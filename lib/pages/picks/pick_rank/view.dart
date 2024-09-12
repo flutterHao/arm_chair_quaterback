@@ -1,0 +1,142 @@
+import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
+import 'package:arm_chair_quaterback/common/style/style.dart';
+import 'package:arm_chair_quaterback/common/widgets/black_app_bar.dart';
+import 'package:arm_chair_quaterback/pages/picks/pick_rank/widgets/rank_page.dart';
+import 'package:arm_chair_quaterback/pages/picks/pick_rank/widgets/reward_page.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+
+import 'index.dart';
+import 'widgets/widgets.dart';
+
+class PickRankPage extends GetView<PickRankController> {
+  const PickRankPage({Key? key}) : super(key: key);
+
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<PickRankController>(
+      builder: (_) {
+        return BlackAppWidget(
+          Stack(
+            alignment: Alignment.centerLeft,
+            children: [
+              InkWell(
+                onTap: () => Get.back(id: GlobalNestedKey.PICKS),
+                child: SizedBox(
+                    width: 48.w,
+                    height: 48.w,
+                    child: Image.asset(
+                      Assets.iconBackPng,
+                      width: 19.w,
+                    )),
+              ),
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "PICK RANK",
+                      style: TextStyle(
+                          color: AppColors.cE6E6E6,
+                          fontSize: 19.sp,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "6d:08:02:20",
+                      style:
+                          TextStyle(color: AppColors.c666666, fontSize: 12.sp),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
+          totalScreenWidget:
+              TabBarView(controller: controller.tabController, children: const [
+            //rank
+            RankPage(),
+            //reward
+            RewardPage(),
+          ]),
+          floatWidgets: [
+            //悬浮tab
+            Positioned(
+              top: MediaQuery.of(context).padding.top + 48.w + 6.w + 16.w,
+              left: 12.w,
+              right: 12.w,
+              child: Container(
+                height: 34.w,
+                width: double.infinity,
+                margin: EdgeInsets.only(bottom: 39.w),
+                padding: EdgeInsets.symmetric(horizontal: 1.5.w),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(17.w),
+                    color: AppColors.c808080.withOpacity(.4),
+                    border: Border.all(color: AppColors.c808080, width: 1.w)),
+                child: Stack(
+                  alignment: FractionalOffset.centerLeft,
+                  children: [
+                    LayoutBuilder(builder: (context, constraints) {
+                      return Obx(() {
+                        return Container(
+                          height: 28.w,
+                          width: constraints.maxWidth / 2,
+                          margin: EdgeInsets.only(
+                              left: controller.scrollValue.value *
+                                  constraints.maxWidth /
+                                  2),
+                          decoration: BoxDecoration(
+                              color: AppColors.cF2F2F2,
+                              borderRadius: BorderRadius.circular(17.w)),
+                        );
+                      });
+                    }),
+                    Row(
+                      children: [
+                        Flexible(
+                            child: InkWell(
+                          onTap: () => controller.tabController.animateTo(0),
+                          child: Center(
+                            child: Obx(() {
+                              return Text(
+                                "Rank",
+                                style: TextStyle(
+                                    color: controller.tabIndex.value == 0
+                                        ? AppColors.c1A1A1A
+                                        : AppColors.cB3B3B3,
+                                    fontSize: 13.sp),
+                              );
+                            }),
+                          ),
+                        )),
+                        Flexible(
+                            child: InkWell(
+                          onTap: () => controller.tabController.animateTo(1),
+                          child: Center(
+                            child: Obx(() {
+                              return Text(
+                                "Reward",
+                                style: TextStyle(
+                                    color: controller.tabIndex.value == 1
+                                        ? AppColors.c1A1A1A
+                                        : AppColors.cB3B3B3,
+                                    fontSize: 13.sp),
+                              );
+                            }),
+                          ),
+                        ))
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            )
+          ],
+        );
+      },
+    );
+  }
+}

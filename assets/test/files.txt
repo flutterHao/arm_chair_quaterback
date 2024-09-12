@@ -1,0 +1,1 @@
+static const testTeamLogoPng = 'assets/test/test_team_logo.png';

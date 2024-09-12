@@ -1,0 +1,12 @@
+static const ball_1Png = 'assets/images/home/ball_1.png';
+static const ball_2Png = 'assets/images/home/ball_2.png';
+static const news_2Png = 'assets/images/home/news_2.png';
+static const new_1Png = 'assets/images/home/new_1.png';
+static const sel_1Png = 'assets/images/home/sel_1.png';
+static const sel_2Png = 'assets/images/home/sel_2.png';
+static const slot_1Png = 'assets/images/home/slot_1.png';
+static const slot_2Png = 'assets/images/home/slot_2.png';
+static const social_1Png = 'assets/images/home/social_1.png';
+static const social_2Png = 'assets/images/home/social_2.png';
+static const trade_1Png = 'assets/images/home/trade_1.png';
+static const trade_2Png = 'assets/images/home/trade_2.png';
