@@ -7,11 +7,11 @@ import 'package:flutter/material.dart';
 class BorderContainer extends StatelessWidget {
   const BorderContainer(
       {super.key,
-      required this.width,
+      this.width,
       required this.height,
       this.borderColor = AppColors.cB3B3B3,
       required this.child});
-  final double width;
+  final double? width;
   final double height;
   final Color borderColor;
   final Widget child;

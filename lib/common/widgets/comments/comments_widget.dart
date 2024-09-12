@@ -2,6 +2,7 @@ import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/comments/comment_controller.dart';
+import 'package:arm_chair_quaterback/common/widgets/comments/comment_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:flutter/material.dart';
@@ -175,9 +176,14 @@ class CommentItemView extends GetView<CommentController> {
                       style: 12.w4(color: AppColors.cB3B3B3),
                     ),
                   ),
-                  Text(
-                    "Reple",
-                    style: 12.w4(color: AppColors.c666666),
+                  InkWell(
+                    onTap: () {
+                      showCommentBottomSheet(context);
+                    },
+                    child: Text(
+                      "Reple",
+                      style: 12.w4(color: AppColors.c666666),
+                    ),
                   ),
                 ],
               ),

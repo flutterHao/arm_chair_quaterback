@@ -21,6 +21,9 @@ class RankController extends GetxController
     EasTeamListView(),
   ];
 
+  RxInt divisionIndex = 1.obs;
+  RxInt seasonIndex = 3.obs;
+
   /// 在 widget 内存中分配后立即调用。
   @override
   void onInit() {

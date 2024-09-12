@@ -28,7 +28,7 @@ class AppBarWidget extends StatelessWidget {
               height: 19.w,
               child: left ??
                   InkWell(
-                    onTap: () => Get.back(id: 1),
+                    onTap: () => Get.back(),
                     child: IconWidget(
                       iconWidth: 19.w,
                       iconHeight: 19.w,

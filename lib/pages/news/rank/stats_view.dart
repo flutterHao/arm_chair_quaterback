@@ -6,6 +6,7 @@ import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/widgets/border_container.dart';
+import 'package:arm_chair_quaterback/pages/news/rank/widgets/search_bottom_dialog.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,7 +15,7 @@ class StatsRankPage extends GetView<RankController> {
   const StatsRankPage({super.key});
 
   // 主视图
-  Widget _buildView() {
+  Widget _buildView(context) {
     return Column(
       children: [
         16.vGap,
@@ -107,10 +108,19 @@ class StatsRankPage extends GetView<RankController> {
                       ),
                     ),
                     10.hGap,
-                    IconWidget(
-                      iconWidth: 15.w,
-                      iconHeight: 9.w,
-                      icon: Assets.uiIconExpansionPng,
+                    InkWell(
+                      onTap: () {
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return SearchBottomDialog();
+                            });
+                      },
+                      child: IconWidget(
+                        iconWidth: 15.w,
+                        iconHeight: 9.w,
+                        icon: Assets.uiIconExpansionPng,
+                      ),
                     )
                   ],
                 ),
@@ -135,7 +145,7 @@ class StatsRankPage extends GetView<RankController> {
       builder: (_) {
         return BlackAppWidget(const AppBarWidget(title: "STATS"),
             bodyWidget: Expanded(
-              child: _buildView(),
+              child: _buildView(context),
             ));
       },
     );
