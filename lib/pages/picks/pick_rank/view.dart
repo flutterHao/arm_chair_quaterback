@@ -1,6 +1,7 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/style/style.dart';
+import 'package:arm_chair_quaterback/common/widgets/app_bar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_bar.dart';
 import 'package:arm_chair_quaterback/pages/picks/pick_rank/widgets/rank_page.dart';
 import 'package:arm_chair_quaterback/pages/picks/pick_rank/widgets/reward_page.dart';
@@ -14,7 +15,6 @@ import 'widgets/widgets.dart';
 class PickRankPage extends GetView<PickRankController> {
   const PickRankPage({Key? key}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
     return GetBuilder<PickRankController>(
@@ -23,18 +23,9 @@ class PickRankPage extends GetView<PickRankController> {
           Stack(
             alignment: Alignment.centerLeft,
             children: [
-              InkWell(
-                onTap: () => Get.back(id: GlobalNestedKey.PICKS),
-                child: SizedBox(
-                    width: 48.w,
-                    height: 48.w,
-                    child: Image.asset(
-                      Assets.iconBackPng,
-                      width: 19.w,
-                    )),
-              ),
-              Center(
-                child: Column(
+              AppBarWidget(
+                id: GlobalNestedKey.PICKS,
+                titleWidget: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
@@ -64,7 +55,10 @@ class PickRankPage extends GetView<PickRankController> {
           floatWidgets: [
             //悬浮tab
             Positioned(
-              top: MediaQuery.of(context).padding.top + 48.w + 6.w + 16.w,
+              top: MediaQuery.of(context).padding.top +
+                  AppBarContainer.APPBARCONTAINERHEIGHT +
+                  6.w +
+                  16.w,
               left: 12.w,
               right: 12.w,
               child: Container(

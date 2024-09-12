@@ -1,6 +1,7 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/widgets/app_bar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_bar.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guss_item.dart';
 import 'package:arm_chair_quaterback/pages/picks/recive_rward/widgets/recive_award_detail_item.dart';
@@ -439,39 +440,9 @@ class ReciveRwardPage extends GetView<ReciveRwardController> {
     return GetBuilder<ReciveRwardController>(
       builder: (_) {
         return BlackAppWidget(
-          Container(
-            margin: EdgeInsets.only(bottom: 5.w),
-            child: Stack(
-              alignment: Alignment.centerLeft,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(left: 7.w),
-                  child: InkWell(
-                      onTap: () => Get.back(id: GlobalNestedKey.PICKS),
-                      child: Container(
-                          alignment: Alignment.center,
-                          width: 48.w,
-                          height: 48.w,
-                          child: Image.asset(
-                            Assets.iconBackPng,
-                            width: 18.w,
-                          ))),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      "RECEIVE AWARD",
-                      style: TextStyle(
-                          color: AppColors.cF2F2F2,
-                          fontSize: 19.sp,
-                          fontWeight: FontWeight.bold),
-                    )
-                  ],
-                )
-              ],
-            ),
+          const AppBarWidget(
+            id: GlobalNestedKey.PICKS,
+            title: "RECEIVE AWARD",
           ),
           bodyWidget: _buildView(context),
           floatWidgets: [

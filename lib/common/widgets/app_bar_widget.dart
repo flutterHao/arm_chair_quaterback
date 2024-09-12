@@ -10,10 +10,15 @@ import 'package:get/get.dart';
 ///@date 2024/9/9
 ///@description 页面标题栏
 class AppBarWidget extends StatelessWidget {
-  const AppBarWidget({super.key, this.left, this.right, required this.title});
+  const AppBarWidget(
+      {super.key, this.left, this.right, this.title, this.titleWidget,this.id})
+      : assert(titleWidget != null || title != null,
+            "select one of titleWidget,title");
   final Widget? left;
   final Widget? right;
-  final String title;
+  final String? title;
+  final Widget? titleWidget;
+  final int? id;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +33,7 @@ class AppBarWidget extends StatelessWidget {
               height: 19.w,
               child: left ??
                   InkWell(
-                    onTap: () => Get.back(),
+                    onTap: () => Get.back(id: id),
                     child: IconWidget(
                       iconWidth: 19.w,
                       iconHeight: 19.w,
@@ -40,10 +45,11 @@ class AppBarWidget extends StatelessWidget {
             Expanded(
               child: Align(
                 alignment: Alignment.center,
-                child: Text(
-                  title,
-                  style: 19.w7(color: Colors.white),
-                ),
+                child: titleWidget ??
+                    Text(
+                      title!,
+                      style: 19.w7(color: Colors.white),
+                    ),
               ),
             ),
             SizedBox(
@@ -59,7 +65,10 @@ class AppBarWidget extends StatelessWidget {
 }
 
 class AppBarContainer extends StatelessWidget {
+
+  static double APPBARCONTAINERHEIGHT = ScreenUtil().setWidth(63);
   const AppBarContainer({super.key, required this.child});
+
   final Widget child;
 
   @override
