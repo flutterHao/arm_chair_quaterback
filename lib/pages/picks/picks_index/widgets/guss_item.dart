@@ -627,8 +627,6 @@ class _GussItemState extends State<GussItem>
                                   height: 24.w,
                                   width: 83.w,
                                   alignment: Alignment.center,
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 15.w),
                                   decoration: BoxDecoration(
                                       border: Border.all(
                                           color: AppColors.cFF7954, width: 1),
