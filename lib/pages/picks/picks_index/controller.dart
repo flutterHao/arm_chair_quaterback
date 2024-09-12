@@ -9,7 +9,7 @@ class PicksIndexController extends GetxController {
   final state = PicksIndexState();
   late ScrollController scrollController = ScrollController();
   final GlobalKey targetKey = GlobalKey(); // 用来标记目标 widget
-  var isSelfInfoFloatShow = false; //竞猜榜单自己的信息浮窗是否显示
+  var isSelfInfoFloatShow = false.obs; //竞猜榜单自己的信息浮窗是否显示
 
   // tap
   void handleTap(int index) {
@@ -32,14 +32,14 @@ class PicksIndexController extends GetxController {
 
       // 比较目标的相对位置和滚动位置，确保检测到精确的进入和离开时机
       if (targetOffset<=screenHeight) {
-        if (!isSelfInfoFloatShow) {
-          isSelfInfoFloatShow = true;
+        if (!isSelfInfoFloatShow.value) {
+          isSelfInfoFloatShow.value = true;
           update();
           print('已经到达目标 Widget');
         }
       } else {
-        if (isSelfInfoFloatShow) {
-          isSelfInfoFloatShow = false;
+        if (isSelfInfoFloatShow.value) {
+          isSelfInfoFloatShow.value = false;
           update();
           print('离开目标 Widget');
         }

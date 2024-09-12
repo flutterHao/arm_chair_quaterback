@@ -130,7 +130,7 @@ class _PicksIndexPageState extends State<PicksIndexPage>
           SliverFixedExtentList(
             itemExtent: 125.w, //列表项高度固定
             delegate: SliverChildBuilderDelegate(
-              (_, index) => GussItem(),
+                  (_, index) => GussItem(),
               childCount: 10,
             ),
           ),
@@ -150,8 +150,9 @@ class _PicksIndexPageState extends State<PicksIndexPage>
           //竞猜榜单
           SliverToBoxAdapter(
             child: InkWell(
-              onTap: () => Get.toNamed(RouteNames.picksPickRank,
-                  id: GlobalNestedKey.PICKS),
+              onTap: () =>
+                  Get.toNamed(RouteNames.picksPickRank,
+                      id: GlobalNestedKey.PICKS),
               child: Container(
                 height: 36.w,
                 alignment: Alignment.center,
@@ -197,17 +198,18 @@ class _PicksIndexPageState extends State<PicksIndexPage>
           SliverFixedExtentList(
               delegate: SliverChildBuilderDelegate(childCount: 10, (_, index) {
                 return InkWell(
-                  onTap: () => Get.toNamed(RouteNames.picksPickRank,
-                      id: GlobalNestedKey.PICKS),
+                  onTap: () =>
+                      Get.toNamed(RouteNames.picksPickRank,
+                          id: GlobalNestedKey.PICKS),
                   child: Container(
                       alignment: Alignment.centerLeft,
                       decoration: BoxDecoration(
                           color:
-                              index % 2 != 0 ? Colors.white : AppColors.cEDEDED,
+                          index % 2 != 0 ? Colors.white : AppColors.cEDEDED,
                           borderRadius: index == 9
                               ? BorderRadius.only(
-                                  bottomRight: Radius.circular(16.w),
-                                  bottomLeft: Radius.circular(16.w))
+                              bottomRight: Radius.circular(16.w),
+                              bottomLeft: Radius.circular(16.w))
                               : null),
                       padding: EdgeInsets.only(left: 24.w, right: 26.w),
                       margin: EdgeInsets.symmetric(horizontal: 16.w),
@@ -239,80 +241,83 @@ class _PicksIndexPageState extends State<PicksIndexPage>
           bodyWidget: _buildView(),
           floatWidgets: [
             //个人榜单信息浮窗
-            AnimatedPositioned(
-                left: 6.w,
-                right: 6.w,
-                bottom: picksIndexController.isSelfInfoFloatShow ? 9.w : -68.w,
-                duration: const Duration(milliseconds: 300),
-                child: Container(
-                  padding: EdgeInsets.only(left: 43.w, right: 33.w),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20.w),
-                      color: AppColors.c333333),
-                  height: 68.w,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            "--",
-                            style: TextStyle(
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.cFF7954),
-                          ),
-                          SizedBox(
-                            width: 4.w,
-                          ),
-                          Image.asset(
-                            Assets.testTeamLogoPng,
-                            width: 48.w,
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(left: 12.w),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Player Name",
-                                  style: TextStyle(
-                                      overflow: TextOverflow.ellipsis,
-                                      fontSize: 12.sp,
-                                      fontWeight: FontWeight.bold,
-                                      color: AppColors.cFF7954),
-                                ),
-                                SizedBox(
-                                  height: 3.w,
-                                ),
-                                Text(
-                                  "WIN  256",
-                                  style: TextStyle(
-                                      color: AppColors.cB3B3B3,
-                                      fontSize: 10.sp),
-                                ),
-                                Text(
-                                  "SUCCESS  47%",
-                                  style: TextStyle(
-                                      color: AppColors.cB3B3B3,
-                                      fontSize: 10.sp),
-                                )
-                              ],
+            Obx(() {
+              return AnimatedPositioned(
+                  left: 6.w,
+                  right: 6.w,
+                  bottom: picksIndexController.isSelfInfoFloatShow.value ? 9.w : -68
+                      .w,
+                  duration: const Duration(milliseconds: 300),
+                  child: Container(
+                    padding: EdgeInsets.only(left: 43.w, right: 33.w),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.w),
+                        color: AppColors.c333333),
+                    height: 68.w,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              "--",
+                              style: TextStyle(
+                                  fontSize: 18.sp,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.cFF7954),
                             ),
-                          )
-                        ],
-                      ),
-                      Text(
-                        "256K",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontSize: 18.sp),
-                      )
-                    ],
-                  ),
-                )),
+                            SizedBox(
+                              width: 4.w,
+                            ),
+                            Image.asset(
+                              Assets.testTeamLogoPng,
+                              width: 48.w,
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(left: 12.w),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Player Name",
+                                    style: TextStyle(
+                                        overflow: TextOverflow.ellipsis,
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.cFF7954),
+                                  ),
+                                  SizedBox(
+                                    height: 3.w,
+                                  ),
+                                  Text(
+                                    "WIN  256",
+                                    style: TextStyle(
+                                        color: AppColors.cB3B3B3,
+                                        fontSize: 10.sp),
+                                  ),
+                                  Text(
+                                    "SUCCESS  47%",
+                                    style: TextStyle(
+                                        color: AppColors.cB3B3B3,
+                                        fontSize: 10.sp),
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                        Text(
+                          "256K",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize: 18.sp),
+                        )
+                      ],
+                    ),
+                  ));
+            }),
             //下注
             Positioned(
                 left: 63.w,
