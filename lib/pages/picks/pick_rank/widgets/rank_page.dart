@@ -22,6 +22,7 @@ class _RankPageState extends State<RankPage>
     return Stack(
       children: [
         SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: Stack(
             children: [
               Image.asset(

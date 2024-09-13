@@ -20,15 +20,13 @@ class ReciveRwardPage extends GetView<ReciveRwardController> {
   Widget _buildView(BuildContext context) {
     return Expanded(
         child: CustomScrollView(
+      physics: const BouncingScrollPhysics(),
       slivers: [
         SliverToBoxAdapter(
           child: Container(
             margin: EdgeInsets.only(
                 left: 13.w, right: 13.w, bottom: 10.w, top: 16.w),
-            child: Text(
-              "Aug 1,2024",
-              style: 19.w7(color: AppColors.c262626)
-            ),
+            child: Text("Aug 1,2024", style: 19.w7(color: AppColors.c262626)),
           ),
         ),
         SliverPadding(
@@ -265,18 +263,25 @@ class ReciveRwardPage extends GetView<ReciveRwardController> {
                                         ],
                                       ),
                                     ),
-                                    SizedBox(
-                                      height: 10.w,
-                                    ),
+                                    // SizedBox(
+                                    //   height: 10.w,
+                                    // ),
                                     //列表
                                     Expanded(
                                       // constraints: BoxConstraints(
                                       //   maxHeight: 465.w
                                       // ),
                                       child: ListView.builder(
+                                          physics:
+                                              const BouncingScrollPhysics(),
                                           itemCount: 10,
                                           itemBuilder: (context, index) {
-                                            return const ReciveAwardDetailItem();
+                                            return Column(
+                                              children: [
+                                                if(index == 0) 8.vGap,
+                                                const ReciveAwardDetailItem(),
+                                              ],
+                                            );
                                           }),
                                     )
                                   ],
@@ -318,20 +323,14 @@ class ReciveRwardPage extends GetView<ReciveRwardController> {
                                 Assets.testTeamLogoPng,
                                 width: 63.w,
                               ),
-                              Text(
-                                "8x",
-                                style: 24.w7(color: AppColors.c262626)
-                              )
+                              Text("8x", style: 24.w7(color: AppColors.c262626))
                             ],
                           ),
                         ),
                         SizedBox(
                           height: 5.w,
                         ),
-                        Text(
-                          "+256K",
-                          style: 30.w7(color: AppColors.c10A86A)
-                        ),
+                        Text("+256K", style: 30.w7(color: AppColors.c10A86A)),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -402,10 +401,8 @@ class ReciveRwardPage extends GetView<ReciveRwardController> {
                                 borderRadius: BorderRadius.circular(12.w),
                                 border: Border.all(
                                     color: AppColors.cFF7954, width: 1.w)),
-                            child: Text(
-                              "GET",
-                              style: 12.w7(color: AppColors.cFF7954)
-                            ),
+                            child: Text("GET",
+                                style: 12.w7(color: AppColors.cFF7954)),
                           ),
                         )
                       ],
@@ -464,10 +461,8 @@ class ReciveRwardPage extends GetView<ReciveRwardController> {
                           color: AppColors.c000000,
                           borderRadius: BorderRadius.circular(20.w),
                         ),
-                        child: Text(
-                          "RECEIVE",
-                          style: 16.w7(color: AppColors.cFFFFFF)
-                        ),
+                        child: Text("RECEIVE",
+                            style: 16.w7(color: AppColors.cFFFFFF)),
                       )
                     ],
                   ),

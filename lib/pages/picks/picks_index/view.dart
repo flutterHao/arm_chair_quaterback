@@ -71,6 +71,7 @@ class _PicksIndexPageState extends State<PicksIndexPage>
   Widget _buildView() {
     return Expanded(
       child: CustomScrollView(
+        physics: const BouncingScrollPhysics(),
         controller: picksIndexController.scrollController,
         slivers: [
           //banner
@@ -224,7 +225,7 @@ class _PicksIndexPageState extends State<PicksIndexPage>
               itemExtent: 70.w),
           SliverToBoxAdapter(
             child: SizedBox(
-              height: 20.w,
+              height: 90.w,
             ),
           )
         ],

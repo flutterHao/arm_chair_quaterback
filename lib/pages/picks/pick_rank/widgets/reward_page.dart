@@ -22,6 +22,7 @@ class _RewardPageState extends State<RewardPage> {
     return Stack(
       children: [
         SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: Stack(
             children: [
               Image.asset(
