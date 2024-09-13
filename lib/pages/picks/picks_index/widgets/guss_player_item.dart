@@ -42,10 +42,11 @@ class GussPlayerItem extends StatelessWidget {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          "${index + 1}",
-                          style: 18.w7(color: index > 2 ? AppColors.c262626 : Colors.white)
-                        ),
+                        Text("${index + 1}",
+                            style: 18.w7(
+                                color: index > 2
+                                    ? AppColors.c262626
+                                    : Colors.white)),
                         SizedBox(
                           height: 5.w,
                         )
@@ -71,10 +72,7 @@ class GussPlayerItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  "Player Name",
-                  style: 12.w7(color: AppColors.c262626)
-                ),
+                Text("Player Name", style: 12.w7(color: AppColors.c262626)),
                 SizedBox(
                   height: 3.w,
                 ),

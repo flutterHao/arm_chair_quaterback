@@ -63,46 +63,55 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
               Stack(
                 children: [
                   Positioned(
-                    right: 0,
+                      right: 0,
                       bottom: 0,
                       child: Container(
                         width: 130.w,
                         height: 100.w,
                         decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(bottomRight: Radius.circular(32.w))
-                        ),
-                      )),//todo 换图
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                                bottomRight: Radius.circular(32.w))),
+                      )), //todo 换图
                   Container(
-                    margin: EdgeInsets.only(left: 29.w,bottom: 12.w),
+                    margin: EdgeInsets.only(left: 29.w, bottom: 12.w),
                     child: Row(
                       children: [
                         Container(
-                          margin: EdgeInsets.only(right: 13.w),
-                            child: ImageWidget(url: "url",width: 64.w,height: 64.w,borderRadius: BorderRadius.circular(32.w),)),
+                            margin: EdgeInsets.only(right: 13.w),
+                            child: ImageWidget(
+                              url: "url",
+                              width: 64.w,
+                              height: 64.w,
+                              borderRadius: BorderRadius.circular(32.w),
+                            )),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("HOU  #6",style: TextStyle(
-                              color: AppColors.cB3B3B3,
-                              fontSize: 10.sp,
-                            ),),
+                            Text(
+                              "HOU  #6",
+                              style: TextStyle(
+                                color: AppColors.cB3B3B3,
+                                fontSize: 10.sp,
+                              ),
+                            ),
                             3.vGap,
-                            Text("Player Name",style: TextStyle(
-                              color: AppColors.cF2F2F2,
-                              fontSize: 16.sp,
-                            ),),
+                            Text(
+                              "Player Name",
+                              style: TextStyle(
+                                color: AppColors.cF2F2F2,
+                                fontSize: 16.sp,
+                              ),
+                            ),
                             3.vGap,
                             Container(
                               padding: EdgeInsets.symmetric(
-                                horizontal: 3.w,
-                                vertical: 0.w
-                              ),
+                                  horizontal: 3.w, vertical: 0.w),
                               decoration: BoxDecoration(
-                                color: AppColors.cFFFFFF,
-                                borderRadius: BorderRadius.circular(2.w)
-                              ),
-                              child: Text("PF",style: 10.w7(color: AppColors.c262626)),
+                                  color: AppColors.cFFFFFF,
+                                  borderRadius: BorderRadius.circular(2.w)),
+                              child: Text("PF",
+                                  style: 10.w7(color: AppColors.c262626)),
                             )
                           ],
                         )

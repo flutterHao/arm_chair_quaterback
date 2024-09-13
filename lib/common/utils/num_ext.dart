@@ -28,12 +28,13 @@ extension NumExt on num {
       fontSize: kIsWeb ? toDouble() : toDouble().sp,
       color: color);
 
-  TextStyle w7({Color color = AppColors.c262626,TextOverflow? overflow}) => TextStyle(
-      fontWeight: FontWeight.w700,
-      fontSize: kIsWeb ? toDouble() : toDouble().sp,
-      overflow: overflow,
-      color: color,
-      fontFamily: FontFamily.fBlack);
+  TextStyle w7({Color color = AppColors.c262626, TextOverflow? overflow}) =>
+      TextStyle(
+          fontWeight: FontWeight.w700,
+          fontSize: kIsWeb ? toDouble() : toDouble().sp,
+          overflow: overflow,
+          color: color,
+          fontFamily: FontFamily.fBlack);
 
   Divider get hLine => Divider(
         color: AppColors.cB3B3B3,

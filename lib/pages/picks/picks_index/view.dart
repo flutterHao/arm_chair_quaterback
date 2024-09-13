@@ -281,7 +281,9 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                                 children: [
                                   Text(
                                     "Player Name",
-                                    style: 12.w7(color: AppColors.cFF7954,overflow: TextOverflow.ellipsis),
+                                    style: 12.w7(
+                                        color: AppColors.cFF7954,
+                                        overflow: TextOverflow.ellipsis),
                                   ),
                                   SizedBox(
                                     height: 3.w,

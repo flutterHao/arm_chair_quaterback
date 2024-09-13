@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:arm_chair_quaterback/common/net/base/error_entity.dart';
 import 'package:arm_chair_quaterback/common/net/base/result_entity.dart';
 import 'package:arm_chair_quaterback/common/store/user.dart';
@@ -11,9 +13,11 @@ import 'package:get/get.dart' as getx;
 /// date:2024/9/13
 /// desc : 网络拦截
 class NetInterceptor extends InterceptorsWrapper {
+  static const other = 'unknown error';
+
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    super.onRequest(options, handler);
+    // super.onRequest(options, handler);
     Map<String, dynamic>? authorization = getAuthorizationHeader();
     if (authorization != null) {
       options.headers.addAll(authorization);
@@ -29,31 +33,51 @@ class NetInterceptor extends InterceptorsWrapper {
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    super.onResponse(response, handler);
+    // super.onResponse(response, handler);
     // Do something with response data
+    // return handler.next(response); // continue
+
     //处理自己服务器业务逻辑的错误
-    Result result = Result.fromJson(response.data);
-    if (result.code == 0) {
-      return handler.next(result.data); // continue
-    } else {}
+    var responseData =
+        response.data is String ? json.decode(response.data) : response.data;
+
+    // 假设你的 Result.fromJson 可以处理 Map 类型的数据
+    Result result = Result.fromJson(responseData);
+
+    if (result.code == 200) {
+      // 成功返回数据，将数据传递给下一步
+      return handler.next(Response(
+        requestOptions: response.requestOptions,
+        data: result.data, // 将解析后的 data 部分返回
+      ));
+    } else {
+      // 业务逻辑错误，处理错误并返回 DioException
+      handlerError(ErrorEntity(code: result.code!, message: result.message!));
+      return handler.reject(DioException(
+        requestOptions: response.requestOptions,
+        response: response,
+        type: DioExceptionType.badResponse, // 标记为服务器返回错误
+        error: result.message, // 返回错误信息
+      ));
+    }
 
     // 如果你想终止请求并触发一个错误,你可以 reject 一个`DioError`对象,如`handler.reject(error)`，
     // 这样请求将被中止并触发异常，上层catchError会被调用。
   }
 
   @override
-  void onError(DioException e, ErrorInterceptorHandler handler) {
-    super.onError(e, handler);
+  void onError(DioException err, ErrorInterceptorHandler handler) {
+    // super.onError(err, handler);
     // Do something with response error
     Loading.dismiss();
-    ErrorEntity eInfo = createErrorEntity(e);
+    ErrorEntity eInfo = createErrorEntity(err);
     handlerError(eInfo);
-    return handler.next(e); //continue
+    return handler.next(err); //continue
     // 如果你想完成请求并返回一些自定义数据，可以resolve 一个`Response`,如`handler.resolve(response)`。
     // 这样请求将会被终止，上层then会被调用，then中返回的数据将是你的自定义response.
   }
 
-  /// 读取本地配置
+  /// 读取本地配置Authorization
   Map<String, dynamic>? getAuthorizationHeader() {
     var headers = <String, dynamic>{};
     if (getx.Get.isRegistered<UserStore>() && UserStore.to.hasToken == true) {
@@ -72,13 +96,13 @@ class NetInterceptor extends InterceptorsWrapper {
   ErrorEntity createErrorEntity(DioException error) {
     switch (error.type) {
       case DioExceptionType.connectionTimeout:
-        return ErrorEntity(code: -1, message: "连接超时");
+        return ErrorEntity(code: -1, message: "connection exception");
       case DioExceptionType.sendTimeout:
-        return ErrorEntity(code: -1, message: "请求超时");
+        return ErrorEntity(code: -1, message: "Send Timeout");
       case DioExceptionType.receiveTimeout:
-        return ErrorEntity(code: -1, message: "响应超时");
+        return ErrorEntity(code: -1, message: "receive timeout");
       case DioExceptionType.cancel:
-        return ErrorEntity(code: -1, message: "请求取消");
+        return ErrorEntity(code: -1, message: "Cancel Connection");
       case DioExceptionType.badResponse:
         {
           try {
@@ -88,26 +112,30 @@ class NetInterceptor extends InterceptorsWrapper {
             // return ErrorEntity(code: errCode, message: errMsg);
             switch (errCode) {
               case 400:
-                return ErrorEntity(code: errCode, message: "请求语法错误");
+                return ErrorEntity(
+                    code: errCode, message: "Request syntax error");
               case 401:
-                return ErrorEntity(code: errCode, message: "没有权限");
+                return ErrorEntity(code: errCode, message: "Unauthorized");
               case 403:
-                return ErrorEntity(code: errCode, message: "服务器拒绝执行");
+                return ErrorEntity(code: errCode, message: "Forbidden");
               case 404:
-                return ErrorEntity(code: errCode, message: "无法连接服务器");
+                return ErrorEntity(code: errCode, message: "Not Found");
               case 405:
-                return ErrorEntity(code: errCode, message: "请求方法被禁止");
+                return ErrorEntity(
+                    code: errCode, message: "Method Not Allowed");
               case 500:
-                return ErrorEntity(code: errCode, message: "服务器内部错误");
+                return ErrorEntity(
+                    code: errCode, message: "Internal Server Error");
               case 502:
-                return ErrorEntity(code: errCode, message: "无效的请求");
+                return ErrorEntity(code: errCode, message: "Bad Gateway");
               case 503:
-                return ErrorEntity(code: errCode, message: "服务器挂了");
+                return ErrorEntity(
+                    code: errCode, message: "Service Unavailable");
               case 505:
-                return ErrorEntity(code: errCode, message: "不支持HTTP协议请求");
+                return ErrorEntity(
+                    code: errCode, message: "HTTP Version Not Supported");
               default:
                 {
-                  // return ErrorEntity(code: errCode, message: "未知错误");
                   return ErrorEntity(
                     code: errCode,
                     message: error.response != null
@@ -117,12 +145,12 @@ class NetInterceptor extends InterceptorsWrapper {
                 }
             }
           } on Exception catch (_) {
-            return ErrorEntity(code: -1, message: "未知错误");
+            return ErrorEntity(code: -1, message: other);
           }
         }
       default:
         {
-          return ErrorEntity(code: -1, message: error.message ?? "未知错误");
+          return ErrorEntity(code: -1, message: error.message ?? other);
         }
     }
   }

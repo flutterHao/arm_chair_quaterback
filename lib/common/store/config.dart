@@ -1,3 +1,9 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-09-06 15:39:28
+ * @LastEditTime: 2024-09-13 15:40:28
+ */
 import 'package:flutter/material.dart';
 import 'package:arm_chair_quaterback/common/services/services.dart';
 import 'package:arm_chair_quaterback/common/values/values.dart';
@@ -11,8 +17,8 @@ class ConfigStore extends GetxController {
   // PackageInfo? _platform;
   // String get version => _platform?.version ?? '-';
   // bool get isRelease => bool.fromEnvironment("dart.vm.product");
-  Locale locale = Locale('en', 'US');
-  List<Locale> languages = [
+  Locale locale = const Locale('en', 'US');
+  List<Locale> languages = const [
     Locale('en', 'US'),
     Locale('zh', 'CN'),
   ];
@@ -20,7 +26,7 @@ class ConfigStore extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    isFirstOpen = StorageService.to.getBool(STORAGE_DEVICE_FIRST_OPEN_KEY);
+    isFirstOpen = StorageService.to.getBool(UserConstant.firstOpen);
   }
 
   // Future<void> getPlatform() async {
@@ -29,11 +35,11 @@ class ConfigStore extends GetxController {
 
   // 标记用户已打开APP
   Future<bool> saveAlreadyOpen() {
-    return StorageService.to.setBool(STORAGE_DEVICE_FIRST_OPEN_KEY, false);
+    return StorageService.to.setBool(UserConstant.firstOpen, false);
   }
 
   void onInitLocale() {
-    var langCode = StorageService.to.getString(STORAGE_LANGUAGE_CODE);
+    var langCode = StorageService.to.getString(UserConstant.languge);
     if (langCode.isEmpty) return;
     var index = languages.indexWhere((element) {
       return element.languageCode == langCode;
@@ -45,6 +51,6 @@ class ConfigStore extends GetxController {
   void onLocaleUpdate(Locale value) {
     locale = value;
     Get.updateLocale(value);
-    StorageService.to.setString(STORAGE_LANGUAGE_CODE, value.languageCode);
+    StorageService.to.setString(UserConstant.languge, value.languageCode);
   }
 }

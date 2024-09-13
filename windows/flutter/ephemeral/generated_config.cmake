@@ -2,10 +2,10 @@
 file(TO_CMAKE_PATH "E:\\flutter_sdk\\flutter" FLUTTER_ROOT)
 file(TO_CMAKE_PATH "C:\\Users\\honghao.li\\Desktop\\sport_game\\doc\\sourcecode\\arm_chair_quaterback" PROJECT_DIR)
 
-set(FLUTTER_VERSION "1.0.0+1" PARENT_SCOPE)
+set(FLUTTER_VERSION "1.0.1+1" PARENT_SCOPE)
 set(FLUTTER_VERSION_MAJOR 1 PARENT_SCOPE)
 set(FLUTTER_VERSION_MINOR 0 PARENT_SCOPE)
-set(FLUTTER_VERSION_PATCH 0 PARENT_SCOPE)
+set(FLUTTER_VERSION_PATCH 1 PARENT_SCOPE)
 set(FLUTTER_VERSION_BUILD 1 PARENT_SCOPE)
 
 # Environment variables to pass to tool_backend.sh

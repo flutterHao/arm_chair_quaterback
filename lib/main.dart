@@ -1,5 +1,9 @@
-import 'package:arm_chair_quaterback/common/net/apis.dart';
-import 'package:arm_chair_quaterback/common/net/http.dart';
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-09-09 16:17:35
+ * @LastEditTime: 2024-09-13 16:38:20
+ */
 import 'package:arm_chair_quaterback/pages/home/home_binding.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -14,12 +18,6 @@ import 'package:get/get.dart';
 
 Future<void> main() async {
   await Global.init();
-  // HttpUtil().post(Api.authAccount, queryParameters: {
-  //   "accountName": "w001",
-  //   "serviceId": 0,
-  //   "userIp": "192.168.12.46",
-  //   "id": 7
-  // });
   runApp(const MyApp());
 }
 

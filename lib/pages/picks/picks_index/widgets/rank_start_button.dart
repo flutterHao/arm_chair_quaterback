@@ -29,8 +29,7 @@ class RankStartButton extends StatelessWidget {
               height: 40.w,
               decoration: BoxDecoration(
                   color: AppColors.cFF7954,
-                  borderRadius:
-                  BorderRadius.circular(20.w)),
+                  borderRadius: BorderRadius.circular(20.w)),
             ),
           ),
           Container(
@@ -38,8 +37,7 @@ class RankStartButton extends StatelessWidget {
             width: double.infinity,
             decoration: BoxDecoration(
               color: AppColors.c000000,
-              borderRadius:
-              BorderRadius.circular(20.w),
+              borderRadius: BorderRadius.circular(20.w),
             ),
             child: Stack(
               alignment: Alignment.centerLeft,
@@ -50,9 +48,7 @@ class RankStartButton extends StatelessWidget {
                   margin: EdgeInsets.only(left: 3.w),
                   decoration: BoxDecoration(
                       color: AppColors.cFF7954,
-                      borderRadius:
-                      BorderRadius.circular(
-                          18.w)),
+                      borderRadius: BorderRadius.circular(18.w)),
                   alignment: Alignment.center,
                   child: Text.rich(
                       textAlign: TextAlign.end,
@@ -60,26 +56,18 @@ class RankStartButton extends StatelessWidget {
                         TextSpan(
                             text: "3",
                             style: TextStyle(
-                                fontSize: 14.sp,
-                                fontWeight:
-                                FontWeight.bold)),
+                                fontSize: 14.sp, fontWeight: FontWeight.bold)),
                       ])),
                 ),
                 Container(
                   width: double.infinity,
                   child: Column(
-                    crossAxisAlignment:
-                    CrossAxisAlignment.center,
-                    mainAxisAlignment:
-                    MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                          "CONFIRM",
-                          style: 16.w7(color: AppColors.cFFFFFF)
-                      ),
+                      Text("CONFIRM", style: 16.w7(color: AppColors.cFFFFFF)),
                       Row(
-                        mainAxisAlignment:
-                        MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset(
                             Assets.uiIconJettonPng,
@@ -91,9 +79,8 @@ class RankStartButton extends StatelessWidget {
                           ),
                           Text(
                             "999k",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 11.sp),
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 11.sp),
                           )
                         ],
                       )
@@ -107,7 +94,11 @@ class RankStartButton extends StatelessWidget {
               right: 10.w,
               top: 0,
               bottom: 0,
-              child: Center(child: Text("99.5x",style: 14.w7(color: AppColors.cFF7954),)))
+              child: Center(
+                  child: Text(
+                "99.5x",
+                style: 14.w7(color: AppColors.cFF7954),
+              )))
         ],
       ),
     );

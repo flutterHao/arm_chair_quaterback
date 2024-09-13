@@ -4,7 +4,6 @@ import 'package:arm_chair_quaterback/common/net/inerceptor/net_interceptor.dart'
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
-import 'package:arm_chair_quaterback/common/values/values.dart';
 
 ///author ：lihonghao
 /// date:2024/9/13
@@ -39,7 +38,9 @@ class HttpUtil {
       /// 如果您想以"application/x-www-form-urlencoded"格式编码请求数据,
       /// 可以设置此选项为 `Headers.formUrlEncodedContentType`,  这样[Dio]
       /// 就会自动编码请求体.
-      contentType: 'application/json; charset=utf-8',
+
+      // contentType: 'application/json; charset=utf-8',
+      contentType: Headers.formUrlEncodedContentType,
 
       /// [responseType] 表示期望以那种格式(方式)接受响应数据。
       /// 目前 [ResponseType] 接受三种类型 `JSON`, `STREAM`, `PLAIN`.
@@ -79,12 +80,12 @@ class HttpUtil {
   /// list 是否列表 默认 false
   /// cacheKey 缓存key
   /// cacheDisk 是否磁盘缓存
-  Future get(
+  Future get<T>(
     String path, {
     Map<String, dynamic>? queryParameters,
     Options? options,
     bool refresh = false,
-    bool noCache = !CACHE_ENABLE,
+    bool noCache = true,
     bool list = false,
     String cacheKey = '',
     bool cacheDisk = false,
@@ -189,7 +190,7 @@ class HttpUtil {
       options: requestOptions,
       cancelToken: _cancelToken,
     );
-    return response.data;
+    return response.data.data;
   }
 
   /// restful post form 表单提交操作
@@ -209,7 +210,7 @@ class HttpUtil {
       options: requestOptions,
       cancelToken: _cancelToken,
     );
-    return response.data;
+    return response.data.data;
   }
 
   /// restful post Stream 流数据
@@ -233,6 +234,6 @@ class HttpUtil {
       options: requestOptions,
       cancelToken: _cancelToken,
     );
-    return response.data;
+    return response.data.data;
   }
 }

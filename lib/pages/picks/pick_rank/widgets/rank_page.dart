@@ -140,7 +140,9 @@ class _RankPageState extends State<RankPage>
                                         alignment: Alignment.center,
                                         child: Text(
                                           "Player Name",
-                                          style: 12.w7(color: AppColors.cB3B3B3,overflow: TextOverflow.ellipsis),
+                                          style: 12.w7(
+                                              color: AppColors.cB3B3B3,
+                                              overflow: TextOverflow.ellipsis),
                                         ),
                                       ),
                                       Text(
@@ -209,7 +211,9 @@ class _RankPageState extends State<RankPage>
                                         alignment: Alignment.center,
                                         child: Text(
                                           "Player Name",
-                                          style: 12.w7(color: AppColors.cB3B3B3,overflow: TextOverflow.ellipsis),
+                                          style: 12.w7(
+                                              color: AppColors.cB3B3B3,
+                                              overflow: TextOverflow.ellipsis),
                                         ),
                                       ),
                                       Text(
@@ -279,7 +283,9 @@ class _RankPageState extends State<RankPage>
                                         alignment: Alignment.center,
                                         child: Text(
                                           "Player Name",
-                                          style: 12.w7(color: AppColors.cB3B3B3,overflow: TextOverflow.ellipsis),
+                                          style: 12.w7(
+                                              color: AppColors.cB3B3B3,
+                                              overflow: TextOverflow.ellipsis),
                                         ),
                                       ),
                                       Text(
@@ -430,7 +436,7 @@ class _RankPageState extends State<RankPage>
                     alignment: Alignment.center,
                     child: Text(
                       "11",
-                      style: 19.w7(color:AppColors.cFFFFFF),
+                      style: 19.w7(color: AppColors.cFFFFFF),
                     ),
                   ),
                   SizedBox(
