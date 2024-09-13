@@ -4,6 +4,7 @@ import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/rank_start_button.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -35,6 +36,89 @@ class _GussItemState extends State<GussItem>
       scrollValue.value = tabController.animation?.value ?? 0;
     });
     tabController.addListener(() => currentIndex.value = tabController.index);
+  }
+
+  FlTitlesData get titlesData => const FlTitlesData(
+        show: true,
+        bottomTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: false,
+          ),
+        ),
+        leftTitles: AxisTitles(
+          sideTitles: SideTitles(showTitles: false),
+        ),
+        topTitles: AxisTitles(
+          sideTitles: SideTitles(showTitles: false),
+        ),
+        rightTitles: AxisTitles(
+          sideTitles: SideTitles(showTitles: false),
+        ),
+      );
+
+  Widget _generateBarChart() {
+    List<BarChartGroupData> barGroups = [
+      BarChartGroupData(
+        x: 0,
+        barRods: [
+          BarChartRodData(
+              toY: 10,
+              width: 6.w,
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(2)),
+              color: AppColors.cFF7954)
+        ],
+      ),
+      BarChartGroupData(
+        x: 1,
+        barRods: [
+          BarChartRodData(
+              toY: 15,
+              width: 6.w,
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(2)),
+              color: AppColors.cFF7954)
+        ],
+      ),
+      BarChartGroupData(
+        x: 2,
+        barRods: [
+          BarChartRodData(
+              toY: 8,
+              width: 6.w,
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(2)),
+              color: AppColors.c000000.withOpacity(.5))
+        ],
+      ),
+      BarChartGroupData(
+        x: 3,
+        barRods: [
+          BarChartRodData(
+              toY: 13,
+              width: 6.w,
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(2)),
+              color: AppColors.cFF7954)
+        ],
+      ),
+      BarChartGroupData(
+        x: 4,
+        barRods: [
+          BarChartRodData(
+              toY: 7,
+              width: 6.w,
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(2)),
+              color: AppColors.c000000.withOpacity(.5))
+        ],
+      ),
+    ];
+
+    return BarChart(BarChartData(
+        barGroups: barGroups,
+        titlesData: titlesData,
+        borderData: FlBorderData(show: false)));
   }
 
   @override
@@ -239,11 +323,35 @@ class _GussItemState extends State<GussItem>
                                                 EdgeInsets.only(left: 27.w),
                                             child: Row(
                                               children: [
-                                                Container(
-                                                  alignment: Alignment.center,
-                                                  width: 62.w,
-                                                  child: Text("柱状图"), //todo
+                                                Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Container(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      width: 62.w,
+                                                      height: 32.w,
+                                                      child: Stack(
+                                                        children: [
+                                                          Container(
+                                                            margin:
+                                                                EdgeInsets.only(
+                                                                    top: 12.w),
+                                                            child: 1.hLine,//todo 换成箭头图片
+                                                          ),
+                                                          _generateBarChart()
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    3.vGap,
+                                                    Text("L5 Avg.4.8",
+                                                        style: 10.w4(
+                                                            color: AppColors
+                                                                .c666666))
+                                                  ],
                                                 ),
+                                                18.hGap,
                                                 Container(
                                                   width: 62.w,
                                                   height: 55.w,
@@ -406,7 +514,8 @@ class _GussItemState extends State<GussItem>
                         InkWell(
                           onTap: () {
                             // print('点击了头像');
-                            Get.toNamed(RouteNames.picksPlayerDetail,id: GlobalNestedKey.PICKS);
+                            Get.toNamed(RouteNames.picksPlayerDetail,
+                                id: GlobalNestedKey.PICKS);
                           },
                           child: Container(
                             decoration: BoxDecoration(
@@ -417,9 +526,7 @@ class _GussItemState extends State<GussItem>
                                 Assets.testTeamLogoPng,
                                 width: 55.w,
                               ),
-                              Text(
-                                "SS",
-                                style: 14.w7(color: AppColors.c262626))
+                              Text("SS", style: 14.w7(color: AppColors.c262626))
                             ]),
                           ),
                         ),
@@ -469,10 +576,8 @@ class _GussItemState extends State<GussItem>
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Text(
-                                "25.6",
-                                style: 18.w7(color: AppColors.cFF7954)
-                              ),
+                              Text("25.6",
+                                  style: 18.w7(color: AppColors.cFF7954)),
                               Text(
                                 "PTS",
                                 style: TextStyle(
@@ -503,7 +608,8 @@ class _GussItemState extends State<GussItem>
                                       TextSpan(children: [
                                         TextSpan(
                                             text: "MORE",
-                                            style: 11.w7(color: AppColors.cFFFFFF)),
+                                            style: 11
+                                                .w7(color: AppColors.cFFFFFF)),
                                         TextSpan(
                                             text: " +1.5",
                                             style: TextStyle(
@@ -617,5 +723,3 @@ class _GussItemState extends State<GussItem>
     );
   }
 }
-
-
