@@ -1,6 +1,7 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/style/style.dart';
+import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/app_bar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_bar.dart';
 import 'package:arm_chair_quaterback/pages/picks/pick_rank/widgets/rank_page.dart';
@@ -30,10 +31,7 @@ class PickRankPage extends GetView<PickRankController> {
                   children: [
                     Text(
                       "PICK RANK",
-                      style: TextStyle(
-                          color: AppColors.cE6E6E6,
-                          fontSize: 19.sp,
-                          fontWeight: FontWeight.bold),
+                      style: 19.w7(color: AppColors.cE6E6E6),
                     ),
                     Text(
                       "6d:08:02:20",

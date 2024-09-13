@@ -1,5 +1,6 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -121,10 +122,7 @@ class UserInfoBar extends StatelessWidget {
                 ),
                 Text(
                   "NEW YORK YANKEES",
-                  style: TextStyle(
-                      color: AppColors.cF2F2F2,
-                      fontSize: 21.sp,
-                      fontWeight: FontWeight.bold),
+                  style: 21.w7(color: AppColors.cF2F2F2),
                 )
               ],
             ),

@@ -67,11 +67,7 @@ class _RewardPageState extends State<RewardPage> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("Box",style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 24.sp
-                                  ),),
+                                  Text("Box",style: 24.w7(color: AppColors.cFFFFFF) ),
                                   Text("rank 1-10",style: TextStyle(
                                     color: AppColors.cB3B3B3,
                                     fontSize: 12.sp
@@ -94,11 +90,7 @@ class _RewardPageState extends State<RewardPage> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("Money",style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 24.sp
-                                  ),),
+                                  Text("Money",style: 24.w7(color: AppColors.cFFFFFF)),
                                   Text("rank 1-10",style: TextStyle(
                                       color: AppColors.cB3B3B3,
                                       fontSize: 12.sp
@@ -128,11 +120,7 @@ class _RewardPageState extends State<RewardPage> {
                             Flexible(
                               flex:1,
                               child: Center(
-                                child: Text("$index",style: TextStyle(
-                                  fontSize: 12.sp,
-                                  color: index==3?AppColors.cFF7954:AppColors.c262626,
-                                  fontWeight: FontWeight.bold
-                                ),),
+                                child: Text("$index",style: 12.w7(color: index==3?AppColors.cFF7954:AppColors.c262626)),
                               ),
                             ),
                             Flexible(
@@ -204,11 +192,7 @@ class _RewardPageState extends State<RewardPage> {
                     ),
                     child: Text(
                       "GET",
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
+                      style: 16.w7(color: AppColors.cFFFFFF),
                     ),
                   )
                 ],

@@ -17,4 +17,5 @@ class RouteNames {
   static const picksPicksIndex = '/picks_picks_index';
   static const picksReciveRward = '/picks_recive_rward';
   static const picksPickRank = '/picks_pick_rank';
+  static const picksPlayerDetail = '/picks_player_detail';
 }

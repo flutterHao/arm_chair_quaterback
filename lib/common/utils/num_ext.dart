@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -20,20 +21,19 @@ extension NumExt on num {
   TextStyle w5({Color color = AppColors.c262626}) => TextStyle(
       fontWeight: FontWeight.w500,
       fontSize: kIsWeb ? toDouble() : toDouble().sp,
-      color: color,
-      fontFamily: 'PingFang SC');
+      color: color);
 
   TextStyle w4({Color color = AppColors.c262626}) => TextStyle(
       fontWeight: FontWeight.w400,
       fontSize: kIsWeb ? toDouble() : toDouble().sp,
-      color: color,
-      fontFamily: 'PingFang SC');
+      color: color);
 
-  TextStyle w7({Color color = AppColors.c262626}) => TextStyle(
+  TextStyle w7({Color color = AppColors.c262626,TextOverflow? overflow}) => TextStyle(
       fontWeight: FontWeight.w700,
       fontSize: kIsWeb ? toDouble() : toDouble().sp,
+      overflow: overflow,
       color: color,
-      fontFamily: 'PingFang SC');
+      fontFamily: FontFamily.fBlack);
 
   Divider get hLine => Divider(
         color: AppColors.cB3B3B3,

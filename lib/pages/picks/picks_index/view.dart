@@ -2,6 +2,7 @@ import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_bar.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/pages/picks/pick_rank/bindings.dart';
@@ -9,6 +10,9 @@ import 'package:arm_chair_quaterback/pages/picks/pick_rank/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guss_item.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guss_player_item.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/picks_swiper_pagination_builder.dart';
+import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/rank_start_button.dart';
+import 'package:arm_chair_quaterback/pages/picks/player_detail/bindings.dart';
+import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/recive_rward/index.dart';
 import 'package:arm_chair_quaterback/pages/picks/recive_rward/view.dart';
 import 'package:card_swiper/card_swiper.dart';
@@ -41,6 +45,11 @@ class PicksIndex extends StatelessWidget {
                 settings: setting,
                 page: () => const PickRankPage(),
                 binding: PickRankBinding());
+          case RouteNames.picksPlayerDetail:
+            return GetPageRoute(
+                settings: setting,
+                page: () => const PlayerDetailPage(),
+                binding: PlayerDetailBinding());
         }
       },
     );
@@ -113,10 +122,7 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                 children: [
                   Text(
                     "Point Guessing",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 19.sp,
-                        fontWeight: FontWeight.bold),
+                    style: 19.w7(color: AppColors.c000000),
                   ),
                   Text(
                     "07/28 Wed",
@@ -140,10 +146,7 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                   left: 16.w, right: 37.w, top: 20.w, bottom: 13.w),
               child: Text(
                 "Point Guessing",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 19.sp,
-                    fontWeight: FontWeight.bold),
+                style: 19.w7(color: AppColors.c000000),
               ),
             ),
           ),
@@ -261,10 +264,7 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                           children: [
                             Text(
                               "--",
-                              style: TextStyle(
-                                  fontSize: 18.sp,
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.cFF7954),
+                              style: 18.w7(color: AppColors.cFF7954),
                             ),
                             SizedBox(
                               width: 4.w,
@@ -281,11 +281,7 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                                 children: [
                                   Text(
                                     "Player Name",
-                                    style: TextStyle(
-                                        overflow: TextOverflow.ellipsis,
-                                        fontSize: 12.sp,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColors.cFF7954),
+                                    style: 12.w7(color: AppColors.cFF7954,overflow: TextOverflow.ellipsis),
                                   ),
                                   SizedBox(
                                     height: 3.w,
@@ -309,10 +305,7 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                         ),
                         Text(
                           "256K",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 18.sp),
+                          style: 18.w7(color: AppColors.cFFFFFF),
                         )
                       ],
                     ),
@@ -323,98 +316,7 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                 left: 63.w,
                 right: 63.w,
                 bottom: 20.w,
-                child: Container(
-                  height: 43.w,
-                  // color: Colors.red,
-                  child: Stack(
-                    alignment: Alignment.topCenter,
-                    children: [
-                      Positioned(
-                        left: 0,
-                        right: 0,
-                        bottom: 0.w,
-                        child: Container(
-                          height: 40.w,
-                          decoration: BoxDecoration(
-                              color: AppColors.cFF7954,
-                              borderRadius: BorderRadius.circular(20.w)),
-                        ),
-                      ),
-                      Container(
-                        height: 40.w,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: AppColors.c000000,
-                          borderRadius: BorderRadius.circular(20.w),
-                        ),
-                        child: Stack(
-                          alignment: Alignment.centerLeft,
-                          children: [
-                            Container(
-                              height: 35.w,
-                              width: 35.w,
-                              margin: EdgeInsets.only(left: 3.w),
-                              decoration: BoxDecoration(
-                                  color: AppColors.cFF7954,
-                                  borderRadius: BorderRadius.circular(18.w)),
-                              alignment: Alignment.center,
-                              child: Text.rich(
-                                  textAlign: TextAlign.end,
-                                  TextSpan(children: [
-                                    TextSpan(
-                                        text: "3",
-                                        style: TextStyle(
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.bold)),
-                                    TextSpan(
-                                        text: "/10",
-                                        style: TextStyle(
-                                          fontSize: 10.sp,
-                                        ))
-                                  ])),
-                            ),
-                            Container(
-                              width: double.infinity,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "CONFIRM",
-                                    style: TextStyle(
-                                      fontSize: 16.sp,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                        Assets.uiIconJettonPng,
-                                        width: 12.w,
-                                        fit: BoxFit.fitWidth,
-                                      ),
-                                      SizedBox(
-                                        width: 3.w,
-                                      ),
-                                      Text(
-                                        "999k",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 11.sp),
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ))
+                child: const RankStartButton())
           ],
         );
       },

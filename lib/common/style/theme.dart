@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:flutter/material.dart';
 
 import 'color.dart';
@@ -11,6 +12,7 @@ class AppTheme {
     scaffoldBackgroundColor: AppColors.ce5e5e5,
     splashColor: Colors.transparent,
     highlightColor: Colors.transparent,
+    fontFamily: FontFamily.fMedium,
     primaryColor: AppColors.cF1F1F1,
     colorScheme: ColorScheme.fromSwatch().copyWith(
       secondary: AppColors.cF1F1F1,

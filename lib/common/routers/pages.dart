@@ -36,5 +36,9 @@ class AppPages {
     //     name: RouteNames.teamRank,
     //     page: () => const TeamRankPage(),
     //     binding: RankBinding()),
+    // GetPage(
+    //   name: RouteNames.picksPlayerDetail,
+    //   page: () => const PlayerDetailPage(),
+    // ),
   ];
 }

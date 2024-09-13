@@ -1,5 +1,9 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
+import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/rank_start_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -384,106 +388,7 @@ class _GussItemState extends State<GussItem>
                               left: 63.w,
                               right: 63.w,
                               bottom: 20.w,
-                              child: Container(
-                                height: 43.w,
-                                // color: Colors.red,
-                                child: Stack(
-                                  alignment: Alignment.topCenter,
-                                  children: [
-                                    Positioned(
-                                      left: 0,
-                                      right: 0,
-                                      bottom: 0.w,
-                                      child: Container(
-                                        height: 40.w,
-                                        decoration: BoxDecoration(
-                                            color: AppColors.cFF7954,
-                                            borderRadius:
-                                                BorderRadius.circular(20.w)),
-                                      ),
-                                    ),
-                                    Container(
-                                      height: 40.w,
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                        color: AppColors.c000000,
-                                        borderRadius:
-                                            BorderRadius.circular(20.w),
-                                      ),
-                                      child: Stack(
-                                        alignment: Alignment.centerLeft,
-                                        children: [
-                                          Container(
-                                            height: 35.w,
-                                            width: 35.w,
-                                            margin: EdgeInsets.only(left: 3.w),
-                                            decoration: BoxDecoration(
-                                                color: AppColors.cFF7954,
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        18.w)),
-                                            alignment: Alignment.center,
-                                            child: Text.rich(
-                                                textAlign: TextAlign.end,
-                                                TextSpan(children: [
-                                                  TextSpan(
-                                                      text: "3",
-                                                      style: TextStyle(
-                                                          fontSize: 14.sp,
-                                                          fontWeight:
-                                                              FontWeight.bold)),
-                                                  TextSpan(
-                                                      text: "/10",
-                                                      style: TextStyle(
-                                                        fontSize: 10.sp,
-                                                      ))
-                                                ])),
-                                          ),
-                                          Container(
-                                            width: double.infinity,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  "CONFIRM",
-                                                  style: TextStyle(
-                                                    fontSize: 16.sp,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Image.asset(
-                                                      Assets.uiIconJettonPng,
-                                                      width: 12.w,
-                                                      fit: BoxFit.fitWidth,
-                                                    ),
-                                                    SizedBox(
-                                                      width: 3.w,
-                                                    ),
-                                                    Text(
-                                                      "999k",
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 11.sp),
-                                                    )
-                                                  ],
-                                                )
-                                              ],
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ))
+                              child: const RankStartButton())
                         ],
                       ),
                     );
@@ -500,7 +405,8 @@ class _GussItemState extends State<GussItem>
                       children: [
                         InkWell(
                           onTap: () {
-                            print('点击了头像');
+                            // print('点击了头像');
+                            Get.toNamed(RouteNames.picksPlayerDetail,id: GlobalNestedKey.PICKS);
                           },
                           child: Container(
                             decoration: BoxDecoration(
@@ -513,11 +419,7 @@ class _GussItemState extends State<GussItem>
                               ),
                               Text(
                                 "SS",
-                                style: TextStyle(
-                                    color: AppColors.c262626,
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.bold),
-                              )
+                                style: 14.w7(color: AppColors.c262626))
                             ]),
                           ),
                         ),
@@ -569,10 +471,7 @@ class _GussItemState extends State<GussItem>
                             children: [
                               Text(
                                 "25.6",
-                                style: TextStyle(
-                                    fontSize: 18.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.cFF7954),
+                                style: 18.w7(color: AppColors.cFF7954)
                               ),
                               Text(
                                 "PTS",
@@ -604,10 +503,7 @@ class _GussItemState extends State<GussItem>
                                       TextSpan(children: [
                                         TextSpan(
                                             text: "MORE",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 11.sp,
-                                                fontWeight: FontWeight.bold)),
+                                            style: 11.w7(color: AppColors.cFFFFFF)),
                                         TextSpan(
                                             text: " +1.5",
                                             style: TextStyle(
@@ -635,10 +531,7 @@ class _GussItemState extends State<GussItem>
                                   child: Text.rich(TextSpan(children: [
                                     TextSpan(
                                         text: "LESS",
-                                        style: TextStyle(
-                                            color: AppColors.cFF7954,
-                                            fontSize: 11.sp,
-                                            fontWeight: FontWeight.bold)),
+                                        style: 11.w7(color: AppColors.cFF7954)),
                                     TextSpan(
                                         text: " +1.5",
                                         style: TextStyle(
@@ -724,3 +617,5 @@ class _GussItemState extends State<GussItem>
     );
   }
 }
+
+

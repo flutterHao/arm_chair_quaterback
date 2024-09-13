@@ -1,5 +1,6 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -16,10 +17,9 @@ class ReciveAwardDetailItem extends StatelessWidget {
       // height: 109.w,
       margin: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 8.w),
       padding:
-      EdgeInsets.only(top: 13.w, bottom: 10.w, left: 13.w, right: 11.w),
+          EdgeInsets.only(top: 13.w, bottom: 10.w, left: 13.w, right: 11.w),
       decoration: BoxDecoration(
-          color: AppColors.cF2F2F2,
-          borderRadius: BorderRadius.circular(20.w)),
+          color: AppColors.cF2F2F2, borderRadius: BorderRadius.circular(20.w)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -36,13 +36,7 @@ class ReciveAwardDetailItem extends StatelessWidget {
                   Assets.testTeamLogoPng,
                   width: 55.w,
                 ),
-                Text(
-                  "SS",
-                  style: TextStyle(
-                      color: AppColors.c262626,
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.bold),
-                )
+                Text("SS", style: 14.w7(color: AppColors.c262626))
               ]),
             ),
           ),
@@ -61,21 +55,18 @@ class ReciveAwardDetailItem extends StatelessWidget {
                 ),
                 Text(
                   "vs nop 8:05am",
-                  style: TextStyle(
-                      color: AppColors.cB3B3B3, fontSize: 8.sp),
+                  style: TextStyle(color: AppColors.cB3B3B3, fontSize: 8.sp),
                 ),
                 SizedBox(
                   height: 3.w,
                 ),
                 Text(
                   "PPG: 26P",
-                  style: TextStyle(
-                      color: AppColors.cB3B3B3, fontSize: 8.sp),
+                  style: TextStyle(color: AppColors.cB3B3B3, fontSize: 8.sp),
                 ),
                 Text(
                   "L10: 26.7P",
-                  style: TextStyle(
-                      color: AppColors.cB3B3B3, fontSize: 8.sp),
+                  style: TextStyle(color: AppColors.cB3B3B3, fontSize: 8.sp),
                 )
               ],
             ),
@@ -87,33 +78,32 @@ class ReciveAwardDetailItem extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 8.w),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(9.w),
-                border:
-                Border.all(color: AppColors.ce5e5e5, width: 1)),
+                border: Border.all(color: AppColors.ce5e5e5, width: 1)),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  "25.6",
-                  style: TextStyle(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.c666666),
-                ),
+                Text("25.6", style: 18.w7(color: AppColors.c666666)),
                 Text(
                   "PTS",
-                  style: TextStyle(
-                      fontSize: 11.sp, color: AppColors.c666666),
+                  style: TextStyle(fontSize: 11.sp, color: AppColors.c666666),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(Assets.uiTriangleGPng,width: 7.w,fit: BoxFit.fitWidth,),
-                    SizedBox(width: 3.w,),
-                    Text("0.5",style: TextStyle(
-                      color: AppColors.c10A86A,
-                      fontSize: 10.sp
-                    ),)
+                    Image.asset(
+                      Assets.uiTriangleGPng,
+                      width: 7.w,
+                      fit: BoxFit.fitWidth,
+                    ),
+                    SizedBox(
+                      width: 3.w,
+                    ),
+                    Text(
+                      "0.5",
+                      style:
+                          TextStyle(color: AppColors.c10A86A, fontSize: 10.sp),
+                    )
                   ],
                 )
               ],
@@ -127,11 +117,16 @@ class ReciveAwardDetailItem extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(Assets.uiIconMoneyBPng,width: 11.w,fit: BoxFit.fitWidth,),
-                    Text("+500",style: TextStyle(
-                      color: AppColors.c545454,
-                      fontSize: 12.sp
-                    ),)
+                    Image.asset(
+                      Assets.uiIconMoneyBPng,
+                      width: 11.w,
+                      fit: BoxFit.fitWidth,
+                    ),
+                    Text(
+                      "+500",
+                      style:
+                          TextStyle(color: AppColors.c545454, fontSize: 12.sp),
+                    )
                   ],
                 ),
                 Container(
@@ -139,18 +134,18 @@ class ReciveAwardDetailItem extends StatelessWidget {
                   height: 24.w,
                   alignment: Alignment.center,
                   decoration: const BoxDecoration(
-                    image: DecorationImage(image: AssetImage(Assets.uiBingoPng),fit: BoxFit.fitWidth)
+                      image: DecorationImage(
+                          image: AssetImage(Assets.uiBingoPng),
+                          fit: BoxFit.fitWidth)),
+                  child: Text(
+                    "BINGO",
+                    style: 11.w7(color: AppColors.c10A86A)
                   ),
-                  child: Text("BINGO",style: TextStyle(
-                    color: AppColors.c10A86A,
-                    fontSize: 11.sp,
-                    fontWeight: FontWeight.bold
-                  ),),
                 ),
-                Text("winner 45.3%",style: TextStyle(
-                  fontSize: 10.sp,
-                  color: AppColors.cB3B3B3
-                ),)
+                Text(
+                  "winner 45.3%",
+                  style: TextStyle(fontSize: 10.sp, color: AppColors.cB3B3B3),
+                )
               ],
             ),
           )

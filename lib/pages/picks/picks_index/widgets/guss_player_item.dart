@@ -44,11 +44,7 @@ class GussPlayerItem extends StatelessWidget {
                       children: [
                         Text(
                           "${index + 1}",
-                          style: TextStyle(
-                            fontSize: 18.sp,
-                            color: index > 2 ? AppColors.c262626 : Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: 18.w7(color: index > 2 ? AppColors.c262626 : Colors.white)
                         ),
                         SizedBox(
                           height: 5.w,
@@ -77,10 +73,7 @@ class GussPlayerItem extends StatelessWidget {
               children: [
                 Text(
                   "Player Name",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.c262626,
-                      fontSize: 12.sp),
+                  style: 12.w7(color: AppColors.c262626)
                 ),
                 SizedBox(
                   height: 3.w,
@@ -102,10 +95,7 @@ class GussPlayerItem extends StatelessWidget {
           width: 55.w,
           child: Text(
             "256K",
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: AppColors.c262626,
-                fontSize: 18.sp),
+            style: 18.w7(color: AppColors.c262626),
           ),
         )
       ],

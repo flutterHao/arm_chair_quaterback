@@ -1,5 +1,6 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -59,17 +60,11 @@ class _RankPageState extends State<RankPage>
                             children: [
                               Text(
                                 "3th rank",
-                                style: TextStyle(
-                                    color: AppColors.c999999,
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.bold),
+                                style: 14.w7(color: AppColors.c999999),
                               ),
                               Text(
                                 "PICK MORE&RIGHT",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18.sp,
-                                    fontWeight: FontWeight.bold),
+                                style: 18.w7(color: AppColors.cFFFFFF),
                               )
                             ],
                           )
@@ -144,11 +139,7 @@ class _RankPageState extends State<RankPage>
                                         alignment: Alignment.center,
                                         child: Text(
                                           "Player Name",
-                                          style: TextStyle(
-                                              color: AppColors.cB3B3B3,
-                                              overflow: TextOverflow.ellipsis,
-                                              fontSize: 12.sp,
-                                              fontWeight: FontWeight.bold),
+                                          style: 12.w7(color: AppColors.cB3B3B3,overflow: TextOverflow.ellipsis),
                                         ),
                                       ),
                                       Text(
@@ -217,11 +208,7 @@ class _RankPageState extends State<RankPage>
                                         alignment: Alignment.center,
                                         child: Text(
                                           "Player Name",
-                                          style: TextStyle(
-                                              color: AppColors.cB3B3B3,
-                                              overflow: TextOverflow.ellipsis,
-                                              fontSize: 12.sp,
-                                              fontWeight: FontWeight.bold),
+                                          style: 12.w7(color: AppColors.cB3B3B3,overflow: TextOverflow.ellipsis),
                                         ),
                                       ),
                                       Text(
@@ -291,11 +278,7 @@ class _RankPageState extends State<RankPage>
                                         alignment: Alignment.center,
                                         child: Text(
                                           "Player Name",
-                                          style: TextStyle(
-                                              color: AppColors.cB3B3B3,
-                                              overflow: TextOverflow.ellipsis,
-                                              fontSize: 12.sp,
-                                              fontWeight: FontWeight.bold),
+                                          style: 12.w7(color: AppColors.cB3B3B3,overflow: TextOverflow.ellipsis),
                                         ),
                                       ),
                                       Text(
@@ -341,10 +324,7 @@ class _RankPageState extends State<RankPage>
                                       ),
                                       Text(
                                         "+0.5w",
-                                        style: TextStyle(
-                                            color: AppColors.cF2F2F2,
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.bold),
+                                        style: 14.w7(color: AppColors.cF2F2F2),
                                       )
                                     ],
                                   ),
@@ -372,10 +352,7 @@ class _RankPageState extends State<RankPage>
                                       ),
                                       Text(
                                         "+0.5w",
-                                        style: TextStyle(
-                                            color: AppColors.cF2F2F2,
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.bold),
+                                        style: 14.w7(color: AppColors.cF2F2F2),
                                       )
                                     ],
                                   ),
@@ -403,10 +380,7 @@ class _RankPageState extends State<RankPage>
                                       ),
                                       Text(
                                         "+0.5w",
-                                        style: TextStyle(
-                                            color: AppColors.cF2F2F2,
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.bold),
+                                        style: 14.w7(color: AppColors.cF2F2F2),
                                       )
                                     ],
                                   ),
@@ -454,10 +428,7 @@ class _RankPageState extends State<RankPage>
                     alignment: Alignment.center,
                     child: Text(
                       "11",
-                      style: TextStyle(
-                          color: AppColors.cFFFFFF,
-                          fontSize: 19.sp,
-                          fontWeight: FontWeight.bold),
+                      style: 19.w7(color:AppColors.cFFFFFF),
                     ),
                   ),
                   SizedBox(
@@ -476,10 +447,7 @@ class _RankPageState extends State<RankPage>
                     children: [
                       Text(
                         "Player Name",
-                        style: TextStyle(
-                            color: AppColors.cFF7954,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12.sp),
+                        style: 12.w7(color: AppColors.cFF7954),
                       ),
                       Row(
                         children: [
@@ -518,10 +486,7 @@ class _RankPageState extends State<RankPage>
                         ),
                         Text(
                           "+0.5w",
-                          style: TextStyle(
-                              color: AppColors.cFFFFFF,
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.bold),
+                          style: 14.w7(color: AppColors.cFFFFFF),
                         )
                       ],
                     ),
@@ -548,10 +513,7 @@ class _RankPageState extends State<RankPage>
             alignment: Alignment.center,
             child: Text(
               "$index",
-              style: TextStyle(
-                  color: AppColors.c666666,
-                  fontSize: 19.sp,
-                  fontWeight: FontWeight.bold),
+              style: 19.w7(color: AppColors.c666666),
             ),
           ),
           SizedBox(
@@ -570,10 +532,7 @@ class _RankPageState extends State<RankPage>
             children: [
               Text(
                 "Player Name",
-                style: TextStyle(
-                    color: AppColors.c1A1A1A,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12.sp),
+                style: 12.w7(color: AppColors.c1A1A1A),
               ),
               Row(
                 children: [
@@ -612,10 +571,7 @@ class _RankPageState extends State<RankPage>
                 ),
                 Text(
                   "+0.5w",
-                  style: TextStyle(
-                      color: AppColors.c1A1A1A,
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.bold),
+                  style: 14.w7(color: AppColors.c1A1A1A),
                 )
               ],
             ),

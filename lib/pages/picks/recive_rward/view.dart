@@ -1,6 +1,7 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/app_bar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_bar.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guss_item.dart';
@@ -26,10 +27,7 @@ class ReciveRwardPage extends GetView<ReciveRwardController> {
                 left: 13.w, right: 13.w, bottom: 10.w, top: 16.w),
             child: Text(
               "Aug 1,2024",
-              style: TextStyle(
-                  color: AppColors.c262626,
-                  fontSize: 19.sp,
-                  fontWeight: FontWeight.bold),
+              style: 19.w7(color: AppColors.c262626)
             ),
           ),
         ),
@@ -322,10 +320,7 @@ class ReciveRwardPage extends GetView<ReciveRwardController> {
                               ),
                               Text(
                                 "8x",
-                                style: TextStyle(
-                                    color: AppColors.c262626,
-                                    fontSize: 24.sp,
-                                    fontWeight: FontWeight.bold),
+                                style: 24.w7(color: AppColors.c262626)
                               )
                             ],
                           ),
@@ -335,10 +330,7 @@ class ReciveRwardPage extends GetView<ReciveRwardController> {
                         ),
                         Text(
                           "+256K",
-                          style: TextStyle(
-                              fontSize: 30.sp,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.c10A86A),
+                          style: 30.w7(color: AppColors.c10A86A)
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -412,10 +404,7 @@ class ReciveRwardPage extends GetView<ReciveRwardController> {
                                     color: AppColors.cFF7954, width: 1.w)),
                             child: Text(
                               "GET",
-                              style: TextStyle(
-                                  color: AppColors.cFF7954,
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.bold),
+                              style: 12.w7(color: AppColors.cFF7954)
                             ),
                           ),
                         )
@@ -477,11 +466,7 @@ class ReciveRwardPage extends GetView<ReciveRwardController> {
                         ),
                         child: Text(
                           "RECEIVE",
-                          style: TextStyle(
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
+                          style: 16.w7(color: AppColors.cFFFFFF)
                         ),
                       )
                     ],
