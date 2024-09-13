@@ -399,7 +399,7 @@ class _GussItemState extends State<GussItem>
               child: TabBarView(
                   controller: tabController,
                   children: List.generate(
-                    3,//todo
+                    3, //todo
                     (index) => Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [

@@ -14,7 +14,7 @@ class UserInfoBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 11.w,bottom: 11.w),
+      margin: EdgeInsets.only(left: 11.w, bottom: 11.w),
       child: Row(
         children: [
           Stack(
@@ -54,27 +54,21 @@ class UserInfoBar extends StatelessWidget {
                   children: [
                     Text(
                       "LV20",
-                      style: TextStyle(
-                          color: AppColors.cFF7954,
-                          fontSize: 12.sp),
+                      style:
+                          TextStyle(color: AppColors.cFF7954, fontSize: 12.sp),
                     ),
                     Container(
                       // height: 12.w,
                       // width: 66.w,
-                      constraints:
-                      BoxConstraints(minWidth: 66.w),
+                      constraints: BoxConstraints(minWidth: 66.w),
                       margin: EdgeInsets.only(left: 9.w),
-                      padding:
-                      EdgeInsets.symmetric(horizontal: 2.w),
+                      padding: EdgeInsets.symmetric(horizontal: 2.w),
                       decoration: BoxDecoration(
                           color: Colors.black,
-                          borderRadius:
-                          BorderRadius.circular(8.w)),
+                          borderRadius: BorderRadius.circular(8.w)),
                       child: Row(
-                        crossAxisAlignment:
-                        CrossAxisAlignment.center,
-                        mainAxisAlignment:
-                        MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Image.asset(
                             Assets.uiIconMoneyPng,
@@ -83,8 +77,7 @@ class UserInfoBar extends StatelessWidget {
                           Text(
                             "999k",
                             style: TextStyle(
-                                color: AppColors.cF2F2F2,
-                                fontSize: 10.sp),
+                                color: AppColors.cF2F2F2, fontSize: 10.sp),
                           )
                         ],
                       ),
@@ -93,17 +86,13 @@ class UserInfoBar extends StatelessWidget {
                       // height: 12.w,
                       width: 66.w,
                       margin: EdgeInsets.only(left: 3.w),
-                      padding:
-                      EdgeInsets.symmetric(horizontal: 2.w),
+                      padding: EdgeInsets.symmetric(horizontal: 2.w),
                       decoration: BoxDecoration(
                           color: Colors.black,
-                          borderRadius:
-                          BorderRadius.circular(6.2)),
+                          borderRadius: BorderRadius.circular(6.2)),
                       child: Row(
-                        crossAxisAlignment:
-                        CrossAxisAlignment.center,
-                        mainAxisAlignment:
-                        MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Image.asset(
                             Assets.uiIconJettonPng,
@@ -112,8 +101,7 @@ class UserInfoBar extends StatelessWidget {
                           Text(
                             "999k",
                             style: TextStyle(
-                                color: AppColors.cF2F2F2,
-                                fontSize: 10.sp),
+                                color: AppColors.cF2F2F2, fontSize: 10.sp),
                           )
                         ],
                       ),

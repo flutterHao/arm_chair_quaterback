@@ -37,8 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.8
 
   get: ^4.6.6
-  dio: ^4.0.0
-  # dio: ^5.7.0 //TODO
+  # dio: ^4.0.0
+  dio: ^5.7.0 
   dio_cookie_manager: ^2.0.0
   cookie_jar: ^3.0.1
   shared_preferences: ^2.0.5
@@ -47,8 +47,12 @@ dependencies:
   # package_info: ^2.0.0
   card_swiper: ^3.0.1
   extended_image: ^8.0.2
-
-
+  logger: ^2.4.0
+  share_plus: ^10.0.2 
+  # file_picker: ^8.0.2
+  # file_selector: ^1.0.3
+  # image_picker: ^1.1.2
+  # flutter_share_me: ^1.4.0
 
 dev_dependencies:
   flutter_test:

@@ -28,7 +28,7 @@ class PickRankController extends GetxController
     tabController = TabController(length: 2, vsync: this);
     tabController.animation?.addListener(
         () => scrollValue.value = tabController.animation?.value ?? 0);
-    tabController.addListener(()=> tabIndex.value = tabController.index);
+    tabController.addListener(() => tabIndex.value = tabController.index);
   }
 
   /// 在 onInit() 之后调用 1 帧。这是进入的理想场所

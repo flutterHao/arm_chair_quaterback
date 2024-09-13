@@ -15,7 +15,7 @@ class HomeController extends GetxController
     1: GlobalNestedKey.PicksTabGlobalKey,
   };
 
-  GlobalKey<NavigatorState>? getCurrentTabGlobalKey(){
+  GlobalKey<NavigatorState>? getCurrentTabGlobalKey() {
     return navigatorKeys[tabIndex.value];
   }
 

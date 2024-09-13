@@ -416,9 +416,10 @@ class _RankPageState extends State<RankPage>
             right: 6.w,
             child: Container(
               height: 68.w,
-              padding: EdgeInsets.only(left: 21.w,right: 28.w),
+              padding: EdgeInsets.only(left: 21.w, right: 28.w),
               decoration: BoxDecoration(
-                  color: AppColors.c333333, borderRadius: BorderRadius.circular(20.w)),
+                  color: AppColors.c333333,
+                  borderRadius: BorderRadius.circular(20.w)),
               // margin: EdgeInsets.only(left: 17.w, right: 12.w, bottom: 10.w),
               alignment: Alignment.center,
               child: Row(
@@ -501,7 +502,7 @@ class _RankPageState extends State<RankPage>
   Widget _buildItem(int index) {
     var item = Container(
       height: 68.w,
-      padding: EdgeInsets.only(left: 15.w,right: 22.w),
+      padding: EdgeInsets.only(left: 15.w, right: 22.w),
       decoration: BoxDecoration(
           color: AppColors.cF2F2F2, borderRadius: BorderRadius.circular(20.w)),
       margin: EdgeInsets.only(left: 17.w, right: 12.w, bottom: 10.w),

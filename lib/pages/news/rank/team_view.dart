@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/widgets/app_bar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,10 @@ class TeamRankPage extends GetView<RankController> {
   @override
   Widget build(BuildContext context) {
     return BlackAppWidget(
-      const AppBarWidget(title: "TEAM"),
+      const AppBarWidget(
+        title: "TEAM",
+        id: GlobalNestedKey.NEWS,
+      ),
       bodyWidget: Expanded(
         child: Column(
           children: [

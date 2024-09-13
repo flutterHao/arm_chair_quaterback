@@ -137,10 +137,7 @@ class ReciveAwardDetailItem extends StatelessWidget {
                       image: DecorationImage(
                           image: AssetImage(Assets.uiBingoPng),
                           fit: BoxFit.fitWidth)),
-                  child: Text(
-                    "BINGO",
-                    style: 11.w7(color: AppColors.c10A86A)
-                  ),
+                  child: Text("BINGO", style: 11.w7(color: AppColors.c10A86A)),
                 ),
                 Text(
                   "winner 45.3%",

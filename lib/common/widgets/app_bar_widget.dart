@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 ///@description 页面标题栏
 class AppBarWidget extends StatelessWidget {
   const AppBarWidget(
-      {super.key, this.left, this.right, this.title, this.titleWidget,this.id})
+      {super.key, this.left, this.right, this.title, this.titleWidget, this.id})
       : assert(titleWidget != null || title != null,
             "select one of titleWidget,title");
   final Widget? left;
@@ -33,7 +33,9 @@ class AppBarWidget extends StatelessWidget {
               height: 19.w,
               child: left ??
                   InkWell(
-                    onTap: () => Get.back(id: id),
+                    onTap: () {
+                      Get.back(id: id);
+                    },
                     child: IconWidget(
                       iconWidth: 19.w,
                       iconHeight: 19.w,
@@ -65,7 +67,6 @@ class AppBarWidget extends StatelessWidget {
 }
 
 class AppBarContainer extends StatelessWidget {
-
   static double APPBARCONTAINERHEIGHT = ScreenUtil().setWidth(63);
   const AppBarContainer({super.key, required this.child});
 

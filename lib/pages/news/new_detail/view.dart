@@ -1,8 +1,10 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/app_bar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_bar.dart';
+import 'package:arm_chair_quaterback/common/widgets/comments/comment_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/comments/comments_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/more_new_widget.dart';
@@ -17,9 +19,10 @@ class NewsDetailPage extends GetView<NewDetailController> {
   const NewsDetailPage({super.key});
 
   // 主视图
-  Widget _buildView() {
+  Widget _buildView(context) {
     return BlackAppWidget(
       AppBarWidget(
+        id: GlobalNestedKey.NEWS,
         title: "NEWS",
         right: InkWell(
           onTap: () {},
@@ -31,15 +34,19 @@ class NewsDetailPage extends GetView<NewDetailController> {
         ),
       ),
       bodyWidget: Expanded(
-        child: CustomScrollView(
-          slivers: [
-            // _buildAppBar(),
-            _buildNewsContent(),
-            _buildMoreNews(),
-            _buildComments(),
-          ],
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: CustomScrollView(
+            slivers: [
+              // _buildAppBar(),
+              _buildNewsContent(),
+              _buildMoreNews(),
+              _buildComments(),
+            ],
+          ),
         ),
       ),
+      floatWidgets: const [Positioned(bottom: 0, child: CommentInputWidget())],
     );
   }
 
@@ -140,7 +147,7 @@ class NewsDetailPage extends GetView<NewDetailController> {
     return GetBuilder<NewDetailController>(
       builder: (_) {
         // return Scaffold(body: _buildView());
-        return _buildView();
+        return _buildView(context);
       },
     );
   }

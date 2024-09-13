@@ -28,12 +28,11 @@ class _HomePageState extends State<HomePage>
     super.build(context);
     return PopScope(
       canPop: false,
-      onPopInvokedWithResult: (didPop, result) async {
+      onPopInvokedWithResult: (didPop, result) {
         if (didPop) {
           return;
         }
-        var pop =
-            await controller.getCurrentTabGlobalKey()?.currentState?.maybePop();
+        controller.getCurrentTabGlobalKey()?.currentState?.maybePop();
       },
       child: GetBuilder<HomeController>(
         assignId: true,
@@ -77,7 +76,8 @@ class _HomePageState extends State<HomePage>
                           SizedBox(height: 5.w),
                           Image.asset(
                             select ? e.tabIconSelected : e.tabIconNormal,
-                            width: 23.w,
+                            width: 25.w,
+                            fit: BoxFit.fill,
                             // height: 22.5.w,
                           ),
                           SizedBox(height: 7.w),
@@ -93,7 +93,8 @@ class _HomePageState extends State<HomePage>
                             Image.asset(
                               Assets.sel_2Png,
                               width: 22.5.w,
-                              height: 22.5.w,
+                              // height: 22.5.w,
+                              fit: BoxFit.fill,
                             ),
                         ],
                       ),

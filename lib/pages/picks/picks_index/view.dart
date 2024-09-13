@@ -136,7 +136,7 @@ class _PicksIndexPageState extends State<PicksIndexPage>
           SliverFixedExtentList(
             itemExtent: 125.w, //列表项高度固定
             delegate: SliverChildBuilderDelegate(
-                  (_, index) => GussItem(),
+              (_, index) => GussItem(),
               childCount: 10,
             ),
           ),
@@ -153,9 +153,8 @@ class _PicksIndexPageState extends State<PicksIndexPage>
           //竞猜榜单
           SliverToBoxAdapter(
             child: InkWell(
-              onTap: () =>
-                  Get.toNamed(RouteNames.picksPickRank,
-                      id: GlobalNestedKey.PICKS),
+              onTap: () => Get.toNamed(RouteNames.picksPickRank,
+                  id: GlobalNestedKey.PICKS),
               child: Container(
                 height: 36.w,
                 alignment: Alignment.center,
@@ -201,18 +200,17 @@ class _PicksIndexPageState extends State<PicksIndexPage>
           SliverFixedExtentList(
               delegate: SliverChildBuilderDelegate(childCount: 10, (_, index) {
                 return InkWell(
-                  onTap: () =>
-                      Get.toNamed(RouteNames.picksPickRank,
-                          id: GlobalNestedKey.PICKS),
+                  onTap: () => Get.toNamed(RouteNames.picksPickRank,
+                      id: GlobalNestedKey.PICKS),
                   child: Container(
                       alignment: Alignment.centerLeft,
                       decoration: BoxDecoration(
                           color:
-                          index % 2 != 0 ? Colors.white : AppColors.cEDEDED,
+                              index % 2 != 0 ? Colors.white : AppColors.cEDEDED,
                           borderRadius: index == 9
                               ? BorderRadius.only(
-                              bottomRight: Radius.circular(16.w),
-                              bottomLeft: Radius.circular(16.w))
+                                  bottomRight: Radius.circular(16.w),
+                                  bottomLeft: Radius.circular(16.w))
                               : null),
                       padding: EdgeInsets.only(left: 24.w, right: 26.w),
                       margin: EdgeInsets.symmetric(horizontal: 16.w),
@@ -248,8 +246,9 @@ class _PicksIndexPageState extends State<PicksIndexPage>
               return AnimatedPositioned(
                   left: 6.w,
                   right: 6.w,
-                  bottom: picksIndexController.isSelfInfoFloatShow.value ? 9.w : -68
-                      .w,
+                  bottom: picksIndexController.isSelfInfoFloatShow.value
+                      ? 9.w
+                      : -68.w,
                   duration: const Duration(milliseconds: 300),
                   child: Container(
                     padding: EdgeInsets.only(left: 43.w, right: 33.w),
