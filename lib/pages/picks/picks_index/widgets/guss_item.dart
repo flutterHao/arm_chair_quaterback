@@ -126,8 +126,10 @@ class _GussItemState extends State<GussItem>
     return Container(
       // height: 109.w,
       margin: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 8.w),
-      padding:
-          EdgeInsets.only(top: 13.w, bottom: 10.w,),
+      padding: EdgeInsets.only(
+        top: 13.w,
+        bottom: 10.w,
+      ),
       decoration: BoxDecoration(
           color: AppColors.cF2F2F2, borderRadius: BorderRadius.circular(20.w)),
       child: Column(
@@ -288,7 +290,7 @@ class _GussItemState extends State<GussItem>
                                     itemBuilder: (_, index) {
                                       return Column(
                                         children: [
-                                          if(index == 0) 9.vGap,
+                                          if (index == 0) 9.vGap,
                                           Container(
                                             height: 75.w,
                                             decoration: BoxDecoration(
@@ -298,8 +300,7 @@ class _GussItemState extends State<GussItem>
                                                         16.w)),
                                             margin: EdgeInsets.symmetric(
                                                 horizontal: 16.w),
-                                            padding:
-                                                EdgeInsets.only(left: 9.w),
+                                            padding: EdgeInsets.only(left: 9.w),
                                             child: Row(
                                               children: [
                                                 Column(
@@ -482,7 +483,7 @@ class _GussItemState extends State<GussItem>
                   children: List.generate(
                     3, //todo
                     (index) => Container(
-                      margin: EdgeInsets.only(left: 13.w,right: 11.w),
+                      margin: EdgeInsets.only(left: 13.w, right: 11.w),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -501,7 +502,8 @@ class _GussItemState extends State<GussItem>
                                   Assets.testTeamLogoPng,
                                   width: 55.w,
                                 ),
-                                Text("SS", style: 14.w7(color: AppColors.c262626))
+                                Text("SS",
+                                    style: 14.w7(color: AppColors.c262626))
                               ]),
                             ),
                           ),
@@ -556,7 +558,8 @@ class _GussItemState extends State<GussItem>
                                 Text(
                                   "PTS",
                                   style: TextStyle(
-                                      fontSize: 11.sp, color: AppColors.cFF7954),
+                                      fontSize: 11.sp,
+                                      color: AppColors.cFF7954),
                                 )
                               ],
                             ),
@@ -583,8 +586,8 @@ class _GussItemState extends State<GussItem>
                                         TextSpan(children: [
                                           TextSpan(
                                               text: "MORE",
-                                              style: 11
-                                                  .w7(color: AppColors.cFFFFFF)),
+                                              style: 11.w7(
+                                                  color: AppColors.cFFFFFF)),
                                           TextSpan(
                                               text: " +1.5",
                                               style: TextStyle(
@@ -612,7 +615,8 @@ class _GussItemState extends State<GussItem>
                                     child: Text.rich(TextSpan(children: [
                                       TextSpan(
                                           text: "LESS",
-                                          style: 11.w7(color: AppColors.cFF7954)),
+                                          style:
+                                              11.w7(color: AppColors.cFF7954)),
                                       TextSpan(
                                           text: " +1.5",
                                           style: TextStyle(
