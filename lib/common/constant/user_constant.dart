@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-06 15:16:54
- * @LastEditTime: 2024-09-13 15:38:39
+ * @LastEditTime: 2024-09-14 18:20:20
  */
 class UserConstant {
   /// 用户 - 配置信息
@@ -13,4 +13,6 @@ class UserConstant {
 
   /// 多语言
   static const String languge = 'language_code';
+
+  static const String deviceId = "device_id";
 }

@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -14,19 +15,43 @@ class TeamRankWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       height: 225.w,
-      child: ListView.separated(
-          scrollDirection: Axis.horizontal,
-          itemCount: 3,
-          separatorBuilder: (context, index) {
-            return 12.hGap;
-          },
-          itemBuilder: (context, index) {
-            return InkWell(
-                onTap: () => Get.toNamed(RouteNames.teamRank, id: 1),
-                child: TeamRankItem(index: index));
-          }),
+      alignment: Alignment.centerLeft,
+      margin: EdgeInsets.only(bottom: 20.w),
+      // child: ListView.separated(
+      //     scrollDirection: Axis.horizontal,
+      //     itemCount: 3,
+      //     separatorBuilder: (context, index) {
+      //       return 12.hGap;
+      //     },
+      //     itemBuilder: (context, index) {
+      //       return InkWell(
+      //           onTap: () => Get.toNamed(RouteNames.teamRank, id: 1),
+      //           child: TeamRankItem(index: index));
+      //     }),
+      child: PageView.builder(
+        controller: PageController(
+          viewportFraction: 0.9,
+        ),
+        physics: const BouncingScrollPhysics(),
+        reverse: true,
+        itemCount: 3,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: EdgeInsets.only(right: 20.w), // 控制左右间距
+            child: InkWell(
+              onTap: () {
+                Get.toNamed(
+                  RouteNames.statsRank,
+                  id: GlobalNestedKey.NEWS,
+                );
+              },
+              child: TeamRankItem(index: index),
+            ),
+          );
+        },
+      ),
     );
   }
 }
@@ -37,12 +62,15 @@ class TeamRankItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = 375.w * 0.9;
+
     return ShadowContainer(
-      width: 312.w,
+      width: width,
       height: 225.w,
       child: Column(
         children: [
           Container(
+            width: width,
             height: 36.w,
             decoration: BoxDecoration(
                 color: AppColors.c262626,
@@ -75,7 +103,7 @@ class TeamRankItem extends StatelessWidget {
             ),
           ),
           Container(
-            width: 312.w,
+            width: width,
             height: 3.w,
             color: AppColors.cFF7954,
           ),
@@ -84,7 +112,7 @@ class TeamRankItem extends StatelessWidget {
             children: [
               Container(
                 alignment: Alignment.center,
-                width: 120.w,
+                width: 100.w,
                 child: Text(
                   "team",
                   style: 11.w4(color: AppColors.cB3B3B3),
@@ -116,7 +144,7 @@ class TeamRankItem extends StatelessWidget {
               )
             ],
           ),
-          TeamListView()
+          SizedBox(width: width, child: TeamListView())
         ],
       ),
     );
@@ -135,12 +163,12 @@ class TeamListView extends StatelessWidget {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
-            return Container(
+            return SizedBox(
               height: 48.w,
               child: Row(
                 children: [
                   SizedBox(
-                    width: 120.w,
+                    width: 100.w,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

@@ -37,11 +37,17 @@ class NewsDetailPage extends GetView<NewDetailController> {
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: CustomScrollView(
+            physics: const BouncingScrollPhysics(),
             slivers: [
               // _buildAppBar(),
               _buildNewsContent(),
               _buildMoreNews(),
               _buildComments(),
+              SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 100.w,
+                ),
+              )
             ],
           ),
         ),

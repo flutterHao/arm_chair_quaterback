@@ -2,29 +2,34 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-12 16:53:47
- * @LastEditTime: 2024-09-13 17:26:35
+ * @LastEditTime: 2024-09-14 19:42:35
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
+import 'package:arm_chair_quaterback/common/constant/user_constant.dart';
 import 'package:arm_chair_quaterback/common/entities/tab_item_info.dart';
+import 'package:arm_chair_quaterback/common/entities/user_entiry/user_entiry.dart';
 import 'package:arm_chair_quaterback/common/net/apis/user.dart';
+import 'package:arm_chair_quaterback/common/services/services.dart';
 import 'package:arm_chair_quaterback/common/store/user.dart';
-import 'package:arm_chair_quaterback/common/utils/logger.dart';
+import 'package:arm_chair_quaterback/common/utils/device_utils.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/index.dart';
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../common/net/index.dart';
-
 class HomeController extends GetxController
     with GetSingleTickerProviderStateMixin {
+  static HomeController get to => Get.find();
   late TabController tabController;
   RxInt tabIndex = 0.obs;
   Map<int, GlobalKey<NavigatorState>?> navigatorKeys = {
     0: GlobalNestedKey.NewsTabGlobalKey,
     1: GlobalNestedKey.PicksTabGlobalKey,
   };
+
+  UserEntiry userEntiry = UserEntiry();
 
   GlobalKey<NavigatorState>? getCurrentTabGlobalKey() {
     return navigatorKeys[tabIndex.value];
@@ -66,7 +71,7 @@ class HomeController extends GetxController
   @override
   void onInit() {
     super.onInit();
-
+    // auth();
     tabController = TabController(length: tabItems.length, vsync: this);
     // 监听 TabController 的页面改变，更新 tabIndex
     // tabController.addListener(() {
@@ -76,10 +81,10 @@ class HomeController extends GetxController
     // });
   }
 
-  void onTap(v) {
-    tabIndex.value = v;
-    tabController.animateTo(v);
-    update();
+  @override
+  void onReady() {
+    super.onReady();
+    login();
   }
 
   @override
@@ -88,9 +93,34 @@ class HomeController extends GetxController
     super.onClose();
   }
 
-  void auth() {
-    UserApi.auth().then((v) {
-      UserStore().setToken(v);
+  void onTap(v) {
+    tabIndex.value = v;
+    tabController.animateTo(v);
+    update();
+  }
+
+  Future login() async {
+    String accountName = await getUid();
+    int serviceId = 0;
+    String userIp = "192.168.12.46";
+    int id = 7;
+    String v = await UserApi.auth(
+      accountName: accountName,
+      serviceId: serviceId,
+      userIp: userIp,
+      id: id,
+    );
+    UserStore().setToken(v);
+    UserApi.visitorLogin().then((value) {
+      userEntiry = value;
     });
+  }
+
+  Future<String> getUid() async {
+    String accountName = StorageService.to.getString(UserConstant.deviceId);
+    if (ObjectUtil.isEmpty(accountName)) {
+      accountName = await DeviceUtils.getDeviceId();
+    }
+    return accountName;
   }
 }

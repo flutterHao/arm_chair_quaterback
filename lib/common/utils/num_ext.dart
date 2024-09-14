@@ -1,3 +1,9 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-09-13 11:33:27
+ * @LastEditTime: 2024-09-13 19:41:59
+ */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:flutter/foundation.dart';
@@ -18,15 +24,16 @@ extension NumExt on num {
 
   EdgeInsets get ea => EdgeInsets.all(kIsWeb ? toDouble() : toDouble().w);
 
-  TextStyle w5({Color color = AppColors.c262626}) => TextStyle(
-      fontWeight: FontWeight.w500,
-      fontSize: kIsWeb ? toDouble() : toDouble().sp,
-      color: color);
+  // TextStyle w5({Color color = AppColors.c262626}) => TextStyle(
+  //     fontWeight: FontWeight.w500,
+  //     fontSize: kIsWeb ? toDouble() : toDouble().sp,
+  //     color: color);
 
   TextStyle w4({Color color = AppColors.c262626}) => TextStyle(
       fontWeight: FontWeight.w400,
       fontSize: kIsWeb ? toDouble() : toDouble().sp,
-      color: color);
+      color: color,
+      fontFamily: FontFamily.fMedium);
 
   TextStyle w7({Color color = AppColors.c262626, TextOverflow? overflow}) =>
       TextStyle(

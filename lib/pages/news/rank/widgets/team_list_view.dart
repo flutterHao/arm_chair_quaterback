@@ -15,7 +15,7 @@ class EasTeamListView extends StatelessWidget {
         child: Center(
       child: Text(
         text,
-        style: 10.w5(),
+        style: 10.w7(),
       ),
     ));
   }

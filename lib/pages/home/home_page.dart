@@ -25,7 +25,6 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    controller.auth();
     super.build(context);
     return PopScope(
       canPop: false,

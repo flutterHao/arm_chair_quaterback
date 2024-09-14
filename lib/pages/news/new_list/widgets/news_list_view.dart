@@ -1,47 +1,54 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
+import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/pages/news/new_list/controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/widgets/shadow_container.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/widgets/text_icon_widget.dart';
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class NewsListView extends StatelessWidget {
+class NewsListView extends GetView<NewListController> {
   const NewsListView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: BoxConstraints(maxWidth: 343.w),
-      // height: 139.w,
-      child: ListView.separated(
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: 5,
-          shrinkWrap: true,
-          padding: EdgeInsets.symmetric(vertical: 10.w),
-          separatorBuilder: (context, index) {
-            return 9.vGap;
-          },
-          itemBuilder: (context, index) {
-            return InkWell(
-              onTap: () =>
-                  Get.toNamed(RouteNames.newsDetail, id: GlobalNestedKey.NEWS),
-              child: NewsItem(
-                index: index,
-              ),
-            );
-          }),
-    );
+    return GetBuilder<NewListController>(
+        id: "newsList",
+        builder: (_) {
+          return ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: 343.w),
+            // height: 139.w,
+            child: ListView.separated(
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: controller.state.newsList.length,
+                shrinkWrap: true,
+                padding: EdgeInsets.symmetric(vertical: 10.w),
+                separatorBuilder: (context, index) {
+                  return 9.vGap;
+                },
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    onTap: () => Get.toNamed(RouteNames.newsDetail,
+                        id: GlobalNestedKey.NEWS),
+                    child: NewsItemView(
+                      item: controller.state.newsList[index],
+                    ),
+                  );
+                }),
+          );
+        });
   }
 }
 
-class NewsItem extends StatelessWidget {
-  const NewsItem({super.key, required this.index});
-  final int index;
+class NewsItemView extends StatelessWidget {
+  const NewsItemView({super.key, required this.item});
+  final NewsDetail item;
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +75,7 @@ class NewsItem extends StatelessWidget {
                       SizedBox(
                           width: 271.w,
                           child: Text(
-                            "Tyler O'Neill's 465-foot home run run run...",
+                            item.title,
                             overflow: TextOverflow.ellipsis,
                             style: 14.w4(),
                           )),
@@ -82,14 +89,14 @@ class NewsItem extends StatelessWidget {
                   ),
                   5.vGap,
                   Text(
-                    "2024/07/10 12:05 -via twitter",
+                    "${DateUtil.formatDateMs(item.postTime)} -${item.source}",
                     style: 10.w4(color: AppColors.cB3B3B3),
                   ),
                   9.vGap,
                   SizedBox(
                     width: 270.w,
                     child: Text(
-                      "Statcast measures the projected distance and exit velocity of T",
+                      item.dataLabel,
                       maxLines: 2,
                       style: 12.w4(color: AppColors.c666666),
                     ),
@@ -99,16 +106,24 @@ class NewsItem extends StatelessWidget {
                     children: [
                       SizedBox(
                           width: 60.w,
-                          child: const TextIconWidget(
-                            icon: Assets.uiIconChatting_01Png,
-                            text: "100K",
+                          child: TextIconWidget(
+                            width: 16.w,
+                            icon: item.isView == 0
+                                ? Assets.uiIconChatting_01Png
+                                : Assets.uiIconChatting_02Png,
+                            color: AppColors.cB3B3B3,
+                            text: "${item.views}",
                           )),
                       SizedBox(
                           width: 60.w,
-                          child: const TextIconWidget(
-                            icon: Assets.uiIconLike_01Png,
-                            color: Colors.red,
-                            text: "100K",
+                          child: TextIconWidget(
+                            icon: item.isLike == 1
+                                ? Assets.uiIconLike_01Png
+                                : Assets.uiIconLike_02Png,
+                            color: item.isLike == 1
+                                ? AppColors.cFF546C
+                                : AppColors.cB3B3B3,
+                            text: "${item.likes}",
                           )),
                     ],
                   )

@@ -8,6 +8,7 @@ class ShadowContainer extends StatelessWidget {
   final Color backgroudColor;
   final Color? shadowColor;
   final BorderRadius? borderRadius;
+  final EdgeInsets? margin;
 
   const ShadowContainer(
       {super.key,
@@ -16,13 +17,15 @@ class ShadowContainer extends StatelessWidget {
       this.backgroudColor = AppColors.cF1F1F1,
       this.shadowColor,
       required this.child,
-      this.borderRadius});
+      this.borderRadius,
+      this.margin});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: width,
       height: height,
+      margin: margin,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: backgroudColor,

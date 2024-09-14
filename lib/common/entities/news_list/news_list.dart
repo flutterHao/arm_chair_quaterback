@@ -2,10 +2,9 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 17:35:51
- * @LastEditTime: 2024-09-13 17:40:56
+ * @LastEditTime: 2024-09-14 16:45:55
  */
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
-
 
 class NewsList {
   List<NewsDetail>? nbaNewsList;

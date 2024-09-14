@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'package:arm_chair_quaterback/common/net/address.dart';
 import 'package:arm_chair_quaterback/common/net/inerceptor/net_interceptor.dart';
-import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
-import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 
 ///author ：lihonghao
 /// date:2024/9/13
@@ -55,13 +53,12 @@ class HttpUtil {
     _dio = Dio(options);
 
     // Cookie管理
-    CookieJar cookieJar = CookieJar();
-    _dio.interceptors.add(CookieManager(cookieJar));
-    _dio.interceptors
-        .add(LogInterceptor(requestBody: true, responseBody: true));
-
+    // CookieJar cookieJar = CookieJar();
+    // _dio.interceptors.add(CookieManager(cookieJar));
     // 添加拦截器
     _dio.interceptors.add(NetInterceptor());
+    _dio.interceptors
+        .add(LogInterceptor(requestBody: true, responseBody: true));
   }
 
   /*

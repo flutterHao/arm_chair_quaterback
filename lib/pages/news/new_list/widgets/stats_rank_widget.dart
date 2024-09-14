@@ -15,24 +15,66 @@ class StatsRankWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
+      alignment: Alignment.centerLeft,
       height: 191.w,
-      child: ListView.separated(
-          scrollDirection: Axis.horizontal,
-          itemCount: 3,
-          separatorBuilder: (context, index) {
-            return 12.hGap;
-          },
-          itemBuilder: (context, index) {
-            return InkWell(
-                onTap: () {
-                  Get.toNamed(
-                    RouteNames.statsRank,
-                    id: GlobalNestedKey.NEWS,
-                  );
-                },
-                child: StatsRankItem(index: index));
-          }),
+      // child: PageView.builder(
+      //     controller: PageController(viewportFraction: 0.9),
+      //     physics: const BouncingScrollPhysics(),
+      //     reverse: true,
+      //     itemCount: 3,
+      //     itemBuilder: (context, index) {
+      //       return InkWell(
+      //           onTap: () {
+      //             Get.toNamed(
+      //               RouteNames.statsRank,
+      //               id: GlobalNestedKey.NEWS,
+      //             );
+      //           },
+      //           child: StatsRankItem(index: index));
+      //     })
+      child: PageView.builder(
+        controller: PageController(
+          viewportFraction: 0.9,
+        ),
+        physics: const BouncingScrollPhysics(),
+        reverse: true,
+        itemCount: 3,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: EdgeInsets.only(right: 20.w), // 控制左右间距
+            child: InkWell(
+              onTap: () {
+                Get.toNamed(
+                  RouteNames.statsRank,
+                  id: GlobalNestedKey.NEWS,
+                );
+              },
+              child: SizedBox(
+                width: 312.w, // 设置固定的宽度
+                child: StatsRankItem(index: index),
+              ),
+            ),
+          );
+        },
+      ),
+
+      // child: ListView.separated(
+      //     scrollDirection: Axis.horizontal,
+      //     itemCount: 3,
+      //     separatorBuilder: (context, index) {
+      //       return 12.hGap;
+      //     },
+      //     itemBuilder: (context, index) {
+      //       return InkWell(
+      //           onTap: () {
+      //             Get.toNamed(
+      //               RouteNames.statsRank,
+      //               id: GlobalNestedKey.NEWS,
+      //             );
+      //           },
+      //           child: StatsRankItem(index: index));
+      //     }),
     );
   }
 }
@@ -43,12 +85,14 @@ class StatsRankItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = 375.w * 0.9;
     return ShadowContainer(
-      width: 312.w,
+      width: width,
       height: 190.w,
       child: Column(
         children: [
           Container(
+            width: width,
             height: 36.w,
             decoration: BoxDecoration(
                 color: AppColors.c262626,
@@ -81,7 +125,7 @@ class StatsRankItem extends StatelessWidget {
             ),
           ),
           Container(
-            width: 312.w,
+            width: width,
             height: 3.w,
             color: AppColors.cFF7954,
           ),
@@ -134,7 +178,7 @@ class StatsListView extends StatelessWidget {
                     ],
                   ),
                   Container(
-                    width: 156.w,
+                    width: 145.w,
                     padding: EdgeInsets.only(left: 15.w),
                     child: Text(
                       "G · CLEAVINGER",

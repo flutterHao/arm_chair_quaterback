@@ -278,7 +278,7 @@ class ReciveRwardPage extends GetView<ReciveRwardController> {
                                           itemBuilder: (context, index) {
                                             return Column(
                                               children: [
-                                                if(index == 0) 8.vGap,
+                                                if (index == 0) 8.vGap,
                                                 const ReciveAwardDetailItem(),
                                               ],
                                             );

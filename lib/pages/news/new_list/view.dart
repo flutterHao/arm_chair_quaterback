@@ -73,32 +73,35 @@ class NewsListPage extends GetView<NewListController> {
   Widget _buildView() {
     return Container(
       alignment: Alignment.center,
-      margin: EdgeInsets.only(top: 16.w),
       child: CustomScrollView(
+        physics: const BouncingScrollPhysics(),
         slivers: [
           /// Swiper Widget wrapped in SliverToBoxAdapter
           SliverToBoxAdapter(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                maxWidth: 343.w, // 设置最大宽度
-              ),
-              child: SwiperWidget(
-                width: 343.w,
-                height: 150.w,
-                bannerList: controller.images,
-                footer: IconWidget(
-                  iconWidth: 14.w,
-                  iconHeight: 14.w,
-                  icon: Assets.uiIconArrowsPng,
-                  backgroudWitdh: 32.w,
-                  backgroudheight: 32.w,
-                  borderRadius: BorderRadius.circular(16.w),
-                  backgroudColor: Colors.white38,
-                ),
-                onTap: (index) {
-                  Get.toNamed(RouteNames.newsDetail, id: GlobalNestedKey.NEWS);
-                },
-              ),
+            child: Container(
+              margin: EdgeInsets.only(top: 16.w),
+              child: GetBuilder<NewListController>(
+                  id: "newsBanner",
+                  builder: (context) {
+                    return SwiperWidget(
+                      width: 343.w,
+                      height: 150.w,
+                      bannerList: controller.images,
+                      footer: IconWidget(
+                        iconWidth: 14.w,
+                        iconHeight: 14.w,
+                        icon: Assets.uiIconArrowsPng,
+                        backgroudWitdh: 32.w,
+                        backgroudheight: 32.w,
+                        borderRadius: BorderRadius.circular(16.w),
+                        backgroudColor: Colors.white38,
+                      ),
+                      onTap: (index) {
+                        Get.toNamed(RouteNames.newsDetail,
+                            id: GlobalNestedKey.NEWS);
+                      },
+                    );
+                  }),
             ),
           ),
 
@@ -134,11 +137,8 @@ class NewsListPage extends GetView<NewListController> {
           ),
 
           /// StatsRankWidget
-          SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w),
-            sliver: const SliverToBoxAdapter(
-              child: StatsRankWidget(),
-            ),
+          const SliverToBoxAdapter(
+            child: StatsRankWidget(),
           ),
 
           /// Text: "2024 standings"
@@ -153,11 +153,8 @@ class NewsListPage extends GetView<NewListController> {
           ),
 
           /// TeamRankWidget
-          SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w),
-            sliver: const SliverToBoxAdapter(
-              child: TeamRankWidget(),
-            ),
+          const SliverToBoxAdapter(
+            child: TeamRankWidget(),
           ),
         ],
       ),
@@ -167,12 +164,8 @@ class NewsListPage extends GetView<NewListController> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<NewListController>(
+      id: "newsList",
       builder: (_) {
-        // return Scaffold(
-        //   body: SafeArea(
-        //     child: _buildView(),
-        //   ),
-        // );
         return BlackAppWidget(
           const UserInfoBar(),
           bodyWidget: Expanded(child: _buildView()),

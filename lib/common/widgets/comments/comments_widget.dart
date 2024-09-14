@@ -160,7 +160,8 @@ class CommentItemView extends GetView<CommentController> {
                     icon: index % 2 == 0
                         ? Assets.uiIconLike_01Png
                         : Assets.uiIconLike_02Png,
-                    iconColor: index % 2 == 0 ? AppColors.cFF546C : null,
+                    iconColor:
+                        index % 2 == 0 ? AppColors.cFF546C : AppColors.cB3B3B3,
                   )
                 ],
               ),
@@ -200,10 +201,14 @@ class CommentItemView extends GetView<CommentController> {
                         },
                         child: Row(
                           children: [
-                            IconWidget(
-                              iconWidth: 8.w,
-                              iconHeight: 5.w,
-                              icon: Assets.ball_1Png,
+                            // IconWidget(
+                            //   iconWidth: 8.w,
+                            //   iconHeight: 5.w,
+                            //   icon: Assets.uiIconExpansionPng,
+                            // ),
+                            Icon(
+                              Icons.expand_more,
+                              size: 12.w,
                             ),
                             4.hGap,
                             Text(
@@ -220,10 +225,14 @@ class CommentItemView extends GetView<CommentController> {
                         },
                         child: Row(
                           children: [
-                            IconWidget(
-                              iconWidth: 8.w,
-                              iconHeight: 5.w,
-                              icon: Assets.ball_1Png,
+                            // IconWidget(
+                            //   iconWidth: 8.w,
+                            //   iconHeight: 5.w,
+                            //   icon: Assets.ball_1Png,
+                            // ),
+                            Icon(
+                              Icons.expand_less,
+                              size: 12.w,
                             ),
                             4.hGap,
                             Text(
@@ -235,7 +244,7 @@ class CommentItemView extends GetView<CommentController> {
                       ),
                     ],
                   ),
-                )
+                ),
             ],
           ),
         )

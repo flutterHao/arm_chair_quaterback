@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Iconfont {
-    // iconName: share
+  // iconName: share
   static const share = IconData(
     0xe60d,
     fontFamily: 'Iconfont',
@@ -91,6 +91,4 @@ class Iconfont {
     fontFamily: 'Iconfont',
     matchTextDirection: true,
   );
-
-
 }
