@@ -12,6 +12,10 @@ class PickRankController extends GetxController
   final state = PickRankState();
   var scrollValue = 0.0.obs;
   var tabIndex = 0.obs;
+  List<String> tabTitles = [
+    "Rank",
+    "Reward"
+  ];
 
   // tap
   void handleTap(int index) {
@@ -25,7 +29,7 @@ class PickRankController extends GetxController
   @override
   void onInit() {
     super.onInit();
-    tabController = TabController(length: 2, vsync: this);
+    tabController = TabController(length: tabTitles.length, vsync: this);
     tabController.animation?.addListener(
         () => scrollValue.value = tabController.animation?.value ?? 0);
     tabController.addListener(() => tabIndex.value = tabController.index);

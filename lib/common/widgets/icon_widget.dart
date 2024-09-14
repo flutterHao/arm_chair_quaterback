@@ -1,3 +1,5 @@
+import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 ///@author lihonghao
@@ -33,6 +35,15 @@ class IconWidget extends StatelessWidget {
       width: iconWidth,
       height: iconHeight,
       fit: BoxFit.fill,
+      errorBuilder: (context,error,stackTrace){
+        //可能需要更换为缺省图
+        return Container(
+          width: double.infinity,
+          height: double.infinity,
+          color: Colors.white,
+          alignment: Alignment.center,
+        );
+      },
     );
     //过多使用 colorFilter 会对性能有影响
     Widget iconWidget = iconColor != null

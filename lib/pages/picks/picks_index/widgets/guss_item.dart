@@ -3,6 +3,7 @@ import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/widgets/TLBuilderWidget.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/rank_start_button.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -677,8 +678,12 @@ class _GussItemState extends State<GussItem>
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: List.generate(
                         tabController.length,
-                        (index) => Obx(
-                              () => InkWell(
+                        (index) => TLBuildWidget(
+                            controller: tabController,
+                            builder: (currentIndex, next, progress,_) {
+                              var activeColor = AppColors.c1A1A1A;
+                              var normalColor = AppColors.cB3B3B3;
+                              return InkWell(
                                 onTap: () => tabController.animateTo(index),
                                 child: Container(
                                   padding:
@@ -686,15 +691,23 @@ class _GussItemState extends State<GussItem>
                                   alignment: Alignment.centerRight,
                                   child: Text("PTS",
                                       style: TextStyle(
-                                          color: currentIndex.value == index
-                                              ? AppColors.c1A1A1A
-                                              : AppColors.cB3B3B3,
+                                          //逻辑：不做动画时animationValue等于index，currentIndex设置激活状态；做动画时，
+                                          //     比较animationValue和currentIndex的大小来判断滚动方向，
+                                          //     animationValue大于currentIndex时滚动到下一个，小于时滚动到上一个；
+                                          //     获取到即将到来的index做进入动画，currentIndex做推出动画，其他项保持未激活状态
+                                          color: currentIndex == index
+                                              ? Color.lerp(activeColor,
+                                                  normalColor, progress)
+                                              : next == index
+                                                  ? Color.lerp(normalColor,
+                                                      activeColor, progress)
+                                                  : normalColor,
                                           fontSize: 11.sp)),
                                 ),
-                              ),
-                            )),
+                              );
+                            })),
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -702,4 +715,26 @@ class _GussItemState extends State<GussItem>
       ),
     );
   }
+
+  Color? tabLerpColor(
+      TabController tabController,
+      double animationValue,
+      int index,
+      Color activeColor,
+      int currentIndex,
+      Color normalColor,
+      double progress) {
+    var animationValue = 0.0;
+    tabController.animation?.addListener(() {
+      animationValue = tabController.animation?.value ?? 0;
+    });
+    return animationValue == index
+        ? activeColor
+        : currentIndex + (animationValue > currentIndex ? 1 : -1) == index
+            ? Color.lerp(normalColor, activeColor, progress)
+            : currentIndex == index
+                ? Color.lerp(activeColor, normalColor, progress)
+                : normalColor;
+  }
 }
+
