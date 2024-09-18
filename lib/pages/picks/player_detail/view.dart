@@ -1,9 +1,12 @@
+import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/widgets/arc_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_bar.dart';
+import 'package:arm_chair_quaterback/common/widgets/btn_background.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -17,162 +20,27 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
   const PlayerDetailPage({super.key});
 
   // 主视图
-  Widget _buildView() {
+  Widget _buildView(BuildContext context) {
     return Expanded(
       child: SingleChildScrollView(
+        controller: controller.scrollController,
         physics: const BouncingScrollPhysics(),
         child: Container(
           margin: EdgeInsets.symmetric(horizontal: 16.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 119.w,
-                width: double.infinity,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Container(
-                      height: 87.w,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          color: AppColors.c262626,
-                          borderRadius: BorderRadius.circular(16.w)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            children: [
-                              9.vGap,
-                              SizedBox(
-                                  width: 32.w,
-                                  height: 32.w,
-                                  child: IconWidget(
-                                    iconWidth: 32.w,
-                                    icon: Assets.uiIconPingjiPng,
-                                    iconHeight: 32.w,
-                                  )), //todo 换图
-                              3.vGap,
-                              Container(
-                                height: 26.w,
-                                width: 100.w,
-                                decoration: BoxDecoration(
-                                    color: AppColors.c000000,
-                                    borderRadius: BorderRadius.horizontal(
-                                        right: Radius.circular(13.w))),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "Score",
-                                      style: TextStyle(
-                                          color: AppColors.cB3B3B3,
-                                          fontSize: 12.sp),
-                                    ),
-                                    10.hGap,
-                                    Text(
-                                      "85",
-                                      style: TextStyle(
-                                          color: AppColors.cF1F1F1,
-                                          fontSize: 12.sp),
-                                    )
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              9.vGap,
-                              SizedBox(
-                                  width: 32.w,
-                                  height: 32.w,
-                                  child: IconWidget(
-                                    iconWidth: 32.w,
-                                    icon: Assets.uiStateBestPng,
-                                    iconHeight: 32.w,
-                                  )), // todo 换图
-                              3.vGap,
-                              Container(
-                                height: 26.w,
-                                width: 100.w,
-                                decoration: BoxDecoration(
-                                    color: AppColors.c000000,
-                                    borderRadius: BorderRadius.horizontal(
-                                        left: Radius.circular(13.w))),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "SAL",
-                                      style: TextStyle(
-                                          color: AppColors.cB3B3B3,
-                                          fontSize: 12.sp),
-                                    ),
-                                    10.hGap,
-                                    Text(
-                                      "250k",
-                                      style: TextStyle(
-                                          color: AppColors.cF1F1F1,
-                                          fontSize: 12.sp),
-                                    )
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      width: double.infinity,
-                      height: 87.w,
-                      child: IconWidget(
-                          iconWidth: 308.w, icon: Assets.uiLight_01Png),
-                    ),
-                    Positioned(
-                      left: 0,
-                      right: 0,
-                      child: SizedBox(
-                        width: 119.w,
-                        height: 119.w,
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Image.asset(
-                              Assets.uiIconStar_02Png,
-                              height: 119.w,
-                              fit: BoxFit.fitHeight,
-                            ),
-                            IconWidget(
-                              iconWidth: 68.w,
-                              icon: Assets.uiIconStar_01Png,
-                              iconColor: AppColors.cFF7954,
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(top: 10.w),
-                              child: Text(
-                                "5",
-                                style: 34.w7(color: AppColors.c262626),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
+              _leverWidget(context),
               9.vGap,
               Text(
                 "Ability",
-                style: 19.w7(color: AppColors.c262626,height: 1),
+                style: 19.w7(color: AppColors.c262626, height: 1),
               ),
               10.vGap,
               SizedBox(
                 height: (2 * 51.w) + (9.w * 3),
                 child: GridView.builder(
-                  scrollDirection: Axis.horizontal,
+                    scrollDirection: Axis.horizontal,
                     itemCount: 6,
                     physics: const NeverScrollableScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -221,16 +89,15 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
               24.vGap,
               Text(
                 "Potential",
-                style: 19.w7(color: AppColors.c262626,height: 1),
+                style: 19.w7(color: AppColors.c262626, height: 1),
               ),
               13.vGap,
               Container(
                 height: (2 * 65.w) + (9.w * 3),
-                padding: EdgeInsets.symmetric(horizontal:  16.w,vertical: 15.w),
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 15.w),
                 decoration: BoxDecoration(
-                  color: AppColors.cFFFFFF,
-                  borderRadius: BorderRadius.circular(16.w)
-                ),
+                    color: AppColors.cFFFFFF,
+                    borderRadius: BorderRadius.circular(16.w)),
                 child: GridView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: 6,
@@ -250,8 +117,13 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                Text("206",style: 19.w7(color: AppColors.c262626,height: 1),),
-                                Text("/500",style: 10.w4(color: AppColors.cB3B3B3))
+                                Text(
+                                  "206",
+                                  style: 19
+                                      .w7(color: AppColors.c262626, height: 1),
+                                ),
+                                Text("/500",
+                                    style: 10.w4(color: AppColors.cB3B3B3))
                               ],
                             ),
                             Container(
@@ -273,33 +145,68 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                       );
                     }),
               ),
-              24.vGap,
+              18.vGap,
+              Center(
+                child: InkWell(
+                  onTap: () {
+                    _upgradeDialog(context);
+                  },
+                  child: SizedBox(
+                    width: 203.w,
+                    child: BtnBackground(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const SizedBox.shrink(),
+                            Text(
+                              "UPGRADE",
+                              style: 18.w7(color: AppColors.cF2F2F2),
+                            ),
+                            Container(
+                                margin: EdgeInsets.only(right: 11.w),
+                                child: IconWidget(
+                                    iconHeight: 14.w,
+                                    iconWidth: 14.w,
+                                    icon: Assets.uiIconArrowsPng))
+                          ],
+                        )),
+                  ),
+                ),
+              ),
+              13.vGap,
               Text(
                 "Price Fluctuation",
-                style: 19.w7(color: AppColors.c262626,height: 1),
+                style: 19.w7(color: AppColors.c262626, height: 1),
               ),
               13.vGap,
               Container(
                 height: 76.w,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: AppColors.cF2F2F2,
-                  borderRadius: BorderRadius.circular(16.w)
-                ),
+                    color: AppColors.cF2F2F2,
+                    borderRadius: BorderRadius.circular(16.w)),
                 padding: EdgeInsets.symmetric(horizontal: 24.w),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("JAN 26,2024",style: 10.w4(color: AppColors.cFF7954),),
+                    Text(
+                      "JAN 26,2024",
+                      style: 10.w4(color: AppColors.cFF7954),
+                    ),
                     Row(
                       children: [
-                        Text("395K",style: 36.w7(color: AppColors.c262626,height: 1),),
+                        Text(
+                          "395K",
+                          style: 36.w7(color: AppColors.c262626, height: 1),
+                        ),
                         44.hGap,
-                        Text("-35%",style: 36.w7(color: AppColors.cE72646,height: 1),)
+                        Text(
+                          "-35%",
+                          style: 36.w7(color: AppColors.cE72646, height: 1),
+                        )
                       ],
                     ),
-
                   ],
                 ),
               ),
@@ -307,11 +214,10 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
               Container(
                 height: 165.w,
                 width: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 8.w,vertical: 14.w),
+                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 14.w),
                 decoration: BoxDecoration(
                     color: AppColors.cF2F2F2,
-                    borderRadius: BorderRadius.circular(16.w)
-                ),
+                    borderRadius: BorderRadius.circular(16.w)),
                 child: Center(
                   child: BarChart(
                     BarChartData(
@@ -326,95 +232,11 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                   ),
                 ),
               ),
-              24.vGap,
-              Text(
-                "Stats",
-                style: 19.w7(color: AppColors.c262626,height: 1),
-              ),
-              13.vGap,
-              Container(
-                height: 135.w,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: AppColors.cF2F2F2,
-                  borderRadius: BorderRadius.circular(16.w)
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.symmetric(vertical: 7.w),
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 30.w,
-                              width: 77.w,
-                              alignment: Alignment.center,
-                              child: Text("TEAM",style: 10.w4(color: AppColors.cB3B3B3))),
-                          ...List.generate(3, (index)=> Container(
-                              height: 30.w,
-                              width: 77.w,
-                              alignment: Alignment.center,
-                              child: Text("REG",style: 12.w4(color: AppColors.c818181))))
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        physics: const BouncingScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        child: Stack(
-                          children: [
-                            Container(
-                              width: 10.w,
-                              decoration: BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: AppColors.cB3B3B3.withOpacity(.3),
-                                        offset:const Offset(0, 15),
-                                        blurRadius: 15,
-                                        spreadRadius: 10.0
-                                    )
-                                  ]
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.symmetric(vertical: 7.w),
-                              padding: EdgeInsets.only(left: 10.w),
-                              child: Column(
-                                children: [
-                                  Table(
-                                    columnWidths: List.generate(8, (index)=>FixedColumnWidth(40.w)).asMap(),
-                                    children: List.generate(1, (index)=>TableRow(
-                                        children: List.generate(8, (index)=>Container(
-                                            height: 30.w,
-                                            alignment: Alignment.center,
-                                            child: Text("GP",style: 10.w4(color: AppColors.cB3B3B3),)))
-                                    )),
-                                  ),
-                                  Table(
-                                    columnWidths: List.generate(8, (index)=>FixedColumnWidth(40.w)).asMap(),
-                                    children: List.generate(3, (index)=>TableRow(
-                                      children: List.generate(8, (index)=>Container(
-                                        height: 30.w,
-                                          alignment: Alignment.center,
-                                          child: Text("$index",style: 12.w4(color: AppColors.c545454),)))
-                                    )),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    13.hGap
-                  ],
-                ),
-              ),
+              _buildStats(),
               24.vGap,
               Text(
                 "News",
-                style: 19.w7(color: AppColors.c262626,height: 1),
+                style: 19.w7(color: AppColors.c262626, height: 1),
               ),
               13.vGap,
               20.vGap
@@ -423,6 +245,671 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
         ),
       ),
     );
+  }
+
+  Widget _buildStats() {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      24.vGap,
+      Text(
+        "Stats",
+        style: 19.w7(color: AppColors.c262626, height: 1),
+      ),
+      13.vGap,
+      Container(
+        height: 135.w,
+        width: double.infinity,
+        decoration: BoxDecoration(
+            color: AppColors.cF2F2F2,
+            borderRadius: BorderRadius.circular(16.w)),
+        child: Row(
+          children: [
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 7.w),
+              child: Column(
+                children: [
+                  Container(
+                      height: 30.w,
+                      width: 77.w,
+                      alignment: Alignment.center,
+                      child:
+                      Text("TEAM", style: 10.w4(color: AppColors.cB3B3B3))),
+                  ...List.generate(
+                      3,
+                          (index) =>
+                          Container(
+                              height: 30.w,
+                              width: 77.w,
+                              alignment: Alignment.center,
+                              child: Text("REG",
+                                  style: 12.w4(color: AppColors.c818181))))
+                ],
+              ),
+            ),
+            Expanded(
+              child: Stack(
+                children: [
+                  Obx(() {
+                    return Container(
+                      height: 135.w,
+                      width: 2.w,
+                      decoration: BoxDecoration(boxShadow: controller.statsIsScrolling.value?[
+                        BoxShadow(
+                            color: AppColors.c262626.withOpacity(.1),
+                            offset: const Offset(0, 2),
+                            blurRadius: 1,
+                            // spreadRadius: 1.0,
+                        )
+                      ]:[]),
+                    );
+                  }),
+                  SingleChildScrollView(
+                    // physics: const BouncingScrollPhysics(),
+                    controller: controller.statsScrollController,
+                    scrollDirection: Axis.horizontal,
+                    child: Container(
+                      margin: EdgeInsets.symmetric(vertical: 7.w),
+                      padding: EdgeInsets.only(left: 10.w),
+                      child: Column(
+                        children: [
+                          Table(
+                            columnWidths: List.generate(
+                                8, (index) => FixedColumnWidth(40.w)).asMap(),
+                            children: List.generate(
+                                1,
+                                    (index) =>
+                                    TableRow(
+                                        children: List.generate(
+                                            8,
+                                                (index) =>
+                                                Container(
+                                                    height: 30.w,
+                                                    alignment: Alignment.center,
+                                                    child: Text(
+                                                      "GP",
+                                                      style: 10
+                                                          .w4(color: AppColors
+                                                          .cB3B3B3),
+                                                    ))))),
+                          ),
+                          Table(
+                            columnWidths: List.generate(
+                                8, (index) => FixedColumnWidth(40.w)).asMap(),
+                            children: List.generate(
+                                3,
+                                    (index) =>
+                                    TableRow(
+                                        children: List.generate(
+                                            8,
+                                                (index) =>
+                                                Container(
+                                                    height: 30.w,
+                                                    alignment: Alignment.center,
+                                                    child: Text(
+                                                      "$index",
+                                                      style: 12
+                                                          .w4(color: AppColors
+                                                          .c545454),
+                                                    ))))),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            13.hGap
+          ],
+        ),
+      )
+    ]);
+  }
+
+  Widget _leverWidget(BuildContext context) {
+    return SizedBox(
+      height: 119.w,
+      width: double.infinity,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Container(
+            height: 87.w,
+            width: double.infinity,
+            decoration: BoxDecoration(
+                color: AppColors.c262626,
+                borderRadius: BorderRadius.circular(16.w)),
+          ),
+          Obx(() {
+            return AnimatedPositioned(
+              left: controller.other.value * -100.w,
+              top: 14.w,
+              duration: const Duration(milliseconds: 300),
+              child: Column(
+                children: [
+                  9.vGap,
+                  SizedBox(
+                      width: 32.w,
+                      height: 32.w,
+                      child: IconWidget(
+                        iconWidth: 32.w,
+                        icon: Assets.uiIconPingjiPng,
+                        iconHeight: 32.w,
+                      )),
+                  6.vGap,
+                  Container(
+                    height: 26.w,
+                    width: 100.w,
+                    decoration: BoxDecoration(
+                        color: AppColors.c000000,
+                        borderRadius: BorderRadius.horizontal(
+                            right: Radius.circular(13.w))),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Score",
+                          style: TextStyle(
+                              color: AppColors.cB3B3B3, fontSize: 12.sp),
+                        ),
+                        10.hGap,
+                        Text(
+                          "85",
+                          style: TextStyle(
+                              color: AppColors.cF1F1F1, fontSize: 12.sp),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            );
+          }),
+          Obx(() {
+            return AnimatedPositioned(
+              duration: const Duration(milliseconds: 300),
+              right: controller.other.value * -100,
+              top: 14.w,
+              child: Column(
+                children: [
+                  9.vGap,
+                  SizedBox(
+                      width: 32.w,
+                      height: 32.w,
+                      child: IconWidget(
+                        iconWidth: 32.w,
+                        icon: Assets.uiStateBestPng,
+                        iconHeight: 32.w,
+                      )),
+                  6.vGap,
+                  Container(
+                    height: 26.w,
+                    width: 100.w,
+                    decoration: BoxDecoration(
+                        color: AppColors.c000000,
+                        borderRadius: BorderRadius.horizontal(
+                            left: Radius.circular(13.w))),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "SAL",
+                          style: TextStyle(
+                              color: AppColors.cB3B3B3, fontSize: 12.sp),
+                        ),
+                        10.hGap,
+                        Text(
+                          "250k",
+                          style: TextStyle(
+                              color: AppColors.cF1F1F1, fontSize: 12.sp),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            );
+          }),
+          Positioned(
+            left: (MediaQuery
+                .of(context)
+                .size
+                .width - 308.w) / 2,
+            child: Container(
+              width: 308.w,
+              height: 87.w,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16.w),
+                  image: const DecorationImage(
+                      image: AssetImage(Assets.uiLight_01Png),
+                      fit: BoxFit.fill)),
+            ),
+          ),
+          Obx(() {
+            return Positioned(
+                right: 32.w,
+                child: Opacity(
+                  opacity: controller.rateBoxOpacity.value,
+                  child: Column(
+                    children: [
+                      Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          SizedBox(
+                              height: 42.w,
+                              width: 84.w,
+                              child: ArcWidget(
+                                42.w,
+                                progressColor: AppColors.cFF7954,
+                                progressWidth: 8.w,
+                                borderColor: AppColors.cB3B3B3,
+                                borderWidth: 3.w,
+                                progressSweepAngle:
+                                controller.rateProgress.value,
+                                borderSweepAngle:
+                                controller.progressBorder.value,
+                              )),
+                          Positioned(
+                              bottom: 0.w,
+                              child: Text(
+                                "${((controller.rateProgress.value / 180 *
+                                    100) > 100 ? 100 : (controller.rateProgress
+                                    .value / 180 * 100)).toStringAsFixed(0)}%",
+                                style:
+                                24.w7(color: AppColors.cFF7954, height: 1),
+                              ))
+                        ],
+                      ),
+                      3.vGap,
+                      Text(
+                        "Success Rate",
+                        style: 12.w4(color: AppColors.cFF7954),
+                      )
+                    ],
+                  ),
+                ));
+          }),
+          Obx(() {
+            return Positioned(
+              left: controller.propertyLeft.value,
+              child: Container(
+                height: 64.w,
+                width: 151.w,
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(colors: [
+                      AppColors.c666666.withOpacity(0),
+                      AppColors.c666666
+                    ]),
+                    borderRadius:
+                    BorderRadius.horizontal(right: Radius.circular(32.w))),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconWidget(
+                            iconWidth: 8.w, icon: Assets.uiIconArrows_01Png),
+                        10.hGap,
+                        Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            IconWidget(
+                              iconWidth: 35.w,
+                              icon: Assets.uiIconStar_01Png,
+                              iconColor: AppColors.cFF7954,
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(top: 5.w),
+                              child: Text(
+                                "6",
+                                style: 21.w7(color: AppColors.c262626),
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                    3.vGap,
+                    Container(
+                      height: 16.w,
+                      width: 110.w,
+                      decoration: BoxDecoration(
+                          color: AppColors.c262626,
+                          borderRadius: BorderRadius.circular(8.w)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Potential",
+                            style: 10.w4(color: AppColors.cB3B3B3),
+                          ),
+                          6.hGap,
+                          Text(
+                            "+4~8%",
+                            style: 12.w4(color: AppColors.cF2F2F2),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            );
+          }),
+          Obx(() {
+            return Positioned(
+              left: controller.startLeft.value,
+              child: Transform.rotate(
+                angle: controller.starRotate.value * 2 * 3.14159,
+                child: SizedBox(
+                  width: 119.w,
+                  height: 119.w,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Image.asset(
+                        Assets.uiIconStar_02Png,
+                        height: controller.starSize.value,
+                        fit: BoxFit.fitHeight,
+                      ),
+                      IconWidget(
+                        iconWidth: 68.w,
+                        icon: Assets.uiIconStar_01Png,
+                        iconColor: AppColors.cFF7954,
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: 10.w),
+                        child: Text(
+                          "5",
+                          style: 34.w7(color: AppColors.c262626),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            );
+          })
+        ],
+      ),
+    );
+  }
+
+  Future<void> _upgradeDialog(BuildContext context) async {
+    controller.upgradeTap();
+    await showModalBottomSheet(
+        backgroundColor: Colors.transparent,
+        barrierColor: Colors.transparent,
+        context: context,
+        builder: (context) {
+          return Container(
+            height: MediaQuery
+                .of(context)
+                .size
+                .height,
+            width: double.infinity,
+            decoration: BoxDecoration(
+                color: AppColors.cD8D8D8,
+                borderRadius:
+                BorderRadius.vertical(top: Radius.circular(16.w))),
+            child: Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(
+                    top: 11.w,
+                    right: 14.w,
+                    left: 16.w,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        height: 24.w,
+                        width: 92.w,
+                        decoration: BoxDecoration(
+                            color: AppColors.c262626,
+                            borderRadius: BorderRadius.circular(12.w)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            const SizedBox.shrink(),
+                            Text("Grade",
+                                style: 13.w4(color: AppColors.cF2F2F2)),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                IconWidget(
+                                  iconWidth: 8.w,
+                                  icon: Assets.uiIconShrinkPng,
+                                  iconColor: AppColors.cF2F2F2,
+                                ),
+                                3.vGap,
+                                IconWidget(
+                                  iconWidth: 8.w,
+                                  icon: Assets.uiIconUnfoldPng,
+                                  iconColor: AppColors.cB3B3B3,
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        height: 24.w,
+                        width: 92.w,
+                        decoration: BoxDecoration(
+                            color: AppColors.cE6E6E6,
+                            borderRadius: BorderRadius.circular(12.w)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            const SizedBox.shrink(),
+                            Text("Level",
+                                style: 13.w4(color: AppColors.c262626)),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                IconWidget(
+                                  iconWidth: 8.w,
+                                  icon: Assets.uiIconShrinkPng,
+                                  iconColor: AppColors.cB3B3B3,
+                                ),
+                                3.vGap,
+                                IconWidget(
+                                  iconWidth: 8.w,
+                                  icon: Assets.uiIconUnfoldPng,
+                                  iconColor: AppColors.cB3B3B3,
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            "Selected: ",
+                            style: 13.w4(color: AppColors.cB3B3B3),
+                          ),
+                          7.hGap,
+                          Text(
+                            "2",
+                            style: 13.w4(color: AppColors.c10A86A),
+                          ),
+                          Text(
+                            "/5",
+                            style: 13.w4(color: AppColors.c262626),
+                          )
+                        ],
+                      ),
+                      InkWell(
+                          onTap: () => Get.back(id: GlobalNestedKey.PICKS),
+                          child: IconWidget(
+                            iconWidth: 18.w,
+                            icon: Assets.iconClosePng,
+                            iconColor: AppColors.c262626,
+                          ))
+                    ],
+                  ),
+                ),
+                19.vGap,
+                Expanded(
+                  child: Obx(() {
+                    return ListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        bool item = controller.dialogListDatas[index];
+                        return InkWell(
+                          onTap: () => controller.dialogListItemTap(index),
+                          child: Container(
+                            height: 84.w,
+                            margin: EdgeInsets.only(
+                                left: 16.w, right: 16.w, bottom: 9.w),
+                            decoration: BoxDecoration(
+                                color: AppColors.cF2F2F2,
+                                borderRadius: BorderRadius.circular(16.w),
+                                border: Border.all(
+                                    color: item
+                                        ? AppColors.c10A86A
+                                        : Colors.transparent,
+                                    width: 1)),
+                            child: Row(
+                              children: [
+                                13.hGap,
+                                Container(
+                                  width: 64.w,
+                                  height: 64.w,
+                                  decoration: BoxDecoration(
+                                      color: AppColors.cE1E1E1,
+                                      borderRadius:
+                                      BorderRadius.circular(32.w)),
+                                  child: Stack(
+                                    alignment: Alignment.bottomCenter,
+                                    children: [
+                                      IconWidget(
+                                          iconWidth: 64.w,
+                                          icon: Assets.testTeamLogoPng),
+                                      Positioned(
+                                          top: 0,
+                                          left: 0,
+                                          child: Text(
+                                            "SS",
+                                            style:
+                                            16.w7(color: AppColors.c262626),
+                                          ))
+                                    ],
+                                  ),
+                                ),
+                                9.hGap,
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "Player Name",
+                                        style: 16.w4(color: AppColors.c262626),
+                                      ),
+                                      8.vGap,
+                                      Row(
+                                        children: [
+                                          Container(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 3.w),
+                                            decoration: BoxDecoration(
+                                              color: AppColors.c666666,
+                                              borderRadius:
+                                              BorderRadius.circular(2.w),
+                                            ),
+                                            child: Text(
+                                              "SG",
+                                              style: 10
+                                                  .w4(color: AppColors.cF2F2F2),
+                                            ),
+                                          ),
+                                          3.hGap,
+                                          SizedBox(
+                                            width: 14.w,
+                                            height: 14.w,
+                                            child: Stack(
+                                              alignment: Alignment.center,
+                                              children: [
+                                                IconWidget(
+                                                  iconWidth: 14.w,
+                                                  icon: Assets.uiIconStar_01Png,
+                                                  iconColor: AppColors.cFF7954,
+                                                ),
+                                                Text(
+                                                  "5",
+                                                  style: 9.w4(
+                                                      color: AppColors.cFFFFFF),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          3.hGap,
+                                          IconWidget(
+                                              iconWidth: 12.w,
+                                              icon: Assets.uiStateBestPng)
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                20.hGap,
+                                Container(
+                                  width: 81.w,
+                                  height: 56.w,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: AppColors.ce5e5e5, width: 1),
+                                      borderRadius:
+                                      BorderRadius.circular(12.w)),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text("+25%",
+                                          style: 21.w7(
+                                              color: AppColors.cFF7954,
+                                              height: 1)),
+                                      2.vGap,
+                                      Text(
+                                        "SR",
+                                        style: 12.w4(color: AppColors.cFF7954),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                15.hGap,
+                                Container(
+                                  width: 32.w,
+                                  height: 32.w,
+                                  decoration: BoxDecoration(
+                                      color: item
+                                          ? AppColors.c10A86A
+                                          : AppColors.cB3B3B3,
+                                      borderRadius:
+                                      BorderRadius.circular(16.w)),
+                                  child: IconWidget(
+                                      iconWidth: 16.w,
+                                      icon: Assets.uiIconRuidgtPng),
+                                ),
+                                12.hGap
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                      itemCount: controller.dialogListDatas.length,
+                    );
+                  }),
+                ),
+              ],
+            ),
+          );
+        });
+    controller.dismiss();
   }
 
   @override
@@ -475,7 +962,8 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                           child: ClipRRect(
                               borderRadius: BorderRadius.only(
                                   bottomRight: Radius.circular(32.w)),
-                              child: Image.asset(Assets.testTeamLogoPng,height: 80.w)),
+                              child: Image.asset(Assets.testTeamLogoPng,
+                                  height: 80.w)),
                         ), //todo icon换图
                       )),
                   Container(
@@ -484,7 +972,8 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                       children: [
                         Container(
                             margin: EdgeInsets.only(right: 13.w),
-                            child: IconWidget(iconWidth: 64.w, icon: Assets.testTeamLogoPng)),
+                            child: IconWidget(
+                                iconWidth: 64.w, icon: Assets.testTeamLogoPng)),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -522,7 +1011,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
               )
             ],
           ),
-          bodyWidget: _buildView(),
+          bodyWidget: _buildView(context),
         );
       },
     );

@@ -13,3 +13,5 @@ static const uiIconMorePng = 'assets/images/icon/ui_icon_more.png';
 static const uiIconMsgPng = 'assets/images/icon/ui_icon_msg.png';
 static const uiIconReadPng = 'assets/images/icon/ui_icon_read.png';
 static const uiIconRing_01Png = 'assets/images/icon/ui_icon_ring_01.png';
+static const uiIconShrinkPng = 'assets/images/icon/ui_icon_shrink.png';
+static const uiIconUnfoldPng = 'assets/images/icon/ui_icon_unfold.png';
