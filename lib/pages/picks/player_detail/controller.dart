@@ -98,7 +98,7 @@ class PlayerDetailController extends GetxController {
               showTitles: true,
               reservedSize: 35.w,
               getTitlesWidget: (value, titleMate) {
-                print('v:---: $value');
+                // print('v:---: $value');
                 // if (value % 5 != 0) {
                 //   return const SizedBox.shrink();
                 // }

@@ -4,6 +4,7 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/app_bar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_bar.dart';
+import 'package:arm_chair_quaterback/common/widgets/btn_background.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guss_item.dart';
 import 'package:arm_chair_quaterback/pages/picks/recive_rward/widgets/recive_award_detail_item.dart';
 import 'package:flutter/material.dart';
@@ -437,36 +438,11 @@ class ReciveRwardPage extends GetView<ReciveRwardController> {
                 left: 63.w,
                 right: 63.w,
                 bottom: 20.w,
-                child: SizedBox(
-                  height: 43.w,
-                  child: Stack(
-                    alignment: Alignment.topCenter,
-                    children: [
-                      Positioned(
-                        left: 0,
-                        right: 0,
-                        bottom: 0.w,
-                        child: Container(
-                          height: 40.w,
-                          decoration: BoxDecoration(
-                              color: AppColors.cFF7954,
-                              borderRadius: BorderRadius.circular(20.w)),
-                        ),
-                      ),
-                      Container(
-                        height: 40.w,
-                        width: double.infinity,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: AppColors.c000000,
-                          borderRadius: BorderRadius.circular(20.w),
-                        ),
-                        child: Text("RECEIVE",
-                            style: 16.w7(color: AppColors.cFFFFFF)),
-                      )
-                    ],
-                  ),
-                ))
+                child: BtnBackground(
+                    child: Center(
+                  child:
+                      Text("RECEIVE", style: 16.w7(color: AppColors.cFFFFFF)),
+                )))
           ],
         );
       },

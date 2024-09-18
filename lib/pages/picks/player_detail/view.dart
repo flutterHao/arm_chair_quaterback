@@ -451,12 +451,10 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                         ),
                       ),
                     ),
-                    Expanded(
-                      child: Center(
-                        child: Text(
-                          "PLAYER",
-                          style: 19.w7(color: Colors.white),
-                        ),
+                    Center(
+                      child: Text(
+                        "PLAYER",
+                        style: 19.w7(color: Colors.white),
                       ),
                     ),
                   ],
