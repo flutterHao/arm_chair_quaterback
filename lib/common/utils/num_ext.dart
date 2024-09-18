@@ -35,8 +35,9 @@ extension NumExt on num {
       color: color,
       fontFamily: FontFamily.fMedium);
 
-  TextStyle w7({Color color = AppColors.c262626, TextOverflow? overflow}) =>
+  TextStyle w7({Color color = AppColors.c262626, TextOverflow? overflow,double? height}) =>
       TextStyle(
+        height: height,
           fontWeight: FontWeight.w700,
           fontSize: kIsWeb ? toDouble() : toDouble().sp,
           overflow: overflow,

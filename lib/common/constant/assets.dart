@@ -56,4 +56,9 @@ class Assets {
   static const uiTriangleGPng = 'assets/images/picks/ui_triangle_g.png';
   static const uiTriangleRPng = 'assets/images/picks/ui_triangle_r.png';
   static const uiWrongPng = 'assets/images/picks/ui_wrong.png';
+  static const uiIconPingjiPng = 'assets/images/player/ui_icon_pingji.png';
+  static const uiIconStar_01Png = 'assets/images/player/ui_icon_star_01.png';
+  static const uiIconStar_02Png = 'assets/images/player/ui_icon_star_02.png';
+  static const uiLight_01Png = 'assets/images/player/ui_light_01.png';
+  static const uiStateBestPng = 'assets/images/player/ui_state_best.png';
 }

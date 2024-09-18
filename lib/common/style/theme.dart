@@ -17,6 +17,9 @@ class AppTheme {
     colorScheme: ColorScheme.fromSwatch().copyWith(
       secondary: AppColors.cF1F1F1,
     ),
+    textTheme: TextTheme(
+
+    ),
     appBarTheme: const AppBarTheme(
       elevation: 0,
       centerTitle: true,

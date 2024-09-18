@@ -193,10 +193,10 @@ class _RankPageState extends State<RankPage>
                                                           BorderRadius.circular(
                                                               13.w)),
                                                   child: Text(
-                                                    "2",
+                                                    "1",
                                                     style: TextStyle(
                                                         color:
-                                                            AppColors.ccccccc,
+                                                            AppColors.cFFFFFF,
                                                         fontSize: 18.sp,
                                                         fontWeight:
                                                             FontWeight.bold),
@@ -265,10 +265,10 @@ class _RankPageState extends State<RankPage>
                                                           BorderRadius.circular(
                                                               13.w)),
                                                   child: Text(
-                                                    "2",
+                                                    "3",
                                                     style: TextStyle(
                                                         color:
-                                                            AppColors.ccccccc,
+                                                            AppColors.c666666,
                                                         fontSize: 18.sp,
                                                         fontWeight:
                                                             FontWeight.bold),

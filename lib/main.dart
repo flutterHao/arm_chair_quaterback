@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
               fallbackLocale: const Locale('en', 'US'),
               enableLog: true,
               // logWriterCallback: Log.write,
-              defaultTransition: Transition.rightToLeft,
+              defaultTransition: Transition.rightToLeftWithFade,
               //  defaultTransition: Transition.noTransition,
             ),
           );

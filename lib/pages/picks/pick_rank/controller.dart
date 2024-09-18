@@ -10,8 +10,6 @@ class PickRankController extends GetxController
 
   late TabController tabController;
   final state = PickRankState();
-  var scrollValue = 0.0.obs;
-  var tabIndex = 0.obs;
   List<String> tabTitles = [
     "Rank",
     "Reward"
@@ -30,9 +28,6 @@ class PickRankController extends GetxController
   void onInit() {
     super.onInit();
     tabController = TabController(length: tabTitles.length, vsync: this);
-    tabController.animation?.addListener(
-        () => scrollValue.value = tabController.animation?.value ?? 0);
-    tabController.addListener(() => tabIndex.value = tabController.index);
   }
 
   /// 在 onInit() 之后调用 1 帧。这是进入的理想场所

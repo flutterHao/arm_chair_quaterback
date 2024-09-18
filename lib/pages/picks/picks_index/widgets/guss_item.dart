@@ -25,18 +25,10 @@ class _GussItemState extends State<GussItem>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
 
-  var scrollValue = 0.0.obs;
-
-  var currentIndex = 0.obs;
-
   @override
   void initState() {
     super.initState();
     tabController = TabController(length: 3, vsync: this);
-    tabController.animation?.addListener(() {
-      scrollValue.value = tabController.animation?.value ?? 0;
-    });
-    tabController.addListener(() => currentIndex.value = tabController.index);
   }
 
   FlTitlesData get titlesData => const FlTitlesData(
@@ -178,7 +170,7 @@ class _GussItemState extends State<GussItem>
                                       children: [
                                         InkWell(
                                           onTap: () {
-                                            Get.back();
+                                            Get.back(id: GlobalNestedKey.PICKS);
                                           },
                                           child: Container(
                                               height: 42.w,
@@ -638,77 +630,80 @@ class _GussItemState extends State<GussItem>
           //滚动指示器
           Container(
             margin: EdgeInsets.only(top: 12.w, right: 4.w, left: 4.w),
-            child: Column(
-              children: [
-                LayoutBuilder(builder: (context, constraints) {
-                  return Stack(
-                    alignment: Alignment.centerLeft,
-                    children: [
-                      Container(
-                        height: 1.w,
-                        width: double.infinity,
-                        decoration:
-                            const BoxDecoration(color: AppColors.cD8D8D8),
-                      ),
-                      Obx(() => Container(
+            child: TLBuildWidget(
+              controller: tabController,
+              builder: (current,next,progress,totalProgress) {
+                return Column(
+                  children: [
+                    LayoutBuilder(builder: (context, constraints) {
+                      return Stack(
+                        alignment: Alignment.centerLeft,
+                        children: [
+                          Container(
+                            height: 1.w,
+                            width: double.infinity,
+                            decoration:
+                                const BoxDecoration(color: AppColors.cD8D8D8),
+                          ),
+                          Container(
                             width: 8.w,
                             height: 2.w,
                             margin: EdgeInsets.only(
                                 left: (constraints.maxWidth /
-                                                tabController.length -
-                                            8.w) /
-                                        2 +
+                                    tabController.length -
+                                    8.w) /
+                                    2 +
                                     (constraints.maxWidth /
-                                            tabController.length) *
-                                        scrollValue.value),
+                                        tabController.length) *
+                                        totalProgress),
                             decoration: BoxDecoration(
                                 color: AppColors.cFF7954,
                                 borderRadius: BorderRadius.circular(1.w)),
-                          ))
-                    ],
-                  );
-                }),
-                // SizedBox(
-                //   height: 8.w,
-                // ),
-                Container(
-                  height: 24.w,
-                  width: double.infinity,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: List.generate(
-                        tabController.length,
-                        (index) => TLBuildWidget(
-                            controller: tabController,
-                            builder: (currentIndex, next, progress,_) {
+                          )
+                        ],
+                      );
+                    }),
+                    // SizedBox(
+                    //   height: 8.w,
+                    // ),
+                    SizedBox(
+                      height: 24.w,
+                      width: double.infinity,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: List.generate(
+                            tabController.length,
+                            (index){
                               var activeColor = AppColors.c1A1A1A;
                               var normalColor = AppColors.cB3B3B3;
                               return InkWell(
                                 onTap: () => tabController.animateTo(index),
                                 child: Container(
                                   padding:
-                                      EdgeInsets.symmetric(horizontal: 10.w),
+                                  EdgeInsets.symmetric(horizontal: 10.w),
                                   alignment: Alignment.centerRight,
                                   child: Text("PTS",
                                       style: TextStyle(
-                                          //逻辑：不做动画时animationValue等于index，currentIndex设置激活状态；做动画时，
-                                          //     比较animationValue和currentIndex的大小来判断滚动方向，
-                                          //     animationValue大于currentIndex时滚动到下一个，小于时滚动到上一个；
-                                          //     获取到即将到来的index做进入动画，currentIndex做推出动画，其他项保持未激活状态
-                                          color: currentIndex == index
+                                        //逻辑：不做动画时animationValue等于index，currentIndex设置激活状态；做动画时，
+                                        //     比较animationValue和currentIndex的大小来判断滚动方向，
+                                        //     animationValue大于currentIndex时滚动到下一个，小于时滚动到上一个；
+                                        //     获取到即将到来的index做进入动画，currentIndex做推出动画，其他项保持未激活状态
+                                          color: current == index
                                               ? Color.lerp(activeColor,
-                                                  normalColor, progress)
+                                              normalColor, progress)
                                               : next == index
-                                                  ? Color.lerp(normalColor,
-                                                      activeColor, progress)
-                                                  : normalColor,
+                                              ? Color.lerp(normalColor,
+                                              activeColor, progress)
+                                              : normalColor,
                                           fontSize: 11.sp)),
                                 ),
                               );
-                            })),
-                  ),
-                ),
-              ],
+                            }),
+                      ),
+                    ),
+                  ],
+                );
+              }
             ),
           ),
         ],

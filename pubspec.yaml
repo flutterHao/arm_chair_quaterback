@@ -85,6 +85,7 @@ flutter:
   - assets/images/picks/
   - assets/test/
   - assets/images/icon/
+  - assets/images/player/
 
 
   # To add assets to your application, add an assets section, like this:
