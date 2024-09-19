@@ -155,21 +155,21 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                     width: 203.w,
                     child: BtnBackground(
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const SizedBox.shrink(),
-                            Text(
-                              "UPGRADE",
-                              style: 18.w7(color: AppColors.cF2F2F2),
-                            ),
-                            Container(
-                                margin: EdgeInsets.only(right: 11.w),
-                                child: IconWidget(
-                                    iconHeight: 14.w,
-                                    iconWidth: 14.w,
-                                    icon: Assets.uiIconArrowsPng))
-                          ],
-                        )),
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const SizedBox.shrink(),
+                        Text(
+                          "UPGRADE",
+                          style: 18.w7(color: AppColors.cF2F2F2),
+                        ),
+                        Container(
+                            margin: EdgeInsets.only(right: 11.w),
+                            child: IconWidget(
+                                iconHeight: 14.w,
+                                iconWidth: 14.w,
+                                icon: Assets.uiIconArrowsPng))
+                      ],
+                    )),
                   ),
                 ),
               ),
@@ -272,16 +272,15 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                       width: 77.w,
                       alignment: Alignment.center,
                       child:
-                      Text("TEAM", style: 10.w4(color: AppColors.cB3B3B3))),
+                          Text("TEAM", style: 10.w4(color: AppColors.cB3B3B3))),
                   ...List.generate(
                       3,
-                          (index) =>
-                          Container(
-                              height: 30.w,
-                              width: 77.w,
-                              alignment: Alignment.center,
-                              child: Text("REG",
-                                  style: 12.w4(color: AppColors.c818181))))
+                      (index) => Container(
+                          height: 30.w,
+                          width: 77.w,
+                          alignment: Alignment.center,
+                          child: Text("REG",
+                              style: 12.w4(color: AppColors.c818181))))
                 ],
               ),
             ),
@@ -292,14 +291,17 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                     return Container(
                       height: 135.w,
                       width: 2.w,
-                      decoration: BoxDecoration(boxShadow: controller.statsIsScrolling.value?[
-                        BoxShadow(
-                            color: AppColors.c262626.withOpacity(.1),
-                            offset: const Offset(0, 2),
-                            blurRadius: 1,
-                            // spreadRadius: 1.0,
-                        )
-                      ]:[]),
+                      decoration: BoxDecoration(
+                          boxShadow: controller.statsIsScrolling.value
+                              ? [
+                                  BoxShadow(
+                                    color: AppColors.c262626.withOpacity(.1),
+                                    offset: const Offset(0, 2),
+                                    blurRadius: 1,
+                                    // spreadRadius: 1.0,
+                                  )
+                                ]
+                              : []),
                     );
                   }),
                   SingleChildScrollView(
@@ -316,40 +318,34 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                 8, (index) => FixedColumnWidth(40.w)).asMap(),
                             children: List.generate(
                                 1,
-                                    (index) =>
-                                    TableRow(
-                                        children: List.generate(
-                                            8,
-                                                (index) =>
-                                                Container(
-                                                    height: 30.w,
-                                                    alignment: Alignment.center,
-                                                    child: Text(
-                                                      "GP",
-                                                      style: 10
-                                                          .w4(color: AppColors
-                                                          .cB3B3B3),
-                                                    ))))),
+                                (index) => TableRow(
+                                    children: List.generate(
+                                        8,
+                                        (index) => Container(
+                                            height: 30.w,
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              "GP",
+                                              style: 10
+                                                  .w4(color: AppColors.cB3B3B3),
+                                            ))))),
                           ),
                           Table(
                             columnWidths: List.generate(
                                 8, (index) => FixedColumnWidth(40.w)).asMap(),
                             children: List.generate(
                                 3,
-                                    (index) =>
-                                    TableRow(
-                                        children: List.generate(
-                                            8,
-                                                (index) =>
-                                                Container(
-                                                    height: 30.w,
-                                                    alignment: Alignment.center,
-                                                    child: Text(
-                                                      "$index",
-                                                      style: 12
-                                                          .w4(color: AppColors
-                                                          .c545454),
-                                                    ))))),
+                                (index) => TableRow(
+                                    children: List.generate(
+                                        8,
+                                        (index) => Container(
+                                            height: 30.w,
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              "$index",
+                                              style: 12
+                                                  .w4(color: AppColors.c545454),
+                                            ))))),
                           ),
                         ],
                       ),
@@ -470,10 +466,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
             );
           }),
           Positioned(
-            left: (MediaQuery
-                .of(context)
-                .size
-                .width - 308.w) / 2,
+            left: (MediaQuery.of(context).size.width - 308.w) / 2,
             child: Container(
               width: 308.w,
               height: 87.w,
@@ -504,18 +497,16 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                 borderColor: AppColors.cB3B3B3,
                                 borderWidth: 3.w,
                                 progressSweepAngle:
-                                controller.rateProgress.value,
+                                    controller.rateProgress.value,
                                 borderSweepAngle:
-                                controller.progressBorder.value,
+                                    controller.progressBorder.value,
                               )),
                           Positioned(
                               bottom: 0.w,
                               child: Text(
-                                "${((controller.rateProgress.value / 180 *
-                                    100) > 100 ? 100 : (controller.rateProgress
-                                    .value / 180 * 100)).toStringAsFixed(0)}%",
+                                "${((controller.rateProgress.value / 180 * 100) > 100 ? 100 : (controller.rateProgress.value / 180 * 100)).toStringAsFixed(0)}%",
                                 style:
-                                24.w7(color: AppColors.cFF7954, height: 1),
+                                    24.w7(color: AppColors.cFF7954, height: 1),
                               ))
                         ],
                       ),
@@ -540,7 +531,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                       AppColors.c666666
                     ]),
                     borderRadius:
-                    BorderRadius.horizontal(right: Radius.circular(32.w))),
+                        BorderRadius.horizontal(right: Radius.circular(32.w))),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -643,15 +634,12 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
         context: context,
         builder: (context) {
           return Container(
-            height: MediaQuery
-                .of(context)
-                .size
-                .height,
+            height: MediaQuery.of(context).size.height,
             width: double.infinity,
             decoration: BoxDecoration(
                 color: AppColors.cD8D8D8,
                 borderRadius:
-                BorderRadius.vertical(top: Radius.circular(16.w))),
+                    BorderRadius.vertical(top: Radius.circular(16.w))),
             child: Column(
               children: [
                 Container(
@@ -782,7 +770,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                   decoration: BoxDecoration(
                                       color: AppColors.cE1E1E1,
                                       borderRadius:
-                                      BorderRadius.circular(32.w)),
+                                          BorderRadius.circular(32.w)),
                                   child: Stack(
                                     alignment: Alignment.bottomCenter,
                                     children: [
@@ -795,7 +783,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                           child: Text(
                                             "SS",
                                             style:
-                                            16.w7(color: AppColors.c262626),
+                                                16.w7(color: AppColors.c262626),
                                           ))
                                     ],
                                   ),
@@ -804,7 +792,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
@@ -820,7 +808,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                             decoration: BoxDecoration(
                                               color: AppColors.c666666,
                                               borderRadius:
-                                              BorderRadius.circular(2.w),
+                                                  BorderRadius.circular(2.w),
                                             ),
                                             child: Text(
                                               "SG",
@@ -865,7 +853,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                       border: Border.all(
                                           color: AppColors.ce5e5e5, width: 1),
                                       borderRadius:
-                                      BorderRadius.circular(12.w)),
+                                          BorderRadius.circular(12.w)),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -890,7 +878,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                           ? AppColors.c10A86A
                                           : AppColors.cB3B3B3,
                                       borderRadius:
-                                      BorderRadius.circular(16.w)),
+                                          BorderRadius.circular(16.w)),
                                   child: IconWidget(
                                       iconWidth: 16.w,
                                       icon: Assets.uiIconRuidgtPng),

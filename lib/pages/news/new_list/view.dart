@@ -1,5 +1,6 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
+import 'package:arm_chair_quaterback/common/net/address.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_bar.dart';
@@ -44,10 +45,11 @@ class _NewsPageState extends State<NewsPage>
               page: () => const NewsListPage(),
             );
           case RouteNames.newsDetail:
+            final newsId = settings.arguments;
             return GetPageRoute(
               settings: settings,
-              page: () => const NewsDetailPage(),
-              binding: NewDetailBinding(),
+              page: () => NewsDetailPage(newsId),
+              // binding: NewDetailBinding(), /*  */
             );
           case RouteNames.statsRank:
             return GetPageRoute(
@@ -86,7 +88,9 @@ class NewsListPage extends GetView<NewListController> {
                     return SwiperWidget(
                       width: 343.w,
                       height: 150.w,
-                      bannerList: controller.images,
+                      bannerList: controller.state.banners
+                          .map((e) => Address.devUrl + e.pictureId!)
+                          .toList(),
                       footer: IconWidget(
                         iconWidth: 14.w,
                         iconHeight: 14.w,
@@ -98,6 +102,10 @@ class NewsListPage extends GetView<NewListController> {
                       ),
                       onTap: (index) {
                         Get.toNamed(RouteNames.newsDetail,
+                            arguments: controller.state.banners[index].id!,
+                            // parameters: {
+                            //   "id": controller.state.banners[index].id!
+                            // },
                             id: GlobalNestedKey.NEWS);
                       },
                     );

@@ -2,13 +2,12 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2024-09-14 20:11:30
+ * @LastEditTime: 2024-09-19 09:55:54
  */
+import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
+import 'package:arm_chair_quaterback/common/entities/team_rank/nba_team_rank.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
-import 'package:arm_chair_quaterback/common/net/apis/user.dart';
-import 'package:arm_chair_quaterback/common/services/services.dart';
-import 'package:arm_chair_quaterback/common/store/user.dart';
-import 'package:arm_chair_quaterback/common/values/values.dart';
+
 import 'package:get/get.dart';
 
 import 'index.dart';
@@ -18,18 +17,13 @@ class NewListController extends GetxController {
 
   final state = NewListState();
 
-  final List<String> images = [
-    'https://via.placeholder.com/343x150.png?text=Banner+1',
-    'https://via.placeholder.com/343x150.png?text=Banner+2',
-    'https://via.placeholder.com/343x150.png?text=Banner+3',
-  ];
-
   /// 在 onInit() 之后调用 1 帧。这是进入的理想场所
   @override
   void onReady() {
     super.onReady();
-    getNewsList();
-    getNewsDetail(123);
+    // getNewsBanner();
+    // getNewsList();
+    getTeamRank();
   }
 
   void getNewsBanner() {
@@ -46,15 +40,11 @@ class NewListController extends GetxController {
     });
   }
 
-  void getNewsDetail(int id) {
-    NewsApi.getNewsDetail(id).then((value) {
-      state.newsDetail = value;
-      update(['newsDetail']);
-    });
-  }
-
-  void likeNews(int id) {
-    NewsApi.newsLike(id).then((value) {
+  void likeNews(NewsDetail item) {
+    if (item.isLike == 1) return;
+    NewsApi.newsLike(item.id!).then((value) {
+      item.isLike = 1;
+      item.likes = (item.likes ?? 0) + 1;
       update(['newsList']);
     });
   }
@@ -63,5 +53,25 @@ class NewListController extends GetxController {
     NewsApi.newsUnLike(id).then((value) {
       update(['newsList']);
     });
+  }
+
+  ///获取球队信息
+  void getTeamRank() {
+    state.teamRankMap.clear();
+    NewsApi.teamRank().then((value) {
+      state.teamRankList = value.nbaTeamRanks ?? [];
+      update(['teamRank']);
+    });
+  }
+
+  //计算排名
+  List<NbaTeamRank> getRankList(String type) {
+    switch (type) {
+      case 'pts':
+        state.teamRankList.sort((a, b) => b.pts!.compareTo(a.pts!));
+        return [];
+      default:
+        return [];
+    }
   }
 }

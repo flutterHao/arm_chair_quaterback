@@ -46,7 +46,7 @@ class NewsListView extends GetView<NewListController> {
   }
 }
 
-class NewsItemView extends StatelessWidget {
+class NewsItemView extends GetView<NewListController> {
   const NewsItemView({super.key, required this.item});
   final NewsDetail item;
 
@@ -75,7 +75,7 @@ class NewsItemView extends StatelessWidget {
                       SizedBox(
                           width: 271.w,
                           child: Text(
-                            item.title,
+                            item.title ?? "",
                             overflow: TextOverflow.ellipsis,
                             style: 14.w4(),
                           )),
@@ -84,19 +84,20 @@ class NewsItemView extends StatelessWidget {
                   6.vGap,
                   Container(
                     width: 319.w,
-                    height: 0.5,
+                    height: 0.5.w,
                     color: AppColors.cB3B3B3,
                   ),
                   5.vGap,
                   Text(
-                    "${DateUtil.formatDateMs(item.postTime)} -${item.source}",
+                    "${DateUtil.formatDateMs(item.postTime ?? 0, format: DateFormats.y_mo_d_h_m)} -${item.source}",
                     style: 10.w4(color: AppColors.cB3B3B3),
                   ),
                   9.vGap,
                   SizedBox(
                     width: 270.w,
                     child: Text(
-                      item.dataLabel,
+                      item.content ?? "",
+                      overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                       style: 12.w4(color: AppColors.c666666),
                     ),
@@ -111,20 +112,27 @@ class NewsItemView extends StatelessWidget {
                             icon: item.isView == 0
                                 ? Assets.uiIconChatting_01Png
                                 : Assets.uiIconChatting_02Png,
-                            color: AppColors.cB3B3B3,
-                            text: "${item.views}",
-                          )),
-                      SizedBox(
-                          width: 60.w,
-                          child: TextIconWidget(
-                            icon: item.isLike == 1
-                                ? Assets.uiIconLike_01Png
-                                : Assets.uiIconLike_02Png,
-                            color: item.isLike == 1
-                                ? AppColors.cFF546C
+                            color: item.isView == 0
+                                ? AppColors.c666666
                                 : AppColors.cB3B3B3,
-                            text: "${item.likes}",
+                            text: "${item.views ?? 0}",
                           )),
+                      InkWell(
+                        onTap: () {
+                          controller.likeNews(item);
+                        },
+                        child: SizedBox(
+                            width: 60.w,
+                            child: TextIconWidget(
+                              icon: item.isLike == 1
+                                  ? Assets.uiIconLike_01Png
+                                  : Assets.uiIconLike_02Png,
+                              color: item.isLike == 1
+                                  ? AppColors.cFF546C
+                                  : AppColors.cB3B3B3,
+                              text: "${item.likes}",
+                            )),
+                      ),
                     ],
                   )
                 ],

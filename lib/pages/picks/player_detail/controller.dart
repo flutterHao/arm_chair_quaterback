@@ -22,7 +22,6 @@ class PlayerDetailController extends GetxController
   final statsScrollController = ScrollController();
   final statsIsScrolling = false.obs;
 
-
   /// 0-180
 
   // tap
@@ -50,11 +49,11 @@ class PlayerDetailController extends GetxController
   void onInit() {
     super.onInit();
     _initAnimations();
-    statsScrollController.addListener((){
-      if(!statsIsScrolling.value && statsScrollController.offset>5){
+    statsScrollController.addListener(() {
+      if (!statsIsScrolling.value && statsScrollController.offset > 5) {
         statsIsScrolling.value = true;
       }
-      if(statsIsScrolling.value && statsScrollController.offset <= 5){
+      if (statsIsScrolling.value && statsScrollController.offset <= 5) {
         statsIsScrolling.value = false;
       }
     });

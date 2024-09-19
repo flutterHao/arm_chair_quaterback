@@ -198,10 +198,13 @@ class _RewardPageState extends State<RewardPage> {
             left: 63.w,
             right: 63.w,
             bottom: 20.w,
-            child: BtnBackground(child: Center(child: Text(
-              "GET",
-              style: 16.w7(color: AppColors.cFFFFFF),
-            ),)))
+            child: BtnBackground(
+                child: Center(
+              child: Text(
+                "GET",
+                style: 16.w7(color: AppColors.cFFFFFF),
+              ),
+            )))
       ],
     );
   }

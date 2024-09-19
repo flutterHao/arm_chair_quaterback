@@ -8,6 +8,7 @@ import 'package:arm_chair_quaterback/common/widgets/comments/comment_dialog.dart
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/comments/comments_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/more_new_widget.dart';
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -15,8 +16,9 @@ import 'package:get/get.dart';
 import 'index.dart';
 import 'widgets/widgets.dart';
 
-class NewsDetailPage extends GetView<NewDetailController> {
-  const NewsDetailPage({super.key});
+class NewsDetailPage extends GetView<NewsDetailController> {
+  const NewsDetailPage(this.newsId, {super.key});
+  final Object? newsId;
 
   // 主视图
   Widget _buildView(context) {
@@ -56,23 +58,6 @@ class NewsDetailPage extends GetView<NewDetailController> {
     );
   }
 
-// 1. AppBar部分抽取为单独的组件
-  // Widget _buildAppBar() {
-  //   return SliverToBoxAdapter(
-  //     child: AppBarWidget(
-  //       title: "NEWS",
-  //       right: InkWell(
-  //         onTap: () {},
-  //         child: IconWidget(
-  //           iconWidth: 19.w,
-  //           iconHeight: 19.w,
-  //           icon: Assets.iconSharePng,
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
-
 // 2. 新闻内容部分抽取为单独的组件
   Widget _buildNewsContent() {
     return SliverToBoxAdapter(
@@ -95,7 +80,7 @@ class NewsDetailPage extends GetView<NewDetailController> {
 
   Widget _buildNewsTitle() {
     return Text(
-      "Way-Too-Early MLB Free-Agency Predictions Post · 2024 Trade Dea",
+      controller.state.newDetail.title!,
       style: 24.w7(color: AppColors.c262626),
     );
   }
@@ -105,9 +90,13 @@ class NewsDetailPage extends GetView<NewDetailController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         16.vGap,
-        Text("zachary d. rymer", style: 12.w4(color: AppColors.c666666)),
+        Text(controller.state.newDetail.source!,
+            style: 12.w4(color: AppColors.c666666)),
         6.vGap,
-        Text("august 1, 2024", style: 12.w4(color: AppColors.cB3B3B3)),
+        Text(
+            DateUtil.formatDateMs(controller.state.newDetail.postTime!,
+                format: DateFormats.y_mo_d),
+            style: 12.w4(color: AppColors.cB3B3B3)),
       ],
     );
   }
@@ -116,9 +105,7 @@ class NewsDetailPage extends GetView<NewDetailController> {
     return Padding(
       padding: const EdgeInsets.only(top: 16),
       child: Text(
-        "ClutchPoints: “John Wall [was] in tears, crying. He lost 25 gam "
-        "ClutchPoints: “John Wall [was] in tears, crying. He lost 25 gam "
-        "ClutchPoints: “John Wall [was] in tears, crying. He lost 25 gam",
+        controller.state.newDetail.content!,
         style: 14.w4(color: AppColors.c666666),
       ),
     );
@@ -150,7 +137,8 @@ class NewsDetailPage extends GetView<NewDetailController> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<NewDetailController>(
+    controller.getNewsDetail(newsId);
+    return GetBuilder<NewsDetailController>(
       builder: (_) {
         // return Scaffold(body: _buildView());
         return _buildView(context);

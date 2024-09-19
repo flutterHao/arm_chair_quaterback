@@ -187,23 +187,20 @@ import 'package:get/get.dart' as getx;
 
 class NetInterceptor extends InterceptorsWrapper {
   static const other = 'unknown error';
-  // 用于处理 token 刷新期间的等待队列
   Completer<void>? _refreshCompleter;
-
-  // 用于处理 token 刷新期间的等待队列
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    // super.onRequest(options, handler);
+    // 在每个请求中添加 token
     Map<String, dynamic>? authorization = getAuthorizationHeader();
     if (authorization != null) {
       options.headers.addAll(authorization);
     }
-    return handler.next(options); //continue
+    return handler.next(options);
   }
 
   @override
-  void onResponse(Response response, ResponseInterceptorHandler handler) {
+  void onResponse(Response response, ResponseInterceptorHandler handler) async {
     dynamic responseData =
         response.data is String ? json.decode(response.data) : response.data;
 
@@ -216,23 +213,30 @@ class NetInterceptor extends InterceptorsWrapper {
           data: result.data, // 将解析后的 data 部分返回
         ));
       } else if (result.code != null) {
+        // 业务逻辑错误，处理错误并返回 DioException
+        // if (result.code == 401) {
+        //   // 捕获业务逻辑返回的 401 错误
+        //   await _handle401Error(response.requestOptions, handler);
+        // }
         handlerError(ErrorEntity(code: result.code!, message: result.message!));
         return handler.reject(DioException(
           requestOptions: response.requestOptions,
           response: response,
-          type: DioExceptionType.badResponse,
-          error: result.message,
+          type: DioExceptionType.badResponse, // 标记为服务器返回错误
+          error: result.message, // 返回错误信息
         ));
       } else {
+        //Map json文件格式
         return handler.next(Response(
           requestOptions: response.requestOptions,
-          data: responseData,
+          data: responseData, // 将解析后的 data 部分返回
         ));
       }
     } else {
+      //list json 文件格式
       return handler.next(Response(
         requestOptions: response.requestOptions,
-        data: responseData,
+        data: responseData, // 将解析后的 data 部分返回
       ));
     }
   }
@@ -240,48 +244,52 @@ class NetInterceptor extends InterceptorsWrapper {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
     Loading.dismiss();
+
     ErrorEntity eInfo = createErrorEntity(err);
+    handlerError(eInfo);
+    return handler.next(err);
+  }
 
-    // 处理 401 错误
-    if (eInfo.code == 401) {
-      Log.e("开始刷新token");
-      if (_refreshCompleter != null) {
-        // 如果 token 正在刷新，等待完成
-        await _refreshCompleter!.future;
-      } else {
-        // 如果 token 没有在刷新，开始刷新流程
-        _refreshCompleter = Completer<void>();
+  Future<void> _handle401Error(
+      RequestOptions requestOptions, ResponseInterceptorHandler handler) async {
+    Log.e("捕获到 401 错误，开始处理 token 刷新");
 
-        try {
-          await _refreshToken(); // 调用刷新 token 方法
-          _refreshCompleter!.complete(); // 刷新成功
-        } catch (e) {
-          _refreshCompleter!.completeError(e); // 刷新失败
-          handlerError(ErrorEntity(code: 401, message: 'Token刷新失败'));
-          return handler.reject(err);
-        } finally {
-          _refreshCompleter = null;
-        }
-      }
-
-      // 重新发起失败的请求
+    if (_refreshCompleter != null) {
+      // 如果正在刷新 token，等待刷新完成
+      await _refreshCompleter!.future;
+    } else {
+      // 开始刷新 token
+      _refreshCompleter = Completer<void>();
       try {
-        final newOptions = err.requestOptions;
-        newOptions.headers['Authorization'] = UserStore.to.token;
-        final response = await Dio().fetch(newOptions);
-        return handler.resolve(response);
+        await _refreshToken(); // 刷新 token 方法
+        _refreshCompleter!.complete(); // 刷新成功
       } catch (e) {
-        return handler.reject(e as DioException);
+        _refreshCompleter!.completeError(e); // 刷新失败
+        handlerError(ErrorEntity(code: 401, message: 'Token 刷新失败'));
+        return handler.reject(DioException(
+          requestOptions: requestOptions,
+          type: DioExceptionType.badResponse,
+          error: 'Token 刷新失败',
+        ));
+      } finally {
+        _refreshCompleter = null;
       }
     }
 
-    handlerError(eInfo);
-    return handler.next(err); //continue
+    // 刷新 token 成功后，重新发送请求
+    try {
+      final newOptions = requestOptions;
+      newOptions.headers['Authorization'] = UserStore.to.token; // 更新 token
+      final response = await Dio().fetch(newOptions);
+      handler.resolve(response); // 返回新请求的结果
+    } catch (e) {
+      handler.reject(e as DioException);
+    }
   }
 
   /// 刷新 token 的逻辑
   Future<void> _refreshToken() async {
-    HomeController.to.login(); // 假设刷新 token 逻辑在 login 方法中
+    await HomeController.to.login(); // 假设刷新 token 逻辑在 login 方法中
   }
 
   /// 读取本地配置 Authorization
@@ -295,8 +303,8 @@ class NetInterceptor extends InterceptorsWrapper {
 
   /// 错误处理
   void handlerError(ErrorEntity eInfo) {
+    Log.e('error.code -> ${eInfo.code}, error.message -> ${eInfo.message}');
     if (eInfo.code != 401) {
-      Log.e('error.code -> ${eInfo.code}, error.message -> ${eInfo.message}');
       EasyLoading.showError(eInfo.message);
     }
   }

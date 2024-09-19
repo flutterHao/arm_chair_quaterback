@@ -18,23 +18,9 @@ class StatsRankWidget extends StatelessWidget {
     return Container(
       alignment: Alignment.centerLeft,
       height: 191.w,
-      // child: PageView.builder(
-      //     controller: PageController(viewportFraction: 0.9),
-      //     physics: const BouncingScrollPhysics(),
-      //     reverse: true,
-      //     itemCount: 3,
-      //     itemBuilder: (context, index) {
-      //       return InkWell(
-      //           onTap: () {
-      //             Get.toNamed(
-      //               RouteNames.statsRank,
-      //               id: GlobalNestedKey.NEWS,
-      //             );
-      //           },
-      //           child: StatsRankItem(index: index));
-      //     })
       child: PageView.builder(
         controller: PageController(
+          initialPage: 0,
           viewportFraction: 0.9,
         ),
         physics: const BouncingScrollPhysics(),

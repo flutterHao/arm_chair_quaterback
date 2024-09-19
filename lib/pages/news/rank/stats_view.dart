@@ -62,15 +62,11 @@ class StatsRankPage extends GetView<RankController> {
                                   e,
                                   style: 13.w4(
                                       color: current == index
-                                          ? Color.lerp(
-                                              AppColors.cF2F2F2,
-                                              AppColors.c262626,
-                                              progress)!
+                                          ? Color.lerp(AppColors.cF2F2F2,
+                                              AppColors.c262626, progress)!
                                           : next == index
-                                              ? Color.lerp(
-                                                  AppColors.c262626,
-                                                  AppColors.cF2F2F2,
-                                                  progress)!
+                                              ? Color.lerp(AppColors.c262626,
+                                                  AppColors.cF2F2F2, progress)!
                                               : AppColors.c262626),
                                 ),
                               ),

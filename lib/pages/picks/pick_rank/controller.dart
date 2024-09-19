@@ -10,10 +10,7 @@ class PickRankController extends GetxController
 
   late TabController tabController;
   final state = PickRankState();
-  List<String> tabTitles = [
-    "Rank",
-    "Reward"
-  ];
+  List<String> tabTitles = ["Rank", "Reward"];
 
   // tap
   void handleTap(int index) {

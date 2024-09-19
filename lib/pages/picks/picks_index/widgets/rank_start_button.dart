@@ -56,8 +56,7 @@ class RankStartButton extends StatelessWidget {
                   ),
                   Text(
                     "999k",
-                    style:
-                    TextStyle(color: Colors.white, fontSize: 11.sp),
+                    style: TextStyle(color: Colors.white, fontSize: 11.sp),
                   )
                 ],
               )
@@ -65,12 +64,12 @@ class RankStartButton extends StatelessWidget {
           ),
           Center(
               child: Container(
-                margin: EdgeInsets.only(right: 11.w),
-                child: Text(
-                  "99.5x",
-                  style: 14.w7(color: AppColors.cFF7954),
-                ),
-              ))
+            margin: EdgeInsets.only(right: 11.w),
+            child: Text(
+              "99.5x",
+              style: 14.w7(color: AppColors.cFF7954),
+            ),
+          ))
         ],
       ),
     );

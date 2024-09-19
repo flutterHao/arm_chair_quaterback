@@ -20,7 +20,9 @@ class BtnBackground extends StatelessWidget {
       children: [
         Stack(
           children: [
-            SizedBox(height: 43.w,),
+            SizedBox(
+              height: 43.w,
+            ),
             Positioned(
               left: 0,
               right: 0,
@@ -42,9 +44,7 @@ class BtnBackground extends StatelessWidget {
             ),
           ],
         ),
-        Container(
-          margin: EdgeInsets.only(bottom: 3.w),
-            child: child),
+        Container(margin: EdgeInsets.only(bottom: 3.w), child: child),
       ],
     );
   }
