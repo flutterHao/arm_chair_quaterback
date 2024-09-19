@@ -22,129 +22,135 @@ class ReciveAwardDetailItem extends StatelessWidget {
           color: AppColors.cF2F2F2, borderRadius: BorderRadius.circular(20.w)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          InkWell(
-            onTap: () {
-              print('点击了头像');
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                  color: AppColors.ce5e5e5,
-                  borderRadius: BorderRadius.circular(26.w)),
-              child: Stack(children: [
-                Image.asset(
-                  Assets.testTeamLogoPng,
-                  width: 55.w,
-                ),
-                Text("SS", style: 14.w7(color: AppColors.c262626))
-              ]),
-            ),
-          ),
-          Container(
-            constraints: BoxConstraints(maxWidth: 89.w),
-            margin: EdgeInsets.only(left: 10.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "PLAYER NAME",
-                  style: TextStyle(
-                      fontSize: 12.sp,
-                      overflow: TextOverflow.ellipsis,
-                      color: AppColors.c666666),
-                ),
-                Text(
-                  "vs nop 8:05am",
-                  style: TextStyle(color: AppColors.cB3B3B3, fontSize: 8.sp),
-                ),
-                SizedBox(
-                  height: 3.w,
-                ),
-                Text(
-                  "PPG: 26P",
-                  style: TextStyle(color: AppColors.cB3B3B3, fontSize: 8.sp),
-                ),
-                Text(
-                  "L10: 26.7P",
-                  style: TextStyle(color: AppColors.cB3B3B3, fontSize: 8.sp),
-                )
-              ],
-            ),
-          ),
-          Container(
-            width: 62.w,
-            // height: 55.w,
-            margin: EdgeInsets.only(left: 9.w),
-            padding: EdgeInsets.symmetric(vertical: 8.w),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(9.w),
-                border: Border.all(color: AppColors.ce5e5e5, width: 1)),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text("25.6", style: 18.w7(color: AppColors.c666666)),
-                Text(
-                  "PTS",
-                  style: TextStyle(fontSize: 11.sp, color: AppColors.c666666),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+          Row(
+            children: [
+              InkWell(
+                onTap: () {
+                  print('点击了头像');
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: AppColors.ce5e5e5,
+                      borderRadius: BorderRadius.circular(26.w)),
+                  child: Stack(children: [
                     Image.asset(
-                      Assets.uiTriangleGPng,
-                      width: 7.w,
-                      fit: BoxFit.fitWidth,
+                      Assets.testTeamLogoPng,
+                      width: 55.w,
                     ),
-                    SizedBox(
-                      width: 3.w,
-                    ),
+                    Text("SS", style: 14.w7(color: AppColors.c262626))
+                  ]),
+                ),
+              ),
+              Container(
+                constraints: BoxConstraints(maxWidth: 89.w),
+                margin: EdgeInsets.only(left: 10.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
                     Text(
-                      "0.5",
-                      style:
+                      "PLAYER NAME",
+                      style:  13.w4(color: AppColors.c666666,height: 1,overflow: TextOverflow.ellipsis),
+                    ),
+                    4.vGap,
+                    Text(
+                      "VS NOP 8:05AM",
+                      style: 9.w4(color: AppColors.cB3B3B3,height: 1),
+                    ),
+                    8.vGap,
+                    Text(
+                      "PPG: 26P",
+                      style:  9.w4(color: AppColors.cB3B3B3,height: 1),
+                    ),
+                    3.vGap,
+                    Text(
+                      "L10: 26.7P",
+                      style:  9.w4(color: AppColors.cB3B3B3,height: 1),
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Container(
+                width: 62.w,
+                // height: 55.w,
+                margin: EdgeInsets.only(left: 9.w),
+                padding: EdgeInsets.symmetric(vertical: 8.w),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(9.w),
+                    border: Border.all(color: AppColors.ce5e5e5, width: 1)),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text("25.6", style: 18.w7(color: AppColors.c666666)),
+                    Text(
+                      "PTS",
+                      style: TextStyle(fontSize: 11.sp, color: AppColors.c666666),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          Assets.uiTriangleGPng,
+                          width: 7.w,
+                          fit: BoxFit.fitWidth,
+                        ),
+                        SizedBox(
+                          width: 3.w,
+                        ),
+                        Text(
+                          "0.5",
+                          style:
                           TextStyle(color: AppColors.c10A86A, fontSize: 10.sp),
+                        )
+                      ],
                     )
                   ],
-                )
-              ],
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(left: 11.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(left: 11.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image.asset(
-                      Assets.uiIconMoneyBPng,
-                      width: 11.w,
-                      fit: BoxFit.fitWidth,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          Assets.uiIconMoneyBPng,
+                          width: 11.w,
+                          fit: BoxFit.fitWidth,
+                        ),
+                        Text(
+                          "+500",
+                          style:
+                          TextStyle(color: AppColors.c545454, fontSize: 12.sp),
+                        )
+                      ],
+                    ),
+                    Container(
+                      width: 83.w,
+                      height: 24.w,
+                      alignment: Alignment.center,
+                      decoration: const BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage(Assets.uiBingoPng),
+                              fit: BoxFit.fitWidth)),
+                      child: Text("BINGO", style: 11.w7(color: AppColors.c10A86A)),
                     ),
                     Text(
-                      "+500",
-                      style:
-                          TextStyle(color: AppColors.c545454, fontSize: 12.sp),
+                      "winner 45.3%",
+                      style: TextStyle(fontSize: 10.sp, color: AppColors.cB3B3B3),
                     )
                   ],
                 ),
-                Container(
-                  width: 83.w,
-                  height: 24.w,
-                  alignment: Alignment.center,
-                  decoration: const BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage(Assets.uiBingoPng),
-                          fit: BoxFit.fitWidth)),
-                  child: Text("BINGO", style: 11.w7(color: AppColors.c10A86A)),
-                ),
-                Text(
-                  "winner 45.3%",
-                  style: TextStyle(fontSize: 10.sp, color: AppColors.cB3B3B3),
-                )
-              ],
-            ),
+              )
+            ],
           )
         ],
       ),
