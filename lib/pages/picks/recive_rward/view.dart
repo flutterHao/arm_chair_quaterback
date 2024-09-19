@@ -128,101 +128,113 @@ class ReciveRwardPage extends GetView<ReciveRwardController> {
                                             child: Row(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.center,
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
-                                                Container(
-                                                  height: 55.w,
-                                                  width: 55.w,
-                                                  decoration: BoxDecoration(
-                                                      color: AppColors.cB3B3B3,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              28.w)),
-                                                  child: Image.asset(
-                                                    Assets.testTeamLogoPng,
-                                                    width: 45.w,
-                                                  ),
-                                                ),
                                                 Expanded(
-                                                  child: Container(
-                                                    padding: EdgeInsets.only(
-                                                        right: 90.w),
-                                                    margin: EdgeInsets.only(
-                                                        left: 6.w),
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          "Player Name",
-                                                          style: TextStyle(
-                                                              color: AppColors
-                                                                  .cFF7954,
-                                                              fontSize: 14.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    children: [
+                                                      Container(
+                                                        height: 55.w,
+                                                        width: 55.w,
+                                                        decoration: BoxDecoration(
+                                                            color: AppColors.cB3B3B3,
+                                                            borderRadius:
+                                                            BorderRadius.circular(
+                                                                28.w)),
+                                                        child: Image.asset(
+                                                          Assets.testTeamLogoPng,
+                                                          width: 45.w,
                                                         ),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
+                                                      ),
+                                                      6.hGap,
+                                                      Expanded(
+                                                        child: Row(
                                                           children: [
-                                                            Text(
-                                                              "W-L",
-                                                              style: TextStyle(
-                                                                  color: AppColors
-                                                                      .cB3B3B3,
-                                                                  fontSize:
-                                                                      10.sp),
+                                                            Container(
+                                                              constraints: BoxConstraints(
+                                                                  maxWidth: 150.w
+                                                              ),
+                                                              child: Column(
+                                                                crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                                children: [
+                                                                  Text(
+                                                                    "Player Name",
+                                                                    style: TextStyle(
+                                                                        color: AppColors
+                                                                            .cFF7954,
+                                                                        fontSize: 14.sp,
+                                                                        fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                        overflow:
+                                                                        TextOverflow
+                                                                            .ellipsis),
+                                                                  ),
+                                                                  Row(
+                                                                    mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                    children: [
+                                                                      Text(
+                                                                        "W-L",
+                                                                        style: TextStyle(
+                                                                            color: AppColors
+                                                                                .cB3B3B3,
+                                                                            fontSize:
+                                                                            10.sp),
+                                                                      ),
+                                                                      Text(
+                                                                        "3-2",
+                                                                        style: TextStyle(
+                                                                            color: AppColors
+                                                                                .cB3B3B3,
+                                                                            fontSize:
+                                                                            12.sp),
+                                                                      ),
+                                                                      Container(),
+                                                                    ],
+                                                                  ),
+                                                                  Row(
+                                                                    mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                    children: [
+                                                                      Text(
+                                                                        "ODDS",
+                                                                        style: TextStyle(
+                                                                            color: AppColors
+                                                                                .cB3B3B3,
+                                                                            fontSize:
+                                                                            10.sp),
+                                                                      ),
+                                                                      Text(
+                                                                        "25.5x",
+                                                                        style: TextStyle(
+                                                                            color: AppColors
+                                                                                .cB3B3B3,
+                                                                            fontSize:
+                                                                            12.sp),
+                                                                      ),
+                                                                      Text(
+                                                                        "+8x",
+                                                                        style: TextStyle(
+                                                                            color: AppColors
+                                                                                .c10A86A,
+                                                                            fontSize:
+                                                                            12.sp),
+                                                                      ),
+                                                                    ],
+                                                                  )
+                                                                ],
+                                                              ),
                                                             ),
-                                                            Text(
-                                                              "3-2",
-                                                              style: TextStyle(
-                                                                  color: AppColors
-                                                                      .cB3B3B3,
-                                                                  fontSize:
-                                                                      12.sp),
-                                                            ),
-                                                            Container(),
                                                           ],
                                                         ),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Text(
-                                                              "ODDS",
-                                                              style: TextStyle(
-                                                                  color: AppColors
-                                                                      .cB3B3B3,
-                                                                  fontSize:
-                                                                      10.sp),
-                                                            ),
-                                                            Text(
-                                                              "25.5x",
-                                                              style: TextStyle(
-                                                                  color: AppColors
-                                                                      .cB3B3B3,
-                                                                  fontSize:
-                                                                      12.sp),
-                                                            ),
-                                                            Text(
-                                                              "+8x",
-                                                              style: TextStyle(
-                                                                  color: AppColors
-                                                                      .c10A86A,
-                                                                  fontSize:
-                                                                      12.sp),
-                                                            ),
-                                                          ],
-                                                        )
-                                                      ],
-                                                    ),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
                                                 Column(
