@@ -26,17 +26,20 @@ class _RewardPageState extends State<RewardPage> {
           physics: const BouncingScrollPhysics(),
           child: Stack(
             children: [
-              Image.asset(
-                Assets.bgRank_02Jpg,
-                width: double.infinity,
-                fit: BoxFit.fitWidth,
+              SizedBox(
+                height: 599.w,
+                child: Image.asset(
+                  alignment: Alignment.bottomCenter,
+                  Assets.bgRank_02Jpg,
+                  width: double.infinity,
+                  fit: BoxFit.fitWidth,
+                ),
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
                 // color: Colors.red,
                 margin: EdgeInsets.only(
-                    top:
-                        MediaQuery.of(context).padding.top + 48.w + 6.w + 422.w,
+                    top: 564.w,
                     left: 16.w,
                     right: 16.w),
                 padding: EdgeInsets.only(

@@ -37,42 +37,100 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                 style: 19.w7(color: AppColors.c262626, height: 1),
               ),
               10.vGap,
-              SizedBox(
-                height: (2 * 51.w) + (9.w * 3),
-                child: GridView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 6,
-                    physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        mainAxisExtent: 108.w,
-                        childAspectRatio: 51 / 108,
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 9.w,
-                        crossAxisSpacing: 9.w),
-                    itemBuilder: (_, index) {
-                      return Container(
-                        decoration: BoxDecoration(
-                            color: AppColors.cFFFFFF,
-                            borderRadius: BorderRadius.circular(16.w)),
-                        child: Stack(
-                          children: [
-                            Positioned(
-                                right: 6.w,
-                                child: Text("PTS",
-                                    style: TextStyle(
-                                        height: 1,
-                                        fontSize: 30.sp,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColors.cF2F2F2))),
-                            Container(
-                              margin: EdgeInsets.only(left: 14.w),
+              LayoutBuilder(builder: (context, constraints) {
+                return Wrap(
+                  spacing: 9.w,
+                  runSpacing: 9.w,
+                  children: List.generate(
+                      6,
+                      (index) => Container(
+                            width: (constraints.maxWidth - 9.w * 2) / 3,
+                            height: 51.w,
+                            decoration: BoxDecoration(
+                                color: AppColors.cFFFFFF,
+                                borderRadius: BorderRadius.circular(16.w)),
+                            child: Stack(
+                              children: [
+                                Positioned(
+                                    right: 6.w,
+                                    child: Text("PTS",
+                                        style: TextStyle(
+                                            height: 1,
+                                            fontSize: 30.sp,
+                                            fontWeight: FontWeight.bold,
+                                            color: AppColors.cF2F2F2))),
+                                Container(
+                                  margin: EdgeInsets.only(left: 14.w),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "3500",
+                                        style: 19.w7(color: AppColors.c262626),
+                                      ),
+                                      Text(
+                                        "PTS",
+                                        style: 10.w7(color: AppColors.cFF7954),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          )),
+                );
+              }),
+              24.vGap,
+              Text(
+                "Potential",
+                style: 19.w7(color: AppColors.c262626, height: 1),
+              ),
+              13.vGap,
+              LayoutBuilder(builder: (context, constraints) {
+                return Container(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 16.w, vertical: 15.w),
+                  decoration: BoxDecoration(
+                      color: AppColors.cFFFFFF,
+                      borderRadius: BorderRadius.circular(16.w)),
+                  child: Wrap(
+                    spacing: 9.w,
+                    runSpacing: 9.w,
+                    children: List.generate(
+                        6,
+                        (index) => SizedBox(
+                              width:
+                                  (constraints.maxWidth - 9.w * 2 - 16.w * 2) /
+                                      3,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    "3500",
-                                    style: 19.w7(color: AppColors.c262626),
+                                  Row(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        "206",
+                                        style: 19.w7(
+                                            color: AppColors.c262626,
+                                            height: 1),
+                                      ),
+                                      Text("/500",
+                                          style:
+                                              10.w4(color: AppColors.cB3B3B3))
+                                    ],
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.symmetric(vertical: 6.w),
+                                    child: LinearProgressIndicator(
+                                      color: AppColors.c10A86A,
+                                      backgroundColor: AppColors.cB3B3B3,
+                                      value: .6,
+                                      minHeight: 10.w,
+                                      borderRadius: BorderRadius.circular(5.w),
+                                    ),
                                   ),
                                   Text(
                                     "PTS",
@@ -80,71 +138,10 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                   )
                                 ],
                               ),
-                            )
-                          ],
-                        ),
-                      );
-                    }),
-              ),
-              24.vGap,
-              Text(
-                "Potential",
-                style: 19.w7(color: AppColors.c262626, height: 1),
-              ),
-              13.vGap,
-              Container(
-                height: (2 * 65.w) + (9.w * 3),
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 15.w),
-                decoration: BoxDecoration(
-                    color: AppColors.cFFFFFF,
-                    borderRadius: BorderRadius.circular(16.w)),
-                child: GridView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 6,
-                    physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        mainAxisExtent: 90.w,
-                        childAspectRatio: 65 / 90,
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 20.w,
-                        crossAxisSpacing: 9.w),
-                    itemBuilder: (_, index) {
-                      return Container(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Text(
-                                  "206",
-                                  style: 19
-                                      .w7(color: AppColors.c262626, height: 1),
-                                ),
-                                Text("/500",
-                                    style: 10.w4(color: AppColors.cB3B3B3))
-                              ],
-                            ),
-                            Container(
-                              margin: EdgeInsets.symmetric(vertical: 6.w),
-                              child: LinearProgressIndicator(
-                                color: AppColors.c10A86A,
-                                backgroundColor: AppColors.cB3B3B3,
-                                value: .6,
-                                minHeight: 10.w,
-                                borderRadius: BorderRadius.circular(5.w),
-                              ),
-                            ),
-                            Text(
-                              "PTS",
-                              style: 10.w7(color: AppColors.cFF7954),
-                            )
-                          ],
-                        ),
-                      );
-                    }),
-              ),
+                            )),
+                  ),
+                );
+              }),
               18.vGap,
               Center(
                 child: InkWell(
@@ -362,268 +359,290 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
   }
 
   Widget _leverWidget(BuildContext context) {
-    return SizedBox(
-      height: 119.w,
-      width: double.infinity,
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          Container(
-            height: 87.w,
-            width: double.infinity,
-            decoration: BoxDecoration(
-                color: AppColors.c262626,
-                borderRadius: BorderRadius.circular(16.w)),
-          ),
-          Obx(() {
-            return AnimatedPositioned(
-              left: controller.other.value * -100.w,
-              top: 14.w,
-              duration: const Duration(milliseconds: 300),
-              child: Column(
-                children: [
-                  9.vGap,
-                  SizedBox(
-                      width: 32.w,
-                      height: 32.w,
-                      child: IconWidget(
-                        iconWidth: 32.w,
-                        icon: Assets.uiIconPingjiPng,
-                        iconHeight: 32.w,
-                      )),
-                  6.vGap,
-                  Container(
-                    height: 26.w,
-                    width: 100.w,
-                    decoration: BoxDecoration(
-                        color: AppColors.c000000,
-                        borderRadius: BorderRadius.horizontal(
-                            right: Radius.circular(13.w))),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Score",
-                          style: TextStyle(
-                              color: AppColors.cB3B3B3, fontSize: 12.sp),
-                        ),
-                        10.hGap,
-                        Text(
-                          "85",
-                          style: TextStyle(
-                              color: AppColors.cF1F1F1, fontSize: 12.sp),
-                        )
-                      ],
-                    ),
-                  )
-                ],
+    return LayoutBuilder(builder: (context, constraints) {
+      controller.validScreenWidth.value = constraints.maxWidth;
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(16.w),
+        child: SizedBox(
+          height: 119.w,
+          width: double.infinity,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              ///背景色块
+              Container(
+                height: 87.w,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    color: AppColors.c262626,
+                    borderRadius: BorderRadius.circular(16.w)),
               ),
-            );
-          }),
-          Obx(() {
-            return AnimatedPositioned(
-              duration: const Duration(milliseconds: 300),
-              right: controller.other.value * -100,
-              top: 14.w,
-              child: Column(
-                children: [
-                  9.vGap,
-                  SizedBox(
-                      width: 32.w,
-                      height: 32.w,
-                      child: IconWidget(
-                        iconWidth: 32.w,
-                        icon: Assets.uiStateBestPng,
-                        iconHeight: 32.w,
-                      )),
-                  6.vGap,
-                  Container(
-                    height: 26.w,
-                    width: 100.w,
-                    decoration: BoxDecoration(
-                        color: AppColors.c000000,
-                        borderRadius: BorderRadius.horizontal(
-                            left: Radius.circular(13.w))),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "SAL",
-                          style: TextStyle(
-                              color: AppColors.cB3B3B3, fontSize: 12.sp),
-                        ),
-                        10.hGap,
-                        Text(
-                          "250k",
-                          style: TextStyle(
-                              color: AppColors.cF1F1F1, fontSize: 12.sp),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            );
-          }),
-          Positioned(
-            left: (MediaQuery.of(context).size.width - 308.w) / 2,
-            child: Container(
-              width: 308.w,
-              height: 87.w,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16.w),
-                  image: const DecorationImage(
-                      image: AssetImage(Assets.uiLight_01Png),
-                      fit: BoxFit.fill)),
-            ),
-          ),
-          Obx(() {
-            return Positioned(
-                right: 32.w,
-                child: Opacity(
-                  opacity: controller.rateBoxOpacity.value,
+
+              /// 左边星级评分
+              Obx(() {
+                return AnimatedPositioned(
+                  left: controller.other.value * -100.w,
+                  top: 14.w,
+                  duration: const Duration(milliseconds: 300),
                   child: Column(
                     children: [
-                      Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          SizedBox(
-                              height: 42.w,
-                              width: 84.w,
-                              child: ArcWidget(
-                                42.w,
-                                progressColor: AppColors.cFF7954,
-                                progressWidth: 8.w,
-                                borderColor: AppColors.cB3B3B3,
-                                borderWidth: 3.w,
-                                progressSweepAngle:
-                                    controller.rateProgress.value,
-                                borderSweepAngle:
-                                    controller.progressBorder.value,
-                              )),
-                          Positioned(
-                              bottom: 0.w,
-                              child: Text(
-                                "${((controller.rateProgress.value / 180 * 100) > 100 ? 100 : (controller.rateProgress.value / 180 * 100)).toStringAsFixed(0)}%",
-                                style:
-                                    24.w7(color: AppColors.cFF7954, height: 1),
-                              ))
-                        ],
-                      ),
-                      3.vGap,
-                      Text(
-                        "Success Rate",
-                        style: 12.w4(color: AppColors.cFF7954),
+                      9.vGap,
+                      SizedBox(
+                          width: 32.w,
+                          height: 32.w,
+                          child: IconWidget(
+                            iconWidth: 32.w,
+                            icon: Assets.uiIconPingjiPng,
+                            iconHeight: 32.w,
+                          )),
+                      6.vGap,
+                      Container(
+                        height: 26.w,
+                        width: 100.w,
+                        decoration: BoxDecoration(
+                            color: AppColors.c000000,
+                            borderRadius: BorderRadius.horizontal(
+                                right: Radius.circular(13.w))),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Score",
+                              style: TextStyle(
+                                  color: AppColors.cB3B3B3, fontSize: 12.sp),
+                            ),
+                            10.hGap,
+                            Text(
+                              "85",
+                              style: TextStyle(
+                                  color: AppColors.cF1F1F1, fontSize: 12.sp),
+                            )
+                          ],
+                        ),
                       )
                     ],
                   ),
-                ));
-          }),
-          Obx(() {
-            return Positioned(
-              left: controller.propertyLeft.value,
-              child: Container(
-                height: 64.w,
-                width: 151.w,
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(colors: [
-                      AppColors.c666666.withOpacity(0),
-                      AppColors.c666666
-                    ]),
-                    borderRadius:
-                        BorderRadius.horizontal(right: Radius.circular(32.w))),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        IconWidget(
-                            iconWidth: 8.w, icon: Assets.uiIconArrows_01Png),
-                        10.hGap,
-                        Stack(
-                          alignment: Alignment.center,
+                );
+              }),
+
+              /// 右边sal
+              Obx(() {
+                return AnimatedPositioned(
+                  duration: const Duration(milliseconds: 300),
+                  right: controller.other.value * -100,
+                  top: 14.w,
+                  child: Column(
+                    children: [
+                      9.vGap,
+                      SizedBox(
+                          width: 32.w,
+                          height: 32.w,
+                          child: IconWidget(
+                            iconWidth: 32.w,
+                            icon: Assets.uiStateBestPng,
+                            iconHeight: 32.w,
+                          )),
+                      6.vGap,
+                      Container(
+                        height: 26.w,
+                        width: 100.w,
+                        decoration: BoxDecoration(
+                            color: AppColors.c000000,
+                            borderRadius: BorderRadius.horizontal(
+                                left: Radius.circular(13.w))),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            IconWidget(
-                              iconWidth: 35.w,
-                              icon: Assets.uiIconStar_01Png,
-                              iconColor: AppColors.cFF7954,
+                            Text(
+                              "SAL",
+                              style: TextStyle(
+                                  color: AppColors.cB3B3B3, fontSize: 12.sp),
                             ),
-                            Container(
-                              margin: EdgeInsets.only(top: 5.w),
-                              child: Text(
-                                "6",
-                                style: 21.w7(color: AppColors.c262626),
-                              ),
+                            10.hGap,
+                            Text(
+                              "250k",
+                              style: TextStyle(
+                                  color: AppColors.cF1F1F1, fontSize: 12.sp),
                             )
                           ],
-                        )
-                      ],
-                    ),
-                    3.vGap,
-                    Container(
-                      height: 16.w,
-                      width: 110.w,
-                      decoration: BoxDecoration(
-                          color: AppColors.c262626,
-                          borderRadius: BorderRadius.circular(8.w)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              }),
+
+              /// 背后橙色的渐变光
+              Positioned(
+                left: -100,
+                child: Container(
+                  width: 308.w,
+                  height: 87.w,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16.w),
+                      image: const DecorationImage(
+                          image: AssetImage(Assets.uiLight_01Png),
+                          fit: BoxFit.fill)),
+                ),
+              ),
+
+              /// 升级成功的概率
+              Obx(() {
+                return Positioned(
+                    right: 32.w,
+                    child: Opacity(
+                      opacity: controller.rateBoxOpacity.value,
+                      child: Column(
                         children: [
-                          Text(
-                            "Potential",
-                            style: 10.w4(color: AppColors.cB3B3B3),
+                          Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              SizedBox(
+                                  height: 42.w,
+                                  width: 84.w,
+                                  child: ArcWidget(
+                                    42.w,
+                                    progressColor: AppColors.cFF7954,
+                                    progressWidth: 8.w,
+                                    borderColor: AppColors.cB3B3B3,
+                                    borderWidth: 3.w,
+                                    progressSweepAngle:
+                                        controller.rateProgress.value,
+                                    borderSweepAngle:
+                                        controller.progressBorder.value,
+                                  )),
+                              Positioned(
+                                  bottom: 0.w,
+                                  child: Text(
+                                    "${((controller.rateProgress.value / 180 * 100) > 100 ? 100 : (controller.rateProgress.value / 180 * 100)).toStringAsFixed(0)}%",
+                                    style: 24.w7(
+                                        color: AppColors.cFF7954, height: 1),
+                                  ))
+                            ],
                           ),
-                          6.hGap,
+                          3.vGap,
                           Text(
-                            "+4~8%",
-                            style: 12.w4(color: AppColors.cF2F2F2),
+                            "Success Rate",
+                            style: 12.w4(color: AppColors.cFF7954),
                           )
                         ],
                       ),
-                    )
-                  ],
-                ),
-              ),
-            );
-          }),
-          Obx(() {
-            return Positioned(
-              left: controller.startLeft.value,
-              child: Transform.rotate(
-                angle: controller.starRotate.value * 2 * 3.14159,
-                child: SizedBox(
-                  width: 119.w,
-                  height: 119.w,
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Image.asset(
-                        Assets.uiIconStar_02Png,
-                        height: controller.starSize.value,
-                        fit: BoxFit.fitHeight,
-                      ),
-                      IconWidget(
-                        iconWidth: 68.w,
-                        icon: Assets.uiIconStar_01Png,
-                        iconColor: AppColors.cFF7954,
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 10.w),
-                        child: Text(
-                          "5",
-                          style: 34.w7(color: AppColors.c262626),
+                    ));
+              }),
+
+              /// 升级后的属性值
+              Obx(() {
+                return Positioned(
+                  left: controller.propertyLeft.value,
+                  child: Container(
+                    height: 64.w,
+                    width: 151.w,
+                    decoration: BoxDecoration(
+                        gradient: LinearGradient(colors: [
+                          AppColors.c666666.withOpacity(0),
+                          AppColors.c666666
+                        ]),
+                        borderRadius: BorderRadius.horizontal(
+                            right: Radius.circular(32.w))),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            IconWidget(
+                                iconWidth: 8.w,
+                                icon: Assets.uiIconArrows_01Png),
+                            10.hGap,
+                            Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                IconWidget(
+                                  iconWidth: 35.w,
+                                  icon: Assets.uiIconStar_01Png,
+                                  iconColor: AppColors.cFF7954,
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(top: 5.w),
+                                  child: Text(
+                                    "6",
+                                    style: 21.w7(color: AppColors.c262626),
+                                  ),
+                                )
+                              ],
+                            )
+                          ],
                         ),
-                      )
-                    ],
+                        3.vGap,
+                        Container(
+                          height: 16.w,
+                          width: 110.w,
+                          decoration: BoxDecoration(
+                              color: AppColors.c262626,
+                              borderRadius: BorderRadius.circular(8.w)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Potential",
+                                style: 10.w4(color: AppColors.cB3B3B3),
+                              ),
+                              6.hGap,
+                              Text(
+                                "+4~8%",
+                                style: 12.w4(color: AppColors.cF2F2F2),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              ),
-            );
-          })
-        ],
-      ),
-    );
+                );
+              }),
+
+              /// 居中重叠的五角星
+              Obx(() {
+                return Positioned(
+                  left: controller.startLeft.value == -1111
+                      ? (constraints.maxWidth - 119.w - 16.w) / 2
+                      : controller.startLeft.value,
+                  child: Transform.rotate(
+                    angle: controller.starRotate.value * 2 * 3.14159,
+                    child: SizedBox(
+                      width: 119.w,
+                      height: 119.w,
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Image.asset(
+                            Assets.uiIconStar_02Png,
+                            height: controller.starSize.value,
+                            fit: BoxFit.fitHeight,
+                          ),
+                          IconWidget(
+                            iconWidth: 68.w,
+                            icon: Assets.uiIconStar_01Png,
+                            iconColor: AppColors.cFF7954,
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(top: 10.w),
+                            child: Text(
+                              "5",
+                              style: 34.w7(color: AppColors.c262626),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              })
+            ],
+          ),
+        ),
+      );
+    });
   }
 
   Future<void> _upgradeDialog(BuildContext context) async {

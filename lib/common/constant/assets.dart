@@ -58,6 +58,9 @@ class Assets {
   static const uiTriangleGPng = 'assets/images/picks/ui_triangle_g.png';
   static const uiTriangleRPng = 'assets/images/picks/ui_triangle_r.png';
   static const uiWrongPng = 'assets/images/picks/ui_wrong.png';
+  static const uiBannerAwardPng = 'assets/images/picks/ui_banner_award.png';
+  static const uiBannerHistoryPng = 'assets/images/picks/ui_banner_history.png';
+  static const uiBannerRankPng = 'assets/images/picks/ui_banner_rank.png';
 
   ///player
   static const uiIconPingjiPng = 'assets/images/player/ui_icon_pingji.png';

@@ -25,394 +25,403 @@ class _RankPageState extends State<RankPage>
           physics: const BouncingScrollPhysics(),
           child: Stack(
             children: [
-              Image.asset(
-                Assets.bgRank_01Jpg, //todo 换图
-                width: double.infinity,
-                fit: BoxFit.fitWidth,
+              SizedBox(
+                height: 599.w,
+                child: Image.asset(
+                  alignment: Alignment.bottomCenter,
+                  Assets.bgRank_01Jpg,
+                  width: double.infinity,
+                  fit: BoxFit.fitWidth,
+                ),
               ),
-              Container(
-                margin: EdgeInsets.only(
-                    top: MediaQuery.of(context).padding.top +
-                        48.w +
-                        6.w +
-                        16.w +
-                        34.w +
-                        39.w),
-                padding: EdgeInsets.only(bottom: 87.w),
-                child: Column(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(left: 22.w),
-                      child: Row(
-                        children: [
-                          Container(
-                            height: 38.w,
-                            width: 5.w,
-                            decoration: BoxDecoration(
-                                color: AppColors.cFF7954,
-                                borderRadius: BorderRadius.circular(1.5.w)),
-                          ),
-                          SizedBox(
-                            width: 8.w,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
+              Column(
+                children: [
+                  Container(
+                    height: 564.w,
+                    padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).padding.top +
+                            48.w +
+                            6.w +
+                            16.w +
+                            34.w +
+                            39.w),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(left: 22.w),
+                          child: Row(
                             children: [
-                              Text(
-                                "3th rank",
-                                style: 14.w7(color: AppColors.c999999),
+                              Container(
+                                height: 38.w,
+                                width: 5.w,
+                                decoration: BoxDecoration(
+                                    color: AppColors.cFF7954,
+                                    borderRadius: BorderRadius.circular(1.5.w)),
                               ),
-                              Text(
-                                "PICK MORE&RIGHT",
-                                style: 18.w7(color: AppColors.cFFFFFF),
+                              SizedBox(
+                                width: 8.w,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "3th rank",
+                                    style: 14.w7(color: AppColors.c999999),
+                                  ),
+                                  Text(
+                                    "PICK MORE&RIGHT",
+                                    style: 18.w7(color: AppColors.cFFFFFF),
+                                  )
+                                ],
                               )
                             ],
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      // height: 300.w,
-                      margin: EdgeInsets.symmetric(horizontal: 41.w),
-                      child: Stack(
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(bottom: 76.w),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                //第2名
-                                Container(
-                                  margin: EdgeInsets.only(top: 81.w),
-                                  child: Column(
-                                    children: [
-                                      Stack(
-                                        children: [
-                                          Container(
-                                            width: 81.w,
-                                            height: 81.w,
-                                            margin:
-                                                EdgeInsets.only(bottom: 8.w),
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(41.w),
-                                                border: Border.all(
-                                                    color: AppColors.c52473E
-                                                        .withOpacity(.5),
-                                                    width: 8.w)),
-                                            child: Container(
-                                              padding: EdgeInsets.all(8.w),
-                                              child: Image.asset(
-                                                  Assets.testTeamLogoPng),
-                                            ),
-                                          ),
-                                          Positioned(
-                                              bottom: 0,
-                                              left: 0,
-                                              right: 0,
-                                              child: Center(
-                                                child: Container(
-                                                  height: 26.w,
-                                                  width: 26.w,
-                                                  alignment: Alignment.center,
-                                                  decoration: BoxDecoration(
-                                                      color: AppColors.c423832,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              13.w)),
-                                                  child: Text(
-                                                    "2",
-                                                    style: TextStyle(
-                                                        color:
-                                                            AppColors.ccccccc,
-                                                        fontSize: 18.sp,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                ),
-                                              ))
-                                        ],
-                                      ),
-                                      Container(
-                                        width: 50.w,
-                                        margin: EdgeInsets.only(top: 5.w),
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          "Player Name",
-                                          style: 12.w7(
-                                              color: AppColors.cB3B3B3,
-                                              overflow: TextOverflow.ellipsis),
-                                        ),
-                                      ),
-                                      Text(
-                                        "win 36",
-                                        style: TextStyle(
-                                            color: AppColors.c666666,
-                                            fontSize: 11.sp),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                //第1名
-                                Container(
-                                  margin: EdgeInsets.only(top: 34.w),
-                                  child: Column(
-                                    children: [
-                                      Stack(
-                                        children: [
-                                          Container(
-                                            width: 97.w,
-                                            height: 97.w,
-                                            margin:
-                                                EdgeInsets.only(bottom: 8.w),
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(49.w),
-                                                border: Border.all(
-                                                    color: AppColors.c655344,
-                                                    width: 8.w)),
-                                            child: Container(
-                                              padding: EdgeInsets.all(8.w),
-                                              child: Image.asset(
-                                                  Assets.testTeamLogoPng),
-                                            ),
-                                          ),
-                                          Positioned(
-                                              bottom: 0,
-                                              left: 0,
-                                              right: 0,
-                                              child: Center(
-                                                child: Container(
-                                                  height: 26.w,
-                                                  width: 26.w,
-                                                  alignment: Alignment.center,
-                                                  decoration: BoxDecoration(
-                                                      color: AppColors.c423832,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              13.w)),
-                                                  child: Text(
-                                                    "1",
-                                                    style: TextStyle(
-                                                        color:
-                                                            AppColors.cFFFFFF,
-                                                        fontSize: 18.sp,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                ),
-                                              ))
-                                        ],
-                                      ),
-                                      Container(
-                                        width: 50.w,
-                                        margin: EdgeInsets.only(top: 5.w),
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          "Player Name",
-                                          style: 12.w7(
-                                              color: AppColors.cB3B3B3,
-                                              overflow: TextOverflow.ellipsis),
-                                        ),
-                                      ),
-                                      Text(
-                                        "win 36",
-                                        style: TextStyle(
-                                            color: AppColors.c666666,
-                                            fontSize: 11.sp),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                //第3名
-                                Container(
-                                  margin: EdgeInsets.only(top: 101.w),
-                                  child: Column(
-                                    children: [
-                                      Stack(
-                                        children: [
-                                          Container(
-                                            width: 81.w,
-                                            height: 81.w,
-                                            margin:
-                                                EdgeInsets.only(bottom: 8.w),
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(41.w),
-                                                border: Border.all(
-                                                    color: AppColors.c52473E
-                                                        .withOpacity(.3),
-                                                    width: 8.w)),
-                                            child: Container(
-                                              padding: EdgeInsets.all(8.w),
-                                              child: Image.asset(
-                                                  Assets.testTeamLogoPng),
-                                            ),
-                                          ),
-                                          Positioned(
-                                              bottom: 0,
-                                              left: 0,
-                                              right: 0,
-                                              child: Center(
-                                                child: Container(
-                                                  height: 26.w,
-                                                  width: 26.w,
-                                                  alignment: Alignment.center,
-                                                  decoration: BoxDecoration(
-                                                      color: AppColors.c423832,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              13.w)),
-                                                  child: Text(
-                                                    "3",
-                                                    style: TextStyle(
-                                                        color:
-                                                            AppColors.c666666,
-                                                        fontSize: 18.sp,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                ),
-                                              ))
-                                        ],
-                                      ),
-                                      Container(
-                                        width: 50.w,
-                                        margin: EdgeInsets.only(top: 5.w),
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          "Player Name",
-                                          style: 12.w7(
-                                              color: AppColors.cB3B3B3,
-                                              overflow: TextOverflow.ellipsis),
-                                        ),
-                                      ),
-                                      Text(
-                                        "win 36",
-                                        style: TextStyle(
-                                            color: AppColors.c666666,
-                                            fontSize: 11.sp),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
                           ),
-                          Positioned(
-                            bottom: 0,
-                            left: 0,
-                            right: 0,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.only(top: 20.w),
-                                  width: 90.w,
-                                  height: 78.w,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                      color: Colors.white.withOpacity(.05),
-                                      borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(20.w),
-                                          topLeft: Radius.circular(20.w))),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                        Assets.uiIconMoneyWPng,
-                                        width: 14.w,
-                                        fit: BoxFit.fitWidth,
+                        ),
+                        Container(
+                          // height: 300.w,
+                          margin: EdgeInsets.symmetric(horizontal: 41.w),
+                          child: Stack(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(bottom: 76.w),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    //第2名
+                                    Container(
+                                      margin: EdgeInsets.only(top: 81.w),
+                                      child: Column(
+                                        children: [
+                                          Stack(
+                                            children: [
+                                              Container(
+                                                width: 81.w,
+                                                height: 81.w,
+                                                margin:
+                                                EdgeInsets.only(bottom: 8.w),
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                    BorderRadius.circular(41.w),
+                                                    border: Border.all(
+                                                        color: AppColors.c52473E
+                                                            .withOpacity(.5),
+                                                        width: 8.w)),
+                                                child: Container(
+                                                  padding: EdgeInsets.all(8.w),
+                                                  child: Image.asset(
+                                                      Assets.testTeamLogoPng),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                  bottom: 0,
+                                                  left: 0,
+                                                  right: 0,
+                                                  child: Center(
+                                                    child: Container(
+                                                      height: 26.w,
+                                                      width: 26.w,
+                                                      alignment: Alignment.center,
+                                                      decoration: BoxDecoration(
+                                                          color: AppColors.c423832,
+                                                          borderRadius:
+                                                          BorderRadius.circular(
+                                                              13.w)),
+                                                      child: Text(
+                                                        "2",
+                                                        style: TextStyle(
+                                                            color:
+                                                            AppColors.ccccccc,
+                                                            fontSize: 18.sp,
+                                                            fontWeight:
+                                                            FontWeight.bold),
+                                                      ),
+                                                    ),
+                                                  ))
+                                            ],
+                                          ),
+                                          Container(
+                                            width: 50.w,
+                                            margin: EdgeInsets.only(top: 5.w),
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              "Player Name",
+                                              style: 12.w7(
+                                                  color: AppColors.cB3B3B3,
+                                                  overflow: TextOverflow.ellipsis),
+                                            ),
+                                          ),
+                                          Text(
+                                            "win 36",
+                                            style: TextStyle(
+                                                color: AppColors.c666666,
+                                                fontSize: 11.sp),
+                                          ),
+                                        ],
                                       ),
-                                      SizedBox(
-                                        width: 5.w,
+                                    ),
+                                    //第1名
+                                    Container(
+                                      margin: EdgeInsets.only(top: 34.w),
+                                      child: Column(
+                                        children: [
+                                          Stack(
+                                            children: [
+                                              Container(
+                                                width: 97.w,
+                                                height: 97.w,
+                                                margin:
+                                                EdgeInsets.only(bottom: 8.w),
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                    BorderRadius.circular(49.w),
+                                                    border: Border.all(
+                                                        color: AppColors.c655344,
+                                                        width: 8.w)),
+                                                child: Container(
+                                                  padding: EdgeInsets.all(8.w),
+                                                  child: Image.asset(
+                                                      Assets.testTeamLogoPng),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                  bottom: 0,
+                                                  left: 0,
+                                                  right: 0,
+                                                  child: Center(
+                                                    child: Container(
+                                                      height: 26.w,
+                                                      width: 26.w,
+                                                      alignment: Alignment.center,
+                                                      decoration: BoxDecoration(
+                                                          color: AppColors.c423832,
+                                                          borderRadius:
+                                                          BorderRadius.circular(
+                                                              13.w)),
+                                                      child: Text(
+                                                        "1",
+                                                        style: TextStyle(
+                                                            color:
+                                                            AppColors.cFFFFFF,
+                                                            fontSize: 18.sp,
+                                                            fontWeight:
+                                                            FontWeight.bold),
+                                                      ),
+                                                    ),
+                                                  ))
+                                            ],
+                                          ),
+                                          Container(
+                                            width: 50.w,
+                                            margin: EdgeInsets.only(top: 5.w),
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              "Player Name",
+                                              style: 12.w7(
+                                                  color: AppColors.cB3B3B3,
+                                                  overflow: TextOverflow.ellipsis),
+                                            ),
+                                          ),
+                                          Text(
+                                            "win 36",
+                                            style: TextStyle(
+                                                color: AppColors.c666666,
+                                                fontSize: 11.sp),
+                                          ),
+                                        ],
                                       ),
-                                      Text(
-                                        "+0.5w",
-                                        style: 14.w7(color: AppColors.cF2F2F2),
-                                      )
-                                    ],
-                                  ),
+                                    ),
+                                    //第3名
+                                    Container(
+                                      margin: EdgeInsets.only(top: 101.w),
+                                      child: Column(
+                                        children: [
+                                          Stack(
+                                            children: [
+                                              Container(
+                                                width: 81.w,
+                                                height: 81.w,
+                                                margin:
+                                                EdgeInsets.only(bottom: 8.w),
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                    BorderRadius.circular(41.w),
+                                                    border: Border.all(
+                                                        color: AppColors.c52473E
+                                                            .withOpacity(.3),
+                                                        width: 8.w)),
+                                                child: Container(
+                                                  padding: EdgeInsets.all(8.w),
+                                                  child: Image.asset(
+                                                      Assets.testTeamLogoPng),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                  bottom: 0,
+                                                  left: 0,
+                                                  right: 0,
+                                                  child: Center(
+                                                    child: Container(
+                                                      height: 26.w,
+                                                      width: 26.w,
+                                                      alignment: Alignment.center,
+                                                      decoration: BoxDecoration(
+                                                          color: AppColors.c423832,
+                                                          borderRadius:
+                                                          BorderRadius.circular(
+                                                              13.w)),
+                                                      child: Text(
+                                                        "3",
+                                                        style: TextStyle(
+                                                            color:
+                                                            AppColors.c666666,
+                                                            fontSize: 18.sp,
+                                                            fontWeight:
+                                                            FontWeight.bold),
+                                                      ),
+                                                    ),
+                                                  ))
+                                            ],
+                                          ),
+                                          Container(
+                                            width: 50.w,
+                                            margin: EdgeInsets.only(top: 5.w),
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              "Player Name",
+                                              style: 12.w7(
+                                                  color: AppColors.cB3B3B3,
+                                                  overflow: TextOverflow.ellipsis),
+                                            ),
+                                          ),
+                                          Text(
+                                            "win 36",
+                                            style: TextStyle(
+                                                color: AppColors.c666666,
+                                                fontSize: 11.sp),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
                                 ),
-                                Container(
-                                  margin: EdgeInsets.only(top: 20.w),
-                                  width: 90.w,
-                                  height: 96.w,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                      color: Colors.white.withOpacity(.05),
-                                      borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(20.w),
-                                          topLeft: Radius.circular(20.w))),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                        Assets.uiIconMoneyWPng,
-                                        width: 14.w,
-                                        fit: BoxFit.fitWidth,
+                              ),
+                              Positioned(
+                                bottom: 0,
+                                left: 0,
+                                right: 0,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(top: 20.w),
+                                      width: 90.w,
+                                      height: 78.w,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                          color: Colors.white.withOpacity(.05),
+                                          borderRadius: BorderRadius.only(
+                                              topRight: Radius.circular(20.w),
+                                              topLeft: Radius.circular(20.w))),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Image.asset(
+                                            Assets.uiIconMoneyWPng,
+                                            width: 14.w,
+                                            fit: BoxFit.fitWidth,
+                                          ),
+                                          SizedBox(
+                                            width: 5.w,
+                                          ),
+                                          Text(
+                                            "+0.5w",
+                                            style: 14.w7(color: AppColors.cF2F2F2),
+                                          )
+                                        ],
                                       ),
-                                      SizedBox(
-                                        width: 5.w,
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.only(top: 20.w),
+                                      width: 90.w,
+                                      height: 96.w,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                          color: Colors.white.withOpacity(.05),
+                                          borderRadius: BorderRadius.only(
+                                              topRight: Radius.circular(20.w),
+                                              topLeft: Radius.circular(20.w))),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Image.asset(
+                                            Assets.uiIconMoneyWPng,
+                                            width: 14.w,
+                                            fit: BoxFit.fitWidth,
+                                          ),
+                                          SizedBox(
+                                            width: 5.w,
+                                          ),
+                                          Text(
+                                            "+0.5w",
+                                            style: 14.w7(color: AppColors.cF2F2F2),
+                                          )
+                                        ],
                                       ),
-                                      Text(
-                                        "+0.5w",
-                                        style: 14.w7(color: AppColors.cF2F2F2),
-                                      )
-                                    ],
-                                  ),
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.only(top: 20.w),
+                                      width: 90.w,
+                                      height: 63.w,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                          color: Colors.white.withOpacity(.05),
+                                          borderRadius: BorderRadius.only(
+                                              topRight: Radius.circular(20.w),
+                                              topLeft: Radius.circular(20.w))),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Image.asset(
+                                            Assets.uiIconMoneyWPng,
+                                            width: 14.w,
+                                            fit: BoxFit.fitWidth,
+                                          ),
+                                          SizedBox(
+                                            width: 5.w,
+                                          ),
+                                          Text(
+                                            "+0.5w",
+                                            style: 14.w7(color: AppColors.cF2F2F2),
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  ],
                                 ),
-                                Container(
-                                  margin: EdgeInsets.only(top: 20.w),
-                                  width: 90.w,
-                                  height: 63.w,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                      color: Colors.white.withOpacity(.05),
-                                      borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(20.w),
-                                          topLeft: Radius.circular(20.w))),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                        Assets.uiIconMoneyWPng,
-                                        width: 14.w,
-                                        fit: BoxFit.fitWidth,
-                                      ),
-                                      SizedBox(
-                                        width: 5.w,
-                                      ),
-                                      Text(
-                                        "+0.5w",
-                                        style: 14.w7(color: AppColors.cF2F2F2),
-                                      )
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                    ...List.generate(10, (index) {
-                      return _buildItem(index);
-                    }),
-                    // Container(
-                    //   // color: Colors.green,
-                    //   child: ListView.builder(
-                    //       itemCount: 10,
-                    //       shrinkWrap: true,
-                    //       physics: const NeverScrollableScrollPhysics(),
-                    //       itemBuilder: (_, index) {
-                    //         return _buildItem(index);
-                    //       }),
-                    // )
-                  ],
-                ),
+                  ),
+                  ...List.generate(10, (index) {
+                    return _buildItem(index);
+                  }),
+                  // Container(
+                  //   // color: Colors.green,
+                  //   child: ListView.builder(
+                  //       itemCount: 10,
+                  //       shrinkWrap: true,
+                  //       physics: const NeverScrollableScrollPhysics(),
+                  //       itemBuilder: (_, index) {
+                  //         return _buildItem(index);
+                  //       }),
+                  // )
+                ],
               ),
             ],
           ),

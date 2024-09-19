@@ -129,344 +129,7 @@ class _GussItemState extends State<GussItem>
         children: [
           InkWell(
             onTap: () {
-              showModalBottomSheet(
-                  isScrollControlled: true,
-                  context: context,
-                  builder: (context) {
-                    return Container(
-                      constraints: BoxConstraints(maxHeight: 500.w),
-                      child: Stack(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                                color: AppColors.cE6E6E6,
-                                borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(22.w),
-                                    topLeft: Radius.circular(22.w))),
-                          ),
-                          Container(
-                            height: 42.w,
-                            decoration: BoxDecoration(
-                                color: AppColors.cFF7954,
-                                borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(22.w),
-                                    topLeft: Radius.circular(22.w))),
-                          ),
-                          Column(
-                            children: [
-                              SizedBox(
-                                height: 2.w,
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                    color: AppColors.c262626,
-                                    borderRadius: BorderRadius.only(
-                                        topRight: Radius.circular(22.w),
-                                        topLeft: Radius.circular(22.w))),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        InkWell(
-                                          onTap: () {
-                                            Get.back(id: GlobalNestedKey.PICKS);
-                                          },
-                                          child: Container(
-                                              height: 42.w,
-                                              width: 42.w,
-                                              child: Image.asset(
-                                                Assets.iconClosePng,
-                                                width: 13.w,
-                                              )),
-                                        )
-                                      ],
-                                    ),
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                          left: 27.w, bottom: 17.w),
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Stack(
-                                            children: [
-                                              SizedBox(
-                                                width: 70.w,
-                                                height: 70.w,
-                                              ),
-                                              Positioned(
-                                                top: 0,
-                                                bottom: 0,
-                                                child: Center(
-                                                  child: Container(
-                                                      width: 60.w,
-                                                      height: 60.w,
-                                                      decoration: BoxDecoration(
-                                                          color: Colors.white
-                                                              .withOpacity(.1),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      32.w))),
-                                                ),
-                                              ),
-                                              Positioned(
-                                                  bottom: 6.w,
-                                                  child: Container(
-                                                      width: 63.w,
-                                                      height: 55.w,
-                                                      alignment: Alignment
-                                                          .bottomCenter,
-                                                      child: Image.asset(
-                                                        Assets.testTeamLogoPng,
-                                                        width: 55.w,
-                                                        fit: BoxFit.fitWidth,
-                                                      ))),
-                                              Text(
-                                                "SS",
-                                                style: TextStyle(
-                                                    color: AppColors.cF2F2F2,
-                                                    fontSize: 21.w,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              )
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            width: 9.w,
-                                          ),
-                                          Expanded(
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  "Star Name",
-                                                  style: TextStyle(
-                                                      color: AppColors.cD9D9D9,
-                                                      fontSize: 18.sp,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                                Text(
-                                                  "NYY SF/SF",
-                                                  style: TextStyle(
-                                                      color: AppColors.c666666,
-                                                      fontSize: 14.sp,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                                Text(
-                                                  "How will PLAYERNAME do vs MIN Twins?",
-                                                  style: TextStyle(
-                                                      color: AppColors.cFF7954,
-                                                      fontSize: 12.sp,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                )
-                                              ],
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              Expanded(
-                                child: ListView.builder(
-                                    physics: const BouncingScrollPhysics(),
-                                    itemCount: 10,
-                                    itemBuilder: (_, index) {
-                                      return Column(
-                                        children: [
-                                          if (index == 0) 9.vGap,
-                                          Container(
-                                            height: 75.w,
-                                            decoration: BoxDecoration(
-                                                color: AppColors.cF2F2F2,
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        16.w)),
-                                            margin: EdgeInsets.symmetric(
-                                                horizontal: 16.w),
-                                            padding: EdgeInsets.only(left: 9.w),
-                                            child: Row(
-                                              children: [
-                                                Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Container(
-                                                      alignment:
-                                                          Alignment.center,
-                                                      width: 62.w,
-                                                      height: 32.w,
-                                                      child: Stack(
-                                                        children: [
-                                                          Container(
-                                                            margin:
-                                                                EdgeInsets.only(
-                                                                    top: 12.w),
-                                                            child: 1
-                                                                .hLine, //todo 换成箭头图片
-                                                          ),
-                                                          _generateBarChart()
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    3.vGap,
-                                                    Text("L5 Avg.4.8",
-                                                        style: 10.w4(
-                                                            color: AppColors
-                                                                .c666666))
-                                                  ],
-                                                ),
-                                                18.hGap,
-                                                Container(
-                                                  width: 62.w,
-                                                  height: 55.w,
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              9.w),
-                                                      border: Border.all(
-                                                          color:
-                                                              AppColors.ce5e5e5,
-                                                          width: 1)),
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Text(
-                                                        "25.6",
-                                                        style: TextStyle(
-                                                            fontSize: 18.sp,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color: AppColors
-                                                                .cFF7954),
-                                                      ),
-                                                      Text(
-                                                        "PTS",
-                                                        style: TextStyle(
-                                                            fontSize: 11.sp,
-                                                            color: AppColors
-                                                                .cFF7954),
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                                15.hGap,
-                                                InkWell(
-                                                  onTap: () {
-                                                    print('点击了more');
-                                                  },
-                                                  child: Container(
-                                                    height: 24.w,
-                                                    width: 83.w,
-                                                    alignment: Alignment.center,
-                                                    decoration: BoxDecoration(
-                                                        color:
-                                                            AppColors.cFF7954,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(
-                                                                    12.w)),
-                                                    child: Text.rich(
-                                                        textAlign:
-                                                            TextAlign.start,
-                                                        TextSpan(children: [
-                                                          TextSpan(
-                                                              text: "MORE",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize:
-                                                                      11.sp,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold)),
-                                                          TextSpan(
-                                                              text: " +1.5",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize:
-                                                                      9.sp))
-                                                        ])),
-                                                  ),
-                                                ),
-                                                4.hGap,
-                                                InkWell(
-                                                  onTap: () {
-                                                    print('点击了less');
-                                                  },
-                                                  child: Container(
-                                                    height: 24.w,
-                                                    width: 83.w,
-                                                    alignment: Alignment.center,
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                            color: AppColors
-                                                                .cFF7954,
-                                                            width: 1),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(
-                                                                    12.w)),
-                                                    child: Text.rich(
-                                                        TextSpan(children: [
-                                                      TextSpan(
-                                                          text: "LESS",
-                                                          style: TextStyle(
-                                                              color: AppColors
-                                                                  .cFF7954,
-                                                              fontSize: 11.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold)),
-                                                      TextSpan(
-                                                          text: " +1.5",
-                                                          style: TextStyle(
-                                                              color: AppColors
-                                                                  .cFF7954,
-                                                              fontSize: 9.sp))
-                                                    ])),
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                          //todo index==9
-                                          //底部留边距
-                                          Divider(
-                                            height: index == 9 ? 70.w : 9.w,
-                                            color: AppColors.cE6E6E6,
-                                          )
-                                        ],
-                                      );
-                                    }),
-                              ),
-                            ],
-                          ),
-                          //下注
-                          Positioned(
-                              left: 63.w,
-                              right: 63.w,
-                              bottom: 20.w,
-                              child: const RankStartButton())
-                        ],
-                      ),
-                    );
-                  });
+              _gussItemDetailDialog(context);
             },
             child: SizedBox(
               height: 55.w,
@@ -500,38 +163,40 @@ class _GussItemState extends State<GussItem>
                               ]),
                             ),
                           ),
-                          Container(
-                            constraints: BoxConstraints(maxWidth: 89.w),
-                            margin: EdgeInsets.only(left: 10.w),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "PLAYER NAME",
-                                  style: TextStyle(
-                                      fontSize: 12.sp,
-                                      overflow: TextOverflow.ellipsis,
-                                      color: AppColors.c666666),
-                                ),
-                                Text(
-                                  "vs nop 8:05am",
-                                  style: TextStyle(
-                                      color: AppColors.cB3B3B3, fontSize: 8.sp),
-                                ),
-                                SizedBox(
-                                  height: 3.w,
-                                ),
-                                Text(
-                                  "PPG: 26P",
-                                  style: TextStyle(
-                                      color: AppColors.cB3B3B3, fontSize: 8.sp),
-                                ),
-                                Text(
-                                  "L10: 26.7P",
-                                  style: TextStyle(
-                                      color: AppColors.cB3B3B3, fontSize: 8.sp),
-                                )
-                              ],
+                          Expanded(
+                            child: Container(
+                              constraints: BoxConstraints(maxWidth: 89.w),
+                              margin: EdgeInsets.only(left: 10.w),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "PLAYER NAME",
+                                    style: TextStyle(
+                                        fontSize: 12.sp,
+                                        overflow: TextOverflow.ellipsis,
+                                        color: AppColors.c666666),
+                                  ),
+                                  Text(
+                                    "vs nop 8:05am",
+                                    style: TextStyle(
+                                        color: AppColors.cB3B3B3, fontSize: 8.sp),
+                                  ),
+                                  SizedBox(
+                                    height: 3.w,
+                                  ),
+                                  Text(
+                                    "PPG: 26P",
+                                    style: TextStyle(
+                                        color: AppColors.cB3B3B3, fontSize: 8.sp),
+                                  ),
+                                  Text(
+                                    "L10: 26.7P",
+                                    style: TextStyle(
+                                        color: AppColors.cB3B3B3, fontSize: 8.sp),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                           Container(
@@ -706,6 +371,358 @@ class _GussItemState extends State<GussItem>
         ],
       ),
     );
+  }
+
+  void _gussItemDetailDialog(BuildContext context) {
+    showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (context) {
+          return Container(
+            constraints: BoxConstraints(maxHeight: 500.w),
+            child: Stack(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                      color: AppColors.cE6E6E6,
+                      borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(22.w),
+                          topLeft: Radius.circular(22.w))),
+                ),
+                Container(
+                  height: 42.w,
+                  decoration: BoxDecoration(
+                      color: AppColors.cFF7954,
+                      borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(22.w),
+                          topLeft: Radius.circular(22.w))),
+                ),
+                Column(
+                  children: [
+                    SizedBox(
+                      height: 2.w,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          color: AppColors.c262626,
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(22.w),
+                              topLeft: Radius.circular(22.w))),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  Get.back(id: GlobalNestedKey.PICKS);
+                                },
+                                child: Container(
+                                    height: 42.w,
+                                    width: 42.w,
+                                    child: Image.asset(
+                                      Assets.iconClosePng,
+                                      width: 13.w,
+                                    )),
+                              )
+                            ],
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(
+                                left: 27.w, bottom: 17.w),
+                            child: Row(
+                              crossAxisAlignment:
+                                  CrossAxisAlignment.center,
+                              children: [
+                                Stack(
+                                  children: [
+                                    SizedBox(
+                                      width: 70.w,
+                                      height: 70.w,
+                                    ),
+                                    Positioned(
+                                      top: 0,
+                                      bottom: 0,
+                                      child: Center(
+                                        child: Container(
+                                            width: 60.w,
+                                            height: 60.w,
+                                            decoration: BoxDecoration(
+                                                color: Colors.white
+                                                    .withOpacity(.1),
+                                                borderRadius:
+                                                    BorderRadius
+                                                        .circular(
+                                                            32.w))),
+                                      ),
+                                    ),
+                                    Positioned(
+                                        bottom: 6.w,
+                                        child: Container(
+                                            width: 63.w,
+                                            height: 55.w,
+                                            alignment: Alignment
+                                                .bottomCenter,
+                                            child: Image.asset(
+                                              Assets.testTeamLogoPng,
+                                              width: 55.w,
+                                              fit: BoxFit.fitWidth,
+                                            ))),
+                                    Text(
+                                      "SS",
+                                      style: TextStyle(
+                                          color: AppColors.cF2F2F2,
+                                          fontSize: 21.w,
+                                          fontWeight:
+                                              FontWeight.bold),
+                                    )
+                                  ],
+                                ),
+                                SizedBox(
+                                  width: 9.w,
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "Star Name",
+                                        style: TextStyle(
+                                            color: AppColors.cD9D9D9,
+                                            fontSize: 18.sp,
+                                            fontWeight:
+                                                FontWeight.bold),
+                                      ),
+                                      Text(
+                                        "NYY SF/SF",
+                                        style: TextStyle(
+                                            color: AppColors.c666666,
+                                            fontSize: 14.sp,
+                                            fontWeight:
+                                                FontWeight.bold),
+                                      ),
+                                      Text(
+                                        "How will PLAYERNAME do vs MIN Twins?",
+                                        style: TextStyle(
+                                            color: AppColors.cFF7954,
+                                            fontSize: 12.sp,
+                                            fontWeight:
+                                                FontWeight.bold),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: ListView.builder(
+                          physics: const BouncingScrollPhysics(),
+                          itemCount: 10,
+                          itemBuilder: (_, index) {
+                            return Column(
+                              children: [
+                                if (index == 0) 9.vGap,
+                                Container(
+                                  height: 75.w,
+                                  decoration: BoxDecoration(
+                                      color: AppColors.cF2F2F2,
+                                      borderRadius:
+                                          BorderRadius.circular(
+                                              16.w)),
+                                  margin: EdgeInsets.symmetric(
+                                      horizontal: 16.w),
+                                  padding: EdgeInsets.only(left: 9.w),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Column(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                alignment:
+                                                Alignment.center,
+                                                width: 62.w,
+                                                height: 32.w,
+                                                child: Stack(
+                                                  children: [
+                                                    Container(
+                                                      margin:
+                                                      EdgeInsets.only(
+                                                          top: 12.w),
+                                                      child: 1
+                                                          .hLine, //todo 换成箭头图片
+                                                    ),
+                                                    _generateBarChart()
+                                                  ],
+                                                ),
+                                              ),
+                                              3.vGap,
+                                              Text("L5 Avg.4.8",
+                                                  style: 10.w4(
+                                                      color: AppColors
+                                                          .c666666))
+                                            ],
+                                          ),
+                                          18.hGap,
+                                          Container(
+                                            width: 62.w,
+                                            height: 55.w,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                BorderRadius.circular(
+                                                    9.w),
+                                                border: Border.all(
+                                                    color:
+                                                    AppColors.ce5e5e5,
+                                                    width: 1)),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment
+                                                  .center,
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment
+                                                  .center,
+                                              children: [
+                                                Text(
+                                                  "25.6",
+                                                  style: TextStyle(
+                                                      fontSize: 18.sp,
+                                                      fontWeight:
+                                                      FontWeight.bold,
+                                                      color: AppColors
+                                                          .cFF7954),
+                                                ),
+                                                Text(
+                                                  "PTS",
+                                                  style: TextStyle(
+                                                      fontSize: 11.sp,
+                                                      color: AppColors
+                                                          .cFF7954),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Expanded(
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          children: [
+                                          InkWell(
+                                            onTap: () {
+                                              print('点击了more');
+                                            },
+                                            child: Container(
+                                              height: 24.w,
+                                              width: 83.w,
+                                              alignment: Alignment.center,
+                                              decoration: BoxDecoration(
+                                                  color:
+                                                  AppColors.cFF7954,
+                                                  borderRadius:
+                                                  BorderRadius
+                                                      .circular(
+                                                      12.w)),
+                                              child: Text.rich(
+                                                  textAlign:
+                                                  TextAlign.start,
+                                                  TextSpan(children: [
+                                                    TextSpan(
+                                                        text: "MORE",
+                                                        style: TextStyle(
+                                                            color: Colors
+                                                                .white,
+                                                            fontSize:
+                                                            11.sp,
+                                                            fontWeight:
+                                                            FontWeight
+                                                                .bold)),
+                                                    TextSpan(
+                                                        text: " +1.5",
+                                                        style: TextStyle(
+                                                            color: Colors
+                                                                .white,
+                                                            fontSize:
+                                                            9.sp))
+                                                  ])),
+                                            ),
+                                          ),
+                                          4.hGap,
+                                          InkWell(
+                                            onTap: () {
+                                              print('点击了less');
+                                            },
+                                            child: Container(
+                                              height: 24.w,
+                                              width: 83.w,
+                                              alignment: Alignment.center,
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: AppColors
+                                                          .cFF7954,
+                                                      width: 1),
+                                                  borderRadius:
+                                                  BorderRadius
+                                                      .circular(
+                                                      12.w)),
+                                              child: Text.rich(
+                                                  TextSpan(children: [
+                                                    TextSpan(
+                                                        text: "LESS",
+                                                        style: TextStyle(
+                                                            color: AppColors
+                                                                .cFF7954,
+                                                            fontSize: 11.sp,
+                                                            fontWeight:
+                                                            FontWeight
+                                                                .bold)),
+                                                    TextSpan(
+                                                        text: " +1.5",
+                                                        style: TextStyle(
+                                                            color: AppColors
+                                                                .cFF7954,
+                                                            fontSize: 9.sp))
+                                                  ])),
+                                            ),
+                                          )
+                                        ],),
+                                      ),
+                                      9.hGap,
+                                    ],
+                                  ),
+                                ),
+                                //todo index==9
+                                //底部留边距
+                                Divider(
+                                  height: index == 9 ? 70.w : 9.w,
+                                  color: AppColors.cE6E6E6,
+                                )
+                              ],
+                            );
+                          }),
+                    ),
+                  ],
+                ),
+                //下注
+                Positioned(
+                    left: 63.w,
+                    right: 63.w,
+                    bottom: 20.w,
+                    child: const RankStartButton())
+              ],
+            ),
+          );
+        });
   }
 
   Color? tabLerpColor(

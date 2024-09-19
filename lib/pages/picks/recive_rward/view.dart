@@ -296,15 +296,14 @@ class ReciveRwardPage extends GetView<ReciveRwardController> {
                     height: 100,
                     width: 70,
                     margin: const EdgeInsets.all(4),
+                    padding: EdgeInsets.only(top: 9.w,bottom: 17.w),
                     decoration: BoxDecoration(
                         color: AppColors.cF2F2F2,
                         borderRadius: BorderRadius.circular(16.w)),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SizedBox(
-                          height: 9.w,
-                        ),
                         Text(
                           "PM 8:05",
                           style: TextStyle(
@@ -313,7 +312,7 @@ class ReciveRwardPage extends GetView<ReciveRwardController> {
                         SizedBox(
                           height: 5.w,
                         ),
-                        Container(
+                        SizedBox(
                           width: 63.w,
                           height: 63.w,
                           child: Stack(
@@ -324,14 +323,14 @@ class ReciveRwardPage extends GetView<ReciveRwardController> {
                                 Assets.testTeamLogoPng,
                                 width: 63.w,
                               ),
-                              Text("8x", style: 24.w7(color: AppColors.c262626))
+                              Text("8x", style: 24.w7(color: AppColors.c262626,height: 1))
                             ],
                           ),
                         ),
                         SizedBox(
                           height: 5.w,
                         ),
-                        Text("+256K", style: 30.w7(color: AppColors.c10A86A)),
+                        Text("+256K", style: 30.w7(color: AppColors.c10A86A,height: 1)),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -403,7 +402,7 @@ class ReciveRwardPage extends GetView<ReciveRwardController> {
                                 border: Border.all(
                                     color: AppColors.cFF7954, width: 1.w)),
                             child: Text("GET",
-                                style: 12.w7(color: AppColors.cFF7954)),
+                                style: 12.w7(color: AppColors.cFF7954,height: 1)),
                           ),
                         )
                       ],

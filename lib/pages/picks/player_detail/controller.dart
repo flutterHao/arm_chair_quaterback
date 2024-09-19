@@ -21,6 +21,7 @@ class PlayerDetailController extends GetxController
   final rateProgress = 0.0.obs;
   final statsScrollController = ScrollController();
   final statsIsScrolling = false.obs;
+  final validScreenWidth = 0.0.obs; //屏幕有效宽度，适配web屏幕
 
   /// 0-180
 
@@ -48,7 +49,6 @@ class PlayerDetailController extends GetxController
   @override
   void onInit() {
     super.onInit();
-    _initAnimations();
     statsScrollController.addListener(() {
       if (!statsIsScrolling.value && statsScrollController.offset > 5) {
         statsIsScrolling.value = true;
@@ -63,6 +63,7 @@ class PlayerDetailController extends GetxController
   @override
   void onReady() {
     super.onReady();
+    _initAnimations();
   }
 
   /// 在 [onDelete] 方法之前调用。
@@ -74,6 +75,8 @@ class PlayerDetailController extends GetxController
   /// dispose 释放内存
   @override
   void dispose() {
+    _animationController.dispose();
+    _rateAnimationController?.dispose();
     super.dispose();
   }
 
@@ -184,7 +187,7 @@ class PlayerDetailController extends GetxController
       _otherAnimation,
       _rateBoxOpacityAnimation;
 
-  final startLeft = ((Get.width - 16.w - 119.w) / 2).obs;
+  final Rx<double> startLeft = RxDouble(-1111);
   final propertyLeft = (-161.w).obs;
   final starSize = 119.w.obs;
   final starRotate = 0.0.obs;
@@ -193,6 +196,7 @@ class PlayerDetailController extends GetxController
   final other = 0.0.obs;
 
   void _initAnimations() {
+    print('validScreenWidth: ${validScreenWidth.value}');
     _animationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 1000))
       ..addListener(() {
@@ -209,7 +213,7 @@ class PlayerDetailController extends GetxController
     _starSizeAnimation = Tween(begin: 119.w, end: 68.w).animate(CurvedAnimation(
         parent: _animationController, curve: const Interval(0, .1)));
     _starTranslateAnimation =
-        Tween(begin: (Get.width - 16.w - 119.w) / 2, end: -15.w).animate(
+        Tween(begin: (validScreenWidth.value - 16.w - 119.w) / 2, end: -15.w).animate(
             CurvedAnimation(
                 parent: _animationController, curve: const Interval(0.2, 0.4)));
     _starRotateAnimation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
@@ -229,7 +233,6 @@ class PlayerDetailController extends GetxController
             var e = dialogListDatas[i];
             target += e ? 180 * .25 : 0;
           }
-          print('target:$target');
           if (target > 0) {
             _rateAnimationStart(0, target);
           }

@@ -4,6 +4,7 @@ import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_bar.dart';
+import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/pages/picks/pick_rank/bindings.dart';
 import 'package:arm_chair_quaterback/pages/picks/pick_rank/view.dart';
@@ -69,15 +70,16 @@ class _PicksIndexPageState extends State<PicksIndexPage>
 
   // 主视图
   Widget _buildView() {
-    return Expanded(
-      child: CustomScrollView(
-        physics: const BouncingScrollPhysics(),
-        controller: picksIndexController.scrollController,
-        slivers: [
-          //banner
-          SliverToBoxAdapter(
+    return CustomScrollView(
+      physics: const BouncingScrollPhysics(),
+      controller: picksIndexController.scrollController,
+      slivers: [
+        SliverPadding(padding: EdgeInsets.only(top: 40.w+MediaQuery.of(context).padding.top+6.w+11.w)),
+        //banner
+        SliverToBoxAdapter(
+          child: AspectRatio(
+            aspectRatio: 315/137,
             child: Container(
-              height: 153.w,
               margin: EdgeInsets.only(top: 16.w),
               child: Center(
                 child: Swiper(
@@ -101,135 +103,136 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                   itemBuilder: (_, index) {
                     return Align(
                       alignment: Alignment.topCenter,
-                      child: Container(
-                          height: 137.w,
-                          decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(16.w)),
-                          child: Center(child: Text("Banner$index"))),
+                      child: AspectRatio(
+                        aspectRatio: 315/137,
+                        child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16.w)),
+                            child: Image.asset(Assets.uiBannerAwardPng,height: 137.w,fit: BoxFit.fitWidth,)),
+                      ),
                     );
                   },
                 ),
               ),
             ),
           ),
-          SliverToBoxAdapter(
+        ),
+        SliverToBoxAdapter(
+          child: Container(
+            margin: EdgeInsets.only(
+                left: 16.w, right: 37.w, top: 20.w, bottom: 13.w),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Point Guessing",
+                  style: 19.w7(color: AppColors.c000000),
+                ),
+                Text(
+                  "07/28 Wed",
+                  style: TextStyle(fontSize: 13.sp, color: AppColors.c666666),
+                )
+              ],
+            ),
+          ),
+        ),
+        //竞猜球员列表
+        SliverFixedExtentList(
+          itemExtent: 125.w, //列表项高度固定
+          delegate: SliverChildBuilderDelegate(
+            (_, index) => GussItem(),
+            childCount: 10,
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: Container(
+            margin: EdgeInsets.only(
+                left: 16.w, right: 37.w, top: 20.w, bottom: 13.w),
+            child: Text(
+              "Point Guessing",
+              style: 19.w7(color: AppColors.c000000),
+            ),
+          ),
+        ),
+        //竞猜榜单
+        SliverToBoxAdapter(
+          child: InkWell(
+            onTap: () => Get.toNamed(RouteNames.picksPickRank,
+                id: GlobalNestedKey.PICKS),
             child: Container(
-              margin: EdgeInsets.only(
-                  left: 16.w, right: 37.w, top: 20.w, bottom: 13.w),
+              height: 36.w,
+              alignment: Alignment.center,
+              padding: EdgeInsets.only(left: 24.w, right: 26.w),
+              margin: EdgeInsets.symmetric(horizontal: 16.w),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(16.w),
+                      topRight: Radius.circular(16.w))),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "Point Guessing",
-                    style: 19.w7(color: AppColors.c000000),
+                  Container(
+                    width: 90.w,
+                    child: Text(
+                      "LIST",
+                      style: TextStyle(
+                          fontSize: 10.sp, color: AppColors.c666666),
+                    ),
                   ),
-                  Text(
-                    "07/28 Wed",
-                    style: TextStyle(fontSize: 13.sp, color: AppColors.c666666),
+                  Expanded(
+                    child: Text(
+                      "NAME",
+                      style: TextStyle(
+                          fontSize: 10.sp, color: AppColors.c666666),
+                    ),
+                  ),
+                  Container(
+                    alignment: Alignment.centerRight,
+                    width: 55.w,
+                    child: Text(
+                      "JETTON",
+                      style: TextStyle(
+                          fontSize: 10.sp, color: AppColors.c666666),
+                    ),
                   )
                 ],
               ),
             ),
           ),
-          //竞猜球员列表
-          SliverFixedExtentList(
-            itemExtent: 125.w, //列表项高度固定
-            delegate: SliverChildBuilderDelegate(
-              (_, index) => GussItem(),
-              childCount: 10,
-            ),
+        ),
+        SliverFixedExtentList(
+            delegate: SliverChildBuilderDelegate(childCount: 10, (_, index) {
+              return InkWell(
+                onTap: () => Get.toNamed(RouteNames.picksPickRank,
+                    id: GlobalNestedKey.PICKS),
+                child: Container(
+                    alignment: Alignment.centerLeft,
+                    decoration: BoxDecoration(
+                        color:
+                            index % 2 != 0 ? Colors.white : AppColors.cEDEDED,
+                        borderRadius: index == 9
+                            ? BorderRadius.only(
+                                bottomRight: Radius.circular(16.w),
+                                bottomLeft: Radius.circular(16.w))
+                            : null),
+                    padding: EdgeInsets.only(left: 24.w, right: 26.w),
+                    margin: EdgeInsets.symmetric(horizontal: 16.w),
+                    child: GussPlayerItem(
+                      index,
+                      //滑动到榜单的第3个列表项时显示个人榜单信息
+                      key: index == 2 ? picksIndexController.targetKey : null,
+                    )),
+              );
+            }),
+            itemExtent: 70.w),
+        SliverToBoxAdapter(
+          child: SizedBox(
+            height: 90.w,
           ),
-          SliverToBoxAdapter(
-            child: Container(
-              margin: EdgeInsets.only(
-                  left: 16.w, right: 37.w, top: 20.w, bottom: 13.w),
-              child: Text(
-                "Point Guessing",
-                style: 19.w7(color: AppColors.c000000),
-              ),
-            ),
-          ),
-          //竞猜榜单
-          SliverToBoxAdapter(
-            child: InkWell(
-              onTap: () => Get.toNamed(RouteNames.picksPickRank,
-                  id: GlobalNestedKey.PICKS),
-              child: Container(
-                height: 36.w,
-                alignment: Alignment.center,
-                padding: EdgeInsets.only(left: 24.w, right: 26.w),
-                margin: EdgeInsets.symmetric(horizontal: 16.w),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(16.w),
-                        topRight: Radius.circular(16.w))),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      width: 90.w,
-                      child: Text(
-                        "LIST",
-                        style: TextStyle(
-                            fontSize: 10.sp, color: AppColors.c666666),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        "NAME",
-                        style: TextStyle(
-                            fontSize: 10.sp, color: AppColors.c666666),
-                      ),
-                    ),
-                    Container(
-                      alignment: Alignment.centerRight,
-                      width: 55.w,
-                      child: Text(
-                        "JETTON",
-                        style: TextStyle(
-                            fontSize: 10.sp, color: AppColors.c666666),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ),
-          SliverFixedExtentList(
-              delegate: SliverChildBuilderDelegate(childCount: 10, (_, index) {
-                return InkWell(
-                  onTap: () => Get.toNamed(RouteNames.picksPickRank,
-                      id: GlobalNestedKey.PICKS),
-                  child: Container(
-                      alignment: Alignment.centerLeft,
-                      decoration: BoxDecoration(
-                          color:
-                              index % 2 != 0 ? Colors.white : AppColors.cEDEDED,
-                          borderRadius: index == 9
-                              ? BorderRadius.only(
-                                  bottomRight: Radius.circular(16.w),
-                                  bottomLeft: Radius.circular(16.w))
-                              : null),
-                      padding: EdgeInsets.only(left: 24.w, right: 26.w),
-                      margin: EdgeInsets.symmetric(horizontal: 16.w),
-                      child: GussPlayerItem(
-                        index,
-                        //滑动到榜单的第3个列表项时显示个人榜单信息
-                        key: index == 2 ? picksIndexController.targetKey : null,
-                      )),
-                );
-              }),
-              itemExtent: 70.w),
-          SliverToBoxAdapter(
-            child: SizedBox(
-              height: 90.w,
-            ),
-          )
-        ],
-      ),
+        )
+      ],
     );
   }
 
@@ -240,7 +243,7 @@ class _PicksIndexPageState extends State<PicksIndexPage>
       builder: (_) {
         return BlackAppWidget(
           const UserInfoBar(),
-          bodyWidget: _buildView(),
+          totalScreenWidget: _buildView(),
           floatWidgets: [
             //个人榜单信息浮窗
             Obx(() {
