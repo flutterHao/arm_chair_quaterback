@@ -15,7 +15,9 @@ import 'package:get/get.dart';
 ///created at 2024/9/10/10:58
 
 class GussItem extends StatefulWidget {
-  const GussItem({super.key});
+  const GussItem(this.index, {super.key});
+
+  final int index;
 
   @override
   State<GussItem> createState() => _GussItemState();
@@ -28,7 +30,8 @@ class _GussItemState extends State<GussItem>
   @override
   void initState() {
     super.initState();
-    tabController = TabController(length: 3, vsync: this);
+    tabController =
+        TabController(length: widget.index % 2 == 0 ? 2 : 4, vsync: this);
   }
 
   FlTitlesData get titlesData => const FlTitlesData(
@@ -137,7 +140,7 @@ class _GussItemState extends State<GussItem>
                   controller: tabController,
                   physics: const BouncingScrollPhysics(),
                   children: List.generate(
-                    3, //todo
+                    tabController.length, //todo
                     (index) => Container(
                       margin: EdgeInsets.only(left: 13.w, right: 11.w),
                       child: Row(
@@ -172,22 +175,28 @@ class _GussItemState extends State<GussItem>
                                 children: [
                                   Text(
                                     "PLAYER NAME",
-                                    style:  13.w4(color: AppColors.c666666,height: 1,overflow: TextOverflow.ellipsis),
+                                    style: 13.w4(
+                                        color: AppColors.c666666,
+                                        height: 1,
+                                        overflow: TextOverflow.ellipsis),
                                   ),
                                   4.vGap,
                                   Text(
                                     "VS NOP 8:05AM",
-                                    style: 9.w4(color: AppColors.cB3B3B3,height: 1),
+                                    style: 9.w4(
+                                        color: AppColors.cB3B3B3, height: 1),
                                   ),
                                   8.vGap,
                                   Text(
                                     "PPG: 26P",
-                                    style:  9.w4(color: AppColors.cB3B3B3,height: 1),
+                                    style: 9.w4(
+                                        color: AppColors.cB3B3B3, height: 1),
                                   ),
                                   3.vGap,
                                   Text(
                                     "L10: 26.7P",
-                                    style:  9.w4(color: AppColors.cB3B3B3,height: 1),
+                                    style: 9.w4(
+                                        color: AppColors.cB3B3B3, height: 1),
                                   )
                                 ],
                               ),
@@ -292,6 +301,7 @@ class _GussItemState extends State<GussItem>
             child: TLBuildWidget(
                 controller: tabController,
                 builder: (current, next, progress, totalProgress) {
+                  int TABLENGTH = 4;
                   return Column(
                     children: [
                       LayoutBuilder(builder: (context, constraints) {
@@ -308,13 +318,11 @@ class _GussItemState extends State<GussItem>
                               width: 8.w,
                               height: 2.w,
                               margin: EdgeInsets.only(
-                                  left: (constraints.maxWidth /
-                                                  tabController.length -
-                                              8.w) /
-                                          2 +
-                                      (constraints.maxWidth /
-                                              tabController.length) *
-                                          totalProgress),
+                                  left:
+                                      (constraints.maxWidth / TABLENGTH - 8.w) /
+                                              2 +
+                                          (constraints.maxWidth / TABLENGTH) *
+                                              totalProgress),
                               decoration: BoxDecoration(
                                   color: AppColors.cFF7954,
                                   borderRadius: BorderRadius.circular(1.w)),
@@ -329,31 +337,38 @@ class _GussItemState extends State<GussItem>
                         height: 24.w,
                         width: double.infinity,
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children:
-                              List.generate(tabController.length, (index) {
+                          children: List.generate(TABLENGTH, (index) {
                             var activeColor = AppColors.c1A1A1A;
                             var normalColor = AppColors.cB3B3B3;
-                            return InkWell(
-                              onTap: () => tabController.animateTo(index),
-                              child: Container(
-                                padding: EdgeInsets.symmetric(horizontal: 10.w),
-                                alignment: Alignment.centerRight,
-                                child: Text("PTS",
-                                    style: TextStyle(
-                                        //逻辑：不做动画时animationValue等于index，currentIndex设置激活状态；做动画时，
-                                        //     比较animationValue和currentIndex的大小来判断滚动方向，
-                                        //     animationValue大于currentIndex时滚动到下一个，小于时滚动到上一个；
-                                        //     获取到即将到来的index做进入动画，currentIndex做推出动画，其他项保持未激活状态
-                                        color: current == index
-                                            ? Color.lerp(activeColor,
-                                                normalColor, progress)
-                                            : next == index
-                                                ? Color.lerp(normalColor,
-                                                    activeColor, progress)
-                                                : normalColor,
-                                        fontSize: 11.sp)),
-                              ),
+                            return Expanded(
+                              flex: 1,
+                              child: index >= tabController.length
+                                  ? const SizedBox.shrink()
+                                  : InkWell(
+                                      onTap: () =>
+                                          tabController.animateTo(index),
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 10.w),
+                                        alignment: Alignment.center,
+                                        child: Text("PTS",
+                                            style: TextStyle(
+                                                //逻辑：不做动画时animationValue等于index，currentIndex设置激活状态；做动画时，
+                                                //     比较animationValue和currentIndex的大小来判断滚动方向，
+                                                //     animationValue大于currentIndex时滚动到下一个，小于时滚动到上一个；
+                                                //     获取到即将到来的index做进入动画，currentIndex做推出动画，其他项保持未激活状态
+                                                color: current == index
+                                                    ? Color.lerp(activeColor,
+                                                        normalColor, progress)
+                                                    : next == index
+                                                        ? Color.lerp(
+                                                            normalColor,
+                                                            activeColor,
+                                                            progress)
+                                                        : normalColor,
+                                                fontSize: 11.sp)),
+                                      ),
+                                    ),
                             );
                           }),
                         ),
@@ -422,11 +437,9 @@ class _GussItemState extends State<GussItem>
                             ],
                           ),
                           Container(
-                            margin: EdgeInsets.only(
-                                left: 27.w, bottom: 17.w),
+                            margin: EdgeInsets.only(left: 27.w, bottom: 17.w),
                             child: Row(
-                              crossAxisAlignment:
-                                  CrossAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Stack(
                                   children: [
@@ -445,9 +458,8 @@ class _GussItemState extends State<GussItem>
                                                 color: Colors.white
                                                     .withOpacity(.1),
                                                 borderRadius:
-                                                    BorderRadius
-                                                        .circular(
-                                                            32.w))),
+                                                    BorderRadius.circular(
+                                                        32.w))),
                                       ),
                                     ),
                                     Positioned(
@@ -455,8 +467,7 @@ class _GussItemState extends State<GussItem>
                                         child: Container(
                                             width: 63.w,
                                             height: 55.w,
-                                            alignment: Alignment
-                                                .bottomCenter,
+                                            alignment: Alignment.bottomCenter,
                                             child: Image.asset(
                                               Assets.testTeamLogoPng,
                                               width: 55.w,
@@ -467,8 +478,7 @@ class _GussItemState extends State<GussItem>
                                       style: TextStyle(
                                           color: AppColors.cF2F2F2,
                                           fontSize: 21.w,
-                                          fontWeight:
-                                              FontWeight.bold),
+                                          fontWeight: FontWeight.bold),
                                     )
                                   ],
                                 ),
@@ -479,32 +489,28 @@ class _GussItemState extends State<GussItem>
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
                                         "Star Name",
                                         style: TextStyle(
                                             color: AppColors.cD9D9D9,
                                             fontSize: 18.sp,
-                                            fontWeight:
-                                                FontWeight.bold),
+                                            fontWeight: FontWeight.bold),
                                       ),
                                       Text(
                                         "NYY SF/SF",
                                         style: TextStyle(
                                             color: AppColors.c666666,
                                             fontSize: 14.sp,
-                                            fontWeight:
-                                                FontWeight.bold),
+                                            fontWeight: FontWeight.bold),
                                       ),
                                       Text(
                                         "How will PLAYERNAME do vs MIN Twins?",
                                         style: TextStyle(
                                             color: AppColors.cFF7954,
                                             fontSize: 12.sp,
-                                            fontWeight:
-                                                FontWeight.bold),
+                                            fontWeight: FontWeight.bold),
                                       )
                                     ],
                                   ),
@@ -528,33 +534,31 @@ class _GussItemState extends State<GussItem>
                                   decoration: BoxDecoration(
                                       color: AppColors.cF2F2F2,
                                       borderRadius:
-                                          BorderRadius.circular(
-                                              16.w)),
-                                  margin: EdgeInsets.symmetric(
-                                      horizontal: 16.w),
+                                          BorderRadius.circular(16.w)),
+                                  margin:
+                                      EdgeInsets.symmetric(horizontal: 16.w),
                                   padding: EdgeInsets.only(left: 9.w),
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Row(
                                         children: [
                                           Column(
                                             mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                                MainAxisAlignment.center,
                                             children: [
                                               Container(
-                                                alignment:
-                                                Alignment.center,
+                                                alignment: Alignment.center,
                                                 width: 62.w,
                                                 height: 32.w,
                                                 child: Stack(
                                                   children: [
                                                     Container(
-                                                      margin:
-                                                      EdgeInsets.only(
+                                                      margin: EdgeInsets.only(
                                                           top: 12.w),
-                                                      child: 1
-                                                          .hLine, //todo 换成箭头图片
+                                                      child:
+                                                          1.hLine, //todo 换成箭头图片
                                                     ),
                                                     _generateBarChart()
                                                   ],
@@ -563,8 +567,7 @@ class _GussItemState extends State<GussItem>
                                               3.vGap,
                                               Text("L5 Avg.4.8",
                                                   style: 10.w4(
-                                                      color: AppColors
-                                                          .c666666))
+                                                      color: AppColors.c666666))
                                             ],
                                           ),
                                           18.hGap,
@@ -573,35 +576,29 @@ class _GussItemState extends State<GussItem>
                                             height: 55.w,
                                             decoration: BoxDecoration(
                                                 borderRadius:
-                                                BorderRadius.circular(
-                                                    9.w),
+                                                    BorderRadius.circular(9.w),
                                                 border: Border.all(
-                                                    color:
-                                                    AppColors.ce5e5e5,
+                                                    color: AppColors.ce5e5e5,
                                                     width: 1)),
                                             child: Column(
                                               mainAxisAlignment:
-                                              MainAxisAlignment
-                                                  .center,
+                                                  MainAxisAlignment.center,
                                               crossAxisAlignment:
-                                              CrossAxisAlignment
-                                                  .center,
+                                                  CrossAxisAlignment.center,
                                               children: [
                                                 Text(
                                                   "25.6",
                                                   style: TextStyle(
                                                       fontSize: 18.sp,
                                                       fontWeight:
-                                                      FontWeight.bold,
-                                                      color: AppColors
-                                                          .cFF7954),
+                                                          FontWeight.bold,
+                                                      color: AppColors.cFF7954),
                                                 ),
                                                 Text(
                                                   "PTS",
                                                   style: TextStyle(
                                                       fontSize: 11.sp,
-                                                      color: AppColors
-                                                          .cFF7954),
+                                                      color: AppColors.cFF7954),
                                                 )
                                               ],
                                             ),
@@ -610,86 +607,81 @@ class _GussItemState extends State<GussItem>
                                       ),
                                       Expanded(
                                         child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
                                           children: [
-                                          InkWell(
-                                            onTap: () {
-                                              print('点击了more');
-                                            },
-                                            child: Container(
-                                              height: 24.w,
-                                              width: 83.w,
-                                              alignment: Alignment.center,
-                                              decoration: BoxDecoration(
-                                                  color:
-                                                  AppColors.cFF7954,
-                                                  borderRadius:
-                                                  BorderRadius
-                                                      .circular(
-                                                      12.w)),
-                                              child: Text.rich(
-                                                  textAlign:
-                                                  TextAlign.start,
-                                                  TextSpan(children: [
-                                                    TextSpan(
-                                                        text: "MORE",
-                                                        style: TextStyle(
-                                                            color: Colors
-                                                                .white,
-                                                            fontSize:
-                                                            11.sp,
-                                                            fontWeight:
-                                                            FontWeight
-                                                                .bold)),
-                                                    TextSpan(
-                                                        text: " +1.5",
-                                                        style: TextStyle(
-                                                            color: Colors
-                                                                .white,
-                                                            fontSize:
-                                                            9.sp))
-                                                  ])),
+                                            InkWell(
+                                              onTap: () {
+                                                print('点击了more');
+                                              },
+                                              child: Container(
+                                                height: 24.w,
+                                                width: 83.w,
+                                                alignment: Alignment.center,
+                                                decoration: BoxDecoration(
+                                                    color: AppColors.cFF7954,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            12.w)),
+                                                child: Text.rich(
+                                                    textAlign: TextAlign.start,
+                                                    TextSpan(children: [
+                                                      TextSpan(
+                                                          text: "MORE",
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 11.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
+                                                      TextSpan(
+                                                          text: " +1.5",
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 9.sp))
+                                                    ])),
+                                              ),
                                             ),
-                                          ),
-                                          4.hGap,
-                                          InkWell(
-                                            onTap: () {
-                                              print('点击了less');
-                                            },
-                                            child: Container(
-                                              height: 24.w,
-                                              width: 83.w,
-                                              alignment: Alignment.center,
-                                              decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      color: AppColors
-                                                          .cFF7954,
-                                                      width: 1),
-                                                  borderRadius:
-                                                  BorderRadius
-                                                      .circular(
-                                                      12.w)),
-                                              child: Text.rich(
-                                                  TextSpan(children: [
-                                                    TextSpan(
-                                                        text: "LESS",
-                                                        style: TextStyle(
-                                                            color: AppColors
-                                                                .cFF7954,
-                                                            fontSize: 11.sp,
-                                                            fontWeight:
-                                                            FontWeight
-                                                                .bold)),
-                                                    TextSpan(
-                                                        text: " +1.5",
-                                                        style: TextStyle(
-                                                            color: AppColors
-                                                                .cFF7954,
-                                                            fontSize: 9.sp))
-                                                  ])),
-                                            ),
-                                          )
-                                        ],),
+                                            4.hGap,
+                                            InkWell(
+                                              onTap: () {
+                                                print('点击了less');
+                                              },
+                                              child: Container(
+                                                height: 24.w,
+                                                width: 83.w,
+                                                alignment: Alignment.center,
+                                                decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                        color:
+                                                            AppColors.cFF7954,
+                                                        width: 1),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            12.w)),
+                                                child: Text.rich(
+                                                    TextSpan(children: [
+                                                  TextSpan(
+                                                      text: "LESS",
+                                                      style: TextStyle(
+                                                          color:
+                                                              AppColors.cFF7954,
+                                                          fontSize: 11.sp,
+                                                          fontWeight:
+                                                              FontWeight.bold)),
+                                                  TextSpan(
+                                                      text: " +1.5",
+                                                      style: TextStyle(
+                                                          color:
+                                                              AppColors.cFF7954,
+                                                          fontSize: 9.sp))
+                                                ])),
+                                              ),
+                                            )
+                                          ],
+                                        ),
                                       ),
                                       9.hGap,
                                     ],
@@ -712,15 +704,15 @@ class _GussItemState extends State<GussItem>
                     left: 63.w,
                     right: 63.w,
                     bottom: 20.w,
-                    child: Center(child: Container(
-                        constraints: BoxConstraints(
-                          maxWidth: 300.w,
-                        ),
-                        child: const RankStartButton())))
+                    child: Center(
+                        child: Container(
+                            constraints: BoxConstraints(
+                              maxWidth: 300.w,
+                            ),
+                            child: const RankStartButton())))
               ],
             ),
           );
         });
   }
-
 }

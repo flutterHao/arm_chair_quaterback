@@ -74,11 +74,13 @@ class _PicksIndexPageState extends State<PicksIndexPage>
       physics: const BouncingScrollPhysics(),
       controller: picksIndexController.scrollController,
       slivers: [
-        SliverPadding(padding: EdgeInsets.only(top: 40.w+MediaQuery.of(context).padding.top+6.w+11.w)),
+        SliverPadding(
+            padding: EdgeInsets.only(
+                top: 40.w + MediaQuery.of(context).padding.top + 6.w + 11.w)),
         //banner
         SliverToBoxAdapter(
           child: AspectRatio(
-            aspectRatio: 315/137,
+            aspectRatio: 315 / 137,
             child: Container(
               margin: EdgeInsets.only(top: 16.w),
               child: Center(
@@ -103,12 +105,35 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                   itemBuilder: (_, index) {
                     return Align(
                       alignment: Alignment.topCenter,
-                      child: AspectRatio(
-                        aspectRatio: 315/137,
-                        child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(16.w)),
-                            child: Image.asset(Assets.uiBannerAwardPng,height: 137.w,fit: BoxFit.fitWidth,)),
+                      child: Stack(
+                        children: [
+                          AspectRatio(
+                            aspectRatio: 315 / 137,
+                            child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16.w)),
+                                child: Image.asset(
+                                  index == 0
+                                      ? Assets.uiBannerAwardPng
+                                      : index == 1
+                                          ? Assets.uiBannerRankPng
+                                          : Assets.uiBannerHistoryPng,
+                                  height: 137.w,
+                                  fit: BoxFit.fitWidth,
+                                )),
+                          ),
+                          if (index == 1)
+                            Positioned(
+                                bottom: 8.w,
+                                left: 0,
+                                right: 0,
+                                child: Center(
+                                    child: Text(
+                                  "RANK",
+                                  style: 19
+                                      .w7(color: AppColors.cE6E6E6, height: 1),
+                                )))
+                        ],
                       ),
                     );
                   },
@@ -141,7 +166,7 @@ class _PicksIndexPageState extends State<PicksIndexPage>
         SliverFixedExtentList(
           itemExtent: 125.w, //列表项高度固定
           delegate: SliverChildBuilderDelegate(
-            (_, index) => GussItem(),
+            (_, index) => GussItem(index),
             childCount: 10,
           ),
         ),
@@ -177,15 +202,15 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                     width: 90.w,
                     child: Text(
                       "LIST",
-                      style: TextStyle(
-                          fontSize: 10.sp, color: AppColors.c666666),
+                      style:
+                          TextStyle(fontSize: 10.sp, color: AppColors.c666666),
                     ),
                   ),
                   Expanded(
                     child: Text(
                       "NAME",
-                      style: TextStyle(
-                          fontSize: 10.sp, color: AppColors.c666666),
+                      style:
+                          TextStyle(fontSize: 10.sp, color: AppColors.c666666),
                     ),
                   ),
                   Container(
@@ -193,8 +218,8 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                     width: 55.w,
                     child: Text(
                       "JETTON",
-                      style: TextStyle(
-                          fontSize: 10.sp, color: AppColors.c666666),
+                      style:
+                          TextStyle(fontSize: 10.sp, color: AppColors.c666666),
                     ),
                   )
                 ],
@@ -323,9 +348,9 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                 bottom: 20.w,
                 child: Center(
                   child: Container(
-                    constraints: BoxConstraints(
-                      maxWidth: 300.w,
-                    ),
+                      constraints: BoxConstraints(
+                        maxWidth: 300.w,
+                      ),
                       child: const RankStartButton()),
                 ))
           ],

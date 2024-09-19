@@ -85,13 +85,13 @@ class _RankPageState extends State<RankPage>
                           child: Stack(
                             children: [
                               Container(
-                                margin: EdgeInsets.only(bottom: 76.w),
+                                margin: EdgeInsets.only(bottom: 86.w),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     //第2名
                                     Container(
-                                      margin: EdgeInsets.only(top: 81.w),
+                                      margin: EdgeInsets.only(top: 71.w),
                                       child: Column(
                                         children: [
                                           Stack(
@@ -163,7 +163,7 @@ class _RankPageState extends State<RankPage>
                                     ),
                                     //第1名
                                     Container(
-                                      margin: EdgeInsets.only(top: 34.w),
+                                      margin: EdgeInsets.only(top: 24.w),
                                       child: Column(
                                         children: [
                                           Stack(
@@ -316,10 +316,10 @@ class _RankPageState extends State<RankPage>
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Container(
-                                      margin: EdgeInsets.only(top: 20.w),
                                       width: 90.w,
                                       height: 78.w,
-                                      alignment: Alignment.center,
+                                      padding: EdgeInsets.only(top: 15.w),
+                                      alignment: Alignment.topCenter,
                                       decoration: BoxDecoration(
                                           color: Colors.white.withOpacity(.05),
                                           borderRadius: BorderRadius.only(
@@ -344,10 +344,10 @@ class _RankPageState extends State<RankPage>
                                       ),
                                     ),
                                     Container(
-                                      margin: EdgeInsets.only(top: 20.w),
                                       width: 90.w,
                                       height: 96.w,
-                                      alignment: Alignment.center,
+                                      padding: EdgeInsets.only(top: 15.w),
+                                      alignment: Alignment.topCenter,
                                       decoration: BoxDecoration(
                                           color: Colors.white.withOpacity(.05),
                                           borderRadius: BorderRadius.only(
@@ -372,10 +372,10 @@ class _RankPageState extends State<RankPage>
                                       ),
                                     ),
                                     Container(
-                                      margin: EdgeInsets.only(top: 20.w),
                                       width: 90.w,
                                       height: 63.w,
-                                      alignment: Alignment.center,
+                                      padding: EdgeInsets.only(top: 15.w),
+                                      alignment: Alignment.topCenter,
                                       decoration: BoxDecoration(
                                           color: Colors.white.withOpacity(.05),
                                           borderRadius: BorderRadius.only(
