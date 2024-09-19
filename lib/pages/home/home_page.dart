@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage>
                 // controller: controller.tabController,
                 // dividerHeight: 0,
                 // indicatorColor: Colors.transparent,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: controller.tabItems.map((e) {
                   int index = controller.tabItems.indexOf(e);
                   bool select = index == controller.tabIndex.value;
