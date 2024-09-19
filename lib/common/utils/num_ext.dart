@@ -29,11 +29,17 @@ extension NumExt on num {
   //     fontSize: kIsWeb ? toDouble() : toDouble().sp,
   //     color: color);
 
-  TextStyle w4({Color color = AppColors.c262626}) => TextStyle(
-      fontWeight: FontWeight.w400,
-      fontSize: kIsWeb ? toDouble() : toDouble().sp,
-      color: color,
-      fontFamily: FontFamily.fMedium);
+  TextStyle w4(
+          {Color color = AppColors.c262626,
+          TextOverflow? overflow,
+          double? height}) =>
+      TextStyle(
+          fontWeight: FontWeight.w400,
+          height: height,
+          overflow: overflow,
+          fontSize: kIsWeb ? toDouble() : toDouble().sp,
+          color: color,
+          fontFamily: FontFamily.fMedium);
 
   TextStyle w7(
           {Color color = AppColors.c262626,

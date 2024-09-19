@@ -437,11 +437,18 @@ class ReciveRwardPage extends GetView<ReciveRwardController> {
                 left: 63.w,
                 right: 63.w,
                 bottom: 20.w,
-                child: BtnBackground(
-                    child: Center(
-                  child:
-                      Text("RECEIVE", style: 16.w7(color: AppColors.cFFFFFF)),
-                )))
+                child: Center(
+                  child: Container(
+                    constraints: BoxConstraints(
+                      maxWidth: 300.w,
+                    ),
+                    child: BtnBackground(
+                        child: Center(
+                      child:
+                          Text("RECEIVE", style: 16.w7(color: AppColors.cFFFFFF)),
+                    )),
+                  ),
+                ))
           ],
         );
       },

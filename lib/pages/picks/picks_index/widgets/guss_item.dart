@@ -172,28 +172,22 @@ class _GussItemState extends State<GussItem>
                                 children: [
                                   Text(
                                     "PLAYER NAME",
-                                    style: TextStyle(
-                                        fontSize: 12.sp,
-                                        overflow: TextOverflow.ellipsis,
-                                        color: AppColors.c666666),
+                                    style:  13.w4(color: AppColors.c666666,height: 1,overflow: TextOverflow.ellipsis),
                                   ),
+                                  4.vGap,
                                   Text(
-                                    "vs nop 8:05am",
-                                    style: TextStyle(
-                                        color: AppColors.cB3B3B3, fontSize: 8.sp),
+                                    "VS NOP 8:05AM",
+                                    style: 9.w4(color: AppColors.cB3B3B3,height: 1),
                                   ),
-                                  SizedBox(
-                                    height: 3.w,
-                                  ),
+                                  8.vGap,
                                   Text(
                                     "PPG: 26P",
-                                    style: TextStyle(
-                                        color: AppColors.cB3B3B3, fontSize: 8.sp),
+                                    style:  9.w4(color: AppColors.cB3B3B3,height: 1),
                                   ),
+                                  3.vGap,
                                   Text(
                                     "L10: 26.7P",
-                                    style: TextStyle(
-                                        color: AppColors.cB3B3B3, fontSize: 8.sp),
+                                    style:  9.w4(color: AppColors.cB3B3B3,height: 1),
                                   )
                                 ],
                               ),
@@ -718,31 +712,15 @@ class _GussItemState extends State<GussItem>
                     left: 63.w,
                     right: 63.w,
                     bottom: 20.w,
-                    child: const RankStartButton())
+                    child: Center(child: Container(
+                        constraints: BoxConstraints(
+                          maxWidth: 300.w,
+                        ),
+                        child: const RankStartButton())))
               ],
             ),
           );
         });
   }
 
-  Color? tabLerpColor(
-      TabController tabController,
-      double animationValue,
-      int index,
-      Color activeColor,
-      int currentIndex,
-      Color normalColor,
-      double progress) {
-    var animationValue = 0.0;
-    tabController.animation?.addListener(() {
-      animationValue = tabController.animation?.value ?? 0;
-    });
-    return animationValue == index
-        ? activeColor
-        : currentIndex + (animationValue > currentIndex ? 1 : -1) == index
-            ? Color.lerp(normalColor, activeColor, progress)
-            : currentIndex == index
-                ? Color.lerp(activeColor, normalColor, progress)
-                : normalColor;
-  }
 }

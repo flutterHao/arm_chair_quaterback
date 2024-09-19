@@ -209,9 +209,9 @@ class PlayerDetailController extends GetxController
         rateBoxOpacity.value = _rateBoxOpacityAnimation.value;
       });
     _otherAnimation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-        parent: _animationController, curve: const Interval(0, .1)));
+        parent: _animationController, curve: const Interval(0, .2)));
     _starSizeAnimation = Tween(begin: 119.w, end: 68.w).animate(CurvedAnimation(
-        parent: _animationController, curve: const Interval(0, .1)));
+        parent: _animationController, curve: const Interval(0, .2)));
     _starTranslateAnimation =
         Tween(begin: (validScreenWidth.value - 16.w - 119.w) / 2, end: -15.w).animate(
             CurvedAnimation(
@@ -228,14 +228,7 @@ class PlayerDetailController extends GetxController
             parent: _animationController, curve: const Interval(0.8, .9)))
       ..addListener(() {
         if (_rateBoxOpacityAnimation.status == AnimationStatus.completed) {
-          double target = 0;
-          for (int i = 0; i < dialogListDatas.length; i++) {
-            var e = dialogListDatas[i];
-            target += e ? 180 * .25 : 0;
-          }
-          if (target > 0) {
-            _rateAnimationStart(0, target);
-          }
+          _rateStartAnimation();
         }
         if (_rateBoxOpacityAnimation.status == AnimationStatus.reverse) {
           if (rateProgress.value > 0) {
@@ -249,11 +242,26 @@ class PlayerDetailController extends GetxController
             parent: _animationController, curve: const Interval(.9, 1.0)));
   }
 
+  void _rateStartAnimation() {
+    double target = 0;
+    for (int i = 0; i < dialogListDatas.length; i++) {
+      var e = dialogListDatas[i];
+      target += e ? 180 * .25 : 0;
+    }
+    if (target > 0) {
+      _rateAnimationStart(0, target);
+    }
+  }
+
   final dialogListDatas = List.generate(10, (index) => false).obs;
 
   dialogListItemTap(int index) {
     var value = dialogListDatas[index];
-    var before = rateProgress.value;
+    double before = 0;
+    for (int i = 0; i < dialogListDatas.length; i++) {
+      var e = dialogListDatas[i];
+      before += e ? 180 * .25 : 0;
+    }
     var target = 0.0;
     if (!value) {
       target = (180 * .25) + before;

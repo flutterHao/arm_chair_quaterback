@@ -85,7 +85,7 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                 child: Swiper(
                   itemCount: 3,
                   autoplay: true,
-                  viewportFraction: .75,
+                  viewportFraction: .8,
                   indicatorLayout: PageIndicatorLayout.COLOR,
                   scale: .9,
                   pagination: PicksSwiperPaginationBuilder(),
@@ -321,7 +321,13 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                 left: 63.w,
                 right: 63.w,
                 bottom: 20.w,
-                child: const RankStartButton())
+                child: Center(
+                  child: Container(
+                    constraints: BoxConstraints(
+                      maxWidth: 300.w,
+                    ),
+                      child: const RankStartButton()),
+                ))
           ],
         );
       },
