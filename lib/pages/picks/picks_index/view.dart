@@ -154,22 +154,27 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                   "Point Guessing",
                   style: 19.w7(color: AppColors.c000000),
                 ),
-                Text(
-                  "07/28 Wed",
-                  style: TextStyle(fontSize: 13.sp, color: AppColors.c666666),
-                )
+                // Text(
+                //   "07/28 Wed",
+                //   style: TextStyle(fontSize: 13.sp, color: AppColors.c666666),
+                // )
               ],
             ),
           ),
         ),
         //竞猜球员列表
-        SliverFixedExtentList(
-          itemExtent: 125.w, //列表项高度固定
-          delegate: SliverChildBuilderDelegate(
-            (_, index) => GussItem(index),
-            childCount: 10,
-          ),
-        ),
+        GetBuilder<PicksIndexController>(
+            id: "guessList",
+            builder: (context) {
+              return SliverFixedExtentList(
+                itemExtent: 125.w, //列表项高度固定
+                delegate: SliverChildBuilderDelegate(
+                  (_, index) =>
+                      GussItem(index, picksIndexController.picksPlayers[index]),
+                  childCount: picksIndexController.picksPlayers.length,
+                ),
+              );
+            }),
         SliverToBoxAdapter(
           child: Container(
             margin: EdgeInsets.only(
@@ -342,17 +347,26 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                   ));
             }),
             //下注
-            Positioned(
-                left: 63.w,
-                right: 63.w,
-                bottom: 20.w,
-                child: Center(
-                  child: Container(
-                      constraints: BoxConstraints(
-                        maxWidth: 300.w,
-                      ),
-                      child: const RankStartButton()),
-                ))
+            Obx(() {
+              if (picksIndexController.costCount.value <= 0) {
+                return const SizedBox.shrink();
+              }
+              return Positioned(
+                  left: 63.w,
+                  right: 63.w,
+                  bottom: 20.w,
+                  child: Center(
+                    child: Container(
+                        constraints: BoxConstraints(
+                          maxWidth: 300.w,
+                        ),
+                        child: RankStartButton(
+                          picksIndexController.choiceData.length,
+                          picksIndexController.costCount.value,
+                          picksIndexController.betCount.value,
+                        )),
+                  ));
+            })
           ],
         );
       },

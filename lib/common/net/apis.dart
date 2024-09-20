@@ -36,15 +36,21 @@ class Api {
   static const String sendReviews = "$API_BASE_PATH/NBANews/sendReviews";
   static const String deleteReviews = "$API_BASE_PATH/NBANews/deleteReviews";
   static const String likeReviews = "$API_BASE_PATH/NBANews/likeReviews";
-  static const String getGuessInfos = "$API_BASE_PATH/NBANews/getGuessInfos";
+  static const String getGuessInfos = "$API_BASE_PATH/NBANews/getGuessInfos";//历史竞猜记录
+  static const String getGuessGamesInfo = "$API_BASE_PATH/NBANews/getGuessGamesInfo";//picks首页竞猜列表
+  static const String guess = "$API_BASE_PATH/NBANews/guess";
+
   //NBAData
   static const String teamRank = "$API_BASE_PATH/NBAData/queryNBATeamRank";
   static const String playerStats =
       "$API_BASE_PATH/NBAData/getNBAPlayerRankJSONInfo";
   static const String getNBAPlayerInfo =
       "$API_BASE_PATH/NBAData/getNBAPlayerInfo";
+  static const String getRecentAvg = "$API_BASE_PATH/NBAData/getRecentAvg";
 
   /// config
   static const String cNewsBanner = "$CONFIG_BASE_PATH/HightlightNews.json";
   static const String cNewsDefine = "$CONFIG_BASE_PATH/NewsDefine.json";
+  static const String cNBATeamDefine = "$CONFIG_BASE_PATH/NBATeamDefine.json";
+
 }

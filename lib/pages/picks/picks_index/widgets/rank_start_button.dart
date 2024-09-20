@@ -2,162 +2,88 @@ import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/btn_background.dart';
+import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 ///
 ///@auther gejiahui
 ///created at 2024/9/13/11:09
 
 class RankStartButton extends StatelessWidget {
-  const RankStartButton({
+  const RankStartButton(this.size,this.cost,this.bet,{
     super.key,
   });
 
+  final int size;
+  final double cost;
+  final double bet;
+
   @override
   Widget build(BuildContext context) {
-    return BtnBackground(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            height: 35.w,
-            width: 35.w,
-            margin: EdgeInsets.only(left: 3.w),
-            decoration: BoxDecoration(
-                color: AppColors.cFF7954,
-                borderRadius: BorderRadius.circular(18.w)),
-            alignment: Alignment.center,
-            child: Text.rich(
-                textAlign: TextAlign.end,
-                TextSpan(children: [
-                  TextSpan(
-                      text: "3",
-                      style: TextStyle(
-                          fontSize: 14.sp, fontWeight: FontWeight.bold)),
-                ])),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("CONFIRM", style: 16.w7(color: AppColors.cFFFFFF)),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    Assets.uiIconJettonPng,
-                    width: 12.w,
-                    fit: BoxFit.fitWidth,
-                  ),
-                  SizedBox(
-                    width: 3.w,
-                  ),
-                  Text(
-                    "999k",
-                    style: TextStyle(color: Colors.white, fontSize: 11.sp),
-                  )
-                ],
-              )
-            ],
-          ),
-          Center(
+    return InkWell(
+      onTap: () => Get.find<PicksIndexController>().guess(),
+      child: BtnBackground(
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Positioned(
+              left: 0,
               child: Container(
-            margin: EdgeInsets.only(right: 11.w),
-            child: Text(
-              "99.5x",
-              style: 14.w7(color: AppColors.cFF7954),
+                height: 35.w,
+                width: 35.w,
+                margin: EdgeInsets.only(left: 3.w),
+                decoration: BoxDecoration(
+                    color: AppColors.cFF7954,
+                    borderRadius: BorderRadius.circular(18.w)),
+                alignment: Alignment.center,
+                child: Text.rich(
+                    textAlign: TextAlign.end,
+                    TextSpan(children: [
+                      TextSpan(
+                          text: "$size",
+                          style: TextStyle(
+                              fontSize: 14.sp, fontWeight: FontWeight.bold)),
+                    ])),
+              ),
             ),
-          ))
-        ],
-      ),
-    );
-    return SizedBox(
-      height: 43.w,
-      // color: Colors.red,
-      child: Stack(
-        alignment: Alignment.topCenter,
-        children: [
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0.w,
-            child: Container(
-              height: 40.w,
-              decoration: BoxDecoration(
-                  color: AppColors.cFF7954,
-                  borderRadius: BorderRadius.circular(20.w)),
-            ),
-          ),
-          Container(
-            height: 40.w,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: AppColors.c000000,
-              borderRadius: BorderRadius.circular(20.w),
-            ),
-            child: Stack(
-              alignment: Alignment.centerLeft,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  height: 35.w,
-                  width: 35.w,
-                  margin: EdgeInsets.only(left: 3.w),
-                  decoration: BoxDecoration(
-                      color: AppColors.cFF7954,
-                      borderRadius: BorderRadius.circular(18.w)),
-                  alignment: Alignment.center,
-                  child: Text.rich(
-                      textAlign: TextAlign.end,
-                      TextSpan(children: [
-                        TextSpan(
-                            text: "3",
-                            style: TextStyle(
-                                fontSize: 14.sp, fontWeight: FontWeight.bold)),
-                      ])),
-                ),
-                Container(
-                  width: double.infinity,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("CONFIRM", style: 16.w7(color: AppColors.cFFFFFF)),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            Assets.uiIconJettonPng,
-                            width: 12.w,
-                            fit: BoxFit.fitWidth,
-                          ),
-                          SizedBox(
-                            width: 3.w,
-                          ),
-                          Text(
-                            "999k",
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 11.sp),
-                          )
-                        ],
-                      )
-                    ],
-                  ),
+                Text("CONFIRM", style: 16.w7(color: AppColors.cFFFFFF)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      Assets.uiIconJettonPng,
+                      width: 12.w,
+                      fit: BoxFit.fitWidth,
+                    ),
+                    SizedBox(
+                      width: 3.w,
+                    ),
+                    Text(
+                      "${cost}k",
+                      style: TextStyle(color: Colors.white, fontSize: 11.sp),
+                    )
+                  ],
                 )
               ],
             ),
-          ),
-          Positioned(
-              right: 10.w,
-              top: 0,
-              bottom: 0,
-              child: Center(
-                  child: Text(
-                "99.5x",
-                style: 14.w7(color: AppColors.cFF7954),
-              )))
-        ],
+            Positioned(
+              right: 0,
+              child: Container(
+                margin: EdgeInsets.only(right: 11.w),
+                child: Text(
+                  "${bet}x",
+                  style: 14.w7(color: AppColors.cFF7954),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

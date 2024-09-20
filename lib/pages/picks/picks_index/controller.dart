@@ -1,7 +1,13 @@
+import 'dart:math';
+
 import 'package:arm_chair_quaterback/common/entities/guess_infos_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/guess_param_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
+import 'package:arm_chair_quaterback/common/utils/param_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,6 +20,61 @@ class PicksIndexController extends GetxController {
   late ScrollController scrollController = ScrollController();
   final GlobalKey targetKey = GlobalKey(); // 用来标记目标 widget
   var isSelfInfoFloatShow = false.obs; //竞猜榜单自己的信息浮窗是否显示
+
+  late List<PicksPlayer> picksPlayers = [];
+
+  Map<int, double> choiceData = {};
+
+  var betCount = 0.0.obs; // 总赔率
+  var costCount = 0.0.obs; // 总花费
+
+  /// 选择了more/less
+  choiceOne(int index, double choice) {
+    if (choiceData[index] == choice) {
+      choiceData.remove(index);
+    } else {
+      choiceData[index] = choice;
+    }
+    var len = choiceData.length;
+    var odds = double.parse(picksPlayers[0].betOdds);
+    betCount.value = len == 0
+        ? odds
+        : double.parse(
+            (pow(odds, len) * double.parse(picksPlayers[0].betMutOdds))
+                .toStringAsFixed(1));
+    costCount.value = double.parse(
+        (len * double.parse(picksPlayers[0].betCost)).toStringAsFixed(1));
+  }
+
+  guess() {
+    print('guess--------');
+    List<GuessParamEntity> params = [];
+    for (int i = 0; i < choiceData.keys.length; i++) {
+      var key = choiceData.keys.toList()[i];
+      var value = choiceData[key];
+      var split = value.toString().split(".");
+      var betDataIndex = split[0];
+      var choiceIndex = split[1];
+      var picksPlayer = picksPlayers[key];
+      GuessInfosGuessInfos guessInfo = picksPlayer.guessInfo;
+      GuessParamEntity guessParamEntity = GuessParamEntity();
+      guessParamEntity.awayTeamId = guessInfo.awayTeamId;
+      guessParamEntity.gameId = guessInfo.gameId;
+      guessParamEntity.playerId = guessInfo.playerId;
+      guessParamEntity.gameStartTime = guessInfo.gameStartTime;
+      guessParamEntity.type = guessInfo.type;
+      GuessParamGuessData guessData = GuessParamGuessData();
+      var propertyName = picksPlayer.betData[int.parse(betDataIndex)];
+      guessData.guessAttr = propertyName;
+      guessData.guessChoice = int.parse(choiceIndex);
+      guessData.guessReferenceValue = guessInfo.guessReferenceValue
+          .toJson()[ParamUtils.getProKey(propertyName.toLowerCase())];
+      // guessParamEntity.guessData
+      params.add(guessParamEntity);
+    }
+
+    PicksApi.guess(params).then((result) {});
+  }
 
   // tap
   void handleTap(int index) {
@@ -58,15 +119,47 @@ class PicksIndexController extends GetxController {
     scrollController.addListener(_scrollListener);
 
     Future.wait([
-      PicksApi.getGuessInfos(),
+      PicksApi.getGuessGamesInfo(),
       PicksApi.getNBAPlayerInfo(),
-      PicksApi.getNewsDefine()
+      PicksApi.getNewsDefine(),
+      PicksApi.getNBATeamDefine()
     ]).then((results) {
       GuessInfosEntity guessInfosEntity = results[0] as GuessInfosEntity;
       NbaPlayerInfosEntity nbaPlayerInfosEntity =
           results[1] as NbaPlayerInfosEntity;
       NewsDefineEntity newsDefineEntity = results[2] as NewsDefineEntity;
-      for (GuessInfosGuessInfos e in guessInfosEntity.guessInfos) {}
+      List<NbaTeamEntity> nbaTeams = results[3] as List<NbaTeamEntity>;
+      for (GuessInfosGuessInfos e in guessInfosEntity.guessInfos) {
+        PicksPlayer picksPlayer = PicksPlayer();
+        picksPlayer.baseInfoList = nbaPlayerInfosEntity
+            .nBAPlayerInfos.playerBaseInfoList
+            .firstWhere((nba) => nba.playerId == e.playerId);
+        picksPlayer.dataAvgList = nbaPlayerInfosEntity
+            .nBAPlayerInfos.playerDataAvgList
+            .firstWhere((nba) => nba.playerId == e.playerId);
+        switch (picksPlayer.baseInfoList.position.toLowerCase()) {
+          case "c":
+            picksPlayer.betData = newsDefineEntity.cBetData;
+          case "pg":
+            picksPlayer.betData = newsDefineEntity.pgBetDate;
+          case "sg":
+            picksPlayer.betData = newsDefineEntity.sgBetData;
+          case "pf":
+            picksPlayer.betData = newsDefineEntity.pfBetData;
+          case "sf":
+            picksPlayer.betData = newsDefineEntity.sfBetData;
+        }
+        picksPlayer.betMutOdds = newsDefineEntity.betMutOdds;
+        picksPlayer.betCost = newsDefineEntity.betCost;
+        picksPlayer.betOdds = newsDefineEntity.betOdds;
+        picksPlayer.selfTeamInfo = nbaTeams.firstWhere(
+            (nba) => nba.id == picksPlayer.baseInfoList.teamId.toString());
+        picksPlayer.awayTeamInfo =
+            nbaTeams.firstWhere((nba) => nba.id == e.awayTeamId.toString());
+        picksPlayer.guessInfo = e;
+        picksPlayers.add(picksPlayer);
+      }
+      update(['guessList']);
     });
   }
 
@@ -88,13 +181,3 @@ class PicksIndexController extends GetxController {
     super.dispose();
   }
 }
-
-// class PicksPlayer {
-//   NbaPlayerInfosNBAPlayerInfosPlayerBaseInfoList baseInfoList;
-//   NbaPlayerInfosNBAPlayerInfosPlayerDataAvgList dataAvgList;
-//   List<String>? cBetData;
-//   List<String>? pfBetData;
-//   List<String>? pgBetDate;
-//   List<String>? sfBetData;
-//   List<String>? sgBetData;
-// }

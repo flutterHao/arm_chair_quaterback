@@ -62,6 +62,12 @@ GuessInfosGuessInfos $GuessInfosGuessInfosFromJson(Map<String, dynamic> json) {
   if (guessData != null) {
     guessInfosGuessInfos.guessData = guessData;
   }
+  final GuessInfosGuessInfosGuessReferenceValue? guessReferenceValue = jsonConvert
+      .convert<GuessInfosGuessInfosGuessReferenceValue>(
+      json['guessReferenceValue']);
+  if (guessReferenceValue != null) {
+    guessInfosGuessInfos.guessReferenceValue = guessReferenceValue;
+  }
   final int? id = jsonConvert.convert<int>(json['id']);
   if (id != null) {
     guessInfosGuessInfos.id = id;
@@ -97,6 +103,7 @@ Map<String, dynamic> $GuessInfosGuessInfosToJson(GuessInfosGuessInfos entity) {
   data['gameId'] = entity.gameId;
   data['gameStartTime'] = entity.gameStartTime;
   data['guessData'] = entity.guessData.map((v) => v.toJson()).toList();
+  data['guessReferenceValue'] = entity.guessReferenceValue.toJson();
   data['id'] = entity.id;
   data['playerId'] = entity.playerId;
   data['scId'] = entity.scId;
@@ -114,6 +121,7 @@ extension GuessInfosGuessInfosExtension on GuessInfosGuessInfos {
     int? gameId,
     int? gameStartTime,
     List<GuessInfosGuessInfosGuessData>? guessData,
+    GuessInfosGuessInfosGuessReferenceValue? guessReferenceValue,
     int? id,
     int? playerId,
     int? scId,
@@ -128,6 +136,7 @@ extension GuessInfosGuessInfosExtension on GuessInfosGuessInfos {
       ..gameId = gameId ?? this.gameId
       ..gameStartTime = gameStartTime ?? this.gameStartTime
       ..guessData = guessData ?? this.guessData
+      ..guessReferenceValue = guessReferenceValue ?? this.guessReferenceValue
       ..id = id ?? this.id
       ..playerId = playerId ?? this.playerId
       ..scId = scId ?? this.scId
@@ -377,5 +386,171 @@ extension GuessInfosGuessInfosGuessDataExtension on GuessInfosGuessInfosGuessDat
       ..status = status ?? this.status
       ..success = success ?? this.success
       ..winPro = winPro ?? this.winPro;
+  }
+}
+
+GuessInfosGuessInfosGuessReferenceValue $GuessInfosGuessInfosGuessReferenceValueFromJson(
+    Map<String, dynamic> json) {
+  final GuessInfosGuessInfosGuessReferenceValue guessInfosGuessInfosGuessReferenceValue = GuessInfosGuessInfosGuessReferenceValue();
+  final double? ast = jsonConvert.convert<double>(json['ast']);
+  if (ast != null) {
+    guessInfosGuessInfosGuessReferenceValue.ast = ast;
+  }
+  final double? blk = jsonConvert.convert<double>(json['blk']);
+  if (blk != null) {
+    guessInfosGuessInfosGuessReferenceValue.blk = blk;
+  }
+  final int? createTime = jsonConvert.convert<int>(json['createTime']);
+  if (createTime != null) {
+    guessInfosGuessInfosGuessReferenceValue.createTime = createTime;
+  }
+  final double? dreb = jsonConvert.convert<double>(json['dreb']);
+  if (dreb != null) {
+    guessInfosGuessInfosGuessReferenceValue.dreb = dreb;
+  }
+  final double? fga = jsonConvert.convert<double>(json['fga']);
+  if (fga != null) {
+    guessInfosGuessInfosGuessReferenceValue.fga = fga;
+  }
+  final double? fgm = jsonConvert.convert<double>(json['fgm']);
+  if (fgm != null) {
+    guessInfosGuessInfosGuessReferenceValue.fgm = fgm;
+  }
+  final double? fta = jsonConvert.convert<double>(json['fta']);
+  if (fta != null) {
+    guessInfosGuessInfosGuessReferenceValue.fta = fta;
+  }
+  final double? ftm = jsonConvert.convert<double>(json['ftm']);
+  if (ftm != null) {
+    guessInfosGuessInfosGuessReferenceValue.ftm = ftm;
+  }
+  final double? min = jsonConvert.convert<double>(json['min']);
+  if (min != null) {
+    guessInfosGuessInfosGuessReferenceValue.min = min;
+  }
+  final double? oreb = jsonConvert.convert<double>(json['oreb']);
+  if (oreb != null) {
+    guessInfosGuessInfosGuessReferenceValue.oreb = oreb;
+  }
+  final double? pf = jsonConvert.convert<double>(json['pf']);
+  if (pf != null) {
+    guessInfosGuessInfosGuessReferenceValue.pf = pf;
+  }
+  final int? playCount = jsonConvert.convert<int>(json['playCount']);
+  if (playCount != null) {
+    guessInfosGuessInfosGuessReferenceValue.playCount = playCount;
+  }
+  final int? playerId = jsonConvert.convert<int>(json['playerId']);
+  if (playerId != null) {
+    guessInfosGuessInfosGuessReferenceValue.playerId = playerId;
+  }
+  final double? pts = jsonConvert.convert<double>(json['pts']);
+  if (pts != null) {
+    guessInfosGuessInfosGuessReferenceValue.pts = pts;
+  }
+  final int? seasonId = jsonConvert.convert<int>(json['seasonId']);
+  if (seasonId != null) {
+    guessInfosGuessInfosGuessReferenceValue.seasonId = seasonId;
+  }
+  final int? starterCount = jsonConvert.convert<int>(json['starterCount']);
+  if (starterCount != null) {
+    guessInfosGuessInfosGuessReferenceValue.starterCount = starterCount;
+  }
+  final double? stl = jsonConvert.convert<double>(json['stl']);
+  if (stl != null) {
+    guessInfosGuessInfosGuessReferenceValue.stl = stl;
+  }
+  final double? threePa = jsonConvert.convert<double>(json['threePa']);
+  if (threePa != null) {
+    guessInfosGuessInfosGuessReferenceValue.threePa = threePa;
+  }
+  final double? threePm = jsonConvert.convert<double>(json['threePm']);
+  if (threePm != null) {
+    guessInfosGuessInfosGuessReferenceValue.threePm = threePm;
+  }
+  final double? to = jsonConvert.convert<double>(json['to']);
+  if (to != null) {
+    guessInfosGuessInfosGuessReferenceValue.to = to;
+  }
+  final int? updateTime = jsonConvert.convert<int>(json['updateTime']);
+  if (updateTime != null) {
+    guessInfosGuessInfosGuessReferenceValue.updateTime = updateTime;
+  }
+  return guessInfosGuessInfosGuessReferenceValue;
+}
+
+Map<String, dynamic> $GuessInfosGuessInfosGuessReferenceValueToJson(
+    GuessInfosGuessInfosGuessReferenceValue entity) {
+  final Map<String, dynamic> data = <String, dynamic>{};
+  data['ast'] = entity.ast;
+  data['blk'] = entity.blk;
+  data['createTime'] = entity.createTime;
+  data['dreb'] = entity.dreb;
+  data['fga'] = entity.fga;
+  data['fgm'] = entity.fgm;
+  data['fta'] = entity.fta;
+  data['ftm'] = entity.ftm;
+  data['min'] = entity.min;
+  data['oreb'] = entity.oreb;
+  data['pf'] = entity.pf;
+  data['playCount'] = entity.playCount;
+  data['playerId'] = entity.playerId;
+  data['pts'] = entity.pts;
+  data['seasonId'] = entity.seasonId;
+  data['starterCount'] = entity.starterCount;
+  data['stl'] = entity.stl;
+  data['threePa'] = entity.threePa;
+  data['threePm'] = entity.threePm;
+  data['to'] = entity.to;
+  data['updateTime'] = entity.updateTime;
+  return data;
+}
+
+extension GuessInfosGuessInfosGuessReferenceValueExtension on GuessInfosGuessInfosGuessReferenceValue {
+  GuessInfosGuessInfosGuessReferenceValue copyWith({
+    double? ast,
+    double? blk,
+    int? createTime,
+    double? dreb,
+    double? fga,
+    double? fgm,
+    double? fta,
+    double? ftm,
+    double? min,
+    double? oreb,
+    double? pf,
+    int? playCount,
+    int? playerId,
+    double? pts,
+    int? seasonId,
+    int? starterCount,
+    double? stl,
+    double? threePa,
+    double? threePm,
+    double? to,
+    int? updateTime,
+  }) {
+    return GuessInfosGuessInfosGuessReferenceValue()
+      ..ast = ast ?? this.ast
+      ..blk = blk ?? this.blk
+      ..createTime = createTime ?? this.createTime
+      ..dreb = dreb ?? this.dreb
+      ..fga = fga ?? this.fga
+      ..fgm = fgm ?? this.fgm
+      ..fta = fta ?? this.fta
+      ..ftm = ftm ?? this.ftm
+      ..min = min ?? this.min
+      ..oreb = oreb ?? this.oreb
+      ..pf = pf ?? this.pf
+      ..playCount = playCount ?? this.playCount
+      ..playerId = playerId ?? this.playerId
+      ..pts = pts ?? this.pts
+      ..seasonId = seasonId ?? this.seasonId
+      ..starterCount = starterCount ?? this.starterCount
+      ..stl = stl ?? this.stl
+      ..threePa = threePa ?? this.threePa
+      ..threePm = threePm ?? this.threePm
+      ..to = to ?? this.to
+      ..updateTime = updateTime ?? this.updateTime;
   }
 }
