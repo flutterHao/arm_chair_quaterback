@@ -6,6 +6,9 @@ import 'package:dio/dio.dart';
 ///author ：lihonghao
 /// date:2024/9/13
 /// desc : 网络请求工具类
+
+final httpUtil = HttpUtil();
+
 class HttpUtil {
   static final HttpUtil _instance = HttpUtil._internal();
   factory HttpUtil() => _instance;

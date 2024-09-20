@@ -12,7 +12,7 @@ import 'package:arm_chair_quaterback/common/net/index.dart';
 
 class NewsApi {
   static Future<List<NewsBanner>> getNewsBanner() async {
-    List list = await HttpUtil().get(Api.getNewsBanner);
+    List list = await HttpUtil().get(Api.cNewsBanner);
     List<NewsBanner> banners = list.map((e) => NewsBanner.fromJson(e)).toList();
     return banners;
   }

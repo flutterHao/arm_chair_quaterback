@@ -1,3 +1,7 @@
+import 'package:arm_chair_quaterback/common/entities/guess_infos_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
+import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -52,6 +56,18 @@ class PicksIndexController extends GetxController {
   void onInit() {
     super.onInit();
     scrollController.addListener(_scrollListener);
+
+    Future.wait([
+      PicksApi.getGuessInfos(),
+      PicksApi.getNBAPlayerInfo(),
+      PicksApi.getNewsDefine()
+    ]).then((results) {
+      GuessInfosEntity guessInfosEntity = results[0] as GuessInfosEntity;
+      NbaPlayerInfosEntity nbaPlayerInfosEntity =
+          results[1] as NbaPlayerInfosEntity;
+      NewsDefineEntity newsDefineEntity = results[2] as NewsDefineEntity;
+      for (GuessInfosGuessInfos e in guessInfosEntity.guessInfos) {}
+    });
   }
 
   /// 在 onInit() 之后调用 1 帧。这是进入的理想场所
@@ -72,3 +88,13 @@ class PicksIndexController extends GetxController {
     super.dispose();
   }
 }
+
+// class PicksPlayer {
+//   NbaPlayerInfosNBAPlayerInfosPlayerBaseInfoList baseInfoList;
+//   NbaPlayerInfosNBAPlayerInfosPlayerDataAvgList dataAvgList;
+//   List<String>? cBetData;
+//   List<String>? pfBetData;
+//   List<String>? pgBetDate;
+//   List<String>? sfBetData;
+//   List<String>? sgBetData;
+// }
