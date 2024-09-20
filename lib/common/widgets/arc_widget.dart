@@ -75,6 +75,7 @@ class _AnimationArcWidgetState extends State<AnimationArcWidget>
         borderWidth: widget.borderWidth,
         borderSweepAngle: _animation.value);
   }
+
   @override
   void dispose() {
     _animationController.dispose();
@@ -119,11 +120,11 @@ class ArcWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double p = progressSweepAngle>180?180:progressSweepAngle;
+    double p = progressSweepAngle > 180 ? 180 : progressSweepAngle;
     return CustomPaint(
       size: Size(radius * 2, radius),
-      painter: ArcPainter(progressWidth, progressColor, startAngle,
-          p, borderColor, borderWidth, borderSweepAngle),
+      painter: ArcPainter(progressWidth, progressColor, startAngle, p,
+          borderColor, borderWidth, borderSweepAngle),
     );
   }
 }
@@ -161,7 +162,7 @@ class ArcPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    Offset center = Offset(size.width * 0.5, size.height-progressWidth/2);
+    Offset center = Offset(size.width * 0.5, size.height - progressWidth / 2);
     double radius = size.width * 0.5 - progressWidth * 0.5;
     paintArc(canvas, center, radius,
         startAngle: 180,

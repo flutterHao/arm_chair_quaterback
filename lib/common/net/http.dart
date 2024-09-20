@@ -33,7 +33,7 @@ class HttpUtil {
       receiveTimeout: const Duration(milliseconds: _defaultReceiveTimeout),
 
       // Http请求头.
-      headers: {},
+      headers: {"Accept": '*', "Access-Control-Allow-Origin": '*'},
 
       /// 请求的Content-Type，默认值是"application/json; charset=utf-8".
       /// 如果您想以"application/x-www-form-urlencoded"格式编码请求数据,

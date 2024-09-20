@@ -214,11 +214,12 @@ class NetInterceptor extends InterceptorsWrapper {
         ));
       } else if (result.code != null) {
         // 业务逻辑错误，处理错误并返回 DioException
-        // if (result.code == 401) {
-        //   // 捕获业务逻辑返回的 401 错误
-        //   await _handle401Error(response.requestOptions, handler);
-        // }
-        handlerError(ErrorEntity(code: result.code!, message: result.message!));
+        if (result.code == 401) {
+          // 捕获业务逻辑返回的 401 错误
+          await _handle401Error(response.requestOptions, handler);
+        }
+        handlerError(
+            ErrorEntity(code: result.code!, message: result.message ?? ""));
         return handler.reject(DioException(
           requestOptions: response.requestOptions,
           response: response,

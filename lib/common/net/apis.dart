@@ -2,9 +2,22 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-06 15:16:54
- * @LastEditTime: 2024-09-18 18:33:37
+ * @LastEditTime: 2024-09-20 12:27:34
  */
 class Api {
+  // static const String authAccount = '/p/account/authAccount';
+  // static const String login = "/p/team/teamLogin";
+  // static const String visitorLogin = "/p/team/visitorLogin";
+  // static const String getNewsBanner = "/config/HightlightNews.json";
+  // static const String getNewsList = "/p/NBANews/getNBANews";
+  // static const String getNewsDetail = "/p/NBANews/viewNews";
+  // static const String newsLike = "/p/NBANews/like";
+  // static const String newsUnLike = "/p/NBANews/unLike";
+  // static const String teamRank = "/p/NBAData/queryNBATeamRank";
+  // static const String playerStats = "/p/NBAData/getNBAPlayerRankJSONInfo";
+  // static const String sendReviews = "/p/NBANews/sendReviews";
+  // static const String deleteReviews = "/p/NBANews/deleteReviews";
+  // static const String likeReviews = "/p/NBANews/likeReviews";
 
   /// base
   static const String API_BASE_PATH = "/p";
@@ -26,8 +39,10 @@ class Api {
   static const String getGuessInfos = "$API_BASE_PATH/NBANews/getGuessInfos";
   //NBAData
   static const String teamRank = "$API_BASE_PATH/NBAData/queryNBATeamRank";
-  static const String playerStats = "$API_BASE_PATH/NBAData/queryNBAPlayerStats";
-  static const String getNBAPlayerInfo = "$API_BASE_PATH/NBAData/getNBAPlayerInfo";
+  static const String playerStats =
+      "$API_BASE_PATH/NBAData/getNBAPlayerRankJSONInfo";
+  static const String getNBAPlayerInfo =
+      "$API_BASE_PATH/NBAData/getNBAPlayerInfo";
 
   /// config
   static const String cNewsBanner = "$CONFIG_BASE_PATH/HightlightNews.json";

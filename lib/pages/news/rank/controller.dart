@@ -1,3 +1,9 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-09-09 14:27:52
+ * @LastEditTime: 2024-09-19 10:09:39
+ */
 import 'package:arm_chair_quaterback/pages/news/rank/widgets/stats_list_view.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/widgets/team_list_view.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +16,8 @@ class RankController extends GetxController
   late TabController tabController;
   RxInt current = 0.obs;
   List<String> tabs = ["Player", "Team"];
+  List<String> tabs2 = ["Eastean", "Westen"];
+
   RxDouble progress = 0.0.obs;
   List statsPages = const [
     PlayListView(),

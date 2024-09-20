@@ -26,8 +26,9 @@ class StatsRankPage extends GetView<RankController> {
           child: Column(
             children: [
               Container(
-                width: 349.w,
+                // width: 349.w,
                 height: 32.w,
+                margin: EdgeInsets.symmetric(horizontal: 16.w),
                 padding: EdgeInsets.all(4.w),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
@@ -39,35 +40,43 @@ class StatsRankPage extends GetView<RankController> {
                     builder: (current, next, progress, totalProgress) {
                       return Stack(
                         children: [
-                          Container(
-                            width: 169.w,
-                            height: 26.w,
-                            margin:
-                                EdgeInsets.only(left: totalProgress * 169.w),
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                color: AppColors.c262626,
-                                borderRadius: BorderRadius.circular(13.w)),
-                          ),
+                          LayoutBuilder(builder: (context, constraints) {
+                            double left = (constraints.maxWidth /
+                                controller.tabController.length);
+                            return Container(
+                              width: constraints.maxWidth /
+                                  controller.tabController.length,
+                              height: 26.w,
+                              margin:
+                                  EdgeInsets.only(left: totalProgress * left),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  color: AppColors.c262626,
+                                  borderRadius: BorderRadius.circular(13.w)),
+                            );
+                          }),
                           Row(
                               children: controller.tabs.map((e) {
                             int index = controller.tabs.indexOf(e);
-                            return InkWell(
-                              onTap: () => controller.onTap(index),
-                              child: Container(
-                                alignment: Alignment.center,
-                                width: 169.w,
-                                height: 26.w,
-                                child: Text(
-                                  e,
-                                  style: 13.w4(
-                                      color: current == index
-                                          ? Color.lerp(AppColors.cF2F2F2,
-                                              AppColors.c262626, progress)!
-                                          : next == index
-                                              ? Color.lerp(AppColors.c262626,
-                                                  AppColors.cF2F2F2, progress)!
-                                              : AppColors.c262626),
+                            return Expanded(
+                              child: InkWell(
+                                onTap: () => controller.onTap(index),
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  height: 26.w,
+                                  child: Text(
+                                    e,
+                                    style: 13.w4(
+                                        color: current == index
+                                            ? Color.lerp(AppColors.cF2F2F2,
+                                                AppColors.c262626, progress)!
+                                            : next == index
+                                                ? Color.lerp(
+                                                    AppColors.c262626,
+                                                    AppColors.cF2F2F2,
+                                                    progress)!
+                                                : AppColors.c262626),
+                                  ),
                                 ),
                               ),
                             );

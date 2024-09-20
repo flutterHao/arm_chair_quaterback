@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/comments/comment_controller.dart';
@@ -10,81 +11,158 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class CommentsWidget extends StatelessWidget {
-  const CommentsWidget({super.key});
+  const CommentsWidget({super.key, required this.commentList});
+  final List<Reviews> commentList;
 
   @override
   Widget build(BuildContext context) {
     CommentController controller = Get.put(CommentController());
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16.w),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  "Comments(52K)",
-                  style: 19.w7(),
+    controller.setComments(commentList);
+    return GetBuilder<CommentController>(builder: (_) {
+      return Container(
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    "Comments(${commentList.length})",
+                    style: 19.w7(),
+                  ),
                 ),
-              ),
-              Text(
-                "2.5W",
-                style: 10.w7(color: AppColors.cB3B3B3),
-              ),
-              2.hGap,
-              IconWidget(
-                iconWidth: 13.w,
-                iconHeight: 12.w,
-                icon: Assets.uiIconChatting_01Png,
-                iconColor: AppColors.cB3B3B3,
-              )
-            ],
-          ),
-          16.vGap,
-          SizedBox(
-            width: 343.w,
-            // height: 100,
-            child: ListView.separated(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: controller.count.value,
-                separatorBuilder: (context, index) {
-                  return 16.vGap;
-                },
-                itemBuilder: (context, index) {
-                  return Column(
-                    children: [
-                      CommentItemView(index: index, isSub: false),
-                      SizedBox(
-                        width: 295.w,
-                        child: const SubComentsListView(),
-                      )
-                    ],
-                  );
-                }),
-          )
-        ],
-      ),
-    );
+
+                ///TODO 显示查看数量
+                // Text(
+                //   "${commentList.length}",
+                //   style: 10.w7(color: AppColors.cB3B3B3),
+                // ),
+                // 2.hGap,
+                // IconWidget(
+                //   iconWidth: 13.w,
+                //   iconHeight: 12.w,
+                //   icon: Assets.uiIconChatting_01Png,
+                //   iconColor: AppColors.cB3B3B3,
+                // )
+              ],
+            ),
+            16.vGap,
+            SizedBox(
+              // width: 343.w,
+              // height: 100,
+              child: ListView.separated(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: controller.mainList.length,
+                  separatorBuilder: (context, index) {
+                    return 16.vGap;
+                  },
+                  itemBuilder: (context, index) {
+                    var list = controller.subList
+                        .where((e) =>
+                            e.parentReviewId == controller.mainList[index].id)
+                        .toList();
+                    return Column(
+                      children: [
+                        CommentItemView(
+                            item: controller.mainList[index], isSub: false),
+                        if (list.isNotEmpty)
+                          Container(
+                            // width: 295.w,
+                            margin: EdgeInsets.only(left: 20.w),
+                            child: SubComentsListView(list),
+                          )
+                      ],
+                    );
+                  }),
+            ),
+            Container(
+                margin: EdgeInsets.symmetric(vertical: 20.w),
+                child: Text(
+                  "No more",
+                  style: 14.w4(color: AppColors.cB3B3B3),
+                ))
+          ],
+        ),
+      );
+    });
   }
 }
 
 ///附属评论列表
 class SubComentsListView extends GetView<CommentController> {
-  const SubComentsListView({super.key});
+  const SubComentsListView(this.list, {super.key});
+  final List<Reviews> list;
 
   @override
   Widget build(BuildContext context) {
+    RxInt current = 0.obs;
     return SizedBox(
-      width: 295.w,
+      // width: 295.w,
       child: Obx(() {
+        int length = (current < list.length) ? current.value : list.length;
         return ListView.builder(
             padding: EdgeInsets.only(top: 20.w),
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: controller.count.value,
+            itemCount: length + 1,
             shrinkWrap: true,
             itemBuilder: (context, index) {
-              return CommentItemView(index: index, isSub: true);
+              int has = list.length - current.value;
+              return index < length
+                  ? CommentItemView(item: list[index], isSub: true)
+                  : Container(
+                      padding: EdgeInsets.symmetric(vertical: 6.w),
+                      child: Row(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              current.value += 3;
+                            },
+                            child: SizedBox(
+                              width: 150.w,
+                              child: has > 0
+                                  ? Row(
+                                      children: [
+                                        Icon(
+                                          Icons.expand_more,
+                                          size: 12.w,
+                                        ),
+                                        4.hGap,
+                                        Text(
+                                          "more replies  (${list.length - current.value})",
+                                          style: 12.w4(),
+                                        )
+                                      ],
+                                    )
+                                  : null,
+                            ),
+                          ),
+                          30.hGap,
+                          if (current.value != 0)
+                            InkWell(
+                              onTap: () {
+                                current.value = 0;
+                              },
+                              child: SizedBox(
+                                width: 100.w,
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.expand_less,
+                                      size: 12.w,
+                                    ),
+                                    4.hGap,
+                                    Text(
+                                      "fpld",
+                                      style: 12.w4(),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+                    );
             });
       }),
     );
@@ -92,8 +170,8 @@ class SubComentsListView extends GetView<CommentController> {
 }
 
 class CommentItemView extends GetView<CommentController> {
-  const CommentItemView({super.key, required this.isSub, required this.index});
-  final int index;
+  const CommentItemView({super.key, required this.item, required this.isSub});
+  final Reviews item;
   final bool isSub;
 
   @override
@@ -115,8 +193,8 @@ class CommentItemView extends GetView<CommentController> {
               Row(
                 children: [
                   Text(
-                    "Gleavinger",
-                    style: 12.w4(),
+                    item.teamName ?? "",
+                    style: 12.w4(color: Colors.black),
                   ),
                   6.hGap,
                   Container(
@@ -136,8 +214,9 @@ class CommentItemView extends GetView<CommentController> {
                     "@ Gleavinger",
                     style: 12.w4(color: AppColors.cB3B3B3),
                   ),
+                  10.hGap,
                   Text(
-                    "18h",
+                    controller.timeAgo(item.updateTime ?? 0),
                     style: 12.w4(color: AppColors.cB3B3B3),
                   )
                 ],
@@ -150,18 +229,27 @@ class CommentItemView extends GetView<CommentController> {
                 children: [
                   Expanded(
                       child: Text(
-                    "I'm talking about both being able to win  on the defensive side",
+                    item.context ?? "",
                     style: 14.w4(color: AppColors.c666666),
                   )),
                   30.hGap,
-                  IconWidget(
-                    iconWidth: 15.w,
-                    iconHeight: 12.w,
-                    icon: index % 2 == 0
-                        ? Assets.uiIconLike_01Png
-                        : Assets.uiIconLike_02Png,
-                    iconColor:
-                        index % 2 == 0 ? AppColors.cFF546C : AppColors.cB3B3B3,
+                  InkWell(
+                    onTap: () {
+                      controller.likeReviews(
+                          item.newsId ?? 0, item.id ?? 0, item);
+                    },
+                    child: Obx(() {
+                      return IconWidget(
+                        iconWidth: 15.w,
+                        iconHeight: 12.w,
+                        icon: item.isLike?.value == true
+                            ? Assets.uiIconLike_01Png
+                            : Assets.uiIconLike_02Png,
+                        iconColor: item.isLike?.value == true
+                            ? AppColors.cFF546C
+                            : AppColors.cB3B3B3,
+                      );
+                    }),
                   )
                 ],
               ),
@@ -172,14 +260,22 @@ class CommentItemView extends GetView<CommentController> {
                 children: [
                   SizedBox(
                     width: 80.w,
-                    child: Text(
-                      "100k likes",
-                      style: 12.w4(color: AppColors.cB3B3B3),
-                    ),
+                    child: Obx(() {
+                      return Text(
+                        "${item.likes} likes",
+                        style: 12.w4(color: AppColors.cB3B3B3),
+                      );
+                    }),
                   ),
                   InkWell(
                     onTap: () {
-                      showCommentBottomSheet(context);
+                      int parentId = item.parentReviewId == 0
+                          ? item.id!
+                          : item.parentReviewId!;
+                      showCommentBottomSheet(context,
+                          newsId: item.newsId ?? 0,
+                          parentId: parentId,
+                          targetId: item.id ?? 0);
                     },
                     child: Text(
                       "Reple",
@@ -190,61 +286,7 @@ class CommentItemView extends GetView<CommentController> {
               ),
 
               /// 展开 收起
-              if (index == controller.count.value - 1)
-                Container(
-                  padding: EdgeInsets.symmetric(vertical: 6.w),
-                  child: Row(
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          controller.count.value += 3;
-                        },
-                        child: Row(
-                          children: [
-                            // IconWidget(
-                            //   iconWidth: 8.w,
-                            //   iconHeight: 5.w,
-                            //   icon: Assets.uiIconExpansionPng,
-                            // ),
-                            Icon(
-                              Icons.expand_more,
-                              size: 12.w,
-                            ),
-                            4.hGap,
-                            Text(
-                              "more replies  (15)",
-                              style: 12.w4(),
-                            )
-                          ],
-                        ),
-                      ),
-                      30.hGap,
-                      InkWell(
-                        onTap: () {
-                          controller.count.value = 0;
-                        },
-                        child: Row(
-                          children: [
-                            // IconWidget(
-                            //   iconWidth: 8.w,
-                            //   iconHeight: 5.w,
-                            //   icon: Assets.ball_1Png,
-                            // ),
-                            Icon(
-                              Icons.expand_less,
-                              size: 12.w,
-                            ),
-                            4.hGap,
-                            Text(
-                              "fpld",
-                              style: 12.w4(),
-                            )
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+              // if (index == controller.count.value - 1)
             ],
           ),
         )

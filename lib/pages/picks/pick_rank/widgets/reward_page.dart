@@ -38,10 +38,7 @@ class _RewardPageState extends State<RewardPage> {
               Container(
                 width: MediaQuery.of(context).size.width,
                 // color: Colors.red,
-                margin: EdgeInsets.only(
-                    top: 564.w,
-                    left: 16.w,
-                    right: 16.w),
+                margin: EdgeInsets.only(top: 564.w, left: 16.w, right: 16.w),
                 padding: EdgeInsets.only(
                   left: 11.w,
                   top: 12.w,

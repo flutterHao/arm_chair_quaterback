@@ -1,3 +1,9 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-09-09 17:29:19
+ * @LastEditTime: 2024-09-19 13:43:58
+ */
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
@@ -36,6 +42,15 @@ class ImageWidget extends StatelessWidget {
     //       enableMemoryCache: true,
     //       clearMemoryCacheWhenDispose: true);
     // }
+
+    Widget errorWidget = Container(
+      width: width,
+      height: height,
+      decoration: BoxDecoration(
+        color: Colors.grey,
+        borderRadius: BorderRadius.circular(20),
+      ),
+    );
     return ExtendedImage.network(
       url,
       fit: fit,
@@ -48,9 +63,9 @@ class ImageWidget extends StatelessWidget {
       loadStateChanged: (ExtendedImageState state) {
         switch (state.extendedImageLoadState) {
           case LoadState.failed:
-            return Container(color: Colors.grey[100]);
+            return errorWidget;
           case LoadState.loading:
-            return loadingWidget ?? Container(color: Colors.grey[100]);
+            return loadingWidget ?? errorWidget;
           case LoadState.completed:
             // TODO: Handle this case.
             break;
@@ -60,3 +75,12 @@ class ImageWidget extends StatelessWidget {
     );
   }
 }
+
+// class ErrorWidget extends StatelessWidget {
+//   const ErrorWidget({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(color: Colors.grey[200]);
+//   }
+// }

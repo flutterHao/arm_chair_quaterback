@@ -51,22 +51,25 @@ class ReciveAwardDetailItem extends StatelessWidget {
                   children: [
                     Text(
                       "PLAYER NAME",
-                      style:  13.w4(color: AppColors.c666666,height: 1,overflow: TextOverflow.ellipsis),
+                      style: 13.w4(
+                          color: AppColors.c666666,
+                          height: 1,
+                          overflow: TextOverflow.ellipsis),
                     ),
                     4.vGap,
                     Text(
                       "VS NOP 8:05AM",
-                      style: 9.w4(color: AppColors.cB3B3B3,height: 1),
+                      style: 9.w4(color: AppColors.cB3B3B3, height: 1),
                     ),
                     8.vGap,
                     Text(
                       "PPG: 26P",
-                      style:  9.w4(color: AppColors.cB3B3B3,height: 1),
+                      style: 9.w4(color: AppColors.cB3B3B3, height: 1),
                     ),
                     3.vGap,
                     Text(
                       "L10: 26.7P",
-                      style:  9.w4(color: AppColors.cB3B3B3,height: 1),
+                      style: 9.w4(color: AppColors.cB3B3B3, height: 1),
                     )
                   ],
                 ),
@@ -90,7 +93,8 @@ class ReciveAwardDetailItem extends StatelessWidget {
                     Text("25.6", style: 18.w7(color: AppColors.c666666)),
                     Text(
                       "PTS",
-                      style: TextStyle(fontSize: 11.sp, color: AppColors.c666666),
+                      style:
+                          TextStyle(fontSize: 11.sp, color: AppColors.c666666),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -105,8 +109,8 @@ class ReciveAwardDetailItem extends StatelessWidget {
                         ),
                         Text(
                           "0.5",
-                          style:
-                          TextStyle(color: AppColors.c10A86A, fontSize: 10.sp),
+                          style: TextStyle(
+                              color: AppColors.c10A86A, fontSize: 10.sp),
                         )
                       ],
                     )
@@ -128,8 +132,8 @@ class ReciveAwardDetailItem extends StatelessWidget {
                         ),
                         Text(
                           "+500",
-                          style:
-                          TextStyle(color: AppColors.c545454, fontSize: 12.sp),
+                          style: TextStyle(
+                              color: AppColors.c545454, fontSize: 12.sp),
                         )
                       ],
                     ),
@@ -141,11 +145,13 @@ class ReciveAwardDetailItem extends StatelessWidget {
                           image: DecorationImage(
                               image: AssetImage(Assets.uiBingoPng),
                               fit: BoxFit.fitWidth)),
-                      child: Text("BINGO", style: 11.w7(color: AppColors.c10A86A)),
+                      child:
+                          Text("BINGO", style: 11.w7(color: AppColors.c10A86A)),
                     ),
                     Text(
                       "winner 45.3%",
-                      style: TextStyle(fontSize: 10.sp, color: AppColors.cB3B3B3),
+                      style:
+                          TextStyle(fontSize: 10.sp, color: AppColors.cB3B3B3),
                     )
                   ],
                 ),

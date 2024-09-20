@@ -35,6 +35,7 @@ class NewsListView extends GetView<NewListController> {
                 itemBuilder: (context, index) {
                   return InkWell(
                     onTap: () => Get.toNamed(RouteNames.newsDetail,
+                        arguments: controller.state.newsList[index].id,
                         id: GlobalNestedKey.NEWS),
                     child: NewsItemView(
                       item: controller.state.newsList[index],
@@ -119,7 +120,9 @@ class NewsItemView extends GetView<NewListController> {
                           )),
                       InkWell(
                         onTap: () {
-                          controller.likeNews(item);
+                          item.isLike == 1
+                              ? controller.unLikeNews(item)
+                              : controller.likeNews(item);
                         },
                         child: SizedBox(
                             width: 60.w,

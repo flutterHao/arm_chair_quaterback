@@ -87,7 +87,8 @@ class _RankPageState extends State<RankPage>
                               Container(
                                 margin: EdgeInsets.only(bottom: 86.w),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     //第2名
                                     Container(
@@ -99,11 +100,12 @@ class _RankPageState extends State<RankPage>
                                               Container(
                                                 width: 81.w,
                                                 height: 81.w,
-                                                margin:
-                                                EdgeInsets.only(bottom: 8.w),
+                                                margin: EdgeInsets.only(
+                                                    bottom: 8.w),
                                                 decoration: BoxDecoration(
                                                     borderRadius:
-                                                    BorderRadius.circular(41.w),
+                                                        BorderRadius.circular(
+                                                            41.w),
                                                     border: Border.all(
                                                         color: AppColors.c52473E
                                                             .withOpacity(.5),
@@ -122,20 +124,24 @@ class _RankPageState extends State<RankPage>
                                                     child: Container(
                                                       height: 26.w,
                                                       width: 26.w,
-                                                      alignment: Alignment.center,
+                                                      alignment:
+                                                          Alignment.center,
                                                       decoration: BoxDecoration(
-                                                          color: AppColors.c423832,
+                                                          color:
+                                                              AppColors.c423832,
                                                           borderRadius:
-                                                          BorderRadius.circular(
-                                                              13.w)),
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      13.w)),
                                                       child: Text(
                                                         "2",
                                                         style: TextStyle(
-                                                            color:
-                                                            AppColors.ccccccc,
+                                                            color: AppColors
+                                                                .ccccccc,
                                                             fontSize: 18.sp,
                                                             fontWeight:
-                                                            FontWeight.bold),
+                                                                FontWeight
+                                                                    .bold),
                                                       ),
                                                     ),
                                                   ))
@@ -149,7 +155,8 @@ class _RankPageState extends State<RankPage>
                                               "Player Name",
                                               style: 12.w7(
                                                   color: AppColors.cB3B3B3,
-                                                  overflow: TextOverflow.ellipsis),
+                                                  overflow:
+                                                      TextOverflow.ellipsis),
                                             ),
                                           ),
                                           Text(
@@ -171,13 +178,15 @@ class _RankPageState extends State<RankPage>
                                               Container(
                                                 width: 97.w,
                                                 height: 97.w,
-                                                margin:
-                                                EdgeInsets.only(bottom: 8.w),
+                                                margin: EdgeInsets.only(
+                                                    bottom: 8.w),
                                                 decoration: BoxDecoration(
                                                     borderRadius:
-                                                    BorderRadius.circular(49.w),
+                                                        BorderRadius.circular(
+                                                            49.w),
                                                     border: Border.all(
-                                                        color: AppColors.c655344,
+                                                        color:
+                                                            AppColors.c655344,
                                                         width: 8.w)),
                                                 child: Container(
                                                   padding: EdgeInsets.all(8.w),
@@ -193,20 +202,24 @@ class _RankPageState extends State<RankPage>
                                                     child: Container(
                                                       height: 26.w,
                                                       width: 26.w,
-                                                      alignment: Alignment.center,
+                                                      alignment:
+                                                          Alignment.center,
                                                       decoration: BoxDecoration(
-                                                          color: AppColors.c423832,
+                                                          color:
+                                                              AppColors.c423832,
                                                           borderRadius:
-                                                          BorderRadius.circular(
-                                                              13.w)),
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      13.w)),
                                                       child: Text(
                                                         "1",
                                                         style: TextStyle(
-                                                            color:
-                                                            AppColors.cFFFFFF,
+                                                            color: AppColors
+                                                                .cFFFFFF,
                                                             fontSize: 18.sp,
                                                             fontWeight:
-                                                            FontWeight.bold),
+                                                                FontWeight
+                                                                    .bold),
                                                       ),
                                                     ),
                                                   ))
@@ -220,7 +233,8 @@ class _RankPageState extends State<RankPage>
                                               "Player Name",
                                               style: 12.w7(
                                                   color: AppColors.cB3B3B3,
-                                                  overflow: TextOverflow.ellipsis),
+                                                  overflow:
+                                                      TextOverflow.ellipsis),
                                             ),
                                           ),
                                           Text(
@@ -242,11 +256,12 @@ class _RankPageState extends State<RankPage>
                                               Container(
                                                 width: 81.w,
                                                 height: 81.w,
-                                                margin:
-                                                EdgeInsets.only(bottom: 8.w),
+                                                margin: EdgeInsets.only(
+                                                    bottom: 8.w),
                                                 decoration: BoxDecoration(
                                                     borderRadius:
-                                                    BorderRadius.circular(41.w),
+                                                        BorderRadius.circular(
+                                                            41.w),
                                                     border: Border.all(
                                                         color: AppColors.c52473E
                                                             .withOpacity(.3),
@@ -265,20 +280,24 @@ class _RankPageState extends State<RankPage>
                                                     child: Container(
                                                       height: 26.w,
                                                       width: 26.w,
-                                                      alignment: Alignment.center,
+                                                      alignment:
+                                                          Alignment.center,
                                                       decoration: BoxDecoration(
-                                                          color: AppColors.c423832,
+                                                          color:
+                                                              AppColors.c423832,
                                                           borderRadius:
-                                                          BorderRadius.circular(
-                                                              13.w)),
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      13.w)),
                                                       child: Text(
                                                         "3",
                                                         style: TextStyle(
-                                                            color:
-                                                            AppColors.c666666,
+                                                            color: AppColors
+                                                                .c666666,
                                                             fontSize: 18.sp,
                                                             fontWeight:
-                                                            FontWeight.bold),
+                                                                FontWeight
+                                                                    .bold),
                                                       ),
                                                     ),
                                                   ))
@@ -292,7 +311,8 @@ class _RankPageState extends State<RankPage>
                                               "Player Name",
                                               style: 12.w7(
                                                   color: AppColors.cB3B3B3,
-                                                  overflow: TextOverflow.ellipsis),
+                                                  overflow:
+                                                      TextOverflow.ellipsis),
                                             ),
                                           ),
                                           Text(
@@ -312,7 +332,8 @@ class _RankPageState extends State<RankPage>
                                 left: 0,
                                 right: 0,
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Container(
@@ -326,7 +347,8 @@ class _RankPageState extends State<RankPage>
                                               topRight: Radius.circular(20.w),
                                               topLeft: Radius.circular(20.w))),
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
                                           Image.asset(
                                             Assets.uiIconMoneyWPng,
@@ -338,7 +360,8 @@ class _RankPageState extends State<RankPage>
                                           ),
                                           Text(
                                             "+0.5w",
-                                            style: 14.w7(color: AppColors.cF2F2F2),
+                                            style:
+                                                14.w7(color: AppColors.cF2F2F2),
                                           )
                                         ],
                                       ),
@@ -354,7 +377,8 @@ class _RankPageState extends State<RankPage>
                                               topRight: Radius.circular(20.w),
                                               topLeft: Radius.circular(20.w))),
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
                                           Image.asset(
                                             Assets.uiIconMoneyWPng,
@@ -366,7 +390,8 @@ class _RankPageState extends State<RankPage>
                                           ),
                                           Text(
                                             "+0.5w",
-                                            style: 14.w7(color: AppColors.cF2F2F2),
+                                            style:
+                                                14.w7(color: AppColors.cF2F2F2),
                                           )
                                         ],
                                       ),
@@ -382,7 +407,8 @@ class _RankPageState extends State<RankPage>
                                               topRight: Radius.circular(20.w),
                                               topLeft: Radius.circular(20.w))),
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
                                           Image.asset(
                                             Assets.uiIconMoneyWPng,
@@ -394,7 +420,8 @@ class _RankPageState extends State<RankPage>
                                           ),
                                           Text(
                                             "+0.5w",
-                                            style: 14.w7(color: AppColors.cF2F2F2),
+                                            style:
+                                                14.w7(color: AppColors.cF2F2F2),
                                           )
                                         ],
                                       ),

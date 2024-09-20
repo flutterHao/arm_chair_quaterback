@@ -1,3 +1,9 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-09-12 19:09:06
+ * @LastEditTime: 2024-09-19 12:34:58
+ */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -75,7 +81,7 @@ class AppBarContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 361.w,
+      // width: 361.w,
       height: 63.w,
       margin: EdgeInsets.symmetric(horizontal: 7.w),
       decoration: BoxDecoration(

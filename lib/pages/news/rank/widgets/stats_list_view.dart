@@ -46,7 +46,7 @@ class StatsItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ShadowContainer(
       height: 84.w,
-      width: 343.w,
+      // width: 343.w,
       backgroudColor: AppColors.cF1F1F1,
       borderRadius: BorderRadius.circular(16.w),
       child: Row(
@@ -66,8 +66,7 @@ class StatsItem extends StatelessWidget {
             borderRadius: BorderRadius.circular(32.w),
           ),
           9.hGap,
-          SizedBox(
-            width: 147.w,
+          Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,7 +96,8 @@ class StatsItem extends StatelessWidget {
           Text(
             "34.7",
             style: 24.w7(),
-          )
+          ),
+          10.hGap,
         ],
       ),
     );
@@ -112,7 +112,7 @@ class StatsTeamItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ShadowContainer(
       height: 84.w,
-      width: 343.w,
+      // width: 343.w,
       backgroudColor: AppColors.cF1F1F1,
       borderRadius: BorderRadius.circular(16.w),
       child: Row(
@@ -132,16 +132,19 @@ class StatsTeamItem extends StatelessWidget {
             borderRadius: BorderRadius.circular(30.w),
           ),
           9.hGap,
-          SizedBox(
-              width: 140.w,
-              child: Text(
-                "hou",
-                style: 16.w4(),
-              )),
+          Expanded(
+            child: SizedBox(
+                width: 140.w,
+                child: Text(
+                  "hou",
+                  style: 16.w4(),
+                )),
+          ),
           Text(
             "34.7",
             style: 17.w7(),
-          )
+          ),
+          10.hGap,
         ],
       ),
     );

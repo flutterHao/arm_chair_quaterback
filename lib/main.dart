@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 16:17:35
- * @LastEditTime: 2024-09-13 16:38:20
+ * @LastEditTime: 2024-09-19 11:56:18
  */
 import 'package:arm_chair_quaterback/pages/home/home_binding.dart';
 import 'package:flutter/foundation.dart';
@@ -28,19 +28,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isMax = MediaQuery.of(context).size.width > MAXWEBWIDTH && kIsWeb;
     return Center(
       child: Container(
         constraints: const BoxConstraints(maxWidth: MAXWEBWIDTH),
         child: LayoutBuilder(builder: (context, constraints) {
           return ScreenUtilInit(
-            enableScaleWH: (() =>
-                kIsWeb && MediaQuery.of(context).size.width > MAXWEBWIDTH
-                    ? false
-                    : true),
-            enableScaleText: (() =>
-                kIsWeb && MediaQuery.of(context).size.width > MAXWEBWIDTH
-                    ? false
-                    : true),
+            enableScaleWH: (() => isMax ? false : true),
+            enableScaleText: (() => isMax ? false : true),
+            // designSize:
+            //     isMax ? const Size(MAXWEBWIDTH, 812) : const Size(375, 812),
             designSize: const Size(375, 812),
             builder: (context, widget) => GetMaterialApp(
               title: 'arm chair puaterback',

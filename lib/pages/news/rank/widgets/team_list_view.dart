@@ -83,7 +83,8 @@ class TeamItemView extends StatelessWidget {
             children: [
               ImageWidget(
                 url: "https://file.qiumiwu.com/team/BOS_300.png",
-                width: 15.w,
+                width: 20.w,
+                height: 20.w,
               ),
               2.hGap,
               Text(

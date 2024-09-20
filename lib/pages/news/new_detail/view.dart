@@ -54,7 +54,13 @@ class NewsDetailPage extends GetView<NewsDetailController> {
           ),
         ),
       ),
-      floatWidgets: const [Positioned(bottom: 0, child: CommentInputWidget())],
+      floatWidgets: [
+        Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: CommentDialog(newsId: int.tryParse(newsId.toString()) ?? 0))
+      ],
     );
   }
 
@@ -80,7 +86,7 @@ class NewsDetailPage extends GetView<NewsDetailController> {
 
   Widget _buildNewsTitle() {
     return Text(
-      controller.state.newDetail.title!,
+      controller.state.newDetail.title ?? "",
       style: 24.w7(color: AppColors.c262626),
     );
   }
@@ -90,11 +96,11 @@ class NewsDetailPage extends GetView<NewsDetailController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         16.vGap,
-        Text(controller.state.newDetail.source!,
+        Text(controller.state.newDetail.source ?? "",
             style: 12.w4(color: AppColors.c666666)),
         6.vGap,
         Text(
-            DateUtil.formatDateMs(controller.state.newDetail.postTime!,
+            DateUtil.formatDateMs(controller.state.newDetail.postTime ?? 0,
                 format: DateFormats.y_mo_d),
             style: 12.w4(color: AppColors.cB3B3B3)),
       ],
@@ -105,7 +111,7 @@ class NewsDetailPage extends GetView<NewsDetailController> {
     return Padding(
       padding: const EdgeInsets.only(top: 16),
       child: Text(
-        controller.state.newDetail.content!,
+        controller.state.newDetail.content ?? "",
         style: 14.w4(color: AppColors.c666666),
       ),
     );
@@ -121,7 +127,8 @@ class NewsDetailPage extends GetView<NewsDetailController> {
           children: [
             Text("More news", style: 14.w7(color: AppColors.c262626)),
             12.vGap,
-            const MoreNewsWidget(),
+            // ignore: prefer_const_constructors
+            MoreNewsWidget(),
           ],
         ),
       ),
@@ -130,14 +137,16 @@ class NewsDetailPage extends GetView<NewsDetailController> {
 
 // 4. 评论部分抽取为单独的组件
   Widget _buildComments() {
-    return const SliverToBoxAdapter(
-      child: CommentsWidget(),
+    return SliverToBoxAdapter(
+      child: CommentsWidget(
+        commentList: controller.state.newDetail.reviewsList ?? [],
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    controller.getNewsDetail(newsId);
+    Get.put(NewsDetailController(newsId)); // 初始化 Controller 并传递参数
     return GetBuilder<NewsDetailController>(
       builder: (_) {
         // return Scaffold(body: _buildView());

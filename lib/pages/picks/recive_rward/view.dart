@@ -91,34 +91,38 @@ class ReciveRwardPage extends GetView<ReciveRwardController> {
                       children: [
                         Container(
                           height: 44.w,
-                          constraints: BoxConstraints(
-                            maxWidth: 200.w
-                          ),
+                          constraints: BoxConstraints(maxWidth: 200.w),
                           child: Stack(
-                            children: List.generate(5, (index){
+                            children: List.generate(5, (index) {
                               /// 倒叙绘制
                               return Positioned(
-                                left: 30.w * (4-index),
+                                left: 30.w * (4 - index),
                                 child: Container(
                                     width: 44.w,
                                     height: 44.w,
                                     decoration: BoxDecoration(
                                         color: AppColors.cD9D9D9,
                                         borderRadius:
-                                        BorderRadius.circular(22.w),
+                                            BorderRadius.circular(22.w),
                                         border: Border.all(
                                             width: 2.w,
                                             color: AppColors.cF2F2F2)),
                                     alignment: Alignment.bottomCenter,
-                                    child: index == 0? Container(
-                                      alignment: Alignment.center,
-                                      padding: EdgeInsets.only(left: 7.w),
-                                      child: Text("+5",style: 12.w4(color: AppColors.c666666),),
-                                    ):Image.asset(
-                                      Assets.testTeamLogoPng,
-                                      width: 44.w,
-                                      fit: BoxFit.fitWidth,
-                                    )),
+                                    child: index == 0
+                                        ? Container(
+                                            alignment: Alignment.center,
+                                            padding: EdgeInsets.only(left: 7.w),
+                                            child: Text(
+                                              "+5",
+                                              style: 12
+                                                  .w4(color: AppColors.c666666),
+                                            ),
+                                          )
+                                        : Image.asset(
+                                            Assets.testTeamLogoPng,
+                                            width: 44.w,
+                                            fit: BoxFit.fitWidth,
+                                          )),
                               );
                             }),
                           ),

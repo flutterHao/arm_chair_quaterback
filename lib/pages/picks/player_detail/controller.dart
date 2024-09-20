@@ -213,8 +213,8 @@ class PlayerDetailController extends GetxController
     _starSizeAnimation = Tween(begin: 119.w, end: 68.w).animate(CurvedAnimation(
         parent: _animationController, curve: const Interval(0, .2)));
     _starTranslateAnimation =
-        Tween(begin: (validScreenWidth.value - 16.w - 119.w) / 2, end: -15.w).animate(
-            CurvedAnimation(
+        Tween(begin: (validScreenWidth.value - 16.w - 119.w) / 2, end: -15.w)
+            .animate(CurvedAnimation(
                 parent: _animationController, curve: const Interval(0.2, 0.4)));
     _starRotateAnimation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
         parent: _animationController, curve: const Interval(0.2, 0.4)));

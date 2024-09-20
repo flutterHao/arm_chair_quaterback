@@ -7,7 +7,7 @@ import 'package:arm_chair_quaterback/common/widgets/black_app_bar.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/swiper_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
-import 'package:arm_chair_quaterback/pages/news/new_detail/bindings.dart';
+
 import 'package:arm_chair_quaterback/pages/news/new_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/widgets/team_rank_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/bindings.dart';
@@ -81,12 +81,13 @@ class NewsListPage extends GetView<NewListController> {
           /// Swiper Widget wrapped in SliverToBoxAdapter
           SliverToBoxAdapter(
             child: Container(
-              margin: EdgeInsets.only(top: 16.w),
+              margin: EdgeInsets.only(top: 16.w, right: 16.w, left: 16.w),
               child: GetBuilder<NewListController>(
                   id: "newsBanner",
                   builder: (context) {
                     return SwiperWidget(
                       width: 343.w,
+                      // width: MyApp.MAXWEBWIDTH.w - 40.w,
                       height: 150.w,
                       bannerList: controller.state.banners
                           .map((e) => Address.devUrl + e.pictureId!)

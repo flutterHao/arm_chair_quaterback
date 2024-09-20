@@ -69,12 +69,17 @@ class Assets {
   static const uiLight_01Png = 'assets/images/player/ui_light_01.png';
   static const uiStateBestPng = 'assets/images/player/ui_state_best.png';
   static const uiIconRuidgtPng = 'assets/images/player/ui_icon_ruidgt.png';
-  static const uiIconArrows_01Png = 'assets/images/player/ui_icon_arrows_01.png';
-  static const uiIconArrows_02Png = 'assets/images/player/ui_icon_arrows_02.png';
-  static const uiIconArrows_04Png = 'assets/images/player/ui_icon_arrows_04.png';
+  static const uiIconArrows_01Png =
+      'assets/images/player/ui_icon_arrows_01.png';
+  static const uiIconArrows_02Png =
+      'assets/images/player/ui_icon_arrows_02.png';
+  static const uiIconArrows_04Png =
+      'assets/images/player/ui_icon_arrows_04.png';
   static const uiIconGradeSsPng = 'assets/images/player/ui_icon_grade_ss.png';
-  static const uiIconTriangle_01Png = 'assets/images/player/ui_icon_triangle_01.png';
-  static const uiIconTriangle_02Png = 'assets/images/player/ui_icon_triangle_02.png';
-  static const uiIconTriangle_03Png = 'assets/images/player/ui_icon_triangle_03.png';
-
+  static const uiIconTriangle_01Png =
+      'assets/images/player/ui_icon_triangle_01.png';
+  static const uiIconTriangle_02Png =
+      'assets/images/player/ui_icon_triangle_02.png';
+  static const uiIconTriangle_03Png =
+      'assets/images/player/ui_icon_triangle_03.png';
 }

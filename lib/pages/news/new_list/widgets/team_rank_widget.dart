@@ -5,6 +5,7 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
+import 'package:arm_chair_quaterback/main.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/widgets/shadow_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,23 +20,11 @@ class TeamRankWidget extends StatelessWidget {
       height: 225.w,
       alignment: Alignment.centerLeft,
       margin: EdgeInsets.only(bottom: 20.w),
-      // child: ListView.separated(
-      //     scrollDirection: Axis.horizontal,
-      //     itemCount: 3,
-      //     separatorBuilder: (context, index) {
-      //       return 12.hGap;
-      //     },
-      //     itemBuilder: (context, index) {
-      //       return InkWell(
-      //           onTap: () => Get.toNamed(RouteNames.teamRank, id: 1),
-      //           child: TeamRankItem(index: index));
-      //     }),
       child: PageView.builder(
         controller: PageController(
           viewportFraction: 0.9,
         ),
         physics: const BouncingScrollPhysics(),
-        reverse: true,
         itemCount: 3,
         itemBuilder: (context, index) {
           return Padding(
@@ -43,7 +32,7 @@ class TeamRankWidget extends StatelessWidget {
             child: InkWell(
               onTap: () {
                 Get.toNamed(
-                  RouteNames.statsRank,
+                  RouteNames.teamRank,
                   id: GlobalNestedKey.NEWS,
                 );
               },
@@ -56,14 +45,14 @@ class TeamRankWidget extends StatelessWidget {
   }
 }
 
+double width = MyApp.MAXWEBWIDTH.w * 0.9;
+
 class TeamRankItem extends StatelessWidget {
   const TeamRankItem({super.key, required this.index});
   final int index;
 
   @override
   Widget build(BuildContext context) {
-    double width = 375.w * 0.9;
-
     return ShadowContainer(
       width: width,
       height: 225.w,
@@ -110,36 +99,44 @@ class TeamRankItem extends StatelessWidget {
           18.vGap,
           Row(
             children: [
-              Container(
-                alignment: Alignment.center,
-                width: 100.w,
-                child: Text(
-                  "team",
-                  style: 11.w4(color: AppColors.cB3B3B3),
+              Expanded(
+                child: Container(
+                  alignment: Alignment.center,
+                  width: 100.w,
+                  child: Text(
+                    "team",
+                    style: 11.w4(color: AppColors.cB3B3B3),
+                  ),
                 ),
               ),
-              Container(
-                width: 88.w,
-                alignment: Alignment.center,
-                child: Text(
-                  "W-L",
-                  style: 11.w4(color: AppColors.cB3B3B3),
+              Expanded(
+                child: Container(
+                  width: 88.w,
+                  alignment: Alignment.center,
+                  child: Text(
+                    "W-L",
+                    style: 11.w4(color: AppColors.cB3B3B3),
+                  ),
                 ),
               ),
-              Container(
-                alignment: Alignment.center,
-                width: 64.w,
-                child: Text(
-                  "%",
-                  style: 11.w4(color: AppColors.cB3B3B3),
+              Expanded(
+                child: Container(
+                  alignment: Alignment.center,
+                  width: 64.w,
+                  child: Text(
+                    "%",
+                    style: 11.w4(color: AppColors.cB3B3B3),
+                  ),
                 ),
               ),
-              Container(
-                alignment: Alignment.center,
-                width: 40.w,
-                child: Text(
-                  "GB",
-                  style: 11.w4(color: AppColors.cB3B3B3),
+              Expanded(
+                child: Container(
+                  alignment: Alignment.center,
+                  width: 40.w,
+                  child: Text(
+                    "GB",
+                    style: 11.w4(color: AppColors.cB3B3B3),
+                  ),
                 ),
               )
             ],
@@ -167,14 +164,14 @@ class TeamListView extends StatelessWidget {
               height: 48.w,
               child: Row(
                 children: [
-                  SizedBox(
-                    width: 100.w,
+                  Expanded(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ImageWidget(
                           url: "https://file.qiumiwu.com/team/WAS_300.png",
                           width: 25.w,
+                          height: 25.w,
                         ),
                         2.hGap,
                         Text(
@@ -184,28 +181,34 @@ class TeamListView extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Container(
-                    width: 88.w,
-                    alignment: Alignment.center,
-                    child: Text(
-                      "61-64",
-                      style: 11.w4(color: AppColors.c666666),
+                  Expanded(
+                    child: Container(
+                      width: 88.w,
+                      alignment: Alignment.center,
+                      child: Text(
+                        "61-64",
+                        style: 11.w4(color: AppColors.c666666),
+                      ),
                     ),
                   ),
-                  Container(
-                    alignment: Alignment.center,
-                    width: 64.w,
-                    child: Text(
-                      "0.598",
-                      style: 11.w4(color: AppColors.c666666),
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.center,
+                      width: 64.w,
+                      child: Text(
+                        "0.598",
+                        style: 11.w4(color: AppColors.c666666),
+                      ),
                     ),
                   ),
-                  Container(
-                    alignment: Alignment.center,
-                    width: 40.w,
-                    child: Text(
-                      "2.0",
-                      style: 11.w4(color: AppColors.c666666),
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.center,
+                      width: 40.w,
+                      child: Text(
+                        "2.0",
+                        style: 11.w4(color: AppColors.c666666),
+                      ),
                     ),
                   )
                 ],

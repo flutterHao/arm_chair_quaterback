@@ -1,3 +1,9 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-09-09 16:31:51
+ * @LastEditTime: 2024-09-19 12:21:54
+ */
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:card_swiper/card_swiper.dart';
@@ -26,9 +32,10 @@ class SwiperWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: SizedBox(
-      width: width,
-      height: height,
+        child: AspectRatio(
+      aspectRatio: width / height,
+      // width: width,
+      // height: height,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(borderRadius),
         child: Swiper(
@@ -38,12 +45,15 @@ class SwiperWidget extends StatelessWidget {
               onTap: () => onTap(index),
               child: Stack(
                 children: [
-                  ImageWidget(
-                    width: width,
-                    height: height,
-                    url: bannerList[index],
-                    fit: BoxFit.cover,
-                    borderRadius: BorderRadius.circular(16),
+                  AspectRatio(
+                    aspectRatio: width / height,
+                    child: ImageWidget(
+                      width: width,
+                      height: height,
+                      url: bannerList[index],
+                      fit: BoxFit.cover,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
                   ),
                   if (footer != null)
                     Positioned(bottom: 12.w, right: 12.w, child: footer!)
