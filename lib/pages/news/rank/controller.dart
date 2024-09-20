@@ -2,8 +2,10 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:27:52
- * @LastEditTime: 2024-09-19 10:09:39
+ * @LastEditTime: 2024-09-20 16:10:26
  */
+import 'package:arm_chair_quaterback/common/entities/stats_rank/nba_player_stat.dart';
+import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/widgets/stats_list_view.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/widgets/team_list_view.dart';
 import 'package:flutter/material.dart';
@@ -29,8 +31,13 @@ class RankController extends GetxController
     EasTeamListView(),
   ];
 
-  RxInt divisionIndex = 1.obs;
-  RxInt seasonIndex = 3.obs;
+  // RxString divisionIndex = "PTS".obs;
+  // RxString seasonIndex = "2023-24".obs;
+
+  String statType = "PTS";
+  String season = "2023-24";
+  List<NbaPlayerStat> statList = [];
+  List<String> seasonList = ["2023-24"];
 
   /// 在 widget 内存中分配后立即调用。
   @override
@@ -52,22 +59,49 @@ class RankController extends GetxController
   @override
   void onReady() {
     super.onReady();
-  }
-
-  /// 在 [onDelete] 方法之前调用。
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  /// dispose 释放内存
-  @override
-  void dispose() {
-    super.dispose();
+    getStatRank();
   }
 
   void onTap(v) {
     current.value = v;
     tabController.animateTo(v);
+  }
+
+  void getStatRank() {
+    NewsApi.startRank(season: season, statType: statType).then((value) {
+      statList = value.nbaPlayerStats ?? [];
+      update(["stars"]);
+    });
+  }
+
+  void getTeamRank() {
+    NewsApi.teamRank(page: 0, pageSize: 30).then((value) {});
+  }
+
+  dynamic getStartData(String type, NbaPlayerStat item) {
+    switch (type) {
+      case "PTS":
+        return item.pts ?? 0;
+      case "AST":
+        return item.ast ?? 0;
+      case "REB":
+        return item.reb ?? 0;
+      case "FG%":
+        return item.fgPct ?? 0;
+      case "BLK":
+        return item.blk ?? 0;
+      case "STL":
+        return item.stl ?? 0;
+      case "FTP":
+        return item.ftPct ?? 0;
+      case "3PA":
+        return item.fg3A ?? 0;
+      case "3P%":
+        return item.fg3Pct ?? 0;
+      case "TO":
+        return item.tov ?? 0;
+      default:
+        return 0;
+    }
   }
 }

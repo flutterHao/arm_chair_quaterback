@@ -4,7 +4,7 @@
  * @Date: 2024-09-14 17:34:35
  * @LastEditTime: 2024-09-14 18:22:32
  */
-import 'package:arm_chair_quaterback/common/constant/user_constant.dart';
+import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/services/storage.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:async';
@@ -35,7 +35,7 @@ class DeviceUtils {
       // 生成一个唯一 ID（使用 UUID）
       deviceId = const Uuid().v4();
       StorageService.to.setString(
-          UserConstant.deviceId, deviceId); // 将生成的 ID 存储到 SharedPreferences
+          Constant.deviceId, deviceId); // 将生成的 ID 存储到 SharedPreferences
     }
 
     return deviceId;

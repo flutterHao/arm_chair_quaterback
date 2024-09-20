@@ -1,24 +1,82 @@
+import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/widgets/shadow_container.dart';
+import 'package:arm_chair_quaterback/pages/news/rank/controller.dart';
+import 'package:arm_chair_quaterback/pages/news/rank/widgets/border_container.dart';
+import 'package:arm_chair_quaterback/pages/news/rank/widgets/search_bottom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 /// author: lihonghao
 /// date: 2024/9/11
 /// 球员排名列表
-class PlayListView extends StatelessWidget {
+class PlayListView extends GetView<RankController> {
   const PlayListView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-        itemCount: 10,
-        padding: EdgeInsets.symmetric(vertical: 10.w, horizontal: 16.w),
-        separatorBuilder: (context, index) => 9.vGap,
-        itemBuilder: (context, index) {
-          return StatsTeamItem(index: index);
+    return GetBuilder<RankController>(
+        id: "stars",
+        builder: (_) {
+          return Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                child: InkWell(
+                  onTap: () {
+                    showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return SearchBottomDialog();
+                        });
+                  },
+                  child: Row(
+                    children: [
+                      Expanded(child: Text("Rank", style: 19.w7())),
+                      BorderContainer(
+                        width: 70.w,
+                        height: 18.w,
+                        child: Text(
+                          controller.statType,
+                          style: 10.w7(),
+                        ),
+                      ),
+                      4.hGap,
+                      BorderContainer(
+                        width: 140.w,
+                        height: 18.w,
+                        child: Text(
+                          "${controller.season} Regular Season",
+                          style: 10.w7(),
+                        ),
+                      ),
+                      10.hGap,
+                      IconWidget(
+                        iconWidth: 15.w,
+                        iconHeight: 9.w,
+                        icon: Assets.uiIconExpansionPng,
+                      ),
+                      10.hGap,
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                child: ListView.separated(
+                    itemCount: controller.statList.length,
+                    padding:
+                        EdgeInsets.symmetric(vertical: 10.w, horizontal: 16.w),
+                    separatorBuilder: (context, index) => 9.vGap,
+                    itemBuilder: (context, index) {
+                      return StatsTeamItem(index: index);
+                    }),
+              ),
+            ],
+          );
         });
   }
 }
@@ -104,12 +162,13 @@ class StatsItem extends StatelessWidget {
   }
 }
 
-class StatsTeamItem extends StatelessWidget {
+class StatsTeamItem extends GetView<RankController> {
   const StatsTeamItem({super.key, required this.index});
   final int index;
 
   @override
   Widget build(BuildContext context) {
+    var item = controller.statList[index];
     return ShadowContainer(
       height: 84.w,
       // width: 343.w,
@@ -136,12 +195,12 @@ class StatsTeamItem extends StatelessWidget {
             child: SizedBox(
                 width: 140.w,
                 child: Text(
-                  "hou",
+                  item.player ?? "",
                   style: 16.w4(),
                 )),
           ),
           Text(
-            "34.7",
+            "${controller.getStartData(controller.statType, item)}",
             style: 17.w7(),
           ),
           10.hGap,

@@ -4,12 +4,7 @@ import 'package:arm_chair_quaterback/common/widgets/TLBuilderWidget.dart';
 import 'package:arm_chair_quaterback/common/widgets/app_bar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_bar.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/controller.dart';
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
-import 'package:arm_chair_quaterback/pages/news/rank/widgets/border_container.dart';
-import 'package:arm_chair_quaterback/pages/news/rank/widgets/search_bottom_dialog.dart';
-import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guss_item.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -86,46 +81,6 @@ class StatsRankPage extends GetView<RankController> {
                     }),
               ),
               20.vGap,
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.w),
-                child: Row(
-                  children: [
-                    Expanded(child: Text("Rank", style: 19.w7())),
-                    BorderContainer(
-                      width: 70.w,
-                      height: 18.w,
-                      child: Text(
-                        "PPG",
-                        style: 10.w7(),
-                      ),
-                    ),
-                    4.hGap,
-                    BorderContainer(
-                      width: 140.w,
-                      height: 18.w,
-                      child: Text(
-                        "2024 Regular Season",
-                        style: 10.w7(),
-                      ),
-                    ),
-                    10.hGap,
-                    InkWell(
-                      onTap: () {
-                        showModalBottomSheet(
-                            context: context,
-                            builder: (context) {
-                              return SearchBottomDialog();
-                            });
-                      },
-                      child: IconWidget(
-                        iconWidth: 15.w,
-                        iconHeight: 9.w,
-                        icon: Assets.uiIconExpansionPng,
-                      ),
-                    )
-                  ],
-                ),
-              ),
               Expanded(
                   child: TabBarView(
                 // physics: const NeverScrollableScrollPhysics(),

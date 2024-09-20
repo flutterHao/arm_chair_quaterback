@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:23:17
- * @LastEditTime: 2024-09-19 20:30:23
+ * @LastEditTime: 2024-09-20 14:14:12
  */
 /*
  * @Description: 
@@ -39,7 +39,7 @@ class NewsDetailController extends GetxController {
   }
 
   void getNewsDetail(id) {
-    NewsApi.getNewsDetail(123).then((v) {
+    NewsApi.getNewsDetail(id).then((v) {
       state.newDetail = v;
       getMoreNews();
       update();

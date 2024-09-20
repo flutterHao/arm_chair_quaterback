@@ -16,12 +16,12 @@ class UserStore extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    token = StorageService.to.getString(UserConstant.token);
+    token = StorageService.to.getString(Constant.token);
   }
 
   // 保存 token
   Future<void> setToken(String value) async {
-    await StorageService.to.setString(UserConstant.token, value);
+    await StorageService.to.setString(Constant.token, value);
     token = value;
   }
 }

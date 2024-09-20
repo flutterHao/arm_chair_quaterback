@@ -6,7 +6,7 @@
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
-import 'package:arm_chair_quaterback/common/constant/user_constant.dart';
+import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/entities/tab_item_info.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entiry/user_entiry.dart';
 import 'package:arm_chair_quaterback/common/net/apis/user.dart';
@@ -117,7 +117,7 @@ class HomeController extends GetxController
   }
 
   Future<String> getUid() async {
-    String accountName = StorageService.to.getString(UserConstant.deviceId);
+    String accountName = StorageService.to.getString(Constant.deviceId);
     if (ObjectUtil.isEmpty(accountName)) {
       accountName = await DeviceUtils.getDeviceId();
     }

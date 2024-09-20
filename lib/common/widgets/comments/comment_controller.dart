@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-11 16:57:58
- * @LastEditTime: 2024-09-20 10:21:38
+ * @LastEditTime: 2024-09-20 17:46:40
  */
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
@@ -77,17 +77,33 @@ class CommentController extends GetxController {
     int parentReviewId = 0,
   }) async {
     if (ObjectUtil.isEmpty(content)) return;
-    Navigator.pop(context);
-    Reviews item = await NewsApi.sendReviews(newsId, content);
+    if (targetId != 0) {
+      Navigator.pop(context);
+    }
+    Reviews item = await NewsApi.sendReviews(
+        newsId, targetId: targetId, parentReviewId: parentReviewId, content);
     targetId == 0 ? mainList.add(item) : subList.add(item);
     update();
   }
 
   void likeReviews(int newsId, int reviewsId, Reviews item) {
+    if (item.isLike?.value == true) return;
     NewsApi.likeReviews(newsId, reviewsId).then((v) {
       item.isLike?.value = true;
       item.likes?.value += 1;
       // update();
     });
+  }
+
+  String getTeamName(Reviews item) {
+    for (var e in list) {
+      if (e.id == item.targetId) {
+        if (e.parentReviewId != 0) {
+          return "@${e.teamName}";
+        }
+        return "";
+      }
+    }
+    return "";
   }
 }

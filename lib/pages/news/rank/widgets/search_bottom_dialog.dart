@@ -1,5 +1,6 @@
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/values/values.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/widgets/shadow_container.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/controller.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/widgets/border_container.dart';
@@ -27,7 +28,7 @@ class SearchBottomDialog extends GetView<RankController> {
             id: "search",
             builder: (_) {
               return Container(
-                  width: 375.w,
+                  // width: 375.w,
                   height: 350.w,
                   margin: EdgeInsets.only(top: 3.w),
                   padding:
@@ -51,20 +52,22 @@ class SearchBottomDialog extends GetView<RankController> {
                                     style: 14.w7(color: AppColors.c666666))),
                             Expanded(
                                 child: ListView.builder(
-                                    itemCount: 10,
+                                    itemCount: Constant.statTypeList.length,
                                     padding:
                                         EdgeInsets.symmetric(vertical: 10.w),
                                     itemBuilder: (context, index) {
+                                      String item =
+                                          Constant.statTypeList[index];
                                       bool isCurren =
-                                          controller.divisionIndex.value ==
-                                              index;
+                                          controller.statType == item;
                                       return SearchItem(
-                                        index: index,
+                                        text: item,
                                         isCurren: isCurren,
                                         onTap: () {
-                                          controller.divisionIndex.value =
-                                              index;
+                                          controller.statType = item;
                                           controller.update(["search"]);
+                                          Navigator.pop(context);
+                                          controller.getStatRank();
                                         },
                                       );
                                     }))
@@ -78,21 +81,22 @@ class SearchBottomDialog extends GetView<RankController> {
                           children: [
                             ShadowContainer(
                                 backgroudColor: Colors.black54,
-                                child: Text("Sersion",
+                                child: Text("season",
                                     style: 14.w7(color: AppColors.c666666))),
                             Expanded(
                                 child: ListView.builder(
-                                    itemCount: 10,
+                                    itemCount: controller.seasonList.length,
                                     padding:
                                         EdgeInsets.symmetric(vertical: 10.w),
                                     itemBuilder: (context, index) {
-                                      bool isCurren =
-                                          controller.seasonIndex.value == index;
+                                      String item =
+                                          controller.seasonList[index];
+                                      bool isCurren = controller.season == item;
                                       return SearchItem(
-                                        index: index,
+                                        text: item,
                                         isCurren: isCurren,
                                         onTap: () {
-                                          controller.seasonIndex.value = index;
+                                          controller.season = item;
                                           controller.update(["search"]);
                                         },
                                       );
@@ -111,10 +115,10 @@ class SearchBottomDialog extends GetView<RankController> {
 class SearchItem extends StatelessWidget {
   const SearchItem(
       {super.key,
-      required this.index,
+      required this.text,
       required this.isCurren,
       required this.onTap});
-  final int index;
+  final String text;
   final bool isCurren;
   final Function onTap;
 
@@ -128,7 +132,7 @@ class SearchItem extends StatelessWidget {
               height: 36.w,
               borderColor: AppColors.cFF7954,
               child: Text(
-                "Sersion $index",
+                text,
                 style: 14.w7(color: AppColors.cFF7954),
               ),
             )
@@ -137,7 +141,7 @@ class SearchItem extends StatelessWidget {
               alignment: Alignment.center,
               padding: EdgeInsets.symmetric(vertical: 8.w),
               child: Text(
-                "Division $index",
+                text,
                 style: 14.w7(color: AppColors.c666666),
               ),
             ),

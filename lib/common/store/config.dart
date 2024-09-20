@@ -26,7 +26,7 @@ class ConfigStore extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    isFirstOpen = StorageService.to.getBool(UserConstant.firstOpen);
+    isFirstOpen = StorageService.to.getBool(Constant.firstOpen);
   }
 
   // Future<void> getPlatform() async {
@@ -35,11 +35,11 @@ class ConfigStore extends GetxController {
 
   // 标记用户已打开APP
   Future<bool> saveAlreadyOpen() {
-    return StorageService.to.setBool(UserConstant.firstOpen, false);
+    return StorageService.to.setBool(Constant.firstOpen, false);
   }
 
   void onInitLocale() {
-    var langCode = StorageService.to.getString(UserConstant.languge);
+    var langCode = StorageService.to.getString(Constant.languge);
     if (langCode.isEmpty) return;
     var index = languages.indexWhere((element) {
       return element.languageCode == langCode;
@@ -51,6 +51,6 @@ class ConfigStore extends GetxController {
   void onLocaleUpdate(Locale value) {
     locale = value;
     Get.updateLocale(value);
-    StorageService.to.setString(UserConstant.languge, value.languageCode);
+    StorageService.to.setString(Constant.languge, value.languageCode);
   }
 }

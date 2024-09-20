@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 17:28:14
- * @LastEditTime: 2024-09-20 12:14:38
+ * @LastEditTime: 2024-09-20 19:58:08
  */
 import 'package:arm_chair_quaterback/common/entities/news_banner.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
@@ -51,7 +51,7 @@ class NewsApi {
       "targetId": targetId,
       "parentReviewId": parentReviewId
     });
-    return Reviews.fromJson(json);
+    return Reviews.fromJson(json["reviews"]);
   }
 
   static Future<NewsDetail> deleteReviews(int id, int reviewsId) async {
@@ -82,5 +82,9 @@ class NewsApi {
       "seasonType": seasonType,
     });
     return StatsRank.fromJson(json["rankInfo"]);
+  }
+
+  static Future getAward()async{
+    return await HttpUtil().get(Api.getAward);
   }
 }

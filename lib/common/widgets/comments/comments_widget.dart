@@ -46,40 +46,36 @@ class CommentsWidget extends StatelessWidget {
                 // )
               ],
             ),
-            16.vGap,
-            SizedBox(
-              // width: 343.w,
-              // height: 100,
-              child: ListView.separated(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: controller.mainList.length,
-                  separatorBuilder: (context, index) {
-                    return 16.vGap;
-                  },
-                  itemBuilder: (context, index) {
-                    var list = controller.subList
-                        .where((e) =>
-                            e.parentReviewId == controller.mainList[index].id)
-                        .toList();
-                    return Column(
-                      children: [
-                        CommentItemView(
-                            item: controller.mainList[index], isSub: false),
-                        if (list.isNotEmpty)
-                          Container(
-                            // width: 295.w,
-                            margin: EdgeInsets.only(left: 20.w),
-                            child: SubComentsListView(list),
-                          )
-                      ],
-                    );
-                  }),
-            ),
+            // 16.vGap,
+            ListView.separated(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: controller.mainList.length,
+                separatorBuilder: (context, index) {
+                  return 16.vGap;
+                },
+                itemBuilder: (context, index) {
+                  var list = controller.subList
+                      .where((e) =>
+                          e.parentReviewId == controller.mainList[index].id)
+                      .toList();
+                  return Column(
+                    children: [
+                      CommentItemView(
+                          item: controller.mainList[index], isSub: false),
+                      if (list.isNotEmpty)
+                        Container(
+                          // width: 295.w,
+                          margin: EdgeInsets.only(left: 48.w),
+                          child: SubComentsListView(list),
+                        )
+                    ],
+                  );
+                }),
             Container(
                 margin: EdgeInsets.symmetric(vertical: 20.w),
                 child: Text(
-                  "No more",
+                  commentList.isNotEmpty ? "No more" : "",
                   style: 14.w4(color: AppColors.cB3B3B3),
                 ))
           ],
@@ -119,13 +115,14 @@ class SubComentsListView extends GetView<CommentController> {
                               current.value += 3;
                             },
                             child: SizedBox(
-                              width: 150.w,
+                              width: 130.w,
                               child: has > 0
                                   ? Row(
                                       children: [
-                                        Icon(
-                                          Icons.expand_more,
-                                          size: 12.w,
+                                        IconWidget(
+                                          iconWidth: 8.w,
+                                          icon: Assets.uiIconUnfoldPng,
+                                          iconColor: AppColors.c333333,
                                         ),
                                         4.hGap,
                                         Text(
@@ -147,9 +144,10 @@ class SubComentsListView extends GetView<CommentController> {
                                 width: 100.w,
                                 child: Row(
                                   children: [
-                                    Icon(
-                                      Icons.expand_less,
-                                      size: 12.w,
+                                    IconWidget(
+                                      iconWidth: 8.w,
+                                      icon: Assets.uiIconShrinkPng,
+                                      iconColor: AppColors.c333333,
                                     ),
                                     4.hGap,
                                     Text(
@@ -180,7 +178,7 @@ class CommentItemView extends GetView<CommentController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ImageWidget(
-          url: "https://file.qiumiwu.com/player/202404/24/349123f6.png",
+          url: "",
           width: isSub ? 36.w : 48.w,
           height: isSub ? 36.w : 48.w,
           borderRadius: BorderRadius.circular(24.w),
@@ -210,10 +208,11 @@ class CommentItemView extends GetView<CommentController> {
                     ),
                   ),
                   13.hGap,
-                  Text(
-                    "@ Gleavinger",
-                    style: 12.w4(color: AppColors.cB3B3B3),
-                  ),
+                  if (item.targetId != 0)
+                    Text(
+                      " ${controller.getTeamName(item)}",
+                      style: 12.w4(color: AppColors.cB3B3B3),
+                    ),
                   10.hGap,
                   Text(
                     controller.timeAgo(item.updateTime ?? 0),

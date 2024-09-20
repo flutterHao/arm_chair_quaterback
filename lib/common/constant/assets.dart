@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-11 17:18:41
- * @LastEditTime: 2024-09-13 21:14:09
+ * @LastEditTime: 2024-09-20 18:47:57
  */
 class Assets {
   static const ball_1Png = 'assets/images/home/ball_1.png';
@@ -19,25 +19,26 @@ class Assets {
   static const trade_2Png = 'assets/images/home/trade_2.png';
 
   ///icon
-  static const iconBackPng = 'assets/images/icon/icon_back.png';
-  static const iconClosePng = 'assets/images/icon/icon_close.png';
-  static const iconSharePng = 'assets/images/icon/icon_share.png';
-  static const uiIconArrowsPng = 'assets/images/icon/ui_icon_arrows.png';
-  static const uiIconChatting_01Png =
-      'assets/images/icon/ui_icon_chatting_01.png';
-  static const uiIconChatting_02Png =
-      'assets/images/icon/ui_icon_chatting_02.png';
-  static const uiIconExpansionPng = 'assets/images/icon/ui_icon_expansion.png';
-  static const uiIconJettonPng = 'assets/images/icon/ui_icon_jetton.png';
-  static const uiIconLike_01Png = 'assets/images/icon/ui_icon_like_01.png';
-  static const uiIconLike_02Png = 'assets/images/icon/ui_icon_like_02.png';
-  static const uiIconMoneyPng = 'assets/images/icon/ui_icon_money.png';
-  static const uiIconMorePng = 'assets/images/icon/ui_icon_more.png';
-  static const uiIconMsgPng = 'assets/images/icon/ui_icon_msg.png';
-  static const uiIconReadPng = 'assets/images/icon/ui_icon_read.png';
-  static const uiIconRing_01Png = 'assets/images/icon/ui_icon_ring_01.png';
-  static const uiIconShrinkPng = 'assets/images/icon/ui_icon_shrink.png';
-  static const uiIconUnfoldPng = 'assets/images/icon/ui_icon_unfold.png';
+static const iconBackPng = 'assets/images/icon/icon_back.png';
+static const iconClosePng = 'assets/images/icon/icon_close.png';
+static const iconSharePng = 'assets/images/icon/icon_share.png';
+static const uiIconArrowsPng = 'assets/images/icon/ui_icon_arrows.png';
+static const uiIconAwardPng = 'assets/images/icon/ui_icon_award.png';
+static const uiIconChatting_01Png = 'assets/images/icon/ui_icon_chatting_01.png';
+static const uiIconChatting_02Png = 'assets/images/icon/ui_icon_chatting_02.png';
+static const uiIconExpansionPng = 'assets/images/icon/ui_icon_expansion.png';
+static const uiIconJettonPng = 'assets/images/icon/ui_icon_jetton.png';
+static const uiIconLabelPng = 'assets/images/icon/ui_icon_label.png';
+static const uiIconLike_01Png = 'assets/images/icon/ui_icon_like_01.png';
+static const uiIconLike_02Png = 'assets/images/icon/ui_icon_like_02.png';
+static const uiIconMoneyPng = 'assets/images/icon/ui_icon_money.png';
+static const uiIconMorePng = 'assets/images/icon/ui_icon_more.png';
+static const uiIconMsgPng = 'assets/images/icon/ui_icon_msg.png';
+static const uiIconReadPng = 'assets/images/icon/ui_icon_read.png';
+static const uiIconRing_01Png = 'assets/images/icon/ui_icon_ring_01.png';
+static const uiIconShrinkPng = 'assets/images/icon/ui_icon_shrink.png';
+static const uiIconUnfoldPng = 'assets/images/icon/ui_icon_unfold.png';
+
 
   ///test
   static const testTeamLogoPng = 'assets/test/test_team_logo.png';

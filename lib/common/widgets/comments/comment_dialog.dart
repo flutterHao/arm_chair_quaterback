@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-12 16:34:46
- * @LastEditTime: 2024-09-20 10:21:07
+ * @LastEditTime: 2024-09-20 17:57:42
  */
 import 'dart:math';
 
@@ -37,7 +37,7 @@ class CommentDialog extends GetView<CommentController> {
         bottom: MediaQuery.of(context).viewInsets.bottom, // 键盘高度
       ),
       child: Container(
-        color: Colors.white,
+        color: AppColors.c262626,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -47,6 +47,7 @@ class CommentDialog extends GetView<CommentController> {
                   alignment: Alignment.center,
                   constraints: BoxConstraints(minHeight: 42.w),
                   decoration: BoxDecoration(
+                      border: Border.all(width: 1.w, color: AppColors.cFF7954),
                       color: AppColors.cE6E6E6,
                       borderRadius: BorderRadius.circular(24.w)),
                   child: Row(
@@ -73,24 +74,26 @@ class CommentDialog extends GetView<CommentController> {
                           width: 30.w,
                           height: 30.w,
                           decoration: BoxDecoration(
-                              color: AppColors.c666666,
+                              color: AppColors.cFF7954,
                               borderRadius: BorderRadius.circular(15.w)),
                           child: Transform.rotate(
                             angle: 90 * (pi / 180),
                             child: IconWidget(
                               iconWidth: 15.w,
                               icon: Assets.iconBackPng,
-                              iconColor: AppColors.cE6E6E,
+                              iconColor: AppColors.c262626,
                             ),
                           ),
                         ),
                         onPressed: () {
+                          String content = ctrl.text;
+                          ctrl.text = "";
                           controller.sendReviews(
                             context,
                             newsId,
                             targetId: targetId,
                             parentReviewId: parentId,
-                            ctrl.text,
+                            content,
                           );
                         },
                       ),

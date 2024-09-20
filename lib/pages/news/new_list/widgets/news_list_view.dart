@@ -21,28 +21,21 @@ class NewsListView extends GetView<NewListController> {
     return GetBuilder<NewListController>(
         id: "newsList",
         builder: (_) {
-          return ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: 343.w),
-            // height: 139.w,
-            child: ListView.separated(
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: controller.state.newsList.length,
-                shrinkWrap: true,
-                padding: EdgeInsets.symmetric(vertical: 10.w),
-                separatorBuilder: (context, index) {
-                  return 9.vGap;
-                },
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () => Get.toNamed(RouteNames.newsDetail,
-                        arguments: controller.state.newsList[index].id,
-                        id: GlobalNestedKey.NEWS),
-                    child: NewsItemView(
-                      item: controller.state.newsList[index],
-                    ),
-                  );
-                }),
-          );
+          return ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: controller.state.newsList.length,
+              shrinkWrap: true,
+              padding: EdgeInsets.symmetric(vertical: 10.w),
+              itemBuilder: (context, index) {
+                return InkWell(
+                  onTap: () => Get.toNamed(RouteNames.newsDetail,
+                      arguments: controller.state.newsList[index].id,
+                      id: GlobalNestedKey.NEWS),
+                  child: NewsItemView(
+                    item: controller.state.newsList[index],
+                  ),
+                );
+              });
         });
   }
 }
@@ -53,111 +46,132 @@ class NewsItemView extends GetView<NewListController> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 343.w,
-      // height: 139.w,
-      child: Stack(
-        children: [
-          ShadowContainer(
-            child: Padding(
-              padding: EdgeInsets.all(12.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+    return Stack(
+      children: [
+        ShadowContainer(
+          padding: EdgeInsets.all(12.w),
+          margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 7.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
                 children: [
-                  Row(
-                    children: [
-                      IconWidget(
-                        iconHeight: 12.w,
-                        iconWidth: 15.w,
-                        icon: Assets.uiIconReadPng,
-                        iconColor: AppColors.cFF7954,
-                      ),
-                      8.hGap,
-                      SizedBox(
-                          width: 271.w,
-                          child: Text(
-                            item.title ?? "",
-                            overflow: TextOverflow.ellipsis,
-                            style: 14.w4(),
-                          )),
-                    ],
+                  IconWidget(
+                    iconHeight: 12.w,
+                    iconWidth: 15.w,
+                    icon: Assets.uiIconReadPng,
+                    iconColor: AppColors.cFF7954,
                   ),
-                  6.vGap,
-                  Container(
-                    width: 319.w,
-                    height: 0.5.w,
-                    color: AppColors.cB3B3B3,
-                  ),
-                  5.vGap,
-                  Text(
-                    "${DateUtil.formatDateMs(item.postTime ?? 0, format: DateFormats.y_mo_d_h_m)} -${item.source}",
-                    style: 10.w4(color: AppColors.cB3B3B3),
-                  ),
-                  9.vGap,
+                  8.hGap,
                   SizedBox(
-                    width: 270.w,
-                    child: Text(
-                      item.content ?? "",
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                      style: 12.w4(color: AppColors.c666666),
-                    ),
-                  ),
-                  10.vGap,
-                  Row(
-                    children: [
-                      SizedBox(
-                          width: 60.w,
-                          child: TextIconWidget(
-                            width: 16.w,
-                            icon: item.isView == 0
-                                ? Assets.uiIconChatting_01Png
-                                : Assets.uiIconChatting_02Png,
-                            color: item.isView == 0
-                                ? AppColors.c666666
-                                : AppColors.cB3B3B3,
-                            text: "${item.views ?? 0}",
-                          )),
-                      InkWell(
-                        onTap: () {
-                          item.isLike == 1
-                              ? controller.unLikeNews(item)
-                              : controller.likeNews(item);
-                        },
-                        child: SizedBox(
-                            width: 60.w,
-                            child: TextIconWidget(
-                              icon: item.isLike == 1
-                                  ? Assets.uiIconLike_01Png
-                                  : Assets.uiIconLike_02Png,
-                              color: item.isLike == 1
-                                  ? AppColors.cFF546C
-                                  : AppColors.cB3B3B3,
-                              text: "${item.likes}",
-                            )),
-                      ),
-                    ],
-                  )
+                      width: 271.w,
+                      child: Text(
+                        item.title ?? "",
+                        overflow: TextOverflow.ellipsis,
+                        style: 14.w4(
+                          color: item.isView == 0
+                              ? AppColors.c262626
+                              : AppColors.c666666,
+                        ),
+                      )),
                 ],
               ),
-            ),
+              6.vGap,
+              Container(
+                width: 319.w,
+                height: 0.5.w,
+                color: AppColors.cB3B3B3,
+              ),
+              5.vGap,
+              Text(
+                "${DateUtil.formatDateMs(item.postTime ?? 0, format: DateFormats.y_mo_d_h_m)} -${item.source}",
+                style: 10.w4(color: AppColors.cB3B3B3),
+              ),
+              9.vGap,
+              SizedBox(
+                width: 270.w,
+                child: Text(
+                  item.content ?? "",
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                  style: 12.w4(
+                    color: item.isView == 0
+                        ? AppColors.c666666
+                        : AppColors.cB3B3B3,
+                  ),
+                ),
+              ),
+              10.vGap,
+              Row(
+                children: [
+                  SizedBox(
+                      width: 60.w,
+                      child: TextIconWidget(
+                        width: 16.w,
+                        icon: item.isView == 0
+                            ? Assets.uiIconChatting_01Png
+                            : Assets.uiIconChatting_02Png,
+                        color: item.isView == 0
+                            ? AppColors.c666666
+                            : AppColors.cB3B3B3,
+                        text: "${item.views ?? 0}",
+                      )),
+                  InkWell(
+                    onTap: () {
+                      item.isLike == 1
+                          ? controller.unLikeNews(item)
+                          : controller.likeNews(item);
+                    },
+                    child: SizedBox(
+                        width: 60.w,
+                        child: TextIconWidget(
+                          icon: item.isLike == 1
+                              ? Assets.uiIconLike_01Png
+                              : Assets.uiIconLike_02Png,
+                          color: item.isLike == 1
+                              ? AppColors.cFF546C
+                              : AppColors.cB3B3B3,
+                          text: "${item.likes}",
+                        )),
+                  ),
+                ],
+              )
+            ],
           ),
-          Positioned(
-            bottom: 12.w,
-            right: 12.w,
-            child: IconWidget(
-              iconHeight: 14.w,
-              iconWidth: 14.w,
-              backgroudWitdh: 32.w,
-              backgroudheight: 32.w,
-              icon: Assets.uiIconArrowsPng,
-              iconColor: Colors.black,
-              borderRadius: BorderRadius.circular(16.w),
-              border: Border.all(width: 1, color: AppColors.cB3B3B3),
-            ),
-          )
-        ],
-      ),
+        ),
+        Positioned(
+          bottom: 12.w,
+          right: 12.w,
+          child: IconWidget(
+            iconHeight: 14.w,
+            iconWidth: 14.w,
+            backgroudWitdh: 32.w,
+            backgroudheight: 32.w,
+            icon: Assets.uiIconArrowsPng,
+            iconColor: item.isView == 0 ? AppColors.c262626 : AppColors.c666666,
+            borderRadius: BorderRadius.circular(16.w),
+            border: Border.all(width: 1, color: AppColors.cB3B3B3),
+          ),
+        ),
+        Positioned(
+            top: 0.w,
+            right: 0.w,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                IconWidget(
+                  iconWidth: 36.w,
+                  icon: Assets.uiIconLabelPng,
+                  iconColor: AppColors.cED1451,
+                ),
+                IconWidget(
+                  iconWidth: 16.w,
+                  icon: Assets.uiIconAwardPng,
+                  iconColor: Colors.white,
+                ),
+              ],
+            ))
+      ],
     );
   }
 }

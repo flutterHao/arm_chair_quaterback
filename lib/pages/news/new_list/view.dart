@@ -2,6 +2,7 @@ import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/net/address.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
+import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_bar.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
@@ -81,34 +82,64 @@ class NewsListPage extends GetView<NewListController> {
           /// Swiper Widget wrapped in SliverToBoxAdapter
           SliverToBoxAdapter(
             child: Container(
-              margin: EdgeInsets.only(top: 16.w, right: 16.w, left: 16.w),
+              // margin: EdgeInsets.only(top: 16.w, right: 10.w, left: 10.w),
               child: GetBuilder<NewListController>(
                   id: "newsBanner",
                   builder: (context) {
-                    return SwiperWidget(
-                      width: 343.w,
-                      // width: MyApp.MAXWEBWIDTH.w - 40.w,
-                      height: 150.w,
-                      bannerList: controller.state.banners
-                          .map((e) => Address.devUrl + e.pictureId!)
-                          .toList(),
-                      footer: IconWidget(
-                        iconWidth: 14.w,
-                        iconHeight: 14.w,
-                        icon: Assets.uiIconArrowsPng,
-                        backgroudWitdh: 32.w,
-                        backgroudheight: 32.w,
-                        borderRadius: BorderRadius.circular(16.w),
-                        backgroudColor: Colors.white38,
-                      ),
-                      onTap: (index) {
-                        Get.toNamed(RouteNames.newsDetail,
-                            arguments: controller.state.banners[index].id!,
-                            // parameters: {
-                            //   "id": controller.state.banners[index].id!
-                            // },
-                            id: GlobalNestedKey.NEWS);
-                      },
+                    return Stack(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(
+                              top: 16.w, right: 16.w, left: 16.w),
+                          child: SwiperWidget(
+                            width: 343.w,
+                            // width: MyApp.MAXWEBWIDTH.w - 40.w,
+                            height: 150.w,
+                            bannerList: controller.state.banners
+                                .map((e) => Address.devUrl + e.pictureId!)
+                                .toList(),
+                            footer: IconWidget(
+                              iconWidth: 14.w,
+                              iconHeight: 14.w,
+                              icon: Assets.uiIconArrowsPng,
+                              backgroudWitdh: 32.w,
+                              backgroudheight: 32.w,
+                              borderRadius: BorderRadius.circular(16.w),
+                              backgroudColor: Colors.white38,
+                            ),
+                            onTap: (index) {
+                              Get.toNamed(RouteNames.newsDetail,
+                                  arguments:
+                                      controller.state.banners[index].id!,
+                                  // parameters: {
+                                  //   "id": controller.state.banners[index].id!
+                                  // },
+                                  id: GlobalNestedKey.NEWS);
+                            },
+                          ),
+                        ),
+                        Positioned(
+                            top: 8.w,
+                            right: 8.w,
+                            child: InkWell(
+                              onTap: () => controller.getAward(),
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  IconWidget(
+                                    iconWidth: 36.w,
+                                    icon: Assets.uiIconLabelPng,
+                                    iconColor: AppColors.cED1451,
+                                  ),
+                                  IconWidget(
+                                    iconWidth: 16.w,
+                                    icon: Assets.uiIconAwardPng,
+                                    iconColor: Colors.white,
+                                  ),
+                                ],
+                              ),
+                            ))
+                      ],
                     );
                   }),
             ),
@@ -127,7 +158,7 @@ class NewsListPage extends GetView<NewListController> {
 
           /// News List
           SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            padding: EdgeInsets.symmetric(horizontal: 10.w),
             sliver: const SliverToBoxAdapter(
               child: NewsListView(),
             ),

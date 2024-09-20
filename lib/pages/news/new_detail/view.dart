@@ -99,10 +99,11 @@ class NewsDetailPage extends GetView<NewsDetailController> {
         Text(controller.state.newDetail.source ?? "",
             style: 12.w4(color: AppColors.c666666)),
         6.vGap,
-        Text(
-            DateUtil.formatDateMs(controller.state.newDetail.postTime ?? 0,
-                format: DateFormats.y_mo_d),
-            style: 12.w4(color: AppColors.cB3B3B3)),
+        if (controller.state.newDetail.postTime != 0)
+          Text(
+              DateUtil.formatDateMs(controller.state.newDetail.postTime!,
+                  format: DateFormats.y_mo_d),
+              style: 12.w4(color: AppColors.cB3B3B3)),
       ],
     );
   }
@@ -122,15 +123,7 @@ class NewsDetailPage extends GetView<NewsDetailController> {
     return SliverToBoxAdapter(
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 28.w, horizontal: 32.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("More news", style: 14.w7(color: AppColors.c262626)),
-            12.vGap,
-            // ignore: prefer_const_constructors
-            MoreNewsWidget(),
-          ],
-        ),
+        child: MoreNewsWidget(),
       ),
     );
   }

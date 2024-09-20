@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-06 15:16:54
- * @LastEditTime: 2024-09-20 12:27:34
+ * @LastEditTime: 2024-09-20 19:56:51
  */
 class Api {
   // static const String authAccount = '/p/account/authAccount';
@@ -40,6 +40,7 @@ class Api {
   static const String getGuessGamesInfo = "$API_BASE_PATH/NBANews/getGuessGamesInfo";//picks首页竞猜列表
   static const String guess = "$API_BASE_PATH/NBANews/guess";
 
+  static const String getAward = "$API_BASE_PATH/NBANews/getTodayAward";
   //NBAData
   static const String teamRank = "$API_BASE_PATH/NBAData/queryNBATeamRank";
   static const String playerStats =

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2024-09-20 12:22:07
+ * @LastEditTime: 2024-09-20 20:24:08
  */
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
 import 'package:arm_chair_quaterback/common/entities/stats_rank/nba_player_stat.dart';
@@ -21,8 +21,8 @@ class NewListController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    // getNewsBanner();
-    // getNewsList();
+    getNewsBanner();
+    getNewsList();
     getStatsRank();
   }
 
@@ -59,13 +59,18 @@ class NewListController extends GetxController {
   }
 
   ///获取球员信息 //TODO 防止一次性加载过多
-  void getStatsRank() async{
-    for (var element in state.statsRankMap.entries) {
-   await   NewsApi.startRank(season: "2023-24", statType: "PTS").then((value) {
-        state.statsRankMap[element.key] = value.nbaPlayerStats ?? [];
-      });
-    }
-    update(['statsRank']);
+  void getStatsRank() {
+    // for (var element in state.statsRankMap.entries) {
+    //   await NewsApi.startRank(season: "2023-24", statType: "PTS").then((value) {
+    //     state.statsRankMap[element.key] = value.nbaPlayerStats ?? [];
+    //   });
+    // }
+    //  update(['teamRank']);
+    NewsApi.startRank(season: "2023-24", statType: "PTS").then((value) {
+      state.statsList = value.nbaPlayerStats ?? [];
+      setTeamMap();
+      update(['statsRank']);
+    });
   }
 
   dynamic getStartData(String type, NbaPlayerStat item) {
@@ -95,42 +100,46 @@ class NewListController extends GetxController {
     }
   }
 
-  //计算排名,放入map中/
-  // void setTeamMap() {
-  //   state.statsRankMap.clear();
-  //   List<NbaPlayerStat> pts = List<NbaPlayerStat>.from(state.statsList)
-  //     ..sort((a, b) => b.pts!.compareTo(a.pts!));
-  //   List<NbaPlayerStat> ast = List<NbaPlayerStat>.from(state.statsList)
-  //     ..sort((a, b) => b.ast!.compareTo(a.ast!));
-  //   List<NbaPlayerStat> reb = List<NbaPlayerStat>.from(state.statsList)
-  //     ..sort((a, b) => b.reb!.compareTo(a.reb!));
-  //   List<NbaPlayerStat> fg = List<NbaPlayerStat>.from(state.statsList)
-  //     ..sort((a, b) => b.fgP!.compareTo(a.fgP!));
-  //   List<NbaPlayerStat> blk = List<NbaPlayerStat>.from(state.statsList)
-  //     ..sort((a, b) => b.blk!.compareTo(a.blk!));
-  //   List<NbaPlayerStat> stl = List<NbaPlayerStat>.from(state.statsList)
-  //     ..sort((a, b) => b.stl!.compareTo(a.stl!));
-  //   List<NbaPlayerStat> ftp = List<NbaPlayerStat>.from(state.statsList)
-  //     ..sort((a, b) => b.ftP!.compareTo(a.ftP!));
-  //   List<NbaPlayerStat> threePa = List<NbaPlayerStat>.from(state.statsList)
-  //     ..sort((a, b) => b.threePa!.compareTo(a.threePa!));
-  //   List<NbaPlayerStat> threePp = List<NbaPlayerStat>.from(state.statsList)
-  //     ..sort((a, b) => b.threePp!.compareTo(a.threePp!));
-  //   List<NbaPlayerStat> to = List<NbaPlayerStat>.from(state.statsList)
-  //     ..sort((a, b) => a.to!.compareTo(b.to!)); // 注意失误可能是从小到大
+  //计算排名,放入map中
+  void setTeamMap() {
+    state.statsRankMap.clear();
+    List<NbaPlayerStat> pts = List<NbaPlayerStat>.from(state.statsList)
+      ..sort((a, b) => b.pts!.compareTo(a.pts!));
+    List<NbaPlayerStat> ast = List<NbaPlayerStat>.from(state.statsList)
+      ..sort((a, b) => b.ast!.compareTo(a.ast!));
+    List<NbaPlayerStat> reb = List<NbaPlayerStat>.from(state.statsList)
+      ..sort((a, b) => b.reb!.compareTo(a.reb!));
+    List<NbaPlayerStat> fg = List<NbaPlayerStat>.from(state.statsList)
+      ..sort((a, b) => b.fgPct!.compareTo(a.fgPct!));
+    List<NbaPlayerStat> blk = List<NbaPlayerStat>.from(state.statsList)
+      ..sort((a, b) => b.blk!.compareTo(a.blk!));
+    List<NbaPlayerStat> stl = List<NbaPlayerStat>.from(state.statsList)
+      ..sort((a, b) => b.stl!.compareTo(a.stl!));
+    List<NbaPlayerStat> ftp = List<NbaPlayerStat>.from(state.statsList)
+      ..sort((a, b) => b.ftPct!.compareTo(a.ftPct!));
+    List<NbaPlayerStat> threePa = List<NbaPlayerStat>.from(state.statsList)
+      ..sort((a, b) => b.fg3A!.compareTo(a.fg3A!));
+    List<NbaPlayerStat> threePp = List<NbaPlayerStat>.from(state.statsList)
+      ..sort((a, b) => b.fg3Pct!.compareTo(a.fg3Pct!));
+    List<NbaPlayerStat> to = List<NbaPlayerStat>.from(state.statsList)
+      ..sort((a, b) => a.tov!.compareTo(b.tov!)); // 注意失误可能是从小到大
 
-  //   // 将所有的排行数据批量放入 Map 中
-  //   state.statsRankMap.addAll({
-  //     "PTS": pts,
-  //     "AST": ast,
-  //     "REB": reb,
-  //     "FG": fg,
-  //     "BLK": blk,
-  //     "STL": stl,
-  //     "FTP": ftp,
-  //     "3TA": threePa,
-  //     "3TP": threePp,
-  //     "TO": to,
-  //   });
-  // }
+    // 将所有的排行数据批量放入 Map 中
+    state.statsRankMap = {
+      "PTS": pts,
+      "AST": ast,
+      "REB": reb,
+      "FG": fg,
+      "BLK": blk,
+      "STL": stl,
+      "FTP": ftp,
+      "3TA": threePa,
+      "3TP": threePp,
+      "TO": to,
+    };
+  }
+
+  void getAward() {
+    NewsApi.getAward().then((value) {});
+  }
 }
