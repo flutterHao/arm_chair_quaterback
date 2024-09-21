@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:arm_chair_quaterback/common/net/address.dart';
 import 'package:arm_chair_quaterback/common/net/inerceptor/net_interceptor.dart';
 import 'package:dio/dio.dart';
@@ -11,6 +12,7 @@ final httpUtil = HttpUtil();
 
 class HttpUtil {
   static final HttpUtil _instance = HttpUtil._internal();
+
   factory HttpUtil() => _instance;
 
   late Dio _dio;
@@ -60,8 +62,11 @@ class HttpUtil {
     // _dio.interceptors.add(CookieManager(cookieJar));
     // 添加拦截器
     _dio.interceptors.add(NetInterceptor());
-    _dio.interceptors
-        .add(LogInterceptor(requestBody: true, responseBody: true));
+    _dio.interceptors.add(LogInterceptor(
+      requestBody: true,
+      responseBody: true,
+      // logPrint: (o) => log(o.toString()),
+    ));
   }
 
   /*

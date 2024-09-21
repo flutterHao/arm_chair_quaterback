@@ -10,7 +10,6 @@ import 'package:arm_chair_quaterback/common/widgets/TLBuilderWidget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/rank_start_button.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -19,23 +18,23 @@ import 'package:get/get.dart';
 ///@auther gejiahui
 ///created at 2024/9/10/10:58
 
-class GussItem extends StatefulWidget {
-  const GussItem(this.parentIndex, this.pickPlayer, {super.key});
+class GuessItem extends StatefulWidget {
+  const GuessItem(this.parentIndex, this.pickPlayer, {super.key});
 
   final int parentIndex;
   final PicksPlayer pickPlayer;
 
   @override
-  State<GussItem> createState() => _GussItemState();
+  State<GuessItem> createState() => _GuessItemState();
 }
 
-class _GussItemState extends State<GussItem>
+class _GuessItemState extends State<GuessItem>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
   late PicksPlayer player;
 
   /// 整数位代表选中的tab下标，小数位代表选择的more(1)/less(2)
-  var gameChoiceFlag = RxDouble(-1.0); //初始状态未选中
+  var gameChoiceFlag = RxDouble(-1.0);
 
   @override
   void initState() {
@@ -44,92 +43,17 @@ class _GussItemState extends State<GussItem>
     tabController = TabController(length: player.betData.length, vsync: this);
   }
 
-  FlTitlesData get titlesData =>
-      const FlTitlesData(
-        show: true,
-        bottomTitles: AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: false,
-          ),
-        ),
-        leftTitles: AxisTitles(
-          sideTitles: SideTitles(showTitles: false),
-        ),
-        topTitles: AxisTitles(
-          sideTitles: SideTitles(showTitles: false),
-        ),
-        rightTitles: AxisTitles(
-          sideTitles: SideTitles(showTitles: false),
-        ),
-      );
-
-  Widget _generateBarChart() {
-    List<BarChartGroupData> barGroups = [
-      BarChartGroupData(
-        x: 0,
-        barRods: [
-          BarChartRodData(
-              toY: 10,
-              width: 6.w,
-              borderRadius:
-              const BorderRadius.vertical(top: Radius.circular(2)),
-              color: AppColors.cFF7954)
-        ],
-      ),
-      BarChartGroupData(
-        x: 1,
-        barRods: [
-          BarChartRodData(
-              toY: 15,
-              width: 6.w,
-              borderRadius:
-              const BorderRadius.vertical(top: Radius.circular(2)),
-              color: AppColors.cFF7954)
-        ],
-      ),
-      BarChartGroupData(
-        x: 2,
-        barRods: [
-          BarChartRodData(
-              toY: 8,
-              width: 6.w,
-              borderRadius:
-              const BorderRadius.vertical(top: Radius.circular(2)),
-              color: AppColors.c000000.withOpacity(.5))
-        ],
-      ),
-      BarChartGroupData(
-        x: 3,
-        barRods: [
-          BarChartRodData(
-              toY: 13,
-              width: 6.w,
-              borderRadius:
-              const BorderRadius.vertical(top: Radius.circular(2)),
-              color: AppColors.cFF7954)
-        ],
-      ),
-      BarChartGroupData(
-        x: 4,
-        barRods: [
-          BarChartRodData(
-              toY: 7,
-              width: 6.w,
-              borderRadius:
-              const BorderRadius.vertical(top: Radius.circular(2)),
-              color: AppColors.c000000.withOpacity(.5))
-        ],
-      ),
-    ];
-
-    return BarChart(BarChartData(
-        barGroups: barGroups,
-        titlesData: titlesData,
-        borderData: FlBorderData(show: false)));
-  }
-
   @override
   Widget build(BuildContext context) {
+    player = widget.pickPlayer;
+    if (player.guessInfo.guessData.isNotEmpty) {
+      /// 如果已选择则直接滚动到对应tab
+      var index = player.betData.indexWhere((e) =>
+          ParamUtils.getProKey(e.toLowerCase()).toLowerCase() ==
+          player.guessInfo.guessData[0].guessAttr.toLowerCase());
+      tabController.animateTo(index, duration: Duration.zero);
+    }
+    gameChoiceFlag = RxDouble(-1.0);
     return Container(
       margin: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 8.w),
       padding: EdgeInsets.only(
@@ -151,137 +75,114 @@ class _GussItemState extends State<GussItem>
                   physics: const BouncingScrollPhysics(),
                   children: List.generate(
                     tabController.length,
-                        (index) =>
-                        Container(
-                          margin: EdgeInsets.only(left: 13.w, right: 11.w),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  // print('点击了头像');
-                                  Get.toNamed(RouteNames.picksPlayerDetail,
-                                      id: GlobalNestedKey.PICKS);
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      color: AppColors.ce5e5e5,
-                                      borderRadius: BorderRadius.circular(
-                                          26.w)),
-                                  child: Stack(children: [
-                                    Image.asset(
-                                      Assets.testTeamLogoPng,
-                                      width: 55.w,
+                    (index) => Container(
+                      margin: EdgeInsets.only(left: 13.w, right: 11.w),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              // print('点击了头像');
+                              Get.toNamed(RouteNames.picksPlayerDetail,
+                                  id: GlobalNestedKey.PICKS);
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: AppColors.ce5e5e5,
+                                  borderRadius: BorderRadius.circular(26.w)),
+                              child: Stack(children: [
+                                Image.asset(
+                                  Assets.testTeamLogoPng,
+                                  width: 55.w,
 
-                                      /// todo 换成网络图
-                                    ),
-                                    Text(player.baseInfoList.grade,
-                                        style: 14.w7(color: AppColors.c262626))
-                                  ]),
+                                  /// todo 换成网络图
                                 ),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  constraints: BoxConstraints(maxWidth: 89.w),
-                                  margin: EdgeInsets.only(left: 10.w),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment
-                                        .start,
-                                    children: [
-                                      Text(
-                                        player.baseInfoList.ename,
-                                        style: 13.w4(
-                                            color: AppColors.c666666,
-                                            height: 1,
-                                            overflow: TextOverflow.ellipsis),
-                                      ),
-                                      4.vGap,
-                                      Text(
-                                        "VS ${player.awayTeamInfo
-                                            .shortEname}   ${MyDateUtils
-                                            .formatHM(
-                                            MyDateUtils.getDateTimeByMs(
-                                                player.guessInfo
-                                                    .gameStartTime))}",
-                                        style: 9.w4(
-                                            color: AppColors.cB3B3B3,
-                                            height: 1),
-                                      ),
-                                      8.vGap,
-                                      Text(
-                                        "PPG: ${double.parse(
-                                            ((player.dataAvgList
-                                                .toJson()[ParamUtils.getProKey(
-                                                player.betData[index]
-                                                    .toLowerCase())]) ?? 0)
-                                                .toString()).toStringAsFixed(
-                                            1)}",
-                                        style: 9.w4(
-                                            color: AppColors.cB3B3B3,
-                                            height: 1),
-                                      ),
-                                      3.vGap,
-                                      Text(
-                                        "L5: ${double.parse(
-                                            ((player.guessInfo.l5Avg
-                                                .toJson()[ParamUtils.getProKey(
-                                                player.betData[index]
-                                                    .toLowerCase())]) ?? 0)
-                                                .toString()).toStringAsFixed(
-                                            1)}",
-                                        style: 9.w4(
-                                            color: AppColors.cB3B3B3,
-                                            height: 1),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                width: 62.w,
-                                height: 55.w,
-                                margin: EdgeInsets.only(left: 9.w),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(9.w),
-                                    border: Border.all(
-                                        color: AppColors.ce5e5e5, width: 1)),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                        double.parse(((player.guessInfo
-                                            .guessReferenceValue
-                                            .toJson()[
-                                        ParamUtils.getProKey(player
-                                            .betData[index]
-                                            .toLowerCase())]) ??
-                                            0)
-                                            .toString())
-                                            .toStringAsFixed(0),
-                                        style: 18.w7(color: AppColors.cFF7954)),
-                                    Text(
-                                      player.betData[index],
-                                      style: TextStyle(
-                                          fontSize: 11.sp,
-                                          color: AppColors.cFF7954),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(left: 11.w),
-                                child: Column(
-                                  children: [
-                                    _buildBtn(index, "MORE", "1"),
-                                    7.vGap,
-                                    _buildBtn(index, "LESS", "2")
-                                  ],
-                                ),
-                              )
-                            ],
+                                Text(player.baseInfoList.grade,
+                                    style: 14.w7(color: AppColors.c262626))
+                              ]),
+                            ),
                           ),
-                        ),
+                          Expanded(
+                            child: Container(
+                              constraints: BoxConstraints(maxWidth: 89.w),
+                              margin: EdgeInsets.only(left: 10.w),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    player.baseInfoList.ename,
+                                    style: 13.w4(
+                                        color: AppColors.c666666,
+                                        height: 1,
+                                        overflow: TextOverflow.ellipsis),
+                                  ),
+                                  4.vGap,
+                                  Text(
+                                    "VS ${player.awayTeamInfo.shortEname}   ${MyDateUtils.formatHM(MyDateUtils.getDateTimeByMs(player.guessInfo.gameStartTime))}",
+                                    style: 9.w4(
+                                        color: AppColors.cB3B3B3, height: 1),
+                                  ),
+                                  8.vGap,
+                                  Text(
+                                    "PPG: ${double.parse(((player.dataAvgList.toJson()[ParamUtils.getProKey(player.betData[index].toLowerCase())]) ?? 0).toString()).toStringAsFixed(1)}",
+                                    style: 9.w4(
+                                        color: AppColors.cB3B3B3, height: 1),
+                                  ),
+                                  3.vGap,
+                                  Text(
+                                    "L5: ${double.parse(((player.guessInfo.l5Avg.toJson()[ParamUtils.getProKey(player.betData[index].toLowerCase())]) ?? 0).toString()).toStringAsFixed(1)}",
+                                    style: 9.w4(
+                                        color: AppColors.cB3B3B3, height: 1),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 62.w,
+                            height: 55.w,
+                            margin: EdgeInsets.only(left: 9.w),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(9.w),
+                                border: Border.all(
+                                    color: AppColors.ce5e5e5, width: 1)),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                    double.parse(((player.guessInfo
+                                                        .guessReferenceValue
+                                                        .toJson()[
+                                                    ParamUtils.getProKey(player
+                                                        .betData[index]
+                                                        .toLowerCase())]) ??
+                                                0)
+                                            .toString())
+                                        .toStringAsFixed(0),
+                                    style: 18.w7(color: AppColors.cFF7954)),
+                                Text(
+                                  player.betData[index],
+                                  style: TextStyle(
+                                      fontSize: 11.sp,
+                                      color: AppColors.cFF7954),
+                                )
+                              ],
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(left: 11.w),
+                            child: Column(
+                              children: [
+                                _buildBtn(index, "MORE", "1"),
+                                7.vGap,
+                                _buildBtn(index, "LESS", "2")
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
                   )),
             ),
           ),
@@ -291,7 +192,7 @@ class _GussItemState extends State<GussItem>
             child: TLBuildWidget(
                 controller: tabController,
                 builder: (current, next, progress, totalProgress) {
-                  int TABLENGTH = player.betData.length;
+                  int TABLENGTH = tabController.length;
                   return Column(
                     children: [
                       LayoutBuilder(builder: (context, constraints) {
@@ -302,17 +203,17 @@ class _GussItemState extends State<GussItem>
                               height: 1.w,
                               width: double.infinity,
                               decoration:
-                              const BoxDecoration(color: AppColors.cD8D8D8),
+                                  const BoxDecoration(color: AppColors.cD8D8D8),
                             ),
                             Container(
                               width: 8.w,
                               height: 2.w,
                               margin: EdgeInsets.only(
                                   left:
-                                  (constraints.maxWidth / TABLENGTH - 8.w) /
-                                      2 +
-                                      (constraints.maxWidth / TABLENGTH) *
-                                          totalProgress),
+                                      (constraints.maxWidth / TABLENGTH - 8.w) /
+                                              2 +
+                                          (constraints.maxWidth / TABLENGTH) *
+                                              totalProgress),
                               decoration: BoxDecoration(
                                   color: AppColors.cFF7954,
                                   borderRadius: BorderRadius.circular(1.w)),
@@ -335,30 +236,30 @@ class _GussItemState extends State<GussItem>
                               child: index >= tabController.length
                                   ? const SizedBox.shrink()
                                   : InkWell(
-                                onTap: () =>
-                                    tabController.animateTo(index),
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 10.w),
-                                  alignment: Alignment.center,
-                                  child: Text(player.betData[index],
-                                      style: TextStyle(
-                                        //逻辑：不做动画时animationValue等于index，currentIndex设置激活状态；做动画时，
-                                        //     比较animationValue和currentIndex的大小来判断滚动方向，
-                                        //     animationValue大于currentIndex时滚动到下一个，小于时滚动到上一个；
-                                        //     获取到即将到来的index做进入动画，currentIndex做推出动画，其他项保持未激活状态
-                                          color: current == index
-                                              ? Color.lerp(activeColor,
-                                              normalColor, progress)
-                                              : next == index
-                                              ? Color.lerp(
-                                              normalColor,
-                                              activeColor,
-                                              progress)
-                                              : normalColor,
-                                          fontSize: 11.sp)),
-                                ),
-                              ),
+                                      onTap: () =>
+                                          tabController.animateTo(index),
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 10.w),
+                                        alignment: Alignment.center,
+                                        child: Text(player.betData[index],
+                                            style: TextStyle(
+                                                //逻辑：不做动画时animationValue等于index，currentIndex设置激活状态；做动画时，
+                                                //     比较animationValue和currentIndex的大小来判断滚动方向，
+                                                //     animationValue大于currentIndex时滚动到下一个，小于时滚动到上一个；
+                                                //     获取到即将到来的index做进入动画，currentIndex做推出动画，其他项保持未激活状态
+                                                color: current == index
+                                                    ? Color.lerp(activeColor,
+                                                        normalColor, progress)
+                                                    : next == index
+                                                        ? Color.lerp(
+                                                            normalColor,
+                                                            activeColor,
+                                                            progress)
+                                                        : normalColor,
+                                                fontSize: 11.sp)),
+                                      ),
+                                    ),
                             );
                           }),
                         ),
@@ -376,20 +277,24 @@ class _GussItemState extends State<GussItem>
     var gdIsEmpty = player.guessInfo.guessData.isEmpty;
     var isChoice = gdIsEmpty
         ? false
-        : player.guessInfo.guessData[0].guessChoice == 1 &&
-        player.guessInfo.guessData[0].guessAttr ==
-            ParamUtils.getProKey(player.betData[index]);
+        : player.guessInfo.guessData[0].guessChoice == int.parse(ml) &&
+            player.guessInfo.guessData[0].guessAttr.toLowerCase() ==
+                ParamUtils.getProKey(player.betData[index].toLowerCase())
+                    .toLowerCase();
     return Obx(() {
       return InkWell(
         onTap: () {
+          if (!gdIsEmpty) {
+            return;
+          }
           var choice = double.parse("$index.$ml");
           if (gameChoiceFlag.value == choice) {
             gameChoiceFlag.value = -1.0;
           } else {
             gameChoiceFlag.value = choice;
           }
-          Get.find<PicksIndexController>().choiceOne(
-              widget.parentIndex, choice);
+          Get.find<PicksIndexController>()
+              .choiceOne(widget.parentIndex, choice);
         },
         child: Container(
           height: 24.w,
@@ -398,36 +303,40 @@ class _GussItemState extends State<GussItem>
           decoration: BoxDecoration(
               color: gdIsEmpty
                   ? gameChoiceFlag.value == double.parse("$index.$ml")
-                  ? AppColors.cFF7954
-                  : AppColors.cFFFFFF.withOpacity(0)
+                      ? AppColors.cFF7954
+                      : AppColors.cFFFFFF.withOpacity(0)
                   : isChoice
-                  ? AppColors.cFFFFFF.withOpacity(0)
-                  : AppColors.cE1E3E6,
+                      ? AppColors.cFFFFFF.withOpacity(0)
+                      : AppColors.cF2F2F2,
               border: Border.all(
                   width: 1,
                   color: gdIsEmpty
                       ? AppColors.cFF7954
                       : isChoice
-                      ? AppColors.c10A86A
-                      : AppColors.cB3B3B3),
+                          ? AppColors.c10A86A
+                          : AppColors.cB3B3B3),
               borderRadius: BorderRadius.circular(12.w)),
           child: Text.rich(
               textAlign: TextAlign.start,
               style: TextStyle(
                 color: gdIsEmpty
                     ? gameChoiceFlag.value == double.parse("$index.$ml")
-                    ? AppColors.cFFFFFF
-                    : AppColors.cFF7954
+                        ? AppColors.cFFFFFF
+                        : AppColors.cFF7954
                     : isChoice
-                    ? AppColors.c10A86A
-                    : AppColors.cB3B3B3,
+                        ? AppColors.c10A86A
+                        : AppColors.cB3B3B3,
               ),
               TextSpan(children: [
-                TextSpan(text: text,
+                TextSpan(
+                    text: text,
                     style: TextStyle(
                         fontSize: 11.sp, fontWeight: FontWeight.bold)),
                 TextSpan(
-                    text: "   +${player.betOdds}",
+                    text:
+                        "   +${gameChoiceFlag.value != 100 ? player.betOdds : ''}",
+
+                    /// 这个条件是为了obx不报错，可以去了试试看
                     style: TextStyle(fontSize: 9.sp))
               ])),
         ),
@@ -512,8 +421,8 @@ class _GussItemState extends State<GussItem>
                                                 color: Colors.white
                                                     .withOpacity(.1),
                                                 borderRadius:
-                                                BorderRadius.circular(
-                                                    32.w))),
+                                                    BorderRadius.circular(
+                                                        32.w))),
                                       ),
                                     ),
                                     Positioned(
@@ -544,7 +453,7 @@ class _GussItemState extends State<GussItem>
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
@@ -555,17 +464,14 @@ class _GussItemState extends State<GussItem>
                                             fontWeight: FontWeight.bold),
                                       ),
                                       Text(
-                                        "${player.selfTeamInfo
-                                            .shortEname}   ${player.baseInfoList
-                                            .position}",
+                                        "${player.selfTeamInfo.shortEname}   ${player.baseInfoList.position}",
                                         style: TextStyle(
                                             color: AppColors.c666666,
                                             fontSize: 14.sp,
                                             fontWeight: FontWeight.bold),
                                       ),
                                       Text(
-                                        "How will ${player.baseInfoList
-                                            .ename} do vs MIN Twins?",
+                                        "How will ${player.baseInfoList.ename} do vs MIN Twins?",
                                         style: TextStyle(
                                             color: AppColors.cFF7954,
                                             fontSize: 12.sp,
@@ -593,19 +499,19 @@ class _GussItemState extends State<GussItem>
                                   decoration: BoxDecoration(
                                       color: AppColors.cF2F2F2,
                                       borderRadius:
-                                      BorderRadius.circular(16.w)),
+                                          BorderRadius.circular(16.w)),
                                   margin:
-                                  EdgeInsets.symmetric(horizontal: 16.w),
+                                      EdgeInsets.symmetric(horizontal: 16.w),
                                   padding: EdgeInsets.only(left: 9.w),
                                   child: Row(
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Row(
                                         children: [
                                           Column(
                                             mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                                MainAxisAlignment.center,
                                             children: [
                                               Container(
                                                 alignment: Alignment.center,
@@ -621,19 +527,14 @@ class _GussItemState extends State<GussItem>
                                                           .c000000
                                                           .withOpacity(.2),
                                                     ),
-                                                    _generateBarChart()
+
+                                                    // _generateBarChart()
                                                   ],
                                                 ),
                                               ),
                                               3.vGap,
                                               Text(
-                                                  "L5 ${double.parse(
-                                                      ((player.guessInfo.l5Avg
-                                                          .toJson()[ParamUtils.getProKey(
-                                                          player.betData[index]
-                                                              .toLowerCase())]) ??
-                                                          0).toString())
-                                                      .toStringAsFixed(1)}",
+                                                  "L5 ${double.parse(((player.guessInfo.l5Avg.toJson()[ParamUtils.getProKey(player.betData[index].toLowerCase())]) ?? 0).toString()).toStringAsFixed(1)}",
                                                   style: 10.w4(
                                                       color: AppColors.c666666))
                                             ],
@@ -644,32 +545,32 @@ class _GussItemState extends State<GussItem>
                                             height: 55.w,
                                             decoration: BoxDecoration(
                                                 borderRadius:
-                                                BorderRadius.circular(9.w),
+                                                    BorderRadius.circular(9.w),
                                                 border: Border.all(
                                                     color: AppColors.ce5e5e5,
                                                     width: 1)),
                                             child: Column(
                                               mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                                  MainAxisAlignment.center,
                                               crossAxisAlignment:
-                                              CrossAxisAlignment.center,
+                                                  CrossAxisAlignment.center,
                                               children: [
                                                 Text(
                                                   double.parse(((player
-                                                      .guessInfo
-                                                      .guessReferenceValue
-                                                      .toJson()[
-                                                  ParamUtils.getProKey(player
-                                                      .betData[
-                                                  index]
-                                                      .toLowerCase())]) ??
-                                                      0)
-                                                      .toString())
+                                                                      .guessInfo
+                                                                      .guessReferenceValue
+                                                                      .toJson()[
+                                                                  ParamUtils.getProKey(player
+                                                                      .betData[
+                                                                          index]
+                                                                      .toLowerCase())]) ??
+                                                              0)
+                                                          .toString())
                                                       .toStringAsFixed(0),
                                                   style: TextStyle(
                                                       fontSize: 18.sp,
                                                       fontWeight:
-                                                      FontWeight.bold,
+                                                          FontWeight.bold,
                                                       color: AppColors.cFF7954),
                                                 ),
                                                 Text(
@@ -686,7 +587,7 @@ class _GussItemState extends State<GussItem>
                                       Expanded(
                                         child: Row(
                                           mainAxisAlignment:
-                                          MainAxisAlignment.end,
+                                              MainAxisAlignment.end,
                                           children: [
                                             _buildBtn(index, "MORE", "1"),
                                             4.hGap,
@@ -713,6 +614,10 @@ class _GussItemState extends State<GussItem>
                 ),
                 //下注
                 Obx(() {
+                  var value = picksIndexController.costCount.value;
+                  if (value <= 0) {
+                    return const SizedBox.shrink();
+                  }
                   return Positioned(
                       left: 63.w,
                       right: 63.w,
@@ -726,6 +631,7 @@ class _GussItemState extends State<GussItem>
                                 picksIndexController.choiceData.length,
                                 picksIndexController.costCount.value,
                                 picksIndexController.betCount.value,
+                                isDialog: true,
                               ))));
                 })
               ],

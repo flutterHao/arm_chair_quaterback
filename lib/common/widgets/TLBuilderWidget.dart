@@ -29,6 +29,7 @@ class _TLBuildWidgetState extends State<TLBuildWidget> {
   void initState() {
     super.initState();
     currentIndex = next = widget.controller.index;
+    totalProgress = widget.controller.index.toDouble();
     widget.controller.animation?.addListener(() {
       animationValue = widget.controller.animation?.value ?? 0;
       currentIndex = widget.controller.index;

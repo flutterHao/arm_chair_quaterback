@@ -5,8 +5,9 @@ export 'package:arm_chair_quaterback/generated/json/nba_player_infos_entity.g.da
 
 @JsonSerializable()
 class NbaPlayerInfosEntity {
-	@JSONField(name: "NBAPlayerInfos")
-	late NbaPlayerInfosNBAPlayerInfos nBAPlayerInfos;
+	late List<NbaPlayerInfosPlayerDataAvgList> playerDataAvgList;
+	late List<NbaPlayerInfosPlayerDataCapList> playerDataCapList;
+	late List<NbaPlayerInfosPlayerBaseInfoList> playerBaseInfoList;
 
 	NbaPlayerInfosEntity();
 
@@ -21,90 +22,34 @@ class NbaPlayerInfosEntity {
 }
 
 @JsonSerializable()
-class NbaPlayerInfosNBAPlayerInfos {
-	late List<NbaPlayerInfosNBAPlayerInfosPlayerBaseInfoList> playerBaseInfoList;
-	late List<NbaPlayerInfosNBAPlayerInfosPlayerDataAvgList> playerDataAvgList;
-	late List<NbaPlayerInfosNBAPlayerInfosPlayerDataCapList> playerDataCapList;
-
-	NbaPlayerInfosNBAPlayerInfos();
-
-	factory NbaPlayerInfosNBAPlayerInfos.fromJson(Map<String, dynamic> json) => $NbaPlayerInfosNBAPlayerInfosFromJson(json);
-
-	Map<String, dynamic> toJson() => $NbaPlayerInfosNBAPlayerInfosToJson(this);
-
-	@override
-	String toString() {
-		return jsonEncode(this);
-	}
-}
-
-@JsonSerializable()
-class NbaPlayerInfosNBAPlayerInfosPlayerBaseInfoList {
-	late int beforeMarketPrice;
-	late int beforePlayerStrength;
-	late int birthTime;
-	late int createTime;
-	late String ename;
-	late int espnId;
-	late String grade;
-	late bool injuries;
-	late int marketPrice;
-	late int maxPlayerScore;
-	late int minPlayerScore;
-	late String name;
-	late int playerId;
-	late int playerScore;
-	late int playerStrength;
-	late int pos;
-	late String position;
-	late int property;
-	late int salary;
-	late String sname;
-	late List<int> tag;
-	late int teamId;
-	late int updateTime;
-
-	NbaPlayerInfosNBAPlayerInfosPlayerBaseInfoList();
-
-	factory NbaPlayerInfosNBAPlayerInfosPlayerBaseInfoList.fromJson(Map<String, dynamic> json) => $NbaPlayerInfosNBAPlayerInfosPlayerBaseInfoListFromJson(json);
-
-	Map<String, dynamic> toJson() => $NbaPlayerInfosNBAPlayerInfosPlayerBaseInfoListToJson(this);
-
-	@override
-	String toString() {
-		return jsonEncode(this);
-	}
-}
-
-@JsonSerializable()
-class NbaPlayerInfosNBAPlayerInfosPlayerDataAvgList {
-	late double ast;
+class NbaPlayerInfosPlayerDataAvgList {
 	late double blk;
-	late int createTime;
-	late double dreb;
 	late double fga;
-	late double fgm;
-	late double fta;
-	late double ftm;
-	late double min;
-	late double oreb;
-	late double pf;
-	late int playCount;
-	late int playerId;
-	late double pts;
-	late int seasonId;
+	late double ast;
+	late double dreb;
 	late int starterCount;
 	late double stl;
+	late int updateTime;
+	late double fgm;
+	late double pts;
 	late double threePa;
+	late int playCount;
+	late double fta;
+	late double min;
+	late double oreb;
+	late int createTime;
+	late int seasonId;
+	late double pf;
 	late double threePm;
 	late double to;
-	late int updateTime;
+	late double ftm;
+	late int playerId;
 
-	NbaPlayerInfosNBAPlayerInfosPlayerDataAvgList();
+	NbaPlayerInfosPlayerDataAvgList();
 
-	factory NbaPlayerInfosNBAPlayerInfosPlayerDataAvgList.fromJson(Map<String, dynamic> json) => $NbaPlayerInfosNBAPlayerInfosPlayerDataAvgListFromJson(json);
+	factory NbaPlayerInfosPlayerDataAvgList.fromJson(Map<String, dynamic> json) => $NbaPlayerInfosPlayerDataAvgListFromJson(json);
 
-	Map<String, dynamic> toJson() => $NbaPlayerInfosNBAPlayerInfosPlayerDataAvgListToJson(this);
+	Map<String, dynamic> toJson() => $NbaPlayerInfosPlayerDataAvgListToJson(this);
 
 	@override
 	String toString() {
@@ -113,43 +58,81 @@ class NbaPlayerInfosNBAPlayerInfosPlayerDataAvgList {
 }
 
 @JsonSerializable()
-class NbaPlayerInfosNBAPlayerInfosPlayerDataCapList {
-	late int ast;
-	late int attackCap;
-	late int beforeAst;
-	late int beforeBlk;
-	late int beforeDreb;
-	late int beforeOreb;
-	late int beforePts;
-	late int beforeStl;
-	late int beforeThreePm;
-	late int blk;
-	late int createTime;
-	late int defenseCap;
-	late int dreb;
+class NbaPlayerInfosPlayerDataCapList {
 	late int fga;
+	late int ast;
+	late int beforeThreePm;
+	late int dreb;
+	late int beforeBlk;
+	late int defenseCap;
+	late int beforeStl;
 	late int fgm;
 	late int fta;
-	late int ftm;
 	late int min;
-	late int oreb;
-	late int pf;
-	late int playerId;
-	late int pts;
+	late int beforePts;
 	late int slamDunk;
-	late int stl;
-	late int threePa;
-	late int threePm;
+	late int attackCap;
+	late int ftm;
+	late int playerId;
+	late int blk;
 	late int threePts;
-	late int to;
-	late int twoPts;
+	late int beforeAst;
+	late int stl;
 	late int updateTime;
+	late int beforeDreb;
+	late int pts;
+	late int threePa;
+	late int twoPts;
+	late int oreb;
+	late int createTime;
+	late int pf;
+	late int beforeOreb;
+	late int threePm;
+	late int to;
 
-	NbaPlayerInfosNBAPlayerInfosPlayerDataCapList();
+	NbaPlayerInfosPlayerDataCapList();
 
-	factory NbaPlayerInfosNBAPlayerInfosPlayerDataCapList.fromJson(Map<String, dynamic> json) => $NbaPlayerInfosNBAPlayerInfosPlayerDataCapListFromJson(json);
+	factory NbaPlayerInfosPlayerDataCapList.fromJson(Map<String, dynamic> json) => $NbaPlayerInfosPlayerDataCapListFromJson(json);
 
-	Map<String, dynamic> toJson() => $NbaPlayerInfosNBAPlayerInfosPlayerDataCapListToJson(this);
+	Map<String, dynamic> toJson() => $NbaPlayerInfosPlayerDataCapListToJson(this);
+
+	@override
+	String toString() {
+		return jsonEncode(this);
+	}
+}
+
+@JsonSerializable()
+class NbaPlayerInfosPlayerBaseInfoList {
+	late int marketPrice;
+	late int espnId;
+	late bool injuries;
+	late int maxPlayerScore;
+	late int updateTime;
+	late int beforePlayerStrength;
+	late int birthTime;
+	late int playerStrength;
+	late int salary;
+	late int minPlayerScore;
+	late String ename;
+	late int createTime;
+	late int playerScore;
+	late int pos;
+	late String sname;
+	late String grade;
+	late int teamId;
+	late String name;
+	late int property;
+	late String position;
+	late List<int> tag;
+	late int beforeMarketPrice;
+	late int playerId;
+
+	NbaPlayerInfosPlayerBaseInfoList();
+
+	factory NbaPlayerInfosPlayerBaseInfoList.fromJson(Map<String, dynamic> json) => $NbaPlayerInfosPlayerBaseInfoListFromJson(json);
+
+	Map<String, dynamic> toJson() => $NbaPlayerInfosPlayerBaseInfoListToJson(this);
 
 	@override
 	String toString() {

@@ -15,8 +15,7 @@ GuessParamEntity $GuessParamEntityFromJson(Map<String, dynamic> json) {
   if (playerId != null) {
     guessParamEntity.playerId = playerId;
   }
-  final int? gameStartTime = jsonConvert.convert<int>(
-      json['gameStartTime']);
+  final int? gameStartTime = jsonConvert.convert<int>(json['gameStartTime']);
   if (gameStartTime != null) {
     guessParamEntity.gameStartTime = gameStartTime;
   }

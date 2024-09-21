@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/btn_background.dart';
@@ -12,10 +13,11 @@ import 'package:get/get.dart';
 ///created at 2024/9/13/11:09
 
 class RankStartButton extends StatelessWidget {
-  const RankStartButton(this.size,this.cost,this.bet,{
+  const RankStartButton(this.size,this.cost,this.bet,{this.isDialog = false,
     super.key,
   });
 
+  final bool isDialog;
   final int size;
   final double cost;
   final double bet;
@@ -23,7 +25,10 @@ class RankStartButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Get.find<PicksIndexController>().guess(),
+      onTap: () {
+        print('InkWellds');
+        Get.find<PicksIndexController>().guess(inDialog: isDialog);
+      },
       child: BtnBackground(
         child: Stack(
           alignment: Alignment.center,

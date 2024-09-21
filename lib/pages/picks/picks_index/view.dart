@@ -1,14 +1,16 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
+import 'package:arm_chair_quaterback/common/entities/rank_info_entity.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_bar.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
+import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/pick_rank/bindings.dart';
 import 'package:arm_chair_quaterback/pages/picks/pick_rank/view.dart';
-import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guss_item.dart';
+import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guess_item/guess_item.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guss_player_item.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/picks_swiper_pagination_builder.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/rank_start_button.dart';
@@ -87,6 +89,7 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                 child: Swiper(
                   itemCount: 3,
                   autoplay: true,
+                  // loop: false,
                   viewportFraction: .8,
                   indicatorLayout: PageIndicatorLayout.COLOR,
                   scale: .9,
@@ -116,23 +119,26 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                                   index == 0
                                       ? Assets.uiBannerAwardPng
                                       : index == 1
-                                          ? Assets.uiBannerRankPng
-                                          : Assets.uiBannerHistoryPng,
+                                          ? Assets.uiBannerHistoryPng
+                                          : Assets.uiBannerRankPng,
                                   height: 137.w,
                                   fit: BoxFit.fitWidth,
                                 )),
                           ),
-                          if (index == 1)
-                            Positioned(
-                                bottom: 8.w,
-                                left: 0,
-                                right: 0,
-                                child: Center(
-                                    child: Text(
-                                  "RANK",
-                                  style: 19
-                                      .w7(color: AppColors.cE6E6E6, height: 1),
-                                )))
+                          Positioned(
+                              bottom: 8.w,
+                              left: 0,
+                              right: 0,
+                              child: Center(
+                                  child: Text(
+                                index == 0
+                                    ? "RECEIVE AWARD"
+                                    : index == 1
+                                        ? "HISTORICAL"
+                                        : "BOUNS POOL",
+                                style:
+                                    19.w7(color: AppColors.cE6E6E6, height: 1),
+                              )))
                         ],
                       ),
                     );
@@ -164,13 +170,14 @@ class _PicksIndexPageState extends State<PicksIndexPage>
         ),
         //竞猜球员列表
         GetBuilder<PicksIndexController>(
-            id: "guessList",
+            id: PicksIndexController.idGuessList,
             builder: (context) {
-              return SliverFixedExtentList(
-                itemExtent: 125.w, //列表项高度固定
+              return SliverList(
                 delegate: SliverChildBuilderDelegate(
-                  (_, index) =>
-                      GussItem(index, picksIndexController.picksPlayers[index]),
+                  (_, index) {
+                    var player = picksIndexController.picksPlayers[index];
+                    return GuessItem(index, player);
+                  },
                   childCount: picksIndexController.picksPlayers.length,
                 ),
               );
@@ -232,31 +239,57 @@ class _PicksIndexPageState extends State<PicksIndexPage>
             ),
           ),
         ),
-        SliverFixedExtentList(
-            delegate: SliverChildBuilderDelegate(childCount: 10, (_, index) {
-              return InkWell(
-                onTap: () => Get.toNamed(RouteNames.picksPickRank,
-                    id: GlobalNestedKey.PICKS),
-                child: Container(
-                    alignment: Alignment.centerLeft,
-                    decoration: BoxDecoration(
-                        color:
-                            index % 2 != 0 ? Colors.white : AppColors.cEDEDED,
-                        borderRadius: index == 9
-                            ? BorderRadius.only(
-                                bottomRight: Radius.circular(16.w),
-                                bottomLeft: Radius.circular(16.w))
-                            : null),
-                    padding: EdgeInsets.only(left: 24.w, right: 26.w),
-                    margin: EdgeInsets.symmetric(horizontal: 16.w),
-                    child: GussPlayerItem(
-                      index,
-                      //滑动到榜单的第3个列表项时显示个人榜单信息
-                      key: index == 2 ? picksIndexController.targetKey : null,
-                    )),
-              );
+        GetBuilder<PicksIndexController>(
+            id: PicksIndexController.idRankLists,
+            builder: (logic) {
+              var len = picksIndexController.rankLists.length;
+              return SliverFixedExtentList(
+                  delegate:
+                      SliverChildBuilderDelegate(childCount: len, (_, index) {
+                    RankInfoEntity item = picksIndexController.rankLists[index];
+                    int selfIndex = picksIndexController.rankLists.indexWhere(
+                        (e) =>
+                            e.teamId ==
+                            Get.find<HomeController>()
+                                .userEntiry
+                                .teamLoginInfo
+                                ?.team
+                                ?.teamId);
+                    return InkWell(
+                      onTap: () => Get.toNamed(RouteNames.picksPickRank,
+                          id: GlobalNestedKey.PICKS),
+                      child: Container(
+                          alignment: Alignment.centerLeft,
+                          decoration: BoxDecoration(
+                              color: index % 2 != 0
+                                  ? Colors.white
+                                  : AppColors.cEDEDED,
+                              borderRadius: index == 9
+                                  ? BorderRadius.only(
+                                      bottomRight: Radius.circular(16.w),
+                                      bottomLeft: Radius.circular(16.w))
+                                  : null),
+                          padding: EdgeInsets.only(left: 24.w, right: 26.w),
+                          margin: EdgeInsets.symmetric(horizontal: 16.w),
+                          child: GussPlayerItem(
+                            index, item,selfIndex,
+                            //滑动到榜单的第3个列表项时显示个人榜单信息
+                            key: selfIndex != -1
+                                ? null
+                                : len > 5
+                                    ? index == 5
+                                        ? picksIndexController.targetKey
+                                        : null
+                                    : index == len - 1
+                                        ? picksIndexController.targetKey
+                                        : null,
+                            // ? picksIndexController.targetKey
+                            // : null,
+                          )),
+                    );
+                  }),
+                  itemExtent: 70.w);
             }),
-            itemExtent: 70.w),
         SliverToBoxAdapter(
           child: SizedBox(
             height: 90.w,
@@ -348,9 +381,12 @@ class _PicksIndexPageState extends State<PicksIndexPage>
             }),
             //下注
             Obx(() {
-              if (picksIndexController.costCount.value <= 0) {
+              var value = picksIndexController.costCount.value;
+              if (value <= 0) {
                 return const SizedBox.shrink();
               }
+              print(
+                  'picksIndexController-----:${picksIndexController.choiceData.length} , ${picksIndexController.costCount.value} , ${picksIndexController.betCount.value}');
               return Positioned(
                   left: 63.w,
                   right: 63.w,
