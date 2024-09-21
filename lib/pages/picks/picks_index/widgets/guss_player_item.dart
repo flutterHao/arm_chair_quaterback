@@ -91,7 +91,7 @@ class GussPlayerItem extends StatelessWidget {
           alignment: Alignment.centerRight,
           width: 55.w,
           child: Text(
-            "${rankInfoEntity.chip}",
+            rankInfoEntity.chip.toDouble().toStringAsFixed(0),
             style: 18.w7(color: AppColors.c262626),
           ),
         )

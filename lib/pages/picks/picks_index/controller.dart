@@ -8,6 +8,7 @@ import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_info_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/utils/param_utils.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class PicksIndexController extends GetxController {
 
   List<PicksPlayer> picksPlayers = [];
 
-  List<RankInfoEntity> rankLists = [];
+  RankListEntity? rankInfo ;
 
   Map<int, double> choiceData = {};
 
@@ -125,7 +126,6 @@ class PicksIndexController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    scrollController.addListener(_scrollListener);
 
     _initData();
   }
@@ -140,7 +140,6 @@ class PicksIndexController extends GetxController {
     ]).then((results) {
       print('-------------request--------');
       picksPlayers.clear();
-      rankLists.clear();
       List<GuessInfosEntity> guessInfosEntity =
           results[0] as List<GuessInfosEntity>;
       NbaPlayerInfosEntity nbaPlayerInfosEntity =
@@ -148,7 +147,7 @@ class PicksIndexController extends GetxController {
       NewsDefineEntity newsDefineEntity = results[2] as NewsDefineEntity;
       List<NbaTeamEntity> nbaTeams = results[3] as List<NbaTeamEntity>;
       ///rank 排行榜
-      rankLists = results[4] as List<RankInfoEntity>;
+      rankInfo = results[4] as RankListEntity;
       for (GuessInfosEntity e in guessInfosEntity) {
         PicksPlayer picksPlayer = PicksPlayer();
         picksPlayer.baseInfoList = nbaPlayerInfosEntity.playerBaseInfoList
@@ -177,7 +176,12 @@ class PicksIndexController extends GetxController {
         picksPlayer.guessInfo = e;
         picksPlayers.add(picksPlayer);
       }
-      update([idGuessList,idRankLists]);
+      update([idGuessList,idRankLists,idRankLists]);
+      var indexWhere = rankInfo!.ranks.indexWhere((e)=> e.teamId == rankInfo!.myRank.teamId);
+      if(indexWhere == -1){
+        scrollController.removeListener(_scrollListener);
+        scrollController.addListener(_scrollListener);
+      }
     });
   }
 
@@ -185,6 +189,7 @@ class PicksIndexController extends GetxController {
 
   static String get idRankLists => "rankLists";
 
+  static String get idRankList => "rankList";
 
   /// 在 onInit() 之后调用 1 帧。这是进入的理想场所
   @override

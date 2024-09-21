@@ -9,7 +9,9 @@ import 'package:arm_chair_quaterback/common/utils/param_utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/TLBuilderWidget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
+import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guess_item/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/rank_start_button.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -19,10 +21,11 @@ import 'package:get/get.dart';
 ///created at 2024/9/10/10:58
 
 class GuessItem extends StatefulWidget {
-  const GuessItem(this.parentIndex, this.pickPlayer, {super.key});
+  const GuessItem(this.parentIndex, this.pickPlayer, {this.onTap, super.key});
 
   final int parentIndex;
   final PicksPlayer pickPlayer;
+  final Function(int tabIndex, int choice)? onTap;
 
   @override
   State<GuessItem> createState() => _GuessItemState();
@@ -30,28 +33,22 @@ class GuessItem extends StatefulWidget {
 
 class _GuessItemState extends State<GuessItem>
     with SingleTickerProviderStateMixin {
-  late TabController tabController;
-  late PicksPlayer player;
+  late GuessItemController guessItemController;
 
   /// 整数位代表选中的tab下标，小数位代表选择的more(1)/less(2)
   var gameChoiceFlag = RxDouble(-1.0);
 
   @override
-  void initState() {
-    super.initState();
-    player = widget.pickPlayer;
-    tabController = TabController(length: player.betData.length, vsync: this);
-  }
-
-  @override
   Widget build(BuildContext context) {
-    player = widget.pickPlayer;
-    if (player.guessInfo.guessData.isNotEmpty) {
+    guessItemController = Get.put(GuessItemController(widget.pickPlayer),tag: widget.pickPlayer.guessInfo.playerId.toString());
+    if (guessItemController.player.guessInfo.guessData.isNotEmpty) {
       /// 如果已选择则直接滚动到对应tab
-      var index = player.betData.indexWhere((e) =>
+      var index = guessItemController.player.betData.indexWhere((e) =>
           ParamUtils.getProKey(e.toLowerCase()).toLowerCase() ==
-          player.guessInfo.guessData[0].guessAttr.toLowerCase());
-      tabController.animateTo(index, duration: Duration.zero);
+          guessItemController.player.guessInfo.guessData[0].guessAttr
+              .toLowerCase());
+      guessItemController.tabController
+          .animateTo(index, duration: Duration.zero);
     }
     gameChoiceFlag = RxDouble(-1.0);
     return Container(
@@ -71,10 +68,10 @@ class _GuessItemState extends State<GuessItem>
             child: SizedBox(
               height: 55.w,
               child: TabBarView(
-                  controller: tabController,
+                  controller: guessItemController.tabController,
                   physics: const BouncingScrollPhysics(),
                   children: List.generate(
-                    tabController.length,
+                    guessItemController.tabController.length,
                     (index) => Container(
                       margin: EdgeInsets.only(left: 13.w, right: 11.w),
                       child: Row(
@@ -97,7 +94,9 @@ class _GuessItemState extends State<GuessItem>
 
                                   /// todo 换成网络图
                                 ),
-                                Text(player.baseInfoList.grade,
+                                Text(
+                                    guessItemController
+                                        .player.baseInfoList.grade,
                                     style: 14.w7(color: AppColors.c262626))
                               ]),
                             ),
@@ -110,7 +109,8 @@ class _GuessItemState extends State<GuessItem>
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    player.baseInfoList.ename,
+                                    guessItemController
+                                        .player.baseInfoList.ename,
                                     style: 13.w4(
                                         color: AppColors.c666666,
                                         height: 1,
@@ -118,19 +118,19 @@ class _GuessItemState extends State<GuessItem>
                                   ),
                                   4.vGap,
                                   Text(
-                                    "VS ${player.awayTeamInfo.shortEname}   ${MyDateUtils.formatHM(MyDateUtils.getDateTimeByMs(player.guessInfo.gameStartTime))}",
+                                    "VS ${guessItemController.player.awayTeamInfo.shortEname}   ${MyDateUtils.formatHM(MyDateUtils.getDateTimeByMs(guessItemController.player.guessInfo.gameStartTime))}",
                                     style: 9.w4(
                                         color: AppColors.cB3B3B3, height: 1),
                                   ),
                                   8.vGap,
                                   Text(
-                                    "PPG: ${double.parse(((player.dataAvgList.toJson()[ParamUtils.getProKey(player.betData[index].toLowerCase())]) ?? 0).toString()).toStringAsFixed(1)}",
+                                    "PPG: ${double.parse(((guessItemController.player.dataAvgList.toJson()[ParamUtils.getProKey(guessItemController.player.betData[index].toLowerCase())]) ?? 0).toString()).toStringAsFixed(1)}",
                                     style: 9.w4(
                                         color: AppColors.cB3B3B3, height: 1),
                                   ),
                                   3.vGap,
                                   Text(
-                                    "L5: ${double.parse(((player.guessInfo.l5Avg.toJson()[ParamUtils.getProKey(player.betData[index].toLowerCase())]) ?? 0).toString()).toStringAsFixed(1)}",
+                                    "L5: ${double.parse(((guessItemController.player.guessInfo.l5Avg.toJson()[ParamUtils.getProKey(guessItemController.player.betData[index].toLowerCase())]) ?? 0).toString()).toStringAsFixed(1)}",
                                     style: 9.w4(
                                         color: AppColors.cB3B3B3, height: 1),
                                   )
@@ -151,18 +151,22 @@ class _GuessItemState extends State<GuessItem>
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                    double.parse(((player.guessInfo
+                                    double.parse(((guessItemController
+                                                        .player
+                                                        .guessInfo
                                                         .guessReferenceValue
                                                         .toJson()[
-                                                    ParamUtils.getProKey(player
-                                                        .betData[index]
-                                                        .toLowerCase())]) ??
+                                                    ParamUtils.getProKey(
+                                                        guessItemController
+                                                            .player
+                                                            .betData[index]
+                                                            .toLowerCase())]) ??
                                                 0)
                                             .toString())
                                         .toStringAsFixed(0),
                                     style: 18.w7(color: AppColors.cFF7954)),
                                 Text(
-                                  player.betData[index],
+                                  guessItemController.player.betData[index],
                                   style: TextStyle(
                                       fontSize: 11.sp,
                                       color: AppColors.cFF7954),
@@ -190,9 +194,9 @@ class _GuessItemState extends State<GuessItem>
           Container(
             margin: EdgeInsets.only(top: 12.w, right: 4.w, left: 4.w),
             child: TLBuildWidget(
-                controller: tabController,
+                controller: guessItemController.tabController,
                 builder: (current, next, progress, totalProgress) {
-                  int TABLENGTH = tabController.length;
+                  int TABLENGTH = guessItemController.tabController.length;
                   return Column(
                     children: [
                       LayoutBuilder(builder: (context, constraints) {
@@ -233,16 +237,20 @@ class _GuessItemState extends State<GuessItem>
                             var normalColor = AppColors.cB3B3B3;
                             return Expanded(
                               flex: 1,
-                              child: index >= tabController.length
+                              child: index >=
+                                      guessItemController.tabController.length
                                   ? const SizedBox.shrink()
                                   : InkWell(
-                                      onTap: () =>
-                                          tabController.animateTo(index),
+                                      onTap: () => guessItemController
+                                          .tabController
+                                          .animateTo(index),
                                       child: Container(
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 10.w),
                                         alignment: Alignment.center,
-                                        child: Text(player.betData[index],
+                                        child: Text(
+                                            guessItemController
+                                                .player.betData[index],
                                             style: TextStyle(
                                                 //逻辑：不做动画时animationValue等于index，currentIndex设置激活状态；做动画时，
                                                 //     比较animationValue和currentIndex的大小来判断滚动方向，
@@ -274,12 +282,15 @@ class _GuessItemState extends State<GuessItem>
   }
 
   Widget _buildBtn(int index, String text, String ml) {
-    var gdIsEmpty = player.guessInfo.guessData.isEmpty;
+    var gdIsEmpty = guessItemController.player.guessInfo.guessData.isEmpty;
     var isChoice = gdIsEmpty
         ? false
-        : player.guessInfo.guessData[0].guessChoice == int.parse(ml) &&
-            player.guessInfo.guessData[0].guessAttr.toLowerCase() ==
-                ParamUtils.getProKey(player.betData[index].toLowerCase())
+        : guessItemController.player.guessInfo.guessData[0].guessChoice ==
+                int.parse(ml) &&
+            guessItemController.player.guessInfo.guessData[0].guessAttr
+                    .toLowerCase() ==
+                ParamUtils.getProKey(
+                        guessItemController.player.betData[index].toLowerCase())
                     .toLowerCase();
     return Obx(() {
       return InkWell(
@@ -334,7 +345,7 @@ class _GuessItemState extends State<GuessItem>
                         fontSize: 11.sp, fontWeight: FontWeight.bold)),
                 TextSpan(
                     text:
-                        "   +${gameChoiceFlag.value != 100 ? player.betOdds : ''}",
+                        "   +${gameChoiceFlag.value != 100 ? guessItemController.player.betOdds : ''}",
 
                     /// 这个条件是为了obx不报错，可以去了试试看
                     style: TextStyle(fontSize: 9.sp))
@@ -439,7 +450,8 @@ class _GuessItemState extends State<GuessItem>
                                               ///todo 换网络图
                                             ))),
                                     Text(
-                                      player.baseInfoList.grade,
+                                      guessItemController
+                                          .player.baseInfoList.grade,
                                       style: TextStyle(
                                           color: AppColors.cF2F2F2,
                                           fontSize: 21.w,
@@ -457,21 +469,22 @@ class _GuessItemState extends State<GuessItem>
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        player.baseInfoList.ename,
+                                        guessItemController
+                                            .player.baseInfoList.ename,
                                         style: TextStyle(
                                             color: AppColors.cD9D9D9,
                                             fontSize: 18.sp,
                                             fontWeight: FontWeight.bold),
                                       ),
                                       Text(
-                                        "${player.selfTeamInfo.shortEname}   ${player.baseInfoList.position}",
+                                        "${guessItemController.player.selfTeamInfo.shortEname}   ${guessItemController.player.baseInfoList.position}",
                                         style: TextStyle(
                                             color: AppColors.c666666,
                                             fontSize: 14.sp,
                                             fontWeight: FontWeight.bold),
                                       ),
                                       Text(
-                                        "How will ${player.baseInfoList.ename} do vs MIN Twins?",
+                                        "How will ${guessItemController.player.baseInfoList.ename} do vs MIN Twins?",
                                         style: TextStyle(
                                             color: AppColors.cFF7954,
                                             fontSize: 12.sp,
@@ -489,7 +502,7 @@ class _GuessItemState extends State<GuessItem>
                     Expanded(
                       child: ListView.builder(
                           physics: const BouncingScrollPhysics(),
-                          itemCount: player.betData.length,
+                          itemCount: guessItemController.player.betData.length,
                           itemBuilder: (_, index) {
                             return Column(
                               children: [
@@ -527,14 +540,16 @@ class _GuessItemState extends State<GuessItem>
                                                           .c000000
                                                           .withOpacity(.2),
                                                     ),
-
-                                                    // _generateBarChart()
+                                                    BarChart(BarChartData(
+                                                        barGroups: guessItemController.barGroups[guessItemController.player.betData[index]],
+                                                        titlesData: guessItemController.titlesData,
+                                                        borderData: FlBorderData(show: false)))
                                                   ],
                                                 ),
                                               ),
                                               3.vGap,
                                               Text(
-                                                  "L5 ${double.parse(((player.guessInfo.l5Avg.toJson()[ParamUtils.getProKey(player.betData[index].toLowerCase())]) ?? 0).toString()).toStringAsFixed(1)}",
+                                                  "L5 ${double.parse(((guessItemController.player.guessInfo.l5Avg.toJson()[ParamUtils.getProKey(guessItemController.player.betData[index].toLowerCase())]) ?? 0).toString()).toStringAsFixed(1)}",
                                                   style: 10.w4(
                                                       color: AppColors.c666666))
                                             ],
@@ -556,11 +571,13 @@ class _GuessItemState extends State<GuessItem>
                                                   CrossAxisAlignment.center,
                                               children: [
                                                 Text(
-                                                  double.parse(((player
+                                                  double.parse(((guessItemController
+                                                                      .player
                                                                       .guessInfo
                                                                       .guessReferenceValue
                                                                       .toJson()[
-                                                                  ParamUtils.getProKey(player
+                                                                  ParamUtils.getProKey(guessItemController
+                                                                      .player
                                                                       .betData[
                                                                           index]
                                                                       .toLowerCase())]) ??
@@ -574,7 +591,8 @@ class _GuessItemState extends State<GuessItem>
                                                       color: AppColors.cFF7954),
                                                 ),
                                                 Text(
-                                                  player.betData[index],
+                                                  guessItemController
+                                                      .player.betData[index],
                                                   style: TextStyle(
                                                       fontSize: 11.sp,
                                                       color: AppColors.cFF7954),
@@ -601,7 +619,10 @@ class _GuessItemState extends State<GuessItem>
                                 ),
                                 //底部留边距
                                 Divider(
-                                  height: index == player.betData.length - 1
+                                  height: index ==
+                                          guessItemController
+                                                  .player.betData.length -
+                                              1
                                       ? 70.w
                                       : 9.w,
                                   color: AppColors.cE6E6E6,

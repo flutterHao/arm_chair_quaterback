@@ -11,6 +11,7 @@ import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_day_data_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_info_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
 
 JsonConvert jsonConvert = JsonConvert();
 
@@ -207,6 +208,14 @@ class JsonConvert {
       return data.map<RankInfoEntity>((Map<String, dynamic> e) =>
           RankInfoEntity.fromJson(e)).toList() as M;
     }
+    if (<RankListEntity>[] is M) {
+      return data.map<RankListEntity>((Map<String, dynamic> e) =>
+          RankListEntity.fromJson(e)).toList() as M;
+    }
+    if (<RankListMyRank>[] is M) {
+      return data.map<RankListMyRank>((Map<String, dynamic> e) =>
+          RankListMyRank.fromJson(e)).toList() as M;
+    }
 
     debugPrint("$M not found");
 
@@ -246,6 +255,8 @@ class JsonConvertClassCollection {
     (NewsDefineEntity).toString(): NewsDefineEntity.fromJson,
     (PlayerDayDataEntity).toString(): PlayerDayDataEntity.fromJson,
     (RankInfoEntity).toString(): RankInfoEntity.fromJson,
+    (RankListEntity).toString(): RankListEntity.fromJson,
+    (RankListMyRank).toString(): RankListMyRank.fromJson,
   };
 
   bool containsKey(String type) {

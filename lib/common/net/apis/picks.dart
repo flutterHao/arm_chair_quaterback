@@ -1,11 +1,10 @@
 /*
- * @Description: 
+ * @Description:
  * @Author: lihonghao
  * @Date: 2024-09-21 17:26:07
  * @LastEditTime: 2024-09-21 17:29:10
  */
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/entities/guess_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_param_entity.dart';
@@ -13,7 +12,7 @@ import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dar
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_day_data_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/rank_info_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/rank_type.dart';
 import 'package:arm_chair_quaterback/common/net/apis.dart';
 import 'package:arm_chair_quaterback/common/net/http.dart';
@@ -46,7 +45,7 @@ class PicksApi {
   }
 
   static Future<List<PlayerDayDataEntity>> getRecentAvg(
-      int playerId, int gameCount) async {
+      int playerId, {int gameCount = 5}) async {
     List json = await httpUtil.post(Api.getRecentAvg,
         data: {"playerId": playerId, "gameCount": gameCount});
     return json.map((e) => PlayerDayDataEntity.fromJson(e)).toList();
@@ -66,15 +65,15 @@ class PicksApi {
     return json.map((e) => GuessInfosEntity.fromJson(e)).toList();
   }
 
-  static Future<List<RankInfoEntity>> getRedisRankInfo(
+  static Future<RankListEntity> getRedisRankInfo(
       {RankType type = RankType.newsGuess,
       int page = 0,
       int pageSize = 10}) async {
-    List list = await httpUtil.post(Api.getRedisRankInfo, data: {
+    var json = await httpUtil.post(Api.getRedisRankInfo, data: {
       "type": type.value,
       "page": page,
       "pageSize": pageSize,
     });
-    return list.map((e) => RankInfoEntity.fromJson(e)).toList();
+    return RankListEntity.fromJson(json);
   }
 }
