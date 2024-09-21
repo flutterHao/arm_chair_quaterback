@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-12 16:53:47
- * @LastEditTime: 2024-09-18 18:10:43
+ * @LastEditTime: 2024-09-21 19:51:41
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
@@ -84,8 +84,9 @@ class HomeController extends GetxController
   @override
   void onReady() {
     super.onReady();
-    // login();
-    UserStore().setToken("MTM4NTM=");
+        UserStore().setToken("");
+    login();
+
   }
 
   @override

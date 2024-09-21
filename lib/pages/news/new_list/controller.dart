@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2024-09-21 17:13:27
+ * @LastEditTime: 2024-09-21 19:55:49
  */
 /*
  * @Description: 
@@ -174,6 +174,8 @@ class NewListController extends GetxController {
   }
 
   void getAward() {
-    NewsApi.getAward().then((value) {});
+    NewsApi.getAward().then((value) {
+      
+    });
   }
 }

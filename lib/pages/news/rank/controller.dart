@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:27:52
- * @LastEditTime: 2024-09-21 19:04:22
+ * @LastEditTime: 2024-09-21 19:33:53
  */
 import 'package:arm_chair_quaterback/common/entities/stats_rank/nba_player_stat.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
@@ -90,7 +90,7 @@ class RankController extends GetxController
         return item.ast ?? 0;
       case "REB":
         return item.reb ?? 0;
-      case "FG":
+      case "FGP":
         return item.fgPct ?? 0;
       case "BLK":
         return item.blk ?? 0;

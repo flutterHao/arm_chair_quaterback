@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 17:28:14
- * @LastEditTime: 2024-09-21 15:19:04
+ * @LastEditTime: 2024-09-21 19:55:18
  */
 import 'package:arm_chair_quaterback/common/entities/news_banner.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
@@ -89,6 +89,7 @@ class NewsApi {
   }
 
   static Future getAward() async {
-    return await HttpUtil().get(Api.getAward);
+    var json = await HttpUtil().post(Api.getAward);
+    return  json;
   }
 }

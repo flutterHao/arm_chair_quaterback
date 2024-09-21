@@ -97,11 +97,12 @@ class SubComentsListView extends GetView<CommentController> {
       // width: 295.w,
       child: Obx(() {
         int length = (current < list.length) ? current.value : list.length;
-        return ListView.builder(
+        return ListView.separated(
             padding: EdgeInsets.only(top: 20.w),
             physics: const NeverScrollableScrollPhysics(),
             itemCount: length + 1,
             shrinkWrap: true,
+            separatorBuilder: (context, index) => 5.vGap,
             itemBuilder: (context, index) {
               int has = list.length - current.value;
               return index < length
