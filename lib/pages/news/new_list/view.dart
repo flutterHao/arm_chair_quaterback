@@ -96,7 +96,7 @@ class NewsListPage extends GetView<NewListController> {
                             // width: MyApp.MAXWEBWIDTH.w - 40.w,
                             height: 150.w,
                             bannerList: controller.state.banners
-                                .map((e) => Address.devUrl + e.pictureId!)
+                                .map((e) => Address.url + e.pictureId!)
                                 .toList(),
                             footer: IconWidget(
                               iconWidth: 14.w,

@@ -1,14 +1,19 @@
+import 'package:arm_chair_quaterback/common/entities/team_rank.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
+import 'package:arm_chair_quaterback/pages/news/new_list/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 /// author: lihonghao
 /// date: 2024/9/11
 /// 球员排名列表
 class EasTeamListView extends StatelessWidget {
-  const EasTeamListView({super.key});
+  const EasTeamListView({super.key, required this.type});
+  final int type;
 
   Widget _flexText({required String text}) {
     return Flexible(
@@ -22,16 +27,23 @@ class EasTeamListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    NewListController newListCtrl = Get.find();
+
     List<String> columns = ["Rank", "Team", "W-L", "PCT", "HOME", "AWAY", "GB"];
+    var list = newListCtrl.state.teamMap[type] ?? [];
+    // RxInt size = 10.obs;
     return Column(
       children: [
         Row(children: columns.map((e) => _flexText(text: e)).toList()),
         Expanded(
           child: ListView.builder(
-              itemCount: 10,
+              itemCount: list.length,
               padding: EdgeInsets.symmetric(vertical: 10.w),
               itemBuilder: (context, index) {
-                return TeamItemView(index: index);
+                return TeamItemView(
+                  index: index,
+                  item: list[index],
+                );
               }),
         ),
       ],
@@ -54,8 +66,9 @@ class EasTeamListView extends StatelessWidget {
 // }
 
 class TeamItemView extends StatelessWidget {
-  const TeamItemView({super.key, required this.index});
+  const TeamItemView({super.key, required this.index, required this.item});
   final int index;
+  final TeamRank item;
 
   Widget _flexWidget({required Widget child}) {
     return Flexible(
@@ -79,43 +92,46 @@ class TeamItemView extends StatelessWidget {
           )),
           _flexWidget(
               child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               ImageWidget(
-                url: "https://file.qiumiwu.com/team/BOS_300.png",
+                url: Utils.getTeamUrl(item.teamId),
                 width: 20.w,
                 height: 20.w,
               ),
               2.hGap,
-              Text(
-                "BAL",
-                style: 12.w7(color: AppColors.c666666),
+              Expanded(
+                child: Text(
+                  item.shortName ?? "",
+                  style: 12.w7(color: AppColors.c666666),
+                  overflow: TextOverflow.ellipsis,
+                ),
               )
             ],
           )),
           _flexWidget(
               child: Text(
-            "62-64",
+            "${item.w}-${item.l}",
             style: 12.w7(color: AppColors.c666666),
           )),
           _flexWidget(
               child: Text(
-            ".780",
+            "${item.wPct}",
             style: 12.w7(color: AppColors.c666666),
           )),
           _flexWidget(
               child: Text(
-            "37-4",
+            "",
             style: 12.w7(color: AppColors.c666666),
           )),
           _flexWidget(
               child: Text(
-            "62-64",
+            "",
             style: 12.w7(color: AppColors.c666666),
           )),
           _flexWidget(
               child: Text(
-            "14.0",
+            "",
             style: 12.w7(),
           )),
         ],

@@ -2,8 +2,9 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-11 16:57:58
- * @LastEditTime: 2024-09-20 17:46:40
+ * @LastEditTime: 2024-09-21 18:27:07
  */
+import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:common_utils/common_utils.dart';
@@ -92,6 +93,24 @@ class CommentController extends GetxController {
       item.isLike?.value = true;
       item.likes?.value += 1;
       // update();
+    });
+  }
+
+  void likeNews(NewsDetail item) {
+    if (item.isLike?.value == true) return;
+    NewsApi.newsLike(item.id!).then((value) {
+      item.isLike!.value = true;
+      item.likes = (item.likes ?? 0) + 1;
+      update(["commentDialog"]);
+    });
+  }
+
+  void unLikeNews(NewsDetail item) {
+    if (item.isLike?.value == false) return;
+    NewsApi.newsUnLike(item.id!).then((value) {
+      item.isLike!.value = false;
+      item.likes = (item.likes ?? 0) - 1;
+       update(["commentDialog"]);
     });
   }
 

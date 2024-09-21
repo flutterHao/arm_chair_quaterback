@@ -2,10 +2,7 @@
 ///@auther gejiahui
 ///created at 2024/9/20/14:54
 
-
-
 class DateFormats {
-
   /// 一些常用格式参照。如果下面格式不够，你可以自定义
   /// 格式要求
   static const String FULL = 'yyyy-MM-dd HH:mm:ss';
@@ -32,5 +29,4 @@ class DateFormats {
   static const String PARAM_Y_M = 'yyyy/MM';
   static const String PARAM_M_D = 'MM/dd';
   static const String PARAM_M_D_H_M = 'MM/dd HH:mm';
-
 }

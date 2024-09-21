@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-06 15:16:54
- * @LastEditTime: 2024-09-20 19:56:51
+ * @LastEditTime: 2024-09-21 12:10:47
  */
 class Api {
   // static const String authAccount = '/p/account/authAccount';
@@ -36,8 +36,10 @@ class Api {
   static const String sendReviews = "$API_BASE_PATH/NBANews/sendReviews";
   static const String deleteReviews = "$API_BASE_PATH/NBANews/deleteReviews";
   static const String likeReviews = "$API_BASE_PATH/NBANews/likeReviews";
-  static const String getGuessInfos = "$API_BASE_PATH/NBANews/getGuessInfos";//历史竞猜记录
-  static const String getGuessGamesInfo = "$API_BASE_PATH/NBANews/getGuessGamesInfo";//picks首页竞猜列表
+  static const String getGuessInfos =
+      "$API_BASE_PATH/NBANews/getGuessInfos"; //历史竞猜记录
+  static const String getGuessGamesInfo =
+      "$API_BASE_PATH/NBANews/getGuessGamesInfo"; //picks首页竞猜列表
   static const String guess = "$API_BASE_PATH/NBANews/guess";
   static const String getRedisRankInfo = "$API_BASE_PATH/NBANews/getRedisRankInfo";
 
@@ -54,5 +56,4 @@ class Api {
   static const String cNewsBanner = "$CONFIG_BASE_PATH/HightlightNews.json";
   static const String cNewsDefine = "$CONFIG_BASE_PATH/NewsDefine.json";
   static const String cNBATeamDefine = "$CONFIG_BASE_PATH/NBATeamDefine.json";
-
 }

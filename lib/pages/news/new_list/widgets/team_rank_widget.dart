@@ -1,58 +1,66 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
+import 'package:arm_chair_quaterback/common/entities/team_rank.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/main.dart';
+import 'package:arm_chair_quaterback/pages/news/new_list/index.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/widgets/shadow_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class TeamRankWidget extends StatelessWidget {
+class TeamRankWidget extends GetView<NewListController> {
   const TeamRankWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 225.w,
-      alignment: Alignment.centerLeft,
-      margin: EdgeInsets.only(bottom: 20.w),
-      child: PageView.builder(
-        controller: PageController(
-          viewportFraction: 0.9,
-        ),
-        physics: const BouncingScrollPhysics(),
-        itemCount: 3,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: EdgeInsets.only(right: 20.w), // 控制左右间距
-            child: InkWell(
-              onTap: () {
-                Get.toNamed(
-                  RouteNames.teamRank,
-                  id: GlobalNestedKey.NEWS,
+    return GetBuilder<NewListController>(
+        id: "teamRank",
+        builder: (context) {
+          return Container(
+            height: 225.w,
+            alignment: Alignment.centerLeft,
+            margin: EdgeInsets.only(bottom: 20.w),
+            child: PageView.builder(
+              controller: PageController(
+                viewportFraction: 0.9,
+              ),
+              physics: const BouncingScrollPhysics(),
+              itemCount: controller.state.teamMap.entries.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: EdgeInsets.only(right: 20.w), // 控制左右间距
+                  child: InkWell(
+                    onTap: () {
+                      Get.toNamed(
+                        RouteNames.teamRank,
+                        id: GlobalNestedKey.NEWS,
+                      );
+                    },
+                    child: TeamRankItem(index: index),
+                  ),
                 );
               },
-              child: TeamRankItem(index: index),
             ),
           );
-        },
-      ),
-    );
+        });
   }
 }
 
 double width = MyApp.MAXWEBWIDTH.w * 0.9;
 
-class TeamRankItem extends StatelessWidget {
+class TeamRankItem extends GetView<NewListController> {
   const TeamRankItem({super.key, required this.index});
   final int index;
 
   @override
   Widget build(BuildContext context) {
+    final item = controller.state.teamMap.entries.elementAt(index);
     return ShadowContainer(
       width: width,
       height: 225.w,
@@ -70,7 +78,7 @@ class TeamRankItem extends StatelessWidget {
               children: [
                 10.hGap,
                 Text(
-                  "EAST",
+                  item.key == 1 ? "EAST" : "WEST",
                   style: 16.w7(color: AppColors.cE6E6E),
                 ),
                 10.hGap,
@@ -141,7 +149,11 @@ class TeamRankItem extends StatelessWidget {
               )
             ],
           ),
-          SizedBox(width: width, child: TeamListView())
+          SizedBox(
+              width: width,
+              child: TeamListView(
+                list: item.value,
+              ))
         ],
       ),
     );
@@ -149,10 +161,13 @@ class TeamRankItem extends StatelessWidget {
 }
 
 class TeamListView extends StatelessWidget {
-  const TeamListView({super.key});
+  const TeamListView({super.key, required this.list});
+  final List<TeamRank> list;
 
   @override
   Widget build(BuildContext context) {
+    int count = list.length > 3 ? 3 : 0;
+    list.sort((a, b) => b.w!.compareTo(a.w!));
     return SizedBox(
       height: 150.w,
       child: ListView.separated(
@@ -160,6 +175,7 @@ class TeamListView extends StatelessWidget {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
+            final item = list[index];
             return SizedBox(
               height: 48.w,
               child: Row(
@@ -169,13 +185,13 @@ class TeamListView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ImageWidget(
-                          url: "https://file.qiumiwu.com/team/WAS_300.png",
+                          url: Utils.getTeamUrl(item.teamId),
                           width: 25.w,
                           height: 25.w,
                         ),
                         2.hGap,
                         Text(
-                          "BAL",
+                          item.shortName ?? "",
                           style: 12.w7(),
                         )
                       ],
@@ -186,7 +202,7 @@ class TeamListView extends StatelessWidget {
                       width: 88.w,
                       alignment: Alignment.center,
                       child: Text(
-                        "61-64",
+                        "${item.w}-${item.l}",
                         style: 11.w4(color: AppColors.c666666),
                       ),
                     ),
@@ -196,7 +212,7 @@ class TeamListView extends StatelessWidget {
                       alignment: Alignment.center,
                       width: 64.w,
                       child: Text(
-                        "0.598",
+                        "${item.wPct}",
                         style: 11.w4(color: AppColors.c666666),
                       ),
                     ),
@@ -206,7 +222,7 @@ class TeamListView extends StatelessWidget {
                       alignment: Alignment.center,
                       width: 40.w,
                       child: Text(
-                        "2.0",
+                        "${item.gp}",
                         style: 11.w4(color: AppColors.c666666),
                       ),
                     ),
@@ -222,7 +238,7 @@ class TeamListView extends StatelessWidget {
               color: AppColors.cDDDDE3,
             );
           },
-          itemCount: 3),
+          itemCount: count),
     );
   }
 }

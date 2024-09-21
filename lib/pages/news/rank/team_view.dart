@@ -2,13 +2,12 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-14 16:54:10
- * @LastEditTime: 2024-09-19 13:23:06
+ * @LastEditTime: 2024-09-21 14:59:47
  */
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/widgets/TLBuilderWidget.dart';
 import 'package:arm_chair_quaterback/common/widgets/app_bar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_bar.dart';
-import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guess_item/guess_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';

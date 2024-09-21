@@ -2,10 +2,11 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:27:52
- * @LastEditTime: 2024-09-20 16:10:26
+ * @LastEditTime: 2024-09-21 19:04:22
  */
 import 'package:arm_chair_quaterback/common/entities/stats_rank/nba_player_stat.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
+import 'package:arm_chair_quaterback/pages/news/new_list/controller.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/widgets/stats_list_view.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/widgets/team_list_view.dart';
 import 'package:flutter/material.dart';
@@ -27,8 +28,8 @@ class RankController extends GetxController
   ];
 
   List teamPages = const [
-    EasTeamListView(),
-    EasTeamListView(),
+    EasTeamListView(type: 1),
+    EasTeamListView(type: 2),
   ];
 
   // RxString divisionIndex = "PTS".obs;
@@ -68,25 +69,28 @@ class RankController extends GetxController
   }
 
   void getStatRank() {
-    NewsApi.startRank(season: season, statType: statType).then((value) {
-      statList = value.nbaPlayerStats ?? [];
-      update(["stars"]);
-    });
+    // NewsApi.startRank(season: season, statType: statType).then((value) {
+    //   statList = value.nbaPlayerStats ?? [];
+    //   update(["stars"]);
+    // });
+    NewListController ctrl = Get.find();
+    statList = ctrl.state.statsRankMap[statType] ?? [];
+    update(["stars"]);
   }
 
   void getTeamRank() {
     NewsApi.teamRank(page: 0, pageSize: 30).then((value) {});
   }
 
-  dynamic getStartData(String type, NbaPlayerStat item) {
-    switch (type) {
+  dynamic getStartData(NbaPlayerStat item) {
+    switch (statType) {
       case "PTS":
         return item.pts ?? 0;
       case "AST":
         return item.ast ?? 0;
       case "REB":
         return item.reb ?? 0;
-      case "FG%":
+      case "FG":
         return item.fgPct ?? 0;
       case "BLK":
         return item.blk ?? 0;
@@ -96,7 +100,7 @@ class RankController extends GetxController
         return item.ftPct ?? 0;
       case "3PA":
         return item.fg3A ?? 0;
-      case "3P%":
+      case "3PP":
         return item.fg3Pct ?? 0;
       case "TO":
         return item.tov ?? 0;

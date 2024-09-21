@@ -8,6 +8,7 @@ import 'nba_player_infos_entity.dart';
 ///created at 2024/9/20/15:09
 
 class PicksPlayer {
+
   late NbaPlayerInfosPlayerBaseInfoList baseInfoList;/// 基础数据
   late NbaPlayerInfosPlayerDataAvgList dataAvgList; /// 数值
   late List<String> betData;/// 竞猜数据

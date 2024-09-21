@@ -1,8 +1,8 @@
+import 'package:arm_chair_quaterback/common/utils/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:arm_chair_quaterback/common/services/services.dart';
 import 'package:arm_chair_quaterback/common/store/store.dart';
-import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:get/get.dart';
 
 /// 全局静态数据

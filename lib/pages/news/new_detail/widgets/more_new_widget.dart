@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-10 17:28:39
- * @LastEditTime: 2024-09-20 18:16:37
+ * @LastEditTime: 2024-09-21 09:32:26
  */
 /*
  * @Description: 
@@ -23,11 +23,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class MoreNewsWidget extends GetView<NewsDetailController> {
-  const MoreNewsWidget({super.key});
+class MoreNewsWidget extends StatelessWidget {
+  const MoreNewsWidget({super.key, required this.tag});
+  final String tag;
 
   @override
   Widget build(BuildContext context) {
+    NewsDetailController controller = Get.find(tag: tag);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -48,11 +50,11 @@ class MoreNewsWidget extends GetView<NewsDetailController> {
                 Color color =
                     item.isView == 1 ? AppColors.cB3B3B3 : AppColors.c666666;
                 return InkWell(
-                  // onTap: () => Get.toNamed(RouteNames.newsDetail,
-                  //     arguments: item.id, id: GlobalNestedKey.NEWS),
-                  onTap: (){
-                    controller.getNewsDetail(item.id);
-                  },
+                  onTap: () => Get.toNamed(RouteNames.newsDetail,
+                      arguments: item.id, id: GlobalNestedKey.NEWS),
+                  // onTap: (){
+                  //   controller.getNewsDetail(item.id);
+                  // },
                   child: Row(
                     children: [
                       IconWidget(

@@ -3,11 +3,11 @@ import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 
 NbaTeamEntity $NbaTeamEntityFromJson(Map<String, dynamic> json) {
   final NbaTeamEntity nbaTeamEntity = NbaTeamEntity();
-  final String? force = jsonConvert.convert<String>(json['force']);
+  final int? force = jsonConvert.convert<int>(json['force']);
   if (force != null) {
     nbaTeamEntity.force = force;
   }
-  final String? id = jsonConvert.convert<String>(json['id']);
+  final int? id = jsonConvert.convert<int>(json['id']);
   if (id != null) {
     nbaTeamEntity.id = id;
   }
@@ -43,8 +43,8 @@ Map<String, dynamic> $NbaTeamEntityToJson(NbaTeamEntity entity) {
 
 extension NbaTeamEntityExtension on NbaTeamEntity {
   NbaTeamEntity copyWith({
-    String? force,
-    String? id,
+    int? force,
+    int? id,
     String? longEname,
     String? name,
     String? shortEname,

@@ -1,3 +1,9 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-09-21 17:26:07
+ * @LastEditTime: 2024-09-21 17:29:10
+ */
 import 'dart:convert';
 import 'dart:math';
 
@@ -61,7 +67,9 @@ class PicksApi {
   }
 
   static Future<List<RankInfoEntity>> getRedisRankInfo(
-      {RankType type = RankType.newsGuess, int page = 0, int pageSize = 10}) async {
+      {RankType type = RankType.newsGuess,
+      int page = 0,
+      int pageSize = 10}) async {
     List list = await httpUtil.post(Api.getRedisRankInfo, data: {
       "type": type.value,
       "page": page,

@@ -2,7 +2,13 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:23:17
- * @LastEditTime: 2024-09-20 14:14:12
+ * @LastEditTime: 2024-09-21 18:47:02
+ */
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-09-09 14:23:17
+ * @LastEditTime: 2024-09-21 15:49:06
  */
 /*
  * @Description: 
@@ -39,9 +45,11 @@ class NewsDetailController extends GetxController {
   }
 
   void getNewsDetail(id) {
+    state.isLoading = true;
     NewsApi.getNewsDetail(id).then((v) {
       state.newDetail = v;
       getMoreNews();
+      state.isLoading = false;
       update();
     });
   }
@@ -72,7 +80,8 @@ class NewsDetailController extends GetxController {
 
     // 过滤出符合条件的新闻
     List<NewsDetail> filteredList = newsList.where((e) {
-      return checkIsContains(curLabel, e.dataLabel ?? "");
+      return checkIsContains(curLabel, e.dataLabel ?? "") &&
+          e.id.toString() != newsId.toString();
     }).toList();
 
     Log.i("符合条件的新闻数量: ${filteredList.length}");

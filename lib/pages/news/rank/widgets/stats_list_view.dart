@@ -1,7 +1,11 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/common/constant/constant.dart';
+import 'package:arm_chair_quaterback/common/entities/team_rank.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
+import 'package:arm_chair_quaterback/pages/news/new_list/index.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/widgets/shadow_container.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/controller.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/widgets/border_container.dart';
@@ -26,43 +30,84 @@ class PlayListView extends GetView<RankController> {
             children: [
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
-                child: InkWell(
-                  onTap: () {
-                    showModalBottomSheet(
-                        context: context,
-                        builder: (context) {
-                          return SearchBottomDialog();
-                        });
-                  },
-                  child: Row(
-                    children: [
-                      Expanded(child: Text("Rank", style: 19.w7())),
-                      BorderContainer(
-                        width: 70.w,
+                child: Row(
+                  children: [
+                    Expanded(child: Text("Rank", style: 19.w7())),
+                    InkWell(
+                      onTap: () {
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return SearchBottomDialog(
+                                controller.statType,
+                                Constant.statTypeList,
+                                (item) {
+                                  controller.statType = item;
+                                  controller.update(["search"]);
+                                  controller.getStatRank();
+                                },
+                              );
+                            });
+                      },
+                      child: BorderContainer(
                         height: 18.w,
-                        child: Text(
-                          controller.statType,
-                          style: 10.w7(),
+                        padding: EdgeInsets.symmetric(horizontal: 10.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              controller.statType,
+                              style: 10.w7(),
+                            ),
+                            8.hGap,
+                            IconWidget(
+                              iconWidth: 15.w,
+                              iconHeight: 8.w,
+                              icon: Assets.uiIconExpansionPng,
+                            ),
+                          ],
                         ),
                       ),
-                      4.hGap,
-                      BorderContainer(
-                        width: 140.w,
+                    ),
+                    4.hGap,
+                    InkWell(
+                      onTap: () {
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return SearchBottomDialog(
+                                controller.season,
+                                controller.seasonList,
+                                (item) {
+                                  controller.season = item;
+                                  controller.update(["search"]);
+                                  controller.getStatRank();
+                                },
+                              );
+                            });
+                      },
+                      child: BorderContainer(
+                        // width: 150.w,
                         height: 18.w,
-                        child: Text(
-                          "${controller.season} Regular Season",
-                          style: 10.w7(),
+                        padding: EdgeInsets.symmetric(horizontal: 8.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "${controller.season} Regular Season",
+                              style: 10.w7(),
+                            ),
+                            10.hGap,
+                            IconWidget(
+                              iconWidth: 15.w,
+                              iconHeight: 8.w,
+                              icon: Assets.uiIconExpansionPng,
+                            ),
+                          ],
                         ),
                       ),
-                      10.hGap,
-                      IconWidget(
-                        iconWidth: 15.w,
-                        iconHeight: 9.w,
-                        icon: Assets.uiIconExpansionPng,
-                      ),
-                      10.hGap,
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
               Expanded(
@@ -72,7 +117,7 @@ class PlayListView extends GetView<RankController> {
                         EdgeInsets.symmetric(vertical: 10.w, horizontal: 16.w),
                     separatorBuilder: (context, index) => 9.vGap,
                     itemBuilder: (context, index) {
-                      return StatsTeamItem(index: index);
+                      return StatsItem(index: index);
                     }),
               ),
             ],
@@ -81,27 +126,14 @@ class PlayListView extends GetView<RankController> {
   }
 }
 
-class TeamListView extends StatelessWidget {
-  const TeamListView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.separated(
-        itemCount: 10,
-        padding: EdgeInsets.symmetric(vertical: 10.w, horizontal: 16.w),
-        separatorBuilder: (context, index) => 9.vGap,
-        itemBuilder: (context, index) {
-          return StatsItem(index: index);
-        });
-  }
-}
-
-class StatsItem extends StatelessWidget {
+class StatsItem extends GetView<RankController> {
   const StatsItem({super.key, required this.index});
   final int index;
 
   @override
   Widget build(BuildContext context) {
+    var item = controller.statList[index];
+
     return ShadowContainer(
       height: 84.w,
       // width: 343.w,
@@ -118,9 +150,10 @@ class StatsItem extends StatelessWidget {
             ),
           ),
           ImageWidget(
-            url: "https://file.qiumiwu.com/player/202404/24/dab169bb.png",
+            url: Utils.getPlayUrl(item.playerId),
             width: 64.w,
             height: 64.w,
+            imageFailedPath: Assets.head_0000Png,
             borderRadius: BorderRadius.circular(32.w),
           ),
           9.hGap,
@@ -135,7 +168,7 @@ class StatsItem extends StatelessWidget {
                 ),
                 5.vGap,
                 Text(
-                  "Player Name",
+                  item.player ?? "",
                   style: 16.w7(),
                 ),
                 5.vGap,
@@ -152,7 +185,7 @@ class StatsItem extends StatelessWidget {
             ),
           ),
           Text(
-            "34.7",
+            "${controller.getStartData(item)}",
             style: 24.w7(),
           ),
           10.hGap,
@@ -162,13 +195,30 @@ class StatsItem extends StatelessWidget {
   }
 }
 
-class StatsTeamItem extends GetView<RankController> {
-  const StatsTeamItem({super.key, required this.index});
-  final int index;
+class TeamListView extends StatelessWidget {
+  const TeamListView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    var item = controller.statList[index];
+    NewListController ctrl = Get.find();
+    return ListView.separated(
+        itemCount: ctrl.state.teamRankList.length,
+        padding: EdgeInsets.symmetric(vertical: 10.w, horizontal: 16.w),
+        separatorBuilder: (context, index) => 9.vGap,
+        itemBuilder: (context, index) {
+          return StatsTeamItem(
+              index: index, item: ctrl.state.teamRankList[index]);
+        });
+  }
+}
+
+class StatsTeamItem extends GetView<RankController> {
+  const StatsTeamItem({super.key, required this.index, required this.item});
+  final int index;
+  final TeamRank item;
+
+  @override
+  Widget build(BuildContext context) {
     return ShadowContainer(
       height: 84.w,
       // width: 343.w,
@@ -185,9 +235,10 @@ class StatsTeamItem extends GetView<RankController> {
             ),
           ),
           ImageWidget(
-            url: "https://file.qiumiwu.com/team/IND_300.png",
+            url: Utils.getTeamUrl(item.teamId),
             width: 56.w,
             height: 56.w,
+            // imageFailedPath: Assets.head_0000Png,
             borderRadius: BorderRadius.circular(30.w),
           ),
           9.hGap,
@@ -195,12 +246,12 @@ class StatsTeamItem extends GetView<RankController> {
             child: SizedBox(
                 width: 140.w,
                 child: Text(
-                  item.player ?? "",
+                  item.teamName ?? "",
                   style: 16.w4(),
                 )),
           ),
           Text(
-            "${controller.getStartData(controller.statType, item)}",
+            "",
             style: 17.w7(),
           ),
           10.hGap,

@@ -1,6 +1,9 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-09-12 21:40:32
+ * @LastEditTime: 2024-09-20 21:19:31
+ */
 class Address {
-  static const String devUrl = 'http://192.168.12.46:9001';
-  // static const String devUrl = "http://10.0.3.38/http://10.0.3.38";
-  // static const String releaseUrl = "";
-  // static const String releaseUrl = "https://btgame.zhonglehd.cn/api";
+  static String url = "http://192.168.12.46:9001";
 }

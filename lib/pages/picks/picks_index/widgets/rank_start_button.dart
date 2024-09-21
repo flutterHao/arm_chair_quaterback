@@ -13,7 +13,11 @@ import 'package:get/get.dart';
 ///created at 2024/9/13/11:09
 
 class RankStartButton extends StatelessWidget {
-  const RankStartButton(this.size,this.cost,this.bet,{this.isDialog = false,
+  const RankStartButton(
+    this.size,
+    this.cost,
+    this.bet, {
+    this.isDialog = false,
     super.key,
   });
 

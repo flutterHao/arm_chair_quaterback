@@ -2,12 +2,20 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2024-09-20 20:24:08
+ * @LastEditTime: 2024-09-21 17:13:27
  */
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-09-09 14:22:13
+ * @LastEditTime: 2024-09-21 11:57:22
+ */
+import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
 import 'package:arm_chair_quaterback/common/entities/stats_rank/nba_player_stat.dart';
+import 'package:arm_chair_quaterback/common/entities/team_rank.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
-
+import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:get/get.dart';
 
 import 'index.dart';
@@ -24,6 +32,7 @@ class NewListController extends GetxController {
     getNewsBanner();
     getNewsList();
     getStatsRank();
+    getTeamRank();
   }
 
   void getNewsBanner() {
@@ -35,24 +44,24 @@ class NewListController extends GetxController {
 
   void getNewsList() {
     NewsApi.getNewsList().then((value) {
-      state.newsList = value.nbaNewsList ?? [];
+      state.newsList = value;
       update(['newsList']);
     });
   }
 
   void likeNews(NewsDetail item) {
-    if (item.isLike == 1) return;
+    if (item.isLike?.value ==true) return;
     NewsApi.newsLike(item.id!).then((value) {
-      item.isLike = 1;
+      item.isLike!.value = true;
       item.likes = (item.likes ?? 0) + 1;
       update(['newsList']);
     });
   }
 
   void unLikeNews(NewsDetail item) {
-    if (item.isLike == 0) return;
+     if (item.isLike?.value ==false) return;
     NewsApi.newsUnLike(item.id!).then((value) {
-      item.isLike = 0;
+      item.isLike!.value = false;
       item.likes = (item.likes ?? 0) - 1;
       update(['newsList']);
     });
@@ -67,10 +76,35 @@ class NewListController extends GetxController {
     // }
     //  update(['teamRank']);
     NewsApi.startRank(season: "2023-24", statType: "PTS").then((value) {
-      state.statsList = value.nbaPlayerStats ?? [];
+      state.statsList = value;
       setTeamMap();
       update(['statsRank']);
     });
+  }
+
+  void getTeamRank() {
+    Future.wait([
+      PicksApi.getNBATeamDefine(),
+      NewsApi.teamRank(page: 0, pageSize: 30)
+    ]).then((v) {
+      state.teamConfigList = v[0] as List<NbaTeamEntity>;
+      state.teamRankList = v[1] as List<TeamRank>;
+      state.teamMap = {
+        1: state.teamRankList.where((e) => hasContain(1, e)).toList(),
+        2: state.teamRankList.where((e) => hasContain(2, e)).toList()
+      };
+      update(['teamRank']);
+    });
+  }
+
+  bool hasContain(int type, TeamRank item) {
+    for (var element in state.teamConfigList) {
+      if (item.teamName == element.longEname) {
+        item.shortName = element.shortEname;
+        return true;
+      }
+    }
+    return false;
   }
 
   dynamic getStartData(String type, NbaPlayerStat item) {
@@ -81,7 +115,7 @@ class NewListController extends GetxController {
         return item.ast ?? 0;
       case "REB":
         return item.reb ?? 0;
-      case "FG%":
+      case "FGP":
         return item.fgPct ?? 0;
       case "BLK":
         return item.blk ?? 0;
@@ -91,7 +125,7 @@ class NewListController extends GetxController {
         return item.ftPct ?? 0;
       case "3PA":
         return item.fg3A ?? 0;
-      case "3P%":
+      case "3PP":
         return item.fg3Pct ?? 0;
       case "TO":
         return item.tov ?? 0;
@@ -109,7 +143,7 @@ class NewListController extends GetxController {
       ..sort((a, b) => b.ast!.compareTo(a.ast!));
     List<NbaPlayerStat> reb = List<NbaPlayerStat>.from(state.statsList)
       ..sort((a, b) => b.reb!.compareTo(a.reb!));
-    List<NbaPlayerStat> fg = List<NbaPlayerStat>.from(state.statsList)
+    List<NbaPlayerStat> fgp = List<NbaPlayerStat>.from(state.statsList)
       ..sort((a, b) => b.fgPct!.compareTo(a.fgPct!));
     List<NbaPlayerStat> blk = List<NbaPlayerStat>.from(state.statsList)
       ..sort((a, b) => b.blk!.compareTo(a.blk!));
@@ -129,12 +163,12 @@ class NewListController extends GetxController {
       "PTS": pts,
       "AST": ast,
       "REB": reb,
-      "FG": fg,
+      "FGP": fgp,
       "BLK": blk,
       "STL": stl,
       "FTP": ftp,
-      "3TA": threePa,
-      "3TP": threePp,
+      "3PA": threePa,
+      "3PP": threePp,
       "TO": to,
     };
   }

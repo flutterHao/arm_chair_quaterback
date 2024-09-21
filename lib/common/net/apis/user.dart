@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 16:52:11
- * @LastEditTime: 2024-09-14 18:36:48
+ * @LastEditTime: 2024-09-21 16:25:49
  */
 import 'package:arm_chair_quaterback/common/entities/user_entiry/user_entiry.dart';
 import 'package:arm_chair_quaterback/common/net/index.dart';
@@ -13,13 +13,13 @@ class UserApi {
       required int serviceId,
       required String userIp,
       required int id}) async {
-    Map data = await HttpUtil().post(Api.authAccount, data: {
+    String data = await HttpUtil().post(Api.authAccount, data: {
       "accountName": accountName,
       "serviceId": serviceId,
       "userIp": userIp,
       "id": id
     });
-    return data["token"];
+    return data;
   }
 
   static Future<UserEntiry> login() async {

@@ -6,6 +6,7 @@ class NewDetailState {
   // set title(value) => _title.value = value;
   // get title => _title.value;
 
+  bool isLoading = false;
   NewsDetail newDetail = NewsDetail();
   List<NewsDetail> moreList = [];
 }

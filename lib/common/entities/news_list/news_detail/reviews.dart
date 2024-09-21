@@ -2,7 +2,7 @@
  * @Description: ?
  * @Author: lihonghao
  * @Date: 2024-09-13 18:19:28
- * @LastEditTime: 2024-09-19 21:17:58
+ * @LastEditTime: 2024-09-21 17:05:18
  */
 import 'package:get/get.dart';
 
@@ -34,7 +34,7 @@ class Reviews {
   });
 
   factory Reviews.fromJson(Map<String, dynamic> json) {
-    RxBool isLike = RxBool(json['isLike'] ?? false);
+    RxBool isLike = RxBool(json['isLike']==1 ?true: false);
     RxInt likes = RxInt(json['likes'] ?? 0);
 
     return Reviews(

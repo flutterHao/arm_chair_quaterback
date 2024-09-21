@@ -92,7 +92,7 @@ class SubComentsListView extends GetView<CommentController> {
 
   @override
   Widget build(BuildContext context) {
-    RxInt current = 0.obs;
+    RxInt current = 3.obs;
     return SizedBox(
       // width: 295.w,
       child: Obx(() {
@@ -126,7 +126,7 @@ class SubComentsListView extends GetView<CommentController> {
                                         ),
                                         4.hGap,
                                         Text(
-                                          "more replies  (${list.length - current.value})",
+                                          "more replies  (${has > 0 ? has : 0})",
                                           style: 12.w4(),
                                         )
                                       ],
@@ -245,7 +245,7 @@ class CommentItemView extends GetView<CommentController> {
                             ? Assets.uiIconLike_01Png
                             : Assets.uiIconLike_02Png,
                         iconColor: item.isLike?.value == true
-                            ? AppColors.cFF546C
+                            ? AppColors.cFF7954
                             : AppColors.cB3B3B3,
                       );
                     }),
@@ -271,10 +271,12 @@ class CommentItemView extends GetView<CommentController> {
                       int parentId = item.parentReviewId == 0
                           ? item.id!
                           : item.parentReviewId!;
-                      showCommentBottomSheet(context,
-                          newsId: item.newsId ?? 0,
-                          parentId: parentId,
-                          targetId: item.id ?? 0);
+                      showCommentBottomSheet(
+                        context,
+                        newsId: item.newsId ?? 0,
+                        parentId: parentId,
+                        targetId: item.id ?? 0,
+                      );
                     },
                     child: Text(
                       "Reple",

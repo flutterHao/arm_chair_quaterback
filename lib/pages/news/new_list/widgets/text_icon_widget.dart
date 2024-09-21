@@ -1,3 +1,9 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-09-10 10:49:23
+ * @LastEditTime: 2024-09-21 16:28:14
+ */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +39,7 @@ class TextIconWidget extends StatelessWidget {
           ),
           child: image, // 替换为你的 PNG 图片
         ),
+        5.hGap,
         Text(
           text,
           style: 12.w4(

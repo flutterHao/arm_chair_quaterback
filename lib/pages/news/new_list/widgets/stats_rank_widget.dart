@@ -4,6 +4,7 @@ import 'package:arm_chair_quaterback/common/entities/stats_rank/nba_player_stat.
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/main.dart';
@@ -156,18 +157,23 @@ class StatsListView extends GetView<NewListController> {
                   ),
                   Stack(
                     children: [
-                      ImageWidget(
-                        url:
-                            "https://pic3.zhimg.com/80/v2-6d7d2480107f691ebf925b85160a1072_720w.webp",
-                        width: 36.w,
-                        height: 36.w,
-                        borderRadius: BorderRadius.circular(18.w),
+                      Container(
+                        margin: EdgeInsets.only(left: 4.w),
+                        child: ImageWidget(
+                          url: Utils.getPlayUrl(item.playerId),
+                          width: 36.w,
+                          height: 36.w,
+                          imageFailedPath: Assets.head_0000Png,
+                          borderRadius: BorderRadius.circular(18.w),
+                        ),
                       ),
+
+                      ///TODO
                       Positioned(
                           top: 0,
                           left: 0,
                           child: Text(
-                            "SSS",
+                            "SS",
                             style: 10.w7(color: AppColors.c1A1A1A),
                           )),
                     ],
@@ -176,7 +182,7 @@ class StatsListView extends GetView<NewListController> {
                   Expanded(
                     child: Text(
                       item.player ?? "",
-                      style: 12.w7(color: AppColors.c666666),
+                      style: 12.w7(),
                     ),
                   ),
                   Text(

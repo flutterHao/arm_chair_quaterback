@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 import 'reviews.dart';
 
 class NewsDetail {
@@ -6,7 +8,8 @@ class NewsDetail {
   int? createTime;
   String? dataLabel;
   int? id;
-  int? isLike;
+  RxBool? isLike;
+  // int? isLike;
   int? isView;
   int? likes;
   int? postTime;
@@ -24,7 +27,7 @@ class NewsDetail {
     this.createTime = 0,
     this.dataLabel = "",
     this.id = 0,
-    this.isLike = 0,
+     this.isLike,
     this.isView = 0,
     this.likes = 0,
     this.postTime = 0,
@@ -37,26 +40,29 @@ class NewsDetail {
     this.views = 0,
   });
 
-  factory NewsDetail.fromJson(Map<String, dynamic> json) => NewsDetail(
-        award: json['award'] as int?,
-        content: json['content'] as String?,
-        createTime: json['createTime'] as int?,
-        dataLabel: json['dataLabel'] as String?,
-        id: json['id'] as int?,
-        isLike: json['isLike'] as int?,
-        isView: json['isView'] as int?,
-        likes: json['likes'] as int?,
-        postTime: json['postTime'] as int?,
-        reviewsCount: json['reviewsCount'] as int?,
-        reviewsList: ((json['reviewsList'] ?? []) as List<dynamic>)
-            .map((e) => Reviews.fromJson(e as Map<String, dynamic>))
-            .toList(),
-        source: json['source'] as String?,
-        title: json['title'] as String?,
-        unLikes: json['unLikes'] as int?,
-        updateTime: json['updateTime'] as int?,
-        views: json['views'] as int?,
-      );
+  factory NewsDetail.fromJson(Map<String, dynamic> json) {
+    RxBool isLike = RxBool(json['isLike'] == 1 ? true : false);
+    return NewsDetail(
+      award: json['award'] as int?,
+      content: json['content'] as String?,
+      createTime: json['createTime'] as int?,
+      dataLabel: json['dataLabel'] as String?,
+      id: json['id'] as int?,
+      isLike: isLike,
+      isView: json['isView'] as int?,
+      likes: json['likes'] as int?,
+      postTime: json['postTime'] as int?,
+      reviewsCount: json['reviewsCount'] as int?,
+      reviewsList: ((json['reviewsList'] ?? []) as List<dynamic>)
+          .map((e) => Reviews.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      source: json['source'] as String?,
+      title: json['title'] as String?,
+      unLikes: json['unLikes'] as int?,
+      updateTime: json['updateTime'] as int?,
+      views: json['views'] as int?,
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         'award': award,

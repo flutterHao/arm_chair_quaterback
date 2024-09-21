@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 17:29:19
- * @LastEditTime: 2024-09-19 13:43:58
+ * @LastEditTime: 2024-09-21 10:10:13
  */
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +50,7 @@ class ImageWidget extends StatelessWidget {
         color: Colors.grey,
         borderRadius: BorderRadius.circular(20),
       ),
+      child: imageFailedPath != null ? Image.asset(imageFailedPath!) : null,
     );
     return ExtendedImage.network(
       url,

@@ -28,9 +28,12 @@ class NewsListView extends GetView<NewListController> {
               padding: EdgeInsets.symmetric(vertical: 10.w),
               itemBuilder: (context, index) {
                 return InkWell(
-                  onTap: () => Get.toNamed(RouteNames.newsDetail,
-                      arguments: controller.state.newsList[index].id,
-                      id: GlobalNestedKey.NEWS),
+                  onTap: () async {
+                    await Get.toNamed(RouteNames.newsDetail,
+                        arguments: controller.state.newsList[index].id,
+                        id: GlobalNestedKey.NEWS);
+                    controller.getNewsList();
+                  },
                   child: NewsItemView(
                     item: controller.state.newsList[index],
                   ),
@@ -118,18 +121,18 @@ class NewsItemView extends GetView<NewListController> {
                       )),
                   InkWell(
                     onTap: () {
-                      item.isLike == 1
+                      item.isLike?.value == true
                           ? controller.unLikeNews(item)
                           : controller.likeNews(item);
                     },
                     child: SizedBox(
                         width: 60.w,
                         child: TextIconWidget(
-                          icon: item.isLike == 1
+                          icon: item.isLike?.value == true
                               ? Assets.uiIconLike_01Png
                               : Assets.uiIconLike_02Png,
-                          color: item.isLike == 1
-                              ? AppColors.cFF546C
+                          color: item.isLike?.value == true
+                              ? AppColors.cFF7954
                               : AppColors.cB3B3B3,
                           text: "${item.likes}",
                         )),
@@ -140,8 +143,8 @@ class NewsItemView extends GetView<NewListController> {
           ),
         ),
         Positioned(
-          bottom: 12.w,
-          right: 12.w,
+          bottom: 18.w,
+          right: 18.w,
           child: IconWidget(
             iconHeight: 14.w,
             iconWidth: 14.w,

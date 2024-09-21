@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-06 15:16:54
- * @LastEditTime: 2024-09-20 15:07:13
+ * @LastEditTime: 2024-09-20 21:18:42
  */
 class Constant {
   /// 用户 - 配置信息
@@ -21,12 +21,12 @@ class Constant {
     "PTS",
     "AST",
     "REB",
-    "FG",
+    "FGP",
     "BLK",
     "STL",
     "FTP",
-    "3TA",
-    "3TP",
+    "3PA",
+    "3PP",
     "TO"
   ];
 }
