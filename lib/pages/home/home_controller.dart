@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-12 16:53:47
- * @LastEditTime: 2024-09-21 19:51:41
+ * @LastEditTime: 2024-09-21 20:17:36
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
@@ -84,7 +84,6 @@ class HomeController extends GetxController
   @override
   void onReady() {
     super.onReady();
-        UserStore().setToken("");
     login();
 
   }
@@ -102,7 +101,7 @@ class HomeController extends GetxController
   }
 
   Future login() async {
-    // UserStore().setToken("");
+   await UserStore().setToken("");
     String accountName = await getUid();
     int serviceId = 0;
     String userIp = "192.168.12.46";
