@@ -2,13 +2,14 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-12 16:53:47
- * @LastEditTime: 2024-09-23 11:58:55
+ * @LastEditTime: 2024-09-23 16:24:53
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/entities/tab_item_info.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entiry/user_entiry.dart';
+import 'package:arm_chair_quaterback/common/net/apis/config.dart';
 import 'package:arm_chair_quaterback/common/net/apis/user.dart';
 import 'package:arm_chair_quaterback/common/services/services.dart';
 import 'package:arm_chair_quaterback/common/store/user.dart';
@@ -85,7 +86,8 @@ class HomeController extends GetxController
   @override
   void onReady() {
     super.onReady();
-    // login();
+    login();
+    getConfigData();
   }
 
   @override
@@ -100,6 +102,7 @@ class HomeController extends GetxController
     update();
   }
 
+  ///鉴权、获取用户信息
   Future login() async {
     await UserStore.to.setToken("");
     // return;
@@ -124,5 +127,17 @@ class HomeController extends GetxController
       accountName = await DeviceUtils.getDeviceId();
     }
     return accountName;
+  }
+
+  ///获取配置信息
+  void getConfigData() {
+    Future.wait([
+      ConfigApi.getNewsDefine(),
+      ConfigApi.getPropDefine(),
+      ConfigApi.getNBATeamDefine(),
+      ConfigApi.getNBAPlayerInfo()
+    ]).then((v) {
+      Log.d("获取配置数据成功");
+    });
   }
 }

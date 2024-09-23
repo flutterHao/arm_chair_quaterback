@@ -2,16 +2,18 @@ import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.da
 import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_info_entity.dart';
 
+
 RankListEntity $RankListEntityFromJson(Map<String, dynamic> json) {
   final RankListEntity rankListEntity = RankListEntity();
   final List<RankInfoEntity>? ranks = (json['ranks'] as List<dynamic>?)
-      ?.map((e) => jsonConvert.convert<RankInfoEntity>(e) as RankInfoEntity)
+      ?.map(
+          (e) => jsonConvert.convert<RankInfoEntity>(e) as RankInfoEntity)
       .toList();
   if (ranks != null) {
     rankListEntity.ranks = ranks;
   }
-  final RankListMyRank? myRank =
-      jsonConvert.convert<RankListMyRank>(json['myRank']);
+  final RankListMyRank? myRank = jsonConvert.convert<RankListMyRank>(
+      json['myRank']);
   if (myRank != null) {
     rankListEntity.myRank = myRank;
   }

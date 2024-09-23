@@ -7,6 +7,7 @@
 import 'package:arm_chair_quaterback/common/entities/news_banner.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
+import 'package:arm_chair_quaterback/common/entities/receive_prop_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/stats_rank/nba_player_stat.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank.dart';
 import 'package:arm_chair_quaterback/common/net/index.dart';
@@ -88,8 +89,9 @@ class NewsApi {
         .toList();
   }
 
-  static Future getAward() async {
+  static Future<ReceivePropEntity?> getAward() async {
     var json = await HttpUtil().post(Api.getAward);
-    return json;
+    if (json == null) return null;
+    return ReceivePropEntity.fromJson(json);
   }
 }

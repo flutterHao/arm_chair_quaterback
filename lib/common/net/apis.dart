@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-06 15:16:54
- * @LastEditTime: 2024-09-21 12:10:47
+ * @LastEditTime: 2024-09-23 15:35:28
  */
 class Api {
   // static const String authAccount = '/p/account/authAccount';
@@ -57,6 +57,7 @@ class Api {
   static const String cNewsBanner = "$CONFIG_BASE_PATH/HightlightNews.json";
   static const String cNewsDefine = "$CONFIG_BASE_PATH/NewsDefine.json";
   static const String cNBATeamDefine = "$CONFIG_BASE_PATH/NBATeamDefine.json";
-  static const String cGameRankAwardRule = "$CONFIG_BASE_PATH/GameRankAwardRule.json";
-
+  static const String cGameRankAwardRule =
+      "$CONFIG_BASE_PATH/GameRankAwardRule.json";
+  static const String cGetPropDefine = "$CONFIG_BASE_PATH/PropDefine.json";
 }

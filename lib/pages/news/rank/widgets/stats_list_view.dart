@@ -172,7 +172,7 @@ class StatsItem extends GetView<RankController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "hou",
+                  Utils.getTeamInfo(item.teamId ?? 0).shortEname,
                   style: 10.w4(color: AppColors.cB3B3B3),
                 ),
                 5.vGap,
@@ -188,7 +188,7 @@ class StatsItem extends GetView<RankController> {
                     backgroudColor: AppColors.c666666,
                     borderRadius: BorderRadius.circular(2.w),
                     child: Text(
-                      "SG",
+                      Utils.getPlayBaseInfo(item.playerId ?? 0).position,
                       style: 10.w7(color: AppColors.cF2F2F2),
                     ))
               ],

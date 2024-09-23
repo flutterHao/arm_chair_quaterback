@@ -218,15 +218,16 @@ class NetInterceptor extends InterceptorsWrapper {
         if (result.code == 401) {
           // 捕获业务逻辑返回的 401 错误
           await _handle401Error(response.requestOptions, handler);
+        } else {
+          handlerError(
+              ErrorEntity(code: result.code!, message: result.message ?? ""));
+          return handler.reject(DioException(
+            requestOptions: response.requestOptions,
+            response: response,
+            type: DioExceptionType.badResponse, // 标记为服务器返回错误
+            error: result.message, // 返回错误信息
+          ));
         }
-        handlerError(
-            ErrorEntity(code: result.code!, message: result.message ?? ""));
-        return handler.reject(DioException(
-          requestOptions: response.requestOptions,
-          response: response,
-          type: DioExceptionType.badResponse, // 标记为服务器返回错误
-          error: result.message, // 返回错误信息
-        ));
       } else {
         //Map json文件格式
         return handler.next(Response(

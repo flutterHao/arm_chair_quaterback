@@ -222,7 +222,7 @@ class TeamListView extends StatelessWidget {
                       alignment: Alignment.center,
                       width: 40.w,
                       child: Text(
-                        "${item.gp}",
+                        "-",
                         style: 11.w4(color: AppColors.c666666),
                       ),
                     ),

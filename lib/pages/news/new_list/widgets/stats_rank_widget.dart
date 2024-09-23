@@ -173,7 +173,7 @@ class StatsListView extends GetView<NewListController> {
                           top: 0,
                           left: 0,
                           child: Text(
-                            "SS",
+                            Utils.getPlayBaseInfo(item.playerId!).grade,
                             style: 10.w7(color: AppColors.c1A1A1A),
                           )),
                     ],

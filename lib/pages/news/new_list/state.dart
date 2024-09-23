@@ -4,6 +4,7 @@
  * @Date: 2024-09-13 19:00:39
  * @LastEditTime: 2024-09-21 12:37:34
  */
+import 'package:arm_chair_quaterback/common/entities/config/prop_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_banner.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
@@ -26,6 +27,7 @@ class NewListState {
 
   Map<String, List<NbaPlayerStat>> statsRankMap = {};
 
+  PropDefineEntity propDefineEntity = PropDefineEntity();
   NewListState() {
     ///Initialize variables
   }
