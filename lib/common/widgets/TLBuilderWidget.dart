@@ -37,8 +37,16 @@ class _TLBuildWidgetState extends State<TLBuildWidget> {
       next =
           animationValue > currentIndex ? currentIndex + 1 : currentIndex - 1;
       progress = (animationValue - currentIndex).abs();
-      setState(() {});
+      if(mounted) {
+        setState(() {});
+      }
     });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 
   @override

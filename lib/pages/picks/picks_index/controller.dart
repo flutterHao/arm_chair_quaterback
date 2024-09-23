@@ -9,8 +9,10 @@ import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/user_entiry/user_entiry.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/utils/param_utils.dart';
+import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -26,7 +28,7 @@ class PicksIndexController extends GetxController {
 
   List<PicksPlayer> picksPlayers = [];
 
-  RankListEntity? rankInfo ;
+  RankListEntity rankInfo  = RankListEntity();
 
   Map<int, double> choiceData = {};
 
@@ -170,14 +172,15 @@ class PicksIndexController extends GetxController {
         picksPlayer.betCost = newsDefineEntity.betCost;
         picksPlayer.betOdds = newsDefineEntity.betOdds;
         picksPlayer.selfTeamInfo = nbaTeams.firstWhere(
-            (nba) => nba.id == picksPlayer.baseInfoList.teamId.toString());
+            (nba) => nba.id.toString() == picksPlayer.baseInfoList.teamId.toString());
         picksPlayer.awayTeamInfo =
-            nbaTeams.firstWhere((nba) => nba.id == e.awayTeamId.toString());
+            nbaTeams.firstWhere((nba) => nba.id.toString() == e.awayTeamId.toString());
         picksPlayer.guessInfo = e;
         picksPlayers.add(picksPlayer);
       }
       update([idGuessList,idRankLists,idRankLists]);
-      var indexWhere = rankInfo!.ranks.indexWhere((e)=> e.teamId == rankInfo!.myRank.teamId);
+      UserEntiry userEntiry = Get.find<HomeController>().userEntiry;
+      var indexWhere = rankInfo.ranks.indexWhere((e)=> e.teamId == userEntiry.teamLoginInfo?.team?.teamId);
       if(indexWhere == -1){
         scrollController.removeListener(_scrollListener);
         scrollController.addListener(_scrollListener);

@@ -11,6 +11,7 @@ import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_bar.dart';
+import 'package:arm_chair_quaterback/common/widgets/empty_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
@@ -105,10 +106,13 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                       case 0:
                         Get.toNamed(RouteNames.picksReciveRward,
                             id: GlobalNestedKey.PICKS);
+                        break;
                       case 1:
+                        break;
+                      case 2:
                         Get.toNamed(RouteNames.picksPickRank,
                             id: GlobalNestedKey.PICKS);
-                      case 2:
+                        break;
                     }
                   },
                   itemBuilder: (_, index) {
@@ -248,19 +252,20 @@ class _PicksIndexPageState extends State<PicksIndexPage>
         GetBuilder<PicksIndexController>(
             id: PicksIndexController.idRankLists,
             builder: (logic) {
-              if (picksIndexController.rankInfo == null) {
-                return const SliverPadding(padding: EdgeInsets.zero);
+              if (picksIndexController.rankInfo.ranks.isEmpty) {
+                return const SliverToBoxAdapter(child: EmptyWidget());
               }
               return SliverFixedExtentList(
                   delegate: SliverChildBuilderDelegate(
-                      childCount: picksIndexController.rankInfo!.ranks.length,
+                      childCount: picksIndexController.rankInfo.ranks.length,
                       (_, index) {
                     RankInfoEntity item =
-                        picksIndexController.rankInfo!.ranks[index];
-                    int selfIndex = picksIndexController.rankInfo!.ranks
+                        picksIndexController.rankInfo.ranks[index];
+                    int selfIndex = picksIndexController.rankInfo.ranks
                         .indexWhere((e) =>
-                            e.teamId == picksIndexController.rankInfo!.myRank.teamId);
-                    var len = picksIndexController.rankInfo!.ranks.length;
+                            e.teamId ==
+                            picksIndexController.rankInfo.myRank.teamId);
+                    var len = picksIndexController.rankInfo.ranks.length;
                     return InkWell(
                       onTap: () => Get.toNamed(RouteNames.picksPickRank,
                           id: GlobalNestedKey.PICKS),
@@ -337,7 +342,7 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                             Row(
                               children: [
                                 Text(
-                                  "${picksIndexController.rankInfo?.myRank.rank == 0 ? '--' : picksIndexController.rankInfo?.myRank.rank}",
+                                  "${picksIndexController.rankInfo.myRank.rank == 0 ? '--' : picksIndexController.rankInfo.myRank.rank}",
                                   style: 18.w7(color: AppColors.cFF7954),
                                 ),
                                 SizedBox(
@@ -355,7 +360,7 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        "${picksIndexController.rankInfo?.myRank.teamName}",
+                                        "${Get.find<HomeController>().userEntiry.teamLoginInfo?.team?.teamName}",
                                         style: 12.w7(
                                             color: AppColors.cFF7954,
                                             overflow: TextOverflow.ellipsis),
@@ -364,13 +369,13 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                                         height: 3.w,
                                       ),
                                       Text(
-                                        "WIN  ${picksIndexController.rankInfo?.myRank.win??0}",
+                                        "WIN  ${picksIndexController.rankInfo.myRank.win ?? 0}",
                                         style: TextStyle(
                                             color: AppColors.cB3B3B3,
                                             fontSize: 10.sp),
                                       ),
                                       Text(
-                                        "SUCCESS  ${picksIndexController.rankInfo?.myRank.success??0}%",
+                                        "SUCCESS  ${picksIndexController.rankInfo.myRank.success ?? 0}%",
                                         style: TextStyle(
                                             color: AppColors.cB3B3B3,
                                             fontSize: 10.sp),
@@ -381,7 +386,9 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                               ],
                             ),
                             Text(
-                              (picksIndexController.rankInfo?.myRank.chip??0).toDouble().toStringAsFixed(0),
+                              (picksIndexController.rankInfo.myRank.chip ?? 0)
+                                  .toDouble()
+                                  .toStringAsFixed(0),
                               style: 18.w7(color: AppColors.cFFFFFF),
                             )
                           ],

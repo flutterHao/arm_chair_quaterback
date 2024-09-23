@@ -56,4 +56,6 @@ class Api {
   static const String cNewsBanner = "$CONFIG_BASE_PATH/HightlightNews.json";
   static const String cNewsDefine = "$CONFIG_BASE_PATH/NewsDefine.json";
   static const String cNBATeamDefine = "$CONFIG_BASE_PATH/NBATeamDefine.json";
+  static const String cGameRankAwardRule = "$CONFIG_BASE_PATH/GameRankAwardRule.json";
+
 }

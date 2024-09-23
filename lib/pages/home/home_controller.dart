@@ -112,7 +112,7 @@ class HomeController extends GetxController
       userIp: userIp,
       id: id,
     );
-    UserStore().setToken(v);
+    await UserStore().setToken(v);
     userEntiry = await UserApi.visitorLogin();
   }
 

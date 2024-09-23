@@ -12,6 +12,7 @@ import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dar
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_day_data_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/rank_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/rank_type.dart';
 import 'package:arm_chair_quaterback/common/net/apis.dart';
@@ -44,8 +45,8 @@ class PicksApi {
     return NewsDefineEntity.fromJson(json[0]);
   }
 
-  static Future<List<PlayerDayDataEntity>> getRecentAvg(
-      int playerId, {int gameCount = 5}) async {
+  static Future<List<PlayerDayDataEntity>> getRecentAvg(int playerId,
+      {int gameCount = 5}) async {
     List json = await httpUtil.post(Api.getRecentAvg,
         data: {"playerId": playerId, "gameCount": gameCount});
     return json.map((e) => PlayerDayDataEntity.fromJson(e)).toList();
@@ -75,5 +76,10 @@ class PicksApi {
       "pageSize": pageSize,
     });
     return RankListEntity.fromJson(json);
+  }
+
+  static Future<List<RankAwardEntity>> getGameRankAwardRule() async {
+    List json = await httpUtil.get(Api.cGameRankAwardRule);
+    return json.map((e) => RankAwardEntity.fromJson(e)).toList();
   }
 }
