@@ -49,6 +49,7 @@ class PickRankController extends GetxController
                   ?.team
                   ?.teamId) !=
           -1;
+      print('inTheRankList:${inTheRankList.value}');
       update([idRanks]);
     });
     // PicksApi.getGameRankAwardRule().then((result){

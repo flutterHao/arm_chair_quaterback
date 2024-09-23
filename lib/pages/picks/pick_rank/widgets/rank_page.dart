@@ -26,28 +26,28 @@ class _RankPageState extends State<RankPage>
   @override
   Widget build(BuildContext context) {
     controller = Get.find<PickRankController>();
-    return Stack(
-      children: [
-        SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Stack(
-            children: [
-              SizedBox(
-                height: 599.w,
-                child: Image.asset(
-                  alignment: Alignment.bottomCenter,
-                  Assets.bgRank_01Jpg,
-                  width: double.infinity,
-                  fit: BoxFit.fitWidth,
+    return  GetBuilder<PickRankController>(
+        id: PickRankController.idRanks,
+        builder: (controller) {
+          if (controller.rankInfo.ranks.isEmpty) {
+            return const Center(child: EmptyWidget());
+          }
+      return Stack(
+        children: [
+          SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Stack(
+              children: [
+                SizedBox(
+                  height: 599.w,
+                  child: Image.asset(
+                    alignment: Alignment.bottomCenter,
+                    Assets.bgRank_01Jpg,
+                    width: double.infinity,
+                    fit: BoxFit.fitWidth,
+                  ),
                 ),
-              ),
-              GetBuilder<PickRankController>(
-                  id: PickRankController.idRanks,
-                  builder: (controller) {
-                    if (controller.rankInfo.ranks.isEmpty) {
-                      return const EmptyWidget();
-                    }
-                return Column(
+                Column(
                   children: [
                     Container(
                       height: 564.w,
@@ -61,7 +61,7 @@ class _RankPageState extends State<RankPage>
                               16.w +
                               34.w +
                               39.w),
-                      child:Column(
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Container(
@@ -559,91 +559,94 @@ class _RankPageState extends State<RankPage>
                     }),
                     90.vGap,
                   ],
-                );
-              }),
-            ],
-          ),
-        ),
-        Obx(() {
-          return AnimatedPositioned(
-              duration: const Duration(milliseconds: 300),
-              bottom: controller.inTheRankList.value ? -200.w : 9.w,
-              left: 6.w,
-              right: 6.w,
-              child: Container(
-                padding: EdgeInsets.only(left: 43.w, right: 33.w),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20.w),
-                    color: AppColors.c333333),
-                height: 68.w,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          "${controller.rankInfo.myRank.rank == 0
-                              ? '--'
-                              : controller.rankInfo.myRank.rank}",
-                          style: 18.w7(color: AppColors.cFF7954),
-                        ),
-                        SizedBox(
-                          width: 4.w,
-                        ),
-                        Image.asset(
-                          Assets.testTeamLogoPng,
-                          width: 48.w,
-
-                          /// todo 换网络图
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(left: 12.w),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "${Get
-                                    .find<HomeController>()
-                                    .userEntiry
-                                    .teamLoginInfo
-                                    ?.team
-                                    ?.teamName}",
-                                style: 12.w7(
-                                    color: AppColors.cFF7954,
-                                    overflow: TextOverflow.ellipsis),
-                              ),
-                              SizedBox(
-                                height: 3.w,
-                              ),
-                              Text(
-                                "WIN  ${controller.rankInfo.myRank.win ?? 0}",
-                                style: TextStyle(
-                                    color: AppColors.cB3B3B3, fontSize: 10.sp),
-                              ),
-                              Text(
-                                "SUCCESS  ${controller.rankInfo.myRank
-                                    .success ?? 0}%",
-                                style: TextStyle(
-                                    color: AppColors.cB3B3B3, fontSize: 10.sp),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                    Text(
-                      (controller.rankInfo.myRank.chip ?? 0)
-                          .toDouble()
-                          .toStringAsFixed(0),
-                      style: 18.w7(color: AppColors.cFFFFFF),
-                    )
-                  ],
                 ),
-              ));
-        })
-      ],
-    );
+              ],
+            ),
+          ),
+          Obx(() {
+            return AnimatedPositioned(
+                duration: const Duration(milliseconds: 300),
+                bottom: controller.inTheRankList.value ||
+                    controller.rankInfo.myRank.rank == null ? -200.w : 9.w,
+                left: 6.w,
+                right: 6.w,
+                child: Container(
+                  padding: EdgeInsets.only(left: 43.w, right: 33.w),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20.w),
+                      color: AppColors.c333333),
+                  height: 68.w,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            "${controller.rankInfo.myRank.rank == 0
+                                ? '--'
+                                : controller.rankInfo.myRank.rank}",
+                            style: 18.w7(color: AppColors.cFF7954),
+                          ),
+                          SizedBox(
+                            width: 4.w,
+                          ),
+                          Image.asset(
+                            Assets.testTeamLogoPng,
+                            width: 48.w,
+
+                            /// todo 换网络图
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(left: 12.w),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "${Get
+                                      .find<HomeController>()
+                                      .userEntiry
+                                      .teamLoginInfo
+                                      ?.team
+                                      ?.teamName}",
+                                  style: 12.w7(
+                                      color: AppColors.cFF7954,
+                                      overflow: TextOverflow.ellipsis),
+                                ),
+                                SizedBox(
+                                  height: 3.w,
+                                ),
+                                Text(
+                                  "WIN  ${controller.rankInfo.myRank.win ?? 0}",
+                                  style: TextStyle(
+                                      color: AppColors.cB3B3B3,
+                                      fontSize: 10.sp),
+                                ),
+                                Text(
+                                  "SUCCESS  ${controller.rankInfo.myRank
+                                      .success ?? 0}%",
+                                  style: TextStyle(
+                                      color: AppColors.cB3B3B3,
+                                      fontSize: 10.sp),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                      Text(
+                        (controller.rankInfo.myRank.chip ?? 0)
+                            .toDouble()
+                            .toStringAsFixed(0),
+                        style: 18.w7(color: AppColors.cFFFFFF),
+                      )
+                    ],
+                  ),
+                ));
+          })
+        ],
+      );
+    });
   }
 
   Widget _buildItem(int i) {

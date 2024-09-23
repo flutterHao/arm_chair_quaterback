@@ -19,124 +19,131 @@ class RewardPage extends StatefulWidget {
   State<RewardPage> createState() => _RewardPageState();
 }
 
-class _RewardPageState extends State<RewardPage> with AutomaticKeepAliveClientMixin {
+class _RewardPageState extends State<RewardPage>
+    with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Stack(
-            children: [
-              SizedBox(
-                height: 599.w,
-                child: Image.asset(
-                  alignment: Alignment.bottomCenter,
-                  Assets.bgRank_02Jpg,
-                  width: double.infinity,
-                  fit: BoxFit.fitWidth,
+    return GetBuilder<PickRankController>(
+        id: PickRankController.idAwards,
+        builder: (controller) {
+          if (controller.rankAwards.isEmpty) {
+            return const Center(child: EmptyWidget());
+          }
+      return Stack(
+        children: [
+          SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Stack(
+              children: [
+                SizedBox(
+                  height: 599.w,
+                  child: Image.asset(
+                    alignment: Alignment.bottomCenter,
+                    Assets.bgRank_02Jpg,
+                    width: double.infinity,
+                    fit: BoxFit.fitWidth,
+                  ),
                 ),
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                // color: Colors.red,
-                margin: EdgeInsets.only(top: 564.w, left: 16.w, right: 16.w),
-                padding: EdgeInsets.only(
-                  left: 11.w,
-                  top: 12.w,
-                  right: 11.w,
-                  bottom: 90.w,
-                ),
-                decoration: BoxDecoration(
-                    color: AppColors.cF2F2F2,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20.w),
-                        topRight: Radius.circular(20.w))),
-                child: GetBuilder<PickRankController>(
-                    id: PickRankController.idAwards,
-                    builder: (controller) {
-                      if (controller.rankAwards.isEmpty) {
-                        return const EmptyWidget();
-                      }
-                      return Column(
-                        children: [
-                          SizedBox(
-                            height: 77.w,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Flexible(
-                                  flex: 1,
-                                  child: Container(
-                                    height: 77.w,
-                                    width: 156.w,
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 3.w, horizontal: 13.w),
-                                    decoration: const BoxDecoration(
-                                        image: DecorationImage(
-                                            image:
-                                                AssetImage(Assets.uiRankBoxPng),
-                                            fit: BoxFit.fill)),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text("Box",
-                                            style: 24
-                                                .w7(color: AppColors.cFFFFFF)),
-                                        Text(
-                                          "rank 1-10",
-                                          style: TextStyle(
-                                              color: AppColors.cB3B3B3,
-                                              fontSize: 12.sp),
-                                        )
-                                      ],
-                                    ),
-                                  ),
+                Container(
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width,
+                  // color: Colors.red,
+                  margin: EdgeInsets.only(top: 564.w, left: 16.w, right: 16.w),
+                  padding: EdgeInsets.only(
+                    left: 11.w,
+                    top: 12.w,
+                    right: 11.w,
+                    bottom: 90.w,
+                  ),
+                  decoration: BoxDecoration(
+                      color: AppColors.cF2F2F2,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20.w),
+                          topRight: Radius.circular(20.w))),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 77.w,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment
+                              .spaceBetween,
+                          children: [
+                            Flexible(
+                              flex: 1,
+                              child: Container(
+                                height: 77.w,
+                                width: 156.w,
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 3.w, horizontal: 13.w),
+                                decoration: const BoxDecoration(
+                                    image: DecorationImage(
+                                        image:
+                                        AssetImage(Assets.uiRankBoxPng),
+                                        fit: BoxFit.fill)),
+                                child: Column(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.start,
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Box",
+                                        style: 24
+                                            .w7(
+                                            color: AppColors.cFFFFFF)),
+                                    Text(
+                                      "rank 1-10",
+                                      style: TextStyle(
+                                          color: AppColors.cB3B3B3,
+                                          fontSize: 12.sp),
+                                    )
+                                  ],
                                 ),
-                                SizedBox(
-                                  width: 5.w,
-                                ),
-                                Flexible(
-                                  flex: 1,
-                                  child: Container(
-                                    height: 77.w,
-                                    width: 156.w,
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 3.w, horizontal: 13.w),
-                                    decoration: const BoxDecoration(
-                                        image: DecorationImage(
-                                            image: AssetImage(
-                                                Assets.uiRankMoneyPng),
-                                            fit: BoxFit.fitWidth)),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text("Money",
-                                            style: 24
-                                                .w7(color: AppColors.cFFFFFF)),
-                                        Text(
-                                          "rank 1-10",
-                                          style: TextStyle(
-                                              color: AppColors.cB3B3B3,
-                                              fontSize: 12.sp),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 9.w,
-                          ),
-                          ...List.generate(controller.rankAwards.length,
+                            SizedBox(
+                              width: 5.w,
+                            ),
+                            Flexible(
+                              flex: 1,
+                              child: Container(
+                                height: 77.w,
+                                width: 156.w,
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 3.w, horizontal: 13.w),
+                                decoration: const BoxDecoration(
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                            Assets.uiRankMoneyPng),
+                                        fit: BoxFit.fitWidth)),
+                                child: Column(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.start,
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Money",
+                                        style: 24
+                                            .w7(
+                                            color: AppColors.cFFFFFF)),
+                                    Text(
+                                      "rank 1-10",
+                                      style: TextStyle(
+                                          color: AppColors.cB3B3B3,
+                                          fontSize: 12.sp),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 9.w,
+                      ),
+                      ...List.generate(controller.rankAwards.length,
                               (index) {
                             return Container(
                               height: 42.w,
@@ -144,12 +151,15 @@ class _RewardPageState extends State<RewardPage> with AutomaticKeepAliveClientMi
                               margin: EdgeInsets.only(bottom: 9.w),
                               decoration: BoxDecoration(
                                   color: Colors.white,
-                                  borderRadius: BorderRadius.circular(12.w)),
-                              padding: EdgeInsets.only(left: 17.w, right: 28.w),
+                                  borderRadius: BorderRadius.circular(
+                                      12.w)),
+                              padding: EdgeInsets.only(
+                                  left: 17.w, right: 28.w),
                               child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment
+                                    .center,
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 children: [
                                   Flexible(
                                     flex: 1,
@@ -164,11 +174,12 @@ class _RewardPageState extends State<RewardPage> with AutomaticKeepAliveClientMi
                                   Flexible(
                                     flex: 3,
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      mainAxisAlignment: MainAxisAlignment
+                                          .end,
                                       children: [
                                         Row(
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.end,
+                                          CrossAxisAlignment.end,
                                           children: [
                                             Image.asset(
                                               Assets.testTeamLogoPng,
@@ -177,7 +188,8 @@ class _RewardPageState extends State<RewardPage> with AutomaticKeepAliveClientMi
                                             Text(
                                               "x10",
                                               style: TextStyle(
-                                                  color: AppColors.c666666,
+                                                  color: AppColors
+                                                      .c666666,
                                                   fontSize: 10.sp),
                                             )
                                           ],
@@ -187,7 +199,7 @@ class _RewardPageState extends State<RewardPage> with AutomaticKeepAliveClientMi
                                         ),
                                         Row(
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.end,
+                                          CrossAxisAlignment.end,
                                           children: [
                                             Image.asset(
                                               Assets.testTeamLogoPng,
@@ -196,7 +208,8 @@ class _RewardPageState extends State<RewardPage> with AutomaticKeepAliveClientMi
                                             Text(
                                               "x10",
                                               style: TextStyle(
-                                                  color: AppColors.c666666,
+                                                  color: AppColors
+                                                      .c666666,
                                                   fontSize: 10.sp),
                                             )
                                           ],
@@ -208,33 +221,33 @@ class _RewardPageState extends State<RewardPage> with AutomaticKeepAliveClientMi
                               ),
                             );
                           })
-                        ],
-                      );
-                    }),
-              )
-            ],
-          ),
-        ),
-        Positioned(
-            left: 63.w,
-            right: 63.w,
-            bottom: 20.w,
-            child: Center(
-              child: Container(
-                constraints: BoxConstraints(
-                  maxWidth: 300.w,
-                ),
-                child: BtnBackground(
-                    child: Center(
-                  child: Text(
-                    "GET",
-                    style: 16.w7(color: AppColors.cFFFFFF),
+                    ],
                   ),
-                )),
-              ),
-            ))
-      ],
-    );
+                )
+              ],
+            ),
+          ),
+          Positioned(
+              left: 63.w,
+              right: 63.w,
+              bottom: 20.w,
+              child: Center(
+                child: Container(
+                  constraints: BoxConstraints(
+                    maxWidth: 300.w,
+                  ),
+                  child: BtnBackground(
+                      child: Center(
+                        child: Text(
+                          "GET",
+                          style: 16.w7(color: AppColors.cFFFFFF),
+                        ),
+                      )),
+                ),
+              ))
+        ],
+      );
+    });
   }
 
   @override
