@@ -10,7 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 ///created at 2024/9/23/11:22
 
 class EmptyWidget extends StatelessWidget {
-  const EmptyWidget({this.icon=Assets.testTeamLogoPng,this.text='空空如也～',super.key});
+  const EmptyWidget({this.icon=Assets.testTeamLogoPng,this.text='No Data~~',super.key});
 
   final String icon;
   final String text;
@@ -24,7 +24,7 @@ class EmptyWidget extends StatelessWidget {
         children: [
           IconWidget(iconWidth: 70.w, icon: icon),
           5.vGap,
-          Text(text,style: 15.w4(color: AppColors.cB3B3B3.withOpacity(.7)),),
+          Text(text,style: 12.w4(color: AppColors.cB3B3B3.withOpacity(.7)),),
         ],
       ),
     );

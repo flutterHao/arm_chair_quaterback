@@ -2,7 +2,7 @@ import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/TLBuilderWidget.dart';
 import 'package:arm_chair_quaterback/common/widgets/app_bar_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/black_app_bar.dart';
+import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/controller.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

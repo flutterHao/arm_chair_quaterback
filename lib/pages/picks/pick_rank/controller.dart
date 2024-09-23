@@ -1,4 +1,6 @@
+import 'package:arm_chair_quaterback/common/entities/rank_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
+import 'package:arm_chair_quaterback/common/enums/rank_type.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,6 +18,7 @@ class PickRankController extends GetxController
   List<String> tabTitles = ["Rank", "Reward"];
 
   RankListEntity rankInfo = RankListEntity();
+  List<RankAwardEntity> rankAwards = [];
 
   var inTheRankList = false.obs;
   var tabIndex = 0.obs;
@@ -48,9 +51,15 @@ class PickRankController extends GetxController
           -1;
       update([idRanks]);
     });
+    // PicksApi.getGameRankAwardRule().then((result){
+    //   rankAwards = result;
+    //   update([idAwards]);
+    // });
   }
 
   static String get idRanks => "ranks";
+  static String get idAwards => "awards";
+
 
   /// 在 onInit() 之后调用 1 帧。这是进入的理想场所
   @override

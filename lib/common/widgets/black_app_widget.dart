@@ -29,12 +29,11 @@ class BlackAppWidget extends StatelessWidget {
             children: [
               Container(
                 alignment: Alignment.bottomLeft,
-                // margin: EdgeInsets.symmetric(horizontal: 7.w),
                 decoration: BoxDecoration(
                     color: AppColors.c262626,
                     borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(32.w),
-                      bottomRight: Radius.circular(32.w),
+                      bottomLeft: Radius.circular(16.w),
+                      bottomRight: Radius.circular(16.w),
                     )),
                 child: Container(
                   margin: EdgeInsets.only(

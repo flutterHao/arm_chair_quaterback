@@ -3,7 +3,7 @@ import 'package:arm_chair_quaterback/common/style/style.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/TLBuilderWidget.dart';
 import 'package:arm_chair_quaterback/common/widgets/app_bar_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/black_app_bar.dart';
+import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/pages/picks/pick_rank/widgets/rank_page.dart';
 import 'package:arm_chair_quaterback/pages/picks/pick_rank/widgets/reward_page.dart';
 import 'package:flutter/material.dart';
@@ -91,19 +91,6 @@ class PickRankPage extends GetView<PickRankController> {
                                   borderRadius: BorderRadius.circular(17.w)),
                             );
                           });
-                      // return Obx(() {
-                      //   return Container(
-                      //     height: 28.w,
-                      //     width: constraints.maxWidth / 2,
-                      //     margin: EdgeInsets.only(
-                      //         left: controller.scrollValue.value *
-                      //             constraints.maxWidth /
-                      //             2),
-                      //     decoration: BoxDecoration(
-                      //         color: AppColors.cF2F2F2,
-                      //         borderRadius: BorderRadius.circular(17.w)),
-                      //   );
-                      // });
                     }),
                     Row(
                       children: controller.tabTitles.map((e) {

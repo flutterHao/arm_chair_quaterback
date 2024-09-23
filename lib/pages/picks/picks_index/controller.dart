@@ -10,6 +10,7 @@ import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entiry/user_entiry.dart';
+import 'package:arm_chair_quaterback/common/enums/rank_type.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/utils/param_utils.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
@@ -137,7 +138,7 @@ class PicksIndexController extends GetxController {
       PicksApi.getNBAPlayerInfo(),
       PicksApi.getNewsDefine(),
       PicksApi.getNBATeamDefine(),
-      PicksApi.getRedisRankInfo()
+      PicksApi.getRedisRankInfo(type: RankType.newsGuess)
     ]).then((results) {
       print('-------------request--------');
       picksPlayers.clear();
