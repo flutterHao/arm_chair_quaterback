@@ -5,6 +5,7 @@
  * @LastEditTime: 2024-09-21 17:29:10
  */
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/entities/guess_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_param_entity.dart';
@@ -14,6 +15,7 @@ import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_day_data_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/recive_award_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/rank_type.dart';
 import 'package:arm_chair_quaterback/common/net/apis.dart';
 import 'package:arm_chair_quaterback/common/net/http.dart';
@@ -30,9 +32,12 @@ class PicksApi {
     return guessInfosEntitys;
   }
 
-  static Future<GuessInfosEntity> getGuessInfos() async {
-    var json = await httpUtil.post(Api.getGuessInfos);
-    return GuessInfosEntity.fromJson(json);
+  static Future<List<List<ReciveAwardEntity>>> getGuessInfos() async {
+    List json = await httpUtil.post(Api.getGuessInfos);
+    return json
+        .map((e) =>
+            (e as List).map((f) => ReciveAwardEntity.fromJson(f)).toList())
+        .toList();
   }
 
   static Future<NbaPlayerInfosEntity> getNBAPlayerInfo() async {
@@ -81,5 +86,15 @@ class PicksApi {
   static Future<List<RankAwardEntity>> getGameRankAwardRule() async {
     List json = await httpUtil.get(Api.cGameRankAwardRule);
     return json.map((e) => RankAwardEntity.fromJson(e)).toList();
+  }
+
+  static Future<ReciveAwardEntity> getGuessAward(int scId) async {
+    var json = await httpUtil.post(Api.getGuessAward, data: {"guessId": scId});
+    return ReciveAwardEntity.fromJson(json);
+  }
+
+  static Future<List<ReciveAwardEntity>> getGuessAllAward() async {
+    List json = await httpUtil.post(Api.getGuessAllAward);
+    return json.map((e) => ReciveAwardEntity.fromJson(e)).toList();
   }
 }

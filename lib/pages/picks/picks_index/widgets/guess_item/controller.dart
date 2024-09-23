@@ -41,27 +41,6 @@ class GuessItemController extends GetxController
         ),
       );
 
-  Widget _generateBarChart() {
-    List<BarChartGroupData> barGroups = [
-      BarChartGroupData(
-        x: 0,
-        barRods: [
-          BarChartRodData(
-              toY: 10,
-              width: 6.w,
-              borderRadius:
-                  const BorderRadius.vertical(top: Radius.circular(2)),
-              color: AppColors.cFF7954)
-        ],
-      ),
-    ];
-
-    return BarChart(BarChartData(
-        barGroups: barGroups,
-        titlesData: titlesData,
-        borderData: FlBorderData(show: false)));
-  }
-
   @override
   void onInit() {
     super.onInit();
@@ -70,18 +49,28 @@ class GuessItemController extends GetxController
       List<PlayerDayDataEntity> fiveDayData = result;
       for (var i = 0; i < player.betData.length; i++) {
         String key = player.betData[i];
-        double l5Avg = player.guessInfo.l5Avg.toJson()[ParamUtils.getProKey(key.toLowerCase())]??0.0;
-      var barDatas = fiveDayData.map((e) {
-          var v = e.toJson()[ParamUtils.getProKey(key.toLowerCase()).toLowerCase()]??0.0;
+        double l5Avg = player.guessInfo.l5Avg
+                .toJson()[ParamUtils.getProKey(key.toLowerCase())] ??
+            0.0;
+        var barDatas = fiveDayData.map((e) {
+          double v = e.toJson()[
+                  ParamUtils.getProKey(key.toLowerCase()).toLowerCase()] ??
+              0.0;
           var chartGroupData = BarChartGroupData(
             x: 0,
             barRods: [
               BarChartRodData(
-                  toY: v,
+                  toY: v == 0
+                      ? 1
+                      : v < 2
+                          ? 2
+                          : v,
                   width: 6.w,
                   borderRadius:
                       const BorderRadius.vertical(top: Radius.circular(2)),
-                  color: v>l5Avg?AppColors.cFF7954:AppColors.c000000.withOpacity(.5))
+                  color: v > l5Avg
+                      ? AppColors.cFF7954
+                      : AppColors.c000000.withOpacity(.5))
             ],
           );
           return chartGroupData;

@@ -92,10 +92,7 @@ class _PicksIndexPageState extends State<PicksIndexPage>
       slivers: [
         SliverPadding(
             padding: EdgeInsets.only(
-                top: 40.w + MediaQuery
-                    .of(context)
-                    .padding
-                    .top + 6.w + 11.w)),
+                top: 40.w + MediaQuery.of(context).padding.top + 6.w + 11.w)),
         //banner
         SliverToBoxAdapter(
           child: AspectRatio(
@@ -141,8 +138,8 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                                   index == 0
                                       ? Assets.uiBannerAwardPng
                                       : index == 1
-                                      ? Assets.uiBannerHistoryPng
-                                      : Assets.uiBannerRankPng,
+                                          ? Assets.uiBannerHistoryPng
+                                          : Assets.uiBannerRankPng,
                                   height: 137.w,
                                   fit: BoxFit.fitWidth,
                                 )),
@@ -153,14 +150,14 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                               right: 0,
                               child: Center(
                                   child: Text(
-                                    index == 0
-                                        ? "RECEIVE AWARD"
-                                        : index == 1
+                                index == 0
+                                    ? "RECEIVE AWARD"
+                                    : index == 1
                                         ? "HISTORICAL"
                                         : "BOUNS POOL",
-                                    style:
+                                style:
                                     19.w7(color: AppColors.cE6E6E6, height: 1),
-                                  )))
+                              )))
                         ],
                       ),
                     );
@@ -194,9 +191,12 @@ class _PicksIndexPageState extends State<PicksIndexPage>
         GetBuilder<PicksIndexController>(
             id: PicksIndexController.idGuessList,
             builder: (context) {
+              if (picksIndexController.picksPlayers.isEmpty) {
+                return const SliverToBoxAdapter(child: EmptyWidget());
+              }
               return SliverList(
                 delegate: SliverChildBuilderDelegate(
-                      (_, index) {
+                  (_, index) {
                     var player = picksIndexController.picksPlayers[index];
                     return GuessItem(index, player);
                   },
@@ -271,48 +271,47 @@ class _PicksIndexPageState extends State<PicksIndexPage>
               return SliverFixedExtentList(
                   delegate: SliverChildBuilderDelegate(
                       childCount: picksIndexController.rankInfo.ranks.length,
-                          (_, index) {
-                        RankInfoEntity item =
+                      (_, index) {
+                    RankInfoEntity item =
                         picksIndexController.rankInfo.ranks[index];
-                        int selfIndex = picksIndexController.rankInfo.ranks
-                            .indexWhere((e) =>
-                        e.teamId ==
+                    int selfIndex = picksIndexController.rankInfo.ranks
+                        .indexWhere((e) =>
+                            e.teamId ==
                             picksIndexController.rankInfo.myRank.teamId);
-                        var len = picksIndexController.rankInfo.ranks.length;
-                        return InkWell(
-                          onTap: () =>
-                              Get.toNamed(RouteNames.picksPersonalCenter,
-                                  id: GlobalNestedKey.PICKS),
-                          child: Container(
-                              alignment: Alignment.centerLeft,
-                              decoration: BoxDecoration(
-                                  color: index % 2 != 0
-                                      ? Colors.white
-                                      : AppColors.cEDEDED,
-                                  borderRadius: index == 9
-                                      ? BorderRadius.only(
+                    var len = picksIndexController.rankInfo.ranks.length;
+                    return InkWell(
+                      onTap: () => Get.toNamed(RouteNames.picksPersonalCenter,
+                          id: GlobalNestedKey.PICKS),
+                      child: Container(
+                          alignment: Alignment.centerLeft,
+                          decoration: BoxDecoration(
+                              color: index % 2 != 0
+                                  ? Colors.white
+                                  : AppColors.cEDEDED,
+                              borderRadius: index == 9
+                                  ? BorderRadius.only(
                                       bottomRight: Radius.circular(16.w),
                                       bottomLeft: Radius.circular(16.w))
-                                      : null),
-                              padding: EdgeInsets.only(left: 24.w, right: 26.w),
-                              margin: EdgeInsets.symmetric(horizontal: 16.w),
-                              child: GussPlayerItem(
-                                index, item, selfIndex,
-                                //滑动到榜单的第3个列表项时显示个人榜单信息
-                                key: selfIndex != -1
-                                    ? null
-                                    : len > 5
+                                  : null),
+                          padding: EdgeInsets.only(left: 24.w, right: 26.w),
+                          margin: EdgeInsets.symmetric(horizontal: 16.w),
+                          child: GussPlayerItem(
+                            index, item, selfIndex,
+                            //滑动到榜单的第3个列表项时显示个人榜单信息
+                            key: selfIndex != -1
+                                ? null
+                                : len > 5
                                     ? index == 5
-                                    ? picksIndexController.targetKey
-                                    : null
+                                        ? picksIndexController.targetKey
+                                        : null
                                     : index == len - 1
-                                    ? picksIndexController.targetKey
-                                    : null,
-                                // ? picksIndexController.targetKey
-                                // : null,
-                              )),
-                        );
-                      }),
+                                        ? picksIndexController.targetKey
+                                        : null,
+                            // ? picksIndexController.targetKey
+                            // : null,
+                          )),
+                    );
+                  }),
                   itemExtent: 70.w);
             }),
         SliverToBoxAdapter(
@@ -345,9 +344,8 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                           : -68.w,
                       duration: const Duration(milliseconds: 300),
                       child: InkWell(
-                        onTap: () =>
-                            Get.toNamed(RouteNames.picksPersonalCenter,
-                                id: GlobalNestedKey.PICKS),
+                        onTap: () => Get.toNamed(RouteNames.picksPersonalCenter,
+                            id: GlobalNestedKey.PICKS),
                         child: Container(
                           padding: EdgeInsets.only(left: 43.w, right: 33.w),
                           decoration: BoxDecoration(
@@ -360,9 +358,7 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                               Row(
                                 children: [
                                   Text(
-                                    "${picksIndexController.rankInfo.myRank
-                                        .rank == 0 ? '--' : picksIndexController
-                                        .rankInfo.myRank.rank}",
+                                    "${picksIndexController.rankInfo.myRank.rank == 0 ? '--' : picksIndexController.rankInfo.myRank.rank}",
                                     style: 18.w7(color: AppColors.cFF7954),
                                   ),
                                   SizedBox(
@@ -378,17 +374,12 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                                     margin: EdgeInsets.only(left: 12.w),
                                     child: Column(
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment
-                                          .center,
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Text(
-                                          "${Get
-                                              .find<HomeController>()
-                                              .userEntiry
-                                              .teamLoginInfo
-                                              ?.team
-                                              ?.teamName}",
+                                          "${Get.find<HomeController>().userEntiry.teamLoginInfo?.team?.teamName}",
                                           style: 12.w7(
                                               color: AppColors.cFF7954,
                                               overflow: TextOverflow.ellipsis),
@@ -397,15 +388,13 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                                           height: 3.w,
                                         ),
                                         Text(
-                                          "WIN  ${picksIndexController.rankInfo
-                                              .myRank.win ?? 0}",
+                                          "WIN  ${picksIndexController.rankInfo.myRank.win ?? 0}",
                                           style: TextStyle(
                                               color: AppColors.cB3B3B3,
                                               fontSize: 10.sp),
                                         ),
                                         Text(
-                                          "SUCCESS  ${picksIndexController
-                                              .rankInfo.myRank.success ?? 0}%",
+                                          "SUCCESS  ${picksIndexController.rankInfo.myRank.success ?? 0}%",
                                           style: TextStyle(
                                               color: AppColors.cB3B3B3,
                                               fontSize: 10.sp),
@@ -433,9 +422,7 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                 return const SizedBox.shrink();
               }
               print(
-                  'picksIndexController-----:${picksIndexController.choiceData
-                      .length} , ${picksIndexController.costCount
-                      .value} , ${picksIndexController.betCount.value}');
+                  'picksIndexController-----:${picksIndexController.choiceData.length} , ${picksIndexController.costCount.value} , ${picksIndexController.betCount.value}');
               return Positioned(
                   left: 63.w,
                   right: 63.w,

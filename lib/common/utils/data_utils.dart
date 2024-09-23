@@ -712,6 +712,58 @@ class MyDateUtils {
               year, month, day, hour, minute, second, millisecond, microsecond)
           : DateTime(
               year, month, day, hour, minute, second, millisecond, microsecond);
+
+  /// Aug 1,2024
+  static String getEnMMDDYYYY(DateTime dateTime,{ bool short = false}){
+    return "${getMonthEnName(dateTime,short: short)} ${dateTime.day},${dateTime.year}";
+  }
+
+  /// 获取英文月份
+  static String getMonthEnName(DateTime dateTime,
+      { bool short = false}) {
+    String month = "";
+    switch (dateTime.weekday) {
+      case 1:
+        month = 'January';
+        break;
+      case 2:
+        month = 'February';
+        break;
+      case 3:
+        month = 'March';
+        break;
+      case 4:
+        month = 'April';
+        break;
+      case 5:
+        month = 'May';
+        break;
+      case 6:
+        month = 'June';
+        break;
+      case 7:
+        month = 'July';
+        break;
+      case 8:
+        month = 'August';
+        break;
+      case 9:
+        month = 'September';
+        break;
+      case 10:
+        month = 'October';
+        break;
+      case 11:
+        month = 'November';
+        break;
+      case 12:
+        month = 'December';
+        break;
+      default:
+        break;
+    }
+    return month.substring(0, short ? 3 : month.length);
+  }
 }
 
 /// month->days.

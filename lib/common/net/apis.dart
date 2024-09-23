@@ -43,6 +43,9 @@ class Api {
   static const String guess = "$API_BASE_PATH/NBANews/guess";
   static const String getRedisRankInfo =
       "$API_BASE_PATH/NBANews/getRedisRankInfo";
+  static const String getGuessAward = "$API_BASE_PATH/NBANews/getGuessAward";
+  static const String getGuessAllAward = "$API_BASE_PATH/NBANews/getGuessAllAward";
+
 
   static const String getAward = "$API_BASE_PATH/NBANews/getTodayAward";
   //NBAData

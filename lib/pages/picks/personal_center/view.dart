@@ -1,5 +1,6 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
+import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/TLBuilderWidget.dart';
@@ -7,8 +8,8 @@ import 'package:arm_chair_quaterback/common/widgets/app_bar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/empty_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
-import 'package:arm_chair_quaterback/pages/picks/personal_center/widgets/recive_award_picks_page.dart';
-import 'package:arm_chair_quaterback/pages/picks/recive_rward/widgets/recive_award_item.dart';
+import 'package:arm_chair_quaterback/pages/picks/personal_center/widgets/recive_award_pick_page/recive_award_picks_page.dart';
+import 'package:arm_chair_quaterback/pages/picks/recive_rward/widgets/recive_award_item/recive_award_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -111,7 +112,10 @@ class PersonalCenterPage extends GetView<PersonalCenterController> {
             Positioned(
                 left: 13.w,
                 right: 13.w,
-                top: MediaQuery.of(context).padding.top +
+                top: MediaQuery
+                    .of(context)
+                    .padding
+                    .top +
                     63.w +
                     88.w +
                     6.w +
@@ -141,37 +145,39 @@ class PersonalCenterPage extends GetView<PersonalCenterController> {
                                   decoration: BoxDecoration(
                                       color: AppColors.c262626,
                                       borderRadius:
-                                          BorderRadius.circular(26.w)),
+                                      BorderRadius.circular(26.w)),
                                 ),
                               ),
                               Row(
                                 children: List.generate(
                                     controller.titles.length,
-                                    (index) => Expanded(
+                                        (index) =>
+                                        Expanded(
                                           child: InkWell(
-                                              onTap: () => controller
-                                                  .tabController
-                                                  .animateTo(index),
+                                              onTap: () =>
+                                                  controller
+                                                      .tabController
+                                                      .animateTo(index),
                                               child: Center(
                                                   child: Text(
                                                       controller.titles[index],
                                                       style: 13.w4(
                                                         color: current == index
                                                             ? Color.lerp(
-                                                                AppColors
-                                                                    .cF2F2F2,
-                                                                AppColors
-                                                                    .c666666,
-                                                                progress)!
+                                                            AppColors
+                                                                .cF2F2F2,
+                                                            AppColors
+                                                                .c666666,
+                                                            progress)!
                                                             : next == index
-                                                                ? Color.lerp(
-                                                                    AppColors
-                                                                        .c666666,
-                                                                    AppColors
-                                                                        .cF2F2F2,
-                                                                    progress)!
-                                                                : AppColors
-                                                                    .c666666,
+                                                            ? Color.lerp(
+                                                            AppColors
+                                                                .c666666,
+                                                            AppColors
+                                                                .cF2F2F2,
+                                                            progress)!
+                                                            : AppColors
+                                                            .c666666,
                                                       )))),
                                         )),
                               )
@@ -182,7 +188,7 @@ class PersonalCenterPage extends GetView<PersonalCenterController> {
                 ))
           ],
           totalScreenWidget:
-              TabBarView(controller: controller.tabController, children: const [
+          TabBarView(controller: controller.tabController, children: const [
             Center(child: EmptyWidget()),
             ReciveAwardPicksPage(),
             Center(child: EmptyWidget()),

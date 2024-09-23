@@ -78,7 +78,8 @@ class PicksIndexController extends GetxController {
       guessParamEntity.gameId = guessInfo.gameId;
       guessParamEntity.playerId = guessInfo.playerId;
       guessParamEntity.gameStartTime = guessInfo.gameStartTime;
-      guessParamEntity.type = guessInfo.type;
+      guessParamEntity.type =
+          choiceData.keys.length > 1 ? 2 : 1; //type=1就是单选，type=2就是多选
       GuessParamGuessData guessData = GuessParamGuessData();
       var propertyName = picksPlayer.betData[int.parse(betDataIndex)];
       guessData.guessAttr = propertyName.toLowerCase();
@@ -89,7 +90,6 @@ class PicksIndexController extends GetxController {
       params.add(guessParamEntity);
     }
     PicksApi.guess(params).then((result) {
-      print('abce-----');
       if (inDialog) Get.back(id: GlobalNestedKey.PICKS);
       clearChoiceData();
       _initData();
