@@ -10,5 +10,4 @@ class ParamUtils {
             ? "threePa"
             : key;
   }
-
 }

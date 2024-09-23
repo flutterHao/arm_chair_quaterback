@@ -23,11 +23,10 @@ GuessParamEntity $GuessParamEntityFromJson(Map<String, dynamic> json) {
   if (type != null) {
     guessParamEntity.type = type;
   }
-  final List<GuessParamGuessData>? guessData = (json['guessData'] as List<
-      dynamic>?)
-      ?.map(
-          (e) =>
-      jsonConvert.convert<GuessParamGuessData>(e) as GuessParamGuessData)
+  final List<GuessParamGuessData>? guessData = (json['guessData']
+          as List<dynamic>?)
+      ?.map((e) =>
+          jsonConvert.convert<GuessParamGuessData>(e) as GuessParamGuessData)
       .toList();
   if (guessData != null) {
     guessParamEntity.guessData = guessData;
@@ -75,8 +74,8 @@ GuessParamGuessData $GuessParamGuessDataFromJson(Map<String, dynamic> json) {
   if (guessChoice != null) {
     guessParamGuessData.guessChoice = guessChoice;
   }
-  final double? guessReferenceValue = jsonConvert.convert<double>(
-      json['guessReferenceValue']);
+  final double? guessReferenceValue =
+      jsonConvert.convert<double>(json['guessReferenceValue']);
   if (guessReferenceValue != null) {
     guessParamGuessData.guessReferenceValue = guessReferenceValue;
   }

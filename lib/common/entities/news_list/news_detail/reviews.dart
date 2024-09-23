@@ -34,7 +34,7 @@ class Reviews {
   });
 
   factory Reviews.fromJson(Map<String, dynamic> json) {
-    bool v=(json['isLike']==1 ||json['isLike']==true)? true:false;
+    bool v = (json['isLike'] == 1 || json['isLike'] == true) ? true : false;
     RxBool isLike = RxBool(v);
     RxInt likes = RxInt(json['likes'] ?? 0);
 

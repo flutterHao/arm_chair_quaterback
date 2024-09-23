@@ -28,13 +28,12 @@ class PicksIndexController extends GetxController {
 
   List<PicksPlayer> picksPlayers = [];
 
-  RankListEntity rankInfo  = RankListEntity();
+  RankListEntity rankInfo = RankListEntity();
 
   Map<int, double> choiceData = {};
 
   var betCount = 0.0.obs; // 总赔率
   var costCount = 0.0.obs; // 总花费
-
 
   /// 选择了more/less
   choiceOne(int index, double choice) {
@@ -148,6 +147,7 @@ class PicksIndexController extends GetxController {
           results[1] as NbaPlayerInfosEntity;
       NewsDefineEntity newsDefineEntity = results[2] as NewsDefineEntity;
       List<NbaTeamEntity> nbaTeams = results[3] as List<NbaTeamEntity>;
+
       ///rank 排行榜
       rankInfo = results[4] as RankListEntity;
       for (GuessInfosEntity e in guessInfosEntity) {
@@ -171,17 +171,18 @@ class PicksIndexController extends GetxController {
         picksPlayer.betMutOdds = newsDefineEntity.betMutOdds;
         picksPlayer.betCost = newsDefineEntity.betCost;
         picksPlayer.betOdds = newsDefineEntity.betOdds;
-        picksPlayer.selfTeamInfo = nbaTeams.firstWhere(
-            (nba) => nba.id.toString() == picksPlayer.baseInfoList.teamId.toString());
-        picksPlayer.awayTeamInfo =
-            nbaTeams.firstWhere((nba) => nba.id.toString() == e.awayTeamId.toString());
+        picksPlayer.selfTeamInfo = nbaTeams.firstWhere((nba) =>
+            nba.id.toString() == picksPlayer.baseInfoList.teamId.toString());
+        picksPlayer.awayTeamInfo = nbaTeams
+            .firstWhere((nba) => nba.id.toString() == e.awayTeamId.toString());
         picksPlayer.guessInfo = e;
         picksPlayers.add(picksPlayer);
       }
-      update([idGuessList,idRankLists,idRankLists]);
+      update([idGuessList, idRankLists, idRankLists]);
       UserEntiry userEntiry = Get.find<HomeController>().userEntiry;
-      var indexWhere = rankInfo.ranks.indexWhere((e)=> e.teamId == userEntiry.teamLoginInfo?.team?.teamId);
-      if(indexWhere == -1){
+      var indexWhere = rankInfo.ranks.indexWhere(
+          (e) => e.teamId == userEntiry.teamLoginInfo?.team?.teamId);
+      if (indexWhere == -1) {
         scrollController.removeListener(_scrollListener);
         scrollController.addListener(_scrollListener);
       }

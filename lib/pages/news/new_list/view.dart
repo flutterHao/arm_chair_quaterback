@@ -17,6 +17,7 @@ import 'package:arm_chair_quaterback/pages/news/rank/team_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import './widgets/widgets.dart';
 import 'index.dart';
 
@@ -73,9 +74,12 @@ class NewsListPage extends GetView<NewListController> {
   const NewsListPage({super.key});
 
   // 主视图
-  Widget _buildView() {
-    return Container(
-      alignment: Alignment.center,
+  Widget _buildView(BuildContext context) {
+    return SmartRefresher(
+      header: const WaterDropHeader(), // 使用水滴风格的下拉刷新
+      footer: const ClassicFooter(), // 使用经典风格的上拉加载更多
+      controller: controller.refreshCtrl,
+      onRefresh: () => controller.refreshData(),
       child: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [
@@ -85,7 +89,7 @@ class NewsListPage extends GetView<NewListController> {
               // margin: EdgeInsets.only(top: 16.w, right: 10.w, left: 10.w),
               child: GetBuilder<NewListController>(
                   id: "newsBanner",
-                  builder: (context) {
+                  builder: (_) {
                     return Stack(
                       children: [
                         Container(
@@ -111,10 +115,9 @@ class NewsListPage extends GetView<NewListController> {
                               Get.toNamed(RouteNames.newsDetail,
                                   arguments:
                                       controller.state.banners[index].id!,
-                                  // parameters: {
-                                  //   "id": controller.state.banners[index].id!
-                                  // },
                                   id: GlobalNestedKey.NEWS);
+                              // Navigator.of(context).push(
+                              //     createCustomRoute(this, NewsDetailPage(123)));
                             },
                           ),
                         ),
@@ -208,7 +211,7 @@ class NewsListPage extends GetView<NewListController> {
       builder: (_) {
         return BlackAppWidget(
           const UserInfoBar(),
-          bodyWidget: Expanded(child: _buildView()),
+          bodyWidget: Expanded(child: _buildView(context)),
         );
       },
     );

@@ -177,6 +177,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:arm_chair_quaterback/common/net/base/error_entity.dart';
 import 'package:arm_chair_quaterback/common/net/base/result_entity.dart';
+import 'package:arm_chair_quaterback/common/net/http.dart';
 import 'package:arm_chair_quaterback/common/store/user.dart';
 import 'package:arm_chair_quaterback/common/utils/loading.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
@@ -279,9 +280,11 @@ class NetInterceptor extends InterceptorsWrapper {
 
     // 刷新 token 成功后，重新发送请求
     try {
+      Log.d("开始重新发送请求${requestOptions.uri}");
       final newOptions = requestOptions;
       newOptions.headers['Authorization'] = UserStore.to.token; // 更新 token
-      final response = await Dio().fetch(newOptions);
+      // final response = await Dio().fetch(newOptions);
+      final response = await HttpUtil().dio.fetch(newOptions);
       handler.resolve(response); // 返回新请求的结果
     } catch (e) {
       handler.reject(e as DioException);
@@ -295,8 +298,11 @@ class NetInterceptor extends InterceptorsWrapper {
 
   /// 读取本地配置 Authorization
   Map<String, dynamic>? getAuthorizationHeader() {
+    Log.d("token是否存在 ${UserStore.to.hasToken}");
     var headers = <String, dynamic>{};
-    if (getx.Get.isRegistered<UserStore>() && UserStore.to.hasToken == true) {
+    // if (getx.Get.isRegistered<UserStore>() && UserStore.to.hasToken == true) {
+    if (UserStore.to.hasToken == true) {
+      Log.d("添加请求头token");
       headers['Authorization'] = UserStore.to.token;
     }
     return headers;
@@ -305,9 +311,11 @@ class NetInterceptor extends InterceptorsWrapper {
   /// 错误处理
   void handlerError(ErrorEntity eInfo) {
     Log.e('error.code -> ${eInfo.code}, error.message -> ${eInfo.message}');
-    if (eInfo.code != 401) {
-      EasyLoading.showError(eInfo.message);
-    }
+
+    ///TODO
+    // if (eInfo.code != 401) {
+    //   EasyLoading.showError(eInfo.message);
+    // }
   }
 
   /// 错误信息

@@ -9,6 +9,7 @@ import 'package:flutter/foundation.dart';
 class Address {
   ///内网测试地址
   static const String privateDevUrl = 'http://192.168.12.46:9001';
+
   ///外网测试地址
   static const String publicDevUrl = 'http://172.18.3.137:7007';
 

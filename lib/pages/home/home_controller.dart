@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-12 16:53:47
- * @LastEditTime: 2024-09-21 20:17:36
+ * @LastEditTime: 2024-09-23 11:58:55
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
@@ -13,6 +13,7 @@ import 'package:arm_chair_quaterback/common/net/apis/user.dart';
 import 'package:arm_chair_quaterback/common/services/services.dart';
 import 'package:arm_chair_quaterback/common/store/user.dart';
 import 'package:arm_chair_quaterback/common/utils/device_utils.dart';
+import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/index.dart';
 import 'package:common_utils/common_utils.dart';
@@ -84,8 +85,7 @@ class HomeController extends GetxController
   @override
   void onReady() {
     super.onReady();
-    login();
-
+    // login();
   }
 
   @override
@@ -101,7 +101,8 @@ class HomeController extends GetxController
   }
 
   Future login() async {
-   await UserStore().setToken("");
+    await UserStore.to.setToken("");
+    // return;
     String accountName = await getUid();
     int serviceId = 0;
     String userIp = "192.168.12.46";
@@ -112,7 +113,8 @@ class HomeController extends GetxController
       userIp: userIp,
       id: id,
     );
-    await UserStore().setToken(v);
+    await UserStore.to.setToken(v);
+    Log.d("鉴权获取到token=$v，开始游客登陆");
     userEntiry = await UserApi.visitorLogin();
   }
 

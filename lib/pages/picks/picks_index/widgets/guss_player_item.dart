@@ -10,7 +10,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 ///created at 2024/9/10/15:13
 
 class GussPlayerItem extends StatelessWidget {
-  const GussPlayerItem(this.index,this.rankInfoEntity,this.selfIndex ,{super.key});
+  const GussPlayerItem(this.index, this.rankInfoEntity, this.selfIndex,
+      {super.key});
 
   final RankInfoEntity rankInfoEntity;
   final int index;
@@ -63,7 +64,9 @@ class GussPlayerItem extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: AppColors.cB3B3B3,
                       borderRadius: BorderRadius.circular(20.w)),
-                  child: Image.asset(Assets.testTeamLogoPng)),///todo 换网络图
+                  child: Image.asset(Assets.testTeamLogoPng)),
+
+              ///todo 换网络图
             ],
           ),
         ),
@@ -72,7 +75,11 @@ class GussPlayerItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(rankInfoEntity.teamName, style: 12.w7(color: selfIndex == index? AppColors.cFF7954:AppColors.c262626)),
+              Text(rankInfoEntity.teamName,
+                  style: 12.w7(
+                      color: selfIndex == index
+                          ? AppColors.cFF7954
+                          : AppColors.c262626)),
               SizedBox(
                 height: 3.w,
               ),

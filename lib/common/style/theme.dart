@@ -1,3 +1,9 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-09-18 11:23:47
+ * @LastEditTime: 2024-09-23 09:29:37
+ */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +22,9 @@ class AppTheme {
     primaryColor: AppColors.cF1F1F1,
     colorScheme: ColorScheme.fromSwatch().copyWith(
       secondary: AppColors.cF1F1F1,
+    ),
+    progressIndicatorTheme: const ProgressIndicatorThemeData(
+      color: Colors.grey, // 设置全局的 CircularProgressIndicator 颜色
     ),
     textTheme: TextTheme(),
     appBarTheme: const AppBarTheme(

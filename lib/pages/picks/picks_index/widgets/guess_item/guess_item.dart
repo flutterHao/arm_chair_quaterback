@@ -40,7 +40,8 @@ class _GuessItemState extends State<GuessItem>
 
   @override
   Widget build(BuildContext context) {
-    guessItemController = Get.put(GuessItemController(widget.pickPlayer),tag: widget.pickPlayer.guessInfo.playerId.toString());
+    guessItemController = Get.put(GuessItemController(widget.pickPlayer),
+        tag: widget.pickPlayer.guessInfo.playerId.toString());
     if (guessItemController.player.guessInfo.guessData.isNotEmpty) {
       /// 如果已选择则直接滚动到对应tab
       var index = guessItemController.player.betData.indexWhere((e) =>
@@ -541,9 +542,19 @@ class _GuessItemState extends State<GuessItem>
                                                           .withOpacity(.2),
                                                     ),
                                                     BarChart(BarChartData(
-                                                        barGroups: guessItemController.barGroups[guessItemController.player.betData[index]],
-                                                        titlesData: guessItemController.titlesData,
-                                                        borderData: FlBorderData(show: false)))
+                                                        barGroups:
+                                                            guessItemController
+                                                                    .barGroups[
+                                                                guessItemController
+                                                                        .player
+                                                                        .betData[
+                                                                    index]],
+                                                        titlesData:
+                                                            guessItemController
+                                                                .titlesData,
+                                                        borderData:
+                                                            FlBorderData(
+                                                                show: false)))
                                                   ],
                                                 ),
                                               ),

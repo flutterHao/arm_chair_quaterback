@@ -5,122 +5,126 @@ export 'package:arm_chair_quaterback/generated/json/guess_infos_entity.g.dart';
 
 @JsonSerializable()
 class GuessInfosEntity {
-	late int gameId;
-	@JSONField(name: "L5Avg")
-	late GuessInfosL5Avg l5Avg;
-	late int gameStartTime;
-	late double teamId;
-	late List<GuessInfosGuessData> guessData;
-	late GuessInfosGuessReferenceValue guessReferenceValue;
-	late double id;
-	late int type;
-	late int awayTeamId;
-	late double scId;
-	late int playerId;
+  late int gameId;
+  @JSONField(name: "L5Avg")
+  late GuessInfosL5Avg l5Avg;
+  late int gameStartTime;
+  late double teamId;
+  late List<GuessInfosGuessData> guessData;
+  late GuessInfosGuessReferenceValue guessReferenceValue;
+  late double id;
+  late int type;
+  late int awayTeamId;
+  late double scId;
+  late int playerId;
 
-	GuessInfosEntity();
+  GuessInfosEntity();
 
-	factory GuessInfosEntity.fromJson(Map<String, dynamic> json) => $GuessInfosEntityFromJson(json);
+  factory GuessInfosEntity.fromJson(Map<String, dynamic> json) =>
+      $GuessInfosEntityFromJson(json);
 
-	Map<String, dynamic> toJson() => $GuessInfosEntityToJson(this);
+  Map<String, dynamic> toJson() => $GuessInfosEntityToJson(this);
 
-	@override
-	String toString() {
-		return jsonEncode(this);
-	}
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
 }
 
 @JsonSerializable()
 class GuessInfosL5Avg {
-	late double blk;
-	late double fga;
-	late double ast;
-	late double dreb;
-	late double starterCount;
-	late double stl;
-	late double updateTime;
-	late double fgm;
-	late double pts;
-	late double threePa;
-	late double playCount;
-	late double fta;
-	late double min;
-	late double oreb;
-	late double createTime;
-	late double seasonId;
-	late double pf;
-	late double threePm;
-	late double to;
-	late double ftm;
-	late double playerId;
+  late double blk;
+  late double fga;
+  late double ast;
+  late double dreb;
+  late double starterCount;
+  late double stl;
+  late double updateTime;
+  late double fgm;
+  late double pts;
+  late double threePa;
+  late double playCount;
+  late double fta;
+  late double min;
+  late double oreb;
+  late double createTime;
+  late double seasonId;
+  late double pf;
+  late double threePm;
+  late double to;
+  late double ftm;
+  late double playerId;
 
-	GuessInfosL5Avg();
+  GuessInfosL5Avg();
 
-	factory GuessInfosL5Avg.fromJson(Map<String, dynamic> json) => $GuessInfosL5AvgFromJson(json);
+  factory GuessInfosL5Avg.fromJson(Map<String, dynamic> json) =>
+      $GuessInfosL5AvgFromJson(json);
 
-	Map<String, dynamic> toJson() => $GuessInfosL5AvgToJson(this);
+  Map<String, dynamic> toJson() => $GuessInfosL5AvgToJson(this);
 
-	@override
-	String toString() {
-		return jsonEncode(this);
-	}
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
 }
 
 @JsonSerializable()
 class GuessInfosGuessData {
-	late String guessAttr;
-	late double guessChoice;
-	late double guessTime;
-	late List<dynamic> awards;
-	late bool success;
-	late double guessReferenceValue;
-	late double winPro;
-	late double status;
+  late String guessAttr;
+  late double guessChoice;
+  late double guessTime;
+  late List<dynamic> awards;
+  late bool success;
+  late double guessReferenceValue;
+  late double winPro;
+  late double status;
 
-	GuessInfosGuessData();
+  GuessInfosGuessData();
 
-	factory GuessInfosGuessData.fromJson(Map<String, dynamic> json) => $GuessInfosGuessDataFromJson(json);
+  factory GuessInfosGuessData.fromJson(Map<String, dynamic> json) =>
+      $GuessInfosGuessDataFromJson(json);
 
-	Map<String, dynamic> toJson() => $GuessInfosGuessDataToJson(this);
+  Map<String, dynamic> toJson() => $GuessInfosGuessDataToJson(this);
 
-	@override
-	String toString() {
-		return jsonEncode(this);
-	}
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
 }
 
 @JsonSerializable()
 class GuessInfosGuessReferenceValue {
-	late double blk;
-	late double fga;
-	late double ast;
-	late double dreb;
-	late double starterCount;
-	late double stl;
-	late double updateTime;
-	late double fgm;
-	late double pts;
-	late double threePa;
-	late double playCount;
-	late double fta;
-	late double min;
-	late double oreb;
-	late double createTime;
-	late double seasonId;
-	late double pf;
-	late double threePm;
-	late double to;
-	late double ftm;
-	late double playerId;
+  late double blk;
+  late double fga;
+  late double ast;
+  late double dreb;
+  late double starterCount;
+  late double stl;
+  late double updateTime;
+  late double fgm;
+  late double pts;
+  late double threePa;
+  late double playCount;
+  late double fta;
+  late double min;
+  late double oreb;
+  late double createTime;
+  late double seasonId;
+  late double pf;
+  late double threePm;
+  late double to;
+  late double ftm;
+  late double playerId;
 
-	GuessInfosGuessReferenceValue();
+  GuessInfosGuessReferenceValue();
 
-	factory GuessInfosGuessReferenceValue.fromJson(Map<String, dynamic> json) => $GuessInfosGuessReferenceValueFromJson(json);
+  factory GuessInfosGuessReferenceValue.fromJson(Map<String, dynamic> json) =>
+      $GuessInfosGuessReferenceValueFromJson(json);
 
-	Map<String, dynamic> toJson() => $GuessInfosGuessReferenceValueToJson(this);
+  Map<String, dynamic> toJson() => $GuessInfosGuessReferenceValueToJson(this);
 
-	@override
-	String toString() {
-		return jsonEncode(this);
-	}
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
 }

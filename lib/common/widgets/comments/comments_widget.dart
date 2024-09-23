@@ -16,8 +16,8 @@ class CommentsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CommentController controller = Get.put(CommentController());
-    controller.setComments(commentList);
+    CommentController controller = Get.put(CommentController(commentList));
+    // controller.setComments(commentList);
     return GetBuilder<CommentController>(builder: (_) {
       return Container(
         padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -66,7 +66,7 @@ class CommentsWidget extends StatelessWidget {
                       if (list.isNotEmpty)
                         Container(
                           // width: 295.w,
-                          margin: EdgeInsets.only(left: 48.w),
+                          margin: EdgeInsets.only(left: 25.w),
                           child: SubComentsListView(list),
                         )
                     ],
@@ -97,72 +97,76 @@ class SubComentsListView extends GetView<CommentController> {
       // width: 295.w,
       child: Obx(() {
         int length = (current < list.length) ? current.value : list.length;
-        return ListView.separated(
-            padding: EdgeInsets.only(top: 20.w),
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: length + 1,
-            shrinkWrap: true,
-            separatorBuilder: (context, index) => 5.vGap,
-            itemBuilder: (context, index) {
-              int has = list.length - current.value;
-              return index < length
-                  ? CommentItemView(item: list[index], isSub: true)
-                  : Container(
-                      padding: EdgeInsets.symmetric(vertical: 6.w),
-                      child: Row(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              current.value += 3;
-                            },
-                            child: SizedBox(
-                              width: 130.w,
-                              child: has > 0
-                                  ? Row(
-                                      children: [
-                                        IconWidget(
-                                          iconWidth: 8.w,
-                                          icon: Assets.uiIconUnfoldPng,
-                                          iconColor: AppColors.c333333,
-                                        ),
-                                        4.hGap,
-                                        Text(
-                                          "more replies  (${has > 0 ? has : 0})",
-                                          style: 12.w4(),
-                                        )
-                                      ],
-                                    )
-                                  : null,
-                            ),
-                          ),
-                          30.hGap,
-                          if (current.value != 0)
+        return AnimatedSize(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.linear,
+          child: ListView.separated(
+              padding: EdgeInsets.only(top: 20.w),
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: length + 1,
+              shrinkWrap: true,
+              separatorBuilder: (context, index) => 5.vGap,
+              itemBuilder: (context, index) {
+                int has = list.length - current.value;
+                return index < length
+                    ? CommentItemView(item: list[index], isSub: true)
+                    : Container(
+                        padding: EdgeInsets.symmetric(vertical: 6.w),
+                        child: Row(
+                          children: [
                             InkWell(
                               onTap: () {
-                                current.value = 0;
+                                current.value += 3;
                               },
                               child: SizedBox(
-                                width: 100.w,
-                                child: Row(
-                                  children: [
-                                    IconWidget(
-                                      iconWidth: 8.w,
-                                      icon: Assets.uiIconShrinkPng,
-                                      iconColor: AppColors.c333333,
-                                    ),
-                                    4.hGap,
-                                    Text(
-                                      "fpld",
-                                      style: 12.w4(),
-                                    )
-                                  ],
-                                ),
+                                width: 130.w,
+                                child: has > 0
+                                    ? Row(
+                                        children: [
+                                          IconWidget(
+                                            iconWidth: 8.w,
+                                            icon: Assets.uiIconUnfoldPng,
+                                            iconColor: AppColors.c333333,
+                                          ),
+                                          4.hGap,
+                                          Text(
+                                            "more replies  (${has > 0 ? has : 0})",
+                                            style: 12.w4(),
+                                          )
+                                        ],
+                                      )
+                                    : null,
                               ),
                             ),
-                        ],
-                      ),
-                    );
-            });
+                            30.hGap,
+                            if (current.value != 0)
+                              InkWell(
+                                onTap: () {
+                                  current.value = 0;
+                                },
+                                child: SizedBox(
+                                  width: 100.w,
+                                  child: Row(
+                                    children: [
+                                      IconWidget(
+                                        iconWidth: 8.w,
+                                        icon: Assets.uiIconShrinkPng,
+                                        iconColor: AppColors.c333333,
+                                      ),
+                                      4.hGap,
+                                      Text(
+                                        "fold",
+                                        style: 12.w4(),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
+                      );
+              }),
+        );
       }),
     );
   }
@@ -210,9 +214,13 @@ class CommentItemView extends GetView<CommentController> {
                   ),
                   13.hGap,
                   if (item.targetId != 0)
-                    Text(
-                      " ${controller.getTeamName(item)}",
-                      style: 12.w4(color: AppColors.cB3B3B3),
+                    SizedBox(
+                      width: 90.w,
+                      child: Text(
+                        " ${controller.getTeamName(item)}",
+                        style: 12.w4(color: AppColors.cB3B3B3),
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                   10.hGap,
                   Text(
@@ -239,15 +247,18 @@ class CommentItemView extends GetView<CommentController> {
                           item.newsId ?? 0, item.id ?? 0, item);
                     },
                     child: Obx(() {
-                      return IconWidget(
-                        iconWidth: 15.w,
-                        iconHeight: 12.w,
-                        icon: item.isLike?.value == true
-                            ? Assets.uiIconLike_01Png
-                            : Assets.uiIconLike_02Png,
-                        iconColor: item.isLike?.value == true
-                            ? AppColors.cFF7954
-                            : AppColors.cB3B3B3,
+                      return Padding(
+                        padding: const EdgeInsets.all(4),
+                        child: IconWidget(
+                          iconWidth: 15.w,
+                          iconHeight: 12.w,
+                          icon: item.isLike?.value == true
+                              ? Assets.uiIconLike_01Png
+                              : Assets.uiIconLike_02Png,
+                          iconColor: item.isLike?.value == true
+                              ? AppColors.cFF7954
+                              : AppColors.cB3B3B3,
+                        ),
                       );
                     }),
                   )

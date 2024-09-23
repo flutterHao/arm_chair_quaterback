@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 /// author: lihonghao
 /// date: 2024/9/11
@@ -111,14 +112,22 @@ class PlayListView extends GetView<RankController> {
                 ),
               ),
               Expanded(
-                child: ListView.separated(
-                    itemCount: controller.statList.length,
-                    padding:
-                        EdgeInsets.symmetric(vertical: 10.w, horizontal: 16.w),
-                    separatorBuilder: (context, index) => 9.vGap,
-                    itemBuilder: (context, index) {
-                      return StatsItem(index: index);
-                    }),
+                child: SmartRefresher(
+                  controller: controller.refreshCtrl,
+                  enablePullUp: true,
+                  header: const WaterDropHeader(), // 使用水滴风格的下拉刷新
+                  footer: const ClassicFooter(), // 使用经典风格的上拉加载更多
+                  onRefresh: () => controller.getStatRank(),
+                  onLoading: () => controller.getStatRank(refresh: false),
+                  child: ListView.separated(
+                      itemCount: controller.statList.length,
+                      padding: EdgeInsets.symmetric(
+                          vertical: 10.w, horizontal: 16.w),
+                      separatorBuilder: (context, index) => 9.vGap,
+                      itemBuilder: (context, index) {
+                        return StatsItem(index: index);
+                      }),
+                ),
               ),
             ],
           );
@@ -170,6 +179,7 @@ class StatsItem extends GetView<RankController> {
                 Text(
                   item.player ?? "",
                   style: 16.w7(),
+                  overflow: TextOverflow.ellipsis,
                 ),
                 5.vGap,
                 ShadowContainer(
@@ -184,6 +194,7 @@ class StatsItem extends GetView<RankController> {
               ],
             ),
           ),
+          20.hGap,
           Text(
             "${controller.getStartData(item)}",
             style: 24.w7(),
@@ -205,6 +216,7 @@ class TeamListView extends StatelessWidget {
         itemCount: ctrl.state.teamRankList.length,
         padding: EdgeInsets.symmetric(vertical: 10.w, horizontal: 16.w),
         separatorBuilder: (context, index) => 9.vGap,
+        cacheExtent: 84.w,
         itemBuilder: (context, index) {
           return StatsTeamItem(
               index: index, item: ctrl.state.teamRankList[index]);

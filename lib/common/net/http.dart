@@ -21,6 +21,8 @@ class HttpUtil {
   static const int _defaultConnectTimeout = 20 * 1000;
   static const int _defaultReceiveTimeout = 10 * 1000;
 
+  get dio => _dio;
+
   HttpUtil._internal() {
     // BaseOptions、Options、RequestOptions 都可以配置参数，优先级别依次递增，且可以根据优先级别覆盖参数
     BaseOptions options = BaseOptions(

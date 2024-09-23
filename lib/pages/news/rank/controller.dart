@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:27:52
- * @LastEditTime: 2024-09-21 19:33:53
+ * @LastEditTime: 2024-09-22 12:55:55
  */
 import 'package:arm_chair_quaterback/common/entities/stats_rank/nba_player_stat.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
@@ -11,12 +11,14 @@ import 'package:arm_chair_quaterback/pages/news/rank/widgets/stats_list_view.dar
 import 'package:arm_chair_quaterback/pages/news/rank/widgets/team_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class RankController extends GetxController
     with GetSingleTickerProviderStateMixin {
   RankController();
 
   late TabController tabController;
+  RefreshController refreshCtrl = RefreshController();
   RxInt current = 0.obs;
   List<String> tabs = ["Player", "Team"];
   List<String> tabs2 = ["Eastean", "Westen"];
@@ -39,6 +41,9 @@ class RankController extends GetxController
   String season = "2023-24";
   List<NbaPlayerStat> statList = [];
   List<String> seasonList = ["2023-24"];
+
+  int page = 1;
+  int size = 20;
 
   /// 在 widget 内存中分配后立即调用。
   @override
@@ -68,13 +73,23 @@ class RankController extends GetxController
     tabController.animateTo(v);
   }
 
-  void getStatRank() {
+  void getStatRank({bool refresh = true}) async {
     // NewsApi.startRank(season: season, statType: statType).then((value) {
     //   statList = value.nbaPlayerStats ?? [];
     //   update(["stars"]);
     // });
+    // 刷新或加载完成时停止动画
+    await Future.delayed(const Duration(milliseconds: 1000));
+    page = refresh ? 1 : (page + 1);
     NewListController ctrl = Get.find();
-    statList = ctrl.state.statsRankMap[statType] ?? [];
+    var list = ctrl.state.statsRankMap[statType] ?? [];
+    int end = page * size > list.length ? list.length : page * size;
+    statList = list.sublist(0, end);
+    if (refresh) {
+      refreshCtrl.refreshCompleted(); // 停止刷新动画
+    } else {
+      refreshCtrl.loadComplete();
+    }
     update(["stars"]);
   }
 

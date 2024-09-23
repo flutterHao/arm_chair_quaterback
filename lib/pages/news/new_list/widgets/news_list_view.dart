@@ -156,24 +156,25 @@ class NewsItemView extends GetView<NewListController> {
             border: Border.all(width: 1, color: AppColors.cB3B3B3),
           ),
         ),
-        Positioned(
-            top: 0.w,
-            right: 0.w,
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                IconWidget(
-                  iconWidth: 36.w,
-                  icon: Assets.uiIconLabelPng,
-                  iconColor: AppColors.cED1451,
-                ),
-                IconWidget(
-                  iconWidth: 16.w,
-                  icon: Assets.uiIconJettonPng,
-                  iconColor: Colors.white,
-                ),
-              ],
-            ))
+        if (item.guess != null)
+          Positioned(
+              top: 0.w,
+              right: 0.w,
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  IconWidget(
+                    iconWidth: 36.w,
+                    icon: Assets.uiIconLabelPng,
+                    iconColor: AppColors.cED1451,
+                  ),
+                  IconWidget(
+                    iconWidth: 16.w,
+                    icon: Assets.uiIconJettonPng,
+                    iconColor: Colors.white,
+                  ),
+                ],
+              ))
       ],
     );
   }

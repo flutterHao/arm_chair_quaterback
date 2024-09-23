@@ -111,8 +111,8 @@ import 'package:get/get.dart';
 // }
 
 class SearchBottomDialog extends GetView<RankController> {
-  const SearchBottomDialog(this.item, this.list, this.onTap, {super.key});
-  final String item;
+  const SearchBottomDialog(this.sel, this.list, this.onTap, {super.key});
+  final String sel;
   final List<String> list;
   final Function onTap;
 
@@ -148,7 +148,7 @@ class SearchBottomDialog extends GetView<RankController> {
                       padding: EdgeInsets.symmetric(vertical: 10.w),
                       itemBuilder: (context, index) {
                         String item = list[index];
-                        bool isCurren = controller.statType == item;
+                        bool isCurren = sel == item;
                         return SearchItem(
                           text: item,
                           isCurren: isCurren,

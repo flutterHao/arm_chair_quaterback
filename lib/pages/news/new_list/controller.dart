@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2024-09-21 19:55:49
+ * @LastEditTime: 2024-09-22 11:30:25
  */
 /*
  * @Description: 
@@ -17,6 +17,7 @@ import 'package:arm_chair_quaterback/common/entities/team_rank.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'index.dart';
 
@@ -24,33 +25,40 @@ class NewListController extends GetxController {
   NewListController();
 
   final state = NewListState();
+  RefreshController refreshCtrl = RefreshController();
 
   /// 在 onInit() 之后调用 1 帧。这是进入的理想场所
   @override
   void onReady() {
     super.onReady();
-    getNewsBanner();
-    getNewsList();
-    getStatsRank();
-    getTeamRank();
+    refreshData();
   }
 
-  void getNewsBanner() {
-    NewsApi.getNewsBanner().then((value) {
+  ////TODO 并行待优化
+  void refreshData() async {
+    await getNewsBanner();
+    await getNewsList();
+    await getStatsRank();
+    await getTeamRank();
+    refreshCtrl.refreshCompleted();
+  }
+
+  Future getNewsBanner() async {
+    await NewsApi.getNewsBanner().then((value) {
       state.banners = value;
       update(['newsBanner']);
     });
   }
 
-  void getNewsList() {
-    NewsApi.getNewsList().then((value) {
+  Future getNewsList() async {
+    await NewsApi.getNewsList().then((value) {
       state.newsList = value;
       update(['newsList']);
     });
   }
 
   void likeNews(NewsDetail item) {
-    if (item.isLike?.value ==true) return;
+    if (item.isLike?.value == true) return;
     NewsApi.newsLike(item.id!).then((value) {
       item.isLike!.value = true;
       item.likes = (item.likes ?? 0) + 1;
@@ -59,7 +67,7 @@ class NewListController extends GetxController {
   }
 
   void unLikeNews(NewsDetail item) {
-     if (item.isLike?.value ==false) return;
+    if (item.isLike?.value == false) return;
     NewsApi.newsUnLike(item.id!).then((value) {
       item.isLike!.value = false;
       item.likes = (item.likes ?? 0) - 1;
@@ -68,22 +76,22 @@ class NewListController extends GetxController {
   }
 
   ///获取球员信息 //TODO 防止一次性加载过多
-  void getStatsRank() {
+  Future getStatsRank() async {
     // for (var element in state.statsRankMap.entries) {
     //   await NewsApi.startRank(season: "2023-24", statType: "PTS").then((value) {
     //     state.statsRankMap[element.key] = value.nbaPlayerStats ?? [];
     //   });
     // }
     //  update(['teamRank']);
-    NewsApi.startRank(season: "2023-24", statType: "PTS").then((value) {
+    await NewsApi.startRank(season: "2023-24", statType: "PTS").then((value) {
       state.statsList = value;
       setTeamMap();
       update(['statsRank']);
     });
   }
 
-  void getTeamRank() {
-    Future.wait([
+  Future getTeamRank() async {
+    await Future.wait([
       PicksApi.getNBATeamDefine(),
       NewsApi.teamRank(page: 0, pageSize: 30)
     ]).then((v) {
@@ -174,8 +182,6 @@ class NewListController extends GetxController {
   }
 
   void getAward() {
-    NewsApi.getAward().then((value) {
-      
-    });
+    NewsApi.getAward().then((value) {});
   }
 }

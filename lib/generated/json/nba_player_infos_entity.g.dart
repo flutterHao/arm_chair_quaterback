@@ -3,30 +3,27 @@ import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dar
 
 NbaPlayerInfosEntity $NbaPlayerInfosEntityFromJson(Map<String, dynamic> json) {
   final NbaPlayerInfosEntity nbaPlayerInfosEntity = NbaPlayerInfosEntity();
-  final List<
-      NbaPlayerInfosPlayerDataAvgList>? playerDataAvgList = (json['playerDataAvgList'] as List<
-      dynamic>?)?.map(
-          (e) =>
-      jsonConvert.convert<NbaPlayerInfosPlayerDataAvgList>(
-          e) as NbaPlayerInfosPlayerDataAvgList).toList();
+  final List<NbaPlayerInfosPlayerDataAvgList>? playerDataAvgList =
+      (json['playerDataAvgList'] as List<dynamic>?)
+          ?.map((e) => jsonConvert.convert<NbaPlayerInfosPlayerDataAvgList>(e)
+              as NbaPlayerInfosPlayerDataAvgList)
+          .toList();
   if (playerDataAvgList != null) {
     nbaPlayerInfosEntity.playerDataAvgList = playerDataAvgList;
   }
-  final List<
-      NbaPlayerInfosPlayerDataCapList>? playerDataCapList = (json['playerDataCapList'] as List<
-      dynamic>?)?.map(
-          (e) =>
-      jsonConvert.convert<NbaPlayerInfosPlayerDataCapList>(
-          e) as NbaPlayerInfosPlayerDataCapList).toList();
+  final List<NbaPlayerInfosPlayerDataCapList>? playerDataCapList =
+      (json['playerDataCapList'] as List<dynamic>?)
+          ?.map((e) => jsonConvert.convert<NbaPlayerInfosPlayerDataCapList>(e)
+              as NbaPlayerInfosPlayerDataCapList)
+          .toList();
   if (playerDataCapList != null) {
     nbaPlayerInfosEntity.playerDataCapList = playerDataCapList;
   }
-  final List<
-      NbaPlayerInfosPlayerBaseInfoList>? playerBaseInfoList = (json['playerBaseInfoList'] as List<
-      dynamic>?)?.map(
-          (e) =>
-      jsonConvert.convert<NbaPlayerInfosPlayerBaseInfoList>(
-          e) as NbaPlayerInfosPlayerBaseInfoList).toList();
+  final List<NbaPlayerInfosPlayerBaseInfoList>? playerBaseInfoList =
+      (json['playerBaseInfoList'] as List<dynamic>?)
+          ?.map((e) => jsonConvert.convert<NbaPlayerInfosPlayerBaseInfoList>(e)
+              as NbaPlayerInfosPlayerBaseInfoList)
+          .toList();
   if (playerBaseInfoList != null) {
     nbaPlayerInfosEntity.playerBaseInfoList = playerBaseInfoList;
   }
@@ -59,7 +56,8 @@ extension NbaPlayerInfosEntityExtension on NbaPlayerInfosEntity {
 
 NbaPlayerInfosPlayerDataAvgList $NbaPlayerInfosPlayerDataAvgListFromJson(
     Map<String, dynamic> json) {
-  final NbaPlayerInfosPlayerDataAvgList nbaPlayerInfosPlayerDataAvgList = NbaPlayerInfosPlayerDataAvgList();
+  final NbaPlayerInfosPlayerDataAvgList nbaPlayerInfosPlayerDataAvgList =
+      NbaPlayerInfosPlayerDataAvgList();
   final double? blk = jsonConvert.convert<double>(json['blk']);
   if (blk != null) {
     nbaPlayerInfosPlayerDataAvgList.blk = blk;
@@ -174,7 +172,8 @@ Map<String, dynamic> $NbaPlayerInfosPlayerDataAvgListToJson(
   return data;
 }
 
-extension NbaPlayerInfosPlayerDataAvgListExtension on NbaPlayerInfosPlayerDataAvgList {
+extension NbaPlayerInfosPlayerDataAvgListExtension
+    on NbaPlayerInfosPlayerDataAvgList {
   NbaPlayerInfosPlayerDataAvgList copyWith({
     double? blk,
     double? fga,
@@ -225,7 +224,8 @@ extension NbaPlayerInfosPlayerDataAvgListExtension on NbaPlayerInfosPlayerDataAv
 
 NbaPlayerInfosPlayerDataCapList $NbaPlayerInfosPlayerDataCapListFromJson(
     Map<String, dynamic> json) {
-  final NbaPlayerInfosPlayerDataCapList nbaPlayerInfosPlayerDataCapList = NbaPlayerInfosPlayerDataCapList();
+  final NbaPlayerInfosPlayerDataCapList nbaPlayerInfosPlayerDataCapList =
+      NbaPlayerInfosPlayerDataCapList();
   final int? fga = jsonConvert.convert<int>(json['fga']);
   if (fga != null) {
     nbaPlayerInfosPlayerDataCapList.fga = fga;
@@ -385,7 +385,8 @@ Map<String, dynamic> $NbaPlayerInfosPlayerDataCapListToJson(
   return data;
 }
 
-extension NbaPlayerInfosPlayerDataCapListExtension on NbaPlayerInfosPlayerDataCapList {
+extension NbaPlayerInfosPlayerDataCapListExtension
+    on NbaPlayerInfosPlayerDataCapList {
   NbaPlayerInfosPlayerDataCapList copyWith({
     int? fga,
     int? ast,
@@ -454,7 +455,8 @@ extension NbaPlayerInfosPlayerDataCapListExtension on NbaPlayerInfosPlayerDataCa
 
 NbaPlayerInfosPlayerBaseInfoList $NbaPlayerInfosPlayerBaseInfoListFromJson(
     Map<String, dynamic> json) {
-  final NbaPlayerInfosPlayerBaseInfoList nbaPlayerInfosPlayerBaseInfoList = NbaPlayerInfosPlayerBaseInfoList();
+  final NbaPlayerInfosPlayerBaseInfoList nbaPlayerInfosPlayerBaseInfoList =
+      NbaPlayerInfosPlayerBaseInfoList();
   final int? marketPrice = jsonConvert.convert<int>(json['marketPrice']);
   if (marketPrice != null) {
     nbaPlayerInfosPlayerBaseInfoList.marketPrice = marketPrice;
@@ -475,8 +477,8 @@ NbaPlayerInfosPlayerBaseInfoList $NbaPlayerInfosPlayerBaseInfoListFromJson(
   if (updateTime != null) {
     nbaPlayerInfosPlayerBaseInfoList.updateTime = updateTime;
   }
-  final int? beforePlayerStrength = jsonConvert.convert<int>(
-      json['beforePlayerStrength']);
+  final int? beforePlayerStrength =
+      jsonConvert.convert<int>(json['beforePlayerStrength']);
   if (beforePlayerStrength != null) {
     nbaPlayerInfosPlayerBaseInfoList.beforePlayerStrength =
         beforePlayerStrength;
@@ -537,13 +539,14 @@ NbaPlayerInfosPlayerBaseInfoList $NbaPlayerInfosPlayerBaseInfoListFromJson(
   if (position != null) {
     nbaPlayerInfosPlayerBaseInfoList.position = position;
   }
-  final List<int>? tag = (json['tag'] as List<dynamic>?)?.map(
-          (e) => jsonConvert.convert<int>(e) as int).toList();
+  final List<int>? tag = (json['tag'] as List<dynamic>?)
+      ?.map((e) => jsonConvert.convert<int>(e) as int)
+      .toList();
   if (tag != null) {
     nbaPlayerInfosPlayerBaseInfoList.tag = tag;
   }
-  final int? beforeMarketPrice = jsonConvert.convert<int>(
-      json['beforeMarketPrice']);
+  final int? beforeMarketPrice =
+      jsonConvert.convert<int>(json['beforeMarketPrice']);
   if (beforeMarketPrice != null) {
     nbaPlayerInfosPlayerBaseInfoList.beforeMarketPrice = beforeMarketPrice;
   }
@@ -583,7 +586,8 @@ Map<String, dynamic> $NbaPlayerInfosPlayerBaseInfoListToJson(
   return data;
 }
 
-extension NbaPlayerInfosPlayerBaseInfoListExtension on NbaPlayerInfosPlayerBaseInfoList {
+extension NbaPlayerInfosPlayerBaseInfoListExtension
+    on NbaPlayerInfosPlayerBaseInfoList {
   NbaPlayerInfosPlayerBaseInfoList copyWith({
     int? marketPrice,
     int? espnId,

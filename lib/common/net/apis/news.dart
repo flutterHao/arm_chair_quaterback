@@ -90,6 +90,6 @@ class NewsApi {
 
   static Future getAward() async {
     var json = await HttpUtil().post(Api.getAward);
-    return  json;
+    return json;
   }
 }

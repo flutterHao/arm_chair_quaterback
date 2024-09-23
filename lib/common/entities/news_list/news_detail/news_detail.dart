@@ -1,3 +1,10 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-09-13 18:19:28
+ * @LastEditTime: 2024-09-23 09:42:28
+ */
+import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_guess.dart';
 import 'package:get/get.dart';
 
 import 'reviews.dart';
@@ -20,6 +27,7 @@ class NewsDetail {
   int? unLikes;
   int? updateTime;
   int? views;
+  NewsGuess? guess;
 
   NewsDetail({
     this.award = 0,
@@ -27,7 +35,7 @@ class NewsDetail {
     this.createTime = 0,
     this.dataLabel = "",
     this.id = 0,
-     this.isLike,
+    this.isLike,
     this.isView = 0,
     this.likes = 0,
     this.postTime = 0,
@@ -38,6 +46,7 @@ class NewsDetail {
     this.unLikes = 0,
     this.updateTime = 0,
     this.views = 0,
+    this.guess,
   });
 
   factory NewsDetail.fromJson(Map<String, dynamic> json) {
@@ -61,6 +70,9 @@ class NewsDetail {
       unLikes: json['unLikes'] as int?,
       updateTime: json['updateTime'] as int?,
       views: json['views'] as int?,
+      guess: json['guess'] == null
+          ? null
+          : NewsGuess.fromJson(json['NBANewsGuess'] as Map<String, dynamic>),
     );
   }
 

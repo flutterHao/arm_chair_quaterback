@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-11 16:57:58
- * @LastEditTime: 2024-09-21 18:27:07
+ * @LastEditTime: 2024-09-22 13:14:20
  */
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
@@ -12,6 +12,8 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 class CommentController extends GetxController {
+  List<Reviews> commentList;
+  CommentController(this.commentList);
   var list = <Reviews>[];
   var mainList = <Reviews>[].obs; // 主评论列表
   var subList = <Reviews>[].obs; // 子评论列表
@@ -21,7 +23,7 @@ class CommentController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // count.value = (total < 3 ? total : 3);
+    setComments(commentList);
   }
 
   // 初始化时调用的方法，负责将评论分类
@@ -110,7 +112,7 @@ class CommentController extends GetxController {
     NewsApi.newsUnLike(item.id!).then((value) {
       item.isLike!.value = false;
       item.likes = (item.likes ?? 0) - 1;
-       update(["commentDialog"]);
+      update(["commentDialog"]);
     });
   }
 
