@@ -1,10 +1,15 @@
+import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/TLBuilderWidget.dart';
 import 'package:arm_chair_quaterback/common/widgets/app_bar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/controller.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/pages/news/rank/widgets/border_container.dart';
+import 'package:arm_chair_quaterback/pages/news/rank/widgets/search_bottom_dialog.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -80,7 +85,89 @@ class StatsRankPage extends GetView<RankController> {
                       );
                     }),
               ),
-              20.vGap,
+              10.vGap,
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                child: Row(
+                  children: [
+                    Expanded(child: Text("Rank", style: 19.w7())),
+                    InkWell(
+                      onTap: () {
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return SearchBottomDialog(
+                                controller.statType,
+                                Constant.statTypeList,
+                                (item) {
+                                  controller.statType = item;
+                                  controller.update(["search"]);
+                                  controller.getStatRank();
+                                },
+                              );
+                            });
+                      },
+                      child: BorderContainer(
+                        height: 18.w,
+                        padding: EdgeInsets.symmetric(horizontal: 10.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              controller.statType,
+                              style: 10.w7(),
+                            ),
+                            8.hGap,
+                            IconWidget(
+                              iconWidth: 15.w,
+                              iconHeight: 8.w,
+                              icon: Assets.uiIconExpansionPng,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    4.hGap,
+                    InkWell(
+                      onTap: () {
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return SearchBottomDialog(
+                                controller.season,
+                                controller.seasonList,
+                                (item) {
+                                  controller.season = item;
+                                  controller.update(["search"]);
+                                  controller.getStatRank();
+                                },
+                              );
+                            });
+                      },
+                      child: BorderContainer(
+                        // width: 150.w,
+                        height: 18.w,
+                        padding: EdgeInsets.symmetric(horizontal: 8.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "${controller.season} Regular Season",
+                              style: 10.w7(),
+                            ),
+                            10.hGap,
+                            IconWidget(
+                              iconWidth: 15.w,
+                              iconHeight: 8.w,
+                              icon: Assets.uiIconExpansionPng,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               Expanded(
                   child: TabBarView(
                 // physics: const NeverScrollableScrollPhysics(),

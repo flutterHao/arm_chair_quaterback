@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2024-09-23 16:29:00
+ * @LastEditTime: 2024-09-23 21:52:23
  */
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
@@ -31,13 +31,17 @@ class NewListController extends GetxController {
     refreshData();
   }
 
-  ////TODO 并行待优化
   void refreshData() async {
-    await getNewsBanner();
-    await getNewsList();
-    await getStatsRank();
-    await getTeamRank();
-    refreshCtrl.refreshCompleted();
+    Future.wait([
+        getNewsBanner(),
+     getNewsList(),
+     getStatsRank(),
+     getTeamRank(),
+    ]).then((v){
+       refreshCtrl.refreshCompleted();
+    });
+   
+   
   }
 
   Future getNewsBanner() async {
@@ -90,7 +94,7 @@ class NewListController extends GetxController {
   ///TODO 优化
   Future getTeamRank() async {
     await Future.wait([
-      ConfigApi.getNBATeamDefine(),
+      PicksApi.getNBATeamDefine(),
       NewsApi.teamRank(page: 0, pageSize: 30)
     ]).then((v) {
       state.teamConfigList = v[0] as List<NbaTeamEntity>;
@@ -179,11 +183,15 @@ class NewListController extends GetxController {
     };
   }
 
+  void teamRank(){
+    
+  }
+
   void getAward() {
     NewsApi.getAward().then((value) {
       if (value != null) {
         state.propDefineEntity =
-            ConfigApi.propDefineList.where((e) => e.propId == value.id).first;
+            ConfigApi.propDefineList!.where((e) => e.propId == value.id).first;
         EasyLoading.showToast(
             "${state.propDefineEntity.propName} +${value.num}");
       } else {

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:27:52
- * @LastEditTime: 2024-09-23 17:00:52
+ * @LastEditTime: 2024-09-23 21:46:33
  */
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/stats_rank/nba_player_stat.dart';
@@ -81,7 +81,7 @@ class RankController extends GetxController
     //   update(["stars"]);
     // });
     // 刷新或加载完成时停止动画
-    await Future.delayed(const Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 100));
     page = refresh ? 1 : (page + 1);
     NewListController ctrl = Get.find();
     var list = ctrl.state.statsRankMap[statType] ?? [];
@@ -95,9 +95,9 @@ class RankController extends GetxController
     update(["stars"]);
   }
 
-  void getTeamRank() {
-    NewsApi.teamRank(page: 0, pageSize: 30).then((value) {});
-  }
+  // void getTeamRank() {
+  //   NewsApi.teamRank(page: 0, pageSize: 30).then((value) {});
+  // }
 
   dynamic getStartData(NbaPlayerStat item) {
     switch (statType) {

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-12 16:53:47
- * @LastEditTime: 2024-09-23 16:24:53
+ * @LastEditTime: 2024-09-23 21:00:45
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
@@ -87,7 +87,7 @@ class HomeController extends GetxController
   void onReady() {
     super.onReady();
     login();
-    getConfigData();
+   ConfigApi.init();
   }
 
   @override
@@ -104,7 +104,7 @@ class HomeController extends GetxController
 
   ///鉴权、获取用户信息
   Future login() async {
-    await UserStore.to.setToken("");
+    // await UserStore.to.setToken("");
     // return;
     String accountName = await getUid();
     int serviceId = 0;
@@ -129,15 +129,5 @@ class HomeController extends GetxController
     return accountName;
   }
 
-  ///获取配置信息
-  void getConfigData() {
-    Future.wait([
-      ConfigApi.getNewsDefine(),
-      ConfigApi.getPropDefine(),
-      ConfigApi.getNBATeamDefine(),
-      ConfigApi.getNBAPlayerInfo()
-    ]).then((v) {
-      Log.d("获取配置数据成功");
-    });
-  }
+
 }

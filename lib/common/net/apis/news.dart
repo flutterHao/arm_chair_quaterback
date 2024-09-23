@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 17:28:14
- * @LastEditTime: 2024-09-21 19:55:18
+ * @LastEditTime: 2024-09-23 21:43:03
  */
 import 'package:arm_chair_quaterback/common/entities/news_banner.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
@@ -20,9 +20,10 @@ class NewsApi {
   }
 
   static Future<List<NewsDetail>> getNewsList() async {
-    List json = await HttpUtil().post(Api.getNewsList);
-    return json
-        .map((e) => NewsDetail.fromJson(e as Map<String, dynamic>))
+    var json = await HttpUtil().post(Api.getNewsList);
+    List list=json["newsContent"];
+    return 
+        list.map((e) => NewsDetail.fromJson(e as Map<String, dynamic>))
         .toList();
   }
 
@@ -71,7 +72,7 @@ class NewsApi {
   static Future<List<TeamRank>> teamRank(
       {int page = 0, int pageSize = 30}) async {
     List list = await HttpUtil()
-        .post(Api.teamRank, data: {"page": page, "pageSize": pageSize});
+        .post(Api.teamStatRank, data: {"page": page, "pageSize": pageSize});
     return list.map((e) => TeamRank.fromJson(e)).toList();
   }
 

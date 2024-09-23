@@ -20,12 +20,12 @@ class Utils {
 
   ///获取球员基础信息
   static NbaPlayerInfosPlayerBaseInfoList getPlayBaseInfo(int playerId) {
-    var item = ConfigApi.playerInfo.baseInfoMap[playerId];
+    var item = ConfigApi.playerInfo?.baseInfoMap[playerId];
     return item ?? NbaPlayerInfosPlayerBaseInfoList();
   }
 
   static NbaTeamEntity getTeamInfo(int teamId) {
-    var item = ConfigApi.teamMap[teamId];
+    var item = ConfigApi.teamDefineMap?[teamId];
     return item ?? NbaTeamEntity();
   }
 }
