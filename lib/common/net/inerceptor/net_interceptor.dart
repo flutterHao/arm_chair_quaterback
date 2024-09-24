@@ -255,7 +255,8 @@ class NetInterceptor extends InterceptorsWrapper {
 
   Future<void> _handle401Error(
       RequestOptions requestOptions, ResponseInterceptorHandler handler) async {
-    Log.e("捕获到 401 错误，开始处理 token 刷新");
+    String uri = requestOptions.uri.toString();
+    Log.e("$uri捕获到 401 错误 当前token=${UserStore.to.token}，,开始处理 token 刷新");
 
     if (_refreshCompleter != null) {
       // 如果正在刷新 token，等待刷新完成
@@ -299,7 +300,7 @@ class NetInterceptor extends InterceptorsWrapper {
 
   /// 读取本地配置 Authorization
   Map<String, dynamic>? getAuthorizationHeader() {
-    Log.d("token是否存在 ${UserStore.to.hasToken}");
+    // Log.d("token是否存在 ${UserStore.to.hasToken}");
     var headers = <String, dynamic>{};
     // if (getx.Get.isRegistered<UserStore>() && UserStore.to.hasToken == true) {
     if (UserStore.to.hasToken == true) {

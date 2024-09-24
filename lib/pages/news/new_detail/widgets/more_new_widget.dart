@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-10 17:28:39
- * @LastEditTime: 2024-09-21 09:32:26
+ * @LastEditTime: 2024-09-24 11:39:22
  */
 /*
  * @Description: 
@@ -50,8 +50,12 @@ class MoreNewsWidget extends StatelessWidget {
                 Color color =
                     item.isView == 1 ? AppColors.cB3B3B3 : AppColors.c666666;
                 return InkWell(
-                  onTap: () => Get.toNamed(RouteNames.newsDetail,
-                      arguments: item.id, id: GlobalNestedKey.NEWS),
+                  onTap: () async {
+                    item.isView = 1;
+                    await Get.toNamed(RouteNames.newsDetail,
+                        arguments: item.id, id: GlobalNestedKey.NEWS);
+                    controller.update();
+                  },
                   // onTap: (){
                   //   controller.getNewsDetail(item.id);
                   // },

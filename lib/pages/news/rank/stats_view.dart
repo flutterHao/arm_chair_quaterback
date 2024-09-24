@@ -103,6 +103,7 @@ class StatsRankPage extends GetView<RankController> {
                                   controller.statType = item;
                                   controller.update(["search"]);
                                   controller.getStatRank();
+                                  controller.getTeamRank();
                                 },
                               );
                             });

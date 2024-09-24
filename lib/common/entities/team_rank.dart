@@ -1,4 +1,4 @@
-class TeamRank {
+class StarsTeamRank {
   int? pfdRank;
   double? fg3Pct;
   int? orebRank;
@@ -55,7 +55,7 @@ class TeamRank {
   int? stlRank;
   String? shortName;
 
-  TeamRank({
+  StarsTeamRank({
     this.pfdRank,
     this.fg3Pct,
     this.orebRank,
@@ -112,7 +112,7 @@ class TeamRank {
     this.stlRank,
   });
 
-  factory TeamRank.fromJson(Map<String, dynamic> json) => TeamRank(
+  factory StarsTeamRank.fromJson(Map<String, dynamic> json) => StarsTeamRank(
         pfdRank: json['PFD_RANK'] as int?,
         fg3Pct: (json['FG3_PCT'] as num?)?.toDouble(),
         orebRank: json['OREB_RANK'] as int?,

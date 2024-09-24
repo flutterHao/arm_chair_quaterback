@@ -114,7 +114,7 @@ class StatsItem extends GetView<RankController> {
           ),
           20.hGap,
           Text(
-            "${controller.getStartData(item)}",
+            "${controller.getRankValue(item)}",
             style: 24.w7(),
           ),
           10.hGap,
@@ -124,20 +124,23 @@ class StatsItem extends GetView<RankController> {
   }
 }
 
-class TeamListView extends StatelessWidget {
+class TeamListView extends GetView<RankController> {
   const TeamListView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    NewListController ctrl = Get.find();
-    return ListView.separated(
-        itemCount: ctrl.state.teamRankList.length,
-        padding: EdgeInsets.symmetric(vertical: 10.w, horizontal: 16.w),
-        separatorBuilder: (context, index) => 9.vGap,
-        cacheExtent: 84.w,
-        itemBuilder: (context, index) {
-          return StatsTeamItem(
-              index: index, item: ctrl.state.teamRankList[index]);
+    return GetBuilder<RankController>(
+        id: "starsTeam",
+        builder: (_) {
+          return ListView.separated(
+              itemCount: controller.starsTeamRankList.length,
+              padding: EdgeInsets.symmetric(vertical: 10.w, horizontal: 16.w),
+              separatorBuilder: (context, index) => 9.vGap,
+              cacheExtent: 84.w,
+              itemBuilder: (context, index) {
+                return StatsTeamItem(
+                    index: index, item: controller.starsTeamRankList[index]);
+              });
         });
   }
 }
@@ -145,7 +148,7 @@ class TeamListView extends StatelessWidget {
 class StatsTeamItem extends GetView<RankController> {
   const StatsTeamItem({super.key, required this.index, required this.item});
   final int index;
-  final TeamRank item;
+  final StarsTeamRank item;
 
   @override
   Widget build(BuildContext context) {
@@ -181,7 +184,7 @@ class StatsTeamItem extends GetView<RankController> {
                 )),
           ),
           Text(
-            "",
+            "${controller.getRankValue(item)}",
             style: 17.w7(),
           ),
           10.hGap,

@@ -67,6 +67,7 @@ class NewsDetailPage extends StatelessWidget {
         title: "NEWS",
         right: InkWell(
           onTap: () {
+            ///TODO
             Navigator.of(context)
                 .push(createCustomRoute(this, NewsDetailPage(123)));
           },

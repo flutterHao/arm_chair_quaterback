@@ -41,6 +41,9 @@ Map<String, dynamic> $NbaPlayerInfosEntityToJson(NbaPlayerInfosEntity entity) {
       entity.playerDataCapList.map((v) => v.toJson()).toList();
   data['playerBaseInfoList'] =
       entity.playerBaseInfoList.map((v) => v.toJson()).toList();
+  data['dataAvgMap'] = entity.dataAvgMap;
+  data['dataCapMap'] = entity.dataCapMap;
+  data['baseInfoMap'] = entity.baseInfoMap;
   return data;
 }
 
@@ -49,11 +52,17 @@ extension NbaPlayerInfosEntityExtension on NbaPlayerInfosEntity {
     List<NbaPlayerInfosPlayerDataAvgList>? playerDataAvgList,
     List<NbaPlayerInfosPlayerDataCapList>? playerDataCapList,
     List<NbaPlayerInfosPlayerBaseInfoList>? playerBaseInfoList,
+    Map<int, NbaPlayerInfosPlayerDataAvgList>? dataAvgMap,
+    Map<int, NbaPlayerInfosPlayerDataCapList>? dataCapMap,
+    Map<int, NbaPlayerInfosPlayerBaseInfoList>? baseInfoMap,
   }) {
     return NbaPlayerInfosEntity()
       ..playerDataAvgList = playerDataAvgList ?? this.playerDataAvgList
       ..playerDataCapList = playerDataCapList ?? this.playerDataCapList
-      ..playerBaseInfoList = playerBaseInfoList ?? this.playerBaseInfoList;
+      ..playerBaseInfoList = playerBaseInfoList ?? this.playerBaseInfoList
+      ..dataAvgMap = dataAvgMap ?? this.dataAvgMap
+      ..dataCapMap = dataCapMap ?? this.dataCapMap
+      ..baseInfoMap = baseInfoMap ?? this.baseInfoMap;
   }
 }
 

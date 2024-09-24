@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-12 16:53:47
- * @LastEditTime: 2024-09-23 21:00:45
+ * @LastEditTime: 2024-09-24 10:57:13
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
@@ -104,7 +104,7 @@ class HomeController extends GetxController
 
   ///鉴权、获取用户信息
   Future login() async {
-    // await UserStore.to.setToken("");
+    await UserStore.to.setToken("");
     // return;
     String accountName = await getUid();
     int serviceId = 0;

@@ -14,8 +14,9 @@ import 'package:arm_chair_quaterback/common/entities/player_day_data_entity.dart
 import 'package:arm_chair_quaterback/common/entities/rank_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/recive_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/receive_prop_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/recive_award_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
 
 JsonConvert jsonConvert = JsonConvert();
 
@@ -228,6 +229,10 @@ class JsonConvert {
       return data.map<RankListMyRank>((Map<String, dynamic> e) =>
           RankListMyRank.fromJson(e)).toList() as M;
     }
+    if (<ReceivePropEntity>[] is M) {
+      return data.map<ReceivePropEntity>((Map<String, dynamic> e) =>
+          ReceivePropEntity.fromJson(e)).toList() as M;
+    }
     if (<ReciveAwardEntity>[] is M) {
       return data.map<ReciveAwardEntity>((Map<String, dynamic> e) =>
           ReciveAwardEntity.fromJson(e)).toList() as M;
@@ -243,12 +248,10 @@ class JsonConvert {
     if (<ReciveAwardGuessDataAwards>[] is M) {
       return data.map<ReciveAwardGuessDataAwards>((Map<String, dynamic> e) =>
           ReciveAwardGuessDataAwards.fromJson(e)).toList() as M;
-      return data.map<RankListMyRank>((Map<String, dynamic> e) =>
-          RankListMyRank.fromJson(e)).toList() as M;
     }
-    if (<ReceivePropEntity>[] is M) {
-      return data.map<ReceivePropEntity>((Map<String, dynamic> e) =>
-          ReceivePropEntity.fromJson(e)).toList() as M;
+    if (<TeamRankEntity>[] is M) {
+      return data.map<TeamRankEntity>((Map<String, dynamic> e) =>
+          TeamRankEntity.fromJson(e)).toList() as M;
     }
 
     debugPrint("$M not found");
@@ -293,12 +296,13 @@ class JsonConvertClassCollection {
     (RankInfoEntity).toString(): RankInfoEntity.fromJson,
     (RankListEntity).toString(): RankListEntity.fromJson,
     (RankListMyRank).toString(): RankListMyRank.fromJson,
+    (ReceivePropEntity).toString(): ReceivePropEntity.fromJson,
     (ReciveAwardEntity).toString(): ReciveAwardEntity.fromJson,
     (ReciveAwardL5Avg).toString(): ReciveAwardL5Avg.fromJson,
     (ReciveAwardGuessData).toString(): ReciveAwardGuessData.fromJson,
     (ReciveAwardGuessDataAwards).toString(): ReciveAwardGuessDataAwards
         .fromJson,
-    (ReceivePropEntity).toString(): ReceivePropEntity.fromJson,
+    (TeamRankEntity).toString(): TeamRankEntity.fromJson,
   };
 
   bool containsKey(String type) {

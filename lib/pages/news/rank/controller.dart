@@ -2,10 +2,11 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:27:52
- * @LastEditTime: 2024-09-23 21:46:33
+ * @LastEditTime: 2024-09-24 10:03:11
  */
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/stats_rank/nba_player_stat.dart';
+import 'package:arm_chair_quaterback/common/entities/team_rank.dart';
 import 'package:arm_chair_quaterback/common/net/apis/config.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/controller.dart';
@@ -43,6 +44,7 @@ class RankController extends GetxController
   String season = "2023-24";
   List<NbaPlayerStat> statList = [];
   List<String> seasonList = ["2023-24"];
+  List<StarsTeamRank> starsTeamRankList = [];
 
   int page = 1;
   int size = 20;
@@ -68,6 +70,7 @@ class RankController extends GetxController
   void onReady() {
     super.onReady();
     getStatRank();
+    getAllTeamInfo();
   }
 
   void onTap(v) {
@@ -95,11 +98,44 @@ class RankController extends GetxController
     update(["stars"]);
   }
 
+  void getAllTeamInfo() {
+    NewListController ctrl = Get.find();
+    starsTeamRankList = List.from(ctrl.state.starTeamList);
+  }
+
+  void getTeamRank() {
+    switch (statType) {
+      case "PTS":
+        starsTeamRankList.sort((a, b) => b.pts!.compareTo(a.pts!));
+      case "AST":
+        starsTeamRankList.sort((a, b) => b.ast!.compareTo(a.ast!));
+      case "REB":
+        starsTeamRankList.sort((a, b) => b.reb!.compareTo(a.reb!));
+      case "FGP":
+        starsTeamRankList.sort((a, b) => b.fgPct!.compareTo(a.fgPct!));
+      case "BLK":
+        starsTeamRankList.sort((a, b) => b.blk!.compareTo(a.blk!));
+      case "STL":
+        starsTeamRankList.sort((a, b) => b.stl!.compareTo(a.stl!));
+      case "FTP":
+        starsTeamRankList.sort((a, b) => b.ftPct!.compareTo(a.ftPct!));
+      case "3PA":
+        starsTeamRankList.sort((a, b) => b.fg3A!.compareTo(a.fg3A!));
+      case "3PP":
+        starsTeamRankList.sort((a, b) => b.fg3Pct!.compareTo(a.fg3Pct!));
+      case "TO":
+        starsTeamRankList.sort((a, b) => a.tov!.compareTo(b.tov!));
+      default:
+    }
+
+    update(["starsTeam"]);
+  }
+
   // void getTeamRank() {
   //   NewsApi.teamRank(page: 0, pageSize: 30).then((value) {});
   // }
 
-  dynamic getStartData(NbaPlayerStat item) {
+  dynamic getRankValue(dynamic item) {
     switch (statType) {
       case "PTS":
         return item.pts ?? 0;

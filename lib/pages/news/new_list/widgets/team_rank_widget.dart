@@ -1,6 +1,7 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank.dart';
+import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -162,12 +163,11 @@ class TeamRankItem extends GetView<NewListController> {
 
 class TeamListView extends StatelessWidget {
   const TeamListView({super.key, required this.list});
-  final List<TeamRank> list;
+  final List<TeamRankEntity> list;
 
   @override
   Widget build(BuildContext context) {
     int count = list.length > 3 ? 3 : 0;
-    list.sort((a, b) => b.w!.compareTo(a.w!));
     return SizedBox(
       height: 150.w,
       child: ListView.separated(
@@ -185,13 +185,13 @@ class TeamListView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ImageWidget(
-                          url: Utils.getTeamUrl(item.teamId),
+                          url: Utils.getTeamUrl(item.teamID),
                           width: 25.w,
                           height: 25.w,
                         ),
                         2.hGap,
                         Text(
-                          item.shortName ?? "",
+                          item.shortEname,
                           style: 12.w7(),
                         )
                       ],
@@ -202,7 +202,7 @@ class TeamListView extends StatelessWidget {
                       width: 88.w,
                       alignment: Alignment.center,
                       child: Text(
-                        "${item.w}-${item.l}",
+                        "${item.wINS}-${item.lOSSES}",
                         style: 11.w4(color: AppColors.c666666),
                       ),
                     ),
@@ -212,7 +212,7 @@ class TeamListView extends StatelessWidget {
                       alignment: Alignment.center,
                       width: 64.w,
                       child: Text(
-                        "${item.wPct}",
+                        "${item.winPCT}",
                         style: 11.w4(color: AppColors.c666666),
                       ),
                     ),
@@ -222,7 +222,7 @@ class TeamListView extends StatelessWidget {
                       alignment: Alignment.center,
                       width: 40.w,
                       child: Text(
-                        "-",
+                        "${item.conferenceGamesBack}",
                         style: 11.w4(color: AppColors.c666666),
                       ),
                     ),

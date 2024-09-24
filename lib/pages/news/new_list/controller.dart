@@ -2,12 +2,13 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2024-09-23 21:52:23
+ * @LastEditTime: 2024-09-24 10:46:07
  */
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
 import 'package:arm_chair_quaterback/common/entities/stats_rank/nba_player_stat.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank.dart';
+import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/config.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
@@ -33,15 +34,13 @@ class NewListController extends GetxController {
 
   void refreshData() async {
     Future.wait([
-        getNewsBanner(),
-     getNewsList(),
-     getStatsRank(),
-     getTeamRank(),
-    ]).then((v){
-       refreshCtrl.refreshCompleted();
+      getNewsBanner(),
+      getNewsList(),
+      getStatsRank(),
+      getStarTeamList(),
+    ]).then((v) {
+      refreshCtrl.refreshCompleted();
     });
-   
-   
   }
 
   Future getNewsBanner() async {
@@ -92,25 +91,32 @@ class NewListController extends GetxController {
   }
 
   ///TODO 优化
-  Future getTeamRank() async {
+  Future getStarTeamList() async {
     await Future.wait([
       PicksApi.getNBATeamDefine(),
-      NewsApi.teamRank(page: 0, pageSize: 30)
+      NewsApi.starTeamList(page: 0, pageSize: 30),
+      NewsApi.getTeamList()
     ]).then((v) {
       state.teamConfigList = v[0] as List<NbaTeamEntity>;
-      state.teamRankList = v[1] as List<TeamRank>;
+      state.starTeamList = v[1] as List<StarsTeamRank>;
+      state.teamList = v[2] as List<TeamRankEntity>;
       state.teamMap = {
-        1: state.teamRankList.where((e) => hasContain(1, e)).toList(),
-        2: state.teamRankList.where((e) => hasContain(2, e)).toList()
+        1: state.teamList.where((e) => hasContain(1, e)).toList(),
+        2: state.teamList.where((e) => hasContain(2, e)).toList()
       };
       update(['teamRank']);
     });
   }
 
-  bool hasContain(int type, TeamRank item) {
+  // void getTeamList() async {
+  //   state.teamList = await NewsApi.getTeamList();
+  //   update(['teamRanks']);
+  // }
+
+  bool hasContain(int type, TeamRankEntity item) {
     for (var element in state.teamConfigList) {
-      if (item.teamName == element.longEname) {
-        item.shortName = element.shortEname;
+      if (item.teamID == element.id&&element.force==type) {
+        item.shortEname = element.shortEname;
         return true;
       }
     }
@@ -181,10 +187,6 @@ class NewListController extends GetxController {
       "3PP": threePp,
       "TO": to,
     };
-  }
-
-  void teamRank(){
-    
   }
 
   void getAward() {

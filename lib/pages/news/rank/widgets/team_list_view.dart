@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/entities/team_rank.dart';
+import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
@@ -31,6 +32,7 @@ class EasTeamListView extends StatelessWidget {
 
     List<String> columns = ["Rank", "Team", "W-L", "PCT", "HOME", "AWAY", "GB"];
     var list = newListCtrl.state.teamMap[type] ?? [];
+    list.sort((a, b) => a.conferenceGamesBack.compareTo(b.conferenceGamesBack));
     // RxInt size = 10.obs;
     return Column(
       children: [
@@ -68,7 +70,7 @@ class EasTeamListView extends StatelessWidget {
 class TeamItemView extends StatelessWidget {
   const TeamItemView({super.key, required this.index, required this.item});
   final int index;
-  final TeamRank item;
+  final TeamRankEntity item;
 
   Widget _flexWidget({required Widget child}) {
     return Flexible(
@@ -95,14 +97,14 @@ class TeamItemView extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               ImageWidget(
-                url: Utils.getTeamUrl(item.teamId),
+                url: Utils.getTeamUrl(item.teamID),
                 width: 20.w,
                 height: 20.w,
               ),
               2.hGap,
               Expanded(
                 child: Text(
-                  item.shortName ?? "",
+                  item.shortEname,
                   style: 12.w7(color: AppColors.c666666),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -111,27 +113,27 @@ class TeamItemView extends StatelessWidget {
           )),
           _flexWidget(
               child: Text(
-            "${item.w}-${item.l}",
+            "${item.wINS}-${item.lOSSES}",
             style: 12.w7(color: AppColors.c666666),
           )),
           _flexWidget(
               child: Text(
-            "${item.wPct}",
+            "${item.winPCT}",
             style: 12.w7(color: AppColors.c666666),
           )),
           _flexWidget(
               child: Text(
-            "",
+            item.hOME,
             style: 12.w7(color: AppColors.c666666),
           )),
           _flexWidget(
               child: Text(
-            "",
+            "-",
             style: 12.w7(color: AppColors.c666666),
           )),
           _flexWidget(
               child: Text(
-            "",
+            "${item.conferenceGamesBack}",
             style: 12.w7(),
           )),
         ],

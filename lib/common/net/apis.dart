@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-06 15:16:54
- * @LastEditTime: 2024-09-23 20:37:11
+ * @LastEditTime: 2024-09-24 10:20:12
  */
 class Api {
   // static const String authAccount = '/p/account/authAccount';
@@ -50,6 +50,8 @@ class Api {
   static const String getAward = "$API_BASE_PATH/NBANews/getTodayAward";
   //NBAData
   static const String teamStatRank = "$API_BASE_PATH/NBAData/queryNBATeamStatRank";
+  static const String teamRank = "$API_BASE_PATH/NBAData/queryNBATeamRank";
+  
   static const String playerStats =
       "$API_BASE_PATH/NBAData/getNBAPlayerRankJSONInfo";
   static const String getNBAPlayerInfo =

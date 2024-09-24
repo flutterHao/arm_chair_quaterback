@@ -10,8 +10,11 @@ class NbaPlayerInfosEntity {
   late List<NbaPlayerInfosPlayerBaseInfoList> playerBaseInfoList = [];
 
   ///使用Map映射，减少遍历查找时间复杂度
+  @JSONField(deserialize: false)
   Map<int, NbaPlayerInfosPlayerDataAvgList> dataAvgMap = {};
+  @JSONField(deserialize: false)
   Map<int, NbaPlayerInfosPlayerDataCapList> dataCapMap = {};
+  @JSONField(deserialize: false)
   Map<int, NbaPlayerInfosPlayerBaseInfoList> baseInfoMap = {};
 
   NbaPlayerInfosEntity();

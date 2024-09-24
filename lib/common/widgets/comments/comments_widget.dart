@@ -214,8 +214,7 @@ class CommentItemView extends GetView<CommentController> {
                   ),
                   13.hGap,
                   if (item.targetId != 0)
-                    SizedBox(
-                      width: 90.w,
+                    Expanded(
                       child: Text(
                         " ${controller.getTeamName(item)}",
                         style: 12.w4(color: AppColors.cB3B3B3),
