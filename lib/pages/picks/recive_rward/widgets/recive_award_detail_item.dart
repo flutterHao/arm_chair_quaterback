@@ -65,7 +65,7 @@ class ReciveAwardDetailItem extends StatelessWidget {
                     ),
                     4.vGap,
                     Text(
-                      "VS NOP ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(player.reciveAwardInfo.gameStartTime))}AM",
+                      "VS ${player.awayTeamInfo.shortEname} ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(player.reciveAwardInfo.gameStartTime))}AM",
                       style: 9.w4(color: AppColors.cB3B3B3, height: 1),
                     ),
                     8.vGap,

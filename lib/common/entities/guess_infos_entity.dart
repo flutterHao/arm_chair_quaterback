@@ -123,6 +123,10 @@ class GuessInfosGuessReferenceValue {
 
   Map<String, dynamic> toJson() => $GuessInfosGuessReferenceValueToJson(this);
 
+  double getREB(){
+    return (dreb+oreb)/2;
+  }
+
   @override
   String toString() {
     return jsonEncode(this);

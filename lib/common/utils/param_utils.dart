@@ -8,6 +8,6 @@ class ParamUtils {
         ? "threePm"
         : key == "3PA".toLowerCase()
             ? "threePa"
-            : key;
+            : key.toLowerCase();
   }
 }

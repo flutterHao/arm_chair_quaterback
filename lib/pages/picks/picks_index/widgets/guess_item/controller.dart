@@ -20,7 +20,7 @@ class GuessItemController extends GetxController
 
   final PicksPlayer player;
 
-  Map<String, List<BarChartGroupData>> barGroups = {};
+  Map<String, Map<String, dynamic>> barGroups = {};
   late TabController tabController;
 
   FlTitlesData get titlesData => const FlTitlesData(
@@ -52,10 +52,13 @@ class GuessItemController extends GetxController
         double l5Avg = player.guessInfo.l5Avg
                 .toJson()[ParamUtils.getProKey(key.toLowerCase())] ??
             0.0;
-        var barDatas = fiveDayData.map((e) {
-          double v = e.toJson()[
+        double maxY = 0;
+        List<BarChartGroupData> barDatas = [];
+        for (PlayerDayDataEntity p in fiveDayData) {
+          double v = p.toJson()[
                   ParamUtils.getProKey(key.toLowerCase()).toLowerCase()] ??
               0.0;
+          maxY = max(v, maxY);
           var chartGroupData = BarChartGroupData(
             x: 0,
             barRods: [
@@ -73,11 +76,12 @@ class GuessItemController extends GetxController
                       : AppColors.c000000.withOpacity(.5))
             ],
           );
-          return chartGroupData;
-        }).toList();
-        barGroups[key] = barDatas;
+          barDatas.add(chartGroupData);
+        }
+        Map<String, dynamic> item = {"maxY": max(maxY,5.0), "list": barDatas};
+        barGroups[key] = item;
       }
-      update([barchartData]);
+      update();
     });
   }
 

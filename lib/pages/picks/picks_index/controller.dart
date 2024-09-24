@@ -89,8 +89,7 @@ class PicksIndexController extends GetxController {
       var propertyName = picksPlayer.betData[int.parse(betDataIndex)];
       guessData.guessAttr = propertyName.toLowerCase();
       guessData.guessChoice = int.parse(choiceIndex);
-      guessData.guessReferenceValue = guessInfo.guessReferenceValue
-          .toJson()[ParamUtils.getProKey(propertyName.toLowerCase())];
+      guessData.guessReferenceValue = guessInfo.guessReferenceValue.getREB();
       guessParamEntity.guessData = [guessData];
       params.add(guessParamEntity);
     }
