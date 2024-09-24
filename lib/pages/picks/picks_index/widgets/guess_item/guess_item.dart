@@ -117,22 +117,21 @@ class _GuessItemState extends State<GuessItem>
                                         height: 1,
                                         overflow: TextOverflow.ellipsis),
                                   ),
-                                  4.vGap,
+                                  2.vGap,
                                   Text(
                                     "VS ${widget.pickPlayer.awayTeamInfo.shortEname}   ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(widget.pickPlayer.guessInfo.gameStartTime))}",
-                                    style: 9.w4(
+                                    style: 10.w4(
                                         color: AppColors.cB3B3B3, height: 1),
                                   ),
                                   8.vGap,
                                   Text(
-                                    "PPG: ${double.parse(((widget.pickPlayer.dataAvgList.toJson()[ParamUtils.getProKey(widget.pickPlayer.betData[index].toLowerCase())]) ?? 0).toString()).toStringAsFixed(1)}",
-                                    style: 9.w4(
+                                    "PPG: ${double.parse(((widget.pickPlayer.dataAvgList.toJson()[ParamUtils.getProKey(widget.pickPlayer.betData[index].toLowerCase())]) ?? 0).toString()).toStringAsFixed(1)}P",
+                                    style: 10.w4(
                                         color: AppColors.cB3B3B3, height: 1),
                                   ),
-                                  3.vGap,
                                   Text(
-                                    "L5: ${double.parse(((widget.pickPlayer.guessInfo.l5Avg.toJson()[ParamUtils.getProKey(widget.pickPlayer.betData[index].toLowerCase())]) ?? 0).toString()).toStringAsFixed(1)}",
-                                    style: 9.w4(
+                                    "L5: ${double.parse(((widget.pickPlayer.guessInfo.l5Avg.toJson()[ParamUtils.getProKey(widget.pickPlayer.betData[index].toLowerCase())]) ?? 0).toString()).toStringAsFixed(1)}P",
+                                    style: 10.w4(
                                         color: AppColors.cB3B3B3, height: 1),
                                   )
                                 ],
