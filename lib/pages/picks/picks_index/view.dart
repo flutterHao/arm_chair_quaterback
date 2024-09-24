@@ -95,8 +95,6 @@ class _PicksIndexPageState extends State<PicksIndexPage>
               .padding
               .top + 6.w + 11.w),
       child: SmartRefresher(
-        header: const WaterDropHeader(),
-        footer: const ClassicFooter(),
         controller: picksIndexController.refreshController,
         onRefresh: () => picksIndexController.loading(),
         child: CustomScrollView(

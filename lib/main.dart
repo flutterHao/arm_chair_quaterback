@@ -15,6 +15,7 @@ import 'package:arm_chair_quaterback/common/utils/global.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 Future<void> main() async {
   await Global.init();
@@ -39,23 +40,27 @@ class MyApp extends StatelessWidget {
             // designSize:
             //     isMax ? const Size(MAXWEBWIDTH, 812) : const Size(375, 812),
             designSize: const Size(375, 812),
-            builder: (context, widget) => GetMaterialApp(
-              title: 'arm chair puaterback',
-              theme: AppTheme.light,
-              debugShowCheckedModeBanner: false,
-              initialRoute: AppPages.main,
-              getPages: AppPages.routes,
-              builder: EasyLoading.init(),
-              translations: TranslationService(),
-              initialBinding: AllControllerBindings(),
-              navigatorObservers: [AppPages.observer],
-              supportedLocales: ConfigStore.to.languages,
-              locale: ConfigStore.to.locale,
-              fallbackLocale: const Locale('en', 'US'),
-              enableLog: true,
-              // logWriterCallback: Log.write,
-              defaultTransition: Transition.rightToLeftWithFade,
-              //  defaultTransition: Transition.noTransition,
+            builder: (context, widget) => RefreshConfiguration(
+              headerBuilder: () => const WaterDropHeader(),        // Configure the default header indicator. If you have the same header indicator for each page, you need to set this
+              footerBuilder:  () => const ClassicFooter(),
+              child: GetMaterialApp(
+                title: 'arm chair puaterback',
+                theme: AppTheme.light,
+                debugShowCheckedModeBanner: false,
+                initialRoute: AppPages.main,
+                getPages: AppPages.routes,
+                builder: EasyLoading.init(),
+                translations: TranslationService(),
+                initialBinding: AllControllerBindings(),
+                navigatorObservers: [AppPages.observer],
+                supportedLocales: ConfigStore.to.languages,
+                locale: ConfigStore.to.locale,
+                fallbackLocale: const Locale('en', 'US'),
+                enableLog: true,
+                // logWriterCallback: Log.write,
+                defaultTransition: Transition.rightToLeftWithFade,
+                //  defaultTransition: Transition.noTransition,
+              ),
             ),
           );
         }),

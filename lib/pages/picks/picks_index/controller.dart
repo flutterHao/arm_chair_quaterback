@@ -12,7 +12,6 @@ import 'package:arm_chair_quaterback/common/entities/user_entiry/user_entiry.dar
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/enums/rank_type.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
-import 'package:arm_chair_quaterback/common/utils/param_utils.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -89,7 +88,7 @@ class PicksIndexController extends GetxController {
       var propertyName = picksPlayer.betData[int.parse(betDataIndex)];
       guessData.guessAttr = propertyName.toLowerCase();
       guessData.guessChoice = int.parse(choiceIndex);
-      guessData.guessReferenceValue = guessInfo.guessReferenceValue.getREB();
+      guessData.guessReferenceValue = guessInfo.guessReferenceValue.getValue(propertyName);
       guessParamEntity.guessData = [guessData];
       params.add(guessParamEntity);
     }
@@ -128,9 +127,8 @@ class PicksIndexController extends GetxController {
     }
   }
 
-  loading(){
-    print('loadStatusRx.value:${loadStatusRx.value}');
-    if(loadStatusRx.value == LoadDataStatus.loading){
+  loading() {
+    if (loadStatusRx.value == LoadDataStatus.loading) {
       refreshController.refreshCompleted();
       return;
     }
@@ -160,6 +158,7 @@ class PicksIndexController extends GetxController {
           results[1] as NbaPlayerInfosEntity;
       NewsDefineEntity newsDefineEntity = results[2] as NewsDefineEntity;
       List<NbaTeamEntity> nbaTeams = results[3] as List<NbaTeamEntity>;
+
       ///rank 排行榜
       rankInfo = results[4] as RankListEntity;
       for (GuessInfosEntity e in guessInfosEntity) {
@@ -190,9 +189,9 @@ class PicksIndexController extends GetxController {
         picksPlayer.guessInfo = e;
         picksPlayers.add(picksPlayer);
       }
-      if(picksPlayers.isEmpty && rankInfo.ranks.isEmpty){
+      if (picksPlayers.isEmpty && rankInfo.ranks.isEmpty) {
         loadStatusRx.value = LoadDataStatus.noData;
-      }else{
+      } else {
         loadStatusRx.value = LoadDataStatus.success;
       }
       refreshController.refreshCompleted();
@@ -205,7 +204,7 @@ class PicksIndexController extends GetxController {
         scrollController.removeListener(_scrollListener);
         scrollController.addListener(_scrollListener);
       }
-    },onError: (e){
+    }, onError: (e) {
       loadStatusRx.value = LoadDataStatus.error;
     });
   }

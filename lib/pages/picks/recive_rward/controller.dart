@@ -5,8 +5,10 @@ import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/entities/recive_award_entity.dart';
+import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'index.dart';
 
@@ -15,38 +17,48 @@ class ReciveRwardController extends GetxController {
 
   List<List<PicksPlayer>> listData = [];
   final state = ReciveRwardState();
+  RefreshController refreshController = RefreshController();
 
   NewsDefineEntity? newsDefineEntity;
 
-  // tap
-  void handleTap(int index) {
-    Get.snackbar(
-      "标题",
-      "消息",
-    );
+  var loadStatusRx = LoadDataStatus.loading.obs;
+
+
+
+  loading() {
+    if (loadStatusRx.value == LoadDataStatus.loading) {
+      refreshController.refreshCompleted();
+      return;
+    }
+    _initData();
   }
+
 
   /// 在 widget 内存中分配后立即调用。
   @override
   void onInit() {
     super.onInit();
     _initData();
-    PicksApi.getNewsDefine().then((result) {
-      newsDefineEntity = result;
-    });
   }
 
   void _initData() {
-    Future.wait([
+    loadStatusRx.value = LoadDataStatus.loading;
+    var futures = [
       PicksApi.getGuessInfos(),
       PicksApi.getNBATeamDefine(),
       PicksApi.getNBAPlayerInfo(),
-    ]).then((result) {
+    ];
+    if(newsDefineEntity == null){
+      futures.add(PicksApi.getNewsDefine());
+    }
+    Future.wait(futures).then((result) {
       List<List<ReciveAwardEntity>> result0 =
           result[0] as List<List<ReciveAwardEntity>>;
       List<NbaTeamEntity> result1 = result[1] as List<NbaTeamEntity>;
       NbaPlayerInfosEntity result2 = result[2] as NbaPlayerInfosEntity;
-
+      if(result.length==4){
+        newsDefineEntity = result[3] as NewsDefineEntity;
+      }
       /// 1.剔除status为1（未开奖）的数据项
       /// 2.剔除未中奖的（awards为空）
       var guessHistoryList = result0
@@ -70,27 +82,17 @@ class ReciveRwardController extends GetxController {
         }
         listData.add(players);
       }
+      if(newsDefineEntity == null || listData.isEmpty){
+        loadStatusRx.value = LoadDataStatus.noData;
+      }else{
+        loadStatusRx.value = LoadDataStatus.success;
+      }
+      refreshController.refreshCompleted();
       update();
+    },onError: (e){
+      loadStatusRx.value = LoadDataStatus.error;
     });
 
-  }
-
-  /// 在 onInit() 之后调用 1 帧。这是进入的理想场所
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  /// 在 [onDelete] 方法之前调用。
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  /// dispose 释放内存
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   /// 一键领取所有奖励
@@ -99,4 +101,5 @@ class ReciveRwardController extends GetxController {
       _initData();
     });
   }
+
 }

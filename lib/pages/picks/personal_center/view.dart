@@ -8,6 +8,7 @@ import 'package:arm_chair_quaterback/common/widgets/app_bar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/empty_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/personal_center/widgets/recive_award_pick_page/recive_award_picks_page.dart';
 import 'package:arm_chair_quaterback/pages/picks/recive_rward/widgets/recive_award_item/recive_award_item.dart';
 import 'package:flutter/material.dart';
@@ -59,22 +60,24 @@ class PersonalCenterPage extends GetView<PersonalCenterController> {
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
-                          height: 12.w,
-                          width: 30.w,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              color: AppColors.cE7B6DF,
-                              borderRadius: BorderRadius.circular(6.w)),
-                          child: Text(
-                            "KOI",
-                            style: 10.w4(color: AppColors.cFFFFFF, height: 1),
-                          ),
-                        ),
-                        8.vGap,
+                        // future
+                        // Container(
+                        //   height: 12.w,
+                        //   width: 30.w,
+                        //   alignment: Alignment.center,
+                        //   decoration: BoxDecoration(
+                        //       color: AppColors.cE7B6DF,
+                        //       borderRadius: BorderRadius.circular(6.w)),
+                        //   child: Text(
+                        //     "KOI",
+                        //     style: 10.w4(color: AppColors.cFFFFFF, height: 1),
+                        //   ),
+                        // ),
+                        // 8.vGap,
                         Text(
-                          "User Name",
+                          "${Get.find<HomeController>().userEntiry.teamLoginInfo?.team?.teamName}",
                           style: 16.w4(color: AppColors.cE6E6E6, height: 1),
                         )
                       ],

@@ -46,8 +46,7 @@ class _GuessItemState extends State<GuessItem>
       /// 如果已选择则直接滚动到对应tab
       var index = widget.pickPlayer.betData.indexWhere((e) =>
           ParamUtils.getProKey(e.toLowerCase()).toLowerCase() ==
-          widget.pickPlayer.guessInfo.guessData[0].guessAttr
-              .toLowerCase());
+          widget.pickPlayer.guessInfo.guessData[0].guessAttr.toLowerCase());
       guessItemController.tabController
           .animateTo(index, duration: Duration.zero);
     }
@@ -152,9 +151,13 @@ class _GuessItemState extends State<GuessItem>
                               children: [
                                 Text(
                                     double.parse(((guessItemController
-                                                        .player
-                                                        .guessInfo
-                                                        .guessReferenceValue.getREB().toStringAsFixed(0))??
+                                                    .player
+                                                    .guessInfo
+                                                    .guessReferenceValue
+                                                    .getValue(
+                                                        guessItemController
+                                                            .player
+                                                            .betData[index])) ??
                                                 0)
                                             .toString())
                                         .toStringAsFixed(0),
@@ -281,8 +284,7 @@ class _GuessItemState extends State<GuessItem>
         ? false
         : widget.pickPlayer.guessInfo.guessData[0].guessChoice ==
                 int.parse(ml) &&
-            widget.pickPlayer.guessInfo.guessData[0].guessAttr
-                    .toLowerCase() ==
+            widget.pickPlayer.guessInfo.guessData[0].guessAttr.toLowerCase() ==
                 ParamUtils.getProKey(
                         widget.pickPlayer.betData[index].toLowerCase())
                     .toLowerCase();
@@ -582,9 +584,13 @@ class _GuessItemState extends State<GuessItem>
                                               children: [
                                                 Text(
                                                   double.parse(((guessItemController
-                                                                      .player
-                                                                      .guessInfo
-                                                                      .guessReferenceValue.getREB().toStringAsFixed(0)) ??
+                                                                  .player
+                                                                  .guessInfo
+                                                                  .guessReferenceValue
+                                                                  .getValue(guessItemController
+                                                                          .player
+                                                                          .betData[
+                                                                      index])) ??
                                                               0)
                                                           .toString())
                                                       .toStringAsFixed(0),

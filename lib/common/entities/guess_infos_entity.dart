@@ -123,7 +123,20 @@ class GuessInfosGuessReferenceValue {
 
   Map<String, dynamic> toJson() => $GuessInfosGuessReferenceValueToJson(this);
 
-  double getREB(){
+  double getValue(String key) {
+    if(key.toLowerCase() == "reb"){
+      return _getREB();
+    }
+    var json = toJson();
+    for (var k in json.keys) {
+      if (k.toLowerCase() == key.toLowerCase()) {
+        return json[k];
+      }
+    }
+    return 0;
+  }
+
+  double _getREB(){
     return (dreb+oreb)/2;
   }
 

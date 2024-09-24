@@ -63,20 +63,19 @@ class ReciveAwardDetailItem extends StatelessWidget {
                           height: 1,
                           overflow: TextOverflow.ellipsis),
                     ),
-                    4.vGap,
+                    2.vGap,
                     Text(
                       "VS ${player.awayTeamInfo.shortEname} ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(player.reciveAwardInfo.gameStartTime))}AM",
-                      style: 9.w4(color: AppColors.cB3B3B3, height: 1),
+                      style: 10.w4(color: AppColors.cB3B3B3, height: 1),
                     ),
-                    8.vGap,
+                    6.vGap,
                     Text(
-                      "PPG: ${double.parse(player.dataAvgList.toJson()[ParamUtils.getProKey(player.reciveAwardInfo.guessData[0].guessAttr)].toString()).toStringAsFixed(0)}P",
-                      style: 9.w4(color: AppColors.cB3B3B3, height: 1),
+                      "PPG: ${double.parse(player.dataAvgList.getValue(player.reciveAwardInfo.guessData[0].guessAttr).toString()).toStringAsFixed(0)}P",
+                      style: 10.w4(color: AppColors.cB3B3B3, height: 1),
                     ),
-                    3.vGap,
                     Text(
-                      "L5: ${double.parse(player.reciveAwardInfo.l5Avg.toJson()[ParamUtils.getProKey(player.reciveAwardInfo.guessData[0].guessAttr)].toString()).toStringAsFixed(0)}P",
-                      style: 9.w4(color: AppColors.cB3B3B3, height: 1),
+                      "L5: ${double.parse(player.reciveAwardInfo.l5Avg.getValue(player.reciveAwardInfo.guessData[0].guessAttr).toString()).toStringAsFixed(0)}P",
+                      style: 10.w4(color: AppColors.cB3B3B3, height: 1),
                     )
                   ],
                 ),
@@ -112,12 +111,12 @@ class ReciveAwardDetailItem extends StatelessWidget {
                         IconWidget(
                           // icon:Assets.uiTriangleGPng,
                           icon: player.reciveAwardInfo.guessData[0].awards
-                              .isNotEmpty
+                                  .isNotEmpty
                               ? Assets.uiTriangleGPng
                               : Assets.uiTriangleRPng,
                           iconWidth: 7.w,
                           iconColor: player.reciveAwardInfo.guessData[0].awards
-                              .isNotEmpty
+                                  .isNotEmpty
                               ? AppColors.c10A86A
                               : AppColors.cE72646,
                         ),
@@ -125,7 +124,12 @@ class ReciveAwardDetailItem extends StatelessWidget {
                           width: 3.w,
                         ),
                         Text(
-                          "0.5",
+                          (player.reciveAwardInfo.guessData[0]
+                                      .guessGameAttrValue -
+                                  player.reciveAwardInfo.guessData[0]
+                                      .guessReferenceValue)
+                              .abs()
+                              .toStringAsFixed(1),
                           style: TextStyle(
                               color: player.reciveAwardInfo.guessData[0].awards
                                       .isNotEmpty
@@ -147,14 +151,25 @@ class ReciveAwardDetailItem extends StatelessWidget {
                       width: 83.w,
                       height: 24.w,
                       alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage(player.reciveAwardInfo.guessData[0].awards
-                                  .isNotEmpty?Assets.uiBingoPng:Assets.testTeamLogoPng),// todo 换图s
-                              fit: BoxFit.fitWidth)),
-                      child:
-                          Text("BINGO", style: 11.w7(color: player.reciveAwardInfo.guessData[0].awards
-                              .isNotEmpty?AppColors.c10A86A:AppColors.cB3B3B3)),
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          IconWidget(
+                            iconWidth: 83.w,
+                            icon: Assets.uiBingoPng,
+                            iconColor: player.reciveAwardInfo.guessData[0]
+                                    .awards.isNotEmpty
+                                ? AppColors.c10A86A
+                                : AppColors.cB3B3B3,
+                          ),
+                          Text("BINGO",
+                              style: 11.w7(
+                                  color: player.reciveAwardInfo.guessData[0]
+                                          .awards.isNotEmpty
+                                      ? AppColors.c10A86A
+                                      : AppColors.cB3B3B3)),
+                        ],
+                      ),
                     ),
                     Text(
                       "winner ${player.reciveAwardInfo.guessData[0].winPro}%",
