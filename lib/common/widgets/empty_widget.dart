@@ -10,7 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 ///created at 2024/9/23/11:22
 
 class EmptyWidget extends StatelessWidget {
-  const EmptyWidget({this.icon=Assets.testTeamLogoPng,this.text='No Data~~',super.key});
+  const EmptyWidget({this.icon=Assets.testTeamLogoPng,this.text='Data Lost ~~',super.key});
 
   final String icon;
   final String text;

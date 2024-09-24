@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:arm_chair_quaterback/common/net/address.dart';
 import 'package:arm_chair_quaterback/common/net/inerceptor/net_interceptor.dart';
 import 'package:dio/dio.dart';
@@ -66,7 +67,7 @@ class HttpUtil {
     _dio.interceptors.add(LogInterceptor(
       requestBody: true,
       responseBody: true,
-      // logPrint: (o) => log(o.toString()),
+      logPrint: (o) => log(o.toString()),
     ));
   }
 

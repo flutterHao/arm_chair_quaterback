@@ -1,6 +1,10 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/param_utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -9,7 +13,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 ///created at 2024/9/11/13:06
 
 class ReciveAwardDetailItem extends StatelessWidget {
-  const ReciveAwardDetailItem({super.key});
+  const ReciveAwardDetailItem(this.player, {super.key});
+
+  final PicksPlayer player;
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +42,11 @@ class ReciveAwardDetailItem extends StatelessWidget {
                       borderRadius: BorderRadius.circular(26.w)),
                   child: Stack(children: [
                     Image.asset(
-                      Assets.testTeamLogoPng,
+                      Assets.testTeamLogoPng, //todo 换网络图
                       width: 55.w,
                     ),
-                    Text("SS", style: 14.w7(color: AppColors.c262626))
+                    Text(player.baseInfoList.grade,
+                        style: 14.w7(color: AppColors.c262626))
                   ]),
                 ),
               ),
@@ -50,7 +57,7 @@ class ReciveAwardDetailItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "PLAYER NAME",
+                      player.baseInfoList.ename,
                       style: 13.w4(
                           color: AppColors.c666666,
                           height: 1,
@@ -58,17 +65,17 @@ class ReciveAwardDetailItem extends StatelessWidget {
                     ),
                     4.vGap,
                     Text(
-                      "VS NOP 8:05AM",
+                      "VS NOP ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(player.reciveAwardInfo.gameStartTime))}AM",
                       style: 9.w4(color: AppColors.cB3B3B3, height: 1),
                     ),
                     8.vGap,
                     Text(
-                      "PPG: 26P",
+                      "PPG: ${double.parse(player.dataAvgList.toJson()[ParamUtils.getProKey(player.reciveAwardInfo.guessData[0].guessAttr)].toString()).toStringAsFixed(0)}P",
                       style: 9.w4(color: AppColors.cB3B3B3, height: 1),
                     ),
                     3.vGap,
                     Text(
-                      "L10: 26.7P",
+                      "L5: ${double.parse(player.reciveAwardInfo.l5Avg.toJson()[ParamUtils.getProKey(player.reciveAwardInfo.guessData[0].guessAttr)].toString()).toStringAsFixed(0)}P",
                       style: 9.w4(color: AppColors.cB3B3B3, height: 1),
                     )
                   ],
@@ -90,19 +97,29 @@ class ReciveAwardDetailItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text("25.6", style: 18.w7(color: AppColors.c666666)),
                     Text(
-                      "PTS",
+                        "${player.reciveAwardInfo.guessData[0].guessGameAttrValue}",
+                        style: 18.w7(color: AppColors.c666666)),
+                    Text(
+                      player.reciveAwardInfo.guessData[0].guessAttr
+                          .toUpperCase(),
                       style:
                           TextStyle(fontSize: 11.sp, color: AppColors.c666666),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset(
-                          Assets.uiTriangleGPng,
-                          width: 7.w,
-                          fit: BoxFit.fitWidth,
+                        IconWidget(
+                          // icon:Assets.uiTriangleGPng,
+                          icon: player.reciveAwardInfo.guessData[0].awards
+                              .isNotEmpty
+                              ? Assets.uiTriangleGPng
+                              : Assets.uiTriangleRPng,
+                          iconWidth: 7.w,
+                          iconColor: player.reciveAwardInfo.guessData[0].awards
+                              .isNotEmpty
+                              ? AppColors.c10A86A
+                              : AppColors.cE72646,
                         ),
                         SizedBox(
                           width: 3.w,
@@ -110,7 +127,11 @@ class ReciveAwardDetailItem extends StatelessWidget {
                         Text(
                           "0.5",
                           style: TextStyle(
-                              color: AppColors.c10A86A, fontSize: 10.sp),
+                              color: player.reciveAwardInfo.guessData[0].awards
+                                      .isNotEmpty
+                                  ? AppColors.c10A86A
+                                  : AppColors.cE72646,
+                              fontSize: 10.sp),
                         )
                       ],
                     )
@@ -122,34 +143,21 @@ class ReciveAwardDetailItem extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          Assets.uiIconMoneyBPng,
-                          width: 11.w,
-                          fit: BoxFit.fitWidth,
-                        ),
-                        Text(
-                          "+500",
-                          style: TextStyle(
-                              color: AppColors.c545454, fontSize: 12.sp),
-                        )
-                      ],
-                    ),
                     Container(
                       width: 83.w,
                       height: 24.w,
                       alignment: Alignment.center,
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                           image: DecorationImage(
-                              image: AssetImage(Assets.uiBingoPng),
+                              image: AssetImage(player.reciveAwardInfo.guessData[0].awards
+                                  .isNotEmpty?Assets.uiBingoPng:Assets.testTeamLogoPng),// todo 换图s
                               fit: BoxFit.fitWidth)),
                       child:
-                          Text("BINGO", style: 11.w7(color: AppColors.c10A86A)),
+                          Text("BINGO", style: 11.w7(color: player.reciveAwardInfo.guessData[0].awards
+                              .isNotEmpty?AppColors.c10A86A:AppColors.cB3B3B3)),
                     ),
                     Text(
-                      "winner 45.3%",
+                      "winner ${player.reciveAwardInfo.guessData[0].winPro}%",
                       style:
                           TextStyle(fontSize: 10.sp, color: AppColors.cB3B3B3),
                     )

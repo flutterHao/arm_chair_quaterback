@@ -75,6 +75,7 @@ class ReciveAwardGuessData {
 	late List<ReciveAwardGuessDataAwards> awards;
 	late bool success;
 	late int guessReferenceValue;
+	late int guessGameAttrValue;
 	late int winPro;
 	late int status;
 

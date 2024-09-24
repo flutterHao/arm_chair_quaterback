@@ -119,7 +119,7 @@ class _GuessItemState extends State<GuessItem>
                                   ),
                                   4.vGap,
                                   Text(
-                                    "VS ${guessItemController.player.awayTeamInfo.shortEname}   ${MyDateUtils.formatHM(MyDateUtils.getDateTimeByMs(guessItemController.player.guessInfo.gameStartTime))}",
+                                    "VS ${guessItemController.player.awayTeamInfo.shortEname}   ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(guessItemController.player.guessInfo.gameStartTime))}",
                                     style: 9.w4(
                                         color: AppColors.cB3B3B3, height: 1),
                                   ),

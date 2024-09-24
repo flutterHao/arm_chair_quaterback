@@ -1,11 +1,12 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/recive_award_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
-import 'package:arm_chair_quaterback/common/widgets/empty_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/recive_rward/widgets/recive_award_detail_item.dart';
 import 'package:arm_chair_quaterback/pages/picks/recive_rward/widgets/recive_award_item/recive_award_item_controller.dart';
 import 'package:flutter/material.dart';
@@ -17,10 +18,12 @@ import 'package:get/get.dart';
 ///created at 2024/9/23/16:50
 
 class ReciveAwardItem extends StatelessWidget {
-  ReciveAwardItem(this.data, this.newsDefineEntity, {super.key});
+  ReciveAwardItem(this.data, this.newsDefineEntity,
+      {this.personalCenterPage = false, super.key});
 
-  final List<ReciveAwardEntity> data;
+  final List<PicksPlayer> data;
   final NewsDefineEntity newsDefineEntity;
+  final bool personalCenterPage;
 
   late ReciveAwardItemController controller;
 
@@ -56,17 +59,25 @@ class ReciveAwardItem extends StatelessWidget {
                           style: 16.w7(color: AppColors.cF2F2F2, height: 1),
                         ),
                       ),
-                      if (controller.getAwardCoin() != null) ...[
-                        12.hGap,
-                        IconWidget(
-                            iconWidth: 17.w,
-                            icon: Assets.testTeamLogoPng), //todo 换图
-                        4.hGap,
-                        Text(
-                          "+${controller.getAwardCoin()}",
-                          style: 16.w7(color: AppColors.c10A86A, height: 1),
-                        ),
-                      ]
+                      12.hGap,
+                      IconWidget(
+                        iconWidth: 17.w,
+                        icon: Assets.uiIconJettonPng,
+                        iconColor: controller.getAwardCoin() == null
+                            ? AppColors.cE72646
+                            : AppColors.c10A86A,
+                      ), //todo 换图
+                      4.hGap,
+                      Text(
+                        controller.getAwardCoin() == null
+                            ? ("-${controller.getCostCount()}")
+                            : ("+${controller.getAwardCoin()!}"),
+                        style: 16.w7(
+                            color: controller.getAwardCoin() == null
+                                ? AppColors.cE72646
+                                : AppColors.c10A86A,
+                            height: 1),
+                      ),
                     ],
                   ),
                   Text(
@@ -123,21 +134,41 @@ class ReciveAwardItem extends StatelessWidget {
                       }),
                     ),
                   ),
-                  InkWell(
-                    onTap: () => controller.getGuessAward,
-                    child: Container(
-                      width: 98.w,
+                  if (personalCenterPage)
+                    Container(
+                      width: 68.w,
                       height: 27.w,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                          color: data[0].guessData[0].status == 2 ?AppColors.cFF7954:AppColors.cB3B3B3,
-                          borderRadius: BorderRadius.circular(14.w)),
+                        borderRadius: BorderRadius.circular(14.w),
+                          border:
+                              Border.all(color: AppColors.c262626.withOpacity(.2), width: 1)),
                       child: Text(
-                        data[0].guessData[0].status == 2 ? "GET" : "SAL",
-                        style: 14.w4(color: AppColors.cF2F2F2),
+                        "View all",
+                        style: 12.w4(color: AppColors.c666666),
                       ),
-                    ),
-                  )
+                    )
+                  else
+                    InkWell(
+                      onTap: () => controller.getGuessAward(),
+                      child: Container(
+                        width: 98.w,
+                        height: 27.w,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            color:
+                                data[0].reciveAwardInfo.guessData[0].status == 2
+                                    ? AppColors.cFF7954
+                                    : AppColors.cB3B3B3,
+                            borderRadius: BorderRadius.circular(14.w)),
+                        child: Text(
+                          data[0].reciveAwardInfo.guessData[0].status == 2
+                              ? "GET"
+                              : "SAL",
+                          style: 14.w4(color: AppColors.cF2F2F2),
+                        ),
+                      ),
+                    )
                 ],
               )
             ],
@@ -148,6 +179,11 @@ class ReciveAwardItem extends StatelessWidget {
   }
 
   Future<dynamic> _buildDetailDialog(BuildContext context) {
+    int winTimesCount = data
+        .where((e) => e.reciveAwardInfo.guessData[0].awards.isNotEmpty)
+        .toList()
+        .length;
+    int lossTimesCount = data.length - winTimesCount;
     return showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -185,7 +221,7 @@ class ReciveAwardItem extends StatelessWidget {
                               topRight: Radius.circular(22.w))),
                       child: Column(
                         children: [
-                          Container(
+                          SizedBox(
                             width: double.infinity,
                             child: Stack(
                               alignment: Alignment.center,
@@ -199,7 +235,10 @@ class ReciveAwardItem extends StatelessWidget {
                                       color: AppColors.c1A1A1A,
                                       borderRadius: BorderRadius.circular(8)),
                                   child: Text(
-                                    "AM 8:05",
+                                    MyDateUtils.formatAM_HM(
+                                        MyDateUtils.getDateTimeByMs(data[0]
+                                            .reciveAwardInfo
+                                            .createTime)),
                                     style: TextStyle(
                                       color: AppColors.cB3B3B3,
                                       fontSize: 12.sp,
@@ -214,7 +253,7 @@ class ReciveAwardItem extends StatelessWidget {
                                       print('点击了关闭');
                                       Get.back(id: GlobalNestedKey.PICKS);
                                     },
-                                    child: Container(
+                                    child: SizedBox(
                                       width: 45.w,
                                       height: 45.w,
                                       child: Image.asset(
@@ -256,13 +295,13 @@ class ReciveAwardItem extends StatelessWidget {
                                           children: [
                                             Container(
                                               constraints: BoxConstraints(
-                                                  maxWidth: 150.w),
+                                                  maxWidth: 100.w),
                                               child: Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    "Player Name",
+                                                    "${Get.find<HomeController>().userEntiry.teamLoginInfo?.team?.teamName}",
                                                     style: TextStyle(
                                                         color:
                                                             AppColors.cFF7954,
@@ -285,13 +324,12 @@ class ReciveAwardItem extends StatelessWidget {
                                                             fontSize: 10.sp),
                                                       ),
                                                       Text(
-                                                        "3-2",
+                                                        "$winTimesCount-$lossTimesCount",
                                                         style: TextStyle(
                                                             color: AppColors
                                                                 .cB3B3B3,
                                                             fontSize: 12.sp),
                                                       ),
-                                                      Container(),
                                                     ],
                                                   ),
                                                   Row(
@@ -307,17 +345,10 @@ class ReciveAwardItem extends StatelessWidget {
                                                             fontSize: 10.sp),
                                                       ),
                                                       Text(
-                                                        "25.5x",
+                                                        "${controller.getBetCount()}x",
                                                         style: TextStyle(
                                                             color: AppColors
                                                                 .cB3B3B3,
-                                                            fontSize: 12.sp),
-                                                      ),
-                                                      Text(
-                                                        "+8x",
-                                                        style: TextStyle(
-                                                            color: AppColors
-                                                                .c10A86A,
                                                             fontSize: 12.sp),
                                                       ),
                                                     ],
@@ -334,9 +365,14 @@ class ReciveAwardItem extends StatelessWidget {
                                 Column(
                                   children: [
                                     Text(
-                                      "+256K",
+                                      controller.getAwardCoin() == null
+                                          ? ("-${controller.getCostCount()}")
+                                          : ("+${controller.getAwardCoin()!}"),
                                       style: TextStyle(
-                                          color: AppColors.c10A86A,
+                                          color:
+                                              controller.getAwardCoin() == null
+                                                  ? AppColors.cE72646
+                                                  : AppColors.c10A86A,
                                           fontSize: 24.sp,
                                           fontWeight: FontWeight.bold),
                                     ),
@@ -373,12 +409,12 @@ class ReciveAwardItem extends StatelessWidget {
                       // ),
                       child: ListView.builder(
                           physics: const BouncingScrollPhysics(),
-                          itemCount: 10,
+                          itemCount: data.length,
                           itemBuilder: (context, index) {
                             return Column(
                               children: [
                                 if (index == 0) 8.vGap,
-                                const ReciveAwardDetailItem(),
+                                ReciveAwardDetailItem(data[index]),
                               ],
                             );
                           }),

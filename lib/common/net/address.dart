@@ -14,5 +14,5 @@ class Address {
   ///外网测试地址
   static const String publicDevUrl = 'http://172.18.3.137:7007';
 
-  static const String httpBaseUrl = publicDevUrl;
+  static const String httpBaseUrl = kReleaseMode?publicDevUrl:privateDevUrl;
 }

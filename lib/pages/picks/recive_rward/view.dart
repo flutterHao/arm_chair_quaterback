@@ -1,6 +1,7 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_infos_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/entities/recive_award_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
@@ -27,7 +28,7 @@ class ReciveRwardPage extends GetView<ReciveRwardController> {
     int createTime = 0;
     return Expanded(
         child: controller.newsDefineEntity == null ||
-                controller.guessHistoryList.isEmpty
+                controller.listData.isEmpty
             ? const Center(child: EmptyWidget())
             : CustomScrollView(
                 physics: const BouncingScrollPhysics(),
@@ -35,12 +36,12 @@ class ReciveRwardPage extends GetView<ReciveRwardController> {
                   SliverPadding(
                     padding: const EdgeInsets.symmetric(horizontal: 14),
                     sliver: SliverList.builder(
-                      itemCount: controller.guessHistoryList.length,
+                      itemCount: controller.listData.length,
                       itemBuilder: (BuildContext context, int index) {
-                        List<ReciveAwardEntity> items =
-                            controller.guessHistoryList[index];
+                        List<PicksPlayer> items =
+                            controller.listData[index];
                         var itemData = items[0];
-                        var itemCreateTime = itemData.createTime;
+                        var itemCreateTime = itemData.reciveAwardInfo.createTime;
                         var sameDay = MyDateUtils.isSameDay(
                             MyDateUtils.getDateTimeByMs(createTime),
                             MyDateUtils.getDateTimeByMs(itemCreateTime));
@@ -83,7 +84,7 @@ class ReciveRwardPage extends GetView<ReciveRwardController> {
           bodyWidget: _buildView(context),
           floatWidgets: [
             if (!(controller.newsDefineEntity == null ||
-                controller.guessHistoryList.isEmpty))
+                controller.listData.isEmpty))
             //下注
               Positioned(
                   left: 63.w,
@@ -91,7 +92,7 @@ class ReciveRwardPage extends GetView<ReciveRwardController> {
                   bottom: 20.w,
                   child: Center(
                     child: InkWell(
-                      onTap: ()=> controller.getGuessAllAward,
+                      onTap: ()=> controller.getGuessAllAward(),
                       child: Container(
                         constraints: BoxConstraints(
                           maxWidth: 300.w,

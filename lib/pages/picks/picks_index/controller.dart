@@ -140,7 +140,6 @@ class PicksIndexController extends GetxController {
       PicksApi.getNBATeamDefine(),
       PicksApi.getRedisRankInfo(type: RankType.newsGuess)
     ]).then((results) {
-      print('-------------request--------');
       picksPlayers.clear();
       List<GuessInfosEntity> guessInfosEntity =
           results[0] as List<GuessInfosEntity>;

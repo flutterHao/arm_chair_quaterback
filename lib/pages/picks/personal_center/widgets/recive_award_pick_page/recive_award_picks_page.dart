@@ -1,5 +1,6 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/entities/recive_award_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
@@ -40,7 +41,7 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
     int createTime = 0;
     return GetBuilder<ReciveAwardPicksPageController>(builder: (_) {
       return controller.newsDefineEntity == null ||
-              controller.guessHistoryList.isEmpty
+              controller.listData.isEmpty
           ? const Center(child: EmptyWidget())
           : SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
@@ -170,12 +171,12 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
                     //   child: Text("Aug 1,2024",
                     //       style: 19.w7(color: AppColors.c262626)),
                     // ),
-                    ...List.generate(controller.guessHistoryList.length,
+                    ...List.generate(controller.listData.length,
                         (index) {
-                      List<ReciveAwardEntity> items =
-                          controller.guessHistoryList[index];
+                      List<PicksPlayer> items =
+                          controller.listData[index];
                       var itemData = items[0];
-                      var itemCreateTime = itemData.createTime;
+                      var itemCreateTime = itemData.reciveAwardInfo.createTime;
                       var sameDay = MyDateUtils.isSameDay(
                           MyDateUtils.getDateTimeByMs(createTime),
                           MyDateUtils.getDateTimeByMs(itemCreateTime));
@@ -194,7 +195,7 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
                                       short: true),
                                   style: 19.w7(color: AppColors.c262626)),
                             ),
-                          ReciveAwardItem(items, controller.newsDefineEntity!),
+                          ReciveAwardItem(items, controller.newsDefineEntity!,personalCenterPage: true,),
                         ],
                       );
                     }),

@@ -115,7 +115,7 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                             id: GlobalNestedKey.PICKS);
                         break;
                       case 1:
-                        Get.toNamed(RouteNames.picksPickRank,
+                        Get.toNamed(RouteNames.picksPersonalCenter,
                             id: GlobalNestedKey.PICKS);
                         break;
                       case 2:

@@ -303,6 +303,11 @@ ReciveAwardGuessData $ReciveAwardGuessDataFromJson(Map<String, dynamic> json) {
   if (guessReferenceValue != null) {
     reciveAwardGuessData.guessReferenceValue = guessReferenceValue;
   }
+  final int? guessGameAttrValue = jsonConvert.convert<int>(
+      json['guessGameAttrValue']);
+  if (guessGameAttrValue != null) {
+    reciveAwardGuessData.guessGameAttrValue = guessGameAttrValue;
+  }
   final int? winPro = jsonConvert.convert<int>(json['winPro']);
   if (winPro != null) {
     reciveAwardGuessData.winPro = winPro;
@@ -322,6 +327,7 @@ Map<String, dynamic> $ReciveAwardGuessDataToJson(ReciveAwardGuessData entity) {
   data['awards'] = entity.awards.map((v) => v.toJson()).toList();
   data['success'] = entity.success;
   data['guessReferenceValue'] = entity.guessReferenceValue;
+  data['guessGameAttrValue'] = entity.guessGameAttrValue;
   data['winPro'] = entity.winPro;
   data['status'] = entity.status;
   return data;
@@ -335,6 +341,7 @@ extension ReciveAwardGuessDataExtension on ReciveAwardGuessData {
     List<ReciveAwardGuessDataAwards>? awards,
     bool? success,
     int? guessReferenceValue,
+    int? guessGameAttrValue,
     int? winPro,
     int? status,
   }) {
@@ -345,6 +352,7 @@ extension ReciveAwardGuessDataExtension on ReciveAwardGuessData {
       ..awards = awards ?? this.awards
       ..success = success ?? this.success
       ..guessReferenceValue = guessReferenceValue ?? this.guessReferenceValue
+      ..guessGameAttrValue = guessGameAttrValue ?? this.guessGameAttrValue
       ..winPro = winPro ?? this.winPro
       ..status = status ?? this.status;
   }
