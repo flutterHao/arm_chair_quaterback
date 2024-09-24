@@ -92,7 +92,7 @@ class SubComentsListView extends GetView<CommentController> {
 
   @override
   Widget build(BuildContext context) {
-    RxInt current = 3.obs;
+    RxInt current = 1.obs;
     return SizedBox(
       // width: 295.w,
       child: Obx(() {
@@ -108,6 +108,7 @@ class SubComentsListView extends GetView<CommentController> {
               separatorBuilder: (context, index) => 5.vGap,
               itemBuilder: (context, index) {
                 int has = list.length - current.value;
+
                 return index < length
                     ? CommentItemView(item: list[index], isSub: true)
                     : Container(
@@ -116,7 +117,7 @@ class SubComentsListView extends GetView<CommentController> {
                           children: [
                             InkWell(
                               onTap: () {
-                                current.value += 3;
+                                current.value += current <= 1 ? 3 : 10;
                               },
                               child: SizedBox(
                                 width: 130.w,

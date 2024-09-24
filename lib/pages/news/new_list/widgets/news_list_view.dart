@@ -52,7 +52,7 @@ class NewsItemView extends GetView<NewListController> {
     return Stack(
       children: [
         ShadowContainer(
-          padding: EdgeInsets.all(12.w),
+          padding: EdgeInsets.all(15.w),
           margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 7.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,10 +110,10 @@ class NewsItemView extends GetView<NewListController> {
                   SizedBox(
                       width: 60.w,
                       child: TextIconWidget(
-                        width: 16.w,
+                        width: 20.w,
                         icon: item.isView == 0
-                            ? Assets.uiIconChatting_01Png
-                            : Assets.uiIconChatting_02Png,
+                            ? Assets.uiIconEye_02Png
+                            : Assets.uiIconEye_01Png,
                         color: item.isView == 0
                             ? AppColors.c666666
                             : AppColors.cB3B3B3,
@@ -144,7 +144,7 @@ class NewsItemView extends GetView<NewListController> {
         ),
         Positioned(
           bottom: 18.w,
-          right: 18.w,
+          right: 20.w,
           child: IconWidget(
             iconHeight: 14.w,
             iconWidth: 14.w,
@@ -156,25 +156,25 @@ class NewsItemView extends GetView<NewListController> {
             border: Border.all(width: 1, color: AppColors.cB3B3B3),
           ),
         ),
-        if (item.guess != null)
-          Positioned(
-              top: 0.w,
-              right: 0.w,
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  IconWidget(
-                    iconWidth: 36.w,
-                    icon: Assets.uiIconLabelPng,
-                    iconColor: AppColors.cED1451,
-                  ),
-                  IconWidget(
-                    iconWidth: 16.w,
-                    icon: Assets.uiIconJettonPng,
-                    iconColor: Colors.white,
-                  ),
-                ],
-              ))
+        // if (item.guess != null)
+        //   Positioned(
+        //       top: 0.w,
+        //       right: 0.w,
+        //       child: Stack(
+        //         alignment: Alignment.center,
+        //         children: [
+        //           IconWidget(
+        //             iconWidth: 36.w,
+        //             icon: Assets.uiIconLabelPng,
+        //             iconColor: AppColors.cED1451,
+        //           ),
+        //           IconWidget(
+        //             iconWidth: 16.w,
+        //             icon: Assets.uiIconJettonPng,
+        //             iconColor: Colors.white,
+        //           ),
+        //         ],
+        //       ))
       ],
     );
   }

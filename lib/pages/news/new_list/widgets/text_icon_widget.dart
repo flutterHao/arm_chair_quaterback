@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-10 10:49:23
- * @LastEditTime: 2024-09-21 16:28:14
+ * @LastEditTime: 2024-09-24 16:00:39
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -28,6 +28,7 @@ class TextIconWidget extends StatelessWidget {
       icon,
       width: width,
       height: height,
+      fit: BoxFit.fill,
     );
 
     return Row(
@@ -43,7 +44,7 @@ class TextIconWidget extends StatelessWidget {
         Text(
           text,
           style: 12.w4(
-            color: AppColors.c666666,
+            color: color,
           ),
         )
       ],

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-11 17:18:41
- * @LastEditTime: 2024-09-21 10:06:14
+ * @LastEditTime: 2024-09-24 15:52:28
  */
 class Assets {
   static const ball_1Png = 'assets/images/home/ball_1.png';
@@ -30,6 +30,8 @@ class Assets {
   static const uiIconChatting_02Png =
       'assets/images/icon/ui_icon_chatting_02.png';
   static const uiIconExpansionPng = 'assets/images/icon/ui_icon_expansion.png';
+  static const uiIconEye_01Png = 'assets/images/icon/ui_icon_eye_01.png';
+  static const uiIconEye_02Png = 'assets/images/icon/ui_icon_eye_02.png';
   static const uiIconJettonPng = 'assets/images/icon/ui_icon_jetton.png';
   static const uiIconLabelPng = 'assets/images/icon/ui_icon_label.png';
   static const uiIconLike_01Png = 'assets/images/icon/ui_icon_like_01.png';

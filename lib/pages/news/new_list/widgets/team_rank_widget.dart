@@ -181,25 +181,30 @@ class TeamListView extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ImageWidget(
-                          url: Utils.getTeamUrl(item.teamID),
-                          width: 25.w,
-                          height: 25.w,
-                        ),
-                        2.hGap,
-                        Text(
-                          item.shortEname,
-                          style: 12.w7(),
-                        )
-                      ],
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 8.w),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ImageWidget(
+                            url: Utils.getTeamUrl(item.teamID),
+                            width: 25.w,
+                            height: 25.w,
+                          ),
+                          2.hGap,
+                          Expanded(
+                            child: Text(
+                              item.shortEname,
+                              style: 12.w7(),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                   Expanded(
                     child: Container(
-                      width: 88.w,
                       alignment: Alignment.center,
                       child: Text(
                         "${item.wINS}-${item.lOSSES}",

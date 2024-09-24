@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2024-09-24 10:46:07
+ * @LastEditTime: 2024-09-24 15:07:57
  */
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
@@ -39,6 +39,8 @@ class NewListController extends GetxController {
       getStatsRank(),
       getStarTeamList(),
     ]).then((v) {
+      // refreshCtrl.refreshCompleted();
+    }).whenComplete(() {
       refreshCtrl.refreshCompleted();
     });
   }
@@ -115,7 +117,7 @@ class NewListController extends GetxController {
 
   bool hasContain(int type, TeamRankEntity item) {
     for (var element in state.teamConfigList) {
-      if (item.teamID == element.id&&element.force==type) {
+      if (item.teamID == element.id && element.force == type) {
         item.shortEname = element.shortEname;
         return true;
       }
