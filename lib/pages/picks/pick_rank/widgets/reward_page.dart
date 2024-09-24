@@ -27,7 +27,7 @@ class _RewardPageState extends State<RewardPage>
         id: PickRankController.idAwards,
         builder: (controller) {
           if (controller.rankAwards.isEmpty) {
-            return const Center(child: EmptyWidget());
+            return const Center(child: LoadStatusWidget());
           }
       return Stack(
         children: [

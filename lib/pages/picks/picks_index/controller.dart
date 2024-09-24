@@ -7,15 +7,17 @@ import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dar
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
-import 'package:arm_chair_quaterback/common/entities/rank_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entiry/user_entiry.dart';
+import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/enums/rank_type.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/utils/param_utils.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import '';
 
 import 'index.dart';
 
@@ -26,6 +28,9 @@ class PicksIndexController extends GetxController {
   late ScrollController scrollController = ScrollController();
   final GlobalKey targetKey = GlobalKey(); // 用来标记目标 widget
   var isSelfInfoFloatShow = false.obs; //竞猜榜单自己的信息浮窗是否显示
+  RefreshController refreshController = RefreshController();
+
+  var loadStatusRx = LoadDataStatus.loading.obs;
 
   List<PicksPlayer> picksPlayers = [];
 
@@ -124,15 +129,24 @@ class PicksIndexController extends GetxController {
     }
   }
 
+  loading(){
+    print('loadStatusRx.value:${loadStatusRx.value}');
+    if(loadStatusRx.value == LoadDataStatus.loading){
+      refreshController.refreshCompleted();
+      return;
+    }
+    _initData();
+  }
+
   /// 在 widget 内存中分配后立即调用。
   @override
   void onInit() {
     super.onInit();
-
     _initData();
   }
 
   void _initData() {
+    loadStatusRx.value = LoadDataStatus.loading;
     Future.wait([
       PicksApi.getGuessGamesInfo(),
       PicksApi.getNBAPlayerInfo(),
@@ -147,7 +161,6 @@ class PicksIndexController extends GetxController {
           results[1] as NbaPlayerInfosEntity;
       NewsDefineEntity newsDefineEntity = results[2] as NewsDefineEntity;
       List<NbaTeamEntity> nbaTeams = results[3] as List<NbaTeamEntity>;
-
       ///rank 排行榜
       rankInfo = results[4] as RankListEntity;
       for (GuessInfosEntity e in guessInfosEntity) {
@@ -178,7 +191,14 @@ class PicksIndexController extends GetxController {
         picksPlayer.guessInfo = e;
         picksPlayers.add(picksPlayer);
       }
-      update([idGuessList, idRankLists, idRankLists]);
+      if(picksPlayers.isEmpty && rankInfo.ranks.isEmpty){
+        loadStatusRx.value = LoadDataStatus.noData;
+      }else{
+        loadStatusRx.value = LoadDataStatus.success;
+      }
+      refreshController.refreshCompleted();
+
+      update([idMain]);
       UserEntiry userEntiry = Get.find<HomeController>().userEntiry;
       var indexWhere = rankInfo.ranks.indexWhere(
           (e) => e.teamId == userEntiry.teamLoginInfo?.team?.teamId);
@@ -186,14 +206,12 @@ class PicksIndexController extends GetxController {
         scrollController.removeListener(_scrollListener);
         scrollController.addListener(_scrollListener);
       }
+    },onError: (e){
+      loadStatusRx.value = LoadDataStatus.error;
     });
   }
 
-  static String get idGuessList => "guessList";
-
-  static String get idRankLists => "rankLists";
-
-  static String get idRankList => "rankList";
+  static String get idMain => "main";
 
   /// 在 onInit() 之后调用 1 帧。这是进入的理想场所
   @override

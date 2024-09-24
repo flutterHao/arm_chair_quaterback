@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
@@ -9,8 +10,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 ///@auther gejiahui
 ///created at 2024/9/23/11:22
 
-class EmptyWidget extends StatelessWidget {
-  const EmptyWidget({this.icon=Assets.testTeamLogoPng,this.text='Data Lost ~~',super.key});
+class LoadStatusWidget extends StatelessWidget {
+  const LoadStatusWidget({this.icon=Assets.testTeamLogoPng,this.text='Data Lost ~~',super.key});
 
   final String icon;
   final String text;
@@ -19,8 +20,9 @@ class EmptyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 100.w,
-      width: 100.w,
+      width: double.infinity,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           IconWidget(iconWidth: 70.w, icon: icon),
           5.vGap,

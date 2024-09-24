@@ -29,7 +29,7 @@ class ReciveRwardPage extends GetView<ReciveRwardController> {
     return Expanded(
         child: controller.newsDefineEntity == null ||
                 controller.listData.isEmpty
-            ? const Center(child: EmptyWidget())
+            ? const Center(child: LoadStatusWidget())
             : CustomScrollView(
                 physics: const BouncingScrollPhysics(),
                 slivers: [

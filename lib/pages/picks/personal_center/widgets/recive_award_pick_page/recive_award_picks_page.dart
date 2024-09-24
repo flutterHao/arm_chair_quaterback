@@ -42,7 +42,7 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
     return GetBuilder<ReciveAwardPicksPageController>(builder: (_) {
       return controller.newsDefineEntity == null ||
               controller.listData.isEmpty
-          ? const Center(child: EmptyWidget())
+          ? const Center(child: LoadStatusWidget())
           : SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Container(

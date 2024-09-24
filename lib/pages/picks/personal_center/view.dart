@@ -189,9 +189,9 @@ class PersonalCenterPage extends GetView<PersonalCenterController> {
           ],
           totalScreenWidget:
           TabBarView(controller: controller.tabController, children: const [
-            Center(child: EmptyWidget()),
+            Center(child: LoadStatusWidget()),
             ReciveAwardPicksPage(),
-            Center(child: EmptyWidget()),
+            Center(child: LoadStatusWidget()),
           ]),
         );
       },
