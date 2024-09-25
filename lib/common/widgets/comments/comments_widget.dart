@@ -27,7 +27,7 @@ class CommentsWidget extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    "Comments(${controller.commentList.length})",
+                    "Comments(${controller.list.length})",
                     style: 19.w7(),
                   ),
                 ),
@@ -216,7 +216,7 @@ class CommentItemView extends GetView<CommentController> {
                   13.hGap,
                   if (item.targetId != 0)
                     Container(
-                      width: 70.w,
+                      width: 80.w,
                       child: Text(
                         " ${controller.getTeamName(item)}",
                         style: 12.w4(color: AppColors.cB3B3B3),

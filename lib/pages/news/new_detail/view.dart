@@ -179,7 +179,7 @@ class NewsDetailPage extends StatelessWidget {
         }
 
         void onHorizontalDragEnd(DragEndDetails details) {
-          if (dragPosition > MediaQuery.of(context).size.width / 2) {
+          if (dragPosition > MediaQuery.of(context).size.width / 3) {
             Navigator.of(context).pop();
           } else {
             dragPosition = 0.0.obs;

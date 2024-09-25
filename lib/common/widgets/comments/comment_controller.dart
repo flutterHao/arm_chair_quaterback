@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-11 16:57:58
- * @LastEditTime: 2024-09-25 20:36:13
+ * @LastEditTime: 2024-09-25 20:59:57
  */
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
@@ -40,6 +40,8 @@ class CommentController extends GetxController {
         subComments.add(comment); // 子评论
       }
     }
+    mainComments.sort((a, b) => b.likes!.value.compareTo(a.likes!.value));
+    subComments.sort((a, b) => b.likes!.value.compareTo(a.likes!.value));
 
     // 批量添加评论，减少重复触发响应
     mainList.addAll(mainComments);
@@ -86,7 +88,7 @@ class CommentController extends GetxController {
     Reviews item = await NewsApi.sendReviews(
         newsId, targetId: targetId, parentReviewId: parentReviewId, content);
     targetId == 0 ? mainList.add(item) : subList.add(item);
-    commentList.add(item);
+    list.add(item);
     update();
   }
 
