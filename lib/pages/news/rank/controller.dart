@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:27:52
- * @LastEditTime: 2024-09-24 10:03:11
+ * @LastEditTime: 2024-09-24 17:21:14
  */
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/stats_rank/nba_player_stat.dart';
@@ -40,7 +40,7 @@ class RankController extends GetxController
   // RxString divisionIndex = "PTS".obs;
   // RxString seasonIndex = "2023-24".obs;
 
-  String statType = "PTS";
+  RxString statType = "PTS".obs;
   String season = "2023-24";
   List<NbaPlayerStat> statList = [];
   List<String> seasonList = ["2023-24"];
@@ -104,7 +104,7 @@ class RankController extends GetxController
   }
 
   void getTeamRank() {
-    switch (statType) {
+    switch (statType.value) {
       case "PTS":
         starsTeamRankList.sort((a, b) => b.pts!.compareTo(a.pts!));
       case "AST":
@@ -136,7 +136,7 @@ class RankController extends GetxController
   // }
 
   dynamic getRankValue(dynamic item) {
-    switch (statType) {
+    switch (statType.value) {
       case "PTS":
         return item.pts ?? 0;
       case "AST":

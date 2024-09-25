@@ -97,10 +97,10 @@ class StatsRankPage extends GetView<RankController> {
                             context: context,
                             builder: (context) {
                               return SearchBottomDialog(
-                                controller.statType,
+                                controller.statType.value,
                                 Constant.statTypeList,
                                 (item) {
-                                  controller.statType = item;
+                                  controller.statType.value = item;
                                   controller.update(["search"]);
                                   controller.getStatRank();
                                   controller.getTeamRank();
@@ -114,10 +114,12 @@ class StatsRankPage extends GetView<RankController> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              controller.statType,
-                              style: 10.w7(),
-                            ),
+                            Obx(() {
+                              return Text(
+                                controller.statType.value,
+                                style: 10.w7(),
+                              );
+                            }),
                             8.hGap,
                             IconWidget(
                               iconWidth: 15.w,

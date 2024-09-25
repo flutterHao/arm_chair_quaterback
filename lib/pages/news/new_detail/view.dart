@@ -16,45 +16,6 @@ import 'package:get/get.dart';
 import 'index.dart';
 import 'widgets/widgets.dart';
 
-///TODO: 跳转动画优化
-Route createCustomRoute(Widget cur, Widget page) {
-  return PageRouteBuilder(
-    transitionDuration: const Duration(seconds: 1), // 动画时长 2 秒钟
-    pageBuilder: (context, animation, secondaryAnimation) => page, // 新页面
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      // 缩小和移动退出动画（针对第一个页面）
-      var scaleTween = Tween<double>(begin: 1.0, end: 0.5)
-          .chain(CurveTween(curve: Curves.easeInOut)); // 缩小效果
-      var slideTween =
-          Tween<Offset>(begin: Offset(0.0, 0.0), end: Offset(-0.9, 0.0))
-              .chain(CurveTween(curve: Curves.easeInOut)); // 左侧退出效果
-
-      // 新页面的右侧进入效果
-      var slideInTween =
-          Tween<Offset>(begin: Offset(1.0, 0.0), end: Offset(0.0, 0.0))
-              .chain(CurveTween(curve: Curves.easeInOut)); // 右侧进入效果
-
-      return Stack(
-        children: [
-          // 第一个页面：缩小并从左侧退出
-          SlideTransition(
-            position: animation.drive(slideTween), // 左侧滑出
-            child: ScaleTransition(
-              scale: animation.drive(scaleTween), // 同时缩小
-              child: cur, // 第一个页面内容（当前页面）
-            ),
-          ),
-          // 第二个页面：从右侧进入
-          SlideTransition(
-            position: animation.drive(slideInTween), // 右侧滑入
-            child: page, // 第二个页面内容
-          ),
-        ],
-      );
-    },
-  );
-}
-
 class NewsDetailPage extends StatelessWidget {
   const NewsDetailPage(this.newsId, {super.key});
   final Object? newsId;
@@ -62,6 +23,7 @@ class NewsDetailPage extends StatelessWidget {
   // 主视图
   Widget _buildView(BuildContext context, NewsDetailController controller) {
     return BlackAppWidget(
+      backgroundColor: AppColors.cF2F2F2,
       AppBarWidget(
         id: GlobalNestedKey.NEWS,
         title: "NEWS",
@@ -205,21 +167,73 @@ class NewsDetailPage extends StatelessWidget {
       NewsDetailController(newsId),
       tag: newsId.toString(),
     );
+    RxDouble dragPosition = 0.0.obs;
 
     return GetBuilder<NewsDetailController>(
       tag: newsId.toString(), // 使用 tag 区分控制器实例
       builder: (controller) {
-        // return Obx(() {
-        //   return controller.state.isLoading.value
-        //       ? Center(
-        //           child: Text(
-        //           "Loading...",
-        //           style: 14.w4(),
-        //         ))
-        //       : _buildView(context, controller);
-        // });
-        return _buildView(context, controller);
+        ///TODO: 侧滑返回
+        // void onHorizontalDragUpdate(DragUpdateDetails details) {
+        //   dragPosition.value += details.delta.dx;
+        //   controller.update();
+        // }
+
+        // void onHorizontalDragEnd(DragEndDetails details) {
+        //   if (dragPosition > MediaQuery.of(context).size.width / 2) {
+        //     Navigator.of(context).pop();
+        //   } else {
+        //     dragPosition = 0.0.obs;
+        //     controller.update();
+        //   }
+        // }
+
+        return GestureDetector(
+          // onHorizontalDragUpdate: onHorizontalDragUpdate,
+          // onHorizontalDragEnd: onHorizontalDragEnd,
+          child: Transform.translate(
+              offset: Offset(dragPosition.value, 0),
+              child: _buildView(context, controller)),
+        );
       },
     );
   }
+}
+
+///TODO: 跳转动画优化
+Route createCustomRoute(Widget cur, Widget page) {
+  return PageRouteBuilder(
+    transitionDuration: const Duration(seconds: 1), // 动画时长 2 秒钟
+    pageBuilder: (context, animation, secondaryAnimation) => page, // 新页面
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      // 缩小和移动退出动画（针对第一个页面）
+      var scaleTween = Tween<double>(begin: 1.0, end: 0.5)
+          .chain(CurveTween(curve: Curves.easeInOut)); // 缩小效果
+      var slideTween =
+          Tween<Offset>(begin: Offset(0.0, 0.0), end: Offset(-0.9, 0.0))
+              .chain(CurveTween(curve: Curves.easeInOut)); // 左侧退出效果
+
+      // 新页面的右侧进入效果
+      var slideInTween =
+          Tween<Offset>(begin: Offset(1.0, 0.0), end: Offset(0.0, 0.0))
+              .chain(CurveTween(curve: Curves.easeInOut)); // 右侧进入效果
+
+      return Stack(
+        children: [
+          // 第一个页面：缩小并从左侧退出
+          SlideTransition(
+            position: animation.drive(slideTween), // 左侧滑出
+            child: ScaleTransition(
+              scale: animation.drive(scaleTween), // 同时缩小
+              child: cur, // 第一个页面内容（当前页面）
+            ),
+          ),
+          // 第二个页面：从右侧进入
+          SlideTransition(
+            position: animation.drive(slideInTween), // 右侧滑入
+            child: page, // 第二个页面内容
+          ),
+        ],
+      );
+    },
+  );
 }

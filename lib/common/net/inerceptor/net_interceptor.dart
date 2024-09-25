@@ -219,14 +219,15 @@ class NetInterceptor extends InterceptorsWrapper {
           // 捕获业务逻辑返回的 401 错误
           await _handle401Error(response.requestOptions, handler);
         } else {
-          handlerError(
-              ErrorEntity(code: result.code!, message: result.message ?? ""));
-          return handler.reject(DioException(
-            requestOptions: response.requestOptions,
-            response: response,
-            type: DioExceptionType.badResponse, // 标记为服务器返回错误
-            error: result.message, // 返回错误信息
-          ));
+          await _retryOnError(response.requestOptions, handler);
+          // handlerError(
+          //     ErrorEntity(code: result.code!, message: result.message ?? ""));
+          // return handler.reject(DioException(
+          //   requestOptions: response.requestOptions,
+          //   response: response,
+          //   type: DioExceptionType.badResponse, // 标记为服务器返回错误
+          //   error: result.message, // 返回错误信息
+          // ));
         }
       } else {
         //Map json文件格式
@@ -251,6 +252,32 @@ class NetInterceptor extends InterceptorsWrapper {
     ErrorEntity eInfo = createErrorEntity(err);
     handlerError(eInfo);
     return handler.next(err);
+  }
+
+  Future<void> _retryOnError(
+      RequestOptions requestOptions, ResponseInterceptorHandler handler) async {
+    const maxRetryAttempts = 3;
+    var retryCount = 0;
+
+    while (retryCount < maxRetryAttempts) {
+      try {
+        // 重试请求
+        Log.e("${requestOptions.uri}开始重试");
+        final response = await HttpUtil().dio.fetch(requestOptions);
+        handler.resolve(response); // 返回新请求的结果
+        return;
+      } catch (e) {
+        retryCount++;
+        if (retryCount >= maxRetryAttempts) {
+          handler.reject(DioException(
+            requestOptions: requestOptions,
+            type: DioExceptionType.connectionError,
+            error: '请求失败, 达到最大重试次数',
+          ));
+          return;
+        }
+      }
+    }
   }
 
   Future<void> _handle401Error(

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2024-09-24 15:07:57
+ * @LastEditTime: 2024-09-24 19:27:40
  */
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
@@ -103,8 +103,8 @@ class NewListController extends GetxController {
       state.starTeamList = v[1] as List<StarsTeamRank>;
       state.teamList = v[2] as List<TeamRankEntity>;
       state.teamMap = {
-        1: state.teamList.where((e) => hasContain(1, e)).toList(),
-        2: state.teamList.where((e) => hasContain(2, e)).toList()
+        1: state.teamList.where((e) => hasContain(2, e)).toList(),
+        2: state.teamList.where((e) => hasContain(1, e)).toList(),
       };
       update(['teamRank']);
     });

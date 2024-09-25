@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-12 16:34:46
- * @LastEditTime: 2024-09-22 13:21:38
+ * @LastEditTime: 2024-09-25 11:47:49
  */
 import 'dart:math';
 
@@ -13,6 +13,7 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/comments/comment_controller.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/controller.dart';
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -23,18 +24,23 @@ class CommentDialog extends GetView<CommentController> {
       required this.newsId,
       this.parentId = 0,
       this.targetId = 0,
+      this.isReply = false,
       this.hintText = 'Say something...'});
   final String hintText;
   final int newsId;
   final int parentId;
   final int targetId;
+  final bool isReply;
 
   @override
   Widget build(BuildContext context) {
     // 使用 MediaQuery 来获取键盘的高度
     var ctrl = TextEditingController();
+    var hasText = false.obs;
     NewsDetail detail =
         Get.find<NewsDetailController>(tag: newsId.toString()).state.newDetail;
+    final FocusNode focusNode = FocusNode();
+    if (isReply) focusNode.requestFocus();
     return GetBuilder<CommentController>(
         id: "commentDialog",
         builder: (_) {
@@ -68,6 +74,7 @@ class CommentDialog extends GetView<CommentController> {
                                       controller: ctrl,
                                       minLines: 1,
                                       maxLines: 10,
+                                      focusNode: focusNode,
                                       cursorColor: AppColors.cFF7954,
                                       scrollPadding: const EdgeInsets.all(0),
                                       decoration: InputDecoration(
@@ -78,38 +85,49 @@ class CommentDialog extends GetView<CommentController> {
                                         border: const OutlineInputBorder(
                                             borderSide: BorderSide.none),
                                       ),
+                                      onChanged: (v) {
+                                        hasText.value =
+                                            ObjectUtil.isNotEmpty(v);
+                                      },
                                     ),
                                   ),
-                                  IconButton(
-                                    icon: Container(
-                                      width: 30.w,
-                                      height: 30.w,
-                                      decoration: BoxDecoration(
-                                          color: AppColors.cFF7954,
-                                          borderRadius:
-                                              BorderRadius.circular(15.w)),
-                                      child: Transform.rotate(
-                                        angle: 90 * (pi / 180),
-                                        child: IconWidget(
-                                          iconWidth: 15.w,
-                                          icon: Assets.iconBackPng,
-                                          iconColor: AppColors.c262626,
+                                  Obx(() {
+                                    return AnimatedOpacity(
+                                      opacity: hasText.value ? 1.0 : 0.0,
+                                      duration:
+                                          const Duration(milliseconds: 200),
+                                      child: IconButton(
+                                        icon: Container(
+                                          width: 30.w,
+                                          height: 30.w,
+                                          decoration: BoxDecoration(
+                                              color: AppColors.cFF7954,
+                                              borderRadius:
+                                                  BorderRadius.circular(15.w)),
+                                          child: Transform.rotate(
+                                            angle: 90 * (pi / 180),
+                                            child: IconWidget(
+                                              iconWidth: 15.w,
+                                              icon: Assets.iconBackPng,
+                                              iconColor: AppColors.c262626,
+                                            ),
+                                          ),
                                         ),
+                                        onPressed: () {
+                                          String content = ctrl.text;
+                                          ctrl.text = "";
+                                          FocusScope.of(context).unfocus();
+                                          controller.sendReviews(
+                                            context,
+                                            newsId,
+                                            targetId: targetId,
+                                            parentReviewId: parentId,
+                                            content,
+                                          );
+                                        },
                                       ),
-                                    ),
-                                    onPressed: () {
-                                      String content = ctrl.text;
-                                      ctrl.text = "";
-                                      FocusScope.of(context).unfocus();
-                                      controller.sendReviews(
-                                        context,
-                                        newsId,
-                                        targetId: targetId,
-                                        parentReviewId: parentId,
-                                        content,
-                                      );
-                                    },
-                                  ),
+                                    );
+                                  }),
                                 ],
                               )),
                         ),
@@ -132,7 +150,7 @@ class CommentDialog extends GetView<CommentController> {
                                 : AppColors.cB3B3B3,
                           ),
                         ),
-                      ),
+                      )
                     ],
                   ),
                 ],
@@ -209,7 +227,7 @@ void showCommentBottomSheet(
   int targetId = 0,
 }) {
   showModalBottomSheet(
-    context: context,
+    context: Get.context!,
     isScrollControlled: true, // 设置为 true，允许内容随着键盘升起而调整
     backgroundColor: Colors.transparent,
     builder: (context) {
@@ -217,6 +235,7 @@ void showCommentBottomSheet(
         newsId: newsId,
         parentId: parentId,
         targetId: targetId,
+        isReply: true,
       );
     },
   );

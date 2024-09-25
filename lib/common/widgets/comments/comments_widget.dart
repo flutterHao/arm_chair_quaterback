@@ -66,7 +66,7 @@ class CommentsWidget extends StatelessWidget {
                       if (list.isNotEmpty)
                         Container(
                           // width: 295.w,
-                          margin: EdgeInsets.only(left: 25.w),
+                          margin: EdgeInsets.only(left: 48.w),
                           child: SubComentsListView(list),
                         )
                     ],
@@ -105,7 +105,7 @@ class SubComentsListView extends GetView<CommentController> {
               physics: const NeverScrollableScrollPhysics(),
               itemCount: length + 1,
               shrinkWrap: true,
-              separatorBuilder: (context, index) => 5.vGap,
+              separatorBuilder: (context, index) => 10.vGap,
               itemBuilder: (context, index) {
                 int has = list.length - current.value;
 
@@ -140,10 +140,10 @@ class SubComentsListView extends GetView<CommentController> {
                               ),
                             ),
                             30.hGap,
-                            if (current.value != 0)
+                            if (current.value > 1)
                               InkWell(
                                 onTap: () {
-                                  current.value = 0;
+                                  current.value = 1;
                                 },
                                 child: SizedBox(
                                   width: 100.w,
@@ -200,19 +200,19 @@ class CommentItemView extends GetView<CommentController> {
                     item.teamName ?? "",
                     style: 12.w4(color: Colors.black),
                   ),
-                  6.hGap,
-                  Container(
-                    width: 36.w,
-                    height: 14.w,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(7.w),
-                        color: AppColors.cE7B6DF),
-                    child: Text(
-                      "KOI",
-                      style: 10.w4(color: Colors.white),
-                    ),
-                  ),
+                  // 6.hGap,
+                  // Container(
+                  //   width: 36.w,
+                  //   height: 14.w,
+                  //   alignment: Alignment.center,
+                  //   decoration: BoxDecoration(
+                  //       borderRadius: BorderRadius.circular(7.w),
+                  //       color: AppColors.cE7B6DF),
+                  //   child: Text(
+                  //     "KOI",
+                  //     style: 10.w4(color: Colors.white),
+                  //   ),
+                  // ),
                   13.hGap,
                   if (item.targetId != 0)
                     Expanded(
@@ -250,8 +250,8 @@ class CommentItemView extends GetView<CommentController> {
                       return Padding(
                         padding: const EdgeInsets.all(4),
                         child: IconWidget(
-                          iconWidth: 15.w,
-                          iconHeight: 12.w,
+                          iconWidth: 16.w,
+                          iconHeight: 15.w,
                           icon: item.isLike?.value == true
                               ? Assets.uiIconLike_01Png
                               : Assets.uiIconLike_02Png,

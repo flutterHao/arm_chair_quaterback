@@ -1,3 +1,9 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-09-10 14:39:42
+ * @LastEditTime: 2024-09-24 19:41:21
+ */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:flutter/material.dart';
 
@@ -33,14 +39,14 @@ class ShadowContainer extends StatelessWidget {
       decoration: BoxDecoration(
         color: backgroudColor,
         borderRadius: borderRadius ?? BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: shadowColor ?? Colors.grey.withOpacity(0.2),
-            spreadRadius: 1,
-            blurRadius: 1,
-            // offset: Offset(1, 1), // 设置阴影的偏移量
-          ),
-        ],
+        // boxShadow: [
+        //   BoxShadow(
+        //     color: shadowColor ?? Colors.grey.withOpacity(0.2),
+        //     spreadRadius: 1,
+        //     blurRadius: 1,
+        //     // offset: Offset(1, 1), // 设置阴影的偏移量
+        //   ),
+        // ],
       ),
       child: child,
     );

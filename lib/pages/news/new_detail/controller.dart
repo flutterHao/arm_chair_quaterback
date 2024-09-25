@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:23:17
- * @LastEditTime: 2024-09-22 11:52:56
+ * @LastEditTime: 2024-09-24 20:20:48
  */
 /*
  * @Description: 
@@ -81,7 +81,8 @@ class NewsDetailController extends GetxController {
     // 过滤出符合条件的新闻
     List<NewsDetail> filteredList = newsList.where((e) {
       return checkIsContains(curLabel, e.dataLabel ?? "") &&
-          e.id.toString() != newsId.toString();
+          e.id.toString() != newsId.toString() &&
+          e.isView == 0;
     }).toList();
 
     Log.i("符合条件的新闻数量: ${filteredList.length}");
