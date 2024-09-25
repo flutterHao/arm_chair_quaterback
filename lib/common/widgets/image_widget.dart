@@ -4,6 +4,7 @@
  * @Date: 2024-09-09 17:29:19
  * @LastEditTime: 2024-09-21 10:10:13
  */
+import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +25,7 @@ class ImageWidget extends StatelessWidget {
       required this.url,
       this.width,
       this.height,
-      this.imageFailedPath,
+      this.imageFailedPath = Assets.testTeamLogoPng,//todo 换默认缺省图
       this.borderRadius,
       this.fit = BoxFit.cover,
       this.loadingWidget});
@@ -47,7 +48,7 @@ class ImageWidget extends StatelessWidget {
       width: width,
       height: height,
       decoration: BoxDecoration(
-        // color: Colors.grey,
+        color: Colors.grey,
         borderRadius: borderRadius ?? BorderRadius.circular(20),
       ),
       child: imageFailedPath != null ? Image.asset(imageFailedPath!) : null,

@@ -16,7 +16,7 @@ class Address {
   ///内网测试地址
   static const String privateDevUrl = 'http://10.0.3.38:7007';
 
-  static const String httpBaseUrl = privateDevUrl;
+  static const String httpBaseUrl = personalDevUrl;
 
   // static const String httpBaseUrl = kReleaseMode ? privateDevUrl : personalDevUrl;
 }

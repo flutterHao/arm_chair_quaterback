@@ -21,13 +21,9 @@ import 'widgets/widgets.dart';
 class PersonalCenterPage extends GetView<PersonalCenterController> {
   const PersonalCenterPage({super.key});
 
-  // 主视图
-  Widget _buildView() {
-    return const HelloWidget();
-  }
-
   @override
   Widget build(BuildContext context) {
+    var teamId = (ModalRoute.of(context)?.settings.arguments as Map)["teamId"];
     return GetBuilder<PersonalCenterController>(
       builder: (_) {
         return BlackAppWidget(
@@ -186,10 +182,10 @@ class PersonalCenterPage extends GetView<PersonalCenterController> {
                 ))
           ],
           totalScreenWidget:
-              TabBarView(controller: controller.tabController, children: const [
-            Center(child: LoadStatusWidget()),
-            ReciveAwardPicksPage(),
-            Center(child: LoadStatusWidget()),
+              TabBarView(controller: controller.tabController, children:  [
+            const Center(child: LoadStatusWidget()),
+            ReciveAwardPicksPage(teamId),
+            const Center(child: LoadStatusWidget()),
           ]),
         );
       },

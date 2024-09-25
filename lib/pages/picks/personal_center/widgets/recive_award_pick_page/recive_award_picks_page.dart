@@ -21,7 +21,9 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 ///created at 2024/9/23/17:17
 
 class ReciveAwardPicksPage extends StatefulWidget {
-  const ReciveAwardPicksPage({super.key});
+  const ReciveAwardPicksPage(this.teamId, {super.key});
+
+  final int teamId;
 
   @override
   State<ReciveAwardPicksPage> createState() => _ReciveAwardPicksPageState();
@@ -34,7 +36,7 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
   @override
   void initState() {
     super.initState();
-    controller = Get.put(ReciveAwardPicksPageController());
+    controller = Get.put(ReciveAwardPicksPageController(widget.teamId));
   }
 
   @override
@@ -42,7 +44,6 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
     /// 上一条数据的时间
     int createTime = 0;
     return GetBuilder<ReciveAwardPicksPageController>(builder: (_) {
-      var userEntiry = Get.find<HomeController>().userEntiry;
       return Container(
         padding: EdgeInsets.only(
             top: MediaQuery.of(context).padding.top + 63.w + 88.w + 6.w),
@@ -88,7 +89,7 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "${userEntiry.teamLoginInfo?.team?.benchCount}",
+                                "${controller.teamSimpleEntity?.betCoin ?? 0}",
                                 style:
                                     36.w7(color: AppColors.cFFE8DD, height: 1),
                               ),
@@ -113,7 +114,7 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "256",
+                                        "${controller.teamSimpleEntity?.winCount ?? 0}",
                                         style: 16.w7(
                                             color: AppColors.cFFE8DD,
                                             height: 1),
@@ -133,7 +134,7 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "47%",
+                                        "${controller.teamSimpleEntity?.guessSuccessRate ?? 0}%",
                                         style: 16.w7(
                                             color: AppColors.cFFE8DD,
                                             height: 1),
@@ -148,38 +149,45 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
                                     ],
                                   ),
                                   40.hGap,
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: List.generate(
-                                            5,
-                                            (index) => Container(
-                                                  width: 12.w,
-                                                  height: 12.w,
-                                                  margin: EdgeInsets.only(
-                                                      right: 5.w),
-                                                  decoration: BoxDecoration(
+                                  if (controller
+                                          .teamSimpleEntity!.lastGuess.isNotEmpty)
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: List.generate(
+                                              controller.teamSimpleEntity
+                                                      !.lastGuess.length ,
+                                              (index) => Container(
+                                                    width: 12.w,
+                                                    height: 12.w,
+                                                    margin: EdgeInsets.only(
+                                                        right: 5.w),
+                                                    decoration: BoxDecoration(
 
-                                                      ///todo 判断条件
-                                                      color: index == 3
-                                                          ? AppColors.cE72646
-                                                          : AppColors.c10A86A,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              6.w)),
-                                                )),
-                                      ),
-                                      3.vGap,
-                                      Text(
-                                        "LAST5",
-                                        style: 10.w4(
-                                            color: AppColors.c945D4A,
-                                            height: 1),
-                                      )
-                                    ],
-                                  )
+                                                        ///todo 判断条件
+                                                        color: controller
+                                                                        .teamSimpleEntity
+                                                                        !.lastGuess[
+                                                                    index] ==
+                                                                "0"
+                                                            ? AppColors.cE72646
+                                                            : AppColors.c10A86A,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(6.w)),
+                                                  )),
+                                        ),
+                                        3.vGap,
+                                        Text(
+                                          "LAST5",
+                                          style: 10.w4(
+                                              color: AppColors.c945D4A,
+                                              height: 1),
+                                        )
+                                      ],
+                                    )
                                 ],
                               )
                             ],

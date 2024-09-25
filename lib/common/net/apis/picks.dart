@@ -33,8 +33,10 @@ class PicksApi {
     return guessInfosEntitys;
   }
 
-  static Future<List<List<ReciveAwardEntity>>> getGuessInfos() async {
-    List json = await httpUtil.post(Api.getGuessInfos);
+  static Future<List<List<ReciveAwardEntity>>> getGuessInfos(int teamId) async {
+    List json = await httpUtil.post(Api.getGuessInfos,data: {
+      "teamId":teamId
+    });
     return json
         .map((e) =>
             (e as List).map((f) => ReciveAwardEntity.fromJson(f)).toList())

@@ -8,6 +8,7 @@ import 'package:arm_chair_quaterback/common/entities/recive_award_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
+import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -42,7 +43,7 @@ class ReciveRwardController extends GetxController {
   void _initData() {
     loadStatusRx.value = LoadDataStatus.loading;
     var futures = [
-      PicksApi.getGuessInfos(),
+      PicksApi.getGuessInfos(Get.find<HomeController>().userEntiry.teamLoginInfo!.team!.teamId!),
       CacheApi.getNBATeamDefine(getList: true),
       CacheApi.getNBAPlayerInfo(),
     ];

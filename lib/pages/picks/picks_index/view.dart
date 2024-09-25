@@ -121,7 +121,14 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                             break;
                           case 1:
                             Get.toNamed(RouteNames.picksPersonalCenter,
-                                id: GlobalNestedKey.PICKS);
+                                id: GlobalNestedKey.PICKS,
+                                arguments: {
+                                  "teamId": Get.find<HomeController>()
+                                      .userEntiry
+                                      .teamLoginInfo
+                                      ?.team
+                                      ?.teamId
+                                });
                             break;
                           case 2:
                             Get.toNamed(RouteNames.picksPickRank,
@@ -283,7 +290,8 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                       var len = picksIndexController.rankInfo.ranks.length;
                       return InkWell(
                         onTap: () => Get.toNamed(RouteNames.picksPersonalCenter,
-                            id: GlobalNestedKey.PICKS),
+                            id: GlobalNestedKey.PICKS,
+                            arguments: {"teamId": item.teamId}),
                         child: Container(
                             alignment: Alignment.centerLeft,
                             decoration: BoxDecoration(
@@ -336,7 +344,7 @@ class _PicksIndexPageState extends State<PicksIndexPage>
       id: PicksIndexController.idMain,
       builder: (_) {
         return BlackAppWidget(
-          const UserInfoBar(),
+          const UserInfoBar(title: "PICKS",),
           totalScreenWidget: _buildView(),
           floatWidgets: [
             //个人榜单信息浮窗
@@ -350,7 +358,14 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                   duration: const Duration(milliseconds: 300),
                   child: InkWell(
                     onTap: () => Get.toNamed(RouteNames.picksPersonalCenter,
-                        id: GlobalNestedKey.PICKS),
+                        id: GlobalNestedKey.PICKS,
+                        arguments: {
+                          "teamId": Get.find<HomeController>()
+                              .userEntiry
+                              .teamLoginInfo
+                              ?.team
+                              ?.teamId
+                        }),
                     child: Container(
                       padding: EdgeInsets.only(left: 43.w, right: 33.w),
                       decoration: BoxDecoration(

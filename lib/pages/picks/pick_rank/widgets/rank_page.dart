@@ -123,7 +123,10 @@ class _RankPageState extends State<RankPage>
                                                         RouteNames
                                                             .picksPersonalCenter,
                                                         id: GlobalNestedKey
-                                                            .PICKS),
+                                                            .PICKS,arguments: {
+                                                          "teamId":controller.rankInfo
+                                                              .ranks[1].teamId
+                                                    }),
                                                     child: Stack(
                                                       children: [
                                                         Container(
@@ -271,7 +274,10 @@ class _RankPageState extends State<RankPage>
                                                         RouteNames
                                                             .picksPersonalCenter,
                                                         id: GlobalNestedKey
-                                                            .PICKS),
+                                                            .PICKS,arguments: {
+                                                      "teamId":controller.rankInfo
+                                                          .ranks[0].teamId
+                                                    }),
                                                     child: Stack(
                                                       children: [
                                                         Container(
@@ -418,7 +424,10 @@ class _RankPageState extends State<RankPage>
                                                         RouteNames
                                                             .picksPersonalCenter,
                                                         id: GlobalNestedKey
-                                                            .PICKS),
+                                                            .PICKS,arguments: {
+                                                      "teamId":controller.rankInfo
+                                                          .ranks[2].teamId
+                                                    }),
                                                     child: Stack(
                                                       children: [
                                                         Container(

@@ -3,6 +3,7 @@ import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/entities/recive_award_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_simple_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
@@ -13,6 +14,10 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 ///@auther gejiahui
 ///created at 2024/9/23/21:02
 class ReciveAwardPicksPageController extends GetxController {
+  ReciveAwardPicksPageController(this.teamId);
+
+  final int teamId;
+
   List<List<PicksPlayer>> listData = [];
 
   NewsDefineEntity? newsDefineEntity;
@@ -20,6 +25,9 @@ class ReciveAwardPicksPageController extends GetxController {
   RefreshController refreshController = RefreshController();
 
   var loadStatusRx = LoadDataStatus.loading.obs;
+
+  TeamSimpleEntity? teamSimpleEntity;
+
 
   loading() {
     if (loadStatusRx.value == LoadDataStatus.loading) {
@@ -44,9 +52,10 @@ class ReciveAwardPicksPageController extends GetxController {
   void _initData() {
     loadStatusRx.value = LoadDataStatus.loading;
     var futures = [
-      PicksApi.getGuessInfos(),
+      PicksApi.getGuessInfos(teamId),
       CacheApi.getNBATeamDefine(getList: true),
       CacheApi.getNBAPlayerInfo(),
+      PicksApi.getTeamSimple(teamId),
     ];
     if (newsDefineEntity == null) {
       futures.add(CacheApi.getNewsDefine());
@@ -56,9 +65,10 @@ class ReciveAwardPicksPageController extends GetxController {
           result[0] as List<List<ReciveAwardEntity>>;
       List<NbaTeamEntity> result1 = result[1] as List<NbaTeamEntity>;
       NbaPlayerInfosEntity result2 = result[2] as NbaPlayerInfosEntity;
+      teamSimpleEntity = result[3] as TeamSimpleEntity;
 
-      if (result.length == 4) {
-        newsDefineEntity = result[3] as NewsDefineEntity;
+      if (result.length == 5) {
+        newsDefineEntity = result[4] as NewsDefineEntity;
       }
 
       /// 1.剔除status为1（未开奖）的数据项
