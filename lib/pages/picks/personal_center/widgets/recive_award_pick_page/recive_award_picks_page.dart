@@ -2,6 +2,7 @@ import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/entities/recive_award_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_simple_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -21,9 +22,10 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 ///created at 2024/9/23/17:17
 
 class ReciveAwardPicksPage extends StatefulWidget {
-  const ReciveAwardPicksPage(this.teamId, {super.key});
+  const ReciveAwardPicksPage(this.teamId,this.teamSimpleEntity, {super.key});
 
   final int teamId;
+  final TeamSimpleEntity teamSimpleEntity;
 
   @override
   State<ReciveAwardPicksPage> createState() => _ReciveAwardPicksPageState();
@@ -36,7 +38,7 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
   @override
   void initState() {
     super.initState();
-    controller = Get.put(ReciveAwardPicksPageController(widget.teamId));
+    controller = Get.put(ReciveAwardPicksPageController(widget.teamId,widget.teamSimpleEntity));
   }
 
   @override

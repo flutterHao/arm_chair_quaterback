@@ -122,11 +122,13 @@ class _RankPageState extends State<RankPage>
                                                     onTap: () => Get.toNamed(
                                                         RouteNames
                                                             .picksPersonalCenter,
-                                                        id: GlobalNestedKey
-                                                            .PICKS,arguments: {
-                                                          "teamId":controller.rankInfo
-                                                              .ranks[1].teamId
-                                                    }),
+                                                        id: GlobalNestedKey.PICKS,
+                                                        arguments: {
+                                                          "teamId": controller
+                                                              .rankInfo
+                                                              .ranks[1]
+                                                              .teamId
+                                                        }),
                                                     child: Stack(
                                                       children: [
                                                         Container(
@@ -273,11 +275,13 @@ class _RankPageState extends State<RankPage>
                                                     onTap: () => Get.toNamed(
                                                         RouteNames
                                                             .picksPersonalCenter,
-                                                        id: GlobalNestedKey
-                                                            .PICKS,arguments: {
-                                                      "teamId":controller.rankInfo
-                                                          .ranks[0].teamId
-                                                    }),
+                                                        id: GlobalNestedKey.PICKS,
+                                                        arguments: {
+                                                          "teamId": controller
+                                                              .rankInfo
+                                                              .ranks[0]
+                                                              .teamId
+                                                        }),
                                                     child: Stack(
                                                       children: [
                                                         Container(
@@ -423,11 +427,13 @@ class _RankPageState extends State<RankPage>
                                                     onTap: () => Get.toNamed(
                                                         RouteNames
                                                             .picksPersonalCenter,
-                                                        id: GlobalNestedKey
-                                                            .PICKS,arguments: {
-                                                      "teamId":controller.rankInfo
-                                                          .ranks[2].teamId
-                                                    }),
+                                                        id: GlobalNestedKey.PICKS,
+                                                        arguments: {
+                                                          "teamId": controller
+                                                              .rankInfo
+                                                              .ranks[2]
+                                                              .teamId
+                                                        }),
                                                     child: Stack(
                                                       children: [
                                                         Container(
@@ -600,11 +606,18 @@ class _RankPageState extends State<RankPage>
                               SizedBox(
                                 width: 4.w,
                               ),
-                              Image.asset(
-                                Assets.testTeamLogoPng,
-                                width: 48.w,
+                              InkWell(
+                                onTap: () => Get.toNamed(RouteNames.picksPersonalCenter,
+                                    id: GlobalNestedKey.PICKS,
+                                    arguments: {
+                                      "teamId": Get.find<HomeController>().userEntiry.teamLoginInfo?.team?.teamId
+                                    }),
+                                child: Image.asset(
+                                  Assets.testTeamLogoPng,
+                                  width: 48.w,
 
-                                /// todo 换网络图
+                                  /// todo 换网络图
+                                ),
                               ),
                               Container(
                                 margin: EdgeInsets.only(left: 12.w),
@@ -675,11 +688,18 @@ class _RankPageState extends State<RankPage>
           SizedBox(
             width: 7.w,
           ),
-          Image.asset(
-            Assets.testTeamLogoPng,
+          InkWell(
+            onTap: () => Get.toNamed(RouteNames.picksPersonalCenter,
+                id: GlobalNestedKey.PICKS,
+                arguments: {
+                  "teamId": controller.rankInfo.ranks[index].teamId
+                }),
+            child: Image.asset(
+              Assets.testTeamLogoPng,
 
-            /// todo 换网络图
-            width: 48.w,
+              /// todo 换网络图
+              width: 48.w,
+            ),
           ),
           SizedBox(
             width: 10.w,

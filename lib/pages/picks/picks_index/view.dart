@@ -68,7 +68,7 @@ class PicksIndex extends StatelessWidget {
             return GetPageRoute(
                 settings: setting,
                 page: () => const PersonalCenterPage(),
-                binding: PersonalCenterBinding());
+                binding: PersonalCenterBinding((setting.arguments as Map)['teamId']));
         }
       },
     );

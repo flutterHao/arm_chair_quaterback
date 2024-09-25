@@ -14,7 +14,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 ///@auther gejiahui
 ///created at 2024/9/23/21:02
 class ReciveAwardPicksPageController extends GetxController {
-  ReciveAwardPicksPageController(this.teamId);
+  ReciveAwardPicksPageController(this.teamId, this.teamSimpleEntity);
 
   final int teamId;
 
@@ -26,7 +26,7 @@ class ReciveAwardPicksPageController extends GetxController {
 
   var loadStatusRx = LoadDataStatus.loading.obs;
 
-  TeamSimpleEntity? teamSimpleEntity;
+  final TeamSimpleEntity teamSimpleEntity;
 
 
   loading() {
@@ -55,7 +55,6 @@ class ReciveAwardPicksPageController extends GetxController {
       PicksApi.getGuessInfos(teamId),
       CacheApi.getNBATeamDefine(getList: true),
       CacheApi.getNBAPlayerInfo(),
-      PicksApi.getTeamSimple(teamId),
     ];
     if (newsDefineEntity == null) {
       futures.add(CacheApi.getNewsDefine());
@@ -65,10 +64,9 @@ class ReciveAwardPicksPageController extends GetxController {
           result[0] as List<List<ReciveAwardEntity>>;
       List<NbaTeamEntity> result1 = result[1] as List<NbaTeamEntity>;
       NbaPlayerInfosEntity result2 = result[2] as NbaPlayerInfosEntity;
-      teamSimpleEntity = result[3] as TeamSimpleEntity;
 
-      if (result.length == 5) {
-        newsDefineEntity = result[4] as NewsDefineEntity;
+      if (result.length == 4) {
+        newsDefineEntity = result[3] as NewsDefineEntity;
       }
 
       /// 1.剔除status为1（未开奖）的数据项
