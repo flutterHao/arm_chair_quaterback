@@ -136,22 +136,24 @@ class UserInfoBar extends StatelessWidget {
 
   Widget iconText(int propId, int num) {
     return Container(
-      constraints: BoxConstraints(minWidth: 66.w),
-      // margin: EdgeInsets.only(left: 9.w),
-      padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.w),
+      width: 66.w,
       height: 16.w,
+      alignment: Alignment.center,
+      // constraints: BoxConstraints(minWidth: 66.w),
+      // margin: EdgeInsets.only(left: 9.w),
+      padding: EdgeInsets.symmetric(horizontal: 9.w),
       decoration: BoxDecoration(
           color: Colors.black, borderRadius: BorderRadius.circular(8.w)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          IconWidget(
-            icon: Utils.getIconUrl(propId),
-            iconWidth: 11.5.w,
+          ImageWidget(
+            url: Utils.getIconUrl(propId),
+            width: 12.w,
           ),
           Text(
-            "$num",
+            "${num < 1000 ? num : "${(num / 1000).toStringAsFixed(1)}k"}",
             style: TextStyle(color: AppColors.cF2F2F2, fontSize: 10.sp),
           )
         ],
@@ -162,12 +164,13 @@ class UserInfoBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var homeCtrl = Get.find<HomeController>();
-    TeamLoginInfo info = homeCtrl.userEntiry.teamLoginInfo ?? TeamLoginInfo();
-    var list = info.teamPropList ?? [];
 
     return GetBuilder<HomeController>(
         id: "userInfo",
         builder: (_) {
+          TeamLoginInfo info =
+              homeCtrl.userEntiry.teamLoginInfo ?? TeamLoginInfo();
+          var list = info.teamPropList ?? [];
           return Container(
             padding: EdgeInsets.only(left: 14.w, right: 14.w, bottom: 11.w),
             child: Row(

@@ -94,7 +94,7 @@ class StatsRankPage extends GetView<RankController> {
                     InkWell(
                       onTap: () {
                         showModalBottomSheet(
-                            context: context,
+                            context: Get.context!,
                             builder: (context) {
                               return SearchBottomDialog(
                                 controller.statType.value,
@@ -134,7 +134,7 @@ class StatsRankPage extends GetView<RankController> {
                     InkWell(
                       onTap: () {
                         showModalBottomSheet(
-                            context: context,
+                            context: Get.context!,
                             builder: (context) {
                               return SearchBottomDialog(
                                 controller.season,

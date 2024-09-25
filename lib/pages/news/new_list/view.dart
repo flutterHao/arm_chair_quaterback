@@ -242,7 +242,7 @@ class NewsListPage extends GetView<NewListController> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<NewListController>(
-      id: "newsList",
+      id: "newsPage",
       builder: (_) {
         return BlackAppWidget(
           const UserInfoBar(

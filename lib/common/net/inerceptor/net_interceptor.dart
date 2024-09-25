@@ -221,15 +221,15 @@ class NetInterceptor extends InterceptorsWrapper {
           // 捕获业务逻辑返回的 401 错误
           await _handle401Error(response.requestOptions, handler);
         } else {
-          await _retryOnError(response.requestOptions, handler);
-          // handlerError(
-          //     ErrorEntity(code: result.code!, message: result.message ?? ""));
-          // return handler.reject(DioException(
-          //   requestOptions: response.requestOptions,
-          //   response: response,
-          //   type: DioExceptionType.badResponse, // 标记为服务器返回错误
-          //   error: result.message, // 返回错误信息
-          // ));
+          // await _retryOnError(response.requestOptions, handler);
+          handlerError(
+              ErrorEntity(code: result.code!, message: result.message ?? ""));
+          return handler.reject(DioException(
+            requestOptions: response.requestOptions,
+            response: response,
+            type: DioExceptionType.badResponse, // 标记为服务器返回错误
+            error: result.message, // 返回错误信息
+          ));
         }
       } else {
         //Map json文件格式
@@ -263,21 +263,43 @@ class NetInterceptor extends InterceptorsWrapper {
 
     while (retryCount < maxRetryAttempts) {
       try {
+        Log.e("${requestOptions.uri} 开始重试，第 $retryCount 次");
+
+        // 标记重试请求，防止重复进入 onResponse
+        final options = requestOptions.copyWith(
+          extra: {'isRetry': true}, // 添加标记
+        );
+
         // 重试请求
-        Log.e("${requestOptions.uri}开始重试");
-        final response = await HttpUtil().dio.fetch(requestOptions);
-        handler.resolve(response); // 返回新请求的结果
+        final response = await HttpUtil().dio.fetch(options);
+
+        // 手动检查状态码，如果不是成功状态码，抛出异常
+        if (response.statusCode != 200) {
+          throw DioException(
+            requestOptions: options,
+            response: response,
+            type: DioExceptionType.badResponse,
+            error: '服务器返回错误状态码: ${response.statusCode}',
+          );
+        }
+
+        handler.resolve(response);
         return;
       } catch (e) {
         retryCount++;
+
+        // 达到最大重试次数
         if (retryCount >= maxRetryAttempts) {
+          Log.e("${requestOptions.uri} 请求失败，达到最大重试次数");
           handler.reject(DioException(
             requestOptions: requestOptions,
             type: DioExceptionType.connectionError,
-            error: '请求失败, 达到最大重试次数',
+            error: '请求失败，达到最大重试次数',
           ));
           return;
         }
+
+        Log.e("${requestOptions.uri} 重试失败，第 $retryCount 次，错误: $e");
       }
     }
   }

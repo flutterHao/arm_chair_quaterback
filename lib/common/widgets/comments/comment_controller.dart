@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-11 16:57:58
- * @LastEditTime: 2024-09-24 17:32:19
+ * @LastEditTime: 2024-09-25 20:36:13
  */
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
@@ -86,6 +86,7 @@ class CommentController extends GetxController {
     Reviews item = await NewsApi.sendReviews(
         newsId, targetId: targetId, parentReviewId: parentReviewId, content);
     targetId == 0 ? mainList.add(item) : subList.add(item);
+    commentList.add(item);
     update();
   }
 

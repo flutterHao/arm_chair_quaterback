@@ -39,6 +39,8 @@ class _HomePageState extends State<HomePage>
       child: GetBuilder<HomeController>(
         assignId: true,
         builder: (logic) {
+          // final double navigationBarHeight =
+          //     MediaQuery.of(context).padding.bottom;
           return ScrollConfiguration(
             behavior: ScrollConfiguration.of(context).copyWith(
               dragDevices: {
@@ -56,9 +58,9 @@ class _HomePageState extends State<HomePage>
               ),
               bottomNavigationBar: Container(
                 color: AppColors.c262626,
-                height: 90.w,
+                height: 80.w,
                 alignment: Alignment.bottomCenter,
-                padding: EdgeInsets.symmetric(horizontal: 10.w),
+                padding: EdgeInsets.only(left: 10.w, right: 10.w),
                 child: Row(
                   // onTap: (v) => controller.onTap(v),
                   // controller: controller.tabController,
@@ -72,7 +74,7 @@ class _HomePageState extends State<HomePage>
                       onTap: () => controller.onTap(index),
                       child: Container(
                         width: 53.w,
-                        height: 83.w,
+                        height: 74.w,
                         decoration: BoxDecoration(
                           color: select ? AppColors.cFF7954 : null,
                           borderRadius: BorderRadius.only(
@@ -82,23 +84,23 @@ class _HomePageState extends State<HomePage>
                         child: Column(
                           // mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SizedBox(height: 5.w),
+                            SizedBox(height: 12.w),
                             Image.asset(
                               select ? e.tabIconSelected : e.tabIconNormal,
-                              width: 25.w,
+                              width: 30.w,
                               fit: BoxFit.fill,
                               // height: 22.5.w,
                             ),
-                            SizedBox(height: 7.w),
-                            Text(
-                              e.label,
-                              style: TextStyle(
-                                  fontSize: 10.sp,
-                                  color: select
-                                      ? Colors.black
-                                      : AppColors.c666666),
-                            ),
-                            SizedBox(height: 9.w),
+                            // SizedBox(height: 7.w),
+                            // Text(
+                            //   e.label,
+                            //   style: TextStyle(
+                            //       fontSize: 10.sp,
+                            //       color: select
+                            //           ? Colors.black
+                            //           : AppColors.c666666),
+                            // ),
+                            SizedBox(height: 11.w),
                             if (select)
                               Image.asset(
                                 Assets.sel_2Png,

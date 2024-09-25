@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:23:17
- * @LastEditTime: 2024-09-24 20:20:48
+ * @LastEditTime: 2024-09-25 19:58:45
  */
 /*
  * @Description: 
@@ -51,6 +51,8 @@ class NewsDetailController extends GetxController {
       getMoreNews();
       state.isLoading = false;
       update();
+    }).catchError((e) {
+      Log.e("获取新闻详情失败: $e");
     });
   }
 

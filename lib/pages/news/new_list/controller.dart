@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2024-09-24 19:27:40
+ * @LastEditTime: 2024-09-25 20:43:36
  */
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
@@ -12,7 +12,9 @@ import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
+import 'package:arm_chair_quaterback/common/store/store.dart';
 import 'package:arm_chair_quaterback/common/utils/loading.dart';
+import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -55,6 +57,10 @@ class NewListController extends GetxController {
   Future getNewsList() async {
     await NewsApi.getNewsList().then((value) {
       state.newsList = value;
+      update(['newsList']);
+    }).catchError((v) async {
+      Log.e("getNewsList error");
+      state.newsList = await NewsApi.getNewsList();
       update(['newsList']);
     });
   }

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 16:31:51
- * @LastEditTime: 2024-09-19 12:21:54
+ * @LastEditTime: 2024-09-25 17:01:27
  */
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +39,7 @@ class SwiperWidget extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(borderRadius),
         child: Swiper(
+          key: Key(bannerList.toString()),
           itemCount: bannerList.length,
           itemBuilder: (BuildContext context, int index) {
             return InkWell(
@@ -62,6 +63,8 @@ class SwiperWidget extends StatelessWidget {
             );
           },
           autoplay: true, // 启用自动播放
+          // autoplayDelay: 3000,
+          // autoplayDisableOnInteraction: true,
           pagination: SwiperPagination(
             alignment: Alignment.bottomCenter,
             margin: const EdgeInsets.only(bottom: 10), // 指示器的下边距
