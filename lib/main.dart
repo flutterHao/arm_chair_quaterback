@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 16:17:35
- * @LastEditTime: 2024-09-19 11:56:18
+ * @LastEditTime: 2024-09-25 15:23:05
  */
 import 'package:arm_chair_quaterback/pages/home/home_binding.dart';
 import 'package:flutter/foundation.dart';
@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
             designSize: const Size(375, 812),
             builder: (context, widget) => RefreshConfiguration(
               headerBuilder: () => const WaterDropHeader(),
-              footerBuilder:  () => const ClassicFooter(),
+              footerBuilder: () => const ClassicFooter(),
               child: GetMaterialApp(
                 title: 'arm chair puaterback',
                 theme: AppTheme.light,

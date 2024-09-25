@@ -48,7 +48,7 @@ class ImageWidget extends StatelessWidget {
       height: height,
       decoration: BoxDecoration(
         color: Colors.grey,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: borderRadius ?? BorderRadius.circular(20),
       ),
       child: imageFailedPath != null ? Image.asset(imageFailedPath!) : null,
     );

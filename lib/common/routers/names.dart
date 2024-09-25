@@ -20,5 +20,4 @@ class RouteNames {
   static const picksPlayerDetail = '/picks_player_detail';
   static const picksPersonalCenter = '/picks_personal_center';
   static const reciveAwardPickPage = '/recive_award_pick_page';
-
 }

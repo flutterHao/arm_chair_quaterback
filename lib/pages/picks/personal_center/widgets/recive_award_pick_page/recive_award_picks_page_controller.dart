@@ -29,9 +29,10 @@ class ReciveAwardPicksPageController extends GetxController {
     _initData();
   }
 
-  loadMore(){
+  loadMore() {
     /// todo 暂未实现
-    Future.delayed(const Duration(seconds: 1),()=>refreshController.loadComplete());
+    Future.delayed(
+        const Duration(seconds: 1), () => refreshController.loadComplete());
   }
 
   @override
@@ -80,7 +81,7 @@ class ReciveAwardPicksPageController extends GetxController {
       }
       if (newsDefineEntity == null || listData.isEmpty) {
         loadStatusRx.value = LoadDataStatus.noData;
-      }else{
+      } else {
         loadStatusRx.value = LoadDataStatus.success;
       }
       refreshController.refreshCompleted();

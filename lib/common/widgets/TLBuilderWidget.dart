@@ -37,7 +37,7 @@ class _TLBuildWidgetState extends State<TLBuildWidget> {
       next =
           animationValue > currentIndex ? currentIndex + 1 : currentIndex - 1;
       progress = (animationValue - currentIndex).abs();
-      if(mounted) {
+      if (mounted) {
         setState(() {});
       }
     });

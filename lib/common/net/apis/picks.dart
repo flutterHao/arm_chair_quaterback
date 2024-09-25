@@ -40,14 +40,12 @@ class PicksApi {
         .toList();
   }
 
-
   static Future<List<PlayerDayDataEntity>> getRecentAvg(int playerId,
       {int gameCount = 5}) async {
     List json = await httpUtil.post(Api.getRecentAvg,
         data: {"playerId": playerId, "gameCount": gameCount});
     return json.map((e) => PlayerDayDataEntity.fromJson(e)).toList();
   }
-
 
   static Future<List<GuessInfosEntity>> guess(
       List<GuessParamEntity> guessParams) async {

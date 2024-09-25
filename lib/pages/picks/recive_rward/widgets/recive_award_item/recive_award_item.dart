@@ -140,9 +140,10 @@ class ReciveAwardItem extends StatelessWidget {
                       height: 27.w,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(14.w),
-                          border:
-                              Border.all(color: AppColors.c262626.withOpacity(.2), width: 1)),
+                          borderRadius: BorderRadius.circular(14.w),
+                          border: Border.all(
+                              color: AppColors.c262626.withOpacity(.2),
+                              width: 1)),
                       child: Text(
                         "View all",
                         style: 12.w4(color: AppColors.c666666),

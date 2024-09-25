@@ -5,23 +5,24 @@ export 'package:arm_chair_quaterback/generated/json/rank_award_entity.g.dart';
 
 @JsonSerializable()
 class RankAwardEntity {
-	late String awardData;
-	late String awardPickData;
-	late String disc;
-	late String id;
-	late String maxRank;
-	late String minRank;
-	late String paramValue;
-	late String rankAwardType;
+  late String awardData;
+  late String awardPickData;
+  late String disc;
+  late String id;
+  late String maxRank;
+  late String minRank;
+  late String paramValue;
+  late String rankAwardType;
 
-	RankAwardEntity();
+  RankAwardEntity();
 
-	factory RankAwardEntity.fromJson(Map<String, dynamic> json) => $RankAwardEntityFromJson(json);
+  factory RankAwardEntity.fromJson(Map<String, dynamic> json) =>
+      $RankAwardEntityFromJson(json);
 
-	Map<String, dynamic> toJson() => $RankAwardEntityToJson(this);
+  Map<String, dynamic> toJson() => $RankAwardEntityToJson(this);
 
-	@override
-	String toString() {
-		return jsonEncode(this);
-	}
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
 }

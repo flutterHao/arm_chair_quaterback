@@ -83,12 +83,12 @@ class TeamRankItem extends GetView<NewListController> {
                   style: 16.w7(color: AppColors.cE6E6E),
                 ),
                 10.hGap,
-                IconWidget(
-                  iconWidth: 16.w,
-                  iconHeight: 16.w,
-                  icon: Assets.uiIconMsgPng,
-                  iconColor: AppColors.cB3B3B3,
-                ),
+                // IconWidget(
+                //   iconWidth: 16.w,
+                //   iconHeight: 16.w,
+                //   icon: Assets.uiIconMsgPng,
+                //   iconColor: AppColors.cB3B3B3,
+                // ),
                 Expanded(child: Container()),
                 IconWidget(
                   iconWidth: 17.w,

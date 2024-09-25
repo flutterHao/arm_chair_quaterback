@@ -1,14 +1,21 @@
 /*
  * @Description: 
  * @Author: lihonghao
+ * @Date: 2024-09-25 11:48:38
+ * @LastEditTime: 2024-09-25 15:44:48
+ */
+/*
+ * @Description: 
+ * @Author: lihonghao
  * @Date: 2024-09-12 16:53:47
  * @LastEditTime: 2024-09-24 10:57:13
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
+import 'package:arm_chair_quaterback/common/entities/config/prop_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/tab_item_info.dart';
-import 'package:arm_chair_quaterback/common/entities/user_entiry/user_entiry.dart';
+import 'package:arm_chair_quaterback/common/entities/user_entity/user_entiry.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/user.dart';
 import 'package:arm_chair_quaterback/common/services/services.dart';
@@ -31,7 +38,7 @@ class HomeController extends GetxController
     1: GlobalNestedKey.PicksTabGlobalKey,
   };
 
-  UserEntiry userEntiry = UserEntiry();
+  UserEntity userEntiry = UserEntity();
 
   GlobalKey<NavigatorState>? getCurrentTabGlobalKey() {
     return navigatorKeys[tabIndex.value];
@@ -119,6 +126,7 @@ class HomeController extends GetxController
     await UserStore.to.setToken(v);
     Log.d("鉴权获取到token=$v，开始游客登陆");
     userEntiry = await UserApi.visitorLogin();
+    update(["userInfo"]);
   }
 
   Future<String> getUid() async {
@@ -127,5 +135,11 @@ class HomeController extends GetxController
       accountName = await DeviceUtils.getDeviceId();
     }
     return accountName;
+  }
+
+  PropDefineEntity? getPropInfo(int id) {
+    PropDefineEntity? item =
+        CacheApi.propDefineList?.where((e) => e.propId == id).first;
+    return item;
   }
 }

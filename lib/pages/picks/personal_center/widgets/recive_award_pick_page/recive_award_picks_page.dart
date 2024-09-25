@@ -45,11 +45,7 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
       var userEntiry = Get.find<HomeController>().userEntiry;
       return Container(
         padding: EdgeInsets.only(
-          top: MediaQuery.of(context).padding.top +
-              63.w +
-              88.w +
-              6.w
-        ),
+            top: MediaQuery.of(context).padding.top + 63.w + 88.w + 6.w),
         child: SmartRefresher(
           enablePullUp: true,
           controller: controller.refreshController,
@@ -66,9 +62,7 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
                   physics: const BouncingScrollPhysics(),
                   child: Container(
                     padding: EdgeInsets.only(
-                      top: 14.w +
-                          34.w +
-                          18.w,
+                      top: 14.w + 34.w + 18.w,
                     ),
                     margin: EdgeInsets.symmetric(horizontal: 14.w),
                     child: Column(
@@ -95,14 +89,15 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
                             children: [
                               Text(
                                 "${userEntiry.teamLoginInfo?.team?.benchCount}",
-                                style: 36.w7(color: AppColors.cFFE8DD, height: 1),
+                                style:
+                                    36.w7(color: AppColors.cFFE8DD, height: 1),
                               ),
                               Row(
                                 children: [
                                   Text(
                                     "JETTON",
-                                    style: 10
-                                        .w4(color: AppColors.c945D4A, height: 1),
+                                    style: 10.w4(
+                                        color: AppColors.c945D4A, height: 1),
                                   ),
                                   2.hGap,
                                   IconWidget(
@@ -114,41 +109,48 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
                               Row(
                                 children: [
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         "256",
                                         style: 16.w7(
-                                            color: AppColors.cFFE8DD, height: 1),
+                                            color: AppColors.cFFE8DD,
+                                            height: 1),
                                       ),
                                       3.vGap,
                                       Text(
                                         "WIN COUNT",
                                         style: 10.w4(
-                                            color: AppColors.c945D4A, height: 1),
+                                            color: AppColors.c945D4A,
+                                            height: 1),
                                       )
                                     ],
                                   ),
                                   35.hGap,
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         "47%",
                                         style: 16.w7(
-                                            color: AppColors.cFFE8DD, height: 1),
+                                            color: AppColors.cFFE8DD,
+                                            height: 1),
                                       ),
                                       3.vGap,
                                       Text(
                                         "SUCCESS",
                                         style: 10.w4(
-                                            color: AppColors.c945D4A, height: 1),
+                                            color: AppColors.c945D4A,
+                                            height: 1),
                                       )
                                     ],
                                   ),
                                   40.hGap,
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Row(
                                         children: List.generate(
@@ -156,8 +158,8 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
                                             (index) => Container(
                                                   width: 12.w,
                                                   height: 12.w,
-                                                  margin:
-                                                      EdgeInsets.only(right: 5.w),
+                                                  margin: EdgeInsets.only(
+                                                      right: 5.w),
                                                   decoration: BoxDecoration(
 
                                                       ///todo 判断条件
@@ -173,7 +175,8 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
                                       Text(
                                         "LAST5",
                                         style: 10.w4(
-                                            color: AppColors.c945D4A, height: 1),
+                                            color: AppColors.c945D4A,
+                                            height: 1),
                                       )
                                     ],
                                   )

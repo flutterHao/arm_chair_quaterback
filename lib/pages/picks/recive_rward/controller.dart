@@ -24,8 +24,6 @@ class ReciveRwardController extends GetxController {
 
   var loadStatusRx = LoadDataStatus.loading.obs;
 
-
-
   loading() {
     if (loadStatusRx.value == LoadDataStatus.loading) {
       refreshController.refreshCompleted();
@@ -33,7 +31,6 @@ class ReciveRwardController extends GetxController {
     }
     _initData();
   }
-
 
   /// 在 widget 内存中分配后立即调用。
   @override
@@ -49,7 +46,7 @@ class ReciveRwardController extends GetxController {
       CacheApi.getNBATeamDefine(getList: true),
       CacheApi.getNBAPlayerInfo(),
     ];
-    if(newsDefineEntity == null){
+    if (newsDefineEntity == null) {
       futures.add(CacheApi.getNewsDefine());
     }
     Future.wait(futures).then((result) {
@@ -57,9 +54,10 @@ class ReciveRwardController extends GetxController {
           result[0] as List<List<ReciveAwardEntity>>;
       List<NbaTeamEntity> result1 = result[1] as List<NbaTeamEntity>;
       NbaPlayerInfosEntity result2 = result[2] as NbaPlayerInfosEntity;
-      if(result.length==4){
+      if (result.length == 4) {
         newsDefineEntity = result[3] as NewsDefineEntity;
       }
+
       /// 1.剔除status为1（未开奖）的数据项
       /// 2.剔除未中奖的（awards为空）
       var guessHistoryList = result0
@@ -71,29 +69,30 @@ class ReciveRwardController extends GetxController {
               .isNotEmpty))
           .toList();
       listData.clear();
-      for(List l in guessHistoryList){
+      for (List l in guessHistoryList) {
         List<PicksPlayer> players = [];
-        for(ReciveAwardEntity r in l){
+        for (ReciveAwardEntity r in l) {
           PicksPlayer player = PicksPlayer();
-          player.baseInfoList = result2.playerBaseInfoList.firstWhere((e)=> r.playerId==e.playerId);
-          player.dataAvgList = result2.playerDataAvgList.firstWhere((e)=> r.playerId==e.playerId);
-          player.awayTeamInfo = result1.firstWhere((e)=>e.id == r.awayTeamId);
+          player.baseInfoList = result2.playerBaseInfoList
+              .firstWhere((e) => r.playerId == e.playerId);
+          player.dataAvgList = result2.playerDataAvgList
+              .firstWhere((e) => r.playerId == e.playerId);
+          player.awayTeamInfo = result1.firstWhere((e) => e.id == r.awayTeamId);
           player.reciveAwardInfo = r;
           players.add(player);
         }
         listData.add(players);
       }
-      if(newsDefineEntity == null || listData.isEmpty){
+      if (newsDefineEntity == null || listData.isEmpty) {
         loadStatusRx.value = LoadDataStatus.noData;
-      }else{
+      } else {
         loadStatusRx.value = LoadDataStatus.success;
       }
       refreshController.refreshCompleted();
       update();
-    },onError: (e){
+    }, onError: (e) {
       loadStatusRx.value = LoadDataStatus.error;
     });
-
   }
 
   /// 一键领取所有奖励
@@ -102,5 +101,4 @@ class ReciveRwardController extends GetxController {
       _initData();
     });
   }
-
 }

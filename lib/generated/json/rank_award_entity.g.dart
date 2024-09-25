@@ -7,8 +7,8 @@ RankAwardEntity $RankAwardEntityFromJson(Map<String, dynamic> json) {
   if (awardData != null) {
     rankAwardEntity.awardData = awardData;
   }
-  final String? awardPickData = jsonConvert.convert<String>(
-      json['awardPickData']);
+  final String? awardPickData =
+      jsonConvert.convert<String>(json['awardPickData']);
   if (awardPickData != null) {
     rankAwardEntity.awardPickData = awardPickData;
   }
@@ -32,8 +32,8 @@ RankAwardEntity $RankAwardEntityFromJson(Map<String, dynamic> json) {
   if (paramValue != null) {
     rankAwardEntity.paramValue = paramValue;
   }
-  final String? rankAwardType = jsonConvert.convert<String>(
-      json['rankAwardType']);
+  final String? rankAwardType =
+      jsonConvert.convert<String>(json['rankAwardType']);
   if (rankAwardType != null) {
     rankAwardEntity.rankAwardType = rankAwardType;
   }

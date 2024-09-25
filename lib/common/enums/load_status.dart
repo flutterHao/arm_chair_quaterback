@@ -10,6 +10,5 @@ enum LoadDataStatus {
 
   const LoadDataStatus({required this.desc});
 
-  final String desc;//描述
-
+  final String desc; //描述
 }

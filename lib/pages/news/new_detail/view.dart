@@ -173,23 +173,23 @@ class NewsDetailPage extends StatelessWidget {
       tag: newsId.toString(), // 使用 tag 区分控制器实例
       builder: (controller) {
         ///TODO: 侧滑返回
-        // void onHorizontalDragUpdate(DragUpdateDetails details) {
-        //   dragPosition.value += details.delta.dx;
-        //   controller.update();
-        // }
+        void onHorizontalDragUpdate(DragUpdateDetails details) {
+          dragPosition.value += details.delta.dx;
+          controller.update();
+        }
 
-        // void onHorizontalDragEnd(DragEndDetails details) {
-        //   if (dragPosition > MediaQuery.of(context).size.width / 2) {
-        //     Navigator.of(context).pop();
-        //   } else {
-        //     dragPosition = 0.0.obs;
-        //     controller.update();
-        //   }
-        // }
+        void onHorizontalDragEnd(DragEndDetails details) {
+          if (dragPosition > MediaQuery.of(context).size.width / 2) {
+            Navigator.of(context).pop();
+          } else {
+            dragPosition = 0.0.obs;
+            controller.update();
+          }
+        }
 
         return GestureDetector(
-          // onHorizontalDragUpdate: onHorizontalDragUpdate,
-          // onHorizontalDragEnd: onHorizontalDragEnd,
+          onHorizontalDragUpdate: onHorizontalDragUpdate,
+          onHorizontalDragEnd: onHorizontalDragEnd,
           child: Transform.translate(
               offset: Offset(dragPosition.value, 0),
               child: _buildView(context, controller)),

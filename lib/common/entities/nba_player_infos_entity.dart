@@ -73,7 +73,7 @@ class NbaPlayerInfosPlayerDataAvgList {
   Map<String, dynamic> toJson() => $NbaPlayerInfosPlayerDataAvgListToJson(this);
 
   num getValue(String key) {
-    if(key.toLowerCase() == "reb"){
+    if (key.toLowerCase() == "reb") {
       return _getREB();
     }
     var json = toJson();

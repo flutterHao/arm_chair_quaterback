@@ -1,6 +1,7 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/net/address.dart';
+import 'package:arm_chair_quaterback/common/net/http.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -152,9 +153,43 @@ class NewsListPage extends GetView<NewListController> {
           SliverPadding(
             padding: EdgeInsets.only(top: 23.w, left: 16.w),
             sliver: SliverToBoxAdapter(
-              child: Text(
-                "Today's express",
-                style: 19.w7(),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      "Today's express",
+                      style: 19.w7(),
+                    ),
+                  ),
+                  InkWell(
+                      onTap: () {
+                        final List<String> servers = [
+                          Address.personalDevUrl,
+                          Address.privateDevUrl,
+                          Address.publicDevUrl,
+                        ];
+                        String current = HttpUtil().url;
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return ServerSwitchDialog(
+                              servers: servers,
+                              currentServer: current,
+                              onServerChanged: (newServer) {
+                                HttpUtil().setUrl(newServer);
+                              },
+                            );
+                          },
+                        );
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20.w),
+                        child: Text(
+                          "切换服务器",
+                          style: 15.w7(color: Colors.black),
+                        ),
+                      ))
+                ],
               ),
             ),
           ),
@@ -210,7 +245,9 @@ class NewsListPage extends GetView<NewListController> {
       id: "newsList",
       builder: (_) {
         return BlackAppWidget(
-          const UserInfoBar(),
+          const UserInfoBar(
+            title: "NEWS",
+          ),
           bodyWidget: Expanded(child: _buildView(context)),
         );
       },

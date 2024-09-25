@@ -17,7 +17,13 @@ import 'package:get/get.dart';
 ///@description 页面标题栏
 class AppBarWidget extends StatelessWidget {
   const AppBarWidget(
-      {super.key, this.left, this.right, this.title, this.titleWidget, this.id,this.bottomChild})
+      {super.key,
+      this.left,
+      this.right,
+      this.title,
+      this.titleWidget,
+      this.id,
+      this.bottomChild})
       : assert(titleWidget != null || title != null,
             "select one of titleWidget,title");
   final Widget? left;
@@ -76,7 +82,7 @@ class AppBarWidget extends StatelessWidget {
               ],
             ),
           ),
-          bottomChild??const SizedBox.shrink(),
+          bottomChild ?? const SizedBox.shrink(),
         ],
       ),
     );
@@ -93,9 +99,7 @@ class AppBarContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       // width: 361.w,
-      constraints: BoxConstraints(
-        minHeight: 63.w
-      ),
+      constraints: BoxConstraints(minHeight: 63.w),
       margin: EdgeInsets.symmetric(horizontal: 7.w),
       decoration: BoxDecoration(
         color: AppColors.c262626,

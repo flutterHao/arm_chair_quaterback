@@ -18,8 +18,8 @@ class HttpUtil {
   late Dio _dio;
   final CancelToken _cancelToken = CancelToken();
 
-  static const int _defaultConnectTimeout = 20 * 1000;
-  static const int _defaultReceiveTimeout = 10 * 1000;
+  final int _defaultConnectTimeout = 5 * 1000;
+  final int _defaultReceiveTimeout = 5 * 1000;
 
   get dio => _dio;
 
@@ -31,10 +31,10 @@ class HttpUtil {
 
       // baseUrl: storage.read(key: STORAGE_KEY_APIURL) ?? SERVICE_API_BASEURL,
       //连接服务器超时时间，单位是毫秒.
-      connectTimeout: const Duration(milliseconds: _defaultConnectTimeout),
+      connectTimeout: Duration(milliseconds: _defaultConnectTimeout),
 
       // 响应流上前后两次接受到数据的间隔，单位为毫秒。
-      receiveTimeout: const Duration(milliseconds: _defaultReceiveTimeout),
+      receiveTimeout: Duration(milliseconds: _defaultReceiveTimeout),
 
       // Http请求头.
       headers: {"Accept": '*', "Access-Control-Allow-Origin": '*'},
@@ -67,8 +67,14 @@ class HttpUtil {
     _dio.interceptors.add(LogInterceptor(
       requestBody: true,
       responseBody: true,
-      logPrint: (o) => log(o.toString()),
+      // logPrint: (o) => log(o.toString()),
     ));
+  }
+
+  String get url => _dio.options.baseUrl;
+
+  void setUrl(String url) {
+    _dio.options.baseUrl = url;
   }
 
   /*

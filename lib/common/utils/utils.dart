@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-21 20:20:49
- * @LastEditTime: 2024-09-23 17:16:27
+ * @LastEditTime: 2024-09-25 15:40:11
  */
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
@@ -16,6 +16,10 @@ class Utils {
 
   static String getTeamUrl(int? teamId) {
     return "${Address.httpBaseUrl}/image/team/$teamId.png";
+  }
+
+  static String getIconUrl(int? id) {
+    return "${Address.httpBaseUrl}/image/icon/$id.png";
   }
 
   ///获取球员基础信息

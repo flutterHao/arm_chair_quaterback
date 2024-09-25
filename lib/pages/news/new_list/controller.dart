@@ -95,7 +95,7 @@ class NewListController extends GetxController {
   ///TODO 优化
   Future getStarTeamList() async {
     await Future.wait([
-      CacheApi.getNBATeamDefine(),
+      CacheApi.getNBATeamDefine(getList: true),
       NewsApi.starTeamList(page: 0, pageSize: 30),
       NewsApi.getTeamList()
     ]).then((v) {

@@ -11,7 +11,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 ///created at 2024/9/23/11:22
 
 class LoadStatusWidget extends StatelessWidget {
-  const LoadStatusWidget({this.icon=Assets.testTeamLogoPng,this.text='Data Lost ~~',super.key});
+  const LoadStatusWidget(
+      {this.icon = Assets.testTeamLogoPng,
+      this.text = 'Data Lost ~~',
+      super.key});
 
   final String icon;
   final String text;
@@ -26,7 +29,10 @@ class LoadStatusWidget extends StatelessWidget {
         children: [
           IconWidget(iconWidth: 70.w, icon: icon),
           5.vGap,
-          Text(text,style: 12.w4(color: AppColors.cB3B3B3.withOpacity(.7)),),
+          Text(
+            text,
+            style: 12.w4(color: AppColors.cB3B3B3.withOpacity(.7)),
+          ),
         ],
       ),
     );

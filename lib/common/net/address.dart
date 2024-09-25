@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lihonghao
  * @Date: 2024-09-12 21:40:32
- * @LastEditTime: 2024-09-24 15:03:26
+ * @LastEditTime: 2024-09-25 14:23:52
  */
 import 'package:flutter/foundation.dart';
 
@@ -16,7 +16,7 @@ class Address {
   ///内网测试地址
   static const String privateDevUrl = 'http://10.0.3.38:7007';
 
-  static const String httpBaseUrl = personalDevUrl;
+  static const String httpBaseUrl = privateDevUrl;
 
   // static const String httpBaseUrl = kReleaseMode ? privateDevUrl : personalDevUrl;
 }

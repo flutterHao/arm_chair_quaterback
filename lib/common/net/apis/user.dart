@@ -2,9 +2,9 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 16:52:11
- * @LastEditTime: 2024-09-21 16:25:49
+ * @LastEditTime: 2024-09-25 14:44:04
  */
-import 'package:arm_chair_quaterback/common/entities/user_entiry/user_entiry.dart';
+import 'package:arm_chair_quaterback/common/entities/user_entity/user_entiry.dart';
 import 'package:arm_chair_quaterback/common/net/index.dart';
 
 class UserApi {
@@ -22,13 +22,13 @@ class UserApi {
     return data;
   }
 
-  static Future<UserEntiry> login() async {
+  static Future<UserEntity> login() async {
     var data = await HttpUtil().post(Api.login);
-    return UserEntiry.fromMap(data);
+    return UserEntity.fromJson(data);
   }
 
-  static Future<UserEntiry> visitorLogin() async {
+  static Future<UserEntity> visitorLogin() async {
     var data = await HttpUtil().post(Api.visitorLogin);
-    return UserEntiry.fromMap(data);
+    return UserEntity.fromJson(data);
   }
 }

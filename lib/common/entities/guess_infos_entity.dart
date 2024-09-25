@@ -124,7 +124,7 @@ class GuessInfosGuessReferenceValue {
   Map<String, dynamic> toJson() => $GuessInfosGuessReferenceValueToJson(this);
 
   double getValue(String key) {
-    if(key.toLowerCase() == "reb"){
+    if (key.toLowerCase() == "reb") {
       return _getREB();
     }
     var json = toJson();
@@ -136,8 +136,8 @@ class GuessInfosGuessReferenceValue {
     return 0;
   }
 
-  double _getREB(){
-    return (dreb+oreb)/2;
+  double _getREB() {
+    return (dreb + oreb) / 2;
   }
 
   @override

@@ -719,13 +719,12 @@ class MyDateUtils {
               year, month, day, hour, minute, second, millisecond, microsecond);
 
   /// Aug 1,2024
-  static String getEnMMDDYYYY(DateTime dateTime,{ bool short = false}){
-    return "${getMonthEnName(dateTime,short: short)} ${dateTime.day},${dateTime.year}";
+  static String getEnMMDDYYYY(DateTime dateTime, {bool short = false}) {
+    return "${getMonthEnName(dateTime, short: short)} ${dateTime.day},${dateTime.year}";
   }
 
   /// 获取英文月份
-  static String getMonthEnName(DateTime dateTime,
-      { bool short = false}) {
+  static String getMonthEnName(DateTime dateTime, {bool short = false}) {
     String month = "";
     switch (dateTime.weekday) {
       case 1:

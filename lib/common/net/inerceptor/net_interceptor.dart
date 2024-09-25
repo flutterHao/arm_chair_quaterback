@@ -197,7 +197,7 @@ class NetInterceptor extends InterceptorsWrapper {
     if (authorization != null) {
       options.headers.addAll(authorization);
     }
-    return handler.next(options);
+    handler.next(options);
   }
 
   @override
@@ -209,11 +209,13 @@ class NetInterceptor extends InterceptorsWrapper {
       Result result = Result.fromJson(responseData);
       if (result.code == 200) {
         // 成功返回数据，将数据传递给下一步
-        return handler.next(Response(
+        handler.next(Response(
           requestOptions: response.requestOptions,
           data: result.data, // 将解析后的 data 部分返回
         ));
       } else if (result.code != null) {
+        handlerError(
+            ErrorEntity(code: result.code!, message: result.message ?? ""));
         // 业务逻辑错误，处理错误并返回 DioException
         if (result.code == 401) {
           // 捕获业务逻辑返回的 401 错误
@@ -231,14 +233,14 @@ class NetInterceptor extends InterceptorsWrapper {
         }
       } else {
         //Map json文件格式
-        return handler.next(Response(
+        handler.next(Response(
           requestOptions: response.requestOptions,
           data: responseData, // 将解析后的 data 部分返回
         ));
       }
     } else {
       //list json 文件格式
-      return handler.next(Response(
+      handler.next(Response(
         requestOptions: response.requestOptions,
         data: responseData, // 将解析后的 data 部分返回
       ));
@@ -251,7 +253,7 @@ class NetInterceptor extends InterceptorsWrapper {
 
     ErrorEntity eInfo = createErrorEntity(err);
     handlerError(eInfo);
-    return handler.next(err);
+    handler.next(err);
   }
 
   Future<void> _retryOnError(
@@ -331,7 +333,7 @@ class NetInterceptor extends InterceptorsWrapper {
     var headers = <String, dynamic>{};
     // if (getx.Get.isRegistered<UserStore>() && UserStore.to.hasToken == true) {
     if (UserStore.to.hasToken == true) {
-      Log.d("添加请求头token");
+      // Log.d("添加请求头token");
       headers['Authorization'] = UserStore.to.token;
     }
     return headers;

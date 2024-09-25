@@ -61,7 +61,6 @@ class PickRankController extends GetxController
   static String get idRanks => "ranks";
   static String get idAwards => "awards";
 
-
   /// 在 onInit() 之后调用 1 帧。这是进入的理想场所
   @override
   void onReady() {

@@ -3,16 +3,13 @@ import 'package:get/get.dart';
 
 import 'index.dart';
 
-class PersonalCenterController extends GetxController with GetSingleTickerProviderStateMixin {
+class PersonalCenterController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   PersonalCenterController();
 
   final state = PersonalCenterState();
 
-  List<String> titles = [
-    "Game",
-    "Picks",
-    "Comments"
-  ];
+  List<String> titles = ["Game", "Picks", "Comments"];
 
   late TabController tabController;
 
@@ -28,7 +25,8 @@ class PersonalCenterController extends GetxController with GetSingleTickerProvid
   @override
   void onInit() {
     super.onInit();
-    tabController = TabController(length: titles.length, vsync: this,initialIndex: 1);
+    tabController =
+        TabController(length: titles.length, vsync: this, initialIndex: 1);
   }
 
   /// 在 onInit() 之后调用 1 帧。这是进入的理想场所

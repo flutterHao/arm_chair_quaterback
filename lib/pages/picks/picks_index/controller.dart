@@ -8,7 +8,7 @@ import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/user_entiry/user_entiry.dart';
+import 'package:arm_chair_quaterback/common/entities/user_entity/user_entiry.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/enums/rank_type.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
@@ -89,7 +89,8 @@ class PicksIndexController extends GetxController {
       var propertyName = picksPlayer.betData[int.parse(betDataIndex)];
       guessData.guessAttr = propertyName.toLowerCase();
       guessData.guessChoice = int.parse(choiceIndex);
-      guessData.guessReferenceValue = guessInfo.guessReferenceValue.getValue(propertyName);
+      guessData.guessReferenceValue =
+          guessInfo.guessReferenceValue.getValue(propertyName);
       guessParamEntity.guessData = [guessData];
       params.add(guessParamEntity);
     }
@@ -198,7 +199,7 @@ class PicksIndexController extends GetxController {
       refreshController.refreshCompleted();
 
       update([idMain]);
-      UserEntiry userEntiry = Get.find<HomeController>().userEntiry;
+      UserEntity userEntiry = Get.find<HomeController>().userEntiry;
       var indexWhere = rankInfo.ranks.indexWhere(
           (e) => e.teamId == userEntiry.teamLoginInfo?.team?.teamId);
       if (indexWhere == -1) {

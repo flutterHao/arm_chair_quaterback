@@ -78,7 +78,7 @@ class GuessItemController extends GetxController
           );
           barDatas.add(chartGroupData);
         }
-        Map<String, dynamic> item = {"maxY": max(maxY,5.0), "list": barDatas};
+        Map<String, dynamic> item = {"maxY": max(maxY, 5.0), "list": barDatas};
         barGroups[key] = item;
       }
       update();

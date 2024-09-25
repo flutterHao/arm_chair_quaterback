@@ -33,10 +33,11 @@ class ReciveAwardItemController extends GetxController {
   }
 
   /// 获取消耗金币数
-  String getCostCount(){
+  String getCostCount() {
     int len = data.length;
-    var costCount = double.parse(
-        (len * double.parse(newsDefineEntity.betCost)).toString()).toStringAsFixed(1);
+    var costCount =
+        double.parse((len * double.parse(newsDefineEntity.betCost)).toString())
+            .toStringAsFixed(1);
     return costCount;
   }
 
@@ -46,7 +47,7 @@ class ReciveAwardItemController extends GetxController {
     for (int i = 0; i < data.length; i++) {
       var item = data[i];
       if (item.reciveAwardInfo.guessData[0].status > 1) {
-        if(item.reciveAwardInfo.guessData[0].awards.isNotEmpty) {
+        if (item.reciveAwardInfo.guessData[0].awards.isNotEmpty) {
           var award = item.reciveAwardInfo.guessData[0].awards[0];
           count += award.num;
         }
@@ -62,9 +63,9 @@ class ReciveAwardItemController extends GetxController {
   }
 
   /// 获取奖励
-  getGuessAward(){
+  getGuessAward() {
     print('getGuessAward-------');
-    PicksApi.getGuessAward(data[0].reciveAwardInfo.scId).then((result){
+    PicksApi.getGuessAward(data[0].reciveAwardInfo.scId).then((result) {
       data = [];
       for (int i = 0; i < data.length; i++) {
         var item = data[i];
@@ -73,5 +74,4 @@ class ReciveAwardItemController extends GetxController {
       }
     });
   }
-
 }

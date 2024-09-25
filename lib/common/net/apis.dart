@@ -44,14 +44,15 @@ class Api {
   static const String getRedisRankInfo =
       "$API_BASE_PATH/NBANews/getRedisRankInfo";
   static const String getGuessAward = "$API_BASE_PATH/NBANews/getGuessAward";
-  static const String getGuessAllAward = "$API_BASE_PATH/NBANews/getGuessAllAward";
-
+  static const String getGuessAllAward =
+      "$API_BASE_PATH/NBANews/getGuessAllAward";
 
   static const String getAward = "$API_BASE_PATH/NBANews/getTodayAward";
   //NBAData
-  static const String teamStatRank = "$API_BASE_PATH/NBAData/queryNBATeamStatRank";
+  static const String teamStatRank =
+      "$API_BASE_PATH/NBAData/queryNBATeamStatRank";
   static const String teamRank = "$API_BASE_PATH/NBAData/queryNBATeamRank";
-  
+
   static const String playerStats =
       "$API_BASE_PATH/NBAData/getNBAPlayerRankJSONInfo";
   static const String getNBAPlayerInfo =
