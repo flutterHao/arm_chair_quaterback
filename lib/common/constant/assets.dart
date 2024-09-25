@@ -43,6 +43,9 @@ class Assets {
   static const uiIconRing_01Png = 'assets/images/icon/ui_icon_ring_01.png';
   static const uiIconShrinkPng = 'assets/images/icon/ui_icon_shrink.png';
   static const uiIconUnfoldPng = 'assets/images/icon/ui_icon_unfold.png';
+  static const uiIconRingPng = 'assets/images/icon/ui_icon_ring.png';
+  static const uiIconRuidgtPng = 'assets/images/icon/ui_icon_ruidgt.png';
+  static const uiWindowsAwardPng = 'assets/images/icon/ui_windows_award.png';
 
   ///test
   static const testTeamLogoPng = 'assets/test/test_team_logo.png';
@@ -66,6 +69,9 @@ class Assets {
   static const uiBannerAwardPng = 'assets/images/picks/ui_banner_award.png';
   static const uiBannerHistoryPng = 'assets/images/picks/ui_banner_history.png';
   static const uiBannerRankPng = 'assets/images/picks/ui_banner_rank.png';
+  static const uiPropsBoxPng = 'assets/images/picks/ui_props_box.png';
+  static const uiPropsMoenyPng = 'assets/images/picks/ui_props_moeny.png';
+  static const uiBellePng = 'assets/images/picks/ui_belle.png';
 
   ///player
   static const uiIconPingjiPng = 'assets/images/player/ui_icon_pingji.png';
@@ -73,7 +79,6 @@ class Assets {
   static const uiIconStar_02Png = 'assets/images/player/ui_icon_star_02.png';
   static const uiLight_01Png = 'assets/images/player/ui_light_01.png';
   static const uiStateBestPng = 'assets/images/player/ui_state_best.png';
-  static const uiIconRuidgtPng = 'assets/images/player/ui_icon_ruidgt.png';
   static const uiIconArrows_01Png =
       'assets/images/player/ui_icon_arrows_01.png';
   static const uiIconArrows_02Png =

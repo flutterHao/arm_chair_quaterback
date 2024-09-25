@@ -17,6 +17,7 @@ import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/receive_prop_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/recive_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_simple_entity.dart';
 
 JsonConvert jsonConvert = JsonConvert();
 
@@ -302,6 +303,10 @@ class JsonConvert {
               (Map<String, dynamic> e) => TeamRankEntity.fromJson(e))
           .toList() as M;
     }
+    if (<TeamSimpleEntity>[] is M) {
+      return data.map<TeamSimpleEntity>((Map<String, dynamic> e) =>
+          TeamSimpleEntity.fromJson(e)).toList() as M;
+    }
 
     debugPrint("$M not found");
 
@@ -352,6 +357,7 @@ class JsonConvertClassCollection {
     (ReciveAwardGuessDataAwards).toString():
         ReciveAwardGuessDataAwards.fromJson,
     (TeamRankEntity).toString(): TeamRankEntity.fromJson,
+    (TeamSimpleEntity).toString(): TeamSimpleEntity.fromJson,
   };
 
   bool containsKey(String type) {

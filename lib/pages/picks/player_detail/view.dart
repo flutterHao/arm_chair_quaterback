@@ -758,7 +758,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                         ],
                       ),
                       InkWell(
-                          onTap: () => Get.back(id: GlobalNestedKey.PICKS),
+                          onTap: () => Get.back(),
                           child: IconWidget(
                             iconWidth: 18.w,
                             icon: Assets.iconClosePng,

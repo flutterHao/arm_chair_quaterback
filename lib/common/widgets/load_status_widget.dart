@@ -14,15 +14,17 @@ class LoadStatusWidget extends StatelessWidget {
   const LoadStatusWidget(
       {this.icon = Assets.testTeamLogoPng,
       this.text = 'Data Lost ~~',
+      this.onRefreshTap,
       super.key});
 
   final String icon;
   final String text;
+  final Function()? onRefreshTap;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 100.w,
+      height: 150.w,
       width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -33,6 +35,24 @@ class LoadStatusWidget extends StatelessWidget {
             text,
             style: 12.w4(color: AppColors.cB3B3B3.withOpacity(.7)),
           ),
+          if (onRefreshTap != null)
+            InkWell(
+              onTap: onRefreshTap,
+              child: Container(
+                height: 30.w,
+                width: 120.w,
+                margin: EdgeInsets.only(top: 5.w),
+                decoration: BoxDecoration(
+                    color: AppColors.cFF7954,
+                    borderRadius: BorderRadius.circular(15.w)),
+                child: Center(
+                  child: Text(
+                    "REFRESH",
+                    style: 14.w7(color: AppColors.cFFFFFF),
+                  ),
+                ),
+              ),
+            )
         ],
       ),
     );

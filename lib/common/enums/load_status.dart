@@ -5,7 +5,7 @@
 enum LoadDataStatus {
   loading(desc: 'loading ...'),
   error(desc: 'please try again ~~'),
-  noData(desc: 'data lost ~~'),
+  noData(desc: 'no data ~~'),
   success(desc: 'nice');
 
   const LoadDataStatus({required this.desc});

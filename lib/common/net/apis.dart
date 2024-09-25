@@ -25,9 +25,12 @@ class Api {
 
   /// api
   static const String authAccount = '$API_BASE_PATH/account/authAccount';
+
   //team
   static const String login = "$API_BASE_PATH/team/teamLogin";
   static const String visitorLogin = "$API_BASE_PATH/team/visitorLogin";
+  static const String getTeamSimple = "$API_BASE_PATH/team/getTeamSimple";
+
   //NBANews
   static const String getNewsList = "$API_BASE_PATH/NBANews/getNBANews";
   static const String getNewsDetail = "$API_BASE_PATH/NBANews/viewNews";
@@ -46,8 +49,10 @@ class Api {
   static const String getGuessAward = "$API_BASE_PATH/NBANews/getGuessAward";
   static const String getGuessAllAward =
       "$API_BASE_PATH/NBANews/getGuessAllAward";
+  static const String getRankRewards = "$API_BASE_PATH/NBANews/getRankRewards";
 
   static const String getAward = "$API_BASE_PATH/NBANews/getTodayAward";
+
   //NBAData
   static const String teamStatRank =
       "$API_BASE_PATH/NBAData/queryNBATeamStatRank";
