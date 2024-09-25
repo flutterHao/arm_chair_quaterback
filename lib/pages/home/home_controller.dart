@@ -9,7 +9,7 @@ import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/entities/tab_item_info.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entiry/user_entiry.dart';
-import 'package:arm_chair_quaterback/common/net/apis/config.dart';
+import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/user.dart';
 import 'package:arm_chair_quaterback/common/services/services.dart';
 import 'package:arm_chair_quaterback/common/store/user.dart';
@@ -87,7 +87,7 @@ class HomeController extends GetxController
   void onReady() {
     super.onReady();
     login();
-   ConfigApi.init();
+    CacheApi.init();
   }
 
   @override
@@ -128,6 +128,4 @@ class HomeController extends GetxController
     }
     return accountName;
   }
-
-
 }

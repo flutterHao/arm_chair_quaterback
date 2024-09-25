@@ -9,7 +9,7 @@ import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_
 import 'package:arm_chair_quaterback/common/entities/stats_rank/nba_player_stat.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
-import 'package:arm_chair_quaterback/common/net/apis/config.dart';
+import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/utils/loading.dart';
@@ -95,7 +95,7 @@ class NewListController extends GetxController {
   ///TODO 优化
   Future getStarTeamList() async {
     await Future.wait([
-      PicksApi.getNBATeamDefine(),
+      CacheApi.getNBATeamDefine(),
       NewsApi.starTeamList(page: 0, pageSize: 30),
       NewsApi.getTeamList()
     ]).then((v) {
@@ -195,7 +195,7 @@ class NewListController extends GetxController {
     NewsApi.getAward().then((value) {
       if (value != null) {
         state.propDefineEntity =
-            ConfigApi.propDefineList!.where((e) => e.propId == value.id).first;
+            CacheApi.propDefineList!.where((e) => e.propId == value.id).first;
         EasyLoading.showToast(
             "${state.propDefineEntity.propName} +${value.num}");
       } else {

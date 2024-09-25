@@ -40,15 +40,6 @@ class PicksApi {
         .toList();
   }
 
-  static Future<NbaPlayerInfosEntity> getNBAPlayerInfo() async {
-    var json = await httpUtil.post(Api.getNBAPlayerInfo);
-    return NbaPlayerInfosEntity.fromJson(json);
-  }
-
-  static Future<NewsDefineEntity> getNewsDefine() async {
-    List json = await httpUtil.get(Api.cNewsDefine);
-    return NewsDefineEntity.fromJson(json[0]);
-  }
 
   static Future<List<PlayerDayDataEntity>> getRecentAvg(int playerId,
       {int gameCount = 5}) async {
@@ -57,10 +48,6 @@ class PicksApi {
     return json.map((e) => PlayerDayDataEntity.fromJson(e)).toList();
   }
 
-  static Future<List<NbaTeamEntity>> getNBATeamDefine() async {
-    List data = await httpUtil.get(Api.cNBATeamDefine);
-    return data.map((e) => NbaTeamEntity.fromJson(e)).toList();
-  }
 
   static Future<List<GuessInfosEntity>> guess(
       List<GuessParamEntity> guessParams) async {

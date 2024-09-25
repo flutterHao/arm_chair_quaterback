@@ -11,6 +11,7 @@ import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entiry/user_entiry.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/enums/rank_type.dart';
+import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:flutter/material.dart';
@@ -146,9 +147,9 @@ class PicksIndexController extends GetxController {
     loadStatusRx.value = LoadDataStatus.loading;
     Future.wait([
       PicksApi.getGuessGamesInfo(),
-      PicksApi.getNBAPlayerInfo(),
-      PicksApi.getNewsDefine(),
-      PicksApi.getNBATeamDefine(),
+      CacheApi.getNBAPlayerInfo(),
+      CacheApi.getNewsDefine(),
+      CacheApi.getNBATeamDefine(getList: true),
       PicksApi.getRedisRankInfo(type: RankType.newsGuess)
     ]).then((results) {
       picksPlayers.clear();

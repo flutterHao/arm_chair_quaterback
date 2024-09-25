@@ -658,7 +658,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
     await showModalBottomSheet(
         backgroundColor: Colors.transparent,
         barrierColor: Colors.transparent,
-        context: context,
+        context: Get.context!,
         builder: (context) {
           return Container(
             height: MediaQuery.of(context).size.height,

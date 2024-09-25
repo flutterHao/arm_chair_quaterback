@@ -8,6 +8,7 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/param_utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/TLBuilderWidget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guess_item/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/rank_start_button.dart';
@@ -355,7 +356,7 @@ class _GuessItemState extends State<GuessItem>
     PicksIndexController picksIndexController = Get.find();
     showModalBottomSheet(
         isScrollControlled: true,
-        context: context,
+        context: Get.context!,
         builder: (context) {
           return Container(
             constraints: BoxConstraints(maxHeight: 500.w),

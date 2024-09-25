@@ -103,7 +103,7 @@ import 'package:arm_chair_quaterback/common/net/apis.dart';
 import 'package:arm_chair_quaterback/common/net/http.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 
-class ConfigApi {
+class CacheApi {
   ///获取所有球队
   static Map<int, NbaTeamEntity>? teamDefineMap;
   static List<NbaTeamEntity> teamList = [];
@@ -130,12 +130,16 @@ class ConfigApi {
   }
 
   ///获取球队列表
-  static Future<Map<int, NbaTeamEntity>> getNBATeamDefine() async {
+  static Future<dynamic> getNBATeamDefine({bool getList = false}) async {
+    if (teamList.isNotEmpty && getList) {
+      return teamList;
+    }
     if (teamDefineMap != null) {
       return teamDefineMap!;
     }
     List data = await httpUtil.get(Api.cNBATeamDefine);
     teamList = data.map((e) => NbaTeamEntity.fromJson(e)).toList();
+    if (getList) return teamList;
     teamDefineMap = teamList.fold({}, (previousValue, element) {
       previousValue?[element.id] = element;
       return previousValue;

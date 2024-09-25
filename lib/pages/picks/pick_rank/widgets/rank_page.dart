@@ -1,4 +1,6 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
+import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/empty_widget.dart';
@@ -120,69 +122,72 @@ class _RankPageState extends State<RankPage>
                                           EdgeInsets.only(top: 71.w),
                                           child: Column(
                                             children: [
-                                              Stack(
-                                                children: [
-                                                  Container(
-                                                    width: 81.w,
-                                                    height: 81.w,
-                                                    margin: EdgeInsets
-                                                        .only(
-                                                        bottom: 8.w),
-                                                    decoration: BoxDecoration(
-                                                        borderRadius:
-                                                        BorderRadius
-                                                            .circular(41
-                                                            .w),
-                                                        border: Border
-                                                            .all(
-                                                            color: AppColors
-                                                                .c52473E
-                                                                .withOpacity(
-                                                                .5),
-                                                            width: 8.w)),
-                                                    child: Container(
-                                                      padding:
-                                                      EdgeInsets.all(
-                                                          8.w),
-                                                      child: Image.asset(
-                                                          Assets
-                                                              .testTeamLogoPng),
-
-                                                      /// todo 换真实网络图
-                                                    ),
-                                                  ),
-                                                  Positioned(
-                                                      bottom: 0,
-                                                      left: 0,
-                                                      right: 0,
-                                                      child: Center(
-                                                        child: Container(
-                                                          height: 26.w,
-                                                          width: 26.w,
-                                                          alignment:
-                                                          Alignment
-                                                              .center,
-                                                          decoration: BoxDecoration(
+                                              InkWell(
+                                                onTap: () => Get.toNamed(RouteNames.picksPersonalCenter,id: GlobalNestedKey.PICKS),
+                                                child: Stack(
+                                                  children: [
+                                                    Container(
+                                                      width: 81.w,
+                                                      height: 81.w,
+                                                      margin: EdgeInsets
+                                                          .only(
+                                                          bottom: 8.w),
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                          BorderRadius
+                                                              .circular(41
+                                                              .w),
+                                                          border: Border
+                                                              .all(
                                                               color: AppColors
-                                                                  .c423832,
-                                                              borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                  13.w)),
-                                                          child: Text(
-                                                            "2",
-                                                            style: TextStyle(
+                                                                  .c52473E
+                                                                  .withOpacity(
+                                                                  .5),
+                                                              width: 8.w)),
+                                                      child: Container(
+                                                        padding:
+                                                        EdgeInsets.all(
+                                                            8.w),
+                                                        child: Image.asset(
+                                                            Assets
+                                                                .testTeamLogoPng),
+
+                                                        /// todo 换真实网络图
+                                                      ),
+                                                    ),
+                                                    Positioned(
+                                                        bottom: 0,
+                                                        left: 0,
+                                                        right: 0,
+                                                        child: Center(
+                                                          child: Container(
+                                                            height: 26.w,
+                                                            width: 26.w,
+                                                            alignment:
+                                                            Alignment
+                                                                .center,
+                                                            decoration: BoxDecoration(
                                                                 color: AppColors
-                                                                    .ccccccc,
-                                                                fontSize:
-                                                                18.sp,
-                                                                fontWeight:
-                                                                FontWeight
-                                                                    .bold),
+                                                                    .c423832,
+                                                                borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                    13.w)),
+                                                            child: Text(
+                                                              "2",
+                                                              style: TextStyle(
+                                                                  color: AppColors
+                                                                      .ccccccc,
+                                                                  fontSize:
+                                                                  18.sp,
+                                                                  fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                            ),
                                                           ),
-                                                        ),
-                                                      ))
-                                                ],
+                                                        ))
+                                                  ],
+                                                ),
                                               ),
                                               Container(
                                                 width: 50.w,
@@ -267,67 +272,70 @@ class _RankPageState extends State<RankPage>
                                           EdgeInsets.only(top: 24.w),
                                           child: Column(
                                             children: [
-                                              Stack(
-                                                children: [
-                                                  Container(
-                                                    width: 97.w,
-                                                    height: 97.w,
-                                                    margin: EdgeInsets
-                                                        .only(
-                                                        bottom: 8.w),
-                                                    decoration: BoxDecoration(
-                                                        borderRadius:
-                                                        BorderRadius
-                                                            .circular(
-                                                            49.w),
-                                                        border: Border
-                                                            .all(
-                                                            color: AppColors
-                                                                .c655344,
-                                                            width: 8.w)),
-                                                    child: Container(
-                                                      padding:
-                                                      EdgeInsets.all(
-                                                          8.w),
-                                                      child: Image.asset(
-                                                          Assets
-                                                              .testTeamLogoPng),
-
-                                                      /// todo 换网络图
-                                                    ),
-                                                  ),
-                                                  Positioned(
-                                                      bottom: 0,
-                                                      left: 0,
-                                                      right: 0,
-                                                      child: Center(
-                                                        child: Container(
-                                                          height: 26.w,
-                                                          width: 26.w,
-                                                          alignment:
-                                                          Alignment
-                                                              .center,
-                                                          decoration: BoxDecoration(
+                                              InkWell(
+                                                onTap: () => Get.toNamed(RouteNames.picksPersonalCenter,id: GlobalNestedKey.PICKS),
+                                                child: Stack(
+                                                  children: [
+                                                    Container(
+                                                      width: 97.w,
+                                                      height: 97.w,
+                                                      margin: EdgeInsets
+                                                          .only(
+                                                          bottom: 8.w),
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                          BorderRadius
+                                                              .circular(
+                                                              49.w),
+                                                          border: Border
+                                                              .all(
                                                               color: AppColors
-                                                                  .c423832,
-                                                              borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                  13.w)),
-                                                          child: Text(
-                                                            "1",
-                                                            style: TextStyle(
+                                                                  .c655344,
+                                                              width: 8.w)),
+                                                      child: Container(
+                                                        padding:
+                                                        EdgeInsets.all(
+                                                            8.w),
+                                                        child: Image.asset(
+                                                            Assets
+                                                                .testTeamLogoPng),
+                                                
+                                                        /// todo 换网络图
+                                                      ),
+                                                    ),
+                                                    Positioned(
+                                                        bottom: 0,
+                                                        left: 0,
+                                                        right: 0,
+                                                        child: Center(
+                                                          child: Container(
+                                                            height: 26.w,
+                                                            width: 26.w,
+                                                            alignment:
+                                                            Alignment
+                                                                .center,
+                                                            decoration: BoxDecoration(
                                                                 color: AppColors
-                                                                    .cFFFFFF,
-                                                                fontSize:
-                                                                18.sp,
-                                                                fontWeight:
-                                                                FontWeight
-                                                                    .bold),
+                                                                    .c423832,
+                                                                borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                    13.w)),
+                                                            child: Text(
+                                                              "1",
+                                                              style: TextStyle(
+                                                                  color: AppColors
+                                                                      .cFFFFFF,
+                                                                  fontSize:
+                                                                  18.sp,
+                                                                  fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                            ),
                                                           ),
-                                                        ),
-                                                      ))
-                                                ],
+                                                        ))
+                                                  ],
+                                                ),
                                               ),
                                               Container(
                                                 width: 50.w,
@@ -413,69 +421,72 @@ class _RankPageState extends State<RankPage>
                                           EdgeInsets.only(top: 101.w),
                                           child: Column(
                                             children: [
-                                              Stack(
-                                                children: [
-                                                  Container(
-                                                    width: 81.w,
-                                                    height: 81.w,
-                                                    margin: EdgeInsets
-                                                        .only(
-                                                        bottom: 8.w),
-                                                    decoration: BoxDecoration(
-                                                        borderRadius:
-                                                        BorderRadius
-                                                            .circular(41
-                                                            .w),
-                                                        border: Border
-                                                            .all(
-                                                            color: AppColors
-                                                                .c52473E
-                                                                .withOpacity(
-                                                                .3),
-                                                            width: 8.w)),
-                                                    child: Container(
-                                                      padding:
-                                                      EdgeInsets.all(
-                                                          8.w),
-                                                      child: Image.asset(
-                                                          Assets
-                                                              .testTeamLogoPng),
-
-                                                      /// todo 换网络图
-                                                    ),
-                                                  ),
-                                                  Positioned(
-                                                      bottom: 0,
-                                                      left: 0,
-                                                      right: 0,
-                                                      child: Center(
-                                                        child: Container(
-                                                          height: 26.w,
-                                                          width: 26.w,
-                                                          alignment:
-                                                          Alignment
-                                                              .center,
-                                                          decoration: BoxDecoration(
+                                              InkWell(
+                                                onTap: () => Get.toNamed(RouteNames.picksPersonalCenter,id: GlobalNestedKey.PICKS),
+                                                child: Stack(
+                                                  children: [
+                                                    Container(
+                                                      width: 81.w,
+                                                      height: 81.w,
+                                                      margin: EdgeInsets
+                                                          .only(
+                                                          bottom: 8.w),
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                          BorderRadius
+                                                              .circular(41
+                                                              .w),
+                                                          border: Border
+                                                              .all(
                                                               color: AppColors
-                                                                  .c423832,
-                                                              borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                  13.w)),
-                                                          child: Text(
-                                                            "3",
-                                                            style: TextStyle(
+                                                                  .c52473E
+                                                                  .withOpacity(
+                                                                  .3),
+                                                              width: 8.w)),
+                                                      child: Container(
+                                                        padding:
+                                                        EdgeInsets.all(
+                                                            8.w),
+                                                        child: Image.asset(
+                                                            Assets
+                                                                .testTeamLogoPng),
+                                                
+                                                        /// todo 换网络图
+                                                      ),
+                                                    ),
+                                                    Positioned(
+                                                        bottom: 0,
+                                                        left: 0,
+                                                        right: 0,
+                                                        child: Center(
+                                                          child: Container(
+                                                            height: 26.w,
+                                                            width: 26.w,
+                                                            alignment:
+                                                            Alignment
+                                                                .center,
+                                                            decoration: BoxDecoration(
                                                                 color: AppColors
-                                                                    .c666666,
-                                                                fontSize:
-                                                                18.sp,
-                                                                fontWeight:
-                                                                FontWeight
-                                                                    .bold),
+                                                                    .c423832,
+                                                                borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                    13.w)),
+                                                            child: Text(
+                                                              "3",
+                                                              style: TextStyle(
+                                                                  color: AppColors
+                                                                      .c666666,
+                                                                  fontSize:
+                                                                  18.sp,
+                                                                  fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                            ),
                                                           ),
-                                                        ),
-                                                      ))
-                                                ],
+                                                        ))
+                                                  ],
+                                                ),
                                               ),
                                               Container(
                                                 width: 50.w,

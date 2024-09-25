@@ -7,7 +7,7 @@
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/net/address.dart';
-import 'package:arm_chair_quaterback/common/net/apis/config.dart';
+import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 
 class Utils {
   static String getPlayUrl(int? playerId) {
@@ -20,12 +20,12 @@ class Utils {
 
   ///获取球员基础信息
   static NbaPlayerInfosPlayerBaseInfoList getPlayBaseInfo(int playerId) {
-    var item = ConfigApi.playerInfo?.baseInfoMap[playerId];
+    var item = CacheApi.playerInfo?.baseInfoMap[playerId];
     return item ?? NbaPlayerInfosPlayerBaseInfoList();
   }
 
   static NbaTeamEntity getTeamInfo(int teamId) {
-    var item = ConfigApi.teamDefineMap?[teamId];
+    var item = CacheApi.teamDefineMap?[teamId];
     return item ?? NbaTeamEntity();
   }
 }
