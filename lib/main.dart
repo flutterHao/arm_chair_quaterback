@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
             //     isMax ? const Size(MAXWEBWIDTH, 812) : const Size(375, 812),
             designSize: const Size(375, 812),
             builder: (context, widget) => RefreshConfiguration(
-              headerBuilder: () => const WaterDropHeader(),        // Configure the default header indicator. If you have the same header indicator for each page, you need to set this
+              headerBuilder: () => const WaterDropHeader(),
               footerBuilder:  () => const ClassicFooter(),
               child: GetMaterialApp(
                 title: 'arm chair puaterback',
