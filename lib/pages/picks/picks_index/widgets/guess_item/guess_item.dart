@@ -12,6 +12,7 @@ import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guess_item/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/rank_start_button.dart';
+import 'package:arm_chair_quaterback/pages/picks/player_detail/index.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -80,7 +81,12 @@ class _GuessItemState extends State<GuessItem>
                         children: [
                           InkWell(
                             onTap: () {
-                              // print('点击了头像');
+                              print('点击了头像');
+                              // Navigator.of(Get.context!).push(PageRouteBuilder(
+                              //   opaque: false,
+                              //     pageBuilder: (context,animation,secondePageanimation){
+                              //   return PlayerDetailPage();
+                              // }));
                               Get.toNamed(RouteNames.picksPlayerDetail,
                                   id: GlobalNestedKey.PICKS);
                             },

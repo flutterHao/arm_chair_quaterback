@@ -7,8 +7,8 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/arc_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/btn_background.dart';
+import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -43,7 +43,8 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                   runSpacing: 9.w,
                   children: List.generate(
                       6,
-                      (index) => Container(
+                          (index) =>
+                          Container(
                             width: (constraints.maxWidth - 9.w * 2) / 3,
                             height: 51.w,
                             decoration: BoxDecoration(
@@ -64,7 +65,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         "3500",
@@ -91,7 +92,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
               LayoutBuilder(builder: (context, constraints) {
                 return Container(
                   padding:
-                      EdgeInsets.symmetric(horizontal: 16.w, vertical: 15.w),
+                  EdgeInsets.symmetric(horizontal: 16.w, vertical: 15.w),
                   decoration: BoxDecoration(
                       color: AppColors.cFFFFFF,
                       borderRadius: BorderRadius.circular(16.w)),
@@ -100,10 +101,11 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                     runSpacing: 9.w,
                     children: List.generate(
                         6,
-                        (index) => SizedBox(
+                            (index) =>
+                            SizedBox(
                               width:
-                                  (constraints.maxWidth - 9.w * 2 - 16.w * 2) /
-                                      3,
+                              (constraints.maxWidth - 9.w * 2 - 16.w * 2) /
+                                  3,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -119,7 +121,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                       ),
                                       Text("/500",
                                           style:
-                                              10.w4(color: AppColors.cB3B3B3))
+                                          10.w4(color: AppColors.cB3B3B3))
                                     ],
                                   ),
                                   Container(
@@ -152,21 +154,21 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                     width: 203.w,
                     child: BtnBackground(
                         child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const SizedBox.shrink(),
-                        Text(
-                          "UPGRADE",
-                          style: 18.w7(color: AppColors.cF2F2F2),
-                        ),
-                        Container(
-                            margin: EdgeInsets.only(right: 11.w),
-                            child: IconWidget(
-                                iconHeight: 14.w,
-                                iconWidth: 14.w,
-                                icon: Assets.uiIconArrowsPng))
-                      ],
-                    )),
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const SizedBox.shrink(),
+                            Text(
+                              "UPGRADE",
+                              style: 18.w7(color: AppColors.cF2F2F2),
+                            ),
+                            Container(
+                                margin: EdgeInsets.only(right: 11.w),
+                                child: IconWidget(
+                                    iconHeight: 14.w,
+                                    iconWidth: 14.w,
+                                    icon: Assets.uiIconArrowsPng))
+                          ],
+                        )),
                   ),
                 ),
               ),
@@ -269,15 +271,16 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                       width: 77.w,
                       alignment: Alignment.center,
                       child:
-                          Text("TEAM", style: 10.w4(color: AppColors.cB3B3B3))),
+                      Text("TEAM", style: 10.w4(color: AppColors.cB3B3B3))),
                   ...List.generate(
                       3,
-                      (index) => Container(
-                          height: 30.w,
-                          width: 77.w,
-                          alignment: Alignment.center,
-                          child: Text("REG",
-                              style: 12.w4(color: AppColors.c818181))))
+                          (index) =>
+                          Container(
+                              height: 30.w,
+                              width: 77.w,
+                              alignment: Alignment.center,
+                              child: Text("REG",
+                                  style: 12.w4(color: AppColors.c818181))))
                 ],
               ),
             ),
@@ -291,13 +294,13 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                       decoration: BoxDecoration(
                           boxShadow: controller.statsIsScrolling.value
                               ? [
-                                  BoxShadow(
-                                    color: AppColors.c262626.withOpacity(.1),
-                                    offset: const Offset(0, 2),
-                                    blurRadius: 1,
-                                    // spreadRadius: 1.0,
-                                  )
-                                ]
+                            BoxShadow(
+                              color: AppColors.c262626.withOpacity(.1),
+                              offset: const Offset(0, 2),
+                              blurRadius: 1,
+                              // spreadRadius: 1.0,
+                            )
+                          ]
                               : []),
                     );
                   }),
@@ -315,34 +318,40 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                 8, (index) => FixedColumnWidth(40.w)).asMap(),
                             children: List.generate(
                                 1,
-                                (index) => TableRow(
-                                    children: List.generate(
-                                        8,
-                                        (index) => Container(
-                                            height: 30.w,
-                                            alignment: Alignment.center,
-                                            child: Text(
-                                              "GP",
-                                              style: 10
-                                                  .w4(color: AppColors.cB3B3B3),
-                                            ))))),
+                                    (index) =>
+                                    TableRow(
+                                        children: List.generate(
+                                            8,
+                                                (index) =>
+                                                Container(
+                                                    height: 30.w,
+                                                    alignment: Alignment.center,
+                                                    child: Text(
+                                                      "GP",
+                                                      style: 10
+                                                          .w4(color: AppColors
+                                                          .cB3B3B3),
+                                                    ))))),
                           ),
                           Table(
                             columnWidths: List.generate(
                                 8, (index) => FixedColumnWidth(40.w)).asMap(),
                             children: List.generate(
                                 3,
-                                (index) => TableRow(
-                                    children: List.generate(
-                                        8,
-                                        (index) => Container(
-                                            height: 30.w,
-                                            alignment: Alignment.center,
-                                            child: Text(
-                                              "$index",
-                                              style: 12
-                                                  .w4(color: AppColors.c545454),
-                                            ))))),
+                                    (index) =>
+                                    TableRow(
+                                        children: List.generate(
+                                            8,
+                                                (index) =>
+                                                Container(
+                                                    height: 30.w,
+                                                    alignment: Alignment.center,
+                                                    child: Text(
+                                                      "$index",
+                                                      style: 12
+                                                          .w4(color: AppColors
+                                                          .c545454),
+                                                    ))))),
                           ),
                         ],
                       ),
@@ -369,6 +378,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
           child: Stack(
             alignment: Alignment.center,
             children: [
+
               ///背景色块
               Container(
                 height: 87.w,
@@ -483,7 +493,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                     height: 87.w,
                     child: ClipRRect(
                       borderRadius:
-                          BorderRadius.only(topLeft: Radius.circular(16.w)),
+                      BorderRadius.only(topLeft: Radius.circular(16.w)),
                       child: Image.asset(
                         alignment: Alignment.center,
                         Assets.uiLight_01Png,
@@ -515,14 +525,17 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                     borderColor: AppColors.cB3B3B3,
                                     borderWidth: 3.w,
                                     progressSweepAngle:
-                                        controller.rateProgress.value,
+                                    controller.rateProgress.value,
                                     borderSweepAngle:
-                                        controller.progressBorder.value,
+                                    controller.progressBorder.value,
                                   )),
                               Positioned(
                                   bottom: 0.w,
                                   child: Text(
-                                    "${((controller.rateProgress.value / 180 * 100) > 100 ? 100 : (controller.rateProgress.value / 180 * 100)).toStringAsFixed(0)}%",
+                                    "${((controller.rateProgress.value / 180 *
+                                        100) > 100 ? 100 : (controller
+                                        .rateProgress.value / 180 * 100))
+                                        .toStringAsFixed(0)}%",
                                     style: 24.w7(
                                         color: AppColors.cFF7954, height: 1),
                                   ))
@@ -661,12 +674,15 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
         context: Get.context!,
         builder: (context) {
           return Container(
-            height: MediaQuery.of(context).size.height,
+            height: MediaQuery
+                .of(context)
+                .size
+                .height,
             width: double.infinity,
             decoration: BoxDecoration(
                 color: AppColors.cD8D8D8,
                 borderRadius:
-                    BorderRadius.vertical(top: Radius.circular(16.w))),
+                BorderRadius.vertical(top: Radius.circular(16.w))),
             child: Column(
               children: [
                 Container(
@@ -797,7 +813,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                   decoration: BoxDecoration(
                                       color: AppColors.cE1E1E1,
                                       borderRadius:
-                                          BorderRadius.circular(32.w)),
+                                      BorderRadius.circular(32.w)),
                                   child: Stack(
                                     alignment: Alignment.bottomCenter,
                                     children: [
@@ -810,7 +826,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                           child: Text(
                                             "SS",
                                             style:
-                                                16.w7(color: AppColors.c262626),
+                                            16.w7(color: AppColors.c262626),
                                           ))
                                     ],
                                   ),
@@ -819,7 +835,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
@@ -835,7 +851,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                             decoration: BoxDecoration(
                                               color: AppColors.c666666,
                                               borderRadius:
-                                                  BorderRadius.circular(2.w),
+                                              BorderRadius.circular(2.w),
                                             ),
                                             child: Text(
                                               "SG",
@@ -880,7 +896,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                       border: Border.all(
                                           color: AppColors.ce5e5e5, width: 1),
                                       borderRadius:
-                                          BorderRadius.circular(12.w)),
+                                      BorderRadius.circular(12.w)),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -905,7 +921,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                           ? AppColors.c10A86A
                                           : AppColors.cB3B3B3,
                                       borderRadius:
-                                          BorderRadius.circular(16.w)),
+                                      BorderRadius.circular(16.w)),
                                   child: IconWidget(
                                       iconWidth: 16.w,
                                       icon: Assets.uiIconRuidgtPng),
@@ -929,106 +945,109 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<PlayerDetailController>(
-      builder: (_) {
-        return BlackAppWidget(
-          Column(
-            children: [
-              Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                child: Stack(
-                  alignment: Alignment.centerLeft,
-                  children: [
-                    SizedBox(
-                      width: 19.w,
-                      height: 19.w,
-                      child: InkWell(
-                        onTap: () => Get.back(id: GlobalNestedKey.PICKS),
-                        child: IconWidget(
-                          iconWidth: 19.w,
-                          iconHeight: 19.w,
-                          icon: Assets.iconBackPng,
-                          iconColor: Colors.white,
+    var controller = Get.put(PlayerDetailController());
+    return HorizontalDragBackWidget(
+      child: GetBuilder<PlayerDetailController>(
+        builder: (_) {
+          return BlackAppWidget(
+            Column(
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
+                  child: Stack(
+                    alignment: Alignment.centerLeft,
+                    children: [
+                      SizedBox(
+                        width: 19.w,
+                        height: 19.w,
+                        child: InkWell(
+                          onTap: () => Get.back(id: GlobalNestedKey.PICKS),
+                          child: IconWidget(
+                            iconWidth: 19.w,
+                            iconHeight: 19.w,
+                            icon: Assets.iconBackPng,
+                            iconColor: Colors.white,
+                          ),
                         ),
                       ),
-                    ),
-                    Center(
-                      child: Text(
-                        "PLAYER",
-                        style: 19.w7(color: Colors.white),
+                      Center(
+                        child: Text(
+                          "PLAYER",
+                          style: 19.w7(color: Colors.white),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              11.vGap,
-              Stack(
-                children: [
-                  Positioned(
-                      right: 0,
-                      bottom: 0,
-                      child: Container(
-                        width: 130.w,
-                        height: 100.w,
-                        alignment: Alignment.bottomRight,
-                        child: Opacity(
-                          opacity: .3,
-                          child: ClipRRect(
-                              borderRadius: BorderRadius.only(
-                                  bottomRight: Radius.circular(32.w)),
-                              child: Image.asset(Assets.testTeamLogoPng,
-                                  height: 80.w)),
-                        ), //todo icon换图
-                      )),
-                  Container(
-                    margin: EdgeInsets.only(left: 29.w, bottom: 12.w),
-                    child: Row(
-                      children: [
-                        Container(
-                            margin: EdgeInsets.only(right: 13.w),
-                            child: IconWidget(
-                                iconWidth: 64.w, icon: Assets.testTeamLogoPng)),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "HOU  #6",
-                              style: TextStyle(
-                                color: AppColors.cB3B3B3,
-                                fontSize: 10.sp,
+                11.vGap,
+                Stack(
+                  children: [
+                    Positioned(
+                        right: 0,
+                        bottom: 0,
+                        child: Container(
+                          width: 130.w,
+                          height: 100.w,
+                          alignment: Alignment.bottomRight,
+                          child: Opacity(
+                            opacity: .3,
+                            child: ClipRRect(
+                                borderRadius: BorderRadius.only(
+                                    bottomRight: Radius.circular(32.w)),
+                                child: Image.asset(Assets.testTeamLogoPng,
+                                    height: 80.w)),
+                          ), //todo icon换图
+                        )),
+                    Container(
+                      margin: EdgeInsets.only(left: 29.w, bottom: 12.w),
+                      child: Row(
+                        children: [
+                          Container(
+                              margin: EdgeInsets.only(right: 13.w),
+                              child: IconWidget(
+                                  iconWidth: 64.w, icon: Assets.testTeamLogoPng)),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "HOU  #6",
+                                style: TextStyle(
+                                  color: AppColors.cB3B3B3,
+                                  fontSize: 10.sp,
+                                ),
                               ),
-                            ),
-                            3.vGap,
-                            Text(
-                              "Player Name",
-                              style: TextStyle(
-                                color: AppColors.cF2F2F2,
-                                fontSize: 16.sp,
+                              3.vGap,
+                              Text(
+                                "Player Name",
+                                style: TextStyle(
+                                  color: AppColors.cF2F2F2,
+                                  fontSize: 16.sp,
+                                ),
                               ),
-                            ),
-                            3.vGap,
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 3.w, vertical: 0.w),
-                              decoration: BoxDecoration(
-                                  color: AppColors.cFFFFFF,
-                                  borderRadius: BorderRadius.circular(2.w)),
-                              child: Text("PF",
-                                  style: 10.w7(color: AppColors.c262626)),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              )
-            ],
-          ),
-          bodyWidget: _buildView(context),
-        );
-      },
+                              3.vGap,
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 3.w, vertical: 0.w),
+                                decoration: BoxDecoration(
+                                    color: AppColors.cFFFFFF,
+                                    borderRadius: BorderRadius.circular(2.w)),
+                                child: Text("PF",
+                                    style: 10.w7(color: AppColors.c262626)),
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
+            bodyWidget: _buildView(context),
+          );
+        },
+      ),
     );
   }
 }

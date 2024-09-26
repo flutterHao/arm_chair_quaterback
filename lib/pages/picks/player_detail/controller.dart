@@ -29,6 +29,7 @@ class PlayerDetailController extends GetxController
   final statsIsScrolling = false.obs;
   final validScreenWidth = 0.0.obs; //屏幕有效宽度，适配web屏幕
 
+  var xDragValue = 0.0.obs;
   /// 0-180
 
   // tap

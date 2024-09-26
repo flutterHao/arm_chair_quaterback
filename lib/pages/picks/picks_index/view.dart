@@ -60,8 +60,15 @@ class PicksIndex extends StatelessWidget {
                 page: () => const PickRankPage(),
                 binding: PickRankBinding());
           case RouteNames.picksPlayerDetail:
+            return PageRouteBuilder(
+                opaque: false,
+                pageBuilder: (c,a,_) {
+                  return PlayerDetailPage();
+                });
             return GetPageRoute(
+              opaque: false,
                 settings: setting,
+                barrierColor: Colors.transparent,
                 page: () => const PlayerDetailPage(),
                 binding: PlayerDetailBinding());
           case RouteNames.picksPersonalCenter:
