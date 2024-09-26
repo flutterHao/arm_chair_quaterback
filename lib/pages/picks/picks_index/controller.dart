@@ -207,6 +207,7 @@ class PicksIndexController extends GetxController {
         scrollController.addListener(_scrollListener);
       }
     }, onError: (e) {
+      refreshController.refreshCompleted();
       loadStatusRx.value = LoadDataStatus.error;
     });
   }

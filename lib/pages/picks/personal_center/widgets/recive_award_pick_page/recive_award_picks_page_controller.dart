@@ -94,6 +94,9 @@ class ReciveAwardPicksPageController extends GetxController {
       }
       refreshController.refreshCompleted();
       update();
-    }, onError: (e) => loadStatusRx.value = LoadDataStatus.error);
+    }, onError: (e) {
+      refreshController.refreshCompleted();
+      loadStatusRx.value = LoadDataStatus.error;
+    });
   }
 }

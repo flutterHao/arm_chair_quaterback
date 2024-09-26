@@ -92,6 +92,7 @@ class ReciveRwardController extends GetxController {
       refreshController.refreshCompleted();
       update();
     }, onError: (e) {
+      refreshController.refreshCompleted();
       loadStatusRx.value = LoadDataStatus.error;
     });
   }
