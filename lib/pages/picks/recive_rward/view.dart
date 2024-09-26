@@ -9,6 +9,7 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/app_bar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/btn_background.dart';
+import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/pages/picks/recive_rward/widgets/recive_award_detail_item.dart';
@@ -85,40 +86,42 @@ class ReciveRwardPage extends GetView<ReciveRwardController> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ReciveRwardController>(
-      builder: (_) {
-        return BlackAppWidget(
-          const AppBarWidget(
-            id: GlobalNestedKey.PICKS,
-            title: "RECEIVE AWARD",
-          ),
-          bodyWidget: _buildView(context),
-          floatWidgets: [
-            if (!(controller.newsDefineEntity == null ||
-                controller.listData.isEmpty))
-              //下注
-              Positioned(
-                  left: 63.w,
-                  right: 63.w,
-                  bottom: 20.w,
-                  child: Center(
-                    child: InkWell(
-                      onTap: () => controller.getGuessAllAward(),
-                      child: Container(
-                        constraints: BoxConstraints(
-                          maxWidth: 300.w,
+    return HorizontalDragBackWidget(
+      child: GetBuilder<ReciveRwardController>(
+        builder: (_) {
+          return BlackAppWidget(
+            const AppBarWidget(
+              id: GlobalNestedKey.PICKS,
+              title: "RECEIVE AWARD",
+            ),
+            bodyWidget: _buildView(context),
+            floatWidgets: [
+              if (!(controller.newsDefineEntity == null ||
+                  controller.listData.isEmpty))
+                //下注
+                Positioned(
+                    left: 63.w,
+                    right: 63.w,
+                    bottom: 20.w,
+                    child: Center(
+                      child: InkWell(
+                        onTap: () => controller.getGuessAllAward(),
+                        child: Container(
+                          constraints: BoxConstraints(
+                            maxWidth: 300.w,
+                          ),
+                          child: BtnBackground(
+                              child: Center(
+                            child: Text("RECEIVE",
+                                style: 16.w7(color: AppColors.cFFFFFF)),
+                          )),
                         ),
-                        child: BtnBackground(
-                            child: Center(
-                          child: Text("RECEIVE",
-                              style: 16.w7(color: AppColors.cFFFFFF)),
-                        )),
                       ),
-                    ),
-                  ))
-          ],
-        );
-      },
+                    ))
+            ],
+          );
+        },
+      ),
     );
   }
 }

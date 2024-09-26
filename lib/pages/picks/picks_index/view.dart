@@ -34,7 +34,6 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'index.dart';
 
-
 class PicksIndex extends StatelessWidget {
   const PicksIndex({super.key});
 
@@ -47,29 +46,35 @@ class PicksIndex extends StatelessWidget {
         switch (setting.name) {
           case RouteNames.picksPicksIndex:
             return GetPageRoute(
-                settings: setting, page: () => const PicksIndexPage());
+                opaque: false,
+                settings: setting,
+                page: () => const PicksIndexPage());
           case RouteNames.picksReciveRward:
             return GetPageRoute(
+                opaque: false,
                 settings: setting,
                 page: () => const ReciveRwardPage(),
                 binding: ReciveRwardBinding());
           case RouteNames.picksPickRank:
             return GetPageRoute(
+                opaque: false,
                 settings: setting,
                 page: () => const PickRankPage(),
                 binding: PickRankBinding());
           case RouteNames.picksPlayerDetail:
             return GetPageRoute(
-              opaque: false,
+                opaque: false,
                 settings: setting,
                 barrierColor: Colors.transparent,
                 page: () => const PlayerDetailPage(),
                 binding: PlayerDetailBinding());
           case RouteNames.picksPersonalCenter:
             return GetPageRoute(
+                opaque: false,
                 settings: setting,
                 page: () => const PersonalCenterPage(),
-                binding: PersonalCenterBinding((setting.arguments as Map)['teamId']));
+                binding: PersonalCenterBinding(
+                    (setting.arguments as Map)['teamId']));
         }
       },
     );
@@ -345,7 +350,9 @@ class _PicksIndexPageState extends State<PicksIndexPage>
       id: PicksIndexController.idMain,
       builder: (_) {
         return BlackAppWidget(
-          const UserInfoBar(title: "PICKS",),
+          const UserInfoBar(
+            title: "PICKS",
+          ),
           totalScreenWidget: _buildView(),
           floatWidgets: [
             //个人榜单信息浮窗

@@ -31,9 +31,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isMax = MediaQuery.of(context).size.width > MAXWEBWIDTH && kIsWeb;
     Get.config(
-      defaultOpaqueRoute: false,
-      defaultPopGesture: true
-    );
+        // defaultOpaqueRoute: false,// 此全局配置无效，使用GetPageRoute的opaque属性
+        defaultPopGesture: true);
     return Center(
       child: Container(
         constraints: const BoxConstraints(maxWidth: MAXWEBWIDTH),

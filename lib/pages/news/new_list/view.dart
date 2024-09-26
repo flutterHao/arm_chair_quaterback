@@ -44,23 +44,27 @@ class _NewsPageState extends State<NewsPage>
         switch (settings.name) {
           case RouteNames.newList:
             return GetPageRoute(
+              opaque: false,
               settings: settings,
               page: () => const NewsListPage(),
             );
           case RouteNames.newsDetail:
             final newsId = settings.arguments;
             return GetPageRoute(
+              opaque: false,
               settings: settings,
               page: () => NewsDetailPage(newsId),
               // binding: NewDetailBinding(), /*  */
             );
           case RouteNames.statsRank:
             return GetPageRoute(
+                opaque: false,
                 settings: settings,
                 page: () => const StatsRankPage(),
                 binding: RankBinding());
           case RouteNames.teamRank:
             return GetPageRoute(
+                opaque: false,
                 settings: settings,
                 page: () => const TeamRankPage(),
                 binding: RankBinding());
@@ -77,8 +81,10 @@ class NewsListPage extends GetView<NewListController> {
   // 主视图
   Widget _buildView(BuildContext context) {
     return SmartRefresher(
-      header: const WaterDropHeader(), // 使用水滴风格的下拉刷新
-      footer: const ClassicFooter(), // 使用经典风格的上拉加载更多
+      header: const WaterDropHeader(),
+      // 使用水滴风格的下拉刷新
+      footer: const ClassicFooter(),
+      // 使用经典风格的上拉加载更多
       controller: controller.refreshCtrl,
       onRefresh: () => controller.refreshData(),
       child: CustomScrollView(
