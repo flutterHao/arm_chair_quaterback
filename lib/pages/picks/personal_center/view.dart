@@ -44,177 +44,98 @@ class PersonalCenterPage extends GetView<PersonalCenterController> {
                 ),
               ),
             ),
-            floatWidgets: [
-              if (controller.teamSimpleEntity != null)
-                Positioned(
-                    left: 13.w,
-                    right: 13.w,
-                    top: MediaQuery.of(context).padding.top +
-                        63.w +
-                        88.w +
-                        6.w +
-                        14.w,
-                    child: Container(
-                      constraints: BoxConstraints(maxWidth: 400.w),
-                      height: 34.w,
-                      decoration: BoxDecoration(
-                          color: AppColors.cEFEFEF,
-                          borderRadius: BorderRadius.circular(17.w),
-                          border: Border.all(width: 1, color: AppColors.cB3B3B3)),
-                      child: LayoutBuilder(builder: (context, constraints) {
-                        var itemWidth = (constraints.maxWidth - 8.w) / 3;
-      
-                        return TLBuildWidget(
-                            controller: controller.tabController,
-                            builder: (current, next, progress, totalProgress) {
-                              return Stack(
-                                alignment: Alignment.centerLeft,
-                                children: [
-                                  Positioned(
-                                    left: totalProgress * itemWidth,
-                                    child: Container(
-                                      margin: EdgeInsets.only(left: 4.w),
-                                      height: 26.w,
-                                      width: itemWidth,
-                                      decoration: BoxDecoration(
-                                          color: AppColors.c262626,
-                                          borderRadius:
-                                              BorderRadius.circular(26.w)),
-                                    ),
-                                  ),
-                                  Row(
-                                    children: List.generate(
-                                        controller.titles.length,
-                                        (index) => Expanded(
-                                              child: InkWell(
-                                                  onTap: () => controller
-                                                      .tabController
-                                                      .animateTo(index),
-                                                  child: Center(
-                                                      child: Text(
-                                                          controller
-                                                              .titles[index],
-                                                          style: 13.w4(
-                                                            color: current ==
-                                                                    index
-                                                                ? Color.lerp(
-                                                                    AppColors
-                                                                        .cF2F2F2,
-                                                                    AppColors
-                                                                        .c666666,
-                                                                    progress)!
-                                                                : next == index
-                                                                    ? Color.lerp(
-                                                                        AppColors
-                                                                            .c666666,
-                                                                        AppColors
-                                                                            .cF2F2F2,
-                                                                        progress)!
-                                                                    : AppColors
-                                                                        .c666666,
-                                                          )))),
-                                            )),
-                                  )
-                                ],
-                              );
-                            });
+            totalScreenBuilder: (context, appBarHeight) {
+              return controller.teamSimpleEntity == null
+                  ? Center(
+                      child: Obx(() {
+                        return LoadStatusWidget(
+                            text: controller.loadStatus.value.desc,
+                            onRefreshTap: controller.getData());
                       }),
-                    ))
-            ],
-            totalScreenWidget: controller.teamSimpleEntity == null
-                ? Center(
-                    child: Obx(() {
-                      return LoadStatusWidget(
-                          text: controller.loadStatus.value.desc,
-                          onRefreshTap: controller.getData());
-                    }),
-                  )
-                : Stack(
-                    children: [
-                      Container(
-                        height: 88.w + 63.w,
-                        decoration: BoxDecoration(
-                          color: AppColors.c262626,
-                          borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(16.w),
-                              bottomRight: Radius.circular(16.w)),
-                        ),
-                        margin: EdgeInsets.only(
-                            top: MediaQuery.of(context).padding.top + 6.w),
-                        padding: EdgeInsets.only(
-                            top: 24.w + 63.w,
-                            bottom: 16.w,
-                            right: 23.w,
-                            left: 23.w),
-                        child: Row(
-                          children: [
-                            Container(
-                                decoration: BoxDecoration(
-                                    color: AppColors.cF2F2F2,
-                                    borderRadius: BorderRadius.circular(8.w)),
-                                child: IconWidget(
-                                    iconWidth: 48.w,
-                                    icon: Assets.testTeamLogoPng)),
-      
-                            ///todo 换网络图
-                            10.hGap,
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  // future
-                                  // Container(
-                                  //   height: 12.w,
-                                  //   width: 30.w,
-                                  //   alignment: Alignment.center,
-                                  //   decoration: BoxDecoration(
-                                  //       color: AppColors.cE7B6DF,
-                                  //       borderRadius: BorderRadius.circular(6.w)),
-                                  //   child: Text(
-                                  //     "KOI",
-                                  //     style: 10.w4(color: AppColors.cFFFFFF, height: 1),
-                                  //   ),
-                                  // ),
-                                  // 8.vGap,
-                                  Text(
-                                    controller.teamSimpleEntity!.teamName,
-                                    style: 16
-                                        .w4(color: AppColors.cE6E6E6, height: 1),
-                                  )
-                                ],
+                    )
+                  : Stack(
+                      children: [
+                        Container(
+                          height: 88.w + appBarHeight,
+                          decoration: BoxDecoration(
+                            color: AppColors.c262626,
+                            borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(16.w),
+                                bottomRight: Radius.circular(16.w)),
+                          ),
+                          padding: EdgeInsets.only(
+                              top: 24.w + appBarHeight,
+                              bottom: 16.w,
+                              right: 23.w,
+                              left: 23.w),
+                          child: Row(
+                            children: [
+                              Container(
+                                  decoration: BoxDecoration(
+                                      color: AppColors.cF2F2F2,
+                                      borderRadius: BorderRadius.circular(8.w)),
+                                  child: IconWidget(
+                                      iconWidth: 48.w,
+                                      icon: Assets.testTeamLogoPng)),
+
+                              ///todo 换网络图
+                              10.hGap,
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    // future
+                                    // Container(
+                                    //   height: 12.w,
+                                    //   width: 30.w,
+                                    //   alignment: Alignment.center,
+                                    //   decoration: BoxDecoration(
+                                    //       color: AppColors.cE7B6DF,
+                                    //       borderRadius: BorderRadius.circular(6.w)),
+                                    //   child: Text(
+                                    //     "KOI",
+                                    //     style: 10.w4(color: AppColors.cFFFFFF, height: 1),
+                                    //   ),
+                                    // ),
+                                    // 8.vGap,
+                                    Text(
+                                      controller.teamSimpleEntity!.teamName,
+                                      style: 16.w4(
+                                          color: AppColors.cE6E6E6, height: 1),
+                                    )
+                                  ],
+                                ),
                               ),
-                            ),
-                            // Container(
-                            //   width: 29.w,
-                            //   height: 29.w,
-                            //   decoration: BoxDecoration(
-                            //       borderRadius: BorderRadius.circular(15.w),
-                            //       border: Border.all(color: AppColors.cE6E6E6,
-                            //           width: 1)),
-                            //   child: IconWidget(
-                            //       iconWidth: 16.w, icon: Assets.testTeamLogoPng),
-                            //
-                            //
-                            // ),
-                            // 9.hGap,
-                            // Container(
-                            //   width: 29.w,
-                            //   height: 29.w,
-                            //   decoration: BoxDecoration(
-                            //     borderRadius: BorderRadius.circular(15.w),
-                            //     color: AppColors.cD4D4D4,
-                            //   ),
-                            //   child: IconWidget(
-                            //       iconWidth: 16.w, icon: Assets.testTeamLogoPng),
-                            //
-                            //
-                            // )
-                          ],
+                              // Container(
+                              //   width: 29.w,
+                              //   height: 29.w,
+                              //   decoration: BoxDecoration(
+                              //       borderRadius: BorderRadius.circular(15.w),
+                              //       border: Border.all(color: AppColors.cE6E6E6,
+                              //           width: 1)),
+                              //   child: IconWidget(
+                              //       iconWidth: 16.w, icon: Assets.testTeamLogoPng),
+                              //
+                              //
+                              // ),
+                              // 9.hGap,
+                              // Container(
+                              //   width: 29.w,
+                              //   height: 29.w,
+                              //   decoration: BoxDecoration(
+                              //     borderRadius: BorderRadius.circular(15.w),
+                              //     color: AppColors.cD4D4D4,
+                              //   ),
+                              //   child: IconWidget(
+                              //       iconWidth: 16.w, icon: Assets.testTeamLogoPng),
+                              //
+                              //
+                              // )
+                            ],
+                          ),
                         ),
-                      ),
-                      Expanded(
-                        child: TabBarView(
+                        TabBarView(
                             controller: controller.tabController,
                             children: [
                               const Center(child: LoadStatusWidget()),
@@ -222,9 +143,86 @@ class PersonalCenterPage extends GetView<PersonalCenterController> {
                                   teamId, controller.teamSimpleEntity!),
                               const Center(child: LoadStatusWidget()),
                             ]),
-                      ),
-                    ],
-                  ),
+                        Positioned(
+                            left: 13.w,
+                            right: 13.w,
+                            top: appBarHeight + 88.w + 14.w,
+                            child: Container(
+                              constraints: BoxConstraints(maxWidth: 400.w),
+                              height: 34.w,
+                              decoration: BoxDecoration(
+                                  color: AppColors.cEFEFEF,
+                                  borderRadius: BorderRadius.circular(17.w),
+                                  border: Border.all(
+                                      width: 1, color: AppColors.cB3B3B3)),
+                              child: LayoutBuilder(
+                                  builder: (context, constraints) {
+                                var itemWidth =
+                                    (constraints.maxWidth - 8.w) / 3;
+
+                                return TLBuildWidget(
+                                    controller: controller.tabController,
+                                    builder: (current, next, progress,
+                                        totalProgress) {
+                                      return Stack(
+                                        alignment: Alignment.centerLeft,
+                                        children: [
+                                          Positioned(
+                                            left: totalProgress * itemWidth,
+                                            child: Container(
+                                              margin:
+                                                  EdgeInsets.only(left: 4.w),
+                                              height: 26.w,
+                                              width: itemWidth,
+                                              decoration: BoxDecoration(
+                                                  color: AppColors.c262626,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          26.w)),
+                                            ),
+                                          ),
+                                          Row(
+                                            children: List.generate(
+                                                controller.titles.length,
+                                                (index) => Expanded(
+                                                      child: InkWell(
+                                                          onTap: () =>
+                                                              controller
+                                                                  .tabController
+                                                                  .animateTo(
+                                                                      index),
+                                                          child: Center(
+                                                              child: Text(
+                                                                  controller
+                                                                          .titles[
+                                                                      index],
+                                                                  style: 13.w4(
+                                                                    color: current ==
+                                                                            index
+                                                                        ? Color.lerp(
+                                                                            AppColors
+                                                                                .cF2F2F2,
+                                                                            AppColors
+                                                                                .c666666,
+                                                                            progress)!
+                                                                        : next ==
+                                                                                index
+                                                                            ? Color.lerp(
+                                                                                AppColors.c666666,
+                                                                                AppColors.cF2F2F2,
+                                                                                progress)!
+                                                                            : AppColors.c666666,
+                                                                  )))),
+                                                    )),
+                                          )
+                                        ],
+                                      );
+                                    });
+                              }),
+                            ))
+                      ],
+                    );
+            },
           );
         },
       ),

@@ -15,7 +15,8 @@ import 'package:get/get.dart';
 ///created at 2024/9/11/18:56
 
 class RewardPage extends StatefulWidget {
-  const RewardPage({super.key});
+  const RewardPage(this.appBarHeight,{super.key});
+  final double appBarHeight;
 
   @override
   State<RewardPage> createState() => _RewardPageState();

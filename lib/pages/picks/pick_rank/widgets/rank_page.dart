@@ -15,7 +15,9 @@ import 'package:get/get.dart';
 ///created at 2024/9/11/18:08
 
 class RankPage extends StatefulWidget {
-  const RankPage({super.key});
+  const RankPage(this.appBarHeight,{super.key});
+
+  final double appBarHeight;
 
   @override
   State<RankPage> createState() => _RankPageState();
@@ -54,12 +56,7 @@ class _RankPageState extends State<RankPage>
                         Container(
                           height: 564.w,
                           padding: EdgeInsets.only(
-                              top: MediaQuery.of(context).padding.top +
-                                  48.w +
-                                  6.w +
-                                  16.w +
-                                  34.w +
-                                  39.w),
+                              top: widget.appBarHeight),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [

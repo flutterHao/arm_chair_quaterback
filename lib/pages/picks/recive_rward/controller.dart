@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
@@ -43,7 +42,7 @@ class ReciveRwardController extends GetxController {
   void _initData() {
     loadStatusRx.value = LoadDataStatus.loading;
     var futures = [
-      PicksApi.getGuessInfos(Get.find<HomeController>().userEntiry.teamLoginInfo!.team!.teamId!),
+      PicksApi.getGuessInfos(Get.find<HomeController>().userEntiry.teamLoginInfo?.team?.teamId??0),
       CacheApi.getNBATeamDefine(getList: true),
       CacheApi.getNBAPlayerInfo(),
     ];

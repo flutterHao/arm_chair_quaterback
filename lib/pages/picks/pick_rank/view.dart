@@ -48,13 +48,14 @@ class PickRankPage extends GetView<PickRankController> {
                 )
               ],
             ),
-            totalScreenWidget:
-                TabBarView(controller: controller.tabController, children: const [
-              //rank
-              RankPage(),
-              //reward
-              RewardPage(),
-            ]),
+            totalScreenBuilder: (context,appBarHeight){
+              return TabBarView(controller: controller.tabController, children:  [
+                //rank
+                RankPage(appBarHeight),
+                //reward
+                RewardPage(appBarHeight),
+              ]);
+            },
             floatWidgets: [
               //悬浮tab
               Positioned(

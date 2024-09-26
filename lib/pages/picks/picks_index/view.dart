@@ -93,10 +93,10 @@ class _PicksIndexPageState extends State<PicksIndexPage>
   late PicksIndexController picksIndexController;
 
   // 主视图
-  Widget _buildView() {
+  Widget _buildView(BuildContext context,double appBarHeight) {
+    print('appBarHeight:$appBarHeight');
     return Container(
-      padding: EdgeInsets.only(
-          top: 40.w + MediaQuery.of(context).padding.top + 6.w + 11.w),
+      padding: EdgeInsets.only(top: appBarHeight),
       child: SmartRefresher(
         controller: picksIndexController.refreshController,
         onRefresh: () => picksIndexController.loading(),
@@ -353,7 +353,7 @@ class _PicksIndexPageState extends State<PicksIndexPage>
           const UserInfoBar(
             title: "PICKS",
           ),
-          totalScreenWidget: _buildView(),
+          totalScreenBuilder: _buildView,
           floatWidgets: [
             //个人榜单信息浮窗
             Obx(() {
