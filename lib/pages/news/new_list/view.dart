@@ -37,6 +37,7 @@ class _NewsPageState extends State<NewsPage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+
     return Navigator(
       key: GlobalNestedKey.NewsTabGlobalKey,
       initialRoute: RouteNames.newList,
@@ -44,7 +45,6 @@ class _NewsPageState extends State<NewsPage>
         switch (settings.name) {
           case RouteNames.newList:
             return GetPageRoute(
-              opaque: false,
               settings: settings,
               page: () => const NewsListPage(),
             );
@@ -71,6 +71,24 @@ class _NewsPageState extends State<NewsPage>
         }
         return null;
       },
+    );
+  }
+}
+
+class CustomTransparentTransition extends CustomTransition {
+  @override
+  Widget buildTransition(
+    BuildContext context,
+    Curve? curve,
+    Alignment? alignment,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
+    // 使用FadeTransition来实现渐隐渐显的动画
+    return FadeTransition(
+      opacity: animation, // 使用动画控制透明度
+      child: child,
     );
   }
 }

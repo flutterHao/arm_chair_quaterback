@@ -2,11 +2,13 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-11 16:57:58
- * @LastEditTime: 2024-09-25 20:59:57
+ * @LastEditTime: 2024-09-26 10:50:12
  */
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
+import 'package:arm_chair_quaterback/common/entities/user_entity/team_login_info.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
+import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -19,11 +21,14 @@ class CommentController extends GetxController {
   var subList = <Reviews>[].obs; // 子评论列表
   int total = 5;
   // RxInt count = 0.obs;
-
+  final FocusNode focusNode = FocusNode();
+  late TeamLoginInfo userEntity;
   @override
   void onInit() {
     super.onInit();
     setComments(commentList);
+    userEntity =
+        Get.find<HomeController>().userEntiry.teamLoginInfo ?? TeamLoginInfo();
   }
 
   // 初始化时调用的方法，负责将评论分类

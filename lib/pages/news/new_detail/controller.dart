@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:23:17
- * @LastEditTime: 2024-09-25 19:58:45
+ * @LastEditTime: 2024-09-26 11:22:41
  */
 /*
  * @Description: 
@@ -92,16 +92,16 @@ class NewsDetailController extends GetxController {
     // 如果过滤后的新闻数量小于3，随机获取3条
     if (filteredList.length < 3) {
       // 随机获取3条
-      Random random = Random();
-      while (state.moreList.length < 3) {
-        int randomIndex = random.nextInt(newsList.length);
-        NewsDetail randomItem = newsList[randomIndex];
+      // Random random = Random();
+      // while (state.moreList.length < 3) {
+      //   int randomIndex = random.nextInt(newsList.length);
+      //   NewsDetail randomItem = newsList[randomIndex];
 
-        // 确保没有重复添加相同的新闻
-        if (!state.moreList.contains(randomItem)) {
-          state.moreList.add(randomItem);
-        }
-      }
+      //   // 确保没有重复添加相同的新闻
+      //   if (!state.moreList.contains(randomItem)) {
+      //     state.moreList.add(randomItem);
+      //   }
+      // }
     } else {
       // 如果大于或等于3条，直接添加到列表
       for (var element in filteredList) {

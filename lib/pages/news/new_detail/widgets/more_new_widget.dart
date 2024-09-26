@@ -36,60 +36,61 @@ class MoreNewsWidget extends StatelessWidget {
         if (controller.state.moreList.isNotEmpty)
           Text("More news", style: 14.w7(color: AppColors.c262626)),
         12.vGap,
-        ShadowContainer(
-          backgroudColor: Colors.white,
-          padding: EdgeInsets.all(16.w),
-          child: ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: controller.state.moreList.length,
-              padding: const EdgeInsets.all(0),
-              separatorBuilder: (context, index) => SizedBox(height: 10.w),
-              itemBuilder: (context, index) {
-                NewsDetail item = controller.state.moreList[index];
-                Color color =
-                    item.isView == 1 ? AppColors.cB3B3B3 : AppColors.c666666;
-                return InkWell(
-                  onTap: () async {
-                    item.isView = 1;
-                    await Get.toNamed(RouteNames.newsDetail,
-                        arguments: item.id, id: GlobalNestedKey.NEWS);
-                    controller.update();
-                  },
-                  // onTap: (){
-                  //   controller.getNewsDetail(item.id);
-                  // },
-                  child: Row(
-                    children: [
-                      IconWidget(
-                        iconWidth: 15.w,
-                        icon: Assets.uiIconReadPng,
-                        iconColor: item.isView == 0
-                            ? AppColors.cFF7954
-                            : AppColors.cB3B3B3,
-                      ),
-                      4.hGap,
-                      Expanded(
-                        // width: 250.w,
-                        child: Text(
-                          maxLines: 1,
-                          item.title ?? "",
-                          overflow: TextOverflow.ellipsis,
-                          style: 12.w4(color: color),
+        if (controller.state.moreList.isNotEmpty)
+          ShadowContainer(
+            backgroudColor: Colors.white,
+            padding: EdgeInsets.all(16.w),
+            child: ListView.separated(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: controller.state.moreList.length,
+                padding: const EdgeInsets.all(0),
+                separatorBuilder: (context, index) => SizedBox(height: 10.w),
+                itemBuilder: (context, index) {
+                  NewsDetail item = controller.state.moreList[index];
+                  Color color =
+                      item.isView == 1 ? AppColors.cB3B3B3 : AppColors.c666666;
+                  return InkWell(
+                    onTap: () async {
+                      item.isView = 1;
+                      await Get.toNamed(RouteNames.newsDetail,
+                          arguments: item.id, id: GlobalNestedKey.NEWS);
+                      controller.update();
+                    },
+                    // onTap: (){
+                    //   controller.getNewsDetail(item.id);
+                    // },
+                    child: Row(
+                      children: [
+                        IconWidget(
+                          iconWidth: 15.w,
+                          icon: Assets.uiIconReadPng,
+                          iconColor: item.isView == 0
+                              ? AppColors.cFF7954
+                              : AppColors.cB3B3B3,
                         ),
-                      ),
-                      20.hGap,
-                      IconWidget(
-                        iconWidth: 12.w,
-                        iconHeight: 12.w,
-                        icon: Assets.uiIconArrowsPng,
-                        iconColor: color,
-                      )
-                    ],
-                  ),
-                );
-              }),
-        ),
+                        4.hGap,
+                        Expanded(
+                          // width: 250.w,
+                          child: Text(
+                            maxLines: 1,
+                            item.title ?? "",
+                            overflow: TextOverflow.ellipsis,
+                            style: 12.w4(color: color),
+                          ),
+                        ),
+                        20.hGap,
+                        IconWidget(
+                          iconWidth: 12.w,
+                          iconHeight: 12.w,
+                          icon: Assets.uiIconArrowsPng,
+                          iconColor: color,
+                        )
+                      ],
+                    ),
+                  );
+                }),
+          ),
       ],
     );
   }

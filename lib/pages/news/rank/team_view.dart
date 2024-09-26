@@ -2,12 +2,13 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-14 16:54:10
- * @LastEditTime: 2024-09-21 14:59:47
+ * @LastEditTime: 2024-09-26 15:31:45
  */
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/widgets/TLBuilderWidget.dart';
 import 'package:arm_chair_quaterback/common/widgets/app_bar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -20,81 +21,83 @@ class TeamRankPage extends GetView<RankController> {
 
   @override
   Widget build(BuildContext context) {
-    return BlackAppWidget(
-      const AppBarWidget(
-        title: "TEAM",
-        id: GlobalNestedKey.NEWS,
-      ),
-      bodyWidget: Expanded(
-        child: Column(
-          children: [
-            10.vGap,
-            Container(
-              // width: 349.w,
-              height: 32.w,
-              margin: EdgeInsets.symmetric(horizontal: 16.w),
-              padding: EdgeInsets.all(4.w),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16.w),
-                border: Border.all(width: 0.5, color: AppColors.cB3B3B3),
-              ),
-              child: TLBuildWidget(
-                  controller: controller.tabController,
-                  builder: (current, next, progress, totalProgress) {
-                    return Stack(
-                      children: [
-                        LayoutBuilder(builder: (context, constraints) {
-                          double left = (constraints.maxWidth /
-                              controller.tabController.length);
-                          return Container(
-                            width: constraints.maxWidth /
-                                controller.tabController.length,
-                            height: 26.w,
-                            margin: EdgeInsets.only(left: totalProgress * left),
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                color: AppColors.c262626,
-                                borderRadius: BorderRadius.circular(13.w)),
-                          );
-                        }),
-                        Row(
-                            children: controller.tabs2.map((e) {
-                          int index = controller.tabs2.indexOf(e);
-                          return Expanded(
-                            child: InkWell(
-                              onTap: () => controller.onTap(index),
-                              child: Container(
-                                alignment: Alignment.center,
-                                height: 26.w,
-                                child: Text(
-                                  e,
-                                  style: 13.w4(
-                                      color: current == index
-                                          ? Color.lerp(AppColors.cF2F2F2,
-                                              AppColors.c262626, progress)!
-                                          : next == index
-                                              ? Color.lerp(AppColors.c262626,
-                                                  AppColors.cF2F2F2, progress)!
-                                              : AppColors.c262626),
+    return HorizontalDragBackWidget(
+      child: BlackAppWidget(
+        const AppBarWidget(
+          title: "TEAM",
+          id: GlobalNestedKey.NEWS,
+        ),
+        bodyWidget: Expanded(
+          child: Column(
+            children: [
+              10.vGap,
+              Container(
+                // width: 349.w,
+                height: 32.w,
+                margin: EdgeInsets.symmetric(horizontal: 16.w),
+                padding: EdgeInsets.all(4.w),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16.w),
+                  border: Border.all(width: 0.5, color: AppColors.cB3B3B3),
+                ),
+                child: TLBuildWidget(
+                    controller: controller.tabController,
+                    builder: (current, next, progress, totalProgress) {
+                      return Stack(
+                        children: [
+                          LayoutBuilder(builder: (context, constraints) {
+                            double left = (constraints.maxWidth /
+                                controller.tabController.length);
+                            return Container(
+                              width: constraints.maxWidth /
+                                  controller.tabController.length,
+                              height: 26.w,
+                              margin: EdgeInsets.only(left: totalProgress * left),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  color: AppColors.c262626,
+                                  borderRadius: BorderRadius.circular(13.w)),
+                            );
+                          }),
+                          Row(
+                              children: controller.tabs2.map((e) {
+                            int index = controller.tabs2.indexOf(e);
+                            return Expanded(
+                              child: InkWell(
+                                onTap: () => controller.onTap(index),
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  height: 26.w,
+                                  child: Text(
+                                    e,
+                                    style: 13.w4(
+                                        color: current == index
+                                            ? Color.lerp(AppColors.cF2F2F2,
+                                                AppColors.c262626, progress)!
+                                            : next == index
+                                                ? Color.lerp(AppColors.c262626,
+                                                    AppColors.cF2F2F2, progress)!
+                                                : AppColors.c262626),
+                                  ),
                                 ),
                               ),
-                            ),
-                          );
-                        }).toList()),
-                      ],
-                    );
-                  }),
-            ),
-            20.vGap,
-            Expanded(
-                child: TabBarView(
-              // physics: const NeverScrollableScrollPhysics(),
-              controller: controller.tabController,
-              children:
-                  controller.teamPages.map((e) => Center(child: e)).toList(),
-            ))
-          ],
+                            );
+                          }).toList()),
+                        ],
+                      );
+                    }),
+              ),
+              20.vGap,
+              Expanded(
+                  child: TabBarView(
+                // physics: const NeverScrollableScrollPhysics(),
+                controller: controller.tabController,
+                children:
+                    controller.teamPages.map((e) => Center(child: e)).toList(),
+              ))
+            ],
+          ),
         ),
       ),
     );

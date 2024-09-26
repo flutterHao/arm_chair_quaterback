@@ -5,6 +5,7 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/app_bar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/comments/comment_dialog.dart';
+import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/comments/comments_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/more_new_widget.dart';
@@ -30,8 +31,6 @@ class NewsDetailPage extends StatelessWidget {
         right: InkWell(
           onTap: () {
             ///TODO
-            Navigator.of(context)
-                .push(createCustomRoute(this, NewsDetailPage(123)));
           },
           child: IconWidget(
             iconWidth: 19.w,
@@ -49,7 +48,7 @@ class NewsDetailPage extends StatelessWidget {
                   slivers: [
                     // _buildAppBar(),
                     _buildNewsContent(controller),
-                    _buildMoreNews(),
+                    _buildMoreNews(controller),
                     _buildComments(controller),
                     SliverToBoxAdapter(
                       child: SizedBox(
@@ -140,14 +139,16 @@ class NewsDetailPage extends StatelessWidget {
   }
 
   // 更多新闻部分
-  Widget _buildMoreNews() {
+  Widget _buildMoreNews(NewsDetailController controller) {
     return SliverToBoxAdapter(
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 28.w, horizontal: 32.w),
-        child: MoreNewsWidget(
-          tag: newsId.toString(),
-        ),
-      ),
+      child: controller.state.moreList.isNotEmpty
+          ? Padding(
+              padding: EdgeInsets.symmetric(vertical: 28.w, horizontal: 32.w),
+              child: MoreNewsWidget(
+                tag: newsId.toString(),
+              ),
+            )
+          : 30.vGap,
     );
   }
 
@@ -167,73 +168,14 @@ class NewsDetailPage extends StatelessWidget {
       NewsDetailController(newsId),
       tag: newsId.toString(),
     );
-    RxDouble dragPosition = 0.0.obs;
 
-    return GetBuilder<NewsDetailController>(
-      tag: newsId.toString(), // 使用 tag 区分控制器实例
-      builder: (controller) {
-        ///TODO: 侧滑返回
-        void onHorizontalDragUpdate(DragUpdateDetails details) {
-          dragPosition.value += details.delta.dx;
-          controller.update();
-        }
-
-        void onHorizontalDragEnd(DragEndDetails details) {
-          if (dragPosition > MediaQuery.of(context).size.width / 3) {
-            Navigator.of(context).pop();
-          } else {
-            dragPosition = 0.0.obs;
-            controller.update();
-          }
-        }
-
-        return GestureDetector(
-          onHorizontalDragUpdate: onHorizontalDragUpdate,
-          onHorizontalDragEnd: onHorizontalDragEnd,
-          child: Transform.translate(
-              offset: Offset(dragPosition.value, 0),
-              child: _buildView(context, controller)),
-        );
-      },
+    return HorizontalDragBackWidget(
+      child: GetBuilder<NewsDetailController>(
+        tag: newsId.toString(), // 使用 tag 区分控制器实例
+        builder: (controller) {
+          return _buildView(context, controller);
+        },
+      ),
     );
   }
-}
-
-///TODO: 跳转动画优化
-Route createCustomRoute(Widget cur, Widget page) {
-  return PageRouteBuilder(
-    transitionDuration: const Duration(seconds: 1), // 动画时长 2 秒钟
-    pageBuilder: (context, animation, secondaryAnimation) => page, // 新页面
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      // 缩小和移动退出动画（针对第一个页面）
-      var scaleTween = Tween<double>(begin: 1.0, end: 0.5)
-          .chain(CurveTween(curve: Curves.easeInOut)); // 缩小效果
-      var slideTween =
-          Tween<Offset>(begin: Offset(0.0, 0.0), end: Offset(-0.9, 0.0))
-              .chain(CurveTween(curve: Curves.easeInOut)); // 左侧退出效果
-
-      // 新页面的右侧进入效果
-      var slideInTween =
-          Tween<Offset>(begin: Offset(1.0, 0.0), end: Offset(0.0, 0.0))
-              .chain(CurveTween(curve: Curves.easeInOut)); // 右侧进入效果
-
-      return Stack(
-        children: [
-          // 第一个页面：缩小并从左侧退出
-          SlideTransition(
-            position: animation.drive(slideTween), // 左侧滑出
-            child: ScaleTransition(
-              scale: animation.drive(scaleTween), // 同时缩小
-              child: cur, // 第一个页面内容（当前页面）
-            ),
-          ),
-          // 第二个页面：从右侧进入
-          SlideTransition(
-            position: animation.drive(slideInTween), // 右侧滑入
-            child: page, // 第二个页面内容
-          ),
-        ],
-      );
-    },
-  );
 }

@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -85,12 +86,19 @@ class _HomePageState extends State<HomePage>
                           // mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             SizedBox(height: 12.w),
-                            Image.asset(
-                              select ? e.tabIconSelected : e.tabIconNormal,
-                              width: 30.w,
-                              fit: BoxFit.fill,
-                              // height: 22.5.w,
+                            IconWidget(
+                              iconWidth: 30.w,
+                              icon: e.tabIconNormal,
+                              iconColor: select
+                                  ? AppColors.c262626
+                                  : AppColors.c666666,
                             ),
+                            // Image.asset(
+                            //   select ? e.tabIconSelected : e.tabIconNormal,
+                            //   width: 30.w,
+                            //   fit: BoxFit.fill,
+                            //   // height: 22.5.w,
+                            // ),
                             // SizedBox(height: 7.w),
                             // Text(
                             //   e.label,
@@ -103,7 +111,7 @@ class _HomePageState extends State<HomePage>
                             SizedBox(height: 11.w),
                             if (select)
                               Image.asset(
-                                Assets.sel_2Png,
+                                Assets.uiNavubarSel_02Png,
                                 width: 22.5.w,
                                 // height: 22.5.w,
                                 fit: BoxFit.fill,

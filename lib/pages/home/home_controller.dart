@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-25 11:48:38
- * @LastEditTime: 2024-09-25 15:44:48
+ * @LastEditTime: 2024-09-26 14:13:08
  */
 /*
  * @Description: 
@@ -47,32 +47,32 @@ class HomeController extends GetxController
   List<TabItemInfo> tabItems = [
     TabItemInfo(
       "NEWS",
-      Assets.news_2Png,
-      Assets.new_1Png,
+      Assets.uiIconNews_01Png,
+      Assets.uiIconNews_01Png,
       const NewsPage(),
     ),
     TabItemInfo(
       "PICKS",
-      Assets.slot_2Png,
-      Assets.slot_1Png,
+      Assets.uiIconPicks_01Png,
+      Assets.uiIconPicks_01Png,
       const PicksIndex(),
     ),
     TabItemInfo(
       "TRAINING",
-      Assets.trade_2Png,
-      Assets.trade_1Png,
+      Assets.uiIconTraining_01Png,
+      Assets.uiIconTraining_01Png,
       Container(),
     ),
     TabItemInfo(
       "TEAM",
-      Assets.ball_2Png,
-      Assets.ball_1Png,
+      Assets.uiIconTeam_01Png,
+      Assets.uiIconTeam_01Png,
       const PicksIndex(),
     ),
     TabItemInfo(
       "LEAGUES",
-      Assets.trade_2Png,
-      Assets.trade_1Png,
+      Assets.uiIconLeagues_01Png,
+      Assets.uiIconLeagues_01Png,
       const PicksIndex(),
     ),
   ];
@@ -111,7 +111,7 @@ class HomeController extends GetxController
 
   ///鉴权、获取用户信息
   Future login() async {
-    await UserStore.to.setToken("");
+    // await UserStore.to.setToken("");
     // return;
     String accountName = await getUid();
     int serviceId = 0;

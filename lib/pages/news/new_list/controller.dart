@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2024-09-25 20:43:36
+ * @LastEditTime: 2024-09-26 09:41:31
  */
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
@@ -59,7 +59,7 @@ class NewListController extends GetxController {
       state.newsList = value;
       update(['newsList']);
     }).catchError((v) async {
-      Log.e("getNewsList error");
+      Log.e("getNewsList error,开始重试");
       state.newsList = await NewsApi.getNewsList();
       update(['newsList']);
     });

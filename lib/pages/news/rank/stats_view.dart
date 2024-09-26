@@ -5,6 +5,7 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/TLBuilderWidget.dart';
 import 'package:arm_chair_quaterback/common/widgets/app_bar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/controller.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -187,17 +188,19 @@ class StatsRankPage extends GetView<RankController> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<RankController>(
-      builder: (_) {
-        return BlackAppWidget(
-            const AppBarWidget(
-              title: "STATS",
-              id: GlobalNestedKey.NEWS,
-            ),
-            bodyWidget: Expanded(
-              child: _buildView(context),
-            ));
-      },
+    return HorizontalDragBackWidget(
+      child: GetBuilder<RankController>(
+        builder: (_) {
+          return BlackAppWidget(
+              const AppBarWidget(
+                title: "STATS",
+                id: GlobalNestedKey.NEWS,
+              ),
+              bodyWidget: Expanded(
+                child: _buildView(context),
+              ));
+        },
+      ),
     );
   }
 }
