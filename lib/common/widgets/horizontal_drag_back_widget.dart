@@ -129,8 +129,18 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
 
     return NotificationListener<ScrollNotification>(
       onNotification: (notification) {
+        // print('notification:${notification.runtimeType}');
         if (notification is OverscrollNotification) {
-          if (notification.metrics.pixels ==
+          // print('notification.metrics.pixels:${notification.metrics.pixels}');
+          if (notification.metrics.pixels <=
+              notification.metrics.minScrollExtent && !isOnLeftSide) {
+            //到达左边界
+            isOnLeftSide = true;
+          }
+        }
+        if(notification is ScrollUpdateNotification && !isOnLeftSide){
+          // print('notification.metrics.pixels:${notification.metrics.pixels}');
+          if (notification.metrics.pixels <=
               notification.metrics.minScrollExtent && !isOnLeftSide) {
             //到达左边界
             isOnLeftSide = true;

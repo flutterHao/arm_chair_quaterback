@@ -136,6 +136,7 @@ class PersonalCenterPage extends GetView<PersonalCenterController> {
                           ),
                         ),
                         TabBarView(
+                          physics: const BouncingScrollPhysics(),
                             controller: controller.tabController,
                             children: [
                               const Center(child: LoadStatusWidget()),
