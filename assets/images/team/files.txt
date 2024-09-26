@@ -1,0 +1,10 @@
+static const uiBgOpenPng = 'assets/images/team/ui_bg_open.png';
+static const uiIconBasketballPng = 'assets/images/team/ui_icon_basketball.png';
+static const uiIconBondPng = 'assets/images/team/ui_icon_bond.png';
+static const uiIconTrophy_01Png = 'assets/images/team/ui_icon_trophy_01.png';
+static const uiStateGeneralPng = 'assets/images/team/ui_state_general.png';
+static const uiTeamBox_01Png = 'assets/images/team/ui_team_box_01.png';
+static const uiTeamBox_02Png = 'assets/images/team/ui_team_box_02.png';
+static const uiTeamBox_03Png = 'assets/images/team/ui_team_box_03.png';
+static const uiTeamBox_04Png = 'assets/images/team/ui_team_box_04.png';
+static const uiTeamBox_05Png = 'assets/images/team/ui_team_box_05.png';
