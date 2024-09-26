@@ -30,6 +30,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isMax = MediaQuery.of(context).size.width > MAXWEBWIDTH && kIsWeb;
+    Get.config(
+      defaultOpaqueRoute: false,
+      defaultPopGesture: true
+    );
     return Center(
       child: Container(
         constraints: const BoxConstraints(maxWidth: MAXWEBWIDTH),
@@ -58,7 +62,7 @@ class MyApp extends StatelessWidget {
                 fallbackLocale: const Locale('en', 'US'),
                 enableLog: true,
                 // logWriterCallback: Log.write,
-                defaultTransition: Transition.rightToLeftWithFade,
+                defaultTransition: Transition.rightToLeft,
                 //  defaultTransition: Transition.noTransition,
               ),
             ),

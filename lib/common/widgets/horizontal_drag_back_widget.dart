@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 ///
@@ -21,14 +20,18 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
     with SingleTickerProviderStateMixin {
   ///手指按下的x位置
   double startX = 0;
+
   ///移动的距离
   double offsetX = 0;
+
   /// 布局宽度
   double width = 0;
   late AnimationController animationController;
   late Tween<double> tween;
+
   /// 回收动画的最小时长
   int minMilliseconds = 10;
+
   /// 回收动画的最大时长
   int maxMilliseconds = 100;
   late Animation<double> animation;
@@ -92,8 +95,8 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
       child: Stack(
         children: [
           Container(
-            color: Color.lerp(Colors.black.withOpacity(.5), Colors.transparent,
-                offsetX / width),
+            color: Color.lerp(Colors.black.withOpacity(.3),
+                Colors.black.withOpacity(.0), offsetX / width),
           ),
           Transform.translate(offset: Offset(offsetX, 0), child: widget.child),
         ],

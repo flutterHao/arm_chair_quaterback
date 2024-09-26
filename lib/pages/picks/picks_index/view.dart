@@ -7,13 +7,11 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_info_entity.dart';
-import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/personal_center/bindings.dart';
@@ -35,6 +33,7 @@ import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'index.dart';
+
 
 class PicksIndex extends StatelessWidget {
   const PicksIndex({super.key});
@@ -60,11 +59,6 @@ class PicksIndex extends StatelessWidget {
                 page: () => const PickRankPage(),
                 binding: PickRankBinding());
           case RouteNames.picksPlayerDetail:
-            return PageRouteBuilder(
-                opaque: false,
-                pageBuilder: (c,a,_) {
-                  return PlayerDetailPage();
-                });
             return GetPageRoute(
               opaque: false,
                 settings: setting,

@@ -82,11 +82,6 @@ class _GuessItemState extends State<GuessItem>
                           InkWell(
                             onTap: () {
                               print('点击了头像');
-                              // Navigator.of(Get.context!).push(PageRouteBuilder(
-                              //   opaque: false,
-                              //     pageBuilder: (context,animation,secondePageanimation){
-                              //   return PlayerDetailPage();
-                              // }));
                               Get.toNamed(RouteNames.picksPlayerDetail,
                                   id: GlobalNestedKey.PICKS);
                             },
