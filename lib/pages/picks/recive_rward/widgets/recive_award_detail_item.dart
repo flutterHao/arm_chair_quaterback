@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
@@ -13,12 +14,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 ///created at 2024/9/11/13:06
 
 class ReciveAwardDetailItem extends StatelessWidget {
-  const ReciveAwardDetailItem(this.player, {super.key});
+  const ReciveAwardDetailItem(this.player,this.newsDefineEntity, {super.key});
 
   final PicksPlayer player;
+  final NewsDefineEntity newsDefineEntity;
 
   @override
   Widget build(BuildContext context) {
+    var guessValueDiff =
+        player.reciveAwardInfo.guessData[0].guessGameAttrValue -
+            player.reciveAwardInfo.guessData[0].guessReferenceValue;
     return Container(
       // height: 109.w,
       margin: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 8.w),
@@ -105,80 +110,118 @@ class ReciveAwardDetailItem extends StatelessWidget {
                       style:
                           TextStyle(fontSize: 11.sp, color: AppColors.c666666),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        IconWidget(
-                          // icon:Assets.uiTriangleGPng,
-                          icon: player.reciveAwardInfo.guessData[0].awards
-                                  .isNotEmpty
-                              ? Assets.uiTriangleGPng
-                              : Assets.uiTriangleRPng,
-                          iconWidth: 7.w,
-                          iconColor: player.reciveAwardInfo.guessData[0].awards
-                                  .isNotEmpty
-                              ? AppColors.c10A86A
-                              : AppColors.cE72646,
-                        ),
-                        SizedBox(
-                          width: 3.w,
-                        ),
-                        Text(
-                          (player.reciveAwardInfo.guessData[0]
-                                      .guessGameAttrValue -
-                                  player.reciveAwardInfo.guessData[0]
-                                      .guessReferenceValue)
-                              .abs()
-                              .toStringAsFixed(1),
-                          style: TextStyle(
-                              color: player.reciveAwardInfo.guessData[0].awards
-                                      .isNotEmpty
-                                  ? AppColors.c10A86A
-                                  : AppColors.cE72646,
-                              fontSize: 10.sp),
-                        )
-                      ],
-                    )
+                    if (player.reciveAwardInfo.guessData[0].status != 1)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconWidget(
+                            // icon:Assets.uiTriangleGPng,
+                            icon: player.reciveAwardInfo.guessData[0].success
+                                ? Assets.uiTriangleGPng
+                                : Assets.uiTriangleRPng,
+                            iconWidth: 7.w,
+                            iconColor:
+                                player.reciveAwardInfo.guessData[0].success
+                                    ? AppColors.c10A86A
+                                    : AppColors.cE72646,
+                          ),
+                          SizedBox(
+                            width: 3.w,
+                          ),
+                          Text(
+                            guessValueDiff.abs().toStringAsFixed(1),
+                            style: TextStyle(
+                                color:
+                                    player.reciveAwardInfo.guessData[0].success
+                                        ? AppColors.c10A86A
+                                        : AppColors.cE72646,
+                                fontSize: 10.sp),
+                          )
+                        ],
+                      )
                   ],
                 ),
               ),
-              Container(
-                margin: EdgeInsets.only(left: 11.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+              if (player.reciveAwardInfo.guessData[0].status == 1)
+                Column(
                   children: [
                     Container(
                       width: 83.w,
                       height: 24.w,
+                      margin: EdgeInsets.only(left: 11.w),
                       alignment: Alignment.center,
-                      child: Stack(
-                        alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12.w),
+                        border: Border.all(color: guessValueDiff<0?AppColors.c10A86A:AppColors.cE1E3E6,width: 1)
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          IconWidget(
-                            iconWidth: 83.w,
-                            icon: Assets.uiBingoPng,
-                            iconColor: player.reciveAwardInfo.guessData[0]
-                                    .awards.isNotEmpty
-                                ? AppColors.c10A86A
-                                : AppColors.cB3B3B3,
-                          ),
-                          Text("BINGO",
-                              style: 11.w7(
-                                  color: player.reciveAwardInfo.guessData[0]
-                                          .awards.isNotEmpty
-                                      ? AppColors.c10A86A
-                                      : AppColors.cB3B3B3)),
+                          Text("MORE",style: 11.w7(color: guessValueDiff<0?AppColors.c10A86A:AppColors.cB3B3B3),),
+                          3.hGap,
+                          Text("+${newsDefineEntity.betOdds}",style: 9.w7(color: guessValueDiff<0?AppColors.c10A86A:AppColors.cB3B3B3))
                         ],
                       ),
                     ),
-                    Text(
-                      "winner ${player.reciveAwardInfo.guessData[0].winPro}%",
-                      style:
-                          TextStyle(fontSize: 10.sp, color: AppColors.cB3B3B3),
-                    )
+                    7.vGap,
+                    Container(
+                      width: 83.w,
+                      height: 24.w,
+                      margin: EdgeInsets.only(left: 11.w),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12.w),
+                          border: Border.all(color: guessValueDiff>0?AppColors.c10A86A:AppColors.cE1E3E6,width: 1)
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("LESS",style: 11.w7(color: guessValueDiff>0?AppColors.c10A86A:AppColors.cB3B3B3),),
+                          3.hGap,
+                          Text("+${newsDefineEntity.betOdds}",style: 9.w7(color: guessValueDiff>0?AppColors.c10A86A:AppColors.cB3B3B3))
+                        ],
+                      ),
+                    ),
                   ],
-                ),
-              )
+                )
+              else
+                Container(
+                  margin: EdgeInsets.only(left: 11.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 83.w,
+                        height: 24.w,
+                        alignment: Alignment.center,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            IconWidget(
+                              iconWidth: 83.w,
+                              icon: Assets.uiBingoPng,
+                              iconColor:
+                                  player.reciveAwardInfo.guessData[0].success
+                                      ? AppColors.c10A86A
+                                      : AppColors.cB3B3B3,
+                            ),
+                            Text("BINGO",
+                                style: 11.w7(
+                                    color: player.reciveAwardInfo.guessData[0]
+                                            .success
+                                        ? AppColors.c10A86A
+                                        : AppColors.cB3B3B3)),
+                          ],
+                        ),
+                      ),
+                      Text(
+                        "winner ${player.reciveAwardInfo.guessData[0].winPro}%",
+                        style: TextStyle(
+                            fontSize: 10.sp, color: AppColors.cB3B3B3),
+                      )
+                    ],
+                  ),
+                )
             ],
           )
         ],

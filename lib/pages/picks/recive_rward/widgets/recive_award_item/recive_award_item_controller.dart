@@ -74,4 +74,6 @@ class ReciveAwardItemController extends GetxController {
       }
     });
   }
+
+  String get idReciveAwardItem => "recive_award_item";
 }

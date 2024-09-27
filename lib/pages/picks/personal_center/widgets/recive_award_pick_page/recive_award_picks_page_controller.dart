@@ -28,7 +28,6 @@ class ReciveAwardPicksPageController extends GetxController {
 
   final TeamSimpleEntity teamSimpleEntity;
 
-
   loading() {
     if (loadStatusRx.value == LoadDataStatus.loading) {
       refreshController.refreshCompleted();
@@ -69,9 +68,12 @@ class ReciveAwardPicksPageController extends GetxController {
         newsDefineEntity = result[3] as NewsDefineEntity;
       }
 
-      /// 1.剔除status为1（未开奖）的数据项
-      /// 2.剔除未中奖的（awards为空）
-      List<List<ReciveAwardEntity>> guessHistoryList = result0;
+      /// 1.剔除status为2（未开奖）的数据项
+      List<List<ReciveAwardEntity>> guessHistoryList = result0
+          .where((e) =>
+              (e.where((f) => f.guessData[0].status != 2).toList().isNotEmpty))
+          .toList();
+      ;
       listData.clear();
       for (List l in guessHistoryList) {
         List<PicksPlayer> players = [];

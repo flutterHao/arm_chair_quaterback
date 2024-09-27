@@ -30,7 +30,9 @@ class ReciveAwardItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     controller = Get.put(ReciveAwardItemController(data, newsDefineEntity));
-    return GetBuilder<ReciveAwardItemController>(builder: (_) {
+    return GetBuilder<ReciveAwardItemController>(
+      id: controller.idReciveAwardItem,
+        builder: (_) {
       return InkWell(
         onTap: () => _buildDetailDialog(context),
         child: Container(
@@ -151,7 +153,9 @@ class ReciveAwardItem extends StatelessWidget {
                     )
                   else
                     InkWell(
-                      onTap: () => controller.getGuessAward(),
+                      onTap: data[0].reciveAwardInfo.guessData[0].status == 2
+                          ? () => controller.getGuessAward()
+                          : null,
                       child: Container(
                         width: 98.w,
                         height: 27.w,
@@ -181,7 +185,7 @@ class ReciveAwardItem extends StatelessWidget {
 
   Future<dynamic> _buildDetailDialog(BuildContext context) {
     int winTimesCount = data
-        .where((e) => e.reciveAwardInfo.guessData[0].awards.isNotEmpty)
+        .where((e) => e.reciveAwardInfo.guessData[0].success)
         .toList()
         .length;
     int lossTimesCount = data.length - winTimesCount;
@@ -415,7 +419,7 @@ class ReciveAwardItem extends StatelessWidget {
                             return Column(
                               children: [
                                 if (index == 0) 8.vGap,
-                                ReciveAwardDetailItem(data[index]),
+                                ReciveAwardDetailItem(data[index],newsDefineEntity),
                               ],
                             );
                           }),

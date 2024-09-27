@@ -58,13 +58,16 @@ class ReciveRwardController extends GetxController {
         newsDefineEntity = result[3] as NewsDefineEntity;
       }
 
-      /// 1.剔除status为1（未开奖）的数据项
-      /// 2.剔除未中奖的（awards为空）
+      /// 1.只取status为2的项
+      ///
+      ///  STATUS_未结算 = 1;
+      ///  STATUS_已结算未领取奖励 = 2;
+      ///  STATUS_已结算已领取奖励 = 3;
+      ///
       var guessHistoryList = result0
           .where((e) => (e
               .where((f) =>
-                  f.guessData[0].status != 1 &&
-                  f.guessData[0].awards.isNotEmpty)
+                  f.guessData[0].status == 2)
               .toList()
               .isNotEmpty))
           .toList();
