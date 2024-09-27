@@ -205,7 +205,7 @@ class _RankPageState extends State<RankPage>
                                                     ),
                                                   ),
                                                   Text(
-                                                    "win ${controller.rankInfo.ranks[1].win}",
+                                                    "win ${controller.rankInfo.ranks[1].getWin}",
                                                     style: TextStyle(
                                                         color:
                                                             AppColors.c666666,
@@ -356,7 +356,7 @@ class _RankPageState extends State<RankPage>
                                                     ),
                                                   ),
                                                   Text(
-                                                    "win ${controller.rankInfo.ranks[0].win}",
+                                                    "win ${controller.rankInfo.ranks[0].getWin}",
                                                     style: TextStyle(
                                                         color:
                                                             AppColors.c666666,
@@ -510,7 +510,7 @@ class _RankPageState extends State<RankPage>
                                                     ),
                                                   ),
                                                   Text(
-                                                    "win ${controller.rankInfo.ranks[2].win}",
+                                                    "win ${controller.rankInfo.ranks[2].getWin}",
                                                     style: TextStyle(
                                                         color:
                                                             AppColors.c666666,
@@ -638,7 +638,7 @@ class _RankPageState extends State<RankPage>
                                           fontSize: 10.sp),
                                     ),
                                     Text(
-                                      "SUCCESS  ${controller.rankInfo.myRank.success ?? 0}%",
+                                      "SUCCESS  ${controller.rankInfo.myRank.getSuccess}%",
                                       style: TextStyle(
                                           color: AppColors.cB3B3B3,
                                           fontSize: 10.sp),
@@ -722,7 +722,7 @@ class _RankPageState extends State<RankPage>
                     width: 10.w,
                   ),
                   Text(
-                    "${controller.rankInfo.ranks[index].win}",
+                    controller.rankInfo.ranks[index].getWin,
                     style: TextStyle(
                       color: AppColors.c666666,
                       fontSize: 12.sp,

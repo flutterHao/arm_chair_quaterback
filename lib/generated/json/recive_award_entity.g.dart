@@ -7,8 +7,8 @@ ReciveAwardEntity $ReciveAwardEntityFromJson(Map<String, dynamic> json) {
   if (gameId != null) {
     reciveAwardEntity.gameId = gameId;
   }
-  final ReciveAwardL5Avg? l5Avg =
-      jsonConvert.convert<ReciveAwardL5Avg>(json['L5Avg']);
+  final ReciveAwardL5Avg? l5Avg = jsonConvert.convert<ReciveAwardL5Avg>(
+      json['L5Avg']);
   if (l5Avg != null) {
     reciveAwardEntity.l5Avg = l5Avg;
   }
@@ -24,10 +24,11 @@ ReciveAwardEntity $ReciveAwardEntityFromJson(Map<String, dynamic> json) {
   if (teamId != null) {
     reciveAwardEntity.teamId = teamId;
   }
-  final List<ReciveAwardGuessData>? guessData = (json['guessData']
-          as List<dynamic>?)
-      ?.map((e) =>
-          jsonConvert.convert<ReciveAwardGuessData>(e) as ReciveAwardGuessData)
+  final List<ReciveAwardGuessData>? guessData = (json['guessData'] as List<
+      dynamic>?)
+      ?.map(
+          (e) =>
+      jsonConvert.convert<ReciveAwardGuessData>(e) as ReciveAwardGuessData)
       .toList();
   if (guessData != null) {
     reciveAwardEntity.guessData = guessData;
@@ -285,11 +286,11 @@ ReciveAwardGuessData $ReciveAwardGuessDataFromJson(Map<String, dynamic> json) {
   if (guessTime != null) {
     reciveAwardGuessData.guessTime = guessTime;
   }
-  final List<ReciveAwardGuessDataAwards>? awards =
-      (json['awards'] as List<dynamic>?)
-          ?.map((e) => jsonConvert.convert<ReciveAwardGuessDataAwards>(e)
-              as ReciveAwardGuessDataAwards)
-          .toList();
+  final List<ReciveAwardGuessDataAwards>? awards = (json['awards'] as List<
+      dynamic>?)?.map(
+          (e) =>
+      jsonConvert.convert<ReciveAwardGuessDataAwards>(
+          e) as ReciveAwardGuessDataAwards).toList();
   if (awards != null) {
     reciveAwardGuessData.awards = awards;
   }
@@ -297,13 +298,13 @@ ReciveAwardGuessData $ReciveAwardGuessDataFromJson(Map<String, dynamic> json) {
   if (success != null) {
     reciveAwardGuessData.success = success;
   }
-  final int? guessReferenceValue =
-      jsonConvert.convert<int>(json['guessReferenceValue']);
+  final int? guessReferenceValue = jsonConvert.convert<int>(
+      json['guessReferenceValue']);
   if (guessReferenceValue != null) {
     reciveAwardGuessData.guessReferenceValue = guessReferenceValue;
   }
-  final int? guessGameAttrValue =
-      jsonConvert.convert<int>(json['guessGameAttrValue']);
+  final int? guessGameAttrValue = jsonConvert.convert<int>(
+      json['guessGameAttrValue']);
   if (guessGameAttrValue != null) {
     reciveAwardGuessData.guessGameAttrValue = guessGameAttrValue;
   }
@@ -359,8 +360,7 @@ extension ReciveAwardGuessDataExtension on ReciveAwardGuessData {
 
 ReciveAwardGuessDataAwards $ReciveAwardGuessDataAwardsFromJson(
     Map<String, dynamic> json) {
-  final ReciveAwardGuessDataAwards reciveAwardGuessDataAwards =
-      ReciveAwardGuessDataAwards();
+  final ReciveAwardGuessDataAwards reciveAwardGuessDataAwards = ReciveAwardGuessDataAwards();
   final int? id = jsonConvert.convert<int>(json['id']);
   if (id != null) {
     reciveAwardGuessDataAwards.id = id;

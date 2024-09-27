@@ -420,7 +420,7 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                                           fontSize: 10.sp),
                                     ),
                                     Text(
-                                      "SUCCESS  ${picksIndexController.rankInfo.myRank.success ?? 0}%",
+                                      "SUCCESS  ${picksIndexController.rankInfo.myRank.getSuccess}%",
                                       style: TextStyle(
                                           color: AppColors.cB3B3B3,
                                           fontSize: 10.sp),

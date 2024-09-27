@@ -16,6 +16,7 @@ import 'package:arm_chair_quaterback/common/entities/rank_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/receive_prop_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/recive_award_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_simple_entity.dart';
 
@@ -23,9 +24,7 @@ JsonConvert jsonConvert = JsonConvert();
 
 typedef JsonConvertFunction<T> = T Function(Map<String, dynamic> json);
 typedef EnumConvertFunction<T> = T Function(String value);
-typedef ConvertExceptionHandler = void Function(
-    Object error, StackTrace stackTrace);
-
+typedef ConvertExceptionHandler = void Function(Object error, StackTrace stackTrace);
 extension MapSafeExt<K, V> on Map<K, V> {
   T? getOrNull<T>(K? key) {
     if (!containsKey(key) || key == null) {
@@ -83,8 +82,7 @@ class JsonConvert {
       return null;
     }
     try {
-      return value
-          .map((dynamic e) => _asT<T>(e, enumConvert: enumConvert))
+      return value.map((dynamic e) => _asT<T>(e, enumConvert: enumConvert))
           .toList();
     } catch (e, stackTrace) {
       debugPrint('asT<$T> $e $stackTrace');
@@ -101,9 +99,8 @@ class JsonConvert {
       return null;
     }
     try {
-      return (value as List<dynamic>)
-          .map((dynamic e) => _asT<T>(e, enumConvert: enumConvert)!)
-          .toList();
+      return (value as List<dynamic>).map((dynamic e) =>
+      _asT<T>(e, enumConvert: enumConvert)!).toList();
     } catch (e, stackTrace) {
       debugPrint('asT<$T> $e $stackTrace');
       if (onError != null) {
@@ -160,148 +157,120 @@ class JsonConvert {
   //list is returned by type
   static M? _getListChildType<M>(List<Map<String, dynamic>> data) {
     if (<PropDefineEntity>[] is M) {
-      return data
-          .map<PropDefineEntity>(
-              (Map<String, dynamic> e) => PropDefineEntity.fromJson(e))
-          .toList() as M;
+      return data.map<PropDefineEntity>((Map<String, dynamic> e) =>
+          PropDefineEntity.fromJson(e)).toList() as M;
     }
     if (<GuessInfosEntity>[] is M) {
-      return data
-          .map<GuessInfosEntity>(
-              (Map<String, dynamic> e) => GuessInfosEntity.fromJson(e))
-          .toList() as M;
+      return data.map<GuessInfosEntity>((Map<String, dynamic> e) =>
+          GuessInfosEntity.fromJson(e)).toList() as M;
     }
     if (<GuessInfosL5Avg>[] is M) {
-      return data
-          .map<GuessInfosL5Avg>(
-              (Map<String, dynamic> e) => GuessInfosL5Avg.fromJson(e))
-          .toList() as M;
+      return data.map<GuessInfosL5Avg>((Map<String, dynamic> e) =>
+          GuessInfosL5Avg.fromJson(e)).toList() as M;
     }
     if (<GuessInfosGuessData>[] is M) {
-      return data
-          .map<GuessInfosGuessData>(
-              (Map<String, dynamic> e) => GuessInfosGuessData.fromJson(e))
-          .toList() as M;
+      return data.map<GuessInfosGuessData>((Map<String, dynamic> e) =>
+          GuessInfosGuessData.fromJson(e)).toList() as M;
     }
     if (<GuessInfosGuessReferenceValue>[] is M) {
-      return data
-          .map<GuessInfosGuessReferenceValue>((Map<String, dynamic> e) =>
-              GuessInfosGuessReferenceValue.fromJson(e))
-          .toList() as M;
+      return data.map<GuessInfosGuessReferenceValue>((Map<String, dynamic> e) =>
+          GuessInfosGuessReferenceValue.fromJson(e)).toList() as M;
     }
     if (<GuessParamEntity>[] is M) {
-      return data
-          .map<GuessParamEntity>(
-              (Map<String, dynamic> e) => GuessParamEntity.fromJson(e))
-          .toList() as M;
+      return data.map<GuessParamEntity>((Map<String, dynamic> e) =>
+          GuessParamEntity.fromJson(e)).toList() as M;
     }
     if (<GuessParamGuessData>[] is M) {
-      return data
-          .map<GuessParamGuessData>(
-              (Map<String, dynamic> e) => GuessParamGuessData.fromJson(e))
-          .toList() as M;
+      return data.map<GuessParamGuessData>((Map<String, dynamic> e) =>
+          GuessParamGuessData.fromJson(e)).toList() as M;
     }
     if (<NbaPlayerInfosEntity>[] is M) {
-      return data
-          .map<NbaPlayerInfosEntity>(
-              (Map<String, dynamic> e) => NbaPlayerInfosEntity.fromJson(e))
-          .toList() as M;
+      return data.map<NbaPlayerInfosEntity>((Map<String, dynamic> e) =>
+          NbaPlayerInfosEntity.fromJson(e)).toList() as M;
     }
     if (<NbaPlayerInfosPlayerDataAvgList>[] is M) {
-      return data
-          .map<NbaPlayerInfosPlayerDataAvgList>((Map<String, dynamic> e) =>
-              NbaPlayerInfosPlayerDataAvgList.fromJson(e))
-          .toList() as M;
+      return data.map<NbaPlayerInfosPlayerDataAvgList>((
+          Map<String, dynamic> e) =>
+          NbaPlayerInfosPlayerDataAvgList.fromJson(e)).toList() as M;
     }
     if (<NbaPlayerInfosPlayerDataCapList>[] is M) {
-      return data
-          .map<NbaPlayerInfosPlayerDataCapList>((Map<String, dynamic> e) =>
-              NbaPlayerInfosPlayerDataCapList.fromJson(e))
-          .toList() as M;
+      return data.map<NbaPlayerInfosPlayerDataCapList>((
+          Map<String, dynamic> e) =>
+          NbaPlayerInfosPlayerDataCapList.fromJson(e)).toList() as M;
     }
     if (<NbaPlayerInfosPlayerBaseInfoList>[] is M) {
-      return data
-          .map<NbaPlayerInfosPlayerBaseInfoList>((Map<String, dynamic> e) =>
-              NbaPlayerInfosPlayerBaseInfoList.fromJson(e))
-          .toList() as M;
+      return data.map<NbaPlayerInfosPlayerBaseInfoList>((
+          Map<String, dynamic> e) =>
+          NbaPlayerInfosPlayerBaseInfoList.fromJson(e)).toList() as M;
     }
     if (<NbaTeamEntity>[] is M) {
-      return data
-          .map<NbaTeamEntity>(
-              (Map<String, dynamic> e) => NbaTeamEntity.fromJson(e))
-          .toList() as M;
+      return data.map<NbaTeamEntity>((Map<String, dynamic> e) =>
+          NbaTeamEntity.fromJson(e)).toList() as M;
     }
     if (<NewsDefineEntity>[] is M) {
-      return data
-          .map<NewsDefineEntity>(
-              (Map<String, dynamic> e) => NewsDefineEntity.fromJson(e))
-          .toList() as M;
+      return data.map<NewsDefineEntity>((Map<String, dynamic> e) =>
+          NewsDefineEntity.fromJson(e)).toList() as M;
     }
     if (<PlayerDayDataEntity>[] is M) {
-      return data
-          .map<PlayerDayDataEntity>(
-              (Map<String, dynamic> e) => PlayerDayDataEntity.fromJson(e))
-          .toList() as M;
+      return data.map<PlayerDayDataEntity>((Map<String, dynamic> e) =>
+          PlayerDayDataEntity.fromJson(e)).toList() as M;
     }
     if (<RankAwardEntity>[] is M) {
-      return data
-          .map<RankAwardEntity>(
-              (Map<String, dynamic> e) => RankAwardEntity.fromJson(e))
-          .toList() as M;
+      return data.map<RankAwardEntity>((Map<String, dynamic> e) =>
+          RankAwardEntity.fromJson(e)).toList() as M;
     }
     if (<RankInfoEntity>[] is M) {
-      return data
-          .map<RankInfoEntity>(
-              (Map<String, dynamic> e) => RankInfoEntity.fromJson(e))
-          .toList() as M;
+      return data.map<RankInfoEntity>((Map<String, dynamic> e) =>
+          RankInfoEntity.fromJson(e)).toList() as M;
     }
     if (<RankListEntity>[] is M) {
-      return data
-          .map<RankListEntity>(
-              (Map<String, dynamic> e) => RankListEntity.fromJson(e))
-          .toList() as M;
+      return data.map<RankListEntity>((Map<String, dynamic> e) =>
+          RankListEntity.fromJson(e)).toList() as M;
     }
     if (<RankListMyRank>[] is M) {
-      return data
-          .map<RankListMyRank>(
-              (Map<String, dynamic> e) => RankListMyRank.fromJson(e))
-          .toList() as M;
+      return data.map<RankListMyRank>((Map<String, dynamic> e) =>
+          RankListMyRank.fromJson(e)).toList() as M;
     }
     if (<ReceivePropEntity>[] is M) {
-      return data
-          .map<ReceivePropEntity>(
-              (Map<String, dynamic> e) => ReceivePropEntity.fromJson(e))
-          .toList() as M;
+      return data.map<ReceivePropEntity>((Map<String, dynamic> e) =>
+          ReceivePropEntity.fromJson(e)).toList() as M;
     }
     if (<ReciveAwardEntity>[] is M) {
-      return data
-          .map<ReciveAwardEntity>(
-              (Map<String, dynamic> e) => ReciveAwardEntity.fromJson(e))
-          .toList() as M;
+      return data.map<ReciveAwardEntity>((Map<String, dynamic> e) =>
+          ReciveAwardEntity.fromJson(e)).toList() as M;
     }
     if (<ReciveAwardL5Avg>[] is M) {
-      return data
-          .map<ReciveAwardL5Avg>(
-              (Map<String, dynamic> e) => ReciveAwardL5Avg.fromJson(e))
-          .toList() as M;
+      return data.map<ReciveAwardL5Avg>((Map<String, dynamic> e) =>
+          ReciveAwardL5Avg.fromJson(e)).toList() as M;
     }
     if (<ReciveAwardGuessData>[] is M) {
-      return data
-          .map<ReciveAwardGuessData>(
-              (Map<String, dynamic> e) => ReciveAwardGuessData.fromJson(e))
-          .toList() as M;
+      return data.map<ReciveAwardGuessData>((Map<String, dynamic> e) =>
+          ReciveAwardGuessData.fromJson(e)).toList() as M;
     }
     if (<ReciveAwardGuessDataAwards>[] is M) {
-      return data
-          .map<ReciveAwardGuessDataAwards>((Map<String, dynamic> e) =>
-              ReciveAwardGuessDataAwards.fromJson(e))
-          .toList() as M;
+      return data.map<ReciveAwardGuessDataAwards>((Map<String, dynamic> e) =>
+          ReciveAwardGuessDataAwards.fromJson(e)).toList() as M;
+    }
+    if (<TeamPlayerInfoEntity>[] is M) {
+      return data.map<TeamPlayerInfoEntity>((Map<String, dynamic> e) =>
+          TeamPlayerInfoEntity.fromJson(e)).toList() as M;
+    }
+    if (<TeamPlayerInfoPlayerTrend>[] is M) {
+      return data.map<TeamPlayerInfoPlayerTrend>((Map<String, dynamic> e) =>
+          TeamPlayerInfoPlayerTrend.fromJson(e)).toList() as M;
+    }
+    if (<TeamPlayerInfoTeamPlayer>[] is M) {
+      return data.map<TeamPlayerInfoTeamPlayer>((Map<String, dynamic> e) =>
+          TeamPlayerInfoTeamPlayer.fromJson(e)).toList() as M;
+    }
+    if (<TeamPlayerInfoTeamPlayerPotential>[] is M) {
+      return data.map<TeamPlayerInfoTeamPlayerPotential>((
+          Map<String, dynamic> e) =>
+          TeamPlayerInfoTeamPlayerPotential.fromJson(e)).toList() as M;
     }
     if (<TeamRankEntity>[] is M) {
-      return data
-          .map<TeamRankEntity>(
-              (Map<String, dynamic> e) => TeamRankEntity.fromJson(e))
-          .toList() as M;
+      return data.map<TeamRankEntity>((Map<String, dynamic> e) =>
+          TeamRankEntity.fromJson(e)).toList() as M;
     }
     if (<TeamSimpleEntity>[] is M) {
       return data.map<TeamSimpleEntity>((Map<String, dynamic> e) =>
@@ -332,17 +301,17 @@ class JsonConvertClassCollection {
     (GuessInfosEntity).toString(): GuessInfosEntity.fromJson,
     (GuessInfosL5Avg).toString(): GuessInfosL5Avg.fromJson,
     (GuessInfosGuessData).toString(): GuessInfosGuessData.fromJson,
-    (GuessInfosGuessReferenceValue).toString():
-        GuessInfosGuessReferenceValue.fromJson,
+    (GuessInfosGuessReferenceValue).toString(): GuessInfosGuessReferenceValue
+        .fromJson,
     (GuessParamEntity).toString(): GuessParamEntity.fromJson,
     (GuessParamGuessData).toString(): GuessParamGuessData.fromJson,
     (NbaPlayerInfosEntity).toString(): NbaPlayerInfosEntity.fromJson,
-    (NbaPlayerInfosPlayerDataAvgList).toString():
-        NbaPlayerInfosPlayerDataAvgList.fromJson,
-    (NbaPlayerInfosPlayerDataCapList).toString():
-        NbaPlayerInfosPlayerDataCapList.fromJson,
-    (NbaPlayerInfosPlayerBaseInfoList).toString():
-        NbaPlayerInfosPlayerBaseInfoList.fromJson,
+    (NbaPlayerInfosPlayerDataAvgList)
+        .toString(): NbaPlayerInfosPlayerDataAvgList.fromJson,
+    (NbaPlayerInfosPlayerDataCapList)
+        .toString(): NbaPlayerInfosPlayerDataCapList.fromJson,
+    (NbaPlayerInfosPlayerBaseInfoList)
+        .toString(): NbaPlayerInfosPlayerBaseInfoList.fromJson,
     (NbaTeamEntity).toString(): NbaTeamEntity.fromJson,
     (NewsDefineEntity).toString(): NewsDefineEntity.fromJson,
     (PlayerDayDataEntity).toString(): PlayerDayDataEntity.fromJson,
@@ -354,8 +323,13 @@ class JsonConvertClassCollection {
     (ReciveAwardEntity).toString(): ReciveAwardEntity.fromJson,
     (ReciveAwardL5Avg).toString(): ReciveAwardL5Avg.fromJson,
     (ReciveAwardGuessData).toString(): ReciveAwardGuessData.fromJson,
-    (ReciveAwardGuessDataAwards).toString():
-        ReciveAwardGuessDataAwards.fromJson,
+    (ReciveAwardGuessDataAwards).toString(): ReciveAwardGuessDataAwards
+        .fromJson,
+    (TeamPlayerInfoEntity).toString(): TeamPlayerInfoEntity.fromJson,
+    (TeamPlayerInfoPlayerTrend).toString(): TeamPlayerInfoPlayerTrend.fromJson,
+    (TeamPlayerInfoTeamPlayer).toString(): TeamPlayerInfoTeamPlayer.fromJson,
+    (TeamPlayerInfoTeamPlayerPotential)
+        .toString(): TeamPlayerInfoTeamPlayerPotential.fromJson,
     (TeamRankEntity).toString(): TeamRankEntity.fromJson,
     (TeamSimpleEntity).toString(): TeamSimpleEntity.fromJson,
   };

@@ -84,11 +84,11 @@ class GussPlayerItem extends StatelessWidget {
                 height: 3.w,
               ),
               Text(
-                "WIN  ${rankInfoEntity.win}",
+                "WIN  ${rankInfoEntity.getWin}",
                 style: TextStyle(color: AppColors.cB3B3B3, fontSize: 10.sp),
               ),
               Text(
-                "SUCCESS  ${rankInfoEntity.success}%",
+                "SUCCESS  ${rankInfoEntity.getSuccess}%",
                 style: TextStyle(color: AppColors.cB3B3B3, fontSize: 10.sp),
               )
             ],

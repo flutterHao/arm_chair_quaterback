@@ -525,40 +525,41 @@ class _GuessItemState extends State<GuessItem>
                                                 MainAxisAlignment.center,
                                             children: [
                                               Container(
-                                                alignment: Alignment.center,
                                                 width: 62.w,
                                                 height: 32.w,
-                                                child: Stack(
-                                                  children: [
-                                                    IconWidget(
-                                                      iconWidth: 62.w,
-                                                      icon: Assets
-                                                          .uiPickArrowsPng,
-                                                      iconColor: AppColors
-                                                          .c000000
-                                                          .withOpacity(.2),
-                                                    ),
-                                                    Builder(builder: (context) {
-                                                      Map item =
-                                                          (guessItemController
-                                                                  .barGroups[
-                                                              guessItemController
-                                                                      .player
-                                                                      .betData[
-                                                                  index]] as Map);
-                                                      return BarChart(BarChartData(
-                                                          maxY: item['maxY'],
-                                                          barGroups:
-                                                              item['list'],
-                                                          titlesData:
-                                                              guessItemController
-                                                                  .titlesData,
-                                                          borderData:
-                                                              FlBorderData(
-                                                                  show:
-                                                                      false)));
-                                                    })
-                                                  ],
+                                                child: Center(
+                                                  child: Stack(
+                                                    children: [
+                                                      IconWidget(
+                                                        iconWidth: 62.w,
+                                                        icon: Assets
+                                                            .uiPickArrowsPng,
+                                                        iconColor: AppColors
+                                                            .c000000
+                                                            .withOpacity(.2),
+                                                      ),
+                                                      Builder(builder: (context) {
+                                                        Map item =
+                                                            (guessItemController
+                                                                    .barGroups[
+                                                                guessItemController
+                                                                        .player
+                                                                        .betData[
+                                                                    index]] as Map);
+                                                        return BarChart(BarChartData(
+                                                            maxY: item['maxY'],
+                                                            barGroups:
+                                                                item['list'],
+                                                            titlesData:
+                                                                guessItemController
+                                                                    .titlesData,
+                                                            borderData:
+                                                                FlBorderData(
+                                                                    show:
+                                                                        false)));
+                                                      })
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                               3.vGap,

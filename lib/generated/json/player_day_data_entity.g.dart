@@ -19,8 +19,8 @@ PlayerDayDataEntity $PlayerDayDataEntityFromJson(Map<String, dynamic> json) {
   if (dreb != null) {
     playerDayDataEntity.dreb = dreb;
   }
-  final double? starterCount =
-      jsonConvert.convert<double>(json['starterCount']);
+  final double? starterCount = jsonConvert.convert<double>(
+      json['starterCount']);
   if (starterCount != null) {
     playerDayDataEntity.starterCount = starterCount;
   }

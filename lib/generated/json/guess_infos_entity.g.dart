@@ -7,8 +7,8 @@ GuessInfosEntity $GuessInfosEntityFromJson(Map<String, dynamic> json) {
   if (gameId != null) {
     guessInfosEntity.gameId = gameId;
   }
-  final GuessInfosL5Avg? l5Avg =
-      jsonConvert.convert<GuessInfosL5Avg>(json['L5Avg']);
+  final GuessInfosL5Avg? l5Avg = jsonConvert.convert<GuessInfosL5Avg>(
+      json['L5Avg']);
   if (l5Avg != null) {
     guessInfosEntity.l5Avg = l5Avg;
   }
@@ -20,10 +20,11 @@ GuessInfosEntity $GuessInfosEntityFromJson(Map<String, dynamic> json) {
   if (teamId != null) {
     guessInfosEntity.teamId = teamId;
   }
-  final List<GuessInfosGuessData>? guessData = (json['guessData']
-          as List<dynamic>?)
-      ?.map((e) =>
-          jsonConvert.convert<GuessInfosGuessData>(e) as GuessInfosGuessData)
+  final List<GuessInfosGuessData>? guessData = (json['guessData'] as List<
+      dynamic>?)
+      ?.map(
+          (e) =>
+      jsonConvert.convert<GuessInfosGuessData>(e) as GuessInfosGuessData)
       .toList();
   if (guessData != null) {
     guessInfosEntity.guessData = guessData;
@@ -119,8 +120,8 @@ GuessInfosL5Avg $GuessInfosL5AvgFromJson(Map<String, dynamic> json) {
   if (dreb != null) {
     guessInfosL5Avg.dreb = dreb;
   }
-  final double? starterCount =
-      jsonConvert.convert<double>(json['starterCount']);
+  final double? starterCount = jsonConvert.convert<double>(
+      json['starterCount']);
   if (starterCount != null) {
     guessInfosL5Avg.starterCount = starterCount;
   }
@@ -280,8 +281,8 @@ GuessInfosGuessData $GuessInfosGuessDataFromJson(Map<String, dynamic> json) {
   if (guessTime != null) {
     guessInfosGuessData.guessTime = guessTime;
   }
-  final List<dynamic>? awards =
-      (json['awards'] as List<dynamic>?)?.map((e) => e).toList();
+  final List<dynamic>? awards = (json['awards'] as List<dynamic>?)?.map(
+          (e) => e).toList();
   if (awards != null) {
     guessInfosGuessData.awards = awards;
   }
@@ -289,8 +290,8 @@ GuessInfosGuessData $GuessInfosGuessDataFromJson(Map<String, dynamic> json) {
   if (success != null) {
     guessInfosGuessData.success = success;
   }
-  final double? guessReferenceValue =
-      jsonConvert.convert<double>(json['guessReferenceValue']);
+  final double? guessReferenceValue = jsonConvert.convert<double>(
+      json['guessReferenceValue']);
   if (guessReferenceValue != null) {
     guessInfosGuessData.guessReferenceValue = guessReferenceValue;
   }
@@ -343,8 +344,7 @@ extension GuessInfosGuessDataExtension on GuessInfosGuessData {
 
 GuessInfosGuessReferenceValue $GuessInfosGuessReferenceValueFromJson(
     Map<String, dynamic> json) {
-  final GuessInfosGuessReferenceValue guessInfosGuessReferenceValue =
-      GuessInfosGuessReferenceValue();
+  final GuessInfosGuessReferenceValue guessInfosGuessReferenceValue = GuessInfosGuessReferenceValue();
   final double? blk = jsonConvert.convert<double>(json['blk']);
   if (blk != null) {
     guessInfosGuessReferenceValue.blk = blk;
@@ -361,8 +361,8 @@ GuessInfosGuessReferenceValue $GuessInfosGuessReferenceValueFromJson(
   if (dreb != null) {
     guessInfosGuessReferenceValue.dreb = dreb;
   }
-  final double? starterCount =
-      jsonConvert.convert<double>(json['starterCount']);
+  final double? starterCount = jsonConvert.convert<double>(
+      json['starterCount']);
   if (starterCount != null) {
     guessInfosGuessReferenceValue.starterCount = starterCount;
   }
@@ -460,8 +460,7 @@ Map<String, dynamic> $GuessInfosGuessReferenceValueToJson(
   return data;
 }
 
-extension GuessInfosGuessReferenceValueExtension
-    on GuessInfosGuessReferenceValue {
+extension GuessInfosGuessReferenceValueExtension on GuessInfosGuessReferenceValue {
   GuessInfosGuessReferenceValue copyWith({
     double? blk,
     double? fga,

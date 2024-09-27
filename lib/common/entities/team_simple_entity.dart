@@ -29,6 +29,8 @@ class TeamSimpleEntity {
 
 	Map<String, dynamic> toJson() => $TeamSimpleEntityToJson(this);
 
+	String get getGuessSuccessRate => guessSuccessRate.toStringAsFixed(2);
+
 	@override
 	String toString() {
 		return jsonEncode(this);

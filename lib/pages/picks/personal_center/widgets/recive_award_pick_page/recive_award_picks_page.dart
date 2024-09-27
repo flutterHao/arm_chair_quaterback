@@ -136,7 +136,7 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "${controller.teamSimpleEntity?.guessSuccessRate ?? 0}%",
+                                        "${controller.teamSimpleEntity.getGuessSuccessRate}%",
                                         style: 16.w7(
                                             color: AppColors.cFFE8DD,
                                             height: 1),

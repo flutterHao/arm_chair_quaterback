@@ -22,6 +22,8 @@ class RankInfoEntity {
 
   Map<String, dynamic> toJson() => $RankInfoEntityToJson(this);
 
+  String get getWin => win.toStringAsFixed(0);
+  String get getSuccess => (success * 100).toStringAsFixed(0);
   @override
   String toString() {
     return jsonEncode(this);

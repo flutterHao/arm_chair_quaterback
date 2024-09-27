@@ -27,18 +27,18 @@ TeamRankEntity $TeamRankEntityFromJson(Map<String, dynamic> json) {
   if (rOAD != null) {
     teamRankEntity.rOAD = rOAD;
   }
-  final String? strCurrentHomeStreak =
-      jsonConvert.convert<String>(json['strCurrentHomeStreak']);
+  final String? strCurrentHomeStreak = jsonConvert.convert<String>(
+      json['strCurrentHomeStreak']);
   if (strCurrentHomeStreak != null) {
     teamRankEntity.strCurrentHomeStreak = strCurrentHomeStreak;
   }
-  final int? diffTotalPoints =
-      jsonConvert.convert<int>(json['DiffTotalPoints']);
+  final int? diffTotalPoints = jsonConvert.convert<int>(
+      json['DiffTotalPoints']);
   if (diffTotalPoints != null) {
     teamRankEntity.diffTotalPoints = diffTotalPoints;
   }
-  final String? strLongHomeStreak =
-      jsonConvert.convert<String>(json['strLongHomeStreak']);
+  final String? strLongHomeStreak = jsonConvert.convert<String>(
+      json['strLongHomeStreak']);
   if (strLongHomeStreak != null) {
     teamRankEntity.strLongHomeStreak = strLongHomeStreak;
   }
@@ -46,8 +46,8 @@ TeamRankEntity $TeamRankEntityFromJson(Map<String, dynamic> json) {
   if (last10Road != null) {
     teamRankEntity.last10Road = last10Road;
   }
-  final String? aheadAtThird =
-      jsonConvert.convert<String>(json['AheadAtThird']);
+  final String? aheadAtThird = jsonConvert.convert<String>(
+      json['AheadAtThird']);
   if (aheadAtThird != null) {
     teamRankEntity.aheadAtThird = aheadAtThird;
   }
@@ -59,8 +59,8 @@ TeamRankEntity $TeamRankEntityFromJson(Map<String, dynamic> json) {
   if (conference != null) {
     teamRankEntity.conference = conference;
   }
-  final String? behindAtHalf =
-      jsonConvert.convert<String>(json['BehindAtHalf']);
+  final String? behindAtHalf = jsonConvert.convert<String>(
+      json['BehindAtHalf']);
   if (behindAtHalf != null) {
     teamRankEntity.behindAtHalf = behindAtHalf;
   }
@@ -72,23 +72,23 @@ TeamRankEntity $TeamRankEntityFromJson(Map<String, dynamic> json) {
   if (playoffRank != null) {
     teamRankEntity.playoffRank = playoffRank;
   }
-  final String? tenPTSOrMore =
-      jsonConvert.convert<String>(json['TenPTSOrMore']);
+  final String? tenPTSOrMore = jsonConvert.convert<String>(
+      json['TenPTSOrMore']);
   if (tenPTSOrMore != null) {
     teamRankEntity.tenPTSOrMore = tenPTSOrMore;
   }
-  final int? eliminatedConference =
-      jsonConvert.convert<int>(json['EliminatedConference']);
+  final int? eliminatedConference = jsonConvert.convert<int>(
+      json['EliminatedConference']);
   if (eliminatedConference != null) {
     teamRankEntity.eliminatedConference = eliminatedConference;
   }
-  final String? score80Plus =
-      jsonConvert.convert<String>(json['Score_80_Plus']);
+  final String? score80Plus = jsonConvert.convert<String>(
+      json['Score_80_Plus']);
   if (score80Plus != null) {
     teamRankEntity.score80Plus = score80Plus;
   }
-  final String? conferenceRecord =
-      jsonConvert.convert<String>(json['ConferenceRecord']);
+  final String? conferenceRecord = jsonConvert.convert<String>(
+      json['ConferenceRecord']);
   if (conferenceRecord != null) {
     teamRankEntity.conferenceRecord = conferenceRecord;
   }
@@ -96,8 +96,8 @@ TeamRankEntity $TeamRankEntityFromJson(Map<String, dynamic> json) {
   if (pointsPG != null) {
     teamRankEntity.pointsPG = pointsPG;
   }
-  final int? currentRoadStreak =
-      jsonConvert.convert<int>(json['CurrentRoadStreak']);
+  final int? currentRoadStreak = jsonConvert.convert<int>(
+      json['CurrentRoadStreak']);
   if (currentRoadStreak != null) {
     teamRankEntity.currentRoadStreak = currentRoadStreak;
   }
@@ -121,18 +121,18 @@ TeamRankEntity $TeamRankEntityFromJson(Map<String, dynamic> json) {
   if (lOSSES != null) {
     teamRankEntity.lOSSES = lOSSES;
   }
-  final String? strLongRoadStreak =
-      jsonConvert.convert<String>(json['strLongRoadStreak']);
+  final String? strLongRoadStreak = jsonConvert.convert<String>(
+      json['strLongRoadStreak']);
   if (strLongRoadStreak != null) {
     teamRankEntity.strLongRoadStreak = strLongRoadStreak;
   }
-  final int? clinchedPlayoffBirth =
-      jsonConvert.convert<int>(json['ClinchedPlayoffBirth']);
+  final int? clinchedPlayoffBirth = jsonConvert.convert<int>(
+      json['ClinchedPlayoffBirth']);
   if (clinchedPlayoffBirth != null) {
     teamRankEntity.clinchedPlayoffBirth = clinchedPlayoffBirth;
   }
-  final String? clinchIndicator =
-      jsonConvert.convert<String>(json['ClinchIndicator']);
+  final String? clinchIndicator = jsonConvert.convert<String>(
+      json['ClinchIndicator']);
   if (clinchIndicator != null) {
     teamRankEntity.clinchIndicator = clinchIndicator;
   }
@@ -140,18 +140,18 @@ TeamRankEntity $TeamRankEntityFromJson(Map<String, dynamic> json) {
   if (leadInFGPCT != null) {
     teamRankEntity.leadInFGPCT = leadInFGPCT;
   }
-  final String? oppScoreBelow80 =
-      jsonConvert.convert<String>(json['Opp_Score_Below_80']);
+  final String? oppScoreBelow80 = jsonConvert.convert<String>(
+      json['Opp_Score_Below_80']);
   if (oppScoreBelow80 != null) {
     teamRankEntity.oppScoreBelow80 = oppScoreBelow80;
   }
-  final String? strCurrentRoadStreak =
-      jsonConvert.convert<String>(json['strCurrentRoadStreak']);
+  final String? strCurrentRoadStreak = jsonConvert.convert<String>(
+      json['strCurrentRoadStreak']);
   if (strCurrentRoadStreak != null) {
     teamRankEntity.strCurrentRoadStreak = strCurrentRoadStreak;
   }
-  final String? strCurrentStreak =
-      jsonConvert.convert<String>(json['strCurrentStreak']);
+  final String? strCurrentStreak = jsonConvert.convert<String>(
+      json['strCurrentStreak']);
   if (strCurrentStreak != null) {
     teamRankEntity.strCurrentStreak = strCurrentStreak;
   }
@@ -159,13 +159,13 @@ TeamRankEntity $TeamRankEntityFromJson(Map<String, dynamic> json) {
   if (teamSlug != null) {
     teamRankEntity.teamSlug = teamSlug;
   }
-  final int? clinchedPostSeason =
-      jsonConvert.convert<int>(json['ClinchedPostSeason']);
+  final int? clinchedPostSeason = jsonConvert.convert<int>(
+      json['ClinchedPostSeason']);
   if (clinchedPostSeason != null) {
     teamRankEntity.clinchedPostSeason = clinchedPostSeason;
   }
-  final double? conferenceGamesBack =
-      jsonConvert.convert<double>(json['ConferenceGamesBack']);
+  final double? conferenceGamesBack = jsonConvert.convert<double>(
+      json['ConferenceGamesBack']);
   if (conferenceGamesBack != null) {
     teamRankEntity.conferenceGamesBack = conferenceGamesBack;
   }
@@ -173,8 +173,8 @@ TeamRankEntity $TeamRankEntityFromJson(Map<String, dynamic> json) {
   if (nov != null) {
     teamRankEntity.nov = nov;
   }
-  final int? clinchedDivisionTitle =
-      jsonConvert.convert<int>(json['ClinchedDivisionTitle']);
+  final int? clinchedDivisionTitle = jsonConvert.convert<int>(
+      json['ClinchedDivisionTitle']);
   if (clinchedDivisionTitle != null) {
     teamRankEntity.clinchedDivisionTitle = clinchedDivisionTitle;
   }
@@ -214,13 +214,13 @@ TeamRankEntity $TeamRankEntityFromJson(Map<String, dynamic> json) {
   if (mar != null) {
     teamRankEntity.mar = mar;
   }
-  final String? behindAtThird =
-      jsonConvert.convert<String>(json['BehindAtThird']);
+  final String? behindAtThird = jsonConvert.convert<String>(
+      json['BehindAtThird']);
   if (behindAtThird != null) {
     teamRankEntity.behindAtThird = behindAtThird;
   }
-  final String? scoreBelow80 =
-      jsonConvert.convert<String>(json['Score_Below_80']);
+  final String? scoreBelow80 = jsonConvert.convert<String>(
+      json['Score_Below_80']);
   if (scoreBelow80 != null) {
     teamRankEntity.scoreBelow80 = scoreBelow80;
   }
@@ -252,8 +252,8 @@ TeamRankEntity $TeamRankEntityFromJson(Map<String, dynamic> json) {
   if (leadInReb != null) {
     teamRankEntity.leadInReb = leadInReb;
   }
-  final int? eliminatedDivision =
-      jsonConvert.convert<int>(json['EliminatedDivision']);
+  final int? eliminatedDivision = jsonConvert.convert<int>(
+      json['EliminatedDivision']);
   if (eliminatedDivision != null) {
     teamRankEntity.eliminatedDivision = eliminatedDivision;
   }
@@ -285,23 +285,23 @@ TeamRankEntity $TeamRankEntityFromJson(Map<String, dynamic> json) {
   if (clinchedPlayIn != null) {
     teamRankEntity.clinchedPlayIn = clinchedPlayIn;
   }
-  final double? leagueGamesBack =
-      jsonConvert.convert<double>(json['LeagueGamesBack']);
+  final double? leagueGamesBack = jsonConvert.convert<double>(
+      json['LeagueGamesBack']);
   if (leagueGamesBack != null) {
     teamRankEntity.leagueGamesBack = leagueGamesBack;
   }
-  final double? divisionGamesBack =
-      jsonConvert.convert<double>(json['DivisionGamesBack']);
+  final double? divisionGamesBack = jsonConvert.convert<double>(
+      json['DivisionGamesBack']);
   if (divisionGamesBack != null) {
     teamRankEntity.divisionGamesBack = divisionGamesBack;
   }
-  final String? fewerTurnovers =
-      jsonConvert.convert<String>(json['FewerTurnovers']);
+  final String? fewerTurnovers = jsonConvert.convert<String>(
+      json['FewerTurnovers']);
   if (fewerTurnovers != null) {
     teamRankEntity.fewerTurnovers = fewerTurnovers;
   }
-  final String? divisionRecord =
-      jsonConvert.convert<String>(json['DivisionRecord']);
+  final String? divisionRecord = jsonConvert.convert<String>(
+      json['DivisionRecord']);
   if (divisionRecord != null) {
     teamRankEntity.divisionRecord = divisionRecord;
   }
@@ -321,8 +321,8 @@ TeamRankEntity $TeamRankEntityFromJson(Map<String, dynamic> json) {
   if (oT != null) {
     teamRankEntity.oT = oT;
   }
-  final String? oppScore100PTS =
-      jsonConvert.convert<String>(json['OppScore100PTS']);
+  final String? oppScore100PTS = jsonConvert.convert<String>(
+      json['OppScore100PTS']);
   if (oppScore100PTS != null) {
     teamRankEntity.oppScore100PTS = oppScore100PTS;
   }
@@ -330,8 +330,8 @@ TeamRankEntity $TeamRankEntityFromJson(Map<String, dynamic> json) {
   if (vsSouthwest != null) {
     teamRankEntity.vsSouthwest = vsSouthwest;
   }
-  final int? clinchedConferenceTitle =
-      jsonConvert.convert<int>(json['ClinchedConferenceTitle']);
+  final int? clinchedConferenceTitle = jsonConvert.convert<int>(
+      json['ClinchedConferenceTitle']);
   if (clinchedConferenceTitle != null) {
     teamRankEntity.clinchedConferenceTitle = clinchedConferenceTitle;
   }
@@ -343,8 +343,8 @@ TeamRankEntity $TeamRankEntityFromJson(Map<String, dynamic> json) {
   if (l10 != null) {
     teamRankEntity.l10 = l10;
   }
-  final String? oppScore80Plus =
-      jsonConvert.convert<String>(json['Opp_Score_80_Plus']);
+  final String? oppScore80Plus = jsonConvert.convert<String>(
+      json['Opp_Score_80_Plus']);
   if (oppScore80Plus != null) {
     teamRankEntity.oppScore80Plus = oppScore80Plus;
   }
@@ -356,8 +356,8 @@ TeamRankEntity $TeamRankEntityFromJson(Map<String, dynamic> json) {
   if (longLossStreak != null) {
     teamRankEntity.longLossStreak = longLossStreak;
   }
-  final int? currentHomeStreak =
-      jsonConvert.convert<int>(json['CurrentHomeStreak']);
+  final int? currentHomeStreak = jsonConvert.convert<int>(
+      json['CurrentHomeStreak']);
   if (currentHomeStreak != null) {
     teamRankEntity.currentHomeStreak = currentHomeStreak;
   }
@@ -365,13 +365,13 @@ TeamRankEntity $TeamRankEntityFromJson(Map<String, dynamic> json) {
   if (jan != null) {
     teamRankEntity.jan = jan;
   }
-  final double? diffPointsPG =
-      jsonConvert.convert<double>(json['DiffPointsPG']);
+  final double? diffPointsPG = jsonConvert.convert<double>(
+      json['DiffPointsPG']);
   if (diffPointsPG != null) {
     teamRankEntity.diffPointsPG = diffPointsPG;
   }
-  final String? threePTSOrLess =
-      jsonConvert.convert<String>(json['ThreePTSOrLess']);
+  final String? threePTSOrLess = jsonConvert.convert<String>(
+      json['ThreePTSOrLess']);
   if (threePTSOrLess != null) {
     teamRankEntity.threePTSOrLess = threePTSOrLess;
   }
@@ -613,8 +613,8 @@ extension TeamRankEntityExtension on TeamRankEntity {
       ..clinchedPostSeason = clinchedPostSeason ?? this.clinchedPostSeason
       ..conferenceGamesBack = conferenceGamesBack ?? this.conferenceGamesBack
       ..nov = nov ?? this.nov
-      ..clinchedDivisionTitle =
-          clinchedDivisionTitle ?? this.clinchedDivisionTitle
+      ..clinchedDivisionTitle = clinchedDivisionTitle ??
+          this.clinchedDivisionTitle
       ..tiedAtThird = tiedAtThird ?? this.tiedAtThird
       ..vsNorthwest = vsNorthwest ?? this.vsNorthwest
       ..playoffSeeding = playoffSeeding ?? this.playoffSeeding
@@ -651,8 +651,8 @@ extension TeamRankEntityExtension on TeamRankEntity {
       ..oT = oT ?? this.oT
       ..oppScore100PTS = oppScore100PTS ?? this.oppScore100PTS
       ..vsSouthwest = vsSouthwest ?? this.vsSouthwest
-      ..clinchedConferenceTitle =
-          clinchedConferenceTitle ?? this.clinchedConferenceTitle
+      ..clinchedConferenceTitle = clinchedConferenceTitle ??
+          this.clinchedConferenceTitle
       ..vsCentral = vsCentral ?? this.vsCentral
       ..l10 = l10 ?? this.l10
       ..oppScore80Plus = oppScore80Plus ?? this.oppScore80Plus

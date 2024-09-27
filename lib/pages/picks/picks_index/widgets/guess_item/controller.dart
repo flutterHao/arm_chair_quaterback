@@ -52,22 +52,21 @@ class GuessItemController extends GetxController
         double l5Avg = player.guessInfo.l5Avg
                 .toJson()[ParamUtils.getProKey(key.toLowerCase())] ??
             0.0;
-        double maxY = 0;
+        double minValue = l5Avg <= 0 ? 1 : l5Avg / 2;
+        double maxValue = l5Avg <= 0 ? 3 : l5Avg * 2;
+        double maxY = maxValue;
         List<BarChartGroupData> barDatas = [];
         for (PlayerDayDataEntity p in fiveDayData) {
           double v = p.toJson()[
                   ParamUtils.getProKey(key.toLowerCase()).toLowerCase()] ??
               0.0;
-          maxY = max(v, maxY);
+          double toY = v < minValue ? minValue : v;
+          maxY = max(toY, maxY);
           var chartGroupData = BarChartGroupData(
             x: 0,
             barRods: [
               BarChartRodData(
-                  toY: v == 0
-                      ? 1
-                      : v < 2
-                          ? 2
-                          : v,
+                  toY: toY,
                   width: 6.w,
                   borderRadius:
                       const BorderRadius.vertical(top: Radius.circular(2)),
@@ -78,7 +77,7 @@ class GuessItemController extends GetxController
           );
           barDatas.add(chartGroupData);
         }
-        Map<String, dynamic> item = {"maxY": max(maxY, 5.0), "list": barDatas};
+        Map<String, dynamic> item = {"maxY": maxY, "list": barDatas};
         barGroups[key] = item;
       }
       update();

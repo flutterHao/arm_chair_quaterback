@@ -43,6 +43,9 @@ class RankListMyRank {
 
   Map<String, dynamic> toJson() => $RankListMyRankToJson(this);
 
+  String get getSuccess =>
+      success == null ? "0" : (100 * success!).toStringAsFixed(0);
+
   @override
   String toString() {
     return jsonEncode(this);
