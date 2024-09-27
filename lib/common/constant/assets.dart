@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-11 17:18:41
- * @LastEditTime: 2024-09-26 17:55:15
+ * @LastEditTime: 2024-09-27 19:00:36
  */
 class Assets {
   ///home
@@ -96,18 +96,19 @@ class Assets {
       'assets/images/player/ui_icon_triangle_03.png';
 
   ///team
-  static const uiBelle_01Png = 'assets/images/team/ui_belle_01.png';
-  static const uiBgOpenPng = 'assets/images/team/ui_bg_open.png';
-  static const uiCommonGrainPng = 'assets/images/team/UI_common_grain.png';
-  static const uiCommonTcBg3Png = 'assets/images/team/UI_common_TC_bg3.png';
-  static const uiIconBasketballPng =
-      'assets/images/team/ui_icon_basketball.png';
-  static const uiIconBondPng = 'assets/images/team/ui_icon_bond.png';
-  static const uiIconTrophy_01Png = 'assets/images/team/ui_icon_trophy_01.png';
-  static const uiStateGeneralPng = 'assets/images/team/ui_state_general.png';
-  static const uiTeamBox_01Png = 'assets/images/team/ui_team_box_01.png';
-  static const uiTeamBox_02Png = 'assets/images/team/ui_team_box_02.png';
-  static const uiTeamBox_03Png = 'assets/images/team/ui_team_box_03.png';
-  static const uiTeamBox_04Png = 'assets/images/team/ui_team_box_04.png';
-  static const uiTeamBox_05Png = 'assets/images/team/ui_team_box_05.png';
+static const uiBelle_01Png = 'assets/images/team/ui_belle_01.png';
+static const uiBgOpenPng = 'assets/images/team/ui_bg_open.png';
+static const uiCommonGrainPng = 'assets/images/team/UI_common_grain.png';
+static const uiCommonTcBg3Png = 'assets/images/team/UI_common_TC_bg3.png';
+static const uiIconBasketballPng = 'assets/images/team/ui_icon_basketball.png';
+static const uiIconBondPng = 'assets/images/team/ui_icon_bond.png';
+static const uiIconTrophy_01Png = 'assets/images/team/ui_icon_trophy_01.png';
+static const uiStateGeneralPng = 'assets/images/team/ui_state_general.png';
+static const uiTeamBox_01Png = 'assets/images/team/ui_team_box_01.png';
+static const uiTeamBox_02Png = 'assets/images/team/ui_team_box_02.png';
+static const uiTeamBox_03Png = 'assets/images/team/ui_team_box_03.png';
+static const uiTeamBox_04Png = 'assets/images/team/ui_team_box_04.png';
+static const uiTeamBox_05Png = 'assets/images/team/ui_team_box_05.png';
+static const uiBgDiagonalPng = 'assets/images/team/ui__bg_diagonal.png';
+
 }

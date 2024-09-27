@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-09-27 16:05:42
+ * @LastEditTime: 2024-09-27 18:03:09
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -15,6 +15,7 @@ import 'package:arm_chair_quaterback/pages/news/new_list/widgets/shadow_containe
 import 'package:arm_chair_quaterback/pages/news/rank/widgets/border_container.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/border_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/progress_circle.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -25,7 +26,7 @@ class TeamIndexPage extends GetView<TeamIndexController> {
   const TeamIndexPage({super.key});
 
   // 主视图
-  Widget _buildView(context) {
+  Widget _buildView(TeamIndexController ctrl) {
     return Expanded(
         child: Stack(
       children: [
@@ -295,87 +296,100 @@ class TeamIndexPage extends GetView<TeamIndexController> {
           ),
         ),
 
-        // Positioned(child: BorderContainer(width: 150.h, height: 375.h,child: Container(
-
-        // )))
+        Obx(() {
+          return AnimatedPositioned(
+              top: ctrl.myTeamTop.value,
+              duration: Duration(milliseconds: 200),
+              left: 0,
+              right: 0,
+              child: TeamTrainingPage());
+        }),
 
         ///训练按钮
-        Positioned(
-          bottom: 50.h,
-          left: 0,
-          child: BorderWidget(
-            offset: Offset(0, -3.h),
-            width: 152.h,
-            height: 64.h,
-            onTap: () {},
-            margin: EdgeInsets.only(bottom: 2.h),
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(32.h),
-              bottomRight: Radius.circular(32.h),
+        Obx(() {
+          return AnimatedPositioned(
+            left: ctrl.trainingLeft.value,
+            duration: Duration(milliseconds: 200),
+            bottom: 50.h,
+            child: BorderWidget(
+              offset: Offset(0, -3.h),
+              width: 152.h,
+              height: 64.h,
+              onTap: () {
+                ctrl.showTeamTraining();
+              },
+              margin: EdgeInsets.only(bottom: 2.h),
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(32.h),
+                bottomRight: Radius.circular(32.h),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "TRAINING",
+                    style: 21.w7(color: AppColors.cFF7954),
+                  ),
+                  5.hGap,
+                  IconWidget(
+                    iconWidth: 35.h,
+                    icon: Assets.uiIconBasketballPng,
+                    iconColor: AppColors.cFF7954,
+                  ),
+                ],
+              ),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "TRAINING",
-                  style: 21.w7(color: AppColors.cFF7954),
-                ),
-                5.hGap,
-                IconWidget(
-                  iconWidth: 35.h,
-                  icon: Assets.uiIconBasketballPng,
-                  iconColor: AppColors.cFF7954,
-                ),
-              ],
-            ),
-          ),
-        ),
+          );
+        }),
 
         ///战斗按键
-        Positioned(
-          bottom: 50.h,
-          right: 0,
-          child: BorderWidget(
-            offset: Offset(0, -3.h),
-            width: 152.h,
-            height: 64.h,
-            onTap: () {},
-            margin: EdgeInsets.only(bottom: 2.h),
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(32.h),
-              bottomLeft: Radius.circular(32.h),
+        Obx(() {
+          return AnimatedPositioned(
+            right: ctrl.bettleRight.value,
+            duration: Duration(milliseconds: 200),
+            bottom: 50.h,
+            child: BorderWidget(
+              offset: Offset(0, -3.h),
+              width: 152.h,
+              height: 64.h,
+              onTap: () {},
+              margin: EdgeInsets.only(bottom: 2.h),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(32.h),
+                bottomLeft: Radius.circular(32.h),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconWidget(
+                        iconWidth: 28.h,
+                        icon: Assets.uiIconTrophy_01Png,
+                      ),
+                      SizedBox(height: 5.h),
+                      CustomContainer(
+                          // width:35.w ,
+                          // height: 10.h,
+                          padding: EdgeInsets.symmetric(horizontal: 2.h),
+                          borderRadius: BorderRadius.circular(5.h),
+                          backgroudColor: AppColors.cFED141,
+                          child: Text(
+                            "15000",
+                            style: 10.w7(color: AppColors.c262626, height: 1),
+                          )),
+                    ],
+                  ),
+                  Text(
+                    "BATTLE",
+                    style: 21.w7(color: AppColors.cFF7954),
+                  ),
+                ],
+              ),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconWidget(
-                      iconWidth: 28.h,
-                      icon: Assets.uiIconTrophy_01Png,
-                    ),
-                    SizedBox(height: 5.h),
-                    CustomContainer(
-                        // width:35.w ,
-                        // height: 10.h,
-                        padding: EdgeInsets.symmetric(horizontal: 2.h),
-                        borderRadius: BorderRadius.circular(5.h),
-                        backgroudColor: AppColors.cFED141,
-                        child: Text(
-                          "15000",
-                          style: 10.w7(color: AppColors.c262626, height: 1),
-                        )),
-                  ],
-                ),
-                Text(
-                  "BATTLE",
-                  style: 21.w7(color: AppColors.cFF7954),
-                ),
-              ],
-            ),
-          ),
-        ),
+          );
+        }),
       ],
     ));
   }
@@ -421,7 +435,7 @@ class TeamIndexPage extends GetView<TeamIndexController> {
       builder: (ctrl) {
         return BlackAppWidget(
           const UserInfoBar(title: "TEAM"),
-          bodyWidget: _buildView(context),
+          bodyWidget: _buildView(ctrl),
           floatWidgets: [],
         );
       },
