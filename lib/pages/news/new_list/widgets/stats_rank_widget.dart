@@ -78,7 +78,7 @@ class StatsRankItem extends GetView<NewListController> {
   @override
   Widget build(BuildContext context) {
     final item = controller.state.statsRankMap.entries.elementAt(index);
-    return ShadowContainer(
+    return CustomContainer(
       width: width,
       height: 190.w,
       child: Column(

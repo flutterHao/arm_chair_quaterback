@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-11 17:18:41
- * @LastEditTime: 2024-09-26 11:30:22
+ * @LastEditTime: 2024-09-26 17:55:15
  */
 class Assets {
   ///home
@@ -34,15 +34,19 @@ class Assets {
   static const uiIconLabelPng = 'assets/images/icon/ui_icon_label.png';
   static const uiIconLike_01Png = 'assets/images/icon/ui_icon_like_01.png';
   static const uiIconLike_02Png = 'assets/images/icon/ui_icon_like_02.png';
+  static const uiIconLockPng = 'assets/images/icon/ui_icon_lock.png';
   static const uiIconMoneyPng = 'assets/images/icon/ui_icon_money.png';
   static const uiIconMorePng = 'assets/images/icon/ui_icon_more.png';
   static const uiIconMsgPng = 'assets/images/icon/ui_icon_msg.png';
   static const uiIconReadPng = 'assets/images/icon/ui_icon_read.png';
-  static const uiIconRing_01Png = 'assets/images/icon/ui_icon_ring_01.png';
-  static const uiIconShrinkPng = 'assets/images/icon/ui_icon_shrink.png';
-  static const uiIconUnfoldPng = 'assets/images/icon/ui_icon_unfold.png';
   static const uiIconRingPng = 'assets/images/icon/ui_icon_ring.png';
+  static const uiIconRing_01Png = 'assets/images/icon/ui_icon_ring_01.png';
   static const uiIconRuidgtPng = 'assets/images/icon/ui_icon_ruidgt.png';
+  static const uiIconShrinkPng = 'assets/images/icon/ui_icon_shrink.png';
+  static const uiIconStaminaPng = 'assets/images/icon/ui_icon_stamina.png';
+  static const uiIconSwitch_01Png = 'assets/images/icon/ui_icon_switch_01.png';
+  static const uiIconSwitch_02Png = 'assets/images/icon/ui_icon_switch_02.png';
+  static const uiIconUnfoldPng = 'assets/images/icon/ui_icon_unfold.png';
   static const uiWindowsAwardPng = 'assets/images/icon/ui_windows_award.png';
 
   ///test
@@ -92,7 +96,10 @@ class Assets {
       'assets/images/player/ui_icon_triangle_03.png';
 
   ///team
+  static const uiBelle_01Png = 'assets/images/team/ui_belle_01.png';
   static const uiBgOpenPng = 'assets/images/team/ui_bg_open.png';
+  static const uiCommonGrainPng = 'assets/images/team/UI_common_grain.png';
+  static const uiCommonTcBg3Png = 'assets/images/team/UI_common_TC_bg3.png';
   static const uiIconBasketballPng =
       'assets/images/team/ui_icon_basketball.png';
   static const uiIconBondPng = 'assets/images/team/ui_icon_bond.png';

@@ -1,28 +1,38 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
-import 'package:arm_chair_quaterback/common/entities/user_entity/user_entiry.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/comments/comment_controller.dart';
 import 'package:arm_chair_quaterback/common/widgets/comments/comment_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
-import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class CommentsWidget extends StatelessWidget {
-  const CommentsWidget({super.key, required this.commentList});
+  const CommentsWidget(
+      {super.key, required this.commentList, required this.newsId});
   final List<Reviews> commentList;
+  final int newsId;
 
   @override
   Widget build(BuildContext context) {
     CommentController controller = Get.put(CommentController(commentList));
     // controller.setComments(commentList);
-    RxBool isSeeMore = false.obs;
-    int count =
-        isSeeMore.value && commentList.length > 1 ? 1 : commentList.length;
+
+    // RxBool isSeeMore = false.obs;
+    // int count = (controller.list.length > 1 && !isSeeMore.value)
+    //     ? 1
+    //     : controller.list.length;
+
+    // if (isSeeMore.value) {
+    //   if (commentList.length > 1) {
+    //     count = 1;
+    //   } else {
+    //     count = commentList.length;
+    //   }
+    // }
     return GetBuilder<CommentController>(builder: (_) {
       return Container(
         padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -77,10 +87,10 @@ class CommentsWidget extends StatelessWidget {
                     ],
                   );
                 }),
-            // if (controller.list.length > 1)
+            // if (controller.list.length > 1 && !isSeeMore.value)
             //   InkWell(
             //       onTap: () {
-            //         isSeeMore.value = isSeeMore.value;
+            //         isSeeMore.value = !isSeeMore.value;
             //       },
             //       child: Container(
             //           padding: EdgeInsets.symmetric(vertical: 6.w),
@@ -301,25 +311,24 @@ class CommentItemView extends GetView<CommentController> {
                       );
                     }),
                   ),
-                  if (item.teamId != (controller.userEntity.team?.teamId ?? 0))
-                    InkWell(
-                      onTap: () {
-                        int parentId = item.parentReviewId == 0
-                            ? item.id!
-                            : item.parentReviewId!;
-                        String name = "@${item.teamName}";
-                        // controller.focusNode.requestFocus();
-                        showCommentBottomSheet(context,
-                            newsId: item.newsId ?? 0,
-                            parentId: parentId,
-                            targetId: item.id ?? 0,
-                            hintText: name);
-                      },
-                      child: Text(
-                        "Reple",
-                        style: 12.w4(color: AppColors.c666666),
-                      ),
+                  // if (item.teamId != (controller.userEntity.team?.teamId ?? 0))
+                  InkWell(
+                    onTap: () {
+                      int parentId = item.parentReviewId == 0
+                          ? item.id!
+                          : item.parentReviewId!;
+                      String name = "@${item.teamName}";
+                      showCommentBottomSheet(context,
+                          newsId: item.newsId ?? 0,
+                          parentId: parentId,
+                          targetId: item.id ?? 0,
+                          hintText: name);
+                    },
+                    child: Text(
+                      "Reple",
+                      style: 12.w4(color: AppColors.c666666),
                     ),
+                  ),
                 ],
               ),
 

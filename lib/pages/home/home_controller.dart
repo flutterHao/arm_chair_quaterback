@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-25 11:48:38
- * @LastEditTime: 2024-09-26 14:13:08
+ * @LastEditTime: 2024-09-26 19:10:32
  */
 /*
  * @Description: 
@@ -24,6 +24,7 @@ import 'package:arm_chair_quaterback/common/utils/device_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/index.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/view.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -57,17 +58,18 @@ class HomeController extends GetxController
       Assets.uiIconPicks_01Png,
       const PicksIndex(),
     ),
-    TabItemInfo(
-      "TRAINING",
-      Assets.uiIconTraining_01Png,
-      Assets.uiIconTraining_01Png,
-      Container(),
-    ),
+
     TabItemInfo(
       "TEAM",
       Assets.uiIconTeam_01Png,
       Assets.uiIconTeam_01Png,
-      const PicksIndex(),
+      const TeamIndexPage(),
+    ),
+        TabItemInfo(
+      "TRAINING",
+      Assets.uiIconTraining_01Png,
+      Assets.uiIconTraining_01Png,
+      Container(),
     ),
     TabItemInfo(
       "LEAGUES",

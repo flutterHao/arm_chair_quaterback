@@ -1,4 +1,7 @@
+static const uiBelle_01Png = 'assets/images/team/ui_belle_01.png';
 static const uiBgOpenPng = 'assets/images/team/ui_bg_open.png';
+static const uiCommonGrainPng = 'assets/images/team/UI_common_grain.png';
+static const uiCommonTcBg3Png = 'assets/images/team/UI_common_TC_bg3.png';
 static const uiIconBasketballPng = 'assets/images/team/ui_icon_basketball.png';
 static const uiIconBondPng = 'assets/images/team/ui_icon_bond.png';
 static const uiIconTrophy_01Png = 'assets/images/team/ui_icon_trophy_01.png';

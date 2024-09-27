@@ -2,11 +2,14 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-14 15:06:14
- * @LastEditTime: 2024-09-14 15:27:44
+ * @LastEditTime: 2024-09-27 15:58:54
  */
 import 'dart:math';
 
+import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CircleProgressView extends StatefulWidget {
   ///背景圆形色值
@@ -34,7 +37,7 @@ class CircleProgressView extends StatefulWidget {
       required this.height,
       this.backgroundColor = Colors.grey,
       this.progressColor = Colors.blue,
-      this.progressWidth = 10.0});
+      this.progressWidth = 2});
 
   @override
   State<CircleProgressView> createState() => _CircleProgressViewState();
@@ -91,12 +94,32 @@ class _CircleProgressViewState extends State<CircleProgressView>
     return Container(
       width: widget.width,
       height: widget.height,
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(2),
+      decoration: BoxDecoration(
+          color: AppColors.c262626,
+          borderRadius: BorderRadius.circular(widget.width / 2)),
       child: CustomPaint(
-        child: Center(child: Text("${animation.value.toInt()}%")),
-        //这里因为我们给的进度一般都是0-100区间
         painter: ProgressPaint(animation.value / 50 * _Pi, widget.progressWidth,
             widget.backgroundColor, widget.progressColor),
+        child: Container(
+          width: widget.width - 10,
+          height: widget.height - 10,
+          alignment: Alignment.center,
+          margin: const EdgeInsets.all(3),
+          decoration: BoxDecoration(
+              color: AppColors.c4D4D4D,
+              borderRadius: BorderRadius.circular((widget.width) / 2)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("PF", style: 16.w7(color: widget.progressColor, height: 1)),
+              Text(
+                "${animation.value.toInt()}%",
+                style: 10.w4(color: widget.progressColor, height: 1),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -154,9 +154,11 @@ class NewsDetailPage extends StatelessWidget {
 
   // 评论部分
   Widget _buildComments(NewsDetailController controller) {
+    int id = controller.state.newDetail.id ?? 0;
     return SliverToBoxAdapter(
       child: CommentsWidget(
         commentList: controller.state.newDetail.reviewsList ?? [],
+        newsId: id,
       ),
     );
   }

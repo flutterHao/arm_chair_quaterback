@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2024-09-26 09:41:31
+ * @LastEditTime: 2024-09-26 16:46:07
  */
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
@@ -11,9 +11,6 @@ import 'package:arm_chair_quaterback/common/entities/team_rank.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
-import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
-import 'package:arm_chair_quaterback/common/store/store.dart';
-import 'package:arm_chair_quaterback/common/utils/loading.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';

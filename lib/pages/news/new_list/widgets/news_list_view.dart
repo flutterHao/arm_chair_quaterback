@@ -51,7 +51,7 @@ class NewsItemView extends GetView<NewListController> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        ShadowContainer(
+        CustomContainer(
           padding: EdgeInsets.all(15.w),
           margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 7.w),
           child: Column(

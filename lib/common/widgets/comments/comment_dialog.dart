@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-12 16:34:46
- * @LastEditTime: 2024-09-26 09:45:19
+ * @LastEditTime: 2024-09-26 17:33:21
  */
 import 'dart:math';
 
@@ -25,12 +25,14 @@ class CommentDialog extends GetView<CommentController> {
       this.parentId = 0,
       this.targetId = 0,
       this.isReply = false,
+      this.showKeyboard,
       this.hintText = 'Say something...'});
   final String hintText;
   final int newsId;
   final int parentId;
   final int targetId;
   final bool isReply;
+  final Function? showKeyboard;
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +44,9 @@ class CommentDialog extends GetView<CommentController> {
     // controller.focusNode.requestFocus();    final FocusNode focusNode = FocusNode();
     final FocusNode focusNode = FocusNode();
     if (isReply) focusNode.requestFocus();
+    // if (showKeyboard != null) {
+    //   showKeyboard!(context);
+    // }
     return GetBuilder<CommentController>(
         id: "commentDialog",
         builder: (_) {
@@ -76,6 +81,7 @@ class CommentDialog extends GetView<CommentController> {
                                       minLines: 1,
                                       maxLines: 10,
                                       focusNode: focusNode,
+                                      // focusNode: controller.focusNode,
                                       cursorColor: AppColors.cFF7954,
                                       scrollPadding: const EdgeInsets.all(0),
                                       decoration: InputDecoration(
@@ -173,11 +179,19 @@ void showCommentBottomSheet(BuildContext context,
     backgroundColor: Colors.transparent,
     builder: (context) {
       return CommentDialog(
-          newsId: newsId,
-          parentId: parentId,
-          targetId: targetId,
-          isReply: true,
-          hintText: hintText);
+        newsId: newsId,
+        parentId: parentId,
+        targetId: targetId,
+        isReply: true,
+        hintText: hintText,
+        showKeyboard: () {
+          // if (!hasFocus) {
+          //   CommentController controller = Get.find();
+          //   controller.focusNode.requestFocus();
+          //   // FocusScope.of(context).requestFocus(controller.focusNode);
+          // }
+        },
+      );
     },
   );
 }

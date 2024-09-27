@@ -62,7 +62,7 @@ class TeamRankItem extends GetView<NewListController> {
   @override
   Widget build(BuildContext context) {
     final item = controller.state.teamMap.entries.elementAt(index);
-    return ShadowContainer(
+    return CustomContainer(
       width: width,
       height: 225.w,
       child: Column(

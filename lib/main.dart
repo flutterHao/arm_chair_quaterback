@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 16:17:35
- * @LastEditTime: 2024-09-25 15:23:05
+ * @LastEditTime: 2024-09-27 15:19:35
  */
 import 'package:arm_chair_quaterback/pages/home/home_binding.dart';
 import 'package:flutter/foundation.dart';
@@ -35,11 +35,12 @@ class MyApp extends StatelessWidget {
         defaultPopGesture: true);
     return Center(
       child: Container(
-        constraints: const BoxConstraints(maxWidth: MAXWEBWIDTH),
+        // constraints: const BoxConstraints(maxWidth: MAXWEBWIDTH),
         child: LayoutBuilder(builder: (context, constraints) {
           return ScreenUtilInit(
-            enableScaleWH: (() => isMax ? false : true),
-            enableScaleText: (() => isMax ? false : true),
+            minTextAdapt: true,
+            // enableScaleWH: (() => isMax ? false : true),
+            // enableScaleText: (() => isMax ? false : true),
             // designSize:
             //     isMax ? const Size(MAXWEBWIDTH, 812) : const Size(375, 812),
             designSize: const Size(375, 812),
