@@ -8,6 +8,7 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/param_utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/TLBuilderWidget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guess_item/controller.dart';
@@ -83,7 +84,12 @@ class _GuessItemState extends State<GuessItem>
                             onTap: () {
                               print('点击了头像');
                               Get.toNamed(RouteNames.picksPlayerDetail,
-                                  id: GlobalNestedKey.PICKS);
+                                  id: GlobalNestedKey.PICKS,
+                                  arguments: {
+                                    "teamId":
+                                        widget.pickPlayer.guessInfo.teamId,
+                                    "uuid": widget.pickPlayer.guessInfo.teamId
+                                  });
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -357,7 +363,7 @@ class _GuessItemState extends State<GuessItem>
     PicksIndexController picksIndexController = Get.find();
     showModalBottomSheet(
         isScrollControlled: true,
-        context: Get.context!,
+        context: context,
         builder: (context) {
           return Container(
             constraints: BoxConstraints(maxHeight: 500.w),
@@ -524,42 +530,54 @@ class _GuessItemState extends State<GuessItem>
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: [
-                                              Container(
+                                              SizedBox(
                                                 width: 62.w,
                                                 height: 32.w,
                                                 child: Center(
-                                                  child: Stack(
-                                                    children: [
-                                                      IconWidget(
-                                                        iconWidth: 62.w,
-                                                        icon: Assets
-                                                            .uiPickArrowsPng,
-                                                        iconColor: AppColors
-                                                            .c000000
-                                                            .withOpacity(.2),
-                                                      ),
-                                                      Builder(builder: (context) {
-                                                        Map item =
-                                                            (guessItemController
-                                                                    .barGroups[
-                                                                guessItemController
-                                                                        .player
-                                                                        .betData[
-                                                                    index]] as Map);
-                                                        return BarChart(BarChartData(
-                                                            maxY: item['maxY'],
-                                                            barGroups:
-                                                                item['list'],
-                                                            titlesData:
-                                                                guessItemController
-                                                                    .titlesData,
-                                                            borderData:
-                                                                FlBorderData(
-                                                                    show:
-                                                                        false)));
-                                                      })
-                                                    ],
-                                                  ),
+                                                  child: guessItemController
+                                                          .barGroups.isEmpty
+                                                      ? Text(
+                                                          "~~",//todo 替换缺省
+                                                          style: 14.w4(
+                                                              color: AppColors
+                                                                  .cB3B3B3
+                                                                  .withOpacity(
+                                                                      .6)),
+                                                        )
+                                                      : Stack(
+                                                          children: [
+                                                            IconWidget(
+                                                              iconWidth: 62.w,
+                                                              icon: Assets
+                                                                  .uiPickArrowsPng,
+                                                              iconColor: AppColors
+                                                                  .c000000
+                                                                  .withOpacity(
+                                                                      .2),
+                                                            ),
+                                                            Builder(builder:
+                                                                (context) {
+                                                              Map item = (guessItemController
+                                                                      .barGroups[
+                                                                  guessItemController
+                                                                          .player
+                                                                          .betData[
+                                                                      index]] as Map);
+                                                              return BarChart(BarChartData(
+                                                                  maxY: item[
+                                                                      'maxY'],
+                                                                  barGroups: item[
+                                                                      'list'],
+                                                                  titlesData:
+                                                                      guessItemController
+                                                                          .titlesData,
+                                                                  borderData:
+                                                                      FlBorderData(
+                                                                          show:
+                                                                              false)));
+                                                            })
+                                                          ],
+                                                        ),
                                                 ),
                                               ),
                                               3.vGap,

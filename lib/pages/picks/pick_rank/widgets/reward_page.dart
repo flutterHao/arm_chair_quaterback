@@ -24,13 +24,17 @@ class RewardPage extends StatefulWidget {
 
 class _RewardPageState extends State<RewardPage>
     with AutomaticKeepAliveClientMixin {
+  late PickRankController controller;
+
   @override
   Widget build(BuildContext context) {
+    controller = Get.find<PickRankController>();
+
     return GetBuilder<PickRankController>(
         id: PickRankController.idAwards,
         builder: (controller) {
           if (controller.awardInfo.isEmpty) {
-            return const Center(child: LoadStatusWidget());
+            return Center(child: LoadStatusWidget(onRefreshTap: controller.reloadRewardData(),));
           }
           return Stack(
             children: [

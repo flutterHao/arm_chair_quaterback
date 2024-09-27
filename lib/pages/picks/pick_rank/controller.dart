@@ -56,6 +56,14 @@ class PickRankController extends GetxController
     _initRewardData();
   }
 
+  reloadRankData(){
+    _initRankData();
+  }
+
+  reloadRewardData(){
+    _initRewardData();
+  }
+
   void _initRewardData() {
     Future.wait([
       CacheApi.getGameRankAwardRule(),

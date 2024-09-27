@@ -7,6 +7,7 @@
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
+import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -64,6 +65,10 @@ class PlayerDetailController extends GetxController
         statsIsScrolling.value = false;
       }
     });
+  }
+
+  _initData(){
+
   }
 
   /// 在 onInit() 之后调用 1 帧。这是进入的理想场所

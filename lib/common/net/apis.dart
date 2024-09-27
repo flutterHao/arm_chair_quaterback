@@ -5,19 +5,6 @@
  * @LastEditTime: 2024-09-24 10:20:12
  */
 class Api {
-  // static const String authAccount = '/p/account/authAccount';
-  // static const String login = "/p/team/teamLogin";
-  // static const String visitorLogin = "/p/team/visitorLogin";
-  // static const String getNewsBanner = "/config/HightlightNews.json";
-  // static const String getNewsList = "/p/NBANews/getNBANews";
-  // static const String getNewsDetail = "/p/NBANews/viewNews";
-  // static const String newsLike = "/p/NBANews/like";
-  // static const String newsUnLike = "/p/NBANews/unLike";
-  // static const String teamRank = "/p/NBAData/queryNBATeamRank";
-  // static const String playerStats = "/p/NBAData/getNBAPlayerRankJSONInfo";
-  // static const String sendReviews = "/p/NBANews/sendReviews";
-  // static const String deleteReviews = "/p/NBANews/deleteReviews";
-  // static const String likeReviews = "/p/NBANews/likeReviews";
 
   /// base
   static const String API_BASE_PATH = "/p";
@@ -71,4 +58,9 @@ class Api {
   static const String cGameRankAwardRule =
       "$CONFIG_BASE_PATH/GameRankAwardRule.json";
   static const String cGetPropDefine = "$CONFIG_BASE_PATH/PropDefine.json";
+
+
+  /// TeamPlayer
+  static const String getTeamPlayerByUUID = "$API_BASE_PATH/TeamPlayer/getTeamPlayerByUUID";
+
 }

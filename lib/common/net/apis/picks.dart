@@ -16,6 +16,7 @@ import 'package:arm_chair_quaterback/common/entities/player_day_data_entity.dart
 import 'package:arm_chair_quaterback/common/entities/rank_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/recive_award_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_simple_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/rank_type.dart';
 import 'package:arm_chair_quaterback/common/net/apis.dart';
@@ -34,9 +35,8 @@ class PicksApi {
   }
 
   static Future<List<List<ReciveAwardEntity>>> getGuessInfos(int teamId) async {
-    List json = await httpUtil.post(Api.getGuessInfos,data: {
-      "teamId":teamId
-    });
+    List json =
+        await httpUtil.post(Api.getGuessInfos, data: {"teamId": teamId});
     return json
         .map((e) =>
             (e as List).map((f) => ReciveAwardEntity.fromJson(f)).toList())
@@ -82,16 +82,20 @@ class PicksApi {
   }
 
   static Future<TeamSimpleEntity> getTeamSimple(int teamId) async {
-    var json = await httpUtil.post(Api.getTeamSimple,data: {
-      "teamId":teamId
-    });
+    var json = await httpUtil.post(Api.getTeamSimple, data: {"teamId": teamId});
     return TeamSimpleEntity.fromJson(json);
   }
 
   static Future<List> getRankRewards(RankType rankType) async {
-    var json = await httpUtil.post(Api.getRankRewards,data: {
-      "rankType":rankType
-    });
+    var json =
+        await httpUtil.post(Api.getRankRewards, data: {"rankType": rankType});
     return json;
+  }
+
+  static Future<TeamPlayerInfoEntity> getTeamPlayerByUUID(
+      int teamId, String uuid) async {
+    var json = await httpUtil
+        .post(Api.getTeamPlayerByUUID, data: {"teamId": teamId, "uuid": uuid});
+    return TeamPlayerInfoEntity.fromJson(json);
   }
 }
