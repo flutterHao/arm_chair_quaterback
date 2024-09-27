@@ -127,56 +127,68 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
       setState(() {});
     }
 
-    return NotificationListener<ScrollNotification>(
-      onNotification: (notification) {
-        // print('notification:${notification.runtimeType}');
-        if (notification is OverscrollNotification) {
-          // print('notification.metrics.pixels:${notification.metrics.pixels}');
-          if (notification.metrics.pixels <=
-              notification.metrics.minScrollExtent && !isOnLeftSide) {
-            //到达左边界
-            isOnLeftSide = true;
-          }
+    return GestureDetector(
+      onHorizontalDragDown: (detail){
+        if(!isOnLeftSide){
+          isOnLeftSide = true;
         }
-        if(notification is ScrollUpdateNotification && !isOnLeftSide){
-          // print('notification.metrics.pixels:${notification.metrics.pixels}');
-          if (notification.metrics.pixels <=
-              notification.metrics.minScrollExtent && !isOnLeftSide) {
-            //到达左边界
-            isOnLeftSide = true;
-          }
-        }
-        if(notification is ScrollStartNotification && isOnLeftSide){
-          isOnLeftSide = false;
-        }
-        // true 阻止向上冒泡 ,false 继续向上冒泡
-        return true;
       },
-      child: RawGestureDetector(
-        gestures: {
-          CustomTapGestureRecognizer:
-              GestureRecognizerFactoryWithHandlers<
-                  CustomTapGestureRecognizer>(
-            () => CustomTapGestureRecognizer(),
-            (HorizontalDragGestureRecognizer detector) {
-              detector
-                ..onDown = onHorizontalDragDown
-                ..onStart = onHorizontalDragStart
-                ..onUpdate = onHorizontalDragUpdate
-                ..onEnd = onHorizontalDragEnd
-                ..onCancel = onHorizontalDragCancel;
-            },
-          )
+      onHorizontalDragStart: (detail){
+        if(!isOnLeftSide){
+          isOnLeftSide = true;
+        }
+      },
+      child: NotificationListener<ScrollNotification>(
+        onNotification: (notification) {
+          // print('notification:${notification.runtimeType}');
+          if (notification is OverscrollNotification) {
+            // print('notification.metrics.pixels:${notification.metrics.pixels}');
+            if (notification.metrics.pixels <=
+                notification.metrics.minScrollExtent && !isOnLeftSide) {
+              //到达左边界
+              isOnLeftSide = true;
+            }
+          }
+          if(notification is ScrollUpdateNotification && !isOnLeftSide){
+            // print('notification.metrics.pixels:${notification.metrics.pixels}');
+            if (notification.metrics.pixels <=
+                notification.metrics.minScrollExtent && !isOnLeftSide) {
+              //到达左边界
+              isOnLeftSide = true;
+            }
+          }
+          if(notification is ScrollStartNotification && isOnLeftSide){
+            isOnLeftSide = false;
+          }
+          // true 阻止向上冒泡 ,false 继续向上冒泡
+          return true;
         },
-        child: Stack(
-          children: [
-            Container(
-              color: Color.lerp(Colors.black.withOpacity(.3),
-                  Colors.black.withOpacity(.0), offsetX / width),
-            ),
-            Transform.translate(
-                offset: Offset(offsetX, 0), child: widget.child),
-          ],
+        child: RawGestureDetector(
+          gestures: {
+            CustomTapGestureRecognizer:
+                GestureRecognizerFactoryWithHandlers<
+                    CustomTapGestureRecognizer>(
+              () => CustomTapGestureRecognizer(),
+              (HorizontalDragGestureRecognizer detector) {
+                detector
+                  ..onDown = onHorizontalDragDown
+                  ..onStart = onHorizontalDragStart
+                  ..onUpdate = onHorizontalDragUpdate
+                  ..onEnd = onHorizontalDragEnd
+                  ..onCancel = onHorizontalDragCancel;
+              },
+            )
+          },
+          child: Stack(
+            children: [
+              Container(
+                color: Color.lerp(Colors.black.withOpacity(.3),
+                    Colors.black.withOpacity(.0), offsetX / width),
+              ),
+              Transform.translate(
+                  offset: Offset(offsetX, 0), child: widget.child),
+            ],
+          ),
         ),
       ),
     );
