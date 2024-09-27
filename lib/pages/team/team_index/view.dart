@@ -5,6 +5,7 @@
  * @LastEditTime: 2024-09-27 18:03:09
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
@@ -13,6 +14,7 @@ import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/widgets/progress_paint.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/widgets/shadow_container.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/widgets/border_container.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/border_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/progress_circle.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/view.dart';
@@ -352,7 +354,7 @@ class TeamIndexPage extends GetView<TeamIndexController> {
               offset: Offset(0, -3.h),
               width: 152.h,
               height: 64.h,
-              onTap: () {},
+              onTap: () => Get.toNamed(RouteNames.teamTeamBattle),
               margin: EdgeInsets.only(bottom: 2.h),
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(32.h),
