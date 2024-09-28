@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +19,9 @@ class IconWidget extends StatelessWidget {
     this.iconColor,
     this.backgroudColor,
     this.border,
+    this.rotateAngle,
   });
+
   final double iconWidth;
   final double? iconHeight;
   final String icon;
@@ -27,6 +31,7 @@ class IconWidget extends StatelessWidget {
   final BorderRadius? borderRadius;
   final Color? backgroudColor;
   final Border? border;
+  final double? rotateAngle;
 
   @override
   Widget build(BuildContext context) {
@@ -55,16 +60,19 @@ class IconWidget extends StatelessWidget {
             child: image, // 替换为你的 PNG 图片
           )
         : image;
-    return Container(
-      width: backgroudWitdh,
-      height: backgroudheight,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        border: border,
-        color: backgroudColor,
-        borderRadius: borderRadius,
+    return Transform.rotate(
+      angle: pi / 180 * (rotateAngle ?? 0),
+      child: Container(
+        width: backgroudWitdh,
+        height: backgroudheight,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          border: border,
+          color: backgroudColor,
+          borderRadius: borderRadius,
+        ),
+        child: iconWidget,
       ),
-      child: iconWidget,
     );
   }
 }

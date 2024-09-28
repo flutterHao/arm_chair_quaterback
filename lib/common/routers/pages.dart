@@ -4,6 +4,8 @@
 // import 'package:arm_chair_quaterback/pages/news/rank/bindings.dart';
 // import 'package:arm_chair_quaterback/pages/news/rank/stats_view.dart';
 // import 'package:arm_chair_quaterback/pages/news/rank/team_view.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -19,6 +21,14 @@ class AppPages {
     GetPage(
       name: main,
       page: () => const HomePage(),
+    ),
+    GetPage(
+      opaque: false,
+      name: RouteNames.teamTeamBattle,
+      binding: BindingsBuilder(() {
+        Get.lazyPut<TeamBattleController>(() => TeamBattleController());
+      }),
+      page: () => const TeamBattlePage(),
     ),
     // GetPage(
     //   name: RouteNames.newDetail,
