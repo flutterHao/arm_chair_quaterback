@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-25 11:48:38
- * @LastEditTime: 2024-09-26 19:10:32
+ * @LastEditTime: 2024-09-27 21:40:42
  */
 /*
  * @Description: 
@@ -58,14 +58,13 @@ class HomeController extends GetxController
       Assets.uiIconPicks_01Png,
       const PicksIndex(),
     ),
-
     TabItemInfo(
       "TEAM",
       Assets.uiIconTeam_01Png,
       Assets.uiIconTeam_01Png,
       const TeamIndexPage(),
     ),
-        TabItemInfo(
+    TabItemInfo(
       "TRAINING",
       Assets.uiIconTraining_01Png,
       Assets.uiIconTraining_01Png,

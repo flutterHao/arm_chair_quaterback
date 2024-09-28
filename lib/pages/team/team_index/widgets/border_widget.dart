@@ -1,6 +1,5 @@
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 ///边框容器
 class BorderWidget extends StatelessWidget {
@@ -10,10 +9,11 @@ class BorderWidget extends StatelessWidget {
     required this.width,
     required this.height,
     required this.child,
-     this.onTap,
+    this.onTap,
     this.margin,
     required this.borderRadius,
   });
+
   final double width;
   final double height;
   final EdgeInsets? margin;
@@ -28,29 +28,39 @@ class BorderWidget extends StatelessWidget {
       onTap: () {
         onTap?.call();
       },
-      child: Stack(
-        children: [
-          Positioned(
-            child: Container(
+      child: Container(
+        margin: margin,
+        width: width + offset.dx.abs(),
+        height: height + offset.dy.abs(),
+        // decoration: BoxDecoration(
+        //   borderRadius: borderRadius,
+        // ),
+        child: Stack(
+          clipBehavior: Clip.none, // 确保内容不被剪裁
+          children: [
+            Container(
               width: width,
               height: height,
               decoration: BoxDecoration(
-                  color: AppColors.cFF7954, borderRadius: borderRadius),
+                color: AppColors.cFF7954,
+                borderRadius: borderRadius,
+              ),
             ),
-          ),
-          Positioned(
-            left: offset.dx,
-            top: offset.dy,
-            child: Container(
+            Positioned(
+              left: offset.dx,
+              top: offset.dy,
+              child: Container(
                 width: width,
                 height: height,
                 decoration: BoxDecoration(
                   color: AppColors.c262626,
                   borderRadius: borderRadius,
                 ),
-                child: child),
-          )
-        ],
+                child: child,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

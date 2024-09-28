@@ -28,3 +28,10 @@ static const uiTeamBox_02Png = 'assets/images/team/ui_team_box_02.png';
 static const uiTeamBox_03Png = 'assets/images/team/ui_team_box_03.png';
 static const uiTeamBox_04Png = 'assets/images/team/ui_team_box_04.png';
 static const uiTeamBox_05Png = 'assets/images/team/ui_team_box_05.png';
+<<<<<<< .mine
+static const uiWindowsStaminaPng = 'assets/images/team/ui_windows_Stamina.png';
+static const uiBgDiagonalPng = 'assets/images/team/ui__bg_diagonal.png';
+||||||| .r644577
+static const uiBgDiagonalPng = 'assets/images/team/ui__bg_diagonal.png';
+=======
+>>>>>>> .r644592

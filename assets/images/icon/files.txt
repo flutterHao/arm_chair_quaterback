@@ -18,6 +18,7 @@ static const uiIconLockPng = 'assets/images/icon/ui_icon_lock.png';
 static const uiIconMoneyPng = 'assets/images/icon/ui_icon_money.png';
 static const uiIconMorePng = 'assets/images/icon/ui_icon_more.png';
 static const uiIconMsgPng = 'assets/images/icon/ui_icon_msg.png';
+static const uiIconPlusPng = 'assets/images/icon/ui_icon_plus.png';
 static const uiIconReadPng = 'assets/images/icon/ui_icon_read.png';
 static const uiIconRingPng = 'assets/images/icon/ui_icon_ring.png';
 static const uiIconRing_01Png = 'assets/images/icon/ui_icon_ring_01.png';

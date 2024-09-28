@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 11:33:27
- * @LastEditTime: 2024-09-27 15:21:33
+ * @LastEditTime: 2024-09-28 10:26:30
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -36,8 +36,10 @@ extension NumExt on num {
       TextStyle(
           fontWeight: FontWeight.w400,
           height: height,
-          overflow: overflow,
+          overflow: overflow??TextOverflow.ellipsis,
           fontSize: toDouble().h,
+
+          ///TODO
           // fontSize: kIsWeb ? toDouble() : toDouble().sp,
           color: color,
           fontFamily: FontFamily.fMedium);
@@ -51,7 +53,7 @@ extension NumExt on num {
           fontWeight: FontWeight.w700,
           // fontSize: kIsWeb ? toDouble() : toDouble().sp,
           fontSize: toDouble().h,
-          overflow: overflow,
+          overflow: overflow??TextOverflow.ellipsis,
           color: color,
           fontFamily: FontFamily.fBlack);
 

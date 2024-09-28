@@ -7,6 +7,10 @@ import 'package:flutter/material.dart';
 ///@author lihonghao
 ///@date 2024/9/9
 ///@description 可设置颜色图标
+
+/// @author lihonghao
+/// @date 2024/9/9
+/// @description 可设置颜色和旋转的图标
 class IconWidget extends StatelessWidget {
   const IconWidget({
     super.key,
@@ -19,6 +23,7 @@ class IconWidget extends StatelessWidget {
     this.iconColor,
     this.backgroudColor,
     this.border,
+    // this.rotation = 0.0,
     this.rotateAngle,
   });
 
@@ -31,6 +36,7 @@ class IconWidget extends StatelessWidget {
   final BorderRadius? borderRadius;
   final Color? backgroudColor;
   final Border? border;
+  // final double rotation; // 添加旋转角度
   final double? rotateAngle;
 
   @override
@@ -41,7 +47,7 @@ class IconWidget extends StatelessWidget {
       height: iconHeight,
       fit: BoxFit.fill,
       // errorBuilder: (context, error, stackTrace) {
-      //   //可能需要更换为缺省图
+      //   // 可能需要更换为缺省图
       //   return Container(
       //     width: double.infinity,
       //     height: double.infinity,
@@ -50,16 +56,18 @@ class IconWidget extends StatelessWidget {
       //   );
       // },
     );
-    //过多使用 colorFilter 会对性能有影响
+
+    // 过多使用 colorFilter 会对性能有影响
     Widget iconWidget = iconColor != null
         ? ColorFiltered(
             colorFilter: ColorFilter.mode(
-              iconColor!, // 修改为你想要的颜色
+              iconColor!,
               BlendMode.srcIn,
             ),
-            child: image, // 替换为你的 PNG 图片
+            child: image,
           )
         : image;
+
     return Transform.rotate(
       angle: pi / 180 * (rotateAngle ?? 0),
       child: Container(
