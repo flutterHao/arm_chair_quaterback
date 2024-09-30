@@ -1,8 +1,14 @@
+import 'dart:math';
+
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/battle_before_game.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/battle_game.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/battle_game_over.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -11,14 +17,14 @@ import 'package:get/get.dart';
 ///@auther gejiahui
 ///created at 2024/9/28/19:06
 
-class DataBattleBeforeGame extends StatefulWidget {
-  const DataBattleBeforeGame({super.key});
+class BattleMain extends StatefulWidget {
+  const BattleMain({super.key});
 
   @override
-  State<DataBattleBeforeGame> createState() => _DataBattleBeforeGameState();
+  State<BattleMain> createState() => _BattleMainState();
 }
 
-class _DataBattleBeforeGameState extends State<DataBattleBeforeGame>
+class _BattleMainState extends State<BattleMain>
     with SingleTickerProviderStateMixin {
   late TeamBattleController controller;
 
@@ -26,17 +32,21 @@ class _DataBattleBeforeGameState extends State<DataBattleBeforeGame>
 
   late Animation<double> animation;
 
+  late PageController pageController;
+
   @override
   void initState() {
     super.initState();
+    pageController = PageController();
     animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 300));
+        vsync: this, duration: const Duration(milliseconds: 200));
     animation = Tween(begin: 0.0, end: 1.0).animate(animationController);
-    animation.addListener(() {
-      setState(() {});
-    });
-
+    animation.addListener(_startAnimationListener);
     animationController.forward();
+  }
+
+  void _startAnimationListener() {
+    setState(() {});
   }
 
   @override
@@ -48,83 +58,46 @@ class _DataBattleBeforeGameState extends State<DataBattleBeforeGame>
   @override
   Widget build(BuildContext context) {
     controller = Get.find();
+    double v = animation.value > 1 ? 1 : animation.value;
     return Transform.scale(
-      scale: animation.value,
+      scale: v,
       child: Opacity(
-        opacity: animation.value,
+        opacity: v,
         child: Container(
           height: double.infinity,
           width: double.infinity,
           decoration: const BoxDecoration(
-              color: AppColors.cE6E6E6,
-              image: DecorationImage(
-                  image: AssetImage(Assets.uiBgBattleJpg),
-                  fit: BoxFit.fitWidth,
-                  alignment: Alignment.topCenter)),
+            color: AppColors.cE6E6E6,
+          ),
           child: Stack(
             children: [
-              _buildHeader(),
               Positioned(
-                  bottom: 40.w,
-                  left: 15.w,
-                  right: 15.w,
-                  child: Container(
-                    width: double.infinity,
-                    height: 331.w,
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 25.w, vertical: 46.w),
-                    decoration: BoxDecoration(
-                        color: AppColors.c262626,
-                        borderRadius: BorderRadius.circular(20.w)),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: List.generate(6, (index) {
-                        return Row(
-                          children: [
-                            Text(
-                              "75%",
-                              style: 14.w7(color: AppColors.c3B93FF),
-                            ),
-                            13.hGap,
-                            Expanded(
-                              child: SizedBox(
-                                height: 8.w,
-                                child: LinearProgressIndicator(
-                                  borderRadius: BorderRadius.circular(4.w),
-                                  value: .75,
-                                  color: AppColors.c3B93FF,
-                                  backgroundColor: AppColors.c666666,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                                width: 40.w,
-                                child: Center(
-                                    child: Text(
-                                  "POINT",
-                                  style: 10.w4(color: AppColors.c666666),
-                                ))),
-                            Expanded(
-                              child: SizedBox(
-                                height: 8.w,
-                                child: LinearProgressIndicator(
-                                  borderRadius: BorderRadius.circular(4.w),
-                                  value: .3,
-                                  color: AppColors.cB2B2B2,
-                                  backgroundColor: AppColors.c666666,
-                                ),
-                              ),
-                            ),
-                            13.hGap,
-                            Text(
-                              "30%",
-                              style: 14.w7(color: AppColors.cFF7954),
-                            ),
-                          ],
-                        );
-                      }),
+                  child: SizedBox(
+                    height: 530.h,
+                    child: Image.asset(
+                      Assets.uiBgBattleJpg,
+                      fit: BoxFit.cover,
                     ),
-                  ))
+                  )),
+              PageView(
+                // physics: const NeverScrollableScrollPhysics(),///测试时注释
+                scrollDirection: Axis.vertical,
+                controller: pageController,
+                children: [
+                  BattleBeforeGame(onDown: () {
+                    controller.nextStep();
+                    pageController.animateToPage(1, duration: const Duration(milliseconds: 300), curve: Curves.linear);
+                  },),
+                  BattleGame(onGameOver: (){
+                    controller.nextStep();
+                    pageController.animateToPage(2, duration: const Duration(milliseconds: 300), curve: Curves.linear);
+                  }),
+                  const BattleGameOver()
+                ],
+              ),
+
+              _buildHeader(),
+
             ],
           ),
         ),
@@ -132,10 +105,11 @@ class _DataBattleBeforeGameState extends State<DataBattleBeforeGame>
     );
   }
 
+
   Container _buildHeader() {
     return Container(
-      height: 119.w,
-      padding: EdgeInsets.only(top: 32.w, left: 20.w, right: 20.w),
+      height: 129.h,
+      padding: EdgeInsets.only(top: 32.h, left: 20.w, right: 20.w),
       decoration: BoxDecoration(
           color: AppColors.c262626,
           borderRadius: BorderRadius.only(
@@ -166,7 +140,7 @@ class _DataBattleBeforeGameState extends State<DataBattleBeforeGame>
                   ClipRRect(
                       borderRadius: BorderRadius.circular(10.w),
                       child: IconWidget(
-                          iconWidth: 36.w, icon: controller.meAvatar)),
+                          iconWidth: 36.h, icon: controller.meAvatar)),
                 ],
               ),
               Container(
@@ -182,13 +156,13 @@ class _DataBattleBeforeGameState extends State<DataBattleBeforeGame>
                   ClipRRect(
                       borderRadius: BorderRadius.circular(10.w),
                       child: IconWidget(
-                          iconWidth: 36.w, icon: controller.opponentAvatar)),
+                          iconWidth: 36.h, icon: controller.opponentAvatar)),
                   10.hGap,
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "ME",
+                        "OPPONENT",
                         style: 10.w4(color: AppColors.cFF7954, height: 1),
                       ),
                       Text(
@@ -218,10 +192,30 @@ class _DataBattleBeforeGameState extends State<DataBattleBeforeGame>
                         "OVR",
                         style: 14.w4(color: AppColors.cF2F2F2, height: 1),
                       ),
-                      Text(
-                        "75%",
-                        style: 14.w4(color: AppColors.cF2F2F2, height: 1),
-                      )
+                      Obx(() {
+                        return Row(
+                          children: [
+                            Visibility(
+                              visible: controller.breakingNewsBreaking.value,
+                              child: SizedBox(
+                                height: 7.h,
+                                width: 8.h,
+                                child: IconWidget(
+                                    iconWidth: 7.h,
+                                    icon: Assets.uiTriangleRPng),
+                              ),
+                            ),
+                            5.hGap,
+                            Text(
+                              "${controller.ovr}%",
+                              style: 14.w4(
+                                  color: controller.breakingNewsBreaking.value
+                                      ? AppColors.cFF3B5C
+                                      : AppColors.cF2F2F2, height: 1),
+                            ),
+                          ],
+                        );
+                      })
                     ],
                   ),
                 ),

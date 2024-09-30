@@ -36,6 +36,13 @@ class MyDateUtils {
     return "${dateTime.hour < 12 ? "AM" : "PM"} ${dateTime.hour < 12 ? dateTime.hour : dateTime.hour - 12}:${dateTime.minute}";
   }
 
+  /// 秒格式化为分钟秒: 02:35
+  static String formatMS(int second) {
+    var minute = second~/60;
+    var s = second%60;
+    return "${minute<10?"0$minute":minute}:${s<10?"0$s":s}";
+  }
+
   /// get DateMilliseconds By DateStr.
   /// 将字符串时间转化为毫秒值
   static int? getDateMsByTimeString(String dateStr, {bool? isUtc}) {

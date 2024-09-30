@@ -11,11 +11,8 @@ class TeamBattleController extends GetxController
   ///   0 初始状态
   ///   1 扫描
   ///   2 匹配成功
-  ///   3 队伍百分比数据
-  ///   4 各位置球员 & 突发新闻
-  ///   5 比赛开始倒计时
-  ///   6 战斗
-  ///   7 结算
+  ///   3 队伍百分比数据,各位置球员 & 突发新闻,比赛
+  ///   4 结算
   ///
   var step = 0.obs;
 
@@ -42,6 +39,8 @@ class TeamBattleController extends GetxController
 
   late String meAvatar;
   late String opponentAvatar;
+  var breakingNewsBreaking = false.obs;
+  double ovr = 75;///测试数据，需删除
 
   @override
   void onInit() {
@@ -56,9 +55,25 @@ class TeamBattleController extends GetxController
     });
   }
 
+  /// 是否有突发新闻
+  bool havaBreakingNews(){
+    return true;
+  }
+
+  void onBreakingNewsStart(){
+    ovr = 70;
+    breakingNewsBreaking.value = true;
+  }
+
+  void onBreakingNewsComplete(){
+    Future.delayed(const Duration(seconds: 3),(){
+      breakingNewsBreaking.value = false;
+    });
+  }
+
   void nextStep() {
-    print('nextStep-------');
     step.value = step.value + 1;
+    print('nextStep-------: ${step.value}');
   }
 
 }

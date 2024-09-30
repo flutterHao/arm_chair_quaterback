@@ -134,4 +134,8 @@ class Assets {
   static const uiBattlePanel_01Png =
       'assets/images/team/ui_battle_panel_01.png';
   static const uiBgBattleJpg = 'assets/images/team/ui_bg_battle.jpg';
+  static const uiBattleNewsPng = 'assets/images/team/ui_battle_news.png';
+  static const uiIconLocation_01Png = 'assets/images/team/ui_icon_location_01.png';
+  static const uiIconLocation_02Png = 'assets/images/team/ui_icon_location_02.png';
+
 }

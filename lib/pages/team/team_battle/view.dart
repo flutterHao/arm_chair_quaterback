@@ -4,7 +4,7 @@ import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
-import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/data_battle_before_game.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/battle_main.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/match_success.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/matching.dart';
 import 'package:flutter/material.dart';
@@ -37,15 +37,13 @@ class TeamBattlePage extends GetView<TeamBattleController> {
                 if (controller.step.value == 1)
                   const Matching()
                 else if (controller.step.value == 2)
-                  MatchSuccess(onCompleted: (){
-                    Future.delayed(const Duration(seconds: 1),(){
+                  MatchSuccess(onCompleted: () {
+                    Future.delayed(const Duration(seconds: 1), () {
                       controller.nextStep();
                     });
                   })
-                else if (controller.step.value == 3)
-                    const DataBattleBeforeGame()
                 else
-                  const SizedBox.shrink()
+                  const BattleMain()
               ],
             );
           }),
