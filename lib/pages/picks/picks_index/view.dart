@@ -134,7 +134,7 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                                       .userEntiry
                                       .teamLoginInfo
                                       ?.team
-                                      ?.teamId
+                                      ?.teamId??0
                                 });
                             break;
                           case 2:
