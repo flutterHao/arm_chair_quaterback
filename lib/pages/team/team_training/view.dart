@@ -2,17 +2,14 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 16:18:58
- * @LastEditTime: 2024-09-28 12:09:23
+ * @LastEditTime: 2024-09-30 17:41:56
  */
-import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
-import 'package:arm_chair_quaterback/common/widgets/TLBuilderWidget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_index/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/border_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/widgets/team_tab_bar.dart';
 import 'package:flutter/material.dart';
@@ -64,13 +61,12 @@ class TeamTrainingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(TeamTrainingController());
     final TeamIndexController indexCtrl = Get.find();
-    double turns = 0;
     return GetBuilder<TeamTrainingController>(
       builder: (_) {
         return BorderWidget(
           offset: Offset(0, 3.h),
           width: 375.w,
-          height: 616.h,
+          height: 615.h,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(16.w),
             topRight: Radius.circular(16.w),
@@ -88,11 +84,11 @@ class TeamTrainingPage extends StatelessWidget {
                   child: Padding(
                     padding: EdgeInsets.all(10.w),
                     child: Obx(() {
-                      bool isOpne = indexCtrl.isShow.value;
-                      turns = isOpne ? turns + 1 / 2 : turns - 1 / 2;
+                      // bool isOpen = indexCtrl.isShow.value;
+                      // controller.turns = isOpen ? 1 / 2 : -1 / 2;
                       return AnimatedRotation(
                         duration: const Duration(milliseconds: 300),
-                        turns: turns,
+                        turns: indexCtrl.turns.value,
                         child: Stack(
                           children: [
                             IconWidget(
@@ -121,8 +117,9 @@ class TeamTrainingPage extends StatelessWidget {
                 top: 66.w,
                 left: 0,
                 right: 0,
+                bottom: 0,
                 child: Container(
-                    height: 630.w,
+                    // height: 500.h,
                     width: double.infinity,
                     padding: EdgeInsets.symmetric(vertical: 16.w),
                     decoration: BoxDecoration(
@@ -144,9 +141,7 @@ class TeamTrainingPage extends StatelessWidget {
                           child: TabBarView(
                             // physics: const NeverScrollableScrollPhysics(),
                             controller: controller.tabController,
-                            children: controller.pages
-                                .map((e) => Center(child: e))
-                                .toList(),
+                            children: controller.pages.map((e) => e).toList(),
                           ),
                         )
                       ],

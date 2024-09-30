@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-12 16:34:46
- * @LastEditTime: 2024-09-26 17:33:21
+ * @LastEditTime: 2024-09-30 16:00:53
  */
 import 'dart:math';
 
@@ -146,15 +146,29 @@ class CommentDialog extends GetView<CommentController> {
                               : controller.likeNews(detail);
                         },
                         child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: IconWidget(
-                            iconWidth: 30.w,
-                            icon: detail.isLike?.value == true
-                                ? Assets.uiIconLike_01Png
-                                : Assets.uiIconLike_02Png,
-                            iconColor: detail.isLike?.value == true
-                                ? AppColors.cFF7954
-                                : AppColors.cB3B3B3,
+                          padding: const EdgeInsets.all(4.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              IconWidget(
+                                iconWidth: 30.w,
+                                icon: detail.isLike?.value == true
+                                    ? Assets.uiIconLike_01Png
+                                    : Assets.uiIconLike_02Png,
+                                iconColor: detail.isLike?.value == true
+                                    ? AppColors.cFF7954
+                                    : AppColors.cB3B3B3,
+                              ),
+                              // if ((detail.likes ?? 0) > 0)
+                              Text(
+                                "${detail.likes}",
+                                style: 14.w4(
+                                  color: detail.isLike?.value == true
+                                      ? AppColors.cFF7954
+                                      : AppColors.cB3B3B3,
+                                ),
+                              )
+                            ],
                           ),
                         ),
                       )

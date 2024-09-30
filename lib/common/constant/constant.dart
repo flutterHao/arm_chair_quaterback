@@ -29,4 +29,6 @@ class Constant {
     "3PP",
     "TO"
   ];
+
+  static String serviceUrl = "serviceUrl";
 }

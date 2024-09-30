@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-09-28 20:14:17
+ * @LastEditTime: 2024-09-30 17:15:54
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
@@ -20,6 +20,7 @@ import 'package:arm_chair_quaterback/pages/news/rank/widgets/border_container.da
 import 'package:arm_chair_quaterback/pages/team/team_battle/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/border_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/pie_chart.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/widgets/vertical_drag_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -55,6 +56,7 @@ class _TeamView extends GetView<TeamIndexController> {
   Widget _buildView(TeamIndexController ctrl) {
     return Expanded(
         child: Stack(
+      alignment: Alignment.bottomCenter,
       children: [
         _buildleft(),
         _buildRight(ctrl),
@@ -253,13 +255,7 @@ class _TeamView extends GetView<TeamIndexController> {
                                                 ctrl.claimBox(1);
                                               });
                                         });
-                                    // Get.dialog(CustomDialog(
-                                    //     content:_rewardContent(),
-                                    //     onTap: () {
-                                    //       ctrl.claimBox(1);
-                                    //     }));
-                                  }
-                                  if (!ctrl.box2Claimed.value) {
+                                  } else if (!ctrl.box2Claimed.value) {
                                     Get.dialog(CustomDialog(
                                         content: _rewardContent(),
                                         onTap: () {
@@ -397,67 +393,73 @@ class _TeamView extends GetView<TeamIndexController> {
                   Positioned(
                     bottom: 0,
                     right: 0.h,
-                    child: Column(
-                      children: [
-                        Container(
-                          width: 148.h,
-                          height: 26.h,
-                          padding: EdgeInsets.only(left: 13.h),
-                          alignment: Alignment.centerLeft,
-                          decoration: BoxDecoration(
-                              color: AppColors.cFF7954,
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(16.h))),
-                          child: Text(
-                            "Preparation Level",
-                            style: 14.w4(color: AppColors.c262626),
+                    child: InkWell(
+                      onTap: () => controller.openPage(),
+                      child: Column(
+                        children: [
+                          Container(
+                            width: 148.h,
+                            height: 26.h,
+                            padding: EdgeInsets.only(left: 13.h),
+                            alignment: Alignment.centerLeft,
+                            decoration: BoxDecoration(
+                                color: AppColors.cFF7954,
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(16.h))),
+                            child: Text(
+                              "Preparation Level",
+                              style: 14.w4(color: AppColors.c262626),
+                            ),
                           ),
-                        ),
-                        Container(
-                          width: 148.h,
-                          height: 122.h,
-                          decoration: BoxDecoration(
-                              color: AppColors.c262626,
-                              borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(16.h))),
-                        ),
-                      ],
+                          Container(
+                            width: 148.h,
+                            height: 122.h,
+                            decoration: BoxDecoration(
+                                color: AppColors.c262626,
+                                borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(16.h))),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   Positioned(
                     right: 16.h,
                     bottom: 70.h,
-                    child: CustomContainer(
-                        width: 147.h,
-                        height: 38.h,
-                        backgroudColor: AppColors.c343434,
-                        borderRadius: BorderRadius.circular(19.h),
-                        padding: EdgeInsets.symmetric(horizontal: 4.h),
-                        child: Row(
-                          children: [
-                            Image.asset(
-                              width: 30.h,
-                              height: 30.h,
-                              Assets.uiStateGeneralPng,
-                              fit: BoxFit.fill,
-                            ),
-                            10.hGap,
-                            Expanded(
-                                child: Text(
-                              "x10",
-                              style: 16.w4(color: AppColors.cF2F2F2),
-                            )),
-                            BorderContainer(
-                              height: 30.h,
-                              width: 30.h,
-                              borderColor: AppColors.cB3B3B3,
-                              child: Image.asset(
-                                Assets.uiIconArrowsPng,
-                                width: 14.h,
+                    child: InkWell(
+                      onTap: () => controller.openPage(),
+                      child: CustomContainer(
+                          width: 147.h,
+                          height: 38.h,
+                          backgroudColor: AppColors.c343434,
+                          borderRadius: BorderRadius.circular(19.h),
+                          padding: EdgeInsets.symmetric(horizontal: 4.h),
+                          child: Row(
+                            children: [
+                              Image.asset(
+                                width: 30.h,
+                                height: 30.h,
+                                Assets.uiStateGeneralPng,
+                                fit: BoxFit.fill,
                               ),
-                            ),
-                          ],
-                        )),
+                              10.hGap,
+                              Expanded(
+                                  child: Text(
+                                "x10",
+                                style: 16.w4(color: AppColors.cF2F2F2),
+                              )),
+                              BorderContainer(
+                                height: 30.h,
+                                width: 30.h,
+                                borderColor: AppColors.cB3B3B3,
+                                child: Image.asset(
+                                  Assets.uiIconArrowsPng,
+                                  width: 14.h,
+                                ),
+                              ),
+                            ],
+                          )),
+                    ),
                   ),
                   Positioned(
                     right: 12.h,
@@ -491,14 +493,22 @@ class _TeamView extends GetView<TeamIndexController> {
           ),
 
           ///训练界面
-          Obx(() {
-            return AnimatedPositioned(
-                bottom: ctrl.myTeamBottom.value,
-                duration: _duration,
-                left: 0,
-                right: 0,
-                child: const TeamTrainingPage());
-          }),
+          // Obx(() {
+          //   return AnimatedPositioned(
+          //       bottom: ctrl.myTeamBottom.value,
+          //       duration: _duration,
+          //       left: 0,
+          //       right: 0,
+          //       child: const VerticalDragBackWidget(child: TeamTrainingPage()));
+          // }),
+
+          // Positioned(
+          //       bottom: ctrl.myTeamBottom.value,
+          //       // duration: _duration,
+          //       left: 0,
+          //       right: 0,
+          //       child: const VerticalDragBackWidget(child: TeamTrainingPage())),
+          const VerticalDragBackWidget(child: TeamTrainingPage()),
 
           ///训练按钮
           Obx(() {
@@ -547,7 +557,7 @@ class _TeamView extends GetView<TeamIndexController> {
                 offset: Offset(0, -3.h),
                 width: 152.h,
                 height: 64.h,
-                       onTap: () => Get.toNamed(RouteNames.teamTeamBattle),
+                onTap: () => Get.toNamed(RouteNames.teamTeamBattle),
                 margin: EdgeInsets.only(bottom: 2.h),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(32.h),

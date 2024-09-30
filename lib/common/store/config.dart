@@ -2,8 +2,9 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-06 15:39:28
- * @LastEditTime: 2024-09-13 15:40:28
+ * @LastEditTime: 2024-09-30 18:12:21
  */
+import 'package:arm_chair_quaterback/common/net/address.dart';
 import 'package:flutter/material.dart';
 import 'package:arm_chair_quaterback/common/services/services.dart';
 import 'package:arm_chair_quaterback/common/values/values.dart';
@@ -52,5 +53,17 @@ class ConfigStore extends GetxController {
     locale = value;
     Get.updateLocale(value);
     StorageService.to.setString(Constant.languge, value.languageCode);
+  }
+
+  void setServiceUrl(String url) {
+    StorageService.to.setString(Constant.serviceUrl, url);
+  }
+
+  String getServiceUrl() {
+    String url = StorageService.to.getString(Constant.serviceUrl);
+    if (url.isEmpty) {
+      url = Address.httpBaseUrl;
+    }
+    return url;
   }
 }

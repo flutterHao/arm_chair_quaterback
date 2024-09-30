@@ -1,7 +1,6 @@
 import 'package:arm_chair_quaterback/pages/team/team_training/widgets/line_up_tab.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/widgets/player_bag_tab.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'index.dart';
@@ -12,11 +11,15 @@ class TeamTrainingController extends GetxController
 
   late TabController tabController;
   RxInt current = 0.obs;
+  // double turns = 0;
   final List<String> tabs = ["Line-up", "Player bag"];
-  final List<Widget> pages = [
+  final List<Widget> pages = const [
     LineUpTab(),
     PlayerBagTab(),
   ];
+  List<String> teamList = ["C", "PG", "SG", "SF", "PF"];
+  RxBool isRecovering = false.obs;
+  List<int> lineUpList = [];
 
   /// 在 widget 内存中分配后立即调用。
   @override
@@ -43,7 +46,7 @@ class TeamTrainingController extends GetxController
     super.dispose();
   }
 
-  void onTap(v) {
+  void onTabChange(v) {
     current.value = v;
     tabController.animateTo(v);
   }

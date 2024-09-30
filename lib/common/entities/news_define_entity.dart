@@ -28,6 +28,8 @@ class NewsDefineEntity {
   late List<String> pgBetDate;
   late List<String> sfBetData;
   late List<String> sgBetData;
+  late int newsReviewShowNum=7;
+  late int newsReviewOpenNum=30;
 
   NewsDefineEntity();
 

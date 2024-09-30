@@ -1,9 +1,17 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-09-28 20:33:28
+ * @LastEditTime: 2024-09-29 20:09:48
+ */
 // import 'package:arm_chair_quaterback/pages/news/new_detail/bindings.dart';
 // import 'package:arm_chair_quaterback/pages/news/new_detail/view.dart';
 // import 'package:arm_chair_quaterback/pages/news/new_list/view.dart';
 // import 'package:arm_chair_quaterback/pages/news/rank/bindings.dart';
 // import 'package:arm_chair_quaterback/pages/news/rank/stats_view.dart';
 // import 'package:arm_chair_quaterback/pages/news/rank/team_view.dart';
+import 'package:arm_chair_quaterback/pages/picks/player_detail/bindings.dart';
+import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/view.dart';
 import 'package:flutter/material.dart';
@@ -30,25 +38,10 @@ class AppPages {
       }),
       page: () => const TeamBattlePage(),
     ),
-    // GetPage(
-    //   name: RouteNames.newDetail,
-    //   page: () => const NewsDetailPage(),
-    // ),
-    // GetPage(
-    //   name: RouteNames.newList,
-    //   page: () => const NewsListPage(),
-    // ),
-    // GetPage(
-    //     name: RouteNames.statsRank,
-    //     page: () => const StatsRankPage(),
-    //     binding: NewDetailBinding()),
-    // GetPage(
-    //     name: RouteNames.teamRank,
-    //     page: () => const TeamRankPage(),
-    //     binding: RankBinding()),
-    // GetPage(
-    //   name: RouteNames.picksPlayerDetail,
-    //   page: () => const PlayerDetailPage(),
-    // ),
+    GetPage(
+        opaque: false,
+        name: RouteNames.picksPlayerDetail,
+        page: () => const PlayerDetailPage(),
+        binding: PlayerDetailBinding()),
   ];
 }

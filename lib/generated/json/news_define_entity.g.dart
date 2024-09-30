@@ -100,6 +100,16 @@ NewsDefineEntity $NewsDefineEntityFromJson(Map<String, dynamic> json) {
   if (sgBetData != null) {
     newsDefineEntity.sgBetData = sgBetData;
   }
+  final int? newsReviewShowNum = jsonConvert.convert<int>(
+      json['newsReviewShowNum']);
+  if (newsReviewShowNum != null) {
+    newsDefineEntity.newsReviewShowNum = newsReviewShowNum;
+  }
+  final int? newsReviewOpenNum = jsonConvert.convert<int>(
+      json['newsReviewOpenNum']);
+  if (newsReviewOpenNum != null) {
+    newsDefineEntity.newsReviewOpenNum = newsReviewOpenNum;
+  }
   return newsDefineEntity;
 }
 
@@ -125,6 +135,8 @@ Map<String, dynamic> $NewsDefineEntityToJson(NewsDefineEntity entity) {
   data['pgBetDate'] = entity.pgBetDate;
   data['sfBetData'] = entity.sfBetData;
   data['sgBetData'] = entity.sgBetData;
+  data['newsReviewShowNum'] = entity.newsReviewShowNum;
+  data['newsReviewOpenNum'] = entity.newsReviewOpenNum;
   return data;
 }
 
@@ -150,6 +162,8 @@ extension NewsDefineEntityExtension on NewsDefineEntity {
     List<String>? pgBetDate,
     List<String>? sfBetData,
     List<String>? sgBetData,
+    int? newsReviewShowNum,
+    int? newsReviewOpenNum,
   }) {
     return NewsDefineEntity()
       ..betMutMax = betMutMax ?? this.betMutMax
@@ -171,6 +185,8 @@ extension NewsDefineEntityExtension on NewsDefineEntity {
       ..pfBetData = pfBetData ?? this.pfBetData
       ..pgBetDate = pgBetDate ?? this.pgBetDate
       ..sfBetData = sfBetData ?? this.sfBetData
-      ..sgBetData = sgBetData ?? this.sgBetData;
+      ..sgBetData = sgBetData ?? this.sgBetData
+      ..newsReviewShowNum = newsReviewShowNum ?? this.newsReviewShowNum
+      ..newsReviewOpenNum = newsReviewOpenNum ?? this.newsReviewOpenNum;
   }
 }

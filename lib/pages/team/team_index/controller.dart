@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-09-28 17:17:00
+ * @LastEditTime: 2024-09-30 17:32:09
  */
 
 import 'dart:async';
@@ -21,6 +21,7 @@ class TeamIndexController extends GetxController {
   RxDouble myTeamBottom = (-546.h).obs;
   RxDouble pageLeft = 0.0.obs;
   RxDouble pageRight = 0.0.obs;
+  RxDouble turns =0.5.obs;
 
   ///宝箱
   var box1Claimed = false.obs;
@@ -46,10 +47,21 @@ class TeamIndexController extends GetxController {
     myTeamBottom.value = 0.h;
     pageLeft.value = -250.w;
     pageRight.value = -220.w;
+    turns.value += 1 / 2;
     isShow.value = true;
   }
 
   void closePage() {
+    trainingLeft.value = 0.0;
+    bettleRight.value = 0.0;
+    myTeamBottom.value = -546.0.h;
+    pageLeft.value = 0.0;
+    pageRight.value = 0.0;
+    turns.value -= 1 / 2;
+    isShow.value = false;
+  }
+
+  void updatePagePosition() {
     trainingLeft.value = 0.0;
     bettleRight.value = 0.0;
     myTeamBottom.value = -546.0.h;
@@ -68,7 +80,6 @@ class TeamIndexController extends GetxController {
       box2Claimed.value = true;
       box2Timer.value = 4 * 60 * 60; // 4小时
       Log.d("领取宝箱$boxNumber");
-      
     }
 
     // 如果两个都已领取，开始倒计时

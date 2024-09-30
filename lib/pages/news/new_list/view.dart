@@ -3,12 +3,14 @@ import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/net/address.dart';
 import 'package:arm_chair_quaterback/common/net/http.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
+import 'package:arm_chair_quaterback/common/store/store.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/swiper_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
+import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 
 import 'package:arm_chair_quaterback/pages/news/new_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/widgets/team_rank_widget.dart';
@@ -192,7 +194,7 @@ class NewsListPage extends GetView<NewListController> {
                           Address.privateDevUrl,
                           Address.publicDevUrl,
                         ];
-                        String current = HttpUtil().url;
+                        String current = HttpUtil().getUrl;
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
@@ -201,6 +203,7 @@ class NewsListPage extends GetView<NewListController> {
                               currentServer: current,
                               onServerChanged: (newServer) {
                                 HttpUtil().setUrl(newServer);
+                                HomeController.to.login();
                               },
                             );
                           },

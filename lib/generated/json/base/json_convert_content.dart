@@ -16,6 +16,7 @@ import 'package:arm_chair_quaterback/common/entities/rank_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/receive_prop_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/recive_award_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_simple_entity.dart';
 
@@ -250,6 +251,23 @@ class JsonConvert {
       return data.map<ReciveAwardGuessDataAwards>((Map<String, dynamic> e) =>
           ReciveAwardGuessDataAwards.fromJson(e)).toList() as M;
     }
+    if (<TeamPlayerInfoEntity>[] is M) {
+      return data.map<TeamPlayerInfoEntity>((Map<String, dynamic> e) =>
+          TeamPlayerInfoEntity.fromJson(e)).toList() as M;
+    }
+    if (<TeamPlayerInfoPlayerTrend>[] is M) {
+      return data.map<TeamPlayerInfoPlayerTrend>((Map<String, dynamic> e) =>
+          TeamPlayerInfoPlayerTrend.fromJson(e)).toList() as M;
+    }
+    if (<TeamPlayerInfoTeamPlayer>[] is M) {
+      return data.map<TeamPlayerInfoTeamPlayer>((Map<String, dynamic> e) =>
+          TeamPlayerInfoTeamPlayer.fromJson(e)).toList() as M;
+    }
+    if (<TeamPlayerInfoTeamPlayerPotential>[] is M) {
+      return data.map<TeamPlayerInfoTeamPlayerPotential>((
+          Map<String, dynamic> e) =>
+          TeamPlayerInfoTeamPlayerPotential.fromJson(e)).toList() as M;
+    }
     if (<TeamRankEntity>[] is M) {
       return data.map<TeamRankEntity>((Map<String, dynamic> e) =>
           TeamRankEntity.fromJson(e)).toList() as M;
@@ -307,6 +325,11 @@ class JsonConvertClassCollection {
     (ReciveAwardGuessData).toString(): ReciveAwardGuessData.fromJson,
     (ReciveAwardGuessDataAwards).toString(): ReciveAwardGuessDataAwards
         .fromJson,
+    (TeamPlayerInfoEntity).toString(): TeamPlayerInfoEntity.fromJson,
+    (TeamPlayerInfoPlayerTrend).toString(): TeamPlayerInfoPlayerTrend.fromJson,
+    (TeamPlayerInfoTeamPlayer).toString(): TeamPlayerInfoTeamPlayer.fromJson,
+    (TeamPlayerInfoTeamPlayerPotential)
+        .toString(): TeamPlayerInfoTeamPlayerPotential.fromJson,
     (TeamRankEntity).toString(): TeamRankEntity.fromJson,
     (TeamSimpleEntity).toString(): TeamSimpleEntity.fromJson,
   };

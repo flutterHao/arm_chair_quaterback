@@ -31,6 +31,7 @@ class PlayerDetailController extends GetxController
   final validScreenWidth = 0.0.obs; //屏幕有效宽度，适配web屏幕
 
   var xDragValue = 0.0.obs;
+
   /// 0-180
 
   // tap
@@ -67,9 +68,7 @@ class PlayerDetailController extends GetxController
     });
   }
 
-  _initData(){
-
-  }
+  _initData() {}
 
   /// 在 onInit() 之后调用 1 帧。这是进入的理想场所
   @override

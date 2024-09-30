@@ -1,5 +1,6 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
+import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/comments/comment_controller.dart';
@@ -33,7 +34,16 @@ class CommentsWidget extends StatelessWidget {
     //     count = commentList.length;
     //   }
     // }
+
+    int showCount = 1;
     return GetBuilder<CommentController>(builder: (_) {
+      ///展示评论数量
+      // RxInt showCount = CacheApi.newsDefine!.newsReviewOpenNum.obs;
+
+      ///可以展示的数量
+      int count = showCount > controller.mainList.length
+          ? controller.mainList.length
+          : showCount;
       return Container(
         padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: Column(
@@ -46,70 +56,61 @@ class CommentsWidget extends StatelessWidget {
                     style: 19.w7(),
                   ),
                 ),
-
-                ///TODO 显示查看数量
-                // Text(
-                //   "${commentList.length}",
-                //   style: 10.w7(color: AppColors.cB3B3B3),
-                // ),
-                // 2.hGap,
-                // IconWidget(
-                //   iconWidth: 13.w,
-                //   iconHeight: 12.w,
-                //   icon: Assets.uiIconChatting_01Png,
-                //   iconColor: AppColors.cB3B3B3,
-                // )
               ],
             ),
             // 16.vGap,
-            ListView.separated(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: controller.mainList.length,
-                separatorBuilder: (context, index) {
-                  return 16.vGap;
-                },
-                itemBuilder: (context, index) {
-                  var list = controller.subList
-                      .where((e) =>
-                          e.parentReviewId == controller.mainList[index].id)
-                      .toList();
-                  return Column(
-                    children: [
-                      CommentItemView(
-                          item: controller.mainList[index], isSub: false),
-                      if (list.isNotEmpty)
-                        Container(
-                          // width: 295.w,
-                          margin: EdgeInsets.only(left: 48.w),
-                          child: SubComentsListView(list),
-                        )
-                    ],
-                  );
-                }),
-            // if (controller.list.length > 1 && !isSeeMore.value)
-            //   InkWell(
-            //       onTap: () {
-            //         isSeeMore.value = !isSeeMore.value;
-            //       },
-            //       child: Container(
-            //           padding: EdgeInsets.symmetric(vertical: 6.w),
-            //           child: Text(
-            //             "see more comments",
-            //             style: TextStyle(
-            //               decoration: TextDecoration.underline,
-            //               decorationColor: Colors.blue,
-            //               decorationThickness: 2.0,
-            //               fontSize: 14.sp,
-            //               color: Colors.blue,
-            //             ),
-            //           ))),
-            Container(
-                margin: EdgeInsets.symmetric(vertical: 20.w),
-                child: Text(
-                  commentList.isNotEmpty ? "No more" : "",
-                  style: 14.w4(color: AppColors.cB3B3B3),
-                ))
+            AnimatedSize(
+              duration: const Duration(milliseconds: 300),
+              child: ListView.separated(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: count,
+                  separatorBuilder: (context, index) {
+                    return 16.vGap;
+                  },
+                  itemBuilder: (context, index) {
+                    var subList = controller.subList
+                        .where((e) =>
+                            e.parentReviewId == controller.mainList[index].id)
+                        .toList();
+                    return Column(
+                      children: [
+                        CommentItemView(
+                            item: controller.mainList[index], isSub: false),
+                        if (subList.isNotEmpty)
+                          Container(
+                            // width: 295.w,
+                            margin: EdgeInsets.only(left: 48.w),
+                            child: SubComentsListView(subList),
+                          )
+                      ],
+                    );
+                  }),
+            ),
+            if (controller.list.length > showCount)
+              InkWell(
+                  onTap: () {
+                    showCount += CacheApi.newsDefine!.newsReviewOpenNum;
+                    controller.update();
+                  },
+                  child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 6.w),
+                      child: Text(
+                        "see more comments",
+                        style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          decorationColor: Colors.blue,
+                          decorationThickness: 2.0,
+                          fontSize: 14.sp,
+                          color: Colors.blue,
+                        ),
+                      ))),
+            // Container(
+            //     margin: EdgeInsets.symmetric(vertical: 20.w),
+            //     child: Text(
+            //       commentList.isNotEmpty ? "No more" : "",
+            //       style: 14.w4(color: AppColors.cB3B3B3),
+            //     ))
           ],
         ),
       );

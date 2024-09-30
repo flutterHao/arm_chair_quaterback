@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 17:28:14
- * @LastEditTime: 2024-09-25 20:00:32
+ * @LastEditTime: 2024-09-29 18:47:12
  */
 import 'package:arm_chair_quaterback/common/entities/news_banner.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
@@ -85,7 +85,7 @@ class NewsApi {
   static Future<List<NbaPlayerStat>> startRank(
       {required String season,
       required String statType,
-      String seasonType = "Regular"}) async {
+      String seasonType = "Regular%20Season"}) async {
     List list = await HttpUtil().post(Api.playerStats, data: {
       "season": season,
       "statType": statType,

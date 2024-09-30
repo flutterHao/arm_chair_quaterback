@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'package:arm_chair_quaterback/common/net/address.dart';
 import 'package:arm_chair_quaterback/common/net/inerceptor/net_interceptor.dart';
+import 'package:arm_chair_quaterback/common/store/config.dart';
 import 'package:dio/dio.dart';
 
 ///author ：lihonghao
@@ -27,7 +28,7 @@ class HttpUtil {
     // BaseOptions、Options、RequestOptions 都可以配置参数，优先级别依次递增，且可以根据优先级别覆盖参数
     BaseOptions options = BaseOptions(
       // 请求基地址,可以包含子路径
-      baseUrl: Address.httpBaseUrl,
+      baseUrl: getUrl,
 
       // baseUrl: storage.read(key: STORAGE_KEY_APIURL) ?? SERVICE_API_BASEURL,
       //连接服务器超时时间，单位是毫秒.
@@ -75,6 +76,12 @@ class HttpUtil {
 
   void setUrl(String url) {
     _dio.options.baseUrl = url;
+    ConfigStore.to.setServiceUrl(url);
+  }
+
+  String get getUrl {
+    String url = ConfigStore.to.getServiceUrl();
+    return url;
   }
 
   /*

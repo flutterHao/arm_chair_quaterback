@@ -1,3 +1,9 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-09-27 10:54:14
+ * @LastEditTime: 2024-09-29 17:42:07
+ */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:flutter/material.dart';
 
@@ -30,6 +36,7 @@ class BorderWidget extends StatelessWidget {
       },
       child: Container(
         margin: margin,
+        // alignment: Alignment.center,
         width: width + offset.dx.abs(),
         height: height + offset.dy.abs(),
         // decoration: BoxDecoration(

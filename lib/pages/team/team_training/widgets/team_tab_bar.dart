@@ -2,7 +2,7 @@
  * @Description: 我的球队的训练和比赛
  * @Author: lihonghao
  * @Date: 2024-09-27 19:21:36
- * @LastEditTime: 2024-09-27 20:31:41
+ * @LastEditTime: 2024-09-29 15:54:23
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -19,7 +19,7 @@ class TeamTabbar extends GetView<TeamTrainingController> {
   Widget build(BuildContext context) {
     return Container(
       height: 34.w,
-      margin: EdgeInsets.symmetric(horizontal: 16.w),
+      margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 2.w),
       padding: EdgeInsets.all(4.w),
       alignment: Alignment.center,
       decoration: BoxDecoration(
@@ -50,7 +50,7 @@ class TeamTabbar extends GetView<TeamTrainingController> {
                   int index = controller.tabs.indexOf(e);
                   return Expanded(
                     child: InkWell(
-                      onTap: () => controller.onTap(index),
+                      onTap: () => controller.onTabChange(index),
                       child: Container(
                         alignment: Alignment.center,
                         height: 26.w,

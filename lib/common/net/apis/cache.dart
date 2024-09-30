@@ -112,7 +112,7 @@ class CacheApi {
   static NbaPlayerInfosEntity? playerInfo;
 
   ///新闻定义
-  static NbaPlayerInfosEntity? newsDefine;
+  static NewsDefineEntity? newsDefine;
 
   ///道具定义
   static List<PropDefineEntity>? propDefineList;
@@ -160,8 +160,12 @@ class CacheApi {
 
   ///
   static Future<NewsDefineEntity> getNewsDefine() async {
+    if (newsDefine != null) {
+      return newsDefine!;
+    }
     List json = await httpUtil.get(Api.cNewsDefine);
-    return NewsDefineEntity.fromJson(json[0]);
+    newsDefine = NewsDefineEntity.fromJson(json[0]);
+    return newsDefine!;
   }
 
   ///排行奖励规则
