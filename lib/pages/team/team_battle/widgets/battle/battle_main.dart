@@ -80,7 +80,7 @@ class _BattleMainState extends State<BattleMain>
                     ),
                   )),
               PageView(
-                // physics: const NeverScrollableScrollPhysics(),///测试时注释
+                physics: const NeverScrollableScrollPhysics(),///测试时注释
                 scrollDirection: Axis.vertical,
                 controller: pageController,
                 children: [

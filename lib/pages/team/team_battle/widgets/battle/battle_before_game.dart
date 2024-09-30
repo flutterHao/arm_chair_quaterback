@@ -210,6 +210,7 @@ class _BattleBeforeGameState extends State<BattleBeforeGame>
         child: PageView(
           controller: pageController,
           scrollDirection: Axis.horizontal,
+          physics: const NeverScrollableScrollPhysics(),
           children: [
             Container(
               margin: EdgeInsets.symmetric(horizontal: 15.w),
