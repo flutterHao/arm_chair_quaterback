@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 17:28:14
- * @LastEditTime: 2024-09-29 18:47:12
+ * @LastEditTime: 2024-10-08 18:49:54
  */
 import 'package:arm_chair_quaterback/common/entities/news_banner.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
@@ -64,9 +64,9 @@ class NewsApi {
     return NewsDetail.fromJson(json);
   }
 
-  static Future<NewsDetail> likeReviews(int newsId, int reviewsId) async {
+  static Future<NewsDetail> likeReviews(int newsId, int reviewsId,bool isLike) async {
     var json = await HttpUtil().post(Api.likeReviews,
-        data: {"newsId": newsId, "reviewsId": reviewsId});
+        data: {"newsId": newsId, "reviewsId": reviewsId,"isLike":isLike});
     return NewsDetail.fromJson(json);
   }
 

@@ -2,7 +2,7 @@
  * @Description: 我的球队的训练和比赛
  * @Author: lihonghao
  * @Date: 2024-09-27 19:21:36
- * @LastEditTime: 2024-09-29 15:54:23
+ * @LastEditTime: 2024-10-08 16:41:42
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -24,7 +24,7 @@ class TeamTabbar extends GetView<TeamTrainingController> {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16.w),
-        border: Border.all(width: 0.5, color: AppColors.cEFEFEF),
+        border: Border.all(width: 0.5, color: AppColors.cB3B3B3),
       ),
       child: TLBuildWidget(
           controller: controller.tabController,

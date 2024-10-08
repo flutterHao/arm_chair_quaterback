@@ -2,9 +2,11 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-09-30 17:15:54
+ * @LastEditTime: 2024-10-08 20:28:50
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -17,11 +19,11 @@ import 'package:arm_chair_quaterback/pages/team/team_index/widgets/battle_award_
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/progress_paint.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/widgets/shadow_container.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/widgets/border_container.dart';
-import 'package:arm_chair_quaterback/pages/team/team_battle/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/border_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/pie_chart.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/vertical_drag_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/view.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/widgets/team_training.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -43,7 +45,28 @@ class _TeamIndexPageState extends State<TeamIndexPage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return const _TeamView();
+
+    return Navigator(
+      key: GlobalNestedKey.TeamTabGlobalKey,
+      initialRoute: RouteNames.teamTeamIndex,
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case RouteNames.teamTeamIndex:
+            return GetPageRoute(
+              settings: settings,
+              page: () => const _TeamView(),
+            );
+          case RouteNames.teamTrainingPage:
+            return GetPageRoute(
+              opaque: false,
+              settings: settings,
+              page: () => const TeamTrainingPage(),
+              // binding: NewDetailBinding(), /*  */
+            );
+        }
+        return null;
+      },
+    );
   }
 }
 
@@ -194,8 +217,8 @@ class _TeamView extends GetView<TeamIndexController> {
                     "Hi,Manager ",
                     overflow: TextOverflow.ellipsis,
                     style: 24.w7(
-                      color: AppColors.c262626,
-                    ),
+                        color: AppColors.c262626,
+                        fontFamily: FontFamily.oswaldLight),
                   ),
                 ),
                 Column(
@@ -213,7 +236,7 @@ class _TeamView extends GetView<TeamIndexController> {
                       children: [
                         _numWidget("Battle", 24),
                         8.hGap,
-                        _numWidget("Train", 52),
+                        _numWidget("Training", 52),
                       ],
                     )
                   ],
@@ -272,6 +295,18 @@ class _TeamView extends GetView<TeamIndexController> {
                                       child: Stack(
                                         children: [
                                           Positioned(
+                                              top: 0,
+                                              right: 0,
+                                              child: Obx(() {
+                                                return Image.asset(
+                                                  ctrl.box2Claimed.value
+                                                      ? Assets.uiTeamBox_04Png
+                                                      : Assets.uiTeamBox_03Png,
+                                                  width: 23.h,
+                                                  fit: BoxFit.fill,
+                                                );
+                                              })),
+                                          Positioned(
                                             bottom: 0,
                                             left: 0,
                                             child: Obx(() {
@@ -284,18 +319,6 @@ class _TeamView extends GetView<TeamIndexController> {
                                               );
                                             }),
                                           ),
-                                          Positioned(
-                                              top: 0,
-                                              right: 0,
-                                              child: Obx(() {
-                                                return Image.asset(
-                                                  ctrl.box2Claimed.value
-                                                      ? Assets.uiTeamBox_04Png
-                                                      : Assets.uiTeamBox_03Png,
-                                                  width: 23.h,
-                                                  fit: BoxFit.fill,
-                                                );
-                                              })),
                                         ],
                                       ),
                                     ),
@@ -508,21 +531,20 @@ class _TeamView extends GetView<TeamIndexController> {
           //       left: 0,
           //       right: 0,
           //       child: const VerticalDragBackWidget(child: TeamTrainingPage())),
-          const VerticalDragBackWidget(child: TeamTrainingPage()),
+          const VerticalDragBackWidget(child: TeamMenberView()),
 
-          ///训练按钮
+          ///战斗按键
           Obx(() {
             return AnimatedPositioned(
               left: ctrl.trainingLeft.value,
               duration: _duration,
-              bottom: 50.h,
+              bottom: 45.h,
               child: BorderWidget(
                 offset: Offset(0, -3.h),
                 width: 152.h,
                 height: 64.h,
-                onTap: () {
-                  ctrl.pageOnTap();
-                },
+                           onTap: () => Get.toNamed(RouteNames.teamTeamBattle),
+      
                 margin: EdgeInsets.only(bottom: 2.h),
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(32.h),
@@ -530,64 +552,81 @@ class _TeamView extends GetView<TeamIndexController> {
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      "TRAINING",
+                      "BATTLE",
                       style: 21.w7(color: AppColors.cFF7954),
                     ),
-                    5.hGap,
-                    IconWidget(
-                      iconWidth: 35.h,
-                      icon: Assets.uiIconBasketballPng,
-                      iconColor: AppColors.cFF7954,
+                    6.hGap,
+                    SizedBox(
+                      height: 40.h,
+                      width: 36.h,
+                      child: Stack(
+                        // mainAxisAlignment: MainAxisAlignment.center,
+                        alignment: Alignment.bottomCenter,
+                        children: [
+                          Positioned(
+                            top: 0,
+                            child: IconWidget(
+                              iconWidth: 31.h,
+                              icon: Assets.uiIconTrophy_01Png,
+                            ),
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            child: CustomContainer(
+                                // width:35.w ,
+                                // height: 10.h,
+                                padding: EdgeInsets.symmetric(horizontal: 2.h),
+                                borderRadius: BorderRadius.circular(5.h),
+                                backgroudColor: AppColors.cFED141,
+                                child: Text(
+                                  "15000",
+                                  style: 10
+                                      .w7(color: AppColors.c262626, height: 1),
+                                )),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
               ),
             );
           }),
-
-          ///战斗按键
+          
+          ///训练按钮
           Obx(() {
             return AnimatedPositioned(
               right: ctrl.bettleRight.value,
               duration: Duration(milliseconds: 200),
-              bottom: 50.h,
+              bottom: 45.h,
               child: BorderWidget(
                 offset: Offset(0, -3.h),
                 width: 152.h,
                 height: 64.h,
-                onTap: () => Get.toNamed(RouteNames.teamTeamBattle),
+                        onTap: () {
+                  // ctrl.pageOnTap();
+                  Get.toNamed(RouteNames.teamTrainingPage,
+                      id: GlobalNestedKey.TEAM);
+                },
                 margin: EdgeInsets.only(bottom: 2.h),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(32.h),
                   bottomLeft: Radius.circular(32.h),
                 ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        IconWidget(
-                          iconWidth: 28.h,
-                          icon: Assets.uiIconTrophy_01Png,
-                        ),
-                        SizedBox(height: 5.h),
-                        CustomContainer(
-                            // width:35.w ,
-                            // height: 10.h,
-                            padding: EdgeInsets.symmetric(horizontal: 2.h),
-                            borderRadius: BorderRadius.circular(5.h),
-                            backgroudColor: AppColors.cFED141,
-                            child: Text(
-                              "15000",
-                              style: 10.w7(color: AppColors.c262626, height: 1),
-                            )),
-                      ],
+                    IconWidget(
+                      iconWidth: 35.h,
+                      icon: Assets.uiIconBasketballPng,
+                      iconColor: AppColors.cFF7954,
                     ),
+                    5.hGap,
                     Text(
-                      "BATTLE",
+                      "TRAINING",
                       style: 21.w7(color: AppColors.cFF7954),
                     ),
                   ],

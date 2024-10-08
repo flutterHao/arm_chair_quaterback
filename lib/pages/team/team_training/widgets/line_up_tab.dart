@@ -155,6 +155,7 @@ class LineUpTab extends GetView<TeamTrainingController> {
 
               ///球员列表
               Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   16.hGap,
                   Text(

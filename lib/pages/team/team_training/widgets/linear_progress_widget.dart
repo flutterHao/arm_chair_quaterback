@@ -2,10 +2,9 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 20:30:20
- * @LastEditTime: 2024-09-29 14:26:01
+ * @LastEditTime: 2024-10-08 15:07:13
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -48,6 +47,7 @@ class CustomLinearProgressBar extends StatelessWidget {
     double p = progress > 1 ? 1 : progress;
     return SizedBox(
       height: height ?? 4.w,
+      width: width,
       child: LinearProgressIndicator(
         value: p,
         borderRadius: BorderRadius.circular((height ?? 4.w) / 2),

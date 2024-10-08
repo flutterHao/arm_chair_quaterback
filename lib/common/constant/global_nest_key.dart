@@ -8,6 +8,9 @@ import 'package:get/get.dart';
 class GlobalNestedKey {
   static const NEWS = 1;
   static const PICKS = 2;
+  static const TEAM = 3;
   static var NewsTabGlobalKey = Get.nestedKey(GlobalNestedKey.NEWS);
   static var PicksTabGlobalKey = Get.nestedKey(GlobalNestedKey.PICKS);
+  static var TeamTabGlobalKey = Get.nestedKey(GlobalNestedKey.TEAM);
+  
 }

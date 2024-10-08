@@ -3,6 +3,8 @@
 ///created at 2024/9/13/10:14
 
 class FontFamily {
-  static const fBlack = 'Roboto-Black';
-  static const fMedium = 'Roboto-Medium';
+  static const robotoBlack = 'Roboto-Black';
+  static const robotoMedium = 'Roboto-Medium';
+  static const oswaldLight = 'Oswald-Light';
+  static const oswaldMedium = "Oswald-Medium";
 }

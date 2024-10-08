@@ -87,7 +87,7 @@ class CommentsWidget extends StatelessWidget {
                     );
                   }),
             ),
-            if (controller.list.length > showCount)
+            if (controller.mainList.length > showCount)
               InkWell(
                   onTap: () {
                     showCount += CacheApi.newsDefine!.newsReviewOpenNum;
@@ -312,24 +312,24 @@ class CommentItemView extends GetView<CommentController> {
                       );
                     }),
                   ),
-                  // if (item.teamId != (controller.userEntity.team?.teamId ?? 0))
-                  InkWell(
-                    onTap: () {
-                      int parentId = item.parentReviewId == 0
-                          ? item.id!
-                          : item.parentReviewId!;
-                      String name = "@${item.teamName}";
-                      showCommentBottomSheet(context,
-                          newsId: item.newsId ?? 0,
-                          parentId: parentId,
-                          targetId: item.id ?? 0,
-                          hintText: name);
-                    },
-                    child: Text(
-                      "Reple",
-                      style: 12.w4(color: AppColors.c666666),
+                  if (item.teamId != (controller.userEntity.team?.teamId ?? 0))
+                    InkWell(
+                      onTap: () {
+                        int parentId = item.parentReviewId == 0
+                            ? item.id!
+                            : item.parentReviewId!;
+                        String name = "@${item.teamName}";
+                        showCommentBottomSheet(context,
+                            newsId: item.newsId ?? 0,
+                            parentId: parentId,
+                            targetId: item.id ?? 0,
+                            hintText: name);
+                      },
+                      child: Text(
+                        "Reple",
+                        style: 12.w4(color: AppColors.c666666),
+                      ),
                     ),
-                  ),
                 ],
               ),
 

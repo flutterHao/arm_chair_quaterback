@@ -100,7 +100,7 @@ class BattleAwardDialog extends StatelessWidget {
       height: 110.w,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-          color: Colors.black38,
+          color: Colors.black.withOpacity(0.1),
           borderRadius: BorderRadius.circular(16.w),
           border: Border.all(
             width: 2,
@@ -117,7 +117,7 @@ class BattleAwardDialog extends StatelessWidget {
           12.vGap,
           Text(
             "Unlock at Lv18",
-            style: 14.w4(),
+            style: 14.w7(color: AppColors.c666666),
           ),
         ],
       ),
@@ -169,6 +169,7 @@ class BattleAwardDialog extends StatelessWidget {
                 margin: EdgeInsets.all(16.w),
                 child: GridView(
                   shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2, // 列数
                     childAspectRatio: 164 / 110, // 宽高比

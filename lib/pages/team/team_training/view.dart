@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 16:18:58
- * @LastEditTime: 2024-09-30 17:41:56
+ * @LastEditTime: 2024-10-08 18:10:33
  */
 
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
@@ -18,8 +18,8 @@ import 'package:get/get.dart';
 
 import 'index.dart';
 
-class TeamTrainingPage extends StatelessWidget {
-  const TeamTrainingPage({super.key});
+class TeamMenberView extends StatelessWidget {
+  const TeamMenberView({super.key});
 
   Widget _head() {
     return Positioned(
@@ -64,9 +64,9 @@ class TeamTrainingPage extends StatelessWidget {
     return GetBuilder<TeamTrainingController>(
       builder: (_) {
         return BorderWidget(
-          offset: Offset(0, 3.h),
+          offset: Offset(0, 3.w),
           width: 375.w,
-          height: 615.h,
+          height: 619.h,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(16.w),
             topRight: Radius.circular(16.w),
@@ -75,8 +75,7 @@ class TeamTrainingPage extends StatelessWidget {
             alignment: Alignment.topCenter,
             children: [
               _head(),
-              Positioned(
-                top: 5.w,
+              MyAnimatedPointer(
                 child: InkWell(
                   onTap: () {
                     Get.find<TeamIndexController>().pageOnTap();
@@ -149,6 +148,68 @@ class TeamTrainingPage extends StatelessWidget {
               ),
             ],
           ),
+        );
+      },
+    );
+  }
+}
+
+class MyAnimatedPointer extends StatefulWidget {
+  final Widget child;
+  final double animationRange;
+  final Duration animationDuration;
+
+  const MyAnimatedPointer({
+    super.key,
+    required this.child,
+    this.animationRange = 18.0,
+    this.animationDuration = const Duration(milliseconds: 500),
+  });
+
+  @override
+  _MyAnimatedPointerState createState() => _MyAnimatedPointerState();
+}
+
+class _MyAnimatedPointerState extends State<MyAnimatedPointer>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: widget.animationDuration,
+      vsync: this,
+    );
+
+    _animation = Tween<double>(begin: 0.0, end: widget.animationRange)
+        .animate(_controller)
+      ..addListener(() {
+        if (_animation.value >= widget.animationRange) {
+          _controller.reverse();
+        } else if (_animation.value <= 0.0) {
+          _controller.forward();
+        }
+      });
+
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _animation,
+      builder: (context, child) {
+        return Positioned(
+          top: _animation.value,
+          child: widget.child,
         );
       },
     );

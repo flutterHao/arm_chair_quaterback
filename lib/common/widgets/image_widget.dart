@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 17:29:19
- * @LastEditTime: 2024-09-21 10:10:13
+ * @LastEditTime: 2024-10-08 14:22:54
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:extended_image/extended_image.dart';
@@ -25,7 +25,7 @@ class ImageWidget extends StatelessWidget {
       required this.url,
       this.width,
       this.height,
-      this.imageFailedPath = Assets.testTeamLogoPng,//todo 换默认缺省图
+      this.imageFailedPath = Assets.testTeamLogoPng, //todo 换默认缺省图
       this.borderRadius,
       this.fit = BoxFit.cover,
       this.loadingWidget});
@@ -78,11 +78,53 @@ class ImageWidget extends StatelessWidget {
   }
 }
 
-// class ErrorWidget extends StatelessWidget {
-//   const ErrorWidget({super.key});
+///镜像图片
+class MirrorImageWidget extends StatelessWidget {
+  final String imagePath; // 本地图片路径
+  final double fullWidth; // UI给出的完整宽度
+  final double imageHeight; // 图片高度
+  final BoxFit? fit;
+  final Alignment? alignment;
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(color: Colors.grey[200]);
-//   }
-// }
+  const MirrorImageWidget({
+    super.key,
+    required this.imagePath,
+    required this.fullWidth,
+    required this.imageHeight,
+    this.fit,
+    this.alignment,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    // 计算一半的宽度
+    double halfWidth = fullWidth / 2;
+
+    return SizedBox(
+      width: fullWidth, // 设置整个拼合后的宽度
+      height: imageHeight, // 设置高度
+      child: Row(
+        children: [
+          // 显示原始的一半图片
+          Image.asset(
+            imagePath,
+            width: halfWidth, // 一半的宽度
+            height: imageHeight,
+            alignment: Alignment.topRight,
+            fit: fit ?? BoxFit.fitHeight,
+          ),
+          // 显示镜像的图片，利用 Transform 翻转
+          Transform(
+            alignment: Alignment.center,
+            transform: Matrix4.identity()..scale(-1.0, 1.0), // 水平镜像翻转
+            child: Image.asset(imagePath,
+                width: halfWidth, // 一半的宽度
+                height: imageHeight,
+                fit: fit ?? BoxFit.fitHeight,
+                alignment: Alignment.topRight),
+          ),
+        ],
+      ),
+    );
+  }
+}

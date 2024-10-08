@@ -32,7 +32,7 @@ extension NumExt on num {
   TextStyle w4(
           {Color color = AppColors.c262626,
           TextOverflow? overflow,
-          double? height}) =>
+          double? height,String? fontFamily}) =>
       TextStyle(
           fontWeight: FontWeight.w400,
           height: height,
@@ -43,20 +43,20 @@ extension NumExt on num {
           ///TODO
           // fontSize: kIsWeb ? toDouble() : toDouble().sp,
           color: color,
-          fontFamily: FontFamily.fMedium);
+          fontFamily:fontFamily?? FontFamily.robotoMedium);
 
   TextStyle w7(
           {Color color = AppColors.c262626,
           TextOverflow? overflow,
-          double? height}) =>
+          double? height,String? fontFamily}) =>
       TextStyle(
           height: height,
           fontWeight: FontWeight.w700,
           // fontSize: kIsWeb ? toDouble() : toDouble().sp,
           fontSize: toDouble().h,
-          overflow: overflow??TextOverflow.ellipsis,
+          overflow: overflow ?? TextOverflow.ellipsis,
           color: color,
-          fontFamily: FontFamily.fBlack);
+          fontFamily: fontFamily??FontFamily.robotoBlack);
 
   Divider get hLine => Divider(
         color: AppColors.cB3B3B3,

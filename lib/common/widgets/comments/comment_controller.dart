@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-11 16:57:58
- * @LastEditTime: 2024-09-26 10:50:12
+ * @LastEditTime: 2024-10-08 18:50:53
  */
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
@@ -98,7 +98,7 @@ class CommentController extends GetxController {
   }
 
   void likeReviews(int newsId, int reviewsId, Reviews item) {
-    NewsApi.likeReviews(newsId, reviewsId).then((v) {
+    NewsApi.likeReviews(newsId, reviewsId,!item.isLike!.value).then((v) {
       if (item.isLike?.value == true) {
         item.isLike?.value = false;
         item.likes?.value -= 1;

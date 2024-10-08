@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2024-09-30 17:45:51
+ * @LastEditTime: 2024-10-08 16:45:33
  */
 /*
  * @Description: 
@@ -201,14 +201,16 @@ class PlayerItem extends GetView<TeamTrainingController> {
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                CustomContainer(
+                Container(
                     width: 18.w,
                     height: 12.w,
-                    borderRadius: BorderRadius.circular(2.w),
-                    backgroudColor: AppColors.c666666,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(2.w),
+                        color: AppColors.c666666),
                     child: Text(
                       "SG",
-                      style: 10.w7(color: AppColors.cFFFFFF),
+                      style: 10.w7(color: AppColors.cFFFFFF, height: 1),
                     )),
                 6.hGap,
                 IconWidget(
@@ -349,6 +351,7 @@ class PlayerItem extends GetView<TeamTrainingController> {
       width: 360.w,
       child: Stack(
         children: [
+          if(!isBag)
           _playerPosition(),
           (index > 5 && !isMain && !isBag) ? _addPlayer() : _playCard(),
         ],

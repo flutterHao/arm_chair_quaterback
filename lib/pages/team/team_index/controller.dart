@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-09-30 17:32:09
+ * @LastEditTime: 2024-10-08 18:13:47
  */
 
 import 'dart:async';
@@ -21,7 +21,7 @@ class TeamIndexController extends GetxController {
   RxDouble myTeamBottom = (-546.h).obs;
   RxDouble pageLeft = 0.0.obs;
   RxDouble pageRight = 0.0.obs;
-  RxDouble turns =0.5.obs;
+  RxDouble turns = 0.5.obs;
 
   ///宝箱
   var box1Claimed = false.obs;
@@ -29,7 +29,7 @@ class TeamIndexController extends GetxController {
   var box1Timer = 0.obs;
   var box2Timer = 0.obs;
   var isCountdownActive = false.obs; // 倒计时是否激活
-  Timer? timer;
+  Timer? boxTimer;
 
   @override
   void onReady() {
@@ -54,7 +54,7 @@ class TeamIndexController extends GetxController {
   void closePage() {
     trainingLeft.value = 0.0;
     bettleRight.value = 0.0;
-    myTeamBottom.value = -546.0.h;
+    myTeamBottom.value = -556.0.h;
     pageLeft.value = 0.0;
     pageRight.value = 0.0;
     turns.value -= 1 / 2;
@@ -64,7 +64,7 @@ class TeamIndexController extends GetxController {
   void updatePagePosition() {
     trainingLeft.value = 0.0;
     bettleRight.value = 0.0;
-    myTeamBottom.value = -546.0.h;
+    myTeamBottom.value = -556.0.h;
     pageLeft.value = 0.0;
     pageRight.value = 0.0;
     isShow.value = false;
@@ -89,14 +89,14 @@ class TeamIndexController extends GetxController {
   }
 
   void startTimer() {
-    if (timer != null) {
-      timer!.cancel();
+    if (boxTimer != null) {
+      boxTimer!.cancel();
     }
 
     isCountdownActive.value = true;
 
     // 每秒更新倒计时
-    timer = Timer.periodic(Duration(seconds: 1), (Timer t) {
+    boxTimer = Timer.periodic(Duration(seconds: 1), (Timer t) {
       if (box1Timer.value > 0 || box2Timer.value > 0) {
         if (box1Timer.value > 0) box1Timer.value--;
         if (box2Timer.value > 0) box2Timer.value--;
@@ -127,7 +127,7 @@ class TeamIndexController extends GetxController {
 
   @override
   void onClose() {
-    timer?.cancel();
+    boxTimer?.cancel();
     super.onClose();
   }
 }

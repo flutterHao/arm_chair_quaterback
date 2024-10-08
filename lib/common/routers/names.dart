@@ -1,3 +1,9 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-09-28 20:33:28
+ * @LastEditTime: 2024-10-08 12:21:38
+ */
 class RouteNames {
   static const main = '/';
   static const signIn = '/sign_in';
@@ -21,6 +27,8 @@ class RouteNames {
   static const picksPersonalCenter = '/picks_personal_center';
   static const reciveAwardPickPage = '/recive_award_pick_page';
 
+  static const teamTeamIndex = '/team_team_index';
+  static const teamTeamDetail = '/team_team_detail';
   static const teamTeamBattle = '/team_team_battle';
-
+  static const teamTrainingPage = '/team_training_page';
 }

@@ -88,10 +88,10 @@ class _VerticalDragBackWidgetState extends State<VerticalDragBackWidget>
   void _animateToPosition(DragEndDetails details) {
     Log.d(details.toString());
     // double targetBottom;
-    // if ((teamCtrl.isShow.value && details.velocity.pixelsPerSecond.dy <= 0) ||
-    //     (!teamCtrl.isShow.value && details.velocity.pixelsPerSecond.dy >= 0)) {
-    //   return;
-    // }
+    if ((teamCtrl.isShow.value && details.localPosition.dy <= 0) ||
+        (!teamCtrl.isShow.value && details.localPosition.dy >= 0)) {
+      return;
+    }
     if (details.velocity.pixelsPerSecond.dy < -1000) {
       // targetBottom = maxBottom; // 快速上滑到最大位置
       teamCtrl.pageOnTap();
