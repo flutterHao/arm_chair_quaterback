@@ -309,7 +309,7 @@ class _BattleGameState extends State<BattleGame>
         right: 0,
         child: InkWell(
           onTap: () {
-            _gameStart(); //todo 删除
+            // _gameStart(); //todo 删除
           },
           child: Container(
             height: 315.h,
@@ -320,11 +320,13 @@ class _BattleGameState extends State<BattleGame>
                 Stack(
                   alignment: Alignment.bottomCenter,
                   children: [
+                    //背景
                     Text(
                       "WIN RATE",
                       style: 40.w7(
                           color: AppColors.cB3B3B3.withOpacity(.1), height: 1),
                     ),
+                    //前景
                     Container(
                       margin: EdgeInsets.only(bottom: 5.h),
                       alignment: Alignment.bottomCenter,
@@ -349,6 +351,7 @@ class _BattleGameState extends State<BattleGame>
                           child: Stack(
                             alignment: Alignment.centerLeft,
                             children: [
+                              // 表格的纵向参照线
                               ...List.generate(3, (index) {
                                 return Container(
                                   margin: EdgeInsets.only(
@@ -358,6 +361,7 @@ class _BattleGameState extends State<BattleGame>
                                   color: AppColors.c262626,
                                 );
                               }),
+                              //横向50参照线
                               const DashedLine(
                                 axis: Axis.horizontal,
                                 dashedWidth: 4,
@@ -367,12 +371,13 @@ class _BattleGameState extends State<BattleGame>
                               Obx(() {
                                 return Stack(
                                   children: [
+                                    //倾斜渐变线
                                     SizedBox(
                                       width: 325.w,
                                       height: 181.h,
                                       child: ClipPath(
                                         clipper:
-                                            LineChartClipper(chartPoints.value),
+                                        LineChartClipper(chartPoints.value),
                                         child: ShaderMask(
                                           shaderCallback: (Rect bounds) {
                                             return const LinearGradient(
@@ -394,11 +399,12 @@ class _BattleGameState extends State<BattleGame>
                                                     image: AssetImage(
                                                         Assets.uiBgDiagonalPng),
                                                     repeat:
-                                                        ImageRepeat.repeat)),
+                                                    ImageRepeat.repeat)),
                                           ),
                                         ),
                                       ),
                                     ),
+                                    //折线图实线
                                     CustomPaint(
                                       size: Size(325.w, 181.h),
                                       painter: ChartPainter(
@@ -407,10 +413,11 @@ class _BattleGameState extends State<BattleGame>
                                   ],
                                 );
                               }),
+                              //实时指标虚线
                               Obx(() {
                                 return Positioned(
                                   left: pointOffset.value != Offset.zero
-                                      ? pointOffset.value.dx - 7.h / 2
+                                      ? pointOffset.value.dx-2
                                       : 0,
                                   child: SizedBox(
                                     width: 325.w,
@@ -420,15 +427,14 @@ class _BattleGameState extends State<BattleGame>
                                         Container(
                                           width: double.infinity,
                                           color:
-                                              AppColors.c3B3B3B.withOpacity(.3),
+                                          AppColors.c3B3B3B.withOpacity(.3),
                                         ),
-                                        Stack(
+                                        const Stack(
                                           alignment: Alignment.center,
                                           children: [
                                             SizedBox(
-                                              width: 7.h,
                                               height: double.infinity,
-                                              child: const DashedLine(
+                                              child: DashedLine(
                                                 axis: Axis.vertical,
                                                 dashedHeight: 2,
                                                 dashedWidth: 2,
@@ -477,6 +483,7 @@ class _BattleGameState extends State<BattleGame>
                         8.hGap
                       ],
                     ),
+                    //实时数据指示点
                     SizedBox(
                       width: 332.w,
                       height: 188.h,
@@ -485,7 +492,7 @@ class _BattleGameState extends State<BattleGame>
                           Obx(() {
                             return Positioned(
                               left: pointOffset.value != Offset.zero
-                                  ? pointOffset.value.dx-1.h
+                                  ? pointOffset.value.dx-7.h/2
                                   : 0,
                               top: pointOffset.value != Offset.zero
                                   ? pointOffset.value.dy
@@ -503,7 +510,7 @@ class _BattleGameState extends State<BattleGame>
                                       decoration: BoxDecoration(
                                           color: AppColors.cFF7954,
                                           borderRadius:
-                                              BorderRadius.circular(2.h))),
+                                          BorderRadius.circular(2.h))),
                                 ),
                               ),
                             );
@@ -631,8 +638,6 @@ class _BattleGameState extends State<BattleGame>
   }
 
   void _gameStart() {
-    /// 随机生产一个0-1的数字，
-    var nextDouble = Random().nextDouble();
 
     /// 以此为左边胜率，右边相反（跟着左边一起移动），用nextDouble
     animationController.removeStatusListener(_countDownStatusListener);
@@ -660,29 +665,34 @@ class _BattleGameState extends State<BattleGame>
       animationController.addStatusListener((s) {});
       winAnimationValue.value = true;
       Future.delayed(const Duration(seconds: 2), () {
-        // widget.onGameOver.call();
+        widget.onGameOver.call();
       });
     });
   }
 
   void _fightAnimationListener() {
     fightAnimationValue.value = animation.value;
-    calculate(animation.value, path);
+    calculate(animation.value);
   }
 
   List<Offset> pointData = [
-    Offset(0, 0), //0 90
-    Offset(1, -20),
-    Offset(2, 30),
-    Offset(3, 10),
-    Offset(4, 40),
-    Offset(5, -30),
-    Offset(6, -16),
-    Offset(7, -50),
+    const Offset(0, 0), //0 90
+    const Offset(1, -20),
+    const Offset(2, 30),
+    const Offset(3, 10),
+    const Offset(4, 40),
+    const Offset(5, -30),
+    const Offset(6, -16),
+    const Offset(7, -50),
   ];
-  Path path = Path();
+
+  var pointOffset = Offset.zero.obs;
+  RxList<Offset> chartPoints = RxList();
+
+  List<Offset> list = [];
 
   void _buildPath() {
+    Path path = Path();
     list.clear();
     chartPoints.clear();
     path.reset();
@@ -696,15 +706,15 @@ class _BattleGameState extends State<BattleGame>
       if (pointData[index].dy < 0) {
         dy = pointData[index].dy.abs() * stepY + size.height / 2;
       } else {
-        dy = 90 - pointData[index].dy;
+        dy = size.height/2 - pointData[index].dy;
       }
       return Offset(pointData[index].dx * stepX, dy);
     });
     final spline = CatmullRomSpline(points);
     list = spline.generateSamples().map((e) => e.value).toList();
     // var list = points;
-    print('list.len:${list.length}');
-    path.moveTo(-10, list[0].dy);
+    // print('list.len:${list[0]}');
+    path.moveTo(list[0].dx, list[0].dy);
     for (var i = 1; i < list.length; i++) {
       final current = list[i];
       final next = list[i + 1 >= list.length ? i : i + 1];
@@ -727,17 +737,15 @@ class _BattleGameState extends State<BattleGame>
     path.lineTo(list[list.length - 1].dx, size.height / 2);
   }
 
-  var pointOffset = Offset.zero.obs;
-  RxList<Offset> chartPoints = RxList();
 
-  List<Offset> list = [];
-
-  void calculate(double value, path) {
-    var item = list[(value / 4.4 * (list.length - 1)).toInt()];
+  void calculate(double value) {
+    var index = (value / 4.4 * (list.length - 1)).toInt();
+    var item = list[index];
     if (pointOffset.value.dx != item.dx) {
       pointOffset.value = item;
+      // print('chartPoints.length:${chartPoints.length},$index,${list.length}');
       chartPoints.addAll(list.getRange(
-          chartPoints.length, (value / 4.4 * (list.length - 1)).toInt()));
+          chartPoints.length, index));
       chartPoints.refresh();
     }
   }

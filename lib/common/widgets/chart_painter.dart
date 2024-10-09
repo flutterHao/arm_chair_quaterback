@@ -43,7 +43,6 @@ class ChartPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    print('pppppp');
     for (int i = 0; i < _list2.length; i++) {
       var next = _list2[i + 1 >= _list2.length ? i : i + 1];
       var current = _list2[i];
