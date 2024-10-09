@@ -46,9 +46,5 @@ class AppPages {
       page: () => const PlayerDetailPage(),
       binding: PlayerDetailBinding(),
     ),
-    GetPage(
-        name: RouteNames.teamTrainingPage,
-        opaque: false,
-        page: () => const TeamTrainingPage())
   ];
 }

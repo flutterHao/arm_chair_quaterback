@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-14 15:06:14
- * @LastEditTime: 2024-09-28 17:53:12
+ * @LastEditTime: 2024-10-09 14:57:41
  */
 import 'dart:math';
 
@@ -28,17 +28,17 @@ class CircleProgressView extends StatefulWidget {
 
   ///高度
   final double height;
-  
+
   ///title
-   final String title;
+  final String title;
 
   const CircleProgressView(
       {super.key,
-       required this.title,
+      required this.title,
       required this.progress,
       required this.width,
       required this.height,
-      this.backgroundColor = Colors.grey,
+      this.backgroundColor = const Color(0xFF262626),
       this.progressColor = Colors.blue,
       this.progressWidth = 2});
 
@@ -115,7 +115,8 @@ class _CircleProgressViewState extends State<CircleProgressView>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(widget.title, style: 16.w7(color: widget.progressColor, height: 1)),
+              Text(widget.title,
+                  style: 16.w7(color: widget.progressColor, height: 1)),
               Text(
                 "${animation.value.toInt()}%",
                 style: 10.w4(color: widget.progressColor, height: 1),

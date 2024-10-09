@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 17:29:19
- * @LastEditTime: 2024-10-08 14:22:54
+ * @LastEditTime: 2024-10-09 14:33:13
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:extended_image/extended_image.dart';
@@ -85,6 +85,7 @@ class MirrorImageWidget extends StatelessWidget {
   final double imageHeight; // 图片高度
   final BoxFit? fit;
   final Alignment? alignment;
+  final bool isLeft;
 
   const MirrorImageWidget({
     super.key,
@@ -93,36 +94,51 @@ class MirrorImageWidget extends StatelessWidget {
     required this.imageHeight,
     this.fit,
     this.alignment,
+    this.isLeft = true,
   });
 
   @override
   Widget build(BuildContext context) {
     // 计算一半的宽度
     double halfWidth = fullWidth / 2;
-
-    return SizedBox(
-      width: fullWidth, // 设置整个拼合后的宽度
-      height: imageHeight, // 设置高度
-      child: Row(
-        children: [
-          // 显示原始的一半图片
-          Image.asset(
+    Widget image = isLeft
+        ? Image.asset(
             imagePath,
             width: halfWidth, // 一半的宽度
             height: imageHeight,
-            alignment: Alignment.topRight,
             fit: fit ?? BoxFit.fitHeight,
-          ),
+            alignment: alignment ?? Alignment.topRight,
+          )
+        : Image.asset(
+            imagePath,
+            width: halfWidth, // 一半的宽度
+            height: imageHeight,
+            fit: fit ?? BoxFit.fitHeight,
+            alignment: alignment ?? Alignment.topLeft,
+          );
+    return SizedBox(
+      width: fullWidth, // 设置整个拼合后的宽度
+      height: imageHeight, // 设置高度
+      child: isLeft?Row(
+        children: [
+          // 显示原始的一半图片
+          image,
           // 显示镜像的图片，利用 Transform 翻转
           Transform(
             alignment: Alignment.center,
             transform: Matrix4.identity()..scale(-1.0, 1.0), // 水平镜像翻转
-            child: Image.asset(imagePath,
-                width: halfWidth, // 一半的宽度
-                height: imageHeight,
-                fit: fit ?? BoxFit.fitHeight,
-                alignment: Alignment.topRight),
+            child: image,
           ),
+        ],
+      ):Row(
+        children: [
+          Transform(
+            alignment: Alignment.center,
+            transform: Matrix4.identity()..scale(-1.0, 1.0), // 水平镜像翻转
+            child: image,
+          ),
+          image,
+          
         ],
       ),
     );

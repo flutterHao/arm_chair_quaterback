@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2024-10-08 16:45:33
+ * @LastEditTime: 2024-10-09 15:49:49
  */
 /*
  * @Description: 
@@ -71,7 +71,7 @@ class PlayerItem extends GetView<TeamTrainingController> {
         child: Row(
           children: [
             10.hGap,
-            _playerAvatar(),
+            PlayerAwater(),
             SizedBox(
               width: 3.w,
             ),
@@ -257,51 +257,7 @@ class PlayerItem extends GetView<TeamTrainingController> {
     );
   }
 
-  ///头像
-  Widget _playerAvatar() {
-    return InkWell(
-      onTap: () {
-        Get.toNamed(RouteNames.picksPlayerDetail);
-      },
-      child: Stack(
-        children: [
-          Positioned(
-            child: ImageWidget(
-              url: "https://file.qiumiwu.com/player/202404/24/349123f6.png",
-              width: 64.w,
-              height: 64.w,
-              borderRadius: BorderRadius.circular(32.w),
-            ),
-          ),
-          Positioned(
-            left: 0,
-            top: 2,
-            child: Text(
-              "S",
-              style: 17.w7(color: AppColors.c262626),
-            ),
-          ),
-          Positioned(
-            top: 1.5.w,
-            right: 0.5.w,
-            child: IconWidget(
-              iconWidth: 17.w,
-              icon: Assets.uiIconStar_01Png,
-              iconColor: AppColors.cFF7954,
-            ),
-          ),
-          Positioned(
-            right: 6.w,
-            top: 6.5.w,
-            child: Text(
-              "5",
-              style: 12.w7(color: AppColors.cFFFFFF, height: 1),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+
 
   Widget _addPlayer() {
     return Positioned(
@@ -480,6 +436,58 @@ class __NumChangeWidgetState extends State<_NumChangeWidget> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+///球员头像
+class PlayerAwater extends StatelessWidget {
+  const PlayerAwater({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+     ///头像
+    return InkWell(
+      onTap: () {
+        Get.toNamed(RouteNames.picksPlayerDetail);
+      },
+      child: Stack(
+        children: [
+          Positioned(
+            child: ImageWidget(
+              url: "https://file.qiumiwu.com/player/202404/24/349123f6.png",
+              width: 64.w,
+              height: 64.w,
+              borderRadius: BorderRadius.circular(32.w),
+            ),
+          ),
+          Positioned(
+            left: 0,
+            top: 2,
+            child: Text(
+              "S",
+              style: 17.w7(color: AppColors.c262626),
+            ),
+          ),
+          Positioned(
+            top: 1.5.w,
+            right: 0.5.w,
+            child: IconWidget(
+              iconWidth: 17.w,
+              icon: Assets.uiIconStar_01Png,
+              iconColor: AppColors.cFF7954,
+            ),
+          ),
+          Positioned(
+            right: 6.w,
+            top: 6.5.w,
+            child: Text(
+              "5",
+              style: 12.w7(color: AppColors.cFFFFFF, height: 1),
+            ),
+          ),
+        ],
       ),
     );
   }
