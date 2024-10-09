@@ -17,10 +17,12 @@ class CustomTapGestureRecognizer extends HorizontalDragGestureRecognizer {
 
 class HorizontalDragBackWidget extends StatefulWidget {
   const HorizontalDragBackWidget(
-      {required this.child, this.onWidgetOut,this.canPop=true, super.key});
+      {required this.child, this.onWidgetOut, this.canPop = true, super.key});
 
   final Widget child;
-  final bool canPop;///是否支持右滑返回，实体/虚拟按键返回
+  final bool canPop;
+
+  ///是否支持右滑返回，实体/虚拟按键返回
   final Function()? onWidgetOut;
 
   @override
@@ -80,15 +82,15 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     onHorizontalDragStart(DragStartDetails detail) {
-      if(!isOnLeftSide){
+      if (!isOnLeftSide) {
         return;
       }
-      print('onHorizontalDragStart: ${detail.localPosition}');
+      // print('onHorizontalDragStart: ${detail.localPosition}');
       startX = detail.localPosition.dx;
     }
 
     onHorizontalDragEnd(DragEndDetails detail) {
-      if(!isOnLeftSide){
+      if (!isOnLeftSide) {
         return;
       }
       // print('onHorizontalDragEnd: ${detail.localPosition}');
@@ -97,7 +99,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
     }
 
     onHorizontalDragCancel() {
-      if(!isOnLeftSide){
+      if (!isOnLeftSide) {
         return;
       }
       // print('onHorizontalDragCancel: ');
@@ -105,7 +107,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
     }
 
     onHorizontalDragDown(DragDownDetails detail) {
-      if(!isOnLeftSide){
+      if (!isOnLeftSide) {
         return;
       }
       // print('onHorizontalDragDown: ${detail.localPosition}');
@@ -113,15 +115,18 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
     }
 
     onHorizontalDragUpdate(DragUpdateDetails detail) {
-      if(!widget.canPop){
+      if (!widget.canPop) {
         return;
       }
-      if(!isOnLeftSide){
+      if (!isOnLeftSide) {
         return;
       }
       // print('onHorizontalDragUpdate: ${detail.localPosition}');
       // print('onHorizontalDragUpdate-offsetX:$offsetX');
-      if(startX <= 0){
+      if (detail.delta.dy > detail.delta.dx) {
+        return;
+      }
+      if (startX <= 0) {
         startX = detail.localPosition.dx;
       }
       offsetX = detail.localPosition.dx - startX;
@@ -134,13 +139,13 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
     return PopScope(
       canPop: widget.canPop,
       child: GestureDetector(
-        onHorizontalDragDown: (detail){
-          if(!isOnLeftSide){
+        onHorizontalDragDown: (detail) {
+          if (!isOnLeftSide) {
             isOnLeftSide = true;
           }
         },
-        onHorizontalDragStart: (detail){
-          if(!isOnLeftSide){
+        onHorizontalDragStart: (detail) {
+          if (!isOnLeftSide) {
             isOnLeftSide = true;
           }
         },
@@ -150,20 +155,24 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
             if (notification is OverscrollNotification) {
               // print('notification.metrics.pixels:${notification.metrics.pixels}');
               if (notification.metrics.pixels <=
-                  notification.metrics.minScrollExtent && !isOnLeftSide) {
+                      notification.metrics.minScrollExtent &&
+                  !isOnLeftSide &&
+                  notification.metrics.axisDirection == AxisDirection.right) {
                 //到达左边界
                 isOnLeftSide = true;
               }
             }
-            if(notification is ScrollUpdateNotification && !isOnLeftSide){
+            if (notification is ScrollUpdateNotification && !isOnLeftSide) {
               // print('notification.metrics.pixels:${notification.metrics.pixels}');
               if (notification.metrics.pixels <=
-                  notification.metrics.minScrollExtent && !isOnLeftSide) {
+                      notification.metrics.minScrollExtent &&
+                  !isOnLeftSide &&
+                  notification.metrics.axisDirection == AxisDirection.right) {
                 //到达左边界
                 isOnLeftSide = true;
               }
             }
-            if(notification is ScrollStartNotification && isOnLeftSide){
+            if (notification is ScrollStartNotification && isOnLeftSide) {
               isOnLeftSide = false;
             }
             // true 阻止向上冒泡 ,false 继续向上冒泡
@@ -171,9 +180,8 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
           },
           child: RawGestureDetector(
             gestures: {
-              CustomTapGestureRecognizer:
-                  GestureRecognizerFactoryWithHandlers<
-                      CustomTapGestureRecognizer>(
+              CustomTapGestureRecognizer: GestureRecognizerFactoryWithHandlers<
+                  CustomTapGestureRecognizer>(
                 () => CustomTapGestureRecognizer(),
                 (HorizontalDragGestureRecognizer detector) {
                   detector

@@ -183,7 +183,7 @@ class _BattleMainState extends State<BattleMain>
                   height: 20.w,
                   padding: EdgeInsets.symmetric(horizontal: 8.w),
                   decoration: BoxDecoration(
-                      color: AppColors.c666666,
+                      color: AppColors.cFFFFFF.withOpacity(.1),
                       borderRadius: BorderRadius.circular(10.w)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -226,7 +226,7 @@ class _BattleMainState extends State<BattleMain>
                   height: 20.w,
                   padding: EdgeInsets.symmetric(horizontal: 8.w),
                   decoration: BoxDecoration(
-                      color: AppColors.c666666,
+                      color: AppColors.cFFFFFF.withOpacity(.1),
                       borderRadius: BorderRadius.circular(10.w)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

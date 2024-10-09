@@ -1,10 +1,14 @@
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/TLBuilderWidget.dart';
+import 'package:arm_chair_quaterback/common/widgets/btn_background.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/widgets/player.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/widgets/score_panel.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/widgets/statistic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 ///
 ///@auther gejiahui
@@ -109,10 +113,26 @@ class _BattleGameOverState extends State<BattleGameOver>
             right: 0,
             bottom: 0,
             child: TabBarView(controller: tabController, children: const [
-              Center(child: LoadStatusWidget()),
-              Center(child: LoadStatusWidget())
+              Statistic(),
+              Player()
             ]),
-          )
+          ),
+          Positioned(
+              bottom: 36.h,
+              child: InkWell(
+                onTap: (){
+                  Get.back();
+                },
+                child: SizedBox(
+                  width: 203.w,
+                  child: BtnBackground(
+                      child: Center(
+                          child: Text(
+                    "GO BACK",
+                    style: 18.w7(color: AppColors.cF2F2F2),
+                  ))),
+                ),
+              ))
         ],
       ),
     );

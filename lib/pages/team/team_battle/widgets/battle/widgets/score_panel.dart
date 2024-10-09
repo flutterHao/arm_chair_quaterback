@@ -40,7 +40,7 @@ class ScorePanel extends StatelessWidget {
                 height: 63.h,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                    color: AppColors.c666666,
+                    color: AppColors.cFFFFFF.withOpacity(.1),
                     borderRadius: BorderRadius.circular(9.h)),
                 child: Text(
                   "$leftScore",
@@ -129,7 +129,7 @@ class ScorePanel extends StatelessWidget {
                 height: 63.h,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                    color: AppColors.c666666,
+                    color: AppColors.cFFFFFF.withOpacity(.1),
                     borderRadius: BorderRadius.circular(9.h)),
                 child: Text(
                   "$rightScore",
