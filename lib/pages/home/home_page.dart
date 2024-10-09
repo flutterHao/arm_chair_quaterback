@@ -32,6 +32,7 @@ class _HomePageState extends State<HomePage>
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, result) {
+        print('home_page->onPopInvokedWithResult');
         if (didPop) {
           return;
         }

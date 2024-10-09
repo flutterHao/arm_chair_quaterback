@@ -26,11 +26,12 @@ class TeamBattlePage extends GetView<TeamBattleController> {
 
   @override
   Widget build(BuildContext context) {
-    return HorizontalDragBackWidget(
-      child: GetBuilder<TeamBattleController>(
-        id: "team_battle",
-        builder: (_) {
-          return Container(
+    return GetBuilder<TeamBattleController>(
+      id: "team_battle",
+      builder: (_) {
+        return HorizontalDragBackWidget(
+          canPop: TeamBattleController.canPop,
+          child: Container(
             color: AppColors.c000000.withOpacity(.8),
             child: Obx(() {
               return Stack(
@@ -49,9 +50,9 @@ class TeamBattlePage extends GetView<TeamBattleController> {
                 ],
               );
             }),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

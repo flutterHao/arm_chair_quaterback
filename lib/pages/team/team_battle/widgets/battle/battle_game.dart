@@ -675,15 +675,19 @@ class _BattleGameState extends State<BattleGame>
     calculate(animation.value);
   }
 
+  /// y：取值范围（-50，50）
   List<Offset> pointData = [
-    const Offset(0, 0), //0 90
+    const Offset(0, 20), //0 90
     const Offset(1, -20),
     const Offset(2, 30),
     const Offset(3, 10),
     const Offset(4, 40),
     const Offset(5, -30),
     const Offset(6, -16),
-    const Offset(7, -50),
+    const Offset(7, -20),
+    const Offset(8, -45),
+    const Offset(9, 40),
+    const Offset(10, 50),
   ];
 
   var pointOffset = Offset.zero.obs;

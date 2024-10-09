@@ -16,6 +16,8 @@ class TeamBattleController extends GetxController
   ///
   var step = 0.obs;
 
+  static  bool _canPop = false;
+
   _initData() {
     update(["team_battle"]);
   }
@@ -46,6 +48,7 @@ class TeamBattleController extends GetxController
   void onInit() {
     super.onInit();
     step.value = 1;
+    _canPop = false;
     meAvatar = totalAvatars[Random().nextInt(totalAvatars.length-1)];
     totalAvatars.remove(meAvatar);
     opponentAvatar = totalAvatars[Random().nextInt(totalAvatars.length-1)];
@@ -74,6 +77,12 @@ class TeamBattleController extends GetxController
   void nextStep() {
     step.value = step.value + 1;
     print('nextStep-------: ${step.value}');
+    if(step.value == 5) {
+      _canPop = true;
+      update(['team_battle']);
+    }
   }
+
+  static get canPop => _canPop;
 
 }
