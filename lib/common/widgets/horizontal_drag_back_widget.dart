@@ -55,6 +55,8 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
 
   bool isOnLeftSide = false;
 
+  bool isOut = false;
+
   @override
   void initState() {
     super.initState();
@@ -68,7 +70,8 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
           setState(() {});
         }
         if (animationController.status == AnimationStatus.completed) {
-          if (offsetX > width) {
+          if (offsetX > width && !isOut) {
+            isOut = true;
             widget.onWidgetOut != null
                 ? widget.onWidgetOut!()
                 : Navigator.of(context).pop();
@@ -93,6 +96,9 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
       if (!isOnLeftSide) {
         return;
       }
+      if(animationController.isAnimating || isOut){
+        return;
+      }
       // print('onHorizontalDragEnd: ${detail.localPosition}');
       // print('onHorizontalDragEnd: ${detail.velocity}');
       _recycleAnimation(velocity: detail.velocity.pixelsPerSecond.dx);
@@ -100,6 +106,9 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
 
     onHorizontalDragCancel() {
       if (!isOnLeftSide) {
+        return;
+      }
+      if(animationController.isAnimating || isOut){
         return;
       }
       // print('onHorizontalDragCancel: ');
@@ -119,6 +128,9 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
         return;
       }
       if (!isOnLeftSide) {
+        return;
+      }
+      if(animationController.isAnimating || isOut){
         return;
       }
       // print('onHorizontalDragUpdate: ${detail.localPosition}');
