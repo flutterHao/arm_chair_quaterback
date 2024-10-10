@@ -50,10 +50,10 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
         padding: EdgeInsets.only(
             top: MediaQuery.of(context).padding.top + 63.w + 88.w + 6.w),
         child: SmartRefresher(
-          enablePullUp: true,
+          // enablePullUp: true,
           controller: controller.refreshController,
           onRefresh: () => controller.loading(),
-          onLoading: () => controller.loadMore(),
+          // onLoading: () => controller.loadMore(),
           child: controller.newsDefineEntity == null ||
                   controller.listData.isEmpty
               ? Center(child: Obx(() {

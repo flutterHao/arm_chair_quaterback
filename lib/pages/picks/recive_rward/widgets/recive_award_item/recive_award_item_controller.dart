@@ -65,13 +65,15 @@ class ReciveAwardItemController extends GetxController {
   /// 获取奖励
   getGuessAward() {
     print('getGuessAward-------');
-    PicksApi.getGuessAward(data[0].reciveAwardInfo.scId).then((result) {
-      data = [];
+    PicksApi.getGuessAward(data.length==1?data[0].reciveAwardInfo.id:data[0].reciveAwardInfo.scId).then((result) {
+      List<PicksPlayer> tempData = [];
       for (int i = 0; i < data.length; i++) {
         var item = data[i];
         item.reciveAwardInfo.guessData[0].status = 3;
-        data.add(item);
+        tempData.add(item);
       }
+      data = tempData;
+      update([idReciveAwardItem]);
     });
   }
 

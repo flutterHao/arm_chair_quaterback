@@ -218,7 +218,7 @@ class _TeamView extends GetView<TeamIndexController> {
                     overflow: TextOverflow.ellipsis,
                     style: 24.w7(
                         color: AppColors.c262626,
-                        fontFamily: FontFamily.oswaldLight),
+                        fontFamily: FontFamily.fOswaldLight),
                   ),
                 ),
                 Column(

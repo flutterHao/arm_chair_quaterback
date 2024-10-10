@@ -29,166 +29,180 @@ class ReciveAwardItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    controller = Get.put(ReciveAwardItemController(data, newsDefineEntity));
+    controller = ReciveAwardItemController(data, newsDefineEntity);
     return GetBuilder<ReciveAwardItemController>(
-      id: controller.idReciveAwardItem,
+        init: controller,
+        tag: data[0].reciveAwardInfo.id.toString(),
+        id: controller.idReciveAwardItem,
         builder: (_) {
-      return InkWell(
-        onTap: () => _buildDetailDialog(context),
-        child: Container(
-          height: 105.w,
-          width: double.infinity,
-          margin: EdgeInsets.only(bottom: 9.w),
-          padding:
-              EdgeInsets.only(top: 13.w, bottom: 12.w, right: 15.w, left: 12.w),
-          decoration: BoxDecoration(
-              color: AppColors.cF2F2F2,
-              borderRadius: BorderRadius.circular(16.w)),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          return InkWell(
+            onTap: () => _buildDetailDialog(context),
+            child: Container(
+              height: 105.w,
+              width: double.infinity,
+              margin: EdgeInsets.only(bottom: 9.w),
+              padding: EdgeInsets.only(
+                  top: 13.w, bottom: 12.w, right: 15.w, left: 12.w),
+              decoration: BoxDecoration(
+                  color: AppColors.cF2F2F2,
+                  borderRadius: BorderRadius.circular(16.w)),
+              child: Column(
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 6.w),
-                        decoration: BoxDecoration(
-                            color: AppColors.c262626,
-                            borderRadius: BorderRadius.circular(5.w)),
-                        child: Text(
-                          "${controller.getBetCount()}x",
-                          style: 16.w7(color: AppColors.cF2F2F2, height: 1),
-                        ),
-                      ),
-                      12.hGap,
-                      IconWidget(
-                        iconWidth: 17.w,
-                        icon: Assets.uiIconJettonPng,
-                        iconColor: controller.getAwardCoin() == null
-                            ? AppColors.cE72646
-                            : AppColors.c10A86A,
-                      ), //todo 换图
-                      4.hGap,
-                      Text(
-                        controller.getAwardCoin() == null
-                            ? ("-${controller.getCostCount()}")
-                            : ("+${controller.getAwardCoin()!}"),
-                        style: 16.w7(
-                            color: controller.getAwardCoin() == null
+                      Row(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 6.w),
+                            decoration: BoxDecoration(
+                                color: AppColors.c262626,
+                                borderRadius: BorderRadius.circular(5.w)),
+                            child: Text(
+                              "${controller.getBetCount()}x",
+                              style: 16.w7(color: AppColors.cF2F2F2, height: 1),
+                            ),
+                          ),
+                          12.hGap,
+                          IconWidget(
+                            iconWidth: 17.w,
+                            icon: Assets.uiIconJettonPng,
+                            iconColor: controller.getAwardCoin() == null
                                 ? AppColors.cE72646
                                 : AppColors.c10A86A,
-                            height: 1),
+                          ), //todo 换图
+                          4.hGap,
+                          Text(
+                            controller.getAwardCoin() == null
+                                ? ("-${controller.getCostCount()}")
+                                : ("+${controller.getAwardCoin()!}"),
+                            style: 16.w7(
+                                color: controller.getAwardCoin() == null
+                                    ? AppColors.cE72646
+                                    : AppColors.c10A86A,
+                                height: 1),
+                          ),
+                        ],
                       ),
+                      Text(
+                        controller.getTime(),
+                        style: 12.w4(color: AppColors.cB3B3B3, height: 1),
+                      )
                     ],
                   ),
-                  Text(
-                    controller.getTime(),
-                    style: 12.w4(color: AppColors.cB3B3B3, height: 1),
+                  6.vGap,
+                  Divider(
+                    height: 1,
+                    color: AppColors.c262626.withOpacity(.15),
+                  ),
+                  10.vGap,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        height: 44.w,
+                        constraints: BoxConstraints(maxWidth: 200.w),
+                        child: Stack(
+                          children: List.generate(
+                              controller.data.length > 5
+                                  ? 5
+                                  : controller.data.length, (index) {
+                            /// 倒叙绘制
+                            return Positioned(
+                              left: 30.w *
+                                  ((controller.data.length >= 5
+                                          ? 5
+                                          : controller.data.length) -
+                                      1 -
+                                      index),
+                              child: Container(
+                                  width: 44.w,
+                                  height: 44.w,
+                                  decoration: BoxDecoration(
+                                      color: AppColors.cD9D9D9,
+                                      borderRadius: BorderRadius.circular(22.w),
+                                      border: Border.all(
+                                          width: 2.w,
+                                          color: AppColors.cF2F2F2)),
+                                  alignment: Alignment.bottomCenter,
+                                  child: controller.data.length >= 5 &&
+                                          index == 0
+                                      ? Container(
+                                          alignment: Alignment.center,
+                                          padding: EdgeInsets.only(left: 7.w),
+                                          child: Text(
+                                            "+${controller.data.length - 5}",
+                                            style:
+                                                12.w4(color: AppColors.c666666),
+                                          ),
+                                        )
+                                      : Image.asset(
+                                          Assets.testTeamLogoPng,
+                                          width: 44.w,
+                                          fit: BoxFit.fitWidth,
+                                        )),
+                            );
+                          }),
+                        ),
+                      ),
+                      if (personalCenterPage)
+                        Container(
+                          width: 68.w,
+                          height: 27.w,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(14.w),
+                              border: Border.all(
+                                  color: AppColors.c262626.withOpacity(.2),
+                                  width: 1)),
+                          child: Text(
+                            "View all",
+                            style: 12.w4(color: AppColors.c666666),
+                          ),
+                        )
+                      else
+                        InkWell(
+                          onTap: controller.data[0].reciveAwardInfo.guessData[0]
+                                      .status ==
+                                  2
+                              ? () => controller.getGuessAward()
+                              : null,
+                          child: Container(
+                            width: 98.w,
+                            height: 27.w,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                color: controller.data[0].reciveAwardInfo
+                                            .guessData[0].status ==
+                                        2
+                                    ? AppColors.cFF7954
+                                    : AppColors.cB3B3B3,
+                                borderRadius: BorderRadius.circular(14.w)),
+                            child: Text(
+                              controller.data[0].reciveAwardInfo.guessData[0]
+                                          .status ==
+                                      2
+                                  ? "GET"
+                                  : "SAL",
+                              style: 14.w4(color: AppColors.cF2F2F2),
+                            ),
+                          ),
+                        )
+                    ],
                   )
                 ],
               ),
-              6.vGap,
-              Divider(
-                height: 1,
-                color: AppColors.c262626.withOpacity(.15),
-              ),
-              10.vGap,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    height: 44.w,
-                    constraints: BoxConstraints(maxWidth: 200.w),
-                    child: Stack(
-                      children: List.generate(
-                          data.length >= 5 ? 5 : data.length, (index) {
-                        /// 倒叙绘制
-                        return Positioned(
-                          left: 30.w *
-                              ((data.length >= 5 ? 5 : data.length) -
-                                  1 -
-                                  index),
-                          child: Container(
-                              width: 44.w,
-                              height: 44.w,
-                              decoration: BoxDecoration(
-                                  color: AppColors.cD9D9D9,
-                                  borderRadius: BorderRadius.circular(22.w),
-                                  border: Border.all(
-                                      width: 2.w, color: AppColors.cF2F2F2)),
-                              alignment: Alignment.bottomCenter,
-                              child: data.length >= 5 && index == 0
-                                  ? Container(
-                                      alignment: Alignment.center,
-                                      padding: EdgeInsets.only(left: 7.w),
-                                      child: Text(
-                                        "+${data.length - 5}",
-                                        style: 12.w4(color: AppColors.c666666),
-                                      ),
-                                    )
-                                  : Image.asset(
-                                      Assets.testTeamLogoPng,
-                                      width: 44.w,
-                                      fit: BoxFit.fitWidth,
-                                    )),
-                        );
-                      }),
-                    ),
-                  ),
-                  if (personalCenterPage)
-                    Container(
-                      width: 68.w,
-                      height: 27.w,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(14.w),
-                          border: Border.all(
-                              color: AppColors.c262626.withOpacity(.2),
-                              width: 1)),
-                      child: Text(
-                        "View all",
-                        style: 12.w4(color: AppColors.c666666),
-                      ),
-                    )
-                  else
-                    InkWell(
-                      onTap: data[0].reciveAwardInfo.guessData[0].status == 2
-                          ? () => controller.getGuessAward()
-                          : null,
-                      child: Container(
-                        width: 98.w,
-                        height: 27.w,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            color:
-                                data[0].reciveAwardInfo.guessData[0].status == 2
-                                    ? AppColors.cFF7954
-                                    : AppColors.cB3B3B3,
-                            borderRadius: BorderRadius.circular(14.w)),
-                        child: Text(
-                          data[0].reciveAwardInfo.guessData[0].status == 2
-                              ? "GET"
-                              : "SAL",
-                          style: 14.w4(color: AppColors.cF2F2F2),
-                        ),
-                      ),
-                    )
-                ],
-              )
-            ],
-          ),
-        ),
-      );
-    });
+            ),
+          );
+        });
   }
 
   Future<dynamic> _buildDetailDialog(BuildContext context) {
-    int winTimesCount = data
+    int winTimesCount = controller.data
         .where((e) => e.reciveAwardInfo.guessData[0].success)
         .toList()
         .length;
-    int lossTimesCount = data.length - winTimesCount;
+    int lossTimesCount = controller.data.length - winTimesCount;
     return showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -241,7 +255,8 @@ class ReciveAwardItem extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(8)),
                                   child: Text(
                                     MyDateUtils.formatAM_HM(
-                                        MyDateUtils.getDateTimeByMs(data[0]
+                                        MyDateUtils.getDateTimeByMs(controller
+                                            .data[0]
                                             .reciveAwardInfo
                                             .createTime)),
                                     style: TextStyle(
@@ -414,12 +429,13 @@ class ReciveAwardItem extends StatelessWidget {
                       // ),
                       child: ListView.builder(
                           physics: const BouncingScrollPhysics(),
-                          itemCount: data.length,
+                          itemCount: controller.data.length,
                           itemBuilder: (context, index) {
                             return Column(
                               children: [
                                 if (index == 0) 8.vGap,
-                                ReciveAwardDetailItem(data[index],newsDefineEntity),
+                                ReciveAwardDetailItem(
+                                    controller.data[index], newsDefineEntity),
                               ],
                             );
                           }),
