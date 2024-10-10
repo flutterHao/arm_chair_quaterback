@@ -123,7 +123,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
       }
       // print('onHorizontalDragUpdate: ${detail.localPosition}');
       // print('onHorizontalDragUpdate-offsetX:$offsetX');
-      if (detail.delta.dy > detail.delta.dx) {
+      if (detail.delta.dy.abs() > detail.delta.dx.abs()) {
         return;
       }
       if (startX <= 0) {
