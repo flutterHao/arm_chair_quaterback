@@ -43,7 +43,7 @@ extension NumExt on num {
           ///TODO
           // fontSize: kIsWeb ? toDouble() : toDouble().sp,
           color: color,
-          fontFamily:fontFamily?? FontFamily.robotoMedium);
+          fontFamily:fontFamily);
 
   TextStyle w7(
           {Color color = AppColors.c262626,
@@ -54,9 +54,9 @@ extension NumExt on num {
           fontWeight: FontWeight.w700,
           // fontSize: kIsWeb ? toDouble() : toDouble().sp,
           fontSize: toDouble().h,
-          overflow: overflow ?? TextOverflow.ellipsis,
+          overflow: overflow,
           color: color,
-          fontFamily: fontFamily??FontFamily.robotoBlack);
+          fontFamily: fontFamily??FontFamily.fRobotoBlack);
 
   Divider get hLine => Divider(
         color: AppColors.cB3B3B3,

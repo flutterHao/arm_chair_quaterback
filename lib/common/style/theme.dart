@@ -18,7 +18,7 @@ class AppTheme {
     scaffoldBackgroundColor: AppColors.ce5e5e5,
     splashColor: Colors.transparent,
     highlightColor: Colors.transparent,
-    fontFamily: FontFamily.robotoMedium,
+    fontFamily: FontFamily.fRobotoMedium,
     primaryColor: AppColors.cF1F1F1,
     colorScheme: ColorScheme.fromSwatch().copyWith(
       secondary: AppColors.cF1F1F1,
