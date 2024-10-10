@@ -52,6 +52,8 @@ class Assets {
       'assets/images/icon/ui_icon_triangle_03.png';
   static const uiIconUnfoldPng = 'assets/images/icon/ui_icon_unfold.png';
   static const uiWindowsAwardPng = 'assets/images/icon/ui_windows_award.png';
+  static const uiIconDelete_01Png = 'assets/images/icon/ui_icon_delete_01.png';
+  static const uiIconDelete_02Png = 'assets/images/icon/ui_icon_delete_02.png';
 
   ///test
   static const testTeamLogoPng = 'assets/test/test_team_logo.png';

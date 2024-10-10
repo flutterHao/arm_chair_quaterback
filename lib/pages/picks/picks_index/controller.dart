@@ -41,13 +41,19 @@ class PicksIndexController extends GetxController {
   var betCount = 0.0.obs; // 总赔率
   var costCount = 0.0.obs; // 总花费
 
+  var batchDeleteOpen = false.obs;
+
   /// 选择了more/less
-  choiceOne(int index, double choice) {
+  choiceOne(int index, double choice,{bool needRefreshList = false}) {
     if (choiceData[index] == choice) {
       choiceData.remove(index);
     } else {
       choiceData[index] = choice;
     }
+    _count(needRefreshList);
+  }
+
+  void _count(bool needRefreshList) {
     var len = choiceData.length;
     var odds = double.parse(picksPlayers[0].betOdds);
     betCount.value = len == 0
@@ -59,6 +65,19 @@ class PicksIndexController extends GetxController {
                     .toStringAsFixed(1));
     costCount.value = double.parse(
         (len * double.parse(picksPlayers[0].betCost)).toStringAsFixed(1));
+    if(needRefreshList){
+      update([idGuessList]);
+    }
+  }
+
+  deleteOne(int index){
+    choiceData.remove(index);
+    _count(true);
+  }
+
+  deleteAll(){
+    choiceData.clear();
+    _count(true);
   }
 
   clearChoiceData() {
@@ -95,7 +114,7 @@ class PicksIndexController extends GetxController {
       params.add(guessParamEntity);
     }
     PicksApi.guess(params).then((result) {
-      if (inDialog) Get.back(id: GlobalNestedKey.PICKS);
+      if (inDialog) Get.back();
       clearChoiceData();
       _initData();
     });
@@ -213,6 +232,7 @@ class PicksIndexController extends GetxController {
   }
 
   static String get idMain => "main";
+  static String get idGuessList => "guessList";
 
   /// 在 onInit() 之后调用 1 帧。这是进入的理想场所
   @override

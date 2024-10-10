@@ -8,12 +8,9 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/param_utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/TLBuilderWidget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
-import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guess_item/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/rank_start_button.dart';
-import 'package:arm_chair_quaterback/pages/picks/player_detail/index.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -53,7 +50,9 @@ class _GuessItemState extends State<GuessItem>
       guessItemController.tabController
           .animateTo(index, duration: Duration.zero);
     }
-    gameChoiceFlag = RxDouble(-1.0);
+    PicksIndexController picksIndexController = Get.find();
+    gameChoiceFlag = RxDouble(picksIndexController.choiceData[widget.parentIndex]??-1.0);
+
     return Container(
       margin: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 8.w),
       padding: EdgeInsets.only(
@@ -75,123 +74,7 @@ class _GuessItemState extends State<GuessItem>
                   physics: const BouncingScrollPhysics(),
                   children: List.generate(
                     guessItemController.tabController.length,
-                    (index) => Container(
-                      margin: EdgeInsets.only(left: 13.w, right: 11.w),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              print('点击了头像');
-                              Get.toNamed(RouteNames.picksPlayerDetail,
-                                  id: GlobalNestedKey.PICKS,
-                                  arguments: {
-                                    "teamId":
-                                        widget.pickPlayer.guessInfo.teamId,
-                                    "uuid": widget.pickPlayer.guessInfo.teamId
-                                  });
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: AppColors.ce5e5e5,
-                                  borderRadius: BorderRadius.circular(26.w)),
-                              child: Stack(children: [
-                                Image.asset(
-                                  Assets.testTeamLogoPng,
-                                  width: 55.w,
-
-                                  /// todo 换成网络图
-                                ),
-                                Text(
-                                    guessItemController
-                                        .player.baseInfoList.grade,
-                                    style: 14.w7(color: AppColors.c262626))
-                              ]),
-                            ),
-                          ),
-                          Expanded(
-                            child: Container(
-                              constraints: BoxConstraints(maxWidth: 89.w),
-                              margin: EdgeInsets.only(left: 10.w),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    guessItemController
-                                        .player.baseInfoList.ename,
-                                    style: 13.w4(
-                                        color: AppColors.c666666,
-                                        height: 1,
-                                        overflow: TextOverflow.ellipsis),
-                                  ),
-                                  2.vGap,
-                                  Text(
-                                    "VS ${widget.pickPlayer.awayTeamInfo.shortEname}   ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(widget.pickPlayer.guessInfo.gameStartTime))}",
-                                    style: 10.w4(
-                                        color: AppColors.cB3B3B3, height: 1),
-                                  ),
-                                  8.vGap,
-                                  Text(
-                                    "PPG: ${double.parse(((widget.pickPlayer.dataAvgList.toJson()[ParamUtils.getProKey(widget.pickPlayer.betData[index].toLowerCase())]) ?? 0).toString()).toStringAsFixed(1)}P",
-                                    style: 10.w4(
-                                        color: AppColors.cB3B3B3, height: 1),
-                                  ),
-                                  Text(
-                                    "L5: ${double.parse(((widget.pickPlayer.guessInfo.l5Avg.toJson()[ParamUtils.getProKey(widget.pickPlayer.betData[index].toLowerCase())]) ?? 0).toString()).toStringAsFixed(1)}P",
-                                    style: 10.w4(
-                                        color: AppColors.cB3B3B3, height: 1),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                          Container(
-                            width: 62.w,
-                            height: 55.w,
-                            margin: EdgeInsets.only(left: 9.w),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(9.w),
-                                border: Border.all(
-                                    color: AppColors.ce5e5e5, width: 1)),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                    double.parse(((guessItemController
-                                                    .player
-                                                    .guessInfo
-                                                    .guessReferenceValue
-                                                    .getValue(
-                                                        guessItemController
-                                                            .player
-                                                            .betData[index])) ??
-                                                0)
-                                            .toString())
-                                        .toStringAsFixed(0),
-                                    style: 18.w7(color: AppColors.cFF7954)),
-                                Text(
-                                  widget.pickPlayer.betData[index],
-                                  style: TextStyle(
-                                      fontSize: 11.sp,
-                                      color: AppColors.cFF7954),
-                                )
-                              ],
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(left: 11.w),
-                            child: Column(
-                              children: [
-                                _buildBtn(index, "MORE", "1"),
-                                7.vGap,
-                                _buildBtn(index, "LESS", "2")
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
+                    (index) => _buildItem(index),
                   )),
             ),
           ),
@@ -286,6 +169,115 @@ class _GuessItemState extends State<GuessItem>
     );
   }
 
+  Container _buildItem(int index) {
+    return Container(
+      margin: EdgeInsets.only(left: 13.w, right: 11.w),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          InkWell(
+            onTap: () {
+              print('点击了头像');
+              Get.toNamed(RouteNames.picksPlayerDetail,
+                  id: GlobalNestedKey.PICKS,
+                  arguments: {
+                    "teamId": widget.pickPlayer.guessInfo.teamId,
+                    "uuid": widget.pickPlayer.guessInfo.teamId
+                  });
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                  color: AppColors.ce5e5e5,
+                  borderRadius: BorderRadius.circular(26.w)),
+              child: Stack(children: [
+                Image.asset(
+                  Assets.testTeamLogoPng,
+                  width: 55.w,
+
+                  /// todo 换成网络图
+                ),
+                Text(guessItemController.player.baseInfoList.grade,
+                    style: 14.w7(color: AppColors.c262626))
+              ]),
+            ),
+          ),
+          Expanded(
+            child: Container(
+              constraints: BoxConstraints(maxWidth: 89.w),
+              margin: EdgeInsets.only(left: 10.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    guessItemController.player.baseInfoList.ename,
+                    style: 13.w4(
+                        color: AppColors.c666666,
+                        height: 1,
+                        overflow: TextOverflow.ellipsis),
+                  ),
+                  2.vGap,
+                  Text(
+                    "VS ${widget.pickPlayer.awayTeamInfo.shortEname}   ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(widget.pickPlayer.guessInfo.gameStartTime))}",
+                    style: 10.w4(
+                        color: AppColors.cB3B3B3,
+                        height: 1,
+                        overflow: TextOverflow.ellipsis),
+                  ),
+                  8.vGap,
+                  Text(
+                    "PPG: ${double.parse(((widget.pickPlayer.dataAvgList.toJson()[ParamUtils.getProKey(widget.pickPlayer.betData[index].toLowerCase())]) ?? 0).toString()).toStringAsFixed(1)}P",
+                    style: 10.w4(color: AppColors.cB3B3B3, height: 1),
+                  ),
+                  Text(
+                    "L5: ${double.parse(((widget.pickPlayer.guessInfo.l5Avg.toJson()[ParamUtils.getProKey(widget.pickPlayer.betData[index].toLowerCase())]) ?? 0).toString()).toStringAsFixed(1)}P",
+                    style: 10.w4(color: AppColors.cB3B3B3, height: 1),
+                  )
+                ],
+              ),
+            ),
+          ),
+          Container(
+            width: 62.w,
+            height: 55.w,
+            margin: EdgeInsets.only(left: 9.w),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(9.w),
+                border: Border.all(color: AppColors.ce5e5e5, width: 1)),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                    double.parse(((guessItemController
+                                    .player.guessInfo.guessReferenceValue
+                                    .getValue(guessItemController
+                                        .player.betData[index])) ??
+                                0)
+                            .toString())
+                        .toStringAsFixed(0),
+                    style: 18.w7(color: AppColors.cFF7954)),
+                Text(
+                  widget.pickPlayer.betData[index],
+                  style: TextStyle(fontSize: 11.sp, color: AppColors.cFF7954),
+                )
+              ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 11.w),
+            child: Column(
+              children: [
+                _buildBtn(index, "MORE", "1"),
+                7.vGap,
+                _buildBtn(index, "LESS", "2")
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
   Widget _buildBtn(int index, String text, String ml) {
     var gdIsEmpty = widget.pickPlayer.guessInfo.guessData.isEmpty;
     var isChoice = gdIsEmpty
@@ -365,8 +357,8 @@ class _GuessItemState extends State<GuessItem>
         isScrollControlled: true,
         context: context,
         builder: (context) {
-          return Container(
-            constraints: BoxConstraints(maxHeight: 500.w),
+          return SizedBox(
+            height: 595.h,
             child: Stack(
               children: [
                 Container(
@@ -537,7 +529,7 @@ class _GuessItemState extends State<GuessItem>
                                                   child: guessItemController
                                                           .barGroups.isEmpty
                                                       ? Text(
-                                                          "~~",//todo 替换缺省
+                                                          "~~", //todo 替换缺省
                                                           style: 14.w4(
                                                               color: AppColors
                                                                   .cB3B3B3

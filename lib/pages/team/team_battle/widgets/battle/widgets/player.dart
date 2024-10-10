@@ -106,12 +106,13 @@ class _PlayerState extends State<Player> {
                         ),
                         Expanded(
                             child: Container(
-                              alignment: Alignment.centerLeft,
+                                alignment: Alignment.centerLeft,
                                 child: Text(
-                              "PLAYER",
-                              style: 10.w4(color: AppColors.c666666),
-                            ))),
-                        Expanded(
+                                  "PLAYER",
+                                  style: 10.w4(color: AppColors.c666666),
+                                ))),
+                        SizedBox(
+                          width: 50.w,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -269,20 +270,22 @@ class _PlayerState extends State<Player> {
                                       SizedBox(
                                         width: 58.w,
                                         child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Transform.rotate(
                                                 angle: pi / 180 * -90,
                                                 child: Text(
                                                   "C",
-                                                  style:
-                                                  16.w7(color: AppColors.cD8D8D8),
+                                                  style: 16.w7(
+                                                      color: AppColors.cD8D8D8),
                                                 )),
                                             PlayerAvatarWidget(
                                               playerBaseInfo: null,
                                               width: 36.w,
                                               fontColor: AppColors.c262626,
-                                              backgroundColor: AppColors.cD9D9D9,
+                                              backgroundColor:
+                                                  AppColors.cD9D9D9,
                                             ),
                                             6.hGap,
                                           ],
@@ -299,7 +302,9 @@ class _PlayerState extends State<Player> {
                                             "Player Name",
                                             style: 12.w4(
                                                 color: AppColors.c262626,
-                                                height: 1),
+                                                height: 1,
+                                                overflow:
+                                                    TextOverflow.ellipsis),
                                           ),
                                           4.vGap,
                                           Row(
@@ -348,38 +353,40 @@ class _PlayerState extends State<Player> {
                                           )
                                         ],
                                       )),
-                                      Expanded(
-                                          child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            "8.9",
-                                            style: 14.w7(
-                                                color: index == 0
-                                                    ? AppColors.c3B93FF
-                                                    : AppColors.c262626,
-                                                height: 1),
-                                          ),
-                                          Visibility(
-                                            visible: index == 0,
-                                            child: Container(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 4.w),
-                                              decoration: BoxDecoration(
-                                                  color: AppColors.c3B93FF,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          4.w)),
-                                              child: Text(
-                                                "SVP",
-                                                style: 12.w7(
-                                                    color: AppColors.cFFFFFF),
-                                              ),
+                                      SizedBox(
+                                        width: 50.w,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              "8.9",
+                                              style: 14.w7(
+                                                  color: index == 0
+                                                      ? AppColors.c3B93FF
+                                                      : AppColors.c262626,
+                                                  height: 1),
                                             ),
-                                          )
-                                        ],
-                                      )),
+                                            Visibility(
+                                              visible: index == 0,
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 4.w),
+                                                decoration: BoxDecoration(
+                                                    color: AppColors.c3B93FF,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            4.w)),
+                                                child: Text(
+                                                  "SVP",
+                                                  style: 12.w7(
+                                                      color: AppColors.cFFFFFF),
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
                                       SizedBox(
                                           width: 50.w,
                                           child: Center(

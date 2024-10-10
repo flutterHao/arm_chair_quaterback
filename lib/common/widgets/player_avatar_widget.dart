@@ -24,6 +24,7 @@ class PlayerAvatarWidget extends StatelessWidget {
     this.fontColor = AppColors.cFFFFFF,
     this.imageWidth,
     this.imageHeight,
+    this.showGrade = true,
   });
 
   final NbaPlayerInfosPlayerBaseInfoList? playerBaseInfo;
@@ -35,6 +36,7 @@ class PlayerAvatarWidget extends StatelessWidget {
   final double? radius;
   final double fontSize;
   final Color fontColor;
+  final bool showGrade;
 
   @override
   Widget build(BuildContext context) {
@@ -70,9 +72,12 @@ class PlayerAvatarWidget extends StatelessWidget {
           Positioned(
               top: 0,
               left: 0,
-              child: Text(
-                playerBaseInfo?.grade ?? 'SS',
-                style: 14.w7(color: fontColor),
+              child: Visibility(
+                visible: showGrade,
+                child: Text(
+                  playerBaseInfo?.grade ?? 'SS',
+                  style: 14.w7(color: fontColor),
+                ),
               ))
         ],
       ),
