@@ -68,18 +68,18 @@ class _MatchingState extends State<Matching>
   List<String> avatars = [];
   List<Size> sizes = [];
   List<Offset> totalOffsets = [
-    Offset(54.w, 316.w),
-    Offset(114.w, 186.w),
-    Offset(262.w, 239.w),
-    Offset(319.w, 419.w),
-    Offset(241.w, 500.w),
-    Offset(73.w, 532.w),
-    Offset(77.w, 401.w),
-    Offset(66.w, 333.w),
-    Offset(150.w, 196.w),
-    Offset(254.w, 210.w),
-    Offset(280.w, 450.w),
-    Offset(130.w, 239.w),
+    Offset(30.w, 256.w),
+    Offset(50.w, 500.w),
+    Offset(160.w, 600.w),
+    Offset(280.w, 530.w),
+    Offset(270.w, 400.w),
+    Offset(170.w, 140.w),
+    Offset(290.w, 250.w),
+    Offset(30.w, 386.w),
+    Offset(160.w, 500.w),
+    Offset(130.w, 270.w),
+    Offset(220.w, 240.w),
+    Offset(35.w, 580.w),
   ];
   List<Offset> offsets = [];
 
@@ -129,6 +129,7 @@ class _MatchingState extends State<Matching>
       }
     }
     sizes.replaceRange(indexOf, indexOf+1, [Size.square((Random().nextInt(44)+20).toDouble())]);
+
     if (mounted) setState(() {});
 
     // state.forward();
