@@ -15,6 +15,7 @@ import 'package:get/get.dart';
 
 class MatchSuccess extends StatefulWidget {
   const MatchSuccess({required this.onCompleted, super.key});
+
   final Function() onCompleted;
 
   @override
@@ -32,12 +33,11 @@ class _MatchSuccessState extends State<MatchSuccess>
     super.initState();
 
     animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 1200))
+        vsync: this, duration: const Duration(milliseconds: 500))
       ..addStatusListener(_matchStatusListener);
     animation = TweenSequence([
-      TweenSequenceItem(tween: Tween(begin: 0.0, end: 1.0), weight: 3),
-      TweenSequenceItem(tween: Tween(begin: 2.0, end: 3.0), weight: 3),
-      TweenSequenceItem(tween: Tween(begin: 4.0, end: 5.0), weight: 4),
+      TweenSequenceItem(tween: Tween(begin: 0.0, end: 1.0), weight: 5),
+      TweenSequenceItem(tween: Tween(begin: 4.0, end: 5.0), weight: 5),
     ]).animate(animationController)
       ..addListener(_animationListener);
     animationController.forward();
@@ -49,6 +49,11 @@ class _MatchSuccessState extends State<MatchSuccess>
 
   void _matchStatusListener(AnimationStatus status) {
     if (status == AnimationStatus.completed) {
+      Future.delayed(const Duration(seconds: 1), () {
+        animationController.reverse();
+      });
+    }
+    if (status == AnimationStatus.dismissed) {
       widget.onCompleted.call();
     }
   }
@@ -116,9 +121,14 @@ class _MatchSuccessState extends State<MatchSuccess>
                             children: [
                               Text(
                                 "ME",
-                                style: 10.w4(color: AppColors.c3B93FF,height: 1),
+                                style:
+                                    10.w4(color: AppColors.c3B93FF, height: 1),
                               ),
-                              Text("USER NAME",style: 19.w7(color: AppColors.c262626,height: 1),)
+                              Text(
+                                "USER NAME",
+                                style:
+                                    19.w7(color: AppColors.c262626, height: 1),
+                              )
                             ],
                           ),
                         ),
@@ -128,14 +138,21 @@ class _MatchSuccessState extends State<MatchSuccess>
                           height: 20.w,
                           padding: EdgeInsets.symmetric(horizontal: 8.w),
                           decoration: BoxDecoration(
-                            color: AppColors.c3B93FF,
-                            borderRadius: BorderRadius.circular(10.w)
-                          ),
+                              color: AppColors.c3B93FF,
+                              borderRadius: BorderRadius.circular(10.w)),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("OVR",style: 14.w4(color: AppColors.cF2F2F2,height: 1),),
-                              Text("75%",style: 14.w4(color: AppColors.cF2F2F2,height: 1),)
+                              Text(
+                                "OVR",
+                                style:
+                                    14.w4(color: AppColors.cF2F2F2, height: 1),
+                              ),
+                              Text(
+                                "75%",
+                                style:
+                                    14.w4(color: AppColors.cF2F2F2, height: 1),
+                              )
                             ],
                           ),
                         )
@@ -152,8 +169,7 @@ class _MatchSuccessState extends State<MatchSuccess>
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(14.w),
                             child: IconWidget(
-                                iconWidth: 64.w,
-                                icon: controller.meAvatar))),
+                                iconWidth: 64.w, icon: controller.meAvatar))),
                     12.hGap,
                     IconWidget(
                       iconWidth: 7.w,
@@ -170,44 +186,28 @@ class _MatchSuccessState extends State<MatchSuccess>
         ),
       ),
 
-      /// v
+      /// vs
       Positioned(
-          left: -width / 2 * (progress.value > 4 ? (5 - progress.value) : 1),
+          left: 0,
+          right: 0,
           top: (height - designHeight) / 2 + 86.w,
           bottom: (height - designHeight) / 2 + 86.w,
-          child: Container(
-            width: width / 2,
-            height: 86.w,
-            alignment: Alignment.centerRight,
-            child: Text(
-              "V",
-              style: 64.w7(color: AppColors.cFFFFFF, height: 1),
-            ),
-          )),
-
-      /// s
-      Positioned(
-          right: -width / 2 * (progress.value > 4 ? (5 - progress.value) : 1),
-          top: (height - designHeight) / 2 + 86.w,
-          bottom: (height - designHeight) / 2 + 86.w,
-          child: Container(
-            width: width / 2,
-            height: 86.w,
-            alignment: Alignment.centerLeft,
-            child: Text(
-              "S",
-              style: 64.w7(color: AppColors.cFFFFFF, height: 1),
+          child: Transform.scale(
+            scale: 3 - (progress.value > 4 ? (progress.value - 4) : 0) * 2,
+            child: Opacity(
+              opacity: 1 * (progress.value > 4 ? (progress.value - 4) : 0),
+              child: Center(
+                child: Text(
+                  "VS",
+                  style: 64.w7(color: AppColors.cFFFFFF, height: 1),
+                ),
+              ),
             ),
           )),
 
       /// right
       Positioned(
-          right: -282.w *
-              (progress.value > 2 && progress.value < 3
-                  ? (1 - progress.value + 2)
-                  : progress.value > 3
-                      ? 0
-                      : 1),
+          right: -282.w * (progress.value < 2 ? (1 - progress.value) : 0),
           // right: -282.w,
           bottom: (height - designHeight) / 2,
           child: Stack(
@@ -266,8 +266,8 @@ class _MatchSuccessState extends State<MatchSuccess>
                       height: 64.w,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(14.w),
-                          border: Border.all(
-                              color: AppColors.cFF7954, width: 2.w)),
+                          border:
+                              Border.all(color: AppColors.cFF7954, width: 2.w)),
                       child: ClipRRect(
                           borderRadius: BorderRadius.circular(14.w),
                           child: IconWidget(
@@ -285,9 +285,12 @@ class _MatchSuccessState extends State<MatchSuccess>
                           children: [
                             Text(
                               "OPPONENT",
-                              style: 10.w4(color: AppColors.cFF7954,height: 1),
+                              style: 10.w4(color: AppColors.cFF7954, height: 1),
                             ),
-                            Text("USER NAME",style: 19.w7(color: AppColors.c262626,height: 1),)
+                            Text(
+                              "USER NAME",
+                              style: 19.w7(color: AppColors.c262626, height: 1),
+                            )
                           ],
                         ),
                       ),
@@ -298,13 +301,18 @@ class _MatchSuccessState extends State<MatchSuccess>
                         padding: EdgeInsets.symmetric(horizontal: 8.w),
                         decoration: BoxDecoration(
                             color: AppColors.cFF7954,
-                            borderRadius: BorderRadius.circular(10.w)
-                        ),
+                            borderRadius: BorderRadius.circular(10.w)),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("OVR",style: 14.w4(color: AppColors.cF2F2F2,height: 1),),
-                            Text("75%",style: 14.w4(color: AppColors.cF2F2F2,height: 1),)
+                            Text(
+                              "OVR",
+                              style: 14.w4(color: AppColors.cF2F2F2, height: 1),
+                            ),
+                            Text(
+                              "75%",
+                              style: 14.w4(color: AppColors.cF2F2F2, height: 1),
+                            )
                           ],
                         ),
                       )

@@ -30,27 +30,29 @@ class TeamBattlePage extends GetView<TeamBattleController> {
       id: "team_battle",
       builder: (_) {
         return HorizontalDragBackWidget(
-          canPop: TeamBattleController.canPop,
-          child: Container(
-            color: AppColors.c000000.withOpacity(.8),
-            child: Obx(() {
-              return Stack(
+          // canPop: TeamBattleController.canPop,
+          child: Obx(() {
+            return AnimatedContainer(
+              color: AppColors.c000000.withOpacity(controller.step.value>=3?1:.6),
+              duration: const Duration(milliseconds: 1000),
+              child: Stack(
                 alignment: Alignment.center,
                 children: [
                   if (controller.step.value == 1)
                     const Matching()
-                  else if (controller.step.value == 2)
-                    MatchSuccess(onCompleted: () {
-                      Future.delayed(const Duration(seconds: 1), () {
-                        controller.nextStep();
-                      });
-                    })
                   else
-                    const BattleMain()
+                    if (controller.step.value == 2)
+                      MatchSuccess(onCompleted: () {
+                        Future.delayed(const Duration(seconds: 1), () {
+                          controller.nextStep();
+                        });
+                      })
+                    else
+                      const BattleMain()
                 ],
-              );
-            }),
-          ),
+              ),
+            );
+          }),
         );
       },
     );
