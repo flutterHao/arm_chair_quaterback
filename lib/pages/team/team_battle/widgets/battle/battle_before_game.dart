@@ -74,7 +74,7 @@ class _BattleBeforeGameState extends State<BattleBeforeGame>
     bottomAnimationController.forward();
 
     bottomProgressAnimationController = BattleAnimationController(
-        vsync: this, begin: 0.0, end: 6, duration: const Duration(seconds: 1));
+        vsync: this, begin: 0.0, end: 6.0, duration: const Duration(seconds: 1));
     bottomProgressAnimationController.controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         Future.delayed(const Duration(milliseconds: 500), () {
@@ -111,8 +111,8 @@ class _BattleBeforeGameState extends State<BattleBeforeGame>
 
     bottomAvatarAnimationController = BattleAnimationController(
         vsync: this,
-        begin: 0,
-        end: 5,
+        begin: 0.0,
+        end: 5.0,
         duration: const Duration(milliseconds: 1000));
 
     animationController = AnimationController(
@@ -128,8 +128,8 @@ class _BattleBeforeGameState extends State<BattleBeforeGame>
 
     bottomLeaveAnimationController = BattleAnimationController(
         vsync: this,
-        begin: 0,
-        end: 1,
+        begin: 0.0,
+        end: 1.0,
         duration: const Duration(milliseconds: 300));
   }
 
@@ -139,87 +139,90 @@ class _BattleBeforeGameState extends State<BattleBeforeGame>
       return SizedBox(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Positioned(
-                right: width * value - width,
-                bottom: 423.h,
-                child: Container(
-                  margin: EdgeInsets.only(top: 16.w),
-                  decoration: BoxDecoration(
-                      color: AppColors.cF2F2F2,
-                      borderRadius:
-                          BorderRadius.only(bottomLeft: Radius.circular(32.h))),
+        child: Opacity(
+          opacity: max(value, 0.5),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Positioned(
+                  right: width * value - width,
+                  bottom: 423.h,
                   child: Container(
-                    width: width,
-                    padding:
-                        EdgeInsets.only(top: 32.h, bottom: 16.h, right: 32.w),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                            margin: EdgeInsets.symmetric(
-                              horizontal: 16.w,
-                            ),
-                            width: 82.h,
-                            height: 82.h,
-                            decoration: BoxDecoration(
-                                color: AppColors.cFFFFFF,
-                                borderRadius: BorderRadius.circular(19.h)),
-                            child: IconWidget(
-                                iconWidth: 65.h, icon: Assets.uiBattleNewsPng)),
-                        Expanded(
-                            child: Text.rich(TextSpan(
-                                style: 12.w4(color: AppColors.cB2B2B2),
-                                children: [
-                              const TextSpan(
-                                  text:
-                                      "Recently, Kevin Durant because of drinking some unknown substances, resulting in infection to the team.so that"),
-                              TextSpan(
-                                  text: " the physical value of ",
-                                  style: 12.w7(color: AppColors.c000000)),
-                              TextSpan(
-                                  text: "the team's",
-                                  style: 12.w7(color: AppColors.c3B93FF)),
-                              TextSpan(
-                                  text: " starting players",
-                                  style: 12.w7(color: AppColors.c000000)),
-                              TextSpan(
-                                  text: " -5%.",
-                                  style: 12.w7(color: AppColors.cE72646)),
-                            ])))
-                      ],
+                    margin: EdgeInsets.only(top: 16.w),
+                    decoration: BoxDecoration(
+                        color: AppColors.cF2F2F2,
+                        borderRadius:
+                            BorderRadius.only(bottomLeft: Radius.circular(32.h))),
+                    child: Container(
+                      width: width,
+                      padding:
+                          EdgeInsets.only(top: 32.h, bottom: 16.h, right: 32.w),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                              margin: EdgeInsets.symmetric(
+                                horizontal: 16.w,
+                              ),
+                              width: 82.h,
+                              height: 82.h,
+                              decoration: BoxDecoration(
+                                  color: AppColors.cFFFFFF,
+                                  borderRadius: BorderRadius.circular(19.h)),
+                              child: IconWidget(
+                                  iconWidth: 65.h, icon: Assets.uiBattleNewsPng)),
+                          Expanded(
+                              child: Text.rich(TextSpan(
+                                  style: 12.w4(color: AppColors.cB2B2B2),
+                                  children: [
+                                const TextSpan(
+                                    text:
+                                        "Recently, Kevin Durant because of drinking some unknown substances, resulting in infection to the team.so that"),
+                                TextSpan(
+                                    text: " the physical value of ",
+                                    style: 12.w7(color: AppColors.c000000)),
+                                TextSpan(
+                                    text: "the team's",
+                                    style: 12.w7(color: AppColors.c3B93FF)),
+                                TextSpan(
+                                    text: " starting players",
+                                    style: 12.w7(color: AppColors.c000000)),
+                                TextSpan(
+                                    text: " -5%.",
+                                    style: 12.w7(color: AppColors.cE72646)),
+                              ])))
+                        ],
+                      ),
                     ),
-                  ),
-                )),
-            Positioned(
-                left: 208.w * value - 208.w,
-                bottom: 537.h,
-                child: Container(
-                  height: 32.h,
-                  width: 208.w,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      color: AppColors.cE72646,
-                      borderRadius: BorderRadius.horizontal(
-                          right: Radius.circular(16.h))),
-                  child: Text(
-                    "BREAKING NEWS",
-                    style: 21.w7(color: AppColors.cFFFFFF),
-                  ),
-                )),
-            Positioned(
-                bottom: 393.h,
-                child: AnimatedOpacity(
-                  duration: const Duration(milliseconds: 100),
-                  opacity: breakingNewsComplete.value ? 1 : 0,
-                  child: Text(
-                    "TAP SCREEN TO CONTINUE",
-                    style: 14.w7(color: AppColors.c666666),
-                  ),
-                ))
-          ],
+                  )),
+              Positioned(
+                  left: 208.w * value - 208.w,
+                  bottom: 537.h,
+                  child: Container(
+                    height: 32.h,
+                    width: 208.w,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        color: AppColors.cE72646,
+                        borderRadius: BorderRadius.horizontal(
+                            right: Radius.circular(16.h))),
+                    child: Text(
+                      "BREAKING NEWS",
+                      style: 21.w7(color: AppColors.cFFFFFF),
+                    ),
+                  )),
+              Positioned(
+                  bottom: 393.h,
+                  child: AnimatedOpacity(
+                    duration: const Duration(milliseconds: 100),
+                    opacity: breakingNewsComplete.value ? 1 : 0,
+                    child: Text(
+                      "TAP SCREEN TO CONTINUE",
+                      style: 14.w7(color: AppColors.c666666),
+                    ),
+                  ))
+            ],
+          ),
         ),
       );
     });

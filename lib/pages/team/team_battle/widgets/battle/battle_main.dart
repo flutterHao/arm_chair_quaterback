@@ -44,12 +44,10 @@ class _BattleMainState extends State<BattleMain>
         vsync: this, duration: const Duration(milliseconds: 400))
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed && !isStartAnimationComplete) {
-
           isStartAnimationComplete = true;
           animation.removeListener(_startAnimationListener);
           animationController.reset();
           animation.addListener(() {
-
             headerAnimationValue.value = animation.value;
           });
           animationController.forward();
@@ -100,29 +98,18 @@ class _BattleMainState extends State<BattleMain>
                     ? const SizedBox.shrink()
                     : Stack(
                         children: [
-                          PageView(
-                            physics: const NeverScrollableScrollPhysics(),
-                            scrollDirection: Axis.vertical,
-                            controller: pageController,
-                            children: [
-                              BattleBeforeGame(
-                                onDown: () {
-                                  controller.nextStep();
-                                  pageController.animateToPage(1,
-                                      duration:
-                                          const Duration(milliseconds: 300),
-                                      curve: Curves.linear);
-                                },
-                              ),
-                              BattleGame(onGameOver: () {
+                          if (controller.step.value == 3)
+                            BattleBeforeGame(
+                              onDown: () {
                                 controller.nextStep();
-                                pageController.animateToPage(2,
-                                    duration: const Duration(milliseconds: 300),
-                                    curve: Curves.linear);
-                              }),
-                              const BattleGameOver()
-                            ],
-                          ),
+                              },
+                            ),
+                          if (controller.step.value == 4)
+                            BattleGame(onGameOver: () {
+                              controller.nextStep();
+                            }),
+                          if (controller.step.value == 5)
+                            const BattleGameOver(),
                           _buildHeader(context),
                         ],
                       )

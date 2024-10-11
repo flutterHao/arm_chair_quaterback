@@ -40,7 +40,9 @@ class _BattleGameOverState extends State<BattleGameOver>
       child: Stack(
         alignment: Alignment.center,
         children: [
-          const ScorePanel(leftScore: 189, rightScore: 160),
+          Positioned(
+              top: 145.h,
+              child: const ScorePanel(leftScore: 189, rightScore: 160)),
           Positioned(
             top: 250.h,
             left: 0,
@@ -112,15 +114,14 @@ class _BattleGameOverState extends State<BattleGameOver>
             left: 0,
             right: 0,
             bottom: 0,
-            child: TabBarView(controller: tabController, children: const [
-              Statistic(),
-              Player()
-            ]),
+            child: TabBarView(
+                controller: tabController,
+                children: const [Statistic(), Player()]),
           ),
           Positioned(
               bottom: 36.h,
               child: InkWell(
-                onTap: (){
+                onTap: () {
                   Get.back();
                 },
                 child: SizedBox(
