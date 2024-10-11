@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-11 17:18:41
- * @LastEditTime: 2024-10-08 12:11:28
+ * @LastEditTime: 2024-10-11 14:40:50
  */
 class Assets {
   ///home
@@ -17,43 +17,42 @@ class Assets {
   static const uiNavubarSel_02Png = 'assets/images/home/ui_navubar_sel_02.png';
 
   ///icon
-  static const head_0000Png = 'assets/images/icon/head_0000.png';
-  static const iconBackPng = 'assets/images/icon/icon_back.png';
-  static const iconClosePng = 'assets/images/icon/icon_close.png';
-  static const iconSharePng = 'assets/images/icon/icon_share.png';
-  static const uiIconArrowsPng = 'assets/images/icon/ui_icon_arrows.png';
-  static const uiIconArrows_04Png = 'assets/images/icon/ui_icon_arrows_04.png';
-  static const uiIconAwardPng = 'assets/images/icon/ui_icon_award.png';
-  static const uiIconChatting_01Png =
-      'assets/images/icon/ui_icon_chatting_01.png';
-  static const uiIconChatting_02Png =
-      'assets/images/icon/ui_icon_chatting_02.png';
-  static const uiIconExpansionPng = 'assets/images/icon/ui_icon_expansion.png';
-  static const uiIconEye_01Png = 'assets/images/icon/ui_icon_eye_01.png';
-  static const uiIconEye_02Png = 'assets/images/icon/ui_icon_eye_02.png';
-  static const uiIconJettonPng = 'assets/images/icon/ui_icon_jetton.png';
-  static const uiIconLabelPng = 'assets/images/icon/ui_icon_label.png';
-  static const uiIconLike_01Png = 'assets/images/icon/ui_icon_like_01.png';
-  static const uiIconLike_02Png = 'assets/images/icon/ui_icon_like_02.png';
-  static const uiIconLockPng = 'assets/images/icon/ui_icon_lock.png';
-  static const uiIconMoneyPng = 'assets/images/icon/ui_icon_money.png';
-  static const uiIconMorePng = 'assets/images/icon/ui_icon_more.png';
-  static const uiIconMsgPng = 'assets/images/icon/ui_icon_msg.png';
-  static const uiIconPlusPng = 'assets/images/icon/ui_icon_plus.png';
-  static const uiIconReadPng = 'assets/images/icon/ui_icon_read.png';
-  static const uiIconRingPng = 'assets/images/icon/ui_icon_ring.png';
-  static const uiIconRing_01Png = 'assets/images/icon/ui_icon_ring_01.png';
-  static const uiIconRuidgtPng = 'assets/images/icon/ui_icon_ruidgt.png';
-  static const uiIconShrinkPng = 'assets/images/icon/ui_icon_shrink.png';
-  static const uiIconStaminaPng = 'assets/images/icon/ui_icon_stamina.png';
-  static const uiIconSwitch_01Png = 'assets/images/icon/ui_icon_switch_01.png';
-  static const uiIconSwitch_02Png = 'assets/images/icon/ui_icon_switch_02.png';
-  static const uiIconTriangle_03Png =
-      'assets/images/icon/ui_icon_triangle_03.png';
-  static const uiIconUnfoldPng = 'assets/images/icon/ui_icon_unfold.png';
-  static const uiWindowsAwardPng = 'assets/images/icon/ui_windows_award.png';
+static const head_0000Png = 'assets/images/icon/head_0000.png';
+static const icon_306Png = 'assets/images/icon/icon_306.png';
+static const iconBackPng = 'assets/images/icon/icon_back.png';
+static const iconClosePng = 'assets/images/icon/icon_close.png';
+static const iconSharePng = 'assets/images/icon/icon_share.png';
+static const uiIconArrowsPng = 'assets/images/icon/ui_icon_arrows.png';
+static const uiIconArrows_04Png = 'assets/images/icon/ui_icon_arrows_04.png';
+static const uiIconAwardPng = 'assets/images/icon/ui_icon_award.png';
+static const uiIconChatting_01Png = 'assets/images/icon/ui_icon_chatting_01.png';
+static const uiIconChatting_02Png = 'assets/images/icon/ui_icon_chatting_02.png';
+static const uiIconExpansionPng = 'assets/images/icon/ui_icon_expansion.png';
+static const uiIconEye_01Png = 'assets/images/icon/ui_icon_eye_01.png';
+static const uiIconEye_02Png = 'assets/images/icon/ui_icon_eye_02.png';
+static const uiIconJettonPng = 'assets/images/icon/ui_icon_jetton.png';
+static const uiIconLabelPng = 'assets/images/icon/ui_icon_label.png';
+static const uiIconLike_01Png = 'assets/images/icon/ui_icon_like_01.png';
+static const uiIconLike_02Png = 'assets/images/icon/ui_icon_like_02.png';
+static const uiIconLockPng = 'assets/images/icon/ui_icon_lock.png';
+static const uiIconMoneyPng = 'assets/images/icon/ui_icon_money.png';
+static const uiIconMorePng = 'assets/images/icon/ui_icon_more.png';
+static const uiIconMsgPng = 'assets/images/icon/ui_icon_msg.png';
+static const uiIconPlusPng = 'assets/images/icon/ui_icon_plus.png';
+static const uiIconReadPng = 'assets/images/icon/ui_icon_read.png';
+static const uiIconRingPng = 'assets/images/icon/ui_icon_ring.png';
+static const uiIconRing_01Png = 'assets/images/icon/ui_icon_ring_01.png';
+static const uiIconRuidgtPng = 'assets/images/icon/ui_icon_ruidgt.png';
+static const uiIconShrinkPng = 'assets/images/icon/ui_icon_shrink.png';
+static const uiIconStaminaPng = 'assets/images/icon/ui_icon_stamina.png';
+static const uiIconSwitch_01Png = 'assets/images/icon/ui_icon_switch_01.png';
+static const uiIconSwitch_02Png = 'assets/images/icon/ui_icon_switch_02.png';
+static const uiIconTriangle_03Png = 'assets/images/icon/ui_icon_triangle_03.png';
+static const uiIconUnfoldPng = 'assets/images/icon/ui_icon_unfold.png';
+static const uiWindowsAwardPng = 'assets/images/icon/ui_windows_award.png';
   static const uiIconDelete_01Png = 'assets/images/icon/ui_icon_delete_01.png';
   static const uiIconDelete_02Png = 'assets/images/icon/ui_icon_delete_02.png';
+
 
   ///test
   static const testTeamLogoPng = 'assets/test/test_team_logo.png';
@@ -113,6 +112,8 @@ class Assets {
   static const uiBgBattleJpg = 'assets/images/team/ui_bg_battle.jpg';
   static const uiBgCourtJpg = 'assets/images/team/ui_bg_court.jpg';
   static const uiBgFusePng = 'assets/images/team/ui_bg_fuse.png';
+  static const uiBgLightPng = 'assets/images/team/ui_bg_light.png';
+  static const uiBgMoneyPng = 'assets/images/team/ui_bg_money.png';
   static const uiBgOpenPng = 'assets/images/team/ui_bg_open.png';
   static const uiBgPedestalPng = 'assets/images/team/ui_bg_pedestal.png';
   static const uiBgPillar_01Png = 'assets/images/team/ui_bg_pillar_01.png';

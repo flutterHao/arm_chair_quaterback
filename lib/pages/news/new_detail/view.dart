@@ -11,6 +11,7 @@ import 'package:arm_chair_quaterback/common/widgets/comments/comments_widget.dar
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/more_new_widget.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -170,7 +171,7 @@ class NewsDetailPage extends StatelessWidget {
       NewsDetailController(newsId),
       tag: newsId.toString(),
     );
-
+    SystemChannels.textInput.invokeMethod('TextInput.setKeyboardAppearance', 1);
     return HorizontalDragBackWidget(
       child: GetBuilder<NewsDetailController>(
         tag: newsId.toString(), // 使用 tag 区分控制器实例

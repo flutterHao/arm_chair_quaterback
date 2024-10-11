@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 11:33:27
- * @LastEditTime: 2024-09-30 16:04:26
+ * @LastEditTime: 2024-10-10 16:59:42
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -32,7 +32,8 @@ extension NumExt on num {
   TextStyle w4(
           {Color color = AppColors.c262626,
           TextOverflow? overflow,
-          double? height,String? fontFamily}) =>
+          double? height,
+          String? fontFamily}) =>
       TextStyle(
           fontWeight: FontWeight.w400,
           height: height,
@@ -43,12 +44,13 @@ extension NumExt on num {
           ///TODO
           // fontSize: kIsWeb ? toDouble() : toDouble().sp,
           color: color,
-          fontFamily:fontFamily);
+          fontFamily: fontFamily);
 
   TextStyle w7(
           {Color color = AppColors.c262626,
           TextOverflow? overflow,
-          double? height,String? fontFamily}) =>
+          double? height,
+          String? fontFamily}) =>
       TextStyle(
           height: height,
           fontWeight: FontWeight.w700,
@@ -56,7 +58,7 @@ extension NumExt on num {
           fontSize: toDouble().h,
           overflow: overflow,
           color: color,
-          fontFamily: fontFamily??FontFamily.fRobotoBlack);
+          fontFamily: fontFamily ?? FontFamily.fRobotoBlack);
 
   Divider get hLine => Divider(
         color: AppColors.cB3B3B3,

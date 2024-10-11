@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-10-09 09:57:08
+ * @LastEditTime: 2024-10-11 16:04:38
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -22,8 +22,8 @@ import 'package:arm_chair_quaterback/pages/news/rank/widgets/border_container.da
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/border_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/pie_chart.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/vertical_drag_widget.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/view.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/widgets/team_training.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team/view.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -60,7 +60,7 @@ class _TeamIndexPageState extends State<TeamIndexPage>
             return GetPageRoute(
               opaque: false,
               settings: settings,
-              page: () => const TeamTrainingPage(),
+              page: () => const TrainingPage(),
               // binding: NewDetailBinding(), /*  */
             );
         }
@@ -543,8 +543,7 @@ class _TeamView extends GetView<TeamIndexController> {
                 offset: Offset(0, -3.h),
                 width: 152.h,
                 height: 64.h,
-                           onTap: () => Get.toNamed(RouteNames.teamTeamBattle),
-      
+                onTap: () => Get.toNamed(RouteNames.teamTeamBattle),
                 margin: EdgeInsets.only(bottom: 2.h),
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(32.h),
@@ -595,7 +594,7 @@ class _TeamView extends GetView<TeamIndexController> {
               ),
             );
           }),
-          
+
           ///训练按钮
           Obx(() {
             return AnimatedPositioned(
@@ -606,7 +605,7 @@ class _TeamView extends GetView<TeamIndexController> {
                 offset: Offset(0, -3.h),
                 width: 152.h,
                 height: 64.h,
-                        onTap: () {
+                onTap: () {
                   // ctrl.pageOnTap();
                   Get.toNamed(RouteNames.teamTrainingPage,
                       id: GlobalNestedKey.TEAM);

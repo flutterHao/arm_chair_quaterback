@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-12 16:34:46
- * @LastEditTime: 2024-09-30 16:00:53
+ * @LastEditTime: 2024-10-10 16:43:50
  */
 import 'dart:math';
 
@@ -81,6 +81,7 @@ class CommentDialog extends GetView<CommentController> {
                                       minLines: 1,
                                       maxLines: 10,
                                       focusNode: focusNode,
+                                      // keyboardAppearance:Brightness.light,
                                       // focusNode: controller.focusNode,
                                       cursorColor: AppColors.cFF7954,
                                       scrollPadding: const EdgeInsets.all(0),

@@ -1,4 +1,5 @@
 static const head_0000Png = 'assets/images/icon/head_0000.png';
+static const icon_306Png = 'assets/images/icon/icon_306.png';
 static const iconBackPng = 'assets/images/icon/icon_back.png';
 static const iconClosePng = 'assets/images/icon/icon_close.png';
 static const iconSharePng = 'assets/images/icon/icon_share.png';

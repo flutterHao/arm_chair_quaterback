@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-06 15:16:54
- * @LastEditTime: 2024-09-24 10:20:12
+ * @LastEditTime: 2024-10-11 15:49:38
  */
 class Api {
 
@@ -58,6 +58,7 @@ class Api {
   static const String cGameRankAwardRule =
       "$CONFIG_BASE_PATH/GameRankAwardRule.json";
   static const String cGetPropDefine = "$CONFIG_BASE_PATH/PropDefine.json";
+  static const String  cRewardGroup="$CONFIG_BASE_PATH/RewardGroup.json";
 
 
   /// TeamPlayer
