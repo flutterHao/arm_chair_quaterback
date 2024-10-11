@@ -68,15 +68,13 @@ class TeamBattleController extends GetxController
     breakingNewsBreaking.value = true;
   }
 
-  void onBreakingNewsComplete(){
-    Future.delayed(const Duration(seconds: 3),(){
-      breakingNewsBreaking.value = false;
-    });
-  }
 
   void nextStep() {
     step.value = step.value + 1;
     print('nextStep-------: ${step.value}');
+    if(step.value == 4){
+      breakingNewsBreaking.value = false;
+    }
     if(step.value == 5) {
       _canPop = true;
       update(['team_battle']);

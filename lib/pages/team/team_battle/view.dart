@@ -43,9 +43,7 @@ class TeamBattlePage extends GetView<TeamBattleController> {
                   else
                     if (controller.step.value == 2)
                       MatchSuccess(onCompleted: () {
-                        Future.delayed(const Duration(seconds: 1), () {
-                          controller.nextStep();
-                        });
+                        controller.nextStep();
                       })
                     else
                       const BattleMain()
