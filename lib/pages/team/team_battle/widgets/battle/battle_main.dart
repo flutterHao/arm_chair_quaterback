@@ -103,14 +103,12 @@ class _BattleMainState extends State<BattleMain>
                               onDown: () {
                                 controller.nextStep();
                               },
-                            ),
-                          if (controller.step.value == 4)
+                            )
+                          else
                             BattleGame(onGameOver: () {
                               controller.nextStep();
                             }),
-                          if (controller.step.value == 5)
-                            const BattleGameOver(),
-                          _buildHeader(context),
+                          _buildHeader(context)
                         ],
                       )
               ],

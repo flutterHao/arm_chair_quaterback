@@ -154,4 +154,5 @@ static const uiWindowsAwardPng = 'assets/images/icon/ui_windows_award.png';
   static const uiWindowsStaminaPng =
       'assets/images/team/ui_windows_Stamina.png';
   static const uiBgDiagonalPng = 'assets/images/team/ui__bg_diagonal.png';
+  static const uiTeamFramePng = 'assets/images/team/ui_team_frame.png';
 }

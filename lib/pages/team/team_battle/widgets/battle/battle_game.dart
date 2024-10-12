@@ -11,6 +11,7 @@ import 'package:arm_chair_quaterback/common/widgets/chart_painter.dart';
 import 'package:arm_chair_quaterback/common/widgets/circle_clipper.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/line_chart_clipper.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/battle_game_over.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/widgets/battle_animation_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/widgets/score_panel.dart';
 import 'package:flutter/material.dart';
@@ -85,8 +86,8 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
     startAnimationController.forward();
 
     animationController =
-    AnimationController(vsync: this, duration: const Duration(seconds: 3))
-      ..addStatusListener(_countDownStatusListener);
+        AnimationController(vsync: this, duration: const Duration(seconds: 3))
+          ..addStatusListener(_countDownStatusListener);
     animation = Tween(begin: 4.0, end: 1.0).animate(animationController)
       ..addListener(_countDownAnimationListener);
 
@@ -97,8 +98,7 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
     );
     _scaleAnimation = Tween<double>(begin: 1.2, end: 0.8).animate(
       CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    )
-      ..addStatusListener((status) {
+    )..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
           _controller.reverse(); // 动画完成时反向播放
         }
@@ -135,76 +135,125 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     controller = Get.find();
-    var width = MediaQuery
-        .of(context)
-        .size
-        .width;
+    var width = MediaQuery.of(context).size.width;
     return InkWell(
       // onTap: () => _gameStart(),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          _buildScore(),
-          _buildWinRate(),
-          _buildPlayers(),
-          _buildLive(),
-          _buildGameStartCountdown(),
-          _buildCenterFight(width),
-          _buildWinText()
-        ],
-      ),
+      child: Obx(() {
+        return Stack(
+          alignment: Alignment.center,
+          children: [
+            if (controller.step.value == 5)
+              const BattleGameOver()
+            else ...[
+              _buildWinRate(),
+              _buildPlayers(),
+              _buildLive(),
+              _buildGameStartCountdown(),
+              _buildCenterFight(width),
+              _buildWinText()
+            ],
+            _buildScore(),
+          ],
+        );
+      }),
     );
   }
 
   Positioned _buildLive() {
     return Positioned(
-            top: 247.h,
-            left: 16.w,
-            right: 16.w,
-            child: Stack(
-              alignment: Alignment.topLeft,
-              children: [
-                Obx(() {
-                  return Transform.scale(
-                    scale: max(1, min(countDown.value,3)-1.5),
-                    child: Container(
-                      height: 120.h,
-                      decoration: const BoxDecoration(
-                          color: Colors.red
-                      ),
-                    ),
-                  );
-                }),
-                Container(
-                  height: 12.h,
-                  width: 37.w,
-                  margin: EdgeInsets.only(top: 6.h, left: 7.w),
-                  decoration: BoxDecoration(
-                      color: AppColors.cF2F2F2.withOpacity(0.7),
-                      borderRadius: BorderRadius.circular(6.h)
-                  ),
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 4.h,
-                          width: 4.h,
-                          decoration: BoxDecoration(
-                              color: AppColors.cF42D40,
-                              borderRadius: BorderRadius.circular(2.h)
-                          ),
-                        ),
-                        3.hGap,
-                        Text("LIVE", style: 8.w7(color: AppColors.c262626,
-                            height: 1.12),)
-                      ],
-                    ),
+        top: 247.h,
+        left: 16.w,
+        right: 16.w,
+        child: Stack(
+          alignment: Alignment.topLeft,
+          children: [
+            Obx(() {
+              return Transform.scale(
+                scale: max(1, min(countDown.value, 3) - 1.5),
+                child: Container(
+                  height: 120.h,
+                  child: Stack(
+                    children: [
+                      //左上
+                      Positioned(
+                          left: 0,
+                          child: Transform(
+                            alignment: Alignment.center,
+                            transform: Matrix4.identity()..scale(-1.0, 1.0), // X 轴翻转
+                            child: IconWidget(
+                              iconWidth: 21.w,
+                              icon: Assets.uiTeamFramePng,
+                              iconColor: AppColors.c161616,
+                            ),
+                          )),
+                      //右上
+                      Positioned(
+                          right: 0,
+                          child: IconWidget(
+                            iconWidth: 21.w,
+                            icon: Assets.uiTeamFramePng,
+                            iconColor: AppColors.c161616,
+                          )),
+                      //左下
+                      Positioned(
+                          bottom: 0,
+                          left: 0,
+                          child: Transform.rotate(
+                            angle: pi / 180 * 180,
+                            child: IconWidget(
+                              iconWidth: 21.w,
+                              icon: Assets.uiTeamFramePng,
+                              iconColor: AppColors.c161616,
+                            ),
+                          )),
+                      // 右下
+                      Positioned(
+                          right: 0,
+                          bottom: 0,
+                          child: Transform(
+                            alignment: Alignment.center,
+                            transform: Matrix4.identity()..scale(1.0, -1.0), // X 轴翻转
+                            child: IconWidget(
+                              iconWidth: 21.w,
+                              icon: Assets.uiTeamFramePng,
+                              iconColor: AppColors.c161616,
+                            ),
+                          )),
+                    ],
                   ),
                 ),
-              ],
-            ));
+              );
+            }),
+            Container(
+              height: 12.h,
+              width: 37.w,
+              margin: EdgeInsets.only(top: 6.h, left: 7.w),
+              decoration: BoxDecoration(
+                  color: AppColors.cF2F2F2.withOpacity(0.7),
+                  borderRadius: BorderRadius.circular(6.h)),
+              child: Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 4.h,
+                      width: 4.h,
+                      decoration: BoxDecoration(
+                          color: AppColors.cF42D40,
+                          borderRadius: BorderRadius.circular(2.h)),
+                    ),
+                    3.hGap,
+                    Text(
+                      "LIVE",
+                      style: 8.w7(color: AppColors.c262626, height: 1.12),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ));
   }
 
   Obx _buildWinText() {
@@ -240,9 +289,10 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
       } else if (fightAnimationValue.value <= 5.0) {
         winX = (fightAnimationValue.value - 4.7) / 0.3 * (backX + 20.w) - backX;
       } else {
-        xTranslateValue =
-            (fightAnimationValue.value - 4.8) / 0.4 * (leftWin ? -1 : 1) *
-                maxXTranslateValue;
+        xTranslateValue = (fightAnimationValue.value - 4.8) /
+            0.4 *
+            (leftWin ? -1 : 1) *
+            maxXTranslateValue;
       }
       var winWidth = 250.w;
       return Positioned(
@@ -264,8 +314,9 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
                     child: Stack(
                       children: [
                         Positioned(
-                          left: -width / 2 * (1 -
-                              startAnimationController.value.value),
+                          left: -width /
+                              2 *
+                              (1 - startAnimationController.value.value),
                           height: 135.h,
                           width: width,
                           child: Stack(
@@ -306,13 +357,11 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
                                                 begin: Alignment.topLeft,
                                                 end: Alignment.bottomRight,
                                                 colors: [
-                                                  AppColors.c3B93FF,
-                                                  AppColors.c000000.withOpacity(
-                                                      .8),
-                                                  AppColors.c000000.withOpacity(
-                                                      .9),
-                                                  AppColors.c000000
-                                                ])),
+                                              AppColors.c3B93FF,
+                                              AppColors.c000000.withOpacity(.8),
+                                              AppColors.c000000.withOpacity(.9),
+                                              AppColors.c000000
+                                            ])),
                                       ),
                                     ),
                                   )),
@@ -322,14 +371,14 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
                                     height: 68.h,
                                     width: 68.h,
                                     decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(
-                                            14.h),
+                                        borderRadius:
+                                            BorderRadius.circular(14.h),
                                         border: Border.all(
                                             color: AppColors.c3B93FF,
                                             width: 2.h)),
                                     child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(
-                                            12.h),
+                                        borderRadius:
+                                            BorderRadius.circular(12.h),
                                         child: IconWidget(
                                             iconWidth: 68.h,
                                             iconHeight: 68.h,
@@ -355,8 +404,8 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
                     child: Stack(
                       children: [
                         Positioned(
-                          right: -width / 2 + width / 2 *
-                              startAnimationController.value.value,
+                          right: -width / 2 +
+                              width / 2 * startAnimationController.value.value,
                           height: 135.h,
                           width: width,
                           child: Stack(
@@ -392,19 +441,17 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
                                               // margin: EdgeInsets.only(top: 3.h),
                                               decoration: BoxDecoration(
                                                   gradient: LinearGradient(
-                                                      begin: Alignment
-                                                          .bottomLeft,
+                                                      begin:
+                                                          Alignment.bottomLeft,
                                                       end: Alignment.topRight,
                                                       colors: [
-                                                        AppColors.cFF7954,
-                                                        AppColors.c000000
-                                                            .withOpacity(
-                                                            .7),
-                                                        AppColors.c000000
-                                                            .withOpacity(
-                                                            .9),
-                                                        AppColors.c000000
-                                                      ])),
+                                                    AppColors.cFF7954,
+                                                    AppColors.c000000
+                                                        .withOpacity(.7),
+                                                    AppColors.c000000
+                                                        .withOpacity(.9),
+                                                    AppColors.c000000
+                                                  ])),
                                             ),
                                           )),
                                     ],
@@ -417,14 +464,14 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
                                     height: 68.h,
                                     width: 68.h,
                                     decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(
-                                            14.h),
+                                        borderRadius:
+                                            BorderRadius.circular(14.h),
                                         border: Border.all(
                                             color: AppColors.c3B93FF,
                                             width: 2.h)),
                                     child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(
-                                            12.h),
+                                        borderRadius:
+                                            BorderRadius.circular(12.h),
                                         child: IconWidget(
                                             iconWidth: 68.h,
                                             iconHeight: 68.h,
@@ -517,8 +564,8 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
                                         width: 325.w,
                                         height: 181.h,
                                         child: ClipPath(
-                                          clipper:
-                                          LineChartClipper(chartPoints.value),
+                                          clipper: LineChartClipper(
+                                              chartPoints.value),
                                           child: ShaderMask(
                                             shaderCallback: (Rect bounds) {
                                               return const LinearGradient(
@@ -537,11 +584,10 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
                                             child: Container(
                                               decoration: const BoxDecoration(
                                                   image: DecorationImage(
-                                                      image: AssetImage(
-                                                          Assets
-                                                              .uiBgDiagonalPng),
+                                                      image: AssetImage(Assets
+                                                          .uiBgDiagonalPng),
                                                       repeat:
-                                                      ImageRepeat.repeat)),
+                                                          ImageRepeat.repeat)),
                                             ),
                                           ),
                                         ),
@@ -568,8 +614,8 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
                                         children: [
                                           Container(
                                             width: double.infinity,
-                                            color:
-                                            AppColors.c3B3B3B.withOpacity(.3),
+                                            color: AppColors.c3B3B3B
+                                                .withOpacity(.3),
                                           ),
                                           const Stack(
                                             alignment: Alignment.center,
@@ -581,8 +627,8 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
                                                   dashedHeight: 2,
                                                   dashedWidth: 2,
                                                   count: 30,
-                                                  dashedColor: AppColors
-                                                      .cF2F2F2,
+                                                  dashedColor:
+                                                      AppColors.cF2F2F2,
                                                 ),
                                               ),
                                             ],
@@ -653,7 +699,7 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
                                         decoration: BoxDecoration(
                                             color: AppColors.cFF7954,
                                             borderRadius:
-                                            BorderRadius.circular(2.h))),
+                                                BorderRadius.circular(2.h))),
                                   ),
                                 ),
                               );
@@ -683,50 +729,49 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
               decoration: BoxDecoration(
                   color: AppColors.c000000.withOpacity(.7),
                   borderRadius:
-                  BorderRadius.circular(countDown.value == 1 ? 8.h : 29.h)),
+                      BorderRadius.circular(countDown.value == 1 ? 8.h : 29.h)),
               duration: const Duration(milliseconds: 300),
               child: countDown.value == 1
                   ? Center(
-                  child: Text(
-                    MyDateUtils.formatMS((gameLastTimes.value -
-                        gameLastTimes.value *
-                            fightAnimationValue.value /
-                            4.4)
-                        .toInt()),
-                    style: 24.w7(
-                        color: /*gameLastTimes.value <= 10
+                      child: Text(
+                      MyDateUtils.formatMS((gameLastTimes.value -
+                              gameLastTimes.value *
+                                  fightAnimationValue.value /
+                                  4.4)
+                          .toInt()),
+                      style: 24.w7(
+                          color: /*gameLastTimes.value <= 10
                             ? AppColors.cFF3B5C
                             :*/
-                        AppColors.cF2F2F2),
-                  ))
+                              AppColors.cF2F2F2),
+                    ))
                   : Stack(
-                alignment: Alignment.center,
-                children: [
-                  SizedBox(
-                    width: 48.h,
-                    height: 48.h,
-                    child: CircularProgressIndicator(
-                      value: 1 - (countDown.value - 1) / 3,
-                      strokeWidth: 3.w,
-                      backgroundColor: AppColors.c666666,
-                      color: AppColors.cF2F2F2,
-                      strokeCap: StrokeCap.round,
-                    ),
-                  ),
-                  AnimatedBuilder(
-                      animation: _controller,
-                      builder: (context, child) {
-                        return Transform.scale(
-                          scale: _scaleAnimation.value,
-                          child: Text(
-                            "${countDown.value ~/ 1}",
-                            style: 34.w7(color: AppColors.cF2F2F2),
+                      alignment: Alignment.center,
+                      children: [
+                        SizedBox(
+                          width: 48.h,
+                          height: 48.h,
+                          child: CircularProgressIndicator(
+                            value: 1 - (countDown.value - 1) / 3,
+                            strokeWidth: 3.w,
+                            backgroundColor: AppColors.c666666,
+                            color: AppColors.cF2F2F2,
+                            strokeCap: StrokeCap.round,
                           ),
-                        );
-                      }
-                  ),
-                ],
-              ),
+                        ),
+                        AnimatedBuilder(
+                            animation: _controller,
+                            builder: (context, child) {
+                              return Transform.scale(
+                                scale: _scaleAnimation.value,
+                                child: Text(
+                                  "${countDown.value ~/ 1}",
+                                  style: 34.w7(color: AppColors.cF2F2F2),
+                                ),
+                              );
+                            }),
+                      ],
+                    ),
             ),
           );
         }));
@@ -753,7 +798,6 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
             height: 70.h,
             child: Stack(
               children: [
-
                 /// left
                 ...List.generate(positions.length, (index) {
                   var dx = positions[index].dx;
@@ -795,7 +839,6 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
       );
     });
   }
-
 
   void _gameStart() {
     /// 以此为左边胜率，右边相反（跟着左边一起移动），用nextDouble

@@ -41,9 +41,6 @@ class _BattleGameOverState extends State<BattleGameOver>
         alignment: Alignment.center,
         children: [
           Positioned(
-              top: 145.h,
-              child: const ScorePanel(leftScore: 189, rightScore: 160)),
-          Positioned(
             top: 250.h,
             left: 0,
             right: 0,
