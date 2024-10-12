@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
+import 'package:arm_chair_quaterback/common/entities/chart_sample_data.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/arc_widget.dart';
@@ -13,11 +14,169 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 import 'index.dart';
 
 class PlayerDetailPage extends GetView<PlayerDetailController> {
-  const PlayerDetailPage({super.key});
+   PlayerDetailPage({super.key});
+
+  var dataSource = <ChartSampleData>[
+    ChartSampleData(x: 'PTS', y: 55,yValue: 30),
+    ChartSampleData(x: '3PT', y: 55,yValue: 40),
+    ChartSampleData(x: 'AST', y: 55,yValue: 35),
+    ChartSampleData(x: 'REB', y: 55,yValue: 45),
+    ChartSampleData(x: 'BLK', y: 55,yValue: 30),
+    ChartSampleData(x: 'STL', y: 55,yValue: 40),
+  ];
+
+  List<PieChartSectionData> showingSections() {
+    return List.generate(
+      6,
+      (i) {
+        const color = AppColors.c3B93FF;
+        switch (i) {
+          case 0:
+            return PieChartSectionData(
+              color: color,
+              value: 25,
+              title: '',
+              radius: 60,
+              titlePositionPercentageOffset: 0.55,
+            );
+          case 1:
+            return PieChartSectionData(
+              color: color,
+              value: 25,
+              title: '',
+              radius: 40,
+              titlePositionPercentageOffset: 0.55,
+            );
+          case 2:
+            return PieChartSectionData(
+              color: color,
+              value: 25,
+              title: '',
+              radius: 60,
+              titlePositionPercentageOffset: 0.6,
+            );
+          case 3:
+            return PieChartSectionData(
+              color: color,
+              value: 25,
+              title: '',
+              radius: 40,
+              titlePositionPercentageOffset: 0.55,
+            );
+          case 4:
+            return PieChartSectionData(
+              color: color,
+              value: 25,
+              title: '',
+              radius: 60,
+              titlePositionPercentageOffset: 0.55,
+            );
+          case 5:
+            return PieChartSectionData(
+              color: color,
+              value: 25,
+              title: '',
+              radius: 40,
+              titlePositionPercentageOffset: 0.55,
+            );
+          default:
+            throw Error();
+        }
+      },
+    );
+  }
+
+  List<PieChartSectionData> showingSections2() {
+    return List.generate(
+      6,
+      (i) {
+        const c = Color(0xffE6E6E7);
+        return PieChartSectionData(
+          color: c,
+          value: 25,
+          title: '',
+          radius: 70,
+          titlePositionPercentageOffset: 0.55,
+        );
+      },
+    );
+  }
+
+
+
+  SfCircularChart _buildSmartLabelPieChart() {
+    return SfCircularChart(
+      // title: ChartTitle(
+      //     text: isCardView ? '' : 'Gold medals count in Rio Olympics'),
+      series: _getSmartLabelPieSeries(),
+      // tooltipBehavior: _tooltipBehavior,
+    );
+  }
+
+  SfCircularChart _buildBackgroundSmartLabelPieChart() {
+
+    return SfCircularChart(
+      // title: ChartTitle(
+      //     text: isCardView ? '' : 'Gold medals count in Rio Olympics'),
+      series: <PieSeries<ChartSampleData, String>>[
+        PieSeries<ChartSampleData, String>(
+            animationDuration: 0,
+            dataSource: dataSource,
+            xValueMapper: (ChartSampleData data, _) => data.x as String,
+            yValueMapper: (ChartSampleData data, _) => data.yValue,
+            pointColorMapper: (data, _) => AppColors.ce5e5e5,
+            pointRadiusMapper: (data, _) => data.y.toString(),
+            explodeAll: true,
+            explodeOffset: '3%',
+            explode: true,
+            dataLabelSettings: DataLabelSettings(
+                margin: EdgeInsets.zero,
+                isVisible: true,
+                builder: (data, point, series, int pointIndex, int seriesIndex) {
+                  return Container(
+                      padding:
+                      EdgeInsets.symmetric(horizontal: 6.w, vertical: 6.h),
+                      decoration: BoxDecoration(
+                          color: AppColors.cE6E6E6,
+                          borderRadius: BorderRadius.circular(15.h)),
+                    child: Text.rich(TextSpan(
+                      children: [
+                        TextSpan(text: "${(data as ChartSampleData).x}:  ",style: 10.w4(color: AppColors.cB3B3B3,height: 1)),
+                        TextSpan(text: (data).yValue!.toStringAsFixed(0),style: 14.w7(color: AppColors.c262626,height: 1))
+                      ]
+                    )),
+                  );
+                },
+                labelPosition: ChartDataLabelPosition.outside,
+                connectorLineSettings: const ConnectorLineSettings(
+                    color: AppColors.cB3B3B3,
+                    type: ConnectorType.curve,
+                    length: '20%'),
+                labelIntersectAction: LabelIntersectAction.none))
+      ],
+      // tooltipBehavior: _tooltipBehavior,
+    );
+  }
+
+  List<PieSeries<ChartSampleData, String>> _getSmartLabelPieSeries() {
+    return <PieSeries<ChartSampleData, String>>[
+      PieSeries<ChartSampleData, String>(
+          animationDuration: 0,
+          dataSource: dataSource,
+          xValueMapper: (ChartSampleData data, _) => data.x as String,
+          yValueMapper: (ChartSampleData data, _) => data.yValue,
+          pointColorMapper: (data, _) => AppColors.c3B93FF,
+          pointRadiusMapper: (data, _) => data.yValue.toString(),
+          explodeAll: true,
+          explodeOffset: '3%',
+          explode: true,)
+    ];
+  }
 
   // 主视图
   Widget _buildView(BuildContext context) {
@@ -32,144 +191,237 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
             children: [
               _leverWidget(context),
               9.vGap,
-              Text(
-                "Ability",
-                style: 19.w7(color: AppColors.c262626, height: 1),
-              ),
-              10.vGap,
-              LayoutBuilder(builder: (context, constraints) {
-                return Wrap(
-                  spacing: 9.w,
-                  runSpacing: 9.w,
-                  children: List.generate(
-                      6,
-                          (index) =>
-                          Container(
-                            width: (constraints.maxWidth - 9.w * 2) / 3,
-                            height: 51.w,
-                            decoration: BoxDecoration(
-                                color: AppColors.cFFFFFF,
-                                borderRadius: BorderRadius.circular(16.w)),
-                            child: Stack(
-                              children: [
-                                Positioned(
-                                    right: 6.w,
-                                    child: Text("PTS",
-                                        style: TextStyle(
-                                            height: 1,
-                                            fontSize: 30.sp,
-                                            fontWeight: FontWeight.bold,
-                                            color: AppColors.cF2F2F2))),
-                                Container(
-                                  margin: EdgeInsets.only(left: 14.w),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "3500",
-                                        style: 19.w7(color: AppColors.c262626),
-                                      ),
-                                      Text(
-                                        "PTS",
-                                        style: 10.w7(color: AppColors.cFF7954),
-                                      )
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                          )),
-                );
-              }),
-              24.vGap,
-              Text(
-                "Potential",
-                style: 19.w7(color: AppColors.c262626, height: 1),
-              ),
-              13.vGap,
-              LayoutBuilder(builder: (context, constraints) {
-                return Container(
-                  padding:
-                  EdgeInsets.symmetric(horizontal: 16.w, vertical: 15.w),
-                  decoration: BoxDecoration(
-                      color: AppColors.cFFFFFF,
-                      borderRadius: BorderRadius.circular(16.w)),
-                  child: Wrap(
-                    spacing: 9.w,
-                    runSpacing: 9.w,
-                    children: List.generate(
-                        6,
-                            (index) =>
-                            SizedBox(
-                              width:
-                              (constraints.maxWidth - 9.w * 2 - 16.w * 2) /
-                                  3,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Text(
-                                        "206",
-                                        style: 19.w7(
-                                            color: AppColors.c262626,
-                                            height: 1),
-                                      ),
-                                      Text("/500",
-                                          style:
-                                          10.w4(color: AppColors.cB3B3B3))
-                                    ],
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.symmetric(vertical: 6.w),
-                                    child: LinearProgressIndicator(
-                                      color: AppColors.c10A86A,
-                                      backgroundColor: AppColors.cB3B3B3,
-                                      value: .6,
-                                      minHeight: 10.w,
-                                      borderRadius: BorderRadius.circular(5.w),
-                                    ),
-                                  ),
-                                  Text(
-                                    "PTS",
-                                    style: 10.w7(color: AppColors.cFF7954),
-                                  )
-                                ],
-                              ),
-                            )),
-                  ),
-                );
-              }),
-              18.vGap,
-              Center(
-                child: InkWell(
-                  onTap: () {
-                    _upgradeDialog(context);
-                  },
-                  child: SizedBox(
-                    width: 203.w,
-                    child: BtnBackground(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Container(
+                decoration: BoxDecoration(
+                    color: AppColors.cF2F2F2,
+                    borderRadius: BorderRadius.circular(16.w)),
+                padding: EdgeInsets.all(14.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Ability",
+                      style: 19.w7(color: AppColors.c262626, height: 1),
+                    ),
+                    LayoutBuilder(builder: (context, constraints) {
+                      return SizedBox(
+                        height: 190.h,
+                        child: Stack(
+                          alignment: Alignment.center,
                           children: [
-                            const SizedBox.shrink(),
-                            Text(
-                              "UPGRADE",
-                              style: 18.w7(color: AppColors.cF2F2F2),
-                            ),
-                            Container(
-                                margin: EdgeInsets.only(right: 11.w),
-                                child: IconWidget(
+                            _buildBackgroundSmartLabelPieChart(),
+                            _buildSmartLabelPieChart()
+                          ],
+                        ),
+                      );
+                    }),
+                    Text(
+                      "Potential",
+                      style: 19.w7(color: AppColors.c262626, height: 1),
+                    ),
+                    13.vGap,
+                    LayoutBuilder(builder: (context, constraints) {
+                      return Container(
+                        height: 130.h,
+                        width: double.infinity,
+                        margin:
+                            EdgeInsets.only(left: 14.w, right: 18.w, top: 5.w),
+                        child: AspectRatio(
+                          aspectRatio: 1.4,
+                          child: BarChart(BarChartData(
+                              maxY: 1300,
+                              borderData: FlBorderData(
+                                  show: true,
+                                  border: const Border(
+                                      bottom: BorderSide(
+                                          color: AppColors.cD9D9D9, width: 1))),
+                              gridData: FlGridData(
+                                  show: true,
+                                  drawHorizontalLine: true,
+                                  drawVerticalLine: false,
+                                  horizontalInterval: 200,
+                                  getDrawingHorizontalLine: (value) {
+                                    return const FlLine(
+                                        color: AppColors.cD9D9D9,
+                                        strokeWidth: 1,
+                                        dashArray: [3]);
+                                  }),
+                              titlesData: FlTitlesData(
+                                  show: true,
+                                  leftTitles: AxisTitles(
+                                      sideTitles: SideTitles(
+                                          showTitles: true,
+                                          interval: 200,
+                                          getTitlesWidget: (value, meta) {
+                                            var text = value % 200 != 0
+                                                ? ""
+                                                : value.toStringAsFixed(0);
+                                            return Text(
+                                              text,
+                                              style: 9
+                                                  .w4(color: AppColors.cB2B2B2),
+                                            );
+                                          })),
+                                  bottomTitles: AxisTitles(
+                                      sideTitles: SideTitles(
+                                          showTitles: true,
+                                          getTitlesWidget: (value, meta) {
+                                            var text = "PTS";
+                                            switch (value.toInt()) {
+                                              case 1:
+                                                text = "PTS";
+                                                break;
+                                              case 2:
+                                                text = "3PT";
+                                                break;
+                                              case 3:
+                                                text = "AST";
+                                                break;
+                                              case 4:
+                                                text = "REB";
+                                                break;
+                                              case 5:
+                                                text = "BLK";
+                                                break;
+                                              case 6:
+                                                text = "STL";
+                                                break;
+                                            }
+                                            return Container(
+                                              margin: EdgeInsets.only(top: 2.h),
+                                              child: Text(
+                                                text,
+                                                style: 9.w4(
+                                                    color: AppColors.cB2B2B2),
+                                              ),
+                                            );
+                                          })),
+                                  rightTitles: const AxisTitles(),
+                                  topTitles: const AxisTitles()),
+                              barTouchData: BarTouchData(
+                                  enabled: true,
+                                  handleBuiltInTouches: false,
+                                  touchTooltipData: BarTouchTooltipData(
+                                    tooltipMargin: 0,
+                                    tooltipPadding: const EdgeInsets.all(0),
+                                    getTooltipColor: (_) =>
+                                        AppColors.cTransparent,
+                                    getTooltipItem: (BarChartGroupData group,
+                                        int groupIndex,
+                                        BarChartRodData rod,
+                                        int rodIndex) {
+                                      return BarTooltipItem(
+                                        rod.toY.toStringAsFixed(0),
+                                        11.w7(color: rod.color!, height: 1),
+                                      );
+                                    },
+                                  )),
+                              barGroups: [
+                                BarChartGroupData(
+                                    showingTooltipIndicators: [0],
+                                    x: 1,
+                                    barRods: [
+                                      BarChartRodData(
+                                          width: 10.w,
+                                          borderRadius: BorderRadius.vertical(
+                                              top: Radius.circular(5.w)),
+                                          toY: 300,
+                                          color: AppColors.cE72646)
+                                    ]),
+                                BarChartGroupData(
+                                    showingTooltipIndicators: [0],
+                                    x: 2,
+                                    barRods: [
+                                      BarChartRodData(
+                                          width: 10.w,
+                                          borderRadius: BorderRadius.vertical(
+                                              top: Radius.circular(5.w)),
+                                          toY: 480,
+                                          color: AppColors.cE8B94C)
+                                    ]),
+                                BarChartGroupData(
+                                    showingTooltipIndicators: [0],
+                                    x: 3,
+                                    barRods: [
+                                      BarChartRodData(
+                                          width: 10.w,
+                                          borderRadius: BorderRadius.vertical(
+                                              top: Radius.circular(5.w)),
+                                          toY: 925,
+                                          color: AppColors.c10A86A)
+                                    ]),
+                                BarChartGroupData(
+                                    showingTooltipIndicators: [0],
+                                    x: 4,
+                                    barRods: [
+                                      BarChartRodData(
+                                          width: 10.w,
+                                          borderRadius: BorderRadius.vertical(
+                                              top: Radius.circular(5.w)),
+                                          toY: 700,
+                                          color: AppColors.cE8B94C)
+                                    ]),
+                                BarChartGroupData(
+                                    showingTooltipIndicators: [0],
+                                    x: 5,
+                                    barRods: [
+                                      BarChartRodData(
+                                          width: 10.w,
+                                          borderRadius: BorderRadius.vertical(
+                                              top: Radius.circular(5.w)),
+                                          toY: 925,
+                                          color: AppColors.c10A86A)
+                                    ]),
+                                BarChartGroupData(
+                                    showingTooltipIndicators: [0],
+                                    x: 6,
+                                    barRods: [
+                                      BarChartRodData(
+                                          width: 10.w,
+                                          borderRadius: BorderRadius.vertical(
+                                              top: Radius.circular(5.w)),
+                                          toY: 1125,
+                                          color: AppColors.c10A86A)
+                                    ]),
+                              ])),
+                        ),
+                      );
+                    }),
+                    18.vGap,
+                    Center(
+                      child: InkWell(
+                        onTap: () {
+                          _upgradeDialog(context);
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: AppColors.cFF7954, width: 2.w),
+                              borderRadius: BorderRadius.circular(18.h)),
+                          height: 36.h,
+                          width: 303.w,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const SizedBox.shrink(),
+                              Text(
+                                "UPGRADE",
+                                style: 18.w7(color: AppColors.cFF7954),
+                              ),
+                              Container(
+                                  margin: EdgeInsets.only(right: 11.w),
+                                  child: IconWidget(
                                     iconHeight: 14.w,
                                     iconWidth: 14.w,
-                                    icon: Assets.uiIconArrowsPng))
-                          ],
-                        )),
-                  ),
+                                    icon: Assets.uiIconArrowsPng,
+                                    iconColor: AppColors.cFF7954,
+                                  ))
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               13.vGap,
@@ -271,16 +523,15 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                       width: 77.w,
                       alignment: Alignment.center,
                       child:
-                      Text("TEAM", style: 10.w4(color: AppColors.cB3B3B3))),
+                          Text("TEAM", style: 10.w4(color: AppColors.cB3B3B3))),
                   ...List.generate(
                       3,
-                          (index) =>
-                          Container(
-                              height: 30.w,
-                              width: 77.w,
-                              alignment: Alignment.center,
-                              child: Text("REG",
-                                  style: 12.w4(color: AppColors.c818181))))
+                      (index) => Container(
+                          height: 30.w,
+                          width: 77.w,
+                          alignment: Alignment.center,
+                          child: Text("REG",
+                              style: 12.w4(color: AppColors.c818181))))
                 ],
               ),
             ),
@@ -294,13 +545,13 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                       decoration: BoxDecoration(
                           boxShadow: controller.statsIsScrolling.value
                               ? [
-                            BoxShadow(
-                              color: AppColors.c262626.withOpacity(.1),
-                              offset: const Offset(0, 2),
-                              blurRadius: 1,
-                              // spreadRadius: 1.0,
-                            )
-                          ]
+                                  BoxShadow(
+                                    color: AppColors.c262626.withOpacity(.1),
+                                    offset: const Offset(0, 2),
+                                    blurRadius: 1,
+                                    // spreadRadius: 1.0,
+                                  )
+                                ]
                               : []),
                     );
                   }),
@@ -318,40 +569,34 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                 8, (index) => FixedColumnWidth(40.w)).asMap(),
                             children: List.generate(
                                 1,
-                                    (index) =>
-                                    TableRow(
-                                        children: List.generate(
-                                            8,
-                                                (index) =>
-                                                Container(
-                                                    height: 30.w,
-                                                    alignment: Alignment.center,
-                                                    child: Text(
-                                                      "GP",
-                                                      style: 10
-                                                          .w4(color: AppColors
-                                                          .cB3B3B3),
-                                                    ))))),
+                                (index) => TableRow(
+                                    children: List.generate(
+                                        8,
+                                        (index) => Container(
+                                            height: 30.w,
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              "GP",
+                                              style: 10
+                                                  .w4(color: AppColors.cB3B3B3),
+                                            ))))),
                           ),
                           Table(
                             columnWidths: List.generate(
                                 8, (index) => FixedColumnWidth(40.w)).asMap(),
                             children: List.generate(
                                 3,
-                                    (index) =>
-                                    TableRow(
-                                        children: List.generate(
-                                            8,
-                                                (index) =>
-                                                Container(
-                                                    height: 30.w,
-                                                    alignment: Alignment.center,
-                                                    child: Text(
-                                                      "$index",
-                                                      style: 12
-                                                          .w4(color: AppColors
-                                                          .c545454),
-                                                    ))))),
+                                (index) => TableRow(
+                                    children: List.generate(
+                                        8,
+                                        (index) => Container(
+                                            height: 30.w,
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              "$index",
+                                              style: 12
+                                                  .w4(color: AppColors.c545454),
+                                            ))))),
                           ),
                         ],
                       ),
@@ -378,7 +623,6 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
           child: Stack(
             alignment: Alignment.center,
             children: [
-
               ///背景色块
               Container(
                 height: 87.w,
@@ -493,7 +737,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                     height: 87.w,
                     child: ClipRRect(
                       borderRadius:
-                      BorderRadius.only(topLeft: Radius.circular(16.w)),
+                          BorderRadius.only(topLeft: Radius.circular(16.w)),
                       child: Image.asset(
                         alignment: Alignment.center,
                         Assets.uiLight_01Png,
@@ -525,17 +769,14 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                     borderColor: AppColors.cB3B3B3,
                                     borderWidth: 3.w,
                                     progressSweepAngle:
-                                    controller.rateProgress.value,
+                                        controller.rateProgress.value,
                                     borderSweepAngle:
-                                    controller.progressBorder.value,
+                                        controller.progressBorder.value,
                                   )),
                               Positioned(
                                   bottom: 0.w,
                                   child: Text(
-                                    "${((controller.rateProgress.value / 180 *
-                                        100) > 100 ? 100 : (controller
-                                        .rateProgress.value / 180 * 100))
-                                        .toStringAsFixed(0)}%",
+                                    "${((controller.rateProgress.value / 180 * 100) > 100 ? 100 : (controller.rateProgress.value / 180 * 100)).toStringAsFixed(0)}%",
                                     style: 24.w7(
                                         color: AppColors.cFF7954, height: 1),
                                   ))
@@ -674,15 +915,12 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
         context: Get.context!,
         builder: (context) {
           return Container(
-            height: MediaQuery
-                .of(context)
-                .size
-                .height,
+            height: MediaQuery.of(context).size.height,
             width: double.infinity,
             decoration: BoxDecoration(
                 color: AppColors.cD8D8D8,
                 borderRadius:
-                BorderRadius.vertical(top: Radius.circular(16.w))),
+                    BorderRadius.vertical(top: Radius.circular(16.w))),
             child: Column(
               children: [
                 Container(
@@ -813,7 +1051,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                   decoration: BoxDecoration(
                                       color: AppColors.cE1E1E1,
                                       borderRadius:
-                                      BorderRadius.circular(32.w)),
+                                          BorderRadius.circular(32.w)),
                                   child: Stack(
                                     alignment: Alignment.bottomCenter,
                                     children: [
@@ -826,7 +1064,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                           child: Text(
                                             "SS",
                                             style:
-                                            16.w7(color: AppColors.c262626),
+                                                16.w7(color: AppColors.c262626),
                                           ))
                                     ],
                                   ),
@@ -835,7 +1073,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
@@ -851,7 +1089,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                             decoration: BoxDecoration(
                                               color: AppColors.c666666,
                                               borderRadius:
-                                              BorderRadius.circular(2.w),
+                                                  BorderRadius.circular(2.w),
                                             ),
                                             child: Text(
                                               "SG",
@@ -896,7 +1134,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                       border: Border.all(
                                           color: AppColors.ce5e5e5, width: 1),
                                       borderRadius:
-                                      BorderRadius.circular(12.w)),
+                                          BorderRadius.circular(12.w)),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -921,7 +1159,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                           ? AppColors.c10A86A
                                           : AppColors.cB3B3B3,
                                       borderRadius:
-                                      BorderRadius.circular(16.w)),
+                                          BorderRadius.circular(16.w)),
                                   child: IconWidget(
                                       iconWidth: 16.w,
                                       icon: Assets.uiIconRuidgtPng),
@@ -1006,7 +1244,8 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                           Container(
                               margin: EdgeInsets.only(right: 13.w),
                               child: IconWidget(
-                                  iconWidth: 64.w, icon: Assets.testTeamLogoPng)),
+                                  iconWidth: 64.w,
+                                  icon: Assets.testTeamLogoPng)),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [

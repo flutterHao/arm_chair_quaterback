@@ -30,7 +30,7 @@ class TeamBattlePage extends GetView<TeamBattleController> {
       id: "team_battle",
       builder: (_) {
         return HorizontalDragBackWidget(
-          // canPop: TeamBattleController.canPop,
+          canPop: TeamBattleController.canPop,
           child: Obx(() {
             return AnimatedContainer(
               color: AppColors.c000000.withOpacity(controller.step.value>=3?1:.6),

@@ -41,7 +41,7 @@ class AppPages {
     GetPage(
       opaque: false,
       name: RouteNames.picksPlayerDetail,
-      page: () => const PlayerDetailPage(),
+      page: () => PlayerDetailPage(),
       binding: PlayerDetailBinding(),
     ),
   ];

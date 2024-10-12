@@ -67,7 +67,7 @@ class PicksIndex extends StatelessWidget {
                 opaque: false,
                 settings: setting,
                 barrierColor: Colors.transparent,
-                page: () => const PlayerDetailPage(),
+                page: () => PlayerDetailPage(),
                 binding: PlayerDetailBinding());
           case RouteNames.picksPersonalCenter:
             return GetPageRoute(

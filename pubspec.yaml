@@ -60,7 +60,9 @@ dependencies:
   #下拉刷新
   pull_to_refresh: ^2.0.0
   flutter_slidable: ^3.1.1
-  
+  syncfusion_flutter_charts: ^27.1.52
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
