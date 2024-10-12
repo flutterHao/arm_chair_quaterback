@@ -31,7 +31,7 @@ class _BattleMainState extends State<BattleMain>
 
   late PageController pageController;
 
-  bool isStartAnimationComplete = false;
+  var isStartAnimationComplete = false.obs;
 
   var startAnimationValue = 0.0.obs;
   var headerAnimationValue = 0.0.obs;
@@ -43,8 +43,8 @@ class _BattleMainState extends State<BattleMain>
     animationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 400))
       ..addStatusListener((status) {
-        if (status == AnimationStatus.completed && !isStartAnimationComplete) {
-          isStartAnimationComplete = true;
+        if (status == AnimationStatus.completed && !isStartAnimationComplete.value) {
+          isStartAnimationComplete.value = true;
           animation.removeListener(_startAnimationListener);
           animationController.reset();
           animation.addListener(() {
@@ -94,23 +94,25 @@ class _BattleMainState extends State<BattleMain>
                     fit: BoxFit.cover,
                   ),
                 )),
-                !isStartAnimationComplete
-                    ? const SizedBox.shrink()
-                    : Stack(
-                        children: [
-                          if (controller.step.value == 3)
-                            BattleBeforeGame(
-                              onDown: () {
+                Obx(() {
+                  return !isStartAnimationComplete.value
+                      ? const SizedBox.shrink()
+                      : Stack(
+                          children: [
+                            if (controller.step.value == 3)
+                              BattleBeforeGame(
+                                onDown: () {
+                                  controller.nextStep();
+                                },
+                              )
+                            else
+                              BattleGame(onGameOver: () {
                                 controller.nextStep();
-                              },
-                            )
-                          else
-                            BattleGame(onGameOver: () {
-                              controller.nextStep();
-                            }),
-                          _buildHeader(context)
-                        ],
-                      )
+                              }),
+                            _buildHeader(context)
+                          ],
+                        );
+                })
               ],
             ),
           ),
