@@ -25,28 +25,20 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   var isShot = false.obs; // 使用 GetX 的响应式状态
   var isAscending = true.obs; // 动画是否在上升
 
-  final List<String> awardList = [
-    Assets.uiIconPicks_01Png,
-    Assets.uiIconTeam_01Png
-  ];
-  List<String> currentAward = ['', '', ''].obs;
+  // final List<String> awardList = [
+  //   Assets.uiIconPicks_01Png,
+  //   Assets.uiIconTeam_01Png
+  // ];
+  // List<String> currentAward = ['', '', ''].obs;
 
-  late AnimationController prizeController;
-  late List<Leaf> leaves;
+  // late AnimationController prizeController;
+  // late List<Leaf> leaves;
 
   /// 在 widget 内存中分配后立即调用。
   @override
   void onInit() {
     super.onInit();
     tabController = TabController(length: 2, vsync: this);
-
-    prizeController = AnimationController(
-      duration: const Duration(seconds: 2),
-      vsync: this,
-    );
-
-    // 初始化10片随机落叶
-    leaves = List.generate(20, (index) => Leaf());
   }
 
   /// 在 onInit() 之后调用 1 帧。这是进入的理想场所

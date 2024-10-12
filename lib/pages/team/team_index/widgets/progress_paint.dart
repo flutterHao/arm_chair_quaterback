@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-14 15:06:14
- * @LastEditTime: 2024-10-09 14:57:41
+ * @LastEditTime: 2024-10-12 14:59:21
  */
 import 'dart:math';
 
@@ -32,15 +32,20 @@ class CircleProgressView extends StatefulWidget {
   ///title
   final String title;
 
-  const CircleProgressView(
-      {super.key,
-      required this.title,
-      required this.progress,
-      required this.width,
-      required this.height,
-      this.backgroundColor = const Color(0xFF262626),
-      this.progressColor = Colors.blue,
-      this.progressWidth = 2});
+  ///是否展示动画
+  final bool showAnimation;
+
+  const CircleProgressView({
+    super.key,
+    required this.title,
+    required this.progress,
+    required this.width,
+    required this.height,
+    this.backgroundColor = const Color(0xFF262626),
+    this.progressColor = Colors.blue,
+    this.progressWidth = 2,
+    this.showAnimation = true, // 默认展示动画
+  });
 
   @override
   State<CircleProgressView> createState() => _CircleProgressViewState();
@@ -59,68 +64,90 @@ class _CircleProgressViewState extends State<CircleProgressView>
   void initState() {
     super.initState();
     oldProgress = widget.progress;
-    controller =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
-    curvedAnimation =
-        CurvedAnimation(parent: controller, curve: Curves.decelerate);
-    tween = Tween();
-    tween.begin = 0.0;
-    tween.end = oldProgress;
-    animation = tween.animate(curvedAnimation);
-    animation.addListener(() {
-      setState(() {});
-    });
-    controller.forward();
+
+    if (widget.showAnimation) {
+      controller = AnimationController(
+        vsync: this,
+        duration: const Duration(milliseconds: 300),
+      );
+      curvedAnimation = CurvedAnimation(
+        parent: controller,
+        curve: Curves.decelerate,
+      );
+      tween = Tween<double>(begin: 0.0, end: oldProgress);
+      animation = tween.animate(curvedAnimation);
+
+      animation.addListener(() {
+        setState(() {});
+      });
+      controller.forward();
+    }
   }
 
-  //这里是在重新赋值进度时，再次刷新动画
+  /// 这里是在重新赋值进度时，再次刷新动画
   void startAnimation() {
-    controller.reset();
-    tween.begin = oldProgress;
-    tween.end = widget.progress;
-    animation = tween.animate(curvedAnimation);
-    controller.forward();
+    if (widget.showAnimation) {
+      controller.reset();
+      tween.begin = oldProgress;
+      tween.end = widget.progress;
+      animation = tween.animate(curvedAnimation);
+      controller.forward();
+    }
     oldProgress = widget.progress;
   }
 
   @override
   void dispose() {
+    if (widget.showAnimation) {
+      controller.dispose();
+    }
     super.dispose();
-    controller.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (oldProgress != widget.progress) {
+    // 更新时判断进度变化，控制是否重启动画
+    if (oldProgress != widget.progress && widget.showAnimation) {
       startAnimation();
     }
+
+    final currentProgress = widget.showAnimation ? animation.value : widget.progress;
+
     return Container(
       width: widget.width,
       height: widget.height,
       padding: const EdgeInsets.all(2),
       decoration: BoxDecoration(
-          color: AppColors.c262626,
-          borderRadius: BorderRadius.circular(widget.width / 2)),
+        color: AppColors.c262626,
+        borderRadius: BorderRadius.circular(widget.width / 2),
+      ),
       child: CustomPaint(
-        painter: ProgressPaint(animation.value / 50 * _Pi, widget.progressWidth,
-            widget.backgroundColor, widget.progressColor),
+        painter: ProgressPaint(
+          currentProgress / 50 * _Pi,
+          widget.progressWidth,
+          widget.backgroundColor,
+          widget.progressColor,
+        ),
         child: Container(
           width: widget.width - 10,
           height: widget.height - 10,
           alignment: Alignment.center,
           margin: const EdgeInsets.all(3),
           decoration: BoxDecoration(
-              color: AppColors.c4D4D4D,
-              borderRadius: BorderRadius.circular((widget.width) / 2)),
+            color: AppColors.c4D4D4D,
+            borderRadius: BorderRadius.circular(widget.width / 2),
+          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(widget.title,
-                  style: 16.w7(color: widget.progressColor, height: 1)),
               Text(
-                "${animation.value.toInt()}%",
+                widget.title,
+                style: 16.w7(color: widget.progressColor, height: 1),
+              ),
+              Text(
+                "${currentProgress.toInt()}%",
                 style: 10.w4(color: widget.progressColor, height: 1),
-              )
+              ),
             ],
           ),
         ),
@@ -128,6 +155,7 @@ class _CircleProgressViewState extends State<CircleProgressView>
     );
   }
 }
+
 
 // class ProgressPaint extends CustomPainter {
 //   ProgressPaint(

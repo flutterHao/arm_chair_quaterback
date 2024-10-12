@@ -16,6 +16,7 @@ import 'package:arm_chair_quaterback/common/entities/rank_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/receive_prop_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/recive_award_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/reward_group_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_simple_entity.dart';
@@ -251,6 +252,10 @@ class JsonConvert {
       return data.map<ReciveAwardGuessDataAwards>((Map<String, dynamic> e) =>
           ReciveAwardGuessDataAwards.fromJson(e)).toList() as M;
     }
+    if (<RewardGroupEntity>[] is M) {
+      return data.map<RewardGroupEntity>((Map<String, dynamic> e) =>
+          RewardGroupEntity.fromJson(e)).toList() as M;
+    }
     if (<TeamPlayerInfoEntity>[] is M) {
       return data.map<TeamPlayerInfoEntity>((Map<String, dynamic> e) =>
           TeamPlayerInfoEntity.fromJson(e)).toList() as M;
@@ -325,6 +330,7 @@ class JsonConvertClassCollection {
     (ReciveAwardGuessData).toString(): ReciveAwardGuessData.fromJson,
     (ReciveAwardGuessDataAwards).toString(): ReciveAwardGuessDataAwards
         .fromJson,
+    (RewardGroupEntity).toString(): RewardGroupEntity.fromJson,
     (TeamPlayerInfoEntity).toString(): TeamPlayerInfoEntity.fromJson,
     (TeamPlayerInfoPlayerTrend).toString(): TeamPlayerInfoPlayerTrend.fromJson,
     (TeamPlayerInfoTeamPlayer).toString(): TeamPlayerInfoTeamPlayer.fromJson,

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 17:29:19
- * @LastEditTime: 2024-10-09 14:33:13
+ * @LastEditTime: 2024-10-11 21:25:35
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:extended_image/extended_image.dart';
@@ -19,6 +19,8 @@ class ImageWidget extends StatelessWidget {
   final BoxFit fit;
   final BorderRadius? borderRadius;
   final Widget? loadingWidget;
+  final Widget? errorWidget;
+  final Color? color;
 
   const ImageWidget(
       {super.key,
@@ -28,7 +30,9 @@ class ImageWidget extends StatelessWidget {
       this.imageFailedPath = Assets.testTeamLogoPng, //todo 换默认缺省图
       this.borderRadius,
       this.fit = BoxFit.cover,
-      this.loadingWidget});
+      this.loadingWidget,
+      this.errorWidget,
+      this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -44,30 +48,32 @@ class ImageWidget extends StatelessWidget {
     //       clearMemoryCacheWhenDispose: true);
     // }
 
-    Widget errorWidget = Container(
-      width: width,
-      height: height,
-      decoration: BoxDecoration(
-        color: Colors.grey,
-        borderRadius: borderRadius ?? BorderRadius.circular(20),
-      ),
-      child: imageFailedPath != null ? Image.asset(imageFailedPath!) : null,
-    );
+    Widget error = errorWidget ??
+        Container(
+          width: width,
+          height: height,
+          decoration: BoxDecoration(
+            color: Colors.grey,
+            borderRadius: borderRadius ?? BorderRadius.circular(20),
+          ),
+          child: imageFailedPath != null ? Image.asset(imageFailedPath!) : null,
+        );
     return ExtendedImage.network(
       url,
       fit: fit,
       cache: true,
       width: width,
       height: height,
+      color: color,
       borderRadius: borderRadius,
       shape: BoxShape.rectangle,
       clearMemoryCacheWhenDispose: true,
       loadStateChanged: (ExtendedImageState state) {
         switch (state.extendedImageLoadState) {
           case LoadState.failed:
-            return errorWidget;
+            return error;
           case LoadState.loading:
-            return loadingWidget ?? errorWidget;
+            return loadingWidget ?? error;
           case LoadState.completed:
             // TODO: Handle this case.
             break;
@@ -119,28 +125,29 @@ class MirrorImageWidget extends StatelessWidget {
     return SizedBox(
       width: fullWidth, // 设置整个拼合后的宽度
       height: imageHeight, // 设置高度
-      child: isLeft?Row(
-        children: [
-          // 显示原始的一半图片
-          image,
-          // 显示镜像的图片，利用 Transform 翻转
-          Transform(
-            alignment: Alignment.center,
-            transform: Matrix4.identity()..scale(-1.0, 1.0), // 水平镜像翻转
-            child: image,
-          ),
-        ],
-      ):Row(
-        children: [
-          Transform(
-            alignment: Alignment.center,
-            transform: Matrix4.identity()..scale(-1.0, 1.0), // 水平镜像翻转
-            child: image,
-          ),
-          image,
-          
-        ],
-      ),
+      child: isLeft
+          ? Row(
+              children: [
+                // 显示原始的一半图片
+                image,
+                // 显示镜像的图片，利用 Transform 翻转
+                Transform(
+                  alignment: Alignment.center,
+                  transform: Matrix4.identity()..scale(-1.0, 1.0), // 水平镜像翻转
+                  child: image,
+                ),
+              ],
+            )
+          : Row(
+              children: [
+                Transform(
+                  alignment: Alignment.center,
+                  transform: Matrix4.identity()..scale(-1.0, 1.0), // 水平镜像翻转
+                  child: image,
+                ),
+                image,
+              ],
+            ),
     );
   }
 }

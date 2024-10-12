@@ -99,6 +99,7 @@ import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dar
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_award_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/reward_group_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis.dart';
 import 'package:arm_chair_quaterback/common/net/http.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
@@ -179,5 +180,11 @@ class CacheApi {
     List list = await httpUtil.get(Api.cGetPropDefine);
     propDefineList = list.map((e) => PropDefineEntity.fromJson(e)).toList();
     return propDefineList!;
+  }
+
+  ///Slot奖励组
+  static Future<List<RewardGroupEntity>> getRewardGroup() async {
+    List list = await httpUtil.get(Api.cRewardGroup);
+    return list.map((e) => RewardGroupEntity.fromJson(e)).toList();
   }
 }

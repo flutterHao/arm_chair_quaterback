@@ -1,3 +1,9 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-09-27 17:09:20
+ * @LastEditTime: 2024-10-12 16:08:08
+ */
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:flutter/material.dart';
@@ -60,21 +66,6 @@ class _VerticalDragBackWidgetState extends State<VerticalDragBackWidget>
       child: widget.child,
     );
     return Obx(() {
-      // return isDragging.value
-      //     ? Positioned(
-      //         // duration: const Duration(milliseconds: 200),
-      //         bottom: teamCtrl.myTeamBottom.value,
-      //         left: 0,
-      //         right: 0,
-      //         child: body,
-      //       )
-      //     : AnimatedPositioned(
-      //         duration: const Duration(milliseconds: 200),
-      //         bottom: teamCtrl.myTeamBottom.value,
-      //         left: 0,
-      //         right: 0,
-      //         child: body,
-      //       );
       return AnimatedPositioned(
         duration: Duration(milliseconds: isDragging.value ? 0 : 300),
         bottom: teamCtrl.myTeamBottom.value,
@@ -99,28 +90,6 @@ class _VerticalDragBackWidgetState extends State<VerticalDragBackWidget>
       // targetBottom = minBottom; // 否则返回最小位置
       teamCtrl.pageOnTap();
     }
-
-    // 动画到目标位置
-    // animation = Tween(
-    //   begin: teamCtrl.myTeamBottom.value,
-    //   end: targetBottom,
-    // ).animate(CurvedAnimation(
-    //   parent: animationController,
-    //   curve: Curves.easeInOut,
-    // ));
-
-    // animationController
-    //   ..reset()
-    //   ..forward();
-
-    // animationController.addListener(() {
-    //   teamCtrl.myTeamBottom.value = animation.value;
-    //   if (animationController.isCompleted && widget.onWidgetOut != null) {
-    //     widget.onWidgetOut!();
-    //   }
-    // });
-
-    // animationController.forward();
   }
 
   @override

@@ -1,19 +1,20 @@
-import 'dart:async';
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/buble_box.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/progress_paint.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/linear_progress_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/player_item_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/buble_widget.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/ripple_widget.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -56,7 +57,6 @@ class TrainingPage extends GetView<TrainingController> {
             left: 16.w,
             child: InkWell(
               onTap: () {
-                Log.d("返回");
                 Get.back(id: GlobalNestedKey.TEAM);
               },
               child: Padding(
@@ -74,95 +74,104 @@ class TrainingPage extends GetView<TrainingController> {
           Positioned(
             top: 80.h,
             left: 80.w,
-            child: InkWell(
-              onTap: () {},
-              child: SizedBox(
-                width: 225.w,
-                height: 37.w,
-                child: Stack(
-                  alignment: Alignment.centerLeft,
-                  children: [
-                    Positioned(
-                      left: 0,
-                      // right: 10.w,
-                      child: Container(
-                        width: 214.w,
-                        height: 37.w,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(40.w),
-                            color: AppColors.c262626),
-                      ),
+            child: SizedBox(
+              width: 225.w,
+              height: 37.w,
+              child: Stack(
+                alignment: Alignment.centerLeft,
+                children: [
+                  Positioned(
+                    left: 0,
+                    // right: 10.w,
+                    child: Container(
+                      width: 214.w,
+                      height: 37.w,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(40.w),
+                          color: AppColors.c262626),
                     ),
-                    Positioned(
-                      left: 30.w,
-                      child: CustomLinearProgressBar(
-                        width: 150.w,
-                        height: 10.w,
-                        progress: 0.5,
-                        backgroundColor: AppColors.c000000,
-                        progressColor: AppColors.cFF7954,
-                      ),
+                  ),
+                  Positioned(
+                    left: 30.w,
+                    child: CustomLinearProgressBar(
+                      width: 150.w,
+                      height: 10.w,
+                      progress: 0.5,
+                      backgroundColor: AppColors.c000000,
+                      progressColor: AppColors.cFF7954,
                     ),
-                    Positioned(
-                      left: 96.w,
-                      child: Text(
-                        "10/20",
-                        style: 10.w4(color: AppColors.cFFFFFF),
-                      ),
+                  ),
+                  Positioned(
+                    left: 96.w,
+                    child: Text(
+                      "10/20",
+                      style: 10.w4(color: AppColors.cFFFFFF),
                     ),
-                    Positioned(
-                      left: 5.w,
-                      child: Container(
-                        width: 29.w,
-                        height: 29.w,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15.w),
-                            color: AppColors.c000000),
-                      ),
+                  ),
+                  Positioned(
+                    left: 5.w,
+                    child: Container(
+                      width: 29.w,
+                      height: 29.w,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15.w),
+                          color: AppColors.c000000),
                     ),
-                    Positioned(
-                      left: 5.w,
+                  ),
+                  Positioned(
+                    left: 5.w,
+                    child: InkWell(
+                      onTap: () => controller.showBubles(),
                       child: IconWidget(
                           iconWidth: 27.w,
                           iconHeight: 20.w,
                           icon: Assets.uiMoney_02Png),
                     ),
-                    Positioned(
-                      left: 186.w,
-                      child: IconWidget(
-                        iconWidth: 37.w,
-                        icon: Assets.uiTeamBox_02Png,
-                      ),
+                  ),
+                  Positioned(
+                    left: 186.w,
+                    child: IconWidget(
+                      iconWidth: 37.w,
+                      icon: Assets.uiTeamBox_02Png,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
 
           // 大屏获奖展示
           Positioned(
-            top: 150.h,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Image.asset(
-                  Assets.uiMoney_02Png,
-                  width: 60.h,
-                  fit: BoxFit.fitWidth,
+            top: 160.h,
+            child: Transform(
+              alignment: FractionalOffset.center,
+              transform: Matrix4.identity()
+                ..setEntry(3, 2, 0.01)
+                ..rotateX(-pi / 20),
+              child: Container(
+                // color: Colors.amber,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Image.asset(
+                    //   Assets.uiMoney_02Png,
+                    //   width: 60.h,
+                    //   fit: BoxFit.fitWidth,
+                    // ),
+                    // 10.hGap,
+                    Text(
+                      "Cash +100K",
+                      style: TextStyle(
+                          fontSize: 35.sp,
+                          fontWeight: FontWeight.bold,
+                          height: 1,
+                          color: AppColors.cFF7954.withOpacity(0.5)),
+                    )
+                  ],
                 ),
-                10.hGap,
-                Text(
-                  "+100K",
-                  style: TextStyle(
-                      fontSize: 50.sp,
-                      fontWeight: FontWeight.bold,
-                      height: 1,
-                      color: AppColors.cFF7954.withOpacity(0.5)),
-                )
-              ],
+              ),
             ),
           ),
 
@@ -173,13 +182,13 @@ class TrainingPage extends GetView<TrainingController> {
               alignment: FractionalOffset.center,
               transform: Matrix4.identity()
                 ..setEntry(3, 2, 0.01)
-                ..rotateX(-pi / 4),
+                ..rotateX(-pi / 5),
               child: Container(
                 // color: Colors.black38,
                 width: 375.w,
-                child: GetBuilder<TeamController>(
+                child: GetBuilder<TrainingController>(
                   id: "slot",
-                  builder: (controller) {
+                  builder: (ctrl) {
                     return Row(
                       children: [
                         for (int i = 0; i < 3; i++)
@@ -191,17 +200,16 @@ class TrainingPage extends GetView<TrainingController> {
                                     width: 125.w,
                                     alignment: Alignment.center,
                                     child: Visibility(
-                                      visible: i != 2 ||
-                                          controller.showThirdCard.value,
-                                      child: Image.asset(
-                                        controller.currentAward[i],
-                                        width: 80.h,
-                                        fit: BoxFit.fitWidth,
-                                        errorBuilder:
-                                            (context, error, stackTrace) =>
-                                                Container(),
-                                      ),
-                                    )),
+                                        visible: i != 2 ||
+                                            controller.showThirdCard.value,
+                                        child: ImageWidget(
+                                          width: 80.h,
+                                          color: Colors.white.withOpacity(0.6),
+                                          fit: BoxFit.fitWidth,
+                                          url: Utils.getIconUrl(
+                                              ctrl.currentAward[i]),
+                                          errorWidget: Container(),
+                                        ))),
                                 // Positioned(
                                 //     bottom: 0,
                                 //     child: IconWidget(
@@ -309,29 +317,39 @@ class TrainingPage extends GetView<TrainingController> {
 
           Positioned(
             top: 500.h,
-            child: SizedBox(
-              width: 375.w,
-              height: 86.h,
-              child: Swiper(
-                containerWidth: 64.w,
-                containerHeight: 86.h,
-                itemHeight: 64.w,
-                itemWidth: 64.w,
-                viewportFraction: .2,
-                indicatorLayout: PageIndicatorLayout.COLOR,
-                scale: .5,
-                itemCount: 5,
-                autoplay: true,
-                itemBuilder: (context, index) {
-                  return Container(
-                    alignment: Alignment.center,
-                    child: PlayerAwater(
-                      backgroudColor: AppColors.c666666,
+            child: GetBuilder<TrainingController>(
+                id: "player",
+                builder: (_) {
+                  return SizedBox(
+                    width: 375.w,
+                    height: 86.h,
+                    child: Swiper(
+                      physics: const NeverScrollableScrollPhysics(),
+                      containerWidth: 64.w,
+                      containerHeight: 86.h,
+                      itemHeight: 64.w,
+                      itemWidth: 64.w,
+                      viewportFraction: .2,
+                      indicatorLayout: PageIndicatorLayout.COLOR,
+                      scale: .5,
+                      itemCount: 5,
+                      outer: true,
+                      autoplay: true,
+                      // duration: 200,
+                      autoplayDelay: 1000,
+                      duration: 800, // 动画的过渡时间
+                      controller: controller.swiperControl,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          alignment: Alignment.center,
+                          child: const PlayerAwater(
+                            backgroudColor: AppColors.c666666,
+                          ),
+                        );
+                      },
                     ),
                   );
-                },
-              ),
-            ),
+                }),
           ),
 
           Positioned(
@@ -340,8 +358,10 @@ class TrainingPage extends GetView<TrainingController> {
               child: Column(
                 children: [
                   Container(
-                    width: 98.w,
-                    height: 16.w,
+                    // width: 98.w,
+                    // height: 16.w,
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.w),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.w),
                       color: AppColors.c262626.withOpacity(0.7),
@@ -407,42 +427,42 @@ class TrainingPage extends GetView<TrainingController> {
             ),
           ),
 
-          Positioned(
-              top: 638.h,
-              left: 375.w / 2 + 43.h,
-              child: IconWidget(
-                iconWidth: 8.h,
-                icon: Assets.uiBgFusePng,
-              )),
+          // Positioned(
+          //     top: 638.h,
+          //     left: 375.w / 2 + 43.h,
+          //     child: IconWidget(
+          //       iconWidth: 8.h,
+          //       icon: Assets.uiBgFusePng,
+          //     )),
 
-          Positioned(
-            top: 631.h,
-            left: 375.w / 2 + 50.h,
-            child: Container(
-              width: 74.h,
-              height: 24.h,
-              decoration: BoxDecoration(
-                color: AppColors.c262626,
-                borderRadius: BorderRadius.circular(12.h),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "BET x3",
-                    style: 12.w4(
-                      color: AppColors.cF2F2F2,
-                    ),
-                  ),
-                  SizedBox(width: 10.h),
-                  IconWidget(
-                    iconWidth: 8.h,
-                    icon: Assets.uiIconUnfoldPng,
-                  ),
-                ],
-              ),
-            ),
-          ),
+          // Positioned(
+          //   top: 631.h,
+          //   left: 375.w / 2 + 50.h,
+          //   child: Container(
+          //     width: 74.h,
+          //     height: 24.h,
+          //     decoration: BoxDecoration(
+          //       color: AppColors.c262626,
+          //       borderRadius: BorderRadius.circular(12.h),
+          //     ),
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.center,
+          //       children: [
+          //         Text(
+          //           "BET x3",
+          //           style: 12.w4(
+          //             color: AppColors.cF2F2F2,
+          //           ),
+          //         ),
+          //         SizedBox(width: 10.h),
+          //         IconWidget(
+          //           iconWidth: 8.h,
+          //           icon: Assets.uiIconUnfoldPng,
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
 
           Positioned(
               top: 600.h,
@@ -489,6 +509,22 @@ class TrainingPage extends GetView<TrainingController> {
             );
           }),
 
+          ///气泡提示
+          Positioned(
+            top: 125.h,
+            left: 81.w,
+            child: Obx(() {
+              return Visibility(
+                // visible: true,
+                visible: controller.isShowBuble.value,
+                child: const BubbleBox(
+                  arrowDirection: ArrowDirection.up,
+                  child: PropBubleWidget(),
+                ),
+              );
+            }),
+          ),
+
           Obx(() {
             return !controller.isAscending.value
                 ? Positioned(
@@ -502,26 +538,106 @@ class TrainingPage extends GetView<TrainingController> {
                 : Container();
           }),
 
-          // Positioned(top: 300.h, child: FallingLeaves())
-          ///钞票
-          ...controller.leaves.map((leaf) {
+          ///奖励money
+          AnimatedBuilder(
+            animation: controller.flyCtrl,
+            builder: (BuildContext context, Widget? child) {
+              return Obx(() {
+                return Visibility(
+                  visible: controller.isShowMoney.value,
+                  child: Positioned(
+                      left: 170.w - 85.w * controller.flyCtrl.value,
+                      top: 253.h - 167.h * controller.flyCtrl.value,
+                      child: Transform.scale(
+                        scale: 1 - controller.flyCtrl.value * 0.5,
+                        child: IconWidget(
+                            iconWidth: 40.w, icon: Assets.uiMoney_02Png),
+                      )),
+                );
+              });
+            },
+          ),
+
+          ///奖励篮球
+          AnimatedBuilder(
+            animation: controller.flyCtrl,
+            builder: (BuildContext context, Widget? child) {
+              return Obx(() {
+                return Visibility(
+                  visible: controller.isShowBall.value,
+                  child: Positioned(
+                      left: 160.w - 80.w * controller.flyCtrl.value,
+                      top: 223.h + 348.h * controller.flyCtrl.value,
+                      child: Transform.scale(
+                        scale: 1 - controller.flyCtrl.value * 0.5,
+                        child: IconWidget(
+                            iconWidth: 50.w, icon: Assets.icon_306Png),
+                      )),
+                );
+              });
+            },
+          ),
+
+          ///奖励Buff水波纹
+          Obx(() {
+            return Visibility(
+              visible: controller.isShowRipple.value,
+              child: Positioned(
+                  top: 251.h,
+                  child: WaterRipples(
+                    maxRadius: 125.h, // 设置波纹的最大半径
+                    initialRadius: 49.h, // 设置波纹的初始大小
+                    color: Colors.white, // 设置波纹的颜色
+                    rippleCount: 3, // 设置波纹的数量
+                    duration: const Duration(milliseconds: 1000), // 设置波纹的扩散速度
+                  )),
+            );
+          }),
+
+          ///奖励Buff
+          AnimatedBuilder(
+            animation: controller.flyCtrl,
+            builder: (BuildContext context, Widget? child) {
+              return Obx(() {
+                return Visibility(
+                  visible: controller.isShowBuff.value,
+                  child: Positioned(
+                      top: 289.h + 120.h * controller.flyCtrl.value,
+                      child: Transform.scale(
+                        scale: 1 - controller.flyCtrl.value * 0.5,
+                        child: CircleProgressView(
+                            showAnimation: false,
+                            title: "PF",
+                            progressColor: AppColors.c31E99E,
+                            progress: 100,
+                            width: 49.h,
+                            height: 49.h),
+                      )),
+                );
+              });
+            },
+          ),
+
+          ///奖励钞票
+          ...controller.moneyList.map((leaf) {
             return AnimatedBuilder(
-              animation: controller.prizeController,
+              animation: controller.moneyCtrl,
               builder: (context, child) {
                 return Positioned(
                   // 叶子的左右摇摆
                   left: leaf.x +
-                      (sin(controller.prizeController.value * 2 * pi +
-                              leaf.index) *
+                      (sin(controller.moneyCtrl.value * 2 * pi + leaf.index) *
                           20),
                   // 叶子的垂直下落
-                  top: leaf.y + (controller.prizeController.value * 500.h),
+                  top: leaf.y + (controller.moneyCtrl.value * 500.h),
                   child: Transform.rotate(
                     // 叶子的旋转效果
-                    angle: controller.prizeController.value * 2 * pi +
+                    angle: controller.moneyCtrl.value * 2 * pi +
                         leaf.index * pi / 10,
                     child: Opacity(
-                      opacity: 1 - (controller.prizeController.value),
+                      opacity: controller.moneyCtrl.value != 0
+                          ? (1 - (controller.moneyCtrl.value))
+                          : 0,
                       child: leaf.widget,
                     ),
                   ),
@@ -534,72 +650,3 @@ class TrainingPage extends GetView<TrainingController> {
     );
   }
 }
-
-
-// class SlotMachineScroll extends StatefulWidget {
-//   const SlotMachineScroll({super.key});
-
-//   @override
-//   _SlotMachineScrollState createState() => _SlotMachineScrollState();
-// }
-
-// class _SlotMachineScrollState extends State<SlotMachineScroll> {
-//   late ScrollController _scrollController;
-//   Timer? _timer;
-//   final double _itemHeight = 100.0; // 每个项的高度
-//   final List<String> _items = ['🍒', '🍋', '🍉', '🍇', '🍓', '🍌'];
-//   bool _isAutoScrolling = true;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _scrollController = ScrollController();
-//     _startAutoScroll();
-//   }
-
-//   @override
-//   void dispose() {
-//     _timer?.cancel();
-//     _scrollController.dispose();
-//     super.dispose();
-//   }
-
-//   // 启动自动滚动
-//   void _startAutoScroll() {
-//     _timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
-//       if (_scrollController.hasClients && _isAutoScrolling) {
-//         _scrollController.animateTo(
-//           _scrollController.offset + _itemHeight,
-//           duration: Duration(milliseconds: 50),
-//           curve: Curves.easeInOut,
-//         );
-
-//         // 当滚动到最后一个可见项时，重置到起点
-//         if (_scrollController.offset >=
-//             _scrollController.position.maxScrollExtent) {
-//           _scrollController.jumpTo(0);
-//         }
-//       }
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return ListView.builder(
-//       scrollDirection: Axis.horizontal,
-//       controller: _scrollController,
-//       itemExtent: _itemHeight,
-//       physics: NeverScrollableScrollPhysics(), // 禁止手动滚动
-//       itemBuilder: (context, index) {
-//         final actualIndex = index % _items.length;
-//         return Container(
-//           alignment: Alignment.center,
-//           child: Text(
-//             _items[actualIndex],
-//             style: TextStyle(fontSize: 48),
-//           ),
-//         );
-//       },
-//     );
-//   }
-// }
