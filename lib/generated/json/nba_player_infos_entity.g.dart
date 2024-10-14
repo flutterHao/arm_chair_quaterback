@@ -1,5 +1,7 @@
 import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
+import 'dart:math';
+
 
 NbaPlayerInfosEntity $NbaPlayerInfosEntityFromJson(Map<String, dynamic> json) {
   final NbaPlayerInfosEntity nbaPlayerInfosEntity = NbaPlayerInfosEntity();
@@ -560,6 +562,17 @@ NbaPlayerInfosPlayerBaseInfoList $NbaPlayerInfosPlayerBaseInfoListFromJson(
   if (playerId != null) {
     nbaPlayerInfosPlayerBaseInfoList.playerId = playerId;
   }
+  final int? basicMarketPrice = jsonConvert.convert<int>(
+      json['basicMarketPrice']);
+  if (basicMarketPrice != null) {
+    nbaPlayerInfosPlayerBaseInfoList.basicMarketPrice = basicMarketPrice;
+  }
+  final int? beforeMarketPriceUpdateTime = jsonConvert.convert<int>(
+      json['beforeMarketPriceUpdateTime']);
+  if (beforeMarketPriceUpdateTime != null) {
+    nbaPlayerInfosPlayerBaseInfoList.beforeMarketPriceUpdateTime =
+        beforeMarketPriceUpdateTime;
+  }
   return nbaPlayerInfosPlayerBaseInfoList;
 }
 
@@ -589,6 +602,8 @@ Map<String, dynamic> $NbaPlayerInfosPlayerBaseInfoListToJson(
   data['tag'] = entity.tag;
   data['beforeMarketPrice'] = entity.beforeMarketPrice;
   data['playerId'] = entity.playerId;
+  data['basicMarketPrice'] = entity.basicMarketPrice;
+  data['beforeMarketPriceUpdateTime'] = entity.beforeMarketPriceUpdateTime;
   return data;
 }
 
@@ -617,6 +632,8 @@ extension NbaPlayerInfosPlayerBaseInfoListExtension on NbaPlayerInfosPlayerBaseI
     List<int>? tag,
     int? beforeMarketPrice,
     int? playerId,
+    int? basicMarketPrice,
+    int? beforeMarketPriceUpdateTime,
   }) {
     return NbaPlayerInfosPlayerBaseInfoList()
       ..marketPrice = marketPrice ?? this.marketPrice
@@ -641,6 +658,9 @@ extension NbaPlayerInfosPlayerBaseInfoListExtension on NbaPlayerInfosPlayerBaseI
       ..position = position ?? this.position
       ..tag = tag ?? this.tag
       ..beforeMarketPrice = beforeMarketPrice ?? this.beforeMarketPrice
-      ..playerId = playerId ?? this.playerId;
+      ..playerId = playerId ?? this.playerId
+      ..basicMarketPrice = basicMarketPrice ?? this.basicMarketPrice
+      ..beforeMarketPriceUpdateTime = beforeMarketPriceUpdateTime ??
+          this.beforeMarketPriceUpdateTime;
   }
 }

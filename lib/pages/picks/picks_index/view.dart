@@ -11,7 +11,6 @@ import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
@@ -23,7 +22,6 @@ import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guess_item/
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guss_player_item.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/picks_swiper_pagination_builder.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/rank_start_button.dart';
-import 'package:arm_chair_quaterback/pages/picks/player_detail/bindings.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/recive_rward/index.dart';
 import 'package:arm_chair_quaterback/pages/picks/recive_rward/view.dart';
@@ -67,8 +65,7 @@ class PicksIndex extends StatelessWidget {
                 opaque: false,
                 settings: setting,
                 barrierColor: Colors.transparent,
-                page: () => PlayerDetailPage(),
-                binding: PlayerDetailBinding());
+                page: () => PlayerDetailPage(arguments: setting.arguments as PlayerDetailPageArguments,));
           case RouteNames.picksPersonalCenter:
             return GetPageRoute(
                 opaque: false,

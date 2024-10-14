@@ -11,6 +11,7 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guess_item/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/rank_start_button.dart';
+import 'package:arm_chair_quaterback/pages/picks/player_detail/index.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -180,10 +181,8 @@ class _GuessItemState extends State<GuessItem>
               print('点击了头像');
               Get.toNamed(RouteNames.picksPlayerDetail,
                   id: GlobalNestedKey.PICKS,
-                  arguments: {
-                    "teamId": widget.pickPlayer.guessInfo.teamId,
-                    "uuid": widget.pickPlayer.guessInfo.teamId
-                  });
+                  arguments: PlayerDetailPageArguments(guessItemController.player.baseInfoList.playerId)
+              );
             },
             child: Container(
               decoration: BoxDecoration(

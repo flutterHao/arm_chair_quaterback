@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/nba_player_infos_entity.g.dart';
 import 'dart:convert';
@@ -89,6 +91,19 @@ class NbaPlayerInfosPlayerDataAvgList {
     return (oreb + dreb) / 2;
   }
 
+  double getThreePT(){
+    return double.parse((threePm/threePa*100).toStringAsFixed(0));
+  }
+
+  double getMaxValue(){
+    var value = max(pts, getThreePT());
+    value = max(value, ast ?? 0);
+    value = max(value, (dreb+oreb)/2);
+    value = max(value, blk ?? 0);
+    value = max(value, stl ?? 0);
+    return value;
+  }
+
   @override
   String toString() {
     return jsonEncode(this);
@@ -166,12 +181,16 @@ class NbaPlayerInfosPlayerBaseInfoList {
   late List<int> tag = [];
   late int beforeMarketPrice = 0;
   late int playerId = 0;
+  late int basicMarketPrice = 0;
+  late int beforeMarketPriceUpdateTime = 0;
 
   NbaPlayerInfosPlayerBaseInfoList();
 
   factory NbaPlayerInfosPlayerBaseInfoList.fromJson(
           Map<String, dynamic> json) =>
       $NbaPlayerInfosPlayerBaseInfoListFromJson(json);
+
+  get breakThroughGrade => null;
 
   Map<String, dynamic> toJson() =>
       $NbaPlayerInfosPlayerBaseInfoListToJson(this);

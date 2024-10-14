@@ -9,6 +9,7 @@ import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/entities/guess_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_param_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
@@ -99,4 +100,10 @@ class PicksApi {
         .post(Api.getTeamPlayerByUUID, data: {"teamId": teamId, "uuid": uuid});
     return TeamPlayerInfoEntity.fromJson(json);
   }
+
+  static Future<NbaPlayerBaseInfoEntity> getNBAPlayerBaseInfo(int playerId) async {
+    var json = await httpUtil.post(Api.getNBAPlayerBaseInfo, data: {"playerId": playerId});
+    return NbaPlayerBaseInfoEntity.fromJson(json);
+  }
+
 }

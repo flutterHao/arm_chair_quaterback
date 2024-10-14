@@ -7,9 +7,18 @@
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
+import 'package:arm_chair_quaterback/common/entities/chart_sample_data.dart';
+import 'package:arm_chair_quaterback/common/entities/chart_sample_data.dart';
+import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/user_entity/team_player_list.dart';
+import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,7 +28,9 @@ import 'index.dart';
 
 class PlayerDetailController extends GetxController
     with GetTickerProviderStateMixin {
-  PlayerDetailController();
+  PlayerDetailController(this.arguments);
+
+  final PlayerDetailPageArguments arguments;
 
   final ScrollController scrollController = ScrollController();
 
@@ -31,7 +42,20 @@ class PlayerDetailController extends GetxController
 
   var xDragValue = 0.0.obs;
 
+  AnimationController? _rateAnimationController;
+  Animation<double>? _rateAnimation;
+
+  TeamPlayerList? uuidPlayerInfo;
+  NbaPlayerInfosPlayerBaseInfoList? baseInfo;
+  NbaPlayerInfosPlayerDataAvgList? avgList;
+  NbaTeamEntity? teamInfo;
+  NbaPlayerBaseInfoEntity? nbaPlayerBaseInfoEntity;
+  List<BarChartGroupData> _barGroups = [];
+
   /// 0-180
+  ///
+
+  late List<ChartSampleData> dataSource;
 
   // tap
   void handleTap(int index) {
@@ -57,6 +81,7 @@ class PlayerDetailController extends GetxController
   @override
   void onInit() {
     super.onInit();
+    _initData();
     statsScrollController.addListener(() {
       if (!statsIsScrolling.value && statsScrollController.offset > 5) {
         statsIsScrolling.value = true;
@@ -67,7 +92,78 @@ class PlayerDetailController extends GetxController
     });
   }
 
-  _initData() {}
+  _initData() {
+    if (arguments.teamId != null) {
+      uuidPlayerInfo = Get.find<HomeController>()
+          .userEntiry
+          .teamLoginInfo
+          ?.teamPlayerList
+          ?.firstWhere((e) => e.playerId == arguments.playerId);
+    }
+    Future.wait([
+      CacheApi.getNBAPlayerInfo(),
+      CacheApi.getNBATeamDefine(getList: true),
+      PicksApi.getNBAPlayerBaseInfo(arguments.playerId)
+    ]).then((result) {
+      baseInfo = (result[0] as NbaPlayerInfosEntity)
+          .playerBaseInfoList
+          .firstWhere((e) => e.playerId == arguments.playerId);
+      avgList = (result[0] as NbaPlayerInfosEntity)
+          .playerDataAvgList
+          .firstWhere((e) => e.playerId == arguments.playerId);
+      teamInfo = (result[1] as List<NbaTeamEntity>)
+          .firstWhere((e) => e.id == baseInfo?.teamId);
+      nbaPlayerBaseInfoEntity = (result[2] as NbaPlayerBaseInfoEntity);
+      _barGroups.clear();
+      maxPriceValue = 0;
+      minPriceValue = 100000000;
+      for (int i = 0; i < (nbaPlayerBaseInfoEntity?.playerTrends.length ?? 0); i++) {
+        int index = i;
+        var toY = nbaPlayerBaseInfoEntity!
+                    .playerTrends[index].playerMarketPrice
+                    .toDouble();
+        maxPriceValue = max(maxPriceValue,toY);
+        minPriceValue = min(minPriceValue,toY);
+        minPriceValue = minPriceValue>maxPriceValue-500?maxPriceValue-500:minPriceValue;
+        _barGroups.add(BarChartGroupData(
+          x: MyDateUtils.getDateTimeByMs(
+              nbaPlayerBaseInfoEntity!.playerTrends[index].createTime)
+              .day,
+          barRods: [
+            BarChartRodData(
+              // fromY: Random().nextInt(5).toDouble(),
+                toY: toY,
+                borderRadius: BorderRadius.all(Radius.circular(5.w)),
+                width: 10.w,
+                color:
+                index % 2 == 0 ? AppColors.c10A86A : AppColors.cE72646
+              // gradient: _barsGradient,
+            )
+          ],
+          // showingTooltipIndicators: [0],
+        ));
+      }
+      dataSource = <ChartSampleData>[
+        ChartSampleData(
+            x: 'PTS', y: avgList?.getMaxValue(), yValue: avgList?.pts ?? 0),
+        ChartSampleData(
+            x: '3PT', y: avgList?.getMaxValue(), yValue: avgList?.getThreePT()),
+        ChartSampleData(
+            x: 'AST', y: avgList?.getMaxValue(), yValue: avgList?.ast ?? 0),
+        ChartSampleData(
+            x: 'REB',
+            y: avgList?.getMaxValue(),
+            yValue: avgList?.getValue('reb') ?? 0),
+        ChartSampleData(
+            x: 'BLK', y: avgList?.getMaxValue(), yValue: avgList?.blk ?? 0),
+        ChartSampleData(
+            x: 'STL', y: avgList?.getMaxValue(), yValue: avgList?.stl ?? 0),
+      ];
+      update([idMain]);
+    });
+  }
+
+  static get idMain => "player_detail_main";
 
   /// 在 onInit() 之后调用 1 帧。这是进入的理想场所
   @override
@@ -142,13 +238,13 @@ class PlayerDetailController extends GetxController
               reservedSize: 35.w,
               getTitlesWidget: (value, titleMate) {
                 // print('v:---: $value');
-                // if (value % 5 != 0) {
-                //   return const SizedBox.shrink();
-                // }
+                if (value % 100 != 0) {
+                  return const SizedBox.shrink();
+                }
                 return Container(
                   alignment: Alignment.center,
                   child: Text(
-                    "${value.toInt()}00K",
+                    "${value.toInt()}K",
                     style: 10.w4(color: AppColors.cB3B3B3),
                   ),
                 );
@@ -171,22 +267,7 @@ class PlayerDetailController extends GetxController
         show: false,
       );
 
-  List<BarChartGroupData> get barGroups => List.generate(
-      11,
-      (index) => BarChartGroupData(
-            x: index + 16,
-            barRods: [
-              BarChartRodData(
-                  fromY: Random().nextInt(5).toDouble(),
-                  toY: Random().nextInt(9).toDouble(),
-                  borderRadius: BorderRadius.all(Radius.circular(5.w)),
-                  width: 10.w,
-                  color: index % 2 == 0 ? AppColors.c10A86A : AppColors.cE72646
-                  // gradient: _barsGradient,
-                  )
-            ],
-            // showingTooltipIndicators: [0],
-          ));
+  List<BarChartGroupData> get barGroups => _barGroups;
 
   late AnimationController _animationController;
   late Animation<double> _starTranslateAnimation,
@@ -265,6 +346,8 @@ class PlayerDetailController extends GetxController
 
   final dialogListDatas = List.generate(10, (index) => false).obs;
 
+  double maxPriceValue = 0,minPriceValue = 0;
+
   dialogListItemTap(int index) {
     var value = dialogListDatas[index];
     double before = 0;
@@ -285,9 +368,6 @@ class PlayerDetailController extends GetxController
     dialogListDatas[index] = !value;
     dialogListDatas.refresh();
   }
-
-  AnimationController? _rateAnimationController;
-  Animation<double>? _rateAnimation;
 
   _rateAnimationStart(double before, double target) {
     _rateAnimationController ??= AnimationController(

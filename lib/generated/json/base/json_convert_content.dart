@@ -7,6 +7,7 @@ import 'package:flutter/material.dart' show debugPrint;
 import 'package:arm_chair_quaterback/common/entities/config/prop_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_param_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
@@ -185,6 +186,33 @@ class JsonConvert {
       return data.map<GuessParamGuessData>((Map<String, dynamic> e) =>
           GuessParamGuessData.fromJson(e)).toList() as M;
     }
+    if (<NbaPlayerBaseInfoEntity>[] is M) {
+      return data.map<NbaPlayerBaseInfoEntity>((Map<String, dynamic> e) =>
+          NbaPlayerBaseInfoEntity.fromJson(e)).toList() as M;
+    }
+    if (<NbaPlayerBaseInfoPlayerBaseInfo>[] is M) {
+      return data.map<NbaPlayerBaseInfoPlayerBaseInfo>((
+          Map<String, dynamic> e) =>
+          NbaPlayerBaseInfoPlayerBaseInfo.fromJson(e)).toList() as M;
+    }
+    if (<NbaPlayerBaseInfoPlayerRegularMap>[] is M) {
+      return data.map<NbaPlayerBaseInfoPlayerRegularMap>((
+          Map<String, dynamic> e) =>
+          NbaPlayerBaseInfoPlayerRegularMap.fromJson(e)).toList() as M;
+    }
+    if (<NbaPlayerBaseInfoPlayerPlayoffsMap>[] is M) {
+      return data.map<NbaPlayerBaseInfoPlayerPlayoffsMap>((
+          Map<String, dynamic> e) =>
+          NbaPlayerBaseInfoPlayerPlayoffsMap.fromJson(e)).toList() as M;
+    }
+    if (<NbaPlayerBaseInfoPlayerTrends>[] is M) {
+      return data.map<NbaPlayerBaseInfoPlayerTrends>((Map<String, dynamic> e) =>
+          NbaPlayerBaseInfoPlayerTrends.fromJson(e)).toList() as M;
+    }
+    if (<NbaPlayerBaseInfoPlayerNews>[] is M) {
+      return data.map<NbaPlayerBaseInfoPlayerNews>((Map<String, dynamic> e) =>
+          NbaPlayerBaseInfoPlayerNews.fromJson(e)).toList() as M;
+    }
     if (<NbaPlayerInfosEntity>[] is M) {
       return data.map<NbaPlayerInfosEntity>((Map<String, dynamic> e) =>
           NbaPlayerInfosEntity.fromJson(e)).toList() as M;
@@ -310,6 +338,17 @@ class JsonConvertClassCollection {
         .fromJson,
     (GuessParamEntity).toString(): GuessParamEntity.fromJson,
     (GuessParamGuessData).toString(): GuessParamGuessData.fromJson,
+    (NbaPlayerBaseInfoEntity).toString(): NbaPlayerBaseInfoEntity.fromJson,
+    (NbaPlayerBaseInfoPlayerBaseInfo)
+        .toString(): NbaPlayerBaseInfoPlayerBaseInfo.fromJson,
+    (NbaPlayerBaseInfoPlayerRegularMap)
+        .toString(): NbaPlayerBaseInfoPlayerRegularMap.fromJson,
+    (NbaPlayerBaseInfoPlayerPlayoffsMap)
+        .toString(): NbaPlayerBaseInfoPlayerPlayoffsMap.fromJson,
+    (NbaPlayerBaseInfoPlayerTrends).toString(): NbaPlayerBaseInfoPlayerTrends
+        .fromJson,
+    (NbaPlayerBaseInfoPlayerNews).toString(): NbaPlayerBaseInfoPlayerNews
+        .fromJson,
     (NbaPlayerInfosEntity).toString(): NbaPlayerInfosEntity.fromJson,
     (NbaPlayerInfosPlayerDataAvgList)
         .toString(): NbaPlayerInfosPlayerDataAvgList.fromJson,

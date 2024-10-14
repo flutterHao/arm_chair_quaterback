@@ -4,12 +4,15 @@ import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/chart_sample_data.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/arc_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/btn_background.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,17 +21,17 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 import 'index.dart';
 
-class PlayerDetailPage extends GetView<PlayerDetailController> {
-   PlayerDetailPage({super.key});
+class PlayerDetailPageArguments {
+  final int? teamId;
+  final int playerId;
 
-  var dataSource = <ChartSampleData>[
-    ChartSampleData(x: 'PTS', y: 55,yValue: 30),
-    ChartSampleData(x: '3PT', y: 55,yValue: 40),
-    ChartSampleData(x: 'AST', y: 55,yValue: 35),
-    ChartSampleData(x: 'REB', y: 55,yValue: 45),
-    ChartSampleData(x: 'BLK', y: 55,yValue: 30),
-    ChartSampleData(x: 'STL', y: 55,yValue: 40),
-  ];
+  PlayerDetailPageArguments(this.playerId, {this.teamId});
+}
+
+class PlayerDetailPage extends GetView<PlayerDetailController> {
+  const PlayerDetailPage({super.key, this.arguments});
+
+  final PlayerDetailPageArguments? arguments;
 
   List<PieChartSectionData> showingSections() {
     return List.generate(
@@ -107,8 +110,6 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
     );
   }
 
-
-
   SfCircularChart _buildSmartLabelPieChart() {
     return SfCircularChart(
       // title: ChartTitle(
@@ -119,14 +120,13 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
   }
 
   SfCircularChart _buildBackgroundSmartLabelPieChart() {
-
     return SfCircularChart(
       // title: ChartTitle(
       //     text: isCardView ? '' : 'Gold medals count in Rio Olympics'),
       series: <PieSeries<ChartSampleData, String>>[
         PieSeries<ChartSampleData, String>(
             animationDuration: 0,
-            dataSource: dataSource,
+            dataSource: controller.dataSource,
             xValueMapper: (ChartSampleData data, _) => data.x as String,
             yValueMapper: (ChartSampleData data, _) => data.yValue,
             pointColorMapper: (data, _) => AppColors.ce5e5e5,
@@ -137,19 +137,22 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
             dataLabelSettings: DataLabelSettings(
                 margin: EdgeInsets.zero,
                 isVisible: true,
-                builder: (data, point, series, int pointIndex, int seriesIndex) {
+                builder:
+                    (data, point, series, int pointIndex, int seriesIndex) {
                   return Container(
-                      padding:
-                      EdgeInsets.symmetric(horizontal: 6.w, vertical: 6.h),
-                      decoration: BoxDecoration(
-                          color: AppColors.cE6E6E6,
-                          borderRadius: BorderRadius.circular(15.h)),
-                    child: Text.rich(TextSpan(
-                      children: [
-                        TextSpan(text: "${(data as ChartSampleData).x}:  ",style: 10.w4(color: AppColors.cB3B3B3,height: 1)),
-                        TextSpan(text: (data).yValue!.toStringAsFixed(0),style: 14.w7(color: AppColors.c262626,height: 1))
-                      ]
-                    )),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 6.w, vertical: 6.h),
+                    decoration: BoxDecoration(
+                        color: AppColors.cE6E6E6,
+                        borderRadius: BorderRadius.circular(15.h)),
+                    child: Text.rich(TextSpan(children: [
+                      TextSpan(
+                          text: "${(data as ChartSampleData).x}:  ",
+                          style: 10.w4(color: AppColors.cB3B3B3, height: 1)),
+                      TextSpan(
+                          text: (data).yValue!.toStringAsFixed(0),
+                          style: 14.w7(color: AppColors.c262626, height: 1))
+                    ])),
                   );
                 },
                 labelPosition: ChartDataLabelPosition.outside,
@@ -166,15 +169,16 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
   List<PieSeries<ChartSampleData, String>> _getSmartLabelPieSeries() {
     return <PieSeries<ChartSampleData, String>>[
       PieSeries<ChartSampleData, String>(
-          animationDuration: 0,
-          dataSource: dataSource,
-          xValueMapper: (ChartSampleData data, _) => data.x as String,
-          yValueMapper: (ChartSampleData data, _) => data.yValue,
-          pointColorMapper: (data, _) => AppColors.c3B93FF,
-          pointRadiusMapper: (data, _) => data.yValue.toString(),
-          explodeAll: true,
-          explodeOffset: '3%',
-          explode: true,)
+        animationDuration: 0,
+        dataSource: controller.dataSource,
+        xValueMapper: (ChartSampleData data, _) => data.x as String,
+        yValueMapper: (ChartSampleData data, _) => data.yValue,
+        pointColorMapper: (data, _) => AppColors.c3B93FF,
+        pointRadiusMapper: (data, _) => data.yValue.toString(),
+        explodeAll: true,
+        explodeOffset: '3%',
+        explode: true,
+      )
     ];
   }
 
@@ -189,241 +193,284 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _leverWidget(context),
-              9.vGap,
-              Container(
-                decoration: BoxDecoration(
-                    color: AppColors.cF2F2F2,
-                    borderRadius: BorderRadius.circular(16.w)),
-                padding: EdgeInsets.all(14.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              if (controller.uuidPlayerInfo != null)
+                Column(
                   children: [
-                    Text(
-                      "Ability",
-                      style: 19.w7(color: AppColors.c262626, height: 1),
-                    ),
-                    LayoutBuilder(builder: (context, constraints) {
-                      return SizedBox(
-                        height: 190.h,
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            _buildBackgroundSmartLabelPieChart(),
-                            _buildSmartLabelPieChart()
-                          ],
-                        ),
-                      );
-                    }),
-                    Text(
-                      "Potential",
-                      style: 19.w7(color: AppColors.c262626, height: 1),
-                    ),
-                    13.vGap,
-                    LayoutBuilder(builder: (context, constraints) {
-                      return Container(
-                        height: 130.h,
-                        width: double.infinity,
-                        margin:
-                            EdgeInsets.only(left: 14.w, right: 18.w, top: 5.w),
-                        child: AspectRatio(
-                          aspectRatio: 1.4,
-                          child: BarChart(BarChartData(
-                              maxY: 1300,
-                              borderData: FlBorderData(
-                                  show: true,
-                                  border: const Border(
-                                      bottom: BorderSide(
-                                          color: AppColors.cD9D9D9, width: 1))),
-                              gridData: FlGridData(
-                                  show: true,
-                                  drawHorizontalLine: true,
-                                  drawVerticalLine: false,
-                                  horizontalInterval: 200,
-                                  getDrawingHorizontalLine: (value) {
-                                    return const FlLine(
-                                        color: AppColors.cD9D9D9,
-                                        strokeWidth: 1,
-                                        dashArray: [3]);
-                                  }),
-                              titlesData: FlTitlesData(
-                                  show: true,
-                                  leftTitles: AxisTitles(
-                                      sideTitles: SideTitles(
-                                          showTitles: true,
-                                          interval: 200,
-                                          getTitlesWidget: (value, meta) {
-                                            var text = value % 200 != 0
-                                                ? ""
-                                                : value.toStringAsFixed(0);
-                                            return Text(
-                                              text,
-                                              style: 9
-                                                  .w4(color: AppColors.cB2B2B2),
-                                            );
-                                          })),
-                                  bottomTitles: AxisTitles(
-                                      sideTitles: SideTitles(
-                                          showTitles: true,
-                                          getTitlesWidget: (value, meta) {
-                                            var text = "PTS";
-                                            switch (value.toInt()) {
-                                              case 1:
-                                                text = "PTS";
-                                                break;
-                                              case 2:
-                                                text = "3PT";
-                                                break;
-                                              case 3:
-                                                text = "AST";
-                                                break;
-                                              case 4:
-                                                text = "REB";
-                                                break;
-                                              case 5:
-                                                text = "BLK";
-                                                break;
-                                              case 6:
-                                                text = "STL";
-                                                break;
-                                            }
-                                            return Container(
-                                              margin: EdgeInsets.only(top: 2.h),
-                                              child: Text(
-                                                text,
-                                                style: 9.w4(
-                                                    color: AppColors.cB2B2B2),
-                                              ),
-                                            );
-                                          })),
-                                  rightTitles: const AxisTitles(),
-                                  topTitles: const AxisTitles()),
-                              barTouchData: BarTouchData(
-                                  enabled: true,
-                                  handleBuiltInTouches: false,
-                                  touchTooltipData: BarTouchTooltipData(
-                                    tooltipMargin: 0,
-                                    tooltipPadding: const EdgeInsets.all(0),
-                                    getTooltipColor: (_) =>
-                                        AppColors.cTransparent,
-                                    getTooltipItem: (BarChartGroupData group,
-                                        int groupIndex,
-                                        BarChartRodData rod,
-                                        int rodIndex) {
-                                      return BarTooltipItem(
-                                        rod.toY.toStringAsFixed(0),
-                                        11.w7(color: rod.color!, height: 1),
-                                      );
-                                    },
-                                  )),
-                              barGroups: [
-                                BarChartGroupData(
-                                    showingTooltipIndicators: [0],
-                                    x: 1,
-                                    barRods: [
-                                      BarChartRodData(
-                                          width: 10.w,
-                                          borderRadius: BorderRadius.vertical(
-                                              top: Radius.circular(5.w)),
-                                          toY: 300,
-                                          color: AppColors.cE72646)
-                                    ]),
-                                BarChartGroupData(
-                                    showingTooltipIndicators: [0],
-                                    x: 2,
-                                    barRods: [
-                                      BarChartRodData(
-                                          width: 10.w,
-                                          borderRadius: BorderRadius.vertical(
-                                              top: Radius.circular(5.w)),
-                                          toY: 480,
-                                          color: AppColors.cE8B94C)
-                                    ]),
-                                BarChartGroupData(
-                                    showingTooltipIndicators: [0],
-                                    x: 3,
-                                    barRods: [
-                                      BarChartRodData(
-                                          width: 10.w,
-                                          borderRadius: BorderRadius.vertical(
-                                              top: Radius.circular(5.w)),
-                                          toY: 925,
-                                          color: AppColors.c10A86A)
-                                    ]),
-                                BarChartGroupData(
-                                    showingTooltipIndicators: [0],
-                                    x: 4,
-                                    barRods: [
-                                      BarChartRodData(
-                                          width: 10.w,
-                                          borderRadius: BorderRadius.vertical(
-                                              top: Radius.circular(5.w)),
-                                          toY: 700,
-                                          color: AppColors.cE8B94C)
-                                    ]),
-                                BarChartGroupData(
-                                    showingTooltipIndicators: [0],
-                                    x: 5,
-                                    barRods: [
-                                      BarChartRodData(
-                                          width: 10.w,
-                                          borderRadius: BorderRadius.vertical(
-                                              top: Radius.circular(5.w)),
-                                          toY: 925,
-                                          color: AppColors.c10A86A)
-                                    ]),
-                                BarChartGroupData(
-                                    showingTooltipIndicators: [0],
-                                    x: 6,
-                                    barRods: [
-                                      BarChartRodData(
-                                          width: 10.w,
-                                          borderRadius: BorderRadius.vertical(
-                                              top: Radius.circular(5.w)),
-                                          toY: 1125,
-                                          color: AppColors.c10A86A)
-                                    ]),
-                              ])),
-                        ),
-                      );
-                    }),
-                    18.vGap,
-                    Center(
-                      child: InkWell(
-                        onTap: () {
-                          _upgradeDialog(context);
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: AppColors.cFF7954, width: 2.w),
-                              borderRadius: BorderRadius.circular(18.h)),
-                          height: 36.h,
-                          width: 303.w,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const SizedBox.shrink(),
-                              Text(
-                                "UPGRADE",
-                                style: 18.w7(color: AppColors.cFF7954),
-                              ),
-                              Container(
-                                  margin: EdgeInsets.only(right: 11.w),
-                                  child: IconWidget(
-                                    iconHeight: 14.w,
-                                    iconWidth: 14.w,
-                                    icon: Assets.uiIconArrowsPng,
-                                    iconColor: AppColors.cFF7954,
-                                  ))
-                            ],
+                    _leverWidget(context),
+                    9.vGap,
+                    Container(
+                      decoration: BoxDecoration(
+                          color: AppColors.cF2F2F2,
+                          borderRadius: BorderRadius.circular(16.w)),
+                      padding: EdgeInsets.all(14.w),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Ability",
+                            style: 19.w7(color: AppColors.c262626, height: 1),
                           ),
-                        ),
+                          LayoutBuilder(builder: (context, constraints) {
+                            return SizedBox(
+                              height: 190.h,
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  _buildBackgroundSmartLabelPieChart(),
+                                  _buildSmartLabelPieChart()
+                                ],
+                              ),
+                            );
+                          }),
+                          Text(
+                            "Potential",
+                            style: 19.w7(color: AppColors.c262626, height: 1),
+                          ),
+                          13.vGap,
+                          LayoutBuilder(builder: (context, constraints) {
+                            return Container(
+                              height: 130.h,
+                              width: double.infinity,
+                              margin: EdgeInsets.only(
+                                  left: 14.w, right: 18.w, top: 5.w),
+                              child: AspectRatio(
+                                aspectRatio: 1.4,
+                                child: BarChart(BarChartData(
+                                    maxY: controller.uuidPlayerInfo!.potential!
+                                        .getMax()
+                                        .toDouble(),
+                                    borderData: FlBorderData(
+                                        show: true,
+                                        border: const Border(
+                                            bottom: BorderSide(
+                                                color: AppColors.cD9D9D9,
+                                                width: 1))),
+                                    gridData: FlGridData(
+                                        show: true,
+                                        drawHorizontalLine: true,
+                                        drawVerticalLine: false,
+                                        horizontalInterval: controller
+                                            .uuidPlayerInfo!.potential!
+                                            .getStep()
+                                            .toDouble(),
+                                        getDrawingHorizontalLine: (value) {
+                                          return const FlLine(
+                                              color: AppColors.cD9D9D9,
+                                              strokeWidth: 1,
+                                              dashArray: [3]);
+                                        }),
+                                    titlesData: FlTitlesData(
+                                        show: true,
+                                        leftTitles: AxisTitles(
+                                            sideTitles: SideTitles(
+                                                showTitles: true,
+                                                interval: 10,
+                                                getTitlesWidget: (value, meta) {
+                                                  var text = value % 200 != 0
+                                                      ? ""
+                                                      : value
+                                                          .toStringAsFixed(0);
+                                                  return Text(
+                                                    text,
+                                                    style: 9.w4(
+                                                        color:
+                                                            AppColors.cB2B2B2),
+                                                  );
+                                                })),
+                                        bottomTitles: AxisTitles(
+                                            sideTitles: SideTitles(
+                                                showTitles: true,
+                                                getTitlesWidget: (value, meta) {
+                                                  var text = "PTS";
+                                                  switch (value.toInt()) {
+                                                    case 1:
+                                                      text = "PTS";
+                                                      break;
+                                                    case 2:
+                                                      text = "3PT";
+                                                      break;
+                                                    case 3:
+                                                      text = "AST";
+                                                      break;
+                                                    case 4:
+                                                      text = "REB";
+                                                      break;
+                                                    case 5:
+                                                      text = "BLK";
+                                                      break;
+                                                    case 6:
+                                                      text = "STL";
+                                                      break;
+                                                  }
+                                                  return Container(
+                                                    margin: EdgeInsets.only(
+                                                        top: 2.h),
+                                                    child: Text(
+                                                      text,
+                                                      style: 9.w4(
+                                                          color: AppColors
+                                                              .cB2B2B2),
+                                                    ),
+                                                  );
+                                                })),
+                                        rightTitles: const AxisTitles(),
+                                        topTitles: const AxisTitles()),
+                                    barTouchData: BarTouchData(
+                                        enabled: true,
+                                        handleBuiltInTouches: false,
+                                        touchTooltipData: BarTouchTooltipData(
+                                          tooltipMargin: 0,
+                                          tooltipPadding:
+                                              const EdgeInsets.all(0),
+                                          getTooltipColor: (_) =>
+                                              AppColors.cTransparent,
+                                          getTooltipItem:
+                                              (BarChartGroupData group,
+                                                  int groupIndex,
+                                                  BarChartRodData rod,
+                                                  int rodIndex) {
+                                            return BarTooltipItem(
+                                              rod.toY.toStringAsFixed(0),
+                                              11.w7(
+                                                  color: rod.color!, height: 1),
+                                            );
+                                          },
+                                        )),
+                                    barGroups: [
+                                      BarChartGroupData(
+                                          showingTooltipIndicators: [0],
+                                          x: 1,
+                                          barRods: [
+                                            BarChartRodData(
+                                                width: 10.w,
+                                                borderRadius:
+                                                    BorderRadius.vertical(
+                                                        top: Radius.circular(
+                                                            5.w)),
+                                                toY: controller.uuidPlayerInfo!
+                                                    .potential!.pts!
+                                                    .toDouble(),
+                                                color: AppColors.cE72646)
+                                          ]),
+                                      BarChartGroupData(
+                                          showingTooltipIndicators: [0],
+                                          x: 2,
+                                          barRods: [
+                                            BarChartRodData(
+                                                width: 10.w,
+                                                borderRadius:
+                                                    BorderRadius.vertical(
+                                                        top: Radius.circular(
+                                                            5.w)),
+                                                toY: controller.uuidPlayerInfo!
+                                                    .potential!.threePt!
+                                                    .toDouble(),
+                                                color: AppColors.cE8B94C)
+                                          ]),
+                                      BarChartGroupData(
+                                          showingTooltipIndicators: [0],
+                                          x: 3,
+                                          barRods: [
+                                            BarChartRodData(
+                                                width: 10.w,
+                                                borderRadius:
+                                                    BorderRadius.vertical(
+                                                        top: Radius.circular(
+                                                            5.w)),
+                                                toY: controller.uuidPlayerInfo!
+                                                    .potential!.ast!
+                                                    .toDouble(),
+                                                color: AppColors.c10A86A)
+                                          ]),
+                                      BarChartGroupData(
+                                          showingTooltipIndicators: [0],
+                                          x: 4,
+                                          barRods: [
+                                            BarChartRodData(
+                                                width: 10.w,
+                                                borderRadius:
+                                                    BorderRadius.vertical(
+                                                        top: Radius.circular(
+                                                            5.w)),
+                                                toY: controller.uuidPlayerInfo!
+                                                    .potential!.reb!
+                                                    .toDouble(),
+                                                color: AppColors.cE8B94C)
+                                          ]),
+                                      BarChartGroupData(
+                                          showingTooltipIndicators: [0],
+                                          x: 5,
+                                          barRods: [
+                                            BarChartRodData(
+                                                width: 10.w,
+                                                borderRadius:
+                                                    BorderRadius.vertical(
+                                                        top: Radius.circular(
+                                                            5.w)),
+                                                toY: controller.uuidPlayerInfo!
+                                                    .potential!.blk!
+                                                    .toDouble(),
+                                                color: AppColors.c10A86A)
+                                          ]),
+                                      BarChartGroupData(
+                                          showingTooltipIndicators: [0],
+                                          x: 6,
+                                          barRods: [
+                                            BarChartRodData(
+                                                width: 10.w,
+                                                borderRadius:
+                                                    BorderRadius.vertical(
+                                                        top: Radius.circular(
+                                                            5.w)),
+                                                toY: controller.uuidPlayerInfo!
+                                                    .potential!.stl!
+                                                    .toDouble(),
+                                                color: AppColors.c10A86A)
+                                          ]),
+                                    ])),
+                              ),
+                            );
+                          }),
+                          18.vGap,
+                          Center(
+                            child: InkWell(
+                              onTap: () {
+                                _upgradeDialog(context);
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: AppColors.cFF7954, width: 2.w),
+                                    borderRadius: BorderRadius.circular(18.h)),
+                                height: 36.h,
+                                width: 303.w,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const SizedBox.shrink(),
+                                    Text(
+                                      "UPGRADE",
+                                      style: 18.w7(color: AppColors.cFF7954),
+                                    ),
+                                    Container(
+                                        margin: EdgeInsets.only(right: 11.w),
+                                        child: IconWidget(
+                                          iconHeight: 14.w,
+                                          iconWidth: 14.w,
+                                          icon: Assets.uiIconArrowsPng,
+                                          iconColor: AppColors.cFF7954,
+                                        ))
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
-              ),
               13.vGap,
               Text(
                 "Price Fluctuation",
@@ -442,18 +489,20 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "JAN 26,2024",
+                      MyDateUtils.getEnMMDDYYYY(MyDateUtils.getDateTimeByMs(
+                          controller.baseInfo?.beforeMarketPriceUpdateTime ??
+                              0)),
                       style: 10.w4(color: AppColors.cFF7954),
                     ),
                     Row(
                       children: [
                         Text(
-                          "395K",
+                          "${controller.baseInfo?.marketPrice ?? 0}",
                           style: 36.w7(color: AppColors.c262626, height: 1),
                         ),
                         44.hGap,
                         Text(
-                          "-35%",
+                          "${((controller.uuidPlayerInfo != null ? controller.uuidPlayerInfo!.buyPrice ?? 0 : (controller.baseInfo?.marketPrice ?? 0)) - (controller.baseInfo?.basicMarketPrice ?? 0)) / (controller.baseInfo?.basicMarketPrice ?? 0)}%",
                           style: 36.w7(color: AppColors.cE72646, height: 1),
                         )
                       ],
@@ -462,27 +511,29 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                 ),
               ),
               9.vGap,
-              Container(
-                height: 165.w,
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 14.w),
-                decoration: BoxDecoration(
-                    color: AppColors.cF2F2F2,
-                    borderRadius: BorderRadius.circular(16.w)),
-                child: Center(
-                  child: BarChart(
-                    BarChartData(
-                      barTouchData: controller.barTouchData,
-                      titlesData: controller.titlesData,
-                      borderData: controller.borderData,
-                      barGroups: controller.barGroups,
-                      gridData: controller.gridData,
-                      alignment: BarChartAlignment.spaceAround,
-                      maxY: 9,
+              if (controller.barGroups.isNotEmpty)
+                Container(
+                  height: 165.w,
+                  width: double.infinity,
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 8.w, vertical: 14.w),
+                  decoration: BoxDecoration(
+                      color: AppColors.cF2F2F2,
+                      borderRadius: BorderRadius.circular(16.w)),
+                  child: Center(
+                    child: BarChart(
+                      BarChartData(
+                          barTouchData: controller.barTouchData,
+                          titlesData: controller.titlesData,
+                          borderData: controller.borderData,
+                          barGroups: controller.barGroups,
+                          gridData: controller.gridData,
+                          alignment: BarChartAlignment.spaceAround,
+                          maxY: controller.maxPriceValue,
+                          minY: controller.minPriceValue),
                     ),
                   ),
                 ),
-              ),
               _buildStats(),
               24.vGap,
               Text(
@@ -524,14 +575,24 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                       alignment: Alignment.center,
                       child:
                           Text("TEAM", style: 10.w4(color: AppColors.cB3B3B3))),
-                  ...List.generate(
-                      3,
-                      (index) => Container(
-                          height: 30.w,
-                          width: 77.w,
-                          alignment: Alignment.center,
-                          child: Text("REG",
-                              style: 12.w4(color: AppColors.c818181))))
+                  if (controller.nbaPlayerBaseInfoEntity != null &&
+                      controller.nbaPlayerBaseInfoEntity?.playerRegularMap !=
+                          null)
+                    Container(
+                        height: 30.w,
+                        width: 77.w,
+                        alignment: Alignment.center,
+                        child: Text("REG",
+                            style: 12.w4(color: AppColors.c818181))),
+                  if (controller.nbaPlayerBaseInfoEntity != null &&
+                      controller.nbaPlayerBaseInfoEntity?.playerPlayoffsMap !=
+                          null)
+                    Container(
+                        height: 30.w,
+                        width: 77.w,
+                        alignment: Alignment.center,
+                        child:
+                            Text("POS", style: 12.w4(color: AppColors.c818181)))
                 ],
               ),
             ),
@@ -555,53 +616,124 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                               : []),
                     );
                   }),
-                  SingleChildScrollView(
-                    // physics: const BouncingScrollPhysics(),
-                    controller: controller.statsScrollController,
-                    scrollDirection: Axis.horizontal,
-                    child: Container(
-                      margin: EdgeInsets.symmetric(vertical: 7.w),
-                      padding: EdgeInsets.only(left: 10.w),
-                      child: Column(
-                        children: [
-                          Table(
-                            columnWidths: List.generate(
-                                8, (index) => FixedColumnWidth(40.w)).asMap(),
-                            children: List.generate(
-                                1,
-                                (index) => TableRow(
+                  if (controller.nbaPlayerBaseInfoEntity != null &&
+                      (controller.nbaPlayerBaseInfoEntity?.playerPlayoffsMap !=
+                              null ||
+                          controller
+                                  .nbaPlayerBaseInfoEntity?.playerRegularMap !=
+                              null))
+                    SingleChildScrollView(
+                      // physics: const BouncingScrollPhysics(),
+                      controller: controller.statsScrollController,
+                      scrollDirection: Axis.horizontal,
+                      child: Container(
+                        margin: EdgeInsets.symmetric(vertical: 7.w),
+                        padding: EdgeInsets.only(left: 10.w),
+                        child: Column(
+                          children: [
+                            Table(
+                              columnWidths: List.generate(
+                                  8, (index) => FixedColumnWidth(40.w)).asMap(),
+                              children: List.generate(1, (index) {
+                                List<String> keys = controller
+                                            .nbaPlayerBaseInfoEntity
+                                            ?.playerPlayoffsMap !=
+                                        null
+                                    ? controller.nbaPlayerBaseInfoEntity!
+                                        .playerPlayoffsMap!
+                                        .toJson()
+                                        .keys
+                                        .toList()
+                                    : controller.nbaPlayerBaseInfoEntity!
+                                        .playerRegularMap!
+                                        .toJson()
+                                        .keys
+                                        .toList();
+                                return TableRow(
                                     children: List.generate(
-                                        8,
+                                        keys.length,
                                         (index) => Container(
                                             height: 30.w,
                                             alignment: Alignment.center,
                                             child: Text(
-                                              "GP",
+                                              keys[index].split("_")[0],
                                               style: 10
                                                   .w4(color: AppColors.cB3B3B3),
-                                            ))))),
-                          ),
-                          Table(
-                            columnWidths: List.generate(
-                                8, (index) => FixedColumnWidth(40.w)).asMap(),
-                            children: List.generate(
-                                3,
-                                (index) => TableRow(
-                                    children: List.generate(
-                                        8,
-                                        (index) => Container(
-                                            height: 30.w,
-                                            alignment: Alignment.center,
-                                            child: Text(
-                                              "$index",
-                                              style: 12
-                                                  .w4(color: AppColors.c545454),
-                                            ))))),
-                          ),
-                        ],
+                                            ))));
+                              }),
+                            ),
+                            if (controller.nbaPlayerBaseInfoEntity
+                                    ?.playerPlayoffsMap !=
+                                null)
+                              Table(
+                                columnWidths: List.generate(
+                                        8, (index) => FixedColumnWidth(40.w))
+                                    .asMap(),
+                                children: List.generate(
+                                    1,
+                                    (index) => TableRow(
+                                        children: List.generate(
+                                            controller.nbaPlayerBaseInfoEntity!
+                                                .playerPlayoffsMap!
+                                                .toJson()
+                                                .keys
+                                                .length,
+                                            (index) => Container(
+                                                height: 30.w,
+                                                alignment: Alignment.center,
+                                                child: Text(
+                                                  controller
+                                                      .nbaPlayerBaseInfoEntity!
+                                                      .playerPlayoffsMap!
+                                                      .toJson()[controller
+                                                          .nbaPlayerBaseInfoEntity!
+                                                          .playerPlayoffsMap!
+                                                          .toJson()
+                                                          .keys
+                                                          .toList()[index]]
+                                                      .toString(),
+                                                  style: 12.w4(
+                                                      color: AppColors.c545454),
+                                                ))))),
+                              ),
+                            if (controller.nbaPlayerBaseInfoEntity
+                                    ?.playerRegularMap !=
+                                null)
+                              Table(
+                                columnWidths: List.generate(
+                                        8, (index) => FixedColumnWidth(40.w))
+                                    .asMap(),
+                                children: List.generate(
+                                    1,
+                                    (index) => TableRow(
+                                        children: List.generate(
+                                            controller.nbaPlayerBaseInfoEntity!
+                                                .playerRegularMap!
+                                                .toJson()
+                                                .keys
+                                                .length,
+                                            (index) => Container(
+                                                height: 30.w,
+                                                alignment: Alignment.center,
+                                                child: Text(
+                                                  controller
+                                                      .nbaPlayerBaseInfoEntity!
+                                                      .playerRegularMap!
+                                                      .toJson()[controller
+                                                          .nbaPlayerBaseInfoEntity!
+                                                          .playerRegularMap!
+                                                          .toJson()
+                                                          .keys
+                                                          .toList()[index]]
+                                                      .toString(),
+                                                  style: 12.w4(
+                                                      color: AppColors.c545454),
+                                                ))))),
+                              ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
                 ],
               ),
             ),
@@ -667,7 +799,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                             ),
                             10.hGap,
                             Text(
-                              "85",
+                              "${controller.baseInfo?.playerScore}",
                               style: TextStyle(
                                   color: AppColors.cF1F1F1, fontSize: 12.sp),
                             )
@@ -714,7 +846,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                             ),
                             10.hGap,
                             Text(
-                              "250k",
+                              "${controller.baseInfo?.salary}",
                               style: TextStyle(
                                   color: AppColors.cF1F1F1, fontSize: 12.sp),
                             )
@@ -890,7 +1022,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                           Container(
                             margin: EdgeInsets.only(top: 10.w),
                             child: Text(
-                              "5",
+                              "${controller.uuidPlayerInfo?.breakThroughGrade}",
                               style: 34.w7(color: AppColors.c262626),
                             ),
                           )
@@ -1183,9 +1315,10 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
 
   @override
   Widget build(BuildContext context) {
-    var controller = Get.put(PlayerDetailController());
     return HorizontalDragBackWidget(
       child: GetBuilder<PlayerDetailController>(
+        init: PlayerDetailController(arguments ?? Get.arguments),
+        id: PlayerDetailController.idMain,
         builder: (_) {
           return BlackAppWidget(
             Column(
@@ -1233,8 +1366,11 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                             child: ClipRRect(
                                 borderRadius: BorderRadius.only(
                                     bottomRight: Radius.circular(32.w)),
-                                child: Image.asset(Assets.testTeamLogoPng,
-                                    height: 80.w)),
+                                child: ImageWidget(
+                                  url:
+                                      Utils.getTeamUrl(controller.teamInfo?.id),
+                                  width: 84.w,
+                                )),
                           ), //todo icon换图
                         )),
                     Container(
@@ -1243,14 +1379,16 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                         children: [
                           Container(
                               margin: EdgeInsets.only(right: 13.w),
-                              child: IconWidget(
-                                  iconWidth: 64.w,
-                                  icon: Assets.testTeamLogoPng)),
+                              child: ImageWidget(
+                                url: Utils.getPlayUrl(
+                                    controller.baseInfo?.playerId),
+                                width: 84.w,
+                              )),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "HOU  #6",
+                                "${controller.teamInfo?.shortEname} ",
                                 style: TextStyle(
                                   color: AppColors.cB3B3B3,
                                   fontSize: 10.sp,
@@ -1258,7 +1396,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                               ),
                               3.vGap,
                               Text(
-                                "Player Name",
+                                "${controller.baseInfo?.ename}",
                                 style: TextStyle(
                                   color: AppColors.cF2F2F2,
                                   fontSize: 16.sp,
@@ -1271,7 +1409,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                 decoration: BoxDecoration(
                                     color: AppColors.cFFFFFF,
                                     borderRadius: BorderRadius.circular(2.w)),
-                                child: Text("PF",
+                                child: Text("${controller.baseInfo?.position}",
                                     style: 10.w7(color: AppColors.c262626)),
                               )
                             ],
