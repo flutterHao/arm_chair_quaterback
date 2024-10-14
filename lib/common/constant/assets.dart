@@ -52,6 +52,12 @@ static const uiIconUnfoldPng = 'assets/images/icon/ui_icon_unfold.png';
 static const uiWindowsAwardPng = 'assets/images/icon/ui_windows_award.png';
   static const uiIconDelete_01Png = 'assets/images/icon/ui_icon_delete_01.png';
   static const uiIconDelete_02Png = 'assets/images/icon/ui_icon_delete_02.png';
+  static const uiIconEyesPng = 'assets/images/icon/ui_icon_eyes.png';
+  static const uiIconScorePng = 'assets/images/icon/ui_icon_score.png';
+  static const uiIconSoundPng = 'assets/images/icon/ui_icon_sound.png';
+  static const uiIconWinPng = 'assets/images/icon/ui_icon_win.png';
+  static const uiIconWinningPng = 'assets/images/icon/ui_icon_winning.png';
+
 
 
   ///test

@@ -10,6 +10,7 @@ import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
+import 'package:arm_chair_quaterback/pages/picks/personal_center/widgets/game/game.dart';
 import 'package:arm_chair_quaterback/pages/picks/personal_center/widgets/recive_award_pick_page/recive_award_picks_page.dart';
 import 'package:arm_chair_quaterback/pages/picks/recive_rward/widgets/recive_award_item/recive_award_item.dart';
 import 'package:flutter/material.dart';
@@ -139,10 +140,10 @@ class PersonalCenterPage extends GetView<PersonalCenterController> {
                           physics: const BouncingScrollPhysics(),
                             controller: controller.tabController,
                             children: [
-                              const Center(child: LoadStatusWidget()),
+                              const Game(),
                               ReciveAwardPicksPage(
                                   teamId, controller.teamSimpleEntity!),
-                              const Center(child: LoadStatusWidget()),
+                              // const Center(child: LoadStatusWidget()),
                             ]),
                         Positioned(
                             left: 13.w,
@@ -159,7 +160,7 @@ class PersonalCenterPage extends GetView<PersonalCenterController> {
                               child: LayoutBuilder(
                                   builder: (context, constraints) {
                                 var itemWidth =
-                                    (constraints.maxWidth - 8.w) / 3;
+                                    (constraints.maxWidth - 8.w) / controller.tabController.length;
 
                                 return TLBuildWidget(
                                     controller: controller.tabController,

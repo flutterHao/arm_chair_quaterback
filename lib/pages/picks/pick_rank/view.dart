@@ -72,7 +72,7 @@ class PickRankPage extends GetView<PickRankController> {
                   padding: EdgeInsets.symmetric(horizontal: 1.5.w),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(17.w),
-                      color: AppColors.c808080.withOpacity(.4),
+                      // color: AppColors.c808080.withOpacity(.4),
                       border: Border.all(color: AppColors.c808080, width: 1.w)),
                   child: Stack(
                     alignment: FractionalOffset.centerLeft,

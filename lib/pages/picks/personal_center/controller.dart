@@ -15,7 +15,7 @@ class PersonalCenterController extends GetxController
 
   final state = PersonalCenterState();
 
-  List<String> titles = ["Game", "Picks", "Comments"];
+  List<String> titles = ["Game", "Picks", /*"Comments"*/];
 
   late TabController tabController;
 
@@ -35,7 +35,7 @@ class PersonalCenterController extends GetxController
   void onInit() {
     super.onInit();
     tabController =
-        TabController(length: titles.length, vsync: this, initialIndex: 1);
+        TabController(length: titles.length, vsync: this, initialIndex: 0);
     getData();
   }
 
