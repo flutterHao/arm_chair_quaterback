@@ -70,12 +70,12 @@ class HomeController extends GetxController
       Assets.uiIconTraining_01Png,
       Container(),
     ),
-    TabItemInfo(
-      "LEAGUES",
-      Assets.uiIconLeagues_01Png,
-      Assets.uiIconLeagues_01Png,
-      const PicksIndex(),
-    ),
+    // TabItemInfo(
+    //   "LEAGUES",
+    //   Assets.uiIconLeagues_01Png,
+    //   Assets.uiIconLeagues_01Png,
+    //   const PicksIndex(),
+    // ),
   ];
 
   @override

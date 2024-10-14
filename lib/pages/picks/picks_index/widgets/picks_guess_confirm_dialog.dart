@@ -148,7 +148,7 @@ class _PicksGuessConfirmDialogState extends State<PicksGuessConfirmDialog>
                   HomeController homeController = Get.find();
                   bool btnActive = (homeController
                               .userEntiry.teamLoginInfo?.teamPropList
-                              ?.firstWhere((e) => e.propId == 5)
+                              ?.firstWhere((e) => e.propId == 103)
                               .num ??
                           0) >=
                       controller.costCount.value;

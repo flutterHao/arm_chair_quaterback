@@ -34,7 +34,7 @@ class _TopDialogState extends State<TopDialog>
   void initState() {
     super.initState();
     animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 100))..addStatusListener(_statusListener);
+        vsync: this, duration: const Duration(milliseconds: 200))..addStatusListener(_statusListener);
     animation = Tween(begin: maxHeight, end: 0.0).animate(animationController)
       ..addListener(_animationListener);
     animationController.forward();
@@ -62,7 +62,7 @@ class _TopDialogState extends State<TopDialog>
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop,_){
-        print('didPop:$didPop');
+        // print('didPop:$didPop');
         if(!didPop) {
           offsetDy.value = 0;
           _releaseAnimation();
@@ -78,22 +78,22 @@ class _TopDialogState extends State<TopDialog>
                 GestureDetector(
                   onHorizontalDragUpdate: (d) {
                     offsetDy.value = d.localPosition.dy - startY;
-                    print('onHorizontalDragUpdate----->offsetDy.value:${offsetDy.value}');
+                    // print('onHorizontalDragUpdate----->offsetDy.value:${offsetDy.value}');
                   },
                   onHorizontalDragStart: (d) {
-                    print('onHorizontalDragStart');
+                    // print('onHorizontalDragStart');
                     startY = d.localPosition.dy;
                   },
                   onHorizontalDragEnd: (d) {
-                    print('onHorizontalDragEnd');
+                    // print('onHorizontalDragEnd');
                     _releaseAnimation();
                   },
                   onHorizontalDragCancel: () {
-                    print('onHorizontalDragCancel');
+                    // print('onHorizontalDragCancel');
                     _releaseAnimation();
                   },
                   onHorizontalDragDown: (d) {
-                    print('onHorizontalDragDown');
+                    // print('onHorizontalDragDown');
                     startY = d.localPosition.dy;
                   },
                   child: Obx(() {
