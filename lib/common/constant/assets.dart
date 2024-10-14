@@ -99,6 +99,11 @@ static const uiWindowsAwardPng = 'assets/images/icon/ui_windows_award.png';
       'assets/images/player/ui_icon_triangle_02.png';
   // static const uiIconTriangle_03Png =
   //     'assets/images/player/ui_icon_triangle_03.png';
+  static const uiIconAccountPng = 'assets/images/player/ui_icon_account.png';
+  static const uiIconCenterPng = 'assets/images/player/ui_icon_center.png';
+  static const uiIconFriendPng = 'assets/images/player/ui_icon_friend.png';
+  static const uiIconMailPng = 'assets/images/player/ui_icon_mail.png';
+  static const uiIconSettingPng = 'assets/images/player/ui_icon_setting.png';
 
   ///team
   static const uiBattleNewsPng = 'assets/images/team/ui_battle_news.png';

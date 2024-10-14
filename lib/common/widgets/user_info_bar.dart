@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entity/team_login_info.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entity/user_entiry.dart';
@@ -8,6 +10,7 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/top_dialog.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -131,8 +134,10 @@ import 'package:get/get.dart';
 // }
 
 class UserInfoBar extends StatelessWidget {
-  const UserInfoBar({super.key, this.title = "Title"});
+  const UserInfoBar({super.key, this.title = "Title", this.enable = true});
+
   final String title;
+  final bool enable;
 
   Widget iconText(int propId, int num) {
     return Container(
@@ -176,14 +181,22 @@ class UserInfoBar extends StatelessWidget {
             child: Row(
               children: [
                 ///TODO
-                Container(
-                  width: 80.w,
-                  alignment: Alignment.centerLeft,
-                  child: ImageWidget(
-                      width: 36.w,
-                      height: 36.w,
-                      borderRadius: BorderRadius.circular(12.w),
-                      url: Utils.getTeamUrl(info.team?.teamLogo ?? 0)),
+                InkWell(
+                  onTap: () {
+                    if (!enable) {
+                      return;
+                    }
+                    _showDialog(context);
+                  },
+                  child: Container(
+                    width: 80.w,
+                    alignment: Alignment.centerLeft,
+                    child: ImageWidget(
+                        width: 36.w,
+                        height: 36.w,
+                        borderRadius: BorderRadius.circular(12.w),
+                        url: Utils.getTeamUrl(info.team?.teamLogo ?? 0)),
+                  ),
                 ),
                 Expanded(
                     child: Text(
@@ -209,6 +222,16 @@ class UserInfoBar extends StatelessWidget {
               ],
             ),
           );
+        });
+  }
+
+  void _showDialog(BuildContext context) {
+    showGeneralDialog(
+        barrierColor: Colors.transparent,
+        context: Get.context!,
+        pageBuilder: (BuildContext context, Animation<double> animation,
+            Animation<double> secondaryAnimation) {
+          return TopDialog(title: title);
         });
   }
 }
