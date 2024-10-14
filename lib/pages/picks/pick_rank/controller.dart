@@ -21,7 +21,6 @@ class PickRankController extends GetxController
   PickRankController();
 
   late TabController tabController;
-  final state = PickRankState();
   List<String> tabTitles = ["Rank", "Reward"];
 
   RankListEntity rankInfo = RankListEntity();

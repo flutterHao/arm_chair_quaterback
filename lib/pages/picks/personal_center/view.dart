@@ -20,7 +20,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'index.dart';
-import 'widgets/widgets.dart';
 
 class PersonalCenterPage extends GetView<PersonalCenterController> {
   const PersonalCenterPage({super.key});

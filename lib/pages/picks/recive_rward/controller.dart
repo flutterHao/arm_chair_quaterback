@@ -17,7 +17,6 @@ class ReciveRwardController extends GetxController {
   ReciveRwardController();
 
   List<List<PicksPlayer>> listData = [];
-  final state = ReciveRwardState();
   RefreshController refreshController = RefreshController();
 
   NewsDefineEntity? newsDefineEntity;

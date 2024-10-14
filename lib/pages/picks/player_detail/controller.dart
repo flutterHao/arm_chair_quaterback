@@ -21,7 +21,6 @@ class PlayerDetailController extends GetxController
     with GetTickerProviderStateMixin {
   PlayerDetailController();
 
-  final state = PlayerDetailState();
   final ScrollController scrollController = ScrollController();
 
   final isUpgrading = false.obs;

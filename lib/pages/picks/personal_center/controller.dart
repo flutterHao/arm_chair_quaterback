@@ -13,8 +13,6 @@ class PersonalCenterController extends GetxController
   final int teamId;
 
 
-  final state = PersonalCenterState();
-
   List<String> titles = ["Game", "Picks", /*"Comments"*/];
 
   late TabController tabController;
