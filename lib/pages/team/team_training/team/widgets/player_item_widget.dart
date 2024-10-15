@@ -15,6 +15,7 @@ import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/pages/picks/player_detail/index.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/linear_progress_widget.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,7 @@ class PlayerItem extends GetView<TeamController> {
     required this.isMain,
     this.isBag = false,
   });
+
   final bool isMain;
   final int index;
   final bool isBag;
@@ -329,6 +331,7 @@ class __NumChangeWidgetState extends State<_NumChangeWidget> {
   RxInt currentNum = 0.obs;
   bool showNum = false;
   TeamController ctrl = Get.find();
+
   @override
   void initState() {
     super.initState();
@@ -443,6 +446,7 @@ class __NumChangeWidgetState extends State<_NumChangeWidget> {
 ///球员头像
 class PlayerAwater extends StatelessWidget {
   const PlayerAwater({super.key, this.backgroudColor});
+
   final Color? backgroudColor;
 
   @override
@@ -450,7 +454,10 @@ class PlayerAwater extends StatelessWidget {
     ///头像
     return InkWell(
       onTap: () {
-        Get.toNamed(RouteNames.picksPlayerDetail);
+        Get.toNamed(RouteNames.picksPlayerDetail,
+            arguments: PlayerDetailPageArguments(2115,
+                teamId: 50097,
+                rootNavigator: true)); //todo 2115,50097为测试数据，需要修改成真是球员id
       },
       child: Stack(
         children: [

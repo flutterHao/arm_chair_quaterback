@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/chart_sample_data.dart';
+import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -13,6 +14,7 @@ import 'package:arm_chair_quaterback/common/widgets/btn_background.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,91 +26,19 @@ import 'index.dart';
 class PlayerDetailPageArguments {
   final int? teamId;
   final int playerId;
+  final bool rootNavigator;
+  final int getId;
 
-  PlayerDetailPageArguments(this.playerId, {this.teamId});
+  PlayerDetailPageArguments(this.playerId,
+      {this.teamId,
+      this.rootNavigator = false,
+      this.getId = GlobalNestedKey.PICKS});
 }
 
 class PlayerDetailPage extends GetView<PlayerDetailController> {
   const PlayerDetailPage({super.key, this.arguments});
 
   final PlayerDetailPageArguments? arguments;
-
-  List<PieChartSectionData> showingSections() {
-    return List.generate(
-      6,
-      (i) {
-        const color = AppColors.c3B93FF;
-        switch (i) {
-          case 0:
-            return PieChartSectionData(
-              color: color,
-              value: 25,
-              title: '',
-              radius: 60,
-              titlePositionPercentageOffset: 0.55,
-            );
-          case 1:
-            return PieChartSectionData(
-              color: color,
-              value: 25,
-              title: '',
-              radius: 40,
-              titlePositionPercentageOffset: 0.55,
-            );
-          case 2:
-            return PieChartSectionData(
-              color: color,
-              value: 25,
-              title: '',
-              radius: 60,
-              titlePositionPercentageOffset: 0.6,
-            );
-          case 3:
-            return PieChartSectionData(
-              color: color,
-              value: 25,
-              title: '',
-              radius: 40,
-              titlePositionPercentageOffset: 0.55,
-            );
-          case 4:
-            return PieChartSectionData(
-              color: color,
-              value: 25,
-              title: '',
-              radius: 60,
-              titlePositionPercentageOffset: 0.55,
-            );
-          case 5:
-            return PieChartSectionData(
-              color: color,
-              value: 25,
-              title: '',
-              radius: 40,
-              titlePositionPercentageOffset: 0.55,
-            );
-          default:
-            throw Error();
-        }
-      },
-    );
-  }
-
-  List<PieChartSectionData> showingSections2() {
-    return List.generate(
-      6,
-      (i) {
-        const c = Color(0xffE6E6E7);
-        return PieChartSectionData(
-          color: c,
-          value: 25,
-          title: '',
-          radius: 70,
-          titlePositionPercentageOffset: 0.55,
-        );
-      },
-    );
-  }
 
   SfCircularChart _buildSmartLabelPieChart() {
     return SfCircularChart(
@@ -160,7 +90,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                     color: AppColors.cB3B3B3,
                     type: ConnectorType.curve,
                     length: '20%'),
-                labelIntersectAction: LabelIntersectAction.none))
+                labelIntersectAction: LabelIntersectAction.shift))
       ],
       // tooltipBehavior: _tooltipBehavior,
     );
@@ -193,7 +123,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (controller.uuidPlayerInfo != null)
+              if (controller.uuidPlayerInfo != null )
                 Column(
                   children: [
                     _leverWidget(context),
@@ -210,6 +140,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                             "Ability",
                             style: 19.w7(color: AppColors.c262626, height: 1),
                           ),
+                          if(controller.baseInfo != null)
                           LayoutBuilder(builder: (context, constraints) {
                             return SizedBox(
                               height: 190.h,
@@ -348,8 +279,9 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                                         top: Radius.circular(
                                                             5.w)),
                                                 toY: controller.uuidPlayerInfo!
-                                                    .potential!.pts!
-                                                    .toDouble(),
+                                                        .potential?.pts
+                                                        ?.toDouble() ??
+                                                    0,
                                                 color: AppColors.cE72646)
                                           ]),
                                       BarChartGroupData(
@@ -363,8 +295,9 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                                         top: Radius.circular(
                                                             5.w)),
                                                 toY: controller.uuidPlayerInfo!
-                                                    .potential!.threePt!
-                                                    .toDouble(),
+                                                        .potential?.threePt
+                                                        ?.toDouble() ??
+                                                    0,
                                                 color: AppColors.cE8B94C)
                                           ]),
                                       BarChartGroupData(
@@ -378,8 +311,9 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                                         top: Radius.circular(
                                                             5.w)),
                                                 toY: controller.uuidPlayerInfo!
-                                                    .potential!.ast!
-                                                    .toDouble(),
+                                                        .potential?.ast
+                                                        ?.toDouble() ??
+                                                    0,
                                                 color: AppColors.c10A86A)
                                           ]),
                                       BarChartGroupData(
@@ -393,8 +327,9 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                                         top: Radius.circular(
                                                             5.w)),
                                                 toY: controller.uuidPlayerInfo!
-                                                    .potential!.reb!
-                                                    .toDouble(),
+                                                        .potential?.reb
+                                                        ?.toDouble() ??
+                                                    0,
                                                 color: AppColors.cE8B94C)
                                           ]),
                                       BarChartGroupData(
@@ -408,8 +343,9 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                                         top: Radius.circular(
                                                             5.w)),
                                                 toY: controller.uuidPlayerInfo!
-                                                    .potential!.blk!
-                                                    .toDouble(),
+                                                        .potential?.blk
+                                                        ?.toDouble() ??
+                                                    0,
                                                 color: AppColors.c10A86A)
                                           ]),
                                       BarChartGroupData(
@@ -423,8 +359,9 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                                         top: Radius.circular(
                                                             5.w)),
                                                 toY: controller.uuidPlayerInfo!
-                                                    .potential!.stl!
-                                                    .toDouble(),
+                                                        .potential?.stl
+                                                        ?.toDouble() ??
+                                                    0,
                                                 color: AppColors.c10A86A)
                                           ]),
                                     ])),
@@ -501,10 +438,11 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                           style: 36.w7(color: AppColors.c262626, height: 1),
                         ),
                         44.hGap,
-                        Text(
-                          "${((controller.uuidPlayerInfo != null ? controller.uuidPlayerInfo!.buyPrice ?? 0 : (controller.baseInfo?.marketPrice ?? 0)) - (controller.baseInfo?.basicMarketPrice ?? 0)) / (controller.baseInfo?.basicMarketPrice ?? 0)}%",
-                          style: 36.w7(color: AppColors.cE72646, height: 1),
-                        )
+                        if ((controller.baseInfo?.basicMarketPrice ?? 0) > 0)
+                          Text(
+                            "${((((controller.uuidPlayerInfo != null ? controller.uuidPlayerInfo!.buyPrice ?? 0 : (controller.baseInfo?.marketPrice ?? 0)) - (controller.baseInfo?.basicMarketPrice ?? 0)) / (controller.baseInfo?.basicMarketPrice ?? 0)) * 100).toStringAsFixed(2)}%",
+                            style: 36.w7(color: AppColors.cE72646, height: 1),
+                          )
                       ],
                     ),
                   ],
@@ -558,7 +496,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
       ),
       13.vGap,
       Container(
-        height: 135.w,
+        height: 105.w,
         width: double.infinity,
         decoration: BoxDecoration(
             color: AppColors.cF2F2F2,
@@ -576,8 +514,8 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                       child:
                           Text("TEAM", style: 10.w4(color: AppColors.cB3B3B3))),
                   if (controller.nbaPlayerBaseInfoEntity != null &&
-                      controller.nbaPlayerBaseInfoEntity?.playerRegularMap !=
-                          null)
+                      controller.nbaPlayerBaseInfoEntity!.playerRegularMap
+                          .isNotEmpty())
                     Container(
                         height: 30.w,
                         width: 77.w,
@@ -585,8 +523,8 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                         child: Text("REG",
                             style: 12.w4(color: AppColors.c818181))),
                   if (controller.nbaPlayerBaseInfoEntity != null &&
-                      controller.nbaPlayerBaseInfoEntity?.playerPlayoffsMap !=
-                          null)
+                      controller.nbaPlayerBaseInfoEntity!.playerPlayoffsMap
+                          .isNotEmpty())
                     Container(
                         height: 30.w,
                         width: 77.w,
@@ -601,7 +539,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                 children: [
                   Obx(() {
                     return Container(
-                      height: 135.w,
+                      height: 105.w,
                       width: 2.w,
                       decoration: BoxDecoration(
                           boxShadow: controller.statsIsScrolling.value
@@ -617,11 +555,10 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                     );
                   }),
                   if (controller.nbaPlayerBaseInfoEntity != null &&
-                      (controller.nbaPlayerBaseInfoEntity?.playerPlayoffsMap !=
-                              null ||
-                          controller
-                                  .nbaPlayerBaseInfoEntity?.playerRegularMap !=
-                              null))
+                      (controller.nbaPlayerBaseInfoEntity!.playerPlayoffsMap
+                              .isNotEmpty() ||
+                          controller.nbaPlayerBaseInfoEntity!.playerRegularMap
+                              .isNotEmpty()))
                     SingleChildScrollView(
                       // physics: const BouncingScrollPhysics(),
                       controller: controller.statsScrollController,
@@ -636,16 +573,16 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                   8, (index) => FixedColumnWidth(40.w)).asMap(),
                               children: List.generate(1, (index) {
                                 List<String> keys = controller
-                                            .nbaPlayerBaseInfoEntity
-                                            ?.playerPlayoffsMap !=
-                                        null
+                                        .nbaPlayerBaseInfoEntity!
+                                        .playerPlayoffsMap
+                                        .isNotEmpty()
                                     ? controller.nbaPlayerBaseInfoEntity!
-                                        .playerPlayoffsMap!
+                                        .playerPlayoffsMap
                                         .toJson()
                                         .keys
                                         .toList()
                                     : controller.nbaPlayerBaseInfoEntity!
-                                        .playerRegularMap!
+                                        .playerRegularMap
                                         .toJson()
                                         .keys
                                         .toList();
@@ -662,9 +599,9 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                             ))));
                               }),
                             ),
-                            if (controller.nbaPlayerBaseInfoEntity
-                                    ?.playerPlayoffsMap !=
-                                null)
+                            if (controller
+                                .nbaPlayerBaseInfoEntity!.playerPlayoffsMap
+                                .isNotEmpty())
                               Table(
                                 columnWidths: List.generate(
                                         8, (index) => FixedColumnWidth(40.w))
@@ -674,7 +611,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                     (index) => TableRow(
                                         children: List.generate(
                                             controller.nbaPlayerBaseInfoEntity!
-                                                .playerPlayoffsMap!
+                                                .playerPlayoffsMap
                                                 .toJson()
                                                 .keys
                                                 .length,
@@ -684,21 +621,21 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                                 child: Text(
                                                   controller
                                                       .nbaPlayerBaseInfoEntity!
-                                                      .playerPlayoffsMap!
-                                                      .toJson()[controller
+                                                      .playerPlayoffsMap
+                                                      .getValue(controller
                                                           .nbaPlayerBaseInfoEntity!
-                                                          .playerPlayoffsMap!
+                                                          .playerPlayoffsMap
                                                           .toJson()
                                                           .keys
-                                                          .toList()[index]]
+                                                          .toList()[index])
                                                       .toString(),
                                                   style: 12.w4(
                                                       color: AppColors.c545454),
                                                 ))))),
                               ),
-                            if (controller.nbaPlayerBaseInfoEntity
-                                    ?.playerRegularMap !=
-                                null)
+                            if (controller
+                                .nbaPlayerBaseInfoEntity!.playerRegularMap
+                                .isNotEmpty())
                               Table(
                                 columnWidths: List.generate(
                                         8, (index) => FixedColumnWidth(40.w))
@@ -708,7 +645,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                     (index) => TableRow(
                                         children: List.generate(
                                             controller.nbaPlayerBaseInfoEntity!
-                                                .playerRegularMap!
+                                                .playerRegularMap
                                                 .toJson()
                                                 .keys
                                                 .length,
@@ -718,13 +655,13 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                                 child: Text(
                                                   controller
                                                       .nbaPlayerBaseInfoEntity!
-                                                      .playerRegularMap!
-                                                      .toJson()[controller
+                                                      .playerRegularMap
+                                                      .getValue(controller
                                                           .nbaPlayerBaseInfoEntity!
-                                                          .playerRegularMap!
+                                                          .playerRegularMap
                                                           .toJson()
                                                           .keys
-                                                          .toList()[index]]
+                                                          .toList()[index])
                                                       .toString(),
                                                   style: 12.w4(
                                                       color: AppColors.c545454),
@@ -944,9 +881,33 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            IconWidget(
-                                iconWidth: 8.w,
-                                icon: Assets.uiIconArrows_01Png),
+                            SizedBox(
+                              width: 50.w,
+                              height: 8.w,
+                              child: Stack(
+                                alignment: Alignment.centerRight,
+                                children: [
+                                  Positioned(
+                                    right: 17.w,
+                                    child: IconWidget(
+                                        iconWidth: 8.w,
+                                        icon: Assets.uiIconArrows_01Png,iconColor: AppColors.cF2F2F2.withOpacity(.2),),
+                                  ),
+                                  Positioned(
+                                    right: 11.w,
+                                    child: IconWidget(
+                                        iconWidth: 8.w,
+                                        icon: Assets.uiIconArrows_01Png,iconColor: AppColors.cF2F2F2.withOpacity(.5),),
+                                  ),
+                                  Positioned(
+                                    right: 5.w,
+                                    child: IconWidget(
+                                        iconWidth: 8.w,
+                                        icon: Assets.uiIconArrows_01Png,iconColor: AppColors.cF2F2F2,),
+                                  )
+                                ],
+                              ),
+                            ),
                             10.hGap,
                             Stack(
                               alignment: Alignment.center,
@@ -1333,7 +1294,13 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                         width: 19.w,
                         height: 19.w,
                         child: InkWell(
-                          onTap: () => Get.back(id: GlobalNestedKey.PICKS),
+                          onTap: () {
+                            if (controller.arguments.rootNavigator) {
+                              Get.back();
+                              return;
+                            }
+                            Get.back(id: controller.arguments.getId);
+                          },
                           child: IconWidget(
                             iconWidth: 19.w,
                             iconHeight: 19.w,
@@ -1371,7 +1338,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                       Utils.getTeamUrl(controller.teamInfo?.id),
                                   width: 84.w,
                                 )),
-                          ), //todo icon换图
+                          ),
                         )),
                     Container(
                       margin: EdgeInsets.only(left: 29.w, bottom: 12.w),
@@ -1388,7 +1355,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "${controller.teamInfo?.shortEname} ",
+                                "${controller.teamInfo?.shortEname ?? ""} ",
                                 style: TextStyle(
                                   color: AppColors.cB3B3B3,
                                   fontSize: 10.sp,
@@ -1396,22 +1363,24 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                               ),
                               3.vGap,
                               Text(
-                                "${controller.baseInfo?.ename}",
+                                controller.baseInfo?.ename ?? "",
                                 style: TextStyle(
                                   color: AppColors.cF2F2F2,
                                   fontSize: 16.sp,
                                 ),
                               ),
                               3.vGap,
-                              Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 3.w, vertical: 0.w),
-                                decoration: BoxDecoration(
-                                    color: AppColors.cFFFFFF,
-                                    borderRadius: BorderRadius.circular(2.w)),
-                                child: Text("${controller.baseInfo?.position}",
-                                    style: 10.w7(color: AppColors.c262626)),
-                              )
+                              if (controller.baseInfo != null)
+                                Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 3.w, vertical: 0.w),
+                                  decoration: BoxDecoration(
+                                      color: AppColors.cFFFFFF,
+                                      borderRadius: BorderRadius.circular(2.w)),
+                                  child: Text(
+                                      "${controller.baseInfo?.position}",
+                                      style: 10.w7(color: AppColors.c262626)),
+                                )
                             ],
                           )
                         ],

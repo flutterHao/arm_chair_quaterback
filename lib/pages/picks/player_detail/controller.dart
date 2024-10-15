@@ -13,6 +13,7 @@ import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entity/team_player_list.dart';
+import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -51,6 +52,8 @@ class PlayerDetailController extends GetxController
   NbaTeamEntity? teamInfo;
   NbaPlayerBaseInfoEntity? nbaPlayerBaseInfoEntity;
   List<BarChartGroupData> _barGroups = [];
+
+  var loadStatus = LoadDataStatus.loading.obs;
 
   /// 0-180
   ///
@@ -92,7 +95,12 @@ class PlayerDetailController extends GetxController
     });
   }
 
+  reloadData(){
+    _initData();
+  }
+
   _initData() {
+    loadStatus.value = LoadDataStatus.loading;
     if (arguments.teamId != null) {
       uuidPlayerInfo = Get.find<HomeController>()
           .userEntiry
@@ -105,6 +113,7 @@ class PlayerDetailController extends GetxController
       CacheApi.getNBATeamDefine(getList: true),
       PicksApi.getNBAPlayerBaseInfo(arguments.playerId)
     ]).then((result) {
+      loadStatus.value = LoadDataStatus.success;
       baseInfo = (result[0] as NbaPlayerInfosEntity)
           .playerBaseInfoList
           .firstWhere((e) => e.playerId == arguments.playerId);
@@ -124,7 +133,8 @@ class PlayerDetailController extends GetxController
                     .toDouble();
         maxPriceValue = max(maxPriceValue,toY);
         minPriceValue = min(minPriceValue,toY);
-        minPriceValue = minPriceValue>maxPriceValue-500?maxPriceValue-500:minPriceValue;
+        minPriceValue = (minPriceValue<(maxPriceValue-500))?(maxPriceValue-500):minPriceValue;
+        print('minPriceValue:${minPriceValue}');
         _barGroups.add(BarChartGroupData(
           x: MyDateUtils.getDateTimeByMs(
               nbaPlayerBaseInfoEntity!.playerTrends[index].createTime)
@@ -143,6 +153,7 @@ class PlayerDetailController extends GetxController
           // showingTooltipIndicators: [0],
         ));
       }
+      minPriceValue = minPriceValue == maxPriceValue? maxPriceValue/5:minPriceValue;
       dataSource = <ChartSampleData>[
         ChartSampleData(
             x: 'PTS', y: avgList?.getMaxValue(), yValue: avgList?.pts ?? 0),
@@ -160,6 +171,8 @@ class PlayerDetailController extends GetxController
             x: 'STL', y: avgList?.getMaxValue(), yValue: avgList?.stl ?? 0),
       ];
       update([idMain]);
+    },onError: (e){
+      loadStatus.value = LoadDataStatus.error;
     });
   }
 
@@ -187,26 +200,29 @@ class PlayerDetailController extends GetxController
   }
 
   BarTouchData get barTouchData => BarTouchData(
-        enabled: false,
-        touchTooltipData: BarTouchTooltipData(
-          getTooltipColor: (group) => Colors.transparent,
-          tooltipPadding: EdgeInsets.zero,
-          tooltipMargin: 8,
-          getTooltipItem: (
-            BarChartGroupData group,
-            int groupIndex,
-            BarChartRodData rod,
-            int rodIndex,
+        enabled: true,
+    touchTooltipData: BarTouchTooltipData(
+      getTooltipColor: (BarChartGroupData group) {
+        return Colors.transparent;
+      },
+      tooltipRoundedRadius: 10.h,
+      // fitInsideVertically: true,
+      // fitInsideHorizontally: true,
+      tooltipMargin: -11.h,
+      // tooltipPadding:
+      // EdgeInsets.symmetric(horizontal: 9.w, vertical: 1.h),
+      getTooltipItem: (
+          BarChartGroupData group,
+          int groupIndex,
+          BarChartRodData rod,
+          int rodIndex,
           ) {
-            return BarTooltipItem(
-              rod.toY.round().toString(),
-              const TextStyle(
-                color: AppColors.c262626,
-                fontWeight: FontWeight.bold,
-              ),
-            );
-          },
-        ),
+        return BarTooltipItem(
+          rod.toY.toStringAsFixed(0),
+          11.w7(color: AppColors.c000000, height: 1),
+        );
+      },
+    ),
       );
 
   Widget getTitles(double value, TitleMeta meta) {
@@ -238,9 +254,9 @@ class PlayerDetailController extends GetxController
               reservedSize: 35.w,
               getTitlesWidget: (value, titleMate) {
                 // print('v:---: $value');
-                if (value % 100 != 0) {
-                  return const SizedBox.shrink();
-                }
+                // if (value % 100 != 0) {
+                //   return const SizedBox.shrink();
+                // }
                 return Container(
                   alignment: Alignment.center,
                   child: Text(

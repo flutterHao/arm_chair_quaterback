@@ -91,17 +91,17 @@ class NbaPlayerInfosPlayerDataAvgList {
     return (oreb + dreb) / 2;
   }
 
-  double getThreePT(){
-    return double.parse((threePm/threePa*100).toStringAsFixed(0));
+  double getThreePT() {
+    return double.parse((threePm / threePa * 100).toStringAsFixed(0));
   }
 
-  double getMaxValue(){
+  double getMaxValue() {
     var value = max(pts, getThreePT());
-    value = max(value, ast ?? 0);
-    value = max(value, (dreb+oreb)/2);
-    value = max(value, blk ?? 0);
-    value = max(value, stl ?? 0);
-    return value;
+    value = max(value, ast);
+    value = max(value, (dreb + oreb) / 2);
+    value = max(value, blk);
+    value = max(value, stl);
+    return value+20;
   }
 
   @override

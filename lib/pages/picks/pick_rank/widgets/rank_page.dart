@@ -34,7 +34,7 @@ class _RankPageState extends State<RankPage>
         id: PickRankController.idRanks,
         builder: (controller) {
           if (controller.rankInfo.ranks.isEmpty) {
-            return Center(child: LoadStatusWidget(onRefreshTap: controller.reloadRankData()));
+            return Center(child: LoadStatusWidget(onRefreshTap: controller.reloadRankData));
           }
           return Stack(
             children: [

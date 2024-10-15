@@ -34,7 +34,7 @@ class _RewardPageState extends State<RewardPage>
         id: PickRankController.idAwards,
         builder: (controller) {
           if (controller.awardInfo.isEmpty) {
-            return Center(child: LoadStatusWidget(onRefreshTap: controller.reloadRewardData(),));
+            return Center(child: LoadStatusWidget(onRefreshTap: controller.reloadRewardData,));
           }
           return Stack(
             children: [

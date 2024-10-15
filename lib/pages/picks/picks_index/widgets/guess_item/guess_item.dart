@@ -6,8 +6,10 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/param_utils.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/TLBuilderWidget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guess_item/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/rank_start_button.dart';
@@ -52,7 +54,8 @@ class _GuessItemState extends State<GuessItem>
           .animateTo(index, duration: Duration.zero);
     }
     PicksIndexController picksIndexController = Get.find();
-    gameChoiceFlag = RxDouble(picksIndexController.choiceData[widget.parentIndex]??-1.0);
+    gameChoiceFlag =
+        RxDouble(picksIndexController.choiceData[widget.parentIndex] ?? -1.0);
 
     return Container(
       margin: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 8.w),
@@ -181,19 +184,22 @@ class _GuessItemState extends State<GuessItem>
               print('点击了头像');
               Get.toNamed(RouteNames.picksPlayerDetail,
                   id: GlobalNestedKey.PICKS,
-                  arguments: PlayerDetailPageArguments(guessItemController.player.baseInfoList.playerId)
-              );
+                  arguments: PlayerDetailPageArguments(
+                      guessItemController.player.baseInfoList.playerId));
             },
             child: Container(
               decoration: BoxDecoration(
                   color: AppColors.ce5e5e5,
-                  borderRadius: BorderRadius.circular(26.w)),
+                  borderRadius: BorderRadius.circular(28.w)),
               child: Stack(children: [
-                Image.asset(
-                  Assets.testTeamLogoPng,
-                  width: 55.w,
-
-                  /// todo 换成网络图
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(28.w),
+                  child: ImageWidget(
+                    url: Utils.getPlayUrl(
+                        guessItemController.player.baseInfoList.playerId),
+                    width: 55.w,
+                    color: AppColors.c000000.withOpacity(.1),
+                  ),
                 ),
                 Text(guessItemController.player.baseInfoList.grade,
                     style: 14.w7(color: AppColors.c262626))
@@ -437,12 +443,16 @@ class _GuessItemState extends State<GuessItem>
                                             width: 63.w,
                                             height: 55.w,
                                             alignment: Alignment.bottomCenter,
-                                            child: Image.asset(
-                                              Assets.testTeamLogoPng,
-                                              width: 55.w,
-                                              fit: BoxFit.fitWidth,
-
-                                              ///todo 换网络图
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(28.w),
+                                              child: ImageWidget(
+                                                url: Utils.getPlayUrl(
+                                                    guessItemController.player
+                                                        .baseInfoList.playerId),
+                                                width: 55.w,
+                                                color: AppColors.cFFFFFF.withOpacity(.1),
+                                              ),
                                             ))),
                                     Text(
                                       guessItemController
