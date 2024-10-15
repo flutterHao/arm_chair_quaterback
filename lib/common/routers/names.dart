@@ -32,4 +32,9 @@ class RouteNames {
   static const teamTeamBattle = '/team_team_battle';
   static const teamTrainingPage = '/team_training_page';
   static const teamBeautyPage = "/beauty_page";
+
+  //mine
+  static const mineMineAccount = '/mine_mine_account';
+  static const mineMineInfo = '/mine_mine_info';
+  static const mineMineSetting = '/mine_mine_setting';
 }

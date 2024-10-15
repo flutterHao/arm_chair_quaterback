@@ -1,4 +1,4 @@
-import 'package:arm_chair_quaterback/common/entities/team_player_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis.dart';
 import 'package:arm_chair_quaterback/common/net/http.dart';
 
@@ -8,9 +8,9 @@ import 'package:arm_chair_quaterback/common/net/http.dart';
 
 class TeamPlayerApi {
 
-  static Future<List<TeamPlayerEntity>> getTeamPlayerList(int teamId) async {
+  static Future<List<TeamPlayerInfoEntity>> getTeamPlayerList(int teamId) async {
     List json =
         await httpUtil.post(Api.getTeamPlayerList, data: {"teamId": teamId});
-    return json.map((e) => TeamPlayerEntity.fromJson(e)).toList();
+    return json.map((e) => TeamPlayerInfoEntity.fromJson(e)).toList();
   }
 }

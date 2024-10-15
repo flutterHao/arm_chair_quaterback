@@ -10,6 +10,12 @@
 // import 'package:arm_chair_quaterback/pages/news/rank/bindings.dart';
 // import 'package:arm_chair_quaterback/pages/news/rank/stats_view.dart';
 // import 'package:arm_chair_quaterback/pages/news/rank/team_view.dart';
+import 'package:arm_chair_quaterback/pages/mine/mine_account/bindings.dart';
+import 'package:arm_chair_quaterback/pages/mine/mine_account/view.dart';
+import 'package:arm_chair_quaterback/pages/mine/mine_info/bindings.dart';
+import 'package:arm_chair_quaterback/pages/mine/mine_info/view.dart';
+import 'package:arm_chair_quaterback/pages/mine/mine_setting/bindings.dart';
+import 'package:arm_chair_quaterback/pages/mine/mine_setting/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/view.dart';
@@ -41,6 +47,21 @@ class AppPages {
       opaque: false,
       name: RouteNames.picksPlayerDetail,
       page: () => const PlayerDetailPage(),
+    ),
+    GetPage(
+      name: RouteNames.mineMineAccount,
+      page: () => const MineAccountPage(),
+      binding: MineAccountBinding(),
+    ),
+    GetPage(
+      name: RouteNames.mineMineInfo,
+      page: () => const MineInfoPage(),
+      binding: MineInfoBinding(),
+    ),
+    GetPage(
+      name: RouteNames.mineMineSetting,
+      page: () => const MineSettingPage(),
+      binding: MineSettingBinding()
     ),
   ];
 }

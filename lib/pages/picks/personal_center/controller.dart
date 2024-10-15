@@ -1,5 +1,5 @@
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/team_player_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_simple_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class TeamInfo{
-  final TeamPlayerEntity teamPlayerEntity;
+  final TeamPlayerInfoEntity teamPlayerEntity;
   final NbaPlayerInfosPlayerBaseInfoList baseInfo;
 
   TeamInfo(this.teamPlayerEntity, this.baseInfo);
@@ -55,7 +55,7 @@ class PersonalCenterController extends GetxController
       TeamPlayerApi.getTeamPlayerList(teamId),
       CacheApi.getNBAPlayerInfo(),
     ]).then((result){
-       List<TeamPlayerEntity> teamPlayerEntity= result[0] as List<TeamPlayerEntity>;
+       List<TeamPlayerInfoEntity> teamPlayerEntity= result[0] as List<TeamPlayerInfoEntity>;
        NbaPlayerInfosEntity nbaPlayerInfosEntity= result[1] as NbaPlayerInfosEntity;
        for (int i = 0; i < teamPlayerEntity.length; i++) {
          var playerEntity = teamPlayerEntity[i];

@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
@@ -134,7 +135,7 @@ class _TopDialogState extends State<TopDialog>
                                     flex: 3,
                                     child: InkWell(
                                       onTap: () {
-                                        print('My information');
+                                        Get.toNamed(RouteNames.mineMineInfo);
                                       },
                                       child: Container(
                                         height: 88.w,

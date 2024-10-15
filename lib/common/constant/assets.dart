@@ -63,7 +63,8 @@ static const uiWindowsAwardPng = 'assets/images/icon/ui_windows_award.png';
   static const uiIconMsg_02Png = 'assets/images/icon/ui_icon_msg_02.png';
   static const uiIconBlockPng = 'assets/images/icon/ui_icon_block.png';
   static const uiIconInformPng = 'assets/images/icon/ui_icon_inform.png';
-
+  static const uiIconCameraPng = 'assets/images/icon/ui_icon_camera.png';
+  static const uiIconCompilePng = 'assets/images/icon/ui_icon_compile.png';
 
   ///test
   static const testTeamLogoPng = 'assets/test/test_team_logo.png';
