@@ -34,20 +34,21 @@ class _TopDialogState extends State<TopDialog>
   void initState() {
     super.initState();
     animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 200))..addStatusListener(_statusListener);
+        vsync: this, duration: const Duration(milliseconds: 200))
+      ..addStatusListener(_statusListener);
     animation = Tween(begin: maxHeight, end: 0.0).animate(animationController)
       ..addListener(_animationListener);
     animationController.forward();
   }
 
   void _animationListener() {
-      offsetDy.value = animation.value;
-    }
+    offsetDy.value = animation.value;
+  }
 
-  void _statusListener(status){
-      if(status == AnimationStatus.completed && offsetDy.value == maxHeight){
-          Get.back();
-        }
+  void _statusListener(status) {
+    if (status == AnimationStatus.completed && offsetDy.value == maxHeight) {
+      Get.back();
+    }
   }
 
   @override
@@ -61,11 +62,11 @@ class _TopDialogState extends State<TopDialog>
     var size = MediaQuery.of(context).size;
     return PopScope(
       canPop: false,
-      onPopInvokedWithResult: (didPop,_){
+      onPopInvokedWithResult: (didPop, _) {
         // print('didPop:$didPop');
-        if(!didPop) {
+        if (!didPop) {
           offsetDy.value = 0;
-          _releaseAnimation();
+          _releaseAnimation(isBack: true);
         }
       },
       child: SizedBox(
@@ -85,11 +86,11 @@ class _TopDialogState extends State<TopDialog>
                     startY = d.localPosition.dy;
                   },
                   onHorizontalDragEnd: (d) {
-                    // print('onHorizontalDragEnd');
+                    print('onHorizontalDragEnd');
                     _releaseAnimation();
                   },
                   onHorizontalDragCancel: () {
-                    // print('onHorizontalDragCancel');
+                    print('onHorizontalDragCancel');
                     _releaseAnimation();
                   },
                   onHorizontalDragDown: (d) {
@@ -98,7 +99,8 @@ class _TopDialogState extends State<TopDialog>
                   },
                   child: Obx(() {
                     return Transform.translate(
-                      offset: Offset(0, offsetDy.value >= 0 ? 0 : offsetDy.value),
+                      offset:
+                          Offset(0, offsetDy.value >= 0 ? 0 : offsetDy.value),
                       child: Container(
                         height: 500.h,
                         width: double.infinity,
@@ -123,7 +125,7 @@ class _TopDialogState extends State<TopDialog>
                             20.vGap,
                             Container(
                               margin: EdgeInsets.only(
-                                // top: MediaQuery.of(context).padding.top + 6.w,
+                                  // top: MediaQuery.of(context).padding.top + 6.w,
                                   left: 16.w,
                                   right: 16.w),
                               child: Row(
@@ -144,15 +146,16 @@ class _TopDialogState extends State<TopDialog>
                                         decoration: BoxDecoration(
                                             color: AppColors.c333333,
                                             borderRadius:
-                                            BorderRadius.circular(16.w)),
+                                                BorderRadius.circular(16.w)),
                                         child: Column(
                                           mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                              MainAxisAlignment.spaceBetween,
                                           crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                              CrossAxisAlignment.start,
                                           children: [
                                             ColorFiltered(
-                                              colorFilter: const ColorFilter.mode(
+                                              colorFilter:
+                                                  const ColorFilter.mode(
                                                 AppColors.cFF7954,
                                                 BlendMode.srcIn,
                                               ),
@@ -164,7 +167,8 @@ class _TopDialogState extends State<TopDialog>
                                             ),
                                             Row(
                                               mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
                                                 Text(
                                                   "My information",
@@ -177,7 +181,7 @@ class _TopDialogState extends State<TopDialog>
                                                       iconWidth: 13.w,
                                                       icon: Assets.iconBackPng,
                                                       iconColor:
-                                                      AppColors.c666666,
+                                                          AppColors.c666666,
                                                     ))
                                               ],
                                             )
@@ -203,15 +207,16 @@ class _TopDialogState extends State<TopDialog>
                                         decoration: BoxDecoration(
                                             color: AppColors.c333333,
                                             borderRadius:
-                                            BorderRadius.circular(16.w)),
+                                                BorderRadius.circular(16.w)),
                                         child: Column(
                                           mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                              MainAxisAlignment.spaceBetween,
                                           crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                              CrossAxisAlignment.start,
                                           children: [
                                             ColorFiltered(
-                                              colorFilter: const ColorFilter.mode(
+                                              colorFilter:
+                                                  const ColorFilter.mode(
                                                 AppColors.cFF7954,
                                                 BlendMode.srcIn,
                                               ),
@@ -223,7 +228,8 @@ class _TopDialogState extends State<TopDialog>
                                             ),
                                             Row(
                                               mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
                                                 Text(
                                                   "Friend",
@@ -236,7 +242,7 @@ class _TopDialogState extends State<TopDialog>
                                                       iconWidth: 13.w,
                                                       icon: Assets.iconBackPng,
                                                       iconColor:
-                                                      AppColors.c666666,
+                                                          AppColors.c666666,
                                                     ))
                                               ],
                                             )
@@ -255,14 +261,15 @@ class _TopDialogState extends State<TopDialog>
                               },
                               child: Container(
                                 height: 51.w,
-                                padding: EdgeInsets.only(left: 26.w, right: 24.w),
+                                padding:
+                                    EdgeInsets.only(left: 26.w, right: 24.w),
                                 decoration: BoxDecoration(
                                     color: AppColors.c333333,
                                     borderRadius: BorderRadius.circular(16.w)),
                                 margin: EdgeInsets.symmetric(horizontal: 16.w),
                                 child: Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Row(
                                       children: [
@@ -274,7 +281,8 @@ class _TopDialogState extends State<TopDialog>
                                         9.hGap,
                                         Text(
                                           "Mail",
-                                          style: 14.w4(color: AppColors.cBFBEBE),
+                                          style:
+                                              14.w4(color: AppColors.cBFBEBE),
                                         )
                                       ],
                                     ),
@@ -296,14 +304,15 @@ class _TopDialogState extends State<TopDialog>
                               },
                               child: Container(
                                 height: 51.w,
-                                padding: EdgeInsets.only(left: 26.w, right: 24.w),
+                                padding:
+                                    EdgeInsets.only(left: 26.w, right: 24.w),
                                 decoration: BoxDecoration(
                                     color: AppColors.c333333,
                                     borderRadius: BorderRadius.circular(16.w)),
                                 margin: EdgeInsets.symmetric(horizontal: 16.w),
                                 child: Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Row(
                                       children: [
@@ -315,7 +324,8 @@ class _TopDialogState extends State<TopDialog>
                                         9.hGap,
                                         Text(
                                           "Setting",
-                                          style: 14.w4(color: AppColors.cBFBEBE),
+                                          style:
+                                              14.w4(color: AppColors.cBFBEBE),
                                         )
                                       ],
                                     ),
@@ -337,14 +347,15 @@ class _TopDialogState extends State<TopDialog>
                               },
                               child: Container(
                                 height: 51.w,
-                                padding: EdgeInsets.only(left: 26.w, right: 24.w),
+                                padding:
+                                    EdgeInsets.only(left: 26.w, right: 24.w),
                                 decoration: BoxDecoration(
                                     color: AppColors.c333333,
                                     borderRadius: BorderRadius.circular(16.w)),
                                 margin: EdgeInsets.symmetric(horizontal: 16.w),
                                 child: Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Row(
                                       children: [
@@ -356,7 +367,8 @@ class _TopDialogState extends State<TopDialog>
                                         9.hGap,
                                         Text(
                                           "Account",
-                                          style: 14.w4(color: AppColors.cBFBEBE),
+                                          style:
+                                              14.w4(color: AppColors.cBFBEBE),
                                         )
                                       ],
                                     ),
@@ -404,8 +416,8 @@ class _TopDialogState extends State<TopDialog>
                 Container(
                     decoration: BoxDecoration(
                         color: AppColors.c262626,
-                        borderRadius:
-                            BorderRadius.vertical(bottom: Radius.circular(16.w))),
+                        borderRadius: BorderRadius.vertical(
+                            bottom: Radius.circular(16.w))),
                     padding: EdgeInsets.only(
                         top: MediaQuery.of(context).padding.top + 6.w),
                     child: UserInfoBar(
@@ -418,7 +430,7 @@ class _TopDialogState extends State<TopDialog>
               onTap: () {
                 ///点击空白处
                 offsetDy.value = 0;
-                _releaseAnimation();
+                _releaseAnimation(isBack: true);
               },
             ))
           ],
@@ -427,8 +439,8 @@ class _TopDialogState extends State<TopDialog>
     );
   }
 
-  void _releaseAnimation() {
-    if(offsetDy.value>0){
+  void _releaseAnimation({bool isBack = false}) {
+    if (!isBack && offsetDy.value >= 0) {
       return;
     }
     print('offsetDy.value:${offsetDy.value}');
@@ -437,11 +449,13 @@ class _TopDialogState extends State<TopDialog>
     animationController.reset();
     animationController.addStatusListener(_statusListener);
     animation.addListener(_animationListener);
-    if(offsetDy.value<0 && offsetDy.value.abs()<100) {
-      animation = Tween(begin: offsetDy.value,end: 0.0).animate(animationController);
+    if (offsetDy.value < 0 && offsetDy.value.abs() < 100) {
+      animation =
+          Tween(begin: offsetDy.value, end: 0.0).animate(animationController);
       animationController.forward(from: offsetDy.value);
-    }else{
-      animation = Tween(begin: offsetDy.value,end: maxHeight).animate(animationController);
+    } else {
+      animation = Tween(begin: offsetDy.value, end: maxHeight)
+          .animate(animationController);
       animationController.forward();
     }
   }
