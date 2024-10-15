@@ -1,10 +1,19 @@
+import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_player_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_simple_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
+import 'package:arm_chair_quaterback/common/net/apis/team_player.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'index.dart';
+class TeamInfo{
+  final TeamPlayerEntity teamPlayerEntity;
+  final NbaPlayerInfosPlayerBaseInfoList baseInfo;
+
+  TeamInfo(this.teamPlayerEntity, this.baseInfo);
+}
 
 class PersonalCenterController extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -19,6 +28,8 @@ class PersonalCenterController extends GetxController
 
   TeamSimpleEntity? teamSimpleEntity;
   var loadStatus = LoadDataStatus.loading.obs;
+
+  List<TeamInfo> teamPlayers = [];
 
   // tap
   void handleTap(int index) {
@@ -35,6 +46,25 @@ class PersonalCenterController extends GetxController
     tabController =
         TabController(length: titles.length, vsync: this, initialIndex: 0);
     getData();
+    _initGameData();
+  }
+
+  _initGameData(){
+    teamPlayers.clear();
+    Future.wait([
+      TeamPlayerApi.getTeamPlayerList(teamId),
+      CacheApi.getNBAPlayerInfo(),
+    ]).then((result){
+       List<TeamPlayerEntity> teamPlayerEntity= result[0] as List<TeamPlayerEntity>;
+       NbaPlayerInfosEntity nbaPlayerInfosEntity= result[1] as NbaPlayerInfosEntity;
+       for (int i = 0; i < teamPlayerEntity.length; i++) {
+         var playerEntity = teamPlayerEntity[i];
+         var item = nbaPlayerInfosEntity.playerBaseInfoList.firstWhere((e)=> e.playerId == playerEntity.playerId);
+         TeamInfo teamInfo = TeamInfo(playerEntity, item);
+         teamPlayers.add(teamInfo);
+       }
+      update([idPersonalCenterGameMain]);
+    });
   }
 
   getData() {
@@ -49,6 +79,9 @@ class PersonalCenterController extends GetxController
   }
 
   static String get idPersonalCenterMain => "id_personal_center";
+
+  static String get idPersonalCenterGameMain => "id_personal_center_game_main";
+
 
   /// 在 onInit() 之后调用 1 帧。这是进入的理想场所
   @override

@@ -1,7 +1,9 @@
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/common/constant/getx_builder_ids.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entity/team_login_info.dart';
+import 'package:arm_chair_quaterback/common/entities/user_entity/team_prop_list.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entity/user_entiry.dart';
 import 'package:arm_chair_quaterback/common/net/address.dart';
 import 'package:arm_chair_quaterback/common/net/http.dart';
@@ -139,33 +141,6 @@ class UserInfoBar extends StatelessWidget {
   final String title;
   final bool enable;
 
-  Widget iconText(int propId, int num) {
-    return Container(
-      width: 66.w,
-      height: 16.w,
-      alignment: Alignment.center,
-      // constraints: BoxConstraints(minWidth: 66.w),
-      // margin: EdgeInsets.only(left: 9.w),
-      padding: EdgeInsets.symmetric(horizontal: 9.w),
-      decoration: BoxDecoration(
-          color: Colors.black, borderRadius: BorderRadius.circular(8.w)),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          ImageWidget(
-            url: Utils.getIconUrl(propId),
-            width: 12.w,
-          ),
-          Text(
-            "${num < 1000 ? num : "${(num / 1000).toStringAsFixed(1)}k"}",
-            style: TextStyle(color: AppColors.cF2F2F2, fontSize: 10.sp),
-          )
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     var homeCtrl = Get.find<HomeController>();
@@ -175,7 +150,6 @@ class UserInfoBar extends StatelessWidget {
         builder: (_) {
           TeamLoginInfo info =
               homeCtrl.userEntiry.teamLoginInfo ?? TeamLoginInfo();
-          var list = info.teamPropList ?? [];
           return Container(
             padding: EdgeInsets.only(left: 14.w, right: 14.w, bottom: 11.w),
             child: Row(
@@ -204,21 +178,7 @@ class UserInfoBar extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: 19.w7(color: AppColors.cF2F2F2),
                 )),
-                Container(
-                  width: 80.w,
-                  height: 36.w,
-                  alignment: Alignment.centerRight,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: list.map(
-                      (e) {
-                        var item = homeCtrl.getPropInfo(e.propId!);
-                        return iconText(item?.propId ?? 0, e.num ?? 0);
-                      },
-                    ).toList(),
-                  ),
-                ),
+                const MoneyAndCoinWidget(),
               ],
             ),
           );
@@ -233,6 +193,69 @@ class UserInfoBar extends StatelessWidget {
             Animation<double> secondaryAnimation) {
           return TopDialog(title: title);
         });
+  }
+}
+
+class MoneyAndCoinWidget extends StatelessWidget {
+  const MoneyAndCoinWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<HomeController>(
+        id: GetXBuilderIds.idMoneyAndCoinWidget,
+        builder: (logic) {
+          var homeCtrl = Get.find<HomeController>();
+          TeamLoginInfo info =
+              homeCtrl.userEntiry.teamLoginInfo ?? TeamLoginInfo();
+          var list = info.teamPropList ?? [];
+          return Container(
+            width: 80.w,
+            height: 36.w,
+            alignment: Alignment.centerRight,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: list.map(
+                (e) {
+                  var item = homeCtrl.getPropInfo(e.propId!);
+                  return iconText(
+                      item?.propId == 102
+                          ? Assets.uiIconMoneyPng
+                          : Assets.uiIconJettonPng,
+                      e.num ?? 0);
+                },
+              ).toList(),
+            ),
+          );
+        });
+  }
+
+  Widget iconText(String icon, int num) {
+    return Container(
+      width: 66.w,
+      height: 16.w,
+      alignment: Alignment.center,
+      // constraints: BoxConstraints(minWidth: 66.w),
+      // margin: EdgeInsets.only(left: 9.w),
+      padding: EdgeInsets.symmetric(horizontal: 9.w),
+      decoration: BoxDecoration(
+          color: Colors.black, borderRadius: BorderRadius.circular(8.w)),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          IconWidget(
+            iconWidth: 12.w,
+            icon: icon,
+            iconColor: AppColors.cFFFFFF,
+          ),
+          Text(
+            "${num < 1000 ? num : "${(num / 1000).toStringAsFixed(1)}k"}",
+            style: TextStyle(color: AppColors.cF2F2F2, fontSize: 10.sp),
+          )
+        ],
+      ),
+    );
   }
 }
 

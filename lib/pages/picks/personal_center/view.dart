@@ -32,19 +32,9 @@ class PersonalCenterPage extends GetView<PersonalCenterController> {
         id: PersonalCenterController.idPersonalCenterMain,
         builder: (_) {
           return BlackAppWidget(
-            AppBarWidget(
+            const AppBarWidget(
               id: GlobalNestedKey.PICKS,
               title: "PERSONAL CENTER",
-              right: InkWell(
-                onTap: () {
-                  print('点击了分享');
-                },
-                child: IconWidget(
-                  iconWidth: 19.w,
-                  iconHeight: 19.w,
-                  icon: Assets.iconSharePng,
-                ),
-              ),
             ),
             totalScreenBuilder: (context, appBarHeight) {
               return controller.teamSimpleEntity == null
@@ -212,7 +202,7 @@ class PersonalCenterPage extends GetView<PersonalCenterController> {
                                       child: Row(
                                         children: [
                                           Text(
-                                            "UID:123456",
+                                            "UID:${controller.teamSimpleEntity!.teamId}",
                                             style: 10.w4(
                                                 color: AppColors.c666666,
                                                 height: 1),

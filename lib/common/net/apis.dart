@@ -65,5 +65,6 @@ class Api {
 
   /// TeamPlayer
   static const String getTeamPlayerByUUID = "$API_BASE_PATH/TeamPlayer/getTeamPlayerByUUID";
+  static const String getTeamPlayerList = "$API_BASE_PATH/TeamPlayer/getTeamPlayerList";
 
 }

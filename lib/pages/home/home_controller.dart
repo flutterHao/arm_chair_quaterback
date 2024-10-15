@@ -11,6 +11,7 @@
  * @LastEditTime: 2024-09-24 10:57:13
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/common/constant/getx_builder_ids.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/entities/config/prop_define_entity.dart';
@@ -40,6 +41,11 @@ class HomeController extends GetxController
   };
 
   UserEntity userEntiry = UserEntity();
+
+  refreshMoneyCoinWidget(){
+    /// todo 先获取用户信息在更新
+    update([GetXBuilderIds.idMoneyAndCoinWidget]);
+  }
 
   GlobalKey<NavigatorState>? getCurrentTabGlobalKey() {
     return navigatorKeys[tabIndex.value];

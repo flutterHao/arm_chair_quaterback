@@ -8,6 +8,7 @@ import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -19,7 +20,7 @@ class AppBarWidget extends StatelessWidget {
   const AppBarWidget(
       {super.key,
       this.left,
-      this.right,
+      this.right = const MoneyAndCoinWidget(),
       this.title,
       this.titleWidget,
       this.id,
@@ -72,10 +73,10 @@ class AppBarWidget extends StatelessWidget {
                       ),
                 ),
                 Positioned(
-                  right: 20,
+                  right: 8.w,
                   child: SizedBox(
-                    width: 19.w,
-                    height: 19.w,
+                    // width: 19.w,
+                    // height: 19.w,
                     child: right,
                   ),
                 )

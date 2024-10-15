@@ -445,8 +445,11 @@ class __NumChangeWidgetState extends State<_NumChangeWidget> {
 
 ///球员头像
 class PlayerAwater extends StatelessWidget {
-  const PlayerAwater({super.key, this.backgroudColor});
+  const PlayerAwater({super.key, this.backgroudColor, this.avatarUrl, this.grade, this.level});
 
+  final String? avatarUrl;
+  final String? grade;
+  final String? level;
   final Color? backgroudColor;
 
   @override
@@ -472,7 +475,7 @@ class PlayerAwater extends StatelessWidget {
           ),
           Positioned(
             child: ImageWidget(
-              url: "https://file.qiumiwu.com/player/202404/24/349123f6.png",
+              url: avatarUrl??"https://file.qiumiwu.com/player/202404/24/349123f6.png",
               width: 64.w,
               height: 64.w,
               borderRadius: BorderRadius.circular(32.w),
@@ -482,7 +485,7 @@ class PlayerAwater extends StatelessWidget {
             left: 0,
             top: 2,
             child: Text(
-              "S",
+              grade??"S",
               style: 17.w7(color: AppColors.c262626),
             ),
           ),
@@ -499,7 +502,7 @@ class PlayerAwater extends StatelessWidget {
             right: 6.w,
             top: 6.5.w,
             child: Text(
-              "5",
+              level??"5",
               style: 12.w7(color: AppColors.cFFFFFF, height: 1),
             ),
           ),

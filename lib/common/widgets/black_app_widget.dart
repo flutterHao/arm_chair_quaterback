@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 ///created at 2024/9/11/11:06
 
 class BlackAppWidget extends StatefulWidget {
-  BlackAppWidget(this.appbarWidget,
+  const BlackAppWidget(this.appbarWidget,
       {this.bodyWidget,
       this.totalScreenBuilder,
       this.floatWidgets,

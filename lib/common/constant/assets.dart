@@ -90,6 +90,7 @@ static const uiWindowsAwardPng = 'assets/images/icon/ui_windows_award.png';
   static const uiPropsBoxPng = 'assets/images/picks/ui_props_box.png';
   static const uiPropsMoenyPng = 'assets/images/picks/ui_props_moeny.png';
   static const uiBellePng = 'assets/images/picks/ui_belle.png';
+  static const uiIconJettonBigPng = 'assets/images/picks/ui_icon_jetton_big.png';
 
   ///player
   static const uiIconPingjiPng = 'assets/images/player/ui_icon_pingji.png';

@@ -190,8 +190,6 @@ class NbaPlayerInfosPlayerBaseInfoList {
           Map<String, dynamic> json) =>
       $NbaPlayerInfosPlayerBaseInfoListFromJson(json);
 
-  get breakThroughGrade => null;
-
   Map<String, dynamic> toJson() =>
       $NbaPlayerInfosPlayerBaseInfoListToJson(this);
 

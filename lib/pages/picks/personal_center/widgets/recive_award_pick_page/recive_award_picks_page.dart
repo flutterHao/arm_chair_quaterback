@@ -76,122 +76,126 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
                           width: double.infinity,
                           padding: EdgeInsets.only(left: 25.w, top: 21.w),
                           decoration: BoxDecoration(
-                              image: const DecorationImage(
-                                  alignment: Alignment.bottomRight,
-                                  opacity: .2,
-                                  image: AssetImage(Assets.testTeamLogoPng)),
-
-                              ///todo 换图
                               borderRadius: BorderRadius.circular(16.w),
                               gradient: const LinearGradient(colors: [
-                                AppColors.c7e2919,
-                                AppColors.c251a18
+                                AppColors.c262626,
+                                AppColors.c4c4c4c
                               ])),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          child: Stack(
                             children: [
-                              Text(
-                                "${controller.teamSimpleEntity?.betCoin ?? 0}",
-                                style:
-                                    36.w7(color: AppColors.cFFE8DD, height: 1),
-                              ),
-                              Row(
+                              Positioned(
+                                right: -30,
+                                  top: 0,
+                                  child: Opacity(
+                                opacity: .05,
+                                  child: IconWidget(iconWidth: 120.w, icon: Assets.uiIconJettonBigPng))),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "JETTON",
-                                    style: 10.w4(
-                                        color: AppColors.c945D4A, height: 1),
+                                    "${controller.teamSimpleEntity?.betCoin ?? 0}",
+                                    style:
+                                        36.w7(color: AppColors.cFFFFFF, height: 1),
                                   ),
-                                  2.hGap,
-                                  IconWidget(
-                                      iconWidth: 10.w,
-                                      icon: Assets.uiIconJettonPng)
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "JETTON",
+                                        style: 10.w4(
+                                            color: AppColors.c666666, height: 1),
+                                      ),
+                                      2.hGap,
+                                      IconWidget(
+                                          iconWidth: 10.w,
+                                          icon: Assets.uiIconJettonPng,iconColor: AppColors.cFFFFFF,)
+                                    ],
+                                  ),
+                                  12.vGap,
+                                  Row(
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "${controller.teamSimpleEntity?.winCount ?? 0}",
+                                            style: 16.w7(
+                                                color: AppColors.cFFFFFF,
+                                                height: 1),
+                                          ),
+                                          3.vGap,
+                                          Text(
+                                            "WIN COUNT",
+                                            style: 10.w4(
+                                                color: AppColors.c666666,
+                                                height: 1),
+                                          )
+                                        ],
+                                      ),
+                                      35.hGap,
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "${controller.teamSimpleEntity.getGuessSuccessRate}%",
+                                            style: 16.w7(
+                                                color: AppColors.cFFFFFF,
+                                                height: 1),
+                                          ),
+                                          3.vGap,
+                                          Text(
+                                            "SUCCESS",
+                                            style: 10.w4(
+                                                color: AppColors.c666666,
+                                                height: 1),
+                                          )
+                                        ],
+                                      ),
+                                      40.hGap,
+                                      if (controller
+                                              .teamSimpleEntity!.lastGuess.isNotEmpty)
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: List.generate(
+                                                  controller.teamSimpleEntity
+                                                          !.lastGuess.length ,
+                                                  (index) => Container(
+                                                        width: 12.w,
+                                                        height: 12.w,
+                                                        margin: EdgeInsets.only(
+                                                            right: 5.w),
+                                                        decoration: BoxDecoration(
+
+                                                            ///todo 判断条件
+                                                            color: controller
+                                                                            .teamSimpleEntity
+                                                                            !.lastGuess[
+                                                                        index] ==
+                                                                    "0"
+                                                                ? AppColors.cE72646
+                                                                : AppColors.c10A86A,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(6.w)),
+                                                      )),
+                                            ),
+                                            3.vGap,
+                                            Text(
+                                              "LAST5",
+                                              style: 10.w4(
+                                                  color: AppColors.c666666,
+                                                  height: 1),
+                                            )
+                                          ],
+                                        )
+                                    ],
+                                  )
                                 ],
                               ),
-                              12.vGap,
-                              Row(
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "${controller.teamSimpleEntity?.winCount ?? 0}",
-                                        style: 16.w7(
-                                            color: AppColors.cFFE8DD,
-                                            height: 1),
-                                      ),
-                                      3.vGap,
-                                      Text(
-                                        "WIN COUNT",
-                                        style: 10.w4(
-                                            color: AppColors.c945D4A,
-                                            height: 1),
-                                      )
-                                    ],
-                                  ),
-                                  35.hGap,
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "${controller.teamSimpleEntity.getGuessSuccessRate}%",
-                                        style: 16.w7(
-                                            color: AppColors.cFFE8DD,
-                                            height: 1),
-                                      ),
-                                      3.vGap,
-                                      Text(
-                                        "SUCCESS",
-                                        style: 10.w4(
-                                            color: AppColors.c945D4A,
-                                            height: 1),
-                                      )
-                                    ],
-                                  ),
-                                  40.hGap,
-                                  if (controller
-                                          .teamSimpleEntity!.lastGuess.isNotEmpty)
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: List.generate(
-                                              controller.teamSimpleEntity
-                                                      !.lastGuess.length ,
-                                              (index) => Container(
-                                                    width: 12.w,
-                                                    height: 12.w,
-                                                    margin: EdgeInsets.only(
-                                                        right: 5.w),
-                                                    decoration: BoxDecoration(
-
-                                                        ///todo 判断条件
-                                                        color: controller
-                                                                        .teamSimpleEntity
-                                                                        !.lastGuess[
-                                                                    index] ==
-                                                                "0"
-                                                            ? AppColors.cE72646
-                                                            : AppColors.c10A86A,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(6.w)),
-                                                  )),
-                                        ),
-                                        3.vGap,
-                                        Text(
-                                          "LAST5",
-                                          style: 10.w4(
-                                              color: AppColors.c945D4A,
-                                              height: 1),
-                                        )
-                                      ],
-                                    )
-                                ],
-                              )
                             ],
                           ),
                         ),
