@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2024-10-11 12:30:45
+ * @LastEditTime: 2024-10-15 19:03:27
  */
 /*
  * @Description: 
@@ -13,8 +13,10 @@
 
 import 'dart:math';
 
+import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/index.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/linear_progress_widget.dart';
@@ -75,6 +77,7 @@ class PlayerItem extends GetView<TeamController> {
             10.hGap,
             PlayerAwater(
               backgroudColor: AppColors.cE1E1E1,
+              player: TeamPlayerInfoEntity(),
             ),
             SizedBox(
               width: 3.w,
@@ -445,12 +448,14 @@ class __NumChangeWidgetState extends State<_NumChangeWidget> {
 
 ///球员头像
 class PlayerAwater extends StatelessWidget {
-  const PlayerAwater({super.key, this.backgroudColor, this.avatarUrl, this.grade, this.level});
+  const PlayerAwater({super.key, this.backgroudColor, required this.player});
+  // const PlayerAwater({super.key, this.backgroudColor, this.avatarUrl, this.grade, this.level});
 
-  final String? avatarUrl;
-  final String? grade;
-  final String? level;
+  // final String? avatarUrl;
+  // final String? grade;
+  // final String? level;
   final Color? backgroudColor;
+  final dynamic player;
 
   @override
   Widget build(BuildContext context) {
@@ -475,7 +480,8 @@ class PlayerAwater extends StatelessWidget {
           ),
           Positioned(
             child: ImageWidget(
-              url: avatarUrl??"https://file.qiumiwu.com/player/202404/24/349123f6.png",
+              url: Utils.getPlayUrl(player.id),
+              // url: avatarUrl??"https://file.qiumiwu.com/player/202404/24/349123f6.png",
               width: 64.w,
               height: 64.w,
               borderRadius: BorderRadius.circular(32.w),
@@ -485,7 +491,8 @@ class PlayerAwater extends StatelessWidget {
             left: 0,
             top: 2,
             child: Text(
-              grade??"S",
+              Utils.getPlayBaseInfo(player.playerId).grade,
+              // grade??"S",
               style: 17.w7(color: AppColors.c262626),
             ),
           ),
@@ -502,7 +509,7 @@ class PlayerAwater extends StatelessWidget {
             right: 6.w,
             top: 6.5.w,
             child: Text(
-              level??"5",
+              player.breakThroughGrade.toString(),
               style: 12.w7(color: AppColors.cFFFFFF, height: 1),
             ),
           ),

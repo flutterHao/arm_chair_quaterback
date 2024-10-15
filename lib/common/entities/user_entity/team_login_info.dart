@@ -43,9 +43,11 @@ class TeamLoginInfo {
         teamPlayerList: (json['teamPlayerList'] as List<dynamic>?)
             ?.map((e) => TeamPlayerList.fromJson(e as Map<String, dynamic>))
             .toList(),
-        teamPropList: (json['teamPropList'] as List<dynamic>?)
-            ?.map((e) => TeamPropList.fromJson(e as Map<String, dynamic>))
-            .toList(),
+        teamPropList: (json['teamPropList'] as List<dynamic>?)?.map((e) {
+          Map<String, dynamic> json =
+              e != null ? e as Map<String, dynamic> : {};
+          return TeamPropList.fromJson(json);
+        }).toList(),
         teamRecordList: (json['teamRecordList'] as List<dynamic>?)
             ?.map((e) => TeamRecordList.fromJson(e as Map<String, dynamic>))
             .toList(),

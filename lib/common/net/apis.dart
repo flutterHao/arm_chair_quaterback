@@ -2,10 +2,9 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-06 15:16:54
- * @LastEditTime: 2024-10-11 15:49:38
+ * @LastEditTime: 2024-10-15 18:54:52
  */
 class Api {
-
   /// base
   static const String API_BASE_PATH = "/p";
   static const String CONFIG_BASE_PATH = "/config";
@@ -60,11 +59,18 @@ class Api {
   static const String cGameRankAwardRule =
       "$CONFIG_BASE_PATH/GameRankAwardRule.json";
   static const String cGetPropDefine = "$CONFIG_BASE_PATH/PropDefine.json";
-  static const String  cRewardGroup="$CONFIG_BASE_PATH/RewardGroup.json";
-
+  static const String cRewardGroup = "$CONFIG_BASE_PATH/RewardGroup.json";
+  static const String cTrainTask = "$CONFIG_BASE_PATH/TrainTask.json";
+  static const String cTrainDefine = "$CONFIG_BASE_PATH/TrainDefine.json";
 
   /// TeamPlayer
-  static const String getTeamPlayerByUUID = "$API_BASE_PATH/TeamPlayer/getTeamPlayerByUUID";
-  static const String getTeamPlayerList = "$API_BASE_PATH/TeamPlayer/getTeamPlayerList";
+  static const String getTeamPlayerByUUID =
+      "$API_BASE_PATH/TeamPlayer/getTeamPlayerByUUID";
+  static const String getTrainingInfo =
+      "$API_BASE_PATH/TeamPlayer/getTrainingInfo";
+  static const String playerTraining =
+      "$API_BASE_PATH/TeamPlayer/playerTraining";
+  static const String getTeamPlayerList =
+      "$API_BASE_PATH/TeamPlayer/getTeamPlayerList";
 
 }

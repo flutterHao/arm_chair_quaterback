@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-10-11 16:04:38
+ * @LastEditTime: 2024-10-14 11:54:36
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -15,6 +15,7 @@ import 'package:arm_chair_quaterback/common/widgets/dialog/custom_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/page/beauty_page.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/battle_award_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/progress_paint.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/widgets/shadow_container.dart';
@@ -63,6 +64,12 @@ class _TeamIndexPageState extends State<TeamIndexPage>
               page: () => const TrainingPage(),
               // binding: NewDetailBinding(), /*  */
             );
+          case RouteNames.teamBeautyPage:
+            return GetPageRoute(
+              opaque: false,
+              settings: settings,
+              page: () => const BeautyPage(),
+            );
         }
         return null;
       },
@@ -78,23 +85,61 @@ class _TeamView extends GetView<TeamIndexController> {
   // 主视图
   Widget _buildView(TeamIndexController ctrl) {
     return Expanded(
-        child: Stack(
-      alignment: Alignment.bottomCenter,
-      children: [
-        _buildleft(),
-        _buildRight(ctrl),
-      ],
-    ));
+        child: GestureDetector(
+            onVerticalDragEnd: (details) {
+              if (details.velocity.pixelsPerSecond.dy < 0) {
+                if (controller.isShow.value) return;
+                controller.pageOnTap();
+              }
+            },
+            child: Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                // _backGroud(ctrl),
+                _buildleft(ctrl),
+                _buildRight(ctrl),
+              ],
+            )
+            // child: AnimatedBuilder(
+            //     animation: ctrl.pageAnimation,
+            //     builder: (context, child) {
+            //       return Stack(
+            //         alignment: Alignment.bottomCenter,
+            //         children: [
+            //           _buildleft(ctrl),
+            //           _buildRight(ctrl),
+            //         ],
+            //       );
+            //     }),
+            ));
+  }
+
+  Widget _backGroud(TeamIndexController ctrl) {
+    return Positioned(
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0,
+        // child: Obx(() {
+        //   double progress = -ctrl.pageX.value / 250;
+        //   return Container(
+        //     color: Colors.white.withOpacity(0.5 + 0.5 * progress),
+        //   );
+        // }),
+        child: Container(
+          color: Colors.white.withOpacity(0.5),
+        ));
   }
 
   ///左边美女部分
-  Widget _buildleft() {
+  Widget _buildleft(TeamIndexController ctrl) {
     return AnimatedPositioned(
       top: 0,
       right: 0,
       bottom: 0,
-      left: controller.pageLeft.value,
       duration: _duration,
+      left: ctrl.pageX.value,
+      // left: ctrl.pageAnimation.value,
       child: Stack(
         children: [
           Positioned(
@@ -120,17 +165,21 @@ class _TeamView extends GetView<TeamIndexController> {
           Positioned(
             top: 40.h,
             left: 16.h,
-            child: Container(
-              width: 32.h,
-              height: 32.h,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16.h),
-                  color: Colors.white),
-              child: IconWidget(
-                iconWidth: 16.h,
-                icon: Assets.uiIconSwitch_01Png,
-                iconColor: AppColors.c262626,
+            child: InkWell(
+              onTap: () => Get.toNamed(RouteNames.teamBeautyPage,
+                  id: GlobalNestedKey.TEAM),
+              child: Container(
+                width: 32.h,
+                height: 32.h,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16.h),
+                    color: Colors.white),
+                child: IconWidget(
+                  iconWidth: 16.h,
+                  icon: Assets.uiIconSwitch_01Png,
+                  iconColor: AppColors.c262626,
+                ),
               ),
             ),
           ),
@@ -201,7 +250,8 @@ class _TeamView extends GetView<TeamIndexController> {
       bottom: 0,
       left: 0,
       duration: _duration,
-      right: ctrl.bettleRight.value,
+      right: ctrl.pageX.value,
+      // right: ctrl.pageAnimation.value,
       child: Stack(
         children: [
           ///文字区

@@ -9,7 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
  * @Description: 自定义弹窗
  * @Author: lihonghao
  * @Date: 2024-09-28 15:59:52
- * @LastEditTime: 2024-09-29 18:11:12
+ * @LastEditTime: 2024-10-12 18:36:24
  */
 class CustomDialog extends StatelessWidget {
   const CustomDialog(
@@ -18,12 +18,13 @@ class CustomDialog extends StatelessWidget {
       this.image,
       this.backgroudColor,
       required this.content,
-      required this.onTap});
+      required this.onTap,  this.showComfirmButton=true});
   final String title;
   final String? image;
   final Color? backgroudColor;
   final Widget content;
   final Function onTap;
+  final bool showComfirmButton;
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +85,7 @@ class CustomDialog extends StatelessWidget {
                       constraints: BoxConstraints(minHeight: 173.w),
                       child: content,
                     ),
+                    if(showComfirmButton)
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: ConfirmButton(

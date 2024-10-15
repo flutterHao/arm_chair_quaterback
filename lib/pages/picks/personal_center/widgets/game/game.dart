@@ -394,7 +394,8 @@ class _GameState extends State<Game> with AutomaticKeepAliveClientMixin {
                                     child: Text(
                                       player.teamPlayerEntity.getPosition(),
                                       textAlign: TextAlign.center,
-                                      style: 21.w7(color: AppColors.c2170D2,height: 1),
+                                      style: 21.w7(
+                                          color: AppColors.c2170D2, height: 1),
                                     )),
                               ),
                             Container(
@@ -406,10 +407,8 @@ class _GameState extends State<Game> with AutomaticKeepAliveClientMixin {
                               child: Row(
                                 children: [
                                   10.hGap,
-                                   PlayerAwater(
-                                    avatarUrl: Utils.getPlayUrl(player.baseInfo.playerId),
-                                    grade: player.baseInfo.grade,
-                                    level: player.teamPlayerEntity.breakThroughGrade.toStringAsFixed(0).toString(),
+                                  PlayerAwater(
+                                    player: player.teamPlayerEntity,
                                     backgroudColor: AppColors.cE1E1E1,
                                   ),
                                   4.hGap,
@@ -508,6 +507,7 @@ class _GameState extends State<Game> with AutomaticKeepAliveClientMixin {
                                               ),
                                             ),
                                             6.hGap,
+
                                             ///todo 后段缺少状态字段
                                             // IconWidget(
                                             //     iconWidth: 12.w,

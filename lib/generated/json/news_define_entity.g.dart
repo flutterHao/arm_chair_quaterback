@@ -80,23 +80,19 @@ NewsDefineEntity $NewsDefineEntityFromJson(Map<String, dynamic> json) {
   if (newsRefreshNum != null) {
     newsDefineEntity.newsRefreshNum = newsRefreshNum;
   }
-  final List<String>? pfBetData = (json['pfBetData'] as List<dynamic>?)?.map(
-          (e) => jsonConvert.convert<String>(e) as String).toList();
+  final String? pfBetData = jsonConvert.convert<String>(json['pfBetData']);
   if (pfBetData != null) {
     newsDefineEntity.pfBetData = pfBetData;
   }
-  final List<String>? pgBetDate = (json['pgBetDate'] as List<dynamic>?)?.map(
-          (e) => jsonConvert.convert<String>(e) as String).toList();
+  final String? pgBetDate = jsonConvert.convert<String>(json['pgBetDate']);
   if (pgBetDate != null) {
     newsDefineEntity.pgBetDate = pgBetDate;
   }
-  final List<String>? sfBetData = (json['sfBetData'] as List<dynamic>?)?.map(
-          (e) => jsonConvert.convert<String>(e) as String).toList();
+  final String? sfBetData = jsonConvert.convert<String>(json['sfBetData']);
   if (sfBetData != null) {
     newsDefineEntity.sfBetData = sfBetData;
   }
-  final List<String>? sgBetData = (json['sgBetData'] as List<dynamic>?)?.map(
-          (e) => jsonConvert.convert<String>(e) as String).toList();
+  final String? sgBetData = jsonConvert.convert<String>(json['sgBetData']);
   if (sgBetData != null) {
     newsDefineEntity.sgBetData = sgBetData;
   }
@@ -158,10 +154,10 @@ extension NewsDefineEntityExtension on NewsDefineEntity {
     String? gamePlayRecent,
     List<String>? newsRefresh,
     String? newsRefreshNum,
-    List<String>? pfBetData,
-    List<String>? pgBetDate,
-    List<String>? sfBetData,
-    List<String>? sgBetData,
+    String? pfBetData,
+    String? pgBetDate,
+    String? sfBetData,
+    String? sgBetData,
     int? newsReviewShowNum,
     int? newsReviewOpenNum,
   }) {

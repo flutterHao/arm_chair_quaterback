@@ -145,6 +145,9 @@ class HomeController extends GetxController
   }
 
   PropDefineEntity? getPropInfo(int id) {
+    if (CacheApi.propDefineList!.where((e) => e.propId == id).isEmpty) {
+      return null;
+    }
     PropDefineEntity? item =
         CacheApi.propDefineList?.where((e) => e.propId == id).first;
     return item;

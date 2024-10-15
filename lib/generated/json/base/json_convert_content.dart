@@ -22,6 +22,9 @@ import 'package:arm_chair_quaterback/common/entities/team_player_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_simple_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/train_task_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/training_task_entity.dart';
 
 JsonConvert jsonConvert = JsonConvert();
 
@@ -297,18 +300,9 @@ class JsonConvert {
       return data.map<TeamPlayerInfoEntity>((Map<String, dynamic> e) =>
           TeamPlayerInfoEntity.fromJson(e)).toList() as M;
     }
-    if (<TeamPlayerInfoPlayerTrend>[] is M) {
-      return data.map<TeamPlayerInfoPlayerTrend>((Map<String, dynamic> e) =>
-          TeamPlayerInfoPlayerTrend.fromJson(e)).toList() as M;
-    }
-    if (<TeamPlayerInfoTeamPlayer>[] is M) {
-      return data.map<TeamPlayerInfoTeamPlayer>((Map<String, dynamic> e) =>
-          TeamPlayerInfoTeamPlayer.fromJson(e)).toList() as M;
-    }
-    if (<TeamPlayerInfoTeamPlayerPotential>[] is M) {
-      return data.map<TeamPlayerInfoTeamPlayerPotential>((
-          Map<String, dynamic> e) =>
-          TeamPlayerInfoTeamPlayerPotential.fromJson(e)).toList() as M;
+    if (<TeamPlayerInfoPotential>[] is M) {
+      return data.map<TeamPlayerInfoPotential>((Map<String, dynamic> e) =>
+          TeamPlayerInfoPotential.fromJson(e)).toList() as M;
     }
     if (<TeamRankEntity>[] is M) {
       return data.map<TeamRankEntity>((Map<String, dynamic> e) =>
@@ -317,6 +311,34 @@ class JsonConvert {
     if (<TeamSimpleEntity>[] is M) {
       return data.map<TeamSimpleEntity>((Map<String, dynamic> e) =>
           TeamSimpleEntity.fromJson(e)).toList() as M;
+    }
+    if (<TrainTaskEntity>[] is M) {
+      return data.map<TrainTaskEntity>((Map<String, dynamic> e) =>
+          TrainTaskEntity.fromJson(e)).toList() as M;
+    }
+    if (<TrainingInfoEntity>[] is M) {
+      return data.map<TrainingInfoEntity>((Map<String, dynamic> e) =>
+          TrainingInfoEntity.fromJson(e)).toList() as M;
+    }
+    if (<TrainingInfoAward>[] is M) {
+      return data.map<TrainingInfoAward>((Map<String, dynamic> e) =>
+          TrainingInfoAward.fromJson(e)).toList() as M;
+    }
+    if (<TrainingInfoProp>[] is M) {
+      return data.map<TrainingInfoProp>((Map<String, dynamic> e) =>
+          TrainingInfoProp.fromJson(e)).toList() as M;
+    }
+    if (<TrainingInfoTraining>[] is M) {
+      return data.map<TrainingInfoTraining>((Map<String, dynamic> e) =>
+          TrainingInfoTraining.fromJson(e)).toList() as M;
+    }
+    if (<TrainingInfoBuff>[] is M) {
+      return data.map<TrainingInfoBuff>((Map<String, dynamic> e) =>
+          TrainingInfoBuff.fromJson(e)).toList() as M;
+    }
+    if (<TrainingTaskEntity>[] is M) {
+      return data.map<TrainingTaskEntity>((Map<String, dynamic> e) =>
+          TrainingTaskEntity.fromJson(e)).toList() as M;
     }
 
     debugPrint("$M not found");
@@ -382,12 +404,16 @@ class JsonConvertClassCollection {
     (TeamPlayerEntity).toString(): TeamPlayerEntity.fromJson,
     (TeamPlayerPotential).toString(): TeamPlayerPotential.fromJson,
     (TeamPlayerInfoEntity).toString(): TeamPlayerInfoEntity.fromJson,
-    (TeamPlayerInfoPlayerTrend).toString(): TeamPlayerInfoPlayerTrend.fromJson,
-    (TeamPlayerInfoTeamPlayer).toString(): TeamPlayerInfoTeamPlayer.fromJson,
-    (TeamPlayerInfoTeamPlayerPotential)
-        .toString(): TeamPlayerInfoTeamPlayerPotential.fromJson,
+    (TeamPlayerInfoPotential).toString(): TeamPlayerInfoPotential.fromJson,
     (TeamRankEntity).toString(): TeamRankEntity.fromJson,
     (TeamSimpleEntity).toString(): TeamSimpleEntity.fromJson,
+    (TrainTaskEntity).toString(): TrainTaskEntity.fromJson,
+    (TrainingInfoEntity).toString(): TrainingInfoEntity.fromJson,
+    (TrainingInfoAward).toString(): TrainingInfoAward.fromJson,
+    (TrainingInfoProp).toString(): TrainingInfoProp.fromJson,
+    (TrainingInfoTraining).toString(): TrainingInfoTraining.fromJson,
+    (TrainingInfoBuff).toString(): TrainingInfoBuff.fromJson,
+    (TrainingTaskEntity).toString(): TrainingTaskEntity.fromJson,
   };
 
   bool containsKey(String type) {

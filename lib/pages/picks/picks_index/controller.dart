@@ -43,7 +43,7 @@ class PicksIndexController extends GetxController {
   var batchDeleteOpen = false.obs;
 
   /// 选择了more/less
-  choiceOne(int index, double choice,{bool needRefreshList = false}) {
+  choiceOne(int index, double choice, {bool needRefreshList = false}) {
     if (choiceData[index] == choice) {
       choiceData.remove(index);
     } else {
@@ -64,17 +64,17 @@ class PicksIndexController extends GetxController {
                     .toStringAsFixed(1));
     costCount.value = double.parse(
         (len * double.parse(picksPlayers[0].betCost)).toStringAsFixed(1));
-    if(needRefreshList){
+    if (needRefreshList) {
       update([idGuessList]);
     }
   }
 
-  deleteOne(int index){
+  deleteOne(int index) {
     choiceData.remove(index);
     _count(true);
   }
 
-  deleteAll(){
+  deleteAll() {
     choiceData.clear();
     _count(true);
   }
@@ -191,13 +191,13 @@ class PicksIndexController extends GetxController {
           case "c":
             picksPlayer.betData = newsDefineEntity.cBetData;
           case "pg":
-            picksPlayer.betData = newsDefineEntity.pgBetDate;
+            picksPlayer.betData = [newsDefineEntity.pgBetDate];
           case "sg":
-            picksPlayer.betData = newsDefineEntity.sgBetData;
+            picksPlayer.betData = [newsDefineEntity.sgBetData];
           case "pf":
-            picksPlayer.betData = newsDefineEntity.pfBetData;
+            picksPlayer.betData = [newsDefineEntity.pfBetData];
           case "sf":
-            picksPlayer.betData = newsDefineEntity.sfBetData;
+            picksPlayer.betData = [newsDefineEntity.sfBetData];
         }
         picksPlayer.betMutOdds = newsDefineEntity.betMutOdds;
         picksPlayer.betCost = newsDefineEntity.betCost;

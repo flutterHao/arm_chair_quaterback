@@ -24,12 +24,12 @@ class NewsDefineEntity {
   late String gamePlayRecent;
   late List<String> newsRefresh;
   late String newsRefreshNum;
-  late List<String> pfBetData;
-  late List<String> pgBetDate;
-  late List<String> sfBetData;
-  late List<String> sgBetData;
-  late int newsReviewShowNum=7;
-  late int newsReviewOpenNum=30;
+  late String pfBetData;
+  late String pgBetDate;
+  late String sfBetData;
+  late String sgBetData;
+  late int newsReviewShowNum = 7;
+  late int newsReviewOpenNum = 30;
 
   NewsDefineEntity();
 

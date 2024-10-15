@@ -1,9 +1,16 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/reward_group_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/train_task_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
+import 'package:arm_chair_quaterback/common/net/apis/team.dart';
+import 'package:arm_chair_quaterback/pages/home/index.dart';
 import 'package:card_swiper/card_swiper.dart';
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -17,10 +24,18 @@ class TrainingController extends GetxController
   var isShowBuble = false.obs;
   var isShowRipple = false.obs;
   var isShowBuff = false.obs;
-  var isShowMoney = false.obs;
+  var isShowProp = false.obs;
   var isShowBall = false.obs;
+  var showText = "TRAINING".obs;
+  var recoverTime = "".obs;
   List<int> currentAward = [0, 0, 0].obs;
   List<RewardGroupEntity> rewardList = [];
+  TrainingInfoEntity trainingInfo = TrainingInfoEntity();
+  List<TeamPlayerInfoEntity> playerList = [];
+  List<TrainTaskEntity> trainTaskList = [];
+  Map<String, dynamic> trainDefineMap = {};
+  late int _recoverSeconds;
+  RxString remainString = "".obs;
 
   ///篮球控制
   late AnimationController bllAnimationCtrl;
@@ -36,16 +51,17 @@ class TrainingController extends GetxController
 
   //球员滚动
   late SwiperController swiperControl;
+  late Timer _timer;
 
   /// 在 widget 内存中分配后立即调用。
   @override
   void onInit() {
     super.onInit();
     // 初始化动画控制器
-    setBallAnimationCtrl(2000);
+    setBallAnimationCtrl(1000);
 
     moneyCtrl = AnimationController(
-      duration: const Duration(seconds: 1),
+      duration: const Duration(milliseconds: 1500),
       vsync: this,
     );
 
@@ -78,28 +94,84 @@ class TrainingController extends GetxController
   @override
   void dispose() {
     super.dispose();
+    _timer.cancel();
+    swiperControl.dispose();
   }
 
   void getData() async {
-    Future.wait([CacheApi.getRewardGroup()]).then((v) {
-      rewardList = v[0];
+    int teamId = HomeController.to.userEntiry.teamLoginInfo!.team!.teamId!;
+    await Future.wait([
+      CacheApi.getRewardGroup(),
+      TeamApi.getTrainingInfo(),
+      TeamApi.getTeamPlayerList(teamId),
+      TeamApi.getTrainTaskList(),
+      TeamApi.getTrainDefine()
+    ]).then((v) {
+      rewardList = v[0] as List<RewardGroupEntity>;
+      trainingInfo = v[1] as TrainingInfoEntity;
+      playerList = v[2] as List<TeamPlayerInfoEntity>;
+      trainTaskList = v[3] as List<TrainTaskEntity>;
+      trainDefineMap = v[4] as Map<String, dynamic>;
+      recoverTimeAndCountDown();
+      update(["training_page"]);
     });
   }
 
-  // 投篮的逻辑
-  void shootBall() {
-    // swiperControl.stopAutoplay;
-    currentAward = [0, 0, 0];
-    update(["slot"]);
-    int type = random.nextInt(4);
-    setBallAnimation(type);
-    if (!isShot.value) {
-      isShot.value = true;
-      bllAnimationCtrl.forward().then((value) {
-        // isShot.value = false;
-        // animationController.reset(); // 投篮完成后重置篮球位置
-      });
+  ///获取配置数据计算倒计时
+  void recoverTimeAndCountDown() {
+    int recover = int.tryParse(trainDefineMap["ballRecoverTime"]) ?? 0;
+    DateTime recoverTime =
+        DateUtil.getDateTimeByMs(trainingInfo.prop.updateTime)
+            .add(Duration(seconds: recover));
+    _recoverSeconds = recoverTime.difference(DateTime.now()).inSeconds;
+    _timer = Timer.periodic(const Duration(seconds: 1), (v) async {
+      _recoverSeconds--;
+
+      ///获取回复篮球与当前时间倒计时，转换成mm:ss
+      final minutes = _recoverSeconds ~/ 60;
+      final remainingSeconds = _recoverSeconds % 60;
+      remainString.value =
+          '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
+      if (_recoverSeconds <= 0) {
+        _timer.cancel();
+        trainDefineMap = await TeamApi.getTrainDefine();
+        recoverTimeAndCountDown();
+      }
+    });
+  }
+
+  ///获取当前任务需要多少
+  int getTaskNeed(int level) {
+    for (var element in trainTaskList) {
+      if (element.taskLevel == level) {
+        return element.taskNeed;
+      }
     }
+    return 1;
+  }
+
+  // 投篮的逻辑
+  void shootBall(String uuid) {
+    String id = playerList.first.uuid;
+    TeamApi.playerTraining(id).then((v) {
+      trainingInfo = v;
+      // update(["training_page"]);
+
+      // swiperControl.stopAutoplay();
+      currentAward = [0, 0, 0];
+      update(["slot"]);
+      int type = trainingInfo.awardGroupId != 0
+          ? random.nextInt(2)
+          : (random.nextInt(2) + 2);
+      setBallAnimation(type);
+      if (!isShot.value) {
+        isShot.value = true;
+        bllAnimationCtrl.forward().then((value) {
+          // isShot.value = false;
+          // animationController.reset(); // 投篮完成后重置篮球位置
+        });
+      }
+    });
   }
 
   void setBallAnimation(int type) {
@@ -149,7 +221,7 @@ class TrainingController extends GetxController
 
   ///进球动画
   void setAnimation0() {
-    setBallAnimationCtrl(1500);
+    setBallAnimationCtrl(1000);
     int type = random.nextInt(2);
     double x = random.nextDouble() * (type == 0 ? 0.1 : -0.1);
     positionAnimation = bllAnimationCtrl.drive(
@@ -223,7 +295,7 @@ class TrainingController extends GetxController
 
   ///进球动画
   void setAnimation1() {
-    setBallAnimationCtrl(1500);
+    setBallAnimationCtrl(1000);
     int type = random.nextInt(2);
     // double x = random.nextDouble() * ();
     double x = type == 0 ? 0.1 : -0.1;
@@ -307,7 +379,7 @@ class TrainingController extends GetxController
 
   ///未进球动画
   void setAnimation2() {
-    setBallAnimationCtrl(2000);
+    setBallAnimationCtrl(1500);
     // int d = random.nextInt(2);
     // double x = random.nextDouble() * ();
     double x = 0.2, x1 = x + 0.8, x2 = x1 + 2;
@@ -415,7 +487,7 @@ class TrainingController extends GetxController
 
   ///未进球动画
   void setAnimation3() {
-    setBallAnimationCtrl(2000);
+    setBallAnimationCtrl(1500);
     int type = random.nextBool() ? 1 : -1;
     // double x = random.nextDouble() * ();
     double x = -0.1 * type, x1 = (x + 0.5) * type, x2 = (x + 2.5) * type;
@@ -533,8 +605,10 @@ class TrainingController extends GetxController
 
   ///开始老虎机动画
   void slotAnimation() {
+    // if (rewardList.isEmpty) return;
+    // List<int> props = rewardList[Random().nextInt(rewardList.length)].propOrder;
     currentAward = [0, 0, 0];
-    List<int> props = rewardList[Random().nextInt(rewardList.length)].propOrder;
+    List<int> props = trainingInfo.propArray;
     if (props.isEmpty) return;
     Future.delayed(const Duration(milliseconds: 200), () {
       currentAward[0] = props[0];
@@ -549,35 +623,101 @@ class TrainingController extends GetxController
       update(["slot"]);
       if (currentAward[0] == currentAward[1]) {
         _flashCard(0);
+      } else {
+        awardFlyAnimation();
       }
-    }).then((v) {
-      awardFlyAnimation();
     });
   }
 
   ///奖励飞跃动画
+  ///301:钱
+  ///302:中钱
+  ///303:状态
+  ///304:Buff
+  ///305:任务
+  ///306:球
   void awardFlyAnimation() async {
-    isShowBuff.value = true;
-    isShowMoney.value = true;
-    isShowRipple.value = true;
-    isShowBall.value = true;
-
-    await Future.delayed(const Duration(milliseconds: 500), () {
+    Map<int, int> propMap = countProp();
+    if (propMap[304]! > 0) isShowBuff.value = true;
+    if (propMap[304]! > 1) isShowRipple.value = true;
+    if (propMap[305]! > 0) isShowProp.value = true;
+    if (propMap[306]! > 0) isShowBall.value = true;
+    await Future.delayed(const Duration(milliseconds: 300), () {
       isShowRipple.value = false;
-      moneyCtrl.forward().then((v) {
-        moneyCtrl.reset();
-      });
+      if (propMap[301]! > 0 || propMap[302]! > 0) {
+        updateMoney();
+        moneyCtrl.forward().then((v) {
+          moneyCtrl.reset();
+        });
+      }
       flyCtrl.forward().then((v) {
         isShowBuff.value = false;
-        isShowMoney.value = false;
+        isShowProp.value = false;
         isShowBall.value = false;
+        showText.value = "TRAINING";
         flyCtrl.reset();
       });
     });
 
     isShot.value = false;
     bllAnimationCtrl.reset(); // 投篮完成后重置篮球位置
+    update(["training_page"]);
   }
+
+  void updateMoney() {
+    for (var e in trainingInfo.award) {
+      for (var element
+          in HomeController.to.userEntiry.teamLoginInfo!.teamPropList!) {
+        if ((e.id == 102 && element.propId == 102) ||
+            (e.id == 103 && element.propId == 103)) {
+          element.num = element.num! + e.num;
+          showText.value = "Cash +${e.num}";
+        }
+      }
+    }
+    HomeController.to.update(["userInfo"]);
+  }
+
+  Map<int, int> countProp() {
+    // 初始化所有可能的键，并设置它们的初始值为 0
+    Map<int, int> map = {
+      301: 0,
+      302: 0,
+      303: 0,
+      304: 0,
+      305: 0,
+      306: 0,
+    };
+
+    for (int num in trainingInfo.propArray) {
+      if (num >= 301 && num <= 306) {
+        map[num] = (map[num] ?? 0) + 1;
+      }
+    }
+
+    return map;
+  }
+
+  // int countProp(int num) {
+  // 统计列表中每个数字的出现次数
+  // Map<int, int> occurrences = {};
+  // for (int num in trainingInfo.propArray) {
+  //   if (occurrences.containsKey(num)) {
+  //     occurrences[num] = (occurrences[num] ?? 0) + 1;
+  //   } else {
+  //     occurrences[num] = 1;
+  //   }
+  // }
+  // return occurrences;
+  // int count=0;
+  // for (int e in trainingInfo.propArray) {
+  //   if(num==e){
+  //     count++;
+  //   }
+  // }
+  // return count;
+
+  // }
 
   void updateCard(int index, List<int> props) {
     currentAward[index] = props[index];
@@ -585,7 +725,10 @@ class TrainingController extends GetxController
   }
 
   void _flashCard(int count) {
-    if (count >= 6) return; // 闪烁5次后停止
+    if (count >= 6) {
+      awardFlyAnimation();
+      return; // 闪烁5次后停止
+    }
 
     showThirdCard.value = !showThirdCard.value;
     update(["slot"]);
@@ -634,7 +777,7 @@ class MoneyItem {
 
   MoneyItem()
       : index = Random().nextInt(20),
-        x = Random().nextDouble() * 375.w,
+        x = Random().nextDouble() * 300.w,
         y = Random().nextDouble() * -250.h,
         widget = Image.asset(
           Assets.uiBgMoneyPng,

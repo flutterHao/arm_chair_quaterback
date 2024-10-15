@@ -31,4 +31,5 @@ class RouteNames {
   static const teamTeamDetail = '/team_team_detail';
   static const teamTeamBattle = '/team_team_battle';
   static const teamTrainingPage = '/team_training_page';
+  static const teamBeautyPage = "/beauty_page";
 }
