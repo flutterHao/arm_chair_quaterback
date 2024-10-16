@@ -11,6 +11,12 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/swiper_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
+import 'package:arm_chair_quaterback/pages/mine/mine_account/bindings.dart';
+import 'package:arm_chair_quaterback/pages/mine/mine_account/view.dart';
+import 'package:arm_chair_quaterback/pages/mine/mine_info/bindings.dart';
+import 'package:arm_chair_quaterback/pages/mine/mine_info/view.dart';
+import 'package:arm_chair_quaterback/pages/mine/mine_setting/bindings.dart';
+import 'package:arm_chair_quaterback/pages/mine/mine_setting/view.dart';
 
 import 'package:arm_chair_quaterback/pages/news/new_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/widgets/team_rank_widget.dart';
@@ -70,6 +76,24 @@ class _NewsPageState extends State<NewsPage>
                 settings: settings,
                 page: () => const TeamRankPage(),
                 binding: RankBinding());
+          case RouteNames.mineMineInfo:
+            return GetPageRoute(
+                opaque: false,
+                settings: settings,
+                page: () => MineInfoPage((settings.arguments as Map)['id']),
+                binding: MineInfoBinding());
+          case RouteNames.mineMineSetting:
+            return GetPageRoute(
+                opaque: false,
+                settings: settings,
+                page: () =>  MineSettingPage((settings.arguments as Map)['id']),
+                binding: MineSettingBinding());
+          case RouteNames.mineMineAccount:
+            return GetPageRoute(
+                opaque: false,
+                settings: settings,
+                page: () =>  MineAccountPage((settings.arguments as Map)['id']),
+                binding: MineAccountBinding());
         }
         return null;
       },
@@ -274,6 +298,7 @@ class NewsListPage extends GetView<NewListController> {
         return BlackAppWidget(
           const UserInfoBar(
             title: "NEWS",
+            routeId: GlobalNestedKey.NEWS,
           ),
           bodyWidget: Expanded(child: _buildView(context)),
         );

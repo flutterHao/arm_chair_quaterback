@@ -14,6 +14,12 @@ import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
+import 'package:arm_chair_quaterback/pages/mine/mine_account/bindings.dart';
+import 'package:arm_chair_quaterback/pages/mine/mine_account/view.dart';
+import 'package:arm_chair_quaterback/pages/mine/mine_info/bindings.dart';
+import 'package:arm_chair_quaterback/pages/mine/mine_info/view.dart';
+import 'package:arm_chair_quaterback/pages/mine/mine_setting/bindings.dart';
+import 'package:arm_chair_quaterback/pages/mine/mine_setting/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/personal_center/bindings.dart';
 import 'package:arm_chair_quaterback/pages/picks/personal_center/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/pick_rank/bindings.dart';
@@ -73,6 +79,24 @@ class PicksIndex extends StatelessWidget {
                 page: () => const PersonalCenterPage(),
                 binding: PersonalCenterBinding(
                     (setting.arguments as Map)['teamId']));
+          case RouteNames.mineMineInfo:
+            return GetPageRoute(
+                opaque: false,
+                settings: setting,
+                page: () =>  MineInfoPage((setting.arguments as Map)['id']),
+                binding: MineInfoBinding());
+          case RouteNames.mineMineSetting:
+            return GetPageRoute(
+                opaque: false,
+                settings: setting,
+                page: () =>  MineSettingPage((setting.arguments as Map)['id']),
+                binding: MineSettingBinding());
+          case RouteNames.mineMineAccount:
+            return GetPageRoute(
+                opaque: false,
+                settings: setting,
+                page: () =>  MineAccountPage((setting.arguments as Map)['id']),
+                binding: MineAccountBinding());
         }
       },
     );
@@ -362,6 +386,7 @@ class _PicksIndexPageState extends State<PicksIndexPage>
         return BlackAppWidget(
           const UserInfoBar(
             title: "PICKS",
+            routeId: GlobalNestedKey.PICKS,
           ),
           totalScreenBuilder: _buildView,
           floatWidgets: [

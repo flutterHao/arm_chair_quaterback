@@ -15,6 +15,12 @@ import 'package:arm_chair_quaterback/common/widgets/dialog/custom_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
+import 'package:arm_chair_quaterback/pages/mine/mine_account/bindings.dart';
+import 'package:arm_chair_quaterback/pages/mine/mine_account/view.dart';
+import 'package:arm_chair_quaterback/pages/mine/mine_info/bindings.dart';
+import 'package:arm_chair_quaterback/pages/mine/mine_info/view.dart';
+import 'package:arm_chair_quaterback/pages/mine/mine_setting/bindings.dart';
+import 'package:arm_chair_quaterback/pages/mine/mine_setting/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/page/beauty_page.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/battle_award_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/progress_paint.dart';
@@ -70,6 +76,24 @@ class _TeamIndexPageState extends State<TeamIndexPage>
               settings: settings,
               page: () => const BeautyPage(),
             );
+          case RouteNames.mineMineInfo:
+            return GetPageRoute(
+                opaque: false,
+                settings: settings,
+                page: () => MineInfoPage((settings.arguments as Map)['id']),
+                binding: MineInfoBinding());
+          case RouteNames.mineMineSetting:
+            return GetPageRoute(
+                opaque: false,
+                settings: settings,
+                page: () => MineSettingPage((settings.arguments as Map)['id']),
+                binding: MineSettingBinding());
+          case RouteNames.mineMineAccount:
+            return GetPageRoute(
+                opaque: false,
+                settings: settings,
+                page: () => MineAccountPage((settings.arguments as Map)['id']),
+                binding: MineAccountBinding());
         }
         return null;
       },
@@ -731,7 +755,10 @@ class _TeamView extends GetView<TeamIndexController> {
       id: "team_index",
       builder: (ctrl) {
         return BlackAppWidget(
-          const UserInfoBar(title: "TEAM"),
+          const UserInfoBar(
+            title: "TEAM",
+            routeId: GlobalNestedKey.TEAM,
+          ),
           bodyWidget: _buildView(ctrl),
           floatWidgets: [],
         );

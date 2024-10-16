@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -15,9 +16,10 @@ import 'package:get/get.dart';
 ///created at 2024/10/12/19:14
 
 class TopDialog extends StatefulWidget {
-  const TopDialog({super.key, required this.title});
+  const TopDialog({super.key, required this.title, this.routeId});
 
   final String title;
+  final int? routeId;
 
   @override
   State<TopDialog> createState() => _TopDialogState();
@@ -135,7 +137,8 @@ class _TopDialogState extends State<TopDialog>
                                     flex: 3,
                                     child: InkWell(
                                       onTap: () {
-                                        Get.toNamed(RouteNames.mineMineInfo);
+                                        _popAndPushNamed(
+                                            context, RouteNames.mineMineInfo);
                                       },
                                       child: Container(
                                         height: 88.w,
@@ -301,7 +304,8 @@ class _TopDialogState extends State<TopDialog>
                             9.vGap,
                             InkWell(
                               onTap: () {
-                                print('Setting');
+                                _popAndPushNamed(
+                                    context, RouteNames.mineMineSetting);
                               },
                               child: Container(
                                 height: 51.w,
@@ -344,7 +348,7 @@ class _TopDialogState extends State<TopDialog>
                             9.vGap,
                             InkWell(
                               onTap: () {
-                                print('Account');
+                                _popAndPushNamed(context, RouteNames.mineMineAccount);
                               },
                               child: Container(
                                 height: 51.w,
@@ -438,6 +442,13 @@ class _TopDialogState extends State<TopDialog>
         ),
       ),
     );
+  }
+
+  void _popAndPushNamed(BuildContext context, String routeName) {
+    Get.back();
+    Get.toNamed(routeName,
+        id: widget.routeId, arguments: {"id": widget.routeId});
+    // Navigator.of(context).pushNamed(routeName,arguments: {"id":widget.routeId});
   }
 
   void _releaseAnimation({bool isBack = false}) {

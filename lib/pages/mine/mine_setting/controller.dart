@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/entities/language.dart';
 import 'package:get/get.dart';
 
 import 'index.dart';
@@ -7,12 +8,21 @@ class MineSettingController extends GetxController {
 
   final state = MineSettingState();
 
+  var musicSwitchStatus = false.obs;
+  var soundSwitchStatus = true.obs;
+  var notifySwitchStatus = true.obs;
+
+  var currentLanguageIndex = 0.obs;
+
+  var languages =[
+    Language("English", "UK", "English"),
+    Language("Chinese", "ZH", "中文")
+  ];
+
   // tap
-  void handleTap(int index) {
-    Get.snackbar(
-      "标题",
-      "消息",
-    );
+  void setLanguage(int index) {
+    currentLanguageIndex.value = index;
+    //todo 切换语言
   }
 
   /// 在 widget 内存中分配后立即调用。

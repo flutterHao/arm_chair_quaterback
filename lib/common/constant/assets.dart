@@ -65,6 +65,12 @@ static const uiWindowsAwardPng = 'assets/images/icon/ui_windows_award.png';
   static const uiIconInformPng = 'assets/images/icon/ui_icon_inform.png';
   static const uiIconCameraPng = 'assets/images/icon/ui_icon_camera.png';
   static const uiIconCompilePng = 'assets/images/icon/ui_icon_compile.png';
+  static const uiIconBellPng = 'assets/images/icon/ui_icon_bell.png';
+  static const uiIconLanguagePng = 'assets/images/icon/ui_icon_language.png';
+  static const uiIconMuisicPng = 'assets/images/icon/ui_icon_muisic.png';
+  static const uiIconFactbookPng = 'assets/images/icon/ui_icon_factbook.png';
+  static const uiIconGooglePng = 'assets/images/icon/ui_icon_google.png';
+  static const uiIconApplePng = 'assets/images/icon/ui_icon_apple.png';
 
   ///test
   static const testTeamLogoPng = 'assets/test/test_team_logo.png';

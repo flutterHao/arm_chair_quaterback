@@ -136,10 +136,11 @@ import 'package:get/get.dart';
 // }
 
 class UserInfoBar extends StatelessWidget {
-  const UserInfoBar({super.key, this.title = "Title", this.enable = true});
+  const UserInfoBar({super.key, this.title = "Title", this.enable = true, this.routeId});
 
   final String title;
   final bool enable;
+  final int? routeId;
 
   @override
   Widget build(BuildContext context) {
@@ -160,7 +161,7 @@ class UserInfoBar extends StatelessWidget {
                     if (!enable) {
                       return;
                     }
-                    _showDialog(context);
+                    _showDialog(context,routeId);
                   },
                   child: Container(
                     width: 80.w,
@@ -185,13 +186,13 @@ class UserInfoBar extends StatelessWidget {
         });
   }
 
-  void _showDialog(BuildContext context) {
+  void _showDialog(BuildContext context,int? routeId) {
     showGeneralDialog(
         barrierColor: Colors.transparent,
-        context: Get.context!,
+        context: context,
         pageBuilder: (BuildContext context, Animation<double> animation,
             Animation<double> secondaryAnimation) {
-          return TopDialog(title: title);
+          return TopDialog(title: title,routeId: routeId);
         });
   }
 }
