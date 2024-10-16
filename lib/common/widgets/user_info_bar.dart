@@ -190,6 +190,7 @@ class UserInfoBar extends StatelessWidget {
     showGeneralDialog(
         barrierColor: Colors.transparent,
         context: context,
+        useRootNavigator: false,
         pageBuilder: (BuildContext context, Animation<double> animation,
             Animation<double> secondaryAnimation) {
           return TopDialog(title: title,routeId: routeId);

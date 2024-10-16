@@ -50,7 +50,7 @@ class _TopDialogState extends State<TopDialog>
 
   void _statusListener(status) {
     if (status == AnimationStatus.completed && offsetDy.value == maxHeight) {
-      Get.back();
+      Get.back(id: widget.routeId);
     }
   }
 
@@ -445,7 +445,7 @@ class _TopDialogState extends State<TopDialog>
   }
 
   void _popAndPushNamed(BuildContext context, String routeName) {
-    Get.back();
+    // Get.back(id: widget.routeId);
     Get.toNamed(routeName,
         id: widget.routeId, arguments: {"id": widget.routeId});
     // Navigator.of(context).pushNamed(routeName,arguments: {"id":widget.routeId});
