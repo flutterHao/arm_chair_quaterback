@@ -2,13 +2,12 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-10-14 11:42:32
+ * @LastEditTime: 2024-10-16 15:04:25
  */
 
 import 'dart:async';
 
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -22,7 +21,6 @@ class TeamIndexController extends GetxController
   RxDouble bettleRight = 0.0.obs;
   RxDouble myTeamBottom = (-556.h).obs;
   RxDouble pageX = 0.0.obs;
-  // RxDouble pageRight = 0.0.obs;
   RxDouble turns = 0.5.obs;
   bool isOnTopSide = true;
   // late AnimationController pageAnimationCtrl;
@@ -67,7 +65,6 @@ class TeamIndexController extends GetxController
     bettleRight.value = -163.h;
     myTeamBottom.value = 0.h;
     pageX.value = -250.w;
-    // pageRight.value = -220.w;
     turns.value += 1 / 2;
     isShow.value = true;
   }
@@ -78,7 +75,6 @@ class TeamIndexController extends GetxController
     bettleRight.value = 0.0;
     myTeamBottom.value = -556.0.h;
     pageX.value = 0.0;
-    // pageRight.value = 0.0;
     turns.value -= 1 / 2;
     isShow.value = false;
     isOnTopSide = true;

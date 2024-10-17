@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 17:28:14
- * @LastEditTime: 2024-10-08 18:49:54
+ * @LastEditTime: 2024-10-17 20:53:59
  */
 import 'package:arm_chair_quaterback/common/entities/news_banner.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
@@ -64,9 +64,10 @@ class NewsApi {
     return NewsDetail.fromJson(json);
   }
 
-  static Future<NewsDetail> likeReviews(int newsId, int reviewsId,bool isLike) async {
+  static Future<NewsDetail> likeReviews(
+      int newsId, int reviewsId, bool isLike) async {
     var json = await HttpUtil().post(Api.likeReviews,
-        data: {"newsId": newsId, "reviewsId": reviewsId,"isLike":isLike});
+        data: {"newsId": newsId, "reviewsId": reviewsId, "isLike": isLike});
     return NewsDetail.fromJson(json);
   }
 
@@ -100,5 +101,16 @@ class NewsApi {
     var json = await HttpUtil().post(Api.getAward);
     if (json == null) return null;
     return ReceivePropEntity.fromJson(json);
+  }
+
+  static Future<List<NewsDetail>> newsFlow(newsId,int page,int limit) async {
+    List list = await HttpUtil().post(Api.newsFlow, data: {"newsId": newsId,"page":page,"limit":limit});
+    return list.map((e) => NewsDetail.fromJson(e)).toList();
+  }
+
+  static Future<List<Reviews>> getReviewsByNewsId(newsId,int page,int limit) async {
+    List list =
+        await HttpUtil().post(Api.getReviewsByNewsId, data: {"newsId": newsId,"page":page,"limit":limit});
+    return list.map((e) => Reviews.fromJson(e)).toList();
   }
 }

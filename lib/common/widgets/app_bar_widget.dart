@@ -17,16 +17,16 @@ import 'package:get/get.dart';
 ///@date 2024/9/9
 ///@description 页面标题栏
 class AppBarWidget extends StatelessWidget {
-  const AppBarWidget(
-      {super.key,
-      this.left,
-      this.right = const MoneyAndCoinWidget(),
-      this.title,
-      this.titleWidget,
-      this.id,
-      this.bottomChild,
-      this.borderRadius,})
-      : assert(titleWidget != null || title != null,
+  const AppBarWidget({
+    super.key,
+    this.left,
+    this.right = const MoneyAndCoinWidget(),
+    this.title,
+    this.titleWidget,
+    this.id,
+    this.bottomChild,
+    this.borderRadius,
+  }) : assert(titleWidget != null || title != null,
             "select one of titleWidget,title");
   final Widget? left;
   final Widget? right;
@@ -51,9 +51,10 @@ class AppBarWidget extends StatelessWidget {
               children: [
                 Positioned(
                   left: 0,
-                  child: SizedBox(
-                    width: 48.w,
-                    height: 48.w,
+                  child: Container(
+                    // width: 48.w,
+                    // height: 48.w,
+                    margin: EdgeInsets.only(left: 20.w),
                     child: left ??
                         InkWell(
                           onTap: () {
@@ -108,8 +109,8 @@ class AppBarContainer extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.c262626,
         borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(borderRadius??16.w),
-            bottomRight: Radius.circular(borderRadius??16.w)),
+            bottomLeft: Radius.circular(borderRadius ?? 16.w),
+            bottomRight: Radius.circular(borderRadius ?? 16.w)),
       ),
       child: child,
     );

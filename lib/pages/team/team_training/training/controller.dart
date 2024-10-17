@@ -32,10 +32,13 @@ class TrainingController extends GetxController
   List<RewardGroupEntity> rewardList = [];
   TrainingInfoEntity trainingInfo = TrainingInfoEntity();
   List<TeamPlayerInfoEntity> playerList = [];
+  int currentIndex = 0;
   List<TrainTaskEntity> trainTaskList = [];
   Map<String, dynamic> trainDefineMap = {};
   late int _recoverSeconds;
   RxString remainString = "".obs;
+  RxString taskCountDownString = "".obs;
+  RxInt ballNum = 0.obs;
 
   ///篮球控制
   late AnimationController bllAnimationCtrl;
@@ -112,6 +115,7 @@ class TrainingController extends GetxController
       playerList = v[2] as List<TeamPlayerInfoEntity>;
       trainTaskList = v[3] as List<TrainTaskEntity>;
       trainDefineMap = v[4] as Map<String, dynamic>;
+      ballNum.value = trainingInfo.prop.num;
       recoverTimeAndCountDown();
       update(["training_page"]);
     });
@@ -121,7 +125,7 @@ class TrainingController extends GetxController
   void recoverTimeAndCountDown() {
     int recover = int.tryParse(trainDefineMap["ballRecoverTime"]) ?? 0;
     DateTime recoverTime =
-        DateUtil.getDateTimeByMs(trainingInfo.prop.updateTime)
+        DateUtil.getDateTimeByMs(trainingInfo.training.ballRefreshTime)
             .add(Duration(seconds: recover));
     _recoverSeconds = recoverTime.difference(DateTime.now()).inSeconds;
     _timer = Timer.periodic(const Duration(seconds: 1), (v) async {
@@ -134,9 +138,17 @@ class TrainingController extends GetxController
           '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
       if (_recoverSeconds <= 0) {
         _timer.cancel();
-        trainDefineMap = await TeamApi.getTrainDefine();
+        // trainDefineMap = await TeamApi.getTrainDefine();
+        trainingInfo = await TeamApi.getTrainingInfo();
         recoverTimeAndCountDown();
+        // update(["training_page"]);
       }
+
+      ///计算任务倒计时
+      int ms = trainingInfo.training.taskEndTime -
+          DateTime.now().millisecondsSinceEpoch;
+      taskCountDownString.value =
+          DateUtil.formatDateMs(ms, format: DateFormats.h_m_s);
     });
   }
 
@@ -152,13 +164,16 @@ class TrainingController extends GetxController
 
   // 投篮的逻辑
   void shootBall(String uuid) {
-    String id = playerList.first.uuid;
+    if (ballNum.value <= 0) return;
+    String id = playerList[currentIndex].uuid;
+    ballNum.value = ballNum.value - 1;
     TeamApi.playerTraining(id).then((v) {
       trainingInfo = v;
       // update(["training_page"]);
 
       // swiperControl.stopAutoplay();
       currentAward = [0, 0, 0];
+
       update(["slot"]);
       int type = trainingInfo.awardGroupId != 0
           ? random.nextInt(2)
@@ -295,7 +310,7 @@ class TrainingController extends GetxController
 
   ///进球动画
   void setAnimation1() {
-    setBallAnimationCtrl(1000);
+    setBallAnimationCtrl(1200);
     int type = random.nextInt(2);
     // double x = random.nextDouble() * ();
     double x = type == 0 ? 0.1 : -0.1;
@@ -323,15 +338,23 @@ class TrainingController extends GetxController
             begin: Offset(x, -0.78),
             end: Offset(-x, -0.78),
           ).chain(CurveTween(curve: Curves.bounceOut)),
-          weight: 10.0, // 占总动画时间的 50%
+          weight: 5.0, //
+        ),
+        // 弹跳
+        TweenSequenceItem(
+          tween: Tween<Offset>(
+            begin: Offset(-x, -0.78),
+            end: Offset(x, -0.78),
+          ).chain(CurveTween(curve: Curves.bounceOut)),
+          weight: 5.0, //
         ),
         // 下落
         TweenSequenceItem(
           tween: Tween<Offset>(
             begin: const Offset(0, -0.78),
-            end: const Offset(0, -0.3),
+            end: const Offset(0, -0.2),
           ).chain(CurveTween(curve: Curves.easeInCirc)),
-          weight: 30.0, // 占总动画时间的 50%
+          weight: 50.0, // 占总动画时间的 50%
         ),
         // 第三阶段：从 (0, -1) 回到 (0, 0)，时间占 20%
         // TweenSequenceItem(
@@ -630,6 +653,7 @@ class TrainingController extends GetxController
   }
 
   ///奖励飞跃动画
+  ///102:钱
   ///301:钱
   ///302:中钱
   ///303:状态
@@ -644,7 +668,7 @@ class TrainingController extends GetxController
     if (propMap[306]! > 0) isShowBall.value = true;
     await Future.delayed(const Duration(milliseconds: 300), () {
       isShowRipple.value = false;
-      if (propMap[301]! > 0 || propMap[302]! > 0) {
+      if (propMap[301]! > 0 || propMap[302]! > 0 || propMap[102]! > 0) {
         updateMoney();
         moneyCtrl.forward().then((v) {
           moneyCtrl.reset();
@@ -654,14 +678,17 @@ class TrainingController extends GetxController
         isShowBuff.value = false;
         isShowProp.value = false;
         isShowBall.value = false;
-        showText.value = "TRAINING";
+        Future.delayed(const Duration(seconds: 1), () {
+          showText.value = "TRAINING";
+        });
+        //更新界面
         flyCtrl.reset();
+        isShot.value = false;
+        bllAnimationCtrl.reset();
+        ballNum.value = trainingInfo.prop.num;
+        update(["training_page"]);
       });
     });
-
-    isShot.value = false;
-    bllAnimationCtrl.reset(); // 投篮完成后重置篮球位置
-    update(["training_page"]);
   }
 
   void updateMoney() {
@@ -681,6 +708,7 @@ class TrainingController extends GetxController
   Map<int, int> countProp() {
     // 初始化所有可能的键，并设置它们的初始值为 0
     Map<int, int> map = {
+      102: 0,
       301: 0,
       302: 0,
       303: 0,
@@ -689,9 +717,9 @@ class TrainingController extends GetxController
       306: 0,
     };
 
-    for (int num in trainingInfo.propArray) {
-      if (num >= 301 && num <= 306) {
-        map[num] = (map[num] ?? 0) + 1;
+    for (TrainingInfoAward award in trainingInfo.award) {
+      if (award.num > 0) {
+        map[award.id] = (map[award.id] ?? 0) + 1;
       }
     }
 
@@ -739,6 +767,7 @@ class TrainingController extends GetxController
 
   ///气泡提示
   void showBubles() {
+    if (isShowBuble.value) return;
     isShowBuble.value = true;
     Future.delayed(const Duration(milliseconds: 2000), () {
       isShowBuble.value = false;
@@ -866,7 +895,6 @@ List<TweenSequenceItem<Offset>> _bounceList(double weight, double x) {
 //     ),
 //   ]);
 // }
-
 
 // class HighBounceOutCurve extends Curve {
 //   // const HighBounceOutCurve._();

@@ -363,7 +363,7 @@ class NetInterceptor extends InterceptorsWrapper {
 
   /// 错误处理
   void handlerError(ErrorEntity eInfo) {
-    Log.e('error.code -> ${eInfo.code}, error.message -> ${eInfo.message}');
+    Log.e(' error.code -> ${eInfo.code}, error.message -> ${eInfo.message}');
 
     ///TODO
     // if (eInfo.code != 401) {

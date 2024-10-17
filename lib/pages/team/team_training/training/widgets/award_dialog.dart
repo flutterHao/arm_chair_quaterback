@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-12 15:43:49
- * @LastEditTime: 2024-10-15 18:43:20
+ * @LastEditTime: 2024-10-16 16:12:01
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/train_task_entity.dart';
@@ -10,7 +10,6 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,6 +20,7 @@ class AwardDialog extends GetView<TrainingController> {
 
   int get _currentLevel {
     return controller.trainingInfo.training.currentTaskId;
+    // return 2010;
   }
 
   Color _getColor(int level) {
@@ -68,35 +68,83 @@ class AwardDialog extends GetView<TrainingController> {
   }
 
   Widget _leftList() {
-    return SizedBox(
-      width: 30.w,
-      child: ListView.separated(
-        shrinkWrap: true,
-        itemCount: _list.length,
-        physics: const NeverScrollableScrollPhysics(),
-        separatorBuilder: (context, index) {
-          return Align(
-            alignment: Alignment.center,
-            child: Container(
-              margin: EdgeInsets.symmetric(vertical: 3.w),
-              width: 2.w,
-              height: 38.w,
-              color: _getColor(_list[index].taskLevel),
-            ),
-          );
-        },
-        itemBuilder: (context, index) {
-          return Container(
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                _radioContainer(12.w, 12.w, _getColor(_list[index].taskLevel)),
-                _radioContainer(5.w, 5.w, AppColors.cF2F2F2),
-              ],
-            ),
-          );
-        },
-      ),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        SizedBox(
+          width: 12.w,
+          child: ListView.separated(
+            shrinkWrap: true,
+            itemCount: _list.length,
+            physics: const NeverScrollableScrollPhysics(),
+            separatorBuilder: (context, index) {
+              return Align(
+                alignment: Alignment.center,
+                child: Container(
+                  margin: EdgeInsets.symmetric(vertical: 3.w),
+                  width: 2.w,
+                  height: 38.w,
+                  color: _getColor(_list[index].taskLevel),
+                ),
+              );
+            },
+            itemBuilder: (context, index) {
+              bool isLast = index == .0;
+              return Container(
+                // margin: EdgeInsets.only(left: 12.w),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    _radioContainer(
+                        12.w,
+                        12.w,
+                        isLast
+                            ? AppColors.c6D6D6D
+                            : _getColor(_list[index].taskLevel)),
+                    _radioContainer(5.w, 5.w,
+                        isLast ? AppColors.cFEB942 : AppColors.cF2F2F2),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+        2.hGap,
+        SizedBox(
+          width: 10.w,
+          child: ListView.separated(
+            shrinkWrap: true,
+            itemCount: _list.length,
+            physics: const NeverScrollableScrollPhysics(),
+            separatorBuilder: (context, index) {
+              return Align(
+                alignment: Alignment.center,
+                child: Container(
+                  margin: EdgeInsets.symmetric(vertical: 3.w),
+                  width: 2.w,
+                  height: 38.w,
+                  // color: _getColor(_list[index].taskLevel),
+                ),
+              );
+            },
+            itemBuilder: (context, index) {
+              bool isLast = index == .0;
+              return Container(
+                height: 12.w,
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "${_list.length - index}",
+                  style: 12.w7(
+                      color: isLast
+                          ? AppColors.cB3B3B3
+                          : _getColor(_list[index].taskLevel),
+                      height: 1),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 
@@ -104,9 +152,9 @@ class AwardDialog extends GetView<TrainingController> {
   //   return award.split("_").last;
   // }
 
-  Widget _lastPrize(int index) {
+  Widget _lastAward(int index) {
     int level = _list[index].taskLevel;
-    List<String>award=_list[index].taskReward.split("_");
+    List<String> award = _list[index].taskReward.split("_");
     return Container(
       alignment: Alignment.center,
       padding: EdgeInsets.only(left: 61.w),
@@ -129,7 +177,15 @@ class AwardDialog extends GetView<TrainingController> {
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              IconWidget(iconWidth: 32.w, icon: Assets.uiMoney_02Png),
+              Image.asset(
+                Utils.getPropIconUrl(award[2]),
+                width: 32.w,
+                fit: BoxFit.fitWidth,
+                errorBuilder: (context, error, stackTrace) => IconWidget(
+                  iconWidth: 32.w,
+                  icon: Assets.uiMoney_02Png,
+                ),
+              ),
               8.hGap,
               Text(
                 award[2],
@@ -152,20 +208,28 @@ class AwardDialog extends GetView<TrainingController> {
 
   Widget _item(int index) {
     int level = _list[index].taskLevel;
-       List<String>award=_list[index].taskReward.split("_");
+    List<String> award = _list[index].taskReward.split("_");
     return Container(
-      alignment: Alignment.center,
+      alignment: Alignment.centerLeft,
       padding: EdgeInsets.symmetric(horizontal: 16.w),
       width: level == _currentLevel ? 215.w : 208.w,
-      height: 47.w,
-      margin: EdgeInsets.only(left: 36.w),
+      height: level == _currentLevel ? 51.w : 47.w,
+      margin: EdgeInsets.only(left: 42.w),
       decoration: BoxDecoration(
           color: _getColor2(level),
           borderRadius: BorderRadius.circular(12.w),
           border: Border.all(width: 1, color: _getColor(level))),
       child: Row(
         children: [
-          ImageWidget(width: 32.w, url: Utils.getIconUrl(award[2])),
+          Image.asset(
+            Utils.getPropIconUrl(award[2]),
+            width: 32.w,
+            fit: BoxFit.fitWidth,
+            errorBuilder: (context, error, stackTrace) => IconWidget(
+              iconWidth: 32.w,
+              icon: Assets.uiMoney_02Png,
+            ),
+          ),
           8.hGap,
           Text(
             award[2],
@@ -185,20 +249,23 @@ class AwardDialog extends GetView<TrainingController> {
   }
 
   Widget _rightList() {
-    return ListView.separated(
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      itemCount: _list.length,
-      separatorBuilder: (context, index) {
-        return 7.vGap;
-      },
-      itemBuilder: (context, index) {
-        bool isLast = index == 0;
-        return Align(
-          alignment: Alignment.center,
-          child: isLast ? _lastPrize(index) : _item(index),
-        );
-      },
+    return SizedBox(
+      width: 271.w,
+      child: ListView.separated(
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: _list.length,
+        separatorBuilder: (context, index) {
+          return 8.vGap;
+        },
+        itemBuilder: (context, index) {
+          bool isLast = index == 0;
+          return Align(
+            alignment: Alignment.centerLeft,
+            child: isLast ? _lastAward(index) : _item(index),
+          );
+        },
+      ),
     );
   }
 
@@ -245,12 +312,45 @@ class AwardDialog extends GetView<TrainingController> {
               decoration: BoxDecoration(
                   color: AppColors.cF2F2F2,
                   borderRadius: BorderRadius.circular(16.w)),
-              child: Stack(
-                alignment: Alignment.centerLeft,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _rightList(),
-                  Positioned(left: 12.w, child: _leftList()),
+                  Expanded(
+                    child: Stack(
+                      alignment: Alignment.bottomCenter,
+                      children: [
+                        _rightList(),
+                        Positioned(
+                          left: 12.w,
+                          bottom: 17.5.w,
+                          child: _leftList(),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 5.w),
+                    child: Obx(() {
+                      return Text(
+                          "Time Left: ${controller.taskCountDownString.value}");
+                    }),
+                  )
                 ],
+              ),
+            ),
+            Positioned(
+              top: 42.w,
+              right: 2.w,
+              child: InkWell(
+                onTap: () => Navigator.pop(context),
+                child: Padding(
+                  padding: EdgeInsets.all(8.w),
+                  child: IconWidget(
+                    iconWidth: 18.w,
+                    icon: Assets.iconClosePng,
+                    iconColor: AppColors.c262626,
+                  ),
+                ),
               ),
             ),
           ],

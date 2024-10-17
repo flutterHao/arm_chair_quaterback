@@ -2,18 +2,20 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-21 20:20:49
- * @LastEditTime: 2024-10-15 18:53:05
+ * @LastEditTime: 2024-10-16 15:36:10
  */
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/store/config.dart';
+import 'package:arm_chair_quaterback/common/utils/logger.dart';
 
 class Utils {
   static String getPlayUrl(int? playerId) {
     String url = ConfigStore.to.getServiceUrl();
-    return "$url/image/player/$playerId.png";
+    String image = "$url/image/player/$playerId.png";
+    // Log.d("球员头像:$image");
+    return image;
   }
 
   static String getTeamUrl(int? teamId) {
@@ -21,9 +23,9 @@ class Utils {
     return "$url/image/team/$teamId.png";
   }
 
-  static String getIconUrl(id) {
+  static String getPropIconUrl(id) {
     // String url = ConfigStore.to.getServiceUrl();
-    return "assets/images/image/icon/icon_$id.png";
+    return "assets/images/icon/icon_$id.png";
   }
 
   static String getPosition(int position) {

@@ -61,7 +61,7 @@ class _NewsPageState extends State<NewsPage>
             return GetPageRoute(
               opaque: false,
               settings: settings,
-              page: () => NewsDetailPage(newsId),
+              page: () => NewsDetailList(newsId),
               // binding: NewDetailBinding(), /*  */
             );
           case RouteNames.statsRank:
@@ -86,13 +86,13 @@ class _NewsPageState extends State<NewsPage>
             return GetPageRoute(
                 opaque: false,
                 settings: settings,
-                page: () =>  MineSettingPage((settings.arguments as Map)['id']),
+                page: () => MineSettingPage((settings.arguments as Map)['id']),
                 binding: MineSettingBinding());
           case RouteNames.mineMineAccount:
             return GetPageRoute(
                 opaque: false,
                 settings: settings,
-                page: () =>  MineAccountPage((settings.arguments as Map)['id']),
+                page: () => MineAccountPage((settings.arguments as Map)['id']),
                 binding: MineAccountBinding());
         }
         return null;
@@ -163,6 +163,8 @@ class NewsListPage extends GetView<NewListController> {
                               backgroudColor: Colors.white38,
                             ),
                             onTap: (index) {
+                              var newsId = controller.state.banners[index].id;
+                              controller.getNewsFlow(newsId, isRefresh: true);
                               Get.toNamed(RouteNames.newsDetail,
                                   arguments:
                                       controller.state.banners[index].id!,

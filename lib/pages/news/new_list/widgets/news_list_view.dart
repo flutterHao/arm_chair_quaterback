@@ -29,9 +29,10 @@ class NewsListView extends GetView<NewListController> {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () async {
+                    var newsId = controller.state.banners[index].id;
+                    controller.getNewsFlow(newsId, isRefresh: true);
                     await Get.toNamed(RouteNames.newsDetail,
-                        arguments: controller.state.newsList[index].id,
-                        id: GlobalNestedKey.NEWS);
+                        arguments: newsId, id: GlobalNestedKey.NEWS);
                     controller.getNewsList();
                   },
                   child: NewsItemView(

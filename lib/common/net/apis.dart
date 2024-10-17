@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-06 15:16:54
- * @LastEditTime: 2024-10-15 18:54:52
+ * @LastEditTime: 2024-10-17 18:45:08
  */
 class Api {
   /// base
@@ -25,6 +25,10 @@ class Api {
   static const String sendReviews = "$API_BASE_PATH/NBANews/sendReviews";
   static const String deleteReviews = "$API_BASE_PATH/NBANews/deleteReviews";
   static const String likeReviews = "$API_BASE_PATH/NBANews/likeReviews";
+  static const String newsFlow = "$API_BASE_PATH/NBANews/newsFlow";
+  static const String newsGuess = "$API_BASE_PATH//NBANews/getNewsGuess";
+  static const String getReviewsByNewsId =
+      "$API_BASE_PATH//NBANews/getReviewsByNewsId";
   static const String getGuessInfos =
       "$API_BASE_PATH/NBANews/getGuessInfos"; //历史竞猜记录
   static const String getGuessGamesInfo =
@@ -49,8 +53,8 @@ class Api {
   static const String getNBAPlayerInfo =
       "$API_BASE_PATH/NBAData/getNBAPlayerInfo";
   static const String getRecentAvg = "$API_BASE_PATH/NBAData/getRecentAvg";
-  static const String getNBAPlayerBaseInfo = "$API_BASE_PATH/NBAData/getNBAPlayerBaseInfo";
-
+  static const String getNBAPlayerBaseInfo =
+      "$API_BASE_PATH/NBAData/getNBAPlayerBaseInfo";
 
   /// config
   static const String cNewsBanner = "$CONFIG_BASE_PATH/HightlightNews.json";
@@ -72,5 +76,4 @@ class Api {
       "$API_BASE_PATH/TeamPlayer/playerTraining";
   static const String getTeamPlayerList =
       "$API_BASE_PATH/TeamPlayer/getTeamPlayerList";
-
 }

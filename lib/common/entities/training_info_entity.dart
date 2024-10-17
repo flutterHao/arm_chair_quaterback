@@ -1,6 +1,8 @@
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/training_info_entity.g.dart';
 import 'dart:convert';
+
+import 'package:get/get.dart';
 export 'package:arm_chair_quaterback/generated/json/training_info_entity.g.dart';
 
 @JsonSerializable()
@@ -51,11 +53,15 @@ class TrainingInfoProp {
   late int propId = 0;
   late int teamId = 0;
   late int updateTime = 0;
+  late RxInt ballNum = 0.obs;
 
   TrainingInfoProp();
 
-  factory TrainingInfoProp.fromJson(Map<String, dynamic> json) =>
-      $TrainingInfoPropFromJson(json);
+  factory TrainingInfoProp.fromJson(Map<String, dynamic> json) {
+    TrainingInfoProp e = $TrainingInfoPropFromJson(json);
+    e.ballNum.value = e.num;
+    return e;
+  }
 
   Map<String, dynamic> toJson() => $TrainingInfoPropToJson(this);
 

@@ -103,7 +103,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
         return;
       }
       // print('onHorizontalDragEnd: ${detail.localPosition}');
-      // print('onHorizontalDragEnd: ${detail.velocity}');
+      print('onHorizontalDragEnd: ${detail.velocity}');
       _recycleAnimation(velocity: detail.velocity.pixelsPerSecond.dx);
     }
 
@@ -114,7 +114,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
       if (animationController.isAnimating || isOut) {
         return;
       }
-      // print('onHorizontalDragCancel: ');
+      print('onHorizontalDragCancel: ');
       _recycleAnimation();
     }
 

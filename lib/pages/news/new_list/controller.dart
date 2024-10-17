@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2024-09-26 16:46:07
+ * @LastEditTime: 2024-10-17 21:19:28
  */
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
@@ -22,9 +22,16 @@ class NewListController extends GetxController {
   NewListController();
 
   final state = NewListState();
-  RefreshController refreshCtrl = RefreshController();
+  late RefreshController refreshCtrl;
+  late RefreshController flowRefreshCtrl;
 
-  /// 在 onInit() 之后调用 1 帧。这是进入的理想场所
+  @override
+  void onInit() {
+    super.onInit();
+    refreshCtrl = RefreshController();
+    flowRefreshCtrl = RefreshController();
+  }
+
   @override
   void onReady() {
     super.onReady();
@@ -204,6 +211,22 @@ class NewListController extends GetxController {
       } else {
         EasyLoading.showToast("Already received");
       }
+    });
+  }
+
+  void getNewsFlow(newsId, {bool isRefresh = false}) async {
+    if (isRefresh) {
+      state.newsFlowList.clear();
+      state.page = 0;
+    } else {
+      state.page++;
+    }
+
+    await NewsApi.newsFlow(newsId, state.page, state.pageSize).then((value) {
+      state.newsFlowList.addAll(value);
+      isRefresh ? refreshCtrl.refreshCompleted() : refreshCtrl.loadComplete();
+
+      update(['newsFlow']);
     });
   }
 }

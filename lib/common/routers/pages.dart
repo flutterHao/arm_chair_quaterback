@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:33:28
- * @LastEditTime: 2024-10-11 16:11:13
+ * @LastEditTime: 2024-10-17 10:07:22
  */
 // import 'package:arm_chair_quaterback/pages/news/new_detail/bindings.dart';
 // import 'package:arm_chair_quaterback/pages/news/new_detail/view.dart';
@@ -13,7 +13,7 @@
 import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/view.dart';
-import 'package:arm_chair_quaterback/pages/trade/trade_index/view.dart';
+import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -44,8 +44,9 @@ class AppPages {
       page: () => const PlayerDetailPage(),
     ),
     GetPage(
-      name: RouteNames.tradeTradeIndex,
-      page: () => const TradeIndex(),
-    ),
+        name: RouteNames.teamBeautyDetail,
+        opaque: false,
+        page: () => const BeautyDetailPage(),
+        transition: Transition.fadeIn)
   ];
 }

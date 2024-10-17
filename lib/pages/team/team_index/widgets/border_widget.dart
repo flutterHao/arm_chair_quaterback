@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 10:54:14
- * @LastEditTime: 2024-09-29 17:42:07
+ * @LastEditTime: 2024-10-17 15:50:45
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +18,7 @@ class BorderWidget extends StatelessWidget {
     this.onTap,
     this.margin,
     required this.borderRadius,
+    this.backgroudColor = AppColors.c262626,
   });
 
   final double width;
@@ -27,6 +28,7 @@ class BorderWidget extends StatelessWidget {
   final Offset offset;
   final Function? onTap;
   final Widget child;
+  final Color backgroudColor;
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +44,7 @@ class BorderWidget extends StatelessWidget {
         // decoration: BoxDecoration(
         //   borderRadius: borderRadius,
         // ),
+        // alignment: Alignment.center,
         child: Stack(
           clipBehavior: Clip.none, // 确保内容不被剪裁
           children: [
@@ -60,7 +63,7 @@ class BorderWidget extends StatelessWidget {
                 width: width,
                 height: height,
                 decoration: BoxDecoration(
-                  color: AppColors.c262626,
+                  color: backgroudColor,
                   borderRadius: borderRadius,
                 ),
                 child: child,

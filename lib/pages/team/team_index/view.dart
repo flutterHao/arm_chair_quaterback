@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-10-14 11:54:36
+ * @LastEditTime: 2024-10-17 15:51:56
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -21,7 +21,7 @@ import 'package:arm_chair_quaterback/pages/mine/mine_info/bindings.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_info/view.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_setting/bindings.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_setting/view.dart';
-import 'package:arm_chair_quaterback/pages/team/team_index/page/beauty_page.dart';
+import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_page.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/battle_award_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/progress_paint.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/widgets/shadow_container.dart';
@@ -491,7 +491,11 @@ class _TeamView extends GetView<TeamIndexController> {
                     bottom: 0,
                     right: 0.h,
                     child: InkWell(
-                      onTap: () => controller.openPage(),
+                      // onTap: () => controller.openPage(),
+                      onTap: () {
+                        Get.toNamed(RouteNames.teamTrainingPage,
+                            id: GlobalNestedKey.TEAM);
+                      },
                       child: Column(
                         children: [
                           Container(

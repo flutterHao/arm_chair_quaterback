@@ -33,4 +33,8 @@ class NewListState {
   NewListState() {
     ///Initialize variables
   }
+
+  List<NewsDetail> newsFlowList = [];
+  int page = 0;
+  int pageSize = 5;
 }

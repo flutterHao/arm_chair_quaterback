@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 17:09:20
- * @LastEditTime: 2024-10-14 12:18:14
+ * @LastEditTime: 2024-10-17 16:06:40
  */
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
@@ -31,7 +31,7 @@ class _VerticalDragBackWidgetState extends State<VerticalDragBackWidget>
   late Animation<double> animation;
   var isDragging = false.obs;
 
-  final double minBottom = -546.0.h; // 最小位置
+  final double minBottom = -556.0.h; // 最小位置
   final double maxBottom = 0.h; // 最大位置
 
   TeamIndexController teamCtrl = Get.find();
@@ -57,8 +57,6 @@ class _VerticalDragBackWidgetState extends State<VerticalDragBackWidget>
       if (!teamCtrl.isOnTopSide) {
         return;
       }
-      // print('onHorizontalDragStart: ${detail.localPosition}');
-      // startX = detail.localPosition.dx;
     }
 
     onVerticalDragEnd(DragEndDetails detail) {
@@ -68,41 +66,24 @@ class _VerticalDragBackWidgetState extends State<VerticalDragBackWidget>
 
       isDragging.value = false;
       _animateToPosition(detail);
-      // if(animationController.isAnimating || isOut){
-      //   return;
-      // }
-      // // print('onHorizontalDragEnd: ${detail.localPosition}');
-      // // print('onHorizontalDragEnd: ${detail.velocity}');
-      // _recycleAnimation(velocity: detail.velocity.pixelsPerSecond.dx);
-
-      //       isDragging.value = false;
-      // _animateToPosition(detail);
     }
 
     onVerticalDragCancel() {
       if (!teamCtrl.isOnTopSide) {
         return;
       }
-      // if(animationController.isAnimating || isOut){
-      //   return;
-      // }
-      // // print('onHorizontalDragCancel: ');
-      // _recycleAnimation();
     }
 
     onVerticalDragDown(DragDownDetails detail) {
       if (!teamCtrl.isOnTopSide) {
         return;
       }
-      // print('onHorizontalDragDown: ${detail.localPosition}');
-      // startX = detail.localPosition.dx;
     }
 
     onVerticalDragUpdate(DragUpdateDetails details) {
       if (!teamCtrl.isOnTopSide) {
         return;
       }
-      Log.d("onVerticalDragUpdate: ${details.delta}");
       isDragging.value = true;
       double newBottom = teamCtrl.myTeamBottom.value - details.delta.dy;
       newBottom = newBottom.clamp(minBottom, maxBottom);
@@ -110,16 +91,18 @@ class _VerticalDragBackWidgetState extends State<VerticalDragBackWidget>
     }
 
     Widget body = GestureDetector(
-      // onVerticalDragUpdate: (details) {
-      //   isDragging.value = true;
-      //   double newBottom = teamCtrl.myTeamBottom.value - details.delta.dy;
-      //   newBottom = newBottom.clamp(minBottom, maxBottom);
-      //   teamCtrl.myTeamBottom.value = newBottom;
-      // },
-      // onVerticalDragEnd: (details) {
-      //   isDragging.value = false;
-      //   _animateToPosition(details);
-      // },
+      onVerticalDragUpdate: (details) {
+        if (teamCtrl.isOnTopSide) return;
+        isDragging.value = true;
+        double newBottom = teamCtrl.myTeamBottom.value - details.delta.dy;
+        newBottom = newBottom.clamp(minBottom, maxBottom);
+        teamCtrl.myTeamBottom.value = newBottom;
+      },
+      onVerticalDragEnd: (details) {
+        if (teamCtrl.isOnTopSide) return;
+        isDragging.value = false;
+        _animateToPosition(details);
+      },
       child: NotificationListener<ScrollNotification>(
         onNotification: (notification) {
           // print('notification:${notification.runtimeType}');
@@ -186,6 +169,7 @@ class _VerticalDragBackWidgetState extends State<VerticalDragBackWidget>
         "globalPosition:${details.globalPosition},localPosition${details.localPosition.toString()} velocity${details.velocity.toString()}");
 
     // double targetBottom;
+    // Log.d("details:___"+details.toString());
     if ((teamCtrl.isShow.value && details.localPosition.dy <= 0) ||
         (!teamCtrl.isShow.value && details.localPosition.dy >= 0)) {
       return;

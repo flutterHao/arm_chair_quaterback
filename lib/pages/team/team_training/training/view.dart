@@ -6,7 +6,6 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/buble_box.dart';
-import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/progress_paint.dart';
@@ -15,9 +14,9 @@ import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/playe
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/award_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/buble_widget.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/drag_back_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/ripple_widget.dart';
 import 'package:card_swiper/card_swiper.dart';
-import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -31,14 +30,16 @@ class TrainingPage extends GetView<TrainingController> {
 
   @override
   Widget build(BuildContext context) {
-    // final controller = Get.put(TrainingController());
+    final controller = Get.put(TrainingController());
     // return HorizontalDragBackWidget(
     //     child: Container(
     //   color: Colors.red,
     // ));
-    return HorizontalDragBackWidget(
+    return TrainingDragBackWidget(
+      onDragUpdate: () => controller.swiperControl.stopAutoplay(),
+      onCancel: () => controller.swiperControl.startAutoplay(),
       child: GetBuilder<TrainingController>(
-          init: TrainingController(),
+          // init: TrainingController(),
           id: "training_page",
           builder: (_) {
             var trainInfo = controller.trainingInfo.training;
@@ -142,8 +143,9 @@ class TrainingPage extends GetView<TrainingController> {
                                 icon: Assets.uiMoney_02Png),
                           ),
                         ),
-                        Positioned(
+                        AnimatedPositioned(
                           left: 186.w,
+                          duration: Duration(milliseconds: 100),
                           child: InkWell(
                             onTap: () => showDialog(
                                 context: context,
@@ -224,15 +226,29 @@ class TrainingPage extends GetView<TrainingController> {
                                               visible: i != 2 ||
                                                   controller
                                                       .showThirdCard.value,
-                                              child: ImageWidget(
-                                                width: 80.h,
-                                                color: Colors.white
-                                                    .withOpacity(0.6),
-                                                fit: BoxFit.fitWidth,
-                                                url: Utils.getIconUrl(
-                                                    ctrl.currentAward[i]),
-                                                errorWidget: Container(),
-                                              ))),
+                                              // child: ImageWidget(
+                                              //   width: 80.h,
+                                              //   color:
+                                              //       Colors.white.withOpacity(0.6),
+                                              //   fit: BoxFit.fitWidth,
+                                              //   url: Utils.getPropIconUrl(
+                                              //       ctrl.currentAward[i]),
+                                              //   errorWidget: Container(),
+                                              // ),
+                                              child: ctrl.currentAward[i] != 0
+                                                  ? Image.asset(
+                                                      Utils.getPropIconUrl(
+                                                          ctrl.currentAward[i]),
+                                                      width: 80.h,
+                                                      fit: BoxFit.fitWidth,
+                                                      color: Colors.white
+                                                          .withOpacity(0.6),
+                                                      errorBuilder: (context,
+                                                              error,
+                                                              stackTrace) =>
+                                                          Container(
+                                                              width: 80.h))
+                                                  : Container())),
                                       // Positioned(
                                       //     bottom: 0,
                                       //     child: IconWidget(
@@ -343,42 +359,48 @@ class TrainingPage extends GetView<TrainingController> {
                 // })),
 
                 Positioned(
-                    top: 500.h,
-                    child: GetBuilder<TrainingController>(
-                        id: "player",
-                        builder: (_) {
-                          return SizedBox(
-                            width: 375.w,
-                            height: 86.h,
-                            child: Swiper(
-                              key: const Key("player"),
-                              physics: const NeverScrollableScrollPhysics(),
-                              containerWidth: 64.w,
-                              containerHeight: 86.h,
-                              itemHeight: 64.w,
-                              itemWidth: 64.w,
-                              viewportFraction: .2,
-                              indicatorLayout: PageIndicatorLayout.COLOR,
-                              scale: .5,
-                              itemCount: controller.playerList.length,
-                              outer: true,
-                              autoplay: true,
-                              // duration: 200,
-                              autoplayDelay: 1000,
-                              duration: 800, // 动画的过渡时间
-                              controller: controller.swiperControl,
-                              itemBuilder: (context, index) {
-                                return Container(
-                                  alignment: Alignment.center,
-                                  child: PlayerAwater(
-                                    backgroudColor: AppColors.c666666,
-                                    player: controller.playerList[index],
-                                  ),
-                                );
-                              },
-                            ),
-                          );
-                        })),
+                  top: 500.h,
+                  child: GetBuilder<TrainingController>(
+                    id: "player",
+                    builder: (_) {
+                      return SizedBox(
+                        width: 375.w,
+                        height: 86.h,
+                        child: Swiper(
+                          key: Key("${controller.playerList.length}"),
+                          physics: const NeverScrollableScrollPhysics(),
+                          containerWidth: 64.w,
+                          containerHeight: 86.h,
+                          itemHeight: 64.w,
+                          itemWidth: 64.w,
+                          viewportFraction: .2,
+                          indicatorLayout: PageIndicatorLayout.COLOR,
+                          scale: .5,
+                          itemCount: controller.playerList.length,
+                          outer: false,
+                          autoplay: true,
+                          // duration: 200,
+                          autoplayDelay: 1000,
+                          duration: 800, // 动画的过渡时间
+                          controller: controller.swiperControl,
+                          axisDirection: AxisDirection.right,
+                          onIndexChanged: (value) {
+                            controller.currentIndex = value;
+                          },
+                          itemBuilder: (context, index) {
+                            return Container(
+                              alignment: Alignment.center,
+                              child: PlayerAwater(
+                                backgroudColor: AppColors.c666666,
+                                player: controller.playerList[index],
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                ),
 
                 Positioned(
                     top: 635.h,
@@ -409,10 +431,12 @@ class TrainingPage extends GetView<TrainingController> {
                                 iconColor: AppColors.cFFFFFF,
                               ),
                               3.hGap,
-                              Text(
-                                "${controller.trainingInfo.prop.num}/${controller.trainDefineMap["ballMaxNum"]}",
-                                style: 10.w4(color: AppColors.cFFFFFF),
-                              ),
+                              Obx(() {
+                                return Text(
+                                  "${controller.ballNum.value}/${controller.trainDefineMap["ballMaxNum"] ?? 0}",
+                                  style: 10.w4(color: AppColors.cFFFFFF),
+                                );
+                              }),
                             ],
                           ),
                         ),

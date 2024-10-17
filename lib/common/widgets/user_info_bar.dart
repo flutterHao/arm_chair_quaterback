@@ -225,7 +225,7 @@ class MoneyAndCoinWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: list.map(
                 (e) {
-                  var item = homeCtrl.getPropInfo(e.propId!);
+                  var item = homeCtrl.getPropInfo(e.propId ?? 0);
                   return iconText(
                       item?.propId == 102
                           ? Assets.uiIconMoneyPng

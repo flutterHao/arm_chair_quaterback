@@ -33,8 +33,8 @@ class PlayListView extends GetView<RankController> {
                 child: SmartRefresher(
                   controller: controller.refreshCtrl,
                   enablePullUp: true,
-                  header: const WaterDropHeader(), // 使用水滴风格的下拉刷新
-                  footer: const ClassicFooter(), // 使用经典风格的上拉加载更多
+                  // header: const WaterDropHeader(), // 使用水滴风格的下拉刷新
+                  // footer: const ClassicFooter(), // 使用经典风格的上拉加载更多
                   onRefresh: () => controller.getStatRank(),
                   onLoading: () => controller.getStatRank(refresh: false),
                   child: ListView.separated(
