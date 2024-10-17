@@ -57,6 +57,9 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
 
   bool isOut = false;
 
+  // 开始滚动时是否在边界
+  bool startScrollFlag = false;
+
   @override
   void initState() {
     super.initState();
@@ -96,7 +99,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
       if (!isOnLeftSide) {
         return;
       }
-      if(animationController.isAnimating || isOut){
+      if (animationController.isAnimating || isOut) {
         return;
       }
       // print('onHorizontalDragEnd: ${detail.localPosition}');
@@ -108,7 +111,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
       if (!isOnLeftSide) {
         return;
       }
-      if(animationController.isAnimating || isOut){
+      if (animationController.isAnimating || isOut) {
         return;
       }
       // print('onHorizontalDragCancel: ');
@@ -130,7 +133,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
       if (!isOnLeftSide) {
         return;
       }
-      if(animationController.isAnimating || isOut){
+      if (animationController.isAnimating || isOut) {
         return;
       }
       // print('onHorizontalDragUpdate: ${detail.localPosition}');
@@ -152,30 +155,37 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
       canPop: widget.canPop,
       child: GestureDetector(
         onHorizontalDragDown: (detail) {
+          //处理没有滚动子组件的情况
           if (!isOnLeftSide) {
             isOnLeftSide = true;
           }
         },
         onHorizontalDragStart: (detail) {
+          //处理没有滚动子组件的情况
           if (!isOnLeftSide) {
             isOnLeftSide = true;
           }
         },
         child: NotificationListener<ScrollNotification>(
           onNotification: (notification) {
-            // print('notification:${notification.runtimeType}');
+            print(
+                'notification:${notification.runtimeType}，pixels:${notification.metrics.pixels}');
             if (notification is OverscrollNotification) {
               // print('notification.metrics.pixels:${notification.metrics.pixels}');
               if (notification.metrics.pixels <=
                       notification.metrics.minScrollExtent &&
                   !isOnLeftSide &&
-                  notification.metrics.axisDirection == AxisDirection.right) {
+                  notification.metrics.axisDirection == AxisDirection.right &&
+                  startScrollFlag) {
                 //到达左边界
                 isOnLeftSide = true;
               }
             }
-            if (notification is ScrollUpdateNotification && !isOnLeftSide) {
-              // print('notification.metrics.pixels:${notification.metrics.pixels}');
+            if (notification is ScrollUpdateNotification &&
+                !isOnLeftSide &&
+                startScrollFlag) {
+              print(
+                  'notification.metrics.pixels:${notification.metrics.pixels}');
               if (notification.metrics.pixels <=
                       notification.metrics.minScrollExtent &&
                   !isOnLeftSide &&
@@ -184,8 +194,16 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
                 isOnLeftSide = true;
               }
             }
-            if (notification is ScrollStartNotification && isOnLeftSide) {
+            if (notification is ScrollStartNotification) {
               isOnLeftSide = false;
+              //在边界
+              if (notification.metrics.pixels <=
+                  notification.metrics.minScrollExtent) {
+                startScrollFlag = true;
+              }
+            }
+            if (notification is ScrollEndNotification) {
+              startScrollFlag = false;
             }
             // true 阻止向上冒泡 ,false 继续向上冒泡
             return true;

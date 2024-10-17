@@ -457,10 +457,7 @@ class PlayerAwater extends StatelessWidget {
     ///头像
     return InkWell(
       onTap: () {
-        Get.toNamed(RouteNames.picksPlayerDetail,
-            arguments: PlayerDetailPageArguments(2115,
-                teamId: 50097,
-                rootNavigator: true)); //todo 2115,50097为测试数据，需要修改成真是球员id
+        Get.toNamed(RouteNames.picksPlayerDetail);
       },
       child: Stack(
         children: [

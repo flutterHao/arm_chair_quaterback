@@ -13,6 +13,8 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/game/game.dart';
+import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/history/view.dart';
+import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/summary/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -40,7 +42,10 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
   Widget build(BuildContext context) {
     return HorizontalDragBackWidget(
       child: GetBuilder<PlayerDetailController>(
-        init: PlayerDetailController(arguments ?? Get.arguments),
+        init: PlayerDetailController(arguments ??
+            Get.arguments ??
+            PlayerDetailPageArguments(2115,
+                teamId: 50097, rootNavigator: true)),//todo PlayerDetailPageArguments测试数据，需删除
         id: PlayerDetailController.idMain,
         builder: (_) {
           return BlackAppWidget(
@@ -146,82 +151,80 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                     child: Container(
                       constraints: BoxConstraints(maxWidth: 400.w),
                       height: 34.w,
-                      margin: EdgeInsets.only(left: 16.w,right: 16.w,bottom: 16.w),
+                      margin: EdgeInsets.only(
+                          left: 16.w, right: 16.w, bottom: 16.w),
                       decoration: BoxDecoration(
                           color: AppColors.cF2F2F2,
                           borderRadius: BorderRadius.circular(17.w)),
-                      child: LayoutBuilder(
-                          builder: (context, constraints) {
-                            var itemWidth = (constraints.maxWidth - 8.w) /
-                                controller.tabController.length;
-                            return TLBuildWidget(
-                                controller: controller.tabController,
-                                builder: (current, next, progress,
-                                    totalProgress) {
-                                  return Stack(
-                                    alignment: Alignment.centerLeft,
-                                    children: [
-                                      Positioned(
-                                        left: totalProgress * itemWidth,
-                                        child: Container(
-                                          margin:
-                                          EdgeInsets.only(left: 4.w),
-                                          height: 26.w,
-                                          width: itemWidth,
-                                          decoration: BoxDecoration(
-                                              color: AppColors.c262626,
-                                              borderRadius:
-                                              BorderRadius.circular(
-                                                  26.w)),
-                                        ),
-                                      ),
-                                      Row(
-                                        children: List.generate(
-                                            controller.tabs.length,
-                                                (index) => Expanded(
+                      child: LayoutBuilder(builder: (context, constraints) {
+                        var itemWidth = (constraints.maxWidth - 8.w) /
+                            controller.tabController.length;
+                        return TLBuildWidget(
+                            controller: controller.tabController,
+                            builder: (current, next, progress, totalProgress) {
+                              return Stack(
+                                alignment: Alignment.centerLeft,
+                                children: [
+                                  Positioned(
+                                    left: totalProgress * itemWidth,
+                                    child: Container(
+                                      margin: EdgeInsets.only(left: 4.w),
+                                      height: 26.w,
+                                      width: itemWidth,
+                                      decoration: BoxDecoration(
+                                          color: AppColors.c262626,
+                                          borderRadius:
+                                              BorderRadius.circular(26.w)),
+                                    ),
+                                  ),
+                                  Row(
+                                    children: List.generate(
+                                        controller.tabs.length,
+                                        (index) => Expanded(
                                               child: InkWell(
-                                                  onTap: () =>
-                                                      controller
-                                                          .tabController
-                                                          .animateTo(
-                                                          index),
+                                                  onTap: () => controller
+                                                      .tabController
+                                                      .animateTo(index),
                                                   child: Center(
                                                       child: Text(
                                                           controller
-                                                              .tabs[
-                                                          index],
+                                                              .tabs[index],
                                                           style: 13.w4(
                                                             color: current ==
-                                                                index
+                                                                    index
                                                                 ? Color.lerp(
-                                                                AppColors
-                                                                    .cF2F2F2,
-                                                                AppColors
-                                                                    .c666666,
-                                                                progress)!
-                                                                : next ==
-                                                                index
-                                                                ? Color.lerp(
-                                                                AppColors.c666666,
-                                                                AppColors.cF2F2F2,
-                                                                progress)!
-                                                                : AppColors.c666666,
+                                                                    AppColors
+                                                                        .cF2F2F2,
+                                                                    AppColors
+                                                                        .c666666,
+                                                                    progress)!
+                                                                : next == index
+                                                                    ? Color.lerp(
+                                                                        AppColors
+                                                                            .c666666,
+                                                                        AppColors
+                                                                            .cF2F2F2,
+                                                                        progress)!
+                                                                    : AppColors
+                                                                        .c666666,
                                                           )))),
                                             )),
-                                      )
-                                    ],
-                                  );
-                                });
-                          }),
+                                  )
+                                ],
+                              );
+                            });
+                      }),
                     ),
                   ),
                   Expanded(
                     child: TabBarView(
                         controller: controller.tabController,
                         children: [
-                          const Center(child: LoadStatusWidget()),
-                          const Center(child: LoadStatusWidget()),
-                          PlayerDetailGame(headHeight: appBarHeight+66.w,)
+                          const SummaryPage(),
+                          const HistoryPage(),
+                          PlayerDetailGame(
+                            headHeight: appBarHeight + 66.w,
+                          )
                         ]),
                   )
                 ],
