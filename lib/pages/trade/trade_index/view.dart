@@ -97,83 +97,75 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                                               bottom: Radius.circular(16.w))),
                                       alignment: Alignment.bottomCenter,
                                       child: Container(
-                                        height: 34.h,
-                                        constraints:
-                                            BoxConstraints(maxWidth: 349.w),
-                                        margin: EdgeInsets.only(bottom: 16.h),
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 1.5.w),
+                                        constraints: BoxConstraints(maxWidth: 400.w),
+                                        height: 34.w,
+                                        margin: EdgeInsets.only(left: 16.w,right: 16.w,bottom: 16.w),
                                         decoration: BoxDecoration(
                                             color: AppColors.cF2F2F2,
-                                            borderRadius:
-                                                BorderRadius.circular(17.h)),
-                                        child: Stack(
-                                          alignment:
-                                              FractionalOffset.centerLeft,
-                                          children: [
-                                            LayoutBuilder(builder:
-                                                (context, constraints) {
+                                            borderRadius: BorderRadius.circular(17.w)),
+                                        child: LayoutBuilder(
+                                            builder: (context, constraints) {
+                                              var itemWidth = (constraints.maxWidth - 8.w) /
+                                                  controller.tabController.length;
                                               return TLBuildWidget(
-                                                  controller:
-                                                      controller.tabController,
-                                                  builder: (current, next,
-                                                      progress, totalProgress) {
-                                                    return Container(
-                                                      height: 26.h,
-                                                      width:
-                                                          constraints.maxWidth /
-                                                              controller
-                                                                  .tabs.length,
-                                                      margin: EdgeInsets.only(
-                                                          left: totalProgress *
-                                                              constraints
-                                                                  .maxWidth /
-                                                              2),
-                                                      decoration: BoxDecoration(
-                                                          color:
-                                                              AppColors.c262626,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      17.w)),
+                                                  controller: controller.tabController,
+                                                  builder: (current, next, progress,
+                                                      totalProgress) {
+                                                    return Stack(
+                                                      alignment: Alignment.centerLeft,
+                                                      children: [
+                                                        Positioned(
+                                                          left: totalProgress * itemWidth,
+                                                          child: Container(
+                                                            margin:
+                                                            EdgeInsets.only(left: 4.w),
+                                                            height: 26.w,
+                                                            width: itemWidth,
+                                                            decoration: BoxDecoration(
+                                                                color: AppColors.c262626,
+                                                                borderRadius:
+                                                                BorderRadius.circular(
+                                                                    26.w)),
+                                                          ),
+                                                        ),
+                                                        Row(
+                                                          children: List.generate(
+                                                              controller.tabs.length,
+                                                                  (index) => Expanded(
+                                                                child: InkWell(
+                                                                    onTap: () =>
+                                                                        controller
+                                                                            .tabController
+                                                                            .animateTo(
+                                                                            index),
+                                                                    child: Center(
+                                                                        child: Text(
+                                                                            controller
+                                                                                .tabs[
+                                                                            index],
+                                                                            style: 13.w4(
+                                                                              color: current ==
+                                                                                  index
+                                                                                  ? Color.lerp(
+                                                                                  AppColors
+                                                                                      .cF2F2F2,
+                                                                                  AppColors
+                                                                                      .c666666,
+                                                                                  progress)!
+                                                                                  : next ==
+                                                                                  index
+                                                                                  ? Color.lerp(
+                                                                                  AppColors.c666666,
+                                                                                  AppColors.cF2F2F2,
+                                                                                  progress)!
+                                                                                  : AppColors.c666666,
+                                                                            )))),
+                                                              )),
+                                                        )
+                                                      ],
                                                     );
                                                   });
                                             }),
-                                            Row(
-                                              children:
-                                                  controller.tabs.map((e) {
-                                                int index =
-                                                    controller.tabs.indexOf(e);
-                                                return Flexible(
-                                                    child: TLBuildWidget(
-                                                        controller: controller
-                                                            .tabController,
-                                                        builder: (current, next,
-                                                            progress, _) {
-                                                          return InkWell(
-                                                            onTap: () =>
-                                                                controller
-                                                                    .tabController
-                                                                    .animateTo(
-                                                                        index),
-                                                            child: Center(
-                                                              child: Text(
-                                                                e,
-                                                                style: TextStyle(
-                                                                    color: current == index
-                                                                        ? Color.lerp(AppColors.cF2F2F2, AppColors.c262626, progress)
-                                                                        : next == index
-                                                                            ? Color.lerp(AppColors.c262626, AppColors.cF2F2F2, progress)
-                                                                            : AppColors.c262626,
-                                                                    fontSize: 13.sp),
-                                                              ),
-                                                            ),
-                                                          );
-                                                        }));
-                                              }).toList(),
-                                            )
-                                          ],
-                                        ),
                                       ),
                                     )),
                                 SizedBox(

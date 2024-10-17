@@ -153,6 +153,12 @@ class UserInfoBar extends StatelessWidget {
               homeCtrl.userEntiry.teamLoginInfo ?? TeamLoginInfo();
           return Container(
             padding: EdgeInsets.only(left: 14.w, right: 14.w, bottom: 11.w),
+            decoration: BoxDecoration(
+                color: AppColors.c262626,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(16.w),
+                  bottomRight: Radius.circular(16.w),
+                )),
             child: Row(
               children: [
                 ///TODO

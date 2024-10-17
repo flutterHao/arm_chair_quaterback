@@ -65,16 +65,18 @@ class _BlackAppWidgetState extends State<BlackAppWidget> {
                 }
                 return Container(
                   alignment: Alignment.bottomLeft,
-                  decoration: BoxDecoration(
-                      color: AppColors.c262626,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(16.w),
-                        bottomRight: Radius.circular(16.w),
-                      )),
-                  child: Container(
-                    margin: EdgeInsets.only(
-                        top: MediaQuery.of(context).padding.top + 6.w),
-                    child: widget.appbarWidget,
+                  child: Stack(
+                    children: [
+                      Container(
+                        height: MediaQuery.of(context).padding.top + 10.w,
+                        color: AppColors.c262626,
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(
+                            top: MediaQuery.of(context).padding.top + 6.w),
+                        child: widget.appbarWidget,
+                      ),
+                    ],
                   ),
                 );
               }),

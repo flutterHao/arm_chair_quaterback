@@ -25,7 +25,7 @@ class _BattleGameOverState extends State<BattleGameOver>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
 
-  List<String> tabTitles = ["Statistic", "Player"];
+  List<String> tabs = ["Statistic", "Player"];
 
   @override
   void initState() {
@@ -46,63 +46,65 @@ class _BattleGameOverState extends State<BattleGameOver>
             right: 0,
             child: Center(
               child: Container(
-                height: 34.h,
-                constraints: BoxConstraints(maxWidth: 349.w),
-                margin: EdgeInsets.only(bottom: 16.h),
-                padding: EdgeInsets.symmetric(horizontal: 1.5.w),
+                constraints: BoxConstraints(maxWidth: 400.w),
+                height: 34.w,
+                margin: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 16.w),
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(17.h),
-                    border: Border.all(color: AppColors.c808080, width: 1.w)),
-                child: Stack(
-                  alignment: FractionalOffset.centerLeft,
-                  children: [
-                    LayoutBuilder(builder: (context, constraints) {
-                      return TLBuildWidget(
-                          controller: tabController,
-                          builder: (current, next, progress, totalProgress) {
-                            return Container(
-                              height: 26.h,
-                              width: constraints.maxWidth / tabTitles.length,
-                              margin: EdgeInsets.only(
-                                  left:
-                                      totalProgress * constraints.maxWidth / 2),
-                              decoration: BoxDecoration(
-                                  color: AppColors.c262626,
-                                  borderRadius: BorderRadius.circular(17.w)),
-                            );
-                          });
-                    }),
-                    Row(
-                      children: tabTitles.map((e) {
-                        int index = tabTitles.indexOf(e);
-                        return Flexible(
-                            child: TLBuildWidget(
-                                controller: tabController,
-                                builder: (current, next, progress, _) {
-                                  return InkWell(
-                                    onTap: () => tabController.animateTo(index),
-                                    child: Center(
-                                      child: Text(
-                                        e,
-                                        style: TextStyle(
-                                            color: current == index
-                                                ? Color.lerp(AppColors.cF2F2F2,
-                                                    AppColors.c262626, progress)
-                                                : next == index
-                                                    ? Color.lerp(
-                                                        AppColors.c262626,
-                                                        AppColors.cF2F2F2,
-                                                        progress)
-                                                    : AppColors.c262626,
-                                            fontSize: 13.sp),
-                                      ),
-                                    ),
-                                  );
-                                }));
-                      }).toList(),
-                    )
-                  ],
+                    color: AppColors.cEFEFEF,
+                    borderRadius: BorderRadius.circular(17.w),
+                  border: Border.all(color: AppColors.cB3B3B3,width: 1)
                 ),
+                child: LayoutBuilder(builder: (context, constraints) {
+                  var itemWidth =
+                      (constraints.maxWidth - 8.w) / tabController.length;
+                  return TLBuildWidget(
+                      controller: tabController,
+                      builder: (current, next, progress, totalProgress) {
+                        return Stack(
+                          alignment: Alignment.centerLeft,
+                          children: [
+                            Positioned(
+                              left: totalProgress * itemWidth,
+                              child: Container(
+                                margin: EdgeInsets.only(left: 4.w),
+                                height: 26.w,
+                                width: itemWidth,
+                                decoration: BoxDecoration(
+                                    color: AppColors.c262626,
+                                    borderRadius: BorderRadius.circular(26.w)),
+                              ),
+                            ),
+                            Row(
+                              children: List.generate(
+                                  tabs.length,
+                                  (index) => Expanded(
+                                        child: InkWell(
+                                            onTap: () =>
+                                                tabController.animateTo(index),
+                                            child: Center(
+                                                child: Text(tabs[index],
+                                                    style: 13.w4(
+                                                      color: current == index
+                                                          ? Color.lerp(
+                                                              AppColors.cF2F2F2,
+                                                              AppColors.c666666,
+                                                              progress)!
+                                                          : next == index
+                                                              ? Color.lerp(
+                                                                  AppColors
+                                                                      .c666666,
+                                                                  AppColors
+                                                                      .cF2F2F2,
+                                                                  progress)!
+                                                              : AppColors
+                                                                  .c666666,
+                                                    )))),
+                                      )),
+                            )
+                          ],
+                        );
+                      });
+                }),
               ),
             ),
           ),

@@ -125,6 +125,8 @@ static const uiWindowsAwardPng = 'assets/images/icon/ui_windows_award.png';
   static const uiIconFriendPng = 'assets/images/player/ui_icon_friend.png';
   static const uiIconMailPng = 'assets/images/player/ui_icon_mail.png';
   static const uiIconSettingPng = 'assets/images/player/ui_icon_setting.png';
+  static const uiIconFollowPng = 'assets/images/player/ui_icon_follow.png';
+  static const uiIconFollowedPng = 'assets/images/player/ui_icon_followed.png';
 
   ///team
   static const uiBattleNewsPng = 'assets/images/team/ui_battle_news.png';

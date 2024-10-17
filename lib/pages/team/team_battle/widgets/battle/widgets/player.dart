@@ -252,178 +252,180 @@ class _PlayerState extends State<Player> {
                     child: SingleChildScrollView(
                       physics: const BouncingScrollPhysics(),
                       child: Column(
-                        children: List.generate(20, (index) {
-                          return Container(
-                            height: 59.w,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                const Divider(
-                                  height: 1,
-                                  color: AppColors.cCFCFCF,
-                                ),
-                                Expanded(
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      SizedBox(
-                                        width: 58.w,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Transform.rotate(
-                                                angle: pi / 180 * -90,
-                                                child: Text(
-                                                  "C",
-                                                  style: 16.w7(
-                                                      color: AppColors.cD8D8D8),
-                                                )),
-                                            PlayerAvatarWidget(
-                                              playerBaseInfo: null,
-                                              width: 36.w,
-                                              fontColor: AppColors.c262626,
-                                              backgroundColor:
-                                                  AppColors.cD9D9D9,
-                                            ),
-                                            6.hGap,
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                          child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                        children: [
+                          ...List.generate(20, (index) {
+                        return SizedBox(
+                          height: 59.w,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const Divider(
+                                height: 1,
+                                color: AppColors.cCFCFCF,
+                              ),
+                              Expanded(
+                                child: Row(
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                      width: 58.w,
+                                      child: Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                        MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text(
-                                            "Player Name",
-                                            style: 12.w4(
-                                                color: AppColors.c262626,
-                                                height: 1,
-                                                overflow:
-                                                    TextOverflow.ellipsis),
+                                          Transform.rotate(
+                                              angle: pi / 180 * -90,
+                                              child: Text(
+                                                "C",
+                                                style: 16.w7(
+                                                    color: AppColors.cD8D8D8),
+                                              )),
+                                          PlayerAvatarWidget(
+                                            playerBaseInfo: null,
+                                            width: 36.w,
+                                            fontColor: AppColors.c262626,
+                                            backgroundColor:
+                                            AppColors.cD9D9D9,
                                           ),
-                                          4.vGap,
-                                          Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                    color: AppColors.c666666,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            2.w)),
-                                                child: Text(
-                                                  "SG",
-                                                  style: 10.w4(
-                                                      color: AppColors.cF2F2F2,
-                                                      height: 1),
-                                                ),
-                                              ),
-                                              3.hGap,
-                                              Stack(
-                                                alignment: Alignment.center,
-                                                children: [
-                                                  IconWidget(
-                                                    iconWidth: 14.w,
-                                                    icon:
-                                                        Assets.uiIconStar_01Png,
-                                                    iconColor:
-                                                        AppColors.cFF7954,
-                                                  ),
-                                                  Positioned(
-                                                      top: 2.w,
-                                                      child: Text(
-                                                        '1',
-                                                        style: 9.w7(
-                                                            color: AppColors
-                                                                .cFFFFFF),
-                                                      ))
-                                                ],
-                                              ),
-                                              3.hGap,
-                                              IconWidget(
-                                                  iconWidth: 12.w,
-                                                  icon: Assets.uiStateBestPng)
-                                            ],
-                                          )
+                                          6.hGap,
                                         ],
-                                      )),
-                                      SizedBox(
-                                        width: 50.w,
+                                      ),
+                                    ),
+                                    Expanded(
                                         child: Column(
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                           mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                          MainAxisAlignment.center,
                                           children: [
                                             Text(
-                                              "8.9",
-                                              style: 14.w7(
-                                                  color: index == 0
-                                                      ? AppColors.c3B93FF
-                                                      : AppColors.c262626,
-                                                  height: 1),
+                                              "Player Name",
+                                              style: 12.w4(
+                                                  color: AppColors.c262626,
+                                                  height: 1,
+                                                  overflow:
+                                                  TextOverflow.ellipsis),
                                             ),
-                                            Visibility(
-                                              visible: index == 0,
-                                              child: Container(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 4.w),
-                                                decoration: BoxDecoration(
-                                                    color: AppColors.c3B93FF,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            4.w)),
-                                                child: Text(
-                                                  "SVP",
-                                                  style: 12.w7(
-                                                      color: AppColors.cFFFFFF),
+                                            4.vGap,
+                                            Row(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                              children: [
+                                                Container(
+                                                  decoration: BoxDecoration(
+                                                      color: AppColors.c666666,
+                                                      borderRadius:
+                                                      BorderRadius.circular(
+                                                          2.w)),
+                                                  child: Text(
+                                                    "SG",
+                                                    style: 10.w4(
+                                                        color: AppColors.cF2F2F2,
+                                                        height: 1),
+                                                  ),
                                                 ),
-                                              ),
+                                                3.hGap,
+                                                Stack(
+                                                  alignment: Alignment.center,
+                                                  children: [
+                                                    IconWidget(
+                                                      iconWidth: 14.w,
+                                                      icon:
+                                                      Assets.uiIconStar_01Png,
+                                                      iconColor:
+                                                      AppColors.cFF7954,
+                                                    ),
+                                                    Positioned(
+                                                        top: 2.w,
+                                                        child: Text(
+                                                          '1',
+                                                          style: 9.w7(
+                                                              color: AppColors
+                                                                  .cFFFFFF),
+                                                        ))
+                                                  ],
+                                                ),
+                                                3.hGap,
+                                                IconWidget(
+                                                    iconWidth: 12.w,
+                                                    icon: Assets.uiStateBestPng)
+                                              ],
                                             )
                                           ],
-                                        ),
+                                        )),
+                                    SizedBox(
+                                      width: 50.w,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "8.9",
+                                            style: 14.w7(
+                                                color: index == 0
+                                                    ? AppColors.c3B93FF
+                                                    : AppColors.c262626,
+                                                height: 1),
+                                          ),
+                                          Visibility(
+                                            visible: index == 0,
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 4.w),
+                                              decoration: BoxDecoration(
+                                                  color: AppColors.c3B93FF,
+                                                  borderRadius:
+                                                  BorderRadius.circular(
+                                                      4.w)),
+                                              child: Text(
+                                                "SVP",
+                                                style: 12.w7(
+                                                    color: AppColors.cFFFFFF),
+                                              ),
+                                            ),
+                                          )
+                                        ],
                                       ),
-                                      SizedBox(
-                                          width: 50.w,
-                                          child: Center(
-                                            child: Text(
-                                              "15.6",
-                                              style: 12
-                                                  .w4(color: AppColors.c262626),
-                                            ),
-                                          )),
-                                      SizedBox(
-                                          width: 50.w,
-                                          child: Center(
-                                            child: Text(
-                                              "15.6",
-                                              style: 12
-                                                  .w4(color: AppColors.c262626),
-                                            ),
-                                          )),
-                                      SizedBox(
-                                          width: 50.w,
-                                          child: Center(
-                                            child: Text(
-                                              "15.6",
-                                              style: 12
-                                                  .w4(color: AppColors.c262626),
-                                            ),
-                                          )),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                          );
-                        }),
+                                    ),
+                                    SizedBox(
+                                        width: 50.w,
+                                        child: Center(
+                                          child: Text(
+                                            "15.6",
+                                            style: 12
+                                                .w4(color: AppColors.c262626),
+                                          ),
+                                        )),
+                                    SizedBox(
+                                        width: 50.w,
+                                        child: Center(
+                                          child: Text(
+                                            "15.6",
+                                            style: 12
+                                                .w4(color: AppColors.c262626),
+                                          ),
+                                        )),
+                                    SizedBox(
+                                        width: 50.w,
+                                        child: Center(
+                                          child: Text(
+                                            "15.6",
+                                            style: 12
+                                                .w4(color: AppColors.c262626),
+                                          ),
+                                        )),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        );
+                      }),
+                          100.vGap,
+                        ]),
                       ),
                     ),
-                  ),
                 ],
               ),
             ),

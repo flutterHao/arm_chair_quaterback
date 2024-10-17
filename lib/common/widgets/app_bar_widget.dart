@@ -24,7 +24,8 @@ class AppBarWidget extends StatelessWidget {
       this.title,
       this.titleWidget,
       this.id,
-      this.bottomChild})
+      this.bottomChild,
+      this.borderRadius,})
       : assert(titleWidget != null || title != null,
             "select one of titleWidget,title");
   final Widget? left;
@@ -33,10 +34,12 @@ class AppBarWidget extends StatelessWidget {
   final Widget? titleWidget;
   final int? id;
   final Widget? bottomChild;
+  final double? borderRadius;
 
   @override
   Widget build(BuildContext context) {
     return AppBarContainer(
+      borderRadius: borderRadius,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -92,21 +95,21 @@ class AppBarWidget extends StatelessWidget {
 
 class AppBarContainer extends StatelessWidget {
   static double APPBARCONTAINERHEIGHT = ScreenUtil().setWidth(63);
-  const AppBarContainer({super.key, required this.child});
+  const AppBarContainer({super.key, required this.child, this.borderRadius});
 
   final Widget child;
+  final double? borderRadius;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       // width: 361.w,
       constraints: BoxConstraints(minHeight: 63.w),
-      margin: EdgeInsets.symmetric(horizontal: 7.w),
       decoration: BoxDecoration(
         color: AppColors.c262626,
         borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(16.w),
-            bottomRight: Radius.circular(16.w)),
+            bottomLeft: Radius.circular(borderRadius??16.w),
+            bottomRight: Radius.circular(borderRadius??16.w)),
       ),
       child: child,
     );
