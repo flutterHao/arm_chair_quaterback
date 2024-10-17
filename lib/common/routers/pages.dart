@@ -13,6 +13,7 @@
 import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/view.dart';
+import 'package:arm_chair_quaterback/pages/trade/trade_index/view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -41,6 +42,10 @@ class AppPages {
       opaque: false,
       name: RouteNames.picksPlayerDetail,
       page: () => const PlayerDetailPage(),
+    ),
+    GetPage(
+      name: RouteNames.tradeTradeIndex,
+      page: () => const TradeIndex(),
     ),
   ];
 }
