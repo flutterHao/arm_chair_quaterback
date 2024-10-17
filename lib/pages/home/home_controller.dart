@@ -26,6 +26,7 @@ import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/index.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/view.dart';
+import 'package:arm_chair_quaterback/pages/trade/trade_index/index.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -38,6 +39,8 @@ class HomeController extends GetxController
   Map<int, GlobalKey<NavigatorState>?> navigatorKeys = {
     0: GlobalNestedKey.NewsTabGlobalKey,
     1: GlobalNestedKey.PicksTabGlobalKey,
+    2: GlobalNestedKey.TeamTabGlobalKey,
+    3: GlobalNestedKey.TRADETabGlobalKey,
   };
 
   UserEntity userEntiry = UserEntity();
@@ -71,10 +74,10 @@ class HomeController extends GetxController
       const TeamIndexPage(),
     ),
     TabItemInfo(
-      "TRAINING",
+      "TRADE",
       Assets.uiIconTraining_01Png,
       Assets.uiIconTraining_01Png,
-      Container(),
+      const TradeIndex(),
     ),
     // TabItemInfo(
     //   "LEAGUES",

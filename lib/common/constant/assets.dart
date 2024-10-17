@@ -71,6 +71,8 @@ static const uiWindowsAwardPng = 'assets/images/icon/ui_windows_award.png';
   static const uiIconFactbookPng = 'assets/images/icon/ui_icon_factbook.png';
   static const uiIconGooglePng = 'assets/images/icon/ui_icon_google.png';
   static const uiIconApplePng = 'assets/images/icon/ui_icon_apple.png';
+  static const uiIconCountdownPng = 'assets/images/icon/ui_icon_countdown.png';
+  static const uiIconDecreasingAmplitudePng = 'assets/images/icon/ui_icon_decreasing amplitude.png';
 
   ///test
   static const testTeamLogoPng = 'assets/test/test_team_logo.png';

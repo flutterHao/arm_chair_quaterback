@@ -139,7 +139,7 @@ class UserInfoBar extends StatelessWidget {
   const UserInfoBar({super.key, this.title = "Title", this.enable = true, this.routeId});
 
   final String title;
-  final bool enable;
+  final bool enable;//头像是否可点击显示弹框
   final int? routeId;
 
   @override

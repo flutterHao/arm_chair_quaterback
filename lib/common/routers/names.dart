@@ -37,4 +37,8 @@ class RouteNames {
   static const mineMineAccount = '/mine_mine_account';
   static const mineMineInfo = '/mine_mine_info';
   static const mineMineSetting = '/mine_mine_setting';
+
+  //trade
+  static const tradeTradeIndex = '/trade_trade_index';
+
 }

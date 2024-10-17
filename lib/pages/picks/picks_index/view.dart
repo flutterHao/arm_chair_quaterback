@@ -12,6 +12,7 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/my_water_drop_header.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_account/bindings.dart';
@@ -118,14 +119,16 @@ class _PicksIndexPageState extends State<PicksIndexPage>
   Widget _buildView(BuildContext context, double appBarHeight) {
     print('appBarHeight:$appBarHeight');
     return Container(
-      padding: EdgeInsets.only(top: appBarHeight),
+      padding: EdgeInsets.only(top: appBarHeight-16.w),
       child: SmartRefresher(
         controller: picksIndexController.refreshController,
         onRefresh: () => picksIndexController.loading(),
+        header: MyWaterDropHeader(topPadding: 16.w  * 2,),
         child: CustomScrollView(
           physics: const BouncingScrollPhysics(),
           controller: picksIndexController.scrollController,
           slivers: [
+            SliverPadding(padding: EdgeInsets.only(top: 16.w)),
             //banner
             SliverToBoxAdapter(
               child: AspectRatio(
