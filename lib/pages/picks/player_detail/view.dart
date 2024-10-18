@@ -12,6 +12,7 @@ import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/physics/one_boundary_page_scroll_physics.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/game/game.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/history/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/summary/view.dart';
@@ -219,6 +220,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                   Expanded(
                     child: TabBarView(
                         controller: controller.tabController,
+                        physics: OneBoundaryPageScrollPhysics(tabController: controller.tabController),
                         children: [
                           const SummaryPage(),
                           const HistoryPage(),

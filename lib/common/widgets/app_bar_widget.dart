@@ -60,11 +60,15 @@ class AppBarWidget extends StatelessWidget {
                           onTap: () {
                             Get.back(id: id);
                           },
-                          child: IconWidget(
-                            iconWidth: 19.w,
-                            iconHeight: 19.w,
-                            icon: Assets.iconBackPng,
-                            iconColor: Colors.white,
+                          child: SizedBox(
+                            width: 48.w,
+                            height: 48.w,
+                            child: IconWidget(
+                              iconWidth: 19.w,
+                              iconHeight: 19.w,
+                              icon: Assets.iconBackPng,
+                              iconColor: Colors.white,
+                            ),
                           ),
                         ),
                   ),

@@ -7,7 +7,6 @@ import 'package:flutter/rendering.dart';
 
 class OneBoundaryScrollPhysics extends ScrollPhysics {
 
-  // const OneBoundaryScrollPhysics({super.parent});
   OneBoundaryScrollPhysics({required this.scrollController,super.parent}){
     startPixels = scrollController.initialScrollOffset;
       scrollController.addListener(() {
@@ -50,14 +49,4 @@ class OneBoundaryScrollPhysics extends ScrollPhysics {
     return super.applyBoundaryConditions(position, value);
   }
 
-  // @override
-  // double applyPhysicsToUserOffset(ScrollMetrics position, double offset) {
-  //   // print('applyPhysicsToUserOffset:${position.pixels},offset:$offset');
-  //   // 开始滑动的时候已经在边界，继续向边界方向滑动则不响应
-  //   if(startPixels == 0 && offset>0){
-  //     // print('------------00000-----------');
-  //     return 0;
-  //   }
-  //   return super.applyPhysicsToUserOffset(position, offset);
-  // }
 }
