@@ -7,6 +7,7 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/arc_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/physics/one_boundary_scroll_physics.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/game/controller.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -34,6 +35,8 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
 
   //星级视图高度
   var levelWidgetHeight = 119.w;
+
+  var scrollController = ScrollController();
 
   // 主视图
   Widget _buildView(BuildContext context) {
@@ -1048,7 +1051,8 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                 Expanded(
                   child: Obx(() {
                     return ListView.builder(
-                      physics: const BouncingScrollPhysics(),
+                      controller: scrollController,
+                      physics: OneBoundaryScrollPhysics(scrollController: scrollController),
                       itemBuilder: (context, index) {
                         bool item = controller.dialogListDatas[index];
                         return InkWell(

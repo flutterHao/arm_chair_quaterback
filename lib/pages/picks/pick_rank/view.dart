@@ -26,7 +26,6 @@ class PickRankPage extends GetView<PickRankController> {
               alignment: Alignment.centerLeft,
               children: [
                 AppBarWidget(
-                  id: GlobalNestedKey.PICKS,
                   titleWidget: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

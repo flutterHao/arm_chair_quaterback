@@ -25,13 +25,9 @@ import 'index.dart';
 class PlayerDetailPageArguments {
   final int? teamId;
   final int playerId;
-  final bool rootNavigator;
-  final int getId;
 
   PlayerDetailPageArguments(this.playerId,
-      {this.teamId,
-      this.rootNavigator = false,
-      this.getId = GlobalNestedKey.PICKS});
+      {this.teamId});
 }
 
 class PlayerDetailPage extends GetView<PlayerDetailController> {
@@ -41,12 +37,13 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
 
   @override
   Widget build(BuildContext context) {
-    return HorizontalDragBackWidget(
-      child: GetBuilder<PlayerDetailController>(
-        init: PlayerDetailController(arguments ??
+    var args = arguments ??
             Get.arguments ??
             PlayerDetailPageArguments(2115,
-                teamId: 50097, rootNavigator: true)),//todo PlayerDetailPageArguments测试数据，需删除
+                teamId: 50097);
+    return HorizontalDragBackWidget(
+      child: GetBuilder<PlayerDetailController>(
+        init: PlayerDetailController(args),//todo PlayerDetailPageArguments测试数据，需删除
         id: PlayerDetailController.idMain,
         builder: (_) {
           return BlackAppWidget(
@@ -101,7 +98,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                 ),
                                 IconWidget(
                                     iconWidth: 17.w,
-                                    icon: Assets.uiIconFollowPng), //todo 换图
+                                    icon: Assets.uiIconFollowPng),
                               ],
                             ),
                             Text.rich(
@@ -153,7 +150,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                       constraints: BoxConstraints(maxWidth: 400.w),
                       height: 34.w,
                       margin: EdgeInsets.only(
-                          left: 16.w, right: 16.w, bottom: 16.w),
+                          left: 13.w, right: 13.w, bottom: 16.w),
                       decoration: BoxDecoration(
                           color: AppColors.cF2F2F2,
                           borderRadius: BorderRadius.circular(17.w)),
@@ -223,7 +220,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                         physics: OneBoundaryPageScrollPhysics(tabController: controller.tabController),
                         children: [
                           const SummaryPage(),
-                          const HistoryPage(),
+                          HistoryPage(headHeight: appBarHeight + 66.w,),
                           PlayerDetailGame(
                             headHeight: appBarHeight + 66.w,
                           )

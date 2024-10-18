@@ -15,14 +15,7 @@ import 'index.dart';
 import 'widgets/widgets.dart';
 
 class MineInfoPage extends GetView<MineInfoController> {
-  const MineInfoPage(this.id, {super.key});
-
-  final int id;
-
-  // 主视图
-  Widget _buildView() {
-    return const HelloWidget();
-  }
+  const MineInfoPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +23,8 @@ class MineInfoPage extends GetView<MineInfoController> {
       builder: (_) {
         return HorizontalDragBackWidget(
             child: BlackAppWidget(
-          AppBarWidget(
+          const AppBarWidget(
             title: "MINE",
-            id: id,
             right: null,
           ),
           totalScreenBuilder: (_,h){

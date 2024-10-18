@@ -80,19 +80,19 @@ class _NewsPageState extends State<NewsPage>
             return GetPageRoute(
                 opaque: false,
                 settings: settings,
-                page: () => MineInfoPage((settings.arguments as Map)['id']),
+                page: () => const MineInfoPage(),
                 binding: MineInfoBinding());
           case RouteNames.mineMineSetting:
             return GetPageRoute(
                 opaque: false,
                 settings: settings,
-                page: () => MineSettingPage((settings.arguments as Map)['id']),
+                page: () => const MineSettingPage(),
                 binding: MineSettingBinding());
           case RouteNames.mineMineAccount:
             return GetPageRoute(
                 opaque: false,
                 settings: settings,
-                page: () => MineAccountPage((settings.arguments as Map)['id']),
+                page: () => const MineAccountPage(),
                 binding: MineAccountBinding());
         }
         return null;

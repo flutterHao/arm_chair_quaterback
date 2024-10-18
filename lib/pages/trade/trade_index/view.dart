@@ -10,6 +10,12 @@ import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/player_avatar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
+import 'package:arm_chair_quaterback/pages/mine/mine_account/bindings.dart';
+import 'package:arm_chair_quaterback/pages/mine/mine_account/view.dart';
+import 'package:arm_chair_quaterback/pages/mine/mine_info/bindings.dart';
+import 'package:arm_chair_quaterback/pages/mine/mine_info/view.dart';
+import 'package:arm_chair_quaterback/pages/mine/mine_setting/bindings.dart';
+import 'package:arm_chair_quaterback/pages/mine/mine_setting/view.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -37,6 +43,24 @@ class TradeIndex extends StatelessWidget {
                 settings: setting,
                 page: () => const TradeIndexPage(),
                 binding: TradeIndexBinding());
+          case RouteNames.mineMineInfo:
+            return GetPageRoute(
+                opaque: false,
+                settings: setting,
+                page: () => const MineInfoPage(),
+                binding: MineInfoBinding());
+          case RouteNames.mineMineSetting:
+            return GetPageRoute(
+                opaque: false,
+                settings: setting,
+                page: () => const MineSettingPage(),
+                binding: MineSettingBinding());
+          case RouteNames.mineMineAccount:
+            return GetPageRoute(
+                opaque: false,
+                settings: setting,
+                page: () => const MineAccountPage(),
+                binding: MineAccountBinding());
         }
       },
     );

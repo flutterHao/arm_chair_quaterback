@@ -91,7 +91,6 @@ class ReciveRwardPage extends GetView<ReciveRwardController> {
         builder: (_) {
           return BlackAppWidget(
             const AppBarWidget(
-              id: GlobalNestedKey.PICKS,
               title: "RECEIVE AWARD",
             ),
             bodyWidget: _buildView(context),

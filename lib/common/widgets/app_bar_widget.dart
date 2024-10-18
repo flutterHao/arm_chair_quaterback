@@ -23,7 +23,6 @@ class AppBarWidget extends StatelessWidget {
     this.right = const MoneyAndCoinWidget(),
     this.title,
     this.titleWidget,
-    this.id,
     this.bottomChild,
     this.borderRadius,
   }) : assert(titleWidget != null || title != null,
@@ -32,7 +31,6 @@ class AppBarWidget extends StatelessWidget {
   final Widget? right;
   final String? title;
   final Widget? titleWidget;
-  final int? id;
   final Widget? bottomChild;
   final double? borderRadius;
 
@@ -51,18 +49,18 @@ class AppBarWidget extends StatelessWidget {
               children: [
                 Positioned(
                   left: 0,
-                  child: Container(
-                    // width: 48.w,
-                    // height: 48.w,
-                    margin: EdgeInsets.only(left: 20.w),
+                  child: SizedBox(
+                    width: 68.w,
+                    height: 48.w,
                     child: left ??
                         InkWell(
                           onTap: () {
-                            Get.back(id: id);
+                            Navigator.of(context).pop();
                           },
-                          child: SizedBox(
-                            width: 48.w,
+                          child: Container(
+                            width: 68.w,
                             height: 48.w,
+                            padding: EdgeInsets.only(left: 20.w),
                             child: IconWidget(
                               iconWidth: 19.w,
                               iconHeight: 19.w,

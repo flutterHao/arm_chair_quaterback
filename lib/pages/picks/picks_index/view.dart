@@ -84,19 +84,19 @@ class PicksIndex extends StatelessWidget {
             return GetPageRoute(
                 opaque: false,
                 settings: setting,
-                page: () =>  MineInfoPage((setting.arguments as Map)['id']),
+                page: () =>  const MineInfoPage(),
                 binding: MineInfoBinding());
           case RouteNames.mineMineSetting:
             return GetPageRoute(
                 opaque: false,
                 settings: setting,
-                page: () =>  MineSettingPage((setting.arguments as Map)['id']),
+                page: () =>  const MineSettingPage(),
                 binding: MineSettingBinding());
           case RouteNames.mineMineAccount:
             return GetPageRoute(
                 opaque: false,
                 settings: setting,
-                page: () =>  MineAccountPage((setting.arguments as Map)['id']),
+                page: () =>  const MineAccountPage(),
                 binding: MineAccountBinding());
         }
       },

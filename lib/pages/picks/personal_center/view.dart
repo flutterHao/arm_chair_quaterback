@@ -33,7 +33,6 @@ class PersonalCenterPage extends GetView<PersonalCenterController> {
         builder: (_) {
           return BlackAppWidget(
             const AppBarWidget(
-              id: GlobalNestedKey.PICKS,
               title: "PERSONAL CENTER",
             ),
             totalScreenBuilder: (context, appBarHeight) {

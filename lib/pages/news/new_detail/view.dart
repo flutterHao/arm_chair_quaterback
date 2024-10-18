@@ -58,7 +58,6 @@ class NewsDetailList extends GetView<NewListController> {
     return HorizontalDragBackWidget(
       child: BlackAppWidget(
         AppBarWidget(
-          id: GlobalNestedKey.NEWS,
           title: "NEWS",
           right: InkWell(
             onTap: () {

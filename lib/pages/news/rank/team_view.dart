@@ -25,7 +25,6 @@ class TeamRankPage extends GetView<RankController> {
       child: BlackAppWidget(
         const AppBarWidget(
           title: "TEAM",
-          id: GlobalNestedKey.NEWS,
         ),
         bodyWidget: Expanded(
           child: Column(

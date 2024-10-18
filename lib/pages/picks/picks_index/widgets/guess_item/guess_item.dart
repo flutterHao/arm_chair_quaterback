@@ -451,7 +451,8 @@ class _GuessItemState extends State<GuessItem>
                                                     guessItemController.player
                                                         .baseInfoList.playerId),
                                                 width: 55.w,
-                                                color: AppColors.cFFFFFF.withOpacity(.1),
+                                                color: AppColors.cFFFFFF
+                                                    .withOpacity(.1),
                                               ),
                                             ))),
                                     Text(

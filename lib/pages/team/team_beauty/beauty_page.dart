@@ -145,7 +145,6 @@ class BeautyPage extends GetView<BeautyController> {
         child: BlackAppWidget(
       const AppBarWidget(
         title: "TREASURE",
-        id: GlobalNestedKey.TEAM,
       ),
       bodyWidget: Expanded(child: _buildView(context)),
     ));

@@ -15,26 +15,17 @@ import 'index.dart';
 import 'widgets/widgets.dart';
 
 class MineSettingPage extends GetView<MineSettingController> {
-  const MineSettingPage(this.id, {super.key});
-
-  final int id;
-
-  // 主视图
-  Widget _buildView() {
-    return const HelloWidget();
-  }
+  const MineSettingPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)?.settings.arguments as Map;
     return GetBuilder<MineSettingController>(
       builder: (_) {
         return HorizontalDragBackWidget(
             child: BlackAppWidget(
-          AppBarWidget(
+          const AppBarWidget(
             right: null,
             title: "SETTING",
-            id: id,
           ),
           bodyWidget: SingleChildScrollView(
             child: Column(

@@ -165,6 +165,7 @@ class UserInfoBar extends StatelessWidget {
                 InkWell(
                   onTap: () {
                     if (!enable) {
+                      Navigator.pop(context);
                       return;
                     }
                     _showDialog(context,routeId);

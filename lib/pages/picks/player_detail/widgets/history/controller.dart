@@ -1,8 +1,12 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 
 class HistoryController extends GetxController {
   HistoryController();
+  final ScrollController scrollController = ScrollController();
+  final List<GlobalKey> tileKeys = List.generate(10, (index) => GlobalKey());
+  final List<String> items = List.generate(10, (index) => "Item $index");
 
 
   // tap

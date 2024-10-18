@@ -194,7 +194,6 @@ class StatsRankPage extends GetView<RankController> {
           return BlackAppWidget(
               const AppBarWidget(
                 title: "STATS",
-                id: GlobalNestedKey.NEWS,
               ),
               bodyWidget: Expanded(
                 child: _buildView(context),

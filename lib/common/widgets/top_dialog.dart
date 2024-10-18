@@ -447,7 +447,7 @@ class _TopDialogState extends State<TopDialog>
   void _popAndPushNamed(BuildContext context, String routeName) {
     // Get.back(id: widget.routeId);
     Get.toNamed(routeName,
-        id: widget.routeId, arguments: {"id": widget.routeId});
+        id: widget.routeId);
     // Navigator.of(context).pushNamed(routeName,arguments: {"id":widget.routeId});
   }
 
