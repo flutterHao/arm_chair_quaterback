@@ -14,6 +14,7 @@ import 'package:arm_chair_quaterback/common/widgets/line_chart_clipper.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/battle_game_over.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/widgets/battle_animation_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/widgets/score_panel.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -58,6 +59,9 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
 
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
+
+  late Animation<double> otherAnimationWithFighting;
+  var otherAnimationWithFightingValue = 0.0.obs;
 
   @override
   void initState() {
@@ -179,7 +183,8 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
                           left: 0,
                           child: Transform(
                             alignment: Alignment.center,
-                            transform: Matrix4.identity()..scale(-1.0, 1.0), // X 轴翻转
+                            transform: Matrix4.identity()
+                              ..scale(-1.0, 1.0), // X 轴翻转
                             child: IconWidget(
                               iconWidth: 21.w,
                               icon: Assets.uiTeamFramePng,
@@ -212,7 +217,8 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
                           bottom: 0,
                           child: Transform(
                             alignment: Alignment.center,
-                            transform: Matrix4.identity()..scale(1.0, -1.0), // X 轴翻转
+                            transform: Matrix4.identity()
+                              ..scale(1.0, -1.0), // X 轴翻转
                             child: IconWidget(
                               iconWidth: 21.w,
                               icon: Assets.uiTeamFramePng,
@@ -269,31 +275,8 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
   }
 
   Widget _buildCenterFight(double width) {
-    var xTranslateValue = 0.0;
-    var winX = 0.0;
     return Obx(() {
-      var maxXTranslateValue = width / 3;
-      var backX = maxXTranslateValue / 2;
-      if (fightAnimationValue.value <= 1) {
-        xTranslateValue = fightAnimationValue.value * maxXTranslateValue;
-      } else if (fightAnimationValue.value <= 3) {
-        xTranslateValue =
-            -(fightAnimationValue.value - 1) / 2 * 2 * maxXTranslateValue +
-                maxXTranslateValue;
-      } else if (fightAnimationValue.value <= 3.8) {
-        xTranslateValue =
-            (fightAnimationValue.value - 3) / 0.8 * maxXTranslateValue -
-                maxXTranslateValue;
-      } else if (fightAnimationValue.value <= 4.7) {
-        winX = (fightAnimationValue.value - 3.8) / 0.9 * -backX;
-      } else if (fightAnimationValue.value <= 5.0) {
-        winX = (fightAnimationValue.value - 4.7) / 0.3 * (backX + 20.w) - backX;
-      } else {
-        xTranslateValue = (fightAnimationValue.value - 4.8) /
-            0.4 *
-            (leftWin ? -1 : 1) *
-            maxXTranslateValue;
-      }
+      var maxXTranslateValue = fightAnimationValue.value;
       var winWidth = 250.w;
       return Positioned(
           bottom: 282.h,
@@ -305,9 +288,9 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
                 // left
                 AnimatedPositioned(
                   duration: winDuration,
-                  left: winAnimationValue.value
+                  left: winAnimationValue.value && leftWin
                       ? 0
-                      : -width / 2 - 5 - xTranslateValue + (leftWin ? winX : 0),
+                      : -width / 2 - 5 - maxXTranslateValue,
                   child: SizedBox(
                     height: 135.h,
                     width: width,
@@ -331,7 +314,8 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
                                     child: ClipPath(
                                       clipper: CircleClipper(
                                           leftCut: winAnimationValue.value),
-                                      child: Container(
+                                      child: AnimatedContainer(
+                                        duration: winDuration,
                                         width: winAnimationValue.value
                                             ? winWidth
                                             : width,
@@ -348,7 +332,8 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
                                     child: ClipPath(
                                       clipper: CircleClipper(
                                           leftCut: winAnimationValue.value),
-                                      child: Container(
+                                      child: AnimatedContainer(
+                                        duration: winDuration,
                                         width: winAnimationValue.value
                                             ? winWidth
                                             : width,
@@ -365,24 +350,28 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
                                       ),
                                     ),
                                   )),
-                              Positioned(
-                                right: winAnimationValue.value ? null : 47.w,
-                                child: Container(
-                                    height: 68.h,
-                                    width: 68.h,
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(14.h),
-                                        border: Border.all(
-                                            color: AppColors.c3B93FF,
-                                            width: 2.h)),
-                                    child: ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(12.h),
-                                        child: IconWidget(
-                                            iconWidth: 68.h,
-                                            iconHeight: 68.h,
-                                            icon: controller.meAvatar))),
+                              AnimatedPositioned(
+                                duration: winDuration,
+                                right: winAnimationValue.value ? 0 : 47.w,
+                                left: winAnimationValue.value ? 0 : null,
+                                child: Center(
+                                  child: Container(
+                                      height: 68.h,
+                                      width: 68.h,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(14.h),
+                                          border: Border.all(
+                                              color: AppColors.c3B93FF,
+                                              width: 2.h)),
+                                      child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(12.h),
+                                          child: IconWidget(
+                                              iconWidth: 68.h,
+                                              iconHeight: 68.h,
+                                              icon: controller.meAvatar))),
+                                ),
                               )
                             ],
                           ),
@@ -395,9 +384,9 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
                 // right
                 AnimatedPositioned(
                   duration: winDuration,
-                  right: winAnimationValue.value
-                      ? -width
-                      : -width / 2 - 5 + xTranslateValue + (leftWin ? 0 : winX),
+                  right: winAnimationValue.value && !leftWin
+                      ? (width - winWidth) / 2
+                      : -width / 2 - 5 + maxXTranslateValue,
                   child: SizedBox(
                     height: 135.h,
                     width: width,
@@ -423,10 +412,14 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
                                           bottom: 3.h,
                                           top: 0,
                                           child: ClipPath(
-                                            clipper: CircleClipper(),
-                                            child: Container(
-                                              width: width,
-                                              // margin: EdgeInsets.only(bottom: 3.h),
+                                            clipper: CircleClipper(
+                                                leftCut:
+                                                    winAnimationValue.value),
+                                            child: AnimatedContainer(
+                                              duration: winDuration,
+                                              width: winAnimationValue.value
+                                                  ? winWidth
+                                                  : width,
                                               color: AppColors.cFF7954,
                                             ),
                                           )),
@@ -435,10 +428,14 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
                                           bottom: 0,
                                           top: 3.h,
                                           child: ClipPath(
-                                            clipper: CircleClipper(),
-                                            child: Container(
-                                              width: width,
-                                              // margin: EdgeInsets.only(top: 3.h),
+                                            clipper: CircleClipper(
+                                                leftCut:
+                                                    winAnimationValue.value),
+                                            child: AnimatedContainer(
+                                              duration: winDuration,
+                                              width: winAnimationValue.value
+                                                  ? winWidth
+                                                  : width,
                                               decoration: BoxDecoration(
                                                   gradient: LinearGradient(
                                                       begin:
@@ -458,24 +455,32 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
                                   ),
                                 ),
                               ),
-                              Positioned(
-                                left: 47.w,
-                                child: Container(
-                                    height: 68.h,
-                                    width: 68.h,
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(14.h),
-                                        border: Border.all(
-                                            color: AppColors.c3B93FF,
-                                            width: 2.h)),
-                                    child: ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(12.h),
-                                        child: IconWidget(
-                                            iconWidth: 68.h,
-                                            iconHeight: 68.h,
-                                            icon: controller.opponentAvatar))),
+                              AnimatedPositioned(
+                                duration: winDuration,
+                                left: winAnimationValue.value
+                                    ? (width - (width - winWidth) / 2 - 47.w) /
+                                        2
+                                    : 47.w,
+                                right: winAnimationValue.value ? 0 : null,
+                                child: Center(
+                                  child: Container(
+                                      height: 68.h,
+                                      width: 68.h,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(14.h),
+                                          border: Border.all(
+                                              color: AppColors.cFF7954,
+                                              width: 2.h)),
+                                      child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(12.h),
+                                          child: IconWidget(
+                                              iconWidth: 68.h,
+                                              iconHeight: 68.h,
+                                              icon:
+                                                  controller.opponentAvatar))),
+                                ),
                               )
                             ],
                           ),
@@ -498,218 +503,230 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
           right: 0,
           child: Opacity(
             opacity: max(startAnimationController.value.value, 0.2),
-            child: Container(
-              height: 315.h,
-              color: AppColors.c262626,
-              child: Column(
-                children: [
-                  50.vGap,
-                  Stack(
-                    alignment: Alignment.bottomCenter,
-                    children: [
-                      //背景
-                      Text(
-                        "WIN RATE",
-                        style: 40.w7(
-                            color: AppColors.cB3B3B3.withOpacity(.1),
-                            height: 1),
-                      ),
-                      //前景
-                      Container(
-                        margin: EdgeInsets.only(bottom: 5.h),
-                        alignment: Alignment.bottomCenter,
-                        child: Text(
+            child: InkWell(
+              // onTap: () => _gameStart(),
+              // onTap: (){
+              //   winAnimationValue.value = !winAnimationValue.value;
+              // },
+              child: Container(
+                height: 315.h,
+                color: AppColors.c262626,
+                child: Column(
+                  children: [
+                    50.vGap,
+                    Stack(
+                      alignment: Alignment.bottomCenter,
+                      children: [
+                        //背景
+                        Text(
                           "WIN RATE",
-                          style: 16.w7(color: AppColors.cD3D3D3, height: 1),
+                          style: 40.w7(
+                              color: AppColors.cB3B3B3.withOpacity(.1),
+                              height: 1),
                         ),
-                      ),
-                    ],
-                  ),
-                  // 9.vGap,
-                  Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Container(
-                            width: 325.w,
-                            height: 181.h,
-                            color: AppColors.c0D0D0D.withOpacity(.3),
-                            child: Stack(
-                              alignment: Alignment.centerLeft,
-                              children: [
-                                // 表格的纵向参照线
-                                ...List.generate(3, (index) {
-                                  return Container(
-                                    margin: EdgeInsets.only(
-                                        left: (325.w / 4) * (index + 1) - 3.w),
-                                    height: 181.h,
-                                    width: 3.w,
-                                    color: AppColors.c262626,
-                                  );
-                                }),
-                                //横向50参照线
-                                const DashedLine(
-                                  axis: Axis.horizontal,
-                                  dashedWidth: 4,
-                                  dashedColor: AppColors.c666666,
-                                  count: 40,
-                                ),
-                                Obx(() {
-                                  return Stack(
-                                    children: [
-                                      //倾斜渐变线
-                                      SizedBox(
-                                        width: 325.w,
-                                        height: 181.h,
-                                        child: ClipPath(
-                                          clipper: LineChartClipper(
-                                              chartPoints.value),
-                                          child: ShaderMask(
-                                            shaderCallback: (Rect bounds) {
-                                              return const LinearGradient(
-                                                  begin: Alignment.topCenter,
-                                                  end: Alignment.bottomCenter,
-                                                  colors: [
-                                                    AppColors.c3B93FF,
-                                                    AppColors.c3B93FF,
-                                                    AppColors.c3B93FF,
-                                                    Colors.black,
-                                                    AppColors.cFF7954,
-                                                    AppColors.cFF7954,
-                                                    AppColors.cFF7954
-                                                  ]).createShader(bounds);
-                                            },
-                                            child: Container(
-                                              decoration: const BoxDecoration(
-                                                  image: DecorationImage(
-                                                      image: AssetImage(Assets
-                                                          .uiBgDiagonalPng),
-                                                      repeat:
-                                                          ImageRepeat.repeat)),
+                        //前景
+                        Container(
+                          margin: EdgeInsets.only(bottom: 5.h),
+                          alignment: Alignment.bottomCenter,
+                          child: Text(
+                            "WIN RATE",
+                            style: 16.w7(color: AppColors.cD3D3D3, height: 1),
+                          ),
+                        ),
+                      ],
+                    ),
+                    // 9.vGap,
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Container(
+                              width: 325.w,
+                              height: 181.h,
+                              color: AppColors.c0D0D0D.withOpacity(.3),
+                              child: Stack(
+                                alignment: Alignment.centerLeft,
+                                children: [
+                                  // 表格的纵向参照线
+                                  ...List.generate(3, (index) {
+                                    return Container(
+                                      margin: EdgeInsets.only(
+                                          left:
+                                              (325.w / 4) * (index + 1) - 3.w),
+                                      height: 181.h,
+                                      width: 3.w,
+                                      color: AppColors.c262626,
+                                    );
+                                  }),
+                                  //横向50参照线
+                                  const DashedLine(
+                                    axis: Axis.horizontal,
+                                    dashedWidth: 4,
+                                    dashedColor: AppColors.c666666,
+                                    count: 40,
+                                  ),
+                                  Obx(() {
+                                    return Stack(
+                                      children: [
+                                        //倾斜渐变线
+                                        SizedBox(
+                                          width: 325.w,
+                                          height: 181.h,
+                                          child: ClipPath(
+                                            clipper: LineChartClipper(
+                                                chartPoints.value),
+                                            child: ShaderMask(
+                                              shaderCallback: (Rect bounds) {
+                                                return const LinearGradient(
+                                                    begin: Alignment.topCenter,
+                                                    end: Alignment.bottomCenter,
+                                                    colors: [
+                                                      AppColors.c3B93FF,
+                                                      AppColors.c3B93FF,
+                                                      AppColors.c3B93FF,
+                                                      Colors.black,
+                                                      AppColors.cFF7954,
+                                                      AppColors.cFF7954,
+                                                      AppColors.cFF7954
+                                                    ]).createShader(bounds);
+                                              },
+                                              child: Container(
+                                                decoration: const BoxDecoration(
+                                                    image: DecorationImage(
+                                                        image: AssetImage(Assets
+                                                            .uiBgDiagonalPng),
+                                                        repeat: ImageRepeat
+                                                            .repeat)),
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                      //折线图实线
-                                      CustomPaint(
-                                        size: Size(325.w, 181.h),
-                                        painter: ChartPainter(
-                                            chartPoints.value, 181.h),
-                                      )
-                                    ],
-                                  );
-                                }),
-                                //实时指标虚线
-                                Obx(() {
-                                  return Positioned(
-                                    left: pointOffset.value != Offset.zero
-                                        ? pointOffset.value.dx - 2
-                                        : 0,
-                                    child: SizedBox(
-                                      width: 325.w,
-                                      height: 181.h,
-                                      child: Stack(
-                                        children: [
-                                          Container(
-                                            width: double.infinity,
-                                            color: AppColors.c3B3B3B
-                                                .withOpacity(.3),
-                                          ),
-                                          const Stack(
-                                            alignment: Alignment.center,
-                                            children: [
-                                              SizedBox(
-                                                height: double.infinity,
-                                                child: DashedLine(
-                                                  axis: Axis.vertical,
-                                                  dashedHeight: 2,
-                                                  dashedWidth: 2,
-                                                  count: 30,
-                                                  dashedColor:
-                                                      AppColors.cF2F2F2,
+                                        //折线图实线
+                                        CustomPaint(
+                                          size: Size(325.w, 181.h),
+                                          painter: ChartPainter(
+                                              chartPoints.value, 181.h),
+                                        )
+                                      ],
+                                    );
+                                  }),
+                                  //实时指标虚线
+                                  Obx(() {
+                                    return Positioned(
+                                      left: pointOffset.value != Offset.zero
+                                          ? pointOffset.value.dx - 2
+                                          : 0,
+                                      child: SizedBox(
+                                        width: 325.w,
+                                        height: 181.h,
+                                        child: Stack(
+                                          children: [
+                                            Container(
+                                              width: double.infinity,
+                                              color: AppColors.c3B3B3B
+                                                  .withOpacity(.3),
+                                            ),
+                                            const Stack(
+                                              alignment: Alignment.center,
+                                              children: [
+                                                SizedBox(
+                                                  height: double.infinity,
+                                                  child: DashedLine(
+                                                    axis: Axis.vertical,
+                                                    dashedHeight: 2,
+                                                    dashedWidth: 2,
+                                                    count: 30,
+                                                    dashedColor:
+                                                        AppColors.cF2F2F2,
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
+                                              ],
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                })
-                              ],
+                                    );
+                                  })
+                                ],
+                              ),
                             ),
-                          ),
-                          2.hGap,
-                          SizedBox(
-                            height: 181.h,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "100",
-                                  style: 10.w4(
-                                      color: AppColors.cB3B3B3.withOpacity(.7),
-                                      height: 1),
-                                ),
-                                Text(
-                                  "50",
-                                  style: 10.w4(
-                                      color: AppColors.cB3B3B3.withOpacity(.7),
-                                      height: 1),
-                                ),
-                                Text(
-                                  "100",
-                                  style: 10.w4(
-                                      color: AppColors.cB3B3B3.withOpacity(.7),
-                                      height: 1),
-                                )
-                              ],
-                            ),
-                          ),
-                          8.hGap
-                        ],
-                      ),
-                      //实时数据指示点
-                      SizedBox(
-                        width: 332.w,
-                        height: 188.h,
-                        child: Stack(
-                          children: [
-                            Obx(() {
-                              return Positioned(
-                                left: pointOffset.value != Offset.zero
-                                    ? pointOffset.value.dx - 7.h / 2
-                                    : 0,
-                                top: pointOffset.value != Offset.zero
-                                    ? pointOffset.value.dy
-                                    : (181.h - 7.h) / 2, //修改位置
-                                child: Container(
-                                  width: 7.h,
-                                  height: 7.h,
-                                  decoration: BoxDecoration(
-                                      color: AppColors.cFFFFFF,
-                                      borderRadius: BorderRadius.circular(4.h)),
-                                  child: Center(
-                                    child: Container(
-                                        width: 4.h,
-                                        height: 4.h,
-                                        decoration: BoxDecoration(
-                                            color: AppColors.cFF7954,
-                                            borderRadius:
-                                                BorderRadius.circular(2.h))),
+                            2.hGap,
+                            SizedBox(
+                              height: 181.h,
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "100",
+                                    style: 10.w4(
+                                        color:
+                                            AppColors.cB3B3B3.withOpacity(.7),
+                                        height: 1),
                                   ),
-                                ),
-                              );
-                            })
+                                  Text(
+                                    "50",
+                                    style: 10.w4(
+                                        color:
+                                            AppColors.cB3B3B3.withOpacity(.7),
+                                        height: 1),
+                                  ),
+                                  Text(
+                                    "100",
+                                    style: 10.w4(
+                                        color:
+                                            AppColors.cB3B3B3.withOpacity(.7),
+                                        height: 1),
+                                  )
+                                ],
+                              ),
+                            ),
+                            8.hGap
                           ],
                         ),
-                      ),
-                    ],
-                  )
-                ],
+                        //实时数据指示点
+                        SizedBox(
+                          width: 332.w,
+                          height: 188.h,
+                          child: Stack(
+                            children: [
+                              Obx(() {
+                                return Positioned(
+                                  left: pointOffset.value != Offset.zero
+                                      ? pointOffset.value.dx - 7.h / 2
+                                      : 0,
+                                  top: pointOffset.value != Offset.zero
+                                      ? pointOffset.value.dy
+                                      : (181.h - 7.h) / 2, //修改位置
+                                  child: Container(
+                                    width: 7.h,
+                                    height: 7.h,
+                                    decoration: BoxDecoration(
+                                        color: AppColors.cFFFFFF,
+                                        borderRadius:
+                                            BorderRadius.circular(4.h)),
+                                    child: Center(
+                                      child: Container(
+                                          width: 4.h,
+                                          height: 4.h,
+                                          decoration: BoxDecoration(
+                                              color: AppColors.cFF7954,
+                                              borderRadius:
+                                                  BorderRadius.circular(2.h))),
+                                    ),
+                                  ),
+                                );
+                              })
+                            ],
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
           ));
@@ -736,8 +753,7 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
                       child: Text(
                       MyDateUtils.formatMS((gameLastTimes.value -
                               gameLastTimes.value *
-                                  fightAnimationValue.value /
-                                  4.4)
+                                  otherAnimationWithFightingValue.value)
                           .toInt()),
                       style: 24.w7(
                           color: /*gameLastTimes.value <= 10
@@ -833,24 +849,29 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
         child: Opacity(
           opacity: max(startAnimationController.value.value, 0.5),
           child: ScorePanel(
-              leftScore: ((fightAnimationValue.value / 4) * 172).toInt(),
-              rightScore: ((fightAnimationValue.value / 4) * 146).toInt()),
+              leftScore: (otherAnimationWithFightingValue.value * 172).toInt(),
+              rightScore:
+                  (otherAnimationWithFightingValue.value * 146).toInt()),
         ),
       );
     });
   }
 
   void _gameStart() {
+    // leftWin = false;
+
     /// 以此为左边胜率，右边相反（跟着左边一起移动），用nextDouble
     animationController.removeStatusListener(_countDownStatusListener);
     animation.removeListener(_countDownAnimationListener);
     animationController.reset();
-    fightAnimationValue.value = 0.0;
+    fightAnimationValue.value = otherAnimationWithFightingValue.value = 0.0;
     _buildPath();
-    animationController.duration = const Duration(milliseconds: 1000);
+    animationController.duration = const Duration(milliseconds: 3000);
     animationController.addStatusListener(_fightAnimationStatusListener);
-    animation = Tween(begin: 0.0, end: 5.2).animate(animationController)
-      ..addListener(_fightAnimationListener);
+    // animation = Tween(begin: 0.0, end: 5.2).animate(animationController)
+    //   ..addListener(_fightAnimationListener);
+    _buildFightAnimation();
+    _buildOtherAnimationWithFight();
     animationController.forward();
   }
 
@@ -861,20 +882,52 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
 
     /// 比赛结束
     Future.delayed(const Duration(seconds: 1), () {
+      winAnimationValue.value = true;
       animationController.removeStatusListener(_fightAnimationStatusListener);
       animation.removeListener(_fightAnimationListener);
-      // animationController.reset();
-      animationController.addStatusListener((s) {});
-      winAnimationValue.value = true;
       Future.delayed(const Duration(seconds: 2), () {
         widget.onGameOver.call();
       });
     });
   }
 
+  void _buildFightAnimation() {
+    var width = MediaQuery.of(context).size.width / 2;
+    width = leftWin ? width : -width;
+    var curve = Curves.bounceInOut;
+    animation = TweenSequence([
+      TweenSequenceItem(
+          tween: Tween(begin: 0.0, end: width).chain(CurveTween(curve: curve)),
+          weight: 0.2),
+      TweenSequenceItem(
+          tween: Tween(begin: 0.0, end: -width).chain(CurveTween(curve: curve)),
+          weight: 0.3),
+      TweenSequenceItem(
+          tween: Tween(begin: 0.0, end: width).chain(CurveTween(curve: curve)),
+          weight: 0.1),
+      TweenSequenceItem(
+          tween: Tween(begin: 0.0, end: width).chain(CurveTween(curve: curve)),
+          weight: 0.2),
+      TweenSequenceItem(
+          tween: Tween(begin: 0.0, end: -width)
+              .chain(CurveTween(curve: Curves.elasticIn)),
+          weight: 0.2),
+    ]).animate(animationController)
+      ..addListener(_fightAnimationListener);
+  }
+
+  _buildOtherAnimationWithFight() {
+    otherAnimationWithFighting =
+        Tween(begin: 0.0, end: 1.0).animate(animationController)
+          ..addListener(() {
+            otherAnimationWithFightingValue.value =
+                otherAnimationWithFighting.value;
+            calculate(otherAnimationWithFighting.value);
+          });
+  }
+
   void _fightAnimationListener() {
     fightAnimationValue.value = animation.value;
-    calculate(animation.value);
   }
 
   /// y：取值范围（-50，50）
@@ -944,7 +997,7 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
   }
 
   void calculate(double value) {
-    var index = (value / 5.2 * (list.length - 1)).toInt();
+    var index = (value * (list.length - 1)).toInt();
     var item = list[index];
     if (pointOffset.value.dx != item.dx) {
       pointOffset.value = item;

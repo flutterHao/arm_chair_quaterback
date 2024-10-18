@@ -1,6 +1,7 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/chart_sample_data.dart';
+import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -16,6 +17,7 @@ import 'package:arm_chair_quaterback/pages/mine/mine_info/bindings.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_info/view.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_setting/bindings.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_setting/view.dart';
+import 'package:arm_chair_quaterback/pages/picks/player_detail/index.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -43,6 +45,12 @@ class TradeIndex extends StatelessWidget {
                 settings: setting,
                 page: () => const TradeIndexPage(),
                 binding: TradeIndexBinding());
+          case RouteNames.picksPlayerDetail:
+            return GetPageRoute(
+                opaque: false,
+                settings: setting,
+                barrierColor: Colors.transparent,
+                page: () => PlayerDetailPage(arguments: setting.arguments as PlayerDetailPageArguments,));
           case RouteNames.mineMineInfo:
             return GetPageRoute(
                 opaque: false,
