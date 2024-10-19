@@ -22,51 +22,49 @@ class SummaryPage extends GetView<SummaryController> {
       builder: (_) {
         var scrollController = ScrollController();
         return SingleChildScrollView(
-          child: Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                18.vGap,
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 16.w),
-                  child: Text("Recent Performance",
-                    style: 16.w7(color: AppColors.c262626, height: 1),),
-                ),
-                SizedBox(
-                  height: 48.w,
-                  child: ListView.builder(
-                      itemCount: 10,
-                      controller: scrollController,
-                      physics: OneBoundaryScrollPhysics(scrollController: scrollController),
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return Obx(() {
-                          bool isSelected = controller.currentIndex.value == index;
-                          return InkWell(
-                            onTap: () => controller.currentIndex.value = index,
-                            child: Container(
-                              margin: EdgeInsets.only(right: 4.w,top: 14.w,bottom: 14.w,left: index==0?16.w:0),
-                              height: 20.w,
-                              width: 61.w,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                  color: isSelected
-                                      ? AppColors.c262626
-                                      : AppColors.cD9D9D9,
-                                  borderRadius: BorderRadius.circular(10.w)
-                              ),
-                              child: Text("PTS", style: 13.w4(
-                                  color: isSelected
-                                      ? AppColors.cF2F2F2
-                                      : AppColors.c262626, height: 1),),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              18.vGap,
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 16.w),
+                child: Text("Recent Performance",
+                  style: 16.w7(color: AppColors.c262626, height: 1),),
+              ),
+              SizedBox(
+                height: 48.w,
+                child: ListView.builder(
+                    itemCount: 10,
+                    controller: scrollController,
+                    physics: OneBoundaryScrollPhysics(scrollController: scrollController),
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return Obx(() {
+                        bool isSelected = controller.currentIndex.value == index;
+                        return InkWell(
+                          onTap: () => controller.currentIndex.value = index,
+                          child: Container(
+                            margin: EdgeInsets.only(right: 4.w,top: 14.w,bottom: 14.w,left: index==0?16.w:0),
+                            height: 20.w,
+                            width: 61.w,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                color: isSelected
+                                    ? AppColors.c262626
+                                    : AppColors.cD9D9D9,
+                                borderRadius: BorderRadius.circular(10.w)
                             ),
-                          );
-                        });
-                      }),
-                ),
+                            child: Text("PTS", style: 13.w4(
+                                color: isSelected
+                                    ? AppColors.cF2F2F2
+                                    : AppColors.c262626, height: 1),),
+                          ),
+                        );
+                      });
+                    }),
+              ),
 
-              ],
-            ),
+            ],
           ),
         );
       },

@@ -26,7 +26,7 @@ import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/index.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/view.dart';
-import 'package:arm_chair_quaterback/pages/trade/trade_index/index.dart';
+import 'package:arm_chair_quaterback/pages/trade/trade_index/view.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

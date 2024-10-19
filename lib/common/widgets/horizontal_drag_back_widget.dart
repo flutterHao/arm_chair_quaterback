@@ -103,7 +103,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
         return;
       }
       // print('onHorizontalDragEnd: ${detail.localPosition}');
-      print('onHorizontalDragEnd: ${detail.velocity}');
+      // print('onHorizontalDragEnd: ${detail.velocity}');
       _recycleAnimation(velocity: detail.velocity.pixelsPerSecond.dx);
     }
 
@@ -114,7 +114,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
       if (animationController.isAnimating || isOut) {
         return;
       }
-      print('onHorizontalDragCancel: ');
+      // print('onHorizontalDragCancel: ');
       _recycleAnimation();
     }
 
@@ -168,8 +168,8 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
         },
         child: NotificationListener<ScrollNotification>(
           onNotification: (notification) {
-            print(
-                'notification:${notification.runtimeType}，pixels:${notification.metrics.pixels}');
+            // print(
+                // 'notification:${notification.runtimeType}，pixels:${notification.metrics.pixels}');
             if (notification is OverscrollNotification) {
               // print('notification.metrics.pixels:${notification.metrics.pixels}');
               if (notification.metrics.pixels <=
@@ -184,8 +184,8 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
             if (notification is ScrollUpdateNotification &&
                 !isOnLeftSide &&
                 startScrollFlag) {
-              print(
-                  'notification.metrics.pixels:${notification.metrics.pixels}');
+              // print(
+              //     'notification.metrics.pixels:${notification.metrics.pixels}');
               if (notification.metrics.pixels <=
                       notification.metrics.minScrollExtent &&
                   !isOnLeftSide &&

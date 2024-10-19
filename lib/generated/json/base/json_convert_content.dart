@@ -21,6 +21,7 @@ import 'package:arm_chair_quaterback/common/entities/reward_group_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_simple_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/trade_entity/trade_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/train_task_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/training_task_entity.dart';
@@ -303,6 +304,26 @@ class JsonConvert {
       return data.map<TeamSimpleEntity>((Map<String, dynamic> e) =>
           TeamSimpleEntity.fromJson(e)).toList() as M;
     }
+    if (<TradeInfoEntity>[] is M) {
+      return data.map<TradeInfoEntity>((Map<String, dynamic> e) =>
+          TradeInfoEntity.fromJson(e)).toList() as M;
+    }
+    if (<TradeInfoPlayerTrends>[] is M) {
+      return data.map<TradeInfoPlayerTrends>((Map<String, dynamic> e) =>
+          TradeInfoPlayerTrends.fromJson(e)).toList() as M;
+    }
+    if (<TradeInfoTotalSalary>[] is M) {
+      return data.map<TradeInfoTotalSalary>((Map<String, dynamic> e) =>
+          TradeInfoTotalSalary.fromJson(e)).toList() as M;
+    }
+    if (<TradeInfoTradePlayers>[] is M) {
+      return data.map<TradeInfoTradePlayers>((Map<String, dynamic> e) =>
+          TradeInfoTradePlayers.fromJson(e)).toList() as M;
+    }
+    if (<TradeInfoTradeLogs>[] is M) {
+      return data.map<TradeInfoTradeLogs>((Map<String, dynamic> e) =>
+          TradeInfoTradeLogs.fromJson(e)).toList() as M;
+    }
     if (<TrainTaskEntity>[] is M) {
       return data.map<TrainTaskEntity>((Map<String, dynamic> e) =>
           TrainTaskEntity.fromJson(e)).toList() as M;
@@ -396,6 +417,11 @@ class JsonConvertClassCollection {
     (TeamPlayerInfoPotential).toString(): TeamPlayerInfoPotential.fromJson,
     (TeamRankEntity).toString(): TeamRankEntity.fromJson,
     (TeamSimpleEntity).toString(): TeamSimpleEntity.fromJson,
+    (TradeInfoEntity).toString(): TradeInfoEntity.fromJson,
+    (TradeInfoPlayerTrends).toString(): TradeInfoPlayerTrends.fromJson,
+    (TradeInfoTotalSalary).toString(): TradeInfoTotalSalary.fromJson,
+    (TradeInfoTradePlayers).toString(): TradeInfoTradePlayers.fromJson,
+    (TradeInfoTradeLogs).toString(): TradeInfoTradeLogs.fromJson,
     (TrainTaskEntity).toString(): TrainTaskEntity.fromJson,
     (TrainingInfoEntity).toString(): TrainingInfoEntity.fromJson,
     (TrainingInfoAward).toString(): TrainingInfoAward.fromJson,

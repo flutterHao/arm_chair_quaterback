@@ -76,4 +76,10 @@ class Api {
       "$API_BASE_PATH/TeamPlayer/playerTraining";
   static const String getTeamPlayerList =
       "$API_BASE_PATH/TeamPlayer/getTeamPlayerList";
+
+  ///trade
+  static const String getTradeInfo = "$API_BASE_PATH/Trade/getTradeInfo";
+  static const String buyPlayer = "$API_BASE_PATH/Trade/buyPlayer";
+  static const String sellPlayer = "$API_BASE_PATH/Trade/sellPlayer";
+
 }

@@ -20,7 +20,7 @@ class OneBoundaryPageScrollPhysics extends ScrollPhysics {
 
   @override
   double applyBoundaryConditions(ScrollMetrics position, double value) {
-    print('applyBoundaryConditions:${position.pixels},offset:$value');
+    // print('applyBoundaryConditions:${position.pixels},offset:$value');
     if (tabController.index == 0 && value < 0) {
       return value - position.minScrollExtent;
     }

@@ -80,8 +80,8 @@ class _HistoryPageState extends State<HistoryPage>
     // 延迟确保 ExpansionTile 已完全展开
     Future.delayed(const Duration(milliseconds: 100), () {
       // 获取当前 ExpansionTile 的渲染对象
-      final RenderBox renderBox = controller.tileKeys[index].currentContext!
-          .findRenderObject() as RenderBox;
+      final RenderBox renderBox = controller.tileKeys[index].currentContext
+          ?.findRenderObject() as RenderBox;
       // 获取 ExpansionTile 在屏幕中的位置
       final position = renderBox.localToGlobal(Offset.zero);
       final expansionTileYPosition = position.dy;
