@@ -159,7 +159,8 @@ class ReciveAwardDetailItem extends StatelessWidget {
                         children: [
                           Text("MORE",style: 11.w7(color: guessValueDiff<0?AppColors.c10A86A:AppColors.cB3B3B3),),
                           3.hGap,
-                          Text("+${newsDefineEntity.betOdds}",style: 9.w7(color: guessValueDiff<0?AppColors.c10A86A:AppColors.cB3B3B3))
+                          //todo 注释这里需要修改赔率
+                          // Text("+${newsDefineEntity.betOdds}",style: 9.w7(color: guessValueDiff<0?AppColors.c10A86A:AppColors.cB3B3B3))
                         ],
                       ),
                     ),
@@ -178,7 +179,8 @@ class ReciveAwardDetailItem extends StatelessWidget {
                         children: [
                           Text("LESS",style: 11.w7(color: guessValueDiff>0?AppColors.c10A86A:AppColors.cB3B3B3),),
                           3.hGap,
-                          Text("+${newsDefineEntity.betOdds}",style: 9.w7(color: guessValueDiff>0?AppColors.c10A86A:AppColors.cB3B3B3))
+                          //todo 注释这里需要修改赔率
+                          // Text("+${newsDefineEntity.betOdds}",style: 9.w7(color: guessValueDiff>0?AppColors.c10A86A:AppColors.cB3B3B3))
                         ],
                       ),
                     ),

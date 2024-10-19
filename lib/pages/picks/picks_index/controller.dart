@@ -37,13 +37,17 @@ class PicksIndexController extends GetxController {
 
   Map<int, double> choiceData = {};
 
+  var currentIndex = 0.obs;
+  var tabs = List.generate(10, (_)=> "PTS");
+
   var betCount = 0.0.obs; // 总赔率
   var costCount = 0.0.obs; // 总花费
 
   var batchDeleteOpen = false.obs;
 
   /// 选择了more/less
-  choiceOne(int index, double choice, {bool needRefreshList = false}) {
+  choiceOne(int itemIndex,double choice, {bool needRefreshList = false}) {
+    var index = currentIndex.value;
     if (choiceData[index] == choice) {
       choiceData.remove(index);
     } else {
@@ -53,17 +57,20 @@ class PicksIndexController extends GetxController {
   }
 
   void _count(bool needRefreshList) {
+
+    //todo 功能未实现
     var len = choiceData.length;
-    var odds = double.parse(picksPlayers[0].betOdds);
-    betCount.value = len == 0
-        ? 0
-        : len == 1
-            ? odds
-            : double.parse(
-                (pow(odds, len) * double.parse(picksPlayers[0].betMutOdds))
-                    .toStringAsFixed(1));
-    costCount.value = double.parse(
-        (len * double.parse(picksPlayers[0].betCost)).toStringAsFixed(1));
+    // var odds = double.parse(picksPlayers[0].betOdds);
+    // betCount.value = len == 0
+    //     ? 0
+    //     : len == 1
+    //         ? odds
+    //         : double.parse(
+    //             (pow(odds, len) * double.parse(picksPlayers[0].betMutOdds))
+    //                 .toStringAsFixed(1));
+    // costCount.value = double.parse(
+    //     (len * double.parse(picksPlayers[0].betCost)).toStringAsFixed(1));
+
     if (needRefreshList) {
       update([idGuessList]);
     }
@@ -187,21 +194,23 @@ class PicksIndexController extends GetxController {
             .firstWhere((nba) => nba.playerId == e.playerId);
         picksPlayer.dataAvgList = nbaPlayerInfosEntity.playerDataAvgList
             .firstWhere((nba) => nba.playerId == e.playerId);
-        switch (picksPlayer.baseInfoList.position.toLowerCase()) {
-          case "c":
-            picksPlayer.betData = newsDefineEntity.cBetData;
-          case "pg":
-            picksPlayer.betData = [newsDefineEntity.pgBetDate];
-          case "sg":
-            picksPlayer.betData = [newsDefineEntity.sgBetData];
-          case "pf":
-            picksPlayer.betData = [newsDefineEntity.pfBetData];
-          case "sf":
-            picksPlayer.betData = [newsDefineEntity.sfBetData];
-        }
-        picksPlayer.betMutOdds = newsDefineEntity.betMutOdds;
+
+        //todo
+        // switch (picksPlayer.baseInfoList.position.toLowerCase()) {
+        //   case "c":
+        //     picksPlayer.betData = newsDefineEntity.cBetData;
+        //   case "pg":
+        //     picksPlayer.betData = newsDefineEntity.pgBetDate;
+        //   case "sg":
+        //     picksPlayer.betData = newsDefineEntity.sgBetData;
+        //   case "pf":
+        //     picksPlayer.betData = newsDefineEntity.pfBetData;
+        //   case "sf":
+        //     picksPlayer.betData = newsDefineEntity.sfBetData;
+        // }
+        picksPlayer.betMutOdds = "2";//newsDefineEntity.betMutOdds;//todo
         picksPlayer.betCost = newsDefineEntity.betCost;
-        picksPlayer.betOdds = newsDefineEntity.betOdds;
+        picksPlayer.betOdds = "2";//newsDefineEntity.betOdds;//todo
         picksPlayer.selfTeamInfo = nbaTeams.firstWhere((nba) =>
             nba.id.toString() == picksPlayer.baseInfoList.teamId.toString());
         picksPlayer.awayTeamInfo = nbaTeams

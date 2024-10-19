@@ -22,14 +22,16 @@ class ReciveAwardItemController extends GetxController {
   /// 获取总赔率
   String getBetCount() {
     int len = data.length;
-    var value = len == 0
-        ? "0"
-        : len == 1
-            ? newsDefineEntity.betOdds
-            : (pow(double.parse(newsDefineEntity.betOdds), len) *
-                    double.parse(newsDefineEntity.betMutOdds))
-                .toStringAsFixed(1);
-    return value;
+    //todo 未实现功能，需要完成
+    // var value = len == 0
+    //     ? "0"
+    //     : len == 1
+    //         ? newsDefineEntity.betOdds
+    //         : (pow(double.parse(newsDefineEntity.betOdds), len) *
+    //                 double.parse(newsDefineEntity.betMutOdds))
+    //             .toStringAsFixed(1);
+    // return value;
+    return "2";
   }
 
   /// 获取消耗金币数

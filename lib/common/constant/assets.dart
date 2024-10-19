@@ -76,6 +76,7 @@ class Assets {
   static const uiIconApplePng = 'assets/images/icon/ui_icon_apple.png';
   static const uiIconCountdownPng = 'assets/images/icon/ui_icon_countdown.png';
   static const uiIconDecreasingAmplitudePng = 'assets/images/icon/ui_icon_decreasing amplitude.png';
+  static const uiIconUpPng = 'assets/images/icon/ui_icon_up.png';
 
   ///test
   static const testTeamLogoPng = 'assets/test/test_team_logo.png';

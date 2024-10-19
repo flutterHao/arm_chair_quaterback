@@ -10,6 +10,7 @@ import 'package:arm_chair_quaterback/common/widgets/TLBuilderWidget.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/physics/one_boundary_scroll_physics.dart';
 import 'package:arm_chair_quaterback/common/widgets/player_avatar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_account/bindings.dart';
@@ -86,6 +87,7 @@ class TradeIndexPage extends StatefulWidget {
 
 class _TradeIndexPageState extends State<TradeIndexPage>
     with AutomaticKeepAliveClientMixin {
+  ScrollController scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
     return GetBuilder<TradeIndexController>(
