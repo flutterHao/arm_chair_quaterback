@@ -231,11 +231,11 @@ class _BattleBeforeGameState extends State<BattleBeforeGame>
   Widget _buildPlayers() {
     /// 垂直范围 320.h - 370.h
     List<Offset> positions = [
-      Offset(30.h, 14.h),
-      Offset(99.h, 10.h),
-      Offset(180.h, 15.h),
-      Offset(70.h, 35.h),
-      Offset(130.h, 40.h),
+      Offset(30.w, 14.h),
+      Offset(99.w, 10.h),
+      Offset(170.w, 15.h),
+      Offset(70.w, 35.h),
+      Offset(130.w, 40.h),
     ];
     return Positioned(
       top: 320.h,

@@ -150,7 +150,7 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
               const BattleGameOver()
             else ...[
               _buildWinRate(),
-              _buildPlayers(),
+              _buildPlayers(width),
               _buildLive(),
               _buildGameStartCountdown(),
               _buildCenterFight(width),
@@ -793,24 +793,25 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
         }));
   }
 
-  Widget _buildPlayers() {
+  Widget _buildPlayers(double width) {
     /// 垂直范围 320.h - 370.h
     List<Offset> positions = [
-      Offset(30.h, 14.h),
-      Offset(99.h, 10.h),
-      Offset(180.h, 15.h),
-      Offset(70.h, 35.h),
-      Offset(130.h, 40.h),
+      Offset(30.w, 14.h),
+      Offset(99.w, 10.h),
+      Offset(170.w, 15.h),
+      Offset(70.w, 35.h),
+      Offset(130.w, 40.h),
     ];
     return Obx(() {
       return Positioned(
         top: 320.h,
-        left: 0,
-        right: 0,
+        left: -fightAnimationValue.value/5,
+        // right: 0,
         child: AnimatedOpacity(
           opacity: winAnimationValue.value ? 0 : 1,
           duration: winDuration,
           child: SizedBox(
+            width: width,
             height: 70.h,
             child: Stack(
               children: [
@@ -894,7 +895,7 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
   void _buildFightAnimation() {
     var width = MediaQuery.of(context).size.width / 2;
     width = leftWin ? width : -width;
-    var curve = Curves.bounceInOut;
+    var curve = Random().nextBool()?Curves.elasticInOut:Curves.elasticInOut;
     animation = TweenSequence([
       TweenSequenceItem(
           tween: Tween(begin: 0.0, end: width).chain(CurveTween(curve: curve)),
