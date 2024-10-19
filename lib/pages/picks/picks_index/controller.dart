@@ -71,6 +71,8 @@ class PicksIndexController extends GetxController {
     // costCount.value = double.parse(
     //     (len * double.parse(picksPlayers[0].betCost)).toStringAsFixed(1));
 
+    //todo 假数据，需删除
+    // costCount.value = choiceData.length  * 2;
     if (needRefreshList) {
       update([idGuessList]);
     }

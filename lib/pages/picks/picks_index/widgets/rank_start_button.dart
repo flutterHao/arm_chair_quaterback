@@ -5,6 +5,7 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/btn_background.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/picks_guess_confirm_dialog.dart';
+import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/picks_guess_confirm_dialog_v2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -35,7 +36,7 @@ class RankStartButton extends StatelessWidget {
         showModalBottomSheet(
             isScrollControlled: true,
             context: Get.context!, builder: (context){
-          return const PicksGuessConfirmDialog();
+          return const PicksGuessConfirmDialogV2();
         });
       },
       child: BtnBackground(
