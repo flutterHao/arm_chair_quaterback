@@ -7,6 +7,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:arm_chair_quaterback/common/entities/all_team_players_by_up_star_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_param_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity.dart';
@@ -116,5 +117,13 @@ class PicksApi {
         .post(Api.upStarTeamPlayer, data: {"uuid": uuid, "materialScienceUUID": materialScienceUUID});
     return UpStartTeamPlayerResponseEntity.fromJson(json);
   }
+
+  static Future<List<AllTeamPlayersByUpStarEntity>> getAllTeamPlayersByUpStar(
+      String uuid) async {
+    List json = await httpUtil
+        .post(Api.upStarTeamPlayer, data: {"uuid": uuid});
+    return json.map((e)=> AllTeamPlayersByUpStarEntity.fromJson(e)).toList();
+  }
+
 
 }

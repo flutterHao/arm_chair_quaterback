@@ -5,7 +5,9 @@ export 'package:arm_chair_quaterback/generated/json/up_start_team_player_respons
 
 @JsonSerializable()
 class UpStartTeamPlayerResponseEntity {
-	late List<UpStartTeamPlayerResponseTeamPlayers> teamPlayers;
+	late UpStartTeamPlayerResponseDataBefore before;
+	late bool success;
+	late UpStartTeamPlayerResponseDataAfter after;
 
 	UpStartTeamPlayerResponseEntity();
 
@@ -20,40 +22,30 @@ class UpStartTeamPlayerResponseEntity {
 }
 
 @JsonSerializable()
-class UpStartTeamPlayerResponseTeamPlayers {
-	late List<int> areaMascotId;
-	late bool bindStatus;
-	late int breakThroughGrade;
-	late int buyPlayerScore;
+class UpStartTeamPlayerResponseDataBefore {
 	late int buyPrice;
-	late List<dynamic> coachPassivitySkills;
-	late int createTime;
-	late int famousAlmanacGrade;
-	late int fromType;
-	late int gradeExp;
-	late int id;
-	late int mascotId;
-	late int mvpGrade;
-	late List<dynamic> needAwardData;
-	late int perfectPromoteCount;
-	late int playerGrade;
-	late int playerId;
-	late int position;
-	late int power;
-	late int promoteCount;
-	late int property;
-	late List<UpStartTeamPlayerResponseTeamPlayersQualificationAbility> qualificationAbility;
-	late int qualificationLuckValue;
-	late int specialTrainingGrade;
-	late int teamId;
+	late int buyPlayerScore;
 	late int updateTime;
 	late String uuid;
+	late int gradeExp;
+	late int fromType;
+	late int createTime;
+	late int playerGrade;
+	late int teamId;
+	late int id;
+	late int position;
+	late int power;
+	late UpStartTeamPlayerResponseDataBeforePotential potential;
+	late bool bindStatus;
+	late int breakThroughGrade;
+	late int playerId;
+	late UpStartTeamPlayerResponseDataBeforeUpStarBase upStarBase;
 
-	UpStartTeamPlayerResponseTeamPlayers();
+	UpStartTeamPlayerResponseDataBefore();
 
-	factory UpStartTeamPlayerResponseTeamPlayers.fromJson(Map<String, dynamic> json) => $UpStartTeamPlayerResponseTeamPlayersFromJson(json);
+	factory UpStartTeamPlayerResponseDataBefore.fromJson(Map<String, dynamic> json) => $UpStartTeamPlayerResponseDataBeforeFromJson(json);
 
-	Map<String, dynamic> toJson() => $UpStartTeamPlayerResponseTeamPlayersToJson(this);
+	Map<String, dynamic> toJson() => $UpStartTeamPlayerResponseDataBeforeToJson(this);
 
 	@override
 	String toString() {
@@ -62,17 +54,114 @@ class UpStartTeamPlayerResponseTeamPlayers {
 }
 
 @JsonSerializable()
-class UpStartTeamPlayerResponseTeamPlayersQualificationAbility {
-	late int baseValue;
-	late bool lock;
-	late int newValue;
-	late int type;
+class UpStartTeamPlayerResponseDataBeforePotential {
+	late int blk;
+	late int threePt;
+	late int ast;
+	late int stl;
+	late int pts;
+	late int reb;
 
-	UpStartTeamPlayerResponseTeamPlayersQualificationAbility();
+	UpStartTeamPlayerResponseDataBeforePotential();
 
-	factory UpStartTeamPlayerResponseTeamPlayersQualificationAbility.fromJson(Map<String, dynamic> json) => $UpStartTeamPlayerResponseTeamPlayersQualificationAbilityFromJson(json);
+	factory UpStartTeamPlayerResponseDataBeforePotential.fromJson(Map<String, dynamic> json) => $UpStartTeamPlayerResponseDataBeforePotentialFromJson(json);
 
-	Map<String, dynamic> toJson() => $UpStartTeamPlayerResponseTeamPlayersQualificationAbilityToJson(this);
+	Map<String, dynamic> toJson() => $UpStartTeamPlayerResponseDataBeforePotentialToJson(this);
+
+	@override
+	String toString() {
+		return jsonEncode(this);
+	}
+}
+
+@JsonSerializable()
+class UpStartTeamPlayerResponseDataBeforeUpStarBase {
+	late int blk;
+	late int threePt;
+	late int ast;
+	late int stl;
+	late int pts;
+	late int reb;
+
+	UpStartTeamPlayerResponseDataBeforeUpStarBase();
+
+	factory UpStartTeamPlayerResponseDataBeforeUpStarBase.fromJson(Map<String, dynamic> json) => $UpStartTeamPlayerResponseDataBeforeUpStarBaseFromJson(json);
+
+	Map<String, dynamic> toJson() => $UpStartTeamPlayerResponseDataBeforeUpStarBaseToJson(this);
+
+	@override
+	String toString() {
+		return jsonEncode(this);
+	}
+}
+
+@JsonSerializable()
+class UpStartTeamPlayerResponseDataAfter {
+	late int buyPrice;
+	late int buyPlayerScore;
+	late int updateTime;
+	late String uuid;
+	late int gradeExp;
+	late int fromType;
+	late int createTime;
+	late int playerGrade;
+	late int teamId;
+	late int id;
+	late int position;
+	late int power;
+	late UpStartTeamPlayerResponseDataAfterPotential potential;
+	late bool bindStatus;
+	late int breakThroughGrade;
+	late int playerId;
+	late UpStartTeamPlayerResponseDataAfterUpStarBase upStarBase;
+
+	UpStartTeamPlayerResponseDataAfter();
+
+	factory UpStartTeamPlayerResponseDataAfter.fromJson(Map<String, dynamic> json) => $UpStartTeamPlayerResponseDataAfterFromJson(json);
+
+	Map<String, dynamic> toJson() => $UpStartTeamPlayerResponseDataAfterToJson(this);
+
+	@override
+	String toString() {
+		return jsonEncode(this);
+	}
+}
+
+@JsonSerializable()
+class UpStartTeamPlayerResponseDataAfterPotential {
+	late int blk;
+	late int threePt;
+	late int ast;
+	late int stl;
+	late int pts;
+	late int reb;
+
+	UpStartTeamPlayerResponseDataAfterPotential();
+
+	factory UpStartTeamPlayerResponseDataAfterPotential.fromJson(Map<String, dynamic> json) => $UpStartTeamPlayerResponseDataAfterPotentialFromJson(json);
+
+	Map<String, dynamic> toJson() => $UpStartTeamPlayerResponseDataAfterPotentialToJson(this);
+
+	@override
+	String toString() {
+		return jsonEncode(this);
+	}
+}
+
+@JsonSerializable()
+class UpStartTeamPlayerResponseDataAfterUpStarBase {
+	late int blk;
+	late int threePt;
+	late int ast;
+	late int stl;
+	late int pts;
+	late int reb;
+
+	UpStartTeamPlayerResponseDataAfterUpStarBase();
+
+	factory UpStartTeamPlayerResponseDataAfterUpStarBase.fromJson(Map<String, dynamic> json) => $UpStartTeamPlayerResponseDataAfterUpStarBaseFromJson(json);
+
+	Map<String, dynamic> toJson() => $UpStartTeamPlayerResponseDataAfterUpStarBaseToJson(this);
 
 	@override
 	String toString() {

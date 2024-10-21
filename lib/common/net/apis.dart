@@ -29,8 +29,7 @@ class Api {
   static const String newsGuess = "$API_BASE_PATH//NBANews/getNewsGuess";
   static const String getReviewsByNewsId =
       "$API_BASE_PATH//NBANews/getReviewsByNewsId";
-        static const String getSonReviews =
-      "$API_BASE_PATH//NBANews/getSonReviews";
+  static const String getSonReviews = "$API_BASE_PATH//NBANews/getSonReviews";
   static const String getGuessInfos =
       "$API_BASE_PATH/NBANews/getGuessInfos"; //历史竞猜记录
   static const String getGuessGamesInfo =
@@ -69,8 +68,8 @@ class Api {
   static const String cTrainTask = "$CONFIG_BASE_PATH/TrainTask.json";
   static const String cTrainDefine = "$CONFIG_BASE_PATH/TrainDefine.json";
   static const String cStarUpDefine = "$CONFIG_BASE_PATH/StarUpDefine.json";
-  static const String cGradeInStarDefine = "$CONFIG_BASE_PATH/GradeInStarDefine.json";
-
+  static const String cGradeInStarDefine =
+      "$CONFIG_BASE_PATH/GradeInStarDefine.json";
 
   /// TeamPlayer
   static const String getTeamPlayerByUUID =
@@ -83,10 +82,11 @@ class Api {
       "$API_BASE_PATH/TeamPlayer/getTeamPlayerList";
   static const String upStarTeamPlayer =
       "$API_BASE_PATH/TeamPlayer/upStarTeamPlayer";
+  static const String getAllTeamPlayersByUpStar =
+      "$API_BASE_PATH/TeamPlayer/getAllTeamPlayersByUpStar";
 
   ///trade
   static const String getTradeInfo = "$API_BASE_PATH/Trade/getTradeInfo";
   static const String buyPlayer = "$API_BASE_PATH/Trade/buyPlayer";
   static const String sellPlayer = "$API_BASE_PATH/Trade/sellPlayer";
-
 }

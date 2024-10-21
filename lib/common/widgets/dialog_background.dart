@@ -12,12 +12,14 @@ class DialogBackground extends StatelessWidget {
     super.key,
     required this.child,
     this.frontColor = AppColors.cFFFFFF,
-    this.backgroundColor = AppColors.cFF7954,
+    this.backgroundColor = AppColors.cFF7954, this.borderHeight, this.borderRadius,
   });
 
   final Color frontColor;
   final Color backgroundColor;
   final Widget child;
+  final double? borderHeight;
+  final BorderRadius? borderRadius;
 
   @override
   Widget build(BuildContext context) {
@@ -27,15 +29,15 @@ class DialogBackground extends StatelessWidget {
           width: double.infinity,
           decoration: BoxDecoration(
             color: backgroundColor,
-            borderRadius: BorderRadius.vertical(top: Radius.circular(16.w))
+            borderRadius: borderRadius??BorderRadius.vertical(top: Radius.circular(16.w))
           ),
         ),
         Container(
           width: double.infinity,
-          margin: EdgeInsets.only(top: 4.w),
+          margin: EdgeInsets.only(top: borderHeight??4.w),
           decoration: BoxDecoration(
             color: frontColor,
-            borderRadius: BorderRadius.vertical(top: Radius.circular(16.w))
+            borderRadius: borderRadius??BorderRadius.vertical(top: Radius.circular(16.w))
           ),
           child: child,
         )

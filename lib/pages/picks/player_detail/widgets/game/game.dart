@@ -12,6 +12,8 @@ import 'package:arm_chair_quaterback/common/widgets/physics/one_boundary_scroll_
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/game/controller.dart';
+import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/up_star_defeat.dart';
+import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/up_start_success.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -1107,7 +1109,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                     child: Container(
                                       height: 84.w,
                                       margin: EdgeInsets.only(
-                                          left: 16.w, right: 16.w, bottom: 9.w),
+                                          left: 16.w, right: 16.w, bottom: controller.teamPlayerList.length-1 == index?100:9.w),
                                       decoration: BoxDecoration(
                                           color: AppColors.cF2F2F2,
                                           borderRadius:

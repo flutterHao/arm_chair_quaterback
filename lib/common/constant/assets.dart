@@ -78,6 +78,8 @@ class Assets {
   static const uiIconDecreasingAmplitudePng =
       'assets/images/icon/ui_icon_decreasing amplitude.png';
   static const uiIconUpPng = 'assets/images/icon/ui_icon_up.png';
+  static const uiIconDetailsPng = 'assets/images/icon/ui_icon_details.png';
+  static const uiIconConfirmPng = 'assets/images/icon/ui_icon_confirm.png';
 
   ///test
   static const testTeamLogoPng = 'assets/test/test_team_logo.png';

@@ -13,6 +13,7 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
+import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/up_start_success.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -65,6 +66,11 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
     var materialScienceUUID = where.map((e)=> e.teamPlayer.uuid).toList().join(",");
     await PicksApi.upStarTeamPlayer(uuidPlayerInfo!.uuid!, materialScienceUUID).then((result){
       reloadData();
+      if(result.success){
+        Get.dialog(const UpStartSuccess());
+      }else{
+        //todo
+      }
     },onError: (e){
       EasyLoading.showToast("SERVER ERROR");
     });

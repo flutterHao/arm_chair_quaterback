@@ -1,9 +1,11 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/widgets/btn_background.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog_background.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/physics/one_boundary_scroll_physics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -23,122 +25,177 @@ class PicksGuessConfirmDialogV2 extends StatefulWidget {
 class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
   var modelCurrentIndex = 0.obs;
 
+  double height = 620.h;
+  double maxHeight = 750.h;
+
+  ScrollController scrollController = ScrollController();
+  Function? listener;
+  // 开始滑动时候滚动位置的缓存
+  double startPixels = 0;
+
+  double startY = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    scrollController.addListener((){
+      if(listener == null){
+        scrollController.position.isScrollingNotifier.addListener(listener = (){
+          if(scrollController.position.isScrollingNotifier.value){
+            startPixels = scrollController.position.pixels;
+          }else{
+            startPixels = 0;
+          }
+        });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return DialogBackground(
-        frontColor: AppColors.cE6E6E6,
-        child: Column(
-          children: [
-            12.vGap,
-            Container(
-              decoration: BoxDecoration(
-                  color: AppColors.ccccccc,
-                  borderRadius: BorderRadius.circular(2.w)),
-              height: 4.w,
-              width: 64.w,
-            ),
-            24.vGap,
-            Container(
-                margin: EdgeInsets.symmetric(horizontal: 16.w),
-                child: Row(
-                  children: [
-                    Text(
-                      "Picks confirmation",
-                      style: 16.w7(color: AppColors.c262626, height: 1),
-                    ),
-                  ],
-                )),
-            14.vGap,
-            Expanded(
-                child: ListView.builder(
-                    itemCount: 10,
-                    itemBuilder: (context, index) {
-                      bool lastItem = index == 9; //todo
-                      int currentIndex = 0; //todo
-                      return Container(
-                        height: 70.w,
-                        margin: EdgeInsets.only(
-                            left: 16.w,
-                            right: 16.w,
-                            bottom: lastItem ? 100 : 9.w),
+    return NotificationListener<ScrollNotification>(
+      onNotification: (notification){
+        print('notification:${notification.runtimeType}');
+        return true;
+      },
+      child: SizedBox(
+        height: height,
+        child: DialogBackground(
+            frontColor: AppColors.cE6E6E6,
+            child: Column(
+              children: [
+                GestureDetector(
+                  onVerticalDragDown: (detail){
+                    startY = detail.localPosition.dy;
+                  },
+                  onVerticalDragStart: (detail){
+                    startY = detail.localPosition.dy;
+                  },
+                  onVerticalDragUpdate: (detail){
+
+                  },
+                  onVerticalDragCancel: (){
+
+                  },
+                  onVerticalDragEnd: (detail){
+
+                  },
+                  child: Column(
+                    children: [
+                      12.vGap,
+                      Container(
                         decoration: BoxDecoration(
-                            color: AppColors.cF2F2F2,
-                            borderRadius: BorderRadius.circular(16.w)),
-                        padding: EdgeInsets.symmetric(horizontal: 11.w),
-                        child: Row(
-                          children: [
-                            ImageWidget(
-                              url: "",
-                              width: 42.w,
-                              color: AppColors.ccccccc,
-                            ),
-                            4.hGap,
-                            Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Player Name",
-                                    style: 12.w4(
-                                        color: AppColors.c262626, height: 1),
-                                  ),
-                                  6.vGap,
-                                  Text(
-                                    "VS NOP 8:05AM",
-                                    style: 10.w4(
-                                        color: AppColors.cB3B3B3, height: 1),
-                                  )
-                                ],
+                            color: AppColors.ccccccc,
+                            borderRadius: BorderRadius.circular(2.w)),
+                        height: 4.w,
+                        width: 64.w,
+                      ),
+                      24.vGap,
+                      Container(
+                          margin: EdgeInsets.symmetric(horizontal: 16.w),
+                          child: Row(
+                            children: [
+                              Text(
+                                "Picks confirmation",
+                                style: 16.w7(color: AppColors.c262626, height: 1),
                               ),
-                            ),
-                            9.hGap,
-                            Container(
-                              width: 61.w,
-                              height: 46.w,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8.w),
-                                  border: Border.all(
-                                      width: 1, color: AppColors.ccccccc)),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "25.6",
-                                    style: 18.w7(
-                                        color: AppColors.c262626, height: 1),
+                            ],
+                          )),
+                      14.vGap,
+                    ],
+                  ),
+                ),
+                Expanded(
+                    child: ListView.builder(
+                        itemCount: 10,
+                        controller: scrollController,
+                        physics: OneBoundaryScrollPhysics(scrollController: scrollController),
+                        itemBuilder: (context, index) {
+                          bool lastItem = index == 9; //todo
+                          int currentIndex = 0; //todo
+                          return Container(
+                            height: 70.w,
+                            margin: EdgeInsets.only(
+                                left: 16.w,
+                                right: 16.w,
+                                bottom: lastItem ? 60 : 9.w),
+                            decoration: BoxDecoration(
+                                color: AppColors.cF2F2F2,
+                                borderRadius: BorderRadius.circular(16.w)),
+                            padding: EdgeInsets.symmetric(horizontal: 11.w),
+                            child: Row(
+                              children: [
+                                ImageWidget(
+                                  url: "",
+                                  width: 42.w,
+                                  color: AppColors.ccccccc,
+                                ),
+                                4.hGap,
+                                Expanded(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Player Name",
+                                        style: 12.w4(
+                                            color: AppColors.c262626, height: 1),
+                                      ),
+                                      6.vGap,
+                                      Text(
+                                        "VS NOP 8:05AM",
+                                        style: 10.w4(
+                                            color: AppColors.cB3B3B3, height: 1),
+                                      )
+                                    ],
                                   ),
-                                  5.vGap,
-                                  Text(
-                                    "PTS",
-                                    style: 10.w7(
-                                        color: AppColors.cB3B3B3, height: 1),
-                                  )
-                                ],
-                              ),
-                            ),
-                            11.hGap,
-                            Container(
-                              height: 46.w,
-                              width: 110.w,
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      width: 1, color: AppColors.cFF7954),
-                                  borderRadius: BorderRadius.circular(8.w)),
-                              child: Row(
-                                children: [
-                                  Flexible(
-                                      child: Container(
+                                ),
+                                9.hGap,
+                                Container(
+                                  width: 61.w,
+                                  height: 46.w,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8.w),
+                                      border: Border.all(
+                                          width: 1, color: AppColors.ccccccc)),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "25.6",
+                                        style: 18.w7(
+                                            color: AppColors.c262626, height: 1),
+                                      ),
+                                      5.vGap,
+                                      Text(
+                                        "PTS",
+                                        style: 10.w7(
+                                            color: AppColors.cB3B3B3, height: 1),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                11.hGap,
+                                Container(
+                                  height: 46.w,
+                                  width: 110.w,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          width: 1, color: AppColors.cFF7954),
+                                      borderRadius: BorderRadius.circular(8.w)),
+                                  child: Row(
+                                    children: [
+                                      Flexible(
+                                          child: Container(
                                         decoration: BoxDecoration(
                                             color: currentIndex == 0
                                                 ? AppColors.cFF7954
                                                 : AppColors.cTransparent,
-                                            borderRadius: BorderRadius
-                                                .horizontal(
+                                            borderRadius: BorderRadius.horizontal(
                                                 left: Radius.circular(7.w))),
                                         child: Column(
                                           mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                              MainAxisAlignment.center,
                                           children: [
                                             IconWidget(
                                               iconWidth: 15.w,
@@ -159,22 +216,21 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                           ],
                                         ),
                                       )),
-                                  Divider(
-                                    height: 46.w,
-                                    color: AppColors.cFF7954,
-                                  ),
-                                  Flexible(
-                                      child: Container(
+                                      Divider(
+                                        height: 46.w,
+                                        color: AppColors.cFF7954,
+                                      ),
+                                      Flexible(
+                                          child: Container(
                                         decoration: BoxDecoration(
                                             color: currentIndex == 1
                                                 ? AppColors.cFF7954
                                                 : AppColors.cTransparent,
-                                            borderRadius: BorderRadius
-                                                .horizontal(
+                                            borderRadius: BorderRadius.horizontal(
                                                 right: Radius.circular(7.w))),
                                         child: Column(
                                           mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                              MainAxisAlignment.center,
                                           children: [
                                             IconWidget(
                                               iconWidth: 15.w,
@@ -196,24 +252,24 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                           ],
                                         ),
                                       )),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      );
-                    })),
-            Container(
-              color: AppColors.cF2F2F2,
-              width: double.infinity,
-              padding: EdgeInsets.only(
-                  left: 16.w, right: 16.w, top: 13.w, bottom: 31.w),
-              child: Column(
-                children: [
-                  Row(
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          );
+                        })),
+                Container(
+                  color: AppColors.cF2F2F2,
+                  width: double.infinity,
+                  padding: EdgeInsets.only(
+                      left: 16.w, right: 16.w, top: 13.w, bottom: 31.w),
+                  child: Column(
                     children: [
-                      Flexible(
-                          child: InkWell(
+                      Row(
+                        children: [
+                          Flexible(
+                              child: InkWell(
                             onTap: () => modelCurrentIndex.value = 0,
                             child: Obx(() {
                               return Container(
@@ -234,16 +290,14 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                   children: [
                                     Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
                                           "Flex play",
                                           style: 14.w7(
-                                              color: AppColors.c262626,
-                                              height: 1),
+                                              color: AppColors.c262626, height: 1),
                                         ),
-                                        _buildSelect(
-                                            modelCurrentIndex.value == 0),
+                                        _buildSelect(modelCurrentIndex.value == 0),
                                       ],
                                     ),
                                     6.vGap,
@@ -255,8 +309,9 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                     Expanded(
                                       child: ListView.builder(
                                           itemCount: 3,
-                                          itemBuilder: (context,index){
-                                            return _buildbet(5.toString(), 10.toString());
+                                          itemBuilder: (context, index) {
+                                            return _buildbet(
+                                                5.toString(), 10.toString());
                                           }),
                                     ),
                                     Container(
@@ -264,17 +319,16 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                         child: Text(
                                           "Hit 3out of 5 in the lineup",
                                           style: 10.w4(
-                                              color: AppColors.cB3B3B3,
-                                              height: 1),
+                                              color: AppColors.cB3B3B3, height: 1),
                                         ))
                                   ],
                                 ),
                               );
                             }),
                           )),
-                      9.hGap,
-                      Flexible(
-                          child: InkWell(
+                          9.hGap,
+                          Flexible(
+                              child: InkWell(
                             onTap: () => modelCurrentIndex.value = 1,
                             child: Obx(() {
                               return Container(
@@ -295,16 +349,14 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                   children: [
                                     Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
                                           "Flex play",
                                           style: 14.w7(
-                                              color: AppColors.c262626,
-                                              height: 1),
+                                              color: AppColors.c262626, height: 1),
                                         ),
-                                        _buildSelect(
-                                            modelCurrentIndex.value == 1),
+                                        _buildSelect(modelCurrentIndex.value == 1),
                                       ],
                                     ),
                                     6.vGap,
@@ -315,31 +367,210 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                     5.vGap,
                                     Expanded(
                                       child: ListView.builder(
-                                        itemCount: 1,
-                                          itemBuilder: (context,index){
-                                        return _buildbet(6.toString(), 20.toString());
-                                      }),
+                                          itemCount: 1,
+                                          itemBuilder: (context, index) {
+                                            return _buildbet(
+                                                6.toString(), 20.toString());
+                                          }),
                                     ),
                                     Container(
                                         margin: EdgeInsets.only(left: 11.w),
                                         child: Text(
                                           "Hit 3out of 5 in the lineup",
                                           style: 10.w4(
-                                              color: AppColors.cB3B3B3,
-                                              height: 1),
+                                              color: AppColors.cB3B3B3, height: 1),
                                         ))
                                   ],
                                 ),
                               );
                             }),
                           )),
+                        ],
+                      ),
+                      10.vGap,
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 12.w),
+                        child: Row(
+                          children: [
+                            Column(
+                              children: [
+                                Text.rich(TextSpan(children: [
+                                  TextSpan(
+                                    text: "5",
+                                    style:
+                                        18.w7(color: AppColors.c262626, height: 1),
+                                  ),
+                                  TextSpan(
+                                      text: "/10",
+                                      style: 14
+                                          .w4(color: AppColors.c666666, height: 1))
+                                ])),
+                                2.vGap,
+                                Text(
+                                  "Correct",
+                                  style: 10.w4(color: AppColors.c666666, height: 1),
+                                )
+                              ],
+                            ),
+                            25.hGap,
+                            Flexible(
+                              child: Container(
+                                height: 40.w,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                    color: AppColors.cDCDCDC,
+                                    borderRadius: BorderRadius.circular(4.w)),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "450000",
+                                      style: 18
+                                          .w7(color: AppColors.c262626, height: 1),
+                                    ),
+                                    Text(
+                                      "To win",
+                                      style: 10
+                                          .w4(color: AppColors.c666666, height: 1),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            // if(false)
+                            Flexible(
+                                child: Container(
+                              height: 40.w,
+                              margin: EdgeInsets.only(left: 9.w),
+                              padding: EdgeInsets.only(right: 6.w, top: 8.w),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  color: AppColors.c10A86A,
+                                  borderRadius: BorderRadius.circular(4.w)),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Flexible(
+                                    child: Container(
+                                      width: double.infinity,
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "13",
+                                            style: 18.w7(
+                                                color: AppColors.cF1F1F1,
+                                                height: 1),
+                                          ),
+                                          3.vGap,
+                                          Text(
+                                            "Streak",
+                                            style: 10.w4(
+                                                color: AppColors.cF1F1F1,
+                                                height: 1),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "10000",
+                                        style: 18.w7(
+                                            color: AppColors.cF1F1F1, height: 1),
+                                      ),
+                                      3.vGap,
+                                      Text(
+                                        "streak bonus",
+                                        style: 10.w4(
+                                            color: AppColors.cF1F1F1, height: 1),
+                                      )
+                                    ],
+                                  ),
+                                  Container(
+                                      width: 8.w,
+                                      height: 8.w,
+                                      margin: EdgeInsets.only(left: 2.w),
+                                      child: Center(
+                                          child: IconWidget(
+                                              iconWidth: 8.w,
+                                              icon: Assets.uiIconDetailsPng)))
+                                ],
+                              ),
+                            )),
+                          ],
+                        ),
+                      ),
+                      8.vGap,
+                      const Divider(
+                        color: AppColors.c666666,
+                        height: 1,
+                      ),
+                      17.vGap,
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 12.w),
+                        child: Row(
+                          children: [
+                            Container(
+                              height: 44.w,
+                              width: 44.w,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(22.w),
+                                  border: Border.all(
+                                      color: AppColors.cB3B3B3, width: 1)),
+                              child: IconWidget(
+                                iconWidth: 16.w,
+                                icon: Assets.uiIconDelete_01Png,
+                                iconColor: AppColors.c262626,
+                              ),
+                            ),
+                            12.hGap,
+                            Flexible(
+                              child: Container(
+                                height: 44.w,
+                                child: BtnBackground(
+                                  child: Container(
+                                    height: 44.w,
+                                    width: double.infinity,
+                                    child: Stack(
+                                      alignment: Alignment.center,
+                                      children: [
+                                        Text(
+                                          "CONFIRM",
+                                          style: 18.w7(color: AppColors.cF2F2F2),
+                                        ),
+                                        Positioned(
+                                            left: 9.w,
+                                            child: Stack(
+                                              children: [
+                                                IconWidget(
+                                                    iconWidth: 26.w,
+                                                    icon: Assets.uiIconRingPng),
+                                                Positioned(
+                                                  left: 7.w,
+                                                    top: 5.5.w,
+                                                    child: IconWidget(iconWidth: 17.w, icon: Assets.uiIconConfirmPng,iconColor: AppColors.c31E99E,))
+                                              ],
+                                            ))
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      )
                     ],
-                  )
-                ],
-              ),
-            )
-          ],
-        ));
+                  ),
+                ),
+              ],
+            )),
+      ),
+    );
   }
 
   Widget _buildbet(String num, String bet) {
@@ -355,9 +586,9 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
           8.hGap,
           Expanded(
               child: Text(
-                "correct",
-                style: 12.w4(color: AppColors.c666666),
-              )),
+            "correct",
+            style: 12.w4(color: AppColors.c666666),
+          )),
           Container(
             height: 15.w,
             width: 40.w,
