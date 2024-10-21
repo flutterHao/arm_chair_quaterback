@@ -10,6 +10,8 @@
 // import 'package:arm_chair_quaterback/pages/news/rank/bindings.dart';
 // import 'package:arm_chair_quaterback/pages/news/rank/stats_view.dart';
 // import 'package:arm_chair_quaterback/pages/news/rank/team_view.dart';
+import 'package:arm_chair_quaterback/pages/league/bindings.dart';
+import 'package:arm_chair_quaterback/pages/league/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/view.dart';
@@ -47,6 +49,11 @@ class AppPages {
         name: RouteNames.teamBeautyDetail,
         opaque: false,
         page: () => const BeautyDetailPage(),
-        transition: Transition.fadeIn)
+        transition: Transition.fadeIn),
+    GetPage(
+      name: RouteNames.league,
+      page: () => const LeaguePage(),
+      binding: LeagueBinding(),
+    ),
   ];
 }

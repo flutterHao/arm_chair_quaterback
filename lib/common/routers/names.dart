@@ -13,7 +13,7 @@ class RouteNames {
   static const picks = '/picks';
   static const training = '/training';
   static const team = '/team';
-  static const leaguage = '/leaguage';
+  static const league = '/league';
 
   static const newsDetail = '/news_new_detail';
   static const newList = '/news_new_list';
@@ -40,5 +40,8 @@ class RouteNames {
 
   //trade
   static const tradeTradeIndex = '/trade_trade_index';
+
+  //league
+
 
 }

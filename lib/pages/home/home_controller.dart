@@ -23,6 +23,7 @@ import 'package:arm_chair_quaterback/common/services/services.dart';
 import 'package:arm_chair_quaterback/common/store/user.dart';
 import 'package:arm_chair_quaterback/common/utils/device_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
+import 'package:arm_chair_quaterback/pages/league/view.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/index.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/view.dart';
@@ -41,6 +42,7 @@ class HomeController extends GetxController
     1: GlobalNestedKey.PicksTabGlobalKey,
     2: GlobalNestedKey.TeamTabGlobalKey,
     3: GlobalNestedKey.TRADETabGlobalKey,
+    4: GlobalNestedKey.LEAGUESTabGlobalKey,
   };
 
   UserEntity userEntiry = UserEntity();
@@ -79,12 +81,12 @@ class HomeController extends GetxController
       Assets.uiIconTraining_01Png,
       const TradeIndex(),
     ),
-    // TabItemInfo(
-    //   "LEAGUES",
-    //   Assets.uiIconLeagues_01Png,
-    //   Assets.uiIconLeagues_01Png,
-    //   const PicksIndex(),
-    // ),
+    TabItemInfo(
+      "LEAGUES",
+      Assets.uiIconLeagues_01Png,
+      Assets.uiIconLeagues_01Png,
+      const LeaguePage(),
+    ),
   ];
 
   @override
