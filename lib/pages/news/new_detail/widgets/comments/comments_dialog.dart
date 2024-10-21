@@ -2,12 +2,11 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-18 15:38:51
- * @LastEditTime: 2024-10-19 20:11:37
+ * @LastEditTime: 2024-10-21 14:39:41
  */
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comment_controller.dart';
-import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/drag_back_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/send_comment_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -32,6 +31,7 @@ class CommentsDialog extends GetView<CommentController> {
     return InkWell(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Stack(
+        alignment: Alignment.bottomCenter,
         clipBehavior: Clip.none, // 确保内容不被剪裁
         children: [
           Container(
@@ -88,7 +88,7 @@ class CommentsList extends GetView<CommentController> {
 
   @override
   Widget build(BuildContext context) {
-    // RxBool isTop = false.obs;
+    RxBool isTop = false.obs;
     return GetBuilder<CommentController>(builder: (_) {
       var list =
           controller.mainList.where((e) => e.parentReviewId == 0).toList();
@@ -106,18 +106,12 @@ class CommentsList extends GetView<CommentController> {
                 );
               }),
             ),
-            NotificationListener(
-              onNotification: (ScrollNotification notification) {
-                if (notification.metrics.pixels <= 0 &&
-                    notification is ScrollStartNotification) {
-                  // 允许底部弹窗拖动关闭
-                  // Navigator.pop(context);
-                  return false;
-                }
-                return true;
-              },
-              child: Expanded(
-                child: SmartRefresher(
+            Expanded(
+              child: Obx(() {
+                return SmartRefresher(
+                  physics: isTop.value
+                      ? const NeverScrollableScrollPhysics()
+                      : const ClampingScrollPhysics(),
                   controller: controller.refhreshCtrl,
                   enablePullUp: true,
                   enablePullDown: false,
@@ -126,7 +120,9 @@ class CommentsList extends GetView<CommentController> {
                   child: ListView.separated(
                       controller: ScrollController(),
                       shrinkWrap: false,
-                      physics: const BouncingScrollPhysics(),
+                      physics: isTop.value
+                          ? const NeverScrollableScrollPhysics()
+                          : const ClampingScrollPhysics(),
                       padding: EdgeInsets.symmetric(vertical: 12.w),
                       itemCount: list.length,
                       separatorBuilder: (context, index) {
@@ -151,8 +147,8 @@ class CommentsList extends GetView<CommentController> {
                           ],
                         );
                       }),
-                ),
-              ),
+                );
+              }),
             ),
           ],
         ),
@@ -227,7 +223,9 @@ class SubComentsListView extends GetView<CommentController> {
                         if (mainReviews.current > 0)
                           InkWell(
                             onTap: () {
+                              mainReviews.subList.clear();
                               mainReviews.current = 0;
+                              mainReviews.page = 0;
                               controller.update();
                             },
                             child: _greyContainer(

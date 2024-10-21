@@ -8,6 +8,7 @@ import 'package:arm_chair_quaterback/common/entities/train_task_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
+import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/pages/home/index.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:common_utils/common_utils.dart';
@@ -117,6 +118,7 @@ class TrainingController extends GetxController
       trainDefineMap = v[4] as Map<String, dynamic>;
       ballNum.value = trainingInfo.prop.num;
       recoverTimeAndCountDown();
+      Log.d("球员id列表:${playerList.map((e) => e.playerId).toList()}");
       update(["training_page"]);
     });
   }

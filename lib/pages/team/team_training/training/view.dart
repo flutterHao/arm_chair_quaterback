@@ -441,29 +441,34 @@ class TrainingPage extends GetView<TrainingController> {
                           ),
                         ),
                         5.vGap,
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            IconWidget(
-                              iconWidth: 9.w,
-                              icon: Assets.icon_306Png,
-                              iconColor: AppColors.c666666,
-                            ),
-                            2.hGap,
-                            Text(
-                              "+${controller.trainDefineMap["ballRecoverNum"]}",
-                              style: 10.w4(color: AppColors.c666666),
-                            ),
-                            7.5.hGap,
-                            Obx(() {
-                              return Text(
-                                "in ${controller.remainString.value}",
+                        if (controller.ballNum.value <
+                            (int.tryParse(
+                                    controller.trainDefineMap["ballMaxNum"] ??
+                                        "0") ??
+                                0))
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              IconWidget(
+                                iconWidth: 9.w,
+                                icon: Assets.icon_306Png,
+                                iconColor: AppColors.c666666,
+                              ),
+                              2.hGap,
+                              Text(
+                                "+${controller.trainDefineMap["ballRecoverNum"]}",
                                 style: 10.w4(color: AppColors.c666666),
-                              );
-                            }),
-                          ],
-                        ),
+                              ),
+                              7.5.hGap,
+                              Obx(() {
+                                return Text(
+                                  "in ${controller.remainString.value}",
+                                  style: 10.w4(color: AppColors.c666666),
+                                );
+                              }),
+                            ],
+                          ),
                       ],
                     )),
 

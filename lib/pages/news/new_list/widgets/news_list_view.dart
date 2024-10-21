@@ -122,9 +122,10 @@ class NewsItemView extends GetView<NewListController> {
                       )),
                   InkWell(
                     onTap: () {
-                      item.isLike?.value == 1
-                          ? controller.unLikeNews(item)
-                          : controller.likeNews(item);
+                      // item.isLike?.value == 1
+                      //     ? controller.unLikeNews(item)
+                      //     : controller.likeNews(item);
+                      controller.likeNews(item);
                     },
                     child: SizedBox(
                         width: 60.w,

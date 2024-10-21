@@ -2,7 +2,7 @@
  * @Description: 新闻的底部按钮点赞分享评论
  * @Author: lihonghao
  * @Date: 2024-10-17 17:02:35
- * @LastEditTime: 2024-10-19 19:14:42
+ * @LastEditTime: 2024-10-21 14:36:47
  */
 import 'dart:math';
 
@@ -14,6 +14,7 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comment_controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comments_dialog.dart';
+import 'package:arm_chair_quaterback/common/widgets/drag_back_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -116,14 +117,16 @@ class NewsBottomButton extends StatelessWidget {
           _container(
               width: 86.w,
               onTap: () {
-             Get.find<CommentController>()
+                Get.find<CommentController>()
                     .getReviews(detail.id!, isRefresh: true);
 
                 showModalBottomSheet(
                   isScrollControlled: true,
                   context: Get.context!,
+                  backgroundColor: Colors.transparent,
                   builder: (context) {
-                    return CommentsDialog(detail: detail);
+                    return VerticalDragBackWidget(
+                        child: CommentsDialog(detail: detail));
                   },
                 );
               },
@@ -136,17 +139,15 @@ class NewsBottomButton extends StatelessWidget {
                     iconColor: AppColors.c666666,
                   ),
                   // if (detail.likes != 0)
-                  Obx(
-                () {
-                      return Container(
-                        margin: EdgeInsets.only(left: 7.w),
-                        child: Text(
-                          "${detail.reviewsCount!.value}",
-                          style: 14.w4(color: AppColors.c262626),
-                        ),
-                      );
-                    }
-                  ),
+                  Obx(() {
+                    return Container(
+                      margin: EdgeInsets.only(left: 7.w),
+                      child: Text(
+                        "${detail.reviewsCount!.value}",
+                        style: 14.w4(color: AppColors.c262626),
+                      ),
+                    );
+                  }),
                 ],
               )),
           4.hGap,

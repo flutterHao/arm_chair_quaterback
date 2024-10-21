@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2024-10-15 19:03:27
+ * @LastEditTime: 2024-10-21 10:12:36
  */
 /*
  * @Description: 
@@ -472,7 +472,7 @@ class PlayerAwater extends StatelessWidget {
           ),
           Positioned(
             child: ImageWidget(
-              url: Utils.getPlayUrl(player.id),
+              url: Utils.getPlayUrl(player.playerId),
               width: 64.w,
               height: 64.w,
               borderRadius: BorderRadius.circular(32.w),

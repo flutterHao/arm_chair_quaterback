@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2024-10-19 20:17:45
+ * @LastEditTime: 2024-10-21 12:05:40
  */
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
@@ -79,22 +79,27 @@ class NewListController extends GetxController {
   }
 
   void likeNews(NewsDetail item) {
-    if (item.isLike?.value == 1) return;
+    // if (item.isLike?.value == 1) return;
     NewsApi.newsLike(item.id!).then((value) {
-      item.isLike!.value = 1;
-      item.likes = (item.likes ?? 0) + 1;
+      if ((item.isLike?.value != 1)) {
+        item.likes = (item.likes ?? 0) + 1;
+        item.isLike!.value = 1;
+      } else {
+        item.likes = (item.likes ?? 0) - 1;
+        item.isLike!.value = 0;
+      }
       update(['newsList']);
     });
   }
 
-  void unLikeNews(NewsDetail item) {
-    if (item.isLike?.value == -1) return;
-    NewsApi.newsUnLike(item.id!).then((value) {
-      item.isLike!.value = -1;
-      item.likes = (item.likes ?? 0) - 1;
-      update(['newsList']);
-    });
-  }
+  // void unLikeNews(NewsDetail item) {
+  //   if (item.isLike?.value == -1) return;
+  //   NewsApi.newsUnLike(item.id!).then((value) {
+  //     item.isLike!.value = -1;
+  //     item.likes = (item.likes ?? 0) - 1;
+  //     update(['newsList']);
+  //   });
+  // }
 
   ///获取球员信息 //TODO 防止一次性加载过多
   Future getStatsRank() async {
