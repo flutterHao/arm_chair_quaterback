@@ -2,7 +2,7 @@
  * @Description: ?
  * @Author: lihonghao
  * @Date: 2024-09-13 18:19:28
- * @LastEditTime: 2024-09-21 19:47:40
+ * @LastEditTime: 2024-10-19 18:14:24
  */
 import 'package:get/get.dart';
 
@@ -18,6 +18,11 @@ class Reviews {
   int? teamId;
   String? teamName;
   int? updateTime;
+  int sonReviews = 0;
+  List<Reviews> subList;
+  int page;
+  int size;
+  int current=0;
 
   Reviews({
     this.context = "",
@@ -31,6 +36,10 @@ class Reviews {
     this.teamId = 0,
     this.teamName = "",
     this.updateTime = 0,
+    this.sonReviews = 0,
+    required this.subList,
+    this.page=0,
+    this.size=5,
   });
 
   factory Reviews.fromJson(Map<String, dynamic> json) {
@@ -50,6 +59,7 @@ class Reviews {
       teamId: json['teamId'] as int?,
       teamName: json['teamName'] as String?,
       updateTime: json['updateTime'] as int?,
+      sonReviews: json['sonReviews'] as int? ?? 0, subList: [],
     );
   }
 
@@ -65,5 +75,6 @@ class Reviews {
         'teamId': teamId,
         'teamName': teamName,
         'updateTime': updateTime,
+        'sonReviews': sonReviews,
       };
 }

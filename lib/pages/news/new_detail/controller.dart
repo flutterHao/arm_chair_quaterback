@@ -2,21 +2,10 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:23:17
- * @LastEditTime: 2024-10-17 21:26:51
- */
-/*
- * @Description: 
- * @Author: lihonghao
- * @Date: 2024-09-09 14:23:17
- * @LastEditTime: 2024-09-21 15:49:06
- */
-/*
- * @Description: 
- * @Author: lihonghao
- * @Date: 2024-09-09 14:23:17
- * @LastEditTime: 2024-09-18 12:26:13
+ * @LastEditTime: 2024-10-19 14:45:09
  */
 
+import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:get/get.dart';
 import 'index.dart';
@@ -37,31 +26,38 @@ class NewsDetailController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    getNewsDetail(newsId);
-    getReviewsByNewsId(newsId);
+    // getNewsDetail(newsId);
+    // getReviewsByNewsId(newsId);
   }
 
-    void getNewsDetail(id) {
-    state.isLoading = true;
-    NewsApi.getNewsDetail(id).then((v) {
-      state.newDetail = v;
-      state.isLoading = false;
-      update();
-    }).catchError((e) {
+  // void getNewsDetail(id) {
+  //   state.isLoading = true;
+  //   NewsApi.getNewsDetail(id).then((v) {
+  //     state.newDetail = v;
+  //     state.isLoading = false;
+  //     update();
+  //   }).catchError((e) {});
+  // }
+
+  void likeNews(NewsDetail item) {
+    if (item.isLike?.value == 1) return;
+    NewsApi.newsLike(item.id!).then((value) {
+      item.likes = (item.likes ?? 0) + 1;
+      item.isLike!.value = 1;
+      // update();
+      // getNewsDetail(item.id);
     });
   }
 
-  ///获取评论列表
-  void getReviewsByNewsId(id, {bool isRefresh = false}) {
-    if (isRefresh) {
-      state.reviewsList.clear();
-      state.page = 0;
-    } else {
-      state.page++;
-    }
-    NewsApi.getReviewsByNewsId(id, state.page, state.pageSize).then((v) {
-      state.reviewsList.addAll(v);
-      update();
+  void unLikeNews(NewsDetail item) {
+    if (item.isLike?.value == -1) return;
+    NewsApi.newsUnLike(item.id!).then((value) {
+      if(item.isLike?.value == 1){
+      item.likes = (item.likes ?? 0) - 1;
+      }
+      item.isLike!.value = -1;
+
+      // update();
     });
   }
 }

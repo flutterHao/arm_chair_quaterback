@@ -14,12 +14,10 @@ import 'package:get/get.dart';
 class VerticalDragBackWidget extends StatefulWidget {
   const VerticalDragBackWidget({
     required this.child,
-    this.onWidgetOut,
     super.key,
   });
 
   final Widget child;
-  final Function()? onWidgetOut;
 
   @override
   State<VerticalDragBackWidget> createState() => _VerticalDragBackWidgetState();
@@ -30,11 +28,7 @@ class _VerticalDragBackWidgetState extends State<VerticalDragBackWidget>
   late AnimationController animationController;
   late Animation<double> animation;
   var isDragging = false.obs;
-
-  final double minBottom = -556.0.h; // 最小位置
-  final double maxBottom = 0.h; // 最大位置
-
-  TeamIndexController teamCtrl = Get.find();
+  var isOnTopSide = false;
 
   @override
   void initState() {
@@ -54,13 +48,13 @@ class _VerticalDragBackWidgetState extends State<VerticalDragBackWidget>
   @override
   Widget build(BuildContext context) {
     onVerticalDragStart(DragStartDetails detail) {
-      if (!teamCtrl.isOnTopSide) {
+      if (isOnTopSide) {
         return;
       }
     }
 
     onVerticalDragEnd(DragEndDetails detail) {
-      if (!teamCtrl.isOnTopSide) {
+      if (isOnTopSide) {
         return;
       }
 
@@ -69,40 +63,40 @@ class _VerticalDragBackWidgetState extends State<VerticalDragBackWidget>
     }
 
     onVerticalDragCancel() {
-      if (!teamCtrl.isOnTopSide) {
+      if (isOnTopSide) {
         return;
       }
     }
 
     onVerticalDragDown(DragDownDetails detail) {
-      if (!teamCtrl.isOnTopSide) {
+      if (isOnTopSide) {
         return;
       }
     }
 
     onVerticalDragUpdate(DragUpdateDetails details) {
-      if (!teamCtrl.isOnTopSide) {
+      if (isOnTopSide) {
         return;
       }
-      isDragging.value = true;
-      double newBottom = teamCtrl.myTeamBottom.value - details.delta.dy;
-      newBottom = newBottom.clamp(minBottom, maxBottom);
-      teamCtrl.myTeamBottom.value = newBottom;
+      // isDragging.value = true;
+      // double newBottom = teamCtrl.myTeamBottom.value - details.delta.dy;
+      // newBottom = newBottom.clamp(minBottom, maxBottom);
+      // teamCtrl.myTeamBottom.value = newBottom;
     }
 
     Widget body = GestureDetector(
-      onVerticalDragUpdate: (details) {
-        if (teamCtrl.isOnTopSide) return;
-        isDragging.value = true;
-        double newBottom = teamCtrl.myTeamBottom.value - details.delta.dy;
-        newBottom = newBottom.clamp(minBottom, maxBottom);
-        teamCtrl.myTeamBottom.value = newBottom;
-      },
-      onVerticalDragEnd: (details) {
-        if (teamCtrl.isOnTopSide) return;
-        isDragging.value = false;
-        _animateToPosition(details);
-      },
+      // onVerticalDragUpdate: (details) {
+      //   if (isOnTopSide) return;
+      //   isDragging.value = true;
+      //   double newBottom = teamCtrl.myTeamBottom.value - details.delta.dy;
+      //   newBottom = newBottom.clamp(minBottom, maxBottom);
+      //   teamCtrl.myTeamBottom.value = newBottom;
+      // },
+      // onVerticalDragEnd: (details) {
+      //   if (isOnTopSide) return;
+      //   isDragging.value = false;
+      //   _animateToPosition(details);
+      // },
       child: NotificationListener<ScrollNotification>(
         onNotification: (notification) {
           // print('notification:${notification.runtimeType}');
@@ -110,25 +104,24 @@ class _VerticalDragBackWidgetState extends State<VerticalDragBackWidget>
             // print('notification.metrics.pixels:${notification.metrics.pixels}');
             if (notification.metrics.pixels <=
                     notification.metrics.minScrollExtent &&
-                !teamCtrl.isOnTopSide &&
+                isOnTopSide &&
                 notification.metrics.axisDirection == AxisDirection.down) {
-              teamCtrl.isOnTopSide = true;
+              isOnTopSide = true;
               return false;
             }
           }
-          if (notification is ScrollUpdateNotification &&
-              !teamCtrl.isOnTopSide) {
+          if (notification is ScrollUpdateNotification && isOnTopSide) {
             // print('notification.metrics.pixels:${notification.metrics.pixels}');
             if (notification.metrics.pixels <=
                     notification.metrics.minScrollExtent &&
-                !teamCtrl.isOnTopSide &&
+                isOnTopSide &&
                 notification.metrics.axisDirection == AxisDirection.up) {
-              teamCtrl.isOnTopSide = true;
+              isOnTopSide = true;
               return false;
             }
           }
-          if (notification is ScrollStartNotification && teamCtrl.isOnTopSide) {
-            teamCtrl.isOnTopSide = false;
+          if (notification is ScrollStartNotification && isOnTopSide) {
+            isOnTopSide = false;
             return false;
           }
           // true 阻止向上冒泡 ,false 继续向上冒泡
@@ -154,14 +147,7 @@ class _VerticalDragBackWidgetState extends State<VerticalDragBackWidget>
       ),
     );
 
-    return Obx(() {
-      return AnimatedPositioned(
-          duration: Duration(milliseconds: isDragging.value ? 0 : 300),
-          bottom: teamCtrl.myTeamBottom.value,
-          left: 0,
-          right: 0,
-          child: body);
-    });
+    return body;
   }
 
   void _animateToPosition(DragEndDetails details) {
@@ -170,17 +156,17 @@ class _VerticalDragBackWidgetState extends State<VerticalDragBackWidget>
 
     // double targetBottom;
     // Log.d("details:___"+details.toString());
-    if ((teamCtrl.isShow.value && details.localPosition.dy <= 0) ||
-        (!teamCtrl.isShow.value && details.localPosition.dy >= 0)) {
-      return;
-    }
-    if (details.velocity.pixelsPerSecond.dy < -1000) {
-      // targetBottom = maxBottom; // 快速上滑到最大位置
-      teamCtrl.pageOnTap();
-    } else {
-      // targetBottom = minBottom; // 否则返回最小位置
-      teamCtrl.pageOnTap();
-    }
+    // if ((teamCtrl.isShow.value && details.localPosition.dy <= 0) ||
+    //     (!teamCtrl.isShow.value && details.localPosition.dy >= 0)) {
+    //   return;
+    // }
+    // if (details.velocity.pixelsPerSecond.dy < -1000) {
+    //   // targetBottom = maxBottom; // 快速上滑到最大位置
+    //   teamCtrl.pageOnTap();
+    // } else {
+    //   // targetBottom = minBottom; // 否则返回最小位置
+    //   teamCtrl.pageOnTap();
+    // }
     // teamCtrl.pageOnTap();
   }
 

@@ -136,10 +136,11 @@ import 'package:get/get.dart';
 // }
 
 class UserInfoBar extends StatelessWidget {
-  const UserInfoBar({super.key, this.title = "Title", this.enable = true, this.routeId});
+  const UserInfoBar(
+      {super.key, this.title = "Title", this.enable = true, this.routeId});
 
   final String title;
-  final bool enable;//头像是否可点击显示弹框
+  final bool enable; //头像是否可点击显示弹框
   final int? routeId;
 
   @override
@@ -168,7 +169,7 @@ class UserInfoBar extends StatelessWidget {
                       Navigator.pop(context);
                       return;
                     }
-                    _showDialog(context,routeId);
+                    _showDialog(context, routeId);
                   },
                   child: Container(
                     width: 80.w,
@@ -193,14 +194,14 @@ class UserInfoBar extends StatelessWidget {
         });
   }
 
-  void _showDialog(BuildContext context,int? routeId) {
+  void _showDialog(BuildContext context, int? routeId) {
     showGeneralDialog(
         barrierColor: Colors.transparent,
         context: context,
         useRootNavigator: false,
         pageBuilder: (BuildContext context, Animation<double> animation,
             Animation<double> secondaryAnimation) {
-          return TopDialog(title: title,routeId: routeId);
+          return TopDialog(title: title, routeId: routeId);
         });
   }
 }

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-16 17:13:31
- * @LastEditTime: 2024-10-17 15:13:51
+ * @LastEditTime: 2024-10-19 10:43:59
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -24,13 +24,13 @@ class BeautyDetailPage extends GetView<BeautyController> {
         Positioned(
           top: 5.w,
           right: 0,
-          bottom: 46.w,
+          // bottom: 46.w,
           child: Hero(
             tag: "beauty${controller.beautyIndex}",
             child: Image.asset(controller.beautyList[controller.beautyIndex],
-                fit: BoxFit.fitWidth,
-                // height: 567.w,
-                width: 232.w,
+                fit: BoxFit.fitHeight,
+                height: 567.w,
+                // width: 232.w,
                 alignment: Alignment.topLeft),
           ),
         ),

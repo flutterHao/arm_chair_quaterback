@@ -163,8 +163,8 @@ class NewsListPage extends GetView<NewListController> {
                               backgroudColor: Colors.white38,
                             ),
                             onTap: (index) {
-                              var newsId = controller.state.banners[index].id;
-                              controller.getNewsFlow(newsId, isRefresh: true);
+                              // var newsId = controller.state.banners[index].id;
+                              // controller.getNewsFlow(newsId, isRefresh: true);
                               Get.toNamed(RouteNames.newsDetail,
                                   arguments:
                                       controller.state.banners[index].id!,

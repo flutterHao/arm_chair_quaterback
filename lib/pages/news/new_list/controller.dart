@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2024-10-17 21:19:28
+ * @LastEditTime: 2024-10-19 20:17:45
  */
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
@@ -12,6 +12,7 @@ import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -22,21 +23,29 @@ class NewListController extends GetxController {
   NewListController();
 
   final state = NewListState();
-  late RefreshController refreshCtrl;
-  late RefreshController flowRefreshCtrl;
+  late RefreshController refreshCtrl = RefreshController();
+  late RefreshController flowRefreshCtrl = RefreshController();
+  ScrollController scrollController = ScrollController();
+
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  //   refreshCtrl = RefreshController();
+  //   flowRefreshCtrl = RefreshController();
+  // }
 
   @override
   void onInit() {
     super.onInit();
-    refreshCtrl = RefreshController();
-    flowRefreshCtrl = RefreshController();
+    refreshData();
+    // scrollController.addListener(_onScroll);
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-    refreshData();
-  }
+  // 滚动时调用此函数
+  // void _onScroll() {
+  //   print(
+  //       "zzzzz${scrollController.position.pixels}/${scrollController.position.maxScrollExtent}}");
+  // }
 
   void refreshData() async {
     Future.wait([
@@ -70,18 +79,18 @@ class NewListController extends GetxController {
   }
 
   void likeNews(NewsDetail item) {
-    if (item.isLike?.value == true) return;
+    if (item.isLike?.value == 1) return;
     NewsApi.newsLike(item.id!).then((value) {
-      item.isLike!.value = true;
+      item.isLike!.value = 1;
       item.likes = (item.likes ?? 0) + 1;
       update(['newsList']);
     });
   }
 
   void unLikeNews(NewsDetail item) {
-    if (item.isLike?.value == false) return;
+    if (item.isLike?.value == -1) return;
     NewsApi.newsUnLike(item.id!).then((value) {
-      item.isLike!.value = false;
+      item.isLike!.value = -1;
       item.likes = (item.likes ?? 0) - 1;
       update(['newsList']);
     });
@@ -222,11 +231,13 @@ class NewListController extends GetxController {
       state.page++;
     }
 
-    await NewsApi.newsFlow(newsId, state.page, state.pageSize).then((value) {
+    await NewsApi.newsFlow(newsId, state.page, 10).then((value) {
       state.newsFlowList.addAll(value);
-      isRefresh ? refreshCtrl.refreshCompleted() : refreshCtrl.loadComplete();
-
       update(['newsFlow']);
+    }).whenComplete(() {
+      isRefresh
+          ? flowRefreshCtrl.refreshCompleted()
+          : flowRefreshCtrl.loadComplete();
     });
   }
 }

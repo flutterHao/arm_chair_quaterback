@@ -136,9 +136,9 @@ class TrainingController extends GetxController
       final remainingSeconds = _recoverSeconds % 60;
       remainString.value =
           '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
-      if (_recoverSeconds <= 0) {
+      if (_recoverSeconds == 0) {
         _timer.cancel();
-        // trainDefineMap = await TeamApi.getTrainDefine();
+        // 重新获取新的恢复时间进行倒计时
         trainingInfo = await TeamApi.getTrainingInfo();
         recoverTimeAndCountDown();
         // update(["training_page"]);
@@ -716,11 +716,14 @@ class TrainingController extends GetxController
       305: 0,
       306: 0,
     };
+    // for (TrainingInfoAward award in trainingInfo.award) {
+    //   if (award.num > 0) {
+    //     map[award.id] = (map[award.id] ?? 0) + 1;
+    //   }
+    // }
 
-    for (TrainingInfoAward award in trainingInfo.award) {
-      if (award.num > 0) {
-        map[award.id] = (map[award.id] ?? 0) + 1;
-      }
+    for (int i in trainingInfo.propArray) {
+      map[i] = (map[i] ?? 0) + 1;
     }
 
     return map;

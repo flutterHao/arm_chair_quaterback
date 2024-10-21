@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 18:19:28
- * @LastEditTime: 2024-09-23 09:42:28
+ * @LastEditTime: 2024-10-19 19:06:08
  */
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_guess.dart';
 import 'package:get/get.dart';
@@ -15,12 +15,12 @@ class NewsDetail {
   int? createTime;
   String? dataLabel;
   int? id;
-  RxBool? isLike;
+  RxInt? isLike;
   // int? isLike;
   int? isView;
   int? likes;
   int? postTime;
-  int? reviewsCount;
+  RxInt? reviewsCount;
   List<Reviews>? reviewsList;
   String? source;
   String? title;
@@ -39,7 +39,7 @@ class NewsDetail {
     this.isView = 0,
     this.likes = 0,
     this.postTime = 0,
-    this.reviewsCount = 0,
+    this.reviewsCount,
     this.reviewsList,
     this.source = "",
     this.title = "",
@@ -50,7 +50,8 @@ class NewsDetail {
   });
 
   factory NewsDetail.fromJson(Map<String, dynamic> json) {
-    RxBool isLike = RxBool(json['isLike'] == 1 ? true : false);
+    var isLike = RxInt(json['isLike']);
+    var reviewsCount=RxInt(json['reviewsCount']);
     return NewsDetail(
       award: json['award'] as int?,
       content: json['content'] as String?,
@@ -61,7 +62,7 @@ class NewsDetail {
       isView: json['isView'] as int?,
       likes: json['likes'] as int?,
       postTime: json['postTime'] as int?,
-      reviewsCount: json['reviewsCount'] as int?,
+      reviewsCount: reviewsCount,
       reviewsList: ((json['reviewsList'] ?? []) as List<dynamic>)
           .map((e) => Reviews.fromJson(e as Map<String, dynamic>))
           .toList(),

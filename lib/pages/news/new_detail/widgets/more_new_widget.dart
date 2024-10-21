@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-10 17:28:39
- * @LastEditTime: 2024-09-24 11:39:22
+ * @LastEditTime: 2024-10-18 18:00:45
  */
 /*
  * @Description: 
@@ -29,7 +29,7 @@ class MoreNewsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    NewsDetailController controller = Get.find(tag: tag);
+    NewsDetailController controller = Get.find();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

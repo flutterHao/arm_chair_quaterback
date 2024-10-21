@@ -29,7 +29,7 @@ class NewsListView extends GetView<NewListController> {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () async {
-                    var newsId = controller.state.banners[index].id;
+                    var newsId = controller.state.newsList[index].id;
                     controller.getNewsFlow(newsId, isRefresh: true);
                     await Get.toNamed(RouteNames.newsDetail,
                         arguments: newsId, id: GlobalNestedKey.NEWS);
@@ -122,17 +122,17 @@ class NewsItemView extends GetView<NewListController> {
                       )),
                   InkWell(
                     onTap: () {
-                      item.isLike?.value == true
+                      item.isLike?.value == 1
                           ? controller.unLikeNews(item)
                           : controller.likeNews(item);
                     },
                     child: SizedBox(
                         width: 60.w,
                         child: TextIconWidget(
-                          icon: item.isLike?.value == true
+                          icon: item.isLike?.value == 1
                               ? Assets.uiIconLike_01Png
                               : Assets.uiIconLike_02Png,
-                          color: item.isLike?.value == true
+                          color: item.isLike?.value == 1
                               ? AppColors.cFF7954
                               : AppColors.cB3B3B3,
                           text: "${item.likes}",

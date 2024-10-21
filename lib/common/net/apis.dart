@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-06 15:16:54
- * @LastEditTime: 2024-10-17 18:45:08
+ * @LastEditTime: 2024-10-19 14:59:08
  */
 class Api {
   /// base
@@ -29,6 +29,8 @@ class Api {
   static const String newsGuess = "$API_BASE_PATH//NBANews/getNewsGuess";
   static const String getReviewsByNewsId =
       "$API_BASE_PATH//NBANews/getReviewsByNewsId";
+        static const String getSonReviews =
+      "$API_BASE_PATH//NBANews/getSonReviews";
   static const String getGuessInfos =
       "$API_BASE_PATH/NBANews/getGuessInfos"; //历史竞猜记录
   static const String getGuessGamesInfo =

@@ -1,12 +1,13 @@
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
+import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/app_bar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
-import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comments_widget.dart';
+import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comment_controller.dart';
+import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comment_item.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/news_bottom_button.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/index.dart';
 import 'package:common_utils/common_utils.dart';
@@ -35,7 +36,7 @@ class NewsDetailList extends GetView<NewListController> {
 
   Widget _next() {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 35.w),
+      margin: EdgeInsets.symmetric(vertical: 32.w),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -44,7 +45,7 @@ class NewsDetailList extends GetView<NewListController> {
             margin: EdgeInsets.symmetric(horizontal: 12.w),
             child: Text(
               "NEXT",
-              style: 10.w4(color: AppColors.cB3B3B3),
+              style: 10.w4(color: AppColors.cB3B3B3, height: 1),
             ),
           ),
           _line(),
@@ -55,70 +56,61 @@ class NewsDetailList extends GetView<NewListController> {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(CommentController());
+    Get.put(NewsDetailController(newsId));
     return HorizontalDragBackWidget(
       child: BlackAppWidget(
-        AppBarWidget(
+        backgroundColor: AppColors.cF2F2F2,
+        const AppBarWidget(
           title: "NEWS",
-          right: InkWell(
-            onTap: () {
-              ///TODO
-            },
-            child: Padding(
-              padding: EdgeInsets.all(12.w),
-              child: IconWidget(
-                iconWidth: 19.w,
-                iconHeight: 19.w,
-                icon: Assets.iconSharePng,
-              ),
-            ),
-          ),
         ),
         bodyWidget: Expanded(
-          child: SmartRefresher(
-            controller: controller.flowRefreshCtrl,
-            onRefresh: () => controller.getNewsFlow(newsId, isRefresh: true),
-            onLoading: () => controller.getNewsFlow(newsId, isRefresh: false),
-            child: ListView.separated(
-                itemCount: controller.state.newsFlowList.length,
-                separatorBuilder: (context, index) {
-                  return _next();
-                },
-                itemBuilder: (context, index) {
-                  var newsId = controller.state.newsFlowList[index].id;
-                  return NewsDetailPage(newsId, key: Key(newsId.toString()));
-                }),
-          ),
+          child: GetBuilder<NewListController>(
+              id: "newsFlow",
+              builder: (_) {
+                return SmartRefresher(
+                  controller: controller.flowRefreshCtrl,
+                  enablePullUp: true,
+                  enableTwoLevel: true,
+                  onRefresh: () =>
+                      controller.getNewsFlow(newsId, isRefresh: true),
+                  onLoading: () =>
+                      controller.getNewsFlow(newsId, isRefresh: false),
+                  child: ListView.separated(
+                      controller: controller.scrollController,
+                      padding: EdgeInsets.symmetric(vertical: 40.w),
+                      itemCount: controller.state.newsFlowList.length,
+                      separatorBuilder: (context, index) {
+                        return _next();
+                      },
+                      itemBuilder: (context, index) {
+                        NewsDetail item = controller.state.newsFlowList[index];
+                        return NewsDetailItem(
+                          newsDetail: item,
+                          key: Key(newsId.toString()),
+                        );
+                      }),
+                );
+              }),
         ),
       ),
     );
   }
 }
 
-class NewsDetailPage extends StatelessWidget {
-  const NewsDetailPage(this.newsId, {super.key});
-  final Object? newsId;
+class NewsDetailItem extends StatelessWidget {
+  const NewsDetailItem({super.key, required this.newsDetail});
+  final NewsDetail newsDetail;
 
   // 主视图
   Widget _buildView(BuildContext context, NewsDetailController controller) {
     return Column(
       children: [
-        // _buildAppBar(),
         _buildNewsContent(controller),
-        // _buildComments(controller),
-        Container(
-          margin: EdgeInsets.only(top: 20.w),
-          child: NewsBottomButton(newsId),
-        ),
-        if (controller.state.reviewsList.isNotEmpty)
-          Container(
-              width: 343.w,
-              height: 11.w,
-              decoration: BoxDecoration(
-                color: AppColors.cE6E6E,
-                borderRadius: BorderRadius.circular(8.w),
-              ),
-              child: CommentItemView(
-                  item: controller.state.reviewsList.first, isSub: false))
+        20.vGap,
+        NewsBottomButton(newsDetail),
+        20.vGap,
+        _hotComment(),
       ],
     );
   }
@@ -126,82 +118,70 @@ class NewsDetailPage extends StatelessWidget {
   // 新闻内容部分
   Widget _buildNewsContent(NewsDetailController controller) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 32.w),
+      padding: EdgeInsets.symmetric(horizontal: 25.w),
       child: SizedBox(
-        width: 311.w,
+        // width: 311.w,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            10.vGap,
-            _buildNewsTitle(controller),
-            _buildAuthorAndDate(controller),
-            _buildNewsDescription(controller),
+            Text(
+              newsDetail.title ?? "",
+              style: 24.w7(color: AppColors.c262626, height: 1),
+            ),
+            15.vGap,
+            if (newsDetail.source != null)
+              Text(
+                newsDetail.source ?? "",
+                style: 12.w4(color: AppColors.c666666, height: 1),
+              ),
+            6.vGap,
+            if (newsDetail.postTime != 0)
+              Text(
+                DateUtil.formatDateMs(
+                  newsDetail.postTime!,
+                  format: DateFormats.y_mo_d,
+                ),
+                style: 12.w4(color: AppColors.cB3B3B3, height: 1),
+              ),
+            Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: Text(
+                newsDetail.content ?? "",
+                style: 14.w4(color: AppColors.c666666),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildNewsTitle(NewsDetailController controller) {
-    return Text(
-      controller.state.newDetail.title ?? "",
-      style: 24.w7(color: AppColors.c262626),
-    );
-  }
-
-  Widget _buildAuthorAndDate(NewsDetailController controller) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        16.vGap,
-        Text(
-          controller.state.newDetail.source ?? "",
-          style: 12.w4(color: AppColors.c666666),
-        ),
-        6.vGap,
-        if (controller.state.newDetail.postTime != 0)
-          Text(
-            DateUtil.formatDateMs(
-              controller.state.newDetail.postTime!,
-              format: DateFormats.y_mo_d,
+  Widget _hotComment() {
+    return newsDetail.reviewsList!.isNotEmpty
+        ? Container(
+            width: 343.w,
+            // height: 110.w,
+            padding: EdgeInsets.symmetric(vertical: 15.w, horizontal: 20.w),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: AppColors.cE6E6E,
+              borderRadius: BorderRadius.circular(16.w),
             ),
-            style: 12.w4(color: AppColors.cB3B3B3),
-          ),
-      ],
-    );
-  }
-
-  Widget _buildNewsDescription(NewsDetailController controller) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 16),
-      child: Text(
-        controller.state.newDetail.content ?? "",
-        style: 14.w4(color: AppColors.c666666),
-      ),
-    );
-  }
-
-  // 评论部分
-  Widget _buildComments(NewsDetailController controller) {
-    int id = controller.state.newDetail.id ?? 0;
-    return SliverToBoxAdapter(
-      child: CommentsWidget(
-        commentList: controller.state.newDetail.reviewsList ?? [],
-        newsId: id,
-      ),
-    );
+            child: HotComment(item: newsDetail.reviewsList!.first),
+          )
+        : const SizedBox();
   }
 
   @override
   Widget build(BuildContext context) {
     // 查找带有 tag 的控制器，确保通过 newsId 来区分不同的新闻详情页
-    Get.put(
-      NewsDetailController(newsId),
-      tag: newsId.toString(), /*  */
-    );
+    // Get.put(
+    //   NewsDetailController(newsDetail.id),
+    //   tag: newsDetail.id.toString(), /*  */
+    // );
     SystemChannels.textInput.invokeMethod('TextInput.setKeyboardAppearance', 1);
     return GetBuilder<NewsDetailController>(
-      tag: newsId.toString(), // 使用 tag 区分控制器实例
+      // tag: newsDetail.id.toString(), // 使用 tag 区分控制器实例
       builder: (controller) {
         return _buildView(context, controller);
       },

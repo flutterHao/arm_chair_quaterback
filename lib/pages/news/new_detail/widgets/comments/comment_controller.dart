@@ -2,60 +2,42 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-11 16:57:58
- * @LastEditTime: 2024-10-08 18:50:53
+ * @LastEditTime: 2024-10-19 19:14:12
  */
+import 'dart:math';
+
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entity/team_login_info.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
+import 'package:arm_chair_quaterback/pages/news/new_detail/controller.dart';
+import 'package:arm_chair_quaterback/pages/news/new_list/controller.dart';
 import 'package:common_utils/common_utils.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class CommentController extends GetxController {
-  List<Reviews> commentList;
-  CommentController(this.commentList);
-  var list = <Reviews>[];
+  // List<Reviews> commentList;
+  CommentController();
+  int mainPage = 0;
+  final pageSize = 10;
   var mainList = <Reviews>[].obs; // 主评论列表
-  var subList = <Reviews>[].obs; // 子评论列表
-  int total = 5;
+  // var subList = <Reviews>[].obs;
   // RxInt count = 0.obs;
   final FocusNode focusNode = FocusNode();
   late TeamLoginInfo userEntity;
+
+  RefreshController refhreshCtrl = RefreshController();
   @override
   void onInit() {
     super.onInit();
-    setComments(commentList);
+    // setComments(commentList);
     userEntity =
         Get.find<HomeController>().userEntiry.teamLoginInfo ?? TeamLoginInfo();
-  }
-
-  // 初始化时调用的方法，负责将评论分类
-  void setComments(List<Reviews> commentList) {
-    mainList.clear();
-    subList.clear();
-    List<Reviews> mainComments = [];
-    List<Reviews> subComments = [];
-    list = List.from(commentList);
-    for (var comment in commentList) {
-      if (comment.parentReviewId == 0) {
-        mainComments.add(comment); // 主评论
-      } else {
-        subComments.add(comment); // 子评论
-      }
-    }
-    mainComments.sort((a, b) => b.likes!.value.compareTo(a.likes!.value));
-    subComments.sort((a, b) => b.likes!.value.compareTo(a.likes!.value));
-
-    // 批量添加评论，减少重复触发响应
-    mainList.addAll(mainComments);
-    subList.addAll(subComments);
-  }
-
-  int getLength(int id) {
-    var len = subList.where((e) => e.targetId == id).toList().length;
-    return len;
   }
 
   String timeAgo(int inputTime) {
@@ -79,26 +61,84 @@ class CommentController extends GetxController {
     }
   }
 
+  ///获取主要评论列表
+  void getReviews(id, {bool isRefresh = false}) {
+    if (isRefresh) {
+      mainList.clear();
+      mainPage = 0;
+    } else {
+      mainPage++;
+    }
+    NewsApi.getReviewsByNewsId(id, mainPage, pageSize).then((v) {
+      mainList.addAll(v);
+      update();
+    }).whenComplete(() {
+      isRefresh ? refhreshCtrl.refreshCompleted() : refhreshCtrl.loadComplete();
+    });
+  }
+
+  ///获取二级评论,将它添加到主要item下面
+  void getSubReviews(Reviews mainItem) {
+    NewsApi.getSonReviews(
+            mainItem.newsId, mainItem.id!, mainItem.page, pageSize)
+        .then((v) {
+      mainItem.subList.addAll(v);
+      mainItem.current += pageSize;
+      if (mainItem.current > mainItem.subList.length) {
+        mainItem.current = mainItem.subList.length;
+      }
+      mainItem.page++;
+
+      update();
+    }).whenComplete(() {
+      refhreshCtrl.refreshCompleted();
+    });
+  }
+
+  //直接发送、回复mianList，回复subLIst
   void sendReviews(
     BuildContext context,
     int newsId,
     String content, {
-    int targetId = 0,
-    int parentReviewId = 0,
+    // int targetId = 0,
+    Reviews? reviews,
   }) async {
     if (ObjectUtil.isEmpty(content)) return;
-    if (targetId != 0) {
+    // if (targetId != 0) {
+    //   Navigator.pop(context);
+    // }
+    int parentId = 0;
+    int targetId = 0;
+    if (reviews != null) {
+      parentId =
+          reviews.parentReviewId == 0 ? reviews.id! : reviews.parentReviewId!;
       Navigator.pop(context);
+      targetId = reviews.id!;
     }
-    Reviews item = await NewsApi.sendReviews(
-        newsId, targetId: targetId, parentReviewId: parentReviewId, content);
-    targetId == 0 ? mainList.add(item) : subList.add(item);
-    list.add(item);
-    update();
+    await NewsApi.sendReviews(
+      newsId,
+      targetId: targetId,
+      parentReviewId: parentId,
+      content,
+    ).then((item) {
+      if (targetId == 0) {
+        mainList.add(item);
+      } else {
+        reviews!.sonReviews++;
+        reviews.current++;
+        reviews.subList.add(item);
+      }
+      NewListController controller=Get.find();
+    NewsDetail newsDetail=  controller.state.newsFlowList.where((e)=>e.id==newsId).first;
+    newsDetail.reviewsCount!.value++;
+      update();
+    }).catchError((v) {
+      EasyLoading.showToast(v.error.toString());
+    });
   }
 
   void likeReviews(int newsId, int reviewsId, Reviews item) {
-    NewsApi.likeReviews(newsId, reviewsId,!item.isLike!.value).then((v) {
+    NewsApi.likeReviews(newsId, reviewsId, !item.isLike!.value).then((v) {
       if (item.isLike?.value == true) {
         item.isLike?.value = false;
         item.likes?.value -= 1;
@@ -111,33 +151,47 @@ class CommentController extends GetxController {
     });
   }
 
-  void likeNews(NewsDetail item) {
-    if (item.isLike?.value == true) return;
-    NewsApi.newsLike(item.id!).then((value) {
-      item.isLike!.value = true;
-      item.likes = (item.likes ?? 0) + 1;
-      update(["commentDialog"]);
-    });
-  }
+  // void likeNews(NewsDetail item) {
+  //   if (item.isLike?.value == 1) return;
+  //   NewsApi.newsLike(item.id!).then((value) {
+  //     item.isLike!.value = 1;
+  //     item.likes = (item.likes ?? 0) + 1;
+  //     update(["commentDialog"]);
+  //   });
+  // }
 
-  void unLikeNews(NewsDetail item) {
-    if (item.isLike?.value == false) return;
-    NewsApi.newsUnLike(item.id!).then((value) {
-      item.isLike!.value = false;
-      item.likes = (item.likes ?? 0) - 1;
-      update(["commentDialog"]);
-    });
-  }
+  // void unLikeNews(NewsDetail item) {
+  //   if (item.isLike?.value == -1) return;
+  //   NewsApi.newsUnLike(item.id!).then((value) {
+  //     item.isLike!.value = -1;
+  //     item.likes = (item.likes ?? 0) - 1;
+  //     update(["commentDialog"]);
+  //   });
+  // }
 
   String getTeamName(Reviews item) {
-    for (var e in list) {
+    for (var e in mainList) {
       if (e.id == item.targetId) {
-        if (e.parentReviewId != 0) {
+        // if (e.parentReviewId != 0) {
+        return "@${e.teamName}";
+        // }
+      }
+
+      for (var e in e.subList) {
+        if (e.id == item.targetId) {
           return "@${e.teamName}";
         }
-        return "";
       }
+      return "";
     }
+
+    // for (var e in subList) {
+    //   if (e.id == item.targetId) {
+    //     if (e.parentReviewId != 0) {
+    //       return "@${e.teamName}";
+    //     }
+    //   }
+    // }
     return "";
   }
 }
