@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-11 17:18:41
- * @LastEditTime: 2024-10-16 16:54:48
+ * @LastEditTime: 2024-10-21 20:16:46
  */
 class Assets {
   ///home
@@ -75,7 +75,8 @@ class Assets {
   static const uiIconGooglePng = 'assets/images/icon/ui_icon_google.png';
   static const uiIconApplePng = 'assets/images/icon/ui_icon_apple.png';
   static const uiIconCountdownPng = 'assets/images/icon/ui_icon_countdown.png';
-  static const uiIconDecreasingAmplitudePng = 'assets/images/icon/ui_icon_decreasing amplitude.png';
+  static const uiIconDecreasingAmplitudePng =
+      'assets/images/icon/ui_icon_decreasing amplitude.png';
   static const uiIconUpPng = 'assets/images/icon/ui_icon_up.png';
 
   ///test
@@ -202,4 +203,11 @@ class Assets {
   static const uiIconCapsPng = 'assets/images/personal/ui_icon_caps.png';
   static const uiIconPlayerPng = 'assets/images/personal/ui_icon_player.png';
   static const uiIconSalaryPng = 'assets/images/personal/ui_icon_salary.png';
+
+  ///news
+  static const uiEmojiArrogancePng =
+      'assets/images/news/ui_emoji_arrogance.png';
+  static const uiEmojiJokerPng = 'assets/images/news/ui_emoji_joker.png';
+  static const uiEmojiLaughPng = 'assets/images/news/ui_emoji_laugh.png';
+  static const uiIconEmojiPng = 'assets/images/news/ui_icon_emoji.png';
 }

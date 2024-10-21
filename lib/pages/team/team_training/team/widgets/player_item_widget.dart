@@ -68,7 +68,7 @@ class PlayerItem extends GetView<TeamController> {
   Widget _playCard() {
     return Positioned(
       left: 16.w,
-      child: CustomContainer(
+      child: ShadowContainer(
         width: 343.w,
         height: 84.w,
         backgroudColor: AppColors.cF2F2F2,
@@ -110,7 +110,7 @@ class PlayerItem extends GetView<TeamController> {
     double progress = Random().nextDouble();
     return Row(
       children: [
-        CustomContainer(
+        ShadowContainer(
           width: 62.w,
           height: 12.w,
           // padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.w),
@@ -132,7 +132,7 @@ class PlayerItem extends GetView<TeamController> {
           ),
         ),
         4.hGap,
-        CustomContainer(
+        ShadowContainer(
           width: 62.w,
           height: 12.w,
           // padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.w),
@@ -154,7 +154,7 @@ class PlayerItem extends GetView<TeamController> {
           ),
         ),
         4.hGap,
-        CustomContainer(
+        ShadowContainer(
           width: 120.w,
           height: 12.w,
           // padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.w),

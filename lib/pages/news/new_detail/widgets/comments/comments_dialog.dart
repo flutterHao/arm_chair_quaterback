@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-18 15:38:51
- * @LastEditTime: 2024-10-21 14:39:41
+ * @LastEditTime: 2024-10-21 21:52:40
  */
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -36,7 +36,7 @@ class CommentsDialog extends GetView<CommentController> {
         children: [
           Container(
             width: 375.w,
-            height: 500.w,
+            height: 650.w,
             decoration: BoxDecoration(
               color: AppColors.cFF7954,
               borderRadius: borderRadius,
@@ -49,7 +49,7 @@ class CommentsDialog extends GetView<CommentController> {
             bottom: 0,
             child: Container(
               width: 375.w,
-              height: 500.w,
+              height: 650.w,
               decoration: BoxDecoration(
                 color: AppColors.cF2F2F2,
                 borderRadius: borderRadius,
@@ -75,7 +75,12 @@ class CommentsDialog extends GetView<CommentController> {
               bottom: 0,
               right: 0,
               left: 0,
-              child: SendCommentWidget(newsId: detail.id!))
+              child: SendCommentWidget(
+                newsId: detail.id!,
+                // key: UniqueKey(),
+                // isReply: true,
+                // key: Key("bottom"),
+              ))
         ],
       ),
     );
@@ -88,7 +93,6 @@ class CommentsList extends GetView<CommentController> {
 
   @override
   Widget build(BuildContext context) {
-    RxBool isTop = false.obs;
     return GetBuilder<CommentController>(builder: (_) {
       var list =
           controller.mainList.where((e) => e.parentReviewId == 0).toList();
@@ -107,49 +111,44 @@ class CommentsList extends GetView<CommentController> {
               }),
             ),
             Expanded(
-              child: Obx(() {
-                return SmartRefresher(
-                  physics: isTop.value
-                      ? const NeverScrollableScrollPhysics()
-                      : const ClampingScrollPhysics(),
-                  controller: controller.refhreshCtrl,
-                  enablePullUp: true,
-                  enablePullDown: false,
-                  onLoading: () =>
-                      controller.getReviews(detail.id!, isRefresh: false),
-                  child: ListView.separated(
-                      controller: ScrollController(),
-                      shrinkWrap: false,
-                      physics: isTop.value
-                          ? const NeverScrollableScrollPhysics()
-                          : const ClampingScrollPhysics(),
-                      padding: EdgeInsets.symmetric(vertical: 12.w),
-                      itemCount: list.length,
-                      separatorBuilder: (context, index) {
-                        return 16.vGap;
-                      },
-                      itemBuilder: (context, index) {
-                        // var subList = controller.subList
-                        //     .where((e) =>
-                        //         e.parentReviewId ==
-                        //         list[index].id)
-                        //     .toList();
-                        return Column(
-                          children: [
-                            CommentItemView(item: list[index], isSub: false),
-                            if (list[index].sonReviews > 0 ||
-                                list[index].subList.isNotEmpty)
-                              Container(
-                                // width: 295.w,
-                                margin: EdgeInsets.only(left: 48.w),
-                                child: SubComentsListView(list[index]),
-                              )
-                          ],
-                        );
-                      }),
-                );
-              }),
-            ),
+                child: SmartRefresher(
+              // physics: isTop.value
+              //     ? const NeverScrollableScrollPhysics()
+              //     : const ClampingScrollPhysics(),
+              controller: controller.refhreshCtrl,
+              enablePullUp: true,
+              enablePullDown: false,
+              onLoading: () =>
+                  controller.getReviews(detail.id!, isRefresh: false),
+              child: ListView.separated(
+                  controller: ScrollController(),
+                  shrinkWrap: false,
+                  physics: const ClampingScrollPhysics(),
+                  padding: EdgeInsets.symmetric(vertical: 12.w),
+                  itemCount: list.length,
+                  separatorBuilder: (context, index) {
+                    return 16.vGap;
+                  },
+                  itemBuilder: (context, index) {
+                    // var subList = controller.subList
+                    //     .where((e) =>
+                    //         e.parentReviewId ==
+                    //         list[index].id)
+                    //     .toList();
+                    return Column(
+                      children: [
+                        CommentItemView(item: list[index], isSub: false),
+                        if (list[index].sonReviews > 0 ||
+                            list[index].subList.isNotEmpty)
+                          Container(
+                            // width: 295.w,
+                            margin: EdgeInsets.only(left: 48.w),
+                            child: SubComentsListView(list[index]),
+                          )
+                      ],
+                    );
+                  }),
+            )),
           ],
         ),
       );
@@ -180,7 +179,7 @@ class SubComentsListView extends GetView<CommentController> {
     int has = mainReviews.sonReviews - mainReviews.current;
 
     return AnimatedSize(
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 200),
       curve: Curves.linear,
       child: ListView.separated(
           padding: EdgeInsets.only(top: 10.w),
@@ -192,7 +191,8 @@ class SubComentsListView extends GetView<CommentController> {
             return index < mainReviews.current
                 ? SubCommentItemView(item: mainReviews.subList[index])
                 : Container(
-                    padding: EdgeInsets.symmetric(vertical: 6.w),
+                    // color: Colors.red,
+                    // padding: EdgeInsets.symmetric(vertical: 6.w),
                     child: Row(
                       children: [
                         InkWell(
@@ -212,7 +212,7 @@ class SubComentsListView extends GetView<CommentController> {
                                     ),
                                     4.hGap,
                                     Text(
-                                      "more replies  (${has > 0 ? has : 0})",
+                                      "more replies (${has > 0 ? has : 0})",
                                       style: 12.w4(height: 1),
                                     )
                                   ],
@@ -223,9 +223,9 @@ class SubComentsListView extends GetView<CommentController> {
                         if (mainReviews.current > 0)
                           InkWell(
                             onTap: () {
-                              mainReviews.subList.clear();
                               mainReviews.current = 0;
-                              mainReviews.page = 0;
+                              // mainReviews.subList.clear();
+                              // mainReviews.page = 0;
                               controller.update();
                             },
                             child: _greyContainer(
@@ -240,7 +240,7 @@ class SubComentsListView extends GetView<CommentController> {
                                   ),
                                   4.hGap,
                                   Text(
-                                    "fold",
+                                    "fold (${mainReviews.current})",
                                     style: 12.w4(height: 1),
                                   )
                                 ],

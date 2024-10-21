@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-12 16:34:46
- * @LastEditTime: 2024-10-19 17:06:40
+ * @LastEditTime: 2024-10-21 21:46:15
  */
 import 'dart:math';
 
@@ -92,7 +92,8 @@ class _SendCommentWidgetState extends State<SendCommentWidget> {
                                       controller: ctrl,
                                       minLines: 1,
                                       maxLines: 10,
-                                      focusNode: focusNode,
+                                      focusNode:
+                                          widget.isReply ? focusNode : null,
                                       // keyboardAppearance:Brightness.light,
                                       cursorColor: isDarkMode
                                           ? AppColors.cF2F2F2
@@ -146,7 +147,6 @@ class _SendCommentWidgetState extends State<SendCommentWidget> {
                                         onPressed: () {
                                           String content = ctrl.text;
                                           ctrl.text = "";
-                                          FocusScope.of(context).unfocus();
                                           Get.find<CommentController>()
                                               .sendReviews(
                                             context,
@@ -342,12 +342,12 @@ class _SendCommentWidgetState extends State<SendCommentWidget> {
 //   }
 // }
 
-void showCommentBottomSheet(BuildContext context,
+Future showCommentBottomSheet(BuildContext context,
     {required int newsId,
     required Reviews reviewsItem,
     // int targetId = 0,
-    String hintText = "Say something..."}) {
-  showModalBottomSheet(
+    String hintText = "Say something..."}) async {
+  await showModalBottomSheet(
     context: Get.context!,
     isScrollControlled: true, // 设置为 true，允许内容随着键盘升起而调整
     backgroundColor: Colors.transparent,
@@ -358,6 +358,7 @@ void showCommentBottomSheet(BuildContext context,
         // targetId: targetId,
         isReply: true,
         hintText: hintText,
+        key: UniqueKey(),
         // showKeyboard: () {
         // if (!hasFocus) {
         //   CommentController controller = Get.find();

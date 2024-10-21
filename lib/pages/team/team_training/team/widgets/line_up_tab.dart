@@ -110,10 +110,11 @@ class LineUpTab extends GetView<TeamController> {
                                   Text("Team Rest",
                                       style: 10.w4(
                                           color: AppColors.cF2F2F2, height: 1)),
+                                  1.hGap,
                                   Text(
                                       DateUtil.formatDateStr(
                                           DateUtil.getNowDateStr(),
-                                          format: DateFormats.h_m_s),
+                                          format: DateFormats.h_m),
                                       style: 10.w4(
                                           color: AppColors.c10A86A, height: 1)),
                                 ]),

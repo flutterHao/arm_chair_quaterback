@@ -1,0 +1,4 @@
+static const uiEmojiArrogancePng = 'assets/images/news/ui_emoji_arrogance.png';
+static const uiEmojiJokerPng = 'assets/images/news/ui_emoji_joker.png';
+static const uiEmojiLaughPng = 'assets/images/news/ui_emoji_laugh.png';
+static const uiIconEmojiPng = 'assets/images/news/ui_icon_emoji.png';

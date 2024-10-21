@@ -2,12 +2,12 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-10 14:39:42
- * @LastEditTime: 2024-09-26 20:23:54
+ * @LastEditTime: 2024-10-21 16:32:30
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:flutter/material.dart';
 
-class CustomContainer extends StatelessWidget {
+class ShadowContainer extends StatelessWidget {
   final Widget child;
   final double? width;
   final double? height;
@@ -17,7 +17,7 @@ class CustomContainer extends StatelessWidget {
   final EdgeInsets? margin;
   final EdgeInsets? padding;
 
-  const CustomContainer(
+  const ShadowContainer(
       {super.key,
       this.width,
       this.height,

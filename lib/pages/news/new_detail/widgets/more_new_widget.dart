@@ -37,7 +37,7 @@ class MoreNewsWidget extends StatelessWidget {
           Text("More news", style: 14.w7(color: AppColors.c262626)),
         12.vGap,
         if (controller.state.moreList.isNotEmpty)
-          CustomContainer(
+          ShadowContainer(
             backgroudColor: Colors.white,
             padding: EdgeInsets.all(16.w),
             child: ListView.separated(

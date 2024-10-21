@@ -141,61 +141,35 @@ class NewsListPage extends GetView<NewListController> {
               child: GetBuilder<NewListController>(
                   id: "newsBanner",
                   builder: (_) {
-                    return Stack(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(
-                              top: 16.w, right: 16.w, left: 16.w),
-                          child: SwiperWidget(
-                            width: 343.w,
-                            // width: MyApp.MAXWEBWIDTH.w - 40.w,
-                            height: 150.w,
-                            bannerList: controller.state.banners
-                                .map((e) => Address.httpBaseUrl + e.pictureId!)
-                                .toList(),
-                            footer: IconWidget(
-                              iconWidth: 14.w,
-                              iconHeight: 14.w,
-                              icon: Assets.uiIconArrowsPng,
-                              backgroudWitdh: 32.w,
-                              backgroudheight: 32.w,
-                              borderRadius: BorderRadius.circular(16.w),
-                              backgroudColor: Colors.white38,
-                            ),
-                            onTap: (index) {
-                              // var newsId = controller.state.banners[index].id;
-                              // controller.getNewsFlow(newsId, isRefresh: true);
-                              Get.toNamed(RouteNames.newsDetail,
-                                  arguments:
-                                      controller.state.banners[index].id!,
-                                  id: GlobalNestedKey.NEWS);
-                              // Navigator.of(context).push(
-                              //     createCustomRoute(this, NewsDetailPage(123)));
-                            },
-                          ),
+                    return Container(
+                      margin:
+                          EdgeInsets.only(top: 16.w, right: 16.w, left: 16.w),
+                      child: SwiperWidget(
+                        width: 343.w,
+                        // width: MyApp.MAXWEBWIDTH.w - 40.w,
+                        height: 150.w,
+                        bannerList: controller.state.banners
+                            .map((e) => Address.httpBaseUrl + e.pictureId!)
+                            .toList(),
+                        footer: IconWidget(
+                          iconWidth: 14.w,
+                          iconHeight: 14.w,
+                          icon: Assets.uiIconArrowsPng,
+                          backgroudWitdh: 32.w,
+                          backgroudheight: 32.w,
+                          borderRadius: BorderRadius.circular(16.w),
+                          backgroudColor: Colors.white38,
                         ),
-                        Positioned(
-                            top: 8.w,
-                            right: 8.w,
-                            child: InkWell(
-                              onTap: () => controller.getAward(),
-                              child: Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  IconWidget(
-                                    iconWidth: 36.w,
-                                    icon: Assets.uiIconLabelPng,
-                                    iconColor: AppColors.cED1451,
-                                  ),
-                                  IconWidget(
-                                    iconWidth: 16.w,
-                                    icon: Assets.uiIconAwardPng,
-                                    iconColor: Colors.white,
-                                  ),
-                                ],
-                              ),
-                            ))
-                      ],
+                        onTap: (index) {
+                          // var newsId = controller.state.banners[index].id;
+                          // controller.getNewsFlow(newsId, isRefresh: true);
+                          Get.toNamed(RouteNames.newsDetail,
+                              arguments: controller.state.banners[index].id!,
+                              id: GlobalNestedKey.NEWS);
+                          // Navigator.of(context).push(
+                          //     createCustomRoute(this, NewsDetailPage(123)));
+                        },
+                      ),
                     );
                   }),
             ),

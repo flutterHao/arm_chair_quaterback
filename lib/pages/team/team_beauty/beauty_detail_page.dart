@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-16 17:13:31
- * @LastEditTime: 2024-10-19 10:43:59
+ * @LastEditTime: 2024-10-21 16:43:51
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -19,6 +19,15 @@ class BeautyDetailPage extends GetView<BeautyController> {
   const BeautyDetailPage({super.key});
 
   Widget _buildView(BuildContext context) {
+    RxDouble dressBottom = (-254.w).obs;
+    Future.delayed(const Duration(milliseconds: 100), () {
+      dressBottom.value = 0;
+    });
+    
+        RxDouble tabRight = (-92.w).obs;
+    Future.delayed(const Duration(milliseconds: 100), () {
+      tabRight.value = 16;
+    });
     return Stack(
       children: [
         Positioned(
@@ -44,17 +53,24 @@ class BeautyDetailPage extends GetView<BeautyController> {
           left: 31.5.w,
           child: beautyInfo(color: AppColors.cF2F2F2),
         ),
-        Positioned(
-          bottom: 275.w,
-          right: 16.w,
-          child: _tabButtom(),
+      Obx(() {
+            return AnimatedPositioned(
+            duration: const Duration(milliseconds: 200),
+              bottom: 275.w,
+              right:tabRight.value,
+              child: _tabButtom(),
+            );
+          }
         ),
-        Positioned(
-          bottom: 0,
-          left: 0,
-          right: 0,
-          child: _dressUpView(),
-        )
+        Obx(() {
+          return AnimatedPositioned(
+            duration: const Duration(milliseconds: 200),
+            bottom: dressBottom.value,
+            left: 0,
+            right: 0,
+            child: _dressUpView(),
+          );
+        })
       ],
     );
   }

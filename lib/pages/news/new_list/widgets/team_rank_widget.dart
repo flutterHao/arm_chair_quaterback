@@ -1,6 +1,5 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
-import 'package:arm_chair_quaterback/common/entities/team_rank.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -62,7 +61,7 @@ class TeamRankItem extends GetView<NewListController> {
   @override
   Widget build(BuildContext context) {
     final item = controller.state.teamMap.entries.elementAt(index);
-    return CustomContainer(
+    return ShadowContainer(
       width: width,
       height: 225.w,
       child: Column(

@@ -120,6 +120,10 @@ flutter:
       fonts:
         - asset: assets/fonts/Roboto-Medium.ttf
           weight: 400
+    - family: Roboto-Regular
+      fonts:
+        - asset: assets/fonts/Roboto-Regular.ttf
+          weight: 400
           
               
     - family: Oswald-Light        
@@ -129,6 +133,11 @@ flutter:
     - family: Oswald-Medium
       fonts:
         - asset: assets/fonts/Oswald-Medium.ttf
+          weight: 400
+          
+    - family: NotoSans        
+      fonts:
+        - asset: assets/fonts/NotoSans-Medium.ttf
           weight: 400
           
   #   - family: Trajan Pro

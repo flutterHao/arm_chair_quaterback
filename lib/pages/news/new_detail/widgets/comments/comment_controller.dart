@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-11 16:57:58
- * @LastEditTime: 2024-10-21 14:16:03
+ * @LastEditTime: 2024-10-21 19:50:06
  */
 
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
@@ -21,7 +21,6 @@ class CommentController extends GetxController {
   // List<Reviews> commentList;
   CommentController();
   int mainPage = 0;
-  final pageSize = 10;
   var mainList = <Reviews>[].obs; // 主评论列表
   // var subList = <Reviews>[].obs;
   // RxInt count = 0.obs;
@@ -60,13 +59,14 @@ class CommentController extends GetxController {
 
   ///获取主要评论列表
   void getReviews(id, {bool isRefresh = false}) {
+    const pageSize = 10;
     if (isRefresh) {
       mainList.clear();
       mainPage = 0;
     } else {
       mainPage++;
     }
-    NewsApi.getReviewsByNewsId(123, mainPage, pageSize).then((v) {
+    NewsApi.getReviewsByNewsId(id, mainPage, pageSize).then((v) {
       mainList.addAll(v);
       update();
     }).whenComplete(() {
@@ -76,10 +76,13 @@ class CommentController extends GetxController {
 
   ///获取二级评论,将它添加到主要item下面
   void getSubReviews(Reviews mainItem) {
+    // const pageSize = 10;
+   
     NewsApi.getSonReviews(
-            mainItem.newsId, mainItem.id!, mainItem.page, pageSize)
+            mainItem.newsId, mainItem.id!, mainItem.page, 10)
         .then((v) {
       mainItem.subList.addAll(v);
+       int pageSize = mainItem.current == 0 ? 3 : 10;
       mainItem.current += pageSize;
       if (mainItem.current > mainItem.subList.length) {
         mainItem.current = mainItem.subList.length;

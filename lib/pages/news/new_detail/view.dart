@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -6,6 +7,7 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/app_bar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comment_controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comment_item.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/news_bottom_button.dart';
@@ -68,6 +70,11 @@ class NewsDetailList extends GetView<NewListController> {
           child: GetBuilder<NewListController>(
               id: "newsFlow",
               builder: (_) {
+                // if (controller.state.newsFlowList.isEmpty) {
+                //   return LoadStatusWidget(
+                //       onRefreshTap: () =>
+                //           controller.getNewsFlow(newsId, isRefresh: true));
+                // }
                 return SmartRefresher(
                   controller: controller.flowRefreshCtrl,
                   enablePullUp: true,
@@ -126,7 +133,7 @@ class NewsDetailItem extends StatelessWidget {
           children: [
             Text(
               newsDetail.title ?? "",
-              style: 24.w7(color: AppColors.c262626, height: 1),
+              style: 28.w7(color: AppColors.c262626, height: 1.25),
             ),
             15.vGap,
             if (newsDetail.source != null)
@@ -147,7 +154,15 @@ class NewsDetailItem extends StatelessWidget {
               padding: const EdgeInsets.only(top: 16),
               child: Text(
                 newsDetail.content ?? "",
-                style: 14.w4(color: AppColors.c666666),
+                style: TextStyle(
+                  fontSize: 16.h,
+                  fontFamily: FontFamily.fNotoSans,
+                  color: AppColors.c262626,
+                  // fontWeight: FontWeight.w500,
+                  height: 1.6,
+                  // letterSpacing: 0.5,
+                ),
+                // style: 17.w4(color: AppColors.c262626, height: 1.7,),
               ),
             ),
           ],

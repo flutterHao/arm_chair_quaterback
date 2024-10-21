@@ -61,7 +61,7 @@ class StatsItem extends GetView<RankController> {
   Widget build(BuildContext context) {
     var item = controller.statList[index];
 
-    return CustomContainer(
+    return ShadowContainer(
       height: 84.w,
       // width: 343.w,
       backgroudColor: AppColors.cF1F1F1,
@@ -100,7 +100,7 @@ class StatsItem extends GetView<RankController> {
                   overflow: TextOverflow.ellipsis,
                 ),
                 5.vGap,
-                CustomContainer(
+                ShadowContainer(
                     width: 18.w,
                     // height: 12.w,
                     backgroudColor: AppColors.c666666,
@@ -152,7 +152,7 @@ class StatsTeamItem extends GetView<RankController> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomContainer(
+    return ShadowContainer(
       height: 84.w,
       // width: 343.w,
       backgroudColor: AppColors.cF1F1F1,

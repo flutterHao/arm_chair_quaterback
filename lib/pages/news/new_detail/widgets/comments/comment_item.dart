@@ -51,7 +51,9 @@ class CommentItemView extends GetView<CommentController> {
                   // 13.hGap,
                   if (item.targetId != 0)
                     Container(
-                      width: 70.w,
+                      // width: 70.w,
+                      // constraints:
+                      //     BoxConstraints(maxWidth: 120.w, minWidth: 70.w),
                       margin: EdgeInsets.only(left: 6.w),
                       child: Text(
                         " ${controller.getTeamName(item)}",
@@ -67,17 +69,19 @@ class CommentItemView extends GetView<CommentController> {
                   Expanded(child: Container()),
                   // if (item.teamId != (controller.userEntity.team?.teamId ?? 0))
                   InkWell(
-                    onTap: () {
+                    onTap: () async {
                       // int parentId = item.parentReviewId == 0
                       //     ? item.id!
                       //     : item.parentReviewId!;
-                      // FocusScope.of(context).unfocus();
                       String name = "@${item.teamName}";
-                      showCommentBottomSheet(context,
+                      await showCommentBottomSheet(context,
                           newsId: item.newsId ?? 0,
                           reviewsItem: item,
                           // targetId: item.id ?? 0,
                           hintText: name);
+                      if (context.mounted) {
+                        FocusScope.of(context).unfocus();
+                      }
                     },
                     child: Text(
                       "Reple",
@@ -98,7 +102,7 @@ class CommentItemView extends GetView<CommentController> {
                   Expanded(
                       child: Text(
                     item.context ?? "",
-                    style: 14.w4(color: AppColors.c666666, height: 1),
+                    style: 14.w4(color: AppColors.c666666),
                   )),
                   30.hGap,
                 ],
@@ -189,7 +193,8 @@ class SubCommentItemView extends GetView<CommentController> {
                         ),
                   if (item.targetId != 0)
                     Container(
-                      width: 70.w,
+                      constraints:
+                          BoxConstraints(maxWidth: 120.w, minWidth: 70.w),
                       margin: EdgeInsets.only(left: 6.w),
                       child: Text(
                         " ${controller.getTeamName(item)}",
@@ -259,7 +264,7 @@ class HotComment extends GetView<CommentController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Comments(${item.sonReviews})",
+          "Comments (${item.sonReviews})",
           style: 14.w7(color: AppColors.c262626, height: 1),
         ),
         10.vGap,

@@ -243,7 +243,7 @@ class _TeamView extends GetView<TeamIndexController> {
   Widget _rewardContent() {
     return Column(
       children: [
-        CustomContainer(
+        ShadowContainer(
             width: 162.w,
             height: 24.w,
             backgroudColor: AppColors.ccccccc,
@@ -529,7 +529,7 @@ class _TeamView extends GetView<TeamIndexController> {
                     bottom: 70.h,
                     child: InkWell(
                       onTap: () => controller.openPage(),
-                      child: CustomContainer(
+                      child: ShadowContainer(
                           width: 147.h,
                           height: 38.h,
                           backgroudColor: AppColors.c343434,
@@ -652,7 +652,7 @@ class _TeamView extends GetView<TeamIndexController> {
                           ),
                           Positioned(
                             bottom: 0,
-                            child: CustomContainer(
+                            child: ShadowContainer(
                                 // width:35.w ,
                                 // height: 10.h,
                                 padding: EdgeInsets.symmetric(horizontal: 2.h),

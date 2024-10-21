@@ -2,7 +2,7 @@
  * @Description: 新闻的底部按钮点赞分享评论
  * @Author: lihonghao
  * @Date: 2024-10-17 17:02:35
- * @LastEditTime: 2024-10-21 14:36:47
+ * @LastEditTime: 2024-10-21 21:47:01
  */
 import 'dart:math';
 
@@ -10,6 +10,7 @@ import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comment_controller.dart';
@@ -60,50 +61,61 @@ class NewsBottomButton extends StatelessWidget {
                 children: [
                   InkWell(
                     onTap: () => controller.likeNews(detail),
-                    child: IconWidget(
-                      iconWidth: 18.w,
-                      icon: detail.isLike?.value == 1
-                          ? Assets.uiIconLike_01Png
-                          : Assets.uiIconLike_02Png,
-                      iconColor: detail.isLike?.value == 1
-                          ? AppColors.c262626
-                          : AppColors.c666666,
-                    ),
-                  ),
-                  // if (detail.likes != 0)
-                  InkWell(
-                    onTap: () => controller.likeNews(detail),
                     child: Container(
-                      padding: EdgeInsets.only(left: 7.w),
-                      child: Text(
-                        "${detail.likes}",
-                        style: 14.w4(
-                          color: detail.isLike?.value == 1
-                              ? AppColors.c262626
-                              : AppColors.c666666,
-                        ),
+                      // color: Colors.amber,
+                      padding: EdgeInsets.symmetric(horizontal: 14.w),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            child: IconWidget(
+                              iconWidth: 18.w,
+                              icon: detail.isLike?.value == 1
+                                  ? Assets.uiIconLike_01Png
+                                  : Assets.uiIconLike_02Png,
+                              iconColor: detail.isLike?.value == 1
+                                  ? AppColors.c262626
+                                  : AppColors.c666666,
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(left: 7.w),
+                            child: Text(
+                              Utils.numFormat(detail.likes!),
+                              style: 14.w4(
+                                color: detail.isLike?.value == 1
+                                    ? AppColors.c262626
+                                    : AppColors.c666666,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
+                  // if (detail.likes != 0)
+
                   Container(
-                    margin: EdgeInsets.symmetric(horizontal: 14.w),
                     width: 1.w,
                     height: 24.w,
                     color: AppColors.ccccccc,
                   ),
                   InkWell(
                     onTap: () => controller.unLikeNews(detail),
-                    child: Transform(
-                      alignment: Alignment.center,
-                      transform: Matrix4.rotationX(pi),
-                      child: IconWidget(
-                        iconWidth: 18.w,
-                        icon: detail.isLike?.value == -1
-                            ? Assets.uiIconLike_01Png
-                            : Assets.uiIconLike_02Png,
-                        iconColor: detail.isLike?.value == -1
-                            ? AppColors.c262626
-                            : AppColors.c666666,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 14.w),
+                      child: Transform(
+                        alignment: Alignment.center,
+                        transform: Matrix4.rotationX(pi),
+                        child: IconWidget(
+                          iconWidth: 18.w,
+                          icon: detail.isLike?.value == -1
+                              ? Assets.uiIconLike_01Png
+                              : Assets.uiIconLike_02Png,
+                          iconColor: detail.isLike?.value == -1
+                              ? AppColors.c262626
+                              : AppColors.c666666,
+                        ),
                       ),
                     ),
                   ),
@@ -123,6 +135,7 @@ class NewsBottomButton extends StatelessWidget {
                 showModalBottomSheet(
                   isScrollControlled: true,
                   context: Get.context!,
+                  // barrierColor: Colors.transparent,
                   backgroundColor: Colors.transparent,
                   builder: (context) {
                     return VerticalDragBackWidget(
@@ -143,7 +156,7 @@ class NewsBottomButton extends StatelessWidget {
                     return Container(
                       margin: EdgeInsets.only(left: 7.w),
                       child: Text(
-                        "${detail.reviewsCount!.value}",
+                        Utils.numFormat(detail.reviewsCount!.value),
                         style: 14.w4(color: AppColors.c262626),
                       ),
                     );
