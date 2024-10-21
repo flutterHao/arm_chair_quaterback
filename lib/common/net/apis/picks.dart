@@ -17,8 +17,10 @@ import 'package:arm_chair_quaterback/common/entities/player_day_data_entity.dart
 import 'package:arm_chair_quaterback/common/entities/rank_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/recive_award_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/star_up_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_simple_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/up_start_team_player_response_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/rank_type.dart';
 import 'package:arm_chair_quaterback/common/net/apis.dart';
 import 'package:arm_chair_quaterback/common/net/http.dart';
@@ -75,7 +77,7 @@ class PicksApi {
   static Future<List<ReciveAwardEntity>> getGuessAward(int scId) async {
     List json = await httpUtil.post(Api.getGuessAward, data: {"guessId": scId});
     print('json:$json');
-    return json.map((e)=>ReciveAwardEntity.fromJson(e)).toList();
+    return json.map((e) => ReciveAwardEntity.fromJson(e)).toList();
   }
 
   static Future<List<ReciveAwardEntity>> getGuessAllAward() async {
@@ -101,9 +103,18 @@ class PicksApi {
     return TeamPlayerInfoEntity.fromJson(json);
   }
 
-  static Future<NbaPlayerBaseInfoEntity> getNBAPlayerBaseInfo(int playerId) async {
-    var json = await httpUtil.post(Api.getNBAPlayerBaseInfo, data: {"playerId": playerId});
+  static Future<NbaPlayerBaseInfoEntity> getNBAPlayerBaseInfo(
+      int playerId) async {
+    var json = await httpUtil
+        .post(Api.getNBAPlayerBaseInfo, data: {"playerId": playerId});
     return NbaPlayerBaseInfoEntity.fromJson(json);
+  }
+
+  static Future<UpStartTeamPlayerResponseEntity> upStarTeamPlayer(
+      String uuid, String materialScienceUUID) async {
+    var json = await httpUtil
+        .post(Api.upStarTeamPlayer, data: {"uuid": uuid, "materialScienceUUID": materialScienceUUID});
+    return UpStartTeamPlayerResponseEntity.fromJson(json);
   }
 
 }

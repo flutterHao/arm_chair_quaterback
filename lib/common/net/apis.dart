@@ -68,6 +68,9 @@ class Api {
   static const String cRewardGroup = "$CONFIG_BASE_PATH/RewardGroup.json";
   static const String cTrainTask = "$CONFIG_BASE_PATH/TrainTask.json";
   static const String cTrainDefine = "$CONFIG_BASE_PATH/TrainDefine.json";
+  static const String cStarUpDefine = "$CONFIG_BASE_PATH/StarUpDefine.json";
+  static const String cGradeInStarDefine = "$CONFIG_BASE_PATH/GradeInStarDefine.json";
+
 
   /// TeamPlayer
   static const String getTeamPlayerByUUID =
@@ -78,6 +81,8 @@ class Api {
       "$API_BASE_PATH/TeamPlayer/playerTraining";
   static const String getTeamPlayerList =
       "$API_BASE_PATH/TeamPlayer/getTeamPlayerList";
+  static const String upStarTeamPlayer =
+      "$API_BASE_PATH/TeamPlayer/upStarTeamPlayer";
 
   ///trade
   static const String getTradeInfo = "$API_BASE_PATH/Trade/getTradeInfo";

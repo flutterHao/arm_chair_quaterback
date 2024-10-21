@@ -95,11 +95,13 @@
 // }
 
 import 'package:arm_chair_quaterback/common/entities/config/prop_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/grade_in_star_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/reward_group_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/star_up_define_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis.dart';
 import 'package:arm_chair_quaterback/common/net/http.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
@@ -117,6 +119,10 @@ class CacheApi {
 
   ///道具定义
   static List<PropDefineEntity>? propDefineList;
+
+  static List<StarUpDefineEntity>? _starUpDefines;
+  static List<GradeInStarDefineEntity>? _gradeInStars;
+
 
   static Future<void> init() async {
     await Future.wait([
@@ -186,5 +192,21 @@ class CacheApi {
   static Future<List<RewardGroupEntity>> getRewardGroup() async {
     List list = await httpUtil.get(Api.cRewardGroup);
     return list.map((e) => RewardGroupEntity.fromJson(e)).toList();
+  }
+
+  static Future<List<StarUpDefineEntity>> getStarUpDefine() async {
+    if (_starUpDefines == null) {
+      List json = await httpUtil.post(Api.cStarUpDefine);
+      _starUpDefines = json.map((e) => StarUpDefineEntity.fromJson(e)).toList();
+    }
+    return _starUpDefines!;
+  }
+
+  static Future<List<GradeInStarDefineEntity>> getGradeInStarDefine() async {
+    if (_gradeInStars == null) {
+      List json = await httpUtil.post(Api.cGradeInStarDefine);
+      _gradeInStars = json.map((e) => GradeInStarDefineEntity.fromJson(e)).toList();
+    }
+    return _gradeInStars!;
   }
 }

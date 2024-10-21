@@ -31,6 +31,18 @@ class TeamLoginInfo {
     this.zoneInfo,
   });
 
+  num getCoin(){
+    var firstWhere = teamPropList?.firstWhere((e) => e.propId == 103);
+    return firstWhere?.num??0;
+  }
+
+  num getMoney(){
+    var firstWhere = teamPropList?.firstWhere((e) => e.propId == 102);
+    return firstWhere?.num??0;
+  }
+
+
+
   factory TeamLoginInfo.fromJson(Map<String, dynamic> json) => TeamLoginInfo(
         firstLogin: json['firstLogin'] as bool?,
         loginWay: json['loginWay'] as String?,

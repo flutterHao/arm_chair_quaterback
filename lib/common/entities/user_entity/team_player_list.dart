@@ -37,6 +37,18 @@ class TeamPlayerList {
     this.uuid,
   });
 
+  int getBreakThroughGrade(){
+    if((breakThroughGrade??0)>=1){
+      return breakThroughGrade!;
+    }
+    return 1;
+  }
+
+  int getNextBreakThroughGrade(){
+    var i = getBreakThroughGrade()+1;
+    return i;
+  }
+
   factory TeamPlayerList.fromJson(Map<String, dynamic> json) {
     return TeamPlayerList(
       bindStatus: json['bindStatus'] as bool?,

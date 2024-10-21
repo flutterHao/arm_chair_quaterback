@@ -5,13 +5,16 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/arc_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/btn_background.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/physics/one_boundary_scroll_physics.dart';
+import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/game/controller.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -24,6 +27,7 @@ class PlayerDetailGame extends StatefulWidget {
   const PlayerDetailGame({super.key, required this.headHeight});
 
   final double headHeight;
+
   @override
   State<PlayerDetailGame> createState() => _PlayerDetailGameState();
 }
@@ -721,8 +725,8 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
               Obx(() {
                 return Positioned(
                   left: (constraints.maxWidth - levelWidgetHeight - 16.w) /
-                      2 *
-                      controller.startLeft.value +
+                          2 *
+                          controller.startLeft.value +
                       ((1 - controller.startLeft.value) * -15.w),
                   child: SizedBox(
                     width: levelWidgetHeight,
@@ -851,7 +855,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                 Container(
                                   margin: EdgeInsets.only(top: 5.w),
                                   child: Text(
-                                    "6",
+                                    "${controller.uuidPlayerInfo?.getNextBreakThroughGrade()}",
                                     style: 21.w7(color: AppColors.c262626),
                                   ),
                                 )
@@ -875,7 +879,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                               ),
                               6.hGap,
                               Text(
-                                "+4~8%",
+                                "+${controller.starUpDefineEntity.getPotantialMin().toStringAsFixed(0)}~${controller.starUpDefineEntity.getPotantialMax().toStringAsFixed(0)}%",
                                 style: 12.w4(color: AppColors.cF2F2F2),
                               )
                             ],
@@ -915,7 +919,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                           Container(
                             margin: EdgeInsets.only(top: 10.w),
                             child: Text(
-                              "${controller.uuidPlayerInfo?.breakThroughGrade}",
+                              "${controller.uuidPlayerInfo?.getBreakThroughGrade()}",
                               style: 34.w7(color: AppColors.c262626),
                             ),
                           )
@@ -940,270 +944,387 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
         context: Get.context!,
         isScrollControlled: true,
         builder: (context) {
-          return Container(
-            height: MediaQuery.of(context).size.height-widget.headHeight-levelWidgetHeight,
-            width: double.infinity,
-            decoration: BoxDecoration(
-                color: AppColors.cD8D8D8,
-                borderRadius:
-                    BorderRadius.vertical(top: Radius.circular(16.w))),
-            child: Column(
-              children: [
-                Container(
-                  margin: EdgeInsets.only(
-                    top: 11.w,
-                    right: 14.w,
-                    left: 16.w,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        height: 24.w,
-                        width: 92.w,
-                        decoration: BoxDecoration(
-                            color: AppColors.c262626,
-                            borderRadius: BorderRadius.circular(12.w)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            const SizedBox.shrink(),
-                            Text("Grade",
-                                style: 13.w4(color: AppColors.cF2F2F2)),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                IconWidget(
-                                  iconWidth: 8.w,
-                                  icon: Assets.uiIconShrinkPng,
-                                  iconColor: AppColors.cF2F2F2,
-                                ),
-                                3.vGap,
-                                IconWidget(
-                                  iconWidth: 8.w,
-                                  icon: Assets.uiIconUnfoldPng,
-                                  iconColor: AppColors.cB3B3B3,
-                                )
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                      Container(
-                        height: 24.w,
-                        width: 92.w,
-                        decoration: BoxDecoration(
-                            color: AppColors.cE6E6E6,
-                            borderRadius: BorderRadius.circular(12.w)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            const SizedBox.shrink(),
-                            Text("Level",
-                                style: 13.w4(color: AppColors.c262626)),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                IconWidget(
-                                  iconWidth: 8.w,
-                                  icon: Assets.uiIconShrinkPng,
-                                  iconColor: AppColors.cB3B3B3,
-                                ),
-                                3.vGap,
-                                IconWidget(
-                                  iconWidth: 8.w,
-                                  icon: Assets.uiIconUnfoldPng,
-                                  iconColor: AppColors.cB3B3B3,
-                                )
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            "Selected: ",
-                            style: 13.w4(color: AppColors.cB3B3B3),
-                          ),
-                          7.hGap,
-                          Text(
-                            "2",
-                            style: 13.w4(color: AppColors.c10A86A),
-                          ),
-                          Text(
-                            "/5",
-                            style: 13.w4(color: AppColors.c262626),
-                          )
-                        ],
-                      ),
-                      InkWell(
-                          onTap: () => Get.back(),
-                          child: IconWidget(
-                            iconWidth: 18.w,
-                            icon: Assets.iconClosePng,
-                            iconColor: AppColors.c262626,
-                          ))
-                    ],
-                  ),
-                ),
-                19.vGap,
-                Expanded(
-                  child: Obx(() {
-                    return ListView.builder(
-                      controller: scrollController,
-                      physics: OneBoundaryScrollPhysics(scrollController: scrollController),
-                      itemBuilder: (context, index) {
-                        bool item = controller.dialogListDatas[index];
-                        return InkWell(
-                          onTap: () => controller.dialogListItemTap(index),
+          return Obx(() {
+            var choiceList =
+                controller.teamPlayerList.where((e) => e.choice).toList();
+            var money = Get.find<HomeController>()
+                .userEntiry
+                .teamLoginInfo
+                ?.getMoney() ??
+                0;
+            var cost = 0;
+            for (int i = 0; i < choiceList.length; i++) {
+              cost += choiceList[i].getCost();
+            }
+            return Container(
+              height: MediaQuery.of(context).size.height -
+                  widget.headHeight -
+                  levelWidgetHeight,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  color: AppColors.cD8D8D8,
+                  borderRadius:
+                      BorderRadius.vertical(top: Radius.circular(16.w))),
+              child: Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 11.w,
+                      right: 14.w,
+                      left: 16.w,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        InkWell(
+                          onTap: () => controller.sort(0),
                           child: Container(
-                            height: 84.w,
-                            margin: EdgeInsets.only(
-                                left: 16.w, right: 16.w, bottom: 9.w),
+                            height: 24.w,
+                            width: 92.w,
                             decoration: BoxDecoration(
-                                color: AppColors.cF2F2F2,
-                                borderRadius: BorderRadius.circular(16.w),
-                                border: Border.all(
-                                    color: item
-                                        ? AppColors.c10A86A
-                                        : Colors.transparent,
-                                    width: 1)),
+                                color: AppColors.c262626,
+                                borderRadius: BorderRadius.circular(12.w)),
                             child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                13.hGap,
-                                Container(
-                                  width: 64.w,
-                                  height: 64.w,
-                                  decoration: BoxDecoration(
-                                      color: AppColors.cE1E1E1,
-                                      borderRadius:
-                                          BorderRadius.circular(32.w)),
-                                  child: Stack(
-                                    alignment: Alignment.bottomCenter,
-                                    children: [
-                                      IconWidget(
-                                          iconWidth: 64.w,
-                                          icon: Assets.testTeamLogoPng),
-                                      Positioned(
-                                          top: 0,
-                                          left: 0,
-                                          child: Text(
-                                            "SS",
-                                            style:
-                                                16.w7(color: AppColors.c262626),
-                                          ))
-                                    ],
-                                  ),
+                                const SizedBox.shrink(),
+                                Text("Star",
+                                    style: 13.w4(color: AppColors.cF2F2F2)),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    IconWidget(
+                                      iconWidth: 8.w,
+                                      icon: Assets.uiIconShrinkPng,
+                                      iconColor: !controller.isGradeSort &&
+                                              !controller.breakThroughGradeSort
+                                          ? AppColors.cF2F2F2
+                                          : AppColors.cB3B3B3,
+                                    ),
+                                    3.vGap,
+                                    IconWidget(
+                                      iconWidth: 8.w,
+                                      icon: Assets.uiIconUnfoldPng,
+                                      iconColor: !controller.isGradeSort &&
+                                              controller.breakThroughGradeSort
+                                          ? AppColors.cF2F2F2
+                                          : AppColors.cB3B3B3,
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () => controller.sort(1),
+                          child: Container(
+                            height: 24.w,
+                            width: 92.w,
+                            decoration: BoxDecoration(
+                                color: AppColors.cE6E6E6,
+                                borderRadius: BorderRadius.circular(12.w)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                const SizedBox.shrink(),
+                                Text("Grade",
+                                    style: 13.w4(color: AppColors.c262626)),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    IconWidget(
+                                      iconWidth: 8.w,
+                                      icon: Assets.uiIconShrinkPng,
+                                      iconColor: controller.isGradeSort &&
+                                              !controller.gradeSort
+                                          ? AppColors.cF2F2F2
+                                          : AppColors.cB3B3B3,
+                                    ),
+                                    3.vGap,
+                                    IconWidget(
+                                      iconWidth: 8.w,
+                                      icon: Assets.uiIconUnfoldPng,
+                                      iconColor: controller.isGradeSort &&
+                                              controller.gradeSort
+                                          ? AppColors.cF2F2F2
+                                          : AppColors.cB3B3B3,
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              "Selected: ",
+                              style: 13.w4(color: AppColors.cB3B3B3),
+                            ),
+                            7.hGap,
+                            Text(
+                              "${choiceList.length}",
+                              style: 13.w4(color: AppColors.c10A86A),
+                            ),
+                            Text(
+                              "/5",
+                              style: 13.w4(color: AppColors.c262626),
+                            )
+                          ],
+                        ),
+                        InkWell(
+                            onTap: () => Get.back(),
+                            child: IconWidget(
+                              iconWidth: 18.w,
+                              icon: Assets.iconClosePng,
+                              iconColor: AppColors.c262626,
+                            ))
+                      ],
+                    ),
+                  ),
+                  19.vGap,
+                  Expanded(
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        controller.teamPlayerList.isEmpty
+                            ? Center(
+                                child: LoadStatusWidget(
+                                  text: LoadDataStatus.noData.desc,
                                 ),
-                                9.hGap,
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "Player Name",
-                                        style: 16.w4(color: AppColors.c262626),
-                                      ),
-                                      8.vGap,
-                                      Row(
+                              )
+                            : ListView.builder(
+                                controller: scrollController,
+                                physics: OneBoundaryScrollPhysics(
+                                    scrollController: scrollController),
+                                itemBuilder: (context, index) {
+                                  var item = controller.teamPlayerList[index];
+                                  return InkWell(
+                                    onTap: () {
+                                      controller.dialogListItemTap(index);
+                                    },
+                                    child: Container(
+                                      height: 84.w,
+                                      margin: EdgeInsets.only(
+                                          left: 16.w, right: 16.w, bottom: 9.w),
+                                      decoration: BoxDecoration(
+                                          color: AppColors.cF2F2F2,
+                                          borderRadius:
+                                              BorderRadius.circular(16.w),
+                                          border: Border.all(
+                                              color: item.choice
+                                                  ? AppColors.c10A86A
+                                                  : Colors.transparent,
+                                              width: 1)),
+                                      child: Row(
                                         children: [
+                                          13.hGap,
                                           Container(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 3.w),
+                                            width: 64.w,
+                                            height: 64.w,
                                             decoration: BoxDecoration(
-                                              color: AppColors.c666666,
-                                              borderRadius:
-                                                  BorderRadius.circular(2.w),
-                                            ),
-                                            child: Text(
-                                              "SG",
-                                              style: 10
-                                                  .w4(color: AppColors.cF2F2F2),
-                                            ),
-                                          ),
-                                          3.hGap,
-                                          SizedBox(
-                                            width: 14.w,
-                                            height: 14.w,
+                                                color: AppColors.cE1E1E1,
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        32.w)),
                                             child: Stack(
-                                              alignment: Alignment.center,
+                                              alignment: Alignment.bottomCenter,
                                               children: [
                                                 IconWidget(
-                                                  iconWidth: 14.w,
-                                                  icon: Assets.uiIconStar_01Png,
-                                                  iconColor: AppColors.cFF7954,
-                                                ),
-                                                Text(
-                                                  "5",
-                                                  style: 9.w4(
-                                                      color: AppColors.cFFFFFF),
-                                                ),
+                                                    iconWidth: 64.w,
+                                                    icon:
+                                                        Assets.testTeamLogoPng),
+                                                Positioned(
+                                                    top: 0,
+                                                    left: 0,
+                                                    child: Text(
+                                                      item.baseInfo.getGrade(),
+                                                      style: 16.w7(
+                                                          color: AppColors
+                                                              .c262626),
+                                                    ))
                                               ],
                                             ),
                                           ),
-                                          3.hGap,
+                                          9.hGap,
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  item.baseInfo.ename,
+                                                  style: 16.w4(
+                                                      color: AppColors.c262626),
+                                                ),
+                                                8.vGap,
+                                                Row(
+                                                  children: [
+                                                    Container(
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: 3.w),
+                                                      decoration: BoxDecoration(
+                                                        color:
+                                                            AppColors.c666666,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(2.w),
+                                                      ),
+                                                      child: Text(
+                                                        item.baseInfo.position,
+                                                        style: 10.w4(
+                                                            color: AppColors
+                                                                .cF2F2F2),
+                                                      ),
+                                                    ),
+                                                    3.hGap,
+                                                    SizedBox(
+                                                      width: 14.w,
+                                                      height: 14.w,
+                                                      child: Stack(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        children: [
+                                                          IconWidget(
+                                                            iconWidth: 14.w,
+                                                            icon: Assets
+                                                                .uiIconStar_01Png,
+                                                            iconColor: AppColors
+                                                                .cFF7954,
+                                                          ),
+                                                          Text(
+                                                            "${item.teamPlayer.getBreakThroughGrade()}",
+                                                            style: 9.w4(
+                                                                color: AppColors
+                                                                    .cFFFFFF),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    3.hGap,
+                                                    IconWidget(
+                                                        iconWidth: 12.w,
+                                                        icon: Assets
+                                                            .uiStateBestPng)
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                          20.hGap,
+                                          Container(
+                                            width: 81.w,
+                                            height: 56.w,
+                                            decoration: BoxDecoration(
+                                                border: Border.all(
+                                                    color: AppColors.ce5e5e5,
+                                                    width: 1),
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        12.w)),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                    "+${(item.getUPPercent() * 100).toStringAsFixed(1)}%",
+                                                    style: 21.w7(
+                                                        color:
+                                                            AppColors.cFF7954,
+                                                        height: 1)),
+                                                2.vGap,
+                                                // Text(
+                                                //   "SR",
+                                                //   style: 12.w4(color: AppColors.cFF7954),
+                                                // )
+                                              ],
+                                            ),
+                                          ),
+                                          15.hGap,
+                                          Container(
+                                            width: 32.w,
+                                            height: 32.w,
+                                            decoration: BoxDecoration(
+                                                color: item.choice
+                                                    ? AppColors.c10A86A
+                                                    : AppColors.cB3B3B3,
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        16.w)),
+                                            child: IconWidget(
+                                                iconWidth: 16.w,
+                                                icon: Assets.uiIconRuidgtPng),
+                                          ),
+                                          12.hGap
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                                itemCount: controller.teamPlayerList.length,
+                              ),
+                        Positioned(
+                            bottom: 29.w,
+                            child: SizedBox(
+                              width: 203.w,
+                              child: InkWell(
+                                onTap: () {
+                                  if(choiceList.isEmpty){
+                                    return;
+                                  }
+                                  if (money < cost) {
+                                    return;
+                                  }
+                                  controller.upgradeTap();
+                                },
+                                child: BtnBackground(
+                                    child: Container(
+                                  padding:
+                                      EdgeInsets.only(left: 30.w, right: 15.w),
+                                  alignment: Alignment.center,
+                                  height: 36.w,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "LEVEL UP",
+                                        style: 18.w7(
+                                            color: AppColors.cF2F2F2,
+                                            height: 1),
+                                      ),
+                                      Row(
+                                        children: [
                                           IconWidget(
-                                              iconWidth: 12.w,
-                                              icon: Assets.uiStateBestPng)
+                                            iconWidth: 15.w,
+                                            icon: Assets.uiIconMoneyPng,
+                                            iconColor: AppColors.cF2F2F2,
+                                          ),
+                                          4.hGap,
+                                          Text(
+                                            "${cost}k",
+                                            style: 12.w4(
+                                                color: money<cost?AppColors.cE72646:AppColors.cF2F2F2,
+                                                height: 1),
+                                          )
                                         ],
                                       )
                                     ],
                                   ),
-                                ),
-                                20.hGap,
-                                Container(
-                                  width: 81.w,
-                                  height: 56.w,
-                                  decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: AppColors.ce5e5e5, width: 1),
-                                      borderRadius:
-                                          BorderRadius.circular(12.w)),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text("+25%",
-                                          style: 21.w7(
-                                              color: AppColors.cFF7954,
-                                              height: 1)),
-                                      2.vGap,
-                                      Text(
-                                        "SR",
-                                        style: 12.w4(color: AppColors.cFF7954),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                15.hGap,
-                                Container(
-                                  width: 32.w,
-                                  height: 32.w,
-                                  decoration: BoxDecoration(
-                                      color: item
-                                          ? AppColors.c10A86A
-                                          : AppColors.cB3B3B3,
-                                      borderRadius:
-                                          BorderRadius.circular(16.w)),
-                                  child: IconWidget(
-                                      iconWidth: 16.w,
-                                      icon: Assets.uiIconRuidgtPng),
-                                ),
-                                12.hGap
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                      itemCount: controller.dialogListDatas.length,
-                    );
-                  }),
-                ),
-              ],
-            ),
-          );
+                                )),
+                              ),
+                            ))
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          });
         });
     controller.dismiss();
   }

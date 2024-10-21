@@ -227,12 +227,11 @@ class MoneyAndCoinWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: list.map(
                 (e) {
-                  var item = homeCtrl.getPropInfo(e.propId ?? 0);
                   return iconText(
-                      item?.propId == 102
+                      e.propId == 102
                           ? Assets.uiIconMoneyPng
                           : Assets.uiIconJettonPng,
-                      e.num ?? 0);
+                      e.propId == 102 ? info.getMoney() : info.getCoin());
                 },
               ).toList(),
             ),
@@ -240,7 +239,7 @@ class MoneyAndCoinWidget extends StatelessWidget {
         });
   }
 
-  Widget iconText(String icon, int num) {
+  Widget iconText(String icon, num num) {
     return Container(
       width: 66.w,
       height: 16.w,
@@ -260,7 +259,7 @@ class MoneyAndCoinWidget extends StatelessWidget {
             iconColor: AppColors.cFFFFFF,
           ),
           Text(
-            "${num < 1000 ? num : "${(num / 1000).toStringAsFixed(1)}k"}",
+            "${(num).toStringAsFixed(0)}k",
             style: TextStyle(color: AppColors.cF2F2F2, fontSize: 10.sp),
           )
         ],

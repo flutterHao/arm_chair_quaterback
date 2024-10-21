@@ -193,6 +193,10 @@ class NbaPlayerInfosPlayerBaseInfoList {
   Map<String, dynamic> toJson() =>
       $NbaPlayerInfosPlayerBaseInfoListToJson(this);
 
+  String getGrade(){
+    return grade.replaceAll("-", "").replaceAll("+", "");
+  }
+
   @override
   String toString() {
     return jsonEncode(this);

@@ -1,8 +1,11 @@
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/entities/chart_sample_data.dart';
+import 'package:arm_chair_quaterback/common/entities/grade_in_star_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/star_up_define_entity.dart';
+import 'package:arm_chair_quaterback/common/enums/grade.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
@@ -12,9 +15,11 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entity/team_player_list.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../index.dart';
 
@@ -46,17 +51,24 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
 
   var loadStatus = LoadDataStatus.loading.obs;
 
-  /// 0-180
-  ///
-
   late List<ChartSampleData> dataSource;
 
-  // tap
-  void handleTap(int index) {
-    Get.snackbar(
-      "标题",
-      "消息",
-    );
+  late StarUpDefineEntity starUpDefineEntity;
+
+  late List<GradeInStarDefineEntity> gradeInStarDefines;
+
+  late RxList<GradeUp> teamPlayerList = RxList();
+
+  levelUpTap() async{
+    EasyLoading.show();
+    var where = teamPlayerList.where((e)=>e.choice).toList();
+    var materialScienceUUID = where.map((e)=> e.teamPlayer.uuid).toList().join(",");
+    await PicksApi.upStarTeamPlayer(uuidPlayerInfo!.uuid!, materialScienceUUID).then((result){
+      reloadData();
+    },onError: (e){
+      EasyLoading.showToast("SERVER ERROR");
+    });
+    EasyLoading.dismiss();
   }
 
   upgradeTap() {
@@ -92,17 +104,21 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
 
   _initData() {
     loadStatus.value = LoadDataStatus.loading;
+    var futures = [
+      CacheApi.getNBAPlayerInfo(),
+      PicksApi.getNBAPlayerBaseInfo(arguments.playerId),
+    ];
     if (arguments.teamId != null) {
-      uuidPlayerInfo = Get.find<HomeController>()
-          .userEntiry
-          .teamLoginInfo
-          ?.teamPlayerList
+      futures.addAll([
+        CacheApi.getStarUpDefine(),
+        CacheApi.getGradeInStarDefine(),
+      ]);
+      var homeController = Get.find<HomeController>();
+      uuidPlayerInfo = homeController.userEntiry.teamLoginInfo?.teamPlayerList
           ?.firstWhere((e) => e.playerId == arguments.playerId);
     }
-    Future.wait([
-      CacheApi.getNBAPlayerInfo(),
-      PicksApi.getNBAPlayerBaseInfo(arguments.playerId)
-    ]).then((result) {
+
+    Future.wait(futures).then((result) {
       avgList = (result[0] as NbaPlayerInfosEntity)
           .playerDataAvgList
           .firstWhere((e) => e.playerId == arguments.playerId);
@@ -157,11 +173,86 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
         ChartSampleData(
             x: 'STL', y: avgList?.getMaxValue(), yValue: avgList?.stl ?? 0),
       ];
+      if (arguments.teamId != null) {
+        starUpDefineEntity = (result[2] as List<StarUpDefineEntity>).firstWhere(
+            (e) => e.starUp == uuidPlayerInfo?.getNextBreakThroughGrade());
+        gradeInStarDefines = result[3] as List<GradeInStarDefineEntity>;
+        var playerBaseInfoList =
+            (result[0] as NbaPlayerInfosEntity).playerBaseInfoList;
+        var selfBaseInfoList = playerBaseInfoList
+            .firstWhere((e) => e.playerId == arguments.playerId);
+        var homeController = Get.find<HomeController>();
+        var teamPlayers =
+            homeController.userEntiry.teamLoginInfo!.teamPlayerList!;
+        teamPlayerList.clear();
+        for (var i = 0; i < teamPlayers.length; i++) {
+          var player = teamPlayers[i];
+          var firstWhere = playerBaseInfoList
+              .firstWhere((e) => e.playerId == player.playerId);
+          var value2 = Grade.getGradeByName(selfBaseInfoList.grade);
+          var value3 = Grade.getGradeByName(firstWhere.grade);
+          if (value3.grade != value2.grade &&
+              value3.grade != value2.grade - 1) {
+            //只展示与球员卡同阶或低一阶的
+            continue;
+          }
+          GradeUp gradeUp = GradeUp(
+              teamPlayer: player,
+              baseInfo: firstWhere,
+              self: uuidPlayerInfo!,
+              gradeInStarDefines: gradeInStarDefines,
+              selfBaseInfo: selfBaseInfoList);
+          teamPlayerList.add(gradeUp);
+        }
+        sort(0);
+      }
       loadStatus.value = LoadDataStatus.success;
       // update([idPlayerDetailGameMain]);
     }, onError: (e) {
       loadStatus.value = LoadDataStatus.error;
     });
+  }
+
+  //false 倒序 true 正序
+  bool breakThroughGradeSort = true;
+
+  //false 倒序 true 正序
+  bool gradeSort = true;
+
+  // false breakThroughGradeSort排序 true gradeSort 排序
+  bool isGradeSort = false;
+
+  //type:
+  //  0:breakThroughGrade
+  //  1:grade
+  //down: true 正序,false 倒序
+  sort(int type) {
+    if (type == 0) {
+      if (isGradeSort) {
+        breakThroughGradeSort = true;
+      } else {
+        breakThroughGradeSort = !breakThroughGradeSort;
+      }
+      isGradeSort = false;
+    } else {
+      if (!isGradeSort) {
+        gradeSort = true;
+      } else {
+        gradeSort = !gradeSort;
+      }
+      isGradeSort = true;
+    }
+    var i = ((isGradeSort ? gradeSort : breakThroughGradeSort) ? 1 : -1);
+    if (type == 0) {
+      teamPlayerList.sort((a, b) =>
+          i *
+          (a.teamPlayer.breakThroughGrade!
+              .compareTo(b.teamPlayer.breakThroughGrade!)));
+    } else {
+      teamPlayerList
+          .sort((a, b) => i * (a.baseInfo.grade.compareTo(b.baseInfo.grade)));
+    }
+    teamPlayerList.refresh();
   }
 
   static get idPlayerDetailGameMain => "player_detail_game_main";
@@ -306,14 +397,13 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
         parent: _animationController, curve: const Interval(0, .2)));
     _starSizeAnimation = Tween(begin: 119.w, end: 68.w).animate(CurvedAnimation(
         parent: _animationController, curve: const Interval(0, .2)));
-    _starTranslateAnimation =
-        Tween(begin: 1.0, end: 0.0)
-            .animate(CurvedAnimation(
-                parent: _animationController, curve: const Interval(0.2, 0.4)));
+    _starTranslateAnimation = Tween(begin: 1.0, end: 0.0).animate(
+        CurvedAnimation(
+            parent: _animationController, curve: const Interval(0.2, 0.4)));
     _starRotateAnimation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
         parent: _animationController, curve: const Interval(0.2, 0.4)));
 
-    _propertyBoxAnimation = Tween(begin: -161.w, end: 10.w+34.w).animate(
+    _propertyBoxAnimation = Tween(begin: -161.w, end: 10.w + 34.w).animate(
         CurvedAnimation(
             parent: _animationController, curve: const Interval(.4, .7)));
 
@@ -338,38 +428,41 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
 
   void _rateStartAnimation() {
     double target = 0;
-    for (int i = 0; i < dialogListDatas.length; i++) {
-      var e = dialogListDatas[i];
-      target += e ? 180 * .25 : 0;
+    for (int i = 0; i < teamPlayerList.length; i++) {
+      var e = teamPlayerList[i];
+      target += e.choice ? 180 * e.getUPPercent() : 0;
     }
     if (target > 0) {
       _rateAnimationStart(0, target);
     }
   }
 
-  final dialogListDatas = List.generate(10, (index) => false).obs;
-
   double maxPriceValue = 0, minPriceValue = 0;
 
   dialogListItemTap(int index) {
-    var value = dialogListDatas[index];
+    var current = teamPlayerList[index];
+    var list = teamPlayerList.where((e)=> e.choice).toList();
+    if (list.length >= 5 && !current.choice) {
+      //最多选5个
+      return;
+    }
     double before = 0;
-    for (int i = 0; i < dialogListDatas.length; i++) {
-      var e = dialogListDatas[i];
-      before += e ? 180 * .25 : 0;
+    for (int i = 0; i < teamPlayerList.length; i++) {
+      var e = teamPlayerList[i];
+      before += e.choice ? 180 * e.getUPPercent() : 0;
     }
     var target = 0.0;
-    if (!value) {
-      target = (180 * .25) + before;
+    if (!current.choice) {
+      target = (180 * current.getUPPercent()) + before;
     } else {
-      target = before - (180 * .25);
+      target = before - (180 * current.getUPPercent());
       if (target < 0) {
         target = 0;
       }
     }
     _rateAnimationStart(before, target);
-    dialogListDatas[index] = !value;
-    dialogListDatas.refresh();
+    teamPlayerList[index].choice = !current.choice;
+    teamPlayerList.refresh();
   }
 
   _rateAnimationStart(double before, double target) {
@@ -383,5 +476,46 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
     _rateAnimationController?.reset();
 
     _rateAnimationController?.forward();
+  }
+}
+
+class GradeUp {
+  final TeamPlayerList teamPlayer;
+  final NbaPlayerInfosPlayerBaseInfoList baseInfo;
+  final TeamPlayerList self;
+  final NbaPlayerInfosPlayerBaseInfoList selfBaseInfo;
+  final List<GradeInStarDefineEntity> gradeInStarDefines;
+  bool choice;
+
+  GradeUp(
+      {required this.teamPlayer,
+      required this.baseInfo,
+      required this.self,
+      required this.gradeInStarDefines,
+      required this.selfBaseInfo,
+      this.choice = false});
+
+  double getUPPercent() {
+    var nextStarLevel = self.getNextBreakThroughGrade();
+    var selfGrade = selfBaseInfo.grade;
+    var grade = Grade.getGradeByName(selfGrade);
+    var firstWhere =
+        gradeInStarDefines.firstWhere((e) => e.playerGrade == grade.name);
+    var addWeight = firstWhere.gradeAddWeight[nextStarLevel];
+
+    var grade2 = baseInfo.grade;
+    var g = Grade.getGradeByName(grade2);
+    var f = gradeInStarDefines.firstWhere((e) => e.playerGrade == g.name);
+    var weight = f.gradeWeight;
+    return double.parse((weight / addWeight).toStringAsFixed(1));
+  }
+
+  int getCost(){
+    var level = self.getNextBreakThroughGrade();
+    var selfGrade = selfBaseInfo.grade;
+    var grade = Grade.getGradeByName(selfGrade);
+    var firstWhere =
+    gradeInStarDefines.firstWhere((e) => e.playerGrade == grade.name);
+    return int.parse(firstWhere.starUpGradeCost[level]);
   }
 }
