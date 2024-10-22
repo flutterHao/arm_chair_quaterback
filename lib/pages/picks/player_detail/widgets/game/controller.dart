@@ -15,6 +15,7 @@ import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
+import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/up_star_defeat.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/up_start_success.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -70,14 +71,14 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
     await PicksApi.upStarTeamPlayer(uuidPlayerInfo!.uuid!, materialScienceUUID)
         .then((result) {
       if (result.success) {
-        Get.dialog(UpStartSuccess(response: result,));
+        Get.dialog(UpStarSuccess(response: result,));
         reloadData();
-        //todo 更新个人信息
+        Get.find<HomeController>().refreshMoneyCoinWidget();
         if(upStarSuccessCallBack != null){
           upStarSuccessCallBack!.call();
         }
       } else {
-        //todo
+        Get.dialog(const UpStarDefeat());
       }
     }, onError: (e) {
       EasyLoading.showToast("SERVER ERROR");

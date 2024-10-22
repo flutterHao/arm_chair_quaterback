@@ -14,8 +14,8 @@ import 'package:get/get.dart';
 ///@auther gejiahui
 ///created at 2024/10/21/21:14
 
-class UpStartSuccess extends StatelessWidget {
-  const UpStartSuccess({super.key, required this.response});
+class UpStarSuccess extends StatelessWidget {
+  const UpStarSuccess({super.key, required this.response});
 
   final UpStartTeamPlayerResponseEntity response;
 

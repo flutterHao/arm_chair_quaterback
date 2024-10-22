@@ -31,4 +31,9 @@ class UserApi {
     var data = await HttpUtil().post(Api.visitorLogin);
     return UserEntity.fromJson(data);
   }
+
+  static Future<UserEntity> getTeamLoginInfo() async {
+    var data = await HttpUtil().post(Api.getTeamLoginInfo);
+    return UserEntity.fromJson(data);
+  }
 }

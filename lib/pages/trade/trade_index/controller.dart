@@ -4,6 +4,7 @@ import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/trade.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -67,7 +68,7 @@ class TradeIndexController extends GetxController
     EasyLoading.show();
     await TradeApi.sellPlayer(uuid).then((result) {
       refreshData();
-      //todo 更新个人信息
+      Get.find<HomeController>().refreshMoneyCoinWidget();
     }, onError: (e) {
       EasyLoading.showError("SERVER ERROR");
     });
@@ -78,7 +79,7 @@ class TradeIndexController extends GetxController
     EasyLoading.show();
     await TradeApi.buyPlayer(playerId).then((result) {
       refreshData();
-      //todo 更新个人信息
+      Get.find<HomeController>().refreshMoneyCoinWidget();
     }, onError: (e) {
       EasyLoading.showError("SERVER ERROR");
     });

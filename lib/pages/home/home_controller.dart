@@ -47,8 +47,8 @@ class HomeController extends GetxController
 
   UserEntity userEntiry = UserEntity();
 
-  refreshMoneyCoinWidget(){
-    /// todo 先获取用户信息在更新
+  refreshMoneyCoinWidget() async{
+    await refreshUserEntity();
     update([GetXBuilderIds.idMoneyAndCoinWidget]);
   }
 
@@ -119,6 +119,11 @@ class HomeController extends GetxController
     tabIndex.value = v;
     tabController.animateTo(v);
     update();
+  }
+
+  Future<UserEntity> refreshUserEntity() async{
+    userEntiry = await UserApi.getTeamLoginInfo();
+    return userEntiry;
   }
 
   ///鉴权、获取用户信息

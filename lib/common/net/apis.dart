@@ -16,6 +16,8 @@ class Api {
   static const String login = "$API_BASE_PATH/team/teamLogin";
   static const String visitorLogin = "$API_BASE_PATH/team/visitorLogin";
   static const String getTeamSimple = "$API_BASE_PATH/team/getTeamSimple";
+  static const String getTeamLoginInfo = "$API_BASE_PATH/team/getTeamLoginInfo";
+
 
   //NBANews
   static const String getNewsList = "$API_BASE_PATH/NBANews/getNBANews";
