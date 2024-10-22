@@ -6,4 +6,6 @@
 class GetXBuilderIds{
 
   static String get idMoneyAndCoinWidget=> "id_money_and_coin_widget";
+  static String get idGlobalUserEntityRefresh=> "id_global_user_entity_refresh";
+
 }

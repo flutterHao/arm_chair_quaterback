@@ -122,7 +122,8 @@ class HomeController extends GetxController
   }
 
   Future<UserEntity> refreshUserEntity() async{
-    userEntiry = await UserApi.getTeamLoginInfo();
+    var teamLoginInfo = await UserApi.getTeamLoginInfo();
+    userEntiry = UserEntity(teamLoginInfo: teamLoginInfo);
     return userEntiry;
   }
 
@@ -143,7 +144,7 @@ class HomeController extends GetxController
     await UserStore.to.setToken(v);
     Log.d("鉴权获取到token=$v，开始游客登陆");
     userEntiry = await UserApi.visitorLogin();
-    update(["userInfo"]);
+    update([GetXBuilderIds.idGlobalUserEntityRefresh]);
   }
 
   Future<String> getUid() async {

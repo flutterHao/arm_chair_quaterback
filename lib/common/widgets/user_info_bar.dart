@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/getx_builder_ids.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entity/team_login_info.dart';
@@ -23,13 +25,12 @@ class UserInfoBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var homeCtrl = Get.find<HomeController>();
-
     return GetBuilder<HomeController>(
-        id: "userInfo",
-        builder: (_) {
+        id: GetXBuilderIds.idGlobalUserEntityRefresh,
+        builder: (controller) {
           TeamLoginInfo info =
-              homeCtrl.userEntiry.teamLoginInfo ?? TeamLoginInfo();
+              controller.userEntiry.teamLoginInfo ?? TeamLoginInfo();
+          log('info:${info.toJson()}');
           return Container(
             padding: EdgeInsets.only(left: 14.w, right: 14.w, bottom: 11.w),
             decoration: BoxDecoration(
@@ -40,7 +41,6 @@ class UserInfoBar extends StatelessWidget {
                 )),
             child: Row(
               children: [
-                ///TODO
                 InkWell(
                   onTap: () {
                     if (!enable) {
@@ -65,7 +65,7 @@ class UserInfoBar extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: 19.w7(color: AppColors.cF2F2F2),
                 )),
-                const MoneyAndCoinWidget(),
+                MoneyAndCoinWidget(),
               ],
             ),
           );
@@ -85,17 +85,18 @@ class UserInfoBar extends StatelessWidget {
 }
 
 class MoneyAndCoinWidget extends StatelessWidget {
-  const MoneyAndCoinWidget({super.key});
+  MoneyAndCoinWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(
         id: GetXBuilderIds.idMoneyAndCoinWidget,
-        builder: (logic) {
-          var homeCtrl = Get.find<HomeController>();
+        builder: (controller) {
           TeamLoginInfo info =
-              homeCtrl.userEntiry.teamLoginInfo ?? TeamLoginInfo();
-          var list = info.teamPropList ?? [];
+              controller.userEntiry.teamLoginInfo ?? TeamLoginInfo();
+          var list = info.teamPropList
+                  ?.where((e) => e.propId == 102 || e.propId == 103).toList();
+          log('info:22222:${info.toJson()}');
           return Container(
             width: 80.w,
             height: 36.w,
@@ -103,7 +104,7 @@ class MoneyAndCoinWidget extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,
-              children: list.map(
+              children: list?.map(
                 (e) {
                   return iconText(
                       e.propId == 102
@@ -111,7 +112,7 @@ class MoneyAndCoinWidget extends StatelessWidget {
                           : Assets.uiIconJettonPng,
                       e.propId == 102 ? info.getMoney() : info.getCoin());
                 },
-              ).toList(),
+              ).toList()??[],
             ),
           );
         });

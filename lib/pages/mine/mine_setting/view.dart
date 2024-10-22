@@ -24,8 +24,8 @@ class MineSettingPage extends GetView<MineSettingController> {
         return HorizontalDragBackWidget(
             child: BlackAppWidget(
           const AppBarWidget(
-            right: null,
             title: "SETTING",
+            right: SizedBox.shrink(),
           ),
           bodyWidget: SingleChildScrollView(
             child: Column(

@@ -24,8 +24,8 @@ class MineAccountPage extends GetView<MineAccountController> {
         return HorizontalDragBackWidget(
             child: BlackAppWidget(
           const AppBarWidget(
-            right: null,
             title: "ACCOUNT",
+            right: SizedBox.shrink(),
           ),
           bodyWidget: SingleChildScrollView(
             child: Column(

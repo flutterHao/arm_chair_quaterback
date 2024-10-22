@@ -25,7 +25,7 @@ class MineInfoPage extends GetView<MineInfoController> {
             child: BlackAppWidget(
           const AppBarWidget(
             title: "MINE",
-            right: null,
+            right: SizedBox.shrink(),
           ),
           totalScreenBuilder: (_,h){
             return SingleChildScrollView(

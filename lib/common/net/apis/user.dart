@@ -4,6 +4,7 @@
  * @Date: 2024-09-13 16:52:11
  * @LastEditTime: 2024-09-25 14:44:04
  */
+import 'package:arm_chair_quaterback/common/entities/user_entity/team_login_info.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entity/user_entiry.dart';
 import 'package:arm_chair_quaterback/common/net/index.dart';
 
@@ -32,8 +33,8 @@ class UserApi {
     return UserEntity.fromJson(data);
   }
 
-  static Future<UserEntity> getTeamLoginInfo() async {
+  static Future<TeamLoginInfo> getTeamLoginInfo() async {
     var data = await HttpUtil().post(Api.getTeamLoginInfo);
-    return UserEntity.fromJson(data);
+    return TeamLoginInfo.fromJson(data);
   }
 }

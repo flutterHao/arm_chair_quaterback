@@ -19,7 +19,7 @@ class AppBarWidget extends StatelessWidget {
   const AppBarWidget({
     super.key,
     this.left,
-    this.right = const MoneyAndCoinWidget(),
+    this.right,
     this.title,
     this.titleWidget,
     this.bottomChild,
@@ -82,7 +82,7 @@ class AppBarWidget extends StatelessWidget {
                   child: SizedBox(
                     // width: 19.w,
                     // height: 19.w,
-                    child: right,
+                    child: right?? MoneyAndCoinWidget(),
                   ),
                 )
               ],
