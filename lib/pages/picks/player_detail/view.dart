@@ -84,6 +84,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -111,6 +112,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                           "·${controller.teamInfo?.shortEname}")
                                 ])),
                             13.vGap,
+                            if(false)//todo 接口未提供数据
                             Row(
                               children: [
                                 _buildPlayerInfoItem("AGE", "23"),

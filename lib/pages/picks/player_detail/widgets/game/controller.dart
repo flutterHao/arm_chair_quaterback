@@ -14,6 +14,7 @@ import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/up_start_success.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -165,7 +166,7 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
                 toY: toY,
                 borderRadius: BorderRadius.all(Radius.circular(5.w)),
                 width: 10.w,
-                color: index % 2 == 0 ? AppColors.c10A86A : AppColors.cE72646
+                color: Utils.getChartColor(toY),
                 // gradient: _barsGradient,
                 )
           ],

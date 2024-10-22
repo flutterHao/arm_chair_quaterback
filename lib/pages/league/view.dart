@@ -75,7 +75,7 @@ class LeagueIndexPage extends GetView<LeagueController> {
         bodyWidget: Expanded(
           child: Center(
             child: LoadStatusWidget(
-              text: "COME IN SOON...",
+              text: "COMING SOON...",
             ),
           ),
         ),

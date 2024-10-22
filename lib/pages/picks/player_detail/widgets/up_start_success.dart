@@ -186,45 +186,48 @@ class UpStartSuccess extends StatelessWidget {
                               double percent = ((after - before) / (before==0?1:before) * 100);
                               var target = (before * gameController.starUpDefineEntity.getPotantialMax());
                               double value = after==0?0:after/target;
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    percent<=0?" ":percent.toStringAsFixed(0),
-                                    style: 12.w4(
-                                        color: AppColors.c10A86A, height: 1),
-                                  ),
-                                  Text.rich(TextSpan(children: [
-                                    TextSpan(
-                                        text: "$after",
-                                        style: 19.w7(
-                                            color: AppColors.c262626,
-                                            height: 1)),
-                                    TextSpan(
-                                        text:
-                                            "/${target.toStringAsFixed(0)}",
-                                        style: 10.w4(
-                                            color: AppColors.cB3B3B3,
-                                            height: 1)),
-                                  ])),
-                                  2.vGap,
-                                  Container(
-                                    height: 7.w,
-                                    constraints: BoxConstraints(maxWidth: 63.w),
-                                    child: LinearProgressIndicator(
-                                      value: value,
-                                      borderRadius: BorderRadius.circular(4.w),
-                                      color: value<0.3?AppColors.cE72646:value<0.6?AppColors.cFFBD54:AppColors.c10A86A,
-                                      backgroundColor: AppColors.cB3B3B3,
+                              return Opacity(
+                                opacity: percent<=0?0.7:1,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      percent<=0?" ":percent.toStringAsFixed(0),
+                                      style: 12.w4(
+                                          color: AppColors.c10A86A, height: 1),
                                     ),
-                                  ),
-                                  4.vGap,
-                                  Text(
-                                    Utils.getName(key),
-                                    style: 10.w4(
-                                        color: AppColors.cFF7954, height: 1),
-                                  )
-                                ],
+                                    Text.rich(TextSpan(children: [
+                                      TextSpan(
+                                          text: "$after",
+                                          style: 19.w7(
+                                              color: AppColors.c262626,
+                                              height: 1)),
+                                      TextSpan(
+                                          text:
+                                              "/${target.toStringAsFixed(0)}",
+                                          style: 10.w4(
+                                              color: AppColors.cB3B3B3,
+                                              height: 1)),
+                                    ])),
+                                    2.vGap,
+                                    Container(
+                                      height: 7.w,
+                                      constraints: BoxConstraints(maxWidth: 63.w),
+                                      child: LinearProgressIndicator(
+                                        value: value,
+                                        borderRadius: BorderRadius.circular(4.w),
+                                        color: value<0.3?AppColors.cE72646:value<0.6?AppColors.cFFBD54:AppColors.c10A86A,
+                                        backgroundColor: AppColors.cB3B3B3,
+                                      ),
+                                    ),
+                                    4.vGap,
+                                    Text(
+                                      Utils.getName(key),
+                                      style: 10.w4(
+                                          color: AppColors.cFF7954, height: 1),
+                                    )
+                                  ],
+                                ),
                               );
                             }),
                       ),

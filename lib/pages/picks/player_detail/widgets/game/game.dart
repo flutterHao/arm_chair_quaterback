@@ -6,6 +6,7 @@ import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/arc_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/btn_background.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
@@ -211,11 +212,12 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                                   BorderRadius.vertical(
                                                       top:
                                                           Radius.circular(5.w)),
-                                              toY: controller.uuidPlayerInfo!
-                                                      .potential.pts
-                                                      .toDouble() ??
-                                                  0,
-                                              color: AppColors.cE72646)
+                                              toY: controller
+                                                  .uuidPlayerInfo!.potential.pts
+                                                  .toDouble(),
+                                              color: Utils.getChartColor(controller
+                                                  .uuidPlayerInfo!.potential.pts
+                                                  .toDouble()))
                                         ]),
                                     BarChartGroupData(
                                         showingTooltipIndicators: [0],
@@ -228,10 +230,13 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                                       top:
                                                           Radius.circular(5.w)),
                                               toY: controller.uuidPlayerInfo!
-                                                      .potential.threePts
-                                                      .toDouble() ??
-                                                  0,
-                                              color: AppColors.cE8B94C)
+                                                  .potential.threePts
+                                                  .toDouble(),
+                                              color: Utils.getChartColor(controller
+                                                  .uuidPlayerInfo!
+                                                  .potential
+                                                  .threePts
+                                                  .toDouble()))
                                         ]),
                                     BarChartGroupData(
                                         showingTooltipIndicators: [0],
@@ -243,11 +248,12 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                                   BorderRadius.vertical(
                                                       top:
                                                           Radius.circular(5.w)),
-                                              toY: controller.uuidPlayerInfo!
-                                                      .potential?.ast
-                                                      ?.toDouble() ??
-                                                  0,
-                                              color: AppColors.c10A86A)
+                                              toY: controller
+                                                  .uuidPlayerInfo!.potential.ast
+                                                  .toDouble(),
+                                              color: Utils.getChartColor(controller
+                                                  .uuidPlayerInfo!.potential.ast
+                                                  .toDouble()))
                                         ]),
                                     BarChartGroupData(
                                         showingTooltipIndicators: [0],
@@ -259,11 +265,12 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                                   BorderRadius.vertical(
                                                       top:
                                                           Radius.circular(5.w)),
-                                              toY: controller.uuidPlayerInfo!
-                                                      .potential?.reb
-                                                      ?.toDouble() ??
-                                                  0,
-                                              color: AppColors.cE8B94C)
+                                              toY: controller
+                                                  .uuidPlayerInfo!.potential.reb
+                                                  .toDouble(),
+                                              color: Utils.getChartColor(controller
+                                                  .uuidPlayerInfo!.potential.reb
+                                                  .toDouble()))
                                         ]),
                                     BarChartGroupData(
                                         showingTooltipIndicators: [0],
@@ -275,11 +282,12 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                                   BorderRadius.vertical(
                                                       top:
                                                           Radius.circular(5.w)),
-                                              toY: controller.uuidPlayerInfo!
-                                                      .potential?.blk
-                                                      ?.toDouble() ??
-                                                  0,
-                                              color: AppColors.c10A86A)
+                                              toY: controller
+                                                  .uuidPlayerInfo!.potential.blk
+                                                  .toDouble(),
+                                              color: Utils.getChartColor(controller
+                                                  .uuidPlayerInfo!.potential.blk
+                                                  .toDouble()))
                                         ]),
                                     BarChartGroupData(
                                         showingTooltipIndicators: [0],
@@ -291,11 +299,12 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                                   BorderRadius.vertical(
                                                       top:
                                                           Radius.circular(5.w)),
-                                              toY: controller.uuidPlayerInfo!
-                                                      .potential?.stl
-                                                      ?.toDouble() ??
-                                                  0,
-                                              color: AppColors.c10A86A)
+                                              toY: controller
+                                                  .uuidPlayerInfo!.potential.stl
+                                                  .toDouble(),
+                                              color: Utils.getChartColor(controller
+                                                  .uuidPlayerInfo!.potential.stl
+                                                  .toDouble()))
                                         ]),
                                   ])),
                             ),
@@ -1413,10 +1422,9 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
         yValueMapper: (ChartSampleData data, _) =>
             (data.yValue! < 5 ? 10 : data.yValue),
         pointColorMapper: (data, _) => AppColors.c3B93FF,
-        pointRadiusMapper: (data, _) => (data.yValue! < 5
-                ? (data.y! / 3+data.yValue!)
-                : data.yValue)
-            .toString(),
+        pointRadiusMapper: (data, _) =>
+            (data.yValue! < 5 ? (data.y! / 3 + data.yValue!) : data.yValue)
+                .toString(),
         explodeAll: true,
         explodeOffset: '3%',
         explode: true,

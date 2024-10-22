@@ -8,6 +8,8 @@ import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dar
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/store/config.dart';
+import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:flutter/material.dart';
 
 class Utils {
   static String getPlayUrl(int? playerId) {
@@ -81,5 +83,13 @@ class Utils {
       return "REB";
     }
     return "3PT";
+  }
+
+  static Color getChartColor(double value) {
+    return value < 30
+        ? AppColors.cE72646
+        : value < 60
+        ? AppColors.cE8B94C
+        : AppColors.c10A86A;
   }
 }
