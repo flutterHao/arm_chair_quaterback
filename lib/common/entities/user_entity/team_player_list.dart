@@ -49,6 +49,11 @@ class TeamPlayerList {
     return i;
   }
 
+  int getPreBreakThroughGrade(){
+    var i = getBreakThroughGrade()-1;
+    return i;
+  }
+
   factory TeamPlayerList.fromJson(Map<String, dynamic> json) {
     return TeamPlayerList(
       bindStatus: json['bindStatus'] as bool?,

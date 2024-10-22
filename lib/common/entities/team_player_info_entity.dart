@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/team_player_info_entity.g.dart';
 import 'dart:convert';
@@ -23,6 +25,23 @@ class TeamPlayerInfoEntity {
   late int playerId = 0;
 
   TeamPlayerInfoEntity();
+
+  int getBreakThroughGrade(){
+    if((breakThroughGrade??0)>=1){
+      return breakThroughGrade!;
+    }
+    return 1;
+  }
+
+  int getNextBreakThroughGrade(){
+    var i = getBreakThroughGrade()+1;
+    return i;
+  }
+
+  int getPreBreakThroughGrade(){
+    var i = getBreakThroughGrade()-1;
+    return i;
+  }
 
   factory TeamPlayerInfoEntity.fromJson(Map<String, dynamic> json) => $TeamPlayerInfoEntityFromJson(json);
 
@@ -65,6 +84,27 @@ class TeamPlayerInfoPotential {
   late int reb = 0;
 
   TeamPlayerInfoPotential();
+
+  int _getMaxValue(){
+    var value = max(pts ?? 0, threePts ?? 0);
+    value = max(value, ast ?? 0);
+    value = max(value, reb ?? 0);
+    value = max(value, blk ?? 0);
+    value = max(value, stl ?? 0);
+    return value;
+  }
+  int getMax() {
+    var maxValue = _getMaxValue();
+    int step  = getStep();
+    var value = maxValue%step==0? maxValue+step:(maxValue~/step+1)*step;
+    return value;
+  }
+
+  int getStep(){
+    var value = _getMaxValue();
+    int step  = value>100?20:value>500?100:10;
+    return step;
+  }
 
   factory TeamPlayerInfoPotential.fromJson(Map<String, dynamic> json) => $TeamPlayerInfoPotentialFromJson(json);
 

@@ -63,4 +63,23 @@ class Utils {
       return "${(num / 1000).toStringAsFixed(1)}k";
     }
   }
+
+  static String getName(String key){
+    if(key == "blk"){
+      return "BLK";
+    }
+    if(key == "ast"){
+      return "AST";
+    }
+    if(key == "stl"){
+      return "STL";
+    }
+    if(key == "pts"){
+      return "PTS";
+    }
+    if(key == "reb"){
+      return "REB";
+    }
+    return "3PT";
+  }
 }

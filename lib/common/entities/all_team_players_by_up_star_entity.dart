@@ -8,6 +8,7 @@ class AllTeamPlayersByUpStarEntity {
 	late double buyPrice;
 	late double buyPlayerScore;
 	late double probability;
+	late double cost;
 	late double updateTime;
 	late String uuid;
 	late double gradeExp;

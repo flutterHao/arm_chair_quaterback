@@ -23,11 +23,9 @@ import 'package:get/get.dart';
 import 'index.dart';
 
 class PlayerDetailPageArguments {
-  final int? teamId;
   final int playerId;
 
-  PlayerDetailPageArguments(this.playerId,
-      {this.teamId});
+  PlayerDetailPageArguments(this.playerId);
 }
 
 class PlayerDetailPage extends GetView<PlayerDetailController> {
@@ -39,8 +37,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
   Widget build(BuildContext context) {
     var args = arguments ??
             Get.arguments ??
-            PlayerDetailPageArguments(2115,
-                teamId: 50097);
+            PlayerDetailPageArguments(2115);
     return HorizontalDragBackWidget(
       child: GetBuilder<PlayerDetailController>(
         init: PlayerDetailController(args),//todo PlayerDetailPageArguments测试数据，需删除
@@ -223,6 +220,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                           HistoryPage(headHeight: appBarHeight + 66.w,),
                           PlayerDetailGame(
                             headHeight: appBarHeight + 66.w,
+                            upStarSuccessCallBack: controller.reloadData,
                           )
                         ]),
                   )

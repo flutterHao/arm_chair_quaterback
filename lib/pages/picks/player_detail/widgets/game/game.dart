@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/chart_sample_data.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
@@ -26,9 +28,13 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 ///created at 2024/10/17/11:23
 
 class PlayerDetailGame extends StatefulWidget {
-  const PlayerDetailGame({super.key, required this.headHeight});
+  const PlayerDetailGame(
+      {super.key,
+      required this.headHeight,
+      required this.upStarSuccessCallBack});
 
   final double headHeight;
+  final Function? upStarSuccessCallBack;
 
   @override
   State<PlayerDetailGame> createState() => _PlayerDetailGameState();
@@ -206,8 +212,8 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                                       top:
                                                           Radius.circular(5.w)),
                                               toY: controller.uuidPlayerInfo!
-                                                      .potential?.pts
-                                                      ?.toDouble() ??
+                                                      .potential.pts
+                                                      .toDouble() ??
                                                   0,
                                               color: AppColors.cE72646)
                                         ]),
@@ -222,8 +228,8 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                                       top:
                                                           Radius.circular(5.w)),
                                               toY: controller.uuidPlayerInfo!
-                                                      .potential?.threePt
-                                                      ?.toDouble() ??
+                                                      .potential.threePts
+                                                      .toDouble() ??
                                                   0,
                                               color: AppColors.cE8B94C)
                                         ]),
@@ -950,11 +956,11 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
             var choiceList =
                 controller.teamPlayerList.where((e) => e.choice).toList();
             var money = Get.find<HomeController>()
-                .userEntiry
-                .teamLoginInfo
-                ?.getMoney() ??
+                    .userEntiry
+                    .teamLoginInfo
+                    ?.getMoney() ??
                 0;
-            var cost = 0;
+            var cost = 0.0;
             for (int i = 0; i < choiceList.length; i++) {
               cost += choiceList[i].getCost();
             }
@@ -1109,7 +1115,14 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                     child: Container(
                                       height: 84.w,
                                       margin: EdgeInsets.only(
-                                          left: 16.w, right: 16.w, bottom: controller.teamPlayerList.length-1 == index?100:9.w),
+                                          left: 16.w,
+                                          right: 16.w,
+                                          bottom:
+                                              controller.teamPlayerList.length -
+                                                          1 ==
+                                                      index
+                                                  ? 100
+                                                  : 9.w),
                                       decoration: BoxDecoration(
                                           color: AppColors.cF2F2F2,
                                           borderRadius:
@@ -1199,7 +1212,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                                                 .cFF7954,
                                                           ),
                                                           Text(
-                                                            "${item.teamPlayer.getBreakThroughGrade()}",
+                                                            "${item.teamPlayer.breakThroughGrade}",
                                                             style: 9.w4(
                                                                 color: AppColors
                                                                     .cFFFFFF),
@@ -1233,7 +1246,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Text(
-                                                    "+${(item.getUPPercent() * 100).toStringAsFixed(1)}%",
+                                                    "+${(item.getUPPercent() * 100).toStringAsFixed(0)}%",
                                                     style: 21.w7(
                                                         color:
                                                             AppColors.cFF7954,
@@ -1275,13 +1288,14 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                               width: 203.w,
                               child: InkWell(
                                 onTap: () {
-                                  if(choiceList.isEmpty){
+                                  print('----');
+                                  if (choiceList.isEmpty) {
                                     return;
                                   }
                                   if (money < cost) {
                                     return;
                                   }
-                                  controller.upgradeTap();
+                                  controller.levelUpTap(context);
                                 },
                                 child: BtnBackground(
                                     child: Container(
@@ -1310,7 +1324,9 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                           Text(
                                             "${cost}k",
                                             style: 12.w4(
-                                                color: money<cost?AppColors.cE72646:AppColors.cF2F2F2,
+                                                color: money < cost
+                                                    ? AppColors.cE72646
+                                                    : AppColors.cF2F2F2,
                                                 height: 1),
                                           )
                                         ],
@@ -1349,7 +1365,8 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
             animationDuration: 0,
             dataSource: controller.dataSource,
             xValueMapper: (ChartSampleData data, _) => data.x as String,
-            yValueMapper: (ChartSampleData data, _) => data.yValue,
+            yValueMapper: (ChartSampleData data, _) =>
+                (data.yValue! < 5 ? 10 : data.yValue),
             pointColorMapper: (data, _) => AppColors.ce5e5e5,
             pointRadiusMapper: (data, _) => data.y.toString(),
             explodeAll: true,
@@ -1393,9 +1410,13 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
         animationDuration: 0,
         dataSource: controller.dataSource,
         xValueMapper: (ChartSampleData data, _) => data.x as String,
-        yValueMapper: (ChartSampleData data, _) => data.yValue,
+        yValueMapper: (ChartSampleData data, _) =>
+            (data.yValue! < 5 ? 10 : data.yValue),
         pointColorMapper: (data, _) => AppColors.c3B93FF,
-        pointRadiusMapper: (data, _) => data.yValue.toString(),
+        pointRadiusMapper: (data, _) => (data.yValue! < 5
+                ? (data.y! / 3+data.yValue!)
+                : data.yValue)
+            .toString(),
         explodeAll: true,
         explodeOffset: '3%',
         explode: true,
@@ -1406,7 +1427,8 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
   @override
   Widget build(BuildContext context) {
     playerDetailController = Get.find();
-    controller = Get.put(GameController(playerDetailController.arguments));
+    controller = Get.put(GameController(
+        playerDetailController.arguments, widget.upStarSuccessCallBack));
     return GetBuilder<GameController>(
         id: GameController.idPlayerDetailGameMain,
         builder: (logic) {

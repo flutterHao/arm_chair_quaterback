@@ -55,12 +55,12 @@ class UpStartTeamPlayerResponseDataBefore {
 
 @JsonSerializable()
 class UpStartTeamPlayerResponseDataBeforePotential {
-	late int blk;
-	late int threePt;
-	late int ast;
-	late int stl;
-	late int pts;
-	late int reb;
+	late double blk;
+	late double threePt;
+	late double ast;
+	late double stl;
+	late double pts;
+	late double reb;
 
 	UpStartTeamPlayerResponseDataBeforePotential();
 
@@ -76,12 +76,12 @@ class UpStartTeamPlayerResponseDataBeforePotential {
 
 @JsonSerializable()
 class UpStartTeamPlayerResponseDataBeforeUpStarBase {
-	late int blk;
-	late int threePt;
-	late int ast;
-	late int stl;
-	late int pts;
-	late int reb;
+	late double blk;
+	late double threePt;
+	late double ast;
+	late double stl;
+	late double pts;
+	late double reb;
 
 	UpStartTeamPlayerResponseDataBeforeUpStarBase();
 
@@ -129,12 +129,12 @@ class UpStartTeamPlayerResponseDataAfter {
 
 @JsonSerializable()
 class UpStartTeamPlayerResponseDataAfterPotential {
-	late int blk;
-	late int threePt;
-	late int ast;
-	late int stl;
-	late int pts;
-	late int reb;
+	late double blk;
+	late double threePt;
+	late double ast;
+	late double stl;
+	late double pts;
+	late double reb;
 
 	UpStartTeamPlayerResponseDataAfterPotential();
 
@@ -150,12 +150,12 @@ class UpStartTeamPlayerResponseDataAfterPotential {
 
 @JsonSerializable()
 class UpStartTeamPlayerResponseDataAfterUpStarBase {
-	late int blk;
-	late int threePt;
-	late int ast;
-	late int stl;
-	late int pts;
-	late int reb;
+	late double blk;
+	late double threePt;
+	late double ast;
+	late double stl;
+	late double pts;
+	late double reb;
 
 	UpStartTeamPlayerResponseDataAfterUpStarBase();
 

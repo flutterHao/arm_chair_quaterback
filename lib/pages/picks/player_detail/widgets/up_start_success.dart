@@ -1,20 +1,27 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/common/entities/up_start_team_player_response_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/btn_background.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/game/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 ///
 ///@auther gejiahui
 ///created at 2024/10/21/21:14
 
 class UpStartSuccess extends StatelessWidget {
-  const UpStartSuccess({super.key});
+  const UpStartSuccess({super.key, required this.response});
+
+  final UpStartTeamPlayerResponseEntity response;
 
   @override
   Widget build(BuildContext context) {
+    var gameController = Get.find<GameController>();
     return Center(
       child: Container(
         height: 492.w,
@@ -67,7 +74,7 @@ class UpStartSuccess extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "5",
+                        "${gameController.uuidPlayerInfo?.getPreBreakThroughGrade()}",
                         style: 56.w7(color: AppColors.c262626, height: 1),
                       ),
                       Flexible(
@@ -78,7 +85,7 @@ class UpStartSuccess extends StatelessWidget {
                         rotateAngle: 90,
                       )),
                       Text(
-                        "6",
+                        "${gameController.uuidPlayerInfo?.getBreakThroughGrade()}",
                         style: 56.w7(color: AppColors.c262626),
                       )
                     ],
@@ -108,7 +115,8 @@ class UpStartSuccess extends StatelessWidget {
                         height: 125.w,
                         margin: EdgeInsets.only(left: 15.w),
                         child: GridView.builder(
-                            itemCount: 6,
+                            itemCount:
+                                response.before.upStarBase.toJson().keys.length,
                             physics: const NeverScrollableScrollPhysics(),
                             scrollDirection: Axis.horizontal,
                             gridDelegate:
@@ -117,23 +125,31 @@ class UpStartSuccess extends StatelessWidget {
                                     childAspectRatio: 6 / 8,
                                     crossAxisCount: 2),
                             itemBuilder: (context, index) {
+                              var key = response.before.upStarBase
+                                  .toJson()
+                                  .keys
+                                  .toList()[index];
+                              var after =
+                                  response.after.upStarBase.toJson()[key];
+                              double diff = after -
+                                  response.before.upStarBase.toJson()[key];
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "+15",
+                                    diff<=0?"":"+$diff",
                                     style: 12.w4(
                                         color: AppColors.c10A86A, height: 1),
                                   ),
                                   2.vGap,
                                   Text(
-                                    "3550",
+                                    "$after",
                                     style: 19.w7(
                                         color: AppColors.c262626, height: 1),
                                   ),
                                   6.vGap,
                                   Text(
-                                    "PTS",
+                                    Utils.getName(key),
                                     style: 10.w4(
                                         color: AppColors.cFF7954, height: 1),
                                   )
@@ -149,7 +165,8 @@ class UpStartSuccess extends StatelessWidget {
                         height: 125.w,
                         margin: EdgeInsets.only(left: 15.w),
                         child: GridView.builder(
-                            itemCount: 6,
+                            itemCount:
+                                response.before.potential.toJson().keys.length,
                             physics: const NeverScrollableScrollPhysics(),
                             scrollDirection: Axis.horizontal,
                             gridDelegate:
@@ -158,22 +175,34 @@ class UpStartSuccess extends StatelessWidget {
                                     childAspectRatio: 6 / 8,
                                     crossAxisCount: 2),
                             itemBuilder: (context, index) {
+                              var key = response.before.potential
+                                  .toJson()
+                                  .keys
+                                  .toList()[index];
+                              double after =
+                                  response.after.potential.toJson()[key];
+                              double before =
+                                  response.before.potential.toJson()[key];
+                              double percent = ((after - before) / (before==0?1:before) * 100);
+                              var target = (before * gameController.starUpDefineEntity.getPotantialMax());
+                              double value = after==0?0:after/target;
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "+4%",
+                                    percent<=0?" ":percent.toStringAsFixed(0),
                                     style: 12.w4(
                                         color: AppColors.c10A86A, height: 1),
                                   ),
                                   Text.rich(TextSpan(children: [
                                     TextSpan(
-                                        text: "206",
+                                        text: "$after",
                                         style: 19.w7(
                                             color: AppColors.c262626,
                                             height: 1)),
                                     TextSpan(
-                                        text: "/500",
+                                        text:
+                                            "/${target.toStringAsFixed(0)}",
                                         style: 10.w4(
                                             color: AppColors.cB3B3B3,
                                             height: 1)),
@@ -183,15 +212,15 @@ class UpStartSuccess extends StatelessWidget {
                                     height: 7.w,
                                     constraints: BoxConstraints(maxWidth: 63.w),
                                     child: LinearProgressIndicator(
-                                      value: 0.7,
+                                      value: value,
                                       borderRadius: BorderRadius.circular(4.w),
-                                      color: AppColors.c10A86A,
+                                      color: value<0.3?AppColors.cE72646:value<0.6?AppColors.cFFBD54:AppColors.c10A86A,
                                       backgroundColor: AppColors.cB3B3B3,
                                     ),
                                   ),
                                   4.vGap,
                                   Text(
-                                    "PTS",
+                                    Utils.getName(key),
                                     style: 10.w4(
                                         color: AppColors.cFF7954, height: 1),
                                   )
@@ -202,38 +231,43 @@ class UpStartSuccess extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
-                            height: 44.w,
-                            constraints: BoxConstraints(maxWidth: 243.w),
-                            child: BtnBackground(
-                              child: Container(
-                                height: 44.w,
-                                width: double.infinity,
-                                child: Stack(
-                                  alignment: Alignment.center,
-                                  children: [
-                                    Text(
-                                      "CONFIRM",
-                                      style: 18.w7(color: AppColors.cF2F2F2),
-                                    ),
-                                    Positioned(
-                                        left: 9.w,
-                                        child: Stack(
-                                          children: [
-                                            IconWidget(
-                                                iconWidth: 26.w,
-                                                icon: Assets.uiIconRingPng),
-                                            Positioned(
-                                                left: 7.w,
-                                                top: 5.5.w,
-                                                child: IconWidget(
-                                                  iconWidth: 17.w,
-                                                  icon: Assets.uiIconConfirmPng,
-                                                  iconColor: AppColors.c31E99E,
-                                                ))
-                                          ],
-                                        ))
-                                  ],
+                          InkWell(
+                            onTap: () => Navigator.pop(context),
+                            child: Container(
+                              height: 44.w,
+                              constraints: BoxConstraints(maxWidth: 243.w),
+                              child: BtnBackground(
+                                child: Container(
+                                  height: 44.w,
+                                  width: double.infinity,
+                                  child: Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      Text(
+                                        "CONFIRM",
+                                        style: 18.w7(color: AppColors.cF2F2F2),
+                                      ),
+                                      Positioned(
+                                          left: 9.w,
+                                          child: Stack(
+                                            children: [
+                                              IconWidget(
+                                                  iconWidth: 26.w,
+                                                  icon: Assets.uiIconRingPng),
+                                              Positioned(
+                                                  left: 7.w,
+                                                  top: 5.5.w,
+                                                  child: IconWidget(
+                                                    iconWidth: 17.w,
+                                                    icon:
+                                                        Assets.uiIconConfirmPng,
+                                                    iconColor:
+                                                        AppColors.c31E99E,
+                                                  ))
+                                            ],
+                                          ))
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

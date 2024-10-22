@@ -457,7 +457,7 @@ class PlayerAwater extends StatelessWidget {
     ///头像
     return InkWell(
       onTap: () {
-        Get.toNamed(RouteNames.picksPlayerDetail);
+        Get.toNamed(RouteNames.picksPlayerDetail,arguments: PlayerDetailPageArguments(player.playerId));
       },
       child: Stack(
         children: [

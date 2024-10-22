@@ -1,10 +1,12 @@
 import 'dart:math';
 
+import 'package:arm_chair_quaterback/common/entities/all_team_players_by_up_star_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/chart_sample_data.dart';
 import 'package:arm_chair_quaterback/common/entities/grade_in_star_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/star_up_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/grade.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
@@ -29,9 +31,10 @@ import '../../index.dart';
 ///created at 2024/10/17/11:37
 
 class GameController extends GetxController with GetTickerProviderStateMixin {
-  GameController(this.arguments);
+  GameController(this.arguments, this.upStarSuccessCallBack);
 
   final PlayerDetailPageArguments arguments;
+  final Function? upStarSuccessCallBack;
 
   final ScrollController scrollController = ScrollController();
 
@@ -45,8 +48,8 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
   AnimationController? _rateAnimationController;
   Animation<double>? _rateAnimation;
 
-  TeamPlayerList? uuidPlayerInfo;
-  NbaPlayerInfosPlayerDataAvgList? avgList;
+  TeamPlayerInfoEntity? uuidPlayerInfo;
+  late NbaPlayerInfosPlayerDataAvgList avgList;
   NbaPlayerBaseInfoEntity? nbaPlayerBaseInfoEntity;
   List<BarChartGroupData> _barGroups = [];
 
@@ -56,22 +59,28 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
 
   late StarUpDefineEntity starUpDefineEntity;
 
-  late List<GradeInStarDefineEntity> gradeInStarDefines;
-
   late RxList<GradeUp> teamPlayerList = RxList();
 
-  levelUpTap() async{
+  String? cacheUuid;
+
+  levelUpTap(BuildContext context) async {
+    Navigator.pop(context);
     EasyLoading.show();
-    var where = teamPlayerList.where((e)=>e.choice).toList();
-    var materialScienceUUID = where.map((e)=> e.teamPlayer.uuid).toList().join(",");
-    await PicksApi.upStarTeamPlayer(uuidPlayerInfo!.uuid!, materialScienceUUID).then((result){
-      reloadData();
-      if(result.success){
-        Get.dialog(const UpStartSuccess());
-      }else{
+    var where = teamPlayerList.where((e) => e.choice).toList();
+    var materialScienceUUID =
+        where.map((e) => e.teamPlayer.uuid).toList().join(",");
+    await PicksApi.upStarTeamPlayer(uuidPlayerInfo!.uuid!, materialScienceUUID)
+        .then((result) {
+      if (result.success) {
+        Get.dialog(UpStartSuccess(response: result,));
+        reloadData();
+        if(upStarSuccessCallBack != null){
+          upStarSuccessCallBack!.call();
+        }
+      } else {
         //todo
       }
-    },onError: (e){
+    }, onError: (e) {
       EasyLoading.showToast("SERVER ERROR");
     });
     EasyLoading.dismiss();
@@ -114,14 +123,16 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
       CacheApi.getNBAPlayerInfo(),
       PicksApi.getNBAPlayerBaseInfo(arguments.playerId),
     ];
-    if (arguments.teamId != null) {
+    var homeController = Get.find<HomeController>();
+    var uuidInfo = homeController.userEntiry.teamLoginInfo?.teamPlayerList
+        ?.firstWhere((e) => e.playerId == arguments.playerId);
+    if (uuidInfo != null) {
+      cacheUuid = uuidInfo.uuid;
       futures.addAll([
         CacheApi.getStarUpDefine(),
-        CacheApi.getGradeInStarDefine(),
+        PicksApi.getAllTeamPlayersByUpStar(cacheUuid!),
+        PicksApi.getTeamPlayerByUUID(uuidInfo.teamId!, cacheUuid!)
       ]);
-      var homeController = Get.find<HomeController>();
-      uuidPlayerInfo = homeController.userEntiry.teamLoginInfo?.teamPlayerList
-          ?.firstWhere((e) => e.playerId == arguments.playerId);
     }
 
     Future.wait(futures).then((result) {
@@ -164,35 +175,45 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
       minPriceValue =
           minPriceValue == maxPriceValue ? maxPriceValue / 5 : minPriceValue;
       dataSource = <ChartSampleData>[
+        ChartSampleData(x: 'PTS', y: 55,yValue: 30),
+        ChartSampleData(x: '3PT', y: 55,yValue: 40),
+        ChartSampleData(x: 'AST', y: 55,yValue: 35),
+        ChartSampleData(x: 'REB', y: 55,yValue: 45),
+        ChartSampleData(x: 'BLK', y: 55,yValue: 30),
+        ChartSampleData(x: 'STL', y: 55,yValue: 40),
+      ];
+
+      var maxValue = avgList.getMaxValue();
+      var rate = (maxValue == 0)? 1:(maxValue / 55);
+      maxValue = maxValue/rate;
+      dataSource = <ChartSampleData>[
         ChartSampleData(
-            x: 'PTS', y: avgList?.getMaxValue(), yValue: avgList?.pts ?? 0),
+            x: 'PTS', y: maxValue, yValue: avgList.pts/rate),
         ChartSampleData(
-            x: '3PT', y: avgList?.getMaxValue(), yValue: avgList?.getThreePT()),
+            x: '3PT', y: maxValue, yValue: avgList.getThreePT()/rate),
         ChartSampleData(
-            x: 'AST', y: avgList?.getMaxValue(), yValue: avgList?.ast ?? 0),
+            x: 'AST', y: maxValue, yValue: avgList.ast/rate ),
         ChartSampleData(
             x: 'REB',
-            y: avgList?.getMaxValue(),
-            yValue: avgList?.getValue('reb') ?? 0),
+            y: maxValue,
+            yValue: avgList.getValue('reb')/rate),
         ChartSampleData(
-            x: 'BLK', y: avgList?.getMaxValue(), yValue: avgList?.blk ?? 0),
+            x: 'BLK', y: maxValue, yValue: avgList.blk/rate ),
         ChartSampleData(
-            x: 'STL', y: avgList?.getMaxValue(), yValue: avgList?.stl ?? 0),
+            x: 'STL', y: maxValue, yValue: avgList.stl/rate),
       ];
-      if (arguments.teamId != null) {
+      if (cacheUuid != null) {
+        uuidPlayerInfo = result[4] as TeamPlayerInfoEntity;
         starUpDefineEntity = (result[2] as List<StarUpDefineEntity>).firstWhere(
             (e) => e.starUp == uuidPlayerInfo?.getNextBreakThroughGrade());
-        gradeInStarDefines = result[3] as List<GradeInStarDefineEntity>;
+        var allTeamPlayer = result[3] as List<AllTeamPlayersByUpStarEntity>;
         var playerBaseInfoList =
             (result[0] as NbaPlayerInfosEntity).playerBaseInfoList;
         var selfBaseInfoList = playerBaseInfoList
             .firstWhere((e) => e.playerId == arguments.playerId);
-        var homeController = Get.find<HomeController>();
-        var teamPlayers =
-            homeController.userEntiry.teamLoginInfo!.teamPlayerList!;
         teamPlayerList.clear();
-        for (var i = 0; i < teamPlayers.length; i++) {
-          var player = teamPlayers[i];
+        for (var i = 0; i < allTeamPlayer.length; i++) {
+          var player = allTeamPlayer[i];
           var firstWhere = playerBaseInfoList
               .firstWhere((e) => e.playerId == player.playerId);
           var value2 = Grade.getGradeByName(selfBaseInfoList.grade);
@@ -204,10 +225,7 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
           }
           GradeUp gradeUp = GradeUp(
               teamPlayer: player,
-              baseInfo: firstWhere,
-              self: uuidPlayerInfo!,
-              gradeInStarDefines: gradeInStarDefines,
-              selfBaseInfo: selfBaseInfoList);
+              baseInfo: firstWhere,);
           teamPlayerList.add(gradeUp);
         }
         sort(0);
@@ -447,7 +465,7 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
 
   dialogListItemTap(int index) {
     var current = teamPlayerList[index];
-    var list = teamPlayerList.where((e)=> e.choice).toList();
+    var list = teamPlayerList.where((e) => e.choice).toList();
     if (list.length >= 5 && !current.choice) {
       //最多选5个
       return;
@@ -486,42 +504,20 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
 }
 
 class GradeUp {
-  final TeamPlayerList teamPlayer;
+  final AllTeamPlayersByUpStarEntity teamPlayer;
   final NbaPlayerInfosPlayerBaseInfoList baseInfo;
-  final TeamPlayerList self;
-  final NbaPlayerInfosPlayerBaseInfoList selfBaseInfo;
-  final List<GradeInStarDefineEntity> gradeInStarDefines;
   bool choice;
 
   GradeUp(
       {required this.teamPlayer,
       required this.baseInfo,
-      required this.self,
-      required this.gradeInStarDefines,
-      required this.selfBaseInfo,
       this.choice = false});
 
   double getUPPercent() {
-    var nextStarLevel = self.getNextBreakThroughGrade();
-    var selfGrade = selfBaseInfo.grade;
-    var grade = Grade.getGradeByName(selfGrade);
-    var firstWhere =
-        gradeInStarDefines.firstWhere((e) => e.playerGrade == grade.name);
-    var addWeight = firstWhere.gradeAddWeight[nextStarLevel];
-
-    var grade2 = baseInfo.grade;
-    var g = Grade.getGradeByName(grade2);
-    var f = gradeInStarDefines.firstWhere((e) => e.playerGrade == g.name);
-    var weight = f.gradeWeight;
-    return double.parse((weight / addWeight).toStringAsFixed(1));
+    return teamPlayer.probability/100;
   }
 
-  int getCost(){
-    var level = self.getNextBreakThroughGrade();
-    var selfGrade = selfBaseInfo.grade;
-    var grade = Grade.getGradeByName(selfGrade);
-    var firstWhere =
-    gradeInStarDefines.firstWhere((e) => e.playerGrade == grade.name);
-    return int.parse(firstWhere.starUpGradeCost[level]);
+  double getCost() {
+    return teamPlayer.cost;
   }
 }

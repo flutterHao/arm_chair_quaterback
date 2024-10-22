@@ -121,7 +121,7 @@ class PicksApi {
   static Future<List<AllTeamPlayersByUpStarEntity>> getAllTeamPlayersByUpStar(
       String uuid) async {
     List json = await httpUtil
-        .post(Api.upStarTeamPlayer, data: {"uuid": uuid});
+        .post(Api.getAllTeamPlayersByUpStar, data: {"uuid": uuid});
     return json.map((e)=> AllTeamPlayersByUpStarEntity.fromJson(e)).toList();
   }
 
