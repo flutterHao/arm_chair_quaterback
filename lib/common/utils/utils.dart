@@ -84,4 +84,19 @@ class Utils {
         ? AppColors.cE8B94C
         : AppColors.c10A86A;
   }
+
+  static double getPTS(int playerId){
+    NbaPlayerInfosPlayerDataAvgList? firstWhere = getNBAPlayerInfo(playerId);
+    return firstWhere?.pts??0;
+  }
+
+  static NbaPlayerInfosPlayerDataAvgList? getNBAPlayerInfo(int playerId) {
+    var playerInfo = CacheApi.playerInfo;
+    var firstWhere = playerInfo?.playerDataAvgList.firstWhere((e)=> e.playerId == playerId);
+    return firstWhere;
+  }
+
+  static String formatGrade(String grade){
+    return grade.replaceAll("-", "").replaceAll("+", "");
+  }
 }

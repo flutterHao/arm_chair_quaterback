@@ -282,7 +282,6 @@ class _PlayerState extends State<Player> {
                                                     color: AppColors.cD8D8D8),
                                               )),
                                           PlayerAvatarWidget(
-                                            playerBaseInfo: null,
                                             width: 36.w,
                                             fontColor: AppColors.c262626,
                                             backgroundColor:

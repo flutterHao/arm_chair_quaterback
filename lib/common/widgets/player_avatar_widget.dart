@@ -19,7 +19,7 @@ import 'package:get/get.dart';
 class PlayerAvatarWidget extends StatelessWidget {
   const PlayerAvatarWidget({
     super.key,
-    required this.playerBaseInfo,
+    this.grade,
     required this.width,
     this.height,
     this.backgroundColor = AppColors.c666666,
@@ -29,9 +29,11 @@ class PlayerAvatarWidget extends StatelessWidget {
     this.imageWidth,
     this.imageHeight,
     this.showGrade = true,
+    this.playerId = 1284,
   });
 
-  final NbaPlayerInfosPlayerBaseInfoList? playerBaseInfo;
+  final String? grade;
+  final int playerId;
   final double width;
   final double? height;
   final double? imageWidth;
@@ -45,22 +47,23 @@ class PlayerAvatarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Get.toNamed(RouteNames.picksPlayerDetail,arguments: PlayerDetailPageArguments(1284)),//todo 添加真实的参数
+      onTap: () => Get.toNamed(RouteNames.picksPlayerDetail,
+          arguments: PlayerDetailPageArguments(playerId)),
       child: Container(
         width: width,
         height: height ?? width,
         decoration: BoxDecoration(
             color: backgroundColor,
-            borderRadius: BorderRadius.circular(radius??width / 2)),
+            borderRadius: BorderRadius.circular(radius ?? width / 2)),
         child: Stack(
           alignment: Alignment.bottomCenter,
           children: [
             Positioned(
                 bottom: 0,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(radius??width / 2),
+                  borderRadius: BorderRadius.circular(radius ?? width / 2),
                   child: ExtendedImage.network(
-                    Utils.getPlayUrl(playerBaseInfo?.playerId),
+                    Utils.getPlayUrl(playerId),
                     fit: BoxFit.fitWidth,
                     width: imageWidth ?? width - 5,
                     loadStateChanged: (status) {
@@ -81,7 +84,7 @@ class PlayerAvatarWidget extends StatelessWidget {
                 child: Visibility(
                   visible: showGrade,
                   child: Text(
-                    playerBaseInfo?.grade ?? 'SS',
+                    Utils.formatGrade(grade ?? 'SS'),
                     style: 14.w7(color: fontColor),
                   ),
                 ))

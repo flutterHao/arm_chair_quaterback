@@ -72,6 +72,7 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
       if (result.success) {
         Get.dialog(UpStartSuccess(response: result,));
         reloadData();
+        //todo 更新个人信息
         if(upStarSuccessCallBack != null){
           upStarSuccessCallBack!.call();
         }

@@ -5,38 +5,15 @@ export 'package:arm_chair_quaterback/generated/json/trade_info_entity.g.dart';
 
 @JsonSerializable()
 class TradeInfoEntity {
-	@JSONField(name: "PlayerTrends")
-	late List<TradeInfoPlayerTrends> playerTrends;
 	late TradeInfoTotalSalary totalSalary;
 	late List<TradeInfoTradePlayers> tradePlayers;
-	late TradeInfoTradeLogs tradeLogs;
+	late Map<String,double> tradeLogs;
 
 	TradeInfoEntity();
 
 	factory TradeInfoEntity.fromJson(Map<String, dynamic> json) => $TradeInfoEntityFromJson(json);
 
 	Map<String, dynamic> toJson() => $TradeInfoEntityToJson(this);
-
-	@override
-	String toString() {
-		return jsonEncode(this);
-	}
-}
-
-@JsonSerializable()
-class TradeInfoPlayerTrends {
-	late int playerMarketPrice;
-	late int createTime;
-	late int playerScore;
-	late int updateTime;
-	late int playerStrength;
-	late int playerId;
-
-	TradeInfoPlayerTrends();
-
-	factory TradeInfoPlayerTrends.fromJson(Map<String, dynamic> json) => $TradeInfoPlayerTrendsFromJson(json);
-
-	Map<String, dynamic> toJson() => $TradeInfoPlayerTrendsToJson(this);
 
 	@override
 	String toString() {
@@ -58,9 +35,8 @@ class TradeInfoTotalSalary {
 	Map<String, dynamic> toJson() => $TradeInfoTotalSalaryToJson(this);
 
 	double getTotal(){
-		return other+main+substitute;
+		return main+substitute+other;
 	}
-
 	@override
 	String toString() {
 		return jsonEncode(this);
@@ -69,7 +45,7 @@ class TradeInfoTotalSalary {
 
 @JsonSerializable()
 class TradeInfoTradePlayers {
-	late int marketPrice;
+	int? marketPrice;
 	late int espnId;
 	late bool injuries;
 	late int beforeMarketPriceUpdateTime;
@@ -84,6 +60,7 @@ class TradeInfoTradePlayers {
 	late List<int> tag;
 	late int beforeMarketPrice;
 	late int playerId;
+	late List<TradeInfoTradePlayersTrend> trend;
 	late int maxPlayerScore;
 	late int updateTime;
 	late int beforePlayerStrength;
@@ -94,8 +71,10 @@ class TradeInfoTradePlayers {
 	late String grade;
 	late int teamId;
 	late String name;
-	late int basicMarketPrice;
+	int? basicMarketPrice;
 	late String position;
+	String? uuid;
+	int? buyPrice;
 
 	TradeInfoTradePlayers();
 
@@ -110,14 +89,19 @@ class TradeInfoTradePlayers {
 }
 
 @JsonSerializable()
-class TradeInfoTradeLogs {
+class TradeInfoTradePlayersTrend {
+	late int playerMarketPrice;
+	late int createTime;
+	late int playerScore;
+	late int updateTime;
+	late int playerStrength;
+	late int playerId;
 
+	TradeInfoTradePlayersTrend();
 
-	TradeInfoTradeLogs();
+	factory TradeInfoTradePlayersTrend.fromJson(Map<String, dynamic> json) => $TradeInfoTradePlayersTrendFromJson(json);
 
-	factory TradeInfoTradeLogs.fromJson(Map<String, dynamic> json) => $TradeInfoTradeLogsFromJson(json);
-
-	Map<String, dynamic> toJson() => $TradeInfoTradeLogsToJson(this);
+	Map<String, dynamic> toJson() => $TradeInfoTradePlayersTrendToJson(this);
 
 	@override
 	String toString() {

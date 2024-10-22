@@ -1,10 +1,16 @@
+import 'dart:math';
+
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/chart_sample_data.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/trade_entity/trade_info_entity.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
+import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/DashedLine.dart';
 import 'package:arm_chair_quaterback/common/widgets/TLBuilderWidget.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
@@ -88,8 +94,11 @@ class TradeIndexPage extends StatefulWidget {
 class _TradeIndexPageState extends State<TradeIndexPage>
     with AutomaticKeepAliveClientMixin {
   ScrollController scrollController = ScrollController();
+  late TradeIndexController controller;
+
   @override
   Widget build(BuildContext context) {
+    controller = Get.find();
     return GetBuilder<TradeIndexController>(
       id: TradeIndexController.idTradeIndexMain,
       builder: (controller) {
@@ -257,32 +266,48 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                                                                 .start,
                                                         children: [
                                                           Text(
-                                                            "999,999,999",
+                                                            "${_getTodayCost()}",
                                                             style: 19.w7(
                                                                 color: AppColors
                                                                     .cD9D9D9,
                                                                 height: 1),
                                                           ),
                                                           8.hGap,
-                                                          Row(
-                                                            children: [
-                                                              IconWidget(
-                                                                iconWidth: 8.w,
-                                                                icon: Assets
-                                                                    .uiTriangleGPng,
-                                                                iconColor:
-                                                                    AppColors
-                                                                        .c23E8A9,
-                                                              ),
-                                                              Text(
-                                                                "19.6%",
-                                                                style: 10.w4(
-                                                                    color: AppColors
-                                                                        .c23E8A9,
-                                                                    height: 1),
-                                                              )
-                                                            ],
-                                                          )
+                                                          if (_getPercent() !=
+                                                              0)
+                                                            Row(
+                                                              children: [
+                                                                IconWidget(
+                                                                  iconWidth:
+                                                                      8.w,
+                                                                  icon: Assets
+                                                                      .uiTriangleGPng,
+                                                                  iconColor: _getTodayCost() >
+                                                                          _getLastDayCost()
+                                                                      ? AppColors
+                                                                          .c23E8A9
+                                                                      : AppColors
+                                                                          .cE72646,
+                                                                  rotateAngle:
+                                                                      _getTodayCost() >
+                                                                              _getLastDayCost()
+                                                                          ? 0
+                                                                          : 180,
+                                                                ),
+                                                                Text(
+                                                                  "${_getPercent().toStringAsFixed(1)}%",
+                                                                  style: 10.w4(
+                                                                      color: _getTodayCost() >
+                                                                              _getLastDayCost()
+                                                                          ? AppColors
+                                                                              .c23E8A9
+                                                                          : AppColors
+                                                                              .cE72646,
+                                                                      height:
+                                                                          1),
+                                                                )
+                                                              ],
+                                                            )
                                                         ],
                                                       ),
                                                       11.vGap,
@@ -466,7 +491,7 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                                                           ),
                                                           3.hGap,
                                                           Text(
-                                                            "999K",
+                                                            "${controller.tradeInfoEntity?.totalSalary.getTotal().toStringAsFixed(1)}K",
                                                             style: 19.w7(
                                                                 color: AppColors
                                                                     .cD9D9D9,
@@ -482,7 +507,8 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                                                           margin:
                                                               EdgeInsets.zero,
                                                           series:
-                                                              _getDefaultDoughnutSeries(),
+                                                              _getDefaultDoughnutSeries(
+                                                                  controller),
                                                         ),
                                                       )),
                                                       Row(
@@ -518,9 +544,14 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                             controller: controller.tabController,
                             children: [
                               //buy
-                              _buildView(context, controller),
+                              _buildView(
+                                  controller.tradeInfoEntity!.tradePlayers,
+                                  context,
+                                  controller,
+                                  true),
                               //sell
-                              _buildView(context, controller),
+                              _buildView(controller.sellAllTradePlayers,
+                                  context, controller, false),
                             ],
                           )),
                 ),
@@ -533,7 +564,8 @@ class _TradeIndexPageState extends State<TradeIndexPage>
     );
   }
 
-  Column _buildView(BuildContext context, TradeIndexController controller) {
+  Column _buildView(List<TradeInfoTradePlayers> tradePlayers,
+      BuildContext context, TradeIndexController controller, bool isBuy) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -551,13 +583,29 @@ class _TradeIndexPageState extends State<TradeIndexPage>
             context: context,
             removeTop: true,
             child: ListView.separated(
-                itemCount: 10,
+                itemCount: tradePlayers.length,
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
-                  bool isGood = index % 2 != 0;
-                  bool isSpecial = index == 0;
+                  var trendPlayer = tradePlayers[index];
+                  var player = Utils.getPlayBaseInfo(trendPlayer.playerId);
+                  var basicMarketPrice = (isBuy
+                          ? trendPlayer.buyPrice
+                          : trendPlayer.basicMarketPrice) ??
+                      player.basicMarketPrice;
+                  var marketPrice =
+                      trendPlayer.marketPrice ?? player.marketPrice;
+                  bool isGood = basicMarketPrice > marketPrice;
+                  double percent = (basicMarketPrice - marketPrice).abs() /
+                      basicMarketPrice *
+                      100;
+                  bool isSpecial = false; //todo 接口未定义
+                  var color =
+                      isGood && isBuy ? AppColors.cE72646 : AppColors.c10A86A;
                   Widget child = Container(
-                    margin: EdgeInsets.only(left: 16.w,right: 16.w,bottom: index == 9?100:0),//todo 换成最后一个下标
+                    margin: EdgeInsets.only(
+                        left: 16.w,
+                        right: 16.w,
+                        bottom: index == tradePlayers.length - 1 ? 100 : 0),
                     height: 79.w,
                     decoration: BoxDecoration(
                         color: AppColors.cF2F2F2,
@@ -566,7 +614,8 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                       children: [
                         9.hGap,
                         PlayerAvatarWidget(
-                          playerBaseInfo: null,
+                          grade: player.grade,
+                          playerId: player.playerId,
                           width: 55.w,
                           backgroundColor: AppColors.cE1E1E1,
                           fontColor: AppColors.c262626,
@@ -577,7 +626,7 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Player Name",
+                              player.ename,
                               style: 12.w4(color: AppColors.c262626, height: 1),
                             ),
                             3.vGap,
@@ -585,13 +634,13 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text(
-                                  "PF",
+                                  player.position,
                                   style:
                                       9.w4(color: AppColors.c262626, height: 1),
                                 ),
                                 7.hGap,
                                 Text(
-                                  "PTS:",
+                                  "PTS:${Utils.getPTS(player.playerId).toStringAsFixed(1)}",
                                   style:
                                       9.w4(color: AppColors.cB3B3B3, height: 1),
                                 ),
@@ -613,16 +662,57 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                                 SizedBox(
                                   width: 68.w,
                                   height: 26.w,
-                                  child: BarChart(
-                                    BarChartData(
-                                      barTouchData: controller.barTouchData,
-                                      titlesData: controller.titlesData,
-                                      borderData: controller.borderData,
-                                      barGroups: controller.barGroups,
-                                      gridData: controller.gridData,
-                                      alignment: BarChartAlignment.spaceAround,
-                                    ),
-                                  ),
+                                  child: Builder(builder: (context) {
+                                    var trend = trendPlayer.trend;
+                                    var basic = basicMarketPrice;
+                                    var data = trend.isEmpty
+                                        ? <BarChartGroupData>[]
+                                        : List.generate(trend.length - 1,
+                                            (index) {
+                                            var pre = trend[index + 1]
+                                                .playerMarketPrice
+                                                .toDouble();
+                                            var current = trend[index]
+                                                .playerMarketPrice
+                                                .toDouble();
+                                            return BarChartGroupData(
+                                              x: trend.length - 1 - 1 - index,
+                                              barRods: [
+                                                BarChartRodData(
+                                                    fromY: pre - basic,
+                                                    toY: current == pre
+                                                        ? (pre -
+                                                            basic +
+                                                            (Random().nextBool()
+                                                                ? 1
+                                                                : -1))
+                                                        : current - basic,
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                1.w)),
+                                                    width: 2.w,
+                                                    color: Utils.getChartColor(
+                                                        current - pre)
+                                                    // gradient: _barsGradient,
+                                                    )
+                                              ],
+                                              // showingTooltipIndicators: [0],
+                                            );
+                                          });
+                                    data = data.reversed.toList();
+                                    return BarChart(
+                                      BarChartData(
+                                        barTouchData: controller.barTouchData,
+                                        titlesData: controller.titlesData,
+                                        borderData: controller.borderData,
+                                        barGroups: data,
+                                        gridData: controller.gridData,
+                                        alignment:
+                                            BarChartAlignment.spaceAround,
+                                      ),
+                                    );
+                                  }),
                                 )
                               ],
                             )
@@ -641,61 +731,68 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                                     icon: Assets.uiMoney_02Png),
                                 3.hGap,
                                 Text(
-                                  "240K",
-                                  style: 16.w7(
-                                      color: isGood
-                                          ? AppColors.c10A86A
-                                          : AppColors.cE72646,
-                                      height: 1),
+                                  "${marketPrice}K",
+                                  style: 16.w7(color: color, height: 1),
                                 ),
                                 4.hGap,
-                                Stack(
-                                  alignment: Alignment.bottomLeft,
-                                  children: [
-                                    if (isSpecial)
-                                      Positioned(
-                                          top: 0,
-                                          right: 0,
-                                          child: IconWidget(
+                                if (percent != 0)
+                                  Stack(
+                                    alignment: Alignment.bottomLeft,
+                                    children: [
+                                      if (isSpecial)
+                                        Positioned(
+                                            top: 0,
+                                            right: 0,
+                                            child: IconWidget(
                                               iconWidth: 14.w,
                                               icon: Assets
-                                                  .uiIconDecreasingAmplitudePng)),
-                                    Container(
-                                        height: 16.w,
-                                        width: 39.w,
-                                        margin: EdgeInsets.only(
-                                            top: 6.w, right: 3.w),
-                                        decoration: BoxDecoration(
-                                            color: isGood
-                                                ? AppColors.c10A86A
-                                                : AppColors.cE72646,
-                                            borderRadius:
-                                                BorderRadius.circular(5.w)),
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          "-15%",
-                                          style: 12.w4(
-                                              color: AppColors.cFFFFFF,
-                                              height: 1),
-                                        )),
-                                  ],
-                                )
+                                                  .uiIconDecreasingAmplitudePng,
+                                              iconColor: color,
+                                            )),
+                                      Container(
+                                          height: 16.w,
+                                          width: 39.w,
+                                          margin: EdgeInsets.only(
+                                              top: 6.w, right: 3.w),
+                                          decoration: BoxDecoration(
+                                              color: color,
+                                              borderRadius:
+                                                  BorderRadius.circular(5.w)),
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            "${isGood && isBuy ? "-" : "+"}${percent.toStringAsFixed(0)}%",
+                                            style: 12.w4(
+                                                color: AppColors.cFFFFFF,
+                                                height: 1),
+                                          )),
+                                    ],
+                                  )
                               ],
                             ),
                             12.vGap,
-                            Container(
-                              height: 26.w,
-                              width: 121.w,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(13.w),
-                                  border: Border.all(
-                                      color: AppColors.c262626.withOpacity(0.4),
-                                      width: 1)),
-                              alignment: Alignment.center,
-                              child: Text(
-                                "BUY",
-                                style:
-                                    13.w7(color: AppColors.c262626, height: 1),
+                            InkWell(
+                              onTap: () {
+                                if (isBuy) {
+                                  controller.buy(player.playerId);
+                                } else {
+                                  controller.sell(trendPlayer.uuid!);
+                                }
+                              },
+                              child: Container(
+                                height: 26.w,
+                                width: 121.w,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(13.w),
+                                    border: Border.all(
+                                        color:
+                                            AppColors.c262626.withOpacity(0.4),
+                                        width: 1)),
+                                alignment: Alignment.center,
+                                child: Text(
+                                  isBuy ? "BUY" : "SELL",
+                                  style: 13
+                                      .w7(color: AppColors.c262626, height: 1),
+                                ),
                               ),
                             )
                           ],
@@ -765,27 +862,28 @@ class _TradeIndexPageState extends State<TradeIndexPage>
     );
   }
 
-  List<DoughnutSeries<ChartSampleData, String>> _getDefaultDoughnutSeries() {
+  List<DoughnutSeries<ChartSampleData, String>> _getDefaultDoughnutSeries(
+      TradeIndexController controller) {
     return <DoughnutSeries<ChartSampleData, String>>[
       DoughnutSeries<ChartSampleData, String>(
           explode: true,
-          innerRadius: "25",
-          radius: "41",
+          innerRadius: 25.w.toString(),
+          radius: 41.w.toString(),
           animationDuration: 0,
           dataSource: <ChartSampleData>[
             ChartSampleData(
               x: "f",
-              y: 3,
+              y: controller.tradeInfoEntity?.totalSalary.main,
               pointColor: AppColors.c27FFBA,
             ),
             ChartSampleData(
               x: 's',
-              y: 2,
+              y: controller.tradeInfoEntity?.totalSalary.substitute,
               pointColor: AppColors.c10A86A,
             ),
             ChartSampleData(
               x: 't',
-              y: 5,
+              y: controller.tradeInfoEntity?.totalSalary.other,
               pointColor: AppColors.c12714A,
             ),
           ],
@@ -833,29 +931,48 @@ class _TradeIndexPageState extends State<TradeIndexPage>
   }
 
   List<ChartSampleData> _getLineData() {
-    return <ChartSampleData>[
-      ChartSampleData(x: 0, y: 5),
-      ChartSampleData(
-        x: 1,
-        y: 8,
-      ),
-      ChartSampleData(
-        x: 2,
-        y: 11,
-      ),
-      ChartSampleData(
-        x: 3,
-        y: 17,
-      ),
-      ChartSampleData(
-        x: 4,
-        y: 19,
-      ),
-      ChartSampleData(
-        x: 5,
-        y: 27,
-      ),
-    ];
+    var tradeLogs = controller.tradeInfoEntity!.tradeLogs;
+    var yesterday = MyDateUtils.getYesterday();
+    for (int i = 0; i < 6; i++) {
+      var formatDate =
+          MyDateUtils.formatDate(yesterday, format: DateFormats.Y_M_D);
+      yesterday = MyDateUtils.previousDay(yesterday);
+      if (tradeLogs.containsKey(formatDate)) {
+        continue;
+      } else {
+        tradeLogs[formatDate] = 0;
+      }
+    }
+    var sortedEntries = tradeLogs.entries.toList()
+      ..sort((a, b) => MyDateUtils.getDateTime(a.key)!
+          .millisecond
+          .compareTo(MyDateUtils.getDateTime(b.key)!.millisecond));
+    var map = Map.fromEntries(sortedEntries);
+    var reversed = map.values.toList().reversed.toList();
+    List<ChartSampleData> list = [];
+    for (int i1 = 0; i1 < reversed.length; i1++) {
+      list.add(ChartSampleData(x: i1, y: reversed[i1]));
+    }
+    return list;
+  }
+
+  num _getTodayCost() {
+    var getLineData = _getLineData();
+    return getLineData[getLineData.length - 1].y ?? 0;
+  }
+
+  num _getLastDayCost() {
+    var getLineData = _getLineData();
+    return getLineData[getLineData.length - 2].y ?? 0;
+  }
+
+  num _getPercent() {
+    num todayCost = _getTodayCost();
+    todayCost = todayCost == 0 ? 1 : todayCost;
+    num lastDayCost = _getLastDayCost();
+    lastDayCost = lastDayCost == 0 ? 1 : lastDayCost;
+    var percent = (todayCost - lastDayCost).abs() / lastDayCost;
+    return percent;
   }
 
   Row _buildPieDot(Color color, String text) {
@@ -879,4 +996,3 @@ class _TradeIndexPageState extends State<TradeIndexPage>
   @override
   bool get wantKeepAlive => true;
 }
-

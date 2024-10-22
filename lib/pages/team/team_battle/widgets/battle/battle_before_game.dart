@@ -517,7 +517,6 @@ class _BattleBeforeGameState extends State<BattleBeforeGame>
                                         ),
                                         8.hGap,
                                         PlayerAvatarWidget(
-                                          playerBaseInfo: null,
                                           width: 48.h,
                                         ),
                                       ],
@@ -531,7 +530,6 @@ class _BattleBeforeGameState extends State<BattleBeforeGame>
                                     child: Row(
                                       children: [
                                         PlayerAvatarWidget(
-                                          playerBaseInfo: null,
                                           width: 48.h,
                                         ),
                                         8.hGap,

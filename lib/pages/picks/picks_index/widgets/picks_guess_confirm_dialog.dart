@@ -530,7 +530,8 @@ class _ItemState extends State<_Item> with TickerProviderStateMixin {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               PlayerAvatarWidget(
-                playerBaseInfo: player.baseInfoList,
+                grade: player.baseInfoList.grade,
+                playerId: player.baseInfoList.playerId,
                 width: 55.w,
                 backgroundColor: AppColors.c666666,
                 showGrade: false,
