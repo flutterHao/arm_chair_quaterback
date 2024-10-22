@@ -188,27 +188,27 @@ extension UpStartTeamPlayerResponseDataBeforeExtension on UpStartTeamPlayerRespo
 UpStartTeamPlayerResponseDataBeforePotential $UpStartTeamPlayerResponseDataBeforePotentialFromJson(
     Map<String, dynamic> json) {
   final UpStartTeamPlayerResponseDataBeforePotential upStartTeamPlayerResponseDataBeforePotential = UpStartTeamPlayerResponseDataBeforePotential();
-  final int? blk = jsonConvert.convert<int>(json['blk']);
+  final double? blk = jsonConvert.convert<double>(json['blk']);
   if (blk != null) {
     upStartTeamPlayerResponseDataBeforePotential.blk = blk;
   }
-  final int? threePt = jsonConvert.convert<int>(json['threePt']);
+  final double? threePt = jsonConvert.convert<double>(json['threePt']);
   if (threePt != null) {
     upStartTeamPlayerResponseDataBeforePotential.threePt = threePt;
   }
-  final int? ast = jsonConvert.convert<int>(json['ast']);
+  final double? ast = jsonConvert.convert<double>(json['ast']);
   if (ast != null) {
     upStartTeamPlayerResponseDataBeforePotential.ast = ast;
   }
-  final int? stl = jsonConvert.convert<int>(json['stl']);
+  final double? stl = jsonConvert.convert<double>(json['stl']);
   if (stl != null) {
     upStartTeamPlayerResponseDataBeforePotential.stl = stl;
   }
-  final int? pts = jsonConvert.convert<int>(json['pts']);
+  final double? pts = jsonConvert.convert<double>(json['pts']);
   if (pts != null) {
     upStartTeamPlayerResponseDataBeforePotential.pts = pts;
   }
-  final int? reb = jsonConvert.convert<int>(json['reb']);
+  final double? reb = jsonConvert.convert<double>(json['reb']);
   if (reb != null) {
     upStartTeamPlayerResponseDataBeforePotential.reb = reb;
   }
@@ -229,12 +229,12 @@ Map<String, dynamic> $UpStartTeamPlayerResponseDataBeforePotentialToJson(
 
 extension UpStartTeamPlayerResponseDataBeforePotentialExtension on UpStartTeamPlayerResponseDataBeforePotential {
   UpStartTeamPlayerResponseDataBeforePotential copyWith({
-    int? blk,
-    int? threePt,
-    int? ast,
-    int? stl,
-    int? pts,
-    int? reb,
+    double? blk,
+    double? threePt,
+    double? ast,
+    double? stl,
+    double? pts,
+    double? reb,
   }) {
     return UpStartTeamPlayerResponseDataBeforePotential()
       ..blk = blk ?? this.blk
@@ -249,27 +249,27 @@ extension UpStartTeamPlayerResponseDataBeforePotentialExtension on UpStartTeamPl
 UpStartTeamPlayerResponseDataBeforeUpStarBase $UpStartTeamPlayerResponseDataBeforeUpStarBaseFromJson(
     Map<String, dynamic> json) {
   final UpStartTeamPlayerResponseDataBeforeUpStarBase upStartTeamPlayerResponseDataBeforeUpStarBase = UpStartTeamPlayerResponseDataBeforeUpStarBase();
-  final int? blk = jsonConvert.convert<int>(json['blk']);
+  final double? blk = jsonConvert.convert<double>(json['blk']);
   if (blk != null) {
     upStartTeamPlayerResponseDataBeforeUpStarBase.blk = blk;
   }
-  final int? threePt = jsonConvert.convert<int>(json['threePt']);
+  final double? threePt = jsonConvert.convert<double>(json['threePt']);
   if (threePt != null) {
     upStartTeamPlayerResponseDataBeforeUpStarBase.threePt = threePt;
   }
-  final int? ast = jsonConvert.convert<int>(json['ast']);
+  final double? ast = jsonConvert.convert<double>(json['ast']);
   if (ast != null) {
     upStartTeamPlayerResponseDataBeforeUpStarBase.ast = ast;
   }
-  final int? stl = jsonConvert.convert<int>(json['stl']);
+  final double? stl = jsonConvert.convert<double>(json['stl']);
   if (stl != null) {
     upStartTeamPlayerResponseDataBeforeUpStarBase.stl = stl;
   }
-  final int? pts = jsonConvert.convert<int>(json['pts']);
+  final double? pts = jsonConvert.convert<double>(json['pts']);
   if (pts != null) {
     upStartTeamPlayerResponseDataBeforeUpStarBase.pts = pts;
   }
-  final int? reb = jsonConvert.convert<int>(json['reb']);
+  final double? reb = jsonConvert.convert<double>(json['reb']);
   if (reb != null) {
     upStartTeamPlayerResponseDataBeforeUpStarBase.reb = reb;
   }
@@ -290,12 +290,12 @@ Map<String, dynamic> $UpStartTeamPlayerResponseDataBeforeUpStarBaseToJson(
 
 extension UpStartTeamPlayerResponseDataBeforeUpStarBaseExtension on UpStartTeamPlayerResponseDataBeforeUpStarBase {
   UpStartTeamPlayerResponseDataBeforeUpStarBase copyWith({
-    int? blk,
-    int? threePt,
-    int? ast,
-    int? stl,
-    int? pts,
-    int? reb,
+    double? blk,
+    double? threePt,
+    double? ast,
+    double? stl,
+    double? pts,
+    double? reb,
   }) {
     return UpStartTeamPlayerResponseDataBeforeUpStarBase()
       ..blk = blk ?? this.blk
@@ -452,27 +452,27 @@ extension UpStartTeamPlayerResponseDataAfterExtension on UpStartTeamPlayerRespon
 UpStartTeamPlayerResponseDataAfterPotential $UpStartTeamPlayerResponseDataAfterPotentialFromJson(
     Map<String, dynamic> json) {
   final UpStartTeamPlayerResponseDataAfterPotential upStartTeamPlayerResponseDataAfterPotential = UpStartTeamPlayerResponseDataAfterPotential();
-  final int? blk = jsonConvert.convert<int>(json['blk']);
+  final double? blk = jsonConvert.convert<double>(json['blk']);
   if (blk != null) {
     upStartTeamPlayerResponseDataAfterPotential.blk = blk;
   }
-  final int? threePt = jsonConvert.convert<int>(json['threePt']);
+  final double? threePt = jsonConvert.convert<double>(json['threePt']);
   if (threePt != null) {
     upStartTeamPlayerResponseDataAfterPotential.threePt = threePt;
   }
-  final int? ast = jsonConvert.convert<int>(json['ast']);
+  final double? ast = jsonConvert.convert<double>(json['ast']);
   if (ast != null) {
     upStartTeamPlayerResponseDataAfterPotential.ast = ast;
   }
-  final int? stl = jsonConvert.convert<int>(json['stl']);
+  final double? stl = jsonConvert.convert<double>(json['stl']);
   if (stl != null) {
     upStartTeamPlayerResponseDataAfterPotential.stl = stl;
   }
-  final int? pts = jsonConvert.convert<int>(json['pts']);
+  final double? pts = jsonConvert.convert<double>(json['pts']);
   if (pts != null) {
     upStartTeamPlayerResponseDataAfterPotential.pts = pts;
   }
-  final int? reb = jsonConvert.convert<int>(json['reb']);
+  final double? reb = jsonConvert.convert<double>(json['reb']);
   if (reb != null) {
     upStartTeamPlayerResponseDataAfterPotential.reb = reb;
   }
@@ -493,12 +493,12 @@ Map<String, dynamic> $UpStartTeamPlayerResponseDataAfterPotentialToJson(
 
 extension UpStartTeamPlayerResponseDataAfterPotentialExtension on UpStartTeamPlayerResponseDataAfterPotential {
   UpStartTeamPlayerResponseDataAfterPotential copyWith({
-    int? blk,
-    int? threePt,
-    int? ast,
-    int? stl,
-    int? pts,
-    int? reb,
+    double? blk,
+    double? threePt,
+    double? ast,
+    double? stl,
+    double? pts,
+    double? reb,
   }) {
     return UpStartTeamPlayerResponseDataAfterPotential()
       ..blk = blk ?? this.blk
@@ -513,27 +513,27 @@ extension UpStartTeamPlayerResponseDataAfterPotentialExtension on UpStartTeamPla
 UpStartTeamPlayerResponseDataAfterUpStarBase $UpStartTeamPlayerResponseDataAfterUpStarBaseFromJson(
     Map<String, dynamic> json) {
   final UpStartTeamPlayerResponseDataAfterUpStarBase upStartTeamPlayerResponseDataAfterUpStarBase = UpStartTeamPlayerResponseDataAfterUpStarBase();
-  final int? blk = jsonConvert.convert<int>(json['blk']);
+  final double? blk = jsonConvert.convert<double>(json['blk']);
   if (blk != null) {
     upStartTeamPlayerResponseDataAfterUpStarBase.blk = blk;
   }
-  final int? threePt = jsonConvert.convert<int>(json['threePt']);
+  final double? threePt = jsonConvert.convert<double>(json['threePt']);
   if (threePt != null) {
     upStartTeamPlayerResponseDataAfterUpStarBase.threePt = threePt;
   }
-  final int? ast = jsonConvert.convert<int>(json['ast']);
+  final double? ast = jsonConvert.convert<double>(json['ast']);
   if (ast != null) {
     upStartTeamPlayerResponseDataAfterUpStarBase.ast = ast;
   }
-  final int? stl = jsonConvert.convert<int>(json['stl']);
+  final double? stl = jsonConvert.convert<double>(json['stl']);
   if (stl != null) {
     upStartTeamPlayerResponseDataAfterUpStarBase.stl = stl;
   }
-  final int? pts = jsonConvert.convert<int>(json['pts']);
+  final double? pts = jsonConvert.convert<double>(json['pts']);
   if (pts != null) {
     upStartTeamPlayerResponseDataAfterUpStarBase.pts = pts;
   }
-  final int? reb = jsonConvert.convert<int>(json['reb']);
+  final double? reb = jsonConvert.convert<double>(json['reb']);
   if (reb != null) {
     upStartTeamPlayerResponseDataAfterUpStarBase.reb = reb;
   }
@@ -554,12 +554,12 @@ Map<String, dynamic> $UpStartTeamPlayerResponseDataAfterUpStarBaseToJson(
 
 extension UpStartTeamPlayerResponseDataAfterUpStarBaseExtension on UpStartTeamPlayerResponseDataAfterUpStarBase {
   UpStartTeamPlayerResponseDataAfterUpStarBase copyWith({
-    int? blk,
-    int? threePt,
-    int? ast,
-    int? stl,
-    int? pts,
-    int? reb,
+    double? blk,
+    double? threePt,
+    double? ast,
+    double? stl,
+    double? pts,
+    double? reb,
   }) {
     return UpStartTeamPlayerResponseDataAfterUpStarBase()
       ..blk = blk ?? this.blk

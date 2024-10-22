@@ -9,6 +9,7 @@ import 'package:arm_chair_quaterback/common/entities/config/prop_define_entity.d
 import 'package:arm_chair_quaterback/common/entities/grade_in_star_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_param_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/my_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
@@ -211,6 +212,10 @@ class JsonConvert {
     if (<GuessParamGuessData>[] is M) {
       return data.map<GuessParamGuessData>((Map<String, dynamic> e) =>
           GuessParamGuessData.fromJson(e)).toList() as M;
+    }
+    if (<MyTeamEntity>[] is M) {
+      return data.map<MyTeamEntity>((Map<String, dynamic> e) =>
+          MyTeamEntity.fromJson(e)).toList() as M;
     }
     if (<NbaPlayerBaseInfoEntity>[] is M) {
       return data.map<NbaPlayerBaseInfoEntity>((Map<String, dynamic> e) =>
@@ -453,6 +458,7 @@ class JsonConvertClassCollection {
         .fromJson,
     (GuessParamEntity).toString(): GuessParamEntity.fromJson,
     (GuessParamGuessData).toString(): GuessParamGuessData.fromJson,
+    (MyTeamEntity).toString(): MyTeamEntity.fromJson,
     (NbaPlayerBaseInfoEntity).toString(): NbaPlayerBaseInfoEntity.fromJson,
     (NbaPlayerBaseInfoPlayerBaseInfo)
         .toString(): NbaPlayerBaseInfoPlayerBaseInfo.fromJson,

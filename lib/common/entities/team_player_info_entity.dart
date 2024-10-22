@@ -1,3 +1,9 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-10-15 20:19:57
+ * @LastEditTime: 2024-10-22 11:14:14
+ */
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
@@ -26,34 +32,39 @@ class TeamPlayerInfoEntity {
 
   TeamPlayerInfoEntity();
 
-  int getBreakThroughGrade(){
-    if((breakThroughGrade??0)>=1){
+  int getBreakThroughGrade() {
+    if ((breakThroughGrade ?? 0) >= 1) {
       return breakThroughGrade!;
     }
     return 1;
   }
 
-  int getNextBreakThroughGrade(){
-    var i = getBreakThroughGrade()+1;
+  int getNextBreakThroughGrade() {
+    var i = getBreakThroughGrade() + 1;
     return i;
   }
 
-  int getPreBreakThroughGrade(){
-    var i = getBreakThroughGrade()-1;
+  int getPreBreakThroughGrade() {
+    var i = getBreakThroughGrade() - 1;
     return i;
   }
 
-  factory TeamPlayerInfoEntity.fromJson(Map<String, dynamic> json) => $TeamPlayerInfoEntityFromJson(json);
+  factory TeamPlayerInfoEntity.fromJson(Map<String, dynamic> json) =>
+      $TeamPlayerInfoEntityFromJson(json);
 
   Map<String, dynamic> toJson() => $TeamPlayerInfoEntityToJson(this);
 
   //�油
-  bool isSubstitute(){
+  bool isSubstitute() {
     return position == 0;
   }
 
-  String getPosition(){
-    switch(position){
+  bool isBag() {
+    return position == -1;
+  }
+
+  String getPosition() {
+    switch (position) {
       case 1:
         return "C";
       case 2:
@@ -85,7 +96,7 @@ class TeamPlayerInfoPotential {
 
   TeamPlayerInfoPotential();
 
-  int _getMaxValue(){
+  int _getMaxValue() {
     var value = max(pts ?? 0, threePts ?? 0);
     value = max(value, ast ?? 0);
     value = max(value, reb ?? 0);
@@ -93,20 +104,27 @@ class TeamPlayerInfoPotential {
     value = max(value, stl ?? 0);
     return value;
   }
+
   int getMax() {
     var maxValue = _getMaxValue();
-    int step  = getStep();
-    var value = maxValue%step==0? maxValue+step:(maxValue~/step+1)*step;
+    int step = getStep();
+    var value =
+        maxValue % step == 0 ? maxValue + step : (maxValue ~/ step + 1) * step;
     return value;
   }
 
-  int getStep(){
+  int getStep() {
     var value = _getMaxValue();
-    int step  = value>100?20:value>500?100:10;
+    int step = value > 100
+        ? 20
+        : value > 500
+            ? 100
+            : 10;
     return step;
   }
 
-  factory TeamPlayerInfoPotential.fromJson(Map<String, dynamic> json) => $TeamPlayerInfoPotentialFromJson(json);
+  factory TeamPlayerInfoPotential.fromJson(Map<String, dynamic> json) =>
+      $TeamPlayerInfoPotentialFromJson(json);
 
   Map<String, dynamic> toJson() => $TeamPlayerInfoPotentialToJson(this);
 

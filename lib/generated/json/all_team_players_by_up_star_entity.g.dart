@@ -17,6 +17,10 @@ AllTeamPlayersByUpStarEntity $AllTeamPlayersByUpStarEntityFromJson(
   if (probability != null) {
     allTeamPlayersByUpStarEntity.probability = probability;
   }
+  final double? cost = jsonConvert.convert<double>(json['cost']);
+  if (cost != null) {
+    allTeamPlayersByUpStarEntity.cost = cost;
+  }
   final double? updateTime = jsonConvert.convert<double>(json['updateTime']);
   if (updateTime != null) {
     allTeamPlayersByUpStarEntity.updateTime = updateTime;
@@ -89,6 +93,7 @@ Map<String, dynamic> $AllTeamPlayersByUpStarEntityToJson(
   data['buyPrice'] = entity.buyPrice;
   data['buyPlayerScore'] = entity.buyPlayerScore;
   data['probability'] = entity.probability;
+  data['cost'] = entity.cost;
   data['updateTime'] = entity.updateTime;
   data['uuid'] = entity.uuid;
   data['gradeExp'] = entity.gradeExp;
@@ -112,6 +117,7 @@ extension AllTeamPlayersByUpStarEntityExtension on AllTeamPlayersByUpStarEntity 
     double? buyPrice,
     double? buyPlayerScore,
     double? probability,
+    double? cost,
     double? updateTime,
     String? uuid,
     double? gradeExp,
@@ -132,6 +138,7 @@ extension AllTeamPlayersByUpStarEntityExtension on AllTeamPlayersByUpStarEntity 
       ..buyPrice = buyPrice ?? this.buyPrice
       ..buyPlayerScore = buyPlayerScore ?? this.buyPlayerScore
       ..probability = probability ?? this.probability
+      ..cost = cost ?? this.cost
       ..updateTime = updateTime ?? this.updateTime
       ..uuid = uuid ?? this.uuid
       ..gradeExp = gradeExp ?? this.gradeExp

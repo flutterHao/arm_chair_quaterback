@@ -2,12 +2,15 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-10-16 15:04:25
+ * @LastEditTime: 2024-10-22 16:22:28
  */
 
 import 'dart:async';
 
+import 'package:arm_chair_quaterback/common/entities/my_team_entity.dart';
+import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
+import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -34,6 +37,8 @@ class TeamIndexController extends GetxController
   var isCountdownActive = false.obs; // 倒计时是否激活
   Timer? boxTimer;
 
+  MyTeamEntity myTeamEntity = MyTeamEntity();
+
   @override
   void onInit() {
     super.onInit();
@@ -48,6 +53,20 @@ class TeamIndexController extends GetxController
     //   pageLeft.value = pageAnimationCtrl.value;
     //   update(["team_index"]);
     // });
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+    getMyTeamPlayer();
+  }
+
+  void getMyTeamPlayer() {
+    int teamId =
+        Get.find<HomeController>().userEntiry.teamLoginInfo!.team!.teamId ?? 0;
+    TeamApi.getMyTeamPlayer(teamId).then((v) {
+      myTeamEntity = v;
+    });
   }
 
   void pageOnTap() {

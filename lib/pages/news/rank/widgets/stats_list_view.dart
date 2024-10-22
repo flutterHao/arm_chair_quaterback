@@ -1,15 +1,10 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
-import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
-import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
-import 'package:arm_chair_quaterback/pages/news/new_list/index.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/widgets/shadow_container.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/controller.dart';
-import 'package:arm_chair_quaterback/pages/news/rank/widgets/border_container.dart';
-import 'package:arm_chair_quaterback/pages/news/rank/widgets/search_bottom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

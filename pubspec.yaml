@@ -87,12 +87,14 @@ flutter:
 
   assets:
   - assets/images/home/
+  - assets/images/news/
   - assets/images/picks/
   - assets/test/
   - assets/images/icon/
   - assets/images/player/
   - assets/images/team/
   - assets/images/personal/
+  
 
 
   # To add assets to your application, add an assets section, like this:

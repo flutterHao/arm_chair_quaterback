@@ -4,7 +4,6 @@
  * @Date: 2024-09-14 16:54:10
  * @LastEditTime: 2024-09-26 15:31:45
  */
-import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/widgets/TLBuilderWidget.dart';
 import 'package:arm_chair_quaterback/common/widgets/app_bar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
@@ -52,7 +51,8 @@ class TeamRankPage extends GetView<RankController> {
                               width: constraints.maxWidth /
                                   controller.tabController.length,
                               height: 26.w,
-                              margin: EdgeInsets.only(left: totalProgress * left),
+                              margin:
+                                  EdgeInsets.only(left: totalProgress * left),
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
                                   color: AppColors.c262626,
@@ -75,8 +75,10 @@ class TeamRankPage extends GetView<RankController> {
                                             ? Color.lerp(AppColors.cF2F2F2,
                                                 AppColors.c262626, progress)!
                                             : next == index
-                                                ? Color.lerp(AppColors.c262626,
-                                                    AppColors.cF2F2F2, progress)!
+                                                ? Color.lerp(
+                                                    AppColors.c262626,
+                                                    AppColors.cF2F2F2,
+                                                    progress)!
                                                 : AppColors.c262626),
                                   ),
                                 ),

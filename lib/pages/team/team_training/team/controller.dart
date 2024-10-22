@@ -1,10 +1,12 @@
 import 'dart:math';
 
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/common/entities/my_team_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
+import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/line_up_tab.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/player_bag_tab.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class TeamController extends GetxController with GetTickerProviderStateMixin {
@@ -19,20 +21,10 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   ];
   List<String> teamList = ["C", "PG", "SG", "SF", "PF"];
   RxBool isRecovering = false.obs;
-  List<int> lineUpList = [];
   RxBool showThirdCard = true.obs;
 
-  var isShot = false.obs; // 使用 GetX 的响应式状态
-  var isAscending = true.obs; // 动画是否在上升
-
-  // final List<String> awardList = [
-  //   Assets.uiIconPicks_01Png,
-  //   Assets.uiIconTeam_01Png
-  // ];
-  // List<String> currentAward = ['', '', ''].obs;
-
-  // late AnimationController prizeController;
-  // late List<Leaf> leaves;
+  MyTeamEntity myTeamEntity = MyTeamEntity();
+  List<TeamPlayerInfoEntity> myBagList = [];
 
   /// 在 widget 内存中分配后立即调用。
   @override
@@ -45,6 +37,10 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   @override
   void onReady() {
     super.onReady();
+    myTeamEntity = Get.find<TeamIndexController>().myTeamEntity;
+    myBagList =
+        Get.find<HomeController>().userEntiry.teamLoginInfo!.teamPlayerList ??
+            [];
   }
 
   /// 在 [onDelete] 方法之前调用。

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-11 16:57:58
- * @LastEditTime: 2024-10-21 19:50:06
+ * @LastEditTime: 2024-10-22 15:08:36
  */
 
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
@@ -66,7 +66,8 @@ class CommentController extends GetxController {
     } else {
       mainPage++;
     }
-    NewsApi.getReviewsByNewsId(id, mainPage, pageSize).then((v) {
+    NewsApi.getReviewsByNewsId(id, mainPage, pageSize).then((v) async {
+      await Future.wait(v.map((e) => getSubReviews(e)));
       mainList.addAll(v);
       update();
     }).whenComplete(() {
@@ -75,15 +76,16 @@ class CommentController extends GetxController {
   }
 
   ///获取二级评论,将它添加到主要item下面
-  void getSubReviews(Reviews mainItem) {
-    // const pageSize = 10;
-   
-    NewsApi.getSonReviews(
+  Future getSubReviews(Reviews mainItem) async {
+    if (mainItem.sonReviews == 0) return;
+    await NewsApi.getSonReviews(
             mainItem.newsId, mainItem.id!, mainItem.page, 10)
         .then((v) {
       mainItem.subList.addAll(v);
-       int pageSize = mainItem.current == 0 ? 3 : 10;
-      mainItem.current += pageSize;
+      int show = mainItem.current == 0
+          ? (mainItem.subList.length < 3 ? mainItem.subList.length : 3)
+          : 10;
+      mainItem.current += show;
       if (mainItem.current > mainItem.subList.length) {
         mainItem.current = mainItem.subList.length;
       }

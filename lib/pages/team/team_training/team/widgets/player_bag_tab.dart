@@ -1,9 +1,11 @@
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/player_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
-class PlayerBagTab extends StatelessWidget {
+class PlayerBagTab extends GetView<TeamController> {
   const PlayerBagTab({super.key});
 
   @override

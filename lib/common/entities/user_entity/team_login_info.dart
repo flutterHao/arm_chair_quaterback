@@ -1,5 +1,6 @@
+import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
+
 import 'team.dart';
-import 'team_player_list.dart';
 import 'team_prop_list.dart';
 import 'team_record_list.dart';
 import 'zone_info.dart';
@@ -11,7 +12,7 @@ class TeamLoginInfo {
   int? offlineMinute;
   bool? setSecondPassword;
   Team? team;
-  List<TeamPlayerList>? teamPlayerList;
+  List<TeamPlayerInfoEntity>? teamPlayerList;
   List<TeamPropList>? teamPropList;
   List<TeamRecordList>? teamRecordList;
   List<dynamic>? timerServiceList;
@@ -31,17 +32,15 @@ class TeamLoginInfo {
     this.zoneInfo,
   });
 
-  num getCoin(){
+  num getCoin() {
     var firstWhere = teamPropList?.firstWhere((e) => e.propId == 103);
-    return firstWhere?.num??0;
+    return firstWhere?.num ?? 0;
   }
 
-  num getMoney(){
+  num getMoney() {
     var firstWhere = teamPropList?.firstWhere((e) => e.propId == 102);
-    return firstWhere?.num??0;
+    return firstWhere?.num ?? 0;
   }
-
-
 
   factory TeamLoginInfo.fromJson(Map<String, dynamic> json) => TeamLoginInfo(
         firstLogin: json['firstLogin'] as bool?,
@@ -53,7 +52,8 @@ class TeamLoginInfo {
             ? null
             : Team.fromJson(json['team'] as Map<String, dynamic>),
         teamPlayerList: (json['teamPlayerList'] as List<dynamic>?)
-            ?.map((e) => TeamPlayerList.fromJson(e as Map<String, dynamic>))
+            ?.map(
+                (e) => TeamPlayerInfoEntity.fromJson(e as Map<String, dynamic>))
             .toList(),
         teamPropList: (json['teamPropList'] as List<dynamic>?)?.map((e) {
           Map<String, dynamic> json =

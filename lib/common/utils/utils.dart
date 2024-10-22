@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-21 20:20:49
- * @LastEditTime: 2024-10-21 21:42:46
+ * @LastEditTime: 2024-10-22 09:45:18
  */
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
@@ -56,14 +56,6 @@ class Utils {
   static NbaTeamEntity getTeamInfo(int teamId) {
     var item = CacheApi.teamDefineMap?[teamId];
     return item ?? NbaTeamEntity();
-  }
-
-  static String numFormat(int num) {
-    if (num >= 0 && num <= 999) {
-      return "$num";
-    } else {
-      return "${(num / 1000).toStringAsFixed(1)}k";
-    }
   }
 
   static String getName(String key){

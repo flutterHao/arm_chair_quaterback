@@ -2,7 +2,7 @@
  * @Description: 新闻的底部按钮点赞分享评论
  * @Author: lihonghao
  * @Date: 2024-10-17 17:02:35
- * @LastEditTime: 2024-10-21 21:47:01
+ * @LastEditTime: 2024-10-22 09:45:45
  */
 import 'dart:math';
 
@@ -10,7 +10,6 @@ import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
-import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comment_controller.dart';
@@ -43,6 +42,14 @@ class NewsBottomButton extends StatelessWidget {
         child: child,
       ),
     );
+  }
+
+  static String numFormat(int num) {
+    if (num >= 0 && num <= 999) {
+      return "$num";
+    } else {
+      return "${(num / 1000).toStringAsFixed(1)}k";
+    }
   }
 
   @override
@@ -81,7 +88,7 @@ class NewsBottomButton extends StatelessWidget {
                           Container(
                             padding: EdgeInsets.only(left: 7.w),
                             child: Text(
-                              Utils.numFormat(detail.likes!),
+                              numFormat(detail.likes!),
                               style: 14.w4(
                                 color: detail.isLike?.value == 1
                                     ? AppColors.c262626
@@ -156,7 +163,7 @@ class NewsBottomButton extends StatelessWidget {
                     return Container(
                       margin: EdgeInsets.only(left: 7.w),
                       child: Text(
-                        Utils.numFormat(detail.reviewsCount!.value),
+                        numFormat(detail.reviewsCount!.value),
                         style: 14.w4(color: AppColors.c262626),
                       ),
                     );
