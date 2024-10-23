@@ -19,6 +19,7 @@ import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/physics/one_boundary_scroll_physics.dart';
 import 'package:arm_chair_quaterback/common/widgets/player_avatar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
+import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_account/bindings.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_account/view.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_info/bindings.dart';
@@ -92,7 +93,7 @@ class TradeIndexPage extends StatefulWidget {
 }
 
 class _TradeIndexPageState extends State<TradeIndexPage>
-    with AutomaticKeepAliveClientMixin {
+    with AutomaticKeepAliveClientMixin, WidgetsBindingObserver {
   ScrollController scrollController = ScrollController();
   late TradeIndexController controller;
 
@@ -465,68 +466,74 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                                                       ),
                                                     ],
                                                   ),
-                                                  30.hGap,
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        "Total salary",
-                                                        style: 10.w4(
-                                                            color: AppColors
-                                                                .cB3B3B3,
-                                                            height: 1),
-                                                      ),
-                                                      2.vGap,
-                                                      Row(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          IconWidget(
-                                                            iconWidth: 28.w,
-                                                            icon: Assets
-                                                                .uiMoney_02Png,
-                                                          ),
-                                                          3.hGap,
-                                                          Text(
-                                                            "${controller.tradeInfoEntity?.totalSalary.getTotal().toStringAsFixed(1)}K",
-                                                            style: 19.w7(
-                                                                color: AppColors
-                                                                    .cD9D9D9,
-                                                                height: 1),
-                                                          )
-                                                        ],
-                                                      ),
-                                                      Expanded(
-                                                          child: SizedBox(
-                                                        width: 110.w,
-                                                        // height: 82.w,
-                                                        child: SfCircularChart(
-                                                          margin:
-                                                              EdgeInsets.zero,
-                                                          series:
-                                                              _getDefaultDoughnutSeries(
-                                                                  controller),
+                                                  20.hGap,
+                                                  Expanded(
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          "Total salary",
+                                                          style: 10.w4(
+                                                              color: AppColors
+                                                                  .cB3B3B3,
+                                                              height: 1),
                                                         ),
-                                                      )),
-                                                      Row(
-                                                        children: [
-                                                          _buildPieDot(
-                                                              AppColors.c27FFBA,
-                                                              "main"),
-                                                          5.hGap,
-                                                          _buildPieDot(
-                                                              AppColors.c10A86A,
-                                                              "substitute"),
-                                                          5.hGap,
-                                                          _buildPieDot(
-                                                              AppColors.c12714A,
-                                                              "else"),
-                                                        ],
-                                                      )
-                                                    ],
+                                                        2.vGap,
+                                                        Row(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            IconWidget(
+                                                              iconWidth: 28.w,
+                                                              icon: Assets
+                                                                  .uiMoney_02Png,
+                                                            ),
+                                                            3.hGap,
+                                                            Text(
+                                                              "${controller.tradeInfoEntity?.totalSalary.getTotal().toStringAsFixed(1)}K",
+                                                              style: 19.w7(
+                                                                  color: AppColors
+                                                                      .cD9D9D9,
+                                                                  height: 1),
+                                                            )
+                                                          ],
+                                                        ),
+                                                        Expanded(
+                                                            child: SizedBox(
+                                                          // width: 100.w,
+                                                          // height: 82.w,
+                                                          child:
+                                                              SfCircularChart(
+                                                            margin:
+                                                                EdgeInsets.zero,
+                                                            series:
+                                                                _getDefaultDoughnutSeries(
+                                                                    controller),
+                                                          ),
+                                                        )),
+                                                        Row(
+                                                          children: [
+                                                            _buildPieDot(
+                                                                AppColors
+                                                                    .c27FFBA,
+                                                                "main"),
+                                                            5.hGap,
+                                                            _buildPieDot(
+                                                                AppColors
+                                                                    .c10A86A,
+                                                                "substitute"),
+                                                            5.hGap,
+                                                            _buildPieDot(
+                                                                AppColors
+                                                                    .c12714A,
+                                                                "else"),
+                                                          ],
+                                                        )
+                                                      ],
+                                                    ),
                                                   )
                                                 ],
                                               ),
@@ -621,104 +628,113 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                           fontColor: AppColors.c262626,
                         ),
                         6.hGap,
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              player.ename,
-                              style: 12.w4(color: AppColors.c262626, height: 1),
-                            ),
-                            3.vGap,
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  player.position,
-                                  style:
-                                      9.w4(color: AppColors.c262626, height: 1),
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                constraints: BoxConstraints(maxWidth: 80.w),
+                                child: Text(
+                                  player.ename,
+                                  style: 12.w4(
+                                      color: AppColors.c262626,
+                                      height: 1,
+                                      overflow: TextOverflow.ellipsis),
                                 ),
-                                7.hGap,
-                                Text(
-                                  "PTS:${Utils.getPTS(player.playerId).toStringAsFixed(1)}",
-                                  style:
-                                      9.w4(color: AppColors.cB3B3B3, height: 1),
-                                ),
-                              ],
-                            ),
-                            5.vGap,
-                            Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                SizedBox(
+                              ),
+                              3.vGap,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    player.position,
+                                    style: 9.w4(
+                                        color: AppColors.c262626, height: 1),
+                                  ),
+                                  7.hGap,
+                                  Text(
+                                    "PTS:${Utils.getPTS(player.playerId).toStringAsFixed(1)}",
+                                    style: 9.w4(
+                                        color: AppColors.cB3B3B3, height: 1),
+                                  ),
+                                ],
+                              ),
+                              5.vGap,
+                              Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  SizedBox(
+                                      width: 68.w,
+                                      height: 1,
+                                      child: const DashedLine(
+                                        axis: Axis.horizontal,
+                                        dashedHeight: 2,
+                                        dashedWidth: 4,
+                                        dashedColor: AppColors.c666666,
+                                      )),
+                                  SizedBox(
                                     width: 68.w,
-                                    height: 1,
-                                    child: const DashedLine(
-                                      axis: Axis.horizontal,
-                                      dashedHeight: 2,
-                                      dashedWidth: 4,
-                                      dashedColor: AppColors.c666666,
-                                    )),
-                                SizedBox(
-                                  width: 68.w,
-                                  height: 26.w,
-                                  child: Builder(builder: (context) {
-                                    var trend = trendPlayer.trend;
-                                    var basic = basicMarketPrice;
-                                    var data = trend.isEmpty
-                                        ? <BarChartGroupData>[]
-                                        : List.generate(trend.length - 1,
-                                            (index) {
-                                            var pre = trend[index + 1]
-                                                .playerMarketPrice
-                                                .toDouble();
-                                            var current = trend[index]
-                                                .playerMarketPrice
-                                                .toDouble();
-                                            return BarChartGroupData(
-                                              x: trend.length - 1 - 1 - index,
-                                              barRods: [
-                                                BarChartRodData(
-                                                    fromY: pre - basic,
-                                                    toY: current == pre
-                                                        ? (pre -
-                                                            basic +
-                                                            (Random().nextBool()
-                                                                ? 1
-                                                                : -1))
-                                                        : current - basic,
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                1.w)),
-                                                    width: 2.w,
-                                                    color: Utils.getChartColor(
-                                                        current - pre)
-                                                    // gradient: _barsGradient,
-                                                    )
-                                              ],
-                                              // showingTooltipIndicators: [0],
-                                            );
-                                          });
-                                    data = data.reversed.toList();
-                                    return BarChart(
-                                      BarChartData(
-                                        barTouchData: controller.barTouchData,
-                                        titlesData: controller.titlesData,
-                                        borderData: controller.borderData,
-                                        barGroups: data,
-                                        gridData: controller.gridData,
-                                        alignment:
-                                            BarChartAlignment.spaceAround,
-                                      ),
-                                    );
-                                  }),
-                                )
-                              ],
-                            )
-                          ],
+                                    height: 26.w,
+                                    child: Builder(builder: (context) {
+                                      var trend = trendPlayer.trend;
+                                      var basic = basicMarketPrice;
+                                      var data = trend.isEmpty
+                                          ? <BarChartGroupData>[]
+                                          : List.generate(trend.length - 1,
+                                              (index) {
+                                              var pre = trend[index + 1]
+                                                  .playerMarketPrice
+                                                  .toDouble();
+                                              var current = trend[index]
+                                                  .playerMarketPrice
+                                                  .toDouble();
+                                              return BarChartGroupData(
+                                                x: trend.length - 1 - 1 - index,
+                                                barRods: [
+                                                  BarChartRodData(
+                                                      fromY: pre - basic,
+                                                      toY: current == pre
+                                                          ? (pre -
+                                                              basic +
+                                                              (Random()
+                                                                      .nextBool()
+                                                                  ? 1
+                                                                  : -1))
+                                                          : current - basic,
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  1.w)),
+                                                      width: 2.w,
+                                                      color:
+                                                          Utils.getChartColor(
+                                                              current - pre)
+                                                      // gradient: _barsGradient,
+                                                      )
+                                                ],
+                                                // showingTooltipIndicators: [0],
+                                              );
+                                            });
+                                      data = data.reversed.toList();
+                                      return BarChart(
+                                        BarChartData(
+                                          barTouchData: controller.barTouchData,
+                                          titlesData: controller.titlesData,
+                                          borderData: controller.borderData,
+                                          barGroups: data,
+                                          gridData: controller.gridData,
+                                          alignment:
+                                              BarChartAlignment.spaceAround,
+                                        ),
+                                      );
+                                    }),
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
                         ),
-                        const Expanded(child: SizedBox.shrink()),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -995,4 +1011,32 @@ class _TradeIndexPageState extends State<TradeIndexPage>
 
   @override
   bool get wantKeepAlive => true;
+
+  @override
+  void initState() {
+    super.initState();
+    // 注册监听器
+    WidgetsBinding.instance.addObserver(this);
+    Get.find<HomeController>().tabIndex.listen((value) {
+      if (value == 3) {
+        controller.refreshData();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    // 移除监听器
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    var value = Get.find<HomeController>().tabIndex.value;
+    if (state == AppLifecycleState.resumed && value == 3) {
+      controller.refreshData();
+    }
+  }
 }

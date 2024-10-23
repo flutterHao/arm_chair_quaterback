@@ -125,7 +125,7 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
     ];
     var homeController = Get.find<HomeController>();
     var uuidInfo = homeController.userEntiry.teamLoginInfo?.teamPlayerList
-        ?.firstWhere((e) => e.playerId == arguments.playerId);
+        ?.firstWhereOrNull((e) => e.playerId == arguments.playerId);
     if (uuidInfo != null) {
       cacheUuid = uuidInfo.uuid;
       futures.addAll([
