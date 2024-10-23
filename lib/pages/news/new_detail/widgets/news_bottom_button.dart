@@ -2,7 +2,7 @@
  * @Description: 新闻的底部按钮点赞分享评论
  * @Author: lihonghao
  * @Date: 2024-10-17 17:02:35
- * @LastEditTime: 2024-10-22 09:45:45
+ * @LastEditTime: 2024-10-23 17:49:29
  */
 import 'dart:math';
 
@@ -14,7 +14,7 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comment_controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comments_dialog.dart';
-import 'package:arm_chair_quaterback/common/widgets/drag_back_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/vertival_drag_back_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';

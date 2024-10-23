@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 17:09:20
- * @LastEditTime: 2024-10-18 20:39:15
+ * @LastEditTime: 2024-10-23 18:24:08
  */
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
@@ -35,6 +35,8 @@ class _VerticalDragBackWidgetState extends State<VerticalDragBackWidget>
   final double maxBottom = 0.h; // 最大位置
 
   TeamIndexController teamCtrl = Get.find();
+  double offsetY = 0;
+  double startY = -1;
 
   @override
   void initState() {
@@ -57,6 +59,7 @@ class _VerticalDragBackWidgetState extends State<VerticalDragBackWidget>
       if (!teamCtrl.isOnTopSide) {
         return;
       }
+      startY = detail.localPosition.dy;
     }
 
     onVerticalDragEnd(DragEndDetails detail) {
@@ -74,10 +77,11 @@ class _VerticalDragBackWidgetState extends State<VerticalDragBackWidget>
       }
     }
 
-    onVerticalDragDown(DragDownDetails detail) {
+    onVerticalDragDown(DragDownDetails details) {
       if (!teamCtrl.isOnTopSide) {
         return;
       }
+      startY = details.localPosition.dy;
     }
 
     onVerticalDragUpdate(DragUpdateDetails details) {
@@ -88,15 +92,21 @@ class _VerticalDragBackWidgetState extends State<VerticalDragBackWidget>
       double newBottom = teamCtrl.myTeamBottom.value - details.delta.dy;
       newBottom = newBottom.clamp(minBottom, maxBottom);
       teamCtrl.myTeamBottom.value = newBottom;
+      offsetY = details.localPosition.dy - startY;
+      Log.d(
+          "位置信息：startY:$startY,localPosition.dy ${details.localPosition.dy}:,offsetY:$offsetY");
     }
 
     Widget body = GestureDetector(
       onVerticalDragUpdate: (details) {
+        offsetY = details.localPosition.dy - startY;
         if (teamCtrl.isOnTopSide) return;
         isDragging.value = true;
         double newBottom = teamCtrl.myTeamBottom.value - details.delta.dy;
         newBottom = newBottom.clamp(minBottom, maxBottom);
         teamCtrl.myTeamBottom.value = newBottom;
+        Log.d(
+            "位置信息：startY:$startY,localPosition.dy ${details.localPosition.dy}:,offsetY:$offsetY");
       },
       onVerticalDragEnd: (details) {
         if (teamCtrl.isOnTopSide) return;
@@ -172,14 +182,15 @@ class _VerticalDragBackWidgetState extends State<VerticalDragBackWidget>
     // Log.d("details:___"+details.toString());
     if ((teamCtrl.isShow.value && details.localPosition.dy <= 0) ||
         (!teamCtrl.isShow.value && details.localPosition.dy >= 0)) {
+      teamCtrl.isShow.value ?teamCtrl.openPage():teamCtrl.closePage() ;   
       return;
     }
-    if (details.velocity.pixelsPerSecond.dy < -1000) {
+    if (details.velocity.pixelsPerSecond.dy < -1000 || offsetY < 100) {
       // targetBottom = maxBottom; // 快速上滑到最大位置
-      teamCtrl.pageOnTap();
-    } else {
+      teamCtrl.openPage();
+    } else if (details.velocity.pixelsPerSecond.dy > 1000 || offsetY > 100) {
       // targetBottom = minBottom; // 否则返回最小位置
-      teamCtrl.pageOnTap();
+      teamCtrl.closePage();
     }
     // teamCtrl.pageOnTap();
   }

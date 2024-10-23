@@ -2,15 +2,12 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-10-22 16:22:28
+ * @LastEditTime: 2024-10-23 18:25:31
  */
 
 import 'dart:async';
 
-import 'package:arm_chair_quaterback/common/entities/my_team_entity.dart';
-import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
-import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -74,7 +71,6 @@ class TeamIndexController extends GetxController
     //     .animate(pageAnimationCtrl);
     // pageAnimationCtrl.forward(from: pageLeft.value);
     !isShow.value ? openPage() : closePage();
-    update(["team_index"]);
   }
 
   void openPage() {
@@ -85,6 +81,7 @@ class TeamIndexController extends GetxController
     pageX.value = -250.w;
     turns.value += 1 / 2;
     isShow.value = true;
+    update(["team_index"]);
   }
 
   void closePage() {
@@ -96,6 +93,7 @@ class TeamIndexController extends GetxController
     turns.value -= 1 / 2;
     isShow.value = false;
     isOnTopSide = true;
+    update(["team_index"]);
   }
 
   // void updatePagePosition() {
