@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomLinearProgressBar extends StatelessWidget {
-  final double progress; // 进度值，0.0到1.0
+  final dynamic progress; // 进度值，0.0到1.0
   final double width; // 宽度
   final double? height; // 高度
   final Color? backgroundColor; // 背景颜色

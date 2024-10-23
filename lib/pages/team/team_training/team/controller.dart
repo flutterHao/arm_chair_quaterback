@@ -1,11 +1,14 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/entities/my_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
+import 'package:arm_chair_quaterback/common/net/apis/team.dart';
+import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/line_up_tab.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/player_bag_tab.dart';
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -19,12 +22,14 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
     LineUpTab(),
     PlayerBagTab(),
   ];
-  List<String> teamList = ["C", "PG", "SG", "SF", "PF"];
   RxBool isRecovering = false.obs;
   RxBool showThirdCard = true.obs;
 
   MyTeamEntity myTeamEntity = MyTeamEntity();
   List<TeamPlayerInfoEntity> myBagList = [];
+  late Timer _timer;
+  late int _recoverSeconds;
+  RxString remainString = "00:00:00".obs;
 
   /// 在 widget 内存中分配后立即调用。
   @override
@@ -37,10 +42,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   @override
   void onReady() {
     super.onReady();
-    myTeamEntity = Get.find<TeamIndexController>().myTeamEntity;
-    myBagList =
-        Get.find<HomeController>().userEntiry.teamLoginInfo!.teamPlayerList ??
-            [];
+    getMyTeamPlayer();
   }
 
   /// 在 [onDelete] 方法之前调用。
@@ -53,10 +55,49 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   @override
   void dispose() {
     super.dispose();
+    _timer.cancel();
+  }
+
+  void getMyTeamPlayer() {
+    int teamId =
+        Get.find<HomeController>().userEntiry.teamLoginInfo!.team!.teamId ?? 0;
+    TeamApi.getMyTeamPlayer(teamId).then((v) {
+      myTeamEntity = v;
+      var homeCtrl = Get.find<HomeController>();
+      myBagList = List.from(homeCtrl.userEntiry.teamLoginInfo!.teamPlayerList!);
+      recoverTimeAndCountDown();
+      update();
+    });
   }
 
   void onTabChange(v) {
     current.value = v;
     tabController.animateTo(v);
+  }
+
+  ///计算体力回复时间
+  void recoverTimeAndCountDown() {
+    DateTime recoverTime =
+        DateUtil.getDateTimeByMs(myTeamEntity.powerReplyTime);
+    _recoverSeconds = recoverTime.difference(DateTime.now()).inSeconds;
+    _timer = Timer.periodic(const Duration(seconds: 1), (v) async {
+      _recoverSeconds--;
+      final hours = _recoverSeconds ~/ 3600;
+      final minutes = (_recoverSeconds % 3600) ~/ 60;
+      final remainingSeconds = _recoverSeconds % 60;
+      remainString.value =
+          '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
+      if (_recoverSeconds == 0) {
+        _timer.cancel();
+      }
+    });
+  }
+
+  Color getProgressColor(progress) {
+    return progress > 0.5
+        ? AppColors.c10A86A
+        : progress > 0.2
+            ? AppColors.cDFB523
+            : AppColors.cE72646;
   }
 }

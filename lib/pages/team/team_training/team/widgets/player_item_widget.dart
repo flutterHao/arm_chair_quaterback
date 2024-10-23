@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2024-10-21 10:12:36
+ * @LastEditTime: 2024-10-23 10:31:48
  */
 /*
  * @Description: 
@@ -17,7 +17,6 @@ import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dar
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
-import 'package:arm_chair_quaterback/pages/picks/player_detail/index.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/linear_progress_widget.dart';
 import 'package:flutter/material.dart';
@@ -32,13 +31,13 @@ import 'package:get/get.dart';
 class PlayerItem extends GetView<TeamController> {
   const PlayerItem({
     super.key,
-    required this.index,
+    required this.item,
     required this.isMain,
     this.isBag = false,
   });
 
   final bool isMain;
-  final int index;
+  final TeamPlayerInfoEntity item;
   final bool isBag;
 
   ///球员位置
@@ -53,7 +52,7 @@ class PlayerItem extends GetView<TeamController> {
         child: RotatedBox(
           quarterTurns: -1,
           child: Text(
-            isMain ? controller.teamList[index] : "SUB",
+            Utils.getPosition(item.position),
             style: 21.w7(
               color: isMain ? AppColors.c2170D2 : AppColors.c323232,
               height: 1,
@@ -97,14 +96,6 @@ class PlayerItem extends GetView<TeamController> {
     );
   }
 
-  Color? _getProgressColor(double progress) {
-    return progress > 0.5
-        ? AppColors.c10A86A
-        : progress > 0.2
-            ? AppColors.cDFB523
-            : AppColors.cE72646;
-  }
-
   ///球员状态
   Widget _playerStatus() {
     double progress = Random().nextDouble();
@@ -120,12 +111,12 @@ class PlayerItem extends GetView<TeamController> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                "OVR",
+                "SCORE",
                 style: 10.w4(color: AppColors.cB3B3B3, height: 1),
               ),
               7.hGap,
               Text(
-                "185%",
+                "${item.buyPlayerScore}",
                 style: 10.w7(color: AppColors.c000000, height: 1),
               ),
             ],
@@ -147,7 +138,7 @@ class PlayerItem extends GetView<TeamController> {
               ),
               7.hGap,
               Text(
-                "250K",
+                Utils.formatMoney(item.buyPrice),
                 style: 10.w7(color: AppColors.c000000, height: 1),
               ),
             ],
@@ -173,13 +164,13 @@ class PlayerItem extends GetView<TeamController> {
                 margin: EdgeInsets.symmetric(horizontal: 5.w),
                 child: CustomLinearProgressBar(
                   height: 4.w,
-                  progress: progress,
-                  progressColor: _getProgressColor(progress),
+                  progress: item.power / 100,
+                  progressColor: controller.getProgressColor(progress),
                   backgroundColor: Colors.black12,
                 ),
               ),
               Text(
-                "${(progress * 100).toStringAsFixed(0)}%",
+                "${item.power}%",
                 style: 10.w7(color: AppColors.c000000, height: 1),
               ),
             ],
@@ -236,12 +227,7 @@ class PlayerItem extends GetView<TeamController> {
         //     onChange: () {},
         //   ),
         // ),
-        isBag
-            ? 96.hGap
-            : _NumChangeWidget(
-                num: Random().nextInt(3),
-                onChange: () {},
-              ),
+        isBag ? 96.hGap : _recover(),
         9.hGap,
 
         InkWell(
@@ -261,6 +247,39 @@ class PlayerItem extends GetView<TeamController> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _recover() {
+    return InkWell(
+      onTap: () {},
+      child: Container(
+        width: 92.w,
+        height: 32.w,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16.w),
+          border: Border.all(
+            width: 1.w,
+            color: AppColors.cB3B3B3,
+          ),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IconWidget(
+              iconWidth: 9.w,
+              icon: Assets.uiIconStaminaPng,
+              iconColor: AppColors.c262626,
+            ),
+            6.hGap,
+            Text(
+              "RECOVER",
+              style: 12.w7(color: AppColors.c262626),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -313,134 +332,9 @@ class PlayerItem extends GetView<TeamController> {
       child: Stack(
         children: [
           if (!isBag) _playerPosition(),
-          (index > 5 && !isMain && !isBag) ? _addPlayer() : _playCard(),
+          _playCard()
+          // (item > 5 && !isMain && !isBag) ? _addPlayer() : _playCard(),
         ],
-      ),
-    );
-  }
-}
-
-class _NumChangeWidget extends StatefulWidget {
-  const _NumChangeWidget({required this.num, required this.onChange});
-
-  final int num;
-  final Function onChange;
-
-  @override
-  State<_NumChangeWidget> createState() => __NumChangeWidgetState();
-}
-
-class __NumChangeWidgetState extends State<_NumChangeWidget> {
-  RxInt currentNum = 0.obs;
-  bool showNum = false;
-  TeamController ctrl = Get.find();
-
-  @override
-  void initState() {
-    super.initState();
-    currentNum.value = widget.num;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return showNum && ctrl.isRecovering.value
-        ? SizedBox(
-            width: 96.w,
-            height: 32.w,
-            child: Stack(
-              children: [
-                Positioned(
-                  left: 18.w,
-                  child: Container(
-                    width: 60.w,
-                    height: 32.w,
-                    alignment: Alignment.center,
-                    color: Colors.black12,
-                    child: Obx(() => Text("${currentNum.value}")), // 显示当前数值
-                  ),
-                ),
-                Positioned(left: 0, top: 0, child: _changeBtn(isAdd: false)),
-                Positioned(right: 0, top: 0, child: _changeBtn(isAdd: true)),
-              ],
-            ),
-          )
-        : _recover();
-  }
-
-  Widget _changeBtn({required bool isAdd}) {
-    return InkWell(
-      onTap: () {
-        isAdd
-            ? currentNum.value++
-            : currentNum.value > 0
-                ? currentNum.value--
-                : null;
-        widget.onChange();
-      },
-      child: Container(
-        width: 30.w,
-        height: 30.w,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: AppColors.c262626,
-          borderRadius: BorderRadius.circular(16.w),
-          border: Border.all(
-            width: 2.w,
-            color: Colors.transparent,
-            // color: AppColors.cF2F2F2,
-          ),
-        ),
-        child: isAdd
-            ? IconWidget(
-                iconWidth: 15.w,
-                icon: Assets.uiIconPlusPng,
-                iconColor: AppColors.cFFFFFF,
-              )
-            : Container(
-                width: 15.w,
-                height: 2.w,
-                decoration: BoxDecoration(
-                  color: AppColors.cFFFFFF,
-                  borderRadius: BorderRadius.circular(1.w),
-                ),
-              ),
-      ),
-    );
-  }
-
-  Widget _recover() {
-    return InkWell(
-      onTap: () {
-        showNum = true;
-        setState(() {});
-        Get.find<TeamController>().isRecovering.value = true;
-      },
-      child: Container(
-        width: 92.w,
-        height: 32.w,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16.w),
-          border: Border.all(
-            width: 1.w,
-            color: AppColors.cB3B3B3,
-          ),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            IconWidget(
-              iconWidth: 9.w,
-              icon: Assets.uiIconStaminaPng,
-              iconColor: AppColors.c262626,
-            ),
-            6.hGap,
-            Text(
-              "RECOVER",
-              style: 12.w7(color: AppColors.c262626),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -457,7 +351,7 @@ class PlayerAwater extends StatelessWidget {
     ///头像
     return InkWell(
       onTap: () {
-        Get.toNamed(RouteNames.picksPlayerDetail,arguments: PlayerDetailPageArguments(player.playerId));
+        Get.toNamed(RouteNames.picksPlayerDetail);
       },
       child: Stack(
         children: [

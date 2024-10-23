@@ -138,21 +138,12 @@ class MoneyAndCoinWidget extends StatelessWidget {
             iconColor: AppColors.cFFFFFF,
           ),
           Text(
-            _moneyFormat(num),
+            Utils.formatMoney(num),
             style: TextStyle(color: AppColors.cF2F2F2, fontSize: 10.sp),
           )
         ],
       ),
     );
-  }
-
-  String _moneyFormat(num num) {
-    // return "${num.toStringAsFixed(0)}k";
-    if (num > 0 && num < 10000) {
-      return "${num.toStringAsFixed(0)}k";
-    } else {
-      return "${(num / 10).toStringAsFixed(0)}w";
-    }
   }
 }
 

@@ -37,7 +37,7 @@ class TeamIndexController extends GetxController
   var isCountdownActive = false.obs; // 倒计时是否激活
   Timer? boxTimer;
 
-  MyTeamEntity myTeamEntity = MyTeamEntity();
+  // MyTeamEntity myTeamEntity = MyTeamEntity();
 
   @override
   void onInit() {
@@ -58,16 +58,15 @@ class TeamIndexController extends GetxController
   @override
   void onReady() {
     super.onReady();
-    getMyTeamPlayer();
   }
 
-  void getMyTeamPlayer() {
-    int teamId =
-        Get.find<HomeController>().userEntiry.teamLoginInfo!.team!.teamId ?? 0;
-    TeamApi.getMyTeamPlayer(teamId).then((v) {
-      myTeamEntity = v;
-    });
-  }
+  // void getMyTeamPlayer() {
+  //   int teamId =
+  //       Get.find<HomeController>().userEntiry.teamLoginInfo!.team!.teamId ?? 0;
+  //   TeamApi.getMyTeamPlayer(teamId).then((v) {
+  //     myTeamEntity = v;
+  //   });
+  // }
 
   void pageOnTap() {
     // pageAnimation = Tween<double>(

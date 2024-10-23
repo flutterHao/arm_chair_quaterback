@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/common/entities/my_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/reward_group_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/train_task_entity.dart';
@@ -104,20 +105,21 @@ class TrainingController extends GetxController
   }
 
   void getData() async {
-    // int teamId = HomeController.to.userEntiry.teamLoginInfo!.team!.teamId!;
+    int teamId = HomeController.to.userEntiry.teamLoginInfo!.team!.teamId!;
     await Future.wait([
       CacheApi.getRewardGroup(),
       TeamApi.getTrainingInfo(),
       // TeamApi.getMyTeamPlayer(teamId),
       TeamApi.getTrainTaskList(),
-      TeamApi.getTrainDefine()
+      TeamApi.getTrainDefine(),
+      TeamApi.getMyTeamPlayer(teamId)
     ]).then((v) {
       rewardList = v[0] as List<RewardGroupEntity>;
       trainingInfo = v[1] as TrainingInfoEntity;
       trainTaskList = v[2] as List<TrainTaskEntity>;
       trainDefineMap = v[3] as Map<String, dynamic>;
+      playerList = (v[4] as MyTeamEntity).teamPlayers;
       ballNum.value = trainingInfo.prop.num;
-      playerList = Get.find<TeamIndexController>().myTeamEntity.teamPlayers;
       recoverTimeAndCountDown();
       Log.d("球员id列表:${playerList.map((e) => e.playerId).toList()}");
       update(["training_page"]);

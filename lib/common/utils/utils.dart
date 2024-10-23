@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-21 20:20:49
- * @LastEditTime: 2024-10-22 09:45:18
+ * @LastEditTime: 2024-10-23 10:36:09
  */
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
@@ -41,6 +41,8 @@ class Utils {
         return "SG";
       case 5:
         return "PG";
+      case 0:
+        return "SUB";
       default:
         return "";
     }
@@ -58,31 +60,46 @@ class Utils {
     return item ?? NbaTeamEntity();
   }
 
-  static String getName(String key){
-    if(key == "blk"){
+  static String getName(String key) {
+    if (key == "blk") {
       return "BLK";
     }
-    if(key == "ast"){
+    if (key == "ast") {
       return "AST";
     }
-    if(key == "stl"){
+    if (key == "stl") {
       return "STL";
     }
-    if(key == "pts"){
+    if (key == "pts") {
       return "PTS";
     }
-    if(key == "reb"){
+    if (key == "reb") {
       return "REB";
     }
     return "3PT";
   }
 
-  static Color getChartColor(double value) {
+  static Color getChartColor(value) {
     return value < 30
         ? AppColors.cE72646
         : value < 60
-        ? AppColors.cE8B94C
-        : AppColors.c10A86A;
+            ? AppColors.cE8B94C
+            : AppColors.c10A86A;
+  }
+
+  static String formatMoney(amount, {int precision = 0}) {
+    amount *= 1000;
+    if (amount >= 1e12) {
+      return '${(amount / 1e12).toStringAsFixed(precision)}T';
+    } else if (amount >= 1e9) {
+      return '${(amount / 1e9).toStringAsFixed(precision)}B';
+    } else if (amount >= 1e6) {
+      return '${(amount / 1e6).toStringAsFixed(precision)}M';
+    } else if (amount >= 1e3) {
+      return '${(amount / 1e3).toStringAsFixed(precision)}K';
+    } else {
+      return amount.toStringAsFixed(2);
+    }
   }
 
   static double getPTS(int playerId){
