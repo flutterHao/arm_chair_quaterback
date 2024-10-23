@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-21 20:20:49
- * @LastEditTime: 2024-10-23 11:02:51
+ * @LastEditTime: 2024-10-23 11:42:16
  */
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
@@ -87,19 +87,30 @@ class Utils {
             : AppColors.c10A86A;
   }
 
-  static String formatMoney(amount, {int precision = 1}) {
+  ///金额格式化
+  static String formatMoney(amount) {
+    // amount = 123456789;
     amount *= 1000;
     if (amount >= 1e12) {
-      return '${(amount / 1e12).toStringAsFixed(precision)}T';
+      return '${formatToThreeSignificantDigits(amount / 1e12)}T';
     } else if (amount >= 1e9) {
-      return '${(amount / 1e9).toStringAsFixed(precision)}B';
+      return '${formatToThreeSignificantDigits(amount / 1e9)}B';
     } else if (amount >= 1e6) {
-      return '${(amount / 1e6).toStringAsFixed(precision)}M';
+      return '${formatToThreeSignificantDigits(amount / 1e6)}M';
     } else if (amount >= 1e3) {
-      return '${(amount / 1e3).toStringAsFixed(precision)}K';
+      return '${formatToThreeSignificantDigits(amount / 1e3)}K';
     } else {
-      return amount.toString();
+      return formatToThreeSignificantDigits(amount);
     }
+  }
+
+  static String formatToThreeSignificantDigits(double value) {
+    // 使用科学记数法保留三位有效数字
+    String exponential = value.toStringAsExponential(2);
+    // 将科学记数法转换回普通数字
+    double formattedValue = double.parse(exponential);
+    // 去掉多余的零
+    return formattedValue.toString().replaceAll(RegExp(r'\.0+$'), '');
   }
 
   static double getPTS(int playerId) {
