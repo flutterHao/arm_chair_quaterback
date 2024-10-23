@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-21 20:20:49
- * @LastEditTime: 2024-10-23 10:36:09
+ * @LastEditTime: 2024-10-23 11:02:51
  */
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
@@ -87,7 +87,7 @@ class Utils {
             : AppColors.c10A86A;
   }
 
-  static String formatMoney(amount, {int precision = 0}) {
+  static String formatMoney(amount, {int precision = 1}) {
     amount *= 1000;
     if (amount >= 1e12) {
       return '${(amount / 1e12).toStringAsFixed(precision)}T';
@@ -98,22 +98,23 @@ class Utils {
     } else if (amount >= 1e3) {
       return '${(amount / 1e3).toStringAsFixed(precision)}K';
     } else {
-      return amount.toStringAsFixed(2);
+      return amount.toString();
     }
   }
 
-  static double getPTS(int playerId){
+  static double getPTS(int playerId) {
     NbaPlayerInfosPlayerDataAvgList? firstWhere = getNBAPlayerInfo(playerId);
-    return firstWhere?.pts??0;
+    return firstWhere?.pts ?? 0;
   }
 
   static NbaPlayerInfosPlayerDataAvgList? getNBAPlayerInfo(int playerId) {
     var playerInfo = CacheApi.playerInfo;
-    var firstWhere = playerInfo?.playerDataAvgList.firstWhere((e)=> e.playerId == playerId);
+    var firstWhere =
+        playerInfo?.playerDataAvgList.firstWhere((e) => e.playerId == playerId);
     return firstWhere;
   }
 
-  static String formatGrade(String grade){
+  static String formatGrade(String grade) {
     return grade.replaceAll("-", "").replaceAll("+", "");
   }
 }
