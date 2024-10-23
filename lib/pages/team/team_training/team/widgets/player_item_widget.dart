@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2024-10-23 10:31:48
+ * @LastEditTime: 2024-10-23 11:50:36
  */
 /*
  * @Description: 
@@ -13,7 +13,9 @@
 
 import 'dart:math';
 
+import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
+import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -182,6 +184,8 @@ class PlayerItem extends GetView<TeamController> {
 
   ///球员操作
   Widget _playerOperation() {
+    NbaPlayerInfosPlayerBaseInfoList palyer =
+        Utils.getPlayBaseInfo(item.playerId);
     return Row(
       children: [
         6.hGap,
@@ -191,7 +195,7 @@ class PlayerItem extends GetView<TeamController> {
             SizedBox(
               width: 90.w,
               child: Text(
-                "Player Name",
+                palyer.name,
                 style: 16.w7(height: 1, color: AppColors.c262626),
               ),
             ),

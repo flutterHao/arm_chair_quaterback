@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-21 20:20:49
- * @LastEditTime: 2024-10-23 11:42:16
+ * @LastEditTime: 2024-10-23 11:46:38
  */
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
@@ -88,7 +88,7 @@ class Utils {
   }
 
   ///金额格式化
-  static String formatMoney(amount) {
+  static String formatMoney(num amount) {
     // amount = 123456789;
     amount *= 1000;
     if (amount >= 1e12) {
@@ -104,7 +104,7 @@ class Utils {
     }
   }
 
-  static String formatToThreeSignificantDigits(double value) {
+  static String formatToThreeSignificantDigits(num value) {
     // 使用科学记数法保留三位有效数字
     String exponential = value.toStringAsExponential(2);
     // 将科学记数法转换回普通数字
