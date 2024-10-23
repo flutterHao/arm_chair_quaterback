@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 21:19:02
- * @LastEditTime: 2024-10-23 10:16:06
+ * @LastEditTime: 2024-10-23 16:53:35
  */
 /*
  * @Description: 
@@ -26,21 +26,19 @@ class MainPlayerList extends GetView<TeamController> {
     var list = controller.myTeamEntity.teamPlayers
         .where((e) => e.position > 0)
         .toList();
-    return GetBuilder<TeamController>(builder: (_) {
-      return SizedBox(
-        // width: 360.w,
-        child: ListView.separated(
-          padding: EdgeInsets.symmetric(vertical: 10.w),
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return PlayerItem(item: list[index], isMain: true);
-          },
-          separatorBuilder: (context, index) => 9.vGap,
-          itemCount: list.length,
-        ),
-      );
-    });
+    return SizedBox(
+      // width: 360.w,
+      child: ListView.separated(
+        padding: EdgeInsets.symmetric(vertical: 10.w),
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemBuilder: (context, index) {
+          return PlayerItem(item: list[index]);
+        },
+        separatorBuilder: (context, index) => 9.vGap,
+        itemCount: list.length,
+      ),
+    );
   }
 }
 
@@ -59,7 +57,7 @@ class SubPlayerList extends GetView<TeamController> {
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemBuilder: (context, index) {
-          return PlayerItem(item:list[index] , isMain: false);
+          return PlayerItem(item: list[index]);
         },
         separatorBuilder: (context, index) => 9.vGap,
         itemCount: list.length,

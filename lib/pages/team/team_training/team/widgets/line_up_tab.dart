@@ -30,37 +30,76 @@ class LineUpTab extends GetView<TeamController> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<TeamController>(
-        id: "lineUp",
-        builder: (context) {
-          return SingleChildScrollView(
-            child: Column(
-              children: [
-                12.vGap,
+    return GetBuilder<TeamController>(builder: (_) {
+      return SingleChildScrollView(
+        child: Column(
+          children: [
+            12.vGap,
 
-                ///头部卡片
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _blackContainer(
-                        width: 70.w,
-                        child: Column(
+            ///头部卡片
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _blackContainer(
+                    width: 70.w,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "${controller.myTeamEntity.oVR}",
+                          style: 19.w7(color: AppColors.cF2F2F2, height: 1),
+                        ),
+                        22.vGap,
+                        Text(
+                          "SCORE",
+                          style: 12.w4(height: 1, color: AppColors.c666666),
+                        ),
+                      ],
+                    )),
+                4.hGap,
+                _blackContainer(
+                  width: 109.w,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "${controller.myTeamEntity.oVR}",
-                              style: 19.w7(color: AppColors.cF2F2F2, height: 1),
-                            ),
-                            22.vGap,
+                                Utils.formatMoney(
+                                    controller.myTeamEntity.salary),
+                                style:
+                                    19.w4(color: AppColors.cF2F2F2, height: 1)),
+                            SizedBox(height: 4.h),
                             Text(
-                              "OVR",
-                              style: 12.w4(height: 1, color: AppColors.c666666),
-                            ),
-                          ],
-                        )),
-                    4.hGap,
-                    _blackContainer(
-                      width: 109.w,
+                                "/${Utils.formatMoney(controller.myTeamEntity.salaryCap)}",
+                                style:
+                                    10.w4(color: AppColors.cF2F2F2, height: 1)),
+                          ]),
+                      SizedBox(height: 6.h),
+                      CustomLinearProgressBar(
+                          width: 91.w,
+                          progress: controller.myTeamEntity.salary /
+                              controller.myTeamEntity.salaryCap),
+                      12.vGap,
+                      Text(
+                        "SALARY",
+                        style: 12.w4(height: 1, color: AppColors.c666666),
+                      ),
+                    ],
+                  ),
+                ),
+                4.hGap,
+                InkWell(
+                  onTap: () {
+                    showDialog(
+                        context: Get.context!,
+                        builder: (context) {
+                          return const RecoverDialog();
+                        });
+                  },
+                  child: _blackContainer(
+                      width: 156.w,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -68,133 +107,95 @@ class LineUpTab extends GetView<TeamController> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                    Utils.formatMoney(
-                                        controller.myTeamEntity.salary),
+                                    "${(controller.myTeamEntity.powerP * 100 / 120).toStringAsFixed(0)}%",
                                     style: 19.w4(
                                         color: AppColors.cF2F2F2, height: 1)),
-                                SizedBox(height: 4.h),
-                                Text(
-                                    "/${Utils.formatMoney(controller.myTeamEntity.salaryCap)}",
+                                4.hGap,
+                                Text("Team Rest ",
                                     style: 10.w4(
                                         color: AppColors.cF2F2F2, height: 1)),
+                                1.hGap,
+                                Obx(() {
+                                  return Text(controller.remainString.value,
+                                      style: 10.w4(
+                                          color: AppColors.c10A86A, height: 1));
+                                }),
                               ]),
                           SizedBox(height: 6.h),
-                          CustomLinearProgressBar(width: 91.w, progress: 0.8),
-                          12.vGap,
-                          Text(
-                            "SALARY",
-                            style: 12.w4(height: 1, color: AppColors.c666666),
+                          CustomLinearProgressBar(
+                            width: 138.w,
+                            progress: controller.myTeamEntity.powerP / 120,
+                            progressColor: controller.getProgressColor(
+                                controller.myTeamEntity.powerP / 120),
                           ),
-                        ],
-                      ),
-                    ),
-                    4.hGap,
-                    InkWell(
-                      onTap: () {
-                        showDialog(
-                            context: Get.context!,
-                            builder: (context) {
-                              return const RecoverDialog();
-                            });
-                      },
-                      child: _blackContainer(
-                          width: 156.w,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          SizedBox(height: 5.h),
+                          Row(
                             children: [
-                              Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text("${controller.myTeamEntity.powerP}%",
-                                        style: 19.w4(
-                                            color: AppColors.cF2F2F2,
-                                            height: 1)),
-                                    4.hGap,
-                                    Text("Team Rest ",
-                                        style: 10.w4(
-                                            color: AppColors.cF2F2F2,
-                                            height: 1)),
-                                    1.hGap,
-                                    Obx(() {
-                                      return Text(controller.remainString.value,
-                                          style: 10.w4(
-                                              color: AppColors.c10A86A,
-                                              height: 1));
-                                    }),
-                                  ]),
-                              SizedBox(height: 6.h),
-                              CustomLinearProgressBar(
-                                width: 138.w,
-                                progress: controller.myTeamEntity.powerP / 100,
-                                progressColor: controller.getProgressColor(
-                                    controller.myTeamEntity.powerP),
+                              Expanded(
+                                child: Text(
+                                  "TEAM condition",
+                                  style: 12
+                                      .w4(height: 1, color: AppColors.c666666),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
-                              SizedBox(height: 5.h),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      "TEAM condition",
-                                      style: 12.w4(
-                                          height: 1, color: AppColors.c666666),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                  8.hGap,
-                                  BorderContainer(
-                                    height: 22.w,
-                                    width: 22.w,
-                                    borderColor: AppColors.cB3B3B3,
-                                    child: IconWidget(
-                                      iconWidth: 11.w,
-                                      icon: Assets.uiIconPlusPng,
-                                    ),
-                                  ),
-                                ],
-                              )
+                              8.hGap,
+                              BorderContainer(
+                                height: 22.w,
+                                width: 22.w,
+                                borderColor: AppColors.cB3B3B3,
+                                child: IconWidget(
+                                  iconWidth: 11.w,
+                                  icon: Assets.uiIconPlusPng,
+                                ),
+                              ),
                             ],
-                          )),
-                    )
-                  ],
-                ),
-                SizedBox(height: 25.h),
-
-                ///球员列表
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    16.hGap,
-                    Text(
-                      "Main",
-                      style: 19.w7(color: AppColors.cF1F1F1),
-                    ),
-                    8.hGap,
-                    Text(
-                      "expend more stamina",
-                      style: 10.w7(color: AppColors.cB3B3B3),
-                    ),
-                  ],
-                ),
-                const MainPlayerList(),
-                8.vGap,
-                Row(
-                  children: [
-                    16.hGap,
-                    Text(
-                      "Substitute",
-                      style: 19.w7(color: AppColors.cF1F1F1),
-                    ),
-                    8.hGap,
-                    Text(
-                      "expend less stamina",
-                      style: 10.w7(color: AppColors.cB3B3B3),
-                    ),
-                  ],
-                ),
-                const SubPlayerList(),
+                          )
+                        ],
+                      )),
+                )
               ],
             ),
-          );
-        });
+            SizedBox(height: 25.h),
+
+            ///球员列表
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                16.hGap,
+                Text(
+                  "Main",
+                  style: 19.w7(color: AppColors.cF1F1F1),
+                ),
+                8.hGap,
+                Text(
+                  "expend more stamina",
+                  style: 10.w7(color: AppColors.cB3B3B3),
+                ),
+              ],
+            ),
+            // ignore: prefer_const_constructors
+            MainPlayerList(),
+            8.vGap,
+            Row(
+              children: [
+                16.hGap,
+                Text(
+                  "Substitute",
+                  style: 19.w7(color: AppColors.cF1F1F1),
+                ),
+                8.hGap,
+                Text(
+                  "expend less stamina",
+                  style: 10.w7(color: AppColors.cB3B3B3),
+                ),
+              ],
+            ),
+            // ignore: prefer_const_constructors
+            SubPlayerList(),
+          ],
+        ),
+      );
+    });
   }
 }

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 20:30:20
- * @LastEditTime: 2024-10-16 16:24:20
+ * @LastEditTime: 2024-10-23 16:20:38
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +18,7 @@ class CustomLinearProgressBar extends StatelessWidget {
   const CustomLinearProgressBar({
     super.key,
     required this.progress,
-    this.width = double.infinity, // 默认填充父容器的宽度
+    required this.width, // 默认填充父容器的宽度
     this.height, // 默认高度
     this.backgroundColor, // 默认背景颜色
     this.progressColor, // 默认进度条颜色
@@ -26,7 +26,7 @@ class CustomLinearProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double p = progress > 1 ? 1 : progress;
+    double p = progress > 1 ? 1.0 : progress;
     return SizedBox(
       height: height ?? 4.w,
       width: width,

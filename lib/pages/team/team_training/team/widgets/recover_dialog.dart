@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-29 16:06:50
- * @LastEditTime: 2024-09-29 18:18:36
+ * @LastEditTime: 2024-10-23 17:33:56
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -61,7 +61,7 @@ class RecoverDialog extends GetView<TeamController> {
           ],
         ),
         onTap: () {
-          controller.isRecovering.value = false;
+          controller.recoverPower(type: 2);
           controller.update();
         });
   }

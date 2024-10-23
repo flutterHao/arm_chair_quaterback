@@ -2,13 +2,15 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-14 17:25:31
- * @LastEditTime: 2024-10-22 16:11:33
+ * @LastEditTime: 2024-10-23 17:10:21
  */
 import 'package:arm_chair_quaterback/common/entities/my_team_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/train_task_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis.dart';
 import 'package:arm_chair_quaterback/common/net/http.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/widgets/player.dart';
 
 class TeamApi {
   ///获取球员训练信息
@@ -42,5 +44,15 @@ class TeamApi {
     var list = await HttpUtil().post(Api.cTrainDefine);
     Map<String, dynamic> map = list.length > 0 ? list[0] : {};
     return map;
+  }
+
+  static Future<List<TeamPlayerInfoEntity>> getTeamPlayers()async{
+   List list= await HttpUtil().post(Api.getTeamPlayers);
+   return list.map((e) => TeamPlayerInfoEntity.fromJson(e)).toList();
+  }
+
+  static Future<MyTeamEntity>recoverPower({int type=1,String? uuid}) async{
+    var json= await HttpUtil().post(Api.replyPower,data: {"type":type,"uuid":uuid});
+    return MyTeamEntity.fromJson(json);
   }
 }

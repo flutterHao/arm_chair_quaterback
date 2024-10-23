@@ -5,6 +5,7 @@ import 'package:arm_chair_quaterback/common/entities/my_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/line_up_tab.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/player_bag_tab.dart';
@@ -18,18 +19,18 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   RxInt current = 0.obs;
   // double turns = 0;
   final List<String> tabs = ["Line-up", "Player bag"];
-  final List<Widget> pages = const [
+  final List<Widget> pages = [
     LineUpTab(),
     PlayerBagTab(),
   ];
-  RxBool isRecovering = false.obs;
+  // RxBool isRecovering = false.obs;
   RxBool showThirdCard = true.obs;
 
   MyTeamEntity myTeamEntity = MyTeamEntity();
   List<TeamPlayerInfoEntity> myBagList = [];
   late Timer _timer;
   late int _recoverSeconds;
-  RxString remainString = "00:00:00".obs;
+  RxString remainString = "00:00".obs;
 
   /// 在 widget 内存中分配后立即调用。
   @override
@@ -58,14 +59,36 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
     _timer.cancel();
   }
 
-  void getMyTeamPlayer() {
-    int teamId =
-        Get.find<HomeController>().userEntiry.teamLoginInfo!.team!.teamId ?? 0;
+  void getMyTeamPlayer() async {
+    if (HomeController.to.userEntiry.teamLoginInfo == null) {
+      await HomeController.to.refreshUserEntity();
+    }
+    int teamId = HomeController.to.userEntiry.teamLoginInfo!.team!.teamId ?? 0;
     TeamApi.getMyTeamPlayer(teamId).then((v) {
       myTeamEntity = v;
+      recoverTimeAndCountDown();
       var homeCtrl = Get.find<HomeController>();
       myBagList = List.from(homeCtrl.userEntiry.teamLoginInfo!.teamPlayerList!);
-      recoverTimeAndCountDown();
+      Log.d(
+          "上阵队伍: ${myTeamEntity.teamPlayers.map((e) => e.playerId).toList()}");
+      Log.d("所有队伍: ${myBagList.map((e) => e.playerId).toList()}");
+      update();
+    });
+  }
+
+  void recoverPower({int type = 1, String? uuid}) {
+    TeamApi.recoverPower(type: type, uuid: uuid).then((v) {
+      myTeamEntity.powerReplyTime = v.powerReplyTime;
+      if (type == 1) {
+        for (var e in myTeamEntity.teamPlayers) {
+          if (e.uuid == uuid) {
+            int pw = v.teamPlayers.firstWhere((e) => e.uuid == uuid).power;
+            e.power = pw;
+          }
+        }
+      } else {
+        myTeamEntity = v;
+      }
       update();
     });
   }
@@ -82,11 +105,11 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
     _recoverSeconds = recoverTime.difference(DateTime.now()).inSeconds;
     _timer = Timer.periodic(const Duration(seconds: 1), (v) async {
       _recoverSeconds--;
-      final hours = _recoverSeconds ~/ 3600;
-      final minutes = (_recoverSeconds % 3600) ~/ 60;
+      // final hours = _recoverSeconds ~/ 3600;
+      final minutes = (_recoverSeconds) ~/ 60;
       final remainingSeconds = _recoverSeconds % 60;
       remainString.value =
-          '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
+          '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
       if (_recoverSeconds == 0) {
         _timer.cancel();
       }

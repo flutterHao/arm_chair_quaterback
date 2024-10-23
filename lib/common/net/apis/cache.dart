@@ -123,12 +123,11 @@ class CacheApi {
   static List<StarUpDefineEntity>? _starUpDefines;
   static List<GradeInStarDefineEntity>? _gradeInStars;
 
-
   static Future<void> init() async {
     await Future.wait([
       getNBATeamDefine(),
       getNBAPlayerInfo(),
-      getNewsDefine(),
+      // getNewsDefine(),
       getPropDefine(),
       getGameRankAwardRule(),
     ]).then((v) {
@@ -205,7 +204,8 @@ class CacheApi {
   static Future<List<GradeInStarDefineEntity>> getGradeInStarDefine() async {
     if (_gradeInStars == null) {
       List json = await httpUtil.post(Api.cGradeInStarDefine);
-      _gradeInStars = json.map((e) => GradeInStarDefineEntity.fromJson(e)).toList();
+      _gradeInStars =
+          json.map((e) => GradeInStarDefineEntity.fromJson(e)).toList();
     }
     return _gradeInStars!;
   }

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-06 15:16:54
- * @LastEditTime: 2024-10-19 14:59:08
+ * @LastEditTime: 2024-10-23 15:42:49
  */
 class Api {
   /// base
@@ -17,7 +17,6 @@ class Api {
   static const String visitorLogin = "$API_BASE_PATH/team/visitorLogin";
   static const String getTeamSimple = "$API_BASE_PATH/team/getTeamSimple";
   static const String getTeamLoginInfo = "$API_BASE_PATH/team/getTeamLoginInfo";
-
 
   //NBANews
   static const String getNewsList = "$API_BASE_PATH/NBANews/getNBANews";
@@ -88,11 +87,12 @@ class Api {
       "$API_BASE_PATH/TeamPlayer/getAllTeamPlayersByUpStar";
   static const String getAllTeamPlayerByTrend =
       "$API_BASE_PATH/TeamPlayer/getAllTeamPlayerByTrend";
+  static const String replyPower = "$API_BASE_PATH/TeamPlayer/replyPower";
+  static const String getTeamPlayers =
+      "$API_BASE_PATH/TeamPlayer/getTeamPlayers";
 
   ///trade
   static const String getTradeInfo = "$API_BASE_PATH/Trade/getTradeInfo";
   static const String buyPlayer = "$API_BASE_PATH/Trade/buyPlayer";
   static const String sellPlayer = "$API_BASE_PATH/Trade/sellPlayer";
-
-
 }

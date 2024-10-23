@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2024-10-23 11:50:36
+ * @LastEditTime: 2024-10-23 17:31:54
  */
 /*
  * @Description: 
@@ -11,11 +11,8 @@
  * @LastEditTime: 2024-09-29 18:59:56
  */
 
-import 'dart:math';
-
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
-import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -34,11 +31,10 @@ class PlayerItem extends GetView<TeamController> {
   const PlayerItem({
     super.key,
     required this.item,
-    required this.isMain,
     this.isBag = false,
   });
 
-  final bool isMain;
+  // final bool isMain;
   final TeamPlayerInfoEntity item;
   final bool isBag;
 
@@ -47,7 +43,7 @@ class PlayerItem extends GetView<TeamController> {
     return Positioned(
       left: 0,
       child: Container(
-        color: isMain ? AppColors.c3B93FF : AppColors.c666666,
+        color: item.position > 0 ? AppColors.c3B93FF : AppColors.c666666,
         height: 84.w,
         width: 32.w,
         alignment: Alignment.centerLeft,
@@ -56,7 +52,7 @@ class PlayerItem extends GetView<TeamController> {
           child: Text(
             Utils.getPosition(item.position),
             style: 21.w7(
-              color: isMain ? AppColors.c2170D2 : AppColors.c323232,
+              color: item.position > 0 ? AppColors.c2170D2 : AppColors.c323232,
               height: 1,
             ),
           ),
@@ -100,7 +96,6 @@ class PlayerItem extends GetView<TeamController> {
 
   ///球员状态
   Widget _playerStatus() {
-    double progress = Random().nextDouble();
     return Row(
       children: [
         ShadowContainer(
@@ -166,13 +161,14 @@ class PlayerItem extends GetView<TeamController> {
                 margin: EdgeInsets.symmetric(horizontal: 5.w),
                 child: CustomLinearProgressBar(
                   height: 4.w,
-                  progress: item.power / 100,
-                  progressColor: controller.getProgressColor(progress),
+                  width: 52.w,
+                  progress: item.power / 120,
+                  progressColor: controller.getProgressColor(item.power / 120),
                   backgroundColor: Colors.black12,
                 ),
               ),
               Text(
-                "${item.power}%",
+                "${(item.power*100 / 120).toStringAsFixed(0)}%",
                 style: 10.w7(color: AppColors.c000000, height: 1),
               ),
             ],
@@ -193,10 +189,13 @@ class PlayerItem extends GetView<TeamController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              width: 90.w,
+              width: 100.w,
               child: Text(
-                palyer.name,
-                style: 16.w7(height: 1, color: AppColors.c262626),
+                palyer.ename,
+                style: 16.w7(
+                    height: 1,
+                    color: AppColors.c262626,
+                    overflow: TextOverflow.ellipsis),
               ),
             ),
             7.vGap,
@@ -211,7 +210,7 @@ class PlayerItem extends GetView<TeamController> {
                         borderRadius: BorderRadius.circular(2.w),
                         color: AppColors.c666666),
                     child: Text(
-                      "SG",
+                      palyer.position,
                       style: 10.w7(color: AppColors.cFFFFFF, height: 1),
                     )),
                 6.hGap,
@@ -224,7 +223,7 @@ class PlayerItem extends GetView<TeamController> {
             ),
           ],
         ),
-        22.hGap,
+        12.hGap,
         // Obx(
         //   () => _NumChangeWidget(
         //     num: Random().nextInt(3),
@@ -256,7 +255,9 @@ class PlayerItem extends GetView<TeamController> {
 
   Widget _recover() {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        controller.recoverPower(uuid: item.uuid);
+      },
       child: Container(
         width: 92.w,
         height: 32.w,
@@ -335,7 +336,7 @@ class PlayerItem extends GetView<TeamController> {
       width: 360.w,
       child: Stack(
         children: [
-          if (!isBag) _playerPosition(),
+          _playerPosition(),
           _playCard()
           // (item > 5 && !isMain && !isBag) ? _addPlayer() : _playCard(),
         ],
