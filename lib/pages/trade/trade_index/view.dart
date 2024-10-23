@@ -267,7 +267,7 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                                                                 .start,
                                                         children: [
                                                           Text(
-                                                            "${_getTodayCost()}",
+                                                            Utils.formatMoney(_getTodayCost()),
                                                             style: 19.w7(
                                                                 color: AppColors
                                                                     .cD9D9D9,
@@ -493,7 +493,7 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                                                             ),
                                                             3.hGap,
                                                             Text(
-                                                              "${controller.tradeInfoEntity?.totalSalary.getTotal().toStringAsFixed(1)}K",
+                                                              Utils.formatMoney(controller.tradeInfoEntity?.totalSalary.getTotal()??0),
                                                               style: 19.w7(
                                                                   color: AppColors
                                                                       .cD9D9D9,
@@ -601,13 +601,13 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                       player.basicMarketPrice;
                   var marketPrice =
                       trendPlayer.marketPrice ?? player.marketPrice;
-                  bool isGood = basicMarketPrice > marketPrice;
+                  bool isGood = basicMarketPrice < marketPrice;
                   double percent = (basicMarketPrice - marketPrice).abs() /
                       basicMarketPrice *
                       100;
                   bool isSpecial = false; //todo 接口未定义
                   var color =
-                      isGood && isBuy ? AppColors.cE72646 : AppColors.c10A86A;
+                      isGood ? AppColors.c10A86A : AppColors.cE72646;
                   Widget child = Container(
                     margin: EdgeInsets.only(
                         left: 16.w,
@@ -694,14 +694,7 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                                                 barRods: [
                                                   BarChartRodData(
                                                       fromY: pre - basic,
-                                                      toY: current == pre
-                                                          ? (pre -
-                                                              basic +
-                                                              (Random()
-                                                                      .nextBool()
-                                                                  ? 1
-                                                                  : -1))
-                                                          : current - basic,
+                                                      toY: current - basic,
                                                       borderRadius:
                                                           BorderRadius.all(
                                                               Radius.circular(
@@ -747,7 +740,7 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                                     icon: Assets.uiMoney_02Png),
                                 3.hGap,
                                 Text(
-                                  "${marketPrice}K",
+                                  Utils.formatMoney(marketPrice),
                                   style: 16.w7(color: color, height: 1),
                                 ),
                                 4.hGap,
@@ -776,7 +769,7 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                                                   BorderRadius.circular(5.w)),
                                           alignment: Alignment.center,
                                           child: Text(
-                                            "${isGood && isBuy ? "-" : "+"}${percent.toStringAsFixed(0)}%",
+                                            "${isGood ? "+" : "-"}${percent.toStringAsFixed(0)}%",
                                             style: 12.w4(
                                                 color: AppColors.cFFFFFF,
                                                 height: 1),

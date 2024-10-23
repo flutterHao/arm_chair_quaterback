@@ -74,7 +74,7 @@ class UpStarSuccess extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "${gameController.uuidPlayerInfo?.getPreBreakThroughGrade()}",
+                        "${gameController.uuidPlayerInfo?.getBreakThroughGrade()}",
                         style: 56.w7(color: AppColors.c262626, height: 1),
                       ),
                       Flexible(
@@ -85,7 +85,7 @@ class UpStarSuccess extends StatelessWidget {
                         rotateAngle: 90,
                       )),
                       Text(
-                        "${gameController.uuidPlayerInfo?.getBreakThroughGrade()}",
+                        "${gameController.uuidPlayerInfo?.getNextBreakThroughGrade()}",
                         style: 56.w7(color: AppColors.c262626),
                       )
                     ],

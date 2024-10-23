@@ -30,7 +30,6 @@ class UserInfoBar extends StatelessWidget {
         builder: (controller) {
           TeamLoginInfo info =
               controller.userEntiry.teamLoginInfo ?? TeamLoginInfo();
-          log('info:${info.toJson()}');
           return Container(
             padding: EdgeInsets.only(left: 14.w, right: 14.w, bottom: 11.w),
             decoration: BoxDecoration(
@@ -96,7 +95,6 @@ class MoneyAndCoinWidget extends StatelessWidget {
               controller.userEntiry.teamLoginInfo ?? TeamLoginInfo();
           var list = info.teamPropList
                   ?.where((e) => e.propId == 102 || e.propId == 103).toList();
-          log('info:22222:${info.toJson()}');
           return Container(
             width: 80.w,
             height: 36.w,

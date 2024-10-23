@@ -3,7 +3,7 @@ import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 
 NewsDefineEntity $NewsDefineEntityFromJson(Map<String, dynamic> json) {
   final NewsDefineEntity newsDefineEntity = NewsDefineEntity();
-  final num? iD = jsonConvert.convert<num>(json['ID']);
+  final int? iD = jsonConvert.convert<int>(json['ID']);
   if (iD != null) {
     newsDefineEntity.iD = iD;
   }
@@ -11,34 +11,39 @@ NewsDefineEntity $NewsDefineEntityFromJson(Map<String, dynamic> json) {
   if (betCost != null) {
     newsDefineEntity.betCost = betCost;
   }
-  final num? betNearDouble = jsonConvert.convert<num>(json['betNearDouble']);
+  final double? betNearDouble = jsonConvert.convert<double>(
+      json['betNearDouble']);
   if (betNearDouble != null) {
     newsDefineEntity.betNearDouble = betNearDouble;
   }
-  final num? betOddsPoint = jsonConvert.convert<num>(json['betOddsPoint']);
+  final double? betOddsPoint = jsonConvert.convert<double>(
+      json['betOddsPoint']);
   if (betOddsPoint != null) {
     newsDefineEntity.betOddsPoint = betOddsPoint;
   }
-  final List<num>? betPlayerNum = (json['betPlayerNum'] as List<dynamic>?)?.map(
-          (e) => jsonConvert.convert<num>(e) as num).toList();
+  final List<double>? betPlayerNum = (json['betPlayerNum'] as List<dynamic>?)
+      ?.map(
+          (e) => jsonConvert.convert<double>(e) as double)
+      .toList();
   if (betPlayerNum != null) {
     newsDefineEntity.betPlayerNum = betPlayerNum;
   }
-  final num? betRewardRank = jsonConvert.convert<num>(json['betRewardRank']);
+  final double? betRewardRank = jsonConvert.convert<double>(
+      json['betRewardRank']);
   if (betRewardRank != null) {
     newsDefineEntity.betRewardRank = betRewardRank;
   }
-  final num? betSuccessPoint = jsonConvert.convert<num>(
+  final double? betSuccessPoint = jsonConvert.convert<double>(
       json['betSuccessPoint']);
   if (betSuccessPoint != null) {
     newsDefineEntity.betSuccessPoint = betSuccessPoint;
   }
-  final num? betSuccessTimes = jsonConvert.convert<num>(
+  final double? betSuccessTimes = jsonConvert.convert<double>(
       json['betSuccessTimes']);
   if (betSuccessTimes != null) {
     newsDefineEntity.betSuccessTimes = betSuccessTimes;
   }
-  final num? betSuccessTimesPoint = jsonConvert.convert<num>(
+  final double? betSuccessTimesPoint = jsonConvert.convert<double>(
       json['betSuccessTimesPoint']);
   if (betSuccessTimesPoint != null) {
     newsDefineEntity.betSuccessTimesPoint = betSuccessTimesPoint;
@@ -55,63 +60,70 @@ NewsDefineEntity $NewsDefineEntityFromJson(Map<String, dynamic> json) {
   if (btRankOpen != null) {
     newsDefineEntity.btRankOpen = btRankOpen;
   }
-  final num? dailyCoins = jsonConvert.convert<num>(json['dailyCoins']);
+  final double? dailyCoins = jsonConvert.convert<double>(json['dailyCoins']);
   if (dailyCoins != null) {
     newsDefineEntity.dailyCoins = dailyCoins;
   }
-  final List<num>? flexBet3 = (json['flexBet3'] as List<dynamic>?)?.map(
-          (e) => jsonConvert.convert<num>(e) as num).toList();
+  final List<double>? flexBet3 = (json['flexBet3'] as List<dynamic>?)?.map(
+          (e) => jsonConvert.convert<double>(e) as double).toList();
   if (flexBet3 != null) {
     newsDefineEntity.flexBet3 = flexBet3;
   }
-  final List<num>? flexBet4 = (json['flexBet4'] as List<dynamic>?)?.map(
-          (e) => jsonConvert.convert<num>(e) as num).toList();
+  final List<double>? flexBet4 = (json['flexBet4'] as List<dynamic>?)?.map(
+          (e) => jsonConvert.convert<double>(e) as double).toList();
   if (flexBet4 != null) {
     newsDefineEntity.flexBet4 = flexBet4;
   }
-  final List<num>? flexBet5 = (json['flexBet5'] as List<dynamic>?)?.map(
-          (e) => jsonConvert.convert<num>(e) as num).toList();
+  final List<double>? flexBet5 = (json['flexBet5'] as List<dynamic>?)?.map(
+          (e) => jsonConvert.convert<double>(e) as double).toList();
   if (flexBet5 != null) {
     newsDefineEntity.flexBet5 = flexBet5;
   }
-  final List<num>? flexBet6 = (json['flexBet6'] as List<dynamic>?)?.map(
-          (e) => jsonConvert.convert<num>(e) as num).toList();
+  final List<double>? flexBet6 = (json['flexBet6'] as List<dynamic>?)?.map(
+          (e) => jsonConvert.convert<double>(e) as double).toList();
   if (flexBet6 != null) {
     newsDefineEntity.flexBet6 = flexBet6;
   }
-  final num? gamePlay = jsonConvert.convert<num>(json['gamePlay']);
+  final double? gamePlay = jsonConvert.convert<double>(json['gamePlay']);
   if (gamePlay != null) {
     newsDefineEntity.gamePlay = gamePlay;
   }
-  final num? gamePlayRecent = jsonConvert.convert<num>(json['gamePlayRecent']);
+  final double? gamePlayRecent = jsonConvert.convert<double>(
+      json['gamePlayRecent']);
   if (gamePlayRecent != null) {
     newsDefineEntity.gamePlayRecent = gamePlayRecent;
   }
-  final List<num>? newsBaseRead = (json['newsBaseRead'] as List<dynamic>?)?.map(
-          (e) => jsonConvert.convert<num>(e) as num).toList();
+  final List<double>? newsBaseRead = (json['newsBaseRead'] as List<dynamic>?)
+      ?.map(
+          (e) => jsonConvert.convert<double>(e) as double)
+      .toList();
   if (newsBaseRead != null) {
     newsDefineEntity.newsBaseRead = newsBaseRead;
   }
-  final num? newsCreatePickMax = jsonConvert.convert<num>(
+  final double? newsCreatePickMax = jsonConvert.convert<double>(
       json['newsCreatePickMax']);
   if (newsCreatePickMax != null) {
     newsDefineEntity.newsCreatePickMax = newsCreatePickMax;
   }
-  final num? newsCreatePlayerMax = jsonConvert.convert<num>(
+  final double? newsCreatePlayerMax = jsonConvert.convert<double>(
       json['newsCreatePlayerMax']);
   if (newsCreatePlayerMax != null) {
     newsDefineEntity.newsCreatePlayerMax = newsCreatePlayerMax;
   }
-  final num? newsPickOdds = jsonConvert.convert<num>(json['newsPickOdds']);
+  final double? newsPickOdds = jsonConvert.convert<double>(
+      json['newsPickOdds']);
   if (newsPickOdds != null) {
     newsDefineEntity.newsPickOdds = newsPickOdds;
   }
-  final List<num>? newsRefresh = (json['newsRefresh'] as List<dynamic>?)?.map(
-          (e) => jsonConvert.convert<num>(e) as num).toList();
+  final List<double>? newsRefresh = (json['newsRefresh'] as List<dynamic>?)
+      ?.map(
+          (e) => jsonConvert.convert<double>(e) as double)
+      .toList();
   if (newsRefresh != null) {
     newsDefineEntity.newsRefresh = newsRefresh;
   }
-  final num? newsRefreshNum = jsonConvert.convert<num>(json['newsRefreshNum']);
+  final double? newsRefreshNum = jsonConvert.convert<double>(
+      json['newsRefreshNum']);
   if (newsRefreshNum != null) {
     newsDefineEntity.newsRefreshNum = newsRefreshNum;
   }
@@ -120,20 +132,24 @@ NewsDefineEntity $NewsDefineEntityFromJson(Map<String, dynamic> json) {
   if (newsReviewOpenNum != null) {
     newsDefineEntity.newsReviewOpenNum = newsReviewOpenNum;
   }
-  final num? pfBetData = jsonConvert.convert<num>(json['pfBetData']);
+  final double? pfBetData = jsonConvert.convert<double>(json['pfBetData']);
   if (pfBetData != null) {
     newsDefineEntity.pfBetData = pfBetData;
   }
-  final List<num>? powerBetWin = (json['powerBetWin'] as List<dynamic>?)?.map(
-          (e) => jsonConvert.convert<num>(e) as num).toList();
+  final List<double>? powerBetWin = (json['powerBetWin'] as List<dynamic>?)
+      ?.map(
+          (e) => jsonConvert.convert<double>(e) as double)
+      .toList();
   if (powerBetWin != null) {
     newsDefineEntity.powerBetWin = powerBetWin;
   }
-  final num? professorMax = jsonConvert.convert<num>(json['professorMax']);
+  final double? professorMax = jsonConvert.convert<double>(
+      json['professorMax']);
   if (professorMax != null) {
     newsDefineEntity.professorMax = professorMax;
   }
-  final num? ptsGuessLine = jsonConvert.convert<num>(json['ptsGuessLine']);
+  final double? ptsGuessLine = jsonConvert.convert<double>(
+      json['ptsGuessLine']);
   if (ptsGuessLine != null) {
     newsDefineEntity.ptsGuessLine = ptsGuessLine;
   }
@@ -145,7 +161,8 @@ NewsDefineEntity $NewsDefineEntityFromJson(Map<String, dynamic> json) {
   if (sgBetData != null) {
     newsDefineEntity.sgBetData = sgBetData;
   }
-  final num? winCoinPoint = jsonConvert.convert<num>(json['winCoinPoint']);
+  final double? winCoinPoint = jsonConvert.convert<double>(
+      json['winCoinPoint']);
   if (winCoinPoint != null) {
     newsDefineEntity.winCoinPoint = winCoinPoint;
   }
@@ -191,38 +208,38 @@ Map<String, dynamic> $NewsDefineEntityToJson(NewsDefineEntity entity) {
 
 extension NewsDefineEntityExtension on NewsDefineEntity {
   NewsDefineEntity copyWith({
-    num? iD,
+    int? iD,
     String? betCost,
-    num? betNearDouble,
-    num? betOddsPoint,
-    List<num>? betPlayerNum,
-    num? betRewardRank,
-    num? betSuccessPoint,
-    num? betSuccessTimes,
-    num? betSuccessTimesPoint,
+    double? betNearDouble,
+    double? betOddsPoint,
+    List<double>? betPlayerNum,
+    double? betRewardRank,
+    double? betSuccessPoint,
+    double? betSuccessTimes,
+    double? betSuccessTimesPoint,
     List<String>? btRankClose,
     List<String>? btRankOpen,
-    num? dailyCoins,
-    List<num>? flexBet3,
-    List<num>? flexBet4,
-    List<num>? flexBet5,
-    List<num>? flexBet6,
-    num? gamePlay,
-    num? gamePlayRecent,
-    List<num>? newsBaseRead,
-    num? newsCreatePickMax,
-    num? newsCreatePlayerMax,
-    num? newsPickOdds,
-    List<num>? newsRefresh,
-    num? newsRefreshNum,
+    double? dailyCoins,
+    List<double>? flexBet3,
+    List<double>? flexBet4,
+    List<double>? flexBet5,
+    List<double>? flexBet6,
+    double? gamePlay,
+    double? gamePlayRecent,
+    List<double>? newsBaseRead,
+    double? newsCreatePickMax,
+    double? newsCreatePlayerMax,
+    double? newsPickOdds,
+    List<double>? newsRefresh,
+    double? newsRefreshNum,
     int? newsReviewOpenNum,
-    num? pfBetData,
-    List<num>? powerBetWin,
-    num? professorMax,
-    num? ptsGuessLine,
+    double? pfBetData,
+    List<double>? powerBetWin,
+    double? professorMax,
+    double? ptsGuessLine,
     double? sfBetData,
     double? sgBetData,
-    num? winCoinPoint,
+    double? winCoinPoint,
   }) {
     return NewsDefineEntity()
       ..iD = iD ?? this.iD
