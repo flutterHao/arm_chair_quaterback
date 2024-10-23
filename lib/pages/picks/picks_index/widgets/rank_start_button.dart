@@ -33,13 +33,13 @@ class RankStartButton extends StatelessWidget {
     return InkWell(
       onTap: () {
         print('InkWellds');
-        Get.dialog(const PicksGuessConfirmDialogV2());
-        // showModalBottomSheet(
-        //     isScrollControlled: true,
-        //     backgroundColor: AppColors.cTransparent,
-        //     context: Get.context!, builder: (context){
-        //   return const PicksGuessConfirmDialogV2();
-        // });
+        // Get.dialog(const PicksGuessConfirmDialogV2());
+        showModalBottomSheet(
+            isScrollControlled: true,
+            backgroundColor: AppColors.cTransparent,
+            context: Get.context!, builder: (context){
+          return const PicksGuessConfirmDialogV2();
+        });
       },
       child: BtnBackground(
         child: Stack(

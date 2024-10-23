@@ -38,7 +38,7 @@ class ReciveRwardPage extends GetView<ReciveRwardController> {
           return Obx(() {
             return Center(
                 child: LoadStatusWidget(
-              text: controller.loadStatusRx.value.desc,
+              loadDataStatus: controller.loadStatusRx.value,
                   onRefreshTap: () => controller.loading(),
             ));
           });

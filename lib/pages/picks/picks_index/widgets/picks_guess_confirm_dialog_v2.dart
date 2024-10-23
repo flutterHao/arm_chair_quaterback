@@ -51,6 +51,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
       if (listener == null) {
         scrollController.position.isScrollingNotifier
             .addListener(listener = () {
+          print('scrollController.position.isScrollingNotifier.value:${scrollController.position.isScrollingNotifier.value}');
           if (scrollController.position.isScrollingNotifier.value) {
             startPixels = scrollController.position.pixels;
           } else {
@@ -83,19 +84,26 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
       print('onVerticalDragUpdate----------1111111');
 
       print('---------:${offsetY.value}');
+      print('height:$height , $maxHeight');
+      print('startPixels: $startPixels , ${scrollController.position.minScrollExtent}');
+      if(height >= maxHeight && startPixels != scrollController.position.minScrollExtent){
+        return;
+      }
       offsetY.value = startY - detail.localPosition.dy;
     }
 
     onVerticalDragCancel() {
       print('onVerticalDragCancel----------1111111');
 
-      height = offsetY.value + height;
+      var _height = offsetY.value + height;
+      height = _height<minHeight?minHeight:_height>maxHeight?maxHeight:_height;
     }
 
     onVerticalDragEnd(detail) {
       print('onVerticalDragEnd----------1111111');
 
-      height = offsetY.value + height;
+      var _height = offsetY.value + height;
+      height = _height<minHeight?minHeight:_height>maxHeight?maxHeight:_height;
     }
     var bottom = _buildBottom(context);
     return SizedBox(
@@ -103,30 +111,30 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
       height: queryData.size.height,
       child: Stack(
         children: [
-          RawGestureDetector(
-            gestures: {
-              CustomTapGestureRecognizer: GestureRecognizerFactoryWithHandlers<
-                  CustomTapGestureRecognizer>(
-                    () => CustomTapGestureRecognizer(),
-                    (HorizontalDragGestureRecognizer detector) {
-                  detector
-                    ..onDown = onVerticalDragDown
-                    ..onStart = onVerticalDragStart
-                    ..onUpdate = onVerticalDragUpdate
-                    ..onEnd = onVerticalDragEnd
-                    ..onCancel = onVerticalDragCancel();
+          Column(
+            children: [
+              Expanded(child: InkWell(
+                onTap: ()=> Navigator.pop(context),
+                child: Container(
+                  color: AppColors.cTransparent,
+                ),
+              )),
+              RawGestureDetector(
+                gestures: {
+                  CustomTapGestureRecognizer: GestureRecognizerFactoryWithHandlers<
+                      CustomTapGestureRecognizer>(
+                        () => CustomTapGestureRecognizer(),
+                        (HorizontalDragGestureRecognizer detector) {
+                      detector
+                        ..onDown = onVerticalDragDown
+                        ..onStart = onVerticalDragStart
+                        ..onUpdate = onVerticalDragUpdate
+                        ..onEnd = onVerticalDragEnd
+                        ..onCancel = onVerticalDragCancel();
+                    },
+                  )
                 },
-              )
-            },
-            child: Column(
-              children: [
-                Expanded(child: InkWell(
-                  onTap: ()=> Navigator.pop(context),
-                  child: Container(
-                    color: AppColors.cTransparent,
-                  ),
-                )),
-                Obx(() {
+                child: Obx(() {
                   var h = height + offsetY.value;
                   h = min(h, maxHeight);
                   h = max(h, minHeight);
@@ -366,32 +374,12 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                         )),
                   );
                 }),
-              ],
-            ),
+              ),
+            ],
           ),
           Positioned(
             bottom: 0,
-            child: GestureDetector(
-              onVerticalDragStart: (detail){
-                print('onVerticalDragStart----------');
-              },
-              onVerticalDragDown: (detail){
-                print('onVerticalDragDown----------');
-              },
-              onVerticalDragEnd: (detail){
-                print('onVerticalDragEnd----------');
-
-              },
-              onVerticalDragCancel: (){
-                print('onVerticalDragCancel----------');
-
-              },
-              onVerticalDragUpdate: (detail){
-                print('onVerticalDragUpdate----------');
-
-              },
-              child: bottom,
-            ),
+            child: bottom,
           )
         ],
       ),

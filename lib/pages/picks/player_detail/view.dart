@@ -78,6 +78,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                               url: Utils.getPlayUrl(
                                   controller.baseInfo?.playerId),
                               width: 100.w,
+                              height: 100.w,
                             ),
                           )),
                       2.vGap,
@@ -112,17 +113,20 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                           "·${controller.teamInfo?.shortEname}")
                                 ])),
                             13.vGap,
-                            if(false)//todo 接口未提供数据
-                            Row(
-                              children: [
-                                _buildPlayerInfoItem("AGE", "23"),
-                                24.hGap,
-                                _buildPlayerInfoItem("HEIGHT", '''5'11"'''),
-                                24.hGap,
-                                _buildPlayerInfoItem("WEIGHT", "217 lbs"),
-                                24.hGap,
-                                _buildPlayerInfoItem("EXP", "5"),
-                              ],
+                            //todo 接口未提供数据,隐藏
+                            Opacity(
+                              opacity: 1,
+                              child: Row(
+                                children: [
+                                  _buildPlayerInfoItem("AGE", "23"),
+                                  24.hGap,
+                                  _buildPlayerInfoItem("HEIGHT", '''5'11"'''),
+                                  24.hGap,
+                                  _buildPlayerInfoItem("WEIGHT", "217 lbs"),
+                                  24.hGap,
+                                  _buildPlayerInfoItem("EXP", "5"),
+                                ],
+                              ),
                             )
                           ],
                         ),
@@ -139,7 +143,6 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                   Container(
                     height: appBarHeight + 66.w,
                     width: double.infinity,
-                    padding: EdgeInsets.only(top: appBarHeight),
                     decoration: BoxDecoration(
                         color: AppColors.cD9D9D9,
                         borderRadius: BorderRadius.vertical(

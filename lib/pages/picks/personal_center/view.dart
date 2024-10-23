@@ -40,7 +40,7 @@ class PersonalCenterPage extends GetView<PersonalCenterController> {
                   ? Center(
                       child: Obx(() {
                         return LoadStatusWidget(
-                            text: controller.loadStatus.value.desc,
+                            loadDataStatus: controller.loadStatus.value,
                             onRefreshTap: controller.getData());
                       }),
                     )

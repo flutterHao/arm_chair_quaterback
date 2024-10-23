@@ -112,7 +112,7 @@ class _TradeIndexPageState extends State<TradeIndexPage>
             return Obx(() {
               var emptyWidget = Center(
                 child: LoadStatusWidget(
-                  text: controller.loadStatus.value.desc,
+                  loadDataStatus: controller.loadStatus.value,
                   onRefreshTap: controller.refreshData,
                 ),
               );

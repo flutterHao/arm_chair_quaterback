@@ -1444,7 +1444,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
             if (controller.loadStatus.value != LoadDataStatus.success) {
               return Center(
                 child: LoadStatusWidget(
-                  text: controller.loadStatus.value.desc,
+                  loadDataStatus: controller.loadStatus.value,
                   onRefreshTap: controller.reloadData,
                 ),
               );
