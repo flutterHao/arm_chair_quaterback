@@ -27,7 +27,8 @@ class PersonalCenterPage extends GetView<PersonalCenterController> {
 
   @override
   Widget build(BuildContext context) {
-    var teamId = (ModalRoute.of(context)?.settings.arguments as Map)["teamId"];
+    var teamId = ((ModalRoute.of(context)?.settings.arguments ?? Get.arguments)
+        as Map)["teamId"];
     return HorizontalDragBackWidget(
       child: GetBuilder<PersonalCenterController>(
         id: PersonalCenterController.idPersonalCenterMain,
@@ -242,7 +243,8 @@ class PersonalCenterPage extends GetView<PersonalCenterController> {
                         ),
                         Expanded(
                           child: NestedScrollView(
-                            headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+                            headerSliverBuilder: (BuildContext context,
+                                bool innerBoxIsScrolled) {
                               return <Widget>[];
                             },
                             body: TabBarView(

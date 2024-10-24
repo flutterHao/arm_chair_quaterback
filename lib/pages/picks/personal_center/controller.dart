@@ -19,9 +19,9 @@ class TeamInfo{
 
 class PersonalCenterController extends GetxController
     with GetSingleTickerProviderStateMixin {
-  PersonalCenterController(this.teamId);
+  PersonalCenterController({this.teamId});
 
-  final int teamId;
+  final int? teamId;
 
 
   List<String> titles = ["Game", "Picks", /*"Comments"*/];
@@ -54,7 +54,7 @@ class PersonalCenterController extends GetxController
   _initGameData(){
     teamPlayers.clear();
     Future.wait([
-      TeamPlayerApi.getTeamPlayerList(teamId),
+      TeamPlayerApi.getTeamPlayerList(teamId??0),
       CacheApi.getNBAPlayerInfo(),
     ]).then((result){
       TeamPlayerListEntity teamPlayerEntity= result[0] as TeamPlayerListEntity;
@@ -71,7 +71,7 @@ class PersonalCenterController extends GetxController
 
   getData() {
     loadStatus.value = LoadDataStatus.loading;
-    PicksApi.getTeamSimple(teamId).then((result){
+    PicksApi.getTeamSimple(teamId??0).then((result){
       loadStatus.value = LoadDataStatus.success;
       teamSimpleEntity = result;
       update([idPersonalCenterMain]);

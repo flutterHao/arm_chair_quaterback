@@ -119,7 +119,6 @@ class _RankPageState extends State<RankPage>
                                                     onTap: () => Get.toNamed(
                                                         RouteNames
                                                             .picksPersonalCenter,
-                                                        id: GlobalNestedKey.PICKS,
                                                         arguments: {
                                                           "teamId": controller
                                                               .rankInfo
@@ -272,7 +271,6 @@ class _RankPageState extends State<RankPage>
                                                     onTap: () => Get.toNamed(
                                                         RouteNames
                                                             .picksPersonalCenter,
-                                                        id: GlobalNestedKey.PICKS,
                                                         arguments: {
                                                           "teamId": controller
                                                               .rankInfo
@@ -424,7 +422,6 @@ class _RankPageState extends State<RankPage>
                                                     onTap: () => Get.toNamed(
                                                         RouteNames
                                                             .picksPersonalCenter,
-                                                        id: GlobalNestedKey.PICKS,
                                                         arguments: {
                                                           "teamId": controller
                                                               .rankInfo
@@ -605,7 +602,6 @@ class _RankPageState extends State<RankPage>
                               ),
                               InkWell(
                                 onTap: () => Get.toNamed(RouteNames.picksPersonalCenter,
-                                    id: GlobalNestedKey.PICKS,
                                     arguments: {
                                       "teamId": Get.find<HomeController>().userEntiry.teamLoginInfo?.team?.teamId
                                     }),
@@ -687,7 +683,6 @@ class _RankPageState extends State<RankPage>
           ),
           InkWell(
             onTap: () => Get.toNamed(RouteNames.picksPersonalCenter,
-                id: GlobalNestedKey.PICKS,
                 arguments: {
                   "teamId": controller.rankInfo.ranks[index].teamId
                 }),

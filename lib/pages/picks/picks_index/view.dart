@@ -79,13 +79,6 @@ class PicksIndex extends StatelessWidget {
                     PlayerDetailPage(
                       arguments: setting.arguments as PlayerDetailPageArguments,
                     ));
-          case RouteNames.picksPersonalCenter:
-            return GetPageRoute(
-                opaque: false,
-                settings: setting,
-                page: () => const PersonalCenterPage(),
-                binding: PersonalCenterBinding(
-                    (setting.arguments as Map)['teamId']));
           case RouteNames.mineMineInfo:
             return GetPageRoute(
                 opaque: false,
@@ -160,7 +153,6 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                             break;
                           case 1:
                             Get.toNamed(RouteNames.picksPersonalCenter,
-                                id: GlobalNestedKey.PICKS,
                                 arguments: {
                                   "teamId": Get
                                       .find<HomeController>()
@@ -408,7 +400,6 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                       return InkWell(
                         onTap: () =>
                             Get.toNamed(RouteNames.picksPersonalCenter,
-                                id: GlobalNestedKey.PICKS,
                                 arguments: {"teamId": item.teamId}),
                         child: Container(
                             alignment: Alignment.centerLeft,
@@ -477,7 +468,6 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                   child: InkWell(
                     onTap: () =>
                         Get.toNamed(RouteNames.picksPersonalCenter,
-                            id: GlobalNestedKey.PICKS,
                             arguments: {
                               "teamId": Get
                                   .find<HomeController>()
