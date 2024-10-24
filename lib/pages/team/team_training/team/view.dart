@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 16:18:58
- * @LastEditTime: 2024-10-22 11:16:44
+ * @LastEditTime: 2024-10-24 16:40:22
  */
 /*
  * @Description: 
@@ -126,19 +126,21 @@ class TeamMenberView extends StatelessWidget {
                 child: Container(
                     // height: 500.h,
                     width: double.infinity,
-                    padding: EdgeInsets.symmetric(vertical: 16.w),
+                    padding: EdgeInsets.only(top: 16.w),
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(16.w),
-                          topRight: Radius.circular(16.w),
-                        ),
-                        gradient: const LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              AppColors.c1A1A1A,
-                              AppColors.c262626,
-                            ])),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(16.w),
+                        topRight: Radius.circular(16.w),
+                      ),
+                      gradient: const LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            // AppColors.c1A1A1A,
+                            AppColors.c262626,
+                            AppColors.c4D4D4D
+                          ]),
+                    ),
                     child: Column(
                       children: [
                         TeamTabbar(),

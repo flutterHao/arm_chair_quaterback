@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 17:29:19
- * @LastEditTime: 2024-10-11 21:25:35
+ * @LastEditTime: 2024-10-24 20:57:27
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:extended_image/extended_image.dart';
@@ -21,6 +21,7 @@ class ImageWidget extends StatelessWidget {
   final Widget? loadingWidget;
   final Widget? errorWidget;
   final Color? color;
+  final Alignment? alignment;
 
   const ImageWidget(
       {super.key,
@@ -32,22 +33,11 @@ class ImageWidget extends StatelessWidget {
       this.fit = BoxFit.cover,
       this.loadingWidget,
       this.errorWidget,
-      this.color});
+      this.color,
+      this.alignment});
 
   @override
   Widget build(BuildContext context) {
-    // if (ObjectUtil.isEmptyString(url)) {
-    //   return const SizedBox();
-    // }
-    // if (!ObjectUtil.isEmptyString(url) && !url.isURL) {
-    //   return ExtendedImage.asset(url,
-    //       fit: fit,
-    //       width: width,
-    //       height: height,
-    //       enableMemoryCache: true,
-    //       clearMemoryCacheWhenDispose: true);
-    // }
-
     Widget error = errorWidget ??
         Container(
           width: width,
@@ -65,6 +55,7 @@ class ImageWidget extends StatelessWidget {
       width: width,
       height: height,
       color: color,
+      alignment: alignment ?? Alignment.center,
       borderRadius: borderRadius,
       shape: BoxShape.rectangle,
       clearMemoryCacheWhenDispose: true,

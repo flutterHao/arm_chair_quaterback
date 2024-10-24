@@ -1,23 +1,24 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/net/address.dart';
-import 'package:arm_chair_quaterback/common/net/http.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/swiper_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
-import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_account/bindings.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_account/view.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_info/bindings.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_info/view.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_setting/bindings.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_setting/view.dart';
-
 import 'package:arm_chair_quaterback/pages/news/new_detail/view.dart';
+import 'package:arm_chair_quaterback/pages/news/new_list/widgets/draft_lottery.dart';
+import 'package:arm_chair_quaterback/pages/news/new_list/widgets/player_dynamics_widget.dart';
+import 'package:arm_chair_quaterback/pages/news/new_list/widgets/regular_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/widgets/team_rank_widget.dart';
+import 'package:arm_chair_quaterback/pages/news/new_list/widgets/trade_infomation_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/bindings.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/stats_view.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/team_view.dart';
@@ -173,65 +174,30 @@ class NewsListPage extends GetView<NewListController> {
             ),
           ),
 
-          /// Text: "Today's express"
-          SliverPadding(
-            padding: EdgeInsets.only(top: 23.w, left: 16.w),
-            sliver: SliverToBoxAdapter(
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      "Today's express",
-                      style: 19.w7(),
-                    ),
-                  ),
-                  InkWell(
-                      onTap: () {
-                        final List<String> servers = [
-                          Address.personalDevUrl,
-                          Address.privateDevUrl,
-                          Address.publicDevUrl,
-                        ];
-                        String current = HttpUtil().getUrl;
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return ServerSwitchDialog(
-                              servers: servers,
-                              currentServer: current,
-                              onServerChanged: (newServer) {
-                                HttpUtil().setUrl(newServer);
-                                HomeController.to.login();
-                              },
-                            );
-                          },
-                        );
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20.w),
-                        child: Text(
-                          "切换服务器",
-                          style: 15.w7(color: Colors.black),
-                        ),
-                      ))
-                ],
-              ),
-            ),
+          ///赛事
+          const SliverToBoxAdapter(
+            child: RegularWidget(),
           ),
 
-          /// News List
-          SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 10.w),
-            sliver: const SliverToBoxAdapter(
-              child: NewsListView(),
-            ),
+          ///玩家动态
+          const SliverToBoxAdapter(
+            child: PlayerDynamicsWidget(),
+          ),
+
+          ///选秀抽签
+          const SliverToBoxAdapter(
+            child: DraftLotteryWidget(),
+          ),
+
+          ///交易信息
+          const SliverToBoxAdapter(
+            child: TradeInfomationWidget(),
           ),
 
           /// Text: "Stats"
           SliverPadding(
             padding: EdgeInsets.only(left: 16.w, top: 6.w, bottom: 10.w),
             sliver: SliverToBoxAdapter(
-              // 修复：使用 SliverToBoxAdapter 包裹 Text
               child: Text(
                 "Stats",
                 style: 19.w7(),

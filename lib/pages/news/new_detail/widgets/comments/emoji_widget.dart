@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-22 15:19:24
- * @LastEditTime: 2024-10-22 15:30:42
+ * @LastEditTime: 2024-10-24 15:22:08
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -24,6 +24,8 @@ class EmojiWidget extends StatelessWidget {
       Assets.uiEmojiLaughPng,
     ];
     return Wrap(
+      spacing: 5.w,
+      runSpacing: 5.w,
       children: [
         ...emojiList.map((e) {
           int index = emojiList.indexOf(e);
@@ -35,7 +37,7 @@ class EmojiWidget extends StatelessWidget {
               child: Container(
                 height: 24.w,
                 constraints: BoxConstraints(minWidth: 43.w),
-                padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.w),
+                padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.w),
                 decoration: BoxDecoration(
                   color: current.value == index
                       ? AppColors.c262626
@@ -43,14 +45,16 @@ class EmojiWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12.w),
                 ),
                 child: Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     IconWidget(iconWidth: 16.w, icon: e),
+                    5.hGap,
                     Text(
                       "99",
                       style: 12.w4(
                         color: current.value == index
-                            ? AppColors.c262626
-                            : AppColors.cEFEFEF,
+                            ? AppColors.cEFEFEF
+                            : AppColors.c262626,
                       ),
                     )
                   ],

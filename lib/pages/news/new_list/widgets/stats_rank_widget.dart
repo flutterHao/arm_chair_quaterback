@@ -47,23 +47,6 @@ class StatsRankWidget extends GetView<NewListController> {
                 );
               },
             ),
-
-            // child: ListView.separated(
-            //     scrollDirection: Axis.horizontal,
-            //     itemCount: 3,
-            //     separatorBuilder: (context, index) {
-            //       return 12.hGap;
-            //     },
-            //     itemBuilder: (context, index) {
-            //       return InkWell(
-            //           onTap: () {
-            //             Get.toNamed(
-            //               RouteNames.statsRank,
-            //               id: GlobalNestedKey.NEWS,
-            //             );
-            //           },
-            //           child: StatsRankItem(index: index));
-            //     }),
           );
         });
   }

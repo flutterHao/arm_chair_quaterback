@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-11 17:18:41
- * @LastEditTime: 2024-10-21 20:16:46
+ * @LastEditTime: 2024-10-24 18:22:32
  */
 class Assets {
   ///home
@@ -207,9 +207,13 @@ class Assets {
   static const uiIconSalaryPng = 'assets/images/personal/ui_icon_salary.png';
 
   ///news
-  static const uiEmojiArrogancePng =
-      'assets/images/news/ui_emoji_arrogance.png';
-  static const uiEmojiJokerPng = 'assets/images/news/ui_emoji_joker.png';
-  static const uiEmojiLaughPng = 'assets/images/news/ui_emoji_laugh.png';
-  static const uiIconEmojiPng = 'assets/images/news/ui_icon_emoji.png';
+static const uiEmojiArrogancePng = 'assets/images/news/ui_emoji_arrogance.png';
+static const uiEmojiJokerPng = 'assets/images/news/ui_emoji_joker.png';
+static const uiEmojiLaughPng = 'assets/images/news/ui_emoji_laugh.png';
+static const uiImageArrow = 'assets/images/news/ui_icon_arrows_04.png';
+static const uiIconBallPng = 'assets/images/news/ui_icon_ball.png';
+static const uiIconEmojiPng = 'assets/images/news/ui_icon_emoji.png';
+static const uiIconInjuryPng = 'assets/images/news/ui_icon_injury.png';
+static const uiNewsBanner_01Png = 'assets/images/news/ui_news_banner_01.png';
+
 }

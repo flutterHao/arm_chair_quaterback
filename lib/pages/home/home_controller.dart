@@ -47,7 +47,7 @@ class HomeController extends GetxController
 
   UserEntity userEntiry = UserEntity();
 
-  refreshMoneyCoinWidget() async{
+  refreshMoneyCoinWidget() async {
     await refreshUserEntity();
     update([GetXBuilderIds.idMoneyAndCoinWidget]);
   }
@@ -89,6 +89,8 @@ class HomeController extends GetxController
     ),
   ];
 
+  RxBool isHide = false.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -121,7 +123,7 @@ class HomeController extends GetxController
     update();
   }
 
-  Future<UserEntity> refreshUserEntity() async{
+  Future<UserEntity> refreshUserEntity() async {
     var teamLoginInfo = await UserApi.getTeamLoginInfo();
     userEntiry = UserEntity(teamLoginInfo: teamLoginInfo);
     return userEntiry;

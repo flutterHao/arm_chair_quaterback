@@ -1,7 +1,5 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
-import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
-import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
@@ -28,11 +26,14 @@ class NewsListView extends GetView<NewListController> {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () async {
-                    var newsId = controller.state.newsList[index].id;
-                    controller.getNewsFlow(newsId, isRefresh: true);
-                    await Get.toNamed(RouteNames.newsDetail,
-                        arguments: newsId, id: GlobalNestedKey.NEWS);
-                    controller.getNewsList();
+                    // var newsId = controller.state.newsList[index].id;
+                    // controller.getNewsFlow(newsId, isRefresh: true);
+                    // await Get.toNamed(RouteNames.newsDetail,
+                    //     arguments: newsId, id: GlobalNestedKey.NEWS);
+                    // controller.getNewsList();
+                    controller.pageToDetail(index, callBack: () {
+                      controller.getNewsList();
+                    });
                   },
                   child: NewsItemView(
                     item: controller.state.newsList[index],

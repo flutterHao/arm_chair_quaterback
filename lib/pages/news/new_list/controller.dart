@@ -2,8 +2,9 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2024-10-21 18:29:51
+ * @LastEditTime: 2024-10-24 17:12:12
  */
+import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
 import 'package:arm_chair_quaterback/common/entities/stats_rank/nba_player_stat.dart';
@@ -11,6 +12,7 @@ import 'package:arm_chair_quaterback/common/entities/team_rank.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
+import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -50,7 +52,7 @@ class NewListController extends GetxController {
   void refreshData() async {
     Future.wait([
       getNewsBanner(),
-      getNewsList(),
+      getRegularList(),
       getStatsRank(),
       getStarTeamList(),
     ]).then((v) {
@@ -75,6 +77,16 @@ class NewListController extends GetxController {
       Log.e("getNewsList error,开始重试");
       state.newsList = await NewsApi.getNewsList();
       update(['newsList']);
+    });
+  }
+
+  Future getRegularList() async {
+    await NewsApi.getNewsList().then((value) {
+      state.newsList = value;
+      update(['regular']);
+    }).catchError((v) async {
+      state.newsList = await NewsApi.getNewsList();
+      update(['regular']);
     });
   }
 
@@ -244,5 +256,13 @@ class NewListController extends GetxController {
           ? flowRefreshCtrl.refreshCompleted()
           : flowRefreshCtrl.loadComplete();
     });
+  }
+
+  void pageToDetail(int index, {Function? callBack}) async {
+    var newsId = state.newsList[index].id;
+    getNewsFlow(newsId, isRefresh: true);
+    await Get.toNamed(RouteNames.newsDetail,
+        arguments: newsId, id: GlobalNestedKey.NEWS);
+    if (callBack != null) callBack();
   }
 }
