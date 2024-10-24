@@ -2,13 +2,15 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-15 20:19:57
- * @LastEditTime: 2024-10-22 11:14:14
+ * @LastEditTime: 2024-10-23 20:58:34
  */
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/team_player_info_entity.g.dart';
 import 'dart:convert';
+
+import 'package:get/get.dart';
 export 'package:arm_chair_quaterback/generated/json/team_player_info_entity.g.dart';
 
 @JsonSerializable()
@@ -29,6 +31,8 @@ class TeamPlayerInfoEntity {
   late bool bindStatus = false;
   late int breakThroughGrade = 0;
   late int playerId = 0;
+  @JSONField(deserialize: false, serialize: false)
+  RxBool isChange = false.obs; //是否换人
 
   TeamPlayerInfoEntity();
 
@@ -78,6 +82,7 @@ class TeamPlayerInfoEntity {
     }
     return "";
   }
+
 
   @override
   String toString() {

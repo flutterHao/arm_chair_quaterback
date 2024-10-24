@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 20:08:22
- * @LastEditTime: 2024-10-23 16:55:13
+ * @LastEditTime: 2024-10-24 11:38:11
  */
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/controller.dart';
@@ -22,13 +22,12 @@ class PlayerBagTab extends GetView<TeamController> {
       // shrinkWrap: true,
       itemBuilder: (context, index) {
         return PlayerItem(
-          item: controller.myBagList[index],
+          item: controller.getBagPlayers[index],
           isBag: true,
         );
       },
       separatorBuilder: (context, index) => 9.vGap,
-      itemCount: controller.myBagList.length,
+      itemCount: controller.getBagPlayers.length,
     );
-    ;
   }
 }

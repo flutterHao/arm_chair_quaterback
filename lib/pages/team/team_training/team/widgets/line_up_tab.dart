@@ -32,6 +32,7 @@ class LineUpTab extends GetView<TeamController> {
   Widget build(BuildContext context) {
     return GetBuilder<TeamController>(builder: (_) {
       return SingleChildScrollView(
+        // physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
             12.vGap,

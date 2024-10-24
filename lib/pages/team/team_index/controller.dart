@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-10-23 18:25:31
+ * @LastEditTime: 2024-10-24 10:14:24
  */
 
 import 'dart:async';
@@ -79,7 +79,7 @@ class TeamIndexController extends GetxController
     bettleRight.value = -163.h;
     myTeamBottom.value = 0.h;
     pageX.value = -250.w;
-    turns.value += 1 / 2;
+    turns.value += isShow.value ? 0 : 1 / 2;
     isShow.value = true;
     update(["team_index"]);
   }
@@ -90,7 +90,7 @@ class TeamIndexController extends GetxController
     bettleRight.value = 0.0;
     myTeamBottom.value = -556.0.h;
     pageX.value = 0.0;
-    turns.value -= 1 / 2;
+    turns.value -= !isShow.value ? 0 : 1 / 2;
     isShow.value = false;
     isOnTopSide = true;
     update(["team_index"]);

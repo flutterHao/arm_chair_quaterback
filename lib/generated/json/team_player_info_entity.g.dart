@@ -2,6 +2,8 @@ import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.da
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'dart:math';
 
+import 'package:get/get.dart';
+
 
 TeamPlayerInfoEntity $TeamPlayerInfoEntityFromJson(Map<String, dynamic> json) {
   final TeamPlayerInfoEntity teamPlayerInfoEntity = TeamPlayerInfoEntity();
@@ -113,6 +115,7 @@ extension TeamPlayerInfoEntityExtension on TeamPlayerInfoEntity {
     bool? bindStatus,
     int? breakThroughGrade,
     int? playerId,
+    RxBool? isChange,
   }) {
     return TeamPlayerInfoEntity()
       ..buyPrice = buyPrice ?? this.buyPrice
@@ -130,7 +133,8 @@ extension TeamPlayerInfoEntityExtension on TeamPlayerInfoEntity {
       ..potential = potential ?? this.potential
       ..bindStatus = bindStatus ?? this.bindStatus
       ..breakThroughGrade = breakThroughGrade ?? this.breakThroughGrade
-      ..playerId = playerId ?? this.playerId;
+      ..playerId = playerId ?? this.playerId
+      ..isChange = isChange ?? this.isChange;
   }
 }
 

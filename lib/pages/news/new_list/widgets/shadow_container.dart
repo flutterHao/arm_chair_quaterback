@@ -2,10 +2,11 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-10 14:39:42
- * @LastEditTime: 2024-10-21 16:32:30
+ * @LastEditTime: 2024-10-23 19:56:34
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ShadowContainer extends StatelessWidget {
   final Widget child;
@@ -38,7 +39,7 @@ class ShadowContainer extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: backgroudColor,
-        borderRadius: borderRadius ?? BorderRadius.circular(16),
+        borderRadius: borderRadius ?? BorderRadius.circular(16.w),
         // boxShadow: [
         //   BoxShadow(
         //     color: shadowColor ?? Colors.grey.withOpacity(0.2),

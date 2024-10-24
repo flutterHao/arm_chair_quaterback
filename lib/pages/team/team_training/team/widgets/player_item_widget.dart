@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2024-10-23 17:31:54
+ * @LastEditTime: 2024-10-24 11:46:46
  */
 /*
  * @Description: 
@@ -37,6 +37,8 @@ class PlayerItem extends GetView<TeamController> {
   // final bool isMain;
   final TeamPlayerInfoEntity item;
   final bool isBag;
+
+  // String get position => Utils.getPosition(item.position);
 
   ///球员位置
   Widget _playerPosition() {
@@ -168,7 +170,7 @@ class PlayerItem extends GetView<TeamController> {
                 ),
               ),
               Text(
-                "${(item.power*100 / 120).toStringAsFixed(0)}%",
+                "${(item.power * 100 / 120).toStringAsFixed(0)}%",
                 style: 10.w7(color: AppColors.c000000, height: 1),
               ),
             ],
@@ -235,18 +237,17 @@ class PlayerItem extends GetView<TeamController> {
 
         InkWell(
           onTap: () {
-            controller.onTabChange(isBag ? 0 : 1);
+            controller.playerItemOnTap(isBag, item);
           },
           child: IconWidget(
             iconWidth: 15.w,
             backgroudWitdh: 32.w,
             backgroudheight: 32.w,
             borderRadius: BorderRadius.circular(16.w),
-            border:
-                isBag ? null : Border.all(width: 1.w, color: AppColors.cB3B3B3),
-            backgroudColor: isBag ? AppColors.cFF7954 : null,
+            border: Border.all(width: 1.w, color: AppColors.cB3B3B3),
+            // backgroudColor: isBag ? AppColors.cFF7954 : null,
             icon: Assets.uiIconSwitch_02Png,
-            iconColor: isBag ? AppColors.cFFFFFF : AppColors.c000000,
+            iconColor: isBag ? AppColors.c000000 : AppColors.c000000,
           ),
         ),
       ],
@@ -288,43 +289,22 @@ class PlayerItem extends GetView<TeamController> {
     );
   }
 
-  Widget _addPlayer() {
-    return Positioned(
-      left: 16.w,
-      child: InkWell(
-          onTap: () {
-            controller.onTabChange(1);
-          },
-          child: Container(
-            width: 343.w,
-            height: 84.w,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-                color: AppColors.c323232,
-                borderRadius: BorderRadius.circular(16.w),
-                border: Border.all(
-                  width: 1.w,
-                  color: AppColors.c666666,
-                )),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                IconWidget(
-                  iconWidth: 15.w,
-                  backgroudWitdh: 38.w,
-                  backgroudheight: 38.w,
-                  icon: Assets.uiIconPlusPng,
-                  borderRadius: BorderRadius.circular(19.w),
-                  backgroudColor: AppColors.c666666,
-                  iconColor: AppColors.cFF7954,
-                ),
-                8.vGap,
-                Text(
-                  "Add Player",
-                  style: 12.w4(color: AppColors.cFF7954),
-                )
-              ],
-            ),
+  ///更换球员不可用阴影
+  Widget _enableContainer() {
+    return Container(
+      // width: 343.w,
+      // height: 84.w,
+      margin: EdgeInsets.only(right: 16.w),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+          // color: AppColors.c323232.withOpacity(0.5),
+          color: Colors.black38,
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(16.w),
+              bottomRight: Radius.circular(16.w)),
+          border: Border.all(
+            width: 1.w,
+            color: AppColors.c666666,
           )),
     );
   }
@@ -337,7 +317,8 @@ class PlayerItem extends GetView<TeamController> {
       child: Stack(
         children: [
           _playerPosition(),
-          _playCard()
+          _playCard(),
+          if (!controller.canChange(isBag, item)) _enableContainer()
           // (item > 5 && !isMain && !isBag) ? _addPlayer() : _playCard(),
         ],
       ),

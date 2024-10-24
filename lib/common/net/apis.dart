@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-06 15:16:54
- * @LastEditTime: 2024-10-23 15:42:49
+ * @LastEditTime: 2024-10-23 18:48:46
  */
 class Api {
   /// base
@@ -90,6 +90,7 @@ class Api {
   static const String replyPower = "$API_BASE_PATH/TeamPlayer/replyPower";
   static const String getTeamPlayers =
       "$API_BASE_PATH/TeamPlayer/getTeamPlayers";
+  static const changeTeamPlayer = "$API_BASE_PATH/TeamPlayer/changeTeamPlayer";
 
   ///trade
   static const String getTradeInfo = "$API_BASE_PATH/Trade/getTradeInfo";

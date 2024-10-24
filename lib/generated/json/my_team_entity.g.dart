@@ -34,6 +34,10 @@ MyTeamEntity $MyTeamEntityFromJson(Map<String, dynamic> json) {
   if (salaryCap != null) {
     myTeamEntity.salaryCap = salaryCap;
   }
+  final int? benchCount = jsonConvert.convert<int>(json['benchCount']);
+  if (benchCount != null) {
+    myTeamEntity.benchCount = benchCount;
+  }
   return myTeamEntity;
 }
 
@@ -45,6 +49,7 @@ Map<String, dynamic> $MyTeamEntityToJson(MyTeamEntity entity) {
   data['OVR'] = entity.oVR;
   data['salary'] = entity.salary;
   data['salaryCap'] = entity.salaryCap;
+  data['benchCount'] = entity.benchCount;
   return data;
 }
 
@@ -56,6 +61,7 @@ extension MyTeamEntityExtension on MyTeamEntity {
     int? oVR,
     int? salary,
     int? salaryCap,
+    int? benchCount,
   }) {
     return MyTeamEntity()
       ..powerReplyTime = powerReplyTime ?? this.powerReplyTime
@@ -63,6 +69,7 @@ extension MyTeamEntityExtension on MyTeamEntity {
       ..powerP = powerP ?? this.powerP
       ..oVR = oVR ?? this.oVR
       ..salary = salary ?? this.salary
-      ..salaryCap = salaryCap ?? this.salaryCap;
+      ..salaryCap = salaryCap ?? this.salaryCap
+      ..benchCount = benchCount ?? this.benchCount;
   }
 }
