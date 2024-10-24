@@ -8,6 +8,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/entities/all_team_players_by_up_star_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/guess_game_info_v2_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_param_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity.dart';
@@ -25,17 +26,25 @@ import 'package:arm_chair_quaterback/common/entities/up_start_team_player_respon
 import 'package:arm_chair_quaterback/common/enums/rank_type.dart';
 import 'package:arm_chair_quaterback/common/net/apis.dart';
 import 'package:arm_chair_quaterback/common/net/http.dart';
+import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.dart';
+
+import '../../entities/guess_game_info_entity.dart';
 
 ///
 ///@auther gejiahui
 ///created at 2024/9/20/10:42
 
 class PicksApi {
-  static Future<List<GuessInfosEntity>> getGuessGamesInfo() async {
+  static Future<List<GuessInfosEntity>> getGuessGamesInfo_v1() async {
     List json = await httpUtil.post(Api.getGuessGamesInfo);
     var guessInfosEntitys =
         json.map((e) => GuessInfosEntity.fromJson(e)).toList();
     return guessInfosEntitys;
+  }
+
+  static Future<GuessGameInfoV2Entity> getGuessGamesInfo() async {
+    var json = await httpUtil.post(Api.getGuessGamesInfo);
+    return GuessGameInfoV2Entity.fromJson(json);
   }
 
   static Future<List<List<ReciveAwardEntity>>> getGuessInfos(int teamId) async {
@@ -54,13 +63,13 @@ class PicksApi {
     return json.map((e) => PlayerDayDataEntity.fromJson(e)).toList();
   }
 
-  static Future<List<GuessInfosEntity>> guess(
-      List<GuessParamEntity> guessParams) async {
+  static Future guess(int type, List<GuessParamEntity> guessParams) async {
     List json = await httpUtil.post(Api.guess,
         data: ({
+          "type": type,
           "guessInfo": jsonEncode(guessParams.map((e) => e.toJson()).toList())
         }));
-    return json.map((e) => GuessInfosEntity.fromJson(e)).toList();
+    return json;
   }
 
   static Future<RankListEntity> getRedisRankInfo(
@@ -113,8 +122,8 @@ class PicksApi {
 
   static Future<UpStartTeamPlayerResponseEntity> upStarTeamPlayer(
       String uuid, String materialScienceUUID) async {
-    var json = await httpUtil
-        .post(Api.upStarTeamPlayer, data: {"uuid": uuid, "materialScienceUUID": materialScienceUUID});
+    var json = await httpUtil.post(Api.upStarTeamPlayer,
+        data: {"uuid": uuid, "materialScienceUUID": materialScienceUUID});
     return UpStartTeamPlayerResponseEntity.fromJson(json);
   }
 
@@ -122,8 +131,6 @@ class PicksApi {
       String uuid) async {
     List json = await httpUtil
         .post(Api.getAllTeamPlayersByUpStar, data: {"uuid": uuid});
-    return json.map((e)=> AllTeamPlayersByUpStarEntity.fromJson(e)).toList();
+    return json.map((e) => AllTeamPlayersByUpStarEntity.fromJson(e)).toList();
   }
-
-
 }

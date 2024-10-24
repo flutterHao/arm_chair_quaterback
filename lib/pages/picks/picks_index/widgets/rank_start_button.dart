@@ -4,9 +4,9 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/btn_background.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
-import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/picks_guess_confirm_dialog.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/picks_guess_confirm_dialog_v2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -16,90 +16,70 @@ import 'package:get/get.dart';
 
 class RankStartButton extends StatelessWidget {
   const RankStartButton(
-    this.size,
-    this.cost,
-    this.bet, {
-    this.isDialog = false,
+    this.size, {
     super.key,
   });
 
-  final bool isDialog;
   final int size;
-  final double cost;
-  final double bet;
 
   @override
   Widget build(BuildContext context) {
+    minLimit(){
+      var length = Get.find<PicksIndexController>().getChoiceGuessPlayers().length;
+      if(length<2){
+        EasyLoading.showToast("Select at least 2");
+        return true;
+      }
+      return false;
+    }
     return InkWell(
-      onTap: () {
+      onTap: () async {
         print('InkWellds');
-        // Get.dialog(const PicksGuessConfirmDialogV2());
-        showModalBottomSheet(
+        if(minLimit()){
+          return;
+        }
+        await showModalBottomSheet(
             isScrollControlled: true,
             backgroundColor: AppColors.cTransparent,
-            context: Get.context!, builder: (context){
-          return const PicksGuessConfirmDialogV2();
-        });
+            context: Get.context!,
+            builder: (context) {
+              return  const PicksGuessConfirmDialogV2();
+            });
+        Get.find<PicksIndexController>().batchDeleteOpen.value = false;
       },
       child: BtnBackground(
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Positioned(
-              left: 0,
-              child: Container(
-                height: 35.w,
-                width: 35.w,
-                margin: EdgeInsets.only(left: 3.w),
-                decoration: BoxDecoration(
-                    color: AppColors.cFF7954,
-                    borderRadius: BorderRadius.circular(18.w)),
-                alignment: Alignment.center,
-                child: Text.rich(
-                    textAlign: TextAlign.end,
-                    TextSpan(children: [
-                      TextSpan(
-                          text: "$size",
-                          style: TextStyle(
-                              fontSize: 14.sp, fontWeight: FontWeight.bold)),
-                    ])),
-              ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("CONFIRM", style: 16.w7(color: AppColors.cFFFFFF)),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      Assets.uiIconJettonPng,
-                      width: 12.w,
-                      fit: BoxFit.fitWidth,
-                    ),
-                    SizedBox(
-                      width: 3.w,
-                    ),
-                    Text(
-                      "${cost}k",
-                      style: TextStyle(color: Colors.white, fontSize: 11.sp),
-                    )
-                  ],
-                )
-              ],
-            ),
-            Positioned(
-              right: 0,
-              child: Container(
-                margin: EdgeInsets.only(right: 11.w),
-                child: Text(
-                  "${bet}x",
-                  style: 14.w7(color: AppColors.cFF7954),
+        child: SizedBox(
+          width: double.infinity,
+          height: 43.w,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Positioned(
+                left: 0,
+                child: Center(
+                  child: Container(
+                    height: 35.w,
+                    width: 35.w,
+                    margin: EdgeInsets.only(left: 3.w),
+                    decoration: BoxDecoration(
+                        color: AppColors.cFF7954,
+                        borderRadius: BorderRadius.circular(18.w)),
+                    alignment: Alignment.center,
+                    child: Text.rich(
+                        textAlign: TextAlign.end,
+                        TextSpan(children: [
+                          TextSpan(
+                              text: "$size",
+                              style: TextStyle(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.bold)),
+                        ])),
+                  ),
                 ),
               ),
-            )
-          ],
+              Text("VIEW ENTRY", style: 16.w7(color: AppColors.cFFFFFF)),
+            ],
+          ),
         ),
       ),
     );

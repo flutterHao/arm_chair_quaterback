@@ -1,5 +1,7 @@
 import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.dart';
 import 'package:arm_chair_quaterback/common/entities/recive_award_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/guess_data.dart';
+
 
 ReciveAwardEntity $ReciveAwardEntityFromJson(Map<String, dynamic> json) {
   final ReciveAwardEntity reciveAwardEntity = ReciveAwardEntity();
@@ -24,12 +26,8 @@ ReciveAwardEntity $ReciveAwardEntityFromJson(Map<String, dynamic> json) {
   if (teamId != null) {
     reciveAwardEntity.teamId = teamId;
   }
-  final List<ReciveAwardGuessData>? guessData = (json['guessData'] as List<
-      dynamic>?)
-      ?.map(
-          (e) =>
-      jsonConvert.convert<ReciveAwardGuessData>(e) as ReciveAwardGuessData)
-      .toList();
+  final List<GuessData>? guessData = (json['guessData'] as List<dynamic>?)?.map(
+          (e) => jsonConvert.convert<GuessData>(e) as GuessData).toList();
   if (guessData != null) {
     reciveAwardEntity.guessData = guessData;
   }
@@ -84,7 +82,7 @@ extension ReciveAwardEntityExtension on ReciveAwardEntity {
     int? createTime,
     int? gameStartTime,
     int? teamId,
-    List<ReciveAwardGuessData>? guessData,
+    List<GuessData>? guessData,
     int? updateTime,
     int? id,
     int? type,
@@ -269,131 +267,5 @@ extension ReciveAwardL5AvgExtension on ReciveAwardL5Avg {
       ..to = to ?? this.to
       ..ftm = ftm ?? this.ftm
       ..playerId = playerId ?? this.playerId;
-  }
-}
-
-ReciveAwardGuessData $ReciveAwardGuessDataFromJson(Map<String, dynamic> json) {
-  final ReciveAwardGuessData reciveAwardGuessData = ReciveAwardGuessData();
-  final String? guessAttr = jsonConvert.convert<String>(json['guessAttr']);
-  if (guessAttr != null) {
-    reciveAwardGuessData.guessAttr = guessAttr;
-  }
-  final int? guessChoice = jsonConvert.convert<int>(json['guessChoice']);
-  if (guessChoice != null) {
-    reciveAwardGuessData.guessChoice = guessChoice;
-  }
-  final int? guessTime = jsonConvert.convert<int>(json['guessTime']);
-  if (guessTime != null) {
-    reciveAwardGuessData.guessTime = guessTime;
-  }
-  final List<ReciveAwardGuessDataAwards>? awards = (json['awards'] as List<
-      dynamic>?)?.map(
-          (e) =>
-      jsonConvert.convert<ReciveAwardGuessDataAwards>(
-          e) as ReciveAwardGuessDataAwards).toList();
-  if (awards != null) {
-    reciveAwardGuessData.awards = awards;
-  }
-  final bool? success = jsonConvert.convert<bool>(json['success']);
-  if (success != null) {
-    reciveAwardGuessData.success = success;
-  }
-  final int? guessReferenceValue = jsonConvert.convert<int>(
-      json['guessReferenceValue']);
-  if (guessReferenceValue != null) {
-    reciveAwardGuessData.guessReferenceValue = guessReferenceValue;
-  }
-  final int? guessGameAttrValue = jsonConvert.convert<int>(
-      json['guessGameAttrValue']);
-  if (guessGameAttrValue != null) {
-    reciveAwardGuessData.guessGameAttrValue = guessGameAttrValue;
-  }
-  final int? winPro = jsonConvert.convert<int>(json['winPro']);
-  if (winPro != null) {
-    reciveAwardGuessData.winPro = winPro;
-  }
-  final int? status = jsonConvert.convert<int>(json['status']);
-  if (status != null) {
-    reciveAwardGuessData.status = status;
-  }
-  return reciveAwardGuessData;
-}
-
-Map<String, dynamic> $ReciveAwardGuessDataToJson(ReciveAwardGuessData entity) {
-  final Map<String, dynamic> data = <String, dynamic>{};
-  data['guessAttr'] = entity.guessAttr;
-  data['guessChoice'] = entity.guessChoice;
-  data['guessTime'] = entity.guessTime;
-  data['awards'] = entity.awards.map((v) => v.toJson()).toList();
-  data['success'] = entity.success;
-  data['guessReferenceValue'] = entity.guessReferenceValue;
-  data['guessGameAttrValue'] = entity.guessGameAttrValue;
-  data['winPro'] = entity.winPro;
-  data['status'] = entity.status;
-  return data;
-}
-
-extension ReciveAwardGuessDataExtension on ReciveAwardGuessData {
-  ReciveAwardGuessData copyWith({
-    String? guessAttr,
-    int? guessChoice,
-    int? guessTime,
-    List<ReciveAwardGuessDataAwards>? awards,
-    bool? success,
-    int? guessReferenceValue,
-    int? guessGameAttrValue,
-    int? winPro,
-    int? status,
-  }) {
-    return ReciveAwardGuessData()
-      ..guessAttr = guessAttr ?? this.guessAttr
-      ..guessChoice = guessChoice ?? this.guessChoice
-      ..guessTime = guessTime ?? this.guessTime
-      ..awards = awards ?? this.awards
-      ..success = success ?? this.success
-      ..guessReferenceValue = guessReferenceValue ?? this.guessReferenceValue
-      ..guessGameAttrValue = guessGameAttrValue ?? this.guessGameAttrValue
-      ..winPro = winPro ?? this.winPro
-      ..status = status ?? this.status;
-  }
-}
-
-ReciveAwardGuessDataAwards $ReciveAwardGuessDataAwardsFromJson(
-    Map<String, dynamic> json) {
-  final ReciveAwardGuessDataAwards reciveAwardGuessDataAwards = ReciveAwardGuessDataAwards();
-  final int? id = jsonConvert.convert<int>(json['id']);
-  if (id != null) {
-    reciveAwardGuessDataAwards.id = id;
-  }
-  final int? num = jsonConvert.convert<int>(json['num']);
-  if (num != null) {
-    reciveAwardGuessDataAwards.num = num;
-  }
-  final int? type = jsonConvert.convert<int>(json['type']);
-  if (type != null) {
-    reciveAwardGuessDataAwards.type = type;
-  }
-  return reciveAwardGuessDataAwards;
-}
-
-Map<String, dynamic> $ReciveAwardGuessDataAwardsToJson(
-    ReciveAwardGuessDataAwards entity) {
-  final Map<String, dynamic> data = <String, dynamic>{};
-  data['id'] = entity.id;
-  data['num'] = entity.num;
-  data['type'] = entity.type;
-  return data;
-}
-
-extension ReciveAwardGuessDataAwardsExtension on ReciveAwardGuessDataAwards {
-  ReciveAwardGuessDataAwards copyWith({
-    int? id,
-    int? num,
-    int? type,
-  }) {
-    return ReciveAwardGuessDataAwards()
-      ..id = id ?? this.id
-      ..num = num ?? this.num
-      ..type = type ?? this.type;
   }
 }

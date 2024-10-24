@@ -7,12 +7,17 @@ import 'package:flutter/material.dart' show debugPrint;
 import 'package:arm_chair_quaterback/common/entities/all_team_players_by_up_star_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/config/prop_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/grade_in_star_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/guess_data.dart';
+import 'package:arm_chair_quaterback/common/entities/guess_game_info_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/guess_game_info_v2_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_param_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/guess_reference_value.dart';
 import 'package:arm_chair_quaterback/common/entities/my_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/new_test_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_day_data_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_award_entity.dart';
@@ -23,6 +28,7 @@ import 'package:arm_chair_quaterback/common/entities/recive_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/reward_group_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/star_up_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_player_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_simple_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/trade_entity/trade_info_entity.dart';
@@ -189,6 +195,26 @@ class JsonConvert {
       return data.map<GradeInStarDefineEntity>((Map<String, dynamic> e) =>
           GradeInStarDefineEntity.fromJson(e)).toList() as M;
     }
+    if (<GuessData>[] is M) {
+      return data.map<GuessData>((Map<String, dynamic> e) =>
+          GuessData.fromJson(e)).toList() as M;
+    }
+    if (<Awards>[] is M) {
+      return data.map<Awards>((Map<String, dynamic> e) => Awards.fromJson(e))
+          .toList() as M;
+    }
+    if (<GuessGameInfoEntity>[] is M) {
+      return data.map<GuessGameInfoEntity>((Map<String, dynamic> e) =>
+          GuessGameInfoEntity.fromJson(e)).toList() as M;
+    }
+    if (<GuessGameInfoV2Entity>[] is M) {
+      return data.map<GuessGameInfoV2Entity>((Map<String, dynamic> e) =>
+          GuessGameInfoV2Entity.fromJson(e)).toList() as M;
+    }
+    if (<GuessGameInfoV2GuessInfo>[] is M) {
+      return data.map<GuessGameInfoV2GuessInfo>((Map<String, dynamic> e) =>
+          GuessGameInfoV2GuessInfo.fromJson(e)).toList() as M;
+    }
     if (<GuessInfosEntity>[] is M) {
       return data.map<GuessInfosEntity>((Map<String, dynamic> e) =>
           GuessInfosEntity.fromJson(e)).toList() as M;
@@ -209,9 +235,9 @@ class JsonConvert {
       return data.map<GuessParamEntity>((Map<String, dynamic> e) =>
           GuessParamEntity.fromJson(e)).toList() as M;
     }
-    if (<GuessParamGuessData>[] is M) {
-      return data.map<GuessParamGuessData>((Map<String, dynamic> e) =>
-          GuessParamGuessData.fromJson(e)).toList() as M;
+    if (<GuessReferenceValue>[] is M) {
+      return data.map<GuessReferenceValue>((Map<String, dynamic> e) =>
+          GuessReferenceValue.fromJson(e)).toList() as M;
     }
     if (<MyTeamEntity>[] is M) {
       return data.map<MyTeamEntity>((Map<String, dynamic> e) =>
@@ -267,6 +293,34 @@ class JsonConvert {
       return data.map<NbaTeamEntity>((Map<String, dynamic> e) =>
           NbaTeamEntity.fromJson(e)).toList() as M;
     }
+    if (<NewTestEntity>[] is M) {
+      return data.map<NewTestEntity>((Map<String, dynamic> e) =>
+          NewTestEntity.fromJson(e)).toList() as M;
+    }
+    if (<NewTestAst>[] is M) {
+      return data.map<NewTestAst>((Map<String, dynamic> e) =>
+          NewTestAst.fromJson(e)).toList() as M;
+    }
+    if (<NewTestAstGuessReferenceValue>[] is M) {
+      return data.map<NewTestAstGuessReferenceValue>((Map<String, dynamic> e) =>
+          NewTestAstGuessReferenceValue.fromJson(e)).toList() as M;
+    }
+    if (<NewTest3pt>[] is M) {
+      return data.map<NewTest3pt>((Map<String, dynamic> e) =>
+          NewTest3pt.fromJson(e)).toList() as M;
+    }
+    if (<NewTest3ptGuessReferenceValue>[] is M) {
+      return data.map<NewTest3ptGuessReferenceValue>((Map<String, dynamic> e) =>
+          NewTest3ptGuessReferenceValue.fromJson(e)).toList() as M;
+    }
+    if (<NewTestPts>[] is M) {
+      return data.map<NewTestPts>((Map<String, dynamic> e) =>
+          NewTestPts.fromJson(e)).toList() as M;
+    }
+    if (<NewTestPtsGuessReferenceValue>[] is M) {
+      return data.map<NewTestPtsGuessReferenceValue>((Map<String, dynamic> e) =>
+          NewTestPtsGuessReferenceValue.fromJson(e)).toList() as M;
+    }
     if (<NewsDefineEntity>[] is M) {
       return data.map<NewsDefineEntity>((Map<String, dynamic> e) =>
           NewsDefineEntity.fromJson(e)).toList() as M;
@@ -303,14 +357,6 @@ class JsonConvert {
       return data.map<ReciveAwardL5Avg>((Map<String, dynamic> e) =>
           ReciveAwardL5Avg.fromJson(e)).toList() as M;
     }
-    if (<ReciveAwardGuessData>[] is M) {
-      return data.map<ReciveAwardGuessData>((Map<String, dynamic> e) =>
-          ReciveAwardGuessData.fromJson(e)).toList() as M;
-    }
-    if (<ReciveAwardGuessDataAwards>[] is M) {
-      return data.map<ReciveAwardGuessDataAwards>((Map<String, dynamic> e) =>
-          ReciveAwardGuessDataAwards.fromJson(e)).toList() as M;
-    }
     if (<RewardGroupEntity>[] is M) {
       return data.map<RewardGroupEntity>((Map<String, dynamic> e) =>
           RewardGroupEntity.fromJson(e)).toList() as M;
@@ -326,6 +372,10 @@ class JsonConvert {
     if (<TeamPlayerInfoPotential>[] is M) {
       return data.map<TeamPlayerInfoPotential>((Map<String, dynamic> e) =>
           TeamPlayerInfoPotential.fromJson(e)).toList() as M;
+    }
+    if (<TeamPlayerListEntity>[] is M) {
+      return data.map<TeamPlayerListEntity>((Map<String, dynamic> e) =>
+          TeamPlayerListEntity.fromJson(e)).toList() as M;
     }
     if (<TeamRankEntity>[] is M) {
       return data.map<TeamRankEntity>((Map<String, dynamic> e) =>
@@ -447,13 +497,18 @@ class JsonConvertClassCollection {
         .toString(): AllTeamPlayersByUpStarUpStarBase.fromJson,
     (PropDefineEntity).toString(): PropDefineEntity.fromJson,
     (GradeInStarDefineEntity).toString(): GradeInStarDefineEntity.fromJson,
+    (GuessData).toString(): GuessData.fromJson,
+    (Awards).toString(): Awards.fromJson,
+    (GuessGameInfoEntity).toString(): GuessGameInfoEntity.fromJson,
+    (GuessGameInfoV2Entity).toString(): GuessGameInfoV2Entity.fromJson,
+    (GuessGameInfoV2GuessInfo).toString(): GuessGameInfoV2GuessInfo.fromJson,
     (GuessInfosEntity).toString(): GuessInfosEntity.fromJson,
     (GuessInfosL5Avg).toString(): GuessInfosL5Avg.fromJson,
     (GuessInfosGuessData).toString(): GuessInfosGuessData.fromJson,
     (GuessInfosGuessReferenceValue).toString(): GuessInfosGuessReferenceValue
         .fromJson,
     (GuessParamEntity).toString(): GuessParamEntity.fromJson,
-    (GuessParamGuessData).toString(): GuessParamGuessData.fromJson,
+    (GuessReferenceValue).toString(): GuessReferenceValue.fromJson,
     (MyTeamEntity).toString(): MyTeamEntity.fromJson,
     (NbaPlayerBaseInfoEntity).toString(): NbaPlayerBaseInfoEntity.fromJson,
     (NbaPlayerBaseInfoPlayerBaseInfo)
@@ -474,6 +529,16 @@ class JsonConvertClassCollection {
     (NbaPlayerInfosPlayerBaseInfoList)
         .toString(): NbaPlayerInfosPlayerBaseInfoList.fromJson,
     (NbaTeamEntity).toString(): NbaTeamEntity.fromJson,
+    (NewTestEntity).toString(): NewTestEntity.fromJson,
+    (NewTestAst).toString(): NewTestAst.fromJson,
+    (NewTestAstGuessReferenceValue).toString(): NewTestAstGuessReferenceValue
+        .fromJson,
+    (NewTest3pt).toString(): NewTest3pt.fromJson,
+    (NewTest3ptGuessReferenceValue).toString(): NewTest3ptGuessReferenceValue
+        .fromJson,
+    (NewTestPts).toString(): NewTestPts.fromJson,
+    (NewTestPtsGuessReferenceValue).toString(): NewTestPtsGuessReferenceValue
+        .fromJson,
     (NewsDefineEntity).toString(): NewsDefineEntity.fromJson,
     (PlayerDayDataEntity).toString(): PlayerDayDataEntity.fromJson,
     (RankAwardEntity).toString(): RankAwardEntity.fromJson,
@@ -483,13 +548,11 @@ class JsonConvertClassCollection {
     (ReceivePropEntity).toString(): ReceivePropEntity.fromJson,
     (ReciveAwardEntity).toString(): ReciveAwardEntity.fromJson,
     (ReciveAwardL5Avg).toString(): ReciveAwardL5Avg.fromJson,
-    (ReciveAwardGuessData).toString(): ReciveAwardGuessData.fromJson,
-    (ReciveAwardGuessDataAwards).toString(): ReciveAwardGuessDataAwards
-        .fromJson,
     (RewardGroupEntity).toString(): RewardGroupEntity.fromJson,
     (StarUpDefineEntity).toString(): StarUpDefineEntity.fromJson,
     (TeamPlayerInfoEntity).toString(): TeamPlayerInfoEntity.fromJson,
     (TeamPlayerInfoPotential).toString(): TeamPlayerInfoPotential.fromJson,
+    (TeamPlayerListEntity).toString(): TeamPlayerListEntity.fromJson,
     (TeamRankEntity).toString(): TeamRankEntity.fromJson,
     (TeamSimpleEntity).toString(): TeamSimpleEntity.fromJson,
     (TradeInfoEntity).toString(): TradeInfoEntity.fromJson,

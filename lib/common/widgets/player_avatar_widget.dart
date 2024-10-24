@@ -49,46 +49,46 @@ class PlayerAvatarWidget extends StatelessWidget {
     return InkWell(
       onTap: () => Get.toNamed(RouteNames.picksPlayerDetail,
           arguments: PlayerDetailPageArguments(playerId)),
-      child: Container(
-        width: width,
-        height: height ?? width,
-        decoration: BoxDecoration(
-            color: backgroundColor,
-            borderRadius: BorderRadius.circular(radius ?? width / 2)),
-        child: Stack(
-          alignment: Alignment.bottomCenter,
-          children: [
-            Positioned(
-                bottom: 0,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(radius ?? width / 2),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(radius ?? width / 2),
+        child: Container(
+          width: width,
+          height: height ?? width,
+          decoration: BoxDecoration(
+              color: backgroundColor,
+              borderRadius: BorderRadius.circular(radius ?? width / 2)),
+          child: Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              Positioned(
+                  bottom: 0,
                   child: ExtendedImage.network(
                     Utils.getPlayUrl(playerId),
                     fit: BoxFit.fitWidth,
-                    width: imageWidth ?? width - 5,
+                    width: imageWidth ?? width,
                     loadStateChanged: (status) {
                       switch (status.extendedImageLoadState) {
                         case LoadState.loading:
                         case LoadState.failed:
                           return IconWidget(
-                              iconWidth: imageWidth ?? width - 5,
+                              iconWidth: imageWidth ?? width,
                               icon: Assets.testTeamLogoPng);
                         default:
                       }
                     },
-                  ),
-                )),
-            Positioned(
-                top: 0,
-                left: 0,
-                child: Visibility(
-                  visible: showGrade,
-                  child: Text(
-                    Utils.formatGrade(grade ?? 'SS'),
-                    style: 14.w7(color: fontColor),
-                  ),
-                ))
-          ],
+                  )),
+              Positioned(
+                  top: 0,
+                  left: 0,
+                  child: Visibility(
+                    visible: showGrade,
+                    child: Text(
+                      Utils.formatGrade(grade ?? 'SS'),
+                      style: 14.w7(color: fontColor),
+                    ),
+                  ))
+            ],
+          ),
         ),
       ),
     );

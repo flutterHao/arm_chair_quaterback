@@ -9,8 +9,9 @@ class GuessParamEntity {
   late int gameId;
   late int playerId;
   late int gameStartTime;
-  late int type;
-  late List<GuessParamGuessData> guessData;
+  late String guessAttr;
+  late int guessChoice;
+  late double guessReferenceValue;
 
   GuessParamEntity();
 
@@ -25,21 +26,5 @@ class GuessParamEntity {
   }
 }
 
-@JsonSerializable()
-class GuessParamGuessData {
-  late String guessAttr;
-  late int guessChoice;
-  late double guessReferenceValue;
 
-  GuessParamGuessData();
 
-  factory GuessParamGuessData.fromJson(Map<String, dynamic> json) =>
-      $GuessParamGuessDataFromJson(json);
-
-  Map<String, dynamic> toJson() => $GuessParamGuessDataToJson(this);
-
-  @override
-  String toString() {
-    return jsonEncode(this);
-  }
-}

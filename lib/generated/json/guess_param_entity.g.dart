@@ -19,18 +19,18 @@ GuessParamEntity $GuessParamEntityFromJson(Map<String, dynamic> json) {
   if (gameStartTime != null) {
     guessParamEntity.gameStartTime = gameStartTime;
   }
-  final int? type = jsonConvert.convert<int>(json['type']);
-  if (type != null) {
-    guessParamEntity.type = type;
+  final String? guessAttr = jsonConvert.convert<String>(json['guessAttr']);
+  if (guessAttr != null) {
+    guessParamEntity.guessAttr = guessAttr;
   }
-  final List<GuessParamGuessData>? guessData = (json['guessData'] as List<
-      dynamic>?)
-      ?.map(
-          (e) =>
-      jsonConvert.convert<GuessParamGuessData>(e) as GuessParamGuessData)
-      .toList();
-  if (guessData != null) {
-    guessParamEntity.guessData = guessData;
+  final int? guessChoice = jsonConvert.convert<int>(json['guessChoice']);
+  if (guessChoice != null) {
+    guessParamEntity.guessChoice = guessChoice;
+  }
+  final double? guessReferenceValue = jsonConvert.convert<double>(
+      json['guessReferenceValue']);
+  if (guessReferenceValue != null) {
+    guessParamEntity.guessReferenceValue = guessReferenceValue;
   }
   return guessParamEntity;
 }
@@ -41,8 +41,9 @@ Map<String, dynamic> $GuessParamEntityToJson(GuessParamEntity entity) {
   data['gameId'] = entity.gameId;
   data['playerId'] = entity.playerId;
   data['gameStartTime'] = entity.gameStartTime;
-  data['type'] = entity.type;
-  data['guessData'] = entity.guessData.map((v) => v.toJson()).toList();
+  data['guessAttr'] = entity.guessAttr;
+  data['guessChoice'] = entity.guessChoice;
+  data['guessReferenceValue'] = entity.guessReferenceValue;
   return data;
 }
 
@@ -52,52 +53,15 @@ extension GuessParamEntityExtension on GuessParamEntity {
     int? gameId,
     int? playerId,
     int? gameStartTime,
-    int? type,
-    List<GuessParamGuessData>? guessData,
+    String? guessAttr,
+    int? guessChoice,
+    double? guessReferenceValue,
   }) {
     return GuessParamEntity()
       ..awayTeamId = awayTeamId ?? this.awayTeamId
       ..gameId = gameId ?? this.gameId
       ..playerId = playerId ?? this.playerId
       ..gameStartTime = gameStartTime ?? this.gameStartTime
-      ..type = type ?? this.type
-      ..guessData = guessData ?? this.guessData;
-  }
-}
-
-GuessParamGuessData $GuessParamGuessDataFromJson(Map<String, dynamic> json) {
-  final GuessParamGuessData guessParamGuessData = GuessParamGuessData();
-  final String? guessAttr = jsonConvert.convert<String>(json['guessAttr']);
-  if (guessAttr != null) {
-    guessParamGuessData.guessAttr = guessAttr;
-  }
-  final int? guessChoice = jsonConvert.convert<int>(json['guessChoice']);
-  if (guessChoice != null) {
-    guessParamGuessData.guessChoice = guessChoice;
-  }
-  final double? guessReferenceValue = jsonConvert.convert<double>(
-      json['guessReferenceValue']);
-  if (guessReferenceValue != null) {
-    guessParamGuessData.guessReferenceValue = guessReferenceValue;
-  }
-  return guessParamGuessData;
-}
-
-Map<String, dynamic> $GuessParamGuessDataToJson(GuessParamGuessData entity) {
-  final Map<String, dynamic> data = <String, dynamic>{};
-  data['guessAttr'] = entity.guessAttr;
-  data['guessChoice'] = entity.guessChoice;
-  data['guessReferenceValue'] = entity.guessReferenceValue;
-  return data;
-}
-
-extension GuessParamGuessDataExtension on GuessParamGuessData {
-  GuessParamGuessData copyWith({
-    String? guessAttr,
-    int? guessChoice,
-    double? guessReferenceValue,
-  }) {
-    return GuessParamGuessData()
       ..guessAttr = guessAttr ?? this.guessAttr
       ..guessChoice = guessChoice ?? this.guessChoice
       ..guessReferenceValue = guessReferenceValue ?? this.guessReferenceValue;

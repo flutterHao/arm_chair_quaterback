@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/entities/guess_data.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/recive_award_entity.g.dart';
 import 'dart:convert';
@@ -11,7 +12,7 @@ class ReciveAwardEntity {
   late int createTime;
   late int gameStartTime;
   late int teamId;
-  late List<ReciveAwardGuessData> guessData;
+  late List<GuessData> guessData;
   late int updateTime;
   late int id;
   late int type;
@@ -79,50 +80,6 @@ class ReciveAwardL5Avg {
   double _getREB() {
     return (oreb + dreb) / 2;
   }
-
-  @override
-  String toString() {
-    return jsonEncode(this);
-  }
-}
-
-@JsonSerializable()
-class ReciveAwardGuessData {
-  late String guessAttr;
-  late int guessChoice;
-  late int guessTime;
-  late List<ReciveAwardGuessDataAwards> awards;
-  late bool success;
-  late int guessReferenceValue;
-  late int guessGameAttrValue;
-  late int winPro;
-  late int status;
-
-  ReciveAwardGuessData();
-
-  factory ReciveAwardGuessData.fromJson(Map<String, dynamic> json) =>
-      $ReciveAwardGuessDataFromJson(json);
-
-  Map<String, dynamic> toJson() => $ReciveAwardGuessDataToJson(this);
-
-  @override
-  String toString() {
-    return jsonEncode(this);
-  }
-}
-
-@JsonSerializable()
-class ReciveAwardGuessDataAwards {
-  late int id;
-  late int num;
-  late int type;
-
-  ReciveAwardGuessDataAwards();
-
-  factory ReciveAwardGuessDataAwards.fromJson(Map<String, dynamic> json) =>
-      $ReciveAwardGuessDataAwardsFromJson(json);
-
-  Map<String, dynamic> toJson() => $ReciveAwardGuessDataAwardsToJson(this);
 
   @override
   String toString() {

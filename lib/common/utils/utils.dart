@@ -70,6 +70,9 @@ class Utils {
     if (key == "stl") {
       return "STL";
     }
+    if (key == "3pm") {
+      return "3PM";
+    }
     if (key == "pts") {
       return "PTS";
     }
@@ -77,6 +80,25 @@ class Utils {
       return "REB";
     }
     return "3PT";
+  }
+
+  static String getLongName(String key) {
+    if (key == "blk") {
+      return "Blocks";
+    }
+    if (key == "ast") {
+      return "Assists";
+    }
+    if (key == "stl") {
+      return "Steals";
+    }
+    if (key == "pts") {
+      return "Points";
+    }
+    if (key == "reb") {
+      return "Rebounds";
+    }
+    return "3 Points";
   }
 
   static Color getChartColor(value) {

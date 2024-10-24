@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
+import 'package:arm_chair_quaterback/common/entities/guess_game_info_v2_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_param_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
@@ -13,12 +14,15 @@ import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/enums/rank_type.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
+import 'package:arm_chair_quaterback/common/utils/param_utils.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '';
 
+import '../../../common/entities/guess_game_info_entity.dart';
 import 'index.dart';
 
 class PicksIndexController extends GetxController {
@@ -31,100 +35,116 @@ class PicksIndexController extends GetxController {
 
   var loadStatusRx = LoadDataStatus.loading.obs;
 
-  List<PicksPlayer> picksPlayers = [];
-
   RankListEntity rankInfo = RankListEntity();
 
-  Map<int, double> choiceData = {};
+  Map<String, List<PicksPlayerV2>> guessGamePlayers = {};
+  double streakReward = 0;
+  int guessWinningStreak = 0;
+
+  late NewsDefineEntity newsDefine;
 
   var currentIndex = 0.obs;
-  var tabs = List.generate(10, (_)=> "PTS");
 
   var betCount = 0.0.obs; // 总赔率
   var costCount = 0.0.obs; // 总花费
+  var choiceSize = 0.obs; //选中个数
 
   var batchDeleteOpen = false.obs;
 
+  String getCurrentTabStr() {
+    return ParamUtils.getProKey(
+        guessGamePlayers.keys.toList()[currentIndex.value]);
+  }
+
+  List<PicksPlayerV2> getChoiceGuessPlayers() {
+    List<PicksPlayerV2> list = [];
+    for (int i = 0; i < guessGamePlayers.keys.length; i++) {
+      var key = guessGamePlayers.keys.toList()[i];
+      var list2 = guessGamePlayers[key]!;
+      list.addAll(list2.where((e) => e.status != -1));
+    }
+    return list;
+  }
+
   /// 选择了more/less
-  choiceOne(int itemIndex,double choice, {bool needRefreshList = false}) {
-    var index = currentIndex.value;
-    if (choiceData[index] == choice) {
-      choiceData.remove(index);
-    } else {
-      choiceData[index] = choice;
+  choiceOne({PicksPlayerV2? player, bool needRefreshList = false}) {
+    print('choiceOne---');
+    if (player != null) {
+      for (int i = 0; i < guessGamePlayers.keys.length; i++) {
+        var key = guessGamePlayers.keys.toList()[i];
+        var list2 = guessGamePlayers[key]!;
+        var firstWhereOrNull = list2.firstWhereOrNull((e) =>
+            e.guessInfo.playerId == player.guessInfo.playerId &&
+            e.tabStr == player.tabStr);
+        if (firstWhereOrNull != null) {
+          firstWhereOrNull.status = player.status;
+          break;
+        }
+      }
     }
     _count(needRefreshList);
   }
 
   void _count(bool needRefreshList) {
-
-    //todo 功能未实现
-    var len = choiceData.length;
-    // var odds = double.parse(picksPlayers[0].betOdds);
-    // betCount.value = len == 0
-    //     ? 0
-    //     : len == 1
-    //         ? odds
-    //         : double.parse(
-    //             (pow(odds, len) * double.parse(picksPlayers[0].betMutOdds))
-    //                 .toStringAsFixed(1));
-    // costCount.value = double.parse(
-    //     (len * double.parse(picksPlayers[0].betCost)).toStringAsFixed(1));
-
-    //todo 假数据，需删除
-    costCount.value = choiceData.length  * 2;
+    print('choiceSize1111:${choiceSize.value}');
+    choiceSize.value = getChoiceGuessPlayers().length;
+    print('choiceSize2222:${choiceSize.value}');
     if (needRefreshList) {
-      update([idGuessList]);
+      update([idGuessList, PicksIndexController.idGuessConfirmDialog]);
     }
   }
 
-  deleteOne(int index) {
-    choiceData.remove(index);
+  changeTab(int index) {
+    currentIndex.value = index;
+    update([idGuessList]);
+  }
+
+  deleteChoice() {
     _count(true);
   }
 
-  deleteAll() {
-    choiceData.clear();
+  cleanAll() {
+    batchDeleteOpen.value = false;
+    for (int i = 0; i < guessGamePlayers.keys.length; i++) {
+      var key = guessGamePlayers.keys.toList()[i];
+      var list2 = guessGamePlayers[key]!;
+      for (int i1 = 0; i1 < list2.length; i1++) {
+        var playerV2 = list2[i1];
+        if (playerV2.status != -1) {
+          playerV2.status = -1;
+        }
+      }
+    }
     _count(true);
   }
 
-  clearChoiceData() {
-    print('clearChoiceData--------');
-    choiceData.clear();
-    betCount.value = 0.0;
-    costCount.value = 0.0;
-  }
-
-  guess({bool inDialog = false}) {
+  guess(int type) {
     List<GuessParamEntity> params = [];
-    for (int i = 0; i < choiceData.keys.length; i++) {
-      var key = choiceData.keys.toList()[i];
-      var value = choiceData[key];
-      var split = value.toString().split(".");
-      var betDataIndex = split[0];
-      var choiceIndex = split[1];
-      var picksPlayer = picksPlayers[key];
-      GuessInfosEntity guessInfo = picksPlayer.guessInfo;
-      GuessParamEntity guessParamEntity = GuessParamEntity();
-      guessParamEntity.awayTeamId = guessInfo.awayTeamId;
-      guessParamEntity.gameId = guessInfo.gameId;
-      guessParamEntity.playerId = guessInfo.playerId;
-      guessParamEntity.gameStartTime = guessInfo.gameStartTime;
-      guessParamEntity.type =
-          choiceData.keys.length > 1 ? 2 : 1; //type=1就是单选，type=2就是多选
-      GuessParamGuessData guessData = GuessParamGuessData();
-      var propertyName = picksPlayer.betData[int.parse(betDataIndex)];
-      guessData.guessAttr = propertyName.toLowerCase();
-      guessData.guessChoice = int.parse(choiceIndex);
-      guessData.guessReferenceValue =
-          guessInfo.guessReferenceValue.getValue(propertyName);
-      guessParamEntity.guessData = [guessData];
-      params.add(guessParamEntity);
+    for (int i = 0; i < guessGamePlayers.keys.length; i++) {
+      var key = guessGamePlayers.keys.toList()[i];
+      var list2 = guessGamePlayers[key]!;
+      for (int i1 = 0; i1 < list2.length; i1++) {
+        var playerV2 = list2[i1];
+        if (playerV2.status != -1) {
+          GuessParamEntity guessParamEntity = GuessParamEntity();
+          guessParamEntity.awayTeamId = playerV2.awayTeamInfo!.id;
+          guessParamEntity.gameId = playerV2.guessInfo.gameId;
+          guessParamEntity.playerId = playerV2.guessInfo.playerId;
+          guessParamEntity.gameStartTime = playerV2.guessInfo.gameStartTime;
+          guessParamEntity.guessAttr = playerV2.tabStr;
+          guessParamEntity.guessChoice = playerV2.status == 0 ? 1 : 2;
+          guessParamEntity.guessReferenceValue = playerV2.guessInfo.guessReferenceValue
+              .toJson()[ParamUtils.getProKey(playerV2.tabStr)];
+          params.add(guessParamEntity);
+        }
+      }
     }
-    PicksApi.guess(params).then((result) {
-      if (inDialog) Get.back();
-      clearChoiceData();
+    PicksApi.guess(type,params).then((result) {
+      Get.back();
+      cleanAll();
       _initData();
+    },onError: (e){
+      EasyLoading.showToast("SERVER ERROR");
     });
   }
 
@@ -180,47 +200,39 @@ class PicksIndexController extends GetxController {
       CacheApi.getNBATeamDefine(getList: true),
       PicksApi.getRedisRankInfo(type: RankType.newsGuess)
     ]).then((results) {
-      picksPlayers.clear();
-      List<GuessInfosEntity> guessInfosEntity =
-          results[0] as List<GuessInfosEntity>;
-      NbaPlayerInfosEntity nbaPlayerInfosEntity =
-          results[1] as NbaPlayerInfosEntity;
-      NewsDefineEntity newsDefineEntity = results[2] as NewsDefineEntity;
-      List<NbaTeamEntity> nbaTeams = results[3] as List<NbaTeamEntity>;
+      guessGamePlayers.clear();
+      _count(false);
+      var guessGameInfo = results[0] as GuessGameInfoV2Entity;
+      var res = guessGameInfo.guessInfo.toJson();
+      streakReward = guessGameInfo.streakReward;
+      guessWinningStreak = guessGameInfo.guessWinningStreak;
+      var nbaPlayers = results[1] as NbaPlayerInfosEntity;
+      newsDefine = results[2];
+      List<NbaTeamEntity> teamList = results[3] as List<NbaTeamEntity>;
+      for (int i = 0; i < res.keys.length; i++) {
+        List<PicksPlayerV2> item = [];
+        var key = res.keys.toList()[i];
+        var list = res[key]!;
+        for (int i1 = 0; i1 < list.length; i1++) {
+          GuessGameInfoEntity guessGameInfoEntity =
+              GuessGameInfoEntity.fromJson(list[i1]);
+          PicksPlayerV2 playerV2 = PicksPlayerV2();
+          playerV2.tabStr = key;
+          playerV2.baseInfoList = nbaPlayers.playerBaseInfoList
+              .firstWhere((e) => e.playerId == guessGameInfoEntity.playerId);
+          playerV2.dataAvgList = nbaPlayers.playerDataAvgList
+              .firstWhere((e) => e.playerId == guessGameInfoEntity.playerId);
+          playerV2.awayTeamInfo = teamList
+              .firstWhereOrNull((e) => e.id == guessGameInfoEntity.awayTeamId);
+          playerV2.guessInfo = guessGameInfoEntity;
+          item.add(playerV2);
+        }
+        guessGamePlayers[key] = item;
+      }
 
       ///rank 排行榜
       rankInfo = results[4] as RankListEntity;
-      for (GuessInfosEntity e in guessInfosEntity) {
-        PicksPlayer picksPlayer = PicksPlayer();
-        picksPlayer.baseInfoList = nbaPlayerInfosEntity.playerBaseInfoList
-            .firstWhere((nba) => nba.playerId == e.playerId);
-        picksPlayer.dataAvgList = nbaPlayerInfosEntity.playerDataAvgList
-            .firstWhere((nba) => nba.playerId == e.playerId);
-
-        //todo
-        // switch (picksPlayer.baseInfoList.position.toLowerCase()) {
-        //   case "c":
-        //     picksPlayer.betData = newsDefineEntity.cBetData;
-        //   case "pg":
-        //     picksPlayer.betData = newsDefineEntity.pgBetDate;
-        //   case "sg":
-        //     picksPlayer.betData = newsDefineEntity.sgBetData;
-        //   case "pf":
-        //     picksPlayer.betData = newsDefineEntity.pfBetData;
-        //   case "sf":
-        //     picksPlayer.betData = newsDefineEntity.sfBetData;
-        // }
-        picksPlayer.betMutOdds = "2";//newsDefineEntity.betMutOdds;//todo
-        picksPlayer.betCost = newsDefineEntity.betCost;
-        picksPlayer.betOdds = "2";//newsDefineEntity.betOdds;//todo
-        picksPlayer.selfTeamInfo = nbaTeams.firstWhere((nba) =>
-            nba.id.toString() == picksPlayer.baseInfoList.teamId.toString());
-        picksPlayer.awayTeamInfo = nbaTeams
-            .firstWhere((nba) => nba.id.toString() == e.awayTeamId.toString());
-        picksPlayer.guessInfo = e;
-        picksPlayers.add(picksPlayer);
-      }
-      if (picksPlayers.isEmpty && rankInfo.ranks.isEmpty) {
+      if (guessGamePlayers.isEmpty && rankInfo.ranks.isEmpty) {
         loadStatusRx.value = LoadDataStatus.noData;
       } else {
         loadStatusRx.value = LoadDataStatus.success;
@@ -241,8 +253,11 @@ class PicksIndexController extends GetxController {
     });
   }
 
-  static String get idMain => "main";
-  static String get idGuessList => "guessList";
+  static String get idMain => "id_main";
+
+  static String get idGuessList => "id_guess_list";
+
+  static String get idGuessConfirmDialog => "id_guess_confirm_dialog";
 
   /// 在 onInit() 之后调用 1 帧。这是进入的理想场所
   @override

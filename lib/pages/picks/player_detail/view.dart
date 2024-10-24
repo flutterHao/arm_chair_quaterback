@@ -35,12 +35,11 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
 
   @override
   Widget build(BuildContext context) {
-    var args = arguments ??
-            Get.arguments ??
-            PlayerDetailPageArguments(2115);
+    var args = arguments ?? Get.arguments ?? PlayerDetailPageArguments(2115);
     return HorizontalDragBackWidget(
       child: GetBuilder<PlayerDetailController>(
-        init: PlayerDetailController(args),//todo PlayerDetailPageArguments测试数据，需删除
+        init: PlayerDetailController(args),
+        //todo PlayerDetailPageArguments测试数据，需删除
         id: PlayerDetailController.idMain,
         builder: (_) {
           return BlackAppWidget(
@@ -113,10 +112,8 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                           "·${controller.teamInfo?.shortEname}")
                                 ])),
                             13.vGap,
-                            //todo 接口未提供数据,隐藏
-                            Opacity(
-                              opacity: 1,
-                              child: Row(
+                            if (false) //todo 接口未提供数据,隐藏
+                              Row(
                                 children: [
                                   _buildPlayerInfoItem("AGE", "23"),
                                   24.hGap,
@@ -126,8 +123,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                   24.hGap,
                                   _buildPlayerInfoItem("EXP", "5"),
                                 ],
-                              ),
-                            )
+                              )
                           ],
                         ),
                       ),
@@ -219,10 +215,13 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                   Expanded(
                     child: TabBarView(
                         controller: controller.tabController,
-                        physics: OneBoundaryPageScrollPhysics(tabController: controller.tabController),
+                        physics: OneBoundaryPageScrollPhysics(
+                            tabController: controller.tabController),
                         children: [
                           const SummaryPage(),
-                          HistoryPage(headHeight: appBarHeight + 66.w,),
+                          HistoryPage(
+                            headHeight: appBarHeight + 66.w,
+                          ),
                           PlayerDetailGame(
                             headHeight: appBarHeight + 66.w,
                             upStarSuccessCallBack: controller.reloadData,

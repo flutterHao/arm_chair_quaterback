@@ -1,10 +1,17 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/player_avatar_widget.dart';
+import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guess_item_v2/guess_item_controller_v2.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/player_item_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -12,21 +19,30 @@ import 'package:get/get.dart';
 ///@auther gejiahui
 ///created at 2024/10/19/16:43
 
-class GuessItemV2 extends StatefulWidget {
-  const GuessItemV2({super.key, required this.index});
+class GuessItemV2 extends StatelessWidget {
+  const GuessItemV2({super.key, required this.playerV2, required this.index});
 
+  final PicksPlayerV2 playerV2;
   final int index;
-  @override
-  State<GuessItemV2> createState() => _GuessItemV2State();
-}
 
-class _GuessItemV2State extends State<GuessItemV2> {
   @override
   Widget build(BuildContext context) {
+    PicksPlayerV2 player = playerV2;
+    PicksIndexController picksIndexController = Get.find();
+
+    maxLimit(){
+      var length = picksIndexController.getChoiceGuessPlayers().length;
+      if(length>=6 && player.status == -1){
+        EasyLoading.showToast("Select up to 6");
+        return true;
+      }
+      return false;
+    }
     return GetBuilder<GuessItemControllerV2>(
-        init: GuessItemControllerV2(widget.index),
-        tag: widget.index.toString(),
+        init: GuessItemControllerV2(player),
+        tag: "${playerV2.guessInfo.playerId}_${index}",
         builder: (controller) {
+          controller.currentIndex.value = player.status;
           return Container(
             padding: EdgeInsets.all(14.w),
             decoration: BoxDecoration(
@@ -37,23 +53,25 @@ class _GuessItemV2State extends State<GuessItemV2> {
               children: [
                 Row(
                   children: [
-                    ImageWidget(
-                      url: "", //todo
+                    PlayerAvatarWidget(
                       width: 42.w,
-                      color: AppColors.cE6E6E6,
+                      playerId: player.guessInfo.playerId,
+                      backgroundColor: AppColors.cD9D9D9,
+                      showGrade: false,
                     ),
                     5.hGap,
                     Expanded(
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Player Name",
+                            player.baseInfoList.ename,
                             style: 14.w4(color: AppColors.c262626, height: 1),
                             overflow: TextOverflow.ellipsis,
                           ),
                           7.vGap,
                           Text(
-                            "VS NOP   8:05 AM",
+                            "VS ${player.awayTeamInfo?.shortEname ?? ""}   ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(player.guessInfo.gameStartTime))}",
                             style: 10.w4(color: AppColors.cB3B3B3, height: 1),
                             overflow: TextOverflow.ellipsis,
                           )
@@ -73,24 +91,23 @@ class _GuessItemV2State extends State<GuessItemV2> {
                       Expanded(
                           child: Center(
                               child: Text(
-                                "25.6",
-                                style: 18.w7(
-                                    color: AppColors.c262626, height: 1),
-                              ))),
+                        "${player.guessInfo.guessReferenceValue.getValue(picksIndexController.getCurrentTabStr())}",
+                        style: 18.w7(color: AppColors.c262626, height: 1),
+                      ))),
                       Container(
                         height: 18.w,
                         width: 1,
                         decoration:
-                        const BoxDecoration(color: AppColors.cC4C4C4),
+                            const BoxDecoration(color: AppColors.cC4C4C4),
                       ),
                       Expanded(
                           child: Center(
                               child: Text(
-                                "Points less",
-                                style: 12.w4(
-                                    color: AppColors.cB3B3B3, height: 1),
-                                textAlign: TextAlign.center,
-                              )))
+                        Utils.getLongName(
+                            picksIndexController.getCurrentTabStr()),
+                        style: 12.w4(color: AppColors.cB3B3B3, height: 1),
+                        textAlign: TextAlign.center,
+                      )))
                     ],
                   ),
                 ),
@@ -106,7 +123,12 @@ class _GuessItemV2State extends State<GuessItemV2> {
                         Flexible(
                           flex: 1,
                           child: InkWell(
-                            onTap: () => controller.guessItemTap(0),
+                            onTap: (){
+                              if(maxLimit()){
+                                return;
+                              }
+                              controller.guessItemTap(0);
+                            },
                             child: Container(
                               decoration: BoxDecoration(
                                   color: controller.currentIndex.value == 0
@@ -121,17 +143,20 @@ class _GuessItemV2State extends State<GuessItemV2> {
                                   IconWidget(
                                     iconWidth: 15.w,
                                     icon: Assets.uiIconUpPng,
-                                    iconColor: controller.currentIndex.value == 0
-                                        ? AppColors.cF2F2F2
-                                        : AppColors.cFF7954,
+                                    iconColor:
+                                        controller.currentIndex.value == 0
+                                            ? AppColors.cF2F2F2
+                                            : AppColors.cFF7954,
                                   ),
                                   5.vGap,
                                   Text(
                                     "MORE",
-                                    style: 12
-                                        .w7(color: controller.currentIndex.value == 0
-                                        ? AppColors.cF2F2F2
-                                        : AppColors.cFF7954, height: 1),
+                                    style: 12.w7(
+                                        color:
+                                            controller.currentIndex.value == 0
+                                                ? AppColors.cF2F2F2
+                                                : AppColors.cFF7954,
+                                        height: 1),
                                   )
                                 ],
                               ),
@@ -146,7 +171,12 @@ class _GuessItemV2State extends State<GuessItemV2> {
                         Flexible(
                           flex: 1,
                           child: InkWell(
-                            onTap: () => controller.guessItemTap(1),
+                            onTap: (){
+                              if(maxLimit()){
+                                return;
+                              }
+                              controller.guessItemTap(1);
+                            },
                             child: Container(
                               decoration: BoxDecoration(
                                   color: controller.currentIndex.value == 1
@@ -161,18 +191,21 @@ class _GuessItemV2State extends State<GuessItemV2> {
                                   IconWidget(
                                     iconWidth: 15.w,
                                     icon: Assets.uiIconUpPng,
-                                    iconColor: controller.currentIndex.value == 1
-                                        ? AppColors.cF2F2F2
-                                        : AppColors.cFF7954,
+                                    iconColor:
+                                        controller.currentIndex.value == 1
+                                            ? AppColors.cF2F2F2
+                                            : AppColors.cFF7954,
                                     rotateAngle: 180,
                                   ),
                                   5.vGap,
                                   Text(
                                     "LESS",
-                                    style:
-                                    12.w7(color: controller.currentIndex.value == 1
-                                        ? AppColors.cF2F2F2
-                                        : AppColors.cFF7954, height: 1),
+                                    style: 12.w7(
+                                        color:
+                                            controller.currentIndex.value == 1
+                                                ? AppColors.cF2F2F2
+                                                : AppColors.cFF7954,
+                                        height: 1),
                                   )
                                 ],
                               ),
@@ -188,4 +221,6 @@ class _GuessItemV2State extends State<GuessItemV2> {
           );
         });
   }
+
+
 }
