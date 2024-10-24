@@ -16,6 +16,7 @@ import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dar
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/linear_progress_widget.dart';
 import 'package:flutter/material.dart';
@@ -329,6 +330,7 @@ class PlayerItem extends GetView<TeamController> {
 ///球员头像
 class PlayerAwater extends StatelessWidget {
   const PlayerAwater({super.key, this.backgroudColor, required this.player});
+
   final Color? backgroudColor;
   final dynamic player;
 
@@ -337,7 +339,8 @@ class PlayerAwater extends StatelessWidget {
     ///头像
     return InkWell(
       onTap: () {
-        Get.toNamed(RouteNames.picksPlayerDetail);
+        Get.toNamed(RouteNames.picksPlayerDetail,
+            arguments: PlayerDetailPageArguments(player.playerId));
       },
       child: Stack(
         children: [

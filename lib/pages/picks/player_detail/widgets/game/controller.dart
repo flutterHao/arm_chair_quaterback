@@ -126,12 +126,13 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
     var homeController = Get.find<HomeController>();
     var uuidInfo = homeController.userEntiry.teamLoginInfo?.teamPlayerList
         ?.firstWhereOrNull((e) => e.playerId == arguments.playerId);
+    print('uuidInfo----:${uuidInfo?.toJson()}');
     if (uuidInfo != null) {
       cacheUuid = uuidInfo.uuid;
       futures.addAll([
         CacheApi.getStarUpDefine(),
         PicksApi.getAllTeamPlayersByUpStar(cacheUuid!),
-        PicksApi.getTeamPlayerByUUID(uuidInfo.teamId!, cacheUuid!)
+        PicksApi.getTeamPlayerByUUID(uuidInfo.teamId, cacheUuid!)
       ]);
     }
 

@@ -1,9 +1,9 @@
-
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/entities/recive_award_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/recive_award_v2_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
@@ -41,7 +41,9 @@ class ReciveRwardController extends GetxController {
   void _initData() {
     loadStatusRx.value = LoadDataStatus.loading;
     var futures = [
-      PicksApi.getGuessInfos(Get.find<HomeController>().userEntiry.teamLoginInfo?.team?.teamId??0),
+      PicksApi.getGuessInfos(
+          Get.find<HomeController>().userEntiry.teamLoginInfo?.team?.teamId ??
+              0),
       CacheApi.getNBATeamDefine(getList: true),
       CacheApi.getNBAPlayerInfo(),
     ];
@@ -49,8 +51,7 @@ class ReciveRwardController extends GetxController {
       futures.add(CacheApi.getNewsDefine());
     }
     Future.wait(futures).then((result) {
-      List<List<ReciveAwardEntity>> result0 =
-          result[0] as List<List<ReciveAwardEntity>>;
+      ReciveAwardV2Entity result0 = result[0] as ReciveAwardV2Entity;
       List<NbaTeamEntity> result1 = result[1] as List<NbaTeamEntity>;
       NbaPlayerInfosEntity result2 = result[2] as NbaPlayerInfosEntity;
       if (result.length == 4) {
@@ -63,24 +64,23 @@ class ReciveRwardController extends GetxController {
       ///  STATUS_已结算未领取奖励 = 2;
       ///  STATUS_已结算已领取奖励 = 3;
       ///
-      var guessHistoryList = result0
-          .where((e) => (e
-              .where((f) =>
-                  f.guessData[0].status == 2)
-              .toList()
-              .isNotEmpty))
+      var guessHistoryList = result0.pointGuessing
+          .where((e) => e.guessData[0].status == 2)
           .toList();
+      guessHistoryList.addAll(result0.newsGuessing
+          .where((e) => e.guessData[0].status == 2)
+          .toList());
       listData.clear();
-      for (List l in guessHistoryList) {
+      for (var l in guessHistoryList) {
         List<PicksPlayer> players = [];
-        for (ReciveAwardEntity r in l) {
+        for (var r in l.guessData) {
           PicksPlayer player = PicksPlayer();
           player.baseInfoList = result2.playerBaseInfoList
               .firstWhere((e) => r.playerId == e.playerId);
           player.dataAvgList = result2.playerDataAvgList
               .firstWhere((e) => r.playerId == e.playerId);
           player.awayTeamInfo = result1.firstWhere((e) => e.id == r.awayTeamId);
-          player.reciveAwardInfo = r;
+          player.reciveAwardInfo = l;
           players.add(player);
         }
         listData.add(players);

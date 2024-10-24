@@ -34,6 +34,14 @@ class ReciveAwardItemController extends GetxController {
     return "2";
   }
 
+  String getTypeString(){
+    return data[0].reciveAwardInfo.type ==1?"Flex play":data[0].reciveAwardInfo.type ==2?"Power play":"";
+  }
+
+  int getStatus(){
+    return data[0].reciveAwardInfo.status;
+  }
+
   /// 获取消耗金币数
   String getCostCount() {
     int len = data.length;
@@ -64,19 +72,22 @@ class ReciveAwardItemController extends GetxController {
         format: DateFormats.H_M);
   }
 
+
+
+
   /// 获取奖励
   getGuessAward() {
     print('getGuessAward-------');
-    PicksApi.getGuessAward(data.length==1?data[0].reciveAwardInfo.id:data[0].reciveAwardInfo.scId).then((result) {
-      List<PicksPlayer> tempData = [];
-      for (int i = 0; i < data.length; i++) {
-        var item = data[i];
-        item.reciveAwardInfo.guessData[0].status = 3;
-        tempData.add(item);
-      }
-      data = tempData;
-      update([idReciveAwardItem]);
-    });
+    // PicksApi.getGuessAward(data.length==1?data[0].reciveAwardInfo.id:data[0].reciveAwardInfo.scId).then((result) {
+    //   List<PicksPlayer> tempData = [];
+    //   for (int i = 0; i < data.length; i++) {
+    //     var item = data[i];
+    //     item.reciveAwardInfo.guessData[0].status = 3;
+    //     tempData.add(item);
+    //   }
+    //   data = tempData;
+    //   update([idReciveAwardItem]);
+    // });
   }
 
   String get idReciveAwardItem => "recive_award_item";

@@ -1,6 +1,7 @@
 import 'package:arm_chair_quaterback/common/entities/guess_game_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/recive_award_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/recive_award_v2_entity.dart';
 
 import 'guess_infos_entity.dart';
 import 'nba_player_infos_entity.dart';
@@ -25,7 +26,7 @@ class PicksPlayer {
   /// 竞猜信息
   late GuessGameInfoEntity guessInfo;
 
-  late ReciveAwardEntity reciveAwardInfo;
+  late ReciveAwardV2GuessInfo reciveAwardInfo;
 }
 
 class PicksPlayerV2{

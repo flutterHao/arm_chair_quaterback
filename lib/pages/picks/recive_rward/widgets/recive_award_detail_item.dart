@@ -69,19 +69,19 @@ class ReciveAwardDetailItem extends StatelessWidget {
                           overflow: TextOverflow.ellipsis),
                     ),
                     2.vGap,
-                    Text(
-                      "VS ${player.awayTeamInfo.shortEname} ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(player.reciveAwardInfo.gameStartTime))}AM",
-                      style: 10.w4(color: AppColors.cB3B3B3, height: 1),
-                    ),
+                    // Text(
+                    //   "VS ${player.awayTeamInfo.shortEname} ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(player.reciveAwardInfo.gameStartTime))}AM",
+                    //   style: 10.w4(color: AppColors.cB3B3B3, height: 1),
+                    // ),
                     6.vGap,
                     Text(
                       "PPG: ${double.parse(player.dataAvgList.getValue(player.reciveAwardInfo.guessData[0].guessAttr).toString()).toStringAsFixed(0)}P",
                       style: 10.w4(color: AppColors.cB3B3B3, height: 1),
                     ),
-                    Text(
-                      "L5: ${double.parse(player.reciveAwardInfo.l5Avg.getValue(player.reciveAwardInfo.guessData[0].guessAttr).toString()).toStringAsFixed(0)}P",
-                      style: 10.w4(color: AppColors.cB3B3B3, height: 1),
-                    )
+                    // Text(
+                    //   "L5: ${double.parse(player.reciveAwardInfo.l5Avg.getValue(player.reciveAwardInfo.guessData[0].guessAttr).toString()).toStringAsFixed(0)}P",
+                    //   style: 10.w4(color: AppColors.cB3B3B3, height: 1),
+                    // )
                   ],
                 ),
               ),

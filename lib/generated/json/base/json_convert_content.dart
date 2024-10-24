@@ -25,6 +25,7 @@ import 'package:arm_chair_quaterback/common/entities/rank_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/receive_prop_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/recive_award_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/recive_award_v2_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/reward_group_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/star_up_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
@@ -357,6 +358,19 @@ class JsonConvert {
       return data.map<ReciveAwardL5Avg>((Map<String, dynamic> e) =>
           ReciveAwardL5Avg.fromJson(e)).toList() as M;
     }
+    if (<ReciveAwardV2Entity>[] is M) {
+      return data.map<ReciveAwardV2Entity>((Map<String, dynamic> e) =>
+          ReciveAwardV2Entity.fromJson(e)).toList() as M;
+    }
+    if (<ReciveAwardV2GuessInfo>[] is M) {
+      return data.map<ReciveAwardV2GuessInfo>((Map<String, dynamic> e) =>
+          ReciveAwardV2GuessInfo.fromJson(e)).toList() as M;
+    }
+    if (<ReciveAwardV2GuessInfoGuessData>[] is M) {
+      return data.map<ReciveAwardV2GuessInfoGuessData>((
+          Map<String, dynamic> e) =>
+          ReciveAwardV2GuessInfoGuessData.fromJson(e)).toList() as M;
+    }
     if (<RewardGroupEntity>[] is M) {
       return data.map<RewardGroupEntity>((Map<String, dynamic> e) =>
           RewardGroupEntity.fromJson(e)).toList() as M;
@@ -548,6 +562,10 @@ class JsonConvertClassCollection {
     (ReceivePropEntity).toString(): ReceivePropEntity.fromJson,
     (ReciveAwardEntity).toString(): ReciveAwardEntity.fromJson,
     (ReciveAwardL5Avg).toString(): ReciveAwardL5Avg.fromJson,
+    (ReciveAwardV2Entity).toString(): ReciveAwardV2Entity.fromJson,
+    (ReciveAwardV2GuessInfo).toString(): ReciveAwardV2GuessInfo.fromJson,
+    (ReciveAwardV2GuessInfoGuessData)
+        .toString(): ReciveAwardV2GuessInfoGuessData.fromJson,
     (RewardGroupEntity).toString(): RewardGroupEntity.fromJson,
     (StarUpDefineEntity).toString(): StarUpDefineEntity.fromJson,
     (TeamPlayerInfoEntity).toString(): TeamPlayerInfoEntity.fromJson,

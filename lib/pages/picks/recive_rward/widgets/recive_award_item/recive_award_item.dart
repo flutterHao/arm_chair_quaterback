@@ -3,6 +3,7 @@ import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
@@ -51,42 +52,30 @@ class ReciveAwardItem extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      _buildTopLeftTitle(),
                       Row(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.symmetric(horizontal: 6.w),
+                        children: List.generate(data.length, (index) {
+                          return Container(
+                            height: 12.w,
+                            width: 12.w,
+                            margin: EdgeInsets.only(left: 6.w),
                             decoration: BoxDecoration(
-                                color: AppColors.c262626,
-                                borderRadius: BorderRadius.circular(5.w)),
-                            child: Text(
-                              "${controller.getBetCount()}x",
-                              style: 16.w7(color: AppColors.cF2F2F2, height: 1),
-                            ),
-                          ),
-                          12.hGap,
-                          IconWidget(
-                            iconWidth: 17.w,
-                            icon: Assets.uiIconJettonPng,
-                            iconColor: controller.getAwardCoin() == null
-                                ? AppColors.cE72646
-                                : AppColors.c10A86A,
-                          ), //todo 换图
-                          4.hGap,
-                          Text(
-                            controller.getAwardCoin() == null
-                                ? ("-${controller.getCostCount()}")
-                                : ("+${controller.getAwardCoin()!}"),
-                            style: 16.w7(
-                                color: controller.getAwardCoin() == null
-                                    ? AppColors.cE72646
-                                    : AppColors.c10A86A,
-                                height: 1),
-                          ),
-                        ],
-                      ),
-                      Text(
-                        controller.getTime(),
-                        style: 12.w4(color: AppColors.cB3B3B3, height: 1),
+                                color: controller.getStatus() != 2
+                                    ? data[index]
+                                            .reciveAwardInfo
+                                            .guessData[index]
+                                            .awards
+                                            .isNotEmpty
+                                        ? AppColors.c10A86A
+                                        : AppColors.cE72646
+                                    : AppColors.cTransparent,
+                                border: controller.getStatus() != 2
+                                    ? null
+                                    : Border.all(
+                                        color: AppColors.cB3B3B3, width: 1),
+                                borderRadius: BorderRadius.circular(6.w)),
+                          );
+                        }),
                       )
                     ],
                   ),
@@ -146,19 +135,27 @@ class ReciveAwardItem extends StatelessWidget {
                         ),
                       ),
                       if (personalCenterPage)
-                        Container(
-                          width: 68.w,
-                          height: 27.w,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(14.w),
-                              border: Border.all(
-                                  color: AppColors.c262626.withOpacity(.2),
-                                  width: 1)),
-                          child: Text(
-                            "View all",
-                            style: 12.w4(color: AppColors.c666666),
-                          ),
+                        Column(
+                          children: [
+                            Text(
+                              "${MyDateUtils.getMonthEnName(MyDateUtils.getDateTimeByMs(controller.data[0].reciveAwardInfo.createTime), short: true)} ${MyDateUtils.getDateTimeByMs(controller.data[0].reciveAwardInfo.createTime).day}",
+                              style: 12.w4(color: AppColors.cB3B3B3),
+                            ),
+                            Container(
+                              width: 68.w,
+                              height: 27.w,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(14.w),
+                                  border: Border.all(
+                                      color: AppColors.c262626.withOpacity(.2),
+                                      width: 1)),
+                              child: Text(
+                                "View all",
+                                style: 12.w4(color: AppColors.c666666),
+                              ),
+                            ),
+                          ],
                         )
                       else
                         InkWell(
@@ -195,6 +192,67 @@ class ReciveAwardItem extends StatelessWidget {
             ),
           );
         });
+  }
+
+  Widget _buildTopLeftTitle() {
+    if (controller.getStatus() == 2) {
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          IconWidget(
+            iconWidth: 13.w,
+            icon: Assets.uiIconCountdownPng,
+            iconColor: AppColors.c262626,
+          ),
+          3.hGap,
+          Text(
+            MyDateUtils.formatDate(
+                MyDateUtils.getDateTimeByMs(MyDateUtils.getNextDayStartTimeMS(
+                        MyDateUtils.nextDay(MyDateUtils.getDateTimeByMs(
+                            controller.data[0].reciveAwardInfo.createTime))) -
+                    controller.data[0].reciveAwardInfo.createTime),
+                format: DateFormats.H_M_S),
+            style: 16.w4(color: AppColors.c262626, height: 1),
+          )
+        ],
+      );
+    }
+    return Row(
+      children: [
+        Container(
+          height: 18.w,
+          width: 71.w,
+          decoration: BoxDecoration(
+              color: AppColors.c262626,
+              borderRadius: BorderRadius.circular(5.w)),
+          child: Center(
+            child: Text(
+              controller.getTypeString(),
+              style: 10.w4(color: AppColors.cF2F2F2, height: 1),
+            ),
+          ),
+        ),
+        12.hGap,
+        IconWidget(
+          iconWidth: 17.w,
+          icon: Assets.uiIconJettonPng,
+          iconColor: controller.getAwardCoin() == null
+              ? AppColors.cB3B3B3
+              : AppColors.c10A86A,
+        ),
+        4.hGap,
+        Text(
+          controller.getAwardCoin() == null
+              ? ("-${controller.getCostCount()}")
+              : ("+${controller.getAwardCoin()!}"),
+          style: 16.w7(
+              color: controller.getAwardCoin() == null
+                  ? AppColors.cB3B3B3
+                  : AppColors.c10A86A,
+              height: 1),
+        ),
+      ],
+    );
   }
 
   Future<dynamic> _buildDetailDialog(BuildContext context) {
