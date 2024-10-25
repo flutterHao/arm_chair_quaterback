@@ -136,6 +136,8 @@ class Assets {
   static const uiIconSettingPng = 'assets/images/player/ui_icon_setting.png';
   static const uiIconFollowPng = 'assets/images/player/ui_icon_follow.png';
   static const uiIconFollowedPng = 'assets/images/player/ui_icon_followed.png';
+  static const uiIconPickPng = 'assets/images/player/ui_icon_pick.png';
+  static const uiIconTradePng = 'assets/images/player/ui_icon_trade.png';
 
   ///team
 static const uiBattleNewsPng = 'assets/images/team/ui_battle_news.png';

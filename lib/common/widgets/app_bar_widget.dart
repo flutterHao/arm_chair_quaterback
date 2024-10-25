@@ -56,6 +56,8 @@ class AppBarWidget extends StatelessWidget {
                           onTap: () {
                             Navigator.of(context).pop();
                           },
+                          highlightColor: Colors.red,
+                          splashColor: Colors.green,
                           child: Container(
                             width: 68.w,
                             height: 48.w,

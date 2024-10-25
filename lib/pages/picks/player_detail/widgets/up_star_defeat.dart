@@ -43,18 +43,18 @@ class UpStarDefeat extends StatelessWidget {
                       AppColors.cFFFFFF
                     ],
                     stops: [
-                      0.12,
-                      0.4,
+                      0.06,
+                      0.3,
                       1
                     ]),
               ),
             ),
             Positioned(
-                top: 15.w,
+                top: 20.w,
                 child:
                     IconWidget(iconWidth: 111.w, icon: Assets.uiWindowsLosePng)),
             Container(
-              margin: EdgeInsets.only(top: 106.w),
+              margin: EdgeInsets.only(top: 99.w),
               child: DialogBackground(
                 borderHeight: 2,
                 borderRadius: BorderRadius.circular(20.w),
