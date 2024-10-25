@@ -9,6 +9,7 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog_background.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/recive_rward/widgets/recive_award_detail_item.dart';
 import 'package:arm_chair_quaterback/pages/picks/recive_rward/widgets/recive_award_item/recive_award_item_controller.dart';
@@ -101,39 +102,47 @@ class ReciveAwardItem extends StatelessWidget {
                                   : controller.data.length, (index) {
                             /// 倒叙绘制
                             return Positioned(
-                              left: 30.w *
-                                  ((controller.data.length >= 5
-                                          ? 5
-                                          : controller.data.length) -
-                                      1 -
-                                      index),
-                              child: Container(
-                                  width: 44.w,
-                                  height: 44.w,
+                                left: 30.w *
+                                    ((controller.data.length >= 5
+                                            ? 5
+                                            : controller.data.length) -
+                                        1 -
+                                        index),
+                                child: Container(
                                   decoration: BoxDecoration(
                                       color: AppColors.cD9D9D9,
                                       borderRadius: BorderRadius.circular(22.w),
                                       border: Border.all(
                                           width: 2.w,
                                           color: AppColors.cF2F2F2)),
-                                  alignment: Alignment.bottomCenter,
-                                  child: controller.data.length >= 5 &&
-                                          index == 0
-                                      ? Container(
-                                          alignment: Alignment.center,
-                                          padding: EdgeInsets.only(left: 7.w),
-                                          child: Text(
-                                            "+${controller.data.length - 5}",
-                                            style:
-                                                12.w4(color: AppColors.c666666),
-                                          ),
-                                        )
-                                      : Image.asset(
-                                          Assets.testTeamLogoPng,
-                                          width: 44.w,
-                                          fit: BoxFit.fitWidth,
-                                        )),
-                            );
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(22.w),
+                                    child: Container(
+                                        width: 44.w,
+                                        height: 44.w,
+                                        alignment: Alignment.centerRight,
+                                        child: controller.data.length >= 5 &&
+                                                index == 0
+                                            ? Container(
+                                                alignment: Alignment.center,
+                                                padding:
+                                                    EdgeInsets.only(left: 7.w),
+                                                child: Text(
+                                                  "+${controller.data.length - 5}",
+                                                  style: 12.w4(
+                                                      color: AppColors.c666666),
+                                                ),
+                                              )
+                                            : ImageWidget(
+                                                url: Utils.getPlayUrl(controller
+                                                    .data[index]
+                                                    .guessData
+                                                    ?.playerId),
+                                                width: 40.w,
+                                                height: 40.w,
+                                              )),
+                                  ),
+                                ));
                           }),
                         ),
                       ),
@@ -160,23 +169,23 @@ class ReciveAwardItem extends StatelessWidget {
                             )
                           else
                             InkWell(
-                              onTap: controller.data[0].reciveAwardInfo.status ==
-                                      2
-                                  ? () => controller.getGuessAward()
-                                  : null,
+                              onTap:
+                                  controller.data[0].reciveAwardInfo.status == 2
+                                      ? () => controller.getGuessAward()
+                                      : null,
                               child: Container(
                                 width: 98.w,
                                 height: 27.w,
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
-                                    color: controller.data[0].reciveAwardInfo.status ==
+                                    color: controller.data[0].reciveAwardInfo
+                                                .status ==
                                             2
                                         ? AppColors.cFF7954
                                         : AppColors.cB3B3B3,
                                     borderRadius: BorderRadius.circular(14.w)),
                                 child: Text(
-                                  controller.data[0].reciveAwardInfo.status ==
-                                          2
+                                  controller.data[0].reciveAwardInfo.status == 2
                                       ? "GET"
                                       : "SAL",
                                   style: 14.w4(color: AppColors.cF2F2F2),

@@ -2,6 +2,8 @@ import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_info_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -64,7 +66,7 @@ class GussPlayerItem extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: AppColors.cB3B3B3,
                       borderRadius: BorderRadius.circular(20.w)),
-                  child: Image.asset(Assets.testTeamLogoPng)),
+                  child: ImageWidget(url: Utils.getTeamUrl(rankInfoEntity.teamId))),
 
               ///todo 换网络图
             ],

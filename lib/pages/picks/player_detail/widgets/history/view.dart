@@ -54,7 +54,7 @@ class _HistoryPageState extends State<HistoryPage>
                         onExpansionChanged: (expanded) {
                           if (expanded) {
                             // 在展开时自动滚动到确保内容在屏幕中
-                            _scrollToItem(index);
+                            _scrollToItem(context,index);
                           }
                         },
                         children: [
@@ -76,7 +76,7 @@ class _HistoryPageState extends State<HistoryPage>
     );
   }
 
-  void _scrollToItem(int index) {
+  void _scrollToItem(BuildContext context,int index) {
     // 延迟确保 ExpansionTile 已完全展开
     Future.delayed(const Duration(milliseconds: 100), () {
       // 获取当前 ExpansionTile 的渲染对象
@@ -90,7 +90,7 @@ class _HistoryPageState extends State<HistoryPage>
       final screenHeight = MediaQuery.of(context).size.height;
 
       // 如果 ExpansionTile 的位置接近屏幕底部，滚动到该位置
-      if (expansionTileYPosition + renderBox.size.height > screenHeight) {
+      if (expansionTileYPosition + renderBox.size.height > screenHeight-100) {
         // 计算需要滚动的偏移量
         double scrollOffset = controller.scrollController.offset +
             (expansionTileYPosition +

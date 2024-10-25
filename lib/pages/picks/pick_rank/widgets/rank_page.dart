@@ -3,6 +3,8 @@ import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/pick_rank/controller.dart';
@@ -150,11 +152,12 @@ class _RankPageState extends State<RankPage>
                                                                     EdgeInsets
                                                                         .all(8
                                                                             .w),
-                                                                child: Image
-                                                                    .asset(Assets
-                                                                        .testTeamLogoPng),
-
-                                                                /// todo 换真实网络图
+                                                                child: ImageWidget(
+                                                                    url: Utils.getTeamUrl(controller
+                                                                        .rankInfo
+                                                                        .ranks[
+                                                                            1]
+                                                                        .teamId)),
                                                               ),
                                                             ),
                                                             Positioned(
@@ -308,11 +311,13 @@ class _RankPageState extends State<RankPage>
                                                             padding:
                                                                 EdgeInsets.all(
                                                                     8.w),
-                                                            child: Image.asset(
-                                                                Assets
-                                                                    .testTeamLogoPng),
-
-                                                            /// todo 换网络图
+                                                            child: ImageWidget(
+                                                                url: Utils.getTeamUrl(
+                                                                    controller
+                                                                        .rankInfo
+                                                                        .ranks[
+                                                                            0]
+                                                                        .teamId)),
                                                           ),
                                                         ),
                                                         Positioned(
@@ -462,11 +467,12 @@ class _RankPageState extends State<RankPage>
                                                                     EdgeInsets
                                                                         .all(8
                                                                             .w),
-                                                                child: Image
-                                                                    .asset(Assets
-                                                                        .testTeamLogoPng),
-
-                                                                /// todo 换网络图
+                                                                child: ImageWidget(
+                                                                    url: Utils.getTeamUrl(controller
+                                                                        .rankInfo
+                                                                        .ranks[
+                                                                            2]
+                                                                        .teamId)),
                                                               ),
                                                             ),
                                                             Positioned(
@@ -585,7 +591,8 @@ class _RankPageState extends State<RankPage>
                         Container(
                           constraints: BoxConstraints(minHeight: 70.w),
                           width: double.infinity,
-                          margin: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 10.w),
+                          margin: EdgeInsets.only(
+                              left: 16.w, right: 16.w, bottom: 10.w),
                           decoration: BoxDecoration(
                               color: AppColors.cE6E6E6,
                               borderRadius: BorderRadius.circular(20.w)),
@@ -646,12 +653,7 @@ class _RankPageState extends State<RankPage>
                                           ?.team
                                           ?.teamId
                                     }),
-                                child: Image.asset(
-                                  Assets.testTeamLogoPng,
-                                  width: 48.w,
-
-                                  /// todo 换网络图
-                                ),
+                                child: ImageWidget(url: Utils.getTeamUrl(controller.rankInfo.myRank.teamId),width: 48.w,)
                               ),
                               Container(
                                 margin: EdgeInsets.only(left: 12.w),
@@ -723,15 +725,14 @@ class _RankPageState extends State<RankPage>
             width: 7.w,
           ),
           InkWell(
-            onTap: () => Get.toNamed(RouteNames.picksPersonalCenter,
-                arguments: {"teamId": controller.rankInfo.ranks[index].teamId}),
-            child: Image.asset(
-              Assets.testTeamLogoPng,
-
-              /// todo 换网络图
-              width: 48.w,
-            ),
-          ),
+              onTap: () => Get.toNamed(RouteNames.picksPersonalCenter,
+                      arguments: {
+                        "teamId": controller.rankInfo.ranks[index].teamId
+                      }),
+              child: ImageWidget(
+                url: Utils.getTeamUrl(controller.rankInfo.ranks[index].teamId),
+                width: 48.w,
+              )),
           SizedBox(
             width: 10.w,
           ),

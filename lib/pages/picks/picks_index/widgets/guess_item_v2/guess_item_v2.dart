@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
@@ -56,6 +57,7 @@ class GuessItemV2 extends StatelessWidget {
                     PlayerAvatarWidget(
                       width: 42.w,
                       playerId: player.guessInfo.playerId,
+                      getXRouteId: GlobalNestedKey.PICKS,
                       backgroundColor: AppColors.cD9D9D9,
                       showGrade: false,
                     ),

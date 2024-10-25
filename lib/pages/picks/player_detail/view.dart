@@ -71,8 +71,8 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                       Container(
                           margin: EdgeInsets.only(right: 13.w),
                           child: ClipRRect(
-                            borderRadius: BorderRadius.vertical(
-                                bottom: Radius.circular(32.w)),
+                            borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(32.w)),
                             child: ImageWidget(
                               url: Utils.getPlayUrl(
                                   controller.baseInfo?.playerId),

@@ -22,34 +22,30 @@ class PlayerAvatarWidget extends StatelessWidget {
     super.key,
     this.grade,
     required this.width,
-    this.height,
     this.backgroundColor = AppColors.c666666,
     this.radius,
     this.fontSize = 14,
     this.fontColor = AppColors.cFFFFFF,
-    this.imageWidth,
-    this.imageHeight,
     this.showGrade = true,
     this.playerId = 1284,
+    this.getXRouteId,
   });
 
   final String? grade;
   final int playerId;
   final double width;
-  final double? height;
-  final double? imageWidth;
-  final double? imageHeight;
   final Color? backgroundColor;
   final double? radius;
   final double fontSize;
   final Color fontColor;
   final bool showGrade;
+  final int? getXRouteId;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => Get.toNamed(RouteNames.picksPlayerDetail,
-          arguments: PlayerDetailPageArguments(playerId)),
+          arguments: PlayerDetailPageArguments(playerId),id: getXRouteId),
       child: ClipRRect(
         child: Stack(
           alignment: Alignment.bottomCenter,

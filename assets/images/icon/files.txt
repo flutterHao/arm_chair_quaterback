@@ -62,3 +62,4 @@ static const uiIconUpPng = 'assets/images/icon/ui_icon_up.png';
 static const uiIconWinPng = 'assets/images/icon/ui_icon_win.png';
 static const uiIconWinningPng = 'assets/images/icon/ui_icon_winning.png';
 static const uiWindowsAwardPng = 'assets/images/icon/ui_windows_award.png';
+static const uiWindowsLosePng = 'assets/images/icon/ui_windows_lose.png';

@@ -76,10 +76,11 @@ class Assets {
   static const uiIconApplePng = 'assets/images/icon/ui_icon_apple.png';
   static const uiIconCountdownPng = 'assets/images/icon/ui_icon_countdown.png';
   static const uiIconDecreasingAmplitudePng =
-      'assets/images/icon/ui_icon_decreasing amplitude.png';
+      'assets/images/icon/ui_icon_decreasing_amplitude.png';
   static const uiIconUpPng = 'assets/images/icon/ui_icon_up.png';
   static const uiIconDetailsPng = 'assets/images/icon/ui_icon_details.png';
   static const uiIconConfirmPng = 'assets/images/icon/ui_icon_confirm.png';
+  static const uiWindowsLosePng = 'assets/images/icon/ui_windows_lose.png';
 
   ///test
   static const testTeamLogoPng = 'assets/test/test_team_logo.png';

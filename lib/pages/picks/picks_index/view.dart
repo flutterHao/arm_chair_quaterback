@@ -14,6 +14,7 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/my_water_drop_header.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
@@ -496,12 +497,7 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                               SizedBox(
                                 width: 4.w,
                               ),
-                              Image.asset(
-                                Assets.testTeamLogoPng,
-                                width: 48.w,
-
-                                ///todo 换网络图
-                              ),
+                              ImageWidget(url: Utils.getTeamUrl(picksIndexController.rankInfo.myRank.teamId),width: 48.w,),
                               Container(
                                 margin: EdgeInsets.only(left: 12.w),
                                 child: Column(

@@ -10,6 +10,7 @@ import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/arc_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/btn_background.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/physics/one_boundary_scroll_physics.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
@@ -215,9 +216,10 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                               toY: controller
                                                   .uuidPlayerInfo!.potential.pts
                                                   .toDouble(),
-                                              color: Utils.getChartColor(controller
-                                                  .uuidPlayerInfo!.potential.pts
-                                                  .toDouble()))
+                                              color: Utils.getChartColor(
+                                                  controller.uuidPlayerInfo!
+                                                      .potential.pts
+                                                      .toDouble()))
                                         ]),
                                     BarChartGroupData(
                                         showingTooltipIndicators: [0],
@@ -232,11 +234,10 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                               toY: controller.uuidPlayerInfo!
                                                   .potential.threePts
                                                   .toDouble(),
-                                              color: Utils.getChartColor(controller
-                                                  .uuidPlayerInfo!
-                                                  .potential
-                                                  .threePts
-                                                  .toDouble()))
+                                              color: Utils.getChartColor(
+                                                  controller.uuidPlayerInfo!
+                                                      .potential.threePts
+                                                      .toDouble()))
                                         ]),
                                     BarChartGroupData(
                                         showingTooltipIndicators: [0],
@@ -251,9 +252,10 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                               toY: controller
                                                   .uuidPlayerInfo!.potential.ast
                                                   .toDouble(),
-                                              color: Utils.getChartColor(controller
-                                                  .uuidPlayerInfo!.potential.ast
-                                                  .toDouble()))
+                                              color: Utils.getChartColor(
+                                                  controller.uuidPlayerInfo!
+                                                      .potential.ast
+                                                      .toDouble()))
                                         ]),
                                     BarChartGroupData(
                                         showingTooltipIndicators: [0],
@@ -268,9 +270,10 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                               toY: controller
                                                   .uuidPlayerInfo!.potential.reb
                                                   .toDouble(),
-                                              color: Utils.getChartColor(controller
-                                                  .uuidPlayerInfo!.potential.reb
-                                                  .toDouble()))
+                                              color: Utils.getChartColor(
+                                                  controller.uuidPlayerInfo!
+                                                      .potential.reb
+                                                      .toDouble()))
                                         ]),
                                     BarChartGroupData(
                                         showingTooltipIndicators: [0],
@@ -285,9 +288,10 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                               toY: controller
                                                   .uuidPlayerInfo!.potential.blk
                                                   .toDouble(),
-                                              color: Utils.getChartColor(controller
-                                                  .uuidPlayerInfo!.potential.blk
-                                                  .toDouble()))
+                                              color: Utils.getChartColor(
+                                                  controller.uuidPlayerInfo!
+                                                      .potential.blk
+                                                      .toDouble()))
                                         ]),
                                     BarChartGroupData(
                                         showingTooltipIndicators: [0],
@@ -302,9 +306,10 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                               toY: controller
                                                   .uuidPlayerInfo!.potential.stl
                                                   .toDouble(),
-                                              color: Utils.getChartColor(controller
-                                                  .uuidPlayerInfo!.potential.stl
-                                                  .toDouble()))
+                                              color: Utils.getChartColor(
+                                                  controller.uuidPlayerInfo!
+                                                      .potential.stl
+                                                      .toDouble()))
                                         ]),
                                   ])),
                             ),
@@ -1155,10 +1160,13 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                             child: Stack(
                                               alignment: Alignment.bottomCenter,
                                               children: [
-                                                IconWidget(
-                                                    iconWidth: 64.w,
-                                                    icon:
-                                                        Assets.testTeamLogoPng),
+                                                ImageWidget(
+                                                  url: Utils.getPlayUrl(item
+                                                      .teamPlayer.playerId
+                                                      .toInt()),
+                                                  width: 64.w,
+                                                  height: 64.w,
+                                                ),
                                                 Positioned(
                                                     top: 0,
                                                     left: 0,

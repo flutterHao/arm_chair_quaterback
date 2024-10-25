@@ -94,7 +94,7 @@ class ReciveAwardItemController extends GetxController {
       List<PicksPlayer> tempData = [];
       for (int i = 0; i < data.length; i++) {
         var item = data[i];
-        item.reciveAwardInfo.guessData[0].status = 3;
+        item.reciveAwardInfo.status = 3;
         tempData.add(item);
       }
       data = tempData;
