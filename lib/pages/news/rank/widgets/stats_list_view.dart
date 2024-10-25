@@ -90,7 +90,7 @@ class StatsItem extends GetView<RankController> {
                 ),
                 5.vGap,
                 Text(
-                  item.player ?? "",
+                  Utils.getPlayBaseInfo(item.playerId ?? 0).ename,
                   style: 16.w7(),
                   overflow: TextOverflow.ellipsis,
                 ),

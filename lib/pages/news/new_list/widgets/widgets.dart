@@ -2,11 +2,11 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2024-10-25 16:32:48
+ * @LastEditTime: 2024-10-25 16:48:02
  */
 library widgets;
 
-export './news_banner.dart';
+export './news_banner_widget.dart';
 export './news_list_view.dart';
 export './regular_widget.dart';
 export './draft_lottery.dart';

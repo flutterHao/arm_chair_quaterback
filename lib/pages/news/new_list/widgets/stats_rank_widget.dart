@@ -5,8 +5,6 @@ import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
-import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/main.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/widgets/shadow_container.dart';
@@ -29,7 +27,7 @@ class StatsRankWidget extends GetView<NewListController> {
                 padding: EdgeInsets.only(left: 16.w, top: 6.w, bottom: 10.w),
                 child: Text(
                   "Stats",
-                  style: 19.w7(),
+                  style: 19.w7(height: 1),
                 ),
               ),
               Container(
@@ -64,7 +62,7 @@ class StatsRankWidget extends GetView<NewListController> {
   }
 }
 
-double width = MyApp.MAXWEBWIDTH.w * 0.9;
+double width = MyApp.MAXWEBWIDTH.w * 283 / 375;
 
 class StatsRankItem extends GetView<NewListController> {
   const StatsRankItem({super.key, required this.index});
@@ -80,32 +78,37 @@ class StatsRankItem extends GetView<NewListController> {
         children: [
           Container(
             width: width,
-            height: 36.w,
+            height: 40.w,
             decoration: BoxDecoration(
-                color: AppColors.c262626,
+                color: AppColors.cF2F2F2,
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(16.w),
                     topRight: Radius.circular(16.w))),
             child: Row(
               children: [
-                10.hGap,
+                14.hGap,
                 Text(
                   item.key,
-                  style: 16.w7(color: AppColors.cE6E6E),
-                ),
-                10.hGap,
-                IconWidget(
-                  iconWidth: 16.w,
-                  iconHeight: 16.w,
-                  icon: Assets.uiIconMsgPng,
-                  iconColor: AppColors.cB3B3B3,
+                  style: 16.w7(),
                 ),
                 Expanded(child: Container()),
-                IconWidget(
-                  iconWidth: 17.w,
-                  iconHeight: 4.w,
-                  icon: Assets.uiIconMorePng,
-                  iconColor: AppColors.cFF7954,
+                Container(
+                  width: 50.w,
+                  height: 18.w,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(9.w),
+                    border: Border.all(
+                      width: 1,
+                      color: AppColors.cB3B3B3,
+                    ),
+                  ),
+                  child: Text(
+                    "View all",
+                    style: 10.w4(
+                      color: AppColors.c666666,
+                    ),
+                  ),
                 ),
                 10.hGap,
               ],
@@ -113,8 +116,9 @@ class StatsRankItem extends GetView<NewListController> {
           ),
           Container(
             width: width,
-            height: 3.w,
-            color: AppColors.cFF7954,
+            height: 1.w,
+            color: AppColors.cD9D9D9,
+            margin: EdgeInsets.symmetric(horizontal: 9.w),
           ),
           StatsListView(type: item.key, list: item.value)
         ],
@@ -132,8 +136,8 @@ class StatsListView extends GetView<NewListController> {
   Widget build(BuildContext context) {
     int count = list.length > 3 ? 3 : 0;
     return SizedBox(
-      height: 152.w,
-      child: ListView.separated(
+      height: 150.w,
+      child: ListView.builder(
           padding: const EdgeInsets.all(0),
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
@@ -142,58 +146,48 @@ class StatsListView extends GetView<NewListController> {
               height: 50.w,
               child: Row(
                 children: [
-                  Container(
-                    width: 65.w,
-                    alignment: Alignment.center,
-                    child: Text(
-                      "${index + 1}",
-                      style: 21.w7(),
-                    ),
-                  ),
+                  20.hGap,
                   Stack(
+                    alignment: Alignment.center,
                     children: [
-                      Container(
-                        margin: EdgeInsets.only(left: 4.w),
-                        child: ImageWidget(
-                          url: Utils.getPlayUrl(item.playerId),
-                          width: 36.w,
-                          height: 36.w,
-                          imageFailedPath: Assets.head_0000Png,
-                          borderRadius: BorderRadius.circular(18.w),
+                      if (index <= 2)
+                        Image.asset(
+                          width: 18.w,
+                          fit: BoxFit.fitWidth,
+                          index == 0
+                              ? Assets.iconRankGoldPng
+                              : index == 1
+                                  ? Assets.iconRankSilverPng
+                                  : Assets.iconRankCopperPng,
+                        ),
+                      Positioned(
+                        top: 4.5.w,
+                        child: Text(
+                          "${index + 1}",
+                          style: 12.w7(color: AppColors.cF2F2F2, height: 1),
                         ),
                       ),
-
-                      ///TODO
-                      Positioned(
-                          top: 0,
-                          left: 0,
-                          child: Text(
-                            Utils.getPlayBaseInfo(item.playerId!).grade,
-                            style: 10.w7(color: AppColors.c1A1A1A),
-                          )),
                     ],
+                  ),
+                  13.hGap,
+                  Text(
+                    Utils.getPlayBaseInfo(item.playerId!).ename,
+                    style: 12.w4(),
                   ),
                   15.hGap,
                   Expanded(
                     child: Text(
                       item.player ?? "",
-                      style: 12.w7(),
+                      style: 12.w4(),
                     ),
                   ),
                   Text(
                     "${controller.getStartData(type, item)}",
-                    style: 12.w7(),
+                    style: 12.w4(),
                   ),
                   15.hGap,
                 ],
               ),
-            );
-          },
-          separatorBuilder: (context, index) {
-            return Container(
-              width: 286.w,
-              height: 0.5.w,
-              color: AppColors.cDDDDE3,
             );
           },
           itemCount: count),

@@ -1,11 +1,9 @@
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
-import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/main.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/index.dart';
@@ -28,7 +26,7 @@ class TeamRankWidget extends GetView<NewListController> {
               Padding(
                 padding: EdgeInsets.only(left: 16.w, top: 23.w, bottom: 10.w),
                 child: Text(
-                  "2024 standings",
+                  "2024 Standings",
                   style: 19.w7(),
                 ),
               ),
@@ -80,9 +78,8 @@ class TeamRankItem extends GetView<NewListController> {
         children: [
           Container(
             width: width,
-            height: 36.w,
+            height: 39.w,
             decoration: BoxDecoration(
-                color: AppColors.c262626,
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(16.w),
                     topRight: Radius.circular(16.w))),
@@ -91,21 +88,26 @@ class TeamRankItem extends GetView<NewListController> {
                 10.hGap,
                 Text(
                   item.key == 1 ? "EAST" : "WEST",
-                  style: 16.w7(color: AppColors.cE6E6E),
+                  style: 16.w7(),
                 ),
-                10.hGap,
-                // IconWidget(
-                //   iconWidth: 16.w,
-                //   iconHeight: 16.w,
-                //   icon: Assets.uiIconMsgPng,
-                //   iconColor: AppColors.cB3B3B3,
-                // ),
                 Expanded(child: Container()),
-                IconWidget(
-                  iconWidth: 17.w,
-                  iconHeight: 4.w,
-                  icon: Assets.uiIconMorePng,
-                  iconColor: AppColors.cFF7954,
+                Container(
+                  width: 50.w,
+                  height: 18.w,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(9.w),
+                    border: Border.all(
+                      width: 1,
+                      color: AppColors.cB3B3B3,
+                    ),
+                  ),
+                  child: Text(
+                    "View all",
+                    style: 10.w4(
+                      color: AppColors.c666666,
+                    ),
+                  ),
                 ),
                 10.hGap,
               ],
@@ -113,18 +115,20 @@ class TeamRankItem extends GetView<NewListController> {
           ),
           Container(
             width: width,
-            height: 3.w,
-            color: AppColors.cFF7954,
+            height: 1.w,
+            color: AppColors.cD9D9D9,
+            margin: EdgeInsets.symmetric(horizontal: 9.w),
           ),
-          18.vGap,
+          14.vGap,
           Row(
             children: [
               Expanded(
+                flex: 2,
                 child: Container(
                   alignment: Alignment.center,
                   width: 100.w,
                   child: Text(
-                    "team",
+                    "TEAM",
                     style: 11.w4(color: AppColors.cB3B3B3),
                   ),
                 ),
@@ -180,8 +184,8 @@ class TeamListView extends StatelessWidget {
   Widget build(BuildContext context) {
     int count = list.length > 3 ? 3 : 0;
     return SizedBox(
-      height: 150.w,
-      child: ListView.separated(
+      height: 144.w,
+      child: ListView.builder(
           padding: const EdgeInsets.all(0),
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -192,24 +196,28 @@ class TeamListView extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
+                    flex: 2,
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 8.w),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          ImageWidget(
-                            url: Utils.getTeamUrl(item.teamID),
-                            width: 25.w,
-                            height: 25.w,
+                          Expanded(
+                            child: ImageWidget(
+                              url: Utils.getTeamUrl(item.teamID),
+                              width: 25.w,
+                              height: 25.w,
+                            ),
                           ),
-                          2.hGap,
+                          15.hGap,
                           Expanded(
                             child: Text(
                               item.shortEname,
                               style: 12.w7(),
                               overflow: TextOverflow.ellipsis,
                             ),
-                          )
+                          ),
+                          Expanded(child: Container()),
                         ],
                       ),
                     ),
@@ -245,13 +253,6 @@ class TeamListView extends StatelessWidget {
                   )
                 ],
               ),
-            );
-          },
-          separatorBuilder: (context, index) {
-            return Container(
-              width: 286.w,
-              height: 0.5.w,
-              color: AppColors.cDDDDE3,
             );
           },
           itemCount: count),

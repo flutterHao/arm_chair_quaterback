@@ -131,6 +131,8 @@ class TrainingController extends GetxController
     DateTime recoverTime =
         DateUtil.getDateTimeByMs(trainingInfo.training.ballRefreshTime)
             .add(Duration(seconds: recover));
+    Log.d("恢复时间:${recoverTime}");
+    Log.d("现在时间:${DateTime.now()}");
     _recoverSeconds = recoverTime.difference(DateTime.now()).inSeconds;
     _timer = Timer.periodic(const Duration(seconds: 1), (v) async {
       _recoverSeconds--;
@@ -720,15 +722,15 @@ class TrainingController extends GetxController
       305: 0,
       306: 0,
     };
-    // for (TrainingInfoAward award in trainingInfo.award) {
-    //   if (award.num > 0) {
-    //     map[award.id] = (map[award.id] ?? 0) + 1;
-    //   }
-    // }
-
-    for (int i in trainingInfo.propArray) {
-      map[i] = (map[i] ?? 0) + 1;
+    for (TrainingInfoAward award in trainingInfo.award) {
+      if (award.num > 0) {
+        map[award.id] = (map[award.id] ?? 0) + 1;
+      }
     }
+
+    // for (int i in trainingInfo.propArray) {
+    //   map[i] = (map[i] ?? 0) + 1;
+    // }
 
     return map;
   }

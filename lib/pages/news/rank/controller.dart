@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:27:52
- * @LastEditTime: 2024-10-17 18:53:44
+ * @LastEditTime: 2024-10-25 20:24:41
  */
 import 'package:arm_chair_quaterback/common/entities/stats_rank/nba_player_stat.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank.dart';
@@ -38,7 +38,7 @@ class RankController extends GetxController
   // RxString seasonIndex = "2023-24".obs;
 
   RxString statType = "PTS".obs;
-  String season = "2023-24";
+  RxString season = "2023-24".obs;
   List<NbaPlayerStat> statList = [];
   List<String> seasonList = ["2023-24"];
   List<StarsTeamRank> starsTeamRankList = [];
@@ -84,7 +84,7 @@ class RankController extends GetxController
     await Future.delayed(const Duration(milliseconds: 100));
     page = refresh ? 1 : (page + 1);
     NewListController ctrl = Get.find();
-    var list = ctrl.state.statsRankMap[statType] ?? [];
+    var list = ctrl.state.statsRankMap[statType.value] ?? [];
     int end = page * size > list.length ? list.length : page * size;
     statList = list.sublist(0, end);
     if (refresh) {

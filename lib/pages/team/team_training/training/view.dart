@@ -375,7 +375,7 @@ class TrainingPage extends GetView<TrainingController> {
                           itemWidth: 64.w,
                           viewportFraction: .2,
                           indicatorLayout: PageIndicatorLayout.COLOR,
-                          scale: .5,
+                          // scale: .5,
                           itemCount: controller.playerList.length,
                           outer: false,
                           autoplay: true,
