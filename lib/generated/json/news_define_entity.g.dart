@@ -60,10 +60,6 @@ NewsDefineEntity $NewsDefineEntityFromJson(Map<String, dynamic> json) {
   if (btRankOpen != null) {
     newsDefineEntity.btRankOpen = btRankOpen;
   }
-  final double? dailyCoins = jsonConvert.convert<double>(json['dailyCoins']);
-  if (dailyCoins != null) {
-    newsDefineEntity.dailyCoins = dailyCoins;
-  }
   final List<double>? flexBet3 = (json['flexBet3'] as List<dynamic>?)?.map(
           (e) => jsonConvert.convert<double>(e) as double).toList();
   if (flexBet3 != null) {
@@ -182,7 +178,6 @@ Map<String, dynamic> $NewsDefineEntityToJson(NewsDefineEntity entity) {
   data['betSuccessTimesPoint'] = entity.betSuccessTimesPoint;
   data['btRankClose'] = entity.btRankClose;
   data['btRankOpen'] = entity.btRankOpen;
-  data['dailyCoins'] = entity.dailyCoins;
   data['flexBet3'] = entity.flexBet3;
   data['flexBet4'] = entity.flexBet4;
   data['flexBet5'] = entity.flexBet5;
@@ -219,7 +214,6 @@ extension NewsDefineEntityExtension on NewsDefineEntity {
     double? betSuccessTimesPoint,
     List<String>? btRankClose,
     List<String>? btRankOpen,
-    double? dailyCoins,
     List<double>? flexBet3,
     List<double>? flexBet4,
     List<double>? flexBet5,
@@ -253,7 +247,6 @@ extension NewsDefineEntityExtension on NewsDefineEntity {
       ..betSuccessTimesPoint = betSuccessTimesPoint ?? this.betSuccessTimesPoint
       ..btRankClose = btRankClose ?? this.btRankClose
       ..btRankOpen = btRankOpen ?? this.btRankOpen
-      ..dailyCoins = dailyCoins ?? this.dailyCoins
       ..flexBet3 = flexBet3 ?? this.flexBet3
       ..flexBet4 = flexBet4 ?? this.flexBet4
       ..flexBet5 = flexBet5 ?? this.flexBet5

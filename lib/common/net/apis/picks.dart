@@ -81,10 +81,9 @@ class PicksApi {
     return RankListEntity.fromJson(json);
   }
 
-  static Future<List<ReciveAwardEntity>> getGuessAward(int scId) async {
-    List json = await httpUtil.post(Api.getGuessAward, data: {"guessId": scId});
-    print('json:$json');
-    return json.map((e) => ReciveAwardEntity.fromJson(e)).toList();
+  static Future getGuessAward(int scId) async {
+    var json = await httpUtil.post(Api.getGuessAward, data: {"guessId": scId});
+    return json;
   }
 
   static Future<List<ReciveAwardEntity>> getGuessAllAward() async {

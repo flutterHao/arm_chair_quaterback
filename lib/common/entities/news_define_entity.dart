@@ -17,7 +17,6 @@ class NewsDefineEntity {
   late double betSuccessTimesPoint;
   late List<String> btRankClose;
   late List<String> btRankOpen;
-  late double dailyCoins;
   late List<double> flexBet3;
   late List<double> flexBet4;
   late List<double> flexBet5;
