@@ -68,7 +68,7 @@ class HttpUtil {
     _dio.interceptors.add(LogInterceptor(
       requestBody: true,
       responseBody: true,
-      // logPrint: (o) => log(o.toString()),
+      logPrint: (o) => log(o.toString()),
     ));
   }
 

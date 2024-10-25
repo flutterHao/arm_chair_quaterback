@@ -65,10 +65,10 @@ class ReciveRwardController extends GetxController {
       ///  STATUS_已结算已领取奖励 = 3;
       ///
       var guessHistoryList = result0.pointGuessing
-          .where((e) => e.guessData[0].status == 2)
+          .where((e) => e.status == 2)
           .toList();
       guessHistoryList.addAll(result0.newsGuessing
-          .where((e) => e.guessData[0].status == 2)
+          .where((e) => e.status == 2)
           .toList());
       listData.clear();
       for (var l in guessHistoryList) {
@@ -81,6 +81,7 @@ class ReciveRwardController extends GetxController {
               .firstWhere((e) => r.playerId == e.playerId);
           player.awayTeamInfo = result1.firstWhere((e) => e.id == r.awayTeamId);
           player.reciveAwardInfo = l;
+          player.guessData = r;
           players.add(player);
         }
         listData.add(players);

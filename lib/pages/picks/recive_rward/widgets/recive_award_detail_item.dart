@@ -6,6 +6,7 @@ import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/param_utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/player_avatar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -14,21 +15,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 ///created at 2024/9/11/13:06
 
 class ReciveAwardDetailItem extends StatelessWidget {
-  const ReciveAwardDetailItem(this.player,this.newsDefineEntity, {super.key});
+  const ReciveAwardDetailItem(this.player, this.newsDefineEntity, {super.key});
 
   final PicksPlayer player;
   final NewsDefineEntity newsDefineEntity;
 
   @override
   Widget build(BuildContext context) {
-    var guessValueDiff =
-        player.reciveAwardInfo.guessData[0].guessGameAttrValue -
-            player.reciveAwardInfo.guessData[0].guessReferenceValue;
     return Container(
-      // height: 109.w,
-      margin: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 8.w),
-      padding:
-          EdgeInsets.only(top: 13.w, bottom: 10.w, left: 13.w, right: 11.w),
+      height: 69.w,
+      margin: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 9.w),
+      padding: EdgeInsets.only(left: 12.w, right: 10.w),
       decoration: BoxDecoration(
           color: AppColors.cF2F2F2, borderRadius: BorderRadius.circular(20.w)),
       child: Row(
@@ -37,29 +34,18 @@ class ReciveAwardDetailItem extends StatelessWidget {
         children: [
           Row(
             children: [
-              InkWell(
-                onTap: () {
-                  print('点击了头像');
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: AppColors.ce5e5e5,
-                      borderRadius: BorderRadius.circular(26.w)),
-                  child: Stack(children: [
-                    Image.asset(
-                      Assets.testTeamLogoPng, //todo 换网络图
-                      width: 55.w,
-                    ),
-                    Text(player.baseInfoList.grade,
-                        style: 14.w7(color: AppColors.c262626))
-                  ]),
-                ),
+              PlayerAvatarWidget(
+                width: 42.w,
+                playerId: player.baseInfoList.playerId,
+                showGrade: false,
+                backgroundColor: AppColors.cE6E6E6,
               ),
               Container(
                 constraints: BoxConstraints(maxWidth: 89.w),
                 margin: EdgeInsets.only(left: 10.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       player.baseInfoList.ename,
@@ -68,163 +54,109 @@ class ReciveAwardDetailItem extends StatelessWidget {
                           height: 1,
                           overflow: TextOverflow.ellipsis),
                     ),
-                    2.vGap,
-                    // Text(
-                    //   "VS ${player.awayTeamInfo.shortEname} ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(player.reciveAwardInfo.gameStartTime))}AM",
-                    //   style: 10.w4(color: AppColors.cB3B3B3, height: 1),
-                    // ),
                     6.vGap,
                     Text(
-                      "PPG: ${double.parse(player.dataAvgList.getValue(player.reciveAwardInfo.guessData[0].guessAttr).toString()).toStringAsFixed(0)}P",
+                      "VS ${player.awayTeamInfo.shortEname} ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(player.reciveAwardInfo.createTime))}",
                       style: 10.w4(color: AppColors.cB3B3B3, height: 1),
                     ),
-                    // Text(
-                    //   "L5: ${double.parse(player.reciveAwardInfo.l5Avg.getValue(player.reciveAwardInfo.guessData[0].guessAttr).toString()).toStringAsFixed(0)}P",
-                    //   style: 10.w4(color: AppColors.cB3B3B3, height: 1),
-                    // )
                   ],
                 ),
               ),
             ],
           ),
-          Row(
-            children: [
-              Container(
-                width: 62.w,
-                // height: 55.w,
-                margin: EdgeInsets.only(left: 9.w),
-                padding: EdgeInsets.symmetric(vertical: 8.w),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(9.w),
-                    border: Border.all(color: AppColors.ce5e5e5, width: 1)),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                        "${player.reciveAwardInfo.guessData[0].guessGameAttrValue}",
-                        style: 18.w7(color: AppColors.c666666)),
-                    Text(
-                      player.reciveAwardInfo.guessData[0].guessAttr
-                          .toUpperCase(),
-                      style:
-                          TextStyle(fontSize: 11.sp, color: AppColors.c666666),
-                    ),
-                    if (player.reciveAwardInfo.guessData[0].status != 1)
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          IconWidget(
-                            // icon:Assets.uiTriangleGPng,
-                            icon: player.reciveAwardInfo.guessData[0].success
-                                ? Assets.uiTriangleGPng
-                                : Assets.uiTriangleRPng,
-                            iconWidth: 7.w,
-                            iconColor:
-                                player.reciveAwardInfo.guessData[0].success
-                                    ? AppColors.c10A86A
-                                    : AppColors.cE72646,
-                          ),
-                          SizedBox(
-                            width: 3.w,
-                          ),
-                          Text(
-                            guessValueDiff.abs().toStringAsFixed(1),
-                            style: TextStyle(
-                                color:
-                                    player.reciveAwardInfo.guessData[0].success
-                                        ? AppColors.c10A86A
-                                        : AppColors.cE72646,
-                                fontSize: 10.sp),
-                          )
-                        ],
-                      )
-                  ],
-                ),
-              ),
-              if (player.reciveAwardInfo.guessData[0].status == 1)
-                Column(
-                  children: [
-                    Container(
-                      width: 83.w,
-                      height: 24.w,
-                      margin: EdgeInsets.only(left: 11.w),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12.w),
-                        border: Border.all(color: guessValueDiff<0?AppColors.c10A86A:AppColors.cE1E3E6,width: 1)
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("MORE",style: 11.w7(color: guessValueDiff<0?AppColors.c10A86A:AppColors.cB3B3B3),),
-                          3.hGap,
-                          //todo 注释这里需要修改赔率
-                          // Text("+${newsDefineEntity.betOdds}",style: 9.w7(color: guessValueDiff<0?AppColors.c10A86A:AppColors.cB3B3B3))
-                        ],
-                      ),
-                    ),
-                    7.vGap,
-                    Container(
-                      width: 83.w,
-                      height: 24.w,
-                      margin: EdgeInsets.only(left: 11.w),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12.w),
-                          border: Border.all(color: guessValueDiff>0?AppColors.c10A86A:AppColors.cE1E3E6,width: 1)
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("LESS",style: 11.w7(color: guessValueDiff>0?AppColors.c10A86A:AppColors.cB3B3B3),),
-                          3.hGap,
-                          //todo 注释这里需要修改赔率
-                          // Text("+${newsDefineEntity.betOdds}",style: 9.w7(color: guessValueDiff>0?AppColors.c10A86A:AppColors.cB3B3B3))
-                        ],
-                      ),
-                    ),
-                  ],
-                )
-              else
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
                 Container(
-                  margin: EdgeInsets.only(left: 11.w),
+                  width: 61.w,
+                  height: 46.w,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(9.w),
+                      border: Border.all(color: AppColors.ce5e5e5, width: 1)),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Container(
-                        width: 83.w,
-                        height: 24.w,
-                        alignment: Alignment.center,
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            IconWidget(
-                              iconWidth: 83.w,
-                              icon: Assets.uiBingoPng,
-                              iconColor:
-                                  player.reciveAwardInfo.guessData[0].success
-                                      ? AppColors.c10A86A
-                                      : AppColors.cB3B3B3,
-                            ),
-                            Text("BINGO",
-                                style: 11.w7(
-                                    color: player.reciveAwardInfo.guessData[0]
-                                            .success
-                                        ? AppColors.c10A86A
-                                        : AppColors.cB3B3B3)),
-                          ],
-                        ),
-                      ),
+                      Text("${player.guessData?.guessReferenceValue}",
+                          style: 18.w7(color: AppColors.c262626, height: 1)),
+                      3.vGap,
                       Text(
-                        "winner ${player.reciveAwardInfo.guessData[0].winPro}%",
-                        style: TextStyle(
-                            fontSize: 10.sp, color: AppColors.cB3B3B3),
-                      )
+                        "${player.guessData?.guessAttr.toUpperCase()}",
+                        style: 10.w7(color: AppColors.cB3B3B3, height: 1),
+                      ),
                     ],
                   ),
-                )
-            ],
+                ),
+                if (player.guessData?.status == 1)
+                  Container(
+                    margin: EdgeInsets.only(left: 10.w),
+                    height: 46.w,
+                    constraints: BoxConstraints(minWidth: 80.w),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.w),
+                        border:
+                            Border.all(width: 0.5, color: AppColors.ccccccc)),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconWidget(
+                            iconWidth: 9.w,
+                            icon: Assets.uiIconUpPng,
+                            iconColor: AppColors.cFF7954,
+                            rotateAngle:
+                                player.guessData?.guessChoice == 1 ? 0 : 180),
+                        9.hGap,
+                        Text(
+                          player.guessData?.guessChoice == 1 ? "MORE" : "LESS",
+                          style: 14.w7(color: AppColors.cFF7954, height: 1),
+                        )
+                      ],
+                    ),
+                  )
+                else
+                  Container(
+                    margin: EdgeInsets.only(left: 11.w),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 83.w,
+                          height: 24.w,
+                          alignment: Alignment.center,
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              IconWidget(
+                                iconWidth: 83.w,
+                                icon: Assets.uiBingoPng,
+                                iconColor: player.guessData?.success ?? false
+                                    ? AppColors.c10A86A
+                                    : AppColors.cB3B3B3,
+                              ),
+                              Text(
+                                  player.guessData?.guessChoice == 1
+                                      ? "MORE"
+                                      : "LESS",
+                                  style: 11.w7(
+                                      color: player.guessData?.success ?? false
+                                          ? AppColors.c10A86A
+                                          : AppColors.cB3B3B3)),
+                            ],
+                          ),
+                        ),
+                        Text(
+                          "Result:${player.guessData?.guessGameAttrValue}",
+                          style: TextStyle(
+                              fontSize: 10.sp, color: AppColors.cB3B3B3),
+                        )
+                      ],
+                    ),
+                  )
+              ],
+            ),
           )
         ],
       ),

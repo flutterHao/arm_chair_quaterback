@@ -19,26 +19,41 @@ class ReciveAwardItemController extends GetxController {
 
   final NewsDefineEntity newsDefineEntity;
 
+  int getWinCount() {
+    return data[0]
+        .reciveAwardInfo
+        .guessData
+        .where((e) => e.success)
+        .toList()
+        .length;
+  }
+
   /// 获取总赔率
   String getBetCount() {
-    int len = data.length;
-    //todo 未实现功能，需要完成
-    // var value = len == 0
-    //     ? "0"
-    //     : len == 1
-    //         ? newsDefineEntity.betOdds
-    //         : (pow(double.parse(newsDefineEntity.betOdds), len) *
-    //                 double.parse(newsDefineEntity.betMutOdds))
-    //             .toStringAsFixed(1);
-    // return value;
-    return "2";
+    List<double> bets = data[0].reciveAwardInfo.type == 1
+        ? newsDefineEntity.toJson()["flexBet${data.length}"]
+        : data[0].reciveAwardInfo.type == 2
+            ? newsDefineEntity.powerBetWin
+            : [];
+    var temps = List.generate(data.length, (index) => -1.0).toList();
+    var winCount = getWinCount();
+    var start = data.length - bets.length;
+    temps.replaceRange(start, winCount, bets);
+    return temps[winCount - 1].toString();
   }
 
-  String getTypeString(){
-    return data[0].reciveAwardInfo.type ==1?"Flex play":data[0].reciveAwardInfo.type ==2?"Power play":"";
+  String getTypeString() {
+    return data[0].reciveAwardInfo.type == 1
+        ? "Flex play"
+        : data[0].reciveAwardInfo.type == 2
+            ? "Power play"
+            : "";
   }
 
-  int getStatus(){
+  ///  int STATUS_未结算 = 1;
+  ///  int STATUS_已结算未领取奖励 = 2;
+  ///  int STATUS_已结算已领取奖励 = 3;.
+  int getStatus() {
     return data[0].reciveAwardInfo.status;
   }
 
@@ -67,27 +82,24 @@ class ReciveAwardItemController extends GetxController {
   }
 
   String getTime() {
-    return MyDateUtils.formatDate(
-        MyDateUtils.getDateTimeByMs(data[0].reciveAwardInfo.createTime),
-        format: DateFormats.H_M);
+    var dateTime =
+        MyDateUtils.getDateTimeByMs(data[0].reciveAwardInfo.createTime);
+    return "${MyDateUtils.getWeekday(dateTime, short: true)},${MyDateUtils.getMonthEnName(dateTime, short: false)} ${dateTime.day},${dateTime.year}";
   }
-
-
-
 
   /// 获取奖励
   getGuessAward() {
     print('getGuessAward-------');
-    // PicksApi.getGuessAward(data.length==1?data[0].reciveAwardInfo.id:data[0].reciveAwardInfo.scId).then((result) {
-    //   List<PicksPlayer> tempData = [];
-    //   for (int i = 0; i < data.length; i++) {
-    //     var item = data[i];
-    //     item.reciveAwardInfo.guessData[0].status = 3;
-    //     tempData.add(item);
-    //   }
-    //   data = tempData;
-    //   update([idReciveAwardItem]);
-    // });
+    PicksApi.getGuessAward(data[0].reciveAwardInfo.id).then((result) {
+      List<PicksPlayer> tempData = [];
+      for (int i = 0; i < data.length; i++) {
+        var item = data[i];
+        item.reciveAwardInfo.guessData[0].status = 3;
+        tempData.add(item);
+      }
+      data = tempData;
+      update([idReciveAwardItem]);
+    });
   }
 
   String get idReciveAwardItem => "recive_award_item";

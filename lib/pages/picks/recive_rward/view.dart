@@ -27,7 +27,6 @@ class ReciveRwardPage extends GetView<ReciveRwardController> {
   // 主视图
   Widget _buildView(BuildContext context) {
     /// 上一条数据的时间
-    int createTime = 0;
     return Expanded(
         child: SmartRefresher(
       controller: controller.refreshController,
@@ -52,25 +51,9 @@ class ReciveRwardPage extends GetView<ReciveRwardController> {
                 itemCount: controller.listData.length,
                 itemBuilder: (BuildContext context, int index) {
                   List<PicksPlayer> items = controller.listData[index];
-                  var itemData = items[0];
-                  var itemCreateTime = itemData.reciveAwardInfo.createTime;
-                  var sameDay = MyDateUtils.isSameDay(
-                      MyDateUtils.getDateTimeByMs(createTime),
-                      MyDateUtils.getDateTimeByMs(itemCreateTime));
-                  createTime = itemCreateTime;
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      if (!sameDay)
-                        Container(
-                          margin: EdgeInsets.only(
-                              right: 13.w, bottom: 10.w, top: 16.w),
-                          child: Text(
-                              MyDateUtils.getEnMMDDYYYY(
-                                  MyDateUtils.getDateTimeByMs(itemCreateTime),
-                                  short: true),
-                              style: 19.w7(color: AppColors.c262626)),
-                        ),
                       ReciveAwardItem(items, controller.newsDefineEntity!),
                     ],
                   );
@@ -111,7 +94,7 @@ class ReciveRwardPage extends GetView<ReciveRwardController> {
                           ),
                           child: BtnBackground(
                               child: Center(
-                            child: Text("RECEIVE",
+                            child: Text("GET ALL",
                                 style: 16.w7(color: AppColors.cFFFFFF)),
                           )),
                         ),

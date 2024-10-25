@@ -123,4 +123,7 @@ class AppColors {
   static const Color cBFBFBF = Color(0xffBFBFBF);
   static const Color c1F6E3D = Color(0xff1F6E3D);
   static const Color c0D3D7B = Color(0xFF0D3D7B);
+  static const Color c53CF8A = Color(0xFF53CF8A);
+  static const Color cE8909E = Color(0xFFE8909E);
+
 }

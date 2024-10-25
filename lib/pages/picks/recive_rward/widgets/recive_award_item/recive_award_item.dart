@@ -6,6 +6,8 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog_background.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/recive_rward/widgets/recive_award_detail_item.dart';
@@ -41,7 +43,7 @@ class ReciveAwardItem extends StatelessWidget {
             child: Container(
               height: 105.w,
               width: double.infinity,
-              margin: EdgeInsets.only(bottom: 9.w),
+              margin: EdgeInsets.only(top: 9.w),
               padding: EdgeInsets.only(
                   top: 13.w, bottom: 12.w, right: 15.w, left: 12.w),
               decoration: BoxDecoration(
@@ -52,7 +54,9 @@ class ReciveAwardItem extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      _buildTopLeftTitle(),
+                      _buildStatusWidget(),
+
+                      //右上角结果
                       Row(
                         children: List.generate(data.length, (index) {
                           return Container(
@@ -60,16 +64,15 @@ class ReciveAwardItem extends StatelessWidget {
                             width: 12.w,
                             margin: EdgeInsets.only(left: 6.w),
                             decoration: BoxDecoration(
-                                color: controller.getStatus() != 2
+                                color: controller.getStatus() != 1
                                     ? data[index]
                                             .reciveAwardInfo
                                             .guessData[index]
-                                            .awards
-                                            .isNotEmpty
+                                            .success
                                         ? AppColors.c10A86A
                                         : AppColors.cE72646
                                     : AppColors.cTransparent,
-                                border: controller.getStatus() != 2
+                                border: controller.getStatus() != 1
                                     ? null
                                     : Border.all(
                                         color: AppColors.cB3B3B3, width: 1),
@@ -134,13 +137,13 @@ class ReciveAwardItem extends StatelessWidget {
                           }),
                         ),
                       ),
-                      if (personalCenterPage)
-                        Column(
-                          children: [
-                            Text(
-                              "${MyDateUtils.getMonthEnName(MyDateUtils.getDateTimeByMs(controller.data[0].reciveAwardInfo.createTime), short: true)} ${MyDateUtils.getDateTimeByMs(controller.data[0].reciveAwardInfo.createTime).day}",
-                              style: 12.w4(color: AppColors.cB3B3B3),
-                            ),
+                      Column(
+                        children: [
+                          Text(
+                            "${MyDateUtils.getMonthEnName(MyDateUtils.getDateTimeByMs(controller.data[0].reciveAwardInfo.createTime), short: true)} ${MyDateUtils.getDateTimeByMs(controller.data[0].reciveAwardInfo.createTime).day}",
+                            style: 12.w4(color: AppColors.cB3B3B3),
+                          ),
+                          if (personalCenterPage)
                             Container(
                               width: 68.w,
                               height: 27.w,
@@ -154,37 +157,34 @@ class ReciveAwardItem extends StatelessWidget {
                                 "View all",
                                 style: 12.w4(color: AppColors.c666666),
                               ),
-                            ),
-                          ],
-                        )
-                      else
-                        InkWell(
-                          onTap: controller.data[0].reciveAwardInfo.guessData[0]
-                                      .status ==
-                                  2
-                              ? () => controller.getGuessAward()
-                              : null,
-                          child: Container(
-                            width: 98.w,
-                            height: 27.w,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                color: controller.data[0].reciveAwardInfo
-                                            .guessData[0].status ==
-                                        2
-                                    ? AppColors.cFF7954
-                                    : AppColors.cB3B3B3,
-                                borderRadius: BorderRadius.circular(14.w)),
-                            child: Text(
-                              controller.data[0].reciveAwardInfo.guessData[0]
-                                          .status ==
+                            )
+                          else
+                            InkWell(
+                              onTap: controller.data[0].reciveAwardInfo.status ==
                                       2
-                                  ? "GET"
-                                  : "SAL",
-                              style: 14.w4(color: AppColors.cF2F2F2),
-                            ),
-                          ),
-                        )
+                                  ? () => controller.getGuessAward()
+                                  : null,
+                              child: Container(
+                                width: 98.w,
+                                height: 27.w,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                    color: controller.data[0].reciveAwardInfo.status ==
+                                            2
+                                        ? AppColors.cFF7954
+                                        : AppColors.cB3B3B3,
+                                    borderRadius: BorderRadius.circular(14.w)),
+                                child: Text(
+                                  controller.data[0].reciveAwardInfo.status ==
+                                          2
+                                      ? "GET"
+                                      : "SAL",
+                                  style: 14.w4(color: AppColors.cF2F2F2),
+                                ),
+                              ),
+                            )
+                        ],
+                      )
                     ],
                   )
                 ],
@@ -194,8 +194,8 @@ class ReciveAwardItem extends StatelessWidget {
         });
   }
 
-  Widget _buildTopLeftTitle() {
-    if (controller.getStatus() == 2) {
+  Widget _buildStatusWidget({bool showModal = true}) {
+    if (controller.getStatus() == 1) {
       return Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -218,21 +218,25 @@ class ReciveAwardItem extends StatelessWidget {
       );
     }
     return Row(
+      mainAxisAlignment:
+          showModal ? MainAxisAlignment.start : MainAxisAlignment.center,
       children: [
-        Container(
-          height: 18.w,
-          width: 71.w,
-          decoration: BoxDecoration(
-              color: AppColors.c262626,
-              borderRadius: BorderRadius.circular(5.w)),
-          child: Center(
-            child: Text(
-              controller.getTypeString(),
-              style: 10.w4(color: AppColors.cF2F2F2, height: 1),
+        if (showModal) ...[
+          Container(
+            height: 18.w,
+            width: 71.w,
+            decoration: BoxDecoration(
+                color: AppColors.c262626,
+                borderRadius: BorderRadius.circular(5.w)),
+            child: Center(
+              child: Text(
+                controller.getTypeString(),
+                style: 10.w4(color: AppColors.cF2F2F2, height: 1),
+              ),
             ),
           ),
-        ),
-        12.hGap,
+          12.hGap
+        ],
         IconWidget(
           iconWidth: 17.w,
           icon: Assets.uiIconJettonPng,
@@ -242,9 +246,7 @@ class ReciveAwardItem extends StatelessWidget {
         ),
         4.hGap,
         Text(
-          controller.getAwardCoin() == null
-              ? ("-${controller.getCostCount()}")
-              : ("+${controller.getAwardCoin()!}"),
+          ("+${Utils.formatMoney(double.parse(controller.getAwardCoin() ?? "0"))}"),
           style: 16.w7(
               color: controller.getAwardCoin() == null
                   ? AppColors.cB3B3B3
@@ -256,252 +258,222 @@ class ReciveAwardItem extends StatelessWidget {
   }
 
   Future<dynamic> _buildDetailDialog(BuildContext context) {
-    int winTimesCount = controller.data
-        .where((e) => e.reciveAwardInfo.guessData[0].success)
+    int winTimesCount = controller.data[0].reciveAwardInfo.guessData
+        .where((e) => e.success)
         .toList()
         .length;
-    int lossTimesCount = controller.data.length - winTimesCount;
+    var status = controller.getStatus();
+    var success = controller.data[0].reciveAwardInfo.success;
     return showModalBottomSheet(
         context: context,
         isScrollControlled: true,
         builder: (context) {
           return Container(
-            constraints: BoxConstraints(maxHeight: 550.w),
-            decoration: BoxDecoration(
-                color: AppColors.cE6E6E6,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(22.w),
-                    topRight: Radius.circular(22.w))),
-            child: Stack(
-              children: [
-                Container(
-                  height: 42.w,
-                  decoration: BoxDecoration(
-                      color: AppColors.cFF7954,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(22.w),
-                          topRight: Radius.circular(22.w))),
-                ),
-                Column(
+            constraints: BoxConstraints(maxHeight: 666.h),
+            child: DialogBackground(
+                frontColor: AppColors.cE6E6E6,
+                borderHeight: 2.w,
+                child: Column(
                   children: [
                     SizedBox(
-                      height: 2.w,
+                      height: 12.w,
                     ),
-                    //头部
                     Container(
-                      // height: 100,
-                      width: double.infinity,
                       decoration: BoxDecoration(
-                          color: AppColors.c262626,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(22.w),
-                              topRight: Radius.circular(22.w))),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            width: double.infinity,
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                Container(
-                                  width: 84.w,
-                                  height: 16.w,
-                                  alignment: Alignment.center,
-                                  margin: EdgeInsets.only(top: 14.w),
-                                  decoration: BoxDecoration(
-                                      color: AppColors.c1A1A1A,
-                                      borderRadius: BorderRadius.circular(8)),
-                                  child: Text(
-                                    MyDateUtils.formatAM_HM(
-                                        MyDateUtils.getDateTimeByMs(controller
-                                            .data[0]
-                                            .reciveAwardInfo
-                                            .createTime)),
-                                    style: TextStyle(
-                                      color: AppColors.cB3B3B3,
-                                      fontSize: 12.sp,
-                                    ),
-                                  ),
+                          color: AppColors.ccccccc,
+                          borderRadius: BorderRadius.circular(2.w)),
+                      height: 4.w,
+                      width: 64.w,
+                    ),
+                    24.vGap,
+                    Builder(builder: (context) {
+                      Color big = status == 1
+                          ? AppColors.ccccccc
+                          : success
+                              ? AppColors.c53CF8A
+                              : AppColors.cE8909E;
+                      Color mid = status == 1
+                          ? AppColors.cB3B3B3
+                          : success
+                              ? AppColors.c10A86A
+                              : AppColors.cE72646;
+                      return Container(
+                        height: 112.w,
+                        width: 112.w,
+                        decoration: BoxDecoration(
+                            color: big.withOpacity(0.19),
+                            borderRadius: BorderRadius.circular(56.w)),
+                        child: Center(
+                          child: Container(
+                            width: 90.w,
+                            height: 90.w,
+                            decoration: BoxDecoration(
+                                color: mid,
+                                borderRadius: BorderRadius.circular(45.w)),
+                            child: Center(
+                              child: Container(
+                                width: 35.w,
+                                height: 35.w,
+                                decoration: BoxDecoration(
+                                    color: AppColors.cE6E6E6,
+                                    borderRadius: BorderRadius.circular(18.w)),
+                                child: IconWidget(
+                                  iconWidth: 18.w,
+                                  icon: Assets.uiIconRuidgtPng,
+                                  iconColor: mid,
                                 ),
-                                Positioned(
-                                  right: 0,
-                                  top: 0,
-                                  child: InkWell(
-                                    onTap: () {
-                                      print('点击了关闭');
-                                      Get.back(id: GlobalNestedKey.PICKS);
-                                    },
-                                    child: SizedBox(
-                                      width: 45.w,
-                                      height: 45.w,
-                                      child: Image.asset(
-                                        Assets.iconClosePng,
-                                        width: 13.w,
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    }),
+                    8.vGap,
+                    _buildStatusWidget(showModal: false),
+                    5.vGap,
+                    Text(
+                      controller.getTime(),
+                      style: 12.w4(
+                          color: AppColors.c262626.withOpacity(0.4), height: 1),
+                    ),
+                    17.vGap,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 131.w,
+                          height: 60.w,
+                          decoration: BoxDecoration(
+                              color: AppColors.cD9D9D9,
+                              borderRadius: BorderRadius.circular(8.w)),
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  controller.getTypeString(),
+                                  style: 14
+                                      .w7(color: AppColors.c666666, height: 1),
+                                ),
+                                if (controller.getStatus() == 1)
+                                  Text(
+                                    "Be settling",
+                                    style: 16.w7(
+                                        color: AppColors.c262626, height: 1),
+                                  )
+                                else
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "$winTimesCount",
+                                        style: 16.w7(
+                                            color: AppColors.c282828,
+                                            height: 1),
                                       ),
-                                    ),
-                                  ),
+                                      4.hGap,
+                                      Text(
+                                        "correct",
+                                        style: 12.w4(
+                                            color: AppColors.c262626,
+                                            height: 1),
+                                      ),
+                                      12.hGap,
+                                      Container(
+                                        decoration: BoxDecoration(
+                                            color: AppColors.c262626,
+                                            borderRadius:
+                                                BorderRadius.circular(5.w)),
+                                        width: 40.w,
+                                        height: 15.w,
+                                        child: Center(
+                                          child: Text(
+                                            "${controller.getBetCount()}x",
+                                            style: 11.w4(
+                                                color: AppColors.cF2F2F2,
+                                                height: 1),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  )
+                              ],
+                            ),
+                          ),
+                        ),
+                        12.hGap,
+                        Container(
+                          width: 131.w,
+                          height: 60.w,
+                          decoration: BoxDecoration(
+                              color: AppColors.cD9D9D9,
+                              borderRadius: BorderRadius.circular(8.w)),
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Text(
+                                  "Win-Lose",
+                                  style: 14
+                                      .w7(color: AppColors.c666666, height: 1),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: List.generate(data.length, (index) {
+                                    return Container(
+                                      height: 12.w,
+                                      width: 12.w,
+                                      margin: EdgeInsets.only(left: 6.w),
+                                      decoration: BoxDecoration(
+                                          color: controller.getStatus() != 1
+                                              ? data[index]
+                                                      .reciveAwardInfo
+                                                      .guessData[index]
+                                                      .success
+                                                  ? AppColors.c10A86A
+                                                  : AppColors.cE72646
+                                              : AppColors.cTransparent,
+                                          border: controller.getStatus() != 1
+                                              ? null
+                                              : Border.all(
+                                                  color: AppColors.cB3B3B3,
+                                                  width: 1),
+                                          borderRadius:
+                                              BorderRadius.circular(6.w)),
+                                    );
+                                  }),
                                 )
                               ],
                             ),
                           ),
-                          Container(
-                            margin: EdgeInsets.symmetric(
-                                horizontal: 21.w, vertical: 21.w),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        height: 55.w,
-                                        width: 55.w,
-                                        decoration: BoxDecoration(
-                                            color: AppColors.cB3B3B3,
-                                            borderRadius:
-                                                BorderRadius.circular(28.w)),
-                                        child: Image.asset(
-                                          Assets.testTeamLogoPng,
-                                          width: 45.w,
-                                        ),
-                                      ),
-                                      6.hGap,
-                                      Expanded(
-                                        child: Row(
-                                          children: [
-                                            Container(
-                                              constraints: BoxConstraints(
-                                                  maxWidth: 100.w),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    "${Get.find<HomeController>().userEntiry.teamLoginInfo?.team?.teamName}",
-                                                    style: TextStyle(
-                                                        color:
-                                                            AppColors.cFF7954,
-                                                        fontSize: 14.sp,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        overflow: TextOverflow
-                                                            .ellipsis),
-                                                  ),
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Text(
-                                                        "W-L",
-                                                        style: TextStyle(
-                                                            color: AppColors
-                                                                .cB3B3B3,
-                                                            fontSize: 10.sp),
-                                                      ),
-                                                      Text(
-                                                        "$winTimesCount-$lossTimesCount",
-                                                        style: TextStyle(
-                                                            color: AppColors
-                                                                .cB3B3B3,
-                                                            fontSize: 12.sp),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Text(
-                                                        "ODDS",
-                                                        style: TextStyle(
-                                                            color: AppColors
-                                                                .cB3B3B3,
-                                                            fontSize: 10.sp),
-                                                      ),
-                                                      Text(
-                                                        "${controller.getBetCount()}x",
-                                                        style: TextStyle(
-                                                            color: AppColors
-                                                                .cB3B3B3,
-                                                            fontSize: 12.sp),
-                                                      ),
-                                                    ],
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Column(
-                                  children: [
-                                    Text(
-                                      controller.getAwardCoin() == null
-                                          ? ("-${controller.getCostCount()}")
-                                          : ("+${controller.getAwardCoin()!}"),
-                                      style: TextStyle(
-                                          color:
-                                              controller.getAwardCoin() == null
-                                                  ? AppColors.cE72646
-                                                  : AppColors.c10A86A,
-                                          fontSize: 24.sp,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          "JETTON",
-                                          style: TextStyle(
-                                              fontSize: 10.sp,
-                                              color: AppColors.cB3B3B3),
-                                        ),
-                                        SizedBox(
-                                          width: 5.w,
-                                        ),
-                                        Image.asset(
-                                          Assets.uiIconJettonPng,
-                                          width: 10.w,
-                                          fit: BoxFit.fitWidth,
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
+                        )
+                      ],
                     ),
+                    24.vGap,
                     //列表
                     Expanded(
                       // constraints: BoxConstraints(
                       //   maxHeight: 465.w
                       // ),
-                      child: ListView.builder(
-                          physics: const BouncingScrollPhysics(),
-                          itemCount: controller.data.length,
-                          itemBuilder: (context, index) {
-                            return Column(
-                              children: [
-                                if (index == 0) 8.vGap,
-                                ReciveAwardDetailItem(
-                                    controller.data[index], newsDefineEntity),
-                              ],
-                            );
-                          }),
+                      child: MediaQuery.removePadding(
+                        removeTop: true,
+                        context: context,
+                        child: ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: controller.data.length,
+                            itemBuilder: (context, index) {
+                              return Column(
+                                children: [
+                                  ReciveAwardDetailItem(
+                                      controller.data[index], newsDefineEntity),
+                                ],
+                              );
+                            }),
+                      ),
                     )
                   ],
-                )
-              ],
-            ),
+                )),
           );
         });
   }

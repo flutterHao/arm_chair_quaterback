@@ -13,6 +13,7 @@ import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/physics/one_boundary_page_scroll_physics.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
+import 'package:arm_chair_quaterback/pages/picks/personal_center/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/personal_center/widgets/recive_award_pick_page/recive_award_picks_page_controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/recive_rward/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/recive_rward/widgets/recive_award_item/recive_award_item.dart';
@@ -72,7 +73,10 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
                         padding: EdgeInsets.only(left: 25.w, top: 21.w),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(16.w),
-                            gradient: const LinearGradient(colors: [
+                            gradient: LinearGradient(colors: Get.find<PersonalCenterController>().rank>0?[
+                              AppColors.c7e2919,
+                              AppColors.c251a18,
+                            ]:[
                               AppColors.c262626,
                               AppColors.c4c4c4c
                             ])),

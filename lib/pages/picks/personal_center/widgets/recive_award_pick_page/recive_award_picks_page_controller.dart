@@ -97,6 +97,7 @@ class ReciveAwardPicksPageController extends GetxController with GetSingleTicker
               .firstWhere((e) => r.playerId == e.playerId);
           player.awayTeamInfo = result1.firstWhere((e) => e.id == r.awayTeamId);
           player.reciveAwardInfo = l;
+          player.guessData = r;
           players.add(player);
         }
         listPointsData.add(players);

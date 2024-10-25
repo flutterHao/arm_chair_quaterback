@@ -100,9 +100,9 @@ class Assets {
   static const uiTriangleGPng = 'assets/images/picks/ui_triangle_g.png';
   static const uiTriangleRPng = 'assets/images/picks/ui_triangle_r.png';
   static const uiWrongPng = 'assets/images/picks/ui_wrong.png';
-  static const uiBannerAwardPng = 'assets/images/picks/ui_banner_award.png';
-  static const uiBannerHistoryPng = 'assets/images/picks/ui_banner_history.png';
-  static const uiBannerRankPng = 'assets/images/picks/ui_banner_rank.png';
+  static const uiBannerAwardPng = 'assets/images/picks/ui_banner_award.jpg';
+  static const uiBannerHistoryPng = 'assets/images/picks/ui_banner_history.jpg';
+  static const uiBannerRankPng = 'assets/images/picks/ui_banner_rank.jpg';
   static const uiPropsBoxPng = 'assets/images/picks/ui_props_box.png';
   static const uiPropsMoenyPng = 'assets/images/picks/ui_props_moeny.png';
   static const uiBellePng = 'assets/images/picks/ui_belle.png';

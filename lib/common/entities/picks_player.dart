@@ -27,6 +27,8 @@ class PicksPlayer {
   late GuessGameInfoEntity guessInfo;
 
   late ReciveAwardV2GuessInfo reciveAwardInfo;
+
+  late ReciveAwardV2GuessInfoGuessData? guessData;
 }
 
 class PicksPlayerV2{

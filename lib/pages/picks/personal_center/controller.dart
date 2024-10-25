@@ -1,7 +1,9 @@
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_simple_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/enums/rank_type.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team_player.dart';
@@ -33,6 +35,8 @@ class PersonalCenterController extends GetxController
 
   List<TeamInfo> teamPlayers = [];
 
+  int rank = 0;
+
   // tap
   void handleTap(int index) {
     Get.snackbar(
@@ -56,9 +60,12 @@ class PersonalCenterController extends GetxController
     Future.wait([
       TeamPlayerApi.getTeamPlayerList(teamId??0),
       CacheApi.getNBAPlayerInfo(),
+      PicksApi.getRedisRankInfo(type: RankType.newsGuess)
     ]).then((result){
       TeamPlayerListEntity teamPlayerEntity= result[0] as TeamPlayerListEntity;
        NbaPlayerInfosEntity nbaPlayerInfosEntity= result[1] as NbaPlayerInfosEntity;
+      var rankInfo = result[2] as RankListEntity;
+      rank = rankInfo.myRank.rank??0;
        for (int i = 0; i < teamPlayerEntity.teamPlayers.length; i++) {
          var playerEntity = teamPlayerEntity.teamPlayers[i];
          var item = nbaPlayerInfosEntity.playerBaseInfoList.firstWhere((e)=> e.playerId == playerEntity.playerId);
