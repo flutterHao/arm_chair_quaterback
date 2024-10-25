@@ -22,31 +22,43 @@ class StatsRankWidget extends GetView<NewListController> {
     return GetBuilder<NewListController>(
         id: "statsRank",
         builder: (_) {
-          return Container(
-            alignment: Alignment.centerLeft,
-            height: 191.w,
-            child: PageView.builder(
-              controller: PageController(
-                initialPage: 0,
-                viewportFraction: 0.9,
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: 16.w, top: 6.w, bottom: 10.w),
+                child: Text(
+                  "Stats",
+                  style: 19.w7(),
+                ),
               ),
-              physics: const BouncingScrollPhysics(),
-              itemCount: controller.state.statsRankMap.entries.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: EdgeInsets.only(right: 20.w), // 控制左右间距
-                  child: InkWell(
-                    onTap: () {
-                      Get.toNamed(
-                        RouteNames.statsRank,
-                        id: GlobalNestedKey.NEWS,
-                      );
-                    },
-                    child: StatsRankItem(index: index),
+              Container(
+                alignment: Alignment.centerLeft,
+                height: 191.w,
+                child: PageView.builder(
+                  controller: PageController(
+                    initialPage: 0,
+                    viewportFraction: 0.9,
                   ),
-                );
-              },
-            ),
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: controller.state.statsRankMap.entries.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: EdgeInsets.only(right: 20.w), // 控制左右间距
+                      child: InkWell(
+                        onTap: () {
+                          Get.toNamed(
+                            RouteNames.statsRank,
+                            id: GlobalNestedKey.NEWS,
+                          );
+                        },
+                        child: StatsRankItem(index: index),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
           );
         });
   }

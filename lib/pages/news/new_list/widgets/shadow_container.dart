@@ -22,7 +22,7 @@ class ShadowContainer extends StatelessWidget {
       {super.key,
       this.width,
       this.height,
-      this.backgroudColor = AppColors.cF1F1F1,
+      this.backgroudColor = AppColors.cF2F2F2,
       this.shadowColor,
       required this.child,
       this.borderRadius,

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-24 18:04:19
- * @LastEditTime: 2024-10-24 21:18:33
+ * @LastEditTime: 2024-10-25 10:13:27
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
@@ -65,7 +65,7 @@ class _Item extends StatelessWidget {
       return IconWidget(
         iconWidth: 46.w,
         icon: Assets.uiImageArrow,
-        iconColor: AppColors.c4CB8FC,
+        iconColor: AppColors.c4CB8FC.withOpacity((index + 1) / 4),
       );
     });
   }
@@ -120,41 +120,49 @@ class _Item extends StatelessWidget {
                   Positioned(
                     left: -20.w,
                     bottom: 0,
-                    child: ImageWidget(
-                      url: Utils.getTeamUrl(105),
-                      width: 110.w,
+                    child: Opacity(
+                      opacity: 0.6,
+                      child: ImageWidget(
+                        url: Utils.getTeamUrl(105),
+                        width: 110.w,
+                        // color: Colors.red,
+                      ),
                     ),
                   ),
                   Positioned(
                     right: -20.w,
                     bottom: 0,
-                    child: ImageWidget(
-                      url: Utils.getTeamUrl(116),
-                      width: 110.w,
-                      fit: BoxFit.fitWidth,
+                    child: Opacity(
+                      opacity: 0.6,
+                      child: ImageWidget(
+                        url: Utils.getTeamUrl(103),
+                        width: 110.w,
+                        fit: BoxFit.fitWidth,
+                        // color: Colors.red,
+                      ),
                     ),
                   ),
 
                   ///渐变背景
-                  Container(
-                    width: 343.w,
-                    height: 85.w,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(16.w),
-                        topRight: Radius.circular(16.w),
-                      ),
-                      gradient: LinearGradient(
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                        colors: [
-                          AppColors.c262626.withOpacity(0.5),
-                          AppColors.c262626.withOpacity(0.3),
-                          AppColors.c262626.withOpacity(0.2),
-                        ],
-                      ),
-                    ),
-                  ),
+                  // Container(
+                  //   width: 343.w,
+                  //   height: 85.w,
+                  //   decoration: BoxDecoration(
+                  //     borderRadius: BorderRadius.only(
+                  //       topLeft: Radius.circular(16.w),
+                  //       topRight: Radius.circular(16.w),
+                  //     ),
+                  //     gradient: LinearGradient(
+                  //       begin: Alignment.centerLeft,
+                  //       end: Alignment.centerRight,
+                  //       colors: [
+                  //         AppColors.c262626.withOpacity(0.5),
+                  //         AppColors.c262626.withOpacity(0.3),
+                  //         AppColors.c262626.withOpacity(0.2),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
 
                   ///箭头
                   Positioned(

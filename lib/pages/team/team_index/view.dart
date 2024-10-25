@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-10-17 15:51:56
+ * @LastEditTime: 2024-10-25 11:43:36
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -21,6 +21,7 @@ import 'package:arm_chair_quaterback/pages/mine/mine_info/bindings.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_info/view.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_setting/bindings.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_setting/view.dart';
+import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_page.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/battle_award_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/progress_paint.dart';
@@ -157,6 +158,8 @@ class _TeamView extends GetView<TeamIndexController> {
 
   ///左边美女部分
   Widget _buildleft(TeamIndexController ctrl) {
+    BeautyController beautyCtrl = Get.find();
+
     return AnimatedPositioned(
       top: 0,
       right: 0,
@@ -178,11 +181,14 @@ class _TeamView extends GetView<TeamIndexController> {
             top: 27.h,
             bottom: 70.h,
             left: -15.h,
-            child: Image.asset(Assets.uiBelle_01Png,
-                fit: BoxFit.cover,
-                // height: 567.w,
-                width: 232.w,
-                alignment: Alignment.topRight),
+            child: Obx(() {
+              return Image.asset(
+                  beautyCtrl.beautyList[beautyCtrl.beautyIndex.value],
+                  fit: BoxFit.cover,
+                  // height: 567.w,
+                  width: 232.w,
+                  alignment: Alignment.topRight);
+            }),
           ),
 
           ///刷新按钮
@@ -754,6 +760,7 @@ class _TeamView extends GetView<TeamIndexController> {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(BeautyController());
     return GetBuilder<TeamIndexController>(
       init: TeamIndexController(),
       id: "team_index",

@@ -22,31 +22,43 @@ class TeamRankWidget extends GetView<NewListController> {
     return GetBuilder<NewListController>(
         id: "teamRank",
         builder: (context) {
-          return Container(
-            height: 225.w,
-            alignment: Alignment.centerLeft,
-            margin: EdgeInsets.only(bottom: 20.w),
-            child: PageView.builder(
-              controller: PageController(
-                viewportFraction: 0.9,
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: 16.w, top: 23.w, bottom: 10.w),
+                child: Text(
+                  "2024 standings",
+                  style: 19.w7(),
+                ),
               ),
-              physics: const BouncingScrollPhysics(),
-              itemCount: controller.state.teamMap.entries.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: EdgeInsets.only(right: 20.w), // 控制左右间距
-                  child: InkWell(
-                    onTap: () {
-                      Get.toNamed(
-                        RouteNames.teamRank,
-                        id: GlobalNestedKey.NEWS,
-                      );
-                    },
-                    child: TeamRankItem(index: index),
+              Container(
+                height: 225.w,
+                alignment: Alignment.centerLeft,
+                margin: EdgeInsets.only(bottom: 20.w),
+                child: PageView.builder(
+                  controller: PageController(
+                    viewportFraction: 0.9,
                   ),
-                );
-              },
-            ),
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: controller.state.teamMap.entries.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: EdgeInsets.only(right: 20.w), // 控制左右间距
+                      child: InkWell(
+                        onTap: () {
+                          Get.toNamed(
+                            RouteNames.teamRank,
+                            id: GlobalNestedKey.NEWS,
+                          );
+                        },
+                        child: TeamRankItem(index: index),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
           );
         });
   }

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-12 17:33:59
- * @LastEditTime: 2024-10-17 15:33:27
+ * @LastEditTime: 2024-10-25 11:44:39
  */
 /*
  * @Description: 
@@ -58,7 +58,6 @@ class BeautyPage extends GetView<BeautyController> {
   // var customLayoutOption=
 
   Widget _beautySwiper() {
-    RxInt current = 0.obs;
     var duration = const Duration(milliseconds: 500);
     return Swiper(
       key: Key("${controller.beautyList.length}"),
@@ -77,7 +76,7 @@ class BeautyPage extends GetView<BeautyController> {
       duration: 800, // 动画的过渡时间
       axisDirection: AxisDirection.right,
       onIndexChanged: (value) {
-        current.value = value;
+        controller.beautyIndex.value = value;
       },
       // customLayoutOption:
       //     CustomLayoutOption(startIndex: 0, stateCount: list.length)
@@ -89,11 +88,11 @@ class BeautyPage extends GetView<BeautyController> {
       itemBuilder: (context, index) {
         return InkWell(
           onTap: () {
-            controller.beautyIndex = index;
+            controller.beautyIndex.value = index;
             Get.toNamed(RouteNames.teamBeautyDetail);
           },
           child: Obx(() {
-            var isCurrent = current.value == index;
+            var isCurrent = controller.beautyIndex.value == index;
             return Container(
               // key: Key(index.toString()),
               // alignment: Alignment.center,

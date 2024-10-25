@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2024-10-24 17:12:12
+ * @LastEditTime: 2024-10-25 10:40:07
  */
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
@@ -52,7 +52,8 @@ class NewListController extends GetxController {
   void refreshData() async {
     Future.wait([
       getNewsBanner(),
-      getRegularList(),
+      // getNews(),
+      getNewsFlow(123),
       getStatsRank(),
       getStarTeamList(),
     ]).then((v) {
@@ -80,7 +81,7 @@ class NewListController extends GetxController {
     });
   }
 
-  Future getRegularList() async {
+  Future getNews() async {
     await NewsApi.getNewsList().then((value) {
       state.newsList = value;
       update(['regular']);
@@ -240,7 +241,7 @@ class NewListController extends GetxController {
     });
   }
 
-  void getNewsFlow(newsId, {bool isRefresh = false}) async {
+  Future getNewsFlow(newsId, {bool isRefresh = false}) async {
     if (isRefresh) {
       state.newsFlowList.clear();
       state.page = 0;
@@ -250,7 +251,9 @@ class NewListController extends GetxController {
 
     await NewsApi.newsFlow(123, state.page, 10).then((value) {
       state.newsFlowList.addAll(value);
+      state.newsList = value;
       update(['newsFlow']);
+       update(['newsList']);
     }).whenComplete(() {
       isRefresh
           ? flowRefreshCtrl.refreshCompleted()

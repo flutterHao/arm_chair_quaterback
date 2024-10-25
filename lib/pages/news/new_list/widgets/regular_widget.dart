@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-21 16:48:47
- * @LastEditTime: 2024-10-24 21:16:22
+ * @LastEditTime: 2024-10-25 12:19:36
  */
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
 import 'package:arm_chair_quaterback/common/net/address.dart';
@@ -23,79 +23,79 @@ class RegularWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        20.vGap,
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: Row(
-            children: [
-              Expanded(
-                child: Text(
-                  "24-25 Regular Season",
-                  style: 19.w7(color: AppColors.c262626),
-                ),
-              ),
-              InkWell(
-                  onTap: () {
-                    final List<String> servers = [
-                      Address.personalDevUrl,
-                      Address.privateDevUrl,
-                      Address.publicDevUrl,
-                    ];
-                    String current = HttpUtil().getUrl;
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return ServerSwitchDialog(
-                          servers: servers,
-                          currentServer: current,
-                          onServerChanged: (newServer) {
-                            HttpUtil().setUrl(newServer);
-                            HomeController.to.login();
-                          },
-                        );
-                      },
-                    );
-                  },
+    return GetBuilder<NewListController>(
+      id: "newsList",
+      builder: (controller) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          20.vGap,
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: Row(
+              children: [
+                Expanded(
                   child: Text(
-                    "切换服务器",
-                    style: 15.w7(color: Colors.black),
-                  ))
-            ],
-          ),
-        ),
-        10.vGap,
-        GetBuilder<NewListController>(
-            id: "newsList",
-            builder: (controller) {
-              return Container(
-                alignment: Alignment.centerLeft,
-                height: 232.w,
-                width: 375.w,
-                child: ListView.builder(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w),
-                  scrollDirection: Axis.horizontal,
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: controller.state.newsList.length,
-                  // itemCount: 5,
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () {
-                        controller.pageToDetail(index);
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.only(right: 9.w), // 控制左右间距
-                        child: _item(controller.state.newsList[index]),
-                      ),
-                    );
-                  },
+                    "24-25 Regular Season",
+                    style: 19.w7(color: AppColors.c262626),
+                  ),
                 ),
-              );
-            })
-      ],
-    );
+                InkWell(
+                    onTap: () {
+                      final List<String> servers = [
+                        Address.personalDevUrl,
+                        Address.privateDevUrl,
+                        Address.publicDevUrl,
+                      ];
+                      String current = HttpUtil().getUrl;
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return ServerSwitchDialog(
+                            servers: servers,
+                            currentServer: current,
+                            onServerChanged: (newServer) {
+                              HttpUtil().setUrl(newServer);
+                              HomeController.to.login();
+                            },
+                          );
+                        },
+                      );
+                    },
+                    child: Text(
+                      "切换服务器",
+                      style: 15.w7(color: Colors.black),
+                    ))
+              ],
+            ),
+          ),
+          10.vGap,
+          Container(
+            alignment: Alignment.centerLeft,
+            height: 232.w,
+            width: 375.w,
+            child: ListView.builder(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              scrollDirection: Axis.horizontal,
+              physics: const BouncingScrollPhysics(),
+              itemCount: controller.state.newsList.length,
+              // itemCount: 5,
+              itemBuilder: (context, index) {
+                return InkWell(
+                  onTap: () {
+                    controller.pageToDetail(index);
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.only(right: 9.w), // 控制左右间距
+                    child: _item(controller.state.newsList[index]),
+                  ),
+                );
+              },
+            ),
+          )
+        ],
+      );
+    });
   }
 }
 

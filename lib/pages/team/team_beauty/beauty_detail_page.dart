@@ -23,8 +23,8 @@ class BeautyDetailPage extends GetView<BeautyController> {
     Future.delayed(const Duration(milliseconds: 100), () {
       dressBottom.value = 0;
     });
-    
-        RxDouble tabRight = (-92.w).obs;
+
+    RxDouble tabRight = (-92.w).obs;
     Future.delayed(const Duration(milliseconds: 100), () {
       tabRight.value = 16;
     });
@@ -36,11 +36,12 @@ class BeautyDetailPage extends GetView<BeautyController> {
           // bottom: 46.w,
           child: Hero(
             tag: "beauty${controller.beautyIndex}",
-            child: Image.asset(controller.beautyList[controller.beautyIndex],
-                fit: BoxFit.fitHeight,
-                height: 567.w,
-                // width: 232.w,
-                alignment: Alignment.topLeft),
+            child:
+                Image.asset(controller.beautyList[controller.beautyIndex.value],
+                    fit: BoxFit.fitHeight,
+                    height: 567.w,
+                    // width: 232.w,
+                    alignment: Alignment.topLeft),
           ),
         ),
         Positioned(
@@ -53,15 +54,14 @@ class BeautyDetailPage extends GetView<BeautyController> {
           left: 31.5.w,
           child: beautyInfo(color: AppColors.cF2F2F2),
         ),
-      Obx(() {
-            return AnimatedPositioned(
+        Obx(() {
+          return AnimatedPositioned(
             duration: const Duration(milliseconds: 200),
-              bottom: 275.w,
-              right:tabRight.value,
-              child: _tabButtom(),
-            );
-          }
-        ),
+            bottom: 275.w,
+            right: tabRight.value,
+            child: _tabButtom(),
+          );
+        }),
         Obx(() {
           return AnimatedPositioned(
             duration: const Duration(milliseconds: 200),
