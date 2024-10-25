@@ -10,6 +10,7 @@ import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/index.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 ///
@@ -50,45 +51,43 @@ class PlayerAvatarWidget extends StatelessWidget {
       onTap: () => Get.toNamed(RouteNames.picksPlayerDetail,
           arguments: PlayerDetailPageArguments(playerId)),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(radius ?? width / 2),
-        child: Container(
-          width: width,
-          height: height ?? width,
-          decoration: BoxDecoration(
-              color: backgroundColor,
-              borderRadius: BorderRadius.circular(radius ?? width / 2)),
-          child: Stack(
-            alignment: Alignment.bottomCenter,
-            children: [
-              Positioned(
-                  bottom: 0,
-                  child: ExtendedImage.network(
-                    Utils.getPlayUrl(playerId),
-                    fit: BoxFit.fitWidth,
-                    width: imageWidth ?? width,
-                    loadStateChanged: (status) {
-                      switch (status.extendedImageLoadState) {
-                        case LoadState.loading:
-                        case LoadState.failed:
-                          return IconWidget(
-                              iconWidth: imageWidth ?? width,
-                              icon: Assets.testTeamLogoPng);
-                        default:
-                      }
-                    },
-                  )),
-              Positioned(
-                  top: 0,
-                  left: 0,
-                  child: Visibility(
-                    visible: showGrade,
-                    child: Text(
-                      Utils.formatGrade(grade ?? 'SS'),
-                      style: 14.w7(color: fontColor),
-                    ),
-                  ))
-            ],
-          ),
+        child: Stack(
+          alignment: Alignment.bottomCenter,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(radius ?? (width / 2)),
+              child: Container(
+                color: backgroundColor,
+                height: width,
+                width: width,
+                padding: const EdgeInsets.only(top: 10),
+                child: ExtendedImage.network(
+                  Utils.getPlayUrl(playerId),
+                  fit: BoxFit.fitHeight,
+                  loadStateChanged: (status) {
+                    switch (status.extendedImageLoadState) {
+                      case LoadState.loading:
+                      case LoadState.failed:
+                        return IconWidget(
+                            iconWidth: width-10,
+                            icon: Assets.testTeamLogoPng);
+                      default:
+                    }
+                  },
+                ),
+              ),
+            ),
+            Positioned(
+                top: 0,
+                left: 0,
+                child: Visibility(
+                  visible: showGrade,
+                  child: Text(
+                    Utils.formatGrade(grade ?? 'SS'),
+                    style: 14.w7(color: fontColor),
+                  ),
+                ))
+          ],
         ),
       ),
     );
