@@ -544,7 +544,7 @@ class _GameState extends State<Game>
         context: Get.context!,
         isScrollControlled: true,
         builder: (context) {
-          Future.delayed(const Duration(milliseconds: 200),(){
+          Future.delayed(const Duration(milliseconds: 200), () {
             easyAnimationController?.forward(from: 0);
           });
           return SizedBox(
@@ -626,7 +626,7 @@ class _GameState extends State<Game>
                           Row(
                             children: [
                               Text(
-                                "Next stage (lv.${controller.nextLevelRuleConfig?.grade??0})",
+                                "Next stage (lv.${controller.nextLevelRuleConfig?.grade ?? 0})",
                                 style:
                                     16.w7(color: AppColors.c262626, height: 1),
                               ),
@@ -658,7 +658,7 @@ class _GameState extends State<Game>
                                 Row(
                                   children: [
                                     Text(
-                                      "${controller.currentLevelRuleConfig?.salaryCap??0}",
+                                      "${controller.currentLevelRuleConfig?.salaryCap ?? 0}",
                                       style: 18.w7(color: AppColors.cB3B3B3),
                                     ),
                                     SizedBox(
@@ -690,7 +690,7 @@ class _GameState extends State<Game>
                                       ),
                                     ),
                                     Text(
-                                      "${controller.nextLevelRuleConfig?.salaryCap??0}",
+                                      "${controller.nextLevelRuleConfig?.salaryCap ?? 0}",
                                       style: 18.w7(color: AppColors.c1BC27D),
                                     ),
                                   ],
@@ -698,72 +698,45 @@ class _GameState extends State<Game>
                               ],
                             ),
                           ),
-                          9.vGap,
-                          Container(
-                            padding: EdgeInsets.symmetric(horizontal: 25.w),
-                            decoration: BoxDecoration(
-                                color: AppColors.cF2F2F2,
-                                borderRadius: BorderRadius.circular(16.w)),
-                            height: 90.w,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    IconWidget(
-                                      iconWidth: 40.w,
-                                      icon: Assets.uiIconPlayerPng,
-                                    ),
-                                    Text(
-                                      "Bench player",
-                                      style: 10.w4(color: AppColors.cB3B3B3),
-                                    )
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "56%",//todo
-                                      style: 18.w7(color: AppColors.cB3B3B3),
-                                    ),
-                                    SizedBox(
-                                      width: 30.w,
-                                      child: Stack(
-                                        alignment: Alignment.center,
-                                        children: [
-                                          // SizedBox(
-                                          //   width: 30.w,
-                                          //   height: 12.w,
-                                          // ),
-                                          Positioned(
-                                              left: -2.w,
-                                              right: 0,
-                                              child: IconWidget(
-                                                iconWidth: 7.w,
-                                                icon: Assets.uiIconArrows_01Png,
-                                                iconColor: AppColors.c1BC27D,
-                                              )),
-                                          Positioned(
-                                              left: 6.w,
-                                              right: 0,
-                                              child: IconWidget(
-                                                iconWidth: 7.w,
-                                                icon: Assets.uiIconArrows_01Png,
-                                                iconColor: AppColors.c1BC27D,
-                                              )),
-                                        ],
+                          if (double.parse(controller
+                                          .nextLevelRuleConfig?.benchCount ??
+                                      "0") -
+                                  double.parse(controller
+                                          .currentLevelRuleConfig?.benchCount ??
+                                      "0") !=
+                              0) ...[
+                            9.vGap,
+                            Container(
+                              padding: EdgeInsets.symmetric(horizontal: 25.w),
+                              decoration: BoxDecoration(
+                                  color: AppColors.cF2F2F2,
+                                  borderRadius: BorderRadius.circular(16.w)),
+                              height: 90.w,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      IconWidget(
+                                        iconWidth: 40.w,
+                                        icon: Assets.uiIconPlayerPng,
                                       ),
-                                    ),
-                                    Text(
-                                      "60%",//todo
-                                      style: 18.w7(color: AppColors.c1BC27D),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
+                                      Text(
+                                        "Bench player",
+                                        style: 10.w4(color: AppColors.cB3B3B3),
+                                      )
+                                    ],
+                                  ),
+                                  Text(
+                                    "${double.parse(controller.nextLevelRuleConfig?.benchCount ?? "0") - double.parse(controller.currentLevelRuleConfig?.benchCount ?? "0")}",
+                                    style: 18.w7(color: AppColors.c1BC27D),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
                           9.vGap,
                           Container(
                             padding: EdgeInsets.symmetric(horizontal: 25.w),
@@ -779,7 +752,7 @@ class _GameState extends State<Game>
                                   children: [
                                     IconWidget(
                                       iconWidth: 40.w,
-                                      icon: Assets.uiIconCapsPng,
+                                      icon: Assets.uiIconSalaryPng,
                                     ),
                                     Text(
                                       "Salary caps",
@@ -795,7 +768,7 @@ class _GameState extends State<Game>
                                       color: AppColors.cE41033,
                                       borderRadius: BorderRadius.circular(6.w)),
                                   child: Text(
-                                    "new",//todo
+                                    "new",
                                     style: 16.w7(
                                         color: AppColors.cFFFFFF, height: 1),
                                   ),

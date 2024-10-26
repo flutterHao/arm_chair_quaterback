@@ -121,7 +121,7 @@ class ReciveAwardItem extends StatelessWidget {
                                         width: 44.w,
                                         height: 44.w,
                                         alignment: Alignment.centerRight,
-                                        child: controller.data.length >= 4 &&
+                                        child: controller.data.length >= 5 &&
                                                 index == 0
                                             ? Container(
                                                 alignment: Alignment.center,

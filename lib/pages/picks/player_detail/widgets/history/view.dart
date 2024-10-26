@@ -1,16 +1,19 @@
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
-import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/history/controller.dart';
+import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/history/product_datagridsource.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:syncfusion_flutter_core/theme.dart';
+import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 class HistoryPage extends StatefulWidget {
-  const HistoryPage({super.key, required this.headHeight});
+  const HistoryPage({super.key, required this.headHeight, required this.playerId});
 
   final double headHeight;
+  final int playerId;
+
 
   @override
   State<HistoryPage> createState() => _HistoryPageState();
@@ -23,7 +26,7 @@ class _HistoryPageState extends State<HistoryPage>
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HistoryController>(
-      init: controller = HistoryController(),
+      init: controller = HistoryController(widget.playerId),
       builder: (controller) {
         return Container(
           margin: EdgeInsets.symmetric(horizontal: 16.w),
@@ -54,16 +57,31 @@ class _HistoryPageState extends State<HistoryPage>
                         onExpansionChanged: (expanded) {
                           if (expanded) {
                             // 在展开时自动滚动到确保内容在屏幕中
-                            _scrollToItem(context,index);
+                            _scrollToItem(context, index);
                           }
                         },
                         children: [
-                          Container(
-                            height: 200,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                                color: AppColors.cF2F2F2,
-                                borderRadius: BorderRadius.circular(16.w)),
+                          Builder(
+                            builder: (context) {
+                              var listSize =21;
+                              return Container(
+                                height: listSize*20.w+(2*11.w)+10.w,
+                                constraints: BoxConstraints(
+                                  minHeight: 350.w
+                                ),
+                                padding: EdgeInsets.symmetric(horizontal: 11.w,vertical: 14.w),
+                                decoration: BoxDecoration(
+                                    color: AppColors.cF2F2F2,
+                                    borderRadius: BorderRadius.circular(16.w)),
+                                child: SfDataGridTheme(
+                                    data: const SfDataGridThemeData(
+                                      gridLineColor: AppColors.cTransparent,
+                                      frozenPaneLineColor: Colors.transparent,
+                                      rowHoverColor: Colors.blue,
+                                    ),
+                                    child: _buildDataGrid(listSize)),
+                              );
+                            }
                           ),
                         ],
                       ),
@@ -76,7 +94,109 @@ class _HistoryPageState extends State<HistoryPage>
     );
   }
 
-  void _scrollToItem(BuildContext context,int index) {
+  List<GridColumn> _obtainColumns() {
+    List<GridColumn> columns;
+    columns = <GridColumn>[
+      GridColumn(
+          columnName: 'id',
+          width: 20.w,
+          label: Container(
+            height: 20,
+            alignment: Alignment.center,
+            child: Text(
+              'WK',
+              style: 10.w4(color: AppColors.cB3B3B3, height: 1),
+            ),
+          )),
+      GridColumn(
+          columnName: 'name',
+          width: 48.w,
+          label: Container(
+            alignment: Alignment.center,
+            child:  Text(
+              'OPP',
+              style: 10.w4(color: AppColors.cB3B3B3, height: 1),
+            ),
+          )),
+      GridColumn(
+          columnName: 'productId',
+          width: 48.w,
+          label: Container(
+            alignment: Alignment.center,
+            child: Text(
+              'PTS',
+              style: 10.w4(color: AppColors.cB3B3B3, height: 1),
+            ),
+          )),
+
+      GridColumn(
+          columnName: 'product',
+          width: 40.w,
+          label: Container(
+            alignment: Alignment.center,
+            child:  Text(
+              'PTS',
+              style: 10.w4(color: AppColors.cB3B3B3, height: 1),
+            ),
+          )),
+      GridColumn(
+          columnName: 'orderDate',
+          width: 40.w,
+          label: Container(
+            alignment: Alignment.center,
+            child:  Text(
+              'PTS',
+              style: 10.w4(color: AppColors.cB3B3B3, height: 1),
+            ),
+          )),
+      GridColumn(
+          columnName: 'quantity',
+          width: 40.w,
+          label: Container(
+            alignment: Alignment.center,
+            child:  Text(
+              'PTS',
+              style: 10.w4(color: AppColors.cB3B3B3, height: 1),
+            ),
+          )),
+      GridColumn(
+          columnName: 'city',
+          width: 40.w,
+          label: Container(
+            alignment: Alignment.center,
+            child:  Text(
+              'PTS',
+              style: 10.w4(color: AppColors.cB3B3B3, height: 1),
+            ),
+          )),
+      GridColumn(
+          columnName: 'unitPrice',
+          width: 40.w,
+          label: Container(
+            alignment: Alignment.center,
+            child:  Text(
+              'PTS',
+              style: 10.w4(color: AppColors.cB3B3B3, height: 1),
+            ),
+          )),
+    ];
+    return columns;
+  }
+
+  SfDataGrid _buildDataGrid(int listSize) {
+    return SfDataGrid(
+      source: ProductDataGridSource('FreezePanes', productDataCount: listSize),
+      frozenRowsCount: 0,
+      headerRowHeight: 20.w,
+      rowHeight: 20.w,
+      verticalScrollPhysics: const NeverScrollableScrollPhysics(),
+      frozenColumnsCount: 2,
+      headerGridLinesVisibility: GridLinesVisibility.none,
+      columns: _obtainColumns(),
+    );
+  }
+
+  void _scrollToItem(BuildContext context, int index) {
     // 延迟确保 ExpansionTile 已完全展开
     Future.delayed(const Duration(milliseconds: 100), () {
       // 获取当前 ExpansionTile 的渲染对象
@@ -90,7 +210,7 @@ class _HistoryPageState extends State<HistoryPage>
       final screenHeight = MediaQuery.of(context).size.height;
 
       // 如果 ExpansionTile 的位置接近屏幕底部，滚动到该位置
-      if (expansionTileYPosition + renderBox.size.height > screenHeight-100) {
+      if (expansionTileYPosition + renderBox.size.height > screenHeight - 100) {
         // 计算需要滚动的偏移量
         double scrollOffset = controller.scrollController.offset +
             (expansionTileYPosition +

@@ -129,10 +129,12 @@ class Assets {
   static const String playerUiIconFriend = 'assets/images/player/ui_icon_friend.png';
   static const String playerUiIconGradeSs = 'assets/images/player/ui_icon_grade_ss.png';
   static const String playerUiIconMail = 'assets/images/player/ui_icon_mail.png';
+  static const String playerUiIconPick = 'assets/images/player/ui_icon_pick.png';
   static const String playerUiIconPingji = 'assets/images/player/ui_icon_pingji.png';
   static const String playerUiIconSetting = 'assets/images/player/ui_icon_setting.png';
   static const String playerUiIconStar01 = 'assets/images/player/ui_icon_star_01.png';
   static const String playerUiIconStar02 = 'assets/images/player/ui_icon_star_02.png';
+  static const String playerUiIconTrade = 'assets/images/player/ui_icon_trade.png';
   static const String playerUiIconTriangle01 = 'assets/images/player/ui_icon_triangle_01.png';
   static const String playerUiIconTriangle02 = 'assets/images/player/ui_icon_triangle_02.png';
   static const String playerUiIconTriangle03 = 'assets/images/player/ui_icon_triangle_03.png';
@@ -146,6 +148,9 @@ class Assets {
   static const String teamUiBelle01 = 'assets/images/team/ui_belle_01.png';
   static const String teamUiBelle02 = 'assets/images/team/ui_belle_02.png';
   static const String teamUiBelle03 = 'assets/images/team/ui_belle_03.png';
+  static const String teamUiBelle04 = 'assets/images/team/ui_belle_04.png';
+  static const String teamUiBelle05 = 'assets/images/team/ui_belle_05.png';
+  static const String teamUiBelle06 = 'assets/images/team/ui_belle_06.png';
   static const String teamUiBgBackboard01 = 'assets/images/team/ui_bg_backboard_01.png';
   static const String teamUiBgBackboard02 = 'assets/images/team/ui_bg_backboard_02.png';
   static const String teamUiBgBattle = 'assets/images/team/ui_bg_battle.jpg';

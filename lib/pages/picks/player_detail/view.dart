@@ -35,7 +35,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
 
   @override
   Widget build(BuildContext context) {
-    var args = arguments ?? Get.arguments ?? PlayerDetailPageArguments(2115);
+    PlayerDetailPageArguments args = arguments ?? Get.arguments ?? PlayerDetailPageArguments(2115);
     return HorizontalDragBackWidget(
       child: GetBuilder<PlayerDetailController>(
         init: PlayerDetailController(args),
@@ -221,6 +221,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                           const SummaryPage(),
                           HistoryPage(
                             headHeight: appBarHeight + 66.w,
+                            playerId: args.playerId,
                           ),
                           PlayerDetailGame(
                             headHeight: appBarHeight + 66.w,

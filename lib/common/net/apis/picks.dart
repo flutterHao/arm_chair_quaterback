@@ -13,6 +13,7 @@ import 'package:arm_chair_quaterback/common/entities/guess_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_param_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/nba_player_season_game_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_day_data_entity.dart';
@@ -134,5 +135,16 @@ class PicksApi {
   static Future<TeamInfoEntity> getTeamInfo() async {
     var json = await httpUtil.post(Api.getTeamInfo);
     return TeamInfoEntity.fromJson(json);
+  }
+
+  static Future<List<NbaPlayerSeasonGameEntity>> getNBAPlayerSeasonGameData(
+      int playerId, int seasonId, int page, int pageSize) async {
+    List json = await httpUtil.post(Api.getNBAPlayerSeasonGameData, data: {
+      "playerId": playerId,
+      "seasonId": seasonId,
+      "page": page,
+      "pageSize": pageSize,
+    });
+    return json.map((e) => NbaPlayerSeasonGameEntity.fromJson(e)).toList();
   }
 }
