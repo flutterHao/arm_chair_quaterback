@@ -132,17 +132,22 @@ class PersonalCenterPage extends GetView<PersonalCenterController> {
                       ),
                     ),
                     9.hGap,
-                    Container(
-                      width: 29.w,
-                      height: 29.w,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15.w),
-                          border:
-                              Border.all(color: AppColors.c666666, width: 1)),
-                      child: IconWidget(
-                        iconWidth: 16.w,
-                        icon: Assets.uiIconAddPng,
-                        iconColor: AppColors.cB3B3B3,
+                    InkWell(
+                      onTap: (){
+                        //todo
+                      },
+                      child: Container(
+                        width: 29.w,
+                        height: 29.w,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15.w),
+                            border:
+                                Border.all(color: AppColors.c666666, width: 1)),
+                        child: IconWidget(
+                          iconWidth: 16.w,
+                          icon: Assets.uiIconAddPng,
+                          iconColor: AppColors.cB3B3B3,
+                        ),
                       ),
                     )
                   ],
@@ -287,90 +292,105 @@ class PersonalCenterPage extends GetView<PersonalCenterController> {
                           borderRadius: BorderRadius.circular(2.w)),
                     ),
                     24.vGap,
-                    Container(
-                      height: 51.w,
-                      padding: EdgeInsets.only(left: 26.w, right: 24.w),
-                      margin: EdgeInsets.symmetric(horizontal: 16.w),
-                      decoration: BoxDecoration(
-                          color: AppColors.cF2F2F2,
-                          borderRadius: BorderRadius.circular(16.w)),
-                      child: Row(
-                        children: [
-                          IconWidget(
-                            iconWidth: 22.w,
-                            icon: Assets.uiIconInformPng,
-                            iconColor: AppColors.cFF7954,
-                          ),
-                          7.hGap,
-                          Expanded(
-                              child: Text(
-                            "Unreported",
-                            style: 14.w4(color: AppColors.c262626),
-                          )),
-                          IconWidget(
-                            iconWidth: 13.w,
-                            icon: Assets.uiIconArrowsPng,
-                            iconColor: AppColors.c666666,
-                          )
-                        ],
+                    InkWell(
+                      onTap: (){
+                        //todo
+                      },
+                      child: Container(
+                        height: 51.w,
+                        padding: EdgeInsets.only(left: 26.w, right: 24.w),
+                        margin: EdgeInsets.symmetric(horizontal: 16.w),
+                        decoration: BoxDecoration(
+                            color: AppColors.cF2F2F2,
+                            borderRadius: BorderRadius.circular(16.w)),
+                        child: Row(
+                          children: [
+                            IconWidget(
+                              iconWidth: 22.w,
+                              icon: Assets.uiIconInformPng,
+                              iconColor: AppColors.cFF7954,
+                            ),
+                            7.hGap,
+                            Expanded(
+                                child: Text(
+                              "Unreported",
+                              style: 14.w4(color: AppColors.c262626),
+                            )),
+                            IconWidget(
+                              iconWidth: 13.w,
+                              icon: Assets.uiIconArrowsPng,
+                              iconColor: AppColors.c666666,
+                            )
+                          ],
+                        ),
                       ),
                     ),
                     9.vGap,
-                    Container(
-                      height: 51.w,
-                      padding: EdgeInsets.only(left: 26.w, right: 24.w),
-                      margin: EdgeInsets.symmetric(horizontal: 16.w),
-                      decoration: BoxDecoration(
-                          color: AppColors.cF2F2F2,
-                          borderRadius: BorderRadius.circular(16.w)),
-                      child: Row(
-                        children: [
-                          IconWidget(
-                            iconWidth: 22.w,
-                            icon: Assets.uiIconBlockPng,
-                            iconColor: AppColors.cFF7954,
-                          ),
-                          7.hGap,
-                          Expanded(
-                              child: Text(
-                            "Blacklist",
-                            style: 14.w4(color: AppColors.c262626),
-                          )),
-                          IconWidget(
-                            iconWidth: 13.w,
-                            icon: Assets.uiIconArrowsPng,
-                            iconColor: AppColors.c666666,
-                          )
-                        ],
+                    InkWell(
+                      onTap: (){
+                        //todo
+                      },
+                      child: Container(
+                        height: 51.w,
+                        padding: EdgeInsets.only(left: 26.w, right: 24.w),
+                        margin: EdgeInsets.symmetric(horizontal: 16.w),
+                        decoration: BoxDecoration(
+                            color: AppColors.cF2F2F2,
+                            borderRadius: BorderRadius.circular(16.w)),
+                        child: Row(
+                          children: [
+                            IconWidget(
+                              iconWidth: 22.w,
+                              icon: Assets.uiIconBlockPng,
+                              iconColor: AppColors.cFF7954,
+                            ),
+                            7.hGap,
+                            Expanded(
+                                child: Text(
+                              "Blacklist",
+                              style: 14.w4(color: AppColors.c262626),
+                            )),
+                            IconWidget(
+                              iconWidth: 13.w,
+                              icon: Assets.uiIconArrowsPng,
+                              iconColor: AppColors.c666666,
+                            )
+                          ],
+                        ),
                       ),
                     ),
                     9.vGap,
-                    Container(
-                      height: 51.w,
-                      padding: EdgeInsets.only(left: 26.w, right: 24.w),
-                      margin: EdgeInsets.symmetric(horizontal: 16.w),
-                      decoration: BoxDecoration(
-                          color: AppColors.cF2F2F2,
-                          borderRadius: BorderRadius.circular(16.w)),
-                      child: Row(
-                        children: [
-                          IconWidget(
-                            iconWidth: 22.w,
-                            icon: Assets.iconSharePng,
-                            iconColor: AppColors.cFF7954,
-                          ),
-                          7.hGap,
-                          Expanded(
-                              child: Text(
-                            "Transpond",
-                            style: 14.w4(color: AppColors.c262626),
-                          )),
-                          IconWidget(
-                            iconWidth: 13.w,
-                            icon: Assets.uiIconArrowsPng,
-                            iconColor: AppColors.c666666,
-                          )
-                        ],
+                    InkWell(
+                      onTap: (){
+                        //todo
+                      },
+                      child: Container(
+                        height: 51.w,
+                        padding: EdgeInsets.only(left: 26.w, right: 24.w),
+                        margin: EdgeInsets.symmetric(horizontal: 16.w),
+                        decoration: BoxDecoration(
+                            color: AppColors.cF2F2F2,
+                            borderRadius: BorderRadius.circular(16.w)),
+                        child: Row(
+                          children: [
+                            IconWidget(
+                              iconWidth: 22.w,
+                              icon: Assets.iconSharePng,
+                              iconColor: AppColors.cFF7954,
+                            ),
+                            7.hGap,
+                            Expanded(
+                                child: Text(
+                              "Transpond",
+                              style: 14.w4(color: AppColors.c262626),
+                            )),
+                            IconWidget(
+                              iconWidth: 13.w,
+                              icon: Assets.uiIconArrowsPng,
+                              iconColor: AppColors.c666666,
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ],

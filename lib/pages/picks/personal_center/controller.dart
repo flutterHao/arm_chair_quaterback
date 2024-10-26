@@ -37,6 +37,7 @@ class PersonalCenterController extends GetxController
   TeamSimpleEntity? teamSimpleEntity;
   var loadStatus = LoadDataStatus.loading.obs;
   TeamInfoEntity? teamInfoEntity;
+  TeamRuleConfigEntity? currentLevelRuleConfig,nextLevelRuleConfig;
   String? nextLevelTotalExp = "0";
   String? salaryCap = "0";
 
@@ -78,10 +79,12 @@ class PersonalCenterController extends GetxController
       teamInfoEntity = result[3] as TeamInfoEntity;
       List<TeamRuleConfigEntity> teamRuleConfigList =
           result[4] as List<TeamRuleConfigEntity>;
-      var firstWhereOrNull = teamRuleConfigList.firstWhereOrNull(
+      currentLevelRuleConfig = teamRuleConfigList.firstWhereOrNull(
           (e) => e.grade.toString() == teamInfoEntity?.teamGrade.toString());
-      nextLevelTotalExp = firstWhereOrNull?.totalTeamExp;
-      salaryCap = firstWhereOrNull?.salaryCap;
+      nextLevelRuleConfig = teamRuleConfigList.firstWhereOrNull(
+              (e) => e.grade.toString() == ((teamInfoEntity?.teamGrade??0)+1).toString());
+      nextLevelTotalExp = currentLevelRuleConfig?.totalTeamExp;
+      salaryCap = currentLevelRuleConfig?.salaryCap;
 
       rank = rankInfo.myRank.rank ?? 0;
       for (int i = 0; i < teamPlayerEntity.teamPlayers.length; i++) {

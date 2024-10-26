@@ -227,6 +227,12 @@ class PicksIndexController extends GetxController {
           playerV2.guessInfo = guessGameInfoEntity;
           item.add(playerV2);
         }
+        //排序：选过的放后面
+        item.sort((a,b){
+          if(a.guessInfo.guessData.isNotEmpty) return 1;
+          if(b.guessInfo.guessData.isNotEmpty) return -1;
+          return 0;
+        });
         guessGamePlayers[key] = item;
       }
 

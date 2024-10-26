@@ -121,14 +121,14 @@ class ReciveAwardItem extends StatelessWidget {
                                         width: 44.w,
                                         height: 44.w,
                                         alignment: Alignment.centerRight,
-                                        child: controller.data.length >= 5 &&
+                                        child: controller.data.length >= 4 &&
                                                 index == 0
                                             ? Container(
                                                 alignment: Alignment.center,
                                                 padding:
                                                     EdgeInsets.only(left: 7.w),
                                                 child: Text(
-                                                  "+${controller.data.length - 5}",
+                                                  "+${controller.data.length - 4}",
                                                   style: 12.w4(
                                                       color: AppColors.c666666),
                                                 ),
@@ -207,6 +207,7 @@ class ReciveAwardItem extends StatelessWidget {
     if (controller.getStatus() == 1) {
       return Row(
         crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           IconWidget(
             iconWidth: 13.w,
@@ -219,7 +220,7 @@ class ReciveAwardItem extends StatelessWidget {
                 MyDateUtils.getDateTimeByMs(MyDateUtils.getNextDayStartTimeMS(
                         MyDateUtils.nextDay(MyDateUtils.getDateTimeByMs(
                             controller.data[0].reciveAwardInfo.createTime))) -
-                    controller.data[0].reciveAwardInfo.createTime),
+                    MyDateUtils.getNowDateMs()),
                 format: DateFormats.H_M_S),
             style: 16.w4(color: AppColors.c262626, height: 1),
           )
