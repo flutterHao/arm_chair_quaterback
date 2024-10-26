@@ -1,5 +1,6 @@
 static const uiBattleNewsPng = 'assets/images/team/ui_battle_news.png';
 static const uiBattlePanel_01Png = 'assets/images/team/ui_battle_panel_01.png';
+static const uiBelle_01Png = 'assets/images/team/ui_belle_01.png';
 static const uiBelle_02Png = 'assets/images/team/ui_belle_02.png';
 static const uiBelle_03Png = 'assets/images/team/ui_belle_03.png';
 static const uiBelle_04Png = 'assets/images/team/ui_belle_04.png';

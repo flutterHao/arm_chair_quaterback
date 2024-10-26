@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2024-10-25 10:40:07
+ * @LastEditTime: 2024-10-26 18:34:31
  */
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
@@ -51,8 +51,10 @@ class NewListController extends GetxController {
 
   void refreshData() async {
     Future.wait([
+      CacheApi.getNBATeamDefine(),
+      CacheApi.getNBAPlayerInfo(),
       getNewsBanner(),
-      // getNews(),
+      // getNewsList(),
       getNewsFlow(123),
       getStatsRank(),
       getStarTeamList(),
@@ -72,22 +74,12 @@ class NewListController extends GetxController {
 
   Future getNewsList() async {
     await NewsApi.getNewsList().then((value) {
-      state.newsList = value;
+      state.newsEntity = value;
       update(['newsList']);
     }).catchError((v) async {
       Log.e("getNewsList error,开始重试");
-      state.newsList = await NewsApi.getNewsList();
+      state.newsEntity = await NewsApi.getNewsList();
       update(['newsList']);
-    });
-  }
-
-  Future getNews() async {
-    await NewsApi.getNewsList().then((value) {
-      state.newsList = value;
-      update(['regular']);
-    }).catchError((v) async {
-      state.newsList = await NewsApi.getNewsList();
-      update(['regular']);
     });
   }
 
@@ -249,11 +241,11 @@ class NewListController extends GetxController {
       state.page++;
     }
 
-    await NewsApi.newsFlow(123, state.page, 10).then((value) {
+    await NewsApi.newsFlow(newsId, state.page, 10).then((value) {
       state.newsFlowList.addAll(value);
       state.newsList = value;
       update(['newsFlow']);
-       update(['newsList']);
+      update(['newsList']);
     }).whenComplete(() {
       isRefresh
           ? flowRefreshCtrl.refreshCompleted()
@@ -267,5 +259,35 @@ class NewListController extends GetxController {
     await Get.toNamed(RouteNames.newsDetail,
         arguments: newsId, id: GlobalNestedKey.NEWS);
     if (callBack != null) callBack();
+  }
+
+  ///遍历获取球队id
+  List<int> getNewsTeam(String labels) {
+    List<int> teamList = [];
+    List labelsList = labels.split(",");
+    for (var label in labelsList) {
+      for (var team in CacheApi.teamList) {
+        if (team.longEname.contains(label)) {
+          teamList.add(team.id);
+        }
+      }
+    }
+    Log.d("获取新闻中的球队: $teamList");
+    return teamList;
+  }
+
+  ///遍历获取球队id
+  List<int> getPlayers(String labels) {
+    List<int> playerList = [];
+    List labelsList = labels.split(",");
+    for (var label in labelsList) {
+      for (var player in CacheApi.playerInfo!.playerBaseInfoList) {
+        if (player.name.contains(label)) {
+          playerList.add(player.playerId);
+        }
+      }
+    }
+    Log.d("获取新闻中的球员: $playerList");
+    return playerList;
   }
 }

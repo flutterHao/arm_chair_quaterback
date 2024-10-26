@@ -2,8 +2,10 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-24 21:19:47
- * @LastEditTime: 2024-10-25 15:08:13
+ * @LastEditTime: 2024-10-26 18:45:32
  */
+import 'dart:math';
+
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -11,6 +13,7 @@ import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/widgets/regular_widget.dart';
+import 'package:arm_chair_quaterback/pages/news/new_list/widgets/shadow_container.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -85,28 +88,39 @@ class _Item1 extends StatelessWidget {
   final NewsDetail item;
 
   Widget _team() {
-    return Container(
-        width: 188.w,
-        height: 80.w,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: AppColors.c702C86,
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(16.w), topRight: Radius.circular(16.w)),
-        ),
-        child: Stack(
+    Random random = Random();
+    return ClipRRect(
+      borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16.w), topRight: Radius.circular(16.w)),
+      child: Container(
+          width: 188.w,
+          height: 80.w,
           alignment: Alignment.center,
-          children: [
-            Opacity(
-              opacity: 0.5,
-              child: ImageWidget(
-                url: Utils.getTeamUrl(110),
-                width: 125.w,
+          decoration: BoxDecoration(
+            color: AppColors.c702C86,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(16.w),
+                topRight: Radius.circular(16.w)),
+          ),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Positioned(
+                right: -44.w,
+                child: Opacity(
+                  opacity: 0.5,
+                  child: ImageWidget(
+                    url: getTeasTeamUrl(),
+                    width: 140.w,
+                  ),
+                ),
               ),
-            ),
-            _TeamNameWidget(teamName: "Golden State Warriors")
-          ],
-        ));
+              Positioned(
+                  left: 20.w,
+                  child: _TeamNameWidget(teamName: "Oklahoma City Thunder"))
+            ],
+          )),
+    );
   }
 
   @override
@@ -177,10 +191,12 @@ class _TeamNameWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<String> parts = splitTeamName(teamName);
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(parts[0], style: 18.w4(color: AppColors.cF2F2F2)),
-        Text(parts[1], style: 26.w4(color: AppColors.cF2F2F2)),
+        Text(parts[0], style: 18.w4(color: AppColors.cF2F2F2, height: 1)),
+        // 4.5.vGap,
+        Text(parts[1], style: 26.w4(color: AppColors.cF2F2F2, height: 1)),
       ],
     );
   }
@@ -203,11 +219,11 @@ class _Item2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ShadowContainer(
       width: 343.w,
-      height: 118.w,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16.w), color: AppColors.cF2F2F2),
+      height: 120.w,
+      // decoration: BoxDecoration(
+      //     borderRadius: BorderRadius.circular(16.w), color: AppColors.cF2F2F2),
       child: Column(
         children: [
           Row(
@@ -223,7 +239,7 @@ class _Item2 extends StatelessWidget {
                       child: Opacity(
                         opacity: 0.2,
                         child: ImageWidget(
-                          url: Utils.getTeamUrl(115),
+                          url: getTeasTeamUrl(),
                           width: 100.w,
                         ),
                       ),
@@ -232,7 +248,7 @@ class _Item2 extends StatelessWidget {
                       bottom: 0.w,
                       right: 0.w,
                       child: ImageWidget(
-                        url: Utils.getPlayUrl(1235),
+                        url: getTestPlayerUrl(),
                         width: 100.w,
                       ),
                     ),
@@ -289,4 +305,14 @@ class _Item2 extends StatelessWidget {
       ),
     );
   }
+}
+
+String getTeasTeamUrl() {
+  Random random = Random();
+  return Utils.getTeamUrl(random.nextInt(30) + 100);
+}
+
+String getTestPlayerUrl() {
+  Random random = Random();
+  return Utils.getPlayUrl(random.nextInt(3) + 1281);
 }

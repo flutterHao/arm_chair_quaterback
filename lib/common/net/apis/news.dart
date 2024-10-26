@@ -2,9 +2,10 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 17:28:14
- * @LastEditTime: 2024-10-19 14:59:47
+ * @LastEditTime: 2024-10-26 18:30:03
  */
 import 'package:arm_chair_quaterback/common/entities/news_banner.dart';
+import 'package:arm_chair_quaterback/common/entities/news_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
 import 'package:arm_chair_quaterback/common/entities/receive_prop_entity.dart';
@@ -19,13 +20,11 @@ class NewsApi {
     List<NewsBanner> banners = list.map((e) => NewsBanner.fromJson(e)).toList();
     return banners;
   }
+  
 
-  static Future<List<NewsDetail>> getNewsList() async {
+  static Future<NewsEntity> getNewsList() async {
     var json = await HttpUtil().post(Api.getNewsList);
-    List list = json["newsContent"];
-    return list
-        .map((e) => NewsDetail.fromJson(e as Map<String, dynamic>))
-        .toList();
+    return NewsEntity.fromJson(json);
   }
 
   static Future<NewsDetail> getNewsDetail(id) async {

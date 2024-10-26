@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-24 18:04:19
- * @LastEditTime: 2024-10-25 10:13:27
+ * @LastEditTime: 2024-10-26 18:40:29
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
@@ -13,6 +13,7 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/index.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/widgets/regular_widget.dart';
+import 'package:arm_chair_quaterback/pages/news/new_list/widgets/rumor_widget.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -76,7 +77,7 @@ class _Item extends StatelessWidget {
         left: 90.w,
         bottom: 0,
         child: ImageWidget(
-          url: Utils.getPlayUrl(1005),
+          url: getTestPlayerUrl(),
           height: 78.w,
         ),
       ),
@@ -84,7 +85,7 @@ class _Item extends StatelessWidget {
         right: 90.w,
         bottom: 0,
         child: ImageWidget(
-          url: Utils.getPlayUrl(1007),
+          url: getTestPlayerUrl(),
           height: 78.w,
         ),
       ),
@@ -123,7 +124,7 @@ class _Item extends StatelessWidget {
                     child: Opacity(
                       opacity: 0.6,
                       child: ImageWidget(
-                        url: Utils.getTeamUrl(105),
+                        url: getTeasTeamUrl(),
                         width: 110.w,
                         // color: Colors.red,
                       ),
@@ -135,7 +136,7 @@ class _Item extends StatelessWidget {
                     child: Opacity(
                       opacity: 0.6,
                       child: ImageWidget(
-                        url: Utils.getTeamUrl(103),
+                        url: getTeasTeamUrl(),
                         width: 110.w,
                         fit: BoxFit.fitWidth,
                         // color: Colors.red,

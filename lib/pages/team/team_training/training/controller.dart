@@ -3,11 +3,9 @@ import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/my_team_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/reward_group_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/train_task_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
-import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/pages/home/index.dart';
@@ -31,7 +29,7 @@ class TrainingController extends GetxController
   var showText = "TRAINING".obs;
   var recoverTime = "".obs;
   List<int> currentAward = [0, 0, 0].obs;
-  List<RewardGroupEntity> rewardList = [];
+  // List<RewardGroupEntity> rewardList = [];
   TrainingInfoEntity trainingInfo = TrainingInfoEntity();
   List<TeamPlayerInfoEntity> playerList = [];
   int currentIndex = 0;
@@ -106,18 +104,18 @@ class TrainingController extends GetxController
   void getData() async {
     int teamId = HomeController.to.userEntiry.teamLoginInfo!.team!.teamId!;
     await Future.wait([
-      CacheApi.getRewardGroup(),
+      // CacheApi.getRewardGroup(),
       TeamApi.getTrainingInfo(),
       // TeamApi.getMyTeamPlayer(teamId),
       TeamApi.getTrainTaskList(),
       TeamApi.getTrainDefine(),
       TeamApi.getMyTeamPlayer(teamId)
     ]).then((v) {
-      rewardList = v[0] as List<RewardGroupEntity>;
-      trainingInfo = v[1] as TrainingInfoEntity;
-      trainTaskList = v[2] as List<TrainTaskEntity>;
-      trainDefineMap = v[3] as Map<String, dynamic>;
-      playerList = (v[4] as MyTeamEntity).teamPlayers;
+      // rewardList = v[0] as List<RewardGroupEntity>;
+      trainingInfo = v[0] as TrainingInfoEntity;
+      trainTaskList = v[1] as List<TrainTaskEntity>;
+      trainDefineMap = v[2] as Map<String, dynamic>;
+      playerList = (v[3] as MyTeamEntity).teamPlayers;
       ballNum.value = trainingInfo.prop.num;
       recoverTimeAndCountDown();
       Log.d("球员id列表:${playerList.map((e) => e.playerId).toList()}");
@@ -177,7 +175,7 @@ class TrainingController extends GetxController
       trainingInfo = v;
       // update(["training_page"]);
 
-      // swiperControl.stopAutoplay();
+      swiperControl.stopAutoplay();
       currentAward = [0, 0, 0];
 
       update(["slot"]);
@@ -622,7 +620,7 @@ class TrainingController extends GetxController
         } else {
           isShot.value = false;
           bllAnimationCtrl.reset(); // 投篮完成后重置篮球位置
-          // swiperControl.startAutoplay();
+          swiperControl.startAutoplay();
         }
       }
     });
@@ -692,6 +690,7 @@ class TrainingController extends GetxController
         isShot.value = false;
         bllAnimationCtrl.reset();
         ballNum.value = trainingInfo.prop.num;
+        swiperControl.startAutoplay();
         update(["training_page"]);
       });
     });

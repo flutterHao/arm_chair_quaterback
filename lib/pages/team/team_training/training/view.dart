@@ -321,9 +321,12 @@ class TrainingPage extends GetView<TrainingController> {
                         int count = controller.trainingInfo.buff.length;
                         return count - 1 > index
                             ? CircleProgressView(
-                                title: "PF",
+                                title: Utils.getPosition(controller
+                                    .trainingInfo.buff[index].position),
                                 progressColor: AppColors.c31E99E,
-                                progress: 100,
+                                progress: controller
+                                        .trainingInfo.buff[index].buffValue *
+                                    100,
                                 width: 49.h,
                                 height: 49.h)
                             : Container(
@@ -670,7 +673,7 @@ class TrainingPage extends GetView<TrainingController> {
                               scale: 1 - controller.flyCtrl.value * 0.5,
                               child: CircleProgressView(
                                   showAnimation: false,
-                                  title: "PF",
+                                  title: "",
                                   progressColor: AppColors.c31E99E,
                                   progress: 100,
                                   width: 49.h,
