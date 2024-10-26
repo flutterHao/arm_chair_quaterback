@@ -38,7 +38,7 @@ class _BattleBeforeGameState extends State<BattleBeforeGame>
 
   late PageController pageController;
 
-  late BattleAnimationController bottomProgressAnimationController,
+  late EasyAnimationController bottomProgressAnimationController,
       bottomAvatarAnimationController,
       bottomLeaveAnimationController;
 
@@ -73,7 +73,7 @@ class _BattleBeforeGameState extends State<BattleBeforeGame>
     });
     bottomAnimationController.forward();
 
-    bottomProgressAnimationController = BattleAnimationController(
+    bottomProgressAnimationController = EasyAnimationController(
         vsync: this, begin: 0.0, end: 6.0, duration: const Duration(seconds: 1));
     bottomProgressAnimationController.controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
@@ -109,7 +109,7 @@ class _BattleBeforeGameState extends State<BattleBeforeGame>
       }
     });
 
-    bottomAvatarAnimationController = BattleAnimationController(
+    bottomAvatarAnimationController = EasyAnimationController(
         vsync: this,
         begin: 0.0,
         end: 5.0,
@@ -126,7 +126,7 @@ class _BattleBeforeGameState extends State<BattleBeforeGame>
         }
       });
 
-    bottomLeaveAnimationController = BattleAnimationController(
+    bottomLeaveAnimationController = EasyAnimationController(
         vsync: this,
         begin: 0.0,
         end: 1.0,

@@ -152,7 +152,7 @@ class PicksIndexController extends GetxController {
   void _scrollListener() {
     // 获取目标 widget 的 RenderObject
     final targetContext = targetKey.currentContext;
-    if (targetContext != null) {
+    if (targetContext != null && scrollController.position.pixels>0&&rankInfo.ranks.isNotEmpty) {
       final box = targetContext.findRenderObject() as RenderBox;
       final position = box.localToGlobal(Offset.zero); // 获取目标在屏幕中的位置
       final targetOffset = position.dy;
@@ -160,7 +160,7 @@ class PicksIndexController extends GetxController {
       final screenHeight = Get.height;
 
       // 比较目标的相对位置和滚动位置，确保检测到精确的进入和离开时机
-      if (targetOffset <= screenHeight&&scrollController.position.pixels>0) {
+      if (targetOffset <= screenHeight) {
         if (!isSelfInfoFloatShow.value) {
           isSelfInfoFloatShow.value = true;
           update();

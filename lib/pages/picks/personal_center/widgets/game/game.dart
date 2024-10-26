@@ -8,6 +8,7 @@ import 'package:arm_chair_quaterback/common/widgets/arc_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog_background.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/pages/picks/personal_center/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/widgets/battle_animation_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/player_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,8 +25,11 @@ class Game extends StatefulWidget {
   State<Game> createState() => _GameState();
 }
 
-class _GameState extends State<Game> with AutomaticKeepAliveClientMixin {
+class _GameState extends State<Game>
+    with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   late PersonalCenterController controller;
+
+  EasyAnimationController? easyAnimationController;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +37,8 @@ class _GameState extends State<Game> with AutomaticKeepAliveClientMixin {
         id: PersonalCenterController.idPersonalCenterGameMain,
         builder: (c) {
           controller = c;
+          easyAnimationController ??= EasyAnimationController(vsync: this, begin: 0, end: 1,duration: const Duration(seconds: 1));
+          easyAnimationController?.forward(from: 0);
           return SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Container(
@@ -76,28 +82,38 @@ class _GameState extends State<Game> with AutomaticKeepAliveClientMixin {
                                   child: Stack(
                                     alignment: Alignment.bottomCenter,
                                     children: [
-                                      ArcWidget(
-                                        85.w,
-                                        borderColor: AppColors.c666666,
-                                        progressColor: AppColors.cFF7954,
-                                        progressWidth: 16,
-                                        borderWidth: 16,
-                                      ),
+                                      Obx(() {
+                                        var p = (
+                                            controller.teamInfoEntity
+                                                ?.teamExp ?? 0) /
+                                            double.parse(controller
+                                                .nextLevelTotalExp!) * 180;
+                                        p = easyAnimationController?.value.value*p;
+                                        return ArcWidget(
+                                          85.w,
+                                          borderColor: AppColors.c666666,
+                                          progressColor: AppColors.cFF7954,
+                                          progressWidth: 16,
+                                          progressSweepAngle: p,
+                                          borderWidth: 16,
+                                        );
+                                      }),
                                       Column(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.center,
+                                        CrossAxisAlignment.center,
                                         mainAxisAlignment:
-                                            MainAxisAlignment.end,
+                                        MainAxisAlignment.end,
                                         children: [
                                           Text(
-                                            "25",
+                                            "${controller.teamInfoEntity
+                                                ?.teamGrade ?? 0}",
                                             style: 42.w7(
                                                 color: AppColors.cFF7954,
                                                 height: 1),
                                           ),
                                           Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                            MainAxisAlignment.center,
                                             children: [
                                               Text(
                                                 "TEAM LEVEL",
@@ -114,9 +130,11 @@ class _GameState extends State<Game> with AutomaticKeepAliveClientMixin {
                                             ],
                                           ),
                                           Text(
-                                            "2345/12512",
-                                            style: 10
-                                                .w4(color: AppColors.c666666),
+                                            "${controller.teamInfoEntity
+                                                ?.teamExp ?? 0}/${controller
+                                                .nextLevelTotalExp ?? 0}",
+                                            style:
+                                            10.w4(color: AppColors.c666666),
                                           )
                                         ],
                                       )
@@ -125,8 +143,8 @@ class _GameState extends State<Game> with AutomaticKeepAliveClientMixin {
                                 ),
                                 24.vGap,
                                 Container(
-                                    margin: EdgeInsets.symmetric(
-                                        horizontal: 24.w),
+                                    margin:
+                                    EdgeInsets.symmetric(horizontal: 24.w),
                                     child: const Divider(
                                       height: 1,
                                       color: AppColors.c666666,
@@ -134,9 +152,9 @@ class _GameState extends State<Game> with AutomaticKeepAliveClientMixin {
                                 Container(
                                   height: 46.w,
                                   margin:
-                                      EdgeInsets.symmetric(horizontal: 24.w),
+                                  EdgeInsets.symmetric(horizontal: 24.w),
                                   padding:
-                                      EdgeInsets.symmetric(horizontal: 8.w),
+                                  EdgeInsets.symmetric(horizontal: 8.w),
                                   child: Row(
                                     children: [
                                       IconWidget(
@@ -147,21 +165,22 @@ class _GameState extends State<Game> with AutomaticKeepAliveClientMixin {
                                       10.hGap,
                                       Expanded(
                                           child: Text(
-                                        "Win rate",
-                                        style:
-                                            12.w4(color: AppColors.c666666),
-                                      )),
+                                            "Win rate",
+                                            style: 12.w4(
+                                                color: AppColors.c666666),
+                                          )),
                                       Text(
-                                        "56%",
-                                        style:
-                                            16.w7(color: AppColors.cFFFFFF),
+                                        "${controller.teamInfoEntity
+                                            ?.gameWinRate.toStringAsFixed(0) ??
+                                            0}%",
+                                        style: 16.w7(color: AppColors.cFFFFFF),
                                       )
                                     ],
                                   ),
                                 ),
                                 Container(
-                                    margin: EdgeInsets.symmetric(
-                                        horizontal: 24.w),
+                                    margin:
+                                    EdgeInsets.symmetric(horizontal: 24.w),
                                     child: const Divider(
                                       height: 1,
                                       color: AppColors.c666666,
@@ -169,9 +188,9 @@ class _GameState extends State<Game> with AutomaticKeepAliveClientMixin {
                                 Container(
                                   height: 46.w,
                                   margin:
-                                      EdgeInsets.symmetric(horizontal: 24.w),
+                                  EdgeInsets.symmetric(horizontal: 24.w),
                                   padding:
-                                      EdgeInsets.symmetric(horizontal: 8.w),
+                                  EdgeInsets.symmetric(horizontal: 8.w),
                                   child: Row(
                                     children: [
                                       IconWidget(
@@ -182,21 +201,21 @@ class _GameState extends State<Game> with AutomaticKeepAliveClientMixin {
                                       10.hGap,
                                       Expanded(
                                           child: Text(
-                                        "Top score",
-                                        style:
-                                            12.w4(color: AppColors.c666666),
-                                      )),
+                                            "Top score",
+                                            style: 12.w4(
+                                                color: AppColors.c666666),
+                                          )),
                                       Text(
-                                        "98",
-                                        style:
-                                            16.w7(color: AppColors.cFFFFFF),
+                                        "${controller.teamInfoEntity
+                                            ?.currentWinGames ?? 0}",
+                                        style: 16.w7(color: AppColors.cFFFFFF),
                                       )
                                     ],
                                   ),
                                 ),
                                 Container(
-                                    margin: EdgeInsets.symmetric(
-                                        horizontal: 24.w),
+                                    margin:
+                                    EdgeInsets.symmetric(horizontal: 24.w),
                                     child: const Divider(
                                       height: 1,
                                       color: AppColors.c666666,
@@ -204,9 +223,9 @@ class _GameState extends State<Game> with AutomaticKeepAliveClientMixin {
                                 Container(
                                   height: 46.w,
                                   margin:
-                                      EdgeInsets.symmetric(horizontal: 24.w),
+                                  EdgeInsets.symmetric(horizontal: 24.w),
                                   padding:
-                                      EdgeInsets.symmetric(horizontal: 8.w),
+                                  EdgeInsets.symmetric(horizontal: 8.w),
                                   child: Row(
                                     children: [
                                       IconWidget(
@@ -217,14 +236,14 @@ class _GameState extends State<Game> with AutomaticKeepAliveClientMixin {
                                       10.hGap,
                                       Expanded(
                                           child: Text(
-                                        "Winning streak",
-                                        style:
-                                            12.w4(color: AppColors.c666666),
-                                      )),
+                                            "Winning streak",
+                                            style: 12.w4(
+                                                color: AppColors.c666666),
+                                          )),
                                       Text(
-                                        "11",
-                                        style:
-                                            16.w7(color: AppColors.cFFFFFF),
+                                        "${controller.teamInfoEntity
+                                            ?.maxGameWinningStreak}",
+                                        style: 16.w7(color: AppColors.cFFFFFF),
                                       )
                                     ],
                                   ),
@@ -241,31 +260,33 @@ class _GameState extends State<Game> with AutomaticKeepAliveClientMixin {
                               children: [
                                 Container(
                                   height: 84.w,
-                                  padding: EdgeInsets.only(
-                                      left: 14.w, right: 16.w),
+                                  padding:
+                                  EdgeInsets.only(left: 14.w, right: 16.w),
                                   decoration: BoxDecoration(
                                       color: AppColors.c262626,
                                       borderRadius:
-                                          BorderRadius.circular(16.w)),
+                                      BorderRadius.circular(16.w)),
                                   child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       Row(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            "999K",
+                                            Utils.formatMoney(controller
+                                                .teamInfoEntity?.salary ??
+                                                0),
                                             style: 16.w7(
                                                 color: AppColors.cFFFFFF,
                                                 height: 1),
                                           ),
                                           8.hGap,
                                           Text(
-                                            "/999K",
+                                            "/${Utils.formatMoney(double.parse(
+                                                controller.salaryCap ?? "0"))}",
                                             style: 10.w4(
                                                 color: AppColors.c666666,
                                                 height: 1),
@@ -279,7 +300,7 @@ class _GameState extends State<Game> with AutomaticKeepAliveClientMixin {
                                         minHeight: 4.w,
                                         backgroundColor: AppColors.c666666,
                                         borderRadius:
-                                            BorderRadius.circular(2.w),
+                                        BorderRadius.circular(2.w),
                                       ),
                                       15.vGap,
                                       Text(
@@ -294,48 +315,50 @@ class _GameState extends State<Game> with AutomaticKeepAliveClientMixin {
                                 9.vGap,
                                 Expanded(
                                     child: Container(
-                                  padding: EdgeInsets.only(
-                                      left: 14.w, right: 16.w),
-                                  decoration: BoxDecoration(
-                                      color: AppColors.c262626,
-                                      borderRadius:
+                                      padding:
+                                      EdgeInsets.only(left: 14.w, right: 16.w),
+                                      decoration: BoxDecoration(
+                                          color: AppColors.c262626,
+                                          borderRadius:
                                           BorderRadius.circular(16.w)),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.center,
-                                    children: [
-                                      IconWidget(
-                                          iconWidth: 40.w,
-                                          icon: Assets.uiIconTrophy_01Png),
-                                      28.vGap,
-                                      Text(
-                                        "2156",
-                                        style: 21.w7(
-                                            color: AppColors.cFFFFFF,
-                                            height: 1),
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment
+                                            .center,
+                                        children: [
+                                          IconWidget(
+                                              iconWidth: 40.w,
+                                              icon: Assets.uiIconTrophy_01Png),
+                                          28.vGap,
+                                          Text(
+                                            "${controller.teamInfoEntity?.cup ??
+                                                0}",
+                                            style: 21.w7(
+                                                color: AppColors.cFFFFFF,
+                                                height: 1),
+                                          ),
+                                          9.vGap,
+                                          Text(
+                                            "Current",
+                                            style: 12.w4(
+                                                color: AppColors.c666666),
+                                          ),
+                                          20.vGap,
+                                          Text(
+                                            "${controller.teamInfoEntity
+                                                ?.maxCup ?? 0}",
+                                            style: 21.w7(
+                                                color: AppColors.cFFFFFF,
+                                                height: 1),
+                                          ),
+                                          9.vGap,
+                                          Text(
+                                            "Highest",
+                                            style: 12.w4(
+                                                color: AppColors.c666666),
+                                          ),
+                                        ],
                                       ),
-                                      9.vGap,
-                                      Text(
-                                        "Current",
-                                        style:
-                                            12.w4(color: AppColors.c666666),
-                                      ),
-                                      20.vGap,
-                                      Text(
-                                        "2156",
-                                        style: 21.w7(
-                                            color: AppColors.cFFFFFF,
-                                            height: 1),
-                                      ),
-                                      9.vGap,
-                                      Text(
-                                        "Highest",
-                                        style:
-                                            12.w4(color: AppColors.c666666),
-                                      ),
-                                    ],
-                                  ),
-                                ))
+                                    ))
                               ],
                             ))
                       ],
@@ -354,9 +377,9 @@ class _GameState extends State<Game> with AutomaticKeepAliveClientMixin {
                         8.hGap,
                         Expanded(
                             child: Text(
-                          "expend more stamina",
-                          style: 10.w4(color: AppColors.c666666, height: 1),
-                        )),
+                              "expend more stamina",
+                              style: 10.w4(color: AppColors.c666666, height: 1),
+                            )),
                         SizedBox(
                           width: 18.w,
                           height: 18.w,
@@ -409,8 +432,7 @@ class _GameState extends State<Game> with AutomaticKeepAliveClientMixin {
                                 4.hGap,
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Row(
                                       children: [
@@ -422,7 +444,7 @@ class _GameState extends State<Game> with AutomaticKeepAliveClientMixin {
                                               color: AppColors.c000000
                                                   .withOpacity(0.05),
                                               borderRadius:
-                                                  BorderRadius.circular(6.w)),
+                                              BorderRadius.circular(6.w)),
                                           child: Row(
                                             children: [
                                               Text(
@@ -433,7 +455,8 @@ class _GameState extends State<Game> with AutomaticKeepAliveClientMixin {
                                               ),
                                               8.hGap,
                                               Text(
-                                                "${player.baseInfo.playerScore}",
+                                                "${player.baseInfo
+                                                    .playerScore}",
                                                 style: 10.w4(
                                                     color: AppColors.c262626,
                                                     height: 1),
@@ -450,7 +473,7 @@ class _GameState extends State<Game> with AutomaticKeepAliveClientMixin {
                                               color: AppColors.c000000
                                                   .withOpacity(0.05),
                                               borderRadius:
-                                                  BorderRadius.circular(6.w)),
+                                              BorderRadius.circular(6.w)),
                                           child: Row(
                                             children: [
                                               Text(
@@ -477,7 +500,7 @@ class _GameState extends State<Game> with AutomaticKeepAliveClientMixin {
                                         child: Text(
                                           player.baseInfo.ename,
                                           style:
-                                              16.w4(color: AppColors.c262626),
+                                          16.w4(color: AppColors.c262626),
                                         )),
                                     6.vGap,
                                     Container(
@@ -492,8 +515,7 @@ class _GameState extends State<Game> with AutomaticKeepAliveClientMixin {
                                             decoration: BoxDecoration(
                                                 color: AppColors.c666666,
                                                 borderRadius:
-                                                    BorderRadius.circular(
-                                                        2.w)),
+                                                BorderRadius.circular(2.w)),
                                             child: Text(
                                               player.baseInfo.position,
                                               style: 10.w7(
@@ -571,7 +593,7 @@ class _GameState extends State<Game> with AutomaticKeepAliveClientMixin {
                                   ),
                                   Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                    CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
                                       Text(
@@ -602,7 +624,7 @@ class _GameState extends State<Game> with AutomaticKeepAliveClientMixin {
                               Text(
                                 "Next stage (lv.28)",
                                 style:
-                                    16.w7(color: AppColors.c262626, height: 1),
+                                16.w7(color: AppColors.c262626, height: 1),
                               ),
                             ],
                           ),

@@ -41,7 +41,7 @@ class GuessItemV2 extends StatelessWidget {
     }
     return GetBuilder<GuessItemControllerV2>(
         init: GuessItemControllerV2(player),
-        tag: "${playerV2.guessInfo.playerId}_${index}",
+        tag: "${playerV2.guessInfo.playerId}_${index}_${playerV2.tabStr}",
         builder: (controller) {
           controller.currentIndex.value = player.status;
           return Container(

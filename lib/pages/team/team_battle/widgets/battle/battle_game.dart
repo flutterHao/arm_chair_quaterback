@@ -44,7 +44,7 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
   var gameLastTimes = 170.obs;
 
   late AnimationController animationController;
-  late BattleAnimationController startAnimationController;
+  late EasyAnimationController startAnimationController;
   late Animation<double> animation;
   Timer? gameTimer;
 
@@ -69,7 +69,7 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
 
     leftWin = Random().nextBool();
 
-    startAnimationController = BattleAnimationController(
+    startAnimationController = EasyAnimationController(
         vsync: this,
         begin: 0.0,
         end: 1.0,

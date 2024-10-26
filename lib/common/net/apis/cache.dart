@@ -102,6 +102,7 @@ import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/reward_group_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/star_up_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_rule_config_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis.dart';
 import 'package:arm_chair_quaterback/common/net/http.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
@@ -119,6 +120,12 @@ class CacheApi {
 
   ///道具定义
   static List<PropDefineEntity>? propDefineList;
+
+  static List<RankAwardEntity>? gameRankAwardRuleList;
+
+  static List<TeamRuleConfigEntity>? teamRuleConfigList;
+
+  static List<RewardGroupEntity>? rewardGroupList;
 
   static List<StarUpDefineEntity>? _starUpDefines;
   static List<GradeInStarDefineEntity>? _gradeInStars;
@@ -176,12 +183,17 @@ class CacheApi {
 
   ///排行奖励规则
   static Future<List<RankAwardEntity>> getGameRankAwardRule() async {
+    if (gameRankAwardRuleList?.isNotEmpty == true) {
+      return gameRankAwardRuleList!;
+    }
     List json = await httpUtil.get(Api.cGameRankAwardRule);
-    return json.map((e) => RankAwardEntity.fromJson(e)).toList();
+    return gameRankAwardRuleList =
+        json.map((e) => RankAwardEntity.fromJson(e)).toList();
   }
 
   ///道具定义
   static Future<List<PropDefineEntity>> getPropDefine() async {
+    if (propDefineList?.isNotEmpty == true) return propDefineList!;
     List list = await httpUtil.get(Api.cGetPropDefine);
     propDefineList = list.map((e) => PropDefineEntity.fromJson(e)).toList();
     return propDefineList!;
@@ -189,8 +201,10 @@ class CacheApi {
 
   ///Slot奖励组
   static Future<List<RewardGroupEntity>> getRewardGroup() async {
+    if (rewardGroupList?.isNotEmpty == true) return rewardGroupList!;
     List list = await httpUtil.get(Api.cRewardGroup);
-    return list.map((e) => RewardGroupEntity.fromJson(e)).toList();
+    return rewardGroupList =
+        list.map((e) => RewardGroupEntity.fromJson(e)).toList();
   }
 
   static Future<List<StarUpDefineEntity>> getStarUpDefine() async {
@@ -208,5 +222,13 @@ class CacheApi {
           json.map((e) => GradeInStarDefineEntity.fromJson(e)).toList();
     }
     return _gradeInStars!;
+  }
+
+  static Future<List<TeamRuleConfigEntity>> getTeamRuleConfig() async {
+    if (teamRuleConfigList?.isNotEmpty == true) return teamRuleConfigList!;
+    List list = await httpUtil.get(Api.cTeamRuleConfig);
+    teamRuleConfigList =
+        list.map((e) => TeamRuleConfigEntity.fromJson(e)).toList();
+    return teamRuleConfigList!;
   }
 }

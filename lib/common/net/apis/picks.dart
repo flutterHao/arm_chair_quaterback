@@ -21,6 +21,7 @@ import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/recive_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/recive_award_v2_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/star_up_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_simple_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/up_start_team_player_response_entity.dart';
@@ -61,7 +62,7 @@ class PicksApi {
   }
 
   static Future guess(int type, List<GuessParamEntity> guessParams) async {
-    List json = await httpUtil.post(Api.guess,
+    var json = await httpUtil.post(Api.guess,
         data: ({
           "type": type,
           "guessInfo": jsonEncode(guessParams.map((e) => e.toJson()).toList())
@@ -128,5 +129,10 @@ class PicksApi {
     List json = await httpUtil
         .post(Api.getAllTeamPlayersByUpStar, data: {"uuid": uuid});
     return json.map((e) => AllTeamPlayersByUpStarEntity.fromJson(e)).toList();
+  }
+
+  static Future<TeamInfoEntity> getTeamInfo() async {
+    var json = await httpUtil.post(Api.getTeamInfo);
+    return TeamInfoEntity.fromJson(json);
   }
 }

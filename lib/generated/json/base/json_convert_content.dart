@@ -28,9 +28,11 @@ import 'package:arm_chair_quaterback/common/entities/recive_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/recive_award_v2_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/reward_group_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/star_up_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_rule_config_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_simple_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/trade_entity/trade_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/train_task_entity.dart';
@@ -379,6 +381,14 @@ class JsonConvert {
       return data.map<StarUpDefineEntity>((Map<String, dynamic> e) =>
           StarUpDefineEntity.fromJson(e)).toList() as M;
     }
+    if (<TeamInfoEntity>[] is M) {
+      return data.map<TeamInfoEntity>((Map<String, dynamic> e) =>
+          TeamInfoEntity.fromJson(e)).toList() as M;
+    }
+    if (<TeamInfoTeamPreference>[] is M) {
+      return data.map<TeamInfoTeamPreference>((Map<String, dynamic> e) =>
+          TeamInfoTeamPreference.fromJson(e)).toList() as M;
+    }
     if (<TeamPlayerInfoEntity>[] is M) {
       return data.map<TeamPlayerInfoEntity>((Map<String, dynamic> e) =>
           TeamPlayerInfoEntity.fromJson(e)).toList() as M;
@@ -394,6 +404,10 @@ class JsonConvert {
     if (<TeamRankEntity>[] is M) {
       return data.map<TeamRankEntity>((Map<String, dynamic> e) =>
           TeamRankEntity.fromJson(e)).toList() as M;
+    }
+    if (<TeamRuleConfigEntity>[] is M) {
+      return data.map<TeamRuleConfigEntity>((Map<String, dynamic> e) =>
+          TeamRuleConfigEntity.fromJson(e)).toList() as M;
     }
     if (<TeamSimpleEntity>[] is M) {
       return data.map<TeamSimpleEntity>((Map<String, dynamic> e) =>
@@ -568,10 +582,13 @@ class JsonConvertClassCollection {
         .toString(): ReciveAwardV2GuessInfoGuessData.fromJson,
     (RewardGroupEntity).toString(): RewardGroupEntity.fromJson,
     (StarUpDefineEntity).toString(): StarUpDefineEntity.fromJson,
+    (TeamInfoEntity).toString(): TeamInfoEntity.fromJson,
+    (TeamInfoTeamPreference).toString(): TeamInfoTeamPreference.fromJson,
     (TeamPlayerInfoEntity).toString(): TeamPlayerInfoEntity.fromJson,
     (TeamPlayerInfoPotential).toString(): TeamPlayerInfoPotential.fromJson,
     (TeamPlayerListEntity).toString(): TeamPlayerListEntity.fromJson,
     (TeamRankEntity).toString(): TeamRankEntity.fromJson,
+    (TeamRuleConfigEntity).toString(): TeamRuleConfigEntity.fromJson,
     (TeamSimpleEntity).toString(): TeamSimpleEntity.fromJson,
     (TradeInfoEntity).toString(): TradeInfoEntity.fromJson,
     (TradeInfoTotalSalary).toString(): TradeInfoTotalSalary.fromJson,

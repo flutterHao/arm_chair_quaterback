@@ -5,8 +5,8 @@ import 'package:get/get.dart';
 ///@auther gejiahui
 ///created at 2024/10/11/09:45
 
-class BattleAnimationController<T> {
-  BattleAnimationController(
+class EasyAnimationController<T> {
+  EasyAnimationController(
       {required TickerProvider vsync,
       required T begin,
       required T end,

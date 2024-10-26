@@ -75,6 +75,8 @@ class TradeInfoTradePlayers {
 	late String position;
 	String? uuid;
 	int? buyPrice;
+	late int removalTime;
+	late bool top;
 
 	TradeInfoTradePlayers();
 

@@ -17,6 +17,8 @@ class Api {
   static const String visitorLogin = "$API_BASE_PATH/team/visitorLogin";
   static const String getTeamSimple = "$API_BASE_PATH/team/getTeamSimple";
   static const String getTeamLoginInfo = "$API_BASE_PATH/team/getTeamLoginInfo";
+  static const String getTeamInfo = "$API_BASE_PATH/team/getTeamInfo";
+
 
   //NBANews
   static const String getNewsList = "$API_BASE_PATH/NBANews/getNBANews";
@@ -71,6 +73,8 @@ class Api {
   static const String cStarUpDefine = "$CONFIG_BASE_PATH/StarUpDefine.json";
   static const String cGradeInStarDefine =
       "$CONFIG_BASE_PATH/GradeInStarDefine.json";
+  static const String cTeamRuleConfig = "$CONFIG_BASE_PATH/TeamRuleConfig.json";
+
 
   /// TeamPlayer
   static const String getTeamPlayerByUUID =

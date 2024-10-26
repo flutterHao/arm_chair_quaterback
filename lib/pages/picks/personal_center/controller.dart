@@ -1,6 +1,8 @@
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_rule_config_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_simple_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/enums/rank_type.dart';
@@ -12,7 +14,7 @@ import 'package:get/get.dart';
 
 import '../../../common/entities/team_player_list_entity.dart';
 
-class TeamInfo{
+class TeamInfo {
   final TeamPlayerInfoEntity teamPlayerEntity;
   final NbaPlayerInfosPlayerBaseInfoList baseInfo;
 
@@ -25,13 +27,18 @@ class PersonalCenterController extends GetxController
 
   final int? teamId;
 
-
-  List<String> titles = ["Game", "Picks", /*"Comments"*/];
+  List<String> titles = [
+    "Game",
+    "Picks", /*"Comments"*/
+  ];
 
   late TabController tabController;
 
   TeamSimpleEntity? teamSimpleEntity;
   var loadStatus = LoadDataStatus.loading.obs;
+  TeamInfoEntity? teamInfoEntity;
+  String? nextLevelTotalExp = "0";
+  String? salaryCap = "0";
 
   List<TeamInfo> teamPlayers = [];
 
@@ -55,34 +62,46 @@ class PersonalCenterController extends GetxController
     _initGameData();
   }
 
-  _initGameData(){
+  _initGameData() {
     teamPlayers.clear();
     Future.wait([
-      TeamPlayerApi.getTeamPlayerList(teamId??0),
+      TeamPlayerApi.getTeamPlayerList(teamId ?? 0),
       CacheApi.getNBAPlayerInfo(),
-      PicksApi.getRedisRankInfo(type: RankType.newsGuess)
-    ]).then((result){
-      TeamPlayerListEntity teamPlayerEntity= result[0] as TeamPlayerListEntity;
-       NbaPlayerInfosEntity nbaPlayerInfosEntity= result[1] as NbaPlayerInfosEntity;
+      PicksApi.getRedisRankInfo(type: RankType.newsGuess),
+      PicksApi.getTeamInfo(),
+      CacheApi.getTeamRuleConfig(),
+    ]).then((result) {
+      TeamPlayerListEntity teamPlayerEntity = result[0] as TeamPlayerListEntity;
+      NbaPlayerInfosEntity nbaPlayerInfosEntity =
+          result[1] as NbaPlayerInfosEntity;
       var rankInfo = result[2] as RankListEntity;
-      rank = rankInfo.myRank.rank??0;
-       for (int i = 0; i < teamPlayerEntity.teamPlayers.length; i++) {
-         var playerEntity = teamPlayerEntity.teamPlayers[i];
-         var item = nbaPlayerInfosEntity.playerBaseInfoList.firstWhere((e)=> e.playerId == playerEntity.playerId);
-         TeamInfo teamInfo = TeamInfo(playerEntity, item);
-         teamPlayers.add(teamInfo);
-       }
+      teamInfoEntity = result[3] as TeamInfoEntity;
+      List<TeamRuleConfigEntity> teamRuleConfigList =
+          result[4] as List<TeamRuleConfigEntity>;
+      var firstWhereOrNull = teamRuleConfigList.firstWhereOrNull(
+          (e) => e.grade.toString() == teamInfoEntity?.teamGrade.toString());
+      nextLevelTotalExp = firstWhereOrNull?.totalTeamExp;
+      salaryCap = firstWhereOrNull?.salaryCap;
+
+      rank = rankInfo.myRank.rank ?? 0;
+      for (int i = 0; i < teamPlayerEntity.teamPlayers.length; i++) {
+        var playerEntity = teamPlayerEntity.teamPlayers[i];
+        var item = nbaPlayerInfosEntity.playerBaseInfoList
+            .firstWhere((e) => e.playerId == playerEntity.playerId);
+        TeamInfo teamInfo = TeamInfo(playerEntity, item);
+        teamPlayers.add(teamInfo);
+      }
       update([idPersonalCenterGameMain]);
     });
   }
 
   getData() {
     loadStatus.value = LoadDataStatus.loading;
-    PicksApi.getTeamSimple(teamId??0).then((result){
+    PicksApi.getTeamSimple(teamId ?? 0).then((result) {
       loadStatus.value = LoadDataStatus.success;
       teamSimpleEntity = result;
       update([idPersonalCenterMain]);
-    },onError: (e){
+    }, onError: (e) {
       loadStatus.value = LoadDataStatus.error;
     });
   }
@@ -90,7 +109,6 @@ class PersonalCenterController extends GetxController
   static String get idPersonalCenterMain => "id_personal_center";
 
   static String get idPersonalCenterGameMain => "id_personal_center_game_main";
-
 
   /// 在 onInit() 之后调用 1 帧。这是进入的理想场所
   @override

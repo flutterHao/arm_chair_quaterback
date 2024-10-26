@@ -267,7 +267,8 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                                                                 .start,
                                                         children: [
                                                           Text(
-                                                            Utils.formatMoney(_getTodayCost()),
+                                                            Utils.formatMoney(
+                                                                _getTodayCost()),
                                                             style: 19.w7(
                                                                 color: AppColors
                                                                     .cD9D9D9,
@@ -493,7 +494,11 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                                                             ),
                                                             3.hGap,
                                                             Text(
-                                                              Utils.formatMoney(controller.tradeInfoEntity?.totalSalary.getTotal()??0),
+                                                              Utils.formatMoney(controller
+                                                                      .tradeInfoEntity
+                                                                      ?.totalSalary
+                                                                      .getTotal() ??
+                                                                  0),
                                                               style: 19.w7(
                                                                   color: AppColors
                                                                       .cD9D9D9,
@@ -605,9 +610,8 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                   double percent = (basicMarketPrice - marketPrice).abs() /
                       basicMarketPrice *
                       100;
-                  bool isSpecial = false; //todo 接口未定义
-                  var color =
-                      isGood ? AppColors.c10A86A : AppColors.cE72646;
+                  bool isSpecial = trendPlayer.top; //todo 接口未定义
+                  var color = isGood ? AppColors.c10A86A : AppColors.cE72646;
                   Widget child = Container(
                     margin: EdgeInsets.only(
                         left: 16.w,
@@ -842,7 +846,12 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                                         icon: Assets.uiIconCountdownPng),
                                     3.hGap,
                                     Text(
-                                      "23:10:59",
+                                      MyDateUtils.formatDate(
+                                          MyDateUtils.getDateTimeByMs(
+                                              trendPlayer.removalTime -
+                                                  MyDateUtils.getNowDateTime()
+                                                      .millisecondsSinceEpoch),
+                                          format: DateFormats.H_M_S),
                                       style: 14.w4(
                                           color: AppColors.cF2F2F2, height: 1),
                                     )
