@@ -9,6 +9,8 @@ import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comm
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comment_item.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/news_bottom_button.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/index.dart';
+import 'package:arm_chair_quaterback/pages/news/new_list/widgets/regular_widget.dart';
+import 'package:arm_chair_quaterback/pages/news/new_list/widgets/shadow_container.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -113,6 +115,8 @@ class NewsDetailItem extends StatelessWidget {
         _buildNewsContent(controller),
         20.vGap,
         NewsBottomButton(newsDetail),
+        10.vGap,
+        _progressWidget(),
         20.vGap,
         _hotComment(),
       ],
@@ -166,6 +170,25 @@ class NewsDetailItem extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _progressWidget() {
+    return ShadowContainer(
+        width: 343.w,
+        child: Column(
+          children: [
+            Text(
+              "Support Rate",
+              style: 14.w7(),
+            ),
+            10.vGap,
+            NewsPercentWidget(
+                leftTitle: "Agress",
+                rightTitle: "Disagress",
+                leftCount: newsDetail.likes ?? 0,
+                rightCount: newsDetail.unLikes ?? 0),
+          ],
+        ));
   }
 
   Widget _hotComment() {

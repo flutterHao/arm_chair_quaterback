@@ -2,10 +2,10 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-24 18:39:28
- * @LastEditTime: 2024-10-24 19:12:19
+ * @LastEditTime: 2024-10-26 19:57:53
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
-import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
+import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/controller.dart';
@@ -22,6 +22,9 @@ class DraftLotteryWidget extends StatelessWidget {
     return GetBuilder<NewListController>(
         id: "newsList",
         builder: (controller) {
+          if (controller.state.newsEntity.draft.isEmpty) {
+            return Container();
+          }
           return Padding(
             padding: EdgeInsets.only(left: 16.w),
             child: Column(
@@ -61,7 +64,7 @@ class DraftLotteryWidget extends StatelessWidget {
                           padding: EdgeInsets.symmetric(horizontal: 16.w),
                           scrollDirection: Axis.horizontal,
                           physics: const BouncingScrollPhysics(),
-                          itemCount: controller.state.newsList.length,
+                          itemCount: controller.state.newsEntity.draft.length,
                           // itemCount: 5,
                           separatorBuilder: (context, index) => 9.hGap,
                           itemBuilder: (context, index) {
@@ -69,8 +72,9 @@ class DraftLotteryWidget extends StatelessWidget {
                               onTap: () {
                                 controller.pageToDetail(index);
                               },
-                              child:
-                                  _Item(item: controller.state.newsList[index]),
+                              child: _Item(
+                                  item:
+                                      controller.state.newsEntity.draft[index]),
                             );
                           },
                         ),
@@ -87,7 +91,7 @@ class DraftLotteryWidget extends StatelessWidget {
 
 class _Item extends StatelessWidget {
   const _Item({required this.item});
-  final NewsDetail item;
+  final NewsListDetail item;
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +100,7 @@ class _Item extends StatelessWidget {
       child: Container(
         width: 188.w,
         height: 130.w,
-        padding: EdgeInsets.symmetric(horizontal: 14.w,vertical: 12.w),
+        padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 12.w),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.w),
           color: AppColors.cF2F2F2,
@@ -110,7 +114,7 @@ class _Item extends StatelessWidget {
             ),
             10.vGap,
             Text(
-              "${item.content}",
+              item.content,
               maxLines: 3,
               style: 12.w4(color: AppColors.c262626),
             ),
@@ -119,7 +123,7 @@ class _Item extends StatelessWidget {
               children: [
                 Text(
                   DateUtil.formatDateMs(
-                    item.postTime!,
+                    item.postTime,
                     format: DateFormats.y_mo_d_h_m,
                   ),
                   style: 10.w4(color: AppColors.cB3B3B3, height: 1),
@@ -127,7 +131,7 @@ class _Item extends StatelessWidget {
                 6.hGap,
                 Expanded(
                   child: Text(
-                    item.source ?? "",
+                    item.source,
                     overflow: TextOverflow.ellipsis,
                     style: 10.w4(color: AppColors.cB3B3B3, height: 1),
                   ),

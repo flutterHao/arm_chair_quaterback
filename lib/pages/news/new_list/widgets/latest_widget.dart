@@ -1,5 +1,11 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-10-25 16:33:07
+ * @LastEditTime: 2024-10-26 19:57:43
+ */
+import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:flutter/material.dart';
-import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/controller.dart';
@@ -16,6 +22,9 @@ class LatestWidget extends StatelessWidget {
     return GetBuilder<NewListController>(
         id: "newsList",
         builder: (controller) {
+          if (controller.state.newsEntity.latest.isEmpty) {
+            return Container();
+          }
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -33,7 +42,8 @@ class LatestWidget extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   padding: EdgeInsets.symmetric(horizontal: 16.w),
                   itemBuilder: (context, index) {
-                    NewsDetail item = controller.state.newsList[index];
+                    NewsListDetail item =
+                        controller.state.newsEntity.latest[index];
                     return InkWell(
                       onTap: () => controller.pageToDetail(index),
                       child: ShadowContainer(
@@ -74,7 +84,7 @@ class LatestWidget extends StatelessWidget {
                   separatorBuilder: (context, index) {
                     return 9.vGap;
                   },
-                  itemCount: controller.state.newsList.length)
+                  itemCount: controller.state.newsEntity.latest.length)
             ],
           );
         });

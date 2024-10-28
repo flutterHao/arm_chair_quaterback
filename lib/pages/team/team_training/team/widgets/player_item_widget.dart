@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2024-10-24 11:46:46
+ * @LastEditTime: 2024-10-26 19:30:40
  */
 /*
  * @Description: 
@@ -77,7 +77,7 @@ class PlayerItem extends GetView<TeamController> {
             10.hGap,
             PlayerAwater(
               backgroudColor: AppColors.cE1E1E1,
-              player: TeamPlayerInfoEntity(),
+              player: item,
             ),
             SizedBox(
               width: 3.w,
@@ -332,7 +332,7 @@ class PlayerAwater extends StatelessWidget {
   const PlayerAwater({super.key, this.backgroudColor, required this.player});
 
   final Color? backgroudColor;
-  final dynamic player;
+  final TeamPlayerInfoEntity player;
 
   @override
   Widget build(BuildContext context) {

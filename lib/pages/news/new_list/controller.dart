@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2024-10-26 18:34:31
+ * @LastEditTime: 2024-10-26 21:26:29
  */
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
@@ -14,6 +14,7 @@ import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -54,8 +55,8 @@ class NewListController extends GetxController {
       CacheApi.getNBATeamDefine(),
       CacheApi.getNBAPlayerInfo(),
       getNewsBanner(),
-      // getNewsList(),
-      getNewsFlow(123),
+      getNewsList(),
+      // getNewsFlow(123),
       getStatsRank(),
       getStarTeamList(),
     ]).then((v) {
@@ -253,8 +254,7 @@ class NewListController extends GetxController {
     });
   }
 
-  void pageToDetail(int index, {Function? callBack}) async {
-    var newsId = state.newsList[index].id;
+  void pageToDetail(int newsId, {Function? callBack}) async {
     getNewsFlow(newsId, isRefresh: true);
     await Get.toNamed(RouteNames.newsDetail,
         arguments: newsId, id: GlobalNestedKey.NEWS);
@@ -266,9 +266,11 @@ class NewListController extends GetxController {
     List<int> teamList = [];
     List labelsList = labels.split(",");
     for (var label in labelsList) {
-      for (var team in CacheApi.teamList) {
-        if (team.longEname.contains(label)) {
-          teamList.add(team.id);
+      if (ObjectUtil.isNotEmpty(label)) {
+        for (var team in CacheApi.teamList) {
+          if (team.longEname.contains(label)) {
+            teamList.add(team.id);
+          }
         }
       }
     }
@@ -281,9 +283,11 @@ class NewListController extends GetxController {
     List<int> playerList = [];
     List labelsList = labels.split(",");
     for (var label in labelsList) {
-      for (var player in CacheApi.playerInfo!.playerBaseInfoList) {
-        if (player.name.contains(label)) {
-          playerList.add(player.playerId);
+      if (ObjectUtil.isNotEmpty(label)) {
+        for (var player in CacheApi.playerInfo!.playerBaseInfoList) {
+          if (player.name.contains(label)) {
+            playerList.add(player.playerId);
+          }
         }
       }
     }

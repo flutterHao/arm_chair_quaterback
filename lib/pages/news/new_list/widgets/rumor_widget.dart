@@ -2,11 +2,10 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-24 21:19:47
- * @LastEditTime: 2024-10-26 18:45:32
+ * @LastEditTime: 2024-10-26 21:59:36
  */
-import 'dart:math';
 
-import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
+import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -37,46 +36,61 @@ class RumorWidget extends StatelessWidget {
                   style: 19.w7(color: AppColors.c262626),
                 ),
               ),
-              10.vGap,
-              Container(
-                alignment: Alignment.centerLeft,
-                height: 210.w,
-                width: 375.w,
-                child: ListView.builder(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w),
-                  scrollDirection: Axis.horizontal,
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: controller.state.newsList.length,
+              if (controller.state.newsEntity.teamRumors.isNotEmpty)
+                Container(
+                  alignment: Alignment.centerLeft,
+                  height: 210.w,
+                  width: 375.w,
+                  margin: EdgeInsets.only(top: 10.w),
+                  child: ListView.builder(
+                    padding: EdgeInsets.symmetric(horizontal: 16.w),
+                    scrollDirection: Axis.horizontal,
+                    physics: const BouncingScrollPhysics(),
+                    itemCount:
+                        controller.state.newsEntity.teamRumors.entries.length,
+                    // itemCount: 5,
+                    itemBuilder: (context, index) {
+                      NewsListDetail item = controller
+                          .state.newsEntity.teamRumors.entries
+                          .elementAt(index)
+                          .value;
+                      item.teams = controller.getPlayers(item.dataLabel);
+                      return InkWell(
+                        onTap: () {
+                          controller.pageToDetail(index);
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.only(right: 9.w), // 控制左右间距
+                          child: _Item1(item),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              if (controller.state.newsEntity.playerRumors.isNotEmpty)
+                ListView.separated(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.w),
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: controller.state.newsEntity.playerRumors.length,
                   // itemCount: 5,
+                  separatorBuilder: (context, index) => 9.vGap,
                   itemBuilder: (context, index) {
+                    var item = controller.state.newsEntity.playerRumors.entries
+                        .elementAt(index)
+                        .value;
+                    item.players = controller.getPlayers(item.dataLabel);
+                    item.teams = controller.getPlayers(item.dataLabel);
+                    // bool isEmpty = item.players.isEmpty && item.teams.isEmpty;
                     return InkWell(
                       onTap: () {
                         controller.pageToDetail(index);
                       },
-                      child: Padding(
-                        padding: EdgeInsets.only(right: 9.w), // 控制左右间距
-                        child: _Item1(controller.state.newsList[index]),
-                      ),
+                      child: _Item2(item: item),
                     );
                   },
-                ),
-              ),
-              ListView.separated(
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.w),
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: controller.state.newsList.length,
-                // itemCount: 5,
-                separatorBuilder: (context, index) => 9.vGap,
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () {
-                      controller.pageToDetail(index);
-                    },
-                    child: _Item2(item: controller.state.newsList[index]),
-                  );
-                },
-              )
+                )
             ],
           );
         });
@@ -85,10 +99,9 @@ class RumorWidget extends StatelessWidget {
 
 class _Item1 extends StatelessWidget {
   const _Item1(this.item);
-  final NewsDetail item;
+  final NewsListDetail item;
 
   Widget _team() {
-    Random random = Random();
     return ClipRRect(
       borderRadius: BorderRadius.only(
           topLeft: Radius.circular(16.w), topRight: Radius.circular(16.w)),
@@ -102,24 +115,28 @@ class _Item1 extends StatelessWidget {
                 topLeft: Radius.circular(16.w),
                 topRight: Radius.circular(16.w)),
           ),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Positioned(
-                right: -44.w,
-                child: Opacity(
-                  opacity: 0.5,
-                  child: ImageWidget(
-                    url: getTeasTeamUrl(),
-                    width: 140.w,
-                  ),
-                ),
-              ),
-              Positioned(
-                  left: 20.w,
-                  child: _TeamNameWidget(teamName: "Oklahoma City Thunder"))
-            ],
-          )),
+          child: item.teams.isNotEmpty
+              ? Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Positioned(
+                      right: -44.w,
+                      child: Opacity(
+                        opacity: 0.5,
+                        child: ImageWidget(
+                          url: Utils.getTeamUrl(item.teams[0]),
+                          width: 140.w,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                        left: 20.w,
+                        child: _TeamNameWidget(
+                            teamName:
+                                Utils.getTeamInfo(item.teams[0]).longEname))
+                  ],
+                )
+              : Container()),
     );
   }
 
@@ -158,7 +175,7 @@ class _Item1 extends StatelessWidget {
                   6.hGap,
                   Expanded(
                     child: Text(
-                      item.source ?? "",
+                      item.source,
                       overflow: TextOverflow.ellipsis,
                       style: 10.w4(color: AppColors.cB3B3B3, height: 1),
                     ),
@@ -170,10 +187,10 @@ class _Item1 extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.w),
               child: NewsPercentWidget(
-                  leftTitle: "TEAM1",
+                  leftTitle: "TEAM1zzzzz",
                   rightTitle: "TEAM2",
-                  leftCount: 888,
-                  rightCount: 222),
+                  leftCount: item.likes,
+                  rightCount: item.unLikes),
             ),
           ],
         ),
@@ -215,7 +232,7 @@ class _TeamNameWidget extends StatelessWidget {
 
 class _Item2 extends StatelessWidget {
   const _Item2({required this.item});
-  final NewsDetail item;
+  final NewsListDetail item;
 
   @override
   Widget build(BuildContext context) {
@@ -228,33 +245,34 @@ class _Item2 extends StatelessWidget {
         children: [
           Row(
             children: [
-              SizedBox(
-                width: 95.w,
-                height: 79.w,
-                child: Stack(
-                  children: [
-                    Positioned(
-                      left: -20.w,
-                      top: -20.w,
-                      child: Opacity(
-                        opacity: 0.2,
+              if (item.teams.isNotEmpty && item.players.isNotEmpty)
+                SizedBox(
+                  width: 95.w,
+                  height: 79.w,
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        left: -20.w,
+                        top: -20.w,
+                        child: Opacity(
+                          opacity: 0.2,
+                          child: ImageWidget(
+                            url: Utils.getTeamUrl(item.teams[0]),
+                            width: 100.w,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 0.w,
+                        right: 0.w,
                         child: ImageWidget(
-                          url: getTeasTeamUrl(),
+                          url: Utils.getPlayUrl(item.players[0]),
                           width: 100.w,
                         ),
                       ),
-                    ),
-                    Positioned(
-                      bottom: 0.w,
-                      right: 0.w,
-                      child: ImageWidget(
-                        url: getTestPlayerUrl(),
-                        width: 100.w,
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
               Expanded(
                   child: Column(
                 children: [
@@ -307,12 +325,12 @@ class _Item2 extends StatelessWidget {
   }
 }
 
-String getTeasTeamUrl() {
-  Random random = Random();
-  return Utils.getTeamUrl(random.nextInt(30) + 100);
-}
+// String getTeasTeamUrl() {
+//   Random random = Random();
+//   return Utils.getTeamUrl(random.nextInt(30) + 100);
+// }
 
-String getTestPlayerUrl() {
-  Random random = Random();
-  return Utils.getPlayUrl(random.nextInt(3) + 1281);
-}
+// String getTestPlayerUrl() {
+//   Random random = Random();
+//   return Utils.getPlayUrl(random.nextInt(3) + 1281);
+// }

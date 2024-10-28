@@ -2,10 +2,10 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-24 18:04:19
- * @LastEditTime: 2024-10-24 20:00:36
+ * @LastEditTime: 2024-10-26 20:48:09
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
-import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
+import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/index.dart';
@@ -22,6 +22,10 @@ class PlayerDynamicsWidget extends StatelessWidget {
     return GetBuilder<NewListController>(
         id: "newsList",
         builder: (controller) {
+          int length = controller.state.newsEntity.injuries.length;
+          if (length == 0) {
+            return Container();
+          }
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -29,7 +33,7 @@ class PlayerDynamicsWidget extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
                 child: Text(
-                  "Player Dynamics",
+                  "Player Injurys",
                   style: 19.w7(color: AppColors.c262626),
                 ),
               ),
@@ -40,11 +44,11 @@ class PlayerDynamicsWidget extends StatelessWidget {
                 itemBuilder: (context, index) => InkWell(
                   onTap: () => controller.pageToDetail(index),
                   child: _Item(
-                    item: controller.state.newsList[index],
+                    item: controller.state.newsEntity.injuries[index],
                   ),
                 ),
                 separatorBuilder: (context, index) => 9.vGap,
-                itemCount: controller.state.newsList.length,
+                itemCount: length > 5 ? 5 : length,
               )
             ],
           );
@@ -54,7 +58,7 @@ class PlayerDynamicsWidget extends StatelessWidget {
 
 class _Item extends StatelessWidget {
   const _Item({required this.item});
-  final NewsDetail item;
+  final NewsListDetail item;
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +85,7 @@ class _Item extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "${item.content}",
+                    item.content,
                     maxLines: 2,
                     style: 12.w4(color: AppColors.c262626),
                   ),
@@ -90,7 +94,7 @@ class _Item extends StatelessWidget {
                     children: [
                       Text(
                         DateUtil.formatDateMs(
-                          item.postTime!,
+                          item.postTime,
                           format: DateFormats.y_mo_d_h_m,
                         ),
                         style: 10.w4(color: AppColors.cB3B3B3, height: 1),
@@ -98,7 +102,7 @@ class _Item extends StatelessWidget {
                       6.hGap,
                       Expanded(
                         child: Text(
-                          item.source ?? "",
+                          item.source,
                           overflow: TextOverflow.ellipsis,
                           style: 10.w4(color: AppColors.cB3B3B3, height: 1),
                         ),

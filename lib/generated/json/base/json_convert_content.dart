@@ -21,6 +21,7 @@ import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/new_test_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_day_data_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_info_entity.dart';
@@ -338,6 +339,18 @@ class JsonConvert {
       return data.map<NewsEntity>((Map<String, dynamic> e) =>
           NewsEntity.fromJson(e)).toList() as M;
     }
+    if (<NewsListEntity>[] is M) {
+      return data.map<NewsListEntity>((Map<String, dynamic> e) =>
+          NewsListEntity.fromJson(e)).toList() as M;
+    }
+    if (<NewsListDetail>[] is M) {
+      return data.map<NewsListDetail>((Map<String, dynamic> e) =>
+          NewsListDetail.fromJson(e)).toList() as M;
+    }
+    if (<NewsListDraft>[] is M) {
+      return data.map<NewsListDraft>((Map<String, dynamic> e) =>
+          NewsListDraft.fromJson(e)).toList() as M;
+    }
     if (<PlayerDayDataEntity>[] is M) {
       return data.map<PlayerDayDataEntity>((Map<String, dynamic> e) =>
           PlayerDayDataEntity.fromJson(e)).toList() as M;
@@ -580,6 +593,9 @@ class JsonConvertClassCollection {
         .fromJson,
     (NewsDefineEntity).toString(): NewsDefineEntity.fromJson,
     (NewsEntity).toString(): NewsEntity.fromJson,
+    (NewsListEntity).toString(): NewsListEntity.fromJson,
+    (NewsListDetail).toString(): NewsListDetail.fromJson,
+    (NewsListDraft).toString(): NewsListDraft.fromJson,
     (PlayerDayDataEntity).toString(): PlayerDayDataEntity.fromJson,
     (RankAwardEntity).toString(): RankAwardEntity.fromJson,
     (RankInfoEntity).toString(): RankInfoEntity.fromJson,

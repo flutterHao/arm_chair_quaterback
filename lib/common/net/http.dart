@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
-import 'package:arm_chair_quaterback/common/net/address.dart';
 import 'package:arm_chair_quaterback/common/net/inerceptor/net_interceptor.dart';
 import 'package:arm_chair_quaterback/common/store/config.dart';
 import 'package:dio/dio.dart';

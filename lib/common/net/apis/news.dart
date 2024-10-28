@@ -2,12 +2,12 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 17:28:14
- * @LastEditTime: 2024-10-26 18:30:03
+ * @LastEditTime: 2024-10-26 21:17:00
  */
 import 'package:arm_chair_quaterback/common/entities/news_banner.dart';
-import 'package:arm_chair_quaterback/common/entities/news_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
+import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/receive_prop_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/stats_rank/nba_player_stat.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank.dart';
@@ -20,11 +20,11 @@ class NewsApi {
     List<NewsBanner> banners = list.map((e) => NewsBanner.fromJson(e)).toList();
     return banners;
   }
-  
 
-  static Future<NewsEntity> getNewsList() async {
-    var json = await HttpUtil().post(Api.getNewsList);
-    return NewsEntity.fromJson(json);
+  static Future<NewsListEntity> getNewsList() async {
+    var json =
+        await HttpUtil().post(Api.getNewsList, data: {"page": 0, "size": 10});
+    return NewsListEntity.fromJson(json);
   }
 
   static Future<NewsDetail> getNewsDetail(id) async {
@@ -115,10 +115,14 @@ class NewsApi {
     return list.map((e) => Reviews.fromJson(e)).toList();
   }
 
-    static Future<List<Reviews>> getSonReviews(
-      newsId, int reviewId,int page, int limit) async {
-    List list = await HttpUtil().post(Api.getSonReviews,
-        data: {"newsId": newsId, "reviewId":reviewId,"page": page, "limit": limit});
+  static Future<List<Reviews>> getSonReviews(
+      newsId, int reviewId, int page, int limit) async {
+    List list = await HttpUtil().post(Api.getSonReviews, data: {
+      "newsId": newsId,
+      "reviewId": reviewId,
+      "page": page,
+      "limit": limit
+    });
     return list.map((e) => Reviews.fromJson(e)).toList();
   }
 }

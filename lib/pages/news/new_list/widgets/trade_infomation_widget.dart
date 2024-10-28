@@ -2,10 +2,10 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-24 18:04:19
- * @LastEditTime: 2024-10-26 18:40:29
+ * @LastEditTime: 2024-10-26 21:32:04
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
-import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
+import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -27,6 +27,10 @@ class TradeInfomationWidget extends StatelessWidget {
     return GetBuilder<NewListController>(
         id: "newsList",
         builder: (controller) {
+          int length = controller.state.newsEntity.trade.length;
+          if (length == 0) {
+            return Container();
+          }
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -42,14 +46,19 @@ class TradeInfomationWidget extends StatelessWidget {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 padding: EdgeInsets.symmetric(vertical: 10.w),
-                itemBuilder: (context, index) => InkWell(
-                  onTap: () => controller.pageToDetail(index),
-                  child: _Item(
-                    item: controller.state.newsList[index],
-                  ),
-                ),
+                itemBuilder: (context, index) {
+                  var item = controller.state.newsEntity.trade[index];
+                  item.players = controller.getPlayers(item.dataLabel);
+                  item.teams = controller.getNewsTeam(item.dataLabel);
+                  return InkWell(
+                    onTap: () => controller.pageToDetail(index),
+                    child: _Item(
+                      item: controller.state.newsEntity.trade[index],
+                    ),
+                  );
+                },
                 separatorBuilder: (context, index) => 9.vGap,
-                itemCount: controller.state.newsList.length,
+                itemCount: length,
               )
             ],
           );
@@ -59,7 +68,7 @@ class TradeInfomationWidget extends StatelessWidget {
 
 class _Item extends StatelessWidget {
   const _Item({required this.item});
-  final NewsDetail item;
+  final NewsListDetail item;
 
   _arrowView() {
     return List.generate(4, (index) {
@@ -69,27 +78,6 @@ class _Item extends StatelessWidget {
         iconColor: AppColors.c4CB8FC.withOpacity((index + 1) / 4),
       );
     });
-  }
-
-  _playerView() {
-    return [
-      Positioned(
-        left: 90.w,
-        bottom: 0,
-        child: ImageWidget(
-          url: getTestPlayerUrl(),
-          height: 78.w,
-        ),
-      ),
-      Positioned(
-        right: 90.w,
-        bottom: 0,
-        child: ImageWidget(
-          url: getTestPlayerUrl(),
-          height: 78.w,
-        ),
-      ),
-    ];
   }
 
   @override
@@ -116,33 +104,36 @@ class _Item extends StatelessWidget {
                 color: AppColors.c262626,
               ),
               child: Stack(
+                alignment: Alignment.center,
                 children: [
                   ///队伍
-                  Positioned(
-                    left: -20.w,
-                    bottom: 0,
-                    child: Opacity(
-                      opacity: 0.6,
-                      child: ImageWidget(
-                        url: getTeasTeamUrl(),
-                        width: 110.w,
-                        // color: Colors.red,
+                  if (item.teams.isNotEmpty)
+                    Positioned(
+                      left: -20.w,
+                      bottom: 0,
+                      child: Opacity(
+                        opacity: 0.6,
+                        child: ImageWidget(
+                          url: Utils.getTeamUrl(item.teams[0]),
+                          width: 110.w,
+                          // color: Colors.red,
+                        ),
                       ),
                     ),
-                  ),
-                  Positioned(
-                    right: -20.w,
-                    bottom: 0,
-                    child: Opacity(
-                      opacity: 0.6,
-                      child: ImageWidget(
-                        url: getTeasTeamUrl(),
-                        width: 110.w,
-                        fit: BoxFit.fitWidth,
-                        // color: Colors.red,
+                  if (item.teams.length >= 2)
+                    Positioned(
+                      right: -20.w,
+                      bottom: 0,
+                      child: Opacity(
+                        opacity: 0.6,
+                        child: ImageWidget(
+                          url: Utils.getTeamUrl(item.teams[1]),
+                          width: 110.w,
+                          fit: BoxFit.fitWidth,
+                          // color: Colors.red,
+                        ),
                       ),
                     ),
-                  ),
 
                   ///渐变背景
                   // Container(
@@ -175,7 +166,12 @@ class _Item extends StatelessWidget {
                   ),
 
                   ///球员
-                  ..._playerView()
+                  // ..._playerView()
+                  if(item.players.isNotEmpty)
+                  ImageWidget(
+                    url: Utils.getPlayUrl(item.players[0]),
+                    height: 78.w,
+                  )
                 ],
               ),
             ),
@@ -217,8 +213,8 @@ class _Item extends StatelessWidget {
               child: NewsPercentWidget(
                   leftTitle: "True",
                   rightTitle: "False",
-                  leftCount: 78,
-                  rightCount: 22),
+                  leftCount: item.likes,
+                  rightCount: item.unLikes),
             ),
           ],
         ),

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-18 21:01:04
- * @LastEditTime: 2024-10-25 16:42:02
+ * @LastEditTime: 2024-10-26 20:47:57
  */
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
@@ -123,11 +123,6 @@ class NewsListPage extends GetView<NewListController> {
             child: RegularWidget(),
           ),
 
-          ///玩家动态
-          SliverToBoxAdapter(
-            child: PlayerDynamicsWidget(),
-          ),
-
           ///选秀抽签
           SliverToBoxAdapter(
             child: DraftLotteryWidget(),
@@ -162,6 +157,12 @@ class NewsListPage extends GetView<NewListController> {
           SliverToBoxAdapter(
             child: TeamRankWidget(),
           ),
+
+         ///玩家伤病
+          SliverToBoxAdapter(
+            child: PlayerDynamicsWidget(),
+          ),
+
         ],
       ),
     );

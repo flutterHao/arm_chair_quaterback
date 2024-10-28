@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-16 17:24:51
- * @LastEditTime: 2024-10-25 11:45:49
+ * @LastEditTime: 2024-10-26 19:06:30
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:get/get.dart';
@@ -10,11 +10,11 @@ import 'package:get/get.dart';
 class BeautyController extends GetxController {
   RxInt beautyIndex = 0.obs;
   List beautyList = [
-    // Assets.uiBelle_01Png,
+    Assets.uiBelle_01Png,
     Assets.uiBelle_04Png,
-    // Assets.uiBelle_02Png,
+    Assets.uiBelle_02Png,
     Assets.uiBelle_05Png,
-    // Assets.uiBelle_03Png,
+    Assets.uiBelle_03Png,
     Assets.uiBelle_06Png
   ];
 

@@ -2,13 +2,14 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-21 16:48:47
- * @LastEditTime: 2024-10-26 18:35:23
+ * @LastEditTime: 2024-10-28 09:52:05
  */
-import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
+import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/net/address.dart';
 import 'package:arm_chair_quaterback/common/net/http.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
@@ -26,6 +27,9 @@ class RegularWidget extends StatelessWidget {
     return GetBuilder<NewListController>(
         id: "newsList",
         builder: (controller) {
+          if (controller.state.newsEntity.match.isEmpty) {
+            return Container();
+          }
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -78,16 +82,18 @@ class RegularWidget extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 16.w),
                   scrollDirection: Axis.horizontal,
                   physics: const BouncingScrollPhysics(),
-                  itemCount: controller.state.newsList.length,
+                  itemCount: controller.state.newsEntity.match.length,
                   // itemCount: 5,
                   itemBuilder: (context, index) {
+                    var item = controller.state.newsEntity.match[index];
+                    item.teams = controller.getNewsTeam(item.dataLabel);
                     return InkWell(
                       onTap: () {
-                        controller.pageToDetail(index);
+                        controller.pageToDetail(item.id);
                       },
                       child: Padding(
                         padding: EdgeInsets.only(right: 9.w), // 控制左右间距
-                        child: _item(controller.state.newsList[index]),
+                        child: _Item(controller.state.newsEntity.match[index]),
                         // child: SizedBox(
                         //     width: 180.w,
                         //     height: 80.w,
@@ -103,11 +109,14 @@ class RegularWidget extends StatelessWidget {
   }
 }
 
-class _item extends StatelessWidget {
-  const _item(this.item);
-  final NewsDetail item;
+class _Item extends StatelessWidget {
+  const _Item(this.item);
+  final NewsListDetail item;
 
   Widget _oneTeam() {
+    if (item.teams.length > 2) {
+      item.teams = item.teams.sublist(0, 2);
+    }
     return Container(
         width: 188.w,
         height: 80.w,
@@ -121,9 +130,16 @@ class _item extends StatelessWidget {
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(16.w), topRight: Radius.circular(16.w)),
         ),
-        child: ImageWidget(
-          url: "",
-          width: 42.w,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: item.teams
+              .map(
+                (e) => ImageWidget(
+                  url: Utils.getTeamUrl(e),
+                  width: 60.w,
+                ),
+              )
+              .toList(),
         ));
   }
 
@@ -143,7 +159,7 @@ class _item extends StatelessWidget {
             Container(
               margin: EdgeInsets.all(10.w),
               child: Text(
-                "${item.content}",
+                item.content,
                 maxLines: 4,
                 style: 12.w4(color: AppColors.c262626),
               ),
@@ -154,7 +170,7 @@ class _item extends StatelessWidget {
                 children: [
                   Text(
                     DateUtil.formatDateMs(
-                      item.postTime!,
+                      item.postTime,
                       format: DateFormats.y_mo_d_h_m,
                     ),
                     style: 10.w4(color: AppColors.cB3B3B3, height: 1),
@@ -162,7 +178,7 @@ class _item extends StatelessWidget {
                   6.hGap,
                   Expanded(
                     child: Text(
-                      item.source ?? "",
+                      item.source,
                       overflow: TextOverflow.ellipsis,
                       style: 10.w4(color: AppColors.cB3B3B3, height: 1),
                     ),
@@ -174,10 +190,14 @@ class _item extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.w),
               child: NewsPercentWidget(
-                  leftTitle: "TEAM1",
-                  rightTitle: "TEAM2",
-                  leftCount: 888,
-                  rightCount: 222),
+                  leftTitle: item.teams.length >= 2
+                      ? Utils.getTeamInfo(item.teams[0]).shortEname
+                      : "TRUE",
+                  rightTitle: item.teams.length >= 2
+                      ? Utils.getTeamInfo(item.teams[1]).shortEname
+                      : "FALSE",
+                  leftCount: item.likes,
+                  rightCount: item.unLikes),
             ),
           ],
         ),
@@ -213,19 +233,22 @@ class NewsPercentWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int total = leftCount + rightCount;
-    String leftPercent = (leftCount / total).toStringAsFixed(2);
-    String rightPercent = (rightCount / total).toStringAsFixed(2);
+    if (total == 0) total = 1;
+    String leftPercent = (leftCount * 100 / total).toStringAsFixed(2);
+    String rightPercent = (rightCount * 100 / total).toStringAsFixed(2);
     return Column(
       children: [
         Row(
           children: [
             Expanded(
-              flex: 3,
+              // flex: leftCount == 0 ? 1 : leftCount * 100 ~/ total,
+              flex: leftCount,
               child: _progress(AppColors.c10A86A),
             ),
             2.hGap,
             Expanded(
-              flex: 1,
+              flex: rightCount,
+              // flex: leftCount == 0 ? 1 : rightCount * 100 ~/ total,
               child: _progress(AppColors.cE72646),
             ),
           ],
@@ -236,13 +259,14 @@ class NewsPercentWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  "$leftTitle($leftPercent)%",
+                  "$leftTitle ($leftPercent%)",
                   style: 9.w4(color: AppColors.c262626, height: 1.2),
                 ),
               ),
               Text(
-                "$rightTitle($rightPercent)%",
-                textDirection: TextDirection.rtl,
+                // "$rightTitle($rightPercent)%",
+                // textDirection: TextDirection.rtl,
+                "($rightPercent%) $rightTitle",
                 style: 9.w4(color: AppColors.c262626, height: 1.2),
               )
             ],
