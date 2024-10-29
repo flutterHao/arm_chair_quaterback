@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-24 18:04:19
- * @LastEditTime: 2024-10-29 16:02:21
+ * @LastEditTime: 2024-10-29 18:42:59
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
@@ -150,9 +150,12 @@ class _Item extends StatelessWidget {
                   ///球员
                   // ..._playerView()
                   if (item.players.isNotEmpty)
-                    ImageWidget(
-                      url: Utils.getPlayUrl(item.players[0]),
-                      height: 78.w,
+                    Positioned(
+                      bottom: 0,
+                      child: ImageWidget(
+                        url: Utils.getPlayUrl(item.players[0]),
+                        height: 78.w,
+                      ),
                     )
                 ],
               ),

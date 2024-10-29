@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-21 16:48:47
- * @LastEditTime: 2024-10-29 18:24:10
+ * @LastEditTime: 2024-10-29 19:43:47
  */
 import 'dart:math';
 
@@ -104,16 +104,10 @@ class _Item extends GetView<NewListController> {
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(16.w), topRight: Radius.circular(16.w)),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: item.teams
-              .map(
-                (e) => ImageWidget(
-                  url: Utils.getWhiteTeamUrl(e),
-                  width: 60.w,
-                ),
-              )
-              .toList(),
+        child: ImageWidget(
+          url: Utils.getWhiteTeamUrl(item.teams[0]),
+          width: 60.w,
+          height: 60.w,
         ));
   }
 
@@ -357,7 +351,7 @@ class _TeamClipper extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(covariant CustomClipper<dynamic> oldClipper) {
-    return true;
+    return false;
   }
 
   double radians(double degrees) {

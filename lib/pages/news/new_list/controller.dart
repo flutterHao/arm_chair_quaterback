@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2024-10-28 21:35:31
+ * @LastEditTime: 2024-10-29 20:15:19
  */
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
@@ -31,6 +31,7 @@ class NewListController extends GetxController {
   late RefreshController refreshCtrl = RefreshController();
   late RefreshController flowRefreshCtrl = RefreshController();
   ScrollController scrollController = ScrollController();
+  bool isLoading = true;
 
   // @override
   // void onInit() {
@@ -65,6 +66,9 @@ class NewListController extends GetxController {
       // refreshCtrl.refreshCompleted();
     }).whenComplete(() {
       refreshCtrl.refreshCompleted();
+    }).catchError((e) {
+      Log.e("getNewsList error,开始重试");
+      refreshData();
     });
   }
 
@@ -78,10 +82,6 @@ class NewListController extends GetxController {
   Future getNewsList() async {
     await NewsApi.getNewsList().then((value) {
       state.newsEntity = value;
-      update(['newsList']);
-    }).catchError((v) async {
-      Log.e("getNewsList error,开始重试");
-      state.newsEntity = await NewsApi.getNewsList();
       update(['newsList']);
     });
   }

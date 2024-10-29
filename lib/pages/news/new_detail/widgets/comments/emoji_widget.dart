@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-22 15:19:24
- * @LastEditTime: 2024-10-29 18:38:45
+ * @LastEditTime: 2024-10-29 20:45:41
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -25,7 +25,6 @@ class EmojiWidget extends StatelessWidget {
       Assets.uiEmojiLaughPng,
     ];
     return Wrap(
-      // alignment: WrapAlignment.bottomCenter,
       spacing: 5.w,
       runSpacing: 5.w,
       children: [
@@ -35,6 +34,8 @@ class EmojiWidget extends StatelessWidget {
             return InkWell(
               onTap: () {
                 current.value = index;
+                // EasyLoading.showToast("Not Open",
+                //     duration: const Duration(milliseconds: 200));
               },
               child: Container(
                 height: 24.w,

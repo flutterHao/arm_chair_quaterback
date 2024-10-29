@@ -2,7 +2,7 @@
  * @Description:队伍球员谣言
  * @Author: lihonghao
  * @Date: 2024-10-24 21:19:47
- * @LastEditTime: 2024-10-29 16:35:50
+ * @LastEditTime: 2024-10-29 20:11:13
  */
 
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
@@ -183,13 +183,14 @@ class _Item1 extends GetView<NewListController> {
             ),
             const Expanded(child: SizedBox()),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.w),
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
               child: NewsPercentWidget(
                   leftTitle: "Ture",
                   rightTitle: "False",
                   leftCount: item.likes,
                   rightCount: item.unLikes),
             ),
+            10.vGap
           ],
         ),
       ),
@@ -313,13 +314,14 @@ class _Item2 extends StatelessWidget {
           ),
           const Expanded(child: SizedBox()),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.w),
+            padding: EdgeInsets.symmetric(horizontal: 10.w),
             child: NewsPercentWidget(
                 leftTitle: "True",
                 rightTitle: "False",
                 leftCount: item.likes,
                 rightCount: item.unLikes),
           ),
+          10.vGap
         ],
       ),
     );

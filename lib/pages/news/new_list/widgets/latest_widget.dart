@@ -55,7 +55,7 @@ class LatestWidget extends StatelessWidget {
                               maxLines: 2,
                               style: 12.w4(color: AppColors.c262626),
                             ),
-                            10.vGap,
+                            8.vGap,
                             Row(
                               children: [
                                 Text(

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-12 17:33:59
- * @LastEditTime: 2024-10-25 11:44:39
+ * @LastEditTime: 2024-10-29 20:32:54
  */
 /*
  * @Description: 
@@ -11,7 +11,6 @@
  * @LastEditTime: 2024-10-16 17:13:00
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
-import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -120,11 +119,11 @@ class BeautyPage extends GetView<BeautyController> {
                       duration: duration,
                       scale: isCurrent ? 1 : 381 / 481,
                       child: Image.asset(controller.beautyList[index],
-                          // height: 481.w,
+                          height: 440.h,
                           width: 247.w,
                           // width: isCurrent ? 247.w : 222.w,
                           // height: isCurrent ? 481.h : 381.h,
-                          fit: BoxFit.fitWidth,
+                          fit: BoxFit.fitHeight,
                           // height: 567.h,
                           alignment: Alignment.topCenter),
                     ),

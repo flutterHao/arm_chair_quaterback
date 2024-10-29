@@ -1,7 +1,9 @@
+import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comment_controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/emoji_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/send_comment_widget.dart';
@@ -69,38 +71,38 @@ class CommentItemView extends GetView<CommentController> {
                     style: 12.w4(color: AppColors.cB3B3B3, height: 1),
                   ),
                   Expanded(child: Container()),
-                  // if (item.teamId != (controller.userEntity.team?.teamId ?? 0))
-                  InkWell(
-                    onTap: () async {
-                      // int parentId = item.parentReviewId == 0
-                      //     ? item.id!
-                      //     : item.parentReviewId!;
-                      String name = "@${item.teamName}";
-                      await showCommentBottomSheet(context,
-                          newsId: item.newsId ?? 0,
-                          reviewsItem: item,
-                          // targetId: item.id ?? 0,
-                          hintText: name);
-                      if (context.mounted) {
-                        FocusScope.of(context).unfocus();
-                      }
-                    },
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        border: Border(
-                          bottom:
-                              BorderSide(color: AppColors.cB3B3B3, width: 0.6),
+                  if (item.teamId != (controller.userEntity.team?.teamId ?? 0))
+                    InkWell(
+                      onTap: () async {
+                        // int parentId = item.parentReviewId == 0
+                        //     ? item.id!
+                        //     : item.parentReviewId!;
+                        String name = "@${item.teamName}";
+                        await showCommentBottomSheet(context,
+                            newsId: item.newsId ?? 0,
+                            reviewsItem: item,
+                            // targetId: item.id ?? 0,
+                            hintText: name);
+                        if (context.mounted) {
+                          FocusScope.of(context).unfocus();
+                        }
+                      },
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                                color: AppColors.cB3B3B3, width: 0.6),
+                          ),
+                        ),
+                        child: Text(
+                          "Reple",
+                          style: TextStyle(
+                              color: AppColors.cB3B3B3,
+                              fontSize: 12.h,
+                              height: 1),
                         ),
                       ),
-                      child: Text(
-                        "Reple",
-                        style: TextStyle(
-                            color: AppColors.cB3B3B3,
-                            fontSize: 12.h,
-                            height: 1),
-                      ),
                     ),
-                  ),
                 ],
               ),
               9.vGap,
@@ -117,8 +119,8 @@ class CommentItemView extends GetView<CommentController> {
                   30.hGap,
                 ],
               ),
-              // 10.vGap,
-              // EmojiWidget(),
+              10.vGap,
+              const EmojiWidget(),
 
               /// 点赞和回复
               // Row(
@@ -175,6 +177,7 @@ class SubCommentItemView extends GetView<CommentController> {
         6.hGap,
         Expanded(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               /// 用户信息
               Row(
@@ -220,35 +223,35 @@ class SubCommentItemView extends GetView<CommentController> {
                     style: 12.w4(color: AppColors.cB3B3B3),
                   ),
                   Expanded(child: Container()),
-                  // if (item.teamId != (controller.userEntity.team?.teamId ?? 0))
-                  InkWell(
-                    onTap: () {
-                      // int parentId = item.parentReviewId == 0
-                      //     ? item.id!
-                      //     : item.parentReviewId!;
-                      String name = "@${item.teamName}";
-                      showCommentBottomSheet(context,
-                          newsId: item.newsId ?? 0,
-                          reviewsItem: item,
-                          // targetId: item.id ?? 0,
-                          hintText: name);
-                    },
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        border: Border(
-                          bottom:
-                              BorderSide(color: AppColors.cB3B3B3, width: 0.6),
+                  if (item.teamId != (controller.userEntity.team?.teamId ?? 0))
+                    InkWell(
+                      onTap: () {
+                        // int parentId = item.parentReviewId == 0
+                        //     ? item.id!
+                        //     : item.parentReviewId!;
+                        String name = "@${item.teamName}";
+                        showCommentBottomSheet(context,
+                            newsId: item.newsId ?? 0,
+                            reviewsItem: item,
+                            // targetId: item.id ?? 0,
+                            hintText: name);
+                      },
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                                color: AppColors.cB3B3B3, width: 0.6),
+                          ),
+                        ),
+                        child: Text(
+                          "Reple",
+                          style: TextStyle(
+                              color: AppColors.cB3B3B3,
+                              fontSize: 12.h,
+                              height: 1),
                         ),
                       ),
-                      child: Text(
-                        "Reple",
-                        style: TextStyle(
-                            color: AppColors.cB3B3B3,
-                            fontSize: 12.h,
-                            height: 1),
-                      ),
                     ),
-                  ),
                 ],
               ),
               8.vGap,
@@ -260,11 +263,14 @@ class SubCommentItemView extends GetView<CommentController> {
                   Expanded(
                       child: Text(
                     item.context ?? "",
-                    style: 14.w4(color: AppColors.c666666, height: 1),
+                    style: 14.w4(color: AppColors.c666666),
                   )),
                   30.hGap,
                 ],
               ),
+
+              10.vGap,
+              const EmojiWidget()
             ],
           ),
         )
@@ -282,9 +288,15 @@ class HotComment extends GetView<CommentController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          "Top Comments (${item.sonReviews})",
-          style: 14.w7(color: AppColors.c262626, height: 1),
+        Row(
+          children: [
+            IconWidget(iconWidth: 12.w, icon: Assets.uiIconFirePng),
+            3.hGap,
+            Text(
+              "Top Comments (${item.sonReviews})",
+              style: 14.w7(color: AppColors.c262626, height: 1),
+            ),
+          ],
         ),
         10.vGap,
         Row(
@@ -333,7 +345,7 @@ class HotComment extends GetView<CommentController> {
           ],
         ),
         10.vGap,
-        const EmojiWidget()
+        const Center(child: EmojiWidget())
       ],
     );
   }

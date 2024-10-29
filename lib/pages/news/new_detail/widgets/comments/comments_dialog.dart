@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-18 15:38:51
- * @LastEditTime: 2024-10-29 17:40:40
+ * @LastEditTime: 2024-10-29 21:37:04
  */
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -106,7 +106,7 @@ class CommentsList extends GetView<CommentController> {
               child: Obx(() {
                 return Text(
                   "Comments (${detail.reviewsCount!.value})",
-                  style: 19.w7(),
+                  style: 16.w7(height: 1),
                 );
               }),
             ),
@@ -127,7 +127,7 @@ class CommentsList extends GetView<CommentController> {
                   padding: EdgeInsets.symmetric(vertical: 12.w),
                   itemCount: list.length,
                   separatorBuilder: (context, index) {
-                    return 16.vGap;
+                    return 30.vGap;
                   },
                   itemBuilder: (context, index) {
                     // var subList = controller.subList
@@ -186,7 +186,7 @@ class SubComentsListView extends GetView<CommentController> {
           physics: const NeverScrollableScrollPhysics(),
           itemCount: mainReviews.current + 1,
           shrinkWrap: true,
-          separatorBuilder: (context, index) => 15.vGap,
+          separatorBuilder: (context, index) => 23.vGap,
           itemBuilder: (context, index) {
             return index < mainReviews.current
                 ? SubCommentItemView(item: mainReviews.subList[index])

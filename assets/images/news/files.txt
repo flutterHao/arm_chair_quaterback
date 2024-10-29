@@ -4,5 +4,6 @@ static const uiEmojiLaughPng = 'assets/images/news/ui_emoji_laugh.png';
 static const uiIconArrows_04Png = 'assets/images/news/ui_icon_arrows_04.png';
 static const uiIconBallPng = 'assets/images/news/ui_icon_ball.png';
 static const uiIconEmojiPng = 'assets/images/news/ui_icon_emoji.png';
+static const uiIconFirePng = 'assets/images/news/ui_icon_fire.png';
 static const uiIconInjuryPng = 'assets/images/news/ui_icon_injury.png';
 static const uiNewsBanner_01Png = 'assets/images/news/ui_news_banner_01.png';

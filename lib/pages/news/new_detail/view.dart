@@ -116,7 +116,7 @@ class NewsDetailItem extends StatelessWidget {
         NewsBottomButton(newsDetail),
         10.vGap,
         _progressWidget(),
-        20.vGap,
+        10.vGap,
         _hotComment(),
       ],
     );

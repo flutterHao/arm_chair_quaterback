@@ -129,7 +129,7 @@ class TrainingController extends GetxController
     DateTime recoverTime =
         DateUtil.getDateTimeByMs(trainingInfo.training.ballRefreshTime)
             .add(Duration(seconds: recover));
-    Log.d("恢复时间:${recoverTime}");
+    Log.d("恢复时间:$recoverTime");
     Log.d("现在时间:${DateTime.now()}");
     _recoverSeconds = recoverTime.difference(DateTime.now()).inSeconds;
     _timer = Timer.periodic(const Duration(seconds: 1), (v) async {

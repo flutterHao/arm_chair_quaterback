@@ -2,7 +2,7 @@
  * @Description: 明星球员
  * @Author: lihonghao
  * @Date: 2024-10-25 15:16:18
- * @LastEditTime: 2024-10-29 16:06:35
+ * @LastEditTime: 2024-10-29 21:19:46
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -66,8 +66,8 @@ class PopularPlayerWidget extends StatelessWidget {
                                 playerKey.value = key;
                               },
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
+                                  24.vGap,
                                   Container(
                                     decoration: BoxDecoration(
                                       border: playerKey.value == key
@@ -95,13 +95,13 @@ class PopularPlayerWidget extends StatelessWidget {
                               ),
                             );
                           },
-                          separatorBuilder: (context, index) => 10.hGap,
+                          separatorBuilder: (context, index) => 15.hGap,
                           itemCount: controller
                               .state.newsEntity.playerNews.entries.length,
                         ),
                       ),
                       Container(
-                        width: double .infinity,
+                        width: double.infinity,
                         height: 1,
                         color: AppColors.cD9D9D9,
                         margin: EdgeInsets.only(left: 9.w),
@@ -129,15 +129,16 @@ class PopularPlayerWidget extends StatelessWidget {
                                       Utils.getPlayBaseInfo(
                                               int.parse(playerKey.value))
                                           .ename,
-                                      style: 14.w7(color: AppColors.c262626),
+                                      style: 14.w7(
+                                          color: AppColors.c262626, height: 1),
                                     ),
-                                    6.vGap,
+                                    5.vGap,
                                     Text(
                                       item.content,
-                                      maxLines: 2,
+                                      maxLines: 3,
                                       style: 12.w4(color: AppColors.c262626),
                                     ),
-                                    10.vGap,
+                                    11.vGap,
                                     Row(
                                       children: [
                                         Text(
