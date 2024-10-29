@@ -410,10 +410,7 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text("${index + 1}",
-                                      style: 18.w7(
-                                          color: index > 2
-                                              ? AppColors.c262626
-                                              : Colors.white)),
+                                      style: 18.w7(color: AppColors.c262626)),
                                   SizedBox(
                                     height: 5.w,
                                     width: 26.w,
@@ -428,7 +425,11 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                             ],
                           ),
                         ),
-                        Text("NO data",style: 18.w7(color: AppColors.cB3B3B3.withOpacity(0.5)),)
+                        Text(
+                          "NO data",
+                          style:
+                              18.w7(color: AppColors.cB3B3B3.withOpacity(0.5)),
+                        )
                       ],
                     ),
                   );

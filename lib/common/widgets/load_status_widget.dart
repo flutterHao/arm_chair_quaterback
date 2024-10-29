@@ -50,24 +50,24 @@ class LoadStatusWidget extends StatelessWidget {
             text??loadDataStatus?.desc??"",
             style: 12.w4(color: AppColors.cB3B3B3.withOpacity(.7)),
           ),
-          if (onRefreshTap != null && loadDataStatus != LoadDataStatus.loading && loadDataStatus != LoadDataStatus.noData)
-            InkWell(
-              onTap: onRefreshTap,
-              child: Container(
-                height: 30.w,
-                width: 120.w,
-                margin: EdgeInsets.only(top: 5.w),
-                decoration: BoxDecoration(
-                    color: AppColors.cFF7954,
-                    borderRadius: BorderRadius.circular(15.w)),
-                child: Center(
-                  child: Text(
-                    "REFRESH",
-                    style: 14.w7(color: AppColors.cFFFFFF),
-                  ),
-                ),
-              ),
-            )
+          // if (onRefreshTap != null && loadDataStatus != LoadDataStatus.loading && loadDataStatus != LoadDataStatus.noData)
+          //   InkWell(
+          //     onTap: onRefreshTap,
+          //     child: Container(
+          //       height: 30.w,
+          //       width: 120.w,
+          //       margin: EdgeInsets.only(top: 5.w),
+          //       decoration: BoxDecoration(
+          //           color: AppColors.cFF7954,
+          //           borderRadius: BorderRadius.circular(15.w)),
+          //       child: Center(
+          //         child: Text(
+          //           "REFRESH",
+          //           style: 14.w7(color: AppColors.cFFFFFF),
+          //         ),
+          //       ),
+          //     ),
+          //   )
         ],
       ),
     );

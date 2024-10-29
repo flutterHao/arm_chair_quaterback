@@ -16,7 +16,7 @@ class Constant {
 
   static const String deviceId = "device_id";
 
-  ///球员类型
+  ///球员属性
   static const List<String> statTypeList = [
     "PTS",
     "AST",

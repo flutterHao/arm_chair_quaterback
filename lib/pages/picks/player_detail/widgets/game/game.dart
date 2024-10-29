@@ -16,11 +16,8 @@ import 'package:arm_chair_quaterback/common/widgets/physics/one_boundary_scroll_
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/game/controller.dart';
-import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/up_star_defeat.dart';
-import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/up_start_success.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';

@@ -42,9 +42,7 @@ class _RankPageState extends State<RankPage>
               SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 child: Stack(
-                  alignment: controller.rankInfo.ranks.isEmpty
-                      ? Alignment.center
-                      : AlignmentDirectional.topStart,
+                  alignment: AlignmentDirectional.topStart,
                   children: [
                     SizedBox(
                       height: 599.w,
@@ -55,545 +53,555 @@ class _RankPageState extends State<RankPage>
                         fit: BoxFit.fitWidth,
                       ),
                     ),
-                    controller.rankInfo.ranks.isEmpty
-                        ? Center(
-                            child: LoadStatusWidget(
-                                onRefreshTap: controller.reloadRankData))
-                        : Column(
+                    Column(
+                      children: [
+                        Container(
+                          height: 564.w,
+                          padding: EdgeInsets.only(top: widget.appBarHeight),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Container(
-                                height: 564.w,
-                                padding:
-                                    EdgeInsets.only(top: widget.appBarHeight),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.end,
+                                margin: EdgeInsets.only(left: 22.w),
+                                child: Row(
                                   children: [
                                     Container(
-                                      margin: EdgeInsets.only(left: 22.w),
-                                      child: Row(
+                                      height: 38.w,
+                                      width: 5.w,
+                                      decoration: BoxDecoration(
+                                          color: AppColors.cFF7954,
+                                          borderRadius:
+                                              BorderRadius.circular(1.5.w)),
+                                    ),
+                                    SizedBox(
+                                      width: 8.w,
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "3th rank",
+                                          style:
+                                              14.w7(color: AppColors.c999999),
+                                        ),
+                                        Text(
+                                          "PICK MORE&RIGHT",
+                                          style:
+                                              18.w7(color: AppColors.cFFFFFF),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 41.w),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    //第2名
+                                    Expanded(
+                                      child: Column(
                                         children: [
                                           Container(
-                                            height: 38.w,
-                                            width: 5.w,
-                                            decoration: BoxDecoration(
-                                                color: AppColors.cFF7954,
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        1.5.w)),
-                                          ),
-                                          SizedBox(
-                                            width: 8.w,
-                                          ),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                "3th rank",
-                                                style: 14.w7(
-                                                    color: AppColors.c999999),
-                                              ),
-                                              Text(
-                                                "PICK MORE&RIGHT",
-                                                style: 18.w7(
-                                                    color: AppColors.cFFFFFF),
-                                              )
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: EdgeInsets.symmetric(
-                                          horizontal: 41.w),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        children: [
-                                          //第2名
-                                          Expanded(
-                                            child:
-                                                controller.rankInfo.ranks
-                                                            .length >=
-                                                        2
-                                                    ? Column(
-                                                        children: [
-                                                          Container(
-                                                            margin:
-                                                                EdgeInsets.only(
-                                                                    top: 71.w),
-                                                            child: Column(
-                                                              children: [
-                                                                InkWell(
-                                                                  onTap: () => Get.toNamed(
-                                                                      RouteNames
-                                                                          .picksPersonalCenter,
-                                                                      arguments: {
-                                                                        "teamId": controller
-                                                                            .rankInfo
-                                                                            .ranks[1]
-                                                                            .teamId
-                                                                      }),
-                                                                  child: Stack(
-                                                                    children: [
-                                                                      Container(
-                                                                        width:
-                                                                            81.w,
-                                                                        height:
-                                                                            81.w,
-                                                                        margin: EdgeInsets.only(
-                                                                            bottom:
-                                                                                8.w),
-                                                                        decoration: BoxDecoration(
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(41.w),
-                                                                            border: Border.all(color: AppColors.c52473E.withOpacity(.5), width: 8.w)),
-                                                                        child:
-                                                                            Container(
-                                                                          padding:
-                                                                              EdgeInsets.all(8.w),
-                                                                          child:
-                                                                              ImageWidget(
-                                                                                  borderRadius: BorderRadius.circular(30.w),
-                                                                                  url: Utils.getTeamUrl(controller.rankInfo.ranks[1].teamId)),
-                                                                        ),
-                                                                      ),
-                                                                      Positioned(
-                                                                          bottom:
-                                                                              0,
-                                                                          left:
-                                                                              0,
-                                                                          right:
-                                                                              0,
-                                                                          child:
-                                                                              Center(
-                                                                            child:
-                                                                                Container(
-                                                                              height: 26.w,
-                                                                              width: 26.w,
-                                                                              alignment: Alignment.center,
-                                                                              decoration: BoxDecoration(color: AppColors.c423832, borderRadius: BorderRadius.circular(13.w)),
-                                                                              child: Text(
-                                                                                "2",
-                                                                                style: TextStyle(color: AppColors.ccccccc, fontSize: 18.sp, fontWeight: FontWeight.bold),
-                                                                              ),
-                                                                            ),
-                                                                          ))
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                                Container(
-                                                                  width: 50.w,
-                                                                  margin: EdgeInsets
-                                                                      .only(
-                                                                          top: 5
-                                                                              .w),
-                                                                  alignment:
-                                                                      Alignment
-                                                                          .center,
-                                                                  child: Text(
-                                                                    controller
-                                                                        .rankInfo
-                                                                        .ranks[
-                                                                            1]
-                                                                        .teamName,
-                                                                    style: 12.w7(
-                                                                        color: AppColors
-                                                                            .cB3B3B3,
-                                                                        overflow:
-                                                                            TextOverflow.ellipsis),
-                                                                  ),
-                                                                ),
-                                                                Text(
-                                                                  "win ${controller.rankInfo.ranks[1].getWin}",
-                                                                  style: TextStyle(
-                                                                      color: AppColors
-                                                                          .c666666,
-                                                                      fontSize:
-                                                                          11.sp),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                          20.vGap,
-                                                          Container(
-                                                            width: 90.w,
-                                                            height: 78.w,
-                                                            padding:
-                                                                EdgeInsets.only(
-                                                                    top: 15.w),
-                                                            alignment: Alignment
-                                                                .topCenter,
-                                                            decoration: BoxDecoration(
-                                                                color: Colors
-                                                                    .white
+                                            margin: EdgeInsets.only(top: 71.w),
+                                            child: Column(
+                                              children: [
+                                                InkWell(
+                                                  onTap: () {
+                                                    if (controller.rankInfo
+                                                            .ranks.length <
+                                                        2) return;
+                                                    Get.toNamed(
+                                                        RouteNames
+                                                            .picksPersonalCenter,
+                                                        arguments: {
+                                                          "teamId": controller
+                                                              .rankInfo
+                                                              .ranks[1]
+                                                              .teamId
+                                                        });
+                                                  },
+                                                  child: Stack(
+                                                    children: [
+                                                      Container(
+                                                        width: 81.w,
+                                                        height: 81.w,
+                                                        margin: EdgeInsets.only(
+                                                            bottom: 8.w),
+                                                        decoration: BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(41
+                                                                        .w),
+                                                            border: Border.all(
+                                                                color: AppColors
+                                                                    .c52473E
                                                                     .withOpacity(
-                                                                        .05),
-                                                                borderRadius: BorderRadius.only(
-                                                                    topRight: Radius
-                                                                        .circular(20
-                                                                            .w),
-                                                                    topLeft: Radius
-                                                                        .circular(
-                                                                            20.w))),
-                                                            child: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
+                                                                        .5),
+                                                                width: 8.w)),
+                                                        child: Container(
+                                                          padding:
+                                                              EdgeInsets.all(
+                                                                  8.w),
+                                                          child: controller
+                                                                      .rankInfo
+                                                                      .ranks
+                                                                      .length <
+                                                                  2
+                                                              ? const SizedBox
+                                                                  .shrink()
+                                                              : ImageWidget(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(30
+                                                                              .w),
+                                                                  url: Utils.getTeamUrl(controller
+                                                                      .rankInfo
+                                                                      .ranks[1]
+                                                                      .teamLogo
+                                                                      .toInt())),
+                                                        ),
+                                                      ),
+                                                      Positioned(
+                                                          bottom: 0,
+                                                          left: 0,
+                                                          right: 0,
+                                                          child: Center(
+                                                            child: Container(
+                                                              height: 26.w,
+                                                              width: 26.w,
+                                                              alignment:
+                                                                  Alignment
                                                                       .center,
-                                                              children: [
-                                                                Image.asset(
-                                                                  Assets
-                                                                      .uiIconMoneyWPng,
-                                                                  width: 14.w,
-                                                                  fit: BoxFit
-                                                                      .fitWidth,
-                                                                ),
-                                                                SizedBox(
-                                                                  width: 5.w,
-                                                                ),
-                                                                Text(
-                                                                  "+${Utils.formatMoney(controller.rankInfo.ranks[1].chip)}",
-                                                                  style: 14.w7(
-                                                                      color: AppColors
-                                                                          .cF2F2F2),
-                                                                )
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      )
-                                                    : const SizedBox.shrink(),
-                                          ),
-                                          6.hGap,
-                                          //第1名
-                                          Expanded(
-                                            child: Visibility(
-                                              visible: controller
-                                                  .rankInfo.ranks.isNotEmpty,
-                                              child: Column(
-                                                children: [
-                                                  Container(
-                                                    margin: EdgeInsets.only(
-                                                        top: 24.w),
-                                                    child: Column(
-                                                      children: [
-                                                        InkWell(
-                                                          onTap: () => Get.toNamed(
-                                                              RouteNames
-                                                                  .picksPersonalCenter,
-                                                              arguments: {
-                                                                "teamId":
-                                                                    controller
-                                                                        .rankInfo
-                                                                        .ranks[
-                                                                            0]
-                                                                        .teamId
-                                                              }),
-                                                          child: Stack(
-                                                            children: [
-                                                              Container(
-                                                                width: 97.w,
-                                                                height: 97.w,
-                                                                margin: EdgeInsets
-                                                                    .only(
-                                                                        bottom:
-                                                                            8.w),
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(49
-                                                                            .w),
-                                                                    border: Border.all(
-                                                                        color: AppColors
-                                                                            .c655344,
-                                                                        width: 8
-                                                                            .w)),
-                                                                child:
-                                                                    ClipRRect(
+                                                              decoration: BoxDecoration(
+                                                                  color: AppColors
+                                                                      .c423832,
                                                                   borderRadius:
                                                                       BorderRadius
                                                                           .circular(
-                                                                              50.w),
-                                                                  child:
-                                                                      Container(
-                                                                    padding: EdgeInsets
-                                                                        .all(8
-                                                                            .w),
-                                                                    child: ImageWidget(
-                                                                        borderRadius: BorderRadius.circular(30.w),
-                                                                        url: Utils.getTeamUrl(controller
-                                                                            .rankInfo
-                                                                            .ranks[0]
-                                                                            .teamId)),
-                                                                  ),
-                                                                ),
+                                                                              13.w)),
+                                                              child: Text(
+                                                                "2",
+                                                                style: TextStyle(
+                                                                    color: AppColors
+                                                                        .ccccccc,
+                                                                    fontSize:
+                                                                        18.sp,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
                                                               ),
-                                                              Positioned(
-                                                                  bottom: 0,
-                                                                  left: 0,
-                                                                  right: 0,
-                                                                  child: Center(
-                                                                    child:
-                                                                        Container(
-                                                                      height:
-                                                                          26.w,
-                                                                      width:
-                                                                          26.w,
-                                                                      alignment:
-                                                                          Alignment
-                                                                              .center,
-                                                                      decoration: BoxDecoration(
-                                                                          color: AppColors
-                                                                              .c423832,
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(13.w)),
-                                                                      child:
-                                                                          Text(
-                                                                        "1",
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                                AppColors.cFFFFFF,
-                                                                            fontSize: 18.sp,
-                                                                            fontWeight: FontWeight.bold),
-                                                                      ),
-                                                                    ),
-                                                                  ))
-                                                            ],
-                                                          ),
-                                                        ),
-                                                        Container(
-                                                          width: 50.w,
-                                                          margin:
-                                                              EdgeInsets.only(
-                                                                  top: 5.w),
-                                                          alignment:
-                                                              Alignment.center,
-                                                          child: Text(
-                                                            controller
-                                                                .rankInfo
-                                                                .ranks[0]
-                                                                .teamName,
-                                                            style: 12.w7(
-                                                                color: AppColors
-                                                                    .cB3B3B3,
-                                                                overflow:
-                                                                    TextOverflow
-                                                                        .ellipsis),
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          "win ${controller.rankInfo.ranks[0].getWin}",
-                                                          style: TextStyle(
-                                                              color: AppColors
-                                                                  .c666666,
-                                                              fontSize: 11.sp),
-                                                        ),
-                                                      ],
-                                                    ),
+                                                            ),
+                                                          ))
+                                                    ],
                                                   ),
-                                                  20.vGap,
-                                                  Container(
-                                                    width: 90.w,
-                                                    height: 96.w,
-                                                    padding: EdgeInsets.only(
-                                                        top: 15.w),
-                                                    alignment:
-                                                        Alignment.topCenter,
-                                                    decoration: BoxDecoration(
-                                                        color: Colors.white
-                                                            .withOpacity(.05),
-                                                        borderRadius:
-                                                            BorderRadius.only(
-                                                                topRight: Radius
-                                                                    .circular(
-                                                                        20.w),
-                                                                topLeft: Radius
-                                                                    .circular(
-                                                                        20.w))),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Image.asset(
-                                                          Assets
-                                                              .uiIconMoneyWPng,
-                                                          width: 14.w,
-                                                          fit: BoxFit.fitWidth,
-                                                        ),
-                                                        SizedBox(
-                                                          width: 5.w,
-                                                        ),
-                                                        Text(
-                                                          "+${Utils.formatMoney(controller.rankInfo.ranks[0].chip)}",
-                                                          style: 14.w7(
-                                                              color: AppColors
-                                                                  .cF2F2F2),
-                                                        )
-                                                      ],
-                                                    ),
+                                                ),
+                                                Container(
+                                                  width: 50.w,
+                                                  margin:
+                                                      EdgeInsets.only(top: 5.w),
+                                                  alignment: Alignment.center,
+                                                  child: Text(
+                                                    controller.rankInfo.ranks
+                                                                .length <
+                                                            2
+                                                        ? "--"
+                                                        : controller.rankInfo
+                                                            .ranks[1].teamName,
+                                                    style: 12.w7(
+                                                        color:
+                                                            AppColors.cB3B3B3,
+                                                        overflow: TextOverflow
+                                                            .ellipsis),
                                                   ),
-                                                ],
-                                              ),
+                                                ),
+                                                Text(
+                                                  "win ${controller.rankInfo.ranks.length < 2 ? "-" : controller.rankInfo.ranks[1].getWin}",
+                                                  style: TextStyle(
+                                                      color: AppColors.c666666,
+                                                      fontSize: 11.sp),
+                                                ),
+                                              ],
                                             ),
                                           ),
-                                          6.hGap,
-                                          //第3名
-                                          Expanded(
-                                            child:
-                                                controller.rankInfo.ranks
-                                                            .length >=
-                                                        3
-                                                    ? Column(
-                                                        children: [
-                                                          Container(
-                                                            margin:
-                                                                EdgeInsets.only(
-                                                                    top: 101.w),
-                                                            child: Column(
-                                                              children: [
-                                                                InkWell(
-                                                                  onTap: () => Get.toNamed(
-                                                                      RouteNames
-                                                                          .picksPersonalCenter,
-                                                                      arguments: {
-                                                                        "teamId": controller
-                                                                            .rankInfo
-                                                                            .ranks[2]
-                                                                            .teamId
-                                                                      }),
-                                                                  child: Stack(
-                                                                    children: [
-                                                                      Container(
-                                                                        width:
-                                                                            81.w,
-                                                                        height:
-                                                                            81.w,
-                                                                        margin: EdgeInsets.only(
-                                                                            bottom:
-                                                                                8.w),
-                                                                        decoration: BoxDecoration(
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(41.w),
-                                                                            border: Border.all(color: AppColors.c52473E.withOpacity(.3), width: 8.w)),
-                                                                        child:
-                                                                            Container(
-                                                                          padding:
-                                                                              EdgeInsets.all(8.w),
-                                                                          child:
-                                                                              ImageWidget(
-                                                                                borderRadius: BorderRadius.circular(30.w),
-                                                                                  url: Utils.getTeamUrl(controller.rankInfo.ranks[2].teamId)),
-                                                                        ),
-                                                                      ),
-                                                                      Positioned(
-                                                                          bottom:
-                                                                              0,
-                                                                          left:
-                                                                              0,
-                                                                          right:
-                                                                              0,
-                                                                          child:
-                                                                              Center(
-                                                                            child:
-                                                                                Container(
-                                                                              height: 26.w,
-                                                                              width: 26.w,
-                                                                              alignment: Alignment.center,
-                                                                              decoration: BoxDecoration(color: AppColors.c423832, borderRadius: BorderRadius.circular(13.w)),
-                                                                              child: Text(
-                                                                                "3",
-                                                                                style: TextStyle(color: AppColors.c666666, fontSize: 18.sp, fontWeight: FontWeight.bold),
-                                                                              ),
-                                                                            ),
-                                                                          ))
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                                Container(
-                                                                  width: 50.w,
-                                                                  margin: EdgeInsets
-                                                                      .only(
-                                                                          top: 5
-                                                                              .w),
-                                                                  alignment:
-                                                                      Alignment
-                                                                          .center,
-                                                                  child: Text(
-                                                                    controller
+                                          20.vGap,
+                                          Container(
+                                            width: 90.w,
+                                            height: 78.w,
+                                            padding: EdgeInsets.only(top: 15.w),
+                                            alignment: Alignment.topCenter,
+                                            decoration: BoxDecoration(
+                                                color: Colors.white
+                                                    .withOpacity(.05),
+                                                borderRadius: BorderRadius.only(
+                                                    topRight:
+                                                        Radius.circular(20.w),
+                                                    topLeft:
+                                                        Radius.circular(20.w))),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Image.asset(
+                                                  Assets.uiIconMoneyWPng,
+                                                  width: 14.w,
+                                                  fit: BoxFit.fitWidth,
+                                                ),
+                                                SizedBox(
+                                                  width: 5.w,
+                                                ),
+                                                Text(
+                                                  controller.rankInfo.ranks
+                                                              .length <
+                                                          2
+                                                      ? "No Data"
+                                                      : "+${Utils.formatMoney(controller.rankInfo.ranks[1].chip)}",
+                                                  style: 14.w7(
+                                                      color: AppColors.cF2F2F2),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    6.hGap,
+                                    //第1名
+                                    Expanded(
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            margin: EdgeInsets.only(top: 24.w),
+                                            child: Column(
+                                              children: [
+                                                InkWell(
+                                                  onTap: () {
+                                                    if (controller.rankInfo
+                                                        .ranks.isEmpty) return;
+                                                    Get.toNamed(
+                                                        RouteNames
+                                                            .picksPersonalCenter,
+                                                        arguments: {
+                                                          "teamId": controller
+                                                              .rankInfo
+                                                              .ranks[0]
+                                                              .teamId
+                                                        });
+                                                  },
+                                                  child: Stack(
+                                                    children: [
+                                                      Container(
+                                                        width: 97.w,
+                                                        height: 97.w,
+                                                        margin: EdgeInsets.only(
+                                                            bottom: 8.w),
+                                                        decoration: BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        49.w),
+                                                            border: Border.all(
+                                                                color: AppColors
+                                                                    .c655344,
+                                                                width: 8.w)),
+                                                        child: ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      50.w),
+                                                          child: Container(
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                    8.w),
+                                                            child: controller
+                                                                    .rankInfo
+                                                                    .ranks
+                                                                    .isEmpty
+                                                                ? const SizedBox
+                                                                    .shrink()
+                                                                : ImageWidget(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(30
+                                                                            .w),
+                                                                    url: Utils.getTeamUrl(controller
                                                                         .rankInfo
                                                                         .ranks[
-                                                                            2]
-                                                                        .teamName,
-                                                                    style: 12.w7(
-                                                                        color: AppColors
-                                                                            .cB3B3B3,
-                                                                        overflow:
-                                                                            TextOverflow.ellipsis),
-                                                                  ),
-                                                                ),
-                                                                Text(
-                                                                  "win ${controller.rankInfo.ranks[2].getWin}",
-                                                                  style: TextStyle(
-                                                                      color: AppColors
-                                                                          .c666666,
-                                                                      fontSize:
-                                                                          11.sp),
-                                                                ),
-                                                              ],
-                                                            ),
+                                                                            0]
+                                                                        .teamLogo
+                                                                        .toInt())),
                                                           ),
-                                                          20.vGap,
-                                                          Container(
-                                                            width: 90.w,
-                                                            height: 63.w,
-                                                            padding:
-                                                                EdgeInsets.only(
-                                                                    top: 15.w),
-                                                            alignment: Alignment
-                                                                .topCenter,
-                                                            decoration: BoxDecoration(
-                                                                color: Colors
-                                                                    .white
-                                                                    .withOpacity(
-                                                                        .05),
-                                                                borderRadius: BorderRadius.only(
-                                                                    topRight: Radius
-                                                                        .circular(20
-                                                                            .w),
-                                                                    topLeft: Radius
-                                                                        .circular(
-                                                                            20.w))),
-                                                            child: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
+                                                        ),
+                                                      ),
+                                                      Positioned(
+                                                          bottom: 0,
+                                                          left: 0,
+                                                          right: 0,
+                                                          child: Center(
+                                                            child: Container(
+                                                              height: 26.w,
+                                                              width: 26.w,
+                                                              alignment:
+                                                                  Alignment
                                                                       .center,
-                                                              children: [
-                                                                Image.asset(
-                                                                  Assets
-                                                                      .uiIconMoneyWPng,
-                                                                  width: 14.w,
-                                                                  fit: BoxFit
-                                                                      .fitWidth,
-                                                                ),
-                                                                SizedBox(
-                                                                  width: 5.w,
-                                                                ),
-                                                                Text(
-                                                                  "+${Utils.formatMoney(controller.rankInfo.ranks[2].chip)}",
-                                                                  style: 14.w7(
-                                                                      color: AppColors
-                                                                          .cF2F2F2),
-                                                                )
-                                                              ],
+                                                              decoration: BoxDecoration(
+                                                                  color: AppColors
+                                                                      .c423832,
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              13.w)),
+                                                              child: Text(
+                                                                "1",
+                                                                style: TextStyle(
+                                                                    color: AppColors
+                                                                        .cFFFFFF,
+                                                                    fontSize:
+                                                                        18.sp,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
                                                             ),
-                                                          ),
-                                                        ],
-                                                      )
-                                                    : const SizedBox.shrink(),
+                                                          ))
+                                                    ],
+                                                  ),
+                                                ),
+                                                Container(
+                                                  width: 50.w,
+                                                  margin:
+                                                      EdgeInsets.only(top: 5.w),
+                                                  alignment: Alignment.center,
+                                                  child: Text(
+                                                    controller.rankInfo.ranks
+                                                            .isEmpty
+                                                        ? "--"
+                                                        : controller.rankInfo
+                                                            .ranks[0].teamName,
+                                                    style: 12.w7(
+                                                        color:
+                                                            AppColors.cB3B3B3,
+                                                        overflow: TextOverflow
+                                                            .ellipsis),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  "win ${controller.rankInfo.ranks.isEmpty ? "-" : controller.rankInfo.ranks[0].getWin}",
+                                                  style: TextStyle(
+                                                      color: AppColors.c666666,
+                                                      fontSize: 11.sp),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          20.vGap,
+                                          Container(
+                                            width: 90.w,
+                                            height: 96.w,
+                                            padding: EdgeInsets.only(top: 15.w),
+                                            alignment: Alignment.topCenter,
+                                            decoration: BoxDecoration(
+                                                color: Colors.white
+                                                    .withOpacity(.05),
+                                                borderRadius: BorderRadius.only(
+                                                    topRight:
+                                                        Radius.circular(20.w),
+                                                    topLeft:
+                                                        Radius.circular(20.w))),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Image.asset(
+                                                  Assets.uiIconMoneyWPng,
+                                                  width: 14.w,
+                                                  fit: BoxFit.fitWidth,
+                                                ),
+                                                SizedBox(
+                                                  width: 5.w,
+                                                ),
+                                                Text(
+                                                  controller.rankInfo.ranks
+                                                          .isEmpty
+                                                      ? "No Data"
+                                                      : "+${Utils.formatMoney(controller.rankInfo.ranks[0].chip)}",
+                                                  style: 14.w7(
+                                                      color: AppColors.cF2F2F2),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    6.hGap,
+                                    //第3名
+                                    Expanded(
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            margin: EdgeInsets.only(top: 101.w),
+                                            child: Column(
+                                              children: [
+                                                InkWell(
+                                                  onTap: () {
+                                                    if (controller.rankInfo
+                                                            .ranks.length <
+                                                        3) return;
+                                                    Get.toNamed(
+                                                        RouteNames
+                                                            .picksPersonalCenter,
+                                                        arguments: {
+                                                          "teamId": controller
+                                                              .rankInfo
+                                                              .ranks[2]
+                                                              .teamId
+                                                        });
+                                                  },
+                                                  child: Stack(
+                                                    children: [
+                                                      Container(
+                                                        width: 81.w,
+                                                        height: 81.w,
+                                                        margin: EdgeInsets.only(
+                                                            bottom: 8.w),
+                                                        decoration: BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(41
+                                                                        .w),
+                                                            border: Border.all(
+                                                                color: AppColors
+                                                                    .c52473E
+                                                                    .withOpacity(
+                                                                        .3),
+                                                                width: 8.w)),
+                                                        child: Container(
+                                                          padding:
+                                                              EdgeInsets.all(
+                                                                  8.w),
+                                                          child: controller
+                                                                      .rankInfo
+                                                                      .ranks
+                                                                      .length <
+                                                                  3
+                                                              ? const SizedBox
+                                                                  .shrink()
+                                                              : ImageWidget(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(30
+                                                                              .w),
+                                                                  url: Utils.getTeamUrl(controller
+                                                                      .rankInfo
+                                                                      .ranks[2]
+                                                                      .teamLogo
+                                                                      .toInt())),
+                                                        ),
+                                                      ),
+                                                      Positioned(
+                                                          bottom: 0,
+                                                          left: 0,
+                                                          right: 0,
+                                                          child: Center(
+                                                            child: Container(
+                                                              height: 26.w,
+                                                              width: 26.w,
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              decoration: BoxDecoration(
+                                                                  color: AppColors
+                                                                      .c423832,
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              13.w)),
+                                                              child: Text(
+                                                                "3",
+                                                                style: TextStyle(
+                                                                    color: AppColors
+                                                                        .c666666,
+                                                                    fontSize:
+                                                                        18.sp,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                            ),
+                                                          ))
+                                                    ],
+                                                  ),
+                                                ),
+                                                Container(
+                                                  width: 50.w,
+                                                  margin:
+                                                      EdgeInsets.only(top: 5.w),
+                                                  alignment: Alignment.center,
+                                                  child: Text(
+                                                    controller.rankInfo.ranks
+                                                                .length <
+                                                            3
+                                                        ? "--"
+                                                        : controller.rankInfo
+                                                            .ranks[2].teamName,
+                                                    style: 12.w7(
+                                                        color:
+                                                            AppColors.cB3B3B3,
+                                                        overflow: TextOverflow
+                                                            .ellipsis),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  "win ${controller.rankInfo.ranks.length < 3 ? "-" : controller.rankInfo.ranks[2].getWin}",
+                                                  style: TextStyle(
+                                                      color: AppColors.c666666,
+                                                      fontSize: 11.sp),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          20.vGap,
+                                          Container(
+                                            width: 90.w,
+                                            height: 63.w,
+                                            padding: EdgeInsets.only(top: 15.w),
+                                            alignment: Alignment.topCenter,
+                                            decoration: BoxDecoration(
+                                                color: Colors.white
+                                                    .withOpacity(.05),
+                                                borderRadius: BorderRadius.only(
+                                                    topRight:
+                                                        Radius.circular(20.w),
+                                                    topLeft:
+                                                        Radius.circular(20.w))),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Image.asset(
+                                                  Assets.uiIconMoneyWPng,
+                                                  width: 14.w,
+                                                  fit: BoxFit.fitWidth,
+                                                ),
+                                                SizedBox(
+                                                  width: 5.w,
+                                                ),
+                                                Text(
+                                                  controller.rankInfo.ranks
+                                                              .length <
+                                                          3
+                                                      ? "No data"
+                                                      : "+${Utils.formatMoney(controller.rankInfo.ranks[2].chip)}",
+                                                  style: 14.w7(
+                                                      color: AppColors.cF2F2F2),
+                                                )
+                                              ],
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -601,25 +609,27 @@ class _RankPageState extends State<RankPage>
                                   ],
                                 ),
                               ),
-                              Container(
-                                constraints: BoxConstraints(minHeight: 70.w),
-                                width: double.infinity,
-                                margin: EdgeInsets.only(
-                                    left: 16.w, right: 16.w, bottom: 10.w),
-                                decoration: BoxDecoration(
-                                    color: AppColors.cE6E6E6,
-                                    borderRadius: BorderRadius.circular(20.w)),
-                                child: Column(
-                                  children: List.generate(
-                                          max(controller.rankInfo.ranks.length,10),
-                                          (index) {
-                                          return _buildItem(index);
-                                        }),
-                                ),
-                              ),
-                              90.vGap,
                             ],
                           ),
+                        ),
+                        Container(
+                          constraints: BoxConstraints(minHeight: 70.w),
+                          width: double.infinity,
+                          margin: EdgeInsets.only(
+                              left: 16.w, right: 16.w, bottom: 10.w),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20.w)),
+                          child: Column(
+                            children: List.generate(
+                                max(controller.rankInfo.ranks.length, 7),
+                                (index) {
+                              return _buildItem(index);
+                            }),
+                          ),
+                        ),
+                        90.vGap,
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -664,8 +674,9 @@ class _RankPageState extends State<RankPage>
                                             }),
                                     child: ImageWidget(
                                       borderRadius: BorderRadius.circular(30.w),
-                                      url: Utils.getTeamUrl(
-                                          controller.rankInfo.myRank.teamId),
+                                      url: Utils.getTeamUrl(controller
+                                          .rankInfo.myRank.teamLogo
+                                          ?.toInt()),
                                       width: 48.w,
                                     )),
                                 Container(
@@ -717,13 +728,14 @@ class _RankPageState extends State<RankPage>
   }
 
   Widget _buildItem(int i) {
-    var index = i + 3;
-    if(index > (controller.rankInfo.ranks.length-1)){
+    int index = i + 3;
+    if (index > (controller.rankInfo.ranks.length - 1)) {
       return Container(
         height: 68.w,
         padding: EdgeInsets.only(left: 15.w, right: 22.w),
         decoration: BoxDecoration(
-            color: AppColors.cF2F2F2, borderRadius: BorderRadius.circular(20.w)),
+            color: AppColors.cF2F2F2,
+            borderRadius: BorderRadius.circular(20.w)),
         margin: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 10.w),
         alignment: Alignment.center,
         child: Row(
@@ -733,11 +745,14 @@ class _RankPageState extends State<RankPage>
               width: 30.w,
               alignment: Alignment.center,
               child: Text(
-                "$index",
+                "${index + 1}",
                 style: 19.w7(color: AppColors.c666666),
               ),
             ),
-            Text("NO data",style: 18.w7(color: AppColors.cB3B3B3.withOpacity(0.5)),)
+            Text(
+              "NO data",
+              style: 18.w7(color: AppColors.cB3B3B3.withOpacity(0.5)),
+            )
           ],
         ),
       );
@@ -755,7 +770,7 @@ class _RankPageState extends State<RankPage>
             width: 30.w,
             alignment: Alignment.center,
             child: Text(
-              "$index",
+              "${index + 1}",
               style: 19.w7(color: AppColors.c666666),
             ),
           ),
@@ -769,7 +784,8 @@ class _RankPageState extends State<RankPage>
                       }),
               child: ImageWidget(
                 borderRadius: BorderRadius.circular(30.w),
-                url: Utils.getTeamUrl(controller.rankInfo.ranks[index].teamId),
+                url: Utils.getTeamUrl(
+                    controller.rankInfo.ranks[index].teamLogo.toInt()),
                 width: 48.w,
               )),
           SizedBox(

@@ -71,10 +71,12 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
     await PicksApi.upStarTeamPlayer(uuidPlayerInfo!.uuid!, materialScienceUUID)
         .then((result) {
       if (result.success) {
-        Get.dialog(UpStarSuccess(response: result,));
+        Get.dialog(UpStarSuccess(
+          response: result,
+        ));
         reloadData();
         Get.find<HomeController>().refreshMoneyCoinWidget();
-        if(upStarSuccessCallBack != null){
+        if (upStarSuccessCallBack != null) {
           upStarSuccessCallBack!.call();
         }
       } else {
@@ -162,13 +164,13 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
               .day,
           barRods: [
             BarChartRodData(
-                // fromY: Random().nextInt(5).toDouble(),
-                toY: toY,
-                borderRadius: BorderRadius.all(Radius.circular(5.w)),
-                width: 10.w,
-                color: Utils.getChartColor(toY),
-                // gradient: _barsGradient,
-                )
+              // fromY: Random().nextInt(5).toDouble(),
+              toY: toY,
+              borderRadius: BorderRadius.all(Radius.circular(5.w)),
+              width: 10.w,
+              color: Utils.getChartColor(toY),
+              // gradient: _barsGradient,
+            )
           ],
           // showingTooltipIndicators: [0],
         ));
@@ -176,32 +178,46 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
       minPriceValue =
           minPriceValue == maxPriceValue ? maxPriceValue / 5 : minPriceValue;
       dataSource = <ChartSampleData>[
-        ChartSampleData(x: 'PTS', y: 55,yValue: 30),
-        ChartSampleData(x: '3PT', y: 55,yValue: 40),
-        ChartSampleData(x: 'AST', y: 55,yValue: 35),
-        ChartSampleData(x: 'REB', y: 55,yValue: 45),
-        ChartSampleData(x: 'BLK', y: 55,yValue: 30),
-        ChartSampleData(x: 'STL', y: 55,yValue: 40),
+        ChartSampleData(x: 'PTS', y: 55, yValue: 30),
+        ChartSampleData(x: '3PT', y: 55, yValue: 40),
+        ChartSampleData(x: 'AST', y: 55, yValue: 35),
+        ChartSampleData(x: 'REB', y: 55, yValue: 45),
+        ChartSampleData(x: 'BLK', y: 55, yValue: 30),
+        ChartSampleData(x: 'STL', y: 55, yValue: 40),
       ];
 
       var maxValue = avgList.getMaxValue();
-      var rate = (maxValue == 0)? 1:(maxValue / 55);
-      maxValue = maxValue/rate;
+      var rate = (maxValue == 0) ? 1 : (maxValue / 55);
+      maxValue = maxValue / rate;
       dataSource = <ChartSampleData>[
         ChartSampleData(
-            x: 'PTS', y: maxValue, yValue: avgList.pts/rate),
+            x: 'PTS',
+            y: maxValue.isNaN ? 0 : maxValue,
+            yValue: (avgList.pts / rate).isNaN ? 0 : avgList.pts / rate),
         ChartSampleData(
-            x: '3PT', y: maxValue, yValue: avgList.getThreePT()/rate),
+            x: '3PT',
+            y: maxValue.isNaN ? 0 : maxValue,
+            yValue: (avgList.getThreePT() / rate).isNaN
+                ? 0
+                : avgList.getThreePT() / rate),
         ChartSampleData(
-            x: 'AST', y: maxValue, yValue: avgList.ast/rate ),
+            x: 'AST',
+            y: maxValue.isNaN ? 0 : maxValue,
+            yValue: (avgList.ast / rate).isNaN ? 0 : avgList.ast / rate),
         ChartSampleData(
             x: 'REB',
-            y: maxValue,
-            yValue: avgList.getValue('reb')/rate),
+            y: maxValue.isNaN ? 0 : maxValue,
+            yValue: (avgList.getValue('reb') / rate).isNaN
+                ? 0
+                : avgList.getValue('reb') / rate),
         ChartSampleData(
-            x: 'BLK', y: maxValue, yValue: avgList.blk/rate ),
+            x: 'BLK',
+            y: maxValue.isNaN ? 0 : maxValue,
+            yValue: (avgList.blk / rate).isNaN ? 0 : avgList.blk / rate),
         ChartSampleData(
-            x: 'STL', y: maxValue, yValue: avgList.stl/rate),
+            x: 'STL',
+            y: maxValue.isNaN ? 0 : maxValue,
+            yValue: (avgList.stl / rate).isNaN ? 0 : avgList.stl / rate),
       ];
       if (cacheUuid != null) {
         uuidPlayerInfo = result[4] as TeamPlayerInfoEntity;
@@ -225,8 +241,9 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
             continue;
           }
           GradeUp gradeUp = GradeUp(
-              teamPlayer: player,
-              baseInfo: firstWhere,);
+            teamPlayer: player,
+            baseInfo: firstWhere,
+          );
           teamPlayerList.add(gradeUp);
         }
         sort(0);
@@ -510,12 +527,10 @@ class GradeUp {
   bool choice;
 
   GradeUp(
-      {required this.teamPlayer,
-      required this.baseInfo,
-      this.choice = false});
+      {required this.teamPlayer, required this.baseInfo, this.choice = false});
 
   double getUPPercent() {
-    return teamPlayer.probability/100;
+    return teamPlayer.probability / 100;
   }
 
   double getCost() {

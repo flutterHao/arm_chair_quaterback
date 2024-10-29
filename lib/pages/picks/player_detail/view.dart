@@ -35,11 +35,11 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
 
   @override
   Widget build(BuildContext context) {
-    PlayerDetailPageArguments args = arguments ?? Get.arguments ?? PlayerDetailPageArguments(2115);
+
+    PlayerDetailPageArguments args = arguments ?? Get.arguments;
     return HorizontalDragBackWidget(
       child: GetBuilder<PlayerDetailController>(
         init: PlayerDetailController(args),
-        //todo PlayerDetailPageArguments测试数据，需删除
         id: PlayerDetailController.idMain,
         builder: (_) {
           return BlackAppWidget(

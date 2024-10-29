@@ -245,224 +245,227 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                                                         16.w)),
                                             child: Row(
                                               children: [
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment
-                                                          .start,
-                                                  children: [
-                                                    Text(
-                                                      "Accumulated income",
-                                                      style: 10.w4(
-                                                          color: AppColors
-                                                              .cB3B3B3,
-                                                          height: 1),
-                                                    ),
-                                                    4.vGap,
-                                                    Row(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          Utils.formatMoney(
-                                                              _getTodayCost()),
-                                                          style: 19.w7(
-                                                              color: AppColors
-                                                                  .cD9D9D9,
-                                                              height: 1),
-                                                        ),
-                                                        8.hGap,
-                                                        if (_getPercent() !=
-                                                            0)
-                                                          Row(
-                                                            children: [
-                                                              IconWidget(
-                                                                iconWidth:
-                                                                    8.w,
-                                                                icon: Assets
-                                                                    .uiTriangleGPng,
-                                                                iconColor: _getTodayCost() >
-                                                                        _getLastDayCost()
-                                                                    ? AppColors
-                                                                        .c23E8A9
-                                                                    : AppColors
-                                                                        .cE72646,
-                                                                rotateAngle:
-                                                                    _getTodayCost() >
-                                                                            _getLastDayCost()
-                                                                        ? 0
-                                                                        : 180,
-                                                              ),
-                                                              Text(
-                                                                "${_getPercent().toStringAsFixed(1)}%",
-                                                                style: 10.w4(
-                                                                    color: _getTodayCost() >
-                                                                            _getLastDayCost()
-                                                                        ? AppColors
-                                                                            .c23E8A9
-                                                                        : AppColors
-                                                                            .cE72646,
-                                                                    height:
-                                                                        1),
-                                                              )
-                                                            ],
-                                                          )
-                                                      ],
-                                                    ),
-                                                    11.vGap,
-                                                    Expanded(
-                                                      child: Container(
-                                                        // height: 90.w,
-                                                        width: 175.w,
-                                                        decoration: BoxDecoration(
+                                                Expanded(
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        "Accumulated income",
+                                                        style: 10.w4(
                                                             color: AppColors
-                                                                .c1A1A1A,
+                                                                .cB3B3B3,
+                                                            height: 1),
+                                                      ),
+                                                      4.vGap,
+                                                      Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            Utils.formatMoney(
+                                                                _getTodayCost()),
+                                                            style: 19.w7(
+                                                                color: AppColors
+                                                                    .cD9D9D9,
+                                                                height: 1),
+                                                          ),
+                                                          8.hGap,
+                                                          if (_getPercent() !=
+                                                              0)
+                                                            Row(
+                                                              children: [
+                                                                IconWidget(
+                                                                  iconWidth:
+                                                                      8.w,
+                                                                  icon: Assets
+                                                                      .uiTriangleGPng,
+                                                                  iconColor: _getTodayCost() >
+                                                                          _getLastDayCost()
+                                                                      ? AppColors
+                                                                          .c23E8A9
+                                                                      : AppColors
+                                                                          .cE72646,
+                                                                  rotateAngle:
+                                                                      _getTodayCost() >
+                                                                              _getLastDayCost()
+                                                                          ? 0
+                                                                          : 180,
+                                                                ),
+                                                                Text(
+                                                                  "${_getPercent().toStringAsFixed(1)}%",
+                                                                  style: 10.w4(
+                                                                      color: _getTodayCost() >
+                                                                              _getLastDayCost()
+                                                                          ? AppColors
+                                                                              .c23E8A9
+                                                                          : AppColors
+                                                                              .cE72646,
+                                                                      height:
+                                                                          1),
+                                                                )
+                                                              ],
+                                                            )
+                                                        ],
+                                                      ),
+                                                      11.vGap,
+                                                      Expanded(
+                                                        child: Container(
+                                                          constraints: BoxConstraints(
+                                                            minWidth: 175.w,
+                                                          ),
+                                                          decoration: BoxDecoration(
+                                                              color: AppColors
+                                                                  .c1A1A1A,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8.w)),
+                                                          child: ClipRRect(
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
-                                                                        8.w)),
-                                                        child: ClipRRect(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      8.w),
-                                                          child: Stack(
-                                                            children: [
-                                                              SfCartesianChart(
-                                                                margin:
-                                                                    EdgeInsets
-                                                                        .zero,
-                                                                plotAreaBorderWidth:
-                                                                    0,
-                                                                primaryXAxis:
-                                                                    NumericAxis(
-                                                                  labelStyle:
-                                                                      const TextStyle(
-                                                                          color:
-                                                                              AppColors.cTransparent),
-                                                                  axisLine:
-                                                                      const AxisLine(
-                                                                          width:
-                                                                              0),
-                                                                  majorTickLines:
-                                                                      const MajorTickLines(
-                                                                          width:
-                                                                              0),
-                                                                  // 隐藏 X 轴的刻度线
-                                                                  labelPosition:
-                                                                      ChartDataLabelPosition
-                                                                          .inside,
-                                                                  tickPosition:
-                                                                      TickPosition
-                                                                          .inside,
-                                                                  plotBands: <PlotBand>[
-                                                                    for (var data
-                                                                        in _getLineData())
-                                                                      PlotBand(
-                                                                        start:
-                                                                            data.x,
-                                                                        // 在每个数据点的 x 位置绘制垂直线
-                                                                        end: data
-                                                                            .x,
-                                                                        borderColor:
-                                                                            AppColors.c262626,
-                                                                        // 垂直线的颜色
-                                                                        borderWidth:
-                                                                            1, // 垂直线的宽度
-                                                                      ),
-                                                                  ],
-                                                                ),
-                                                                // const NumericAxis(
-                                                                //   isVisible: false,
-                                                                //   // axisLine: AxisLine(
-                                                                //   //   color: Colors.red
-                                                                //   // ),
-                                                                //   majorGridLines: MajorGridLines(width: 1),
-                                                                // ),
-                                                                primaryYAxis:
-                                                                    const NumericAxis(
-                                                                  isVisible:
-                                                                      false,
-                                                                ),
-                                                                series:
-                                                                    _getAreaZoneSeries(),
-                                                              ),
-                                                              SfCartesianChart(
-                                                                margin:
-                                                                    EdgeInsets
-                                                                        .zero,
-                                                                plotAreaBorderWidth:
-                                                                    0,
-                                                                primaryXAxis:
-                                                                    NumericAxis(
-                                                                  labelStyle:
-                                                                      const TextStyle(
-                                                                          color:
-                                                                              AppColors.cTransparent),
-                                                                  axisLine:
-                                                                      const AxisLine(
-                                                                          width:
-                                                                              0),
-                                                                  majorTickLines:
-                                                                      const MajorTickLines(
-                                                                          width:
-                                                                              0),
-                                                                  // 隐藏 X 轴的刻度线
-                                                                  labelPosition:
-                                                                      ChartDataLabelPosition
-                                                                          .inside,
-                                                                  tickPosition:
-                                                                      TickPosition
-                                                                          .inside,
-                                                                  plotBands: <PlotBand>[
-                                                                    for (var data
-                                                                        in _getLineData())
-                                                                      PlotBand(
-                                                                        start:
-                                                                            data.x,
-                                                                        // 在每个数据点的 x 位置绘制垂直线
-                                                                        end: data
-                                                                            .x,
-                                                                        borderColor:
-                                                                            AppColors.c262626,
-                                                                        // 垂直线的颜色
-                                                                        borderWidth:
-                                                                            1, // 垂直线的宽度
-                                                                      ),
-                                                                  ],
-                                                                ),
-                                                                primaryYAxis:
-                                                                    const NumericAxis(
-                                                                  isVisible:
-                                                                      false,
-                                                                ),
-                                                                series: [
-                                                                  LineSeries<
-                                                                          ChartSampleData,
-                                                                          num>(
-                                                                      animationDuration:
-                                                                          0,
-                                                                      dataSource:
-                                                                          _getLineData(),
-                                                                      xValueMapper: (ChartSampleData sales, _) =>
-                                                                          sales
+                                                                        8.w),
+                                                            child: Stack(
+                                                              children: [
+                                                                SfCartesianChart(
+                                                                  margin:
+                                                                      EdgeInsets
+                                                                          .zero,
+                                                                  plotAreaBorderWidth:
+                                                                      0,
+                                                                  primaryXAxis:
+                                                                      NumericAxis(
+                                                                    labelStyle:
+                                                                        const TextStyle(
+                                                                            color:
+                                                                                AppColors.cTransparent),
+                                                                    axisLine:
+                                                                        const AxisLine(
+                                                                            width:
+                                                                                0),
+                                                                    majorTickLines:
+                                                                        const MajorTickLines(
+                                                                            width:
+                                                                                0),
+                                                                    // 隐藏 X 轴的刻度线
+                                                                    labelPosition:
+                                                                        ChartDataLabelPosition
+                                                                            .inside,
+                                                                    tickPosition:
+                                                                        TickPosition
+                                                                            .inside,
+                                                                    plotBands: <PlotBand>[
+                                                                      for (var data
+                                                                          in _getLineData())
+                                                                        PlotBand(
+                                                                          start:
+                                                                              data.x,
+                                                                          // 在每个数据点的 x 位置绘制垂直线
+                                                                          end: data
                                                                               .x,
-                                                                      yValueMapper: (ChartSampleData sales,
-                                                                              _) =>
-                                                                          sales
-                                                                              .y,
-                                                                      name:
-                                                                          'Germany',
-                                                                      markerSettings:
-                                                                          const MarkerSettings(isVisible: false))
-                                                                ],
-                                                              )
-                                                            ],
+                                                                          borderColor:
+                                                                              AppColors.c262626,
+                                                                          // 垂直线的颜色
+                                                                          borderWidth:
+                                                                              1, // 垂直线的宽度
+                                                                        ),
+                                                                    ],
+                                                                  ),
+                                                                  // const NumericAxis(
+                                                                  //   isVisible: false,
+                                                                  //   // axisLine: AxisLine(
+                                                                  //   //   color: Colors.red
+                                                                  //   // ),
+                                                                  //   majorGridLines: MajorGridLines(width: 1),
+                                                                  // ),
+                                                                  primaryYAxis:
+                                                                      const NumericAxis(
+                                                                    isVisible:
+                                                                        false,
+                                                                  ),
+                                                                  series:
+                                                                      _getAreaZoneSeries(),
+                                                                ),
+                                                                SfCartesianChart(
+                                                                  margin:
+                                                                      EdgeInsets
+                                                                          .zero,
+                                                                  plotAreaBorderWidth:
+                                                                      0,
+                                                                  primaryXAxis:
+                                                                      NumericAxis(
+                                                                    labelStyle:
+                                                                        const TextStyle(
+                                                                            color:
+                                                                                AppColors.cTransparent),
+                                                                    axisLine:
+                                                                        const AxisLine(
+                                                                            width:
+                                                                                0),
+                                                                    majorTickLines:
+                                                                        const MajorTickLines(
+                                                                            width:
+                                                                                0),
+                                                                    // 隐藏 X 轴的刻度线
+                                                                    labelPosition:
+                                                                        ChartDataLabelPosition
+                                                                            .inside,
+                                                                    tickPosition:
+                                                                        TickPosition
+                                                                            .inside,
+                                                                    plotBands: <PlotBand>[
+                                                                      for (var data
+                                                                          in _getLineData())
+                                                                        PlotBand(
+                                                                          start:
+                                                                              data.x,
+                                                                          // 在每个数据点的 x 位置绘制垂直线
+                                                                          end: data
+                                                                              .x,
+                                                                          borderColor:
+                                                                              AppColors.c262626,
+                                                                          // 垂直线的颜色
+                                                                          borderWidth:
+                                                                              1, // 垂直线的宽度
+                                                                        ),
+                                                                    ],
+                                                                  ),
+                                                                  primaryYAxis:
+                                                                      const NumericAxis(
+                                                                    isVisible:
+                                                                        false,
+                                                                  ),
+                                                                  series: [
+                                                                    LineSeries<
+                                                                            ChartSampleData,
+                                                                            num>(
+                                                                        animationDuration:
+                                                                            0,
+                                                                        dataSource:
+                                                                            _getLineData(),
+                                                                        xValueMapper: (ChartSampleData sales, _) =>
+                                                                            sales
+                                                                                .x,
+                                                                        yValueMapper: (ChartSampleData sales,
+                                                                                _) =>
+                                                                            sales
+                                                                                .y,
+                                                                        name:
+                                                                            'Germany',
+                                                                        markerSettings:
+                                                                            const MarkerSettings(isVisible: false))
+                                                                  ],
+                                                                )
+                                                              ],
+                                                            ),
                                                           ),
                                                         ),
                                                       ),
-                                                    ),
-                                                  ],
+                                                    ],
+                                                  ),
                                                 ),
                                                 20.hGap,
                                                 Expanded(
@@ -681,47 +684,33 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                                       height: 26.w,
                                       child: Builder(builder: (context) {
                                         var trend = trendPlayer.trend;
-                                        var basic = basicMarketPrice;
-                                        var data = trend.isEmpty
-                                            ? <BarChartGroupData>[]
-                                            : List.generate(trend.length - 1,
-                                                (index) {
-                                                var pre = trend[index + 1]
-                                                    .playerMarketPrice
-                                                    .toDouble();
-                                                var current = trend[index]
-                                                    .playerMarketPrice
-                                                    .toDouble();
-                                                return BarChartGroupData(
-                                                  x: trend.length - 1 - 1 - index,
-                                                  barRods: [
-                                                    BarChartRodData(
-                                                        fromY: pre - basic,
-                                                        toY: current - basic,
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    1.w)),
-                                                        width: 2.w,
-                                                        color:
-                                                            Utils.getChartColor(
-                                                                current - pre)
-                                                        // gradient: _barsGradient,
-                                                        )
-                                                  ],
-                                                  // showingTooltipIndicators: [0],
-                                                );
-                                              });
-                                        data = data.reversed.toList();
-                                        return BarChart(
-                                          BarChartData(
-                                            barTouchData: controller.barTouchData,
+                                        var data = List.generate(trend.length, (index){
+                                          return FlSpot(index.toDouble(), trend[index].playerMarketPrice.toDouble());
+                                        });
+                                        //
+                                        return LineChart(
+                                          LineChartData(
+                                            lineTouchData: const LineTouchData(enabled: false),
                                             titlesData: controller.titlesData,
                                             borderData: controller.borderData,
-                                            barGroups: data,
+                                            lineBarsData: [
+                                              LineChartBarData(
+                                                spots: data,
+                                               color: AppColors.cFF7954,
+                                                dotData: const FlDotData(
+                                                  show: false
+                                                ),
+                                                barWidth: 2,
+                                                belowBarData: BarAreaData(
+                                                  show: true,
+                                                  gradient: LinearGradient(colors: [
+                                                    AppColors.cFF7954.withOpacity(0.3),
+                                                    AppColors.cFF7954.withOpacity(0.1)
+                                                  ])
+                                                )
+                                              )
+                                            ],
                                             gridData: controller.gridData,
-                                            alignment:
-                                                BarChartAlignment.spaceAround,
                                           ),
                                         );
                                       }),
