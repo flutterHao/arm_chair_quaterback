@@ -15,6 +15,7 @@ import 'package:arm_chair_quaterback/common/enums/rank_type.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/utils/param_utils.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -208,6 +209,7 @@ class PicksIndexController extends GetxController {
       guessWinningStreak = guessGameInfo.guessWinningStreak;
       var nbaPlayers = results[1] as NbaPlayerInfosEntity;
       newsDefine = results[2];
+      Map<String, List<PicksPlayerV2>> temp = {};
       List<NbaTeamEntity> teamList = results[3] as List<NbaTeamEntity>;
       for (int i = 0; i < res.keys.length; i++) {
         List<PicksPlayerV2> item = [];
@@ -233,8 +235,15 @@ class PicksIndexController extends GetxController {
           if(b.guessInfo.guessData.isNotEmpty) return -1;
           return 0;
         });
-        guessGamePlayers[key] = item;
+        temp[key] = item;
       }
+      List<String> titles = ["pts","3pm",'ast','reb'];
+      guessGamePlayers =  titles.fold({}, (p,e){
+        if(temp.containsKey(e)){
+          p[e] = temp[e]!;
+        }
+        return p;
+      });
 
       ///rank 排行榜
       rankInfo = results[4] as RankListEntity;
