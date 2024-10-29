@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-24 18:39:28
- * @LastEditTime: 2024-10-28 18:17:48
+ * @LastEditTime: 2024-10-29 14:30:23
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
@@ -31,7 +31,7 @@ class DraftLotteryWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                20.vGap,
+                13.vGap,
                 Text(
                   "NBA Draft Lottery",
                   style: 19.w7(color: AppColors.c262626, height: 1),
@@ -116,7 +116,7 @@ class _Item extends StatelessWidget {
               name,
               style: 14.w7(color: AppColors.c262626),
             ),
-            10.vGap,
+            8.vGap,
             Text(
               item.content,
               maxLines: 3,

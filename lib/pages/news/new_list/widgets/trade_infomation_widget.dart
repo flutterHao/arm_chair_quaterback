@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-24 18:04:19
- * @LastEditTime: 2024-10-28 20:26:40
+ * @LastEditTime: 2024-10-29 14:39:25
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
@@ -33,12 +33,11 @@ class TradeInfomationWidget extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              10.vGap,
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
                 child: Text(
                   "Trade Information",
-                  style: 19.w7(color: AppColors.c262626),
+                  style: 19.w7(color: AppColors.c262626, height: 1),
                 ),
               ),
               ListView.separated(
