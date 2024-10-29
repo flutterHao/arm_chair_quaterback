@@ -263,9 +263,9 @@ class PersonalCenterPage extends GetView<PersonalCenterController> {
                                     tabController: controller.tabController),
                                 controller: controller.tabController,
                                 children: [
-                                  const Game(),
                                   ReciveAwardPicksPage(
                                       teamId, controller.teamSimpleEntity!),
+                                  const Game(),
                                   // const Center(child: LoadStatusWidget()),
                                 ]),
                           ),

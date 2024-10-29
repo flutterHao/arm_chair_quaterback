@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/getx_builder_ids.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entity/team_login_info.dart';
+import 'package:arm_chair_quaterback/common/entities/user_entity/team_prop_list.dart';
 import 'package:arm_chair_quaterback/common/net/address.dart';
 import 'package:arm_chair_quaterback/common/net/http.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -42,7 +43,7 @@ class UserInfoBar extends StatelessWidget {
             child: Row(
               children: [
                 InkWell(
-                  onLongPress: (){
+                  onLongPress: () {
                     final List<String> servers = [
                       Address.personalDevUrl,
                       Address.privateDevUrl,
@@ -115,24 +116,16 @@ class MoneyAndCoinWidget extends StatelessWidget {
         builder: (controller) {
           TeamLoginInfo info =
               controller.userEntiry.teamLoginInfo ?? TeamLoginInfo();
-          var list = info.teamPropList
-                  ?.where((e) => e.propId == 102 || e.propId == 103).toList();
           return Container(
-            width: 80.w,
-            height: 36.w,
             alignment: Alignment.centerRight,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,
-              children: list?.map(
-                (e) {
-                  return iconText(
-                      e.propId == 102
-                          ? Assets.uiIconMoneyPng
-                          : Assets.uiIconJettonPng,
-                      e.propId == 102 ? info.getMoney() : info.getCoin());
-                },
-              ).toList()??[],
+              children: [
+                iconText(Assets.uiIconJettonPng, info.getCoin()),
+                4.vGap,
+                iconText(Assets.uiIconMoneyPng, info.getMoney()),
+              ],
             ),
           );
         });
@@ -140,12 +133,11 @@ class MoneyAndCoinWidget extends StatelessWidget {
 
   Widget iconText(String icon, num num) {
     return Container(
-      // width: 66.w,
+      width: 66.w,
       height: 16.w,
       alignment: Alignment.center,
       constraints: BoxConstraints(minWidth: 66.w),
-      // margin: EdgeInsets.only(left: 9.w),
-      padding: EdgeInsets.symmetric(horizontal: 9.w),
+      padding: EdgeInsets.only(left: 4.w, right: 9.w),
       decoration: BoxDecoration(
           color: Colors.black, borderRadius: BorderRadius.circular(8.w)),
       child: Row(

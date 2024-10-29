@@ -162,7 +162,7 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                                       ?.team
                                       ?.teamId ??
                                       0,
-                                  "initTab":1
+                                  "initTab":0
                                 });
                             break;
                           case 2:
@@ -498,7 +498,9 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                               SizedBox(
                                 width: 4.w,
                               ),
-                              ImageWidget(url: Utils.getTeamUrl(picksIndexController.rankInfo.myRank.teamId),width: 48.w,),
+                              ImageWidget(
+                                borderRadius: BorderRadius.circular(24.w),
+                                url: Utils.getTeamUrl(picksIndexController.rankInfo.myRank.teamId),width: 48.w,),
                               Container(
                                 margin: EdgeInsets.only(left: 12.w),
                                 child: Column(

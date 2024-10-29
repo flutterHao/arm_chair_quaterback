@@ -65,7 +65,7 @@ class PlayerAvatarWidget extends StatelessWidget {
                       case LoadState.failed:
                         return IconWidget(
                             iconWidth: width-10,
-                            icon: Assets.testTeamLogoPng);
+                            icon: Assets.head_0000Png);
                       default:
                     }
                   },

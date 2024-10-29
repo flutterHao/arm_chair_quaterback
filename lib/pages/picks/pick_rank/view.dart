@@ -38,7 +38,7 @@ class PickRankPage extends GetView<PickRankController> {
                         );
                       }),
                       Text(
-                        "6d:08:02:20",
+                        controller.getRewardOpenTime(),
                         style:
                             TextStyle(color: AppColors.c666666, fontSize: 12.sp),
                       )

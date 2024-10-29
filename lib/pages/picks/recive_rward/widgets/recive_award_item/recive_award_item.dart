@@ -138,6 +138,7 @@ class ReciveAwardItem extends StatelessWidget {
                                                     .data[index]
                                                     .guessData
                                                     ?.playerId),
+                                                imageFailedPath: Assets.head_0000Png,
                                                 width: 40.w,
                                                 height: 40.w,
                                               )),

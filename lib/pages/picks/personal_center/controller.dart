@@ -29,8 +29,8 @@ class PersonalCenterController extends GetxController
   final int? initTab;
 
   List<String> titles = [
+    "Picks",
     "Game",
-    "Picks", /*"Comments"*/
   ];
 
   late TabController tabController;
@@ -45,14 +45,6 @@ class PersonalCenterController extends GetxController
   List<TeamInfo> teamPlayers = [];
 
   int rank = 0;
-
-  // tap
-  void handleTap(int index) {
-    Get.snackbar(
-      "标题",
-      "消息",
-    );
-  }
 
   /// 在 widget 内存中分配后立即调用。
   @override

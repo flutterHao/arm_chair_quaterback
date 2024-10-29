@@ -8,6 +8,7 @@ import 'package:arm_chair_quaterback/common/entities/team_simple_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/rank_type.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
+import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:flutter/cupertino.dart';
@@ -35,13 +36,50 @@ class PickRankController extends GetxController
   ///自己在榜单的什么区段
   int selfInRankListIndex = -1;
 
-  // tap
-  void handleTap(int index) {
-    Get.snackbar(
-      "标题",
-      "消息",
-    );
+  //开奖剩余时间：周三周六零点开奖
+  String getRewardOpenTime(){
+    Duration difference = getTimeDifferenceToTarget();
+    return formatDuration(difference);
   }
+
+  Duration getTimeDifferenceToTarget() {
+    DateTime now = DateTime.now();
+    int currentWeekday = now.weekday;
+
+    // 计算周三和周六的零点时间
+    DateTime targetDate;
+    if (currentWeekday < DateTime.wednesday) {
+      // 当前时间在周三之前
+      targetDate = DateTime(now.year, now.month, now.day + (DateTime.wednesday - currentWeekday));
+    } else if (currentWeekday == DateTime.wednesday && now.hour < 24) {
+      // 当前时间是周三，并且还没到当天结束
+      targetDate = DateTime(now.year, now.month, now.day + 1);
+    } else if (currentWeekday < DateTime.saturday) {
+      // 当前时间在周六之前
+      targetDate = DateTime(now.year, now.month, now.day + (DateTime.saturday - currentWeekday));
+    } else {
+      // 当前时间已经过了周六，计算到下周三的时间
+      targetDate = DateTime(now.year, now.month, now.day + (7 - currentWeekday) + DateTime.wednesday);
+    }
+
+    // 将目标时间设为零点
+    targetDate = DateTime(targetDate.year, targetDate.month, targetDate.day);
+
+    // 计算当前时间与目标时间的差
+    return targetDate.difference(now);
+  }
+
+  String formatDuration(Duration duration) {
+    int days = duration.inDays;
+    int hours = duration.inHours % 24;
+    int minutes = duration.inMinutes % 60;
+    int seconds = duration.inSeconds % 60;
+    // 格式化成 6d:08:19:63 的样式
+    var day = days>=0?"":"${days}d:";
+    var s = "$day${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}";
+    return s;
+  }
+
 
   /// 在 widget 内存中分配后立即调用。
   @override

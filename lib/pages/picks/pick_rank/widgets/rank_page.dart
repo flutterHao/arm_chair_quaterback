@@ -40,7 +40,9 @@ class _RankPageState extends State<RankPage>
               SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 child: Stack(
-                  alignment: controller.rankInfo.ranks.isEmpty?Alignment.center:AlignmentDirectional.topStart,
+                  alignment: controller.rankInfo.ranks.isEmpty
+                      ? Alignment.center
+                      : AlignmentDirectional.topStart,
                   children: [
                     SizedBox(
                       height: 599.w,
@@ -153,7 +155,9 @@ class _RankPageState extends State<RankPage>
                                                                           padding:
                                                                               EdgeInsets.all(8.w),
                                                                           child:
-                                                                              ImageWidget(url: Utils.getTeamUrl(controller.rankInfo.ranks[1].teamId)),
+                                                                              ImageWidget(
+                                                                                  borderRadius: BorderRadius.circular(30.w),
+                                                                                  url: Utils.getTeamUrl(controller.rankInfo.ranks[1].teamId)),
                                                                         ),
                                                                       ),
                                                                       Positioned(
@@ -250,7 +254,7 @@ class _RankPageState extends State<RankPage>
                                                                   width: 5.w,
                                                                 ),
                                                                 Text(
-                                                                  "+${controller.rankInfo.ranks[1].chip.toStringAsFixed(0)}",
+                                                                  "+${Utils.formatMoney(controller.rankInfo.ranks[1].chip)}",
                                                                   style: 14.w7(
                                                                       color: AppColors
                                                                           .cF2F2F2),
@@ -260,7 +264,7 @@ class _RankPageState extends State<RankPage>
                                                           ),
                                                         ],
                                                       )
-                                                    : SizedBox.shrink(),
+                                                    : const SizedBox.shrink(),
                                           ),
                                           6.hGap,
                                           //第1名
@@ -306,17 +310,23 @@ class _RankPageState extends State<RankPage>
                                                                         width: 8
                                                                             .w)),
                                                                 child:
-                                                                    Container(
-                                                                  padding:
-                                                                      EdgeInsets
-                                                                          .all(8
-                                                                              .w),
-                                                                  child: ImageWidget(
-                                                                      url: Utils.getTeamUrl(controller
-                                                                          .rankInfo
-                                                                          .ranks[
-                                                                              0]
-                                                                          .teamId)),
+                                                                    ClipRRect(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              50.w),
+                                                                  child:
+                                                                      Container(
+                                                                    padding: EdgeInsets
+                                                                        .all(8
+                                                                            .w),
+                                                                    child: ImageWidget(
+                                                                        borderRadius: BorderRadius.circular(30.w),
+                                                                        url: Utils.getTeamUrl(controller
+                                                                            .rankInfo
+                                                                            .ranks[0]
+                                                                            .teamId)),
+                                                                  ),
                                                                 ),
                                                               ),
                                                               Positioned(
@@ -416,7 +426,7 @@ class _RankPageState extends State<RankPage>
                                                           width: 5.w,
                                                         ),
                                                         Text(
-                                                          "+${controller.rankInfo.ranks[0].chip.toStringAsFixed(0)}",
+                                                          "+${Utils.formatMoney(controller.rankInfo.ranks[0].chip)}",
                                                           style: 14.w7(
                                                               color: AppColors
                                                                   .cF2F2F2),
@@ -472,7 +482,9 @@ class _RankPageState extends State<RankPage>
                                                                           padding:
                                                                               EdgeInsets.all(8.w),
                                                                           child:
-                                                                              ImageWidget(url: Utils.getTeamUrl(controller.rankInfo.ranks[2].teamId)),
+                                                                              ImageWidget(
+                                                                                borderRadius: BorderRadius.circular(30.w),
+                                                                                  url: Utils.getTeamUrl(controller.rankInfo.ranks[2].teamId)),
                                                                         ),
                                                                       ),
                                                                       Positioned(
@@ -569,7 +581,7 @@ class _RankPageState extends State<RankPage>
                                                                   width: 5.w,
                                                                 ),
                                                                 Text(
-                                                                  "+${controller.rankInfo.ranks[2].chip.toStringAsFixed(0)}",
+                                                                  "+${Utils.formatMoney(controller.rankInfo.ranks[2].chip)}",
                                                                   style: 14.w7(
                                                                       color: AppColors
                                                                           .cF2F2F2),
@@ -616,91 +628,94 @@ class _RankPageState extends State<RankPage>
                   ],
                 ),
               ),
-              if(controller.rankInfo.ranks.isNotEmpty)
-              Obx(() {
-                return AnimatedPositioned(
-                    duration: const Duration(milliseconds: 300),
-                    bottom: controller.inTheRankList.value ||
-                            controller.rankInfo.myRank.rank == null
-                        ? -200.w
-                        : 9.w,
-                    left: 6.w,
-                    right: 6.w,
-                    child: Container(
-                      padding: EdgeInsets.only(left: 43.w, right: 33.w),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.w),
-                          color: AppColors.c333333),
-                      height: 68.w,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                "${controller.rankInfo.myRank.rank == 0 ? '--' : controller.rankInfo.myRank.rank}",
-                                style: 18.w7(color: AppColors.cFF7954),
-                              ),
-                              SizedBox(
-                                width: 4.w,
-                              ),
-                              InkWell(
-                                  onTap: () => Get.toNamed(
-                                          RouteNames.picksPersonalCenter,
-                                          arguments: {
-                                            "teamId": Get.find<HomeController>()
-                                                .userEntiry
-                                                .teamLoginInfo
-                                                ?.team
-                                                ?.teamId
-                                          }),
-                                  child: ImageWidget(
-                                    url: Utils.getTeamUrl(
-                                        controller.rankInfo.myRank.teamId),
-                                    width: 48.w,
-                                  )),
-                              Container(
-                                margin: EdgeInsets.only(left: 12.w),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "${Get.find<HomeController>().userEntiry.teamLoginInfo?.team?.teamName}",
-                                      style: 12.w7(
-                                          color: AppColors.cFF7954,
-                                          overflow: TextOverflow.ellipsis),
-                                    ),
-                                    SizedBox(
-                                      height: 3.w,
-                                    ),
-                                    Text(
-                                      "WIN  ${controller.rankInfo.myRank.win ?? 0}",
-                                      style: TextStyle(
-                                          color: AppColors.cB3B3B3,
-                                          fontSize: 10.sp),
-                                    ),
-                                    Text(
-                                      "SUCCESS  ${controller.rankInfo.myRank.getSuccess}%",
-                                      style: TextStyle(
-                                          color: AppColors.cB3B3B3,
-                                          fontSize: 10.sp),
-                                    )
-                                  ],
+              if (controller.rankInfo.ranks.isNotEmpty)
+                Obx(() {
+                  return AnimatedPositioned(
+                      duration: const Duration(milliseconds: 300),
+                      bottom: controller.inTheRankList.value ||
+                              controller.rankInfo.myRank.rank == null
+                          ? -200.w
+                          : 9.w,
+                      left: 6.w,
+                      right: 6.w,
+                      child: Container(
+                        padding: EdgeInsets.only(left: 43.w, right: 33.w),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20.w),
+                            color: AppColors.c333333),
+                        height: 68.w,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  "${controller.rankInfo.myRank.rank == 0 ? '--' : controller.rankInfo.myRank.rank}",
+                                  style: 18.w7(color: AppColors.cFF7954),
                                 ),
-                              )
-                            ],
-                          ),
-                          Text(
-                            (controller.rankInfo.myRank.chip ?? 0)
-                                .toDouble()
-                                .toStringAsFixed(0),
-                            style: 18.w7(color: AppColors.cFFFFFF),
-                          )
-                        ],
-                      ),
-                    ));
-              })
+                                SizedBox(
+                                  width: 4.w,
+                                ),
+                                InkWell(
+                                    onTap: () => Get.toNamed(
+                                            RouteNames.picksPersonalCenter,
+                                            arguments: {
+                                              "teamId":
+                                                  Get.find<HomeController>()
+                                                      .userEntiry
+                                                      .teamLoginInfo
+                                                      ?.team
+                                                      ?.teamId
+                                            }),
+                                    child: ImageWidget(
+                                      borderRadius: BorderRadius.circular(30.w),
+                                      url: Utils.getTeamUrl(
+                                          controller.rankInfo.myRank.teamId),
+                                      width: 48.w,
+                                    )),
+                                Container(
+                                  margin: EdgeInsets.only(left: 12.w),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "${Get.find<HomeController>().userEntiry.teamLoginInfo?.team?.teamName}",
+                                        style: 12.w7(
+                                            color: AppColors.cFF7954,
+                                            overflow: TextOverflow.ellipsis),
+                                      ),
+                                      SizedBox(
+                                        height: 3.w,
+                                      ),
+                                      Text(
+                                        "WIN  ${controller.rankInfo.myRank.win ?? 0}",
+                                        style: TextStyle(
+                                            color: AppColors.cB3B3B3,
+                                            fontSize: 10.sp),
+                                      ),
+                                      Text(
+                                        "SUCCESS  ${controller.rankInfo.myRank.getSuccess}%",
+                                        style: TextStyle(
+                                            color: AppColors.cB3B3B3,
+                                            fontSize: 10.sp),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                            Text(
+                              (controller.rankInfo.myRank.chip ?? 0)
+                                  .toDouble()
+                                  .toStringAsFixed(0),
+                              style: 18.w7(color: AppColors.cFFFFFF),
+                            )
+                          ],
+                        ),
+                      ));
+                })
             ],
           );
         });
@@ -734,6 +749,7 @@ class _RankPageState extends State<RankPage>
                         "teamId": controller.rankInfo.ranks[index].teamId
                       }),
               child: ImageWidget(
+                borderRadius: BorderRadius.circular(30.w),
                 url: Utils.getTeamUrl(controller.rankInfo.ranks[index].teamId),
                 width: 48.w,
               )),
@@ -784,7 +800,7 @@ class _RankPageState extends State<RankPage>
                   width: 3.w,
                 ),
                 Text(
-                  "+${controller.rankInfo.ranks[index].chip.toStringAsFixed(0)}",
+                  "+${Utils.formatMoney(controller.rankInfo.ranks[index].chip)}",
                   style: 14.w7(color: AppColors.c1A1A1A),
                 )
               ],

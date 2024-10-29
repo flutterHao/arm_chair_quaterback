@@ -29,7 +29,7 @@ class ImageWidget extends StatelessWidget {
       required this.url,
       this.width,
       this.height,
-      this.imageFailedPath = Assets.testTeamLogoPng, //todo 换默认缺省图
+      this.imageFailedPath = Assets.uiHead_01Png,
       this.borderRadius,
       this.fit = BoxFit.cover,
       this.loadingWidget,
@@ -47,8 +47,20 @@ class ImageWidget extends StatelessWidget {
             // color: Colors.grey,
             borderRadius: borderRadius ?? BorderRadius.circular(20),
           ),
-          child: imageFailedPath != null ? Image.asset(imageFailedPath!) : null,
+          child: imageFailedPath != null ? Image.asset(imageFailedPath!,width: width,height: height,fit: BoxFit.fill,) : null,
         );
+    Widget loadingWidgetTemp = loadingWidget??error;
+
+    if(borderRadius != null){
+      error = ClipRRect(
+        borderRadius: borderRadius!,
+        child: error,
+      );
+      loadingWidgetTemp = ClipRRect(
+        borderRadius: borderRadius!,
+        child: loadingWidgetTemp,
+      );
+    }
     return ExtendedImage.network(
       url,
       fit: fit,
@@ -66,7 +78,7 @@ class ImageWidget extends StatelessWidget {
           Log.e("$url load failed");
             return error;
           case LoadState.loading:
-            return loadingWidget ?? error;
+            return loadingWidgetTemp;
           case LoadState.completed:
             // TODO: Handle this case.
             break;

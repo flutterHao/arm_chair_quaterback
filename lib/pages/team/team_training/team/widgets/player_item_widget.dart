@@ -356,6 +356,7 @@ class PlayerAwater extends StatelessWidget {
           Positioned(
             child: ImageWidget(
               url: Utils.getPlayUrl(player.playerId),
+              imageFailedPath:Assets.head_0000Png,
               width: 64.w,
               height: 64.w,
               borderRadius: BorderRadius.circular(32.w),

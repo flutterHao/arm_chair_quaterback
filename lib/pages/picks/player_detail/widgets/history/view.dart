@@ -86,7 +86,7 @@ class _HistoryPageState extends State<HistoryPage>
                                 var listSize = itemData.length;
                                 print('listSize:$listSize');
                                 return Container(
-                                  height: listSize * 22.w + (2 * 14.w) + 10.w,
+                                  height: listSize * 20.w + (2 * 14.w) + 20.w,
                                   constraints: BoxConstraints(
                                       minHeight: listSize > 0 ? 0 : 350.w),
                                   padding: EdgeInsets.symmetric(
