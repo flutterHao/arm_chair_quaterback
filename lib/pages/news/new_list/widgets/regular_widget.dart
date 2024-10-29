@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-21 16:48:47
- * @LastEditTime: 2024-10-29 14:15:14
+ * @LastEditTime: 2024-10-29 18:24:10
  */
 import 'dart:math';
 
@@ -61,16 +61,16 @@ class RegularWidget extends StatelessWidget {
                     var item = controller.state.newsEntity.match[index];
                     item.teams = controller.getNBATeams(item.dataLabel);
                     return InkWell(
+                      key: Key(item.id.toString()),
                       onTap: () {
                         controller.pageToDetail(item);
                       },
                       child: Padding(
                         padding: EdgeInsets.only(right: 9.w), // 控制左右间距
-                        child: _Item(controller.state.newsEntity.match[index]),
-                        // child: SizedBox(
-                        //     width: 180.w,
-                        //     height: 80.w,
-                        //     child: LightningDividerContainer()),
+                        child: _Item(
+                          item,
+                          key: Key(item.id.toString()),
+                        ),
                       ),
                     );
                   },
@@ -83,7 +83,7 @@ class RegularWidget extends StatelessWidget {
 }
 
 class _Item extends GetView<NewListController> {
-  const _Item(this.item);
+  const _Item(this.item, {Key? key});
   final NewsListDetail item;
 
   Widget _oneTeam() {
@@ -251,19 +251,21 @@ class NewsPercentWidget extends StatelessWidget {
       required this.leftTitle,
       required this.rightTitle,
       required this.leftCount,
-      required this.rightCount});
+      required this.rightCount,
+      this.height});
 
   final String leftTitle;
   final String rightTitle;
   final int leftCount;
   final int rightCount;
+  final double? height;
 
   Widget _progress(Color color) {
     return Container(
-      height: 4.w,
+      height: height ?? 4.w,
       decoration: BoxDecoration(
         color: color,
-        borderRadius: BorderRadius.circular(2.w),
+        borderRadius: BorderRadius.circular(height != null ? height! / 2 : 2.w),
       ),
     );
   }

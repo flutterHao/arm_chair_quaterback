@@ -9,7 +9,6 @@ import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comm
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comment_item.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/news_bottom_button.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/index.dart';
-import 'package:arm_chair_quaterback/pages/news/new_list/widgets/regular_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/widgets/shadow_container.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
@@ -84,7 +83,7 @@ class NewsDetailList extends GetView<NewListController> {
                       controller.getNewsFlow(newsId, isRefresh: false),
                   child: ListView.separated(
                       controller: controller.scrollController,
-                      padding: EdgeInsets.symmetric(vertical: 40.w),
+                      padding: EdgeInsets.symmetric(vertical: 30.w),
                       itemCount: controller.state.newsFlowList.length,
                       separatorBuilder: (context, index) {
                         return _next();
@@ -133,13 +132,13 @@ class NewsDetailItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              newsDetail.title ?? "",
+              newsDetail.title!.toUpperCase(),
               style: 28.w7(color: AppColors.c262626, height: 1.25),
             ),
             15.vGap,
             if (newsDetail.source != null)
               Text(
-                newsDetail.source ?? "",
+                newsDetail.source!.toUpperCase(),
                 style: 12.w4(color: AppColors.c666666, height: 1),
               ),
             6.vGap,
@@ -152,7 +151,7 @@ class NewsDetailItem extends StatelessWidget {
                 style: 12.w4(color: AppColors.cB3B3B3, height: 1),
               ),
             Padding(
-              padding: const EdgeInsets.only(top: 16),
+              padding: EdgeInsets.only(top: 25.w),
               child: Text(
                 newsDetail.content ?? "",
                 style: TextStyle(
@@ -187,9 +186,10 @@ class NewsDetailItem extends StatelessWidget {
             10.vGap,
             Obx(() {
               var a = newsDetail.isLike!.value;
-              return NewsPercentWidget(
+              return NewsDetailPercentWidget(
                   leftTitle: "Agress",
                   rightTitle: "Disagress",
+                  height: 8.w,
                   leftCount: newsDetail.likes ?? 0,
                   rightCount: newsDetail.unLikes ?? 0);
             }),
@@ -200,12 +200,13 @@ class NewsDetailItem extends StatelessWidget {
   Widget _hotComment() {
     return newsDetail.reviewsList!.isNotEmpty
         ? Container(
-            width: 343.w,
+            width: double.infinity,
             // height: 110.w,
             padding: EdgeInsets.symmetric(vertical: 15.w, horizontal: 20.w),
+            margin: EdgeInsets.symmetric(horizontal: 16.w),
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: AppColors.cE6E6E,
+              color: AppColors.cFFFFFF,
               borderRadius: BorderRadius.circular(16.w),
             ),
             child: HotComment(item: newsDetail.reviewsList!.first),
@@ -226,6 +227,83 @@ class NewsDetailItem extends StatelessWidget {
       builder: (controller) {
         return _buildView(context, controller);
       },
+    );
+  }
+}
+
+///新闻支持反对比例
+class NewsDetailPercentWidget extends StatelessWidget {
+  const NewsDetailPercentWidget(
+      {super.key,
+      required this.leftTitle,
+      required this.rightTitle,
+      required this.leftCount,
+      required this.rightCount,
+      this.height});
+
+  final String leftTitle;
+  final String rightTitle;
+  final int leftCount;
+  final int rightCount;
+  final double? height;
+
+  Widget _progress(Color color) {
+    return Container(
+      height: height ?? 4.w,
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(height != null ? height! / 2 : 2.w),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    String leftPercent = "50";
+    String rightPercent = "50";
+    if (leftCount != 0 || rightCount != 0) {
+      int total = leftCount + rightCount;
+      if (total == 0) total = 1;
+      leftPercent = (leftCount * 100 / total).toStringAsFixed(1);
+      rightPercent = (rightCount * 100 / total).toStringAsFixed(1);
+    }
+
+    return Column(
+      children: [
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: 3.5.w),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  "$leftTitle ($leftPercent%)",
+                  style: 9.w4(color: AppColors.c262626),
+                ),
+              ),
+              Text(
+                "($rightPercent%) $rightTitle",
+                style: 9.w4(color: AppColors.c262626),
+              )
+            ],
+          ),
+        ),
+        2.5.vGap,
+        Row(
+          children: [
+            Expanded(
+              // flex: leftCount == 0 ? 1 : leftCount * 100 ~/ total,
+              flex: (leftCount == 0 && rightCount == 0) ? 1 : leftCount,
+              child: _progress(AppColors.c10A86A),
+            ),
+            2.hGap,
+            Expanded(
+              flex: (leftCount == 0 && rightCount == 0) ? 1 : rightCount,
+              // flex: leftCount == 0 ? 1 : rightCount * 100 ~/ total,
+              child: _progress(AppColors.cE72646),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

@@ -78,7 +78,7 @@ class UserInfoBar extends StatelessWidget {
                         width: 36.w,
                         height: 36.w,
                         borderRadius: BorderRadius.circular(12.w),
-                        url: Utils.getTeamUrl(info.team?.teamLogo ?? 0)),
+                        url: Utils.getAvaterUrl(info.team?.teamLogo ?? 0)),
                   ),
                 ),
                 Expanded(
@@ -107,7 +107,7 @@ class UserInfoBar extends StatelessWidget {
 }
 
 class MoneyAndCoinWidget extends StatelessWidget {
-  MoneyAndCoinWidget({super.key});
+  const MoneyAndCoinWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -136,7 +136,7 @@ class MoneyAndCoinWidget extends StatelessWidget {
       width: 66.w,
       height: 16.w,
       alignment: Alignment.center,
-      constraints: BoxConstraints(minWidth: 66.w),
+      // constraints: BoxConstraints(minWidth: 66.w),
       padding: EdgeInsets.only(left: 4.w, right: 9.w),
       decoration: BoxDecoration(
           color: Colors.black, borderRadius: BorderRadius.circular(8.w)),

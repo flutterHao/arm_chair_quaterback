@@ -2,7 +2,7 @@
  * @Description: 明星球员
  * @Author: lihonghao
  * @Date: 2024-10-25 15:16:18
- * @LastEditTime: 2024-10-28 15:24:36
+ * @LastEditTime: 2024-10-29 16:06:35
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -45,7 +45,8 @@ class PopularPlayerWidget extends StatelessWidget {
                 ),
                 10.vGap,
                 ShadowContainer(
-                  width: 343.w,
+                  // width: 343.w,
+                  width: double.infinity,
                   margin: EdgeInsets.symmetric(horizontal: 16.w),
                   child: Column(
                     children: [
@@ -100,9 +101,10 @@ class PopularPlayerWidget extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        width: 334.w,
+                        width: double .infinity,
                         height: 1,
                         color: AppColors.cD9D9D9,
+                        margin: EdgeInsets.only(left: 9.w),
                       ),
                       ListView.separated(
                           shrinkWrap: true,

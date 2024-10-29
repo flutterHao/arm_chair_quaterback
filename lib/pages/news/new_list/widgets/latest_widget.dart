@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-25 16:33:07
- * @LastEditTime: 2024-10-29 14:17:01
+ * @LastEditTime: 2024-10-29 16:54:57
  */
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +28,6 @@ class LatestWidget extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              20.vGap,
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
                 child: Text(
@@ -36,7 +35,7 @@ class LatestWidget extends StatelessWidget {
                   style: 19.w7(color: AppColors.c262626, height: 1),
                 ),
               ),
-              10.vGap,
+              13.vGap,
               ListView.separated(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),

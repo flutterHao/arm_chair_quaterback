@@ -24,7 +24,7 @@ class StatsRankWidget extends GetView<NewListController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsets.only(left: 16.w, top: 6.w, bottom: 10.w),
+                padding: EdgeInsets.only(left: 16.w, top: 24.w, bottom: 10.w),
                 child: Text(
                   "Stats",
                   style: 19.w7(height: 1),

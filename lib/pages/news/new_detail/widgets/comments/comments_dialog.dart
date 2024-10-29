@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-18 15:38:51
- * @LastEditTime: 2024-10-21 21:52:40
+ * @LastEditTime: 2024-10-29 17:40:40
  */
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -137,7 +137,7 @@ class CommentsList extends GetView<CommentController> {
                     //     .toList();
                     return Column(
                       children: [
-                        CommentItemView(item: list[index], isSub: false),
+                        CommentItemView(item: list[index]),
                         if (list[index].sonReviews > 0 ||
                             list[index].subList.isNotEmpty)
                           Container(
@@ -206,9 +206,10 @@ class SubComentsListView extends GetView<CommentController> {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     IconWidget(
-                                      iconWidth: 8.w,
-                                      icon: Assets.uiIconUnfoldPng,
+                                      iconWidth: 11.w,
+                                      icon: Assets.uiIconTriangle_03Png,
                                       iconColor: AppColors.c333333,
+                                      rotateAngle: 180,
                                     ),
                                     4.hGap,
                                     Text(
@@ -234,8 +235,8 @@ class SubComentsListView extends GetView<CommentController> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   IconWidget(
-                                    iconWidth: 8.w,
-                                    icon: Assets.uiIconShrinkPng,
+                                    iconWidth: 11.w,
+                                    icon: Assets.uiIconTriangle_03Png,
                                     iconColor: AppColors.c333333,
                                   ),
                                   4.hGap,

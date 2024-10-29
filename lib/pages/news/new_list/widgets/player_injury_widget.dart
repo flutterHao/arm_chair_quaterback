@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-24 18:04:19
- * @LastEditTime: 2024-10-29 14:23:34
+ * @LastEditTime: 2024-10-29 15:28:39
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
@@ -66,9 +66,10 @@ class _Item extends StatelessWidget {
     return Align(
       alignment: Alignment.center,
       child: Container(
-        width: 343.w,
+        // width: 343.w,
         height: 75.w,
         padding: EdgeInsets.symmetric(horizontal: 15.w),
+        margin: EdgeInsets.symmetric(horizontal: 16.w),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.w),
           color: AppColors.cF2F2F2,

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-22 15:19:24
- * @LastEditTime: 2024-10-24 15:22:08
+ * @LastEditTime: 2024-10-29 18:38:45
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -14,6 +14,7 @@ import 'package:get/get.dart';
 
 class EmojiWidget extends StatelessWidget {
   const EmojiWidget({super.key});
+  // final Alignment? alignment;
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +25,7 @@ class EmojiWidget extends StatelessWidget {
       Assets.uiEmojiLaughPng,
     ];
     return Wrap(
+      // alignment: WrapAlignment.bottomCenter,
       spacing: 5.w,
       runSpacing: 5.w,
       children: [
@@ -63,6 +65,24 @@ class EmojiWidget extends StatelessWidget {
             );
           });
         }),
+        InkWell(
+          onTap: () {},
+          child: Container(
+            height: 24.w,
+            width: 43.w,
+            alignment: Alignment.center,
+            padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.w),
+            decoration: BoxDecoration(
+              color: AppColors.cE6E6E,
+              borderRadius: BorderRadius.circular(12.w),
+            ),
+            child: IconWidget(
+              iconWidth: 16.w,
+              icon: Assets.uiIconEmojiPng,
+              iconColor: AppColors.c262626,
+            ),
+          ),
+        )
       ],
     );
   }

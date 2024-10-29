@@ -1,6 +1,7 @@
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comment_controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/emoji_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/send_comment_widget.dart';
@@ -10,9 +11,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class CommentItemView extends GetView<CommentController> {
-  const CommentItemView({super.key, required this.item, required this.isSub});
+  const CommentItemView({super.key, required this.item});
   final Reviews item;
-  final bool isSub;
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +20,10 @@ class CommentItemView extends GetView<CommentController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ImageWidget(
-          url: "",
-          width: isSub ? 36.w : 48.w,
-          height: isSub ? 36.w : 48.w,
-          borderRadius: BorderRadius.circular(24.w),
+          url: Utils.getAvaterUrl(item.teamLogo),
+          width: 36.w,
+          height: 36.w,
+          borderRadius: BorderRadius.circular(12.w),
         ),
         6.hGap,
         Expanded(
@@ -85,12 +85,20 @@ class CommentItemView extends GetView<CommentController> {
                         FocusScope.of(context).unfocus();
                       }
                     },
-                    child: Text(
-                      "Reple",
-                      style: TextStyle(
-                          color: AppColors.c666666,
-                          fontSize: 12.h,
-                          decoration: TextDecoration.underline),
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        border: Border(
+                          bottom:
+                              BorderSide(color: AppColors.cB3B3B3, width: 0.6),
+                        ),
+                      ),
+                      child: Text(
+                        "Reple",
+                        style: TextStyle(
+                            color: AppColors.cB3B3B3,
+                            fontSize: 12.h,
+                            height: 1),
+                      ),
                     ),
                   ),
                 ],
@@ -172,10 +180,10 @@ class SubCommentItemView extends GetView<CommentController> {
               Row(
                 children: [
                   ImageWidget(
-                    url: "",
-                    width: 17.5.w,
-                    height: 17.5.w,
-                    borderRadius: BorderRadius.circular(24.w),
+                    url: Utils.getAvaterUrl(item.teamLogo),
+                    width: 18.w,
+                    height: 18.w,
+                    borderRadius: BorderRadius.circular(6.w),
                   ),
                   3.5.hGap,
                   item.teamId != (controller.userEntity.team?.teamId ?? 0)
@@ -225,13 +233,20 @@ class SubCommentItemView extends GetView<CommentController> {
                           // targetId: item.id ?? 0,
                           hintText: name);
                     },
-                    child: Text(
-                      "Reple",
-                      style: TextStyle(
-                          color: AppColors.c666666,
-                          fontSize: 12.h,
-                          decoration: TextDecoration.underline,
-                          height: 1),
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        border: Border(
+                          bottom:
+                              BorderSide(color: AppColors.cB3B3B3, width: 0.6),
+                        ),
+                      ),
+                      child: Text(
+                        "Reple",
+                        style: TextStyle(
+                            color: AppColors.cB3B3B3,
+                            fontSize: 12.h,
+                            height: 1),
+                      ),
                     ),
                   ),
                 ],
@@ -268,7 +283,7 @@ class HotComment extends GetView<CommentController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Comments (${item.sonReviews})",
+          "Top Comments (${item.sonReviews})",
           style: 14.w7(color: AppColors.c262626, height: 1),
         ),
         10.vGap,
@@ -276,10 +291,10 @@ class HotComment extends GetView<CommentController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ImageWidget(
-              url: "",
-              width: 48.w,
-              height: 48.w,
-              borderRadius: BorderRadius.circular(24.w),
+              url: Utils.getAvaterUrl(item.teamLogo),
+              width: 36.w,
+              height: 36.w,
+              borderRadius: BorderRadius.circular(12.w),
             ),
             6.hGap,
             Expanded(
@@ -317,6 +332,8 @@ class HotComment extends GetView<CommentController> {
             )
           ],
         ),
+        10.vGap,
+        const EmojiWidget()
       ],
     );
   }

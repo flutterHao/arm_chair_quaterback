@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-21 20:20:49
- * @LastEditTime: 2024-10-29 12:25:25
+ * @LastEditTime: 2024-10-29 16:23:44
  */
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
@@ -12,6 +12,12 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:flutter/material.dart';
 
 class Utils {
+  ///深色队徽
+  static String getAvaterUrl(avatarId) {
+    String url = ConfigStore.to.getServiceUrl();
+    return "$url/image/user_avatar/$avatarId.png";
+  }
+
   static String getPlayUrl(int? playerId) {
     String url = ConfigStore.to.getServiceUrl();
     String image = "$url/image/player/$playerId.png";
@@ -30,6 +36,7 @@ class Utils {
     String url = ConfigStore.to.getServiceUrl();
     return "$url/image/team_white/$teamId.png";
   }
+
   static String getPropIconUrl(id) {
     // String url = ConfigStore.to.getServiceUrl();
     return "assets/images/icon/icon_$id.png";

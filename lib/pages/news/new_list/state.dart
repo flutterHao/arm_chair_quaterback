@@ -71,7 +71,7 @@ class NewListState {
     106: {"light": AppColors.c592C82, "dart": AppColors.c000000},
     121: {"light": AppColors.c004880, "dart": AppColors.c000000},
     111: {"light": AppColors.c67040C, "dart": AppColors.c000000},
-    103: {"light": AppColors.c00C2340, "dart": AppColors.c000000},
+    103: {"light": AppColors.c0C2340, "dart": AppColors.c000000},
     122: {"light": AppColors.c0F1840, "dart": AppColors.c000000},
     102: {"light": AppColors.c292929, "dart": AppColors.c000000},
   };

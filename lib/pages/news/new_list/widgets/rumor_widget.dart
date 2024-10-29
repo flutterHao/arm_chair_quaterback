@@ -2,7 +2,7 @@
  * @Description:队伍球员谣言
  * @Author: lihonghao
  * @Date: 2024-10-24 21:19:47
- * @LastEditTime: 2024-10-29 14:17:49
+ * @LastEditTime: 2024-10-29 16:35:50
  */
 
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
@@ -28,19 +28,19 @@ class RumorWidget extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              20.vGap,
+              14.vGap,
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
                 child: Text(
                   "Rumor",
-                  style: 19.w7(color: AppColors.c262626),
+                  style: 19.w7(color: AppColors.c262626, height: 1),
                 ),
               ),
               if (controller.state.newsEntity.teamRumors.isNotEmpty)
                 Container(
                   alignment: Alignment.centerLeft,
                   height: 210.w,
-                  width: 375.w,
+                  // width: 375.w,
                   margin: EdgeInsets.only(top: 10.w),
                   child: ListView.builder(
                     padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -70,7 +70,7 @@ class RumorWidget extends StatelessWidget {
               if (controller.state.newsEntity.playerRumors.isNotEmpty)
                 ListView.separated(
                   padding:
-                      EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.w),
+                      EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.w),
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: controller.state.newsEntity.playerRumors.length,
@@ -149,14 +149,16 @@ class _Item1 extends GetView<NewListController> {
         child: Column(
           children: [
             _team(),
+            8.vGap,
             Container(
-              margin: EdgeInsets.all(10.w),
+              margin: EdgeInsets.symmetric(horizontal: 14.w),
               child: Text(
-                "${item.content}",
+                item.content,
                 maxLines: 3,
                 style: 12.w4(color: AppColors.c262626),
               ),
             ),
+            10.vGap,
             Container(
               margin: EdgeInsets.symmetric(horizontal: 10.w),
               child: Row(
@@ -241,9 +243,10 @@ class _Item2 extends StatelessWidget {
         children: [
           Row(
             children: [
-              SizedBox(
+              Container(
                 width: 95.w,
                 height: 79.w,
+                // color: Colors.red,
                 child: Stack(
                   children: [
                     if (item.teams.isNotEmpty)
@@ -261,7 +264,7 @@ class _Item2 extends StatelessWidget {
                     if (item.players.isNotEmpty)
                       Positioned(
                         bottom: 0.w,
-                        right: 0.w,
+                        right: -10.w,
                         child: ImageWidget(
                           url: Utils.getPlayUrl(item.players[0]),
                           width: 100.w,
@@ -274,7 +277,8 @@ class _Item2 extends StatelessWidget {
                   child: Column(
                 children: [
                   Container(
-                    margin: EdgeInsets.all(10.w),
+                    margin:
+                        EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.w),
                     child: Text(
                       item.content,
                       maxLines: 3,
@@ -282,7 +286,7 @@ class _Item2 extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.symmetric(horizontal: 10.w),
+                    margin: EdgeInsets.symmetric(horizontal: 12.w),
                     child: Row(
                       children: [
                         Text(

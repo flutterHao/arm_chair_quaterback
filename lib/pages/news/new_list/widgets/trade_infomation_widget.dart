@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-24 18:04:19
- * @LastEditTime: 2024-10-29 14:39:25
+ * @LastEditTime: 2024-10-29 16:02:21
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
@@ -75,7 +75,7 @@ class _Item extends StatelessWidget {
       return IconWidget(
         iconWidth: 46.w,
         icon: Assets.uiImageArrow,
-        iconColor: AppColors.c4CB8FC.withOpacity((index + 1) / 4),
+        iconColor: AppColors.c42e5fa.withOpacity((index + 1) / 4),
       );
     });
   }
@@ -85,8 +85,9 @@ class _Item extends StatelessWidget {
     return Align(
       alignment: Alignment.center,
       child: Container(
-        width: 343.w,
+        // width: 343.w,
         height: 197.w,
+        margin: EdgeInsets.symmetric(horizontal: 16.w),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.w),
           color: AppColors.cF2F2F2,
@@ -95,7 +96,8 @@ class _Item extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              width: 343.w,
+              // width: 343.w,
+              width: double.infinity,
               height: 85.w,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
@@ -115,7 +117,7 @@ class _Item extends StatelessWidget {
                       child: Opacity(
                         opacity: 0.6,
                         child: ImageWidget(
-                          url: Utils.getTeamUrl(item.teams[0]),
+                          url: Utils.getWhiteTeamUrl(item.teams[0]),
                           width: 110.w,
                           // color: Colors.red,
                         ),
@@ -128,7 +130,7 @@ class _Item extends StatelessWidget {
                       child: Opacity(
                         opacity: 0.6,
                         child: ImageWidget(
-                          url: Utils.getTeamUrl(item.teams[1]),
+                          url: Utils.getWhiteTeamUrl(item.teams[1]),
                           width: 110.w,
                           fit: BoxFit.fitWidth,
                           // color: Colors.red,
@@ -156,15 +158,15 @@ class _Item extends StatelessWidget {
               ),
             ),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.w),
+              padding: EdgeInsets.symmetric(horizontal: 13.w, vertical: 10.w),
               child: Column(
                 children: [
                   Text(
-                    "${item.content}",
+                    item.content,
                     maxLines: 2,
                     style: 12.w4(color: AppColors.c262626),
                   ),
-                  10.vGap,
+                  8.vGap,
                   Row(
                     children: [
                       Text(

@@ -2,9 +2,8 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 17:29:19
- * @LastEditTime: 2024-10-28 16:25:20
+ * @LastEditTime: 2024-10-29 18:34:19
  */
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:extended_image/extended_image.dart';
@@ -31,7 +30,7 @@ class ImageWidget extends StatelessWidget {
       required this.url,
       this.width,
       this.height,
-      this.imageFailedPath = Assets.uiHead_01Png,
+      this.imageFailedPath,
       this.borderRadius,
       this.fit = BoxFit.cover,
       this.loadingWidget,
@@ -46,7 +45,7 @@ class ImageWidget extends StatelessWidget {
           width: width,
           height: height,
           decoration: BoxDecoration(
-            // color: Colors.grey,
+            color: AppColors.cE6E6E,
             borderRadius: borderRadius ?? BorderRadius.circular(20),
           ),
           child: imageFailedPath != null

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-24 18:39:28
- * @LastEditTime: 2024-10-29 14:30:23
+ * @LastEditTime: 2024-10-29 16:11:01
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
@@ -40,8 +40,9 @@ class DraftLotteryWidget extends StatelessWidget {
                 Stack(
                   children: [
                     Container(
-                      width: 343.w,
+                      width: double.infinity,
                       height: 225.w,
+                      margin: EdgeInsets.only(right: 16.w),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16.w),
                         image: const DecorationImage(
@@ -53,14 +54,11 @@ class DraftLotteryWidget extends StatelessWidget {
                           color: AppColors.c0D3D7B.withOpacity(0.05),
                         ),
                       ),
-                    ),
-                    Positioned(
-                      top: 80.w,
-                      left: 0,
                       child: Container(
                         alignment: Alignment.centerLeft,
                         height: 130.w,
-                        width: 375.w,
+                        width: double.infinity,
+                        margin: EdgeInsets.only(top: 80.w),
                         child: ListView.separated(
                           padding: EdgeInsets.symmetric(horizontal: 16.w),
                           scrollDirection: Axis.horizontal,
@@ -80,6 +78,32 @@ class DraftLotteryWidget extends StatelessWidget {
                         ),
                       ),
                     ),
+                    // Positioned(
+                    //   top: 80.w,
+                    //   left: 0,
+                    //   child: Container(
+                    //     alignment: Alignment.centerLeft,
+                    //     height: 130.w,
+                    //     width: 375.w - 80.w,
+                    //     child: ListView.separated(
+                    //       padding: EdgeInsets.symmetric(horizontal: 16.w),
+                    //       scrollDirection: Axis.horizontal,
+                    //       physics: const BouncingScrollPhysics(),
+                    //       itemCount: controller.state.newsEntity.draft.length,
+                    //       // itemCount: 5,
+                    //       separatorBuilder: (context, index) => 9.hGap,
+                    //       itemBuilder: (context, index) {
+                    //         var item = controller.state.newsEntity.draft[index];
+                    //         return InkWell(
+                    //           onTap: () {
+                    //             controller.pageToDetail(item);
+                    //           },
+                    //           child: _Item(item: item),
+                    //         );
+                    //       },
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 )
               ],
