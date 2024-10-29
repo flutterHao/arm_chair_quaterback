@@ -251,6 +251,8 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                 ),
                 Positioned(
                   bottom: 0,
+                  left: 0,
+                  right: 0,
                   child: bottom,
                 )
               ],
@@ -297,8 +299,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 if (flexBet.isNotEmpty)
-                  Flexible(
-                      child: InkWell(
+                  InkWell(
                     onTap: () {
                       if (players.length <= 2) {
                         return;
@@ -307,9 +308,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                     },
                     child: Container(
                       height: 167.w,
-                      constraints: BoxConstraints(
-                          maxWidth: 250.w
-                      ),
+                      constraints: BoxConstraints(maxWidth: 250.w),
                       padding: EdgeInsets.symmetric(
                           horizontal: 10.w, vertical: 14.w),
                       decoration: BoxDecoration(
@@ -329,8 +328,8 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                             children: [
                               Text(
                                 "Flex play",
-                                style:
-                                    14.w7(color: AppColors.c262626, height: 1),
+                                style: 14
+                                    .w7(color: AppColors.c262626, height: 1),
                               ),
                               _buildSelect(modelCurrentIndex.value == 0),
                             ],
@@ -345,8 +344,9 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                             child: ListView.builder(
                                 itemCount: flexBet.length,
                                 itemBuilder: (context, index) {
-                                  var num = players.length  - index;
-                                  var bet = flexBet[flexBet.length - 1 - index];
+                                  var num = players.length - index;
+                                  var bet =
+                                      flexBet[flexBet.length - 1 - index];
                                   return _buildbet(
                                       num.toString(), bet.toString());
                                 }),
@@ -355,17 +355,16 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                               margin: EdgeInsets.only(left: 11.w),
                               child: Text(
                                 "Hit 3out of 5 in the lineup",
-                                style:
-                                    10.w4(color: AppColors.cB3B3B3, height: 1),
+                                style: 10
+                                    .w4(color: AppColors.cB3B3B3, height: 1),
                               ))
                         ],
                       ),
                     ),
-                  )),
+                  ),
                 if (flexBet.isNotEmpty && powerIndex != -1) 9.hGap,
                 if (powerIndex != -1)
-                  Flexible(
-                      child: InkWell(
+                  InkWell(
                     onTap: () {
                       if (players.length >= 5) {
                         return;
@@ -374,9 +373,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                     },
                     child: Container(
                       height: 167.w,
-                      constraints: BoxConstraints(
-                        maxWidth: 250.w
-                      ),
+                      constraints: BoxConstraints(maxWidth: 250.w),
                       padding: EdgeInsets.symmetric(
                           horizontal: 10.w, vertical: 14.w),
                       decoration: BoxDecoration(
@@ -396,8 +393,8 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                             children: [
                               Text(
                                 "Power play",
-                                style:
-                                    14.w7(color: AppColors.c262626, height: 1),
+                                style: 14
+                                    .w7(color: AppColors.c262626, height: 1),
                               ),
                               _buildSelect(modelCurrentIndex.value == 1),
                             ],
@@ -424,13 +421,13 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                               margin: EdgeInsets.only(left: 11.w),
                               child: Text(
                                 "Hit 3out of 5 in the lineup",
-                                style:
-                                    10.w4(color: AppColors.cB3B3B3, height: 1),
+                                style: 10
+                                    .w4(color: AppColors.cB3B3B3, height: 1),
                               ))
                         ],
                       ),
                     ),
-                  )),
+                  ),
               ],
             ),
             10.vGap,
@@ -647,13 +644,13 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                               );
                             }
                             return InkWell(
-                              onTap: (){
-                                if(players.length<2){
+                              onTap: () {
+                                if (players.length < 2) {
                                   EasyLoading.showToast("Select at least 2");
                                   return;
                                 }
-                                picksIndexController
-                                    .guess(modelCurrentIndex.value == 0 ? 1 : 2);
+                                picksIndexController.guess(
+                                    modelCurrentIndex.value == 0 ? 1 : 2);
                               },
                               child: BtnBackground(
                                 child: SizedBox(

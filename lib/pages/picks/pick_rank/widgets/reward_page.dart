@@ -74,33 +74,38 @@ class _RewardPageState extends State<RewardPage>
                               children: [
                                 Flexible(
                                   flex: 1,
-                                  child: Container(
-                                    height: 77.w,
-                                    width: 156.w,
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 3.w, horizontal: 13.w),
-                                    decoration: const BoxDecoration(
-                                        image: DecorationImage(
-                                            image:
-                                                AssetImage(Assets.uiRankBoxPng),
-                                            fit: BoxFit.fill)),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text("Box",
-                                            style: 24
-                                                .w7(color: AppColors.cFFFFFF)),
-                                        Text(
-                                          "rank ${controller.minRak}-10",
-                                          style: TextStyle(
-                                              color: AppColors.cB3B3B3,
-                                              fontSize: 12.sp),
-                                        )
-                                      ],
-                                    ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Container(
+                                        height: 77.w,
+                                        width: 156.w,
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 3.w, horizontal: 13.w),
+                                        decoration: const BoxDecoration(
+                                            image: DecorationImage(
+                                                image:
+                                                    AssetImage(Assets.uiRankBoxPng),
+                                                fit: BoxFit.fill)),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text("Box",
+                                                style: 24
+                                                    .w7(color: AppColors.cFFFFFF)),
+                                            Text(
+                                              "rank ${controller.minRak}-10",
+                                              style: TextStyle(
+                                                  color: AppColors.cB3B3B3,
+                                                  fontSize: 12.sp),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                                 SizedBox(
@@ -108,33 +113,38 @@ class _RewardPageState extends State<RewardPage>
                                 ),
                                 Flexible(
                                   flex: 1,
-                                  child: Container(
-                                    height: 77.w,
-                                    width: 156.w,
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 3.w, horizontal: 13.w),
-                                    decoration: const BoxDecoration(
-                                        image: DecorationImage(
-                                            image: AssetImage(
-                                                Assets.uiRankMoneyPng),
-                                            fit: BoxFit.fitWidth)),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text("Money",
-                                            style: 24
-                                                .w7(color: AppColors.cFFFFFF)),
-                                        Text(
-                                          "rank 1-${controller.maxRank}",
-                                          style: TextStyle(
-                                              color: AppColors.cB3B3B3,
-                                              fontSize: 12.sp),
-                                        )
-                                      ],
-                                    ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        height: 77.w,
+                                        width: 156.w,
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 3.w, horizontal: 13.w),
+                                        decoration: const BoxDecoration(
+                                            image: DecorationImage(
+                                                image: AssetImage(
+                                                    Assets.uiRankMoneyPng),
+                                                fit: BoxFit.fitWidth)),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text("Money",
+                                                style: 24
+                                                    .w7(color: AppColors.cFFFFFF)),
+                                            Text(
+                                              "rank 1-${controller.maxRank}",
+                                              style: TextStyle(
+                                                  color: AppColors.cB3B3B3,
+                                                  fontSize: 12.sp),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
