@@ -608,15 +608,8 @@ class _RankPageState extends State<RankPage>
                                     color: AppColors.cE6E6E6,
                                     borderRadius: BorderRadius.circular(20.w)),
                                 child: Column(
-                                  children: controller.rankInfo.ranks.length <=
-                                          3
-                                      ? [
-                                          SizedBox(
-                                            height: 68.w,
-                                          )
-                                        ]
-                                      : List.generate(
-                                          controller.rankInfo.ranks.length - 3,
+                                  children: List.generate(
+                                          controller.rankInfo.ranks.length,
                                           (index) {
                                           return _buildItem(index);
                                         }),
@@ -723,6 +716,30 @@ class _RankPageState extends State<RankPage>
 
   Widget _buildItem(int i) {
     var index = i + 3;
+    if(index > (controller.rankInfo.ranks.length-1)){
+      return Container(
+        height: 68.w,
+        padding: EdgeInsets.only(left: 15.w, right: 22.w),
+        decoration: BoxDecoration(
+            color: AppColors.cF2F2F2, borderRadius: BorderRadius.circular(20.w)),
+        margin: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 10.w),
+        alignment: Alignment.center,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              width: 30.w,
+              alignment: Alignment.center,
+              child: Text(
+                "$index",
+                style: 19.w7(color: AppColors.c666666),
+              ),
+            ),
+            Text("NO data",style: 18.w7(color: AppColors.cB3B3B3.withOpacity(0.5)),)
+          ],
+        ),
+      );
+    }
     var item = Container(
       height: 68.w,
       padding: EdgeInsets.only(left: 15.w, right: 22.w),

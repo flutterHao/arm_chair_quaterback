@@ -75,10 +75,10 @@ class ReciveAwardItemController extends GetxController {
     double count = -1;
     for (int i = 0; i < data.length; i++) {
       var item = data[i];
-      if (item.reciveAwardInfo.guessData[0].status > 1) {
-        if (item.reciveAwardInfo.guessData[0].awards.isNotEmpty) {
-          var award = item.reciveAwardInfo.guessData[0].awards[0];
-          count += award.num;
+      if ((item.guessData?.status??0) > 1) {
+        if (item.guessData?.awards.isNotEmpty == true) {
+          var award = item.guessData?.awards[0];
+          count += award?.num??0;
         }
       }
     }

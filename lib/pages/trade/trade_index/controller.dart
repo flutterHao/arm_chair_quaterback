@@ -15,7 +15,9 @@ class TradeIndexController extends GetxController
     with GetSingleTickerProviderStateMixin {
   TradeIndexController();
 
-  final RefreshController refreshController = RefreshController();
+  final RefreshController buyRefreshController = RefreshController();
+  final RefreshController sellRefreshController = RefreshController();
+
 
   var loadStatus = LoadDataStatus.loading.obs;
 
@@ -46,11 +48,15 @@ class TradeIndexController extends GetxController
         loadStatus.value = LoadDataStatus.noData;
       }
       loadStatus.value = LoadDataStatus.success;
-      refreshController.refreshCompleted();
+      buyRefreshController.refreshCompleted();
+      sellRefreshController.refreshCompleted();
+
       update([idTradeIndexMain]);
     }, onError: (e) {
       loadStatus.value = LoadDataStatus.error;
-      refreshController.refreshCompleted();
+      buyRefreshController.refreshCompleted();
+      sellRefreshController.refreshCompleted();
+
     });
   }
 
@@ -58,7 +64,9 @@ class TradeIndexController extends GetxController
 
   refreshData() {
     if (loadStatus.value == LoadDataStatus.loading) {
-      refreshController.refreshCompleted();
+      buyRefreshController.refreshCompleted();
+      sellRefreshController.refreshCompleted();
+
       return;
     }
     _initData();
@@ -141,7 +149,9 @@ class TradeIndexController extends GetxController
   @override
   void dispose() {
     tabController.dispose();
-    refreshController.dispose();
+    buyRefreshController.dispose();
+    sellRefreshController.dispose();
+
     super.dispose();
   }
 }
