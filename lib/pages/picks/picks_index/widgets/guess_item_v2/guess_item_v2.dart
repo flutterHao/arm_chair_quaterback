@@ -67,7 +67,7 @@ class _GuessItemV2State extends State<GuessItemV2> {
                       style: 14.w4(color: AppColors.c262626, height: 1),
                       overflow: TextOverflow.ellipsis,
                     ),
-                    7.vGap,
+                    3.5.vGap,
                     Text(
                       "VS ${player.awayTeamInfo?.shortEname ?? ""}   ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(player.guessInfo.gameStartTime))}",
                       style: 10.w4(color: AppColors.cB3B3B3, height: 1),

@@ -67,8 +67,6 @@ class GussPlayerItem extends StatelessWidget {
                       color: AppColors.cB3B3B3,
                       borderRadius: BorderRadius.circular(20.w)),
                   child: ImageWidget(url: Utils.getTeamUrl(rankInfoEntity.teamId))),
-
-              ///todo 换网络图
             ],
           ),
         ),
@@ -100,7 +98,7 @@ class GussPlayerItem extends StatelessWidget {
           alignment: Alignment.centerRight,
           width: 55.w,
           child: Text(
-            rankInfoEntity.chip.toDouble().toStringAsFixed(0),
+            Utils.formatMoney(rankInfoEntity.chip.toDouble()),
             style: 18.w7(color: AppColors.c262626),
           ),
         )

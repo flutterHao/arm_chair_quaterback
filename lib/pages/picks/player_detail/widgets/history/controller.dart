@@ -1,21 +1,37 @@
+import 'package:arm_chair_quaterback/common/entities/nba_player_season_game_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
+import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
+import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+class SeasonHistoryItems {
+  final NbaPlayerSeasonGameEntity playerSeasonGameEntity;
+  final NbaTeamEntity teamEntity;
+  SeasonHistoryItems(this.playerSeasonGameEntity, this.teamEntity);
+}
+
+class SeasonHistory{
+  late List<SeasonHistoryItems> seasonHistoryItems=[];
+  var loadStatus = LoadDataStatus.loading.obs;
+}
 
 class HistoryController extends GetxController {
   HistoryController(this.playerId);
 
   final int playerId;
 
-
   final ScrollController scrollController = ScrollController();
   final List<GlobalKey> tileKeys = List.generate(10, (index) => GlobalKey());
-  final List<String> items = List.generate(10, (index) => "Item $index");
+  final List<String> items = List.generate(
+      MyDateUtils.getNowDateTime().year - 2016,
+      (index) => "${MyDateUtils.getNowDateTime().year - index}");
 
 
-  Map<String ,List> data = {};
+  Map<String, SeasonHistory> data = {};
 
   // tap
   void handleTap(int index) {
@@ -29,17 +45,37 @@ class HistoryController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    data = items.fold({},(pre,e){
+      pre[e] = SeasonHistory();
+      return pre;
+    });
+    getData(MyDateUtils.getNowDateTime().year.toString());
   }
 
-  getData(int season){
-    var futures = <dynamic>[
-      PicksApi.getNBAPlayerSeasonGameData(playerId, season, 1, 60)
+  getData(String season) {
+    data[season.toString()]!.loadStatus.value = LoadDataStatus.loading;
+    var futures = [
+      PicksApi.getNBAPlayerSeasonGameData(playerId, int.parse(season), 1, 60),
+      CacheApi.getNBATeamDefine(getList: true)
     ];
-    futures.add(CacheApi.getNBATeamDefine(getList: true));
-    Future.wait(futures as Iterable<Future>).then((result){
-
+    Future.wait(futures).then((result) {
+      List<NbaPlayerSeasonGameEntity> seasons =
+          result[0] as List<NbaPlayerSeasonGameEntity>;
+      if(seasons.isEmpty){
+        data[season.toString()]!.loadStatus.value = LoadDataStatus.noData;
+      }else{
+        data[season.toString()]!.seasonHistoryItems = seasons
+            .map((e) => SeasonHistoryItems(e, Utils.getTeamInfo(e.awayTeamId),))
+            .toList();
+        data[season.toString()]!.loadStatus.value = LoadDataStatus.success;
+      }
+      update(["$season"]);
+    },onError: (e){
+      data[season.toString()]!.loadStatus.value = LoadDataStatus.error;
     });
   }
+
+  static String get idHistoryMain => "id_history_main";
 
   /// 在 onInit() 之后调用 1 帧。这是进入的理想场所
   @override

@@ -35,11 +35,15 @@ class ReciveAwardItemController extends GetxController {
         : data[0].reciveAwardInfo.type == 2
             ? newsDefineEntity.powerBetWin
             : [];
-    var temps = List.generate(data.length, (index) => -1.0).toList();
     var winCount = getWinCount();
-    var start = data.length - bets.length;
-    temps.replaceRange(start, winCount, bets);
-    return temps[winCount - 1].toString();
+    if(data[0].reciveAwardInfo.type == 1) {
+      var start = data.length - bets.length;
+      var temps = List.generate(data.length, (index) => -1.0).toList();
+      temps.replaceRange(start, winCount, bets);
+      return temps[winCount - 1].toString();
+    }else{
+      return bets[winCount-2].toString();
+    }
   }
 
   String getTypeString() {

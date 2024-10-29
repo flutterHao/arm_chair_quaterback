@@ -56,7 +56,6 @@ class PlayerAvatarWidget extends StatelessWidget {
                 color: backgroundColor,
                 height: width,
                 width: width,
-                padding: const EdgeInsets.only(top: 10),
                 child: ExtendedImage.network(
                   Utils.getPlayUrl(playerId),
                   fit: BoxFit.fitHeight,

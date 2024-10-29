@@ -1,5 +1,6 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
+import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -27,8 +28,10 @@ class PersonalCenterPage extends GetView<PersonalCenterController> {
 
   @override
   Widget build(BuildContext context) {
-    var teamId = ((ModalRoute.of(context)?.settings.arguments ?? Get.arguments)
-        as Map)["teamId"];
+    var args = ((ModalRoute.of(context)?.settings.arguments ?? Get.arguments)
+        as Map);
+    var teamId = args["teamId"];
+    var initTab = args["initTab"];
     return HorizontalDragBackWidget(
       child: GetBuilder<PersonalCenterController>(
         id: PersonalCenterController.idPersonalCenterMain,
@@ -46,20 +49,25 @@ class PersonalCenterPage extends GetView<PersonalCenterController> {
                 padding: EdgeInsets.only(bottom: 6.w, right: 23.w, left: 23.w),
                 child: Row(
                   children: [
-                    Container(
-                        margin: EdgeInsets.symmetric(vertical: 10.w),
-                        decoration: BoxDecoration(
-                            color: AppColors.cF2F2F2,
-                            borderRadius: BorderRadius.circular(8.w)),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8.w),
-                          child: ImageWidget(
-                            color: AppColors.cFFFFFF,
-                            url: Utils.getTeamUrl(
-                                controller.teamSimpleEntity?.teamId),
-                            width: 48.w,
-                          ),
-                        )),
+                    InkWell(
+                      onTap: (){
+                        Get.toNamed(RouteNames.mineMineInfo);
+                      },
+                      child: Container(
+                          margin: EdgeInsets.symmetric(vertical: 10.w),
+                          decoration: BoxDecoration(
+                              color: AppColors.cF2F2F2,
+                              borderRadius: BorderRadius.circular(8.w)),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8.w),
+                            child: ImageWidget(
+                              color: AppColors.cFFFFFF,
+                              url: Utils.getTeamUrl(
+                                  controller.teamSimpleEntity?.teamId),
+                              width: 48.w,
+                            ),
+                          )),
+                    ),
                     10.hGap,
                     Expanded(
                       child: Column(
@@ -180,9 +188,7 @@ class PersonalCenterPage extends GetView<PersonalCenterController> {
                                 top: appBarHeight + 17.w, bottom: 16.w),
                             decoration: BoxDecoration(
                                 color: AppColors.cEFEFEF,
-                                borderRadius: BorderRadius.circular(17.w),
-                                border: Border.all(
-                                    width: 1, color: AppColors.cB3B3B3)),
+                                borderRadius: BorderRadius.circular(17.w),),
                             child:
                                 LayoutBuilder(builder: (context, constraints) {
                               var itemWidth = (constraints.maxWidth - 8.w) /

@@ -23,9 +23,10 @@ class TeamInfo {
 
 class PersonalCenterController extends GetxController
     with GetSingleTickerProviderStateMixin {
-  PersonalCenterController({this.teamId});
+  PersonalCenterController( {this.initTab,this.teamId});
 
   final int? teamId;
+  final int? initTab;
 
   List<String> titles = [
     "Game",
@@ -58,7 +59,7 @@ class PersonalCenterController extends GetxController
   void onInit() {
     super.onInit();
     tabController =
-        TabController(length: titles.length, vsync: this, initialIndex: 0);
+        TabController(length: titles.length, vsync: this, initialIndex: initTab??0);
     getData();
     _initGameData();
   }

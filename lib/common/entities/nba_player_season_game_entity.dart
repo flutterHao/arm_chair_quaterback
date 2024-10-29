@@ -29,7 +29,7 @@ class NbaPlayerSeasonGameEntity {
 	late double teamId;
 	late double threePm;
 	late double to;
-	late double awayTeamId;
+	late int awayTeamId;
 
 	NbaPlayerSeasonGameEntity();
 

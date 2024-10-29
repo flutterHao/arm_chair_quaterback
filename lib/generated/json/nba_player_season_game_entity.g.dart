@@ -100,7 +100,7 @@ NbaPlayerSeasonGameEntity $NbaPlayerSeasonGameEntityFromJson(
   if (to != null) {
     nbaPlayerSeasonGameEntity.to = to;
   }
-  final double? awayTeamId = jsonConvert.convert<double>(json['awayTeamId']);
+  final int? awayTeamId = jsonConvert.convert<int>(json['awayTeamId']);
   if (awayTeamId != null) {
     nbaPlayerSeasonGameEntity.awayTeamId = awayTeamId;
   }
@@ -164,7 +164,7 @@ extension NbaPlayerSeasonGameEntityExtension on NbaPlayerSeasonGameEntity {
     double? teamId,
     double? threePm,
     double? to,
-    double? awayTeamId,
+    int? awayTeamId,
   }) {
     return NbaPlayerSeasonGameEntity()
       ..fga = fga ?? this.fga

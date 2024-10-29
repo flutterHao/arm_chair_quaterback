@@ -12,6 +12,8 @@
 // import 'package:arm_chair_quaterback/pages/news/rank/team_view.dart';
 import 'package:arm_chair_quaterback/pages/league/bindings.dart';
 import 'package:arm_chair_quaterback/pages/league/view.dart';
+import 'package:arm_chair_quaterback/pages/mine/mine_info/bindings.dart';
+import 'package:arm_chair_quaterback/pages/mine/mine_info/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/personal_center/bindings.dart';
 import 'package:arm_chair_quaterback/pages/picks/personal_center/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
@@ -62,6 +64,12 @@ class AppPages {
         name: RouteNames.picksPersonalCenter,
         page: () => const PersonalCenterPage(),
         binding: PersonalCenterBinding()
+    ),
+    GetPage(
+        opaque: false,
+        name: RouteNames.mineMineInfo,
+        page: () => const MineInfoPage(),
+        binding: MineInfoBinding()
     ),
   ];
 }

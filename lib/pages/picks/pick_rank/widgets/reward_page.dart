@@ -33,14 +33,12 @@ class _RewardPageState extends State<RewardPage>
     return GetBuilder<PickRankController>(
         id: PickRankController.idAwards,
         builder: (controller) {
-          if (controller.awardInfo.isEmpty) {
-            return Center(child: LoadStatusWidget(onRefreshTap: controller.reloadRewardData,));
-          }
           return Stack(
             children: [
               SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 child: Stack(
+                  alignment: controller.awardInfo.isEmpty?Alignment.center:AlignmentDirectional.topStart,
                   children: [
                     SizedBox(
                       height: 599.w,
@@ -51,7 +49,7 @@ class _RewardPageState extends State<RewardPage>
                         fit: BoxFit.fitWidth,
                       ),
                     ),
-                    Container(
+                    controller.awardInfo.isEmpty?Center(child: LoadStatusWidget(onRefreshTap: controller.reloadRewardData,)):Container(
                       width: MediaQuery.of(context).size.width,
                       // color: Colors.red,
                       margin:

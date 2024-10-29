@@ -8,6 +8,6 @@ class PersonalCenterBinding implements Bindings {
   final int? teamId;
   @override
   void dependencies() {
-    Get.lazyPut<PersonalCenterController>(() => PersonalCenterController(teamId: (Get.arguments as Map)["teamId"]));
+    Get.lazyPut<PersonalCenterController>(() => PersonalCenterController(teamId: (Get.arguments as Map)["teamId"],initTab:(Get.arguments as Map)["initTab"]));
   }
 }

@@ -140,7 +140,7 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                   child: Center(
                     child: Swiper(
                       itemCount: 3,
-                      autoplay: true,
+                      // autoplay: true,
                       // loop: false,
                       viewportFraction: .8,
                       indicatorLayout: PageIndicatorLayout.COLOR,
@@ -161,7 +161,8 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                                       .teamLoginInfo
                                       ?.team
                                       ?.teamId ??
-                                      0
+                                      0,
+                                  "initTab":1
                                 });
                             break;
                           case 2:

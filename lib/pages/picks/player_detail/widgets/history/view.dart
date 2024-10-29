@@ -1,5 +1,7 @@
+import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/history/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/history/product_datagridsource.dart';
 import 'package:flutter/material.dart';
@@ -9,11 +11,11 @@ import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 class HistoryPage extends StatefulWidget {
-  const HistoryPage({super.key, required this.headHeight, required this.playerId});
+  const HistoryPage(
+      {super.key, required this.headHeight, required this.playerId});
 
   final double headHeight;
   final int playerId;
-
 
   @override
   State<HistoryPage> createState() => _HistoryPageState();
@@ -27,7 +29,7 @@ class _HistoryPageState extends State<HistoryPage>
   Widget build(BuildContext context) {
     return GetBuilder<HistoryController>(
       init: controller = HistoryController(widget.playerId),
-      builder: (controller) {
+      builder: (_) {
         return Container(
           margin: EdgeInsets.symmetric(horizontal: 16.w),
           child: MediaQuery.removePadding(
@@ -39,6 +41,7 @@ class _HistoryPageState extends State<HistoryPage>
                 itemCount: controller.items.length,
                 itemBuilder: (context, index) {
                   bool lastItem = index == controller.items.length - 1;
+                  String year = controller.items[index];
                   return Container(
                     margin: EdgeInsets.only(bottom: lastItem ? 150 : 0),
                     child: Theme(
@@ -49,40 +52,68 @@ class _HistoryPageState extends State<HistoryPage>
                         key: controller.tileKeys[index],
                         // 使用 GlobalKey
                         title: Text(
-                          "${2024 - index}",
+                          year,
                           style: 16.w7(color: AppColors.c262626),
                         ),
-                        initiallyExpanded: index == 0,
+                        // initiallyExpanded: index == 0,
                         tilePadding: EdgeInsets.only(right: 5.w),
                         onExpansionChanged: (expanded) {
                           if (expanded) {
                             // 在展开时自动滚动到确保内容在屏幕中
                             _scrollToItem(context, index);
+                            if (controller.data[year]!.loadStatus.value ==
+                                    LoadDataStatus.loading &&
+                                controller.data[year]!.seasonHistoryItems
+                                        .isEmpty ==
+                                    true) {
+                              Future.delayed(
+                                  const Duration(
+                                    milliseconds: 300,
+                                  ), () {
+                                controller.getData(year);
+                              });
+                            }
                           }
                         },
                         children: [
-                          Builder(
-                            builder: (context) {
-                              var listSize =21;
-                              return Container(
-                                height: listSize*20.w+(2*11.w)+10.w,
-                                constraints: BoxConstraints(
-                                  minHeight: 350.w
-                                ),
-                                padding: EdgeInsets.symmetric(horizontal: 11.w,vertical: 14.w),
-                                decoration: BoxDecoration(
-                                    color: AppColors.cF2F2F2,
-                                    borderRadius: BorderRadius.circular(16.w)),
-                                child: SfDataGridTheme(
-                                    data: const SfDataGridThemeData(
-                                      gridLineColor: AppColors.cTransparent,
-                                      frozenPaneLineColor: Colors.transparent,
-                                      rowHoverColor: Colors.blue,
-                                    ),
-                                    child: _buildDataGrid(listSize)),
-                              );
-                            }
-                          ),
+                          GetBuilder<HistoryController>(
+                              id: year,
+                              builder: (controller) {
+                                List<SeasonHistoryItems> itemData =
+                                    controller.data[year]!.seasonHistoryItems;
+                                var loadStatus =
+                                    controller.data[year]!.loadStatus;
+                                var listSize = itemData.length;
+                                print('listSize:$listSize');
+                                return Container(
+                                  height: listSize * 22.w + (2 * 14.w) + 10.w,
+                                  constraints: BoxConstraints(
+                                      minHeight: listSize > 0 ? 0 : 350.w),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 11.w, vertical: 14.w),
+                                  decoration: BoxDecoration(
+                                      color: AppColors.cF2F2F2,
+                                      borderRadius:
+                                          BorderRadius.circular(16.w)),
+                                  child: itemData.isEmpty == true
+                                      ? Obx(() {
+                                          return Center(
+                                            child: LoadStatusWidget(
+                                              loadDataStatus: loadStatus.value,
+                                            ),
+                                          );
+                                        })
+                                      : SfDataGridTheme(
+                                          data: const SfDataGridThemeData(
+                                            gridLineColor:
+                                                AppColors.cTransparent,
+                                            frozenPaneLineColor:
+                                                Colors.transparent,
+                                            rowHoverColor: Colors.blue,
+                                          ),
+                                          child: _buildDataGrid(itemData)),
+                                );
+                              }),
                         ],
                       ),
                     ),
@@ -94,14 +125,13 @@ class _HistoryPageState extends State<HistoryPage>
     );
   }
 
-  List<GridColumn> _obtainColumns() {
-    List<GridColumn> columns;
-    columns = <GridColumn>[
+  List<GridColumn> _obtainColumns(List<SeasonHistoryItems> itemData) {
+    List<GridColumn> columns = [];
+    columns.addAll([
       GridColumn(
           columnName: 'id',
           width: 20.w,
           label: Container(
-            height: 20,
             alignment: Alignment.center,
             child: Text(
               'WK',
@@ -113,86 +143,49 @@ class _HistoryPageState extends State<HistoryPage>
           width: 48.w,
           label: Container(
             alignment: Alignment.center,
-            child:  Text(
+            child: Text(
               'OPP',
               style: 10.w4(color: AppColors.cB3B3B3, height: 1),
             ),
           )),
-      GridColumn(
-          columnName: 'productId',
-          width: 48.w,
+    ]);
+    var list = itemData[0].playerSeasonGameEntity.toJson().keys.toList();
+    for (int i = 0; i < list.length; i++) {
+      var key = list[i];
+      if (ProductDataGridSource.excludeKeys.contains(key)) {
+        continue;
+      }
+      double width = 40.w;
+
+      if (i == 0) {
+        width = 48.w;
+      }
+      var gridColumn = GridColumn(
+          columnName: key,
+          width: width,
           label: Container(
             alignment: Alignment.center,
             child: Text(
-              'PTS',
+              key.toUpperCase(),
               style: 10.w4(color: AppColors.cB3B3B3, height: 1),
             ),
-          )),
-
-      GridColumn(
-          columnName: 'product',
-          width: 40.w,
-          label: Container(
-            alignment: Alignment.center,
-            child:  Text(
-              'PTS',
-              style: 10.w4(color: AppColors.cB3B3B3, height: 1),
-            ),
-          )),
-      GridColumn(
-          columnName: 'orderDate',
-          width: 40.w,
-          label: Container(
-            alignment: Alignment.center,
-            child:  Text(
-              'PTS',
-              style: 10.w4(color: AppColors.cB3B3B3, height: 1),
-            ),
-          )),
-      GridColumn(
-          columnName: 'quantity',
-          width: 40.w,
-          label: Container(
-            alignment: Alignment.center,
-            child:  Text(
-              'PTS',
-              style: 10.w4(color: AppColors.cB3B3B3, height: 1),
-            ),
-          )),
-      GridColumn(
-          columnName: 'city',
-          width: 40.w,
-          label: Container(
-            alignment: Alignment.center,
-            child:  Text(
-              'PTS',
-              style: 10.w4(color: AppColors.cB3B3B3, height: 1),
-            ),
-          )),
-      GridColumn(
-          columnName: 'unitPrice',
-          width: 40.w,
-          label: Container(
-            alignment: Alignment.center,
-            child:  Text(
-              'PTS',
-              style: 10.w4(color: AppColors.cB3B3B3, height: 1),
-            ),
-          )),
-    ];
+          ));
+      columns.add(gridColumn);
+    }
+    print('columns:${columns.length}');
     return columns;
   }
 
-  SfDataGrid _buildDataGrid(int listSize) {
+  SfDataGrid _buildDataGrid(List<SeasonHistoryItems> itemData) {
     return SfDataGrid(
-      source: ProductDataGridSource('FreezePanes', productDataCount: listSize),
+      source: ProductDataGridSource(data: itemData),
       frozenRowsCount: 0,
       headerRowHeight: 20.w,
       rowHeight: 20.w,
       verticalScrollPhysics: const NeverScrollableScrollPhysics(),
       frozenColumnsCount: 2,
       headerGridLinesVisibility: GridLinesVisibility.none,
-      columns: _obtainColumns(),
+      columns: _obtainColumns(itemData),
     );
   }
 

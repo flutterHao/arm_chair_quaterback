@@ -44,32 +44,6 @@ class RegularWidget extends StatelessWidget {
                         style: 19.w7(color: AppColors.c262626),
                       ),
                     ),
-                    InkWell(
-                        onTap: () {
-                          final List<String> servers = [
-                            Address.personalDevUrl,
-                            Address.privateDevUrl,
-                            Address.publicDevUrl,
-                          ];
-                          String current = HttpUtil().getUrl;
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return ServerSwitchDialog(
-                                servers: servers,
-                                currentServer: current,
-                                onServerChanged: (newServer) {
-                                  HttpUtil().setUrl(newServer);
-                                  HomeController.to.login();
-                                },
-                              );
-                            },
-                          );
-                        },
-                        child: Text(
-                          "切换服务器",
-                          style: 15.w7(color: Colors.black),
-                        ))
                   ],
                 ),
               ),

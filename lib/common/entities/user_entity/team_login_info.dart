@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
+import 'package:get/get.dart';
 
 import 'team.dart';
 import 'team_prop_list.dart';
@@ -33,12 +34,12 @@ class TeamLoginInfo {
   });
 
   num getCoin() {
-    var firstWhere = teamPropList?.firstWhere((e) => e.propId == 103);
+    var firstWhere = teamPropList?.firstWhereOrNull((e) => e.propId == 103);
     return firstWhere?.num ?? 0;
   }
 
   num getMoney() {
-    var firstWhere = teamPropList?.firstWhere((e) => e.propId == 102);
+    var firstWhere = teamPropList?.firstWhereOrNull((e) => e.propId == 102);
     return firstWhere?.num ?? 0;
   }
 

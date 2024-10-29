@@ -540,13 +540,14 @@ class _GameState extends State<Game>
   }
 
   void _showLevelDetailDialog(BuildContext context) {
+    Future.delayed(const Duration(milliseconds: 200), () {
+      easyAnimationController?.forward(from: 0);
+    });
     showModalBottomSheet(
         context: Get.context!,
         isScrollControlled: true,
         builder: (context) {
-          Future.delayed(const Duration(milliseconds: 200), () {
-            easyAnimationController?.forward(from: 0);
-          });
+
           return SizedBox(
             height: 675.h,
             child: DialogBackground(

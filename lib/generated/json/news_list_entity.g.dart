@@ -171,6 +171,16 @@ NewsListDetail $NewsListDetailFromJson(Map<String, dynamic> json) {
   if (likes != null) {
     newsListDetail.likes = likes;
   }
+  final List<int>? teams = (json['teams'] as List<dynamic>?)?.map(
+          (e) => jsonConvert.convert<int>(e) as int).toList();
+  if (teams != null) {
+    newsListDetail.teams = teams;
+  }
+  final List<int>? players = (json['players'] as List<dynamic>?)?.map(
+          (e) => jsonConvert.convert<int>(e) as int).toList();
+  if (players != null) {
+    newsListDetail.players = players;
+  }
   return newsListDetail;
 }
 
@@ -192,6 +202,8 @@ Map<String, dynamic> $NewsListDetailToJson(NewsListDetail entity) {
   data['id'] = entity.id;
   data['views'] = entity.views;
   data['likes'] = entity.likes;
+  data['teams'] = entity.teams;
+  data['players'] = entity.players;
   return data;
 }
 
@@ -213,6 +225,8 @@ extension NewsListDetailExtension on NewsListDetail {
     int? id,
     int? views,
     int? likes,
+    List<int>? teams,
+    List<int>? players,
   }) {
     return NewsListDetail()
       ..isLike = isLike ?? this.isLike
@@ -230,7 +244,9 @@ extension NewsListDetailExtension on NewsListDetail {
       ..createTime = createTime ?? this.createTime
       ..id = id ?? this.id
       ..views = views ?? this.views
-      ..likes = likes ?? this.likes;
+      ..likes = likes ?? this.likes
+      ..teams = teams ?? this.teams
+      ..players = players ?? this.players;
   }
 }
 

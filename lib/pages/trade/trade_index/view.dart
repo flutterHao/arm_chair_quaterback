@@ -610,7 +610,7 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                   double percent = (basicMarketPrice - marketPrice).abs() /
                       basicMarketPrice *
                       100;
-                  bool isSpecial = trendPlayer.top; //todo 接口未定义
+                  bool isSpecial = trendPlayer.top??false;
                   var color = isGood ? AppColors.c10A86A : AppColors.cE72646;
                   Widget child = Container(
                     margin: EdgeInsets.only(
@@ -848,7 +848,7 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                                     Text(
                                       MyDateUtils.formatDate(
                                           MyDateUtils.getDateTimeByMs(
-                                              trendPlayer.removalTime -
+                                              (trendPlayer.removalTime??0) -
                                                   MyDateUtils.getNowDateTime()
                                                       .millisecondsSinceEpoch),
                                           format: DateFormats.H_M_S),

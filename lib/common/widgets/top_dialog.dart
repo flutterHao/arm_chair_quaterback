@@ -7,6 +7,7 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
+import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -138,7 +139,15 @@ class _TopDialogState extends State<TopDialog>
                                     child: InkWell(
                                       onTap: () {
                                         _popAndPushNamed(
-                                            context, RouteNames.mineMineInfo);
+                                            context, RouteNames.picksPersonalCenter,useRootNavigator: true,arguments: {
+                                          "teamId": Get
+                                              .find<HomeController>()
+                                              .userEntiry
+                                              .teamLoginInfo
+                                              ?.team
+                                              ?.teamId ??
+                                              0
+                                        });
                                       },
                                       child: Container(
                                         height: 88.w,
@@ -444,10 +453,11 @@ class _TopDialogState extends State<TopDialog>
     );
   }
 
-  void _popAndPushNamed(BuildContext context, String routeName) {
+  void _popAndPushNamed(BuildContext context, String routeName,
+      {bool useRootNavigator=false,dynamic? arguments}) {
     // Get.back(id: widget.routeId);
     Get.toNamed(routeName,
-        id: widget.routeId);
+        id: useRootNavigator?null:widget.routeId,arguments: arguments);
     // Navigator.of(context).pushNamed(routeName,arguments: {"id":widget.routeId});
   }
 

@@ -28,7 +28,7 @@ class NewsDefineEntity {
   late double newsCreatePlayerMax;
   late double newsPickOdds;
   late List<double> newsRefresh;
-  late double newsRefreshNum;
+  double? newsRefreshNum;
   late int newsReviewOpenNum;
   late double pfBetData;
   late List<double> powerBetWin;

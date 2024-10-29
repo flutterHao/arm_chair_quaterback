@@ -17,6 +17,7 @@ import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/drag_back_widget.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
@@ -344,7 +345,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                             child: ListView.builder(
                                 itemCount: flexBet.length,
                                 itemBuilder: (context, index) {
-                                  var num = players.length - 1 - index;
+                                  var num = players.length  - index;
                                   var bet = flexBet[flexBet.length - 1 - index];
                                   return _buildbet(
                                       num.toString(), bet.toString());
@@ -646,10 +647,16 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                               );
                             }
                             return InkWell(
-                              onTap: () => picksIndexController
-                                  .guess(modelCurrentIndex.value == 0 ? 1 : 2),
+                              onTap: (){
+                                if(players.length<2){
+                                  EasyLoading.showToast("Select at least 2");
+                                  return;
+                                }
+                                picksIndexController
+                                    .guess(modelCurrentIndex.value == 0 ? 1 : 2);
+                              },
                               child: BtnBackground(
-                                child: Container(
+                                child: SizedBox(
                                   height: 44.w,
                                   width: double.infinity,
                                   child: Stack(

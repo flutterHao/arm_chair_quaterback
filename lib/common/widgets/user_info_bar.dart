@@ -4,6 +4,7 @@ import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/getx_builder_ids.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entity/team_login_info.dart';
 import 'package:arm_chair_quaterback/common/net/address.dart';
+import 'package:arm_chair_quaterback/common/net/http.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -41,6 +42,27 @@ class UserInfoBar extends StatelessWidget {
             child: Row(
               children: [
                 InkWell(
+                  onLongPress: (){
+                    final List<String> servers = [
+                      Address.personalDevUrl,
+                      Address.privateDevUrl,
+                      Address.publicDevUrl,
+                    ];
+                    String current = HttpUtil().getUrl;
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return ServerSwitchDialog(
+                          servers: servers,
+                          currentServer: current,
+                          onServerChanged: (newServer) {
+                            HttpUtil().setUrl(newServer);
+                            HomeController.to.login();
+                          },
+                        );
+                      },
+                    );
+                  },
                   onTap: () {
                     if (!enable) {
                       Navigator.pop(context);
