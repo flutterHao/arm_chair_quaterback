@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
@@ -609,7 +611,7 @@ class _RankPageState extends State<RankPage>
                                     borderRadius: BorderRadius.circular(20.w)),
                                 child: Column(
                                   children: List.generate(
-                                          controller.rankInfo.ranks.length,
+                                          max(controller.rankInfo.ranks.length,10),
                                           (index) {
                                           return _buildItem(index);
                                         }),
