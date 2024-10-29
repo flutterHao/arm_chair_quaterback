@@ -81,6 +81,8 @@ class Assets {
   static const uiIconDetailsPng = 'assets/images/icon/ui_icon_details.png';
   static const uiIconConfirmPng = 'assets/images/icon/ui_icon_confirm.png';
   static const uiWindowsLosePng = 'assets/images/icon/ui_windows_lose.png';
+  static const uiDefaultMistakePng = 'assets/images/icon/ui_default_mistake.png';
+  static const uiDefaultNonePng = 'assets/images/icon/ui_default_none.png';
 
   ///test
   static const testTeamLogoPng = 'assets/test/test_team_logo.png';

@@ -5,9 +5,11 @@
  * @LastEditTime: 2024-10-28 16:25:20
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 ///@author lihonghao
 ///@date 2024/9/9
@@ -47,11 +49,27 @@ class ImageWidget extends StatelessWidget {
             // color: Colors.grey,
             borderRadius: borderRadius ?? BorderRadius.circular(20),
           ),
-          child: imageFailedPath != null ? Image.asset(imageFailedPath!,width: width,height: height,fit: BoxFit.fill,) : null,
+          child: imageFailedPath != null
+              ? Image.asset(
+                  imageFailedPath!,
+                  width: width,
+                  height: height,
+                  fit: BoxFit.fill,
+                )
+              : null,
         );
-    Widget loadingWidgetTemp = loadingWidget??error;
+    Widget loadingWidgetTemp = Center(
+      child: loadingWidget ??
+          SizedBox(
+              width: 25.w,
+              height: 25.w,
+              child: const CircularProgressIndicator(
+                color: AppColors.cE6E6E6,
+                strokeWidth: 2,
+              )),
+    );
 
-    if(borderRadius != null){
+    if (borderRadius != null) {
       error = ClipRRect(
         borderRadius: borderRadius!,
         child: error,
@@ -75,7 +93,7 @@ class ImageWidget extends StatelessWidget {
       loadStateChanged: (ExtendedImageState state) {
         switch (state.extendedImageLoadState) {
           case LoadState.failed:
-          Log.e("$url load failed");
+            Log.e("$url load failed");
             return error;
           case LoadState.loading:
             return loadingWidgetTemp;

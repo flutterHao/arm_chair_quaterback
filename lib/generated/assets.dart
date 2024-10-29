@@ -199,6 +199,8 @@ class Assets {
   static const String teamUiTeamBox05 = 'assets/images/team/ui_team_box_05.png';
   static const String teamUiTeamFrame = 'assets/images/team/ui_team_frame.png';
   static const String teamUiTrainingBall = 'assets/images/team/ui_training_ball.png';
+  static const String teamUiWindowsBox = 'assets/images/team/ui_windows_box.png';
+  static const String teamUiWindowsLose = 'assets/images/team/ui_windows_lose.png';
   static const String teamUiWindowsStamina = 'assets/images/team/ui_windows_Stamina.png';
   static const String testFiles = 'assets/test/files.txt';
   static const String testTestTeamLogo = 'assets/test/test_team_logo.png';

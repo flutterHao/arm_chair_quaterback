@@ -100,6 +100,9 @@ class _HistoryPageState extends State<HistoryPage>
                                           return Center(
                                             child: LoadStatusWidget(
                                               loadDataStatus: loadStatus.value,
+                                              onRefreshTap: (){
+                                                controller.getData(year);
+                                              },
                                             ),
                                           );
                                         })

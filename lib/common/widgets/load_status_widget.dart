@@ -12,14 +12,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoadStatusWidget extends StatelessWidget {
   const LoadStatusWidget({
-    this.icon = Assets.testTeamLogoPng,
+    this.icon,
     this.text,
     this.onRefreshTap,
     super.key,
     this.loadDataStatus,
   });
 
-  final String icon;
+  final String? icon;
   final String? text;
   final LoadDataStatus? loadDataStatus;
   final Function()? onRefreshTap;
@@ -32,13 +32,25 @@ class LoadStatusWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          IconWidget(iconWidth: 70.w, icon: icon),
+          if(loadDataStatus == LoadDataStatus.loading)
+            Center(
+              child: SizedBox(
+                width: 25.w,
+                height: 25.w,
+                child: const CircularProgressIndicator(
+                  color: AppColors.cB3B3B3,
+                  strokeWidth: 2,
+                ),
+              ),
+            )
+          else
+          IconWidget(iconWidth: 70.w, icon: icon??loadDataStatus?.icon??Assets.uiDefaultNonePng),
           5.vGap,
           Text(
             text??loadDataStatus?.desc??"",
             style: 12.w4(color: AppColors.cB3B3B3.withOpacity(.7)),
           ),
-          if (onRefreshTap != null && loadDataStatus != LoadDataStatus.loading)
+          if (onRefreshTap != null && loadDataStatus != LoadDataStatus.loading && loadDataStatus != LoadDataStatus.noData)
             InkWell(
               onTap: onRefreshTap,
               child: Container(
