@@ -55,5 +55,7 @@ static const uiTeamBox_04Png = 'assets/images/team/ui_team_box_04.png';
 static const uiTeamBox_05Png = 'assets/images/team/ui_team_box_05.png';
 static const uiTeamFramePng = 'assets/images/team/ui_team_frame.png';
 static const uiTrainingBallPng = 'assets/images/team/ui_training_ball.png';
+static const uiWindowsBoxPng = 'assets/images/team/ui_windows_box.png';
+static const uiWindowsLosePng = 'assets/images/team/ui_windows_lose.png';
 static const uiWindowsStaminaPng = 'assets/images/team/ui_windows_Stamina.png';
 static const uiBgDiagonalPng = 'assets/images/team/ui__bg_diagonal.png';

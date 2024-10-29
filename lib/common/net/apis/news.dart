@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 17:28:14
- * @LastEditTime: 2024-10-26 21:17:00
+ * @LastEditTime: 2024-10-28 14:59:55
  */
 import 'package:arm_chair_quaterback/common/entities/news_banner.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
@@ -23,7 +23,7 @@ class NewsApi {
 
   static Future<NewsListEntity> getNewsList() async {
     var json =
-        await HttpUtil().post(Api.getNewsList, data: {"page": 0, "size": 10});
+        await HttpUtil().post(Api.getNewsList, data: {"page": 0, "size": 7});
     return NewsListEntity.fromJson(json);
   }
 

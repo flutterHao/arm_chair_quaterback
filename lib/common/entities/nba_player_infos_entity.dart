@@ -101,7 +101,7 @@ class NbaPlayerInfosPlayerDataAvgList {
     value = max(value, (dreb + oreb) / 2);
     value = max(value, blk);
     value = max(value, stl);
-    return value+20;
+    return value + 20;
   }
 
   @override
@@ -183,6 +183,7 @@ class NbaPlayerInfosPlayerBaseInfoList {
   late int playerId = 0;
   late int basicMarketPrice = 0;
   late int beforeMarketPriceUpdateTime = 0;
+  late String elname = "";
 
   NbaPlayerInfosPlayerBaseInfoList();
 
@@ -193,7 +194,7 @@ class NbaPlayerInfosPlayerBaseInfoList {
   Map<String, dynamic> toJson() =>
       $NbaPlayerInfosPlayerBaseInfoListToJson(this);
 
-  String getGrade(){
+  String getGrade() {
     return grade.replaceAll("-", "").replaceAll("+", "");
   }
 

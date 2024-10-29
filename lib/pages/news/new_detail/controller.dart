@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:23:17
- * @LastEditTime: 2024-10-21 12:04:16
+ * @LastEditTime: 2024-10-28 19:48:25
  */
 
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
@@ -42,12 +42,19 @@ class NewsDetailController extends GetxController {
   void likeNews(NewsDetail item) {
     // if (item.isLike?.value == 1) return;
     NewsApi.newsLike(item.id!).then((value) {
-      if((item.isLike?.value != 1)){
-      item.likes = (item.likes ?? 0) + 1;
-      item.isLike!.value = 1;
-      }else{
-           item.likes = (item.likes ?? 0) - 1;
-      item.isLike!.value = 0;
+      if (item.isLike?.value == 0) {
+        /// 未点赞状态
+        item.likes = (item.likes ?? 0) + 1;
+        item.isLike!.value = 1;
+      } else if (item.isLike?.value == 1) {
+        /// 已点赞状态
+        item.likes = (item.likes ?? 0) - 1;
+        item.isLike!.value = 0;
+      } else if (item.isLike?.value == -1) {
+        /// 点踩状态
+        item.unLikes = (item.unLikes ?? 0) - 1;
+        item.likes = (item.likes ?? 0) + 1;
+        item.isLike!.value = 1;
       }
 
       // update();
@@ -58,9 +65,10 @@ class NewsDetailController extends GetxController {
   void unLikeNews(NewsDetail item) {
     if (item.isLike?.value == -1) return;
     NewsApi.newsUnLike(item.id!).then((value) {
-      if(item.isLike?.value == 1){
-      item.likes = (item.likes ?? 0) - 1;
+      if (item.isLike?.value == 1) {
+        item.likes = (item.likes ?? 0) - 1;
       }
+      item.unLikes = (item.unLikes ?? 0) + 1;
       item.isLike!.value = -1;
 
       // update();

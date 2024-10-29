@@ -573,6 +573,10 @@ NbaPlayerInfosPlayerBaseInfoList $NbaPlayerInfosPlayerBaseInfoListFromJson(
     nbaPlayerInfosPlayerBaseInfoList.beforeMarketPriceUpdateTime =
         beforeMarketPriceUpdateTime;
   }
+  final String? elname = jsonConvert.convert<String>(json['elname']);
+  if (elname != null) {
+    nbaPlayerInfosPlayerBaseInfoList.elname = elname;
+  }
   return nbaPlayerInfosPlayerBaseInfoList;
 }
 
@@ -604,6 +608,7 @@ Map<String, dynamic> $NbaPlayerInfosPlayerBaseInfoListToJson(
   data['playerId'] = entity.playerId;
   data['basicMarketPrice'] = entity.basicMarketPrice;
   data['beforeMarketPriceUpdateTime'] = entity.beforeMarketPriceUpdateTime;
+  data['elname'] = entity.elname;
   return data;
 }
 
@@ -634,6 +639,7 @@ extension NbaPlayerInfosPlayerBaseInfoListExtension on NbaPlayerInfosPlayerBaseI
     int? playerId,
     int? basicMarketPrice,
     int? beforeMarketPriceUpdateTime,
+    String? elname,
   }) {
     return NbaPlayerInfosPlayerBaseInfoList()
       ..marketPrice = marketPrice ?? this.marketPrice
@@ -661,6 +667,7 @@ extension NbaPlayerInfosPlayerBaseInfoListExtension on NbaPlayerInfosPlayerBaseI
       ..playerId = playerId ?? this.playerId
       ..basicMarketPrice = basicMarketPrice ?? this.basicMarketPrice
       ..beforeMarketPriceUpdateTime = beforeMarketPriceUpdateTime ??
-          this.beforeMarketPriceUpdateTime;
+          this.beforeMarketPriceUpdateTime
+      ..elname = elname ?? this.elname;
   }
 }

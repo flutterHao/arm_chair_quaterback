@@ -51,7 +51,7 @@ class NewsDetail {
 
   factory NewsDetail.fromJson(Map<String, dynamic> json) {
     var isLike = RxInt(json['isLike']);
-    var reviewsCount=RxInt(json['reviewsCount']);
+    var reviewsCount = RxInt(json['reviewsCount']);
     return NewsDetail(
       award: json['award'] as int?,
       content: json['content'] as String?,

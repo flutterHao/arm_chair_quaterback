@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-21 20:20:49
- * @LastEditTime: 2024-10-23 11:46:38
+ * @LastEditTime: 2024-10-29 12:25:25
  */
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
@@ -19,11 +19,17 @@ class Utils {
     return image;
   }
 
+  ///深色队徽
   static String getTeamUrl(int? teamId) {
     String url = ConfigStore.to.getServiceUrl();
     return "$url/image/team/$teamId.png";
   }
 
+  ///白色队徽
+  static String getWhiteTeamUrl(int? teamId) {
+    String url = ConfigStore.to.getServiceUrl();
+    return "$url/image/team_white/$teamId.png";
+  }
   static String getPropIconUrl(id) {
     // String url = ConfigStore.to.getServiceUrl();
     return "assets/images/icon/icon_$id.png";

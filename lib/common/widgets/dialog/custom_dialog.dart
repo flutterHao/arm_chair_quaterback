@@ -9,7 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
  * @Description: 自定义弹窗
  * @Author: lihonghao
  * @Date: 2024-09-28 15:59:52
- * @LastEditTime: 2024-10-12 18:36:24
+ * @LastEditTime: 2024-10-28 17:04:10
  */
 class CustomDialog extends StatelessWidget {
   const CustomDialog(
@@ -18,7 +18,8 @@ class CustomDialog extends StatelessWidget {
       this.image,
       this.backgroudColor,
       required this.content,
-      required this.onTap,  this.showComfirmButton=true});
+      required this.onTap,
+      this.showComfirmButton = true});
   final String title;
   final String? image;
   final Color? backgroudColor;
@@ -57,7 +58,7 @@ class CustomDialog extends StatelessWidget {
               margin: EdgeInsets.only(top: 10.w),
               child: Image.asset(
                 image ?? Assets.uiWindowsAwardPng,
-                height: 104,
+                height: 96.w,
                 fit: BoxFit.cover,
               ),
             ),
@@ -85,13 +86,13 @@ class CustomDialog extends StatelessWidget {
                       constraints: BoxConstraints(minHeight: 173.w),
                       child: content,
                     ),
-                    if(showComfirmButton)
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: ConfirmButton(
-                          margin: EdgeInsets.only(bottom: 27.w),
-                          onTap: () => onTap()),
-                    )
+                    if (showComfirmButton)
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: ConfirmButton(
+                            margin: EdgeInsets.only(bottom: 27.w),
+                            onTap: () => onTap()),
+                      )
                   ]),
             ),
           ],

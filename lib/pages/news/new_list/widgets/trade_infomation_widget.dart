@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-24 18:04:19
- * @LastEditTime: 2024-10-26 21:32:04
+ * @LastEditTime: 2024-10-28 20:26:40
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
@@ -13,7 +13,6 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/index.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/widgets/regular_widget.dart';
-import 'package:arm_chair_quaterback/pages/news/new_list/widgets/rumor_widget.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -34,7 +33,7 @@ class TradeInfomationWidget extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              20.vGap,
+              10.vGap,
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
                 child: Text(
@@ -48,12 +47,14 @@ class TradeInfomationWidget extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 10.w),
                 itemBuilder: (context, index) {
                   var item = controller.state.newsEntity.trade[index];
-                  item.players = controller.getPlayers(item.dataLabel);
-                  item.teams = controller.getNewsTeam(item.dataLabel);
+                  item.players = controller.getNBAPlayers(item.dataLabel,
+                      tag: "PlayerTrade");
+                  item.teams = controller.getNBATeams(item.dataLabel,
+                      tag: "PlayerTrade");
                   return InkWell(
-                    onTap: () => controller.pageToDetail(index),
+                    onTap: () => controller.pageToDetail(item),
                     child: _Item(
-                      item: controller.state.newsEntity.trade[index],
+                      item: item,
                     ),
                   );
                 },
@@ -91,6 +92,7 @@ class _Item extends StatelessWidget {
           borderRadius: BorderRadius.circular(16.w),
           color: AppColors.cF2F2F2,
         ),
+        clipBehavior: Clip.antiAlias,
         child: Column(
           children: [
             Container(
@@ -135,27 +137,6 @@ class _Item extends StatelessWidget {
                       ),
                     ),
 
-                  ///渐变背景
-                  // Container(
-                  //   width: 343.w,
-                  //   height: 85.w,
-                  //   decoration: BoxDecoration(
-                  //     borderRadius: BorderRadius.only(
-                  //       topLeft: Radius.circular(16.w),
-                  //       topRight: Radius.circular(16.w),
-                  //     ),
-                  //     gradient: LinearGradient(
-                  //       begin: Alignment.centerLeft,
-                  //       end: Alignment.centerRight,
-                  //       colors: [
-                  //         AppColors.c262626.withOpacity(0.5),
-                  //         AppColors.c262626.withOpacity(0.3),
-                  //         AppColors.c262626.withOpacity(0.2),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
-
                   ///箭头
                   Positioned(
                     top: 11.w,
@@ -167,11 +148,11 @@ class _Item extends StatelessWidget {
 
                   ///球员
                   // ..._playerView()
-                  if(item.players.isNotEmpty)
-                  ImageWidget(
-                    url: Utils.getPlayUrl(item.players[0]),
-                    height: 78.w,
-                  )
+                  if (item.players.isNotEmpty)
+                    ImageWidget(
+                      url: Utils.getPlayUrl(item.players[0]),
+                      height: 78.w,
+                    )
                 ],
               ),
             ),
@@ -189,7 +170,7 @@ class _Item extends StatelessWidget {
                     children: [
                       Text(
                         DateUtil.formatDateMs(
-                          item.postTime!,
+                          item.postTime,
                           format: DateFormats.y_mo_d_h_m,
                         ),
                         style: 10.w4(color: AppColors.cB3B3B3, height: 1),
@@ -197,7 +178,7 @@ class _Item extends StatelessWidget {
                       6.hGap,
                       Expanded(
                         child: Text(
-                          item.source ?? "",
+                          "-${item.source}",
                           overflow: TextOverflow.ellipsis,
                           style: 10.w4(color: AppColors.cB3B3B3, height: 1),
                         ),

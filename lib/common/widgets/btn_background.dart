@@ -1,3 +1,9 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-09-18 11:23:47
+ * @LastEditTime: 2024-10-28 16:57:36
+ */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -30,15 +36,24 @@ class BtnBackground extends StatelessWidget {
               child: Container(
                 height: 40.w,
                 decoration: BoxDecoration(
-                    color: AppColors.cFF7954,
-                    borderRadius: BorderRadius.circular(20.w)),
+                  color: AppColors.cFF7954,
+                  borderRadius: BorderRadius.circular(20.w),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.cFF7954.withOpacity(0.3),
+                      spreadRadius: 1,
+                      blurRadius: 5,
+                      offset: Offset(0, 2), // 设置阴影的偏移量
+                    ),
+                  ],
+                ),
               ),
             ),
             Container(
               height: 40.w,
               width: double.infinity,
               decoration: BoxDecoration(
-                color: AppColors.c000000,
+                color: AppColors.c262626,
                 borderRadius: BorderRadius.circular(20.w),
               ),
             ),

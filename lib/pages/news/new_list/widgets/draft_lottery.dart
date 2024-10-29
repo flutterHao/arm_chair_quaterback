@@ -2,12 +2,13 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-24 18:39:28
- * @LastEditTime: 2024-10-26 19:57:53
+ * @LastEditTime: 2024-10-28 18:17:48
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/controller.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,7 @@ class DraftLotteryWidget extends StatelessWidget {
     return GetBuilder<NewListController>(
         id: "newsList",
         builder: (controller) {
-          if (controller.state.newsEntity.draft.isEmpty) {
+          if (controller.state.newsEntity.draft.length <= 1) {
             return Container();
           }
           return Padding(
@@ -68,13 +69,12 @@ class DraftLotteryWidget extends StatelessWidget {
                           // itemCount: 5,
                           separatorBuilder: (context, index) => 9.hGap,
                           itemBuilder: (context, index) {
+                            var item = controller.state.newsEntity.draft[index];
                             return InkWell(
                               onTap: () {
-                                controller.pageToDetail(index);
+                                controller.pageToDetail(item);
                               },
-                              child: _Item(
-                                  item:
-                                      controller.state.newsEntity.draft[index]),
+                              child: _Item(item: item),
                             );
                           },
                         ),
@@ -95,6 +95,10 @@ class _Item extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    NewListController contr = Get.find();
+    List<int> players = contr.getNBAPlayers(item.dataLabel);
+    String name =
+        players.isEmpty ? "" : Utils.getPlayBaseInfo(players.first).ename;
     return Align(
       alignment: Alignment.center,
       child: Container(
@@ -109,7 +113,7 @@ class _Item extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Player Name",
+              name,
               style: 14.w7(color: AppColors.c262626),
             ),
             10.vGap,
@@ -131,7 +135,7 @@ class _Item extends StatelessWidget {
                 6.hGap,
                 Expanded(
                   child: Text(
-                    item.source,
+                    "-${item.source}",
                     overflow: TextOverflow.ellipsis,
                     style: 10.w4(color: AppColors.cB3B3B3, height: 1),
                   ),

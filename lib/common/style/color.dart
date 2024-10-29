@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-20 20:31:52
- * @LastEditTime: 2024-10-24 16:04:28
+ * @LastEditTime: 2024-10-28 21:28:17
  */
 import 'package:flutter/material.dart';
 
@@ -129,4 +129,33 @@ class AppColors {
   static const Color c6DE9B6 = Color(0xFF6DE9B6);
   static const Color cFEC4C8 = Color(0xFFFEC4C8);
   static const Color cF2E2AC = Color(0xFFF2E2AC);
+  static const Color c99152F = Color(0xFF99152F);
+  static const Color c008348 = Color(0xFF008348);
+  static const Color c595959 = Color(0xFF595959);
+  static const Color cAD5207 = Color(0xFFAD5207);
+  static const Color c003DA6 = Color(0xFF003DA6);
+  static const Color cBD1B21 = Color(0xFFBD1B21);
+  static const Color c72253D = Color(0xFF72253D);
+  static const Color c0B336D = Color(0xFF0B336D);
+  static const Color c091F40 = Color(0xFF091F40);
+  static const Color c00471C = Color(0xFF00471C);
+  static const Color c800A1E = Color(0xFF800A1E);
+  static const Color c00788C = Color(0xFF00788C);
+  static const Color c961A31 = Color(0xFF961A31);
+  static const Color c00568B = Color(0xFF00568B);
+  static const Color c002B5C = Color(0xFF002B5C);
+  static const Color c0E2240 = Color(0xFF0E2240);
+  static const Color c0D2240 = Color(0xFF0D2240);
+  static const Color c002D62 = Color(0xFF002D62);
+  static const Color c800E20 = Color(0xFF800E20);
+  static const Color c335787 = Color(0xFF335787);
+  static const Color c0B2241 = Color(0xFF0B2241);
+  static const Color c552C81 = Color(0xFF552C81);
+  static const Color c873522 = Color(0xFF873522);
+  static const Color c592C82 = Color(0xFF592C82);
+  static const Color c004880 = Color(0xFF004880);
+  static const Color c67040C = Color(0xFF67040C);
+  static const Color c00C2340 = Color(0xFF00C2340);
+  static const Color c0F1840 = Color(0xFF0F1840);
+  static const Color c292929 = Color(0xFF292929);
 }

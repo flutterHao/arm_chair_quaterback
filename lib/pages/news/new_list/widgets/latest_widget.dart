@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-25 16:33:07
- * @LastEditTime: 2024-10-26 19:57:43
+ * @LastEditTime: 2024-10-29 14:17:01
  */
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:flutter/material.dart';
@@ -45,14 +45,14 @@ class LatestWidget extends StatelessWidget {
                     NewsListDetail item =
                         controller.state.newsEntity.latest[index];
                     return InkWell(
-                      onTap: () => controller.pageToDetail(index),
+                      onTap: () => controller.pageToDetail(item),
                       child: ShadowContainer(
                         padding: EdgeInsets.all(12.w),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "${item.content}",
+                              item.content,
                               maxLines: 2,
                               style: 12.w4(color: AppColors.c262626),
                             ),
@@ -61,7 +61,7 @@ class LatestWidget extends StatelessWidget {
                               children: [
                                 Text(
                                   DateUtil.formatDateMs(
-                                    item.postTime!,
+                                    item.postTime,
                                     format: DateFormats.y_mo_d_h_m,
                                   ),
                                   style: 10
@@ -69,7 +69,7 @@ class LatestWidget extends StatelessWidget {
                                 ),
                                 14.hGap,
                                 Text(
-                                  item.source ?? "",
+                                  "-${item.source}",
                                   overflow: TextOverflow.ellipsis,
                                   style: 10
                                       .w4(color: AppColors.cB3B3B3, height: 1),

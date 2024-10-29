@@ -31,9 +31,9 @@ class NewsListView extends GetView<NewListController> {
                     // await Get.toNamed(RouteNames.newsDetail,
                     //     arguments: newsId, id: GlobalNestedKey.NEWS);
                     // controller.getNewsList();
-                    controller.pageToDetail(index, callBack: () {
-                      controller.getNewsList();
-                    });
+                    // controller.pageToDetail(index, callBack: () {
+                    //   controller.getNewsList();
+                    // });
                   },
                   child: NewsItemView(
                     item: controller.state.newsList[index],
@@ -88,7 +88,7 @@ class NewsItemView extends GetView<NewListController> {
               ),
               5.vGap,
               Text(
-                "${DateUtil.formatDateMs(item.postTime ?? 0, format: DateFormats.y_mo_d_h_m)} -${item.source}",
+                "${DateUtil.formatDateMs(item.postTime ?? 0, format: DateFormats.y_mo_d_h_m)} -${"-${item.source}"}",
                 style: 10.w4(color: AppColors.cB3B3B3),
               ),
               9.vGap,

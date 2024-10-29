@@ -2,22 +2,21 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-21 16:48:47
- * @LastEditTime: 2024-10-28 09:52:05
+ * @LastEditTime: 2024-10-29 14:15:14
  */
+import 'dart:math';
+
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
-import 'package:arm_chair_quaterback/common/net/address.dart';
-import 'package:arm_chair_quaterback/common/net/http.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
-import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/controller.dart';
-import 'package:common_utils/common_utils.dart';
+import 'package:common_utils/common_utils.dart' as date;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:get/get.dart';
 
 class RegularWidget extends StatelessWidget {
   const RegularWidget({super.key});
@@ -27,7 +26,7 @@ class RegularWidget extends StatelessWidget {
     return GetBuilder<NewListController>(
         id: "newsList",
         builder: (controller) {
-          if (controller.state.newsEntity.match.isEmpty) {
+          if (controller.state.newsEntity.match.length <= 1) {
             return Container();
           }
           return Column(
@@ -41,7 +40,7 @@ class RegularWidget extends StatelessWidget {
                     Expanded(
                       child: Text(
                         "24-25 Regular Season",
-                        style: 19.w7(color: AppColors.c262626),
+                        style: 19.w7(color: AppColors.c262626, height: 1),
                       ),
                     ),
                   ],
@@ -51,7 +50,7 @@ class RegularWidget extends StatelessWidget {
               Container(
                 alignment: Alignment.centerLeft,
                 height: 232.w,
-                width: 375.w,
+                // width: 375.w,
                 child: ListView.builder(
                   padding: EdgeInsets.symmetric(horizontal: 16.w),
                   scrollDirection: Axis.horizontal,
@@ -60,10 +59,10 @@ class RegularWidget extends StatelessWidget {
                   // itemCount: 5,
                   itemBuilder: (context, index) {
                     var item = controller.state.newsEntity.match[index];
-                    item.teams = controller.getNewsTeam(item.dataLabel);
+                    item.teams = controller.getNBATeams(item.dataLabel);
                     return InkWell(
                       onTap: () {
-                        controller.pageToDetail(item.id);
+                        controller.pageToDetail(item);
                       },
                       child: Padding(
                         padding: EdgeInsets.only(right: 9.w), // 控制左右间距
@@ -83,37 +82,102 @@ class RegularWidget extends StatelessWidget {
   }
 }
 
-class _Item extends StatelessWidget {
+class _Item extends GetView<NewListController> {
   const _Item(this.item);
   final NewsListDetail item;
 
   Widget _oneTeam() {
-    if (item.teams.length > 2) {
-      item.teams = item.teams.sublist(0, 2);
-    }
+    NewListController controller = Get.find();
+    Color color = item.teams.isNotEmpty
+        ? controller.getTeamColor(item.teams[0])
+        : AppColors.c404040;
     return Container(
         width: 188.w,
         height: 80.w,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          gradient: const LinearGradient(
+          gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [AppColors.c000000, AppColors.c1F6E3D]),
+              colors: [AppColors.c000000, color]),
           color: AppColors.c262626,
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(16.w), topRight: Radius.circular(16.w)),
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: item.teams
               .map(
                 (e) => ImageWidget(
-                  url: Utils.getTeamUrl(e),
+                  url: Utils.getWhiteTeamUrl(e),
                   width: 60.w,
                 ),
               )
               .toList(),
+        ));
+  }
+
+  Widget _teams() {
+    if (item.teams.length > 2) {
+      item.teams = item.teams.sublist(0, 2);
+    }
+    return SizedBox(
+        width: 188.w,
+        height: 80.w,
+        child: Stack(
+          children: [
+            Positioned(
+              left: 0,
+              child: ClipPath(
+                clipper: _TeamClipper(isLeft: true),
+                child: Container(
+                    width: 100.w,
+                    height: 80.w,
+                    padding: EdgeInsets.only(right: 18.w),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(colors: [
+                        AppColors.c000000,
+                        controller.getTeamColor(item.teams[0]),
+                      ]),
+                      borderRadius:
+                          BorderRadius.only(topLeft: Radius.circular(16.w)),
+                    ),
+                    child: ImageWidget(
+                      url: Utils.getWhiteTeamUrl(item.teams[0]),
+                      width: 56.w,
+                      height: 56.w,
+                    )),
+              ),
+            ),
+            Positioned(
+              right: 0,
+              child: ClipPath(
+                clipper: _TeamClipper(isLeft: false),
+                child: Container(
+                    width: 100.w,
+                    height: 80.w,
+                    padding: EdgeInsets.only(left: 18.w),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.centerRight,
+                          end: Alignment.centerLeft,
+                          colors: [
+                            AppColors.c000000,
+                            controller.getTeamColor(item.teams[1]),
+                          ]),
+                      borderRadius:
+                          BorderRadius.only(topRight: Radius.circular(16.w)),
+                    ),
+                    child: ImageWidget(
+                      url: Utils.getWhiteTeamUrl(item.teams[1]),
+                      width: 56.w,
+                      height: 56.w,
+                    )),
+              ),
+            )
+          ],
         ));
   }
 
@@ -129,9 +193,9 @@ class _Item extends StatelessWidget {
             color: AppColors.cF2F2F2),
         child: Column(
           children: [
-            _oneTeam(),
+            item.teams.length > 1 ? _teams() : _oneTeam(),
             Container(
-              margin: EdgeInsets.all(10.w),
+              margin: EdgeInsets.symmetric(horizontal: 14.w, vertical: 11.5.w),
               child: Text(
                 item.content,
                 maxLines: 4,
@@ -139,20 +203,20 @@ class _Item extends StatelessWidget {
               ),
             ),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 10.w),
+              margin: EdgeInsets.symmetric(horizontal: 14.w),
               child: Row(
                 children: [
                   Text(
-                    DateUtil.formatDateMs(
+                    date.DateUtil.formatDateMs(
                       item.postTime,
-                      format: DateFormats.y_mo_d_h_m,
+                      format: DateFormats.PARAM_Y_M_D_H_M,
                     ),
                     style: 10.w4(color: AppColors.cB3B3B3, height: 1),
                   ),
                   6.hGap,
                   Expanded(
                     child: Text(
-                      item.source,
+                      "-${"-${item.source}"}",
                       overflow: TextOverflow.ellipsis,
                       style: 10.w4(color: AppColors.cB3B3B3, height: 1),
                     ),
@@ -162,7 +226,7 @@ class _Item extends StatelessWidget {
             ),
             const Expanded(child: SizedBox()),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.w),
+              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.w),
               child: NewsPercentWidget(
                   leftTitle: item.teams.length >= 2
                       ? Utils.getTeamInfo(item.teams[0]).shortEname
@@ -206,29 +270,35 @@ class NewsPercentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int total = leftCount + rightCount;
-    if (total == 0) total = 1;
-    String leftPercent = (leftCount * 100 / total).toStringAsFixed(2);
-    String rightPercent = (rightCount * 100 / total).toStringAsFixed(2);
+    String leftPercent = "50";
+    String rightPercent = "50";
+    if (leftCount != 0 || rightCount != 0) {
+      int total = leftCount + rightCount;
+      if (total == 0) total = 1;
+      leftPercent = (leftCount * 100 / total).toStringAsFixed(1);
+      rightPercent = (rightCount * 100 / total).toStringAsFixed(1);
+    }
+
     return Column(
       children: [
         Row(
           children: [
             Expanded(
               // flex: leftCount == 0 ? 1 : leftCount * 100 ~/ total,
-              flex: leftCount,
+              flex: (leftCount == 0 && rightCount == 0) ? 1 : leftCount,
               child: _progress(AppColors.c10A86A),
             ),
             2.hGap,
             Expanded(
-              flex: rightCount,
+              flex: (leftCount == 0 && rightCount == 0) ? 1 : rightCount,
               // flex: leftCount == 0 ? 1 : rightCount * 100 ~/ total,
               child: _progress(AppColors.cE72646),
             ),
           ],
         ),
+        1.5.vGap,
         Container(
-          margin: EdgeInsets.symmetric(horizontal: 2.w),
+          margin: EdgeInsets.symmetric(horizontal: 3.5.w),
           child: Row(
             children: [
               Expanded(
@@ -251,71 +321,44 @@ class NewsPercentWidget extends StatelessWidget {
   }
 }
 
-class LightningDividerContainer extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: 200,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Colors.black, Colors.red],
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-        ),
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(16),
-          topRight: Radius.circular(16),
-        ),
-      ),
-      child: Stack(
-        children: [
-          // 背景容器
-          Positioned.fill(
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.black, Colors.red],
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                ),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(16),
-                  topRight: Radius.circular(16),
-                ),
-              ),
-            ),
-          ),
-          // 闪电形状
-          Positioned.fill(
-            child: ClipPath(
-              clipper: LightningClipper(),
-              child: Container(
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+class _TeamClipper extends CustomClipper<Path> {
+  final bool isLeft;
 
-// 自定义ClipPath闪电形状
-class LightningClipper extends CustomClipper<Path> {
+  _TeamClipper({required this.isLeft});
+
   @override
-  Path getClip(Size size) {
+  getClip(Size size) {
     Path path = Path();
-    path.moveTo(size.width * 0.5, 0);
-    path.lineTo(size.width * 0.45, size.height * 0.3);
-    path.lineTo(size.width * 0.55, size.height * 0.3);
-    path.lineTo(size.width * 0.5, size.height * 0.6);
-    path.lineTo(size.width * 0.6, size.height * 0.6);
-    path.lineTo(size.width * 0.5, size.height);
+    double angle = radians(28); // 倾斜角度，30度
+    double tanAngle = tan(angle);
+    double centerH = size.height * .53;
+    double centerH2 = size.height * .45;
+    if (isLeft) {
+      path.moveTo(0, 0);
+      path.lineTo(size.width, 0);
+      path.lineTo(size.width - centerH * tanAngle, centerH);
+      path.lineTo(size.width, centerH);
+      path.lineTo(size.width - centerH2 * tanAngle, size.height);
+      path.lineTo(0, size.height);
+    } else {
+      path.moveTo(size.width, size.height);
+      path.lineTo(0, size.height);
+      path.lineTo(centerH * tanAngle, centerH2);
+      path.lineTo(0, centerH2);
+      path.lineTo(centerH2 * tanAngle, 0);
+      path.lineTo(size.width, 0);
+    }
+
     path.close();
     return path;
   }
 
   @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+  bool shouldReclip(covariant CustomClipper<dynamic> oldClipper) {
+    return true;
+  }
+
+  double radians(double degrees) {
+    return degrees * (pi / 180.0);
+  }
 }

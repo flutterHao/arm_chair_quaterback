@@ -109,8 +109,8 @@ class CommentItemView extends GetView<CommentController> {
                   30.hGap,
                 ],
               ),
-              10.vGap,
-              EmojiWidget(),
+              // 10.vGap,
+              // EmojiWidget(),
 
               /// 点赞和回复
               // Row(

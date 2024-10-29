@@ -112,7 +112,7 @@ class CacheApi {
   static Map<int, NbaTeamEntity>? teamDefineMap;
   static List<NbaTeamEntity> teamList = [];
 
-  ///获取所有球队信息
+  ///获取所有球员信息
   static NbaPlayerInfosEntity? playerInfo;
 
   ///新闻定义

@@ -2,7 +2,7 @@
  * @Description: 明星球员
  * @Author: lihonghao
  * @Date: 2024-10-25 15:16:18
- * @LastEditTime: 2024-10-26 22:04:14
+ * @LastEditTime: 2024-10-28 15:24:36
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -112,7 +112,7 @@ class PopularPlayerWidget extends StatelessWidget {
                             var item = controller.state.newsEntity
                                 .playerNews[playerKey.value]![index];
                             return InkWell(
-                              onTap: () => controller.pageToDetail(index),
+                              onTap: () => controller.pageToDetail(item),
                               child: Container(
                                 padding: EdgeInsets.symmetric(horizontal: 12.w),
                                 decoration: BoxDecoration(
@@ -140,7 +140,7 @@ class PopularPlayerWidget extends StatelessWidget {
                                       children: [
                                         Text(
                                           DateUtil.formatDateMs(
-                                            item.postTime!,
+                                            item.postTime,
                                             format: DateFormats.y_mo_d_h_m,
                                           ),
                                           style: 10.w4(
@@ -149,7 +149,7 @@ class PopularPlayerWidget extends StatelessWidget {
                                         ),
                                         14.hGap,
                                         Text(
-                                          item.source ?? "",
+                                          "-${item.source}",
                                           overflow: TextOverflow.ellipsis,
                                           style: 10.w4(
                                               color: AppColors.cB3B3B3,

@@ -37,6 +37,7 @@ class ShadowContainer extends StatelessWidget {
       margin: margin,
       padding: padding,
       alignment: Alignment.center,
+      clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: backgroudColor,
         borderRadius: borderRadius ?? BorderRadius.circular(16.w),

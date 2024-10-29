@@ -1,8 +1,8 @@
 /*
- * @Description: 
+ * @Description:队伍球员谣言
  * @Author: lihonghao
  * @Date: 2024-10-24 21:19:47
- * @LastEditTime: 2024-10-26 21:59:36
+ * @LastEditTime: 2024-10-29 14:17:49
  */
 
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
@@ -16,7 +16,7 @@ import 'package:arm_chair_quaterback/pages/news/new_list/widgets/shadow_containe
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:get/get.dart';
 
 class RumorWidget extends StatelessWidget {
   const RumorWidget({super.key});
@@ -54,10 +54,10 @@ class RumorWidget extends StatelessWidget {
                           .state.newsEntity.teamRumors.entries
                           .elementAt(index)
                           .value;
-                      item.teams = controller.getPlayers(item.dataLabel);
+                      item.teams = controller.getNBATeams(item.dataLabel);
                       return InkWell(
                         onTap: () {
-                          controller.pageToDetail(index);
+                          controller.pageToDetail(item);
                         },
                         child: Padding(
                           padding: EdgeInsets.only(right: 9.w), // 控制左右间距
@@ -80,12 +80,12 @@ class RumorWidget extends StatelessWidget {
                     var item = controller.state.newsEntity.playerRumors.entries
                         .elementAt(index)
                         .value;
-                    item.players = controller.getPlayers(item.dataLabel);
-                    item.teams = controller.getPlayers(item.dataLabel);
+                    item.players = controller.getNBAPlayers(item.dataLabel);
+                    item.teams = controller.getNBATeams(item.dataLabel);
                     // bool isEmpty = item.players.isEmpty && item.teams.isEmpty;
                     return InkWell(
                       onTap: () {
-                        controller.pageToDetail(index);
+                        controller.pageToDetail(item);
                       },
                       child: _Item2(item: item),
                     );
@@ -97,47 +97,43 @@ class RumorWidget extends StatelessWidget {
   }
 }
 
-class _Item1 extends StatelessWidget {
+class _Item1 extends GetView<NewListController> {
   const _Item1(this.item);
   final NewsListDetail item;
 
   Widget _team() {
-    return ClipRRect(
-      borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(16.w), topRight: Radius.circular(16.w)),
-      child: Container(
-          width: 188.w,
-          height: 80.w,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: AppColors.c702C86,
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(16.w),
-                topRight: Radius.circular(16.w)),
-          ),
-          child: item.teams.isNotEmpty
-              ? Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Positioned(
-                      right: -44.w,
-                      child: Opacity(
-                        opacity: 0.5,
-                        child: ImageWidget(
-                          url: Utils.getTeamUrl(item.teams[0]),
-                          width: 140.w,
-                        ),
+    return Container(
+        width: 188.w,
+        height: 80.w,
+        alignment: Alignment.center,
+        clipBehavior: Clip.antiAlias,
+        decoration: BoxDecoration(
+          color: controller
+              .getTeamColor(item.teams.isNotEmpty ? item.teams[0] : 0),
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(16.w), topRight: Radius.circular(16.w)),
+        ),
+        child: item.teams.isNotEmpty
+            ? Stack(
+                alignment: Alignment.center,
+                children: [
+                  Positioned(
+                    right: -44.w,
+                    child: Opacity(
+                      opacity: 0.5,
+                      child: ImageWidget(
+                        url: Utils.getTeamUrl(item.teams[0]),
+                        width: 140.w,
                       ),
                     ),
-                    Positioned(
-                        left: 20.w,
-                        child: _TeamNameWidget(
-                            teamName:
-                                Utils.getTeamInfo(item.teams[0]).longEname))
-                  ],
-                )
-              : Container()),
-    );
+                  ),
+                  Positioned(
+                      left: 20.w,
+                      child: _TeamNameWidget(
+                          teamName: Utils.getTeamInfo(item.teams[0]).longEname))
+                ],
+              )
+            : Container());
   }
 
   @override
@@ -167,7 +163,7 @@ class _Item1 extends StatelessWidget {
                 children: [
                   Text(
                     DateUtil.formatDateMs(
-                      item.postTime!,
+                      item.postTime,
                       format: DateFormats.y_mo_d_h_m,
                     ),
                     style: 10.w4(color: AppColors.cB3B3B3, height: 1),
@@ -175,7 +171,7 @@ class _Item1 extends StatelessWidget {
                   6.hGap,
                   Expanded(
                     child: Text(
-                      item.source,
+                      "-${item.source}",
                       overflow: TextOverflow.ellipsis,
                       style: 10.w4(color: AppColors.cB3B3B3, height: 1),
                     ),
@@ -187,8 +183,8 @@ class _Item1 extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.w),
               child: NewsPercentWidget(
-                  leftTitle: "TEAM1zzzzz",
-                  rightTitle: "TEAM2",
+                  leftTitle: "Ture",
+                  rightTitle: "False",
                   leftCount: item.likes,
                   rightCount: item.unLikes),
             ),
@@ -245,12 +241,12 @@ class _Item2 extends StatelessWidget {
         children: [
           Row(
             children: [
-              if (item.teams.isNotEmpty && item.players.isNotEmpty)
-                SizedBox(
-                  width: 95.w,
-                  height: 79.w,
-                  child: Stack(
-                    children: [
+              SizedBox(
+                width: 95.w,
+                height: 79.w,
+                child: Stack(
+                  children: [
+                    if (item.teams.isNotEmpty)
                       Positioned(
                         left: -20.w,
                         top: -20.w,
@@ -262,6 +258,7 @@ class _Item2 extends StatelessWidget {
                           ),
                         ),
                       ),
+                    if (item.players.isNotEmpty)
                       Positioned(
                         bottom: 0.w,
                         right: 0.w,
@@ -270,16 +267,16 @@ class _Item2 extends StatelessWidget {
                           width: 100.w,
                         ),
                       ),
-                    ],
-                  ),
+                  ],
                 ),
+              ),
               Expanded(
                   child: Column(
                 children: [
                   Container(
                     margin: EdgeInsets.all(10.w),
                     child: Text(
-                      "${item.content}",
+                      item.content,
                       maxLines: 3,
                       style: 12.w4(color: AppColors.c262626),
                     ),
@@ -290,7 +287,7 @@ class _Item2 extends StatelessWidget {
                       children: [
                         Text(
                           DateUtil.formatDateMs(
-                            item.postTime!,
+                            item.postTime,
                             format: DateFormats.y_mo_d_h_m,
                           ),
                           style: 10.w4(color: AppColors.cB3B3B3, height: 1),
@@ -298,7 +295,7 @@ class _Item2 extends StatelessWidget {
                         6.hGap,
                         Expanded(
                           child: Text(
-                            item.source ?? "",
+                            "-${item.source}",
                             overflow: TextOverflow.ellipsis,
                             style: 10.w4(color: AppColors.cB3B3B3, height: 1),
                           ),
@@ -314,10 +311,10 @@ class _Item2 extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.w),
             child: NewsPercentWidget(
-                leftTitle: "TEAM1",
-                rightTitle: "TEAM2",
-                leftCount: 888,
-                rightCount: 222),
+                leftTitle: "True",
+                rightTitle: "False",
+                leftCount: item.likes,
+                rightCount: item.unLikes),
           ),
         ],
       ),

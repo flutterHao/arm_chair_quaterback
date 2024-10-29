@@ -175,18 +175,24 @@ class NewsDetailItem extends StatelessWidget {
   Widget _progressWidget() {
     return ShadowContainer(
         width: 343.w,
+        padding: EdgeInsets.all(14.w),
+        backgroudColor: AppColors.cFFFFFF,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               "Support Rate",
-              style: 14.w7(),
+              style: 14.w7(height: 1),
             ),
             10.vGap,
-            NewsPercentWidget(
-                leftTitle: "Agress",
-                rightTitle: "Disagress",
-                leftCount: newsDetail.likes ?? 0,
-                rightCount: newsDetail.unLikes ?? 0),
+            Obx(() {
+              var a = newsDetail.isLike!.value;
+              return NewsPercentWidget(
+                  leftTitle: "Agress",
+                  rightTitle: "Disagress",
+                  leftCount: newsDetail.likes ?? 0,
+                  rightCount: newsDetail.unLikes ?? 0);
+            }),
           ],
         ));
   }

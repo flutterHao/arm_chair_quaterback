@@ -2,17 +2,19 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2024-10-26 21:26:29
+ * @LastEditTime: 2024-10-28 21:35:31
  */
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
+import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/stats_rank/nba_player_stat.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
+import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
@@ -246,7 +248,6 @@ class NewListController extends GetxController {
       state.newsFlowList.addAll(value);
       state.newsList = value;
       update(['newsFlow']);
-      update(['newsList']);
     }).whenComplete(() {
       isRefresh
           ? flowRefreshCtrl.refreshCompleted()
@@ -254,44 +255,61 @@ class NewListController extends GetxController {
     });
   }
 
-  void pageToDetail(int newsId, {Function? callBack}) async {
-    getNewsFlow(newsId, isRefresh: true);
+  void pageToDetail(NewsListDetail item, {Function? callBack}) async {
+    getNewsFlow(item.id, isRefresh: true);
     await Get.toNamed(RouteNames.newsDetail,
-        arguments: newsId, id: GlobalNestedKey.NEWS);
-    if (callBack != null) callBack();
+        arguments: item.id, id: GlobalNestedKey.NEWS);
+    if (callBack != null) {
+      callBack();
+    }
+    if (state.newsFlowList.isNotEmpty) {
+      item.likes = state.newsFlowList.first.likes!;
+      item.unLikes = state.newsFlowList.first.unLikes!;
+      update(["newsList"]);
+    }
   }
 
   ///遍历获取球队id
-  List<int> getNewsTeam(String labels) {
+  List<int> getNBATeams(String labels, {String tag = "getNBATeams"}) {
     List<int> teamList = [];
     List labelsList = labels.split(",");
     for (var label in labelsList) {
+      label = label.trim();
       if (ObjectUtil.isNotEmpty(label)) {
         for (var team in CacheApi.teamList) {
-          if (team.longEname.contains(label)) {
+          if (team.longEname.contains(label) || team.name.contains(label)) {
             teamList.add(team.id);
           }
         }
       }
     }
-    Log.d("获取新闻中的球队: $teamList");
+    // Log.d("获取新闻中的球队labels：$labels 球队: $teamList", tag: tag);
     return teamList;
   }
 
   ///遍历获取球队id
-  List<int> getPlayers(String labels) {
+  List<int> getNBAPlayers(String labels, {String tag = "getNBAPlayers"}) {
     List<int> playerList = [];
-    List labelsList = labels.split(",");
+    List<String> labelsList = labels.split(",");
     for (var label in labelsList) {
+      label = label.trim();
       if (ObjectUtil.isNotEmpty(label)) {
         for (var player in CacheApi.playerInfo!.playerBaseInfoList) {
-          if (player.name.contains(label)) {
+          if (player.elname.contains(label) || player.ename.contains(label)) {
             playerList.add(player.playerId);
           }
         }
       }
     }
-    Log.d("获取新闻中的球员: $playerList");
+    // Log.d("获取新闻中的球员labels：$labels 球员: $playerList", tag: tag);
     return playerList;
+  }
+
+  Color getTeamColor(int teamId) {
+    if (state.teamColorMap[teamId] != null) {
+      return state.teamColorMap[teamId]!["light"]!;
+    } else {
+      return AppColors.c404040;
+    }
   }
 }

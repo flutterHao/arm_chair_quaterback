@@ -2,7 +2,7 @@
  * @Description: 新闻的底部按钮点赞分享评论
  * @Author: lihonghao
  * @Date: 2024-10-17 17:02:35
- * @LastEditTime: 2024-10-23 17:49:29
+ * @LastEditTime: 2024-10-28 11:49:54
  */
 import 'dart:math';
 
@@ -36,7 +36,7 @@ class NewsBottomButton extends StatelessWidget {
         height: 32.w,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: AppColors.cE6E6E,
+          color: AppColors.cFFFFFF,
           borderRadius: BorderRadius.circular(16.w),
         ),
         child: child,
@@ -57,7 +57,7 @@ class NewsBottomButton extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           ///点赞
           _container(
@@ -130,7 +130,7 @@ class NewsBottomButton extends StatelessWidget {
               );
             }),
           ),
-          4.hGap,
+          // 4.hGap,
 
           ///评论
           _container(
@@ -170,7 +170,7 @@ class NewsBottomButton extends StatelessWidget {
                   }),
                 ],
               )),
-          4.hGap,
+          // 4.hGap,
 
           /// 分享
           _container(

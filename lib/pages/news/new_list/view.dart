@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-18 21:01:04
- * @LastEditTime: 2024-10-26 20:47:57
+ * @LastEditTime: 2024-10-29 12:23:28
  */
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
@@ -16,6 +16,7 @@ import 'package:arm_chair_quaterback/pages/mine/mine_setting/bindings.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_setting/view.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/widgets/latest_widget.dart';
+import 'package:arm_chair_quaterback/pages/news/new_list/widgets/page_route_cart.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/widgets/player_dynamics_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/widgets/team_rank_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/bindings.dart';
@@ -123,6 +124,16 @@ class NewsListPage extends GetView<NewListController> {
             child: RegularWidget(),
           ),
 
+          ///球员伤病
+          SliverToBoxAdapter(
+            child: PlayerInjuryWidget(),
+          ),
+
+          ///跳转Pick
+          SliverToBoxAdapter(
+            child: JumpToPick(),
+          ),
+
           ///选秀抽签
           SliverToBoxAdapter(
             child: DraftLotteryWidget(),
@@ -143,6 +154,11 @@ class NewsListPage extends GetView<NewListController> {
             child: PopularPlayerWidget(),
           ),
 
+            ///跳转Trading
+          SliverToBoxAdapter(
+            child: JumpToTrading(),
+          ),
+
           ///最新
           SliverToBoxAdapter(
             child: LatestWidget(),
@@ -157,12 +173,6 @@ class NewsListPage extends GetView<NewListController> {
           SliverToBoxAdapter(
             child: TeamRankWidget(),
           ),
-
-         ///玩家伤病
-          SliverToBoxAdapter(
-            child: PlayerDynamicsWidget(),
-          ),
-
         ],
       ),
     );
