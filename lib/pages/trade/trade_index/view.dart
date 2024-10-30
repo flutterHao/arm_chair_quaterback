@@ -49,10 +49,11 @@ class TradeIndex extends StatelessWidget {
         switch (setting.name) {
           case RouteNames.tradeTradeIndex:
             return GetPageRoute(
-                opaque: false,
-                settings: setting,
-                page: () => const TradeIndexPage(),
-                binding: TradeIndexBinding());
+              opaque: false,
+              settings: setting,
+              page: () => const TradeIndexPage(),
+              // binding: TradeIndexBinding(),
+            );
           case RouteNames.picksPlayerDetail:
             return GetPageRoute(
                 opaque: false,
@@ -121,451 +122,444 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                 child: controller.tradeInfoEntity == null
                     ? emptyWidget
                     : NestedScrollView(
-                        headerSliverBuilder:
-                            (BuildContext context, bool innerBoxIsScrolled) {
-                          return <Widget>[
-                            SliverToBoxAdapter(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  16.vGap,
-                                  SizedBox(
-                                    height: 250.w,
-                                    child: Stack(
-                                      children: [
-                                        Positioned(
-                                            bottom: 0,
-                                            top: 65.w,
-                                            left: 0,
-                                            right: 0,
-                                            child: Container(
-                                              height: 185.w,
-                                              decoration: BoxDecoration(
-                                                  color: AppColors.cD9D9D9,
-                                                  borderRadius:
-                                                      BorderRadius.vertical(
-                                                          bottom:
-                                                              Radius.circular(
-                                                                  16.w))),
-                                              alignment:
-                                                  Alignment.bottomCenter,
-                                              child: Container(
-                                                constraints: BoxConstraints(
-                                                    maxWidth: 400.w),
-                                                height: 34.w,
-                                                margin: EdgeInsets.only(
-                                                    left: 16.w,
-                                                    right: 16.w,
-                                                    bottom: 16.w),
-                                                decoration: BoxDecoration(
-                                                    color: AppColors.cF2F2F2,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            17.w)),
-                                                child: LayoutBuilder(builder:
-                                                    (context, constraints) {
-                                                  var itemWidth =
-                                                      (constraints.maxWidth -
-                                                              8.w) /
-                                                          controller
-                                                              .tabController
-                                                              .length;
-                                                  return TLBuildWidget(
-                                                      controller: controller
-                                                          .tabController,
-                                                      builder: (current,
-                                                          next,
-                                                          progress,
-                                                          totalProgress) {
-                                                        return Stack(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          children: [
-                                                            Positioned(
-                                                              left: totalProgress *
-                                                                  itemWidth,
-                                                              child:
-                                                                  Container(
-                                                                margin: EdgeInsets
-                                                                    .only(
-                                                                        left:
-                                                                            4.w),
-                                                                height: 26.w,
-                                                                width:
-                                                                    itemWidth,
-                                                                decoration: BoxDecoration(
-                                                                    color: AppColors
-                                                                        .c262626,
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            26.w)),
-                                                              ),
-                                                            ),
-                                                            Row(
-                                                              children: List
-                                                                  .generate(
-                                                                      controller
-                                                                          .tabs
-                                                                          .length,
-                                                                      (index) =>
-                                                                          Expanded(
-                                                                            child: InkWell(
-                                                                                onTap: () => controller.tabController.animateTo(index),
-                                                                                child: Center(
-                                                                                    child: Text(controller.tabs[index],
-                                                                                        style: 13.w4(
-                                                                                          color: current == index
-                                                                                              ? Color.lerp(AppColors.cF2F2F2, AppColors.c666666, progress)!
-                                                                                              : next == index
-                                                                                                  ? Color.lerp(AppColors.c666666, AppColors.cF2F2F2, progress)!
-                                                                                                  : AppColors.c666666,
-                                                                                        )))),
-                                                                          )),
-                                                            )
-                                                          ],
-                                                        );
-                                                      });
-                                                }),
-                                              ),
-                                            )),
-                                        SizedBox(
-                                          height: 184.w,
+                    headerSliverBuilder:
+                        (BuildContext context, bool innerBoxIsScrolled) {
+                      return <Widget>[
+                        SliverToBoxAdapter(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              16.vGap,
+                              SizedBox(
+                                height: 250.w,
+                                child: Stack(
+                                  children: [
+                                    Positioned(
+                                        bottom: 0,
+                                        top: 65.w,
+                                        left: 0,
+                                        right: 0,
+                                        child: Container(
+                                          height: 185.w,
+                                          decoration: BoxDecoration(
+                                              color: AppColors.cD9D9D9,
+                                              borderRadius:
+                                              BorderRadius.vertical(
+                                                  bottom:
+                                                  Radius.circular(
+                                                      16.w))),
+                                          alignment: Alignment.bottomCenter,
                                           child: Container(
-                                            margin: EdgeInsets.symmetric(
-                                                horizontal: 16.w),
-                                            padding: EdgeInsets.only(
-                                                top: 12.w,
-                                                right: 9.w,
-                                                left: 12.w,
+                                            constraints: BoxConstraints(
+                                                maxWidth: 400.w),
+                                            height: 34.w,
+                                            margin: EdgeInsets.only(
+                                                left: 16.w,
+                                                right: 16.w,
                                                 bottom: 16.w),
                                             decoration: BoxDecoration(
-                                                color: AppColors.c262626,
+                                                color: AppColors.cF2F2F2,
                                                 borderRadius:
-                                                    BorderRadius.circular(
-                                                        16.w)),
-                                            child: Row(
-                                              children: [
-                                                Expanded(
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        "Accumulated income",
-                                                        style: 10.w4(
-                                                            color: AppColors
-                                                                .cB3B3B3,
-                                                            height: 1),
-                                                      ),
-                                                      4.vGap,
-                                                      Row(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Text(
-                                                            Utils.formatMoney(
-                                                                _getTodayCost()),
-                                                            style: 19.w7(
+                                                BorderRadius.circular(
+                                                    17.w)),
+                                            child: LayoutBuilder(builder:
+                                                (context, constraints) {
+                                              var itemWidth =
+                                                  (constraints.maxWidth -
+                                                      8.w) /
+                                                      controller
+                                                          .tabController
+                                                          .length;
+                                              return TLBuildWidget(
+                                                  controller: controller
+                                                      .tabController,
+                                                  builder: (current,
+                                                      next,
+                                                      progress,
+                                                      totalProgress) {
+                                                    return Stack(
+                                                      alignment: Alignment
+                                                          .centerLeft,
+                                                      children: [
+                                                        Positioned(
+                                                          left:
+                                                          totalProgress *
+                                                              itemWidth,
+                                                          child: Container(
+                                                            margin: EdgeInsets
+                                                                .only(
+                                                                left: 4
+                                                                    .w),
+                                                            height: 26.w,
+                                                            width:
+                                                            itemWidth,
+                                                            decoration: BoxDecoration(
                                                                 color: AppColors
-                                                                    .cD9D9D9,
-                                                                height: 1),
-                                                          ),
-                                                          8.hGap,
-                                                          if (_getPercent() !=
-                                                              0)
-                                                            Row(
-                                                              children: [
-                                                                IconWidget(
-                                                                  iconWidth:
-                                                                      8.w,
-                                                                  icon: Assets
-                                                                      .uiTriangleGPng,
-                                                                  iconColor: _getTodayCost() >
-                                                                          _getLastDayCost()
-                                                                      ? AppColors
-                                                                          .c23E8A9
-                                                                      : AppColors
-                                                                          .cE72646,
-                                                                  rotateAngle:
-                                                                      _getTodayCost() >
-                                                                              _getLastDayCost()
-                                                                          ? 0
-                                                                          : 180,
-                                                                ),
-                                                                Text(
-                                                                  "${_getPercent().toStringAsFixed(1)}%",
-                                                                  style: 10.w4(
-                                                                      color: _getTodayCost() >
-                                                                              _getLastDayCost()
-                                                                          ? AppColors
-                                                                              .c23E8A9
-                                                                          : AppColors
-                                                                              .cE72646,
-                                                                      height:
-                                                                          1),
-                                                                )
-                                                              ],
-                                                            )
-                                                        ],
-                                                      ),
-                                                      11.vGap,
-                                                      Expanded(
-                                                        child: Container(
-                                                          constraints: BoxConstraints(
-                                                            minWidth: 175.w,
-                                                          ),
-                                                          decoration: BoxDecoration(
-                                                              color: AppColors
-                                                                  .c1A1A1A,
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8.w)),
-                                                          child: ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8.w),
-                                                            child: Stack(
-                                                              children: [
-                                                                SfCartesianChart(
-                                                                  margin:
-                                                                      EdgeInsets
-                                                                          .zero,
-                                                                  plotAreaBorderWidth:
-                                                                      0,
-                                                                  primaryXAxis:
-                                                                      NumericAxis(
-                                                                    labelStyle:
-                                                                        const TextStyle(
-                                                                            color:
-                                                                                AppColors.cTransparent),
-                                                                    axisLine:
-                                                                        const AxisLine(
-                                                                            width:
-                                                                                0),
-                                                                    majorTickLines:
-                                                                        const MajorTickLines(
-                                                                            width:
-                                                                                0),
-                                                                    // 隐藏 X 轴的刻度线
-                                                                    labelPosition:
-                                                                        ChartDataLabelPosition
-                                                                            .inside,
-                                                                    tickPosition:
-                                                                        TickPosition
-                                                                            .inside,
-                                                                    plotBands: <PlotBand>[
-                                                                      for (var data
-                                                                          in _getLineData())
-                                                                        PlotBand(
-                                                                          start:
-                                                                              data.x,
-                                                                          // 在每个数据点的 x 位置绘制垂直线
-                                                                          end: data
-                                                                              .x,
-                                                                          borderColor:
-                                                                              AppColors.c262626,
-                                                                          // 垂直线的颜色
-                                                                          borderWidth:
-                                                                              1, // 垂直线的宽度
-                                                                        ),
-                                                                    ],
-                                                                  ),
-                                                                  // const NumericAxis(
-                                                                  //   isVisible: false,
-                                                                  //   // axisLine: AxisLine(
-                                                                  //   //   color: Colors.red
-                                                                  //   // ),
-                                                                  //   majorGridLines: MajorGridLines(width: 1),
-                                                                  // ),
-                                                                  primaryYAxis:
-                                                                      const NumericAxis(
-                                                                    isVisible:
-                                                                        false,
-                                                                  ),
-                                                                  series:
-                                                                      _getAreaZoneSeries(),
-                                                                ),
-                                                                SfCartesianChart(
-                                                                  margin:
-                                                                      EdgeInsets
-                                                                          .zero,
-                                                                  plotAreaBorderWidth:
-                                                                      0,
-                                                                  primaryXAxis:
-                                                                      NumericAxis(
-                                                                    labelStyle:
-                                                                        const TextStyle(
-                                                                            color:
-                                                                                AppColors.cTransparent),
-                                                                    axisLine:
-                                                                        const AxisLine(
-                                                                            width:
-                                                                                0),
-                                                                    majorTickLines:
-                                                                        const MajorTickLines(
-                                                                            width:
-                                                                                0),
-                                                                    // 隐藏 X 轴的刻度线
-                                                                    labelPosition:
-                                                                        ChartDataLabelPosition
-                                                                            .inside,
-                                                                    tickPosition:
-                                                                        TickPosition
-                                                                            .inside,
-                                                                    plotBands: <PlotBand>[
-                                                                      for (var data
-                                                                          in _getLineData())
-                                                                        PlotBand(
-                                                                          start:
-                                                                              data.x,
-                                                                          // 在每个数据点的 x 位置绘制垂直线
-                                                                          end: data
-                                                                              .x,
-                                                                          borderColor:
-                                                                              AppColors.c262626,
-                                                                          // 垂直线的颜色
-                                                                          borderWidth:
-                                                                              1, // 垂直线的宽度
-                                                                        ),
-                                                                    ],
-                                                                  ),
-                                                                  primaryYAxis:
-                                                                      const NumericAxis(
-                                                                    isVisible:
-                                                                        false,
-                                                                  ),
-                                                                  series: [
-                                                                    LineSeries<
-                                                                            ChartSampleData,
-                                                                            num>(
-                                                                        animationDuration:
-                                                                            0,
-                                                                        dataSource:
-                                                                            _getLineData(),
-                                                                        xValueMapper: (ChartSampleData sales, _) =>
-                                                                            sales
-                                                                                .x,
-                                                                        yValueMapper: (ChartSampleData sales,
-                                                                                _) =>
-                                                                            sales
-                                                                                .y,
-                                                                        name:
-                                                                            'Germany',
-                                                                        markerSettings:
-                                                                            const MarkerSettings(isVisible: false))
-                                                                  ],
-                                                                )
-                                                              ],
-                                                            ),
+                                                                    .c262626,
+                                                                borderRadius:
+                                                                BorderRadius.circular(
+                                                                    26.w)),
                                                           ),
                                                         ),
+                                                        Row(
+                                                          children:
+                                                          List.generate(
+                                                              controller
+                                                                  .tabs
+                                                                  .length,
+                                                                  (index) =>
+                                                                  Expanded(
+                                                                    child: InkWell(
+                                                                        onTap: () => controller.tabController.animateTo(index),
+                                                                        child: Center(
+                                                                            child: Text(controller.tabs[index],
+                                                                                style: 13.w4(
+                                                                                  color: current == index
+                                                                                      ? Color.lerp(AppColors.cF2F2F2, AppColors.c666666, progress)!
+                                                                                      : next == index
+                                                                                      ? Color.lerp(AppColors.c666666, AppColors.cF2F2F2, progress)!
+                                                                                      : AppColors.c666666,
+                                                                                )))),
+                                                                  )),
+                                                        )
+                                                      ],
+                                                    );
+                                                  });
+                                            }),
+                                          ),
+                                        )),
+                                    SizedBox(
+                                      height: 184.w,
+                                      child: Container(
+                                        margin: EdgeInsets.symmetric(
+                                            horizontal: 16.w),
+                                        padding: EdgeInsets.only(
+                                            top: 12.w,
+                                            right: 9.w,
+                                            left: 12.w,
+                                            bottom: 16.w),
+                                        decoration: BoxDecoration(
+                                            color: AppColors.c262626,
+                                            borderRadius:
+                                            BorderRadius.circular(
+                                                16.w)),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment
+                                                    .start,
+                                                children: [
+                                                  Text(
+                                                    "Accumulated income",
+                                                    style: 10.w4(
+                                                        color: AppColors
+                                                            .cB3B3B3,
+                                                        height: 1),
+                                                  ),
+                                                  4.vGap,
+                                                  Row(
+                                                    crossAxisAlignment:
+                                                    CrossAxisAlignment
+                                                        .start,
+                                                    children: [
+                                                      Text(
+                                                        Utils.formatMoney(
+                                                            _getTodayCost()),
+                                                        style: 19.w7(
+                                                            color: AppColors
+                                                                .cD9D9D9,
+                                                            height: 1),
                                                       ),
+                                                      8.hGap,
+                                                      if (_getPercent() !=
+                                                          0)
+                                                        Row(
+                                                          children: [
+                                                            IconWidget(
+                                                              iconWidth:
+                                                              8.w,
+                                                              icon: Assets
+                                                                  .uiTriangleGPng,
+                                                              iconColor: _getTodayCost() >
+                                                                  _getLastDayCost()
+                                                                  ? AppColors
+                                                                  .c23E8A9
+                                                                  : AppColors
+                                                                  .cE72646,
+                                                              rotateAngle:
+                                                              _getTodayCost() >
+                                                                  _getLastDayCost()
+                                                                  ? 0
+                                                                  : 180,
+                                                            ),
+                                                            Text(
+                                                              "${_getPercent().toStringAsFixed(1)}%",
+                                                              style: 10.w4(
+                                                                  color: _getTodayCost() >
+                                                                      _getLastDayCost()
+                                                                      ? AppColors
+                                                                      .c23E8A9
+                                                                      : AppColors
+                                                                      .cE72646,
+                                                                  height:
+                                                                  1),
+                                                            )
+                                                          ],
+                                                        )
                                                     ],
                                                   ),
-                                                ),
-                                                20.hGap,
-                                                Expanded(
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        "Total salary",
-                                                        style: 10.w4(
-                                                            color: AppColors
-                                                                .cB3B3B3,
-                                                            height: 1),
+                                                  11.vGap,
+                                                  Expanded(
+                                                    child: Container(
+                                                      constraints:
+                                                      BoxConstraints(
+                                                        minWidth: 175.w,
                                                       ),
-                                                      2.vGap,
-                                                      Row(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          IconWidget(
-                                                            iconWidth: 28.w,
-                                                            icon: Assets
-                                                                .uiMoney_02Png,
-                                                          ),
-                                                          3.hGap,
-                                                          Text(
-                                                            Utils.formatMoney(controller
-                                                                    .tradeInfoEntity
-                                                                    ?.totalSalary
-                                                                    .getTotal() ??
-                                                                0),
-                                                            style: 19.w7(
-                                                                color: AppColors
-                                                                    .cD9D9D9,
-                                                                height: 1),
-                                                          )
-                                                        ],
-                                                      ),
-                                                      Expanded(
-                                                          child: SizedBox(
-                                                        // width: 100.w,
-                                                        // height: 82.w,
-                                                        child:
-                                                            SfCircularChart(
-                                                          margin:
-                                                              EdgeInsets.zero,
-                                                          series:
-                                                              _getDefaultDoughnutSeries(
-                                                                  controller),
+                                                      decoration: BoxDecoration(
+                                                          color: AppColors
+                                                              .c1A1A1A,
+                                                          borderRadius:
+                                                          BorderRadius
+                                                              .circular(
+                                                              8.w)),
+                                                      child: ClipRRect(
+                                                        borderRadius:
+                                                        BorderRadius
+                                                            .circular(
+                                                            8.w),
+                                                        child: Stack(
+                                                          children: [
+                                                            SfCartesianChart(
+                                                              margin:
+                                                              EdgeInsets
+                                                                  .zero,
+                                                              plotAreaBorderWidth:
+                                                              0,
+                                                              primaryXAxis:
+                                                              NumericAxis(
+                                                                labelStyle:
+                                                                const TextStyle(
+                                                                    color:
+                                                                    AppColors.cTransparent),
+                                                                axisLine:
+                                                                const AxisLine(
+                                                                    width:
+                                                                    0),
+                                                                majorTickLines:
+                                                                const MajorTickLines(
+                                                                    width:
+                                                                    0),
+                                                                // 隐藏 X 轴的刻度线
+                                                                labelPosition:
+                                                                ChartDataLabelPosition
+                                                                    .inside,
+                                                                tickPosition:
+                                                                TickPosition
+                                                                    .inside,
+                                                                plotBands: <PlotBand>[
+                                                                  for (var data
+                                                                  in _getLineData())
+                                                                    PlotBand(
+                                                                      start:
+                                                                      data.x,
+                                                                      // 在每个数据点的 x 位置绘制垂直线
+                                                                      end: data
+                                                                          .x,
+                                                                      borderColor:
+                                                                      AppColors.c262626,
+                                                                      // 垂直线的颜色
+                                                                      borderWidth:
+                                                                      1, // 垂直线的宽度
+                                                                    ),
+                                                                ],
+                                                              ),
+                                                              // const NumericAxis(
+                                                              //   isVisible: false,
+                                                              //   // axisLine: AxisLine(
+                                                              //   //   color: Colors.red
+                                                              //   // ),
+                                                              //   majorGridLines: MajorGridLines(width: 1),
+                                                              // ),
+                                                              primaryYAxis:
+                                                              const NumericAxis(
+                                                                isVisible:
+                                                                false,
+                                                              ),
+                                                              series:
+                                                              _getAreaZoneSeries(),
+                                                            ),
+                                                            SfCartesianChart(
+                                                              margin:
+                                                              EdgeInsets
+                                                                  .zero,
+                                                              plotAreaBorderWidth:
+                                                              0,
+                                                              primaryXAxis:
+                                                              NumericAxis(
+                                                                labelStyle:
+                                                                const TextStyle(
+                                                                    color:
+                                                                    AppColors.cTransparent),
+                                                                axisLine:
+                                                                const AxisLine(
+                                                                    width:
+                                                                    0),
+                                                                majorTickLines:
+                                                                const MajorTickLines(
+                                                                    width:
+                                                                    0),
+                                                                // 隐藏 X 轴的刻度线
+                                                                labelPosition:
+                                                                ChartDataLabelPosition
+                                                                    .inside,
+                                                                tickPosition:
+                                                                TickPosition
+                                                                    .inside,
+                                                                plotBands: <PlotBand>[
+                                                                  for (var data
+                                                                  in _getLineData())
+                                                                    PlotBand(
+                                                                      start:
+                                                                      data.x,
+                                                                      // 在每个数据点的 x 位置绘制垂直线
+                                                                      end: data
+                                                                          .x,
+                                                                      borderColor:
+                                                                      AppColors.c262626,
+                                                                      // 垂直线的颜色
+                                                                      borderWidth:
+                                                                      1, // 垂直线的宽度
+                                                                    ),
+                                                                ],
+                                                              ),
+                                                              primaryYAxis:
+                                                              const NumericAxis(
+                                                                isVisible:
+                                                                false,
+                                                              ),
+                                                              series: [
+                                                                LineSeries<
+                                                                    ChartSampleData,
+                                                                    num>(
+                                                                    animationDuration:
+                                                                    0,
+                                                                    dataSource:
+                                                                    _getLineData(),
+                                                                    xValueMapper: (ChartSampleData sales, _) =>
+                                                                    sales
+                                                                        .x,
+                                                                    yValueMapper: (ChartSampleData sales,
+                                                                        _) =>
+                                                                    sales
+                                                                        .y,
+                                                                    name:
+                                                                    'Germany',
+                                                                    markerSettings:
+                                                                    const MarkerSettings(isVisible: false))
+                                                              ],
+                                                            )
+                                                          ],
                                                         ),
-                                                      )),
-                                                      Row(
-                                                        children: [
-                                                          _buildPieDot(
-                                                              AppColors
-                                                                  .c27FFBA,
-                                                              "main"),
-                                                          5.hGap,
-                                                          _buildPieDot(
-                                                              AppColors
-                                                                  .c10A86A,
-                                                              "substitute"),
-                                                          5.hGap,
-                                                          _buildPieDot(
-                                                              AppColors
-                                                                  .c12714A,
-                                                              "else"),
-                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            20.hGap,
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment
+                                                    .start,
+                                                children: [
+                                                  Text(
+                                                    "Total salary",
+                                                    style: 10.w4(
+                                                        color: AppColors
+                                                            .cB3B3B3,
+                                                        height: 1),
+                                                  ),
+                                                  2.vGap,
+                                                  Row(
+                                                    crossAxisAlignment:
+                                                    CrossAxisAlignment
+                                                        .center,
+                                                    children: [
+                                                      IconWidget(
+                                                        iconWidth: 28.w,
+                                                        icon: Assets
+                                                            .uiMoney_02Png,
+                                                      ),
+                                                      3.hGap,
+                                                      Text(
+                                                        Utils.formatMoney(controller
+                                                            .tradeInfoEntity
+                                                            ?.totalSalary
+                                                            .getTotal() ??
+                                                            0),
+                                                        style: 19.w7(
+                                                            color: AppColors
+                                                                .cD9D9D9,
+                                                            height: 1),
                                                       )
                                                     ],
                                                   ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
+                                                  Expanded(
+                                                      child: SizedBox(
+                                                        // width: 100.w,
+                                                        // height: 82.w,
+                                                        child: SfCircularChart(
+                                                          margin:
+                                                          EdgeInsets.zero,
+                                                          series:
+                                                          _getDefaultDoughnutSeries(
+                                                              controller),
+                                                        ),
+                                                      )),
+                                                  Row(
+                                                    children: [
+                                                      _buildPieDot(
+                                                          AppColors.c27FFBA,
+                                                          "main"),
+                                                      5.hGap,
+                                                      _buildPieDot(
+                                                          AppColors.c10A86A,
+                                                          "substitute"),
+                                                      5.hGap,
+                                                      _buildPieDot(
+                                                          AppColors.c12714A,
+                                                          "else"),
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+                                            )
+                                          ],
                                         ),
-                                      ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          ];
-                        },
-                        body: TabBarView(
-                          controller: controller.tabController,
-                          children: [
-                            //buy
-                            _buildView(
-                                controller.tradeInfoEntity!.tradePlayers,
-                                context,
-                                controller,
-                                true),
-                            //sell
-                            _buildView(controller.sellAllTradePlayers,
-                                context, controller, false),
-                          ],
-                        )),
+                            ],
+                          ),
+                        ),
+                      ];
+                    },
+                    body: TabBarView(
+                      controller: controller.tabController,
+                      children: [
+                        //buy
+                        _buildView(controller.tradeInfoEntity!.tradePlayers,
+                            context, controller, true),
+                        //sell
+                        _buildView(controller.sellAllTradePlayers, context,
+                            controller, false),
+                      ],
+                    )),
               );
             });
           },
@@ -595,7 +589,9 @@ class _TradeIndexPageState extends State<TradeIndexPage>
             removeTop: true,
             child: SmartRefresher(
               onRefresh: () => controller.refreshData(),
-              controller: isBuy?controller.buyRefreshController:controller.sellRefreshController,
+              controller: isBuy
+                  ? controller.buyRefreshController
+                  : controller.sellRefreshController,
               child: ListView.separated(
                   itemCount: tradePlayers.length,
                   physics: const BouncingScrollPhysics(),
@@ -612,7 +608,7 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                     double percent = (basicMarketPrice - marketPrice).abs() /
                         basicMarketPrice *
                         100;
-                    bool isSpecial = trendPlayer.top??false;
+                    bool isSpecial = trendPlayer.top ?? false;
                     var color = isGood ? AppColors.c10A86A : AppColors.cE72646;
                     Widget child = Container(
                       margin: EdgeInsets.only(
@@ -684,31 +680,39 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                                       height: 26.w,
                                       child: Builder(builder: (context) {
                                         var trend = trendPlayer.trend;
-                                        var data = List.generate(trend.length, (index){
-                                          return FlSpot(index.toDouble(), trend[index].playerMarketPrice.toDouble());
+                                        var data = List.generate(trend.length,
+                                            (index) {
+                                          return FlSpot(
+                                              index.toDouble(),
+                                              trend[index]
+                                                  .playerMarketPrice
+                                                  .toDouble());
                                         });
                                         //
                                         return LineChart(
                                           LineChartData(
-                                            lineTouchData: const LineTouchData(enabled: false),
+                                            lineTouchData: const LineTouchData(
+                                                enabled: false),
                                             titlesData: controller.titlesData,
                                             borderData: controller.borderData,
                                             lineBarsData: [
                                               LineChartBarData(
-                                                spots: data,
-                                               color: AppColors.cFF7954,
-                                                dotData: const FlDotData(
-                                                  show: false
-                                                ),
-                                                barWidth: 2,
-                                                belowBarData: BarAreaData(
-                                                  show: true,
-                                                  gradient: LinearGradient(colors: [
-                                                    AppColors.cFF7954.withOpacity(0.3),
-                                                    AppColors.cFF7954.withOpacity(0.1)
-                                                  ])
-                                                )
-                                              )
+                                                  spots: data,
+                                                  color: AppColors.cFF7954,
+                                                  dotData: const FlDotData(
+                                                      show: false),
+                                                  barWidth: 2,
+                                                  belowBarData: BarAreaData(
+                                                      show: true,
+                                                      gradient: LinearGradient(
+                                                          colors: [
+                                                            AppColors.cFF7954
+                                                                .withOpacity(
+                                                                    0.3),
+                                                            AppColors.cFF7954
+                                                                .withOpacity(
+                                                                    0.1)
+                                                          ])))
                                             ],
                                             gridData: controller.gridData,
                                           ),
@@ -785,14 +789,14 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(13.w),
                                       border: Border.all(
-                                          color:
-                                              AppColors.c262626.withOpacity(0.4),
+                                          color: AppColors.c262626
+                                              .withOpacity(0.4),
                                           width: 1)),
                                   alignment: Alignment.center,
                                   child: Text(
                                     isBuy ? "BUY" : "SELL",
-                                    style: 13
-                                        .w7(color: AppColors.c262626, height: 1),
+                                    style: 13.w7(
+                                        color: AppColors.c262626, height: 1),
                                   ),
                                 ),
                               )
@@ -820,12 +824,13 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                               margin: EdgeInsets.only(left: 12.w, right: 22.w),
                               alignment: Alignment.center,
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     "Discount in limited time",
-                                    style: 14
-                                        .w4(color: AppColors.cF2F2F2, height: 1),
+                                    style: 14.w4(
+                                        color: AppColors.cF2F2F2, height: 1),
                                   ),
                                   Row(
                                     children: [
@@ -836,12 +841,13 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                                       Text(
                                         MyDateUtils.formatDate(
                                             MyDateUtils.getDateTimeByMs(
-                                                (trendPlayer.removalTime??0) -
+                                                (trendPlayer.removalTime ?? 0) -
                                                     MyDateUtils.getNowDateTime()
                                                         .millisecondsSinceEpoch),
                                             format: DateFormats.H_M_S),
                                         style: 14.w4(
-                                            color: AppColors.cF2F2F2, height: 1),
+                                            color: AppColors.cF2F2F2,
+                                            height: 1),
                                       )
                                     ],
                                   )

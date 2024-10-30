@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/entities/nab_player_season_game_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_season_game_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
@@ -10,8 +11,9 @@ import 'package:get/get.dart';
 
 class SeasonHistoryItems {
   final NbaPlayerSeasonGameEntity playerSeasonGameEntity;
+  final NabPlayerSeasonGameRankEntity playerSeasonGameRankEntity;
   final NbaTeamEntity teamEntity;
-  SeasonHistoryItems(this.playerSeasonGameEntity, this.teamEntity);
+  SeasonHistoryItems(this.playerSeasonGameEntity, this.teamEntity, this.playerSeasonGameRankEntity);
 }
 
 class SeasonHistory{
@@ -59,17 +61,17 @@ class HistoryController extends GetxController {
       CacheApi.getNBATeamDefine(getList: true)
     ];
     Future.wait(futures).then((result) {
-      List<NbaPlayerSeasonGameEntity> seasons =
-          result[0] as List<NbaPlayerSeasonGameEntity>;
+      NbaPlayerSeasonEntity nbaPlayerSeasonEntity = result[0] as NbaPlayerSeasonEntity;
+      List<NbaPlayerSeasonGameEntity> seasons = nbaPlayerSeasonEntity.playerGameData;
       if(seasons.isEmpty){
         data[season.toString()]!.loadStatus.value = LoadDataStatus.noData;
       }else{
         data[season.toString()]!.seasonHistoryItems = seasons
-            .map((e) => SeasonHistoryItems(e, Utils.getTeamInfo(e.awayTeamId),))
+            .map((e) => SeasonHistoryItems(e, Utils.getTeamInfo(e.awayTeamId),nbaPlayerSeasonEntity.playerRank))
             .toList();
         data[season.toString()]!.loadStatus.value = LoadDataStatus.success;
       }
-      update(["$season"]);
+      update([season]);
     },onError: (e){
       data[season.toString()]!.loadStatus.value = LoadDataStatus.error;
     });

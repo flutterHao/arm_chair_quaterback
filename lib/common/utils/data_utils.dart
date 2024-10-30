@@ -28,7 +28,7 @@ class MyDateUtils {
 
   /// 格式化 8:05AM
   static String formatHM_AM(DateTime dateTime) {
-    return "${dateTime.hour < 12 ? dateTime.hour : dateTime.hour - 12}:${dateTime.minute}${dateTime.hour < 12 ? "AM" : "PM"}";
+    return "${dateTime.hour < 12 ? dateTime.hour : dateTime.hour - 12}:${dateTime.minute.toString().padLeft(2, "0")}${dateTime.hour < 12 ? "AM" : "PM"}";
   }
 
   /// 格式化 AM 8:05
@@ -38,9 +38,9 @@ class MyDateUtils {
 
   /// 秒格式化为分钟秒: 02:35
   static String formatMS(int second) {
-    var minute = second~/60;
-    var s = second%60;
-    return "${minute<10?"0$minute":minute}:${s<10?"0$s":s}";
+    var minute = second ~/ 60;
+    var s = second % 60;
+    return "${minute < 10 ? "0$minute" : minute}:${s < 10 ? "0$s" : s}";
   }
 
   /// get DateMilliseconds By DateStr.
@@ -776,8 +776,9 @@ class MyDateUtils {
     return month.substring(0, short ? 3 : month.length);
   }
 
-  static int getNextDayStartTimeMS(DateTime dateTime){
-    var dateTime2 = DateTime(dateTime.year,dateTime.month,dateTime.day,0,0,0,0,0);
+  static int getNextDayStartTimeMS(DateTime dateTime) {
+    var dateTime2 =
+        DateTime(dateTime.year, dateTime.month, dateTime.day, 0, 0, 0, 0, 0);
     return dateTime2.millisecondsSinceEpoch;
   }
 }

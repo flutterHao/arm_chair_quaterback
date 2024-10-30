@@ -137,14 +137,14 @@ class PicksApi {
     return TeamInfoEntity.fromJson(json);
   }
 
-  static Future<List<NbaPlayerSeasonGameEntity>> getNBAPlayerSeasonGameData(
+  static Future<NbaPlayerSeasonEntity> getNBAPlayerSeasonGameData(
       int playerId, int seasonId, int page, int pageSize) async {
-    List json = await httpUtil.post(Api.getNBAPlayerSeasonGameData, data: {
+    var json = await httpUtil.post(Api.getNBAPlayerSeasonGameData, data: {
       "playerId": playerId,
       "seasonId": seasonId,
       "page": page,
       "pageSize": pageSize,
     });
-    return json.map((e) => NbaPlayerSeasonGameEntity.fromJson(e)).toList();
+    return NbaPlayerSeasonEntity.fromJson(json);
   }
 }

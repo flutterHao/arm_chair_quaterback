@@ -1,8 +1,25 @@
+import 'package:arm_chair_quaterback/common/entities/nab_player_season_game_rank_entity.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/nba_player_season_game_entity.g.dart';
 import 'dart:convert';
 export 'package:arm_chair_quaterback/generated/json/nba_player_season_game_entity.g.dart';
 
+@JsonSerializable()
+class NbaPlayerSeasonEntity {
+	late List<NbaPlayerSeasonGameEntity> playerGameData;
+	late NabPlayerSeasonGameRankEntity playerRank;
+
+	NbaPlayerSeasonEntity();
+
+	factory NbaPlayerSeasonEntity.fromJson(Map<String, dynamic> json) => $NbaPlayerSeasonEntityFromJson(json);
+
+	Map<String, dynamic> toJson() => $NbaPlayerSeasonEntityToJson(this);
+
+	@override
+	String toString() {
+		return jsonEncode(this);
+	}
+}
 @JsonSerializable()
 class NbaPlayerSeasonGameEntity {
 	late double fga;

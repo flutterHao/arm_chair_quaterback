@@ -2,6 +2,7 @@ import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/physics/one_boundary_scroll_physics.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/summary/controller.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -11,7 +12,9 @@ import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class SummaryPage extends GetView<SummaryController> {
-  const SummaryPage({Key? key}) : super(key: key);
+  const SummaryPage({required this.playerId, super.key});
+
+  final int playerId;
 
   // 主视图
   Widget _buildView() {
@@ -21,12 +24,17 @@ class SummaryPage extends GetView<SummaryController> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SummaryController>(
-      init: SummaryController(),
+      init: SummaryController(playerId),
       builder: (_) {
         var scrollController1 = ScrollController();
 
         var scrollController = ScrollController();
-        return SingleChildScrollView(
+        return controller.nbaPlayerBaseInfoEntity == null ? Obx(() {
+          return Center(
+            child: LoadStatusWidget(
+              loadDataStatus: controller.loadStatus.value,),
+          );
+        }) : SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -138,51 +146,55 @@ class SummaryPage extends GetView<SummaryController> {
                   children: [
                     Expanded(
                         child: Container(
-                      height: 70.w,
-                      padding: EdgeInsets.only(left: 14.w),
-                      decoration: BoxDecoration(
-                          color: AppColors.cF2F2F2,
-                          borderRadius: BorderRadius.circular(16.w)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Season Avg",
-                            style: 14.w4(color: AppColors.c666666, height: 1),
+                          height: 70.w,
+                          padding: EdgeInsets.only(left: 14.w),
+                          decoration: BoxDecoration(
+                              color: AppColors.cF2F2F2,
+                              borderRadius: BorderRadius.circular(16.w)),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Season Avg",
+                                style: 14.w4(
+                                    color: AppColors.c666666, height: 1),
+                              ),
+                              10.vGap,
+                              Text(
+                                "24.1",
+                                style: 27.w7(
+                                    color: AppColors.c262626, height: 1),
+                              )
+                            ],
                           ),
-                          10.vGap,
-                          Text(
-                            "24.1",
-                            style: 27.w7(color: AppColors.c262626, height: 1),
-                          )
-                        ],
-                      ),
-                    )),
+                        )),
                     9.hGap,
                     Expanded(
                         child: Container(
-                      height: 70.w,
-                      padding: EdgeInsets.only(left: 14.w),
-                      decoration: BoxDecoration(
-                          color: AppColors.cF2F2F2,
-                          borderRadius: BorderRadius.circular(16.w)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Last 5 Avg",
-                            style: 14.w4(color: AppColors.c666666, height: 1),
+                          height: 70.w,
+                          padding: EdgeInsets.only(left: 14.w),
+                          decoration: BoxDecoration(
+                              color: AppColors.cF2F2F2,
+                              borderRadius: BorderRadius.circular(16.w)),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Last 5 Avg",
+                                style: 14.w4(
+                                    color: AppColors.c666666, height: 1),
+                              ),
+                              10.vGap,
+                              Text(
+                                "24.1",
+                                style: 27.w7(
+                                    color: AppColors.c262626, height: 1),
+                              )
+                            ],
                           ),
-                          10.vGap,
-                          Text(
-                            "24.1",
-                            style: 27.w7(color: AppColors.c262626, height: 1),
-                          )
-                        ],
-                      ),
-                    )),
+                        )),
                   ],
                 ),
               ),
@@ -245,7 +257,7 @@ class SummaryPage extends GetView<SummaryController> {
                               Text(
                                 "25.6",
                                 style:
-                                    18.w7(color: AppColors.c262626, height: 1),
+                                18.w7(color: AppColors.c262626, height: 1),
                               ),
                               Text(
                                 "PTS",
@@ -266,25 +278,27 @@ class SummaryPage extends GetView<SummaryController> {
                             children: [
                               Expanded(
                                   child: Container(
-                                decoration: BoxDecoration(
-                                    color: AppColors.cF2F2F2,
-                                    borderRadius: BorderRadius.horizontal(
-                                        left: Radius.circular(8.w))),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    IconWidget(
-                                      iconWidth: 14.w,
-                                      icon: Assets.uiIconUpPng,
-                                      iconColor: AppColors.cFF7954,
+                                    decoration: BoxDecoration(
+                                        color: AppColors.cF2F2F2,
+                                        borderRadius: BorderRadius.horizontal(
+                                            left: Radius.circular(8.w))),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment
+                                          .center,
+                                      children: [
+                                        IconWidget(
+                                          iconWidth: 14.w,
+                                          icon: Assets.uiIconUpPng,
+                                          iconColor: AppColors.cFF7954,
+                                        ),
+                                        Text(
+                                          "MORE",
+                                          style: 10.w7(
+                                              color: AppColors.cFF7954),
+                                        )
+                                      ],
                                     ),
-                                    Text(
-                                      "MORE",
-                                      style: 10.w7(color: AppColors.cFF7954),
-                                    )
-                                  ],
-                                ),
-                              )),
+                                  )),
                               Container(
                                 width: 1,
                                 height: double.infinity,
@@ -292,26 +306,28 @@ class SummaryPage extends GetView<SummaryController> {
                               ),
                               Expanded(
                                   child: Container(
-                                decoration: BoxDecoration(
-                                    color: AppColors.cF2F2F2,
-                                    borderRadius: BorderRadius.horizontal(
-                                        right: Radius.circular(8.w))),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    IconWidget(
-                                      iconWidth: 14.w,
-                                      icon: Assets.uiIconUpPng,
-                                      iconColor: AppColors.cFF7954,
-                                      rotateAngle: 180,
+                                    decoration: BoxDecoration(
+                                        color: AppColors.cF2F2F2,
+                                        borderRadius: BorderRadius.horizontal(
+                                            right: Radius.circular(8.w))),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment
+                                          .center,
+                                      children: [
+                                        IconWidget(
+                                          iconWidth: 14.w,
+                                          icon: Assets.uiIconUpPng,
+                                          iconColor: AppColors.cFF7954,
+                                          rotateAngle: 180,
+                                        ),
+                                        Text(
+                                          "LESS",
+                                          style: 10.w7(
+                                              color: AppColors.cFF7954),
+                                        )
+                                      ],
                                     ),
-                                    Text(
-                                      "LESS",
-                                      style: 10.w7(color: AppColors.cFF7954),
-                                    )
-                                  ],
-                                ),
-                              ))
+                                  ))
                             ],
                           ),
                         )
@@ -578,7 +594,7 @@ class SummaryPage extends GetView<SummaryController> {
                                         return Text(
                                           "$text",
                                           style:
-                                              10.w4(color: AppColors.cB3B3B3),
+                                          10.w4(color: AppColors.cB3B3B3),
                                           textAlign: TextAlign.end,
                                         );
                                       })),
@@ -672,7 +688,7 @@ class SummaryPage extends GetView<SummaryController> {
                               Text(
                                 "23:10:59",
                                 style:
-                                    14.w4(color: AppColors.cF2F2F2, height: 1),
+                                14.w4(color: AppColors.cF2F2F2, height: 1),
                               )
                             ],
                           )
@@ -767,7 +783,7 @@ class SummaryPage extends GetView<SummaryController> {
                                             decoration: BoxDecoration(
                                                 color: AppColors.cE72646,
                                                 borderRadius:
-                                                    BorderRadius.circular(5.w)),
+                                                BorderRadius.circular(5.w)),
                                             alignment: Alignment.center,
                                             child: Text(
                                               "-15%",
@@ -786,7 +802,7 @@ class SummaryPage extends GetView<SummaryController> {
                                     width: 121.w,
                                     decoration: BoxDecoration(
                                         borderRadius:
-                                            BorderRadius.circular(13.w),
+                                        BorderRadius.circular(13.w),
                                         border: Border.all(
                                             color: AppColors.c262626
                                                 .withOpacity(0.4),
@@ -906,7 +922,7 @@ class SummaryPage extends GetView<SummaryController> {
           // labelStyle: 1.w4(color: AppColors.cTransparent),
           axisLine: AxisLine(width: 0),
           majorGridLines:
-              MajorGridLines(width: 1, color: Colors.red, dashArray: [2, 2]),
+          MajorGridLines(width: 1, color: Colors.red, dashArray: [2, 2]),
           majorTickLines: MajorTickLines(color: Colors.transparent)),
       series: controller.getDefaultLineSeries(),
       tooltipBehavior: TooltipBehavior(enable: true),

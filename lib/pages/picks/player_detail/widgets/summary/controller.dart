@@ -1,4 +1,7 @@
 import 'package:arm_chair_quaterback/common/entities/chart_sample_data.dart';
+import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity.dart';
+import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:flutter/material.dart';
@@ -8,10 +11,15 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 
 class SummaryController extends GetxController {
-  SummaryController();
+  SummaryController(this.playerId);
+  final int playerId;
 
 
   var currentIndex = 0.obs;
+
+  var loadStatus = LoadDataStatus.loading.obs;
+
+  NbaPlayerBaseInfoEntity? nbaPlayerBaseInfoEntity;
 
   // tap
   void handleTap(int index) {
@@ -25,6 +33,23 @@ class SummaryController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    initData();
+  }
+
+  initData(){
+    loadStatus.value = LoadDataStatus.loading;
+    Future.wait([
+      PicksApi.getNBAPlayerBaseInfo(playerId),
+    ]).then((result){
+      nbaPlayerBaseInfoEntity = result[0];
+      loadStatus.value = LoadDataStatus.noData;
+
+      loadStatus.value = LoadDataStatus.success;
+
+    },onError: (e){
+      loadStatus.value = LoadDataStatus.error;
+
+    });
   }
 
   /// 在 onInit() 之后调用 1 帧。这是进入的理想场所

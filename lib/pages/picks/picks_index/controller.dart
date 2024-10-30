@@ -199,7 +199,7 @@ class PicksIndexController extends GetxController {
       CacheApi.getNBAPlayerInfo(),
       CacheApi.getNewsDefine(),
       CacheApi.getNBATeamDefine(getList: true),
-      PicksApi.getRedisRankInfo(type: RankType.newsGuess)
+      PicksApi.getRedisRankInfo(type: RankType.newsGuessExpert)
     ]).then((results) {
       guessGamePlayers.clear();
       _count(false);

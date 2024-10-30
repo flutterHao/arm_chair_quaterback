@@ -1,5 +1,47 @@
 import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_season_game_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/nab_player_season_game_rank_entity.dart';
+
+
+NbaPlayerSeasonEntity $NbaPlayerSeasonEntityFromJson(
+    Map<String, dynamic> json) {
+  final NbaPlayerSeasonEntity nbaPlayerSeasonEntity = NbaPlayerSeasonEntity();
+  final List<
+      NbaPlayerSeasonGameEntity>? playerGameData = (json['playerGameData'] as List<
+      dynamic>?)?.map(
+          (e) =>
+      jsonConvert.convert<NbaPlayerSeasonGameEntity>(
+          e) as NbaPlayerSeasonGameEntity).toList();
+  if (playerGameData != null) {
+    nbaPlayerSeasonEntity.playerGameData = playerGameData;
+  }
+  final NabPlayerSeasonGameRankEntity? playerRank = jsonConvert.convert<
+      NabPlayerSeasonGameRankEntity>(json['playerRank']);
+  if (playerRank != null) {
+    nbaPlayerSeasonEntity.playerRank = playerRank;
+  }
+  return nbaPlayerSeasonEntity;
+}
+
+Map<String, dynamic> $NbaPlayerSeasonEntityToJson(
+    NbaPlayerSeasonEntity entity) {
+  final Map<String, dynamic> data = <String, dynamic>{};
+  data['playerGameData'] =
+      entity.playerGameData.map((v) => v.toJson()).toList();
+  data['playerRank'] = entity.playerRank.toJson();
+  return data;
+}
+
+extension NbaPlayerSeasonEntityExtension on NbaPlayerSeasonEntity {
+  NbaPlayerSeasonEntity copyWith({
+    List<NbaPlayerSeasonGameEntity>? playerGameData,
+    NabPlayerSeasonGameRankEntity? playerRank,
+  }) {
+    return NbaPlayerSeasonEntity()
+      ..playerGameData = playerGameData ?? this.playerGameData
+      ..playerRank = playerRank ?? this.playerRank;
+  }
+}
 
 NbaPlayerSeasonGameEntity $NbaPlayerSeasonGameEntityFromJson(
     Map<String, dynamic> json) {

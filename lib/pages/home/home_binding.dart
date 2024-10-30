@@ -6,6 +6,7 @@
  */
 import 'package:arm_chair_quaterback/pages/news/new_list/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
+import 'package:arm_chair_quaterback/pages/trade/trade_index/controller.dart';
 import 'package:get/get.dart';
 
 import 'home_controller.dart';
@@ -16,5 +17,7 @@ class AllControllerBindings extends Bindings {
     Get.lazyPut(() => HomeController());
     Get.lazyPut(() => NewListController(), fenix: true);
     Get.lazyPut(() => TeamIndexController(), fenix: true);
+    //数据加载太慢，启动提前加载
+    Get.put(TradeIndexController());
   }
 }

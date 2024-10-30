@@ -218,7 +218,9 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                         physics: OneBoundaryPageScrollPhysics(
                             tabController: controller.tabController),
                         children: [
-                          const SummaryPage(),
+                          SummaryPage(
+                            playerId: args.playerId,
+                          ),
                           HistoryPage(
                             headHeight: appBarHeight + 66.w,
                             playerId: args.playerId,

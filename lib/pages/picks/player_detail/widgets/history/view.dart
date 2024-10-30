@@ -3,7 +3,7 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/history/controller.dart';
-import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/history/product_datagridsource.dart';
+import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/history/player_property_data_grid_source.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -155,7 +155,7 @@ class _HistoryPageState extends State<HistoryPage>
     var list = itemData[0].playerSeasonGameEntity.toJson().keys.toList();
     for (int i = 0; i < list.length; i++) {
       var key = list[i];
-      if (ProductDataGridSource.excludeKeys.contains(key)) {
+      if (PlayerPropertyDataGridSource.excludeKeys.contains(key)) {
         continue;
       }
       double width = 40.w;
@@ -170,6 +170,7 @@ class _HistoryPageState extends State<HistoryPage>
             alignment: Alignment.center,
             child: Text(
               key.toUpperCase(),
+              textAlign: TextAlign.center,
               style: 10.w4(color: AppColors.cB3B3B3, height: 1),
             ),
           ));
@@ -181,7 +182,7 @@ class _HistoryPageState extends State<HistoryPage>
 
   SfDataGrid _buildDataGrid(List<SeasonHistoryItems> itemData) {
     return SfDataGrid(
-      source: ProductDataGridSource(data: itemData),
+      source: PlayerPropertyDataGridSource(data: itemData),
       frozenRowsCount: 0,
       headerRowHeight: 20.w,
       rowHeight: 20.w,
