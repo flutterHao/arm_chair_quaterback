@@ -32,10 +32,9 @@ import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class HomeController extends GetxController
-    with GetSingleTickerProviderStateMixin {
+class HomeController extends GetxController{
   static HomeController get to => Get.find();
-  late TabController tabController;
+  late PageController pageController;
   RxInt tabIndex = 0.obs;
   Map<int, GlobalKey<NavigatorState>?> navigatorKeys = {
     0: GlobalNestedKey.NewsTabGlobalKey,
@@ -82,7 +81,7 @@ class HomeController extends GetxController
       const TradeIndex(),
     ),
     TabItemInfo(
-      "LEAGUES",
+      "COMMUNITIES",
       Assets.uiIconLeagues_01Png,
       Assets.uiIconLeagues_01Png,
       const LeaguePage(),
@@ -95,7 +94,7 @@ class HomeController extends GetxController
   void onInit() {
     super.onInit();
     // auth();
-    tabController = TabController(length: tabItems.length, vsync: this);
+    pageController = PageController();
     // 监听 TabController 的页面改变，更新 tabIndex
     // tabController.addListener(() {
     //   tabIndex.value = tabController.index;
@@ -113,13 +112,13 @@ class HomeController extends GetxController
 
   @override
   void onClose() {
-    tabController.dispose();
+    pageController.dispose();
     super.onClose();
   }
 
   void onTap(v) {
     tabIndex.value = v;
-    tabController.animateTo(v);
+    pageController.jumpToPage(v);
     update();
   }
 

@@ -156,6 +156,9 @@ class _RankPageState extends State<RankPage>
                                                               ? const SizedBox
                                                                   .shrink()
                                                               : ImageWidget(
+                                                                  imageFailedPath:
+                                                                      Assets
+                                                                          .uiHead_01Png,
                                                                   borderRadius:
                                                                       BorderRadius
                                                                           .circular(30
@@ -325,6 +328,9 @@ class _RankPageState extends State<RankPage>
                                                                 ? const SizedBox
                                                                     .shrink()
                                                                 : ImageWidget(
+                                                                    imageFailedPath:
+                                                                        Assets
+                                                                            .uiHead_01Png,
                                                                     borderRadius:
                                                                         BorderRadius.circular(30
                                                                             .w),
@@ -492,6 +498,9 @@ class _RankPageState extends State<RankPage>
                                                               ? const SizedBox
                                                                   .shrink()
                                                               : ImageWidget(
+                                                                  imageFailedPath:
+                                                                      Assets
+                                                                          .uiHead_01Png,
                                                                   borderRadius:
                                                                       BorderRadius
                                                                           .circular(30
@@ -673,11 +682,13 @@ class _RankPageState extends State<RankPage>
                                                       ?.teamId
                                             }),
                                     child: ImageWidget(
+                                      imageFailedPath: Assets.uiHead_01Png,
                                       borderRadius: BorderRadius.circular(30.w),
                                       url: Utils.getTeamUrl(controller
                                           .rankInfo.myRank.teamLogo
                                           ?.toInt()),
                                       width: 48.w,
+                                      height: 48.w,
                                     )),
                                 Container(
                                   margin: EdgeInsets.only(left: 12.w),
@@ -783,10 +794,12 @@ class _RankPageState extends State<RankPage>
                         "teamId": controller.rankInfo.ranks[index].teamId
                       }),
               child: ImageWidget(
+                imageFailedPath: Assets.uiHead_01Png,
                 borderRadius: BorderRadius.circular(30.w),
                 url: Utils.getTeamUrl(
                     controller.rankInfo.ranks[index].teamLogo.toInt()),
                 width: 48.w,
+                height: 48.w,
               )),
           SizedBox(
             width: 10.w,

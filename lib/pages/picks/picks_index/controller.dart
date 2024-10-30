@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_game_info_v2_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_infos_entity.dart';
@@ -140,7 +141,7 @@ class PicksIndexController extends GetxController {
         }
       }
     }
-    PicksApi.guess(type,params).then((result) {
+    PicksApi.guess(type,params,0).then((result) {
       Get.back();
       cleanAll();
       _initData();
@@ -237,8 +238,9 @@ class PicksIndexController extends GetxController {
         });
         temp[key] = item;
       }
-      List<String> titles = ["pts","3pm",'ast','reb'];
-      guessGamePlayers =  titles.fold({}, (p,e){
+      List<String> titles = Constant.guessTypeList;
+      guessGamePlayers =  titles.fold({}, (p,key){
+        var e = key.toLowerCase();
         if(temp.containsKey(e)){
           p[e] = temp[e]!;
         }

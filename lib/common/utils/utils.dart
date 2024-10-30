@@ -163,4 +163,18 @@ class Utils {
   static String formatGrade(String grade) {
     return grade.replaceAll("-", "").replaceAll("+", "");
   }
+
+  static String getSortWithInt(int value){
+    var string = value.toString();
+    if(string.endsWith("1")){
+      return "${string}st";
+    }
+    if(string.endsWith("2")){
+      return "${string}nd";
+    }
+    if(string.endsWith("3")){
+      return "${string}rd";
+    }
+    return "${string}th";
+  }
 }

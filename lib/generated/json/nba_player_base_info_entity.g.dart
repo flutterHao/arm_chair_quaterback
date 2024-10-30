@@ -4,10 +4,34 @@ import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity
 NbaPlayerBaseInfoEntity $NbaPlayerBaseInfoEntityFromJson(
     Map<String, dynamic> json) {
   final NbaPlayerBaseInfoEntity nbaPlayerBaseInfoEntity = NbaPlayerBaseInfoEntity();
+  final NbaPlayerBaseInfoPlayerDataAvg? playerDataAvg = jsonConvert.convert<
+      NbaPlayerBaseInfoPlayerDataAvg>(json['playerDataAvg']);
+  if (playerDataAvg != null) {
+    nbaPlayerBaseInfoEntity.playerDataAvg = playerDataAvg;
+  }
+  final NbaPlayerBaseInfoGuessInfos? guessInfos = jsonConvert.convert<
+      NbaPlayerBaseInfoGuessInfos>(json['guessInfos']);
+  if (guessInfos != null) {
+    nbaPlayerBaseInfoEntity.guessInfos = guessInfos;
+  }
   final NbaPlayerBaseInfoPlayerBaseInfo? playerBaseInfo = jsonConvert.convert<
       NbaPlayerBaseInfoPlayerBaseInfo>(json['playerBaseInfo']);
   if (playerBaseInfo != null) {
     nbaPlayerBaseInfoEntity.playerBaseInfo = playerBaseInfo;
+  }
+  final List<
+      NbaPlayerBaseInfoL5GameData>? l5GameData = (json['l5GameData'] as List<
+      dynamic>?)?.map(
+          (e) =>
+      jsonConvert.convert<NbaPlayerBaseInfoL5GameData>(
+          e) as NbaPlayerBaseInfoL5GameData).toList();
+  if (l5GameData != null) {
+    nbaPlayerBaseInfoEntity.l5GameData = l5GameData;
+  }
+  final NbaPlayerBaseInfoL5DataAvg? l5DataAvg = jsonConvert.convert<
+      NbaPlayerBaseInfoL5DataAvg>(json['l5DataAvg']);
+  if (l5DataAvg != null) {
+    nbaPlayerBaseInfoEntity.l5DataAvg = l5DataAvg;
   }
   final NbaPlayerBaseInfoPlayerRegularMap? playerRegularMap = jsonConvert
       .convert<NbaPlayerBaseInfoPlayerRegularMap>(json['playerRegularMap']);
@@ -43,7 +67,11 @@ NbaPlayerBaseInfoEntity $NbaPlayerBaseInfoEntityFromJson(
 Map<String, dynamic> $NbaPlayerBaseInfoEntityToJson(
     NbaPlayerBaseInfoEntity entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
+  data['playerDataAvg'] = entity.playerDataAvg.toJson();
+  data['guessInfos'] = entity.guessInfos.toJson();
   data['playerBaseInfo'] = entity.playerBaseInfo.toJson();
+  data['l5GameData'] = entity.l5GameData.map((v) => v.toJson()).toList();
+  data['l5DataAvg'] = entity.l5DataAvg.toJson();
   data['playerRegularMap'] = entity.playerRegularMap.toJson();
   data['playerPlayoffsMap'] = entity.playerPlayoffsMap.toJson();
   data['playerTrends'] = entity.playerTrends.map((v) => v.toJson()).toList();
@@ -53,18 +81,1443 @@ Map<String, dynamic> $NbaPlayerBaseInfoEntityToJson(
 
 extension NbaPlayerBaseInfoEntityExtension on NbaPlayerBaseInfoEntity {
   NbaPlayerBaseInfoEntity copyWith({
+    NbaPlayerBaseInfoPlayerDataAvg? playerDataAvg,
+    NbaPlayerBaseInfoGuessInfos? guessInfos,
     NbaPlayerBaseInfoPlayerBaseInfo? playerBaseInfo,
+    List<NbaPlayerBaseInfoL5GameData>? l5GameData,
+    NbaPlayerBaseInfoL5DataAvg? l5DataAvg,
     NbaPlayerBaseInfoPlayerRegularMap? playerRegularMap,
     NbaPlayerBaseInfoPlayerPlayoffsMap? playerPlayoffsMap,
     List<NbaPlayerBaseInfoPlayerTrends>? playerTrends,
     List<NbaPlayerBaseInfoPlayerNews>? playerNews,
   }) {
     return NbaPlayerBaseInfoEntity()
+      ..playerDataAvg = playerDataAvg ?? this.playerDataAvg
+      ..guessInfos = guessInfos ?? this.guessInfos
       ..playerBaseInfo = playerBaseInfo ?? this.playerBaseInfo
+      ..l5GameData = l5GameData ?? this.l5GameData
+      ..l5DataAvg = l5DataAvg ?? this.l5DataAvg
       ..playerRegularMap = playerRegularMap ?? this.playerRegularMap
       ..playerPlayoffsMap = playerPlayoffsMap ?? this.playerPlayoffsMap
       ..playerTrends = playerTrends ?? this.playerTrends
       ..playerNews = playerNews ?? this.playerNews;
+  }
+}
+
+NbaPlayerBaseInfoPlayerDataAvg $NbaPlayerBaseInfoPlayerDataAvgFromJson(
+    Map<String, dynamic> json) {
+  final NbaPlayerBaseInfoPlayerDataAvg nbaPlayerBaseInfoPlayerDataAvg = NbaPlayerBaseInfoPlayerDataAvg();
+  final double? blk = jsonConvert.convert<double>(json['blk']);
+  if (blk != null) {
+    nbaPlayerBaseInfoPlayerDataAvg.blk = blk;
+  }
+  final double? fga = jsonConvert.convert<double>(json['fga']);
+  if (fga != null) {
+    nbaPlayerBaseInfoPlayerDataAvg.fga = fga;
+  }
+  final double? ast = jsonConvert.convert<double>(json['ast']);
+  if (ast != null) {
+    nbaPlayerBaseInfoPlayerDataAvg.ast = ast;
+  }
+  final double? dreb = jsonConvert.convert<double>(json['dreb']);
+  if (dreb != null) {
+    nbaPlayerBaseInfoPlayerDataAvg.dreb = dreb;
+  }
+  final int? starterCount = jsonConvert.convert<int>(json['starterCount']);
+  if (starterCount != null) {
+    nbaPlayerBaseInfoPlayerDataAvg.starterCount = starterCount;
+  }
+  final double? stl = jsonConvert.convert<double>(json['stl']);
+  if (stl != null) {
+    nbaPlayerBaseInfoPlayerDataAvg.stl = stl;
+  }
+  final int? updateTime = jsonConvert.convert<int>(json['updateTime']);
+  if (updateTime != null) {
+    nbaPlayerBaseInfoPlayerDataAvg.updateTime = updateTime;
+  }
+  final double? fgm = jsonConvert.convert<double>(json['fgm']);
+  if (fgm != null) {
+    nbaPlayerBaseInfoPlayerDataAvg.fgm = fgm;
+  }
+  final double? pts = jsonConvert.convert<double>(json['pts']);
+  if (pts != null) {
+    nbaPlayerBaseInfoPlayerDataAvg.pts = pts;
+  }
+  final double? threePa = jsonConvert.convert<double>(json['threePa']);
+  if (threePa != null) {
+    nbaPlayerBaseInfoPlayerDataAvg.threePa = threePa;
+  }
+  final int? playCount = jsonConvert.convert<int>(json['playCount']);
+  if (playCount != null) {
+    nbaPlayerBaseInfoPlayerDataAvg.playCount = playCount;
+  }
+  final double? fta = jsonConvert.convert<double>(json['fta']);
+  if (fta != null) {
+    nbaPlayerBaseInfoPlayerDataAvg.fta = fta;
+  }
+  final double? min = jsonConvert.convert<double>(json['min']);
+  if (min != null) {
+    nbaPlayerBaseInfoPlayerDataAvg.min = min;
+  }
+  final double? oreb = jsonConvert.convert<double>(json['oreb']);
+  if (oreb != null) {
+    nbaPlayerBaseInfoPlayerDataAvg.oreb = oreb;
+  }
+  final int? createTime = jsonConvert.convert<int>(json['createTime']);
+  if (createTime != null) {
+    nbaPlayerBaseInfoPlayerDataAvg.createTime = createTime;
+  }
+  final int? seasonId = jsonConvert.convert<int>(json['seasonId']);
+  if (seasonId != null) {
+    nbaPlayerBaseInfoPlayerDataAvg.seasonId = seasonId;
+  }
+  final double? pf = jsonConvert.convert<double>(json['pf']);
+  if (pf != null) {
+    nbaPlayerBaseInfoPlayerDataAvg.pf = pf;
+  }
+  final double? threePm = jsonConvert.convert<double>(json['threePm']);
+  if (threePm != null) {
+    nbaPlayerBaseInfoPlayerDataAvg.threePm = threePm;
+  }
+  final double? to = jsonConvert.convert<double>(json['to']);
+  if (to != null) {
+    nbaPlayerBaseInfoPlayerDataAvg.to = to;
+  }
+  final double? ftm = jsonConvert.convert<double>(json['ftm']);
+  if (ftm != null) {
+    nbaPlayerBaseInfoPlayerDataAvg.ftm = ftm;
+  }
+  final int? playerId = jsonConvert.convert<int>(json['playerId']);
+  if (playerId != null) {
+    nbaPlayerBaseInfoPlayerDataAvg.playerId = playerId;
+  }
+  return nbaPlayerBaseInfoPlayerDataAvg;
+}
+
+Map<String, dynamic> $NbaPlayerBaseInfoPlayerDataAvgToJson(
+    NbaPlayerBaseInfoPlayerDataAvg entity) {
+  final Map<String, dynamic> data = <String, dynamic>{};
+  data['blk'] = entity.blk;
+  data['fga'] = entity.fga;
+  data['ast'] = entity.ast;
+  data['dreb'] = entity.dreb;
+  data['starterCount'] = entity.starterCount;
+  data['stl'] = entity.stl;
+  data['updateTime'] = entity.updateTime;
+  data['fgm'] = entity.fgm;
+  data['pts'] = entity.pts;
+  data['threePa'] = entity.threePa;
+  data['playCount'] = entity.playCount;
+  data['fta'] = entity.fta;
+  data['min'] = entity.min;
+  data['oreb'] = entity.oreb;
+  data['createTime'] = entity.createTime;
+  data['seasonId'] = entity.seasonId;
+  data['pf'] = entity.pf;
+  data['threePm'] = entity.threePm;
+  data['to'] = entity.to;
+  data['ftm'] = entity.ftm;
+  data['playerId'] = entity.playerId;
+  return data;
+}
+
+extension NbaPlayerBaseInfoPlayerDataAvgExtension on NbaPlayerBaseInfoPlayerDataAvg {
+  NbaPlayerBaseInfoPlayerDataAvg copyWith({
+    double? blk,
+    double? fga,
+    double? ast,
+    double? dreb,
+    int? starterCount,
+    double? stl,
+    int? updateTime,
+    double? fgm,
+    double? pts,
+    double? threePa,
+    int? playCount,
+    double? fta,
+    double? min,
+    double? oreb,
+    int? createTime,
+    int? seasonId,
+    double? pf,
+    double? threePm,
+    double? to,
+    double? ftm,
+    int? playerId,
+  }) {
+    return NbaPlayerBaseInfoPlayerDataAvg()
+      ..blk = blk ?? this.blk
+      ..fga = fga ?? this.fga
+      ..ast = ast ?? this.ast
+      ..dreb = dreb ?? this.dreb
+      ..starterCount = starterCount ?? this.starterCount
+      ..stl = stl ?? this.stl
+      ..updateTime = updateTime ?? this.updateTime
+      ..fgm = fgm ?? this.fgm
+      ..pts = pts ?? this.pts
+      ..threePa = threePa ?? this.threePa
+      ..playCount = playCount ?? this.playCount
+      ..fta = fta ?? this.fta
+      ..min = min ?? this.min
+      ..oreb = oreb ?? this.oreb
+      ..createTime = createTime ?? this.createTime
+      ..seasonId = seasonId ?? this.seasonId
+      ..pf = pf ?? this.pf
+      ..threePm = threePm ?? this.threePm
+      ..to = to ?? this.to
+      ..ftm = ftm ?? this.ftm
+      ..playerId = playerId ?? this.playerId;
+  }
+}
+
+NbaPlayerBaseInfoGuessInfos $NbaPlayerBaseInfoGuessInfosFromJson(
+    Map<String, dynamic> json) {
+  final NbaPlayerBaseInfoGuessInfos nbaPlayerBaseInfoGuessInfos = NbaPlayerBaseInfoGuessInfos();
+  final NbaPlayerBaseInfoGuessInfosProperty? threePm = jsonConvert.convert<
+      NbaPlayerBaseInfoGuessInfosProperty>(json['3pm']);
+  if (threePm != null) {
+    nbaPlayerBaseInfoGuessInfos.threePm = threePm;
+  }
+  final NbaPlayerBaseInfoGuessInfosProperty? ast = jsonConvert.convert<
+      NbaPlayerBaseInfoGuessInfosProperty>(json['ast']);
+  if (ast != null) {
+    nbaPlayerBaseInfoGuessInfos.ast = ast;
+  }
+  final NbaPlayerBaseInfoGuessInfosProperty? reb = jsonConvert.convert<
+      NbaPlayerBaseInfoGuessInfosProperty>(json['reb']);
+  if (reb != null) {
+    nbaPlayerBaseInfoGuessInfos.reb = reb;
+  }
+  final NbaPlayerBaseInfoGuessInfosProperty? pts = jsonConvert.convert<
+      NbaPlayerBaseInfoGuessInfosProperty>(json['pts']);
+  if (pts != null) {
+    nbaPlayerBaseInfoGuessInfos.pts = pts;
+  }
+  return nbaPlayerBaseInfoGuessInfos;
+}
+
+Map<String, dynamic> $NbaPlayerBaseInfoGuessInfosToJson(
+    NbaPlayerBaseInfoGuessInfos entity) {
+  final Map<String, dynamic> data = <String, dynamic>{};
+  data['3pm'] = entity.threePm.toJson();
+  data['ast'] = entity.ast.toJson();
+  data['reb'] = entity.reb.toJson();
+  data['pts'] = entity.pts.toJson();
+  return data;
+}
+
+extension NbaPlayerBaseInfoGuessInfosExtension on NbaPlayerBaseInfoGuessInfos {
+  NbaPlayerBaseInfoGuessInfos copyWith({
+    NbaPlayerBaseInfoGuessInfosProperty? threePm,
+    NbaPlayerBaseInfoGuessInfosProperty? ast,
+    NbaPlayerBaseInfoGuessInfosProperty? reb,
+    NbaPlayerBaseInfoGuessInfosProperty? pts,
+  }) {
+    return NbaPlayerBaseInfoGuessInfos()
+      ..threePm = threePm ?? this.threePm
+      ..ast = ast ?? this.ast
+      ..reb = reb ?? this.reb
+      ..pts = pts ?? this.pts;
+  }
+}
+
+NbaPlayerBaseInfoGuessInfosAstCommunityPick $NbaPlayerBaseInfoGuessInfosAstCommunityPickFromJson(
+    Map<String, dynamic> json) {
+  final NbaPlayerBaseInfoGuessInfosAstCommunityPick nbaPlayerBaseInfoGuessInfosAstCommunityPick = NbaPlayerBaseInfoGuessInfosAstCommunityPick();
+  final int? moreCount = jsonConvert.convert<int>(json['moreCount']);
+  if (moreCount != null) {
+    nbaPlayerBaseInfoGuessInfosAstCommunityPick.moreCount = moreCount;
+  }
+  final int? lessCount = jsonConvert.convert<int>(json['lessCount']);
+  if (lessCount != null) {
+    nbaPlayerBaseInfoGuessInfosAstCommunityPick.lessCount = lessCount;
+  }
+  return nbaPlayerBaseInfoGuessInfosAstCommunityPick;
+}
+
+Map<String, dynamic> $NbaPlayerBaseInfoGuessInfosAstCommunityPickToJson(
+    NbaPlayerBaseInfoGuessInfosAstCommunityPick entity) {
+  final Map<String, dynamic> data = <String, dynamic>{};
+  data['moreCount'] = entity.moreCount;
+  data['lessCount'] = entity.lessCount;
+  return data;
+}
+
+extension NbaPlayerBaseInfoGuessInfosAstCommunityPickExtension on NbaPlayerBaseInfoGuessInfosAstCommunityPick {
+  NbaPlayerBaseInfoGuessInfosAstCommunityPick copyWith({
+    int? moreCount,
+    int? lessCount,
+  }) {
+    return NbaPlayerBaseInfoGuessInfosAstCommunityPick()
+      ..moreCount = moreCount ?? this.moreCount
+      ..lessCount = lessCount ?? this.lessCount;
+  }
+}
+
+NbaPlayerBaseInfoGuessInfosAstPicks $NbaPlayerBaseInfoGuessInfosAstPicksFromJson(
+    Map<String, dynamic> json) {
+  final NbaPlayerBaseInfoGuessInfosAstPicks nbaPlayerBaseInfoGuessInfosAstPicks = NbaPlayerBaseInfoGuessInfosAstPicks();
+  final int? gameId = jsonConvert.convert<int>(json['gameId']);
+  if (gameId != null) {
+    nbaPlayerBaseInfoGuessInfosAstPicks.gameId = gameId;
+  }
+  final int? newsId = jsonConvert.convert<int>(json['newsId']);
+  if (newsId != null) {
+    nbaPlayerBaseInfoGuessInfosAstPicks.newsId = newsId;
+  }
+  final int? gameStartTime = jsonConvert.convert<int>(json['gameStartTime']);
+  if (gameStartTime != null) {
+    nbaPlayerBaseInfoGuessInfosAstPicks.gameStartTime = gameStartTime;
+  }
+  final int? teamId = jsonConvert.convert<int>(json['teamId']);
+  if (teamId != null) {
+    nbaPlayerBaseInfoGuessInfosAstPicks.teamId = teamId;
+  }
+  final List<dynamic>? guessData = (json['guessData'] as List<dynamic>?)?.map(
+          (e) => e).toList();
+  if (guessData != null) {
+    nbaPlayerBaseInfoGuessInfosAstPicks.guessData = guessData;
+  }
+  final NbaPlayerBaseInfoGuessInfosAstPicksGuessReferenceValue? guessReferenceValue = jsonConvert
+      .convert<NbaPlayerBaseInfoGuessInfosAstPicksGuessReferenceValue>(
+      json['guessReferenceValue']);
+  if (guessReferenceValue != null) {
+    nbaPlayerBaseInfoGuessInfosAstPicks.guessReferenceValue =
+        guessReferenceValue;
+  }
+  final int? id = jsonConvert.convert<int>(json['id']);
+  if (id != null) {
+    nbaPlayerBaseInfoGuessInfosAstPicks.id = id;
+  }
+  final int? type = jsonConvert.convert<int>(json['type']);
+  if (type != null) {
+    nbaPlayerBaseInfoGuessInfosAstPicks.type = type;
+  }
+  final int? awayTeamId = jsonConvert.convert<int>(json['awayTeamId']);
+  if (awayTeamId != null) {
+    nbaPlayerBaseInfoGuessInfosAstPicks.awayTeamId = awayTeamId;
+  }
+  final int? playerId = jsonConvert.convert<int>(json['playerId']);
+  if (playerId != null) {
+    nbaPlayerBaseInfoGuessInfosAstPicks.playerId = playerId;
+  }
+  return nbaPlayerBaseInfoGuessInfosAstPicks;
+}
+
+Map<String, dynamic> $NbaPlayerBaseInfoGuessInfosAstPicksToJson(
+    NbaPlayerBaseInfoGuessInfosAstPicks entity) {
+  final Map<String, dynamic> data = <String, dynamic>{};
+  data['gameId'] = entity.gameId;
+  data['newsId'] = entity.newsId;
+  data['gameStartTime'] = entity.gameStartTime;
+  data['teamId'] = entity.teamId;
+  data['guessData'] = entity.guessData;
+  data['guessReferenceValue'] = entity.guessReferenceValue.toJson();
+  data['id'] = entity.id;
+  data['type'] = entity.type;
+  data['awayTeamId'] = entity.awayTeamId;
+  data['playerId'] = entity.playerId;
+  return data;
+}
+
+extension NbaPlayerBaseInfoGuessInfosAstPicksExtension on NbaPlayerBaseInfoGuessInfosAstPicks {
+  NbaPlayerBaseInfoGuessInfosAstPicks copyWith({
+    int? gameId,
+    int? newsId,
+    int? gameStartTime,
+    int? teamId,
+    List<dynamic>? guessData,
+    NbaPlayerBaseInfoGuessInfosAstPicksGuessReferenceValue? guessReferenceValue,
+    int? id,
+    int? type,
+    int? awayTeamId,
+    int? playerId,
+  }) {
+    return NbaPlayerBaseInfoGuessInfosAstPicks()
+      ..gameId = gameId ?? this.gameId
+      ..newsId = newsId ?? this.newsId
+      ..gameStartTime = gameStartTime ?? this.gameStartTime
+      ..teamId = teamId ?? this.teamId
+      ..guessData = guessData ?? this.guessData
+      ..guessReferenceValue = guessReferenceValue ?? this.guessReferenceValue
+      ..id = id ?? this.id
+      ..type = type ?? this.type
+      ..awayTeamId = awayTeamId ?? this.awayTeamId
+      ..playerId = playerId ?? this.playerId;
+  }
+}
+
+NbaPlayerBaseInfoGuessInfosAstPicksGuessReferenceValue $NbaPlayerBaseInfoGuessInfosAstPicksGuessReferenceValueFromJson(
+    Map<String, dynamic> json) {
+  final NbaPlayerBaseInfoGuessInfosAstPicksGuessReferenceValue nbaPlayerBaseInfoGuessInfosAstPicksGuessReferenceValue = NbaPlayerBaseInfoGuessInfosAstPicksGuessReferenceValue();
+  final double? ast = jsonConvert.convert<double>(json['ast']);
+  if (ast != null) {
+    nbaPlayerBaseInfoGuessInfosAstPicksGuessReferenceValue.ast = ast;
+  }
+  final double? threePm = jsonConvert.convert<double>(json['threePm']);
+  if (threePm != null) {
+    nbaPlayerBaseInfoGuessInfosAstPicksGuessReferenceValue.threePm = threePm;
+  }
+  final int? pts = jsonConvert.convert<int>(json['pts']);
+  if (pts != null) {
+    nbaPlayerBaseInfoGuessInfosAstPicksGuessReferenceValue.pts = pts;
+  }
+  final int? reb = jsonConvert.convert<int>(json['reb']);
+  if (reb != null) {
+    nbaPlayerBaseInfoGuessInfosAstPicksGuessReferenceValue.reb = reb;
+  }
+  return nbaPlayerBaseInfoGuessInfosAstPicksGuessReferenceValue;
+}
+
+Map<String,
+    dynamic> $NbaPlayerBaseInfoGuessInfosAstPicksGuessReferenceValueToJson(
+    NbaPlayerBaseInfoGuessInfosAstPicksGuessReferenceValue entity) {
+  final Map<String, dynamic> data = <String, dynamic>{};
+  data['ast'] = entity.ast;
+  data['threePm'] = entity.threePm;
+  data['pts'] = entity.pts;
+  data['reb'] = entity.reb;
+  return data;
+}
+
+extension NbaPlayerBaseInfoGuessInfosAstPicksGuessReferenceValueExtension on NbaPlayerBaseInfoGuessInfosAstPicksGuessReferenceValue {
+  NbaPlayerBaseInfoGuessInfosAstPicksGuessReferenceValue copyWith({
+    double? ast,
+    double? threePm,
+    int? pts,
+    int? reb,
+  }) {
+    return NbaPlayerBaseInfoGuessInfosAstPicksGuessReferenceValue()
+      ..ast = ast ?? this.ast
+      ..threePm = threePm ?? this.threePm
+      ..pts = pts ?? this.pts
+      ..reb = reb ?? this.reb;
+  }
+}
+
+NbaPlayerBaseInfoGuessInfosAstTwoTeamGames $NbaPlayerBaseInfoGuessInfosAstTwoTeamGamesFromJson(
+    Map<String, dynamic> json) {
+  final NbaPlayerBaseInfoGuessInfosAstTwoTeamGames nbaPlayerBaseInfoGuessInfosAstTwoTeamGames = NbaPlayerBaseInfoGuessInfosAstTwoTeamGames();
+  final int? fga = jsonConvert.convert<int>(json['fga']);
+  if (fga != null) {
+    nbaPlayerBaseInfoGuessInfosAstTwoTeamGames.fga = fga;
+  }
+  final int? ast = jsonConvert.convert<int>(json['ast']);
+  if (ast != null) {
+    nbaPlayerBaseInfoGuessInfosAstTwoTeamGames.ast = ast;
+  }
+  final int? dreb = jsonConvert.convert<int>(json['dreb']);
+  if (dreb != null) {
+    nbaPlayerBaseInfoGuessInfosAstTwoTeamGames.dreb = dreb;
+  }
+  final int? espnId = jsonConvert.convert<int>(json['espnId']);
+  if (espnId != null) {
+    nbaPlayerBaseInfoGuessInfosAstTwoTeamGames.espnId = espnId;
+  }
+  final int? fgm = jsonConvert.convert<int>(json['fgm']);
+  if (fgm != null) {
+    nbaPlayerBaseInfoGuessInfosAstTwoTeamGames.fgm = fgm;
+  }
+  final int? reb = jsonConvert.convert<int>(json['reb']);
+  if (reb != null) {
+    nbaPlayerBaseInfoGuessInfosAstTwoTeamGames.reb = reb;
+  }
+  final int? fta = jsonConvert.convert<int>(json['fta']);
+  if (fta != null) {
+    nbaPlayerBaseInfoGuessInfosAstTwoTeamGames.fta = fta;
+  }
+  final int? min = jsonConvert.convert<int>(json['min']);
+  if (min != null) {
+    nbaPlayerBaseInfoGuessInfosAstTwoTeamGames.min = min;
+  }
+  final bool? isStarter = jsonConvert.convert<bool>(json['isStarter']);
+  if (isStarter != null) {
+    nbaPlayerBaseInfoGuessInfosAstTwoTeamGames.isStarter = isStarter;
+  }
+  final int? ftm = jsonConvert.convert<int>(json['ftm']);
+  if (ftm != null) {
+    nbaPlayerBaseInfoGuessInfosAstTwoTeamGames.ftm = ftm;
+  }
+  final int? playerId = jsonConvert.convert<int>(json['playerId']);
+  if (playerId != null) {
+    nbaPlayerBaseInfoGuessInfosAstTwoTeamGames.playerId = playerId;
+  }
+  final int? blk = jsonConvert.convert<int>(json['blk']);
+  if (blk != null) {
+    nbaPlayerBaseInfoGuessInfosAstTwoTeamGames.blk = blk;
+  }
+  final int? gameId = jsonConvert.convert<int>(json['gameId']);
+  if (gameId != null) {
+    nbaPlayerBaseInfoGuessInfosAstTwoTeamGames.gameId = gameId;
+  }
+  final int? stl = jsonConvert.convert<int>(json['stl']);
+  if (stl != null) {
+    nbaPlayerBaseInfoGuessInfosAstTwoTeamGames.stl = stl;
+  }
+  final int? updateTime = jsonConvert.convert<int>(json['updateTime']);
+  if (updateTime != null) {
+    nbaPlayerBaseInfoGuessInfosAstTwoTeamGames.updateTime = updateTime;
+  }
+  final int? pts = jsonConvert.convert<int>(json['pts']);
+  if (pts != null) {
+    nbaPlayerBaseInfoGuessInfosAstTwoTeamGames.pts = pts;
+  }
+  final int? threePa = jsonConvert.convert<int>(json['threePa']);
+  if (threePa != null) {
+    nbaPlayerBaseInfoGuessInfosAstTwoTeamGames.threePa = threePa;
+  }
+  final String? ename = jsonConvert.convert<String>(json['ename']);
+  if (ename != null) {
+    nbaPlayerBaseInfoGuessInfosAstTwoTeamGames.ename = ename;
+  }
+  final int? oreb = jsonConvert.convert<int>(json['oreb']);
+  if (oreb != null) {
+    nbaPlayerBaseInfoGuessInfosAstTwoTeamGames.oreb = oreb;
+  }
+  final int? createTime = jsonConvert.convert<int>(json['createTime']);
+  if (createTime != null) {
+    nbaPlayerBaseInfoGuessInfosAstTwoTeamGames.createTime = createTime;
+  }
+  final int? pf = jsonConvert.convert<int>(json['pf']);
+  if (pf != null) {
+    nbaPlayerBaseInfoGuessInfosAstTwoTeamGames.pf = pf;
+  }
+  final int? teamId = jsonConvert.convert<int>(json['teamId']);
+  if (teamId != null) {
+    nbaPlayerBaseInfoGuessInfosAstTwoTeamGames.teamId = teamId;
+  }
+  final int? threePm = jsonConvert.convert<int>(json['threePm']);
+  if (threePm != null) {
+    nbaPlayerBaseInfoGuessInfosAstTwoTeamGames.threePm = threePm;
+  }
+  final int? to = jsonConvert.convert<int>(json['to']);
+  if (to != null) {
+    nbaPlayerBaseInfoGuessInfosAstTwoTeamGames.to = to;
+  }
+  final int? awayTeamId = jsonConvert.convert<int>(json['awayTeamId']);
+  if (awayTeamId != null) {
+    nbaPlayerBaseInfoGuessInfosAstTwoTeamGames.awayTeamId = awayTeamId;
+  }
+  return nbaPlayerBaseInfoGuessInfosAstTwoTeamGames;
+}
+
+Map<String, dynamic> $NbaPlayerBaseInfoGuessInfosAstTwoTeamGamesToJson(
+    NbaPlayerBaseInfoGuessInfosAstTwoTeamGames entity) {
+  final Map<String, dynamic> data = <String, dynamic>{};
+  data['fga'] = entity.fga;
+  data['ast'] = entity.ast;
+  data['dreb'] = entity.dreb;
+  data['espnId'] = entity.espnId;
+  data['fgm'] = entity.fgm;
+  data['reb'] = entity.reb;
+  data['fta'] = entity.fta;
+  data['min'] = entity.min;
+  data['isStarter'] = entity.isStarter;
+  data['ftm'] = entity.ftm;
+  data['playerId'] = entity.playerId;
+  data['blk'] = entity.blk;
+  data['gameId'] = entity.gameId;
+  data['stl'] = entity.stl;
+  data['updateTime'] = entity.updateTime;
+  data['pts'] = entity.pts;
+  data['threePa'] = entity.threePa;
+  data['ename'] = entity.ename;
+  data['oreb'] = entity.oreb;
+  data['createTime'] = entity.createTime;
+  data['pf'] = entity.pf;
+  data['teamId'] = entity.teamId;
+  data['threePm'] = entity.threePm;
+  data['to'] = entity.to;
+  data['awayTeamId'] = entity.awayTeamId;
+  return data;
+}
+
+extension NbaPlayerBaseInfoGuessInfosAstTwoTeamGamesExtension on NbaPlayerBaseInfoGuessInfosAstTwoTeamGames {
+  NbaPlayerBaseInfoGuessInfosAstTwoTeamGames copyWith({
+    int? fga,
+    int? ast,
+    int? dreb,
+    int? espnId,
+    int? fgm,
+    int? reb,
+    int? fta,
+    int? min,
+    bool? isStarter,
+    int? ftm,
+    int? playerId,
+    int? blk,
+    int? gameId,
+    int? stl,
+    int? updateTime,
+    int? pts,
+    int? threePa,
+    String? ename,
+    int? oreb,
+    int? createTime,
+    int? pf,
+    int? teamId,
+    int? threePm,
+    int? to,
+    int? awayTeamId,
+  }) {
+    return NbaPlayerBaseInfoGuessInfosAstTwoTeamGames()
+      ..fga = fga ?? this.fga
+      ..ast = ast ?? this.ast
+      ..dreb = dreb ?? this.dreb
+      ..espnId = espnId ?? this.espnId
+      ..fgm = fgm ?? this.fgm
+      ..reb = reb ?? this.reb
+      ..fta = fta ?? this.fta
+      ..min = min ?? this.min
+      ..isStarter = isStarter ?? this.isStarter
+      ..ftm = ftm ?? this.ftm
+      ..playerId = playerId ?? this.playerId
+      ..blk = blk ?? this.blk
+      ..gameId = gameId ?? this.gameId
+      ..stl = stl ?? this.stl
+      ..updateTime = updateTime ?? this.updateTime
+      ..pts = pts ?? this.pts
+      ..threePa = threePa ?? this.threePa
+      ..ename = ename ?? this.ename
+      ..oreb = oreb ?? this.oreb
+      ..createTime = createTime ?? this.createTime
+      ..pf = pf ?? this.pf
+      ..teamId = teamId ?? this.teamId
+      ..threePm = threePm ?? this.threePm
+      ..to = to ?? this.to
+      ..awayTeamId = awayTeamId ?? this.awayTeamId;
+  }
+}
+
+NbaPlayerBaseInfoGuessInfosReb $NbaPlayerBaseInfoGuessInfosRebFromJson(
+    Map<String, dynamic> json) {
+  final NbaPlayerBaseInfoGuessInfosReb nbaPlayerBaseInfoGuessInfosReb = NbaPlayerBaseInfoGuessInfosReb();
+  final NbaPlayerBaseInfoGuessInfosRebCommunityPick? communityPick = jsonConvert
+      .convert<NbaPlayerBaseInfoGuessInfosRebCommunityPick>(
+      json['communityPick']);
+  if (communityPick != null) {
+    nbaPlayerBaseInfoGuessInfosReb.communityPick = communityPick;
+  }
+  final NbaPlayerBaseInfoGuessInfosRebPicks? picks = jsonConvert.convert<
+      NbaPlayerBaseInfoGuessInfosRebPicks>(json['picks']);
+  if (picks != null) {
+    nbaPlayerBaseInfoGuessInfosReb.picks = picks;
+  }
+  final List<
+      NbaPlayerBaseInfoGuessInfosRebTwoTeamGames>? twoTeamGames = (json['twoTeamGames'] as List<
+      dynamic>?)?.map(
+          (e) =>
+      jsonConvert.convert<NbaPlayerBaseInfoGuessInfosRebTwoTeamGames>(
+          e) as NbaPlayerBaseInfoGuessInfosRebTwoTeamGames).toList();
+  if (twoTeamGames != null) {
+    nbaPlayerBaseInfoGuessInfosReb.twoTeamGames = twoTeamGames;
+  }
+  return nbaPlayerBaseInfoGuessInfosReb;
+}
+
+Map<String, dynamic> $NbaPlayerBaseInfoGuessInfosRebToJson(
+    NbaPlayerBaseInfoGuessInfosReb entity) {
+  final Map<String, dynamic> data = <String, dynamic>{};
+  data['communityPick'] = entity.communityPick.toJson();
+  data['picks'] = entity.picks.toJson();
+  data['twoTeamGames'] = entity.twoTeamGames.map((v) => v.toJson()).toList();
+  return data;
+}
+
+extension NbaPlayerBaseInfoGuessInfosRebExtension on NbaPlayerBaseInfoGuessInfosReb {
+  NbaPlayerBaseInfoGuessInfosReb copyWith({
+    NbaPlayerBaseInfoGuessInfosRebCommunityPick? communityPick,
+    NbaPlayerBaseInfoGuessInfosRebPicks? picks,
+    List<NbaPlayerBaseInfoGuessInfosRebTwoTeamGames>? twoTeamGames,
+  }) {
+    return NbaPlayerBaseInfoGuessInfosReb()
+      ..communityPick = communityPick ?? this.communityPick
+      ..picks = picks ?? this.picks
+      ..twoTeamGames = twoTeamGames ?? this.twoTeamGames;
+  }
+}
+
+NbaPlayerBaseInfoGuessInfosRebCommunityPick $NbaPlayerBaseInfoGuessInfosRebCommunityPickFromJson(
+    Map<String, dynamic> json) {
+  final NbaPlayerBaseInfoGuessInfosRebCommunityPick nbaPlayerBaseInfoGuessInfosRebCommunityPick = NbaPlayerBaseInfoGuessInfosRebCommunityPick();
+  final int? moreCount = jsonConvert.convert<int>(json['moreCount']);
+  if (moreCount != null) {
+    nbaPlayerBaseInfoGuessInfosRebCommunityPick.moreCount = moreCount;
+  }
+  final int? lessCount = jsonConvert.convert<int>(json['lessCount']);
+  if (lessCount != null) {
+    nbaPlayerBaseInfoGuessInfosRebCommunityPick.lessCount = lessCount;
+  }
+  return nbaPlayerBaseInfoGuessInfosRebCommunityPick;
+}
+
+Map<String, dynamic> $NbaPlayerBaseInfoGuessInfosRebCommunityPickToJson(
+    NbaPlayerBaseInfoGuessInfosRebCommunityPick entity) {
+  final Map<String, dynamic> data = <String, dynamic>{};
+  data['moreCount'] = entity.moreCount;
+  data['lessCount'] = entity.lessCount;
+  return data;
+}
+
+extension NbaPlayerBaseInfoGuessInfosRebCommunityPickExtension on NbaPlayerBaseInfoGuessInfosRebCommunityPick {
+  NbaPlayerBaseInfoGuessInfosRebCommunityPick copyWith({
+    int? moreCount,
+    int? lessCount,
+  }) {
+    return NbaPlayerBaseInfoGuessInfosRebCommunityPick()
+      ..moreCount = moreCount ?? this.moreCount
+      ..lessCount = lessCount ?? this.lessCount;
+  }
+}
+
+NbaPlayerBaseInfoGuessInfosRebPicks $NbaPlayerBaseInfoGuessInfosRebPicksFromJson(
+    Map<String, dynamic> json) {
+  final NbaPlayerBaseInfoGuessInfosRebPicks nbaPlayerBaseInfoGuessInfosRebPicks = NbaPlayerBaseInfoGuessInfosRebPicks();
+  final int? gameId = jsonConvert.convert<int>(json['gameId']);
+  if (gameId != null) {
+    nbaPlayerBaseInfoGuessInfosRebPicks.gameId = gameId;
+  }
+  final int? newsId = jsonConvert.convert<int>(json['newsId']);
+  if (newsId != null) {
+    nbaPlayerBaseInfoGuessInfosRebPicks.newsId = newsId;
+  }
+  final int? gameStartTime = jsonConvert.convert<int>(json['gameStartTime']);
+  if (gameStartTime != null) {
+    nbaPlayerBaseInfoGuessInfosRebPicks.gameStartTime = gameStartTime;
+  }
+  final int? teamId = jsonConvert.convert<int>(json['teamId']);
+  if (teamId != null) {
+    nbaPlayerBaseInfoGuessInfosRebPicks.teamId = teamId;
+  }
+  final List<dynamic>? guessData = (json['guessData'] as List<dynamic>?)?.map(
+          (e) => e).toList();
+  if (guessData != null) {
+    nbaPlayerBaseInfoGuessInfosRebPicks.guessData = guessData;
+  }
+  final NbaPlayerBaseInfoGuessInfosRebPicksGuessReferenceValue? guessReferenceValue = jsonConvert
+      .convert<NbaPlayerBaseInfoGuessInfosRebPicksGuessReferenceValue>(
+      json['guessReferenceValue']);
+  if (guessReferenceValue != null) {
+    nbaPlayerBaseInfoGuessInfosRebPicks.guessReferenceValue =
+        guessReferenceValue;
+  }
+  final int? id = jsonConvert.convert<int>(json['id']);
+  if (id != null) {
+    nbaPlayerBaseInfoGuessInfosRebPicks.id = id;
+  }
+  final int? type = jsonConvert.convert<int>(json['type']);
+  if (type != null) {
+    nbaPlayerBaseInfoGuessInfosRebPicks.type = type;
+  }
+  final int? awayTeamId = jsonConvert.convert<int>(json['awayTeamId']);
+  if (awayTeamId != null) {
+    nbaPlayerBaseInfoGuessInfosRebPicks.awayTeamId = awayTeamId;
+  }
+  final int? playerId = jsonConvert.convert<int>(json['playerId']);
+  if (playerId != null) {
+    nbaPlayerBaseInfoGuessInfosRebPicks.playerId = playerId;
+  }
+  return nbaPlayerBaseInfoGuessInfosRebPicks;
+}
+
+Map<String, dynamic> $NbaPlayerBaseInfoGuessInfosRebPicksToJson(
+    NbaPlayerBaseInfoGuessInfosRebPicks entity) {
+  final Map<String, dynamic> data = <String, dynamic>{};
+  data['gameId'] = entity.gameId;
+  data['newsId'] = entity.newsId;
+  data['gameStartTime'] = entity.gameStartTime;
+  data['teamId'] = entity.teamId;
+  data['guessData'] = entity.guessData;
+  data['guessReferenceValue'] = entity.guessReferenceValue.toJson();
+  data['id'] = entity.id;
+  data['type'] = entity.type;
+  data['awayTeamId'] = entity.awayTeamId;
+  data['playerId'] = entity.playerId;
+  return data;
+}
+
+extension NbaPlayerBaseInfoGuessInfosRebPicksExtension on NbaPlayerBaseInfoGuessInfosRebPicks {
+  NbaPlayerBaseInfoGuessInfosRebPicks copyWith({
+    int? gameId,
+    int? newsId,
+    int? gameStartTime,
+    int? teamId,
+    List<dynamic>? guessData,
+    NbaPlayerBaseInfoGuessInfosRebPicksGuessReferenceValue? guessReferenceValue,
+    int? id,
+    int? type,
+    int? awayTeamId,
+    int? playerId,
+  }) {
+    return NbaPlayerBaseInfoGuessInfosRebPicks()
+      ..gameId = gameId ?? this.gameId
+      ..newsId = newsId ?? this.newsId
+      ..gameStartTime = gameStartTime ?? this.gameStartTime
+      ..teamId = teamId ?? this.teamId
+      ..guessData = guessData ?? this.guessData
+      ..guessReferenceValue = guessReferenceValue ?? this.guessReferenceValue
+      ..id = id ?? this.id
+      ..type = type ?? this.type
+      ..awayTeamId = awayTeamId ?? this.awayTeamId
+      ..playerId = playerId ?? this.playerId;
+  }
+}
+
+NbaPlayerBaseInfoGuessInfosRebPicksGuessReferenceValue $NbaPlayerBaseInfoGuessInfosRebPicksGuessReferenceValueFromJson(
+    Map<String, dynamic> json) {
+  final NbaPlayerBaseInfoGuessInfosRebPicksGuessReferenceValue nbaPlayerBaseInfoGuessInfosRebPicksGuessReferenceValue = NbaPlayerBaseInfoGuessInfosRebPicksGuessReferenceValue();
+  final double? ast = jsonConvert.convert<double>(json['ast']);
+  if (ast != null) {
+    nbaPlayerBaseInfoGuessInfosRebPicksGuessReferenceValue.ast = ast;
+  }
+  final double? threePm = jsonConvert.convert<double>(json['threePm']);
+  if (threePm != null) {
+    nbaPlayerBaseInfoGuessInfosRebPicksGuessReferenceValue.threePm = threePm;
+  }
+  final int? pts = jsonConvert.convert<int>(json['pts']);
+  if (pts != null) {
+    nbaPlayerBaseInfoGuessInfosRebPicksGuessReferenceValue.pts = pts;
+  }
+  final int? reb = jsonConvert.convert<int>(json['reb']);
+  if (reb != null) {
+    nbaPlayerBaseInfoGuessInfosRebPicksGuessReferenceValue.reb = reb;
+  }
+  return nbaPlayerBaseInfoGuessInfosRebPicksGuessReferenceValue;
+}
+
+Map<String,
+    dynamic> $NbaPlayerBaseInfoGuessInfosRebPicksGuessReferenceValueToJson(
+    NbaPlayerBaseInfoGuessInfosRebPicksGuessReferenceValue entity) {
+  final Map<String, dynamic> data = <String, dynamic>{};
+  data['ast'] = entity.ast;
+  data['threePm'] = entity.threePm;
+  data['pts'] = entity.pts;
+  data['reb'] = entity.reb;
+  return data;
+}
+
+extension NbaPlayerBaseInfoGuessInfosRebPicksGuessReferenceValueExtension on NbaPlayerBaseInfoGuessInfosRebPicksGuessReferenceValue {
+  NbaPlayerBaseInfoGuessInfosRebPicksGuessReferenceValue copyWith({
+    double? ast,
+    double? threePm,
+    int? pts,
+    int? reb,
+  }) {
+    return NbaPlayerBaseInfoGuessInfosRebPicksGuessReferenceValue()
+      ..ast = ast ?? this.ast
+      ..threePm = threePm ?? this.threePm
+      ..pts = pts ?? this.pts
+      ..reb = reb ?? this.reb;
+  }
+}
+
+NbaPlayerBaseInfoGuessInfosRebTwoTeamGames $NbaPlayerBaseInfoGuessInfosRebTwoTeamGamesFromJson(
+    Map<String, dynamic> json) {
+  final NbaPlayerBaseInfoGuessInfosRebTwoTeamGames nbaPlayerBaseInfoGuessInfosRebTwoTeamGames = NbaPlayerBaseInfoGuessInfosRebTwoTeamGames();
+  final int? fga = jsonConvert.convert<int>(json['fga']);
+  if (fga != null) {
+    nbaPlayerBaseInfoGuessInfosRebTwoTeamGames.fga = fga;
+  }
+  final int? ast = jsonConvert.convert<int>(json['ast']);
+  if (ast != null) {
+    nbaPlayerBaseInfoGuessInfosRebTwoTeamGames.ast = ast;
+  }
+  final int? dreb = jsonConvert.convert<int>(json['dreb']);
+  if (dreb != null) {
+    nbaPlayerBaseInfoGuessInfosRebTwoTeamGames.dreb = dreb;
+  }
+  final int? espnId = jsonConvert.convert<int>(json['espnId']);
+  if (espnId != null) {
+    nbaPlayerBaseInfoGuessInfosRebTwoTeamGames.espnId = espnId;
+  }
+  final int? fgm = jsonConvert.convert<int>(json['fgm']);
+  if (fgm != null) {
+    nbaPlayerBaseInfoGuessInfosRebTwoTeamGames.fgm = fgm;
+  }
+  final int? reb = jsonConvert.convert<int>(json['reb']);
+  if (reb != null) {
+    nbaPlayerBaseInfoGuessInfosRebTwoTeamGames.reb = reb;
+  }
+  final int? fta = jsonConvert.convert<int>(json['fta']);
+  if (fta != null) {
+    nbaPlayerBaseInfoGuessInfosRebTwoTeamGames.fta = fta;
+  }
+  final int? min = jsonConvert.convert<int>(json['min']);
+  if (min != null) {
+    nbaPlayerBaseInfoGuessInfosRebTwoTeamGames.min = min;
+  }
+  final bool? isStarter = jsonConvert.convert<bool>(json['isStarter']);
+  if (isStarter != null) {
+    nbaPlayerBaseInfoGuessInfosRebTwoTeamGames.isStarter = isStarter;
+  }
+  final int? ftm = jsonConvert.convert<int>(json['ftm']);
+  if (ftm != null) {
+    nbaPlayerBaseInfoGuessInfosRebTwoTeamGames.ftm = ftm;
+  }
+  final int? playerId = jsonConvert.convert<int>(json['playerId']);
+  if (playerId != null) {
+    nbaPlayerBaseInfoGuessInfosRebTwoTeamGames.playerId = playerId;
+  }
+  final int? blk = jsonConvert.convert<int>(json['blk']);
+  if (blk != null) {
+    nbaPlayerBaseInfoGuessInfosRebTwoTeamGames.blk = blk;
+  }
+  final int? gameId = jsonConvert.convert<int>(json['gameId']);
+  if (gameId != null) {
+    nbaPlayerBaseInfoGuessInfosRebTwoTeamGames.gameId = gameId;
+  }
+  final int? stl = jsonConvert.convert<int>(json['stl']);
+  if (stl != null) {
+    nbaPlayerBaseInfoGuessInfosRebTwoTeamGames.stl = stl;
+  }
+  final int? updateTime = jsonConvert.convert<int>(json['updateTime']);
+  if (updateTime != null) {
+    nbaPlayerBaseInfoGuessInfosRebTwoTeamGames.updateTime = updateTime;
+  }
+  final int? pts = jsonConvert.convert<int>(json['pts']);
+  if (pts != null) {
+    nbaPlayerBaseInfoGuessInfosRebTwoTeamGames.pts = pts;
+  }
+  final int? threePa = jsonConvert.convert<int>(json['threePa']);
+  if (threePa != null) {
+    nbaPlayerBaseInfoGuessInfosRebTwoTeamGames.threePa = threePa;
+  }
+  final String? ename = jsonConvert.convert<String>(json['ename']);
+  if (ename != null) {
+    nbaPlayerBaseInfoGuessInfosRebTwoTeamGames.ename = ename;
+  }
+  final int? oreb = jsonConvert.convert<int>(json['oreb']);
+  if (oreb != null) {
+    nbaPlayerBaseInfoGuessInfosRebTwoTeamGames.oreb = oreb;
+  }
+  final int? createTime = jsonConvert.convert<int>(json['createTime']);
+  if (createTime != null) {
+    nbaPlayerBaseInfoGuessInfosRebTwoTeamGames.createTime = createTime;
+  }
+  final int? pf = jsonConvert.convert<int>(json['pf']);
+  if (pf != null) {
+    nbaPlayerBaseInfoGuessInfosRebTwoTeamGames.pf = pf;
+  }
+  final int? teamId = jsonConvert.convert<int>(json['teamId']);
+  if (teamId != null) {
+    nbaPlayerBaseInfoGuessInfosRebTwoTeamGames.teamId = teamId;
+  }
+  final int? threePm = jsonConvert.convert<int>(json['threePm']);
+  if (threePm != null) {
+    nbaPlayerBaseInfoGuessInfosRebTwoTeamGames.threePm = threePm;
+  }
+  final int? to = jsonConvert.convert<int>(json['to']);
+  if (to != null) {
+    nbaPlayerBaseInfoGuessInfosRebTwoTeamGames.to = to;
+  }
+  final int? awayTeamId = jsonConvert.convert<int>(json['awayTeamId']);
+  if (awayTeamId != null) {
+    nbaPlayerBaseInfoGuessInfosRebTwoTeamGames.awayTeamId = awayTeamId;
+  }
+  return nbaPlayerBaseInfoGuessInfosRebTwoTeamGames;
+}
+
+Map<String, dynamic> $NbaPlayerBaseInfoGuessInfosRebTwoTeamGamesToJson(
+    NbaPlayerBaseInfoGuessInfosRebTwoTeamGames entity) {
+  final Map<String, dynamic> data = <String, dynamic>{};
+  data['fga'] = entity.fga;
+  data['ast'] = entity.ast;
+  data['dreb'] = entity.dreb;
+  data['espnId'] = entity.espnId;
+  data['fgm'] = entity.fgm;
+  data['reb'] = entity.reb;
+  data['fta'] = entity.fta;
+  data['min'] = entity.min;
+  data['isStarter'] = entity.isStarter;
+  data['ftm'] = entity.ftm;
+  data['playerId'] = entity.playerId;
+  data['blk'] = entity.blk;
+  data['gameId'] = entity.gameId;
+  data['stl'] = entity.stl;
+  data['updateTime'] = entity.updateTime;
+  data['pts'] = entity.pts;
+  data['threePa'] = entity.threePa;
+  data['ename'] = entity.ename;
+  data['oreb'] = entity.oreb;
+  data['createTime'] = entity.createTime;
+  data['pf'] = entity.pf;
+  data['teamId'] = entity.teamId;
+  data['threePm'] = entity.threePm;
+  data['to'] = entity.to;
+  data['awayTeamId'] = entity.awayTeamId;
+  return data;
+}
+
+extension NbaPlayerBaseInfoGuessInfosRebTwoTeamGamesExtension on NbaPlayerBaseInfoGuessInfosRebTwoTeamGames {
+  NbaPlayerBaseInfoGuessInfosRebTwoTeamGames copyWith({
+    int? fga,
+    int? ast,
+    int? dreb,
+    int? espnId,
+    int? fgm,
+    int? reb,
+    int? fta,
+    int? min,
+    bool? isStarter,
+    int? ftm,
+    int? playerId,
+    int? blk,
+    int? gameId,
+    int? stl,
+    int? updateTime,
+    int? pts,
+    int? threePa,
+    String? ename,
+    int? oreb,
+    int? createTime,
+    int? pf,
+    int? teamId,
+    int? threePm,
+    int? to,
+    int? awayTeamId,
+  }) {
+    return NbaPlayerBaseInfoGuessInfosRebTwoTeamGames()
+      ..fga = fga ?? this.fga
+      ..ast = ast ?? this.ast
+      ..dreb = dreb ?? this.dreb
+      ..espnId = espnId ?? this.espnId
+      ..fgm = fgm ?? this.fgm
+      ..reb = reb ?? this.reb
+      ..fta = fta ?? this.fta
+      ..min = min ?? this.min
+      ..isStarter = isStarter ?? this.isStarter
+      ..ftm = ftm ?? this.ftm
+      ..playerId = playerId ?? this.playerId
+      ..blk = blk ?? this.blk
+      ..gameId = gameId ?? this.gameId
+      ..stl = stl ?? this.stl
+      ..updateTime = updateTime ?? this.updateTime
+      ..pts = pts ?? this.pts
+      ..threePa = threePa ?? this.threePa
+      ..ename = ename ?? this.ename
+      ..oreb = oreb ?? this.oreb
+      ..createTime = createTime ?? this.createTime
+      ..pf = pf ?? this.pf
+      ..teamId = teamId ?? this.teamId
+      ..threePm = threePm ?? this.threePm
+      ..to = to ?? this.to
+      ..awayTeamId = awayTeamId ?? this.awayTeamId;
+  }
+}
+
+NbaPlayerBaseInfoGuessInfosProperty $NbaPlayerBaseInfoGuessInfosPropertyFromJson(
+    Map<String, dynamic> json) {
+  final NbaPlayerBaseInfoGuessInfosProperty nbaPlayerBaseInfoGuessInfosProperty = NbaPlayerBaseInfoGuessInfosProperty();
+  final NbaPlayerBaseInfoGuessInfosPtsCommunityPick? communityPick = jsonConvert
+      .convert<NbaPlayerBaseInfoGuessInfosPtsCommunityPick>(
+      json['communityPick']);
+  if (communityPick != null) {
+    nbaPlayerBaseInfoGuessInfosProperty.communityPick = communityPick;
+  }
+  final NbaPlayerBaseInfoGuessInfosPtsPicks? picks = jsonConvert.convert<
+      NbaPlayerBaseInfoGuessInfosPtsPicks>(json['picks']);
+  if (picks != null) {
+    nbaPlayerBaseInfoGuessInfosProperty.picks = picks;
+  }
+  final List<
+      NbaPlayerBaseInfoGuessInfosPtsTwoTeamGames>? twoTeamGames = (json['twoTeamGames'] as List<
+      dynamic>?)?.map(
+          (e) =>
+      jsonConvert.convert<NbaPlayerBaseInfoGuessInfosPtsTwoTeamGames>(
+          e) as NbaPlayerBaseInfoGuessInfosPtsTwoTeamGames).toList();
+  if (twoTeamGames != null) {
+    nbaPlayerBaseInfoGuessInfosProperty.twoTeamGames = twoTeamGames;
+  }
+  return nbaPlayerBaseInfoGuessInfosProperty;
+}
+
+Map<String, dynamic> $NbaPlayerBaseInfoGuessInfosPropertyToJson(
+    NbaPlayerBaseInfoGuessInfosProperty entity) {
+  final Map<String, dynamic> data = <String, dynamic>{};
+  data['communityPick'] = entity.communityPick?.toJson();
+  data['picks'] = entity.picks?.toJson();
+  data['twoTeamGames'] = entity.twoTeamGames?.map((v) => v.toJson()).toList();
+  return data;
+}
+
+extension NbaPlayerBaseInfoGuessInfosPropertyExtension on NbaPlayerBaseInfoGuessInfosProperty {
+  NbaPlayerBaseInfoGuessInfosProperty copyWith({
+    NbaPlayerBaseInfoGuessInfosPtsCommunityPick? communityPick,
+    NbaPlayerBaseInfoGuessInfosPtsPicks? picks,
+    List<NbaPlayerBaseInfoGuessInfosPtsTwoTeamGames>? twoTeamGames,
+  }) {
+    return NbaPlayerBaseInfoGuessInfosProperty()
+      ..communityPick = communityPick ?? this.communityPick
+      ..picks = picks ?? this.picks
+      ..twoTeamGames = twoTeamGames ?? this.twoTeamGames;
+  }
+}
+
+NbaPlayerBaseInfoGuessInfosPtsCommunityPick $NbaPlayerBaseInfoGuessInfosPtsCommunityPickFromJson(
+    Map<String, dynamic> json) {
+  final NbaPlayerBaseInfoGuessInfosPtsCommunityPick nbaPlayerBaseInfoGuessInfosPtsCommunityPick = NbaPlayerBaseInfoGuessInfosPtsCommunityPick();
+  final int? moreCount = jsonConvert.convert<int>(json['moreCount']);
+  if (moreCount != null) {
+    nbaPlayerBaseInfoGuessInfosPtsCommunityPick.moreCount = moreCount;
+  }
+  final int? lessCount = jsonConvert.convert<int>(json['lessCount']);
+  if (lessCount != null) {
+    nbaPlayerBaseInfoGuessInfosPtsCommunityPick.lessCount = lessCount;
+  }
+  return nbaPlayerBaseInfoGuessInfosPtsCommunityPick;
+}
+
+Map<String, dynamic> $NbaPlayerBaseInfoGuessInfosPtsCommunityPickToJson(
+    NbaPlayerBaseInfoGuessInfosPtsCommunityPick entity) {
+  final Map<String, dynamic> data = <String, dynamic>{};
+  data['moreCount'] = entity.moreCount;
+  data['lessCount'] = entity.lessCount;
+  return data;
+}
+
+extension NbaPlayerBaseInfoGuessInfosPtsCommunityPickExtension on NbaPlayerBaseInfoGuessInfosPtsCommunityPick {
+  NbaPlayerBaseInfoGuessInfosPtsCommunityPick copyWith({
+    int? moreCount,
+    int? lessCount,
+  }) {
+    return NbaPlayerBaseInfoGuessInfosPtsCommunityPick()
+      ..moreCount = moreCount ?? this.moreCount
+      ..lessCount = lessCount ?? this.lessCount;
+  }
+}
+
+NbaPlayerBaseInfoGuessInfosPtsPicks $NbaPlayerBaseInfoGuessInfosPtsPicksFromJson(
+    Map<String, dynamic> json) {
+  final NbaPlayerBaseInfoGuessInfosPtsPicks nbaPlayerBaseInfoGuessInfosPtsPicks = NbaPlayerBaseInfoGuessInfosPtsPicks();
+  final int? gameId = jsonConvert.convert<int>(json['gameId']);
+  if (gameId != null) {
+    nbaPlayerBaseInfoGuessInfosPtsPicks.gameId = gameId;
+  }
+  final int? newsId = jsonConvert.convert<int>(json['newsId']);
+  if (newsId != null) {
+    nbaPlayerBaseInfoGuessInfosPtsPicks.newsId = newsId;
+  }
+  final int? gameStartTime = jsonConvert.convert<int>(json['gameStartTime']);
+  if (gameStartTime != null) {
+    nbaPlayerBaseInfoGuessInfosPtsPicks.gameStartTime = gameStartTime;
+  }
+  final int? teamId = jsonConvert.convert<int>(json['teamId']);
+  if (teamId != null) {
+    nbaPlayerBaseInfoGuessInfosPtsPicks.teamId = teamId;
+  }
+  final List<dynamic>? guessData = (json['guessData'] as List<dynamic>?)?.map(
+          (e) => e).toList();
+  if (guessData != null) {
+    nbaPlayerBaseInfoGuessInfosPtsPicks.guessData = guessData;
+  }
+  final NbaPlayerBaseInfoGuessInfosPtsPicksGuessReferenceValue? guessReferenceValue = jsonConvert
+      .convert<NbaPlayerBaseInfoGuessInfosPtsPicksGuessReferenceValue>(
+      json['guessReferenceValue']);
+  if (guessReferenceValue != null) {
+    nbaPlayerBaseInfoGuessInfosPtsPicks.guessReferenceValue =
+        guessReferenceValue;
+  }
+  final int? id = jsonConvert.convert<int>(json['id']);
+  if (id != null) {
+    nbaPlayerBaseInfoGuessInfosPtsPicks.id = id;
+  }
+  final int? type = jsonConvert.convert<int>(json['type']);
+  if (type != null) {
+    nbaPlayerBaseInfoGuessInfosPtsPicks.type = type;
+  }
+  final int? awayTeamId = jsonConvert.convert<int>(json['awayTeamId']);
+  if (awayTeamId != null) {
+    nbaPlayerBaseInfoGuessInfosPtsPicks.awayTeamId = awayTeamId;
+  }
+  final int? playerId = jsonConvert.convert<int>(json['playerId']);
+  if (playerId != null) {
+    nbaPlayerBaseInfoGuessInfosPtsPicks.playerId = playerId;
+  }
+  return nbaPlayerBaseInfoGuessInfosPtsPicks;
+}
+
+Map<String, dynamic> $NbaPlayerBaseInfoGuessInfosPtsPicksToJson(
+    NbaPlayerBaseInfoGuessInfosPtsPicks entity) {
+  final Map<String, dynamic> data = <String, dynamic>{};
+  data['gameId'] = entity.gameId;
+  data['newsId'] = entity.newsId;
+  data['gameStartTime'] = entity.gameStartTime;
+  data['teamId'] = entity.teamId;
+  data['guessData'] = entity.guessData;
+  data['guessReferenceValue'] = entity.guessReferenceValue.toJson();
+  data['id'] = entity.id;
+  data['type'] = entity.type;
+  data['awayTeamId'] = entity.awayTeamId;
+  data['playerId'] = entity.playerId;
+  return data;
+}
+
+extension NbaPlayerBaseInfoGuessInfosPtsPicksExtension on NbaPlayerBaseInfoGuessInfosPtsPicks {
+  NbaPlayerBaseInfoGuessInfosPtsPicks copyWith({
+    int? gameId,
+    int? newsId,
+    int? gameStartTime,
+    int? teamId,
+    List<dynamic>? guessData,
+    NbaPlayerBaseInfoGuessInfosPtsPicksGuessReferenceValue? guessReferenceValue,
+    int? id,
+    int? type,
+    int? awayTeamId,
+    int? playerId,
+  }) {
+    return NbaPlayerBaseInfoGuessInfosPtsPicks()
+      ..gameId = gameId ?? this.gameId
+      ..newsId = newsId ?? this.newsId
+      ..gameStartTime = gameStartTime ?? this.gameStartTime
+      ..teamId = teamId ?? this.teamId
+      ..guessData = guessData ?? this.guessData
+      ..guessReferenceValue = guessReferenceValue ?? this.guessReferenceValue
+      ..id = id ?? this.id
+      ..type = type ?? this.type
+      ..awayTeamId = awayTeamId ?? this.awayTeamId
+      ..playerId = playerId ?? this.playerId;
+  }
+}
+
+NbaPlayerBaseInfoGuessInfosPtsPicksGuessReferenceValue $NbaPlayerBaseInfoGuessInfosPtsPicksGuessReferenceValueFromJson(
+    Map<String, dynamic> json) {
+  final NbaPlayerBaseInfoGuessInfosPtsPicksGuessReferenceValue nbaPlayerBaseInfoGuessInfosPtsPicksGuessReferenceValue = NbaPlayerBaseInfoGuessInfosPtsPicksGuessReferenceValue();
+  final double? ast = jsonConvert.convert<double>(json['ast']);
+  if (ast != null) {
+    nbaPlayerBaseInfoGuessInfosPtsPicksGuessReferenceValue.ast = ast;
+  }
+  final double? threePm = jsonConvert.convert<double>(json['threePm']);
+  if (threePm != null) {
+    nbaPlayerBaseInfoGuessInfosPtsPicksGuessReferenceValue.threePm = threePm;
+  }
+  final int? pts = jsonConvert.convert<int>(json['pts']);
+  if (pts != null) {
+    nbaPlayerBaseInfoGuessInfosPtsPicksGuessReferenceValue.pts = pts;
+  }
+  final int? reb = jsonConvert.convert<int>(json['reb']);
+  if (reb != null) {
+    nbaPlayerBaseInfoGuessInfosPtsPicksGuessReferenceValue.reb = reb;
+  }
+  return nbaPlayerBaseInfoGuessInfosPtsPicksGuessReferenceValue;
+}
+
+Map<String,
+    dynamic> $NbaPlayerBaseInfoGuessInfosPtsPicksGuessReferenceValueToJson(
+    NbaPlayerBaseInfoGuessInfosPtsPicksGuessReferenceValue entity) {
+  final Map<String, dynamic> data = <String, dynamic>{};
+  data['ast'] = entity.ast;
+  data['threePm'] = entity.threePm;
+  data['pts'] = entity.pts;
+  data['reb'] = entity.reb;
+  return data;
+}
+
+extension NbaPlayerBaseInfoGuessInfosPtsPicksGuessReferenceValueExtension on NbaPlayerBaseInfoGuessInfosPtsPicksGuessReferenceValue {
+  NbaPlayerBaseInfoGuessInfosPtsPicksGuessReferenceValue copyWith({
+    double? ast,
+    double? threePm,
+    int? pts,
+    int? reb,
+  }) {
+    return NbaPlayerBaseInfoGuessInfosPtsPicksGuessReferenceValue()
+      ..ast = ast ?? this.ast
+      ..threePm = threePm ?? this.threePm
+      ..pts = pts ?? this.pts
+      ..reb = reb ?? this.reb;
+  }
+}
+
+NbaPlayerBaseInfoGuessInfosPtsTwoTeamGames $NbaPlayerBaseInfoGuessInfosPtsTwoTeamGamesFromJson(
+    Map<String, dynamic> json) {
+  final NbaPlayerBaseInfoGuessInfosPtsTwoTeamGames nbaPlayerBaseInfoGuessInfosPtsTwoTeamGames = NbaPlayerBaseInfoGuessInfosPtsTwoTeamGames();
+  final int? fga = jsonConvert.convert<int>(json['fga']);
+  if (fga != null) {
+    nbaPlayerBaseInfoGuessInfosPtsTwoTeamGames.fga = fga;
+  }
+  final int? ast = jsonConvert.convert<int>(json['ast']);
+  if (ast != null) {
+    nbaPlayerBaseInfoGuessInfosPtsTwoTeamGames.ast = ast;
+  }
+  final int? dreb = jsonConvert.convert<int>(json['dreb']);
+  if (dreb != null) {
+    nbaPlayerBaseInfoGuessInfosPtsTwoTeamGames.dreb = dreb;
+  }
+  final int? espnId = jsonConvert.convert<int>(json['espnId']);
+  if (espnId != null) {
+    nbaPlayerBaseInfoGuessInfosPtsTwoTeamGames.espnId = espnId;
+  }
+  final int? fgm = jsonConvert.convert<int>(json['fgm']);
+  if (fgm != null) {
+    nbaPlayerBaseInfoGuessInfosPtsTwoTeamGames.fgm = fgm;
+  }
+  final int? reb = jsonConvert.convert<int>(json['reb']);
+  if (reb != null) {
+    nbaPlayerBaseInfoGuessInfosPtsTwoTeamGames.reb = reb;
+  }
+  final int? fta = jsonConvert.convert<int>(json['fta']);
+  if (fta != null) {
+    nbaPlayerBaseInfoGuessInfosPtsTwoTeamGames.fta = fta;
+  }
+  final int? min = jsonConvert.convert<int>(json['min']);
+  if (min != null) {
+    nbaPlayerBaseInfoGuessInfosPtsTwoTeamGames.min = min;
+  }
+  final bool? isStarter = jsonConvert.convert<bool>(json['isStarter']);
+  if (isStarter != null) {
+    nbaPlayerBaseInfoGuessInfosPtsTwoTeamGames.isStarter = isStarter;
+  }
+  final int? ftm = jsonConvert.convert<int>(json['ftm']);
+  if (ftm != null) {
+    nbaPlayerBaseInfoGuessInfosPtsTwoTeamGames.ftm = ftm;
+  }
+  final int? playerId = jsonConvert.convert<int>(json['playerId']);
+  if (playerId != null) {
+    nbaPlayerBaseInfoGuessInfosPtsTwoTeamGames.playerId = playerId;
+  }
+  final int? blk = jsonConvert.convert<int>(json['blk']);
+  if (blk != null) {
+    nbaPlayerBaseInfoGuessInfosPtsTwoTeamGames.blk = blk;
+  }
+  final int? gameId = jsonConvert.convert<int>(json['gameId']);
+  if (gameId != null) {
+    nbaPlayerBaseInfoGuessInfosPtsTwoTeamGames.gameId = gameId;
+  }
+  final int? stl = jsonConvert.convert<int>(json['stl']);
+  if (stl != null) {
+    nbaPlayerBaseInfoGuessInfosPtsTwoTeamGames.stl = stl;
+  }
+  final int? updateTime = jsonConvert.convert<int>(json['updateTime']);
+  if (updateTime != null) {
+    nbaPlayerBaseInfoGuessInfosPtsTwoTeamGames.updateTime = updateTime;
+  }
+  final int? pts = jsonConvert.convert<int>(json['pts']);
+  if (pts != null) {
+    nbaPlayerBaseInfoGuessInfosPtsTwoTeamGames.pts = pts;
+  }
+  final int? threePa = jsonConvert.convert<int>(json['threePa']);
+  if (threePa != null) {
+    nbaPlayerBaseInfoGuessInfosPtsTwoTeamGames.threePa = threePa;
+  }
+  final String? ename = jsonConvert.convert<String>(json['ename']);
+  if (ename != null) {
+    nbaPlayerBaseInfoGuessInfosPtsTwoTeamGames.ename = ename;
+  }
+  final int? oreb = jsonConvert.convert<int>(json['oreb']);
+  if (oreb != null) {
+    nbaPlayerBaseInfoGuessInfosPtsTwoTeamGames.oreb = oreb;
+  }
+  final int? createTime = jsonConvert.convert<int>(json['createTime']);
+  if (createTime != null) {
+    nbaPlayerBaseInfoGuessInfosPtsTwoTeamGames.createTime = createTime;
+  }
+  final int? pf = jsonConvert.convert<int>(json['pf']);
+  if (pf != null) {
+    nbaPlayerBaseInfoGuessInfosPtsTwoTeamGames.pf = pf;
+  }
+  final int? teamId = jsonConvert.convert<int>(json['teamId']);
+  if (teamId != null) {
+    nbaPlayerBaseInfoGuessInfosPtsTwoTeamGames.teamId = teamId;
+  }
+  final int? threePm = jsonConvert.convert<int>(json['threePm']);
+  if (threePm != null) {
+    nbaPlayerBaseInfoGuessInfosPtsTwoTeamGames.threePm = threePm;
+  }
+  final int? to = jsonConvert.convert<int>(json['to']);
+  if (to != null) {
+    nbaPlayerBaseInfoGuessInfosPtsTwoTeamGames.to = to;
+  }
+  final int? awayTeamId = jsonConvert.convert<int>(json['awayTeamId']);
+  if (awayTeamId != null) {
+    nbaPlayerBaseInfoGuessInfosPtsTwoTeamGames.awayTeamId = awayTeamId;
+  }
+  return nbaPlayerBaseInfoGuessInfosPtsTwoTeamGames;
+}
+
+Map<String, dynamic> $NbaPlayerBaseInfoGuessInfosPtsTwoTeamGamesToJson(
+    NbaPlayerBaseInfoGuessInfosPtsTwoTeamGames entity) {
+  final Map<String, dynamic> data = <String, dynamic>{};
+  data['fga'] = entity.fga;
+  data['ast'] = entity.ast;
+  data['dreb'] = entity.dreb;
+  data['espnId'] = entity.espnId;
+  data['fgm'] = entity.fgm;
+  data['reb'] = entity.reb;
+  data['fta'] = entity.fta;
+  data['min'] = entity.min;
+  data['isStarter'] = entity.isStarter;
+  data['ftm'] = entity.ftm;
+  data['playerId'] = entity.playerId;
+  data['blk'] = entity.blk;
+  data['gameId'] = entity.gameId;
+  data['stl'] = entity.stl;
+  data['updateTime'] = entity.updateTime;
+  data['pts'] = entity.pts;
+  data['threePa'] = entity.threePa;
+  data['ename'] = entity.ename;
+  data['oreb'] = entity.oreb;
+  data['createTime'] = entity.createTime;
+  data['pf'] = entity.pf;
+  data['teamId'] = entity.teamId;
+  data['threePm'] = entity.threePm;
+  data['to'] = entity.to;
+  data['awayTeamId'] = entity.awayTeamId;
+  return data;
+}
+
+extension NbaPlayerBaseInfoGuessInfosPtsTwoTeamGamesExtension on NbaPlayerBaseInfoGuessInfosPtsTwoTeamGames {
+  NbaPlayerBaseInfoGuessInfosPtsTwoTeamGames copyWith({
+    int? fga,
+    int? ast,
+    int? dreb,
+    int? espnId,
+    int? fgm,
+    int? reb,
+    int? fta,
+    int? min,
+    bool? isStarter,
+    int? ftm,
+    int? playerId,
+    int? blk,
+    int? gameId,
+    int? stl,
+    int? updateTime,
+    int? pts,
+    int? threePa,
+    String? ename,
+    int? oreb,
+    int? createTime,
+    int? pf,
+    int? teamId,
+    int? threePm,
+    int? to,
+    int? awayTeamId,
+  }) {
+    return NbaPlayerBaseInfoGuessInfosPtsTwoTeamGames()
+      ..fga = fga ?? this.fga
+      ..ast = ast ?? this.ast
+      ..dreb = dreb ?? this.dreb
+      ..espnId = espnId ?? this.espnId
+      ..fgm = fgm ?? this.fgm
+      ..reb = reb ?? this.reb
+      ..fta = fta ?? this.fta
+      ..min = min ?? this.min
+      ..isStarter = isStarter ?? this.isStarter
+      ..ftm = ftm ?? this.ftm
+      ..playerId = playerId ?? this.playerId
+      ..blk = blk ?? this.blk
+      ..gameId = gameId ?? this.gameId
+      ..stl = stl ?? this.stl
+      ..updateTime = updateTime ?? this.updateTime
+      ..pts = pts ?? this.pts
+      ..threePa = threePa ?? this.threePa
+      ..ename = ename ?? this.ename
+      ..oreb = oreb ?? this.oreb
+      ..createTime = createTime ?? this.createTime
+      ..pf = pf ?? this.pf
+      ..teamId = teamId ?? this.teamId
+      ..threePm = threePm ?? this.threePm
+      ..to = to ?? this.to
+      ..awayTeamId = awayTeamId ?? this.awayTeamId;
   }
 }
 
@@ -82,6 +1535,12 @@ NbaPlayerBaseInfoPlayerBaseInfo $NbaPlayerBaseInfoPlayerBaseInfoFromJson(
   final bool? injuries = jsonConvert.convert<bool>(json['injuries']);
   if (injuries != null) {
     nbaPlayerBaseInfoPlayerBaseInfo.injuries = injuries;
+  }
+  final int? beforeMarketPriceUpdateTime = jsonConvert.convert<int>(
+      json['beforeMarketPriceUpdateTime']);
+  if (beforeMarketPriceUpdateTime != null) {
+    nbaPlayerBaseInfoPlayerBaseInfo.beforeMarketPriceUpdateTime =
+        beforeMarketPriceUpdateTime;
   }
   final int? birthTime = jsonConvert.convert<int>(json['birthTime']);
   if (birthTime != null) {
@@ -102,6 +1561,10 @@ NbaPlayerBaseInfoPlayerBaseInfo $NbaPlayerBaseInfoPlayerBaseInfoFromJson(
   final int? minPlayerScore = jsonConvert.convert<int>(json['minPlayerScore']);
   if (minPlayerScore != null) {
     nbaPlayerBaseInfoPlayerBaseInfo.minPlayerScore = minPlayerScore;
+  }
+  final int? nbaId = jsonConvert.convert<int>(json['nbaId']);
+  if (nbaId != null) {
+    nbaPlayerBaseInfoPlayerBaseInfo.nbaId = nbaId;
   }
   final int? pos = jsonConvert.convert<int>(json['pos']);
   if (pos != null) {
@@ -184,11 +1647,13 @@ Map<String, dynamic> $NbaPlayerBaseInfoPlayerBaseInfoToJson(
   data['marketPrice'] = entity.marketPrice;
   data['espnId'] = entity.espnId;
   data['injuries'] = entity.injuries;
+  data['beforeMarketPriceUpdateTime'] = entity.beforeMarketPriceUpdateTime;
   data['birthTime'] = entity.birthTime;
   data['playerStrength'] = entity.playerStrength;
   data['elname'] = entity.elname;
   data['salary'] = entity.salary;
   data['minPlayerScore'] = entity.minPlayerScore;
+  data['nbaId'] = entity.nbaId;
   data['pos'] = entity.pos;
   data['property'] = entity.property;
   data['tag'] = entity.tag;
@@ -214,11 +1679,13 @@ extension NbaPlayerBaseInfoPlayerBaseInfoExtension on NbaPlayerBaseInfoPlayerBas
     int? marketPrice,
     int? espnId,
     bool? injuries,
+    int? beforeMarketPriceUpdateTime,
     int? birthTime,
     int? playerStrength,
     String? elname,
     int? salary,
     int? minPlayerScore,
+    int? nbaId,
     int? pos,
     int? property,
     List<int>? tag,
@@ -241,11 +1708,14 @@ extension NbaPlayerBaseInfoPlayerBaseInfoExtension on NbaPlayerBaseInfoPlayerBas
       ..marketPrice = marketPrice ?? this.marketPrice
       ..espnId = espnId ?? this.espnId
       ..injuries = injuries ?? this.injuries
+      ..beforeMarketPriceUpdateTime = beforeMarketPriceUpdateTime ??
+          this.beforeMarketPriceUpdateTime
       ..birthTime = birthTime ?? this.birthTime
       ..playerStrength = playerStrength ?? this.playerStrength
       ..elname = elname ?? this.elname
       ..salary = salary ?? this.salary
       ..minPlayerScore = minPlayerScore ?? this.minPlayerScore
+      ..nbaId = nbaId ?? this.nbaId
       ..pos = pos ?? this.pos
       ..property = property ?? this.property
       ..tag = tag ?? this.tag
@@ -263,6 +1733,339 @@ extension NbaPlayerBaseInfoPlayerBaseInfoExtension on NbaPlayerBaseInfoPlayerBas
       ..name = name ?? this.name
       ..basicMarketPrice = basicMarketPrice ?? this.basicMarketPrice
       ..position = position ?? this.position;
+  }
+}
+
+NbaPlayerBaseInfoL5GameData $NbaPlayerBaseInfoL5GameDataFromJson(
+    Map<String, dynamic> json) {
+  final NbaPlayerBaseInfoL5GameData nbaPlayerBaseInfoL5GameData = NbaPlayerBaseInfoL5GameData();
+  final int? blk = jsonConvert.convert<int>(json['blk']);
+  if (blk != null) {
+    nbaPlayerBaseInfoL5GameData.blk = blk;
+  }
+  final int? fga = jsonConvert.convert<int>(json['fga']);
+  if (fga != null) {
+    nbaPlayerBaseInfoL5GameData.fga = fga;
+  }
+  final int? ast = jsonConvert.convert<int>(json['ast']);
+  if (ast != null) {
+    nbaPlayerBaseInfoL5GameData.ast = ast;
+  }
+  final int? dreb = jsonConvert.convert<int>(json['dreb']);
+  if (dreb != null) {
+    nbaPlayerBaseInfoL5GameData.dreb = dreb;
+  }
+  final int? starterCount = jsonConvert.convert<int>(json['starterCount']);
+  if (starterCount != null) {
+    nbaPlayerBaseInfoL5GameData.starterCount = starterCount;
+  }
+  final int? stl = jsonConvert.convert<int>(json['stl']);
+  if (stl != null) {
+    nbaPlayerBaseInfoL5GameData.stl = stl;
+  }
+  final int? updateTime = jsonConvert.convert<int>(json['updateTime']);
+  if (updateTime != null) {
+    nbaPlayerBaseInfoL5GameData.updateTime = updateTime;
+  }
+  final int? fgm = jsonConvert.convert<int>(json['fgm']);
+  if (fgm != null) {
+    nbaPlayerBaseInfoL5GameData.fgm = fgm;
+  }
+  final int? pts = jsonConvert.convert<int>(json['pts']);
+  if (pts != null) {
+    nbaPlayerBaseInfoL5GameData.pts = pts;
+  }
+  final int? threePa = jsonConvert.convert<int>(json['threePa']);
+  if (threePa != null) {
+    nbaPlayerBaseInfoL5GameData.threePa = threePa;
+  }
+  final int? playCount = jsonConvert.convert<int>(json['playCount']);
+  if (playCount != null) {
+    nbaPlayerBaseInfoL5GameData.playCount = playCount;
+  }
+  final int? fta = jsonConvert.convert<int>(json['fta']);
+  if (fta != null) {
+    nbaPlayerBaseInfoL5GameData.fta = fta;
+  }
+  final int? min = jsonConvert.convert<int>(json['min']);
+  if (min != null) {
+    nbaPlayerBaseInfoL5GameData.min = min;
+  }
+  final int? oreb = jsonConvert.convert<int>(json['oreb']);
+  if (oreb != null) {
+    nbaPlayerBaseInfoL5GameData.oreb = oreb;
+  }
+  final int? createTime = jsonConvert.convert<int>(json['createTime']);
+  if (createTime != null) {
+    nbaPlayerBaseInfoL5GameData.createTime = createTime;
+  }
+  final int? seasonId = jsonConvert.convert<int>(json['seasonId']);
+  if (seasonId != null) {
+    nbaPlayerBaseInfoL5GameData.seasonId = seasonId;
+  }
+  final int? pf = jsonConvert.convert<int>(json['pf']);
+  if (pf != null) {
+    nbaPlayerBaseInfoL5GameData.pf = pf;
+  }
+  final int? threePm = jsonConvert.convert<int>(json['threePm']);
+  if (threePm != null) {
+    nbaPlayerBaseInfoL5GameData.threePm = threePm;
+  }
+  final int? to = jsonConvert.convert<int>(json['to']);
+  if (to != null) {
+    nbaPlayerBaseInfoL5GameData.to = to;
+  }
+  final int? ftm = jsonConvert.convert<int>(json['ftm']);
+  if (ftm != null) {
+    nbaPlayerBaseInfoL5GameData.ftm = ftm;
+  }
+  final int? playerId = jsonConvert.convert<int>(json['playerId']);
+  if (playerId != null) {
+    nbaPlayerBaseInfoL5GameData.playerId = playerId;
+  }
+  return nbaPlayerBaseInfoL5GameData;
+}
+
+Map<String, dynamic> $NbaPlayerBaseInfoL5GameDataToJson(
+    NbaPlayerBaseInfoL5GameData entity) {
+  final Map<String, dynamic> data = <String, dynamic>{};
+  data['blk'] = entity.blk;
+  data['fga'] = entity.fga;
+  data['ast'] = entity.ast;
+  data['dreb'] = entity.dreb;
+  data['starterCount'] = entity.starterCount;
+  data['stl'] = entity.stl;
+  data['updateTime'] = entity.updateTime;
+  data['fgm'] = entity.fgm;
+  data['pts'] = entity.pts;
+  data['threePa'] = entity.threePa;
+  data['playCount'] = entity.playCount;
+  data['fta'] = entity.fta;
+  data['min'] = entity.min;
+  data['oreb'] = entity.oreb;
+  data['createTime'] = entity.createTime;
+  data['seasonId'] = entity.seasonId;
+  data['pf'] = entity.pf;
+  data['threePm'] = entity.threePm;
+  data['to'] = entity.to;
+  data['ftm'] = entity.ftm;
+  data['playerId'] = entity.playerId;
+  return data;
+}
+
+extension NbaPlayerBaseInfoL5GameDataExtension on NbaPlayerBaseInfoL5GameData {
+  NbaPlayerBaseInfoL5GameData copyWith({
+    int? blk,
+    int? fga,
+    int? ast,
+    int? dreb,
+    int? starterCount,
+    int? stl,
+    int? updateTime,
+    int? fgm,
+    int? pts,
+    int? threePa,
+    int? playCount,
+    int? fta,
+    int? min,
+    int? oreb,
+    int? createTime,
+    int? seasonId,
+    int? pf,
+    int? threePm,
+    int? to,
+    int? ftm,
+    int? playerId,
+  }) {
+    return NbaPlayerBaseInfoL5GameData()
+      ..blk = blk ?? this.blk
+      ..fga = fga ?? this.fga
+      ..ast = ast ?? this.ast
+      ..dreb = dreb ?? this.dreb
+      ..starterCount = starterCount ?? this.starterCount
+      ..stl = stl ?? this.stl
+      ..updateTime = updateTime ?? this.updateTime
+      ..fgm = fgm ?? this.fgm
+      ..pts = pts ?? this.pts
+      ..threePa = threePa ?? this.threePa
+      ..playCount = playCount ?? this.playCount
+      ..fta = fta ?? this.fta
+      ..min = min ?? this.min
+      ..oreb = oreb ?? this.oreb
+      ..createTime = createTime ?? this.createTime
+      ..seasonId = seasonId ?? this.seasonId
+      ..pf = pf ?? this.pf
+      ..threePm = threePm ?? this.threePm
+      ..to = to ?? this.to
+      ..ftm = ftm ?? this.ftm
+      ..playerId = playerId ?? this.playerId;
+  }
+}
+
+NbaPlayerBaseInfoL5DataAvg $NbaPlayerBaseInfoL5DataAvgFromJson(
+    Map<String, dynamic> json) {
+  final NbaPlayerBaseInfoL5DataAvg nbaPlayerBaseInfoL5DataAvg = NbaPlayerBaseInfoL5DataAvg();
+  final double? blk = jsonConvert.convert<double>(json['blk']);
+  if (blk != null) {
+    nbaPlayerBaseInfoL5DataAvg.blk = blk;
+  }
+  final double? fga = jsonConvert.convert<double>(json['fga']);
+  if (fga != null) {
+    nbaPlayerBaseInfoL5DataAvg.fga = fga;
+  }
+  final double? ast = jsonConvert.convert<double>(json['ast']);
+  if (ast != null) {
+    nbaPlayerBaseInfoL5DataAvg.ast = ast;
+  }
+  final double? dreb = jsonConvert.convert<double>(json['dreb']);
+  if (dreb != null) {
+    nbaPlayerBaseInfoL5DataAvg.dreb = dreb;
+  }
+  final double? starterCount = jsonConvert.convert<double>(
+      json['starterCount']);
+  if (starterCount != null) {
+    nbaPlayerBaseInfoL5DataAvg.starterCount = starterCount;
+  }
+  final double? stl = jsonConvert.convert<double>(json['stl']);
+  if (stl != null) {
+    nbaPlayerBaseInfoL5DataAvg.stl = stl;
+  }
+  final double? updateTime = jsonConvert.convert<double>(json['updateTime']);
+  if (updateTime != null) {
+    nbaPlayerBaseInfoL5DataAvg.updateTime = updateTime;
+  }
+  final double? fgm = jsonConvert.convert<double>(json['fgm']);
+  if (fgm != null) {
+    nbaPlayerBaseInfoL5DataAvg.fgm = fgm;
+  }
+  final double? pts = jsonConvert.convert<double>(json['pts']);
+  if (pts != null) {
+    nbaPlayerBaseInfoL5DataAvg.pts = pts;
+  }
+  final double? threePa = jsonConvert.convert<double>(json['threePa']);
+  if (threePa != null) {
+    nbaPlayerBaseInfoL5DataAvg.threePa = threePa;
+  }
+  final double? playCount = jsonConvert.convert<double>(json['playCount']);
+  if (playCount != null) {
+    nbaPlayerBaseInfoL5DataAvg.playCount = playCount;
+  }
+  final double? fta = jsonConvert.convert<double>(json['fta']);
+  if (fta != null) {
+    nbaPlayerBaseInfoL5DataAvg.fta = fta;
+  }
+  final double? min = jsonConvert.convert<double>(json['min']);
+  if (min != null) {
+    nbaPlayerBaseInfoL5DataAvg.min = min;
+  }
+  final double? oreb = jsonConvert.convert<double>(json['oreb']);
+  if (oreb != null) {
+    nbaPlayerBaseInfoL5DataAvg.oreb = oreb;
+  }
+  final double? createTime = jsonConvert.convert<double>(json['createTime']);
+  if (createTime != null) {
+    nbaPlayerBaseInfoL5DataAvg.createTime = createTime;
+  }
+  final double? seasonId = jsonConvert.convert<double>(json['seasonId']);
+  if (seasonId != null) {
+    nbaPlayerBaseInfoL5DataAvg.seasonId = seasonId;
+  }
+  final double? pf = jsonConvert.convert<double>(json['pf']);
+  if (pf != null) {
+    nbaPlayerBaseInfoL5DataAvg.pf = pf;
+  }
+  final double? threePm = jsonConvert.convert<double>(json['threePm']);
+  if (threePm != null) {
+    nbaPlayerBaseInfoL5DataAvg.threePm = threePm;
+  }
+  final double? to = jsonConvert.convert<double>(json['to']);
+  if (to != null) {
+    nbaPlayerBaseInfoL5DataAvg.to = to;
+  }
+  final double? ftm = jsonConvert.convert<double>(json['ftm']);
+  if (ftm != null) {
+    nbaPlayerBaseInfoL5DataAvg.ftm = ftm;
+  }
+  final double? playerId = jsonConvert.convert<double>(json['playerId']);
+  if (playerId != null) {
+    nbaPlayerBaseInfoL5DataAvg.playerId = playerId;
+  }
+  return nbaPlayerBaseInfoL5DataAvg;
+}
+
+Map<String, dynamic> $NbaPlayerBaseInfoL5DataAvgToJson(
+    NbaPlayerBaseInfoL5DataAvg entity) {
+  final Map<String, dynamic> data = <String, dynamic>{};
+  data['blk'] = entity.blk;
+  data['fga'] = entity.fga;
+  data['ast'] = entity.ast;
+  data['dreb'] = entity.dreb;
+  data['starterCount'] = entity.starterCount;
+  data['stl'] = entity.stl;
+  data['updateTime'] = entity.updateTime;
+  data['fgm'] = entity.fgm;
+  data['pts'] = entity.pts;
+  data['threePa'] = entity.threePa;
+  data['playCount'] = entity.playCount;
+  data['fta'] = entity.fta;
+  data['min'] = entity.min;
+  data['oreb'] = entity.oreb;
+  data['createTime'] = entity.createTime;
+  data['seasonId'] = entity.seasonId;
+  data['pf'] = entity.pf;
+  data['threePm'] = entity.threePm;
+  data['to'] = entity.to;
+  data['ftm'] = entity.ftm;
+  data['playerId'] = entity.playerId;
+  return data;
+}
+
+extension NbaPlayerBaseInfoL5DataAvgExtension on NbaPlayerBaseInfoL5DataAvg {
+  NbaPlayerBaseInfoL5DataAvg copyWith({
+    double? blk,
+    double? fga,
+    double? ast,
+    double? dreb,
+    double? starterCount,
+    double? stl,
+    double? updateTime,
+    double? fgm,
+    double? pts,
+    double? threePa,
+    double? playCount,
+    double? fta,
+    double? min,
+    double? oreb,
+    double? createTime,
+    double? seasonId,
+    double? pf,
+    double? threePm,
+    double? to,
+    double? ftm,
+    double? playerId,
+  }) {
+    return NbaPlayerBaseInfoL5DataAvg()
+      ..blk = blk ?? this.blk
+      ..fga = fga ?? this.fga
+      ..ast = ast ?? this.ast
+      ..dreb = dreb ?? this.dreb
+      ..starterCount = starterCount ?? this.starterCount
+      ..stl = stl ?? this.stl
+      ..updateTime = updateTime ?? this.updateTime
+      ..fgm = fgm ?? this.fgm
+      ..pts = pts ?? this.pts
+      ..threePa = threePa ?? this.threePa
+      ..playCount = playCount ?? this.playCount
+      ..fta = fta ?? this.fta
+      ..min = min ?? this.min
+      ..oreb = oreb ?? this.oreb
+      ..createTime = createTime ?? this.createTime
+      ..seasonId = seasonId ?? this.seasonId
+      ..pf = pf ?? this.pf
+      ..threePm = threePm ?? this.threePm
+      ..to = to ?? this.to
+      ..ftm = ftm ?? this.ftm
+      ..playerId = playerId ?? this.playerId;
   }
 }
 

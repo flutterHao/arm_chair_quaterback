@@ -295,140 +295,151 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
             EdgeInsets.only(left: 16.w, right: 16.w, top: 13.w, bottom: 31.w),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (flexBet.isNotEmpty)
-                  InkWell(
-                    onTap: () {
-                      if (players.length <= 2) {
-                        return;
-                      }
-                      modelCurrentIndex.value = 0;
-                    },
-                    child: Container(
-                      height: 167.w,
-                      constraints: BoxConstraints(maxWidth: 250.w),
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 10.w, vertical: 14.w),
-                      decoration: BoxDecoration(
-                          color: AppColors.cFFFFFF,
-                          borderRadius: BorderRadius.circular(16.w),
-                          border: Border.all(
-                              color: modelCurrentIndex.value == 0
-                                  ? AppColors.c10A86A
-                                  : AppColors.cTransparent,
-                              width: 2)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Flex play",
-                                style: 14
-                                    .w7(color: AppColors.c262626, height: 1),
-                              ),
-                              _buildSelect(modelCurrentIndex.value == 0),
-                            ],
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (flexBet.isNotEmpty)
+                    Expanded(
+                      child: Center(
+                        child: InkWell(
+                          onTap: () {
+                            if (players.length <= 2) {
+                              return;
+                            }
+                            modelCurrentIndex.value = 0;
+                          },
+                          child: Container(
+                            height: 167.w,
+                            constraints: BoxConstraints(maxWidth: 250.w),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10.w, vertical: 14.w),
+                            decoration: BoxDecoration(
+                                color: AppColors.cFFFFFF,
+                                borderRadius: BorderRadius.circular(16.w),
+                                border: Border.all(
+                                    color: modelCurrentIndex.value == 0
+                                        ? AppColors.c10A86A
+                                        : AppColors.cTransparent,
+                                    width: 2)),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Flex play",
+                                      style: 14
+                                          .w7(color: AppColors.c262626, height: 1),
+                                    ),
+                                    _buildSelect(modelCurrentIndex.value == 0),
+                                  ],
+                                ),
+                                6.vGap,
+                                const Divider(
+                                  height: 1,
+                                  color: AppColors.cE6E6E6,
+                                ),
+                                5.vGap,
+                                Expanded(
+                                  child: ListView.builder(
+                                      itemCount: flexBet.length,
+                                      itemBuilder: (context, index) {
+                                        var num = players.length - index;
+                                        var bet =
+                                            flexBet[flexBet.length - 1 - index];
+                                        return _buildbet(
+                                            num.toString(), bet.toString());
+                                      }),
+                                ),
+                                Container(
+                                    margin: EdgeInsets.only(left: 11.w),
+                                    child: Text(
+                                      "Hit 3out of 5 in the lineup",
+                                      style: 10
+                                          .w4(color: AppColors.cB3B3B3, height: 1),
+                                    ))
+                              ],
+                            ),
                           ),
-                          6.vGap,
-                          const Divider(
-                            height: 1,
-                            color: AppColors.cE6E6E6,
-                          ),
-                          5.vGap,
-                          Expanded(
-                            child: ListView.builder(
-                                itemCount: flexBet.length,
-                                itemBuilder: (context, index) {
-                                  var num = players.length - index;
-                                  var bet =
-                                      flexBet[flexBet.length - 1 - index];
-                                  return _buildbet(
-                                      num.toString(), bet.toString());
-                                }),
-                          ),
-                          Container(
-                              margin: EdgeInsets.only(left: 11.w),
-                              child: Text(
-                                "Hit 3out of 5 in the lineup",
-                                style: 10
-                                    .w4(color: AppColors.cB3B3B3, height: 1),
-                              ))
-                        ],
+                        ),
                       ),
                     ),
-                  ),
-                if (flexBet.isNotEmpty && powerIndex != -1) 9.hGap,
-                if (powerIndex != -1)
-                  InkWell(
-                    onTap: () {
-                      if (players.length >= 5) {
-                        return;
-                      }
-                      modelCurrentIndex.value = 1;
-                    },
-                    child: Container(
-                      height: 167.w,
-                      constraints: BoxConstraints(maxWidth: 250.w),
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 10.w, vertical: 14.w),
-                      decoration: BoxDecoration(
-                          color: AppColors.cFFFFFF,
-                          borderRadius: BorderRadius.circular(16.w),
-                          border: Border.all(
-                              color: modelCurrentIndex.value == 1
-                                  ? AppColors.c10A86A
-                                  : AppColors.cTransparent,
-                              width: 2)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Power play",
-                                style: 14
-                                    .w7(color: AppColors.c262626, height: 1),
-                              ),
-                              _buildSelect(modelCurrentIndex.value == 1),
-                            ],
+                  if (flexBet.isNotEmpty && powerIndex != -1) 9.hGap,
+                  if (powerIndex != -1)
+                    Expanded(
+                      child: Center(
+                        child: InkWell(
+                          onTap: () {
+                            if (players.length >= 5) {
+                              return;
+                            }
+                            modelCurrentIndex.value = 1;
+                          },
+                          child: Container(
+                            height: 167.w,
+                            constraints: BoxConstraints(maxWidth: 250.w),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10.w, vertical: 14.w),
+                            decoration: BoxDecoration(
+                                color: AppColors.cFFFFFF,
+                                borderRadius: BorderRadius.circular(16.w),
+                                border: Border.all(
+                                    color: modelCurrentIndex.value == 1
+                                        ? AppColors.c10A86A
+                                        : AppColors.cTransparent,
+                                    width: 2)),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Power play",
+                                      style: 14
+                                          .w7(color: AppColors.c262626, height: 1),
+                                    ),
+                                    _buildSelect(modelCurrentIndex.value == 1),
+                                  ],
+                                ),
+                                6.vGap,
+                                const Divider(
+                                  height: 1,
+                                  color: AppColors.cE6E6E6,
+                                ),
+                                5.vGap,
+                                Expanded(
+                                  child: Builder(builder: (context) {
+                                    return powerIndex == -1
+                                        ? const SizedBox.shrink()
+                                        : Column(
+                                            children: [
+                                              _buildbet(length.toString(),
+                                                  powerBet[powerIndex].toString()),
+                                            ],
+                                          );
+                                  }),
+                                ),
+                                Container(
+                                    margin: EdgeInsets.only(left: 11.w),
+                                    child: Text(
+                                      "Hit 3out of 5 in the lineup",
+                                      style: 10
+                                          .w4(color: AppColors.cB3B3B3, height: 1),
+                                    ))
+                              ],
+                            ),
                           ),
-                          6.vGap,
-                          const Divider(
-                            height: 1,
-                            color: AppColors.cE6E6E6,
-                          ),
-                          5.vGap,
-                          Expanded(
-                            child: Builder(builder: (context) {
-                              return powerIndex == -1
-                                  ? const SizedBox.shrink()
-                                  : Column(
-                                      children: [
-                                        _buildbet(length.toString(),
-                                            powerBet[powerIndex].toString()),
-                                      ],
-                                    );
-                            }),
-                          ),
-                          Container(
-                              margin: EdgeInsets.only(left: 11.w),
-                              child: Text(
-                                "Hit 3out of 5 in the lineup",
-                                style: 10
-                                    .w4(color: AppColors.cB3B3B3, height: 1),
-                              ))
-                        ],
+                        ),
                       ),
                     ),
-                  ),
-              ],
+                ],
+              ),
             ),
             10.vGap,
             Container(

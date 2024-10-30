@@ -535,9 +535,10 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                                 width: 4.w,
                               ),
                               ImageWidget(
+                                imageFailedPath: Assets.uiHead_01Png,
                                 borderRadius: BorderRadius.circular(24.w),
                                 url: Utils.getTeamUrl(picksIndexController
-                                    .rankInfo.myRank.teamId),
+                                    .rankInfo.myRank.teamLogo),
                                 width: 48.w,
                               ),
                               Container(

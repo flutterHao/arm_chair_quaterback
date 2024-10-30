@@ -51,12 +51,12 @@ class _HomePageState extends State<HomePage>
               },
             ),
             child: Scaffold(
-              body: TabBarView(
+              body: PageView(
                 physics: const NeverScrollableScrollPhysics(),
-                controller: controller.tabController,
-                children: controller.tabItems
-                    .map((e) => Center(child: e.tabPage))
-                    .toList(),
+                controller: controller.pageController,
+                  children: controller.tabItems
+                      .map((e) => Center(child: e.tabPage))
+                      .toList(),
               ),
               bottomNavigationBar: Container(
                 color: AppColors.c262626,

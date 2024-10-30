@@ -258,10 +258,103 @@ class JsonConvert {
       return data.map<NbaPlayerBaseInfoEntity>((Map<String, dynamic> e) =>
           NbaPlayerBaseInfoEntity.fromJson(e)).toList() as M;
     }
+    if (<NbaPlayerBaseInfoPlayerDataAvg>[] is M) {
+      return data.map<NbaPlayerBaseInfoPlayerDataAvg>((
+          Map<String, dynamic> e) => NbaPlayerBaseInfoPlayerDataAvg.fromJson(e))
+          .toList() as M;
+    }
+    if (<NbaPlayerBaseInfoGuessInfos>[] is M) {
+      return data.map<NbaPlayerBaseInfoGuessInfos>((Map<String, dynamic> e) =>
+          NbaPlayerBaseInfoGuessInfos.fromJson(e)).toList() as M;
+    }
+    if (<NbaPlayerBaseInfoGuessInfosAstCommunityPick>[] is M) {
+      return data.map<NbaPlayerBaseInfoGuessInfosAstCommunityPick>((
+          Map<String, dynamic> e) =>
+          NbaPlayerBaseInfoGuessInfosAstCommunityPick.fromJson(e))
+          .toList() as M;
+    }
+    if (<NbaPlayerBaseInfoGuessInfosAstPicks>[] is M) {
+      return data.map<NbaPlayerBaseInfoGuessInfosAstPicks>((
+          Map<String, dynamic> e) =>
+          NbaPlayerBaseInfoGuessInfosAstPicks.fromJson(e)).toList() as M;
+    }
+    if (<NbaPlayerBaseInfoGuessInfosAstPicksGuessReferenceValue>[] is M) {
+      return data.map<NbaPlayerBaseInfoGuessInfosAstPicksGuessReferenceValue>((
+          Map<String, dynamic> e) =>
+          NbaPlayerBaseInfoGuessInfosAstPicksGuessReferenceValue.fromJson(e))
+          .toList() as M;
+    }
+    if (<NbaPlayerBaseInfoGuessInfosAstTwoTeamGames>[] is M) {
+      return data.map<NbaPlayerBaseInfoGuessInfosAstTwoTeamGames>((
+          Map<String, dynamic> e) =>
+          NbaPlayerBaseInfoGuessInfosAstTwoTeamGames.fromJson(e)).toList() as M;
+    }
+    if (<NbaPlayerBaseInfoGuessInfosReb>[] is M) {
+      return data.map<NbaPlayerBaseInfoGuessInfosReb>((
+          Map<String, dynamic> e) => NbaPlayerBaseInfoGuessInfosReb.fromJson(e))
+          .toList() as M;
+    }
+    if (<NbaPlayerBaseInfoGuessInfosRebCommunityPick>[] is M) {
+      return data.map<NbaPlayerBaseInfoGuessInfosRebCommunityPick>((
+          Map<String, dynamic> e) =>
+          NbaPlayerBaseInfoGuessInfosRebCommunityPick.fromJson(e))
+          .toList() as M;
+    }
+    if (<NbaPlayerBaseInfoGuessInfosRebPicks>[] is M) {
+      return data.map<NbaPlayerBaseInfoGuessInfosRebPicks>((
+          Map<String, dynamic> e) =>
+          NbaPlayerBaseInfoGuessInfosRebPicks.fromJson(e)).toList() as M;
+    }
+    if (<NbaPlayerBaseInfoGuessInfosRebPicksGuessReferenceValue>[] is M) {
+      return data.map<NbaPlayerBaseInfoGuessInfosRebPicksGuessReferenceValue>((
+          Map<String, dynamic> e) =>
+          NbaPlayerBaseInfoGuessInfosRebPicksGuessReferenceValue.fromJson(e))
+          .toList() as M;
+    }
+    if (<NbaPlayerBaseInfoGuessInfosRebTwoTeamGames>[] is M) {
+      return data.map<NbaPlayerBaseInfoGuessInfosRebTwoTeamGames>((
+          Map<String, dynamic> e) =>
+          NbaPlayerBaseInfoGuessInfosRebTwoTeamGames.fromJson(e)).toList() as M;
+    }
+    if (<NbaPlayerBaseInfoGuessInfosProperty>[] is M) {
+      return data.map<NbaPlayerBaseInfoGuessInfosProperty>((
+          Map<String, dynamic> e) =>
+          NbaPlayerBaseInfoGuessInfosProperty.fromJson(e)).toList() as M;
+    }
+    if (<NbaPlayerBaseInfoGuessInfosPtsCommunityPick>[] is M) {
+      return data.map<NbaPlayerBaseInfoGuessInfosPtsCommunityPick>((
+          Map<String, dynamic> e) =>
+          NbaPlayerBaseInfoGuessInfosPtsCommunityPick.fromJson(e))
+          .toList() as M;
+    }
+    if (<NbaPlayerBaseInfoGuessInfosPtsPicks>[] is M) {
+      return data.map<NbaPlayerBaseInfoGuessInfosPtsPicks>((
+          Map<String, dynamic> e) =>
+          NbaPlayerBaseInfoGuessInfosPtsPicks.fromJson(e)).toList() as M;
+    }
+    if (<NbaPlayerBaseInfoGuessInfosPtsPicksGuessReferenceValue>[] is M) {
+      return data.map<NbaPlayerBaseInfoGuessInfosPtsPicksGuessReferenceValue>((
+          Map<String, dynamic> e) =>
+          NbaPlayerBaseInfoGuessInfosPtsPicksGuessReferenceValue.fromJson(e))
+          .toList() as M;
+    }
+    if (<NbaPlayerBaseInfoGuessInfosPtsTwoTeamGames>[] is M) {
+      return data.map<NbaPlayerBaseInfoGuessInfosPtsTwoTeamGames>((
+          Map<String, dynamic> e) =>
+          NbaPlayerBaseInfoGuessInfosPtsTwoTeamGames.fromJson(e)).toList() as M;
+    }
     if (<NbaPlayerBaseInfoPlayerBaseInfo>[] is M) {
       return data.map<NbaPlayerBaseInfoPlayerBaseInfo>((
           Map<String, dynamic> e) =>
           NbaPlayerBaseInfoPlayerBaseInfo.fromJson(e)).toList() as M;
+    }
+    if (<NbaPlayerBaseInfoL5GameData>[] is M) {
+      return data.map<NbaPlayerBaseInfoL5GameData>((Map<String, dynamic> e) =>
+          NbaPlayerBaseInfoL5GameData.fromJson(e)).toList() as M;
+    }
+    if (<NbaPlayerBaseInfoL5DataAvg>[] is M) {
+      return data.map<NbaPlayerBaseInfoL5DataAvg>((Map<String, dynamic> e) =>
+          NbaPlayerBaseInfoL5DataAvg.fromJson(e)).toList() as M;
     }
     if (<NbaPlayerBaseInfoPlayerRegularMap>[] is M) {
       return data.map<NbaPlayerBaseInfoPlayerRegularMap>((
@@ -573,8 +666,47 @@ class JsonConvertClassCollection {
     (NabPlayerSeasonGameRankEntity).toString(): NabPlayerSeasonGameRankEntity
         .fromJson,
     (NbaPlayerBaseInfoEntity).toString(): NbaPlayerBaseInfoEntity.fromJson,
+    (NbaPlayerBaseInfoPlayerDataAvg).toString(): NbaPlayerBaseInfoPlayerDataAvg
+        .fromJson,
+    (NbaPlayerBaseInfoGuessInfos).toString(): NbaPlayerBaseInfoGuessInfos
+        .fromJson,
+    (NbaPlayerBaseInfoGuessInfosAstCommunityPick)
+        .toString(): NbaPlayerBaseInfoGuessInfosAstCommunityPick.fromJson,
+    (NbaPlayerBaseInfoGuessInfosAstPicks)
+        .toString(): NbaPlayerBaseInfoGuessInfosAstPicks.fromJson,
+    (NbaPlayerBaseInfoGuessInfosAstPicksGuessReferenceValue)
+        .toString(): NbaPlayerBaseInfoGuessInfosAstPicksGuessReferenceValue
+        .fromJson,
+    (NbaPlayerBaseInfoGuessInfosAstTwoTeamGames)
+        .toString(): NbaPlayerBaseInfoGuessInfosAstTwoTeamGames.fromJson,
+    (NbaPlayerBaseInfoGuessInfosReb).toString(): NbaPlayerBaseInfoGuessInfosReb
+        .fromJson,
+    (NbaPlayerBaseInfoGuessInfosRebCommunityPick)
+        .toString(): NbaPlayerBaseInfoGuessInfosRebCommunityPick.fromJson,
+    (NbaPlayerBaseInfoGuessInfosRebPicks)
+        .toString(): NbaPlayerBaseInfoGuessInfosRebPicks.fromJson,
+    (NbaPlayerBaseInfoGuessInfosRebPicksGuessReferenceValue)
+        .toString(): NbaPlayerBaseInfoGuessInfosRebPicksGuessReferenceValue
+        .fromJson,
+    (NbaPlayerBaseInfoGuessInfosRebTwoTeamGames)
+        .toString(): NbaPlayerBaseInfoGuessInfosRebTwoTeamGames.fromJson,
+    (NbaPlayerBaseInfoGuessInfosProperty)
+        .toString(): NbaPlayerBaseInfoGuessInfosProperty.fromJson,
+    (NbaPlayerBaseInfoGuessInfosPtsCommunityPick)
+        .toString(): NbaPlayerBaseInfoGuessInfosPtsCommunityPick.fromJson,
+    (NbaPlayerBaseInfoGuessInfosPtsPicks)
+        .toString(): NbaPlayerBaseInfoGuessInfosPtsPicks.fromJson,
+    (NbaPlayerBaseInfoGuessInfosPtsPicksGuessReferenceValue)
+        .toString(): NbaPlayerBaseInfoGuessInfosPtsPicksGuessReferenceValue
+        .fromJson,
+    (NbaPlayerBaseInfoGuessInfosPtsTwoTeamGames)
+        .toString(): NbaPlayerBaseInfoGuessInfosPtsTwoTeamGames.fromJson,
     (NbaPlayerBaseInfoPlayerBaseInfo)
         .toString(): NbaPlayerBaseInfoPlayerBaseInfo.fromJson,
+    (NbaPlayerBaseInfoL5GameData).toString(): NbaPlayerBaseInfoL5GameData
+        .fromJson,
+    (NbaPlayerBaseInfoL5DataAvg).toString(): NbaPlayerBaseInfoL5DataAvg
+        .fromJson,
     (NbaPlayerBaseInfoPlayerRegularMap)
         .toString(): NbaPlayerBaseInfoPlayerRegularMap.fromJson,
     (NbaPlayerBaseInfoPlayerPlayoffsMap)

@@ -379,7 +379,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                   Row(
                     children: [
                       Text(
-                        "${playerDetailController.baseInfo?.marketPrice ?? 0}",
+                        Utils.formatMoney(playerDetailController.baseInfo?.marketPrice ?? 0),
                         style: 36.w7(color: AppColors.c262626, height: 1),
                       ),
                       44.hGap,
@@ -387,7 +387,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                               0) >
                           0)
                         Text(
-                          "${((((controller.uuidPlayerInfo != null ? controller.uuidPlayerInfo!.buyPrice ?? 0 : (playerDetailController.baseInfo?.marketPrice ?? 0)) - (playerDetailController.baseInfo?.basicMarketPrice ?? 0)) / (playerDetailController.baseInfo?.basicMarketPrice ?? 0)) * 100).toStringAsFixed(2)}%",
+                          "${((((controller.uuidPlayerInfo != null ? controller.uuidPlayerInfo!.buyPrice ?? 0 : (playerDetailController.baseInfo?.marketPrice ?? 0)) - (playerDetailController.baseInfo?.basicMarketPrice ?? 0)) / (playerDetailController.baseInfo?.basicMarketPrice ?? 0)) * 100).toStringAsFixed(1)}%",
                           style: 36.w7(color: AppColors.cE72646, height: 1),
                         )
                     ],
@@ -1161,6 +1161,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                                   url: Utils.getPlayUrl(item
                                                       .teamPlayer.playerId
                                                       .toInt()),
+                                                  imageFailedPath: Assets.head_0000Png,
                                                   width: 64.w,
                                                   height: 64.w,
                                                 ),

@@ -78,6 +78,7 @@ class UserInfoBar extends StatelessWidget {
                         width: 36.w,
                         height: 36.w,
                         borderRadius: BorderRadius.circular(12.w),
+                        imageFailedPath: Assets.uiHead_01Png,
                         url: Utils.getAvaterUrl(info.team?.teamLogo ?? 0)),
                   ),
                 ),

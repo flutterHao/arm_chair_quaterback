@@ -339,7 +339,7 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
             int rodIndex,
           ) {
             return BarTooltipItem(
-              rod.toY.toStringAsFixed(0),
+              Utils.formatMoney(rod.toY),
               11.w7(color: AppColors.c000000, height: 1),
             );
           },
@@ -381,7 +381,7 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
                 return Container(
                   alignment: Alignment.center,
                   child: Text(
-                    "${value.toInt()}K",
+                    Utils.formatMoney(value.toInt()),
                     style: 10.w4(color: AppColors.cB3B3B3),
                   ),
                 );

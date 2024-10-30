@@ -121,7 +121,7 @@ class MineAccountPage extends GetView<MineAccountController> {
                             children: [
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(8.w),
-                                child: ImageWidget(url: "",width: 48.w,height: 48.w,),
+                                child: ImageWidget(url: "",imageFailedPath:Assets.uiHead_01Png,width: 48.w,height: 48.w,),
                               ),
                               9.hGap,
                               Column(

@@ -106,22 +106,12 @@ NewsDefineEntity $NewsDefineEntityFromJson(Map<String, dynamic> json) {
   if (newsCreatePlayerMax != null) {
     newsDefineEntity.newsCreatePlayerMax = newsCreatePlayerMax;
   }
-  final double? newsPickOdds = jsonConvert.convert<double>(
-      json['newsPickOdds']);
-  if (newsPickOdds != null) {
-    newsDefineEntity.newsPickOdds = newsPickOdds;
-  }
   final List<double>? newsRefresh = (json['newsRefresh'] as List<dynamic>?)
       ?.map(
           (e) => jsonConvert.convert<double>(e) as double)
       .toList();
   if (newsRefresh != null) {
     newsDefineEntity.newsRefresh = newsRefresh;
-  }
-  final double? newsRefreshNum = jsonConvert.convert<double>(
-      json['newsRefreshNum']);
-  if (newsRefreshNum != null) {
-    newsDefineEntity.newsRefreshNum = newsRefreshNum;
   }
   final int? newsReviewOpenNum = jsonConvert.convert<int>(
       json['newsReviewOpenNum']);
@@ -187,9 +177,7 @@ Map<String, dynamic> $NewsDefineEntityToJson(NewsDefineEntity entity) {
   data['newsBaseRead'] = entity.newsBaseRead;
   data['newsCreatePickMax'] = entity.newsCreatePickMax;
   data['newsCreatePlayerMax'] = entity.newsCreatePlayerMax;
-  data['newsPickOdds'] = entity.newsPickOdds;
   data['newsRefresh'] = entity.newsRefresh;
-  data['newsRefreshNum'] = entity.newsRefreshNum;
   data['newsReviewOpenNum'] = entity.newsReviewOpenNum;
   data['pfBetData'] = entity.pfBetData;
   data['powerBetWin'] = entity.powerBetWin;
@@ -223,9 +211,7 @@ extension NewsDefineEntityExtension on NewsDefineEntity {
     List<double>? newsBaseRead,
     double? newsCreatePickMax,
     double? newsCreatePlayerMax,
-    double? newsPickOdds,
     List<double>? newsRefresh,
-    double? newsRefreshNum,
     int? newsReviewOpenNum,
     double? pfBetData,
     List<double>? powerBetWin,
@@ -256,9 +242,7 @@ extension NewsDefineEntityExtension on NewsDefineEntity {
       ..newsBaseRead = newsBaseRead ?? this.newsBaseRead
       ..newsCreatePickMax = newsCreatePickMax ?? this.newsCreatePickMax
       ..newsCreatePlayerMax = newsCreatePlayerMax ?? this.newsCreatePlayerMax
-      ..newsPickOdds = newsPickOdds ?? this.newsPickOdds
       ..newsRefresh = newsRefresh ?? this.newsRefresh
-      ..newsRefreshNum = newsRefreshNum ?? this.newsRefreshNum
       ..newsReviewOpenNum = newsReviewOpenNum ?? this.newsReviewOpenNum
       ..pfBetData = pfBetData ?? this.pfBetData
       ..powerBetWin = powerBetWin ?? this.powerBetWin

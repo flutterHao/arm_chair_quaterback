@@ -61,9 +61,10 @@ class PersonalCenterPage extends GetView<PersonalCenterController> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(8.w),
                             child: ImageWidget(
+                              imageFailedPath: Assets.head_0000Png,
                               color: AppColors.cFFFFFF,
                               url: Utils.getTeamUrl(
-                                  controller.teamSimpleEntity?.teamId),
+                                  controller.teamSimpleEntity?.teamLogo),
                               width: 48.w,
                             ),
                           )),

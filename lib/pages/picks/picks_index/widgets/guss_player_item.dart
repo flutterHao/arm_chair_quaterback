@@ -67,8 +67,9 @@ class GussPlayerItem extends StatelessWidget {
                       color: AppColors.cB3B3B3,
                       borderRadius: BorderRadius.circular(20.w)),
                   child: ImageWidget(
+                      imageFailedPath: Assets.uiHead_01Png,
                       borderRadius: BorderRadius.circular(8.w),
-                      url: Utils.getTeamUrl(rankInfoEntity.teamId))),
+                      url: Utils.getTeamUrl(rankInfoEntity.teamLogo.toInt()))),
             ],
           ),
         ),

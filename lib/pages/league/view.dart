@@ -69,7 +69,7 @@ class LeagueIndexPage extends GetView<LeagueController> {
     return GetBuilder<LeagueController>(builder: (_) {
       return const BlackAppWidget(
         UserInfoBar(
-          title: "LEAGUE",
+          title: "COMMUNITIES",
           routeId: GlobalNestedKey.LEAGUES,
         ),
         bodyWidget: Expanded(

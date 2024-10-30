@@ -62,11 +62,13 @@ class PicksApi {
     return json.map((e) => PlayerDayDataEntity.fromJson(e)).toList();
   }
 
-  static Future guess(int type, List<GuessParamEntity> guessParams) async {
+  static Future guess(int type, List<GuessParamEntity> guessParams,int newsId) async {
+    //newsId:新闻id，不是新闻竞猜填0
     var json = await httpUtil.post(Api.guess,
         data: ({
           "type": type,
-          "guessInfo": jsonEncode(guessParams.map((e) => e.toJson()).toList())
+          "guessInfo": jsonEncode(guessParams.map((e) => e.toJson()).toList()),
+          "newsId":newsId,
         }));
     return json;
   }

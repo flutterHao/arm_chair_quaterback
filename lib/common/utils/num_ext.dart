@@ -69,4 +69,9 @@ extension NumExt on num {
         color: AppColors.cB3B3B3,
         width: toDouble(),
       );
+
+  String format(){
+    var stringAsFixed = toStringAsFixed(1);
+    return stringAsFixed.endsWith(".0")?toInt().toString():stringAsFixed;
+  }
 }

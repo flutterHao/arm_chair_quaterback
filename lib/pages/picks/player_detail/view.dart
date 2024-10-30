@@ -74,6 +74,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                             borderRadius: BorderRadius.only(
                                 bottomLeft: Radius.circular(32.w)),
                             child: ImageWidget(
+                              imageFailedPath: Assets.head_0000Png,
                               url: Utils.getPlayUrl(
                                   controller.baseInfo?.playerId),
                               width: 100.w,

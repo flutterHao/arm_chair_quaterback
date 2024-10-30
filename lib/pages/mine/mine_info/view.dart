@@ -52,6 +52,7 @@ class MineInfoPage extends GetView<MineInfoController> {
                                     width: 3.w)),
                             child: ImageWidget(
                               url: "",
+                              imageFailedPath: Assets.uiHead_01Png,
                               width: 100.w,
                               height: 100.w,
                               borderRadius: BorderRadius.circular(50.w),
