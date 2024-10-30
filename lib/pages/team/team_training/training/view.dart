@@ -192,18 +192,21 @@ class TrainingPage extends GetView<TrainingController> {
                                   scale: finish
                                       ? 1
                                       : 2 - controller.moneyCtrl.value,
-                                  child: Text(
-                                    controller.showText.value,
-                                    style: TextStyle(
-                                        fontSize: 40.sp,
-                                        fontWeight: FontWeight.bold,
-                                        height: 1,
-                                        color: controller.showText.value ==
-                                                "TRAINING"
-                                            ? AppColors.c3EC6FF.withOpacity(0.3)
-                                            : AppColors.cFF7954
-                                                .withOpacity(0.5)),
-                                  ),
+                                  child: Obx(() {
+                                    return Text(
+                                      controller.showText.value,
+                                      style: TextStyle(
+                                          fontSize: 40.sp,
+                                          fontWeight: FontWeight.bold,
+                                          height: 1,
+                                          color: controller.showText.value ==
+                                                  "TRAINING"
+                                              ? AppColors.c3EC6FF
+                                                  .withOpacity(0.3)
+                                              : AppColors.cFF7954
+                                                  .withOpacity(0.5)),
+                                    );
+                                  }),
                                 );
                               })
                         ],
@@ -222,6 +225,7 @@ class TrainingPage extends GetView<TrainingController> {
                       ..rotateX(-pi / 6),
                     child: Container(
                       width: 375.w,
+                      // color: Colors.red,
                       alignment: Alignment.topCenter,
                       child: GetBuilder<TrainingController>(
                         id: "slot",
@@ -409,7 +413,7 @@ class TrainingPage extends GetView<TrainingController> {
                       itemWidth: 64.w,
                       viewportFraction: .2,
                       indicatorLayout: PageIndicatorLayout.COLOR,
-                      scale: .9,
+                      // scale: .9,
                       itemCount: controller.playerList.length,
                       outer: false,
                       autoplay: true,
