@@ -10,12 +10,12 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/progress_paint.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/linear_progress_widget.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/player_item_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/award_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/buble_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/drag_back_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/ripple_widget.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/training_avater.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -42,6 +42,7 @@ class TrainingPage extends GetView<TrainingController> {
           // init: TrainingController(),
           id: "training_page",
           builder: (_) {
+            // controller.swiperControl.startAutoplay();
             var trainInfo = controller.trainingInfo.training;
             return Stack(
               alignment: Alignment.topCenter,
@@ -182,16 +183,29 @@ class TrainingPage extends GetView<TrainingController> {
                           //   fit: BoxFit.fitWidth,
                           // ),
                           // 10.hGap,
-                          Obx(() {
-                            return Text(
-                              controller.showText.value,
-                              style: TextStyle(
-                                  fontSize: 35.sp,
-                                  fontWeight: FontWeight.bold,
-                                  height: 1,
-                                  color: AppColors.cFF7954.withOpacity(0.5)),
-                            );
-                          })
+                          AnimatedBuilder(
+                              animation: controller.moneyCtrl,
+                              builder: (context, child) {
+                                var finish = controller.moneyCtrl.value == 0 ||
+                                    controller.moneyCtrl.value == 1;
+                                return Transform.scale(
+                                  scale: finish
+                                      ? 1
+                                      : 2 - controller.moneyCtrl.value,
+                                  child: Text(
+                                    controller.showText.value,
+                                    style: TextStyle(
+                                        fontSize: 40.sp,
+                                        fontWeight: FontWeight.bold,
+                                        height: 1,
+                                        color: controller.showText.value ==
+                                                "TRAINING"
+                                            ? AppColors.c3EC6FF.withOpacity(0.3)
+                                            : AppColors.cFF7954
+                                                .withOpacity(0.5)),
+                                  ),
+                                );
+                              })
                         ],
                       ),
                     ),
@@ -207,66 +221,86 @@ class TrainingPage extends GetView<TrainingController> {
                       ..setEntry(3, 2, 0.01)
                       ..rotateX(-pi / 6),
                     child: Container(
-                      // color: Colors.black38,
                       width: 375.w,
+                      alignment: Alignment.topCenter,
                       child: GetBuilder<TrainingController>(
                         id: "slot",
                         builder: (ctrl) {
-                          return Row(
-                            children: [
-                              for (int i = 0; i < 3; i++)
-                                Expanded(
-                                  child: Stack(
-                                    children: [
-                                      Container(
-                                          // color: Colors.blue,
-                                          width: 125.w,
-                                          alignment: Alignment.center,
-                                          child: Visibility(
-                                              visible: i != 2 ||
-                                                  controller
-                                                      .showThirdCard.value,
-                                              // child: ImageWidget(
-                                              //   width: 80.h,
-                                              //   color:
-                                              //       Colors.white.withOpacity(0.6),
-                                              //   fit: BoxFit.fitWidth,
-                                              //   url: Utils.getPropIconUrl(
-                                              //       ctrl.currentAward[i]),
-                                              //   errorWidget: Container(),
-                                              // ),
-                                              child: ctrl.currentAward[i] != 0
-                                                  ? Image.asset(
-                                                      Utils.getPropIconUrl(
-                                                          ctrl.currentAward[i]),
-                                                      width: 80.h,
-                                                      fit: BoxFit.fitWidth,
-                                                      color: Colors.white
-                                                          .withOpacity(0.6),
-                                                      errorBuilder: (context,
-                                                              error,
-                                                              stackTrace) =>
-                                                          Container(
-                                                              width: 80.h))
-                                                  : Container())),
-                                      // Positioned(
-                                      //     bottom: 0,
-                                      //     child: IconWidget(
-                                      //         iconWidth: 120.w,
-                                      //         iconHeight: 40.h,
-                                      //         icon: Assets.uiBgLightPng)),
-                                      // Positioned(
-                                      //     right: 0,
-                                      //     child: IconWidget(
-                                      //       iconWidth: 120.w,
-                                      //       iconHeight: 40.h,
-                                      //       icon: Assets.uiBgLightPng,
-                                      //       rotateAngle: -90,
-                                      //     )),
-                                    ],
-                                  ),
-                                ),
-                            ],
+                          Random random = Random();
+                          return AnimatedBuilder(
+                            animation: controller.slotCtrl,
+                            builder: (context, child) {
+                              return Row(
+                                children: [
+                                  for (int i = 0; i < 3; i++)
+                                    Expanded(
+                                      child: Stack(
+                                        children: [
+                                          Visibility(
+                                            visible: controller
+                                                        .slotCtrl.value !=
+                                                    0 &&
+                                                controller.slotCtrl.value != 1,
+                                            child: Container(
+                                              height: 80.h,
+                                              width: 125.w,
+                                              padding: EdgeInsets.all(8.w),
+                                              child: GridView.builder(
+                                                padding:
+                                                    const EdgeInsets.all(0),
+                                                gridDelegate:
+                                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                                  crossAxisCount: 15,
+                                                ),
+                                                itemCount: 180,
+                                                itemBuilder: (context, index) {
+                                                  return Visibility(
+                                                    visible:
+                                                        random.nextInt(2) == 1,
+                                                    child: Container(
+                                                      margin:
+                                                          const EdgeInsets.all(
+                                                              1),
+                                                      decoration: BoxDecoration(
+                                                          color: Colors.white
+                                                              .withOpacity(0.7),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(2)),
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                              // color: Colors.blue,
+                                              width: 125.w,
+                                              alignment: Alignment.center,
+                                              child: Visibility(
+                                                  visible: controller
+                                                      .slotCard[i].value,
+                                                  child: ctrl.currentAward[i] != 0
+                                                      ? Image.asset(
+                                                          Utils.getPropIconUrl(
+                                                              ctrl.currentAward[
+                                                                  i]),
+                                                          width: 80.h,
+                                                          fit: BoxFit.fitWidth,
+                                                          color: Colors.white
+                                                              .withOpacity(0.6),
+                                                          errorBuilder: (context,
+                                                                  error,
+                                                                  stackTrace) =>
+                                                              Container(
+                                                                  width: 80.h))
+                                                      : Container())),
+                                        ],
+                                      ),
+                                    ),
+                                ],
+                              );
+                            },
                           );
                         },
                       ),
@@ -319,7 +353,7 @@ class TrainingPage extends GetView<TrainingController> {
                           SizedBox(width: 14.h),
                       itemBuilder: (context, index) {
                         int count = controller.trainingInfo.buff.length;
-                        return count - 1 > index
+                        return count > index
                             ? CircleProgressView(
                                 title: Utils.getPosition(controller
                                     .trainingInfo.buff[index].position),
@@ -363,45 +397,51 @@ class TrainingPage extends GetView<TrainingController> {
 
                 Positioned(
                   top: 500.h,
-                  child: GetBuilder<TrainingController>(
-                    id: "player",
-                    builder: (_) {
-                      return SizedBox(
-                        width: 375.w,
-                        height: 86.h,
-                        child: Swiper(
-                          key: Key("${controller.playerList.length}"),
-                          physics: const NeverScrollableScrollPhysics(),
-                          containerWidth: 64.w,
-                          containerHeight: 86.h,
-                          itemHeight: 64.w,
-                          itemWidth: 64.w,
-                          viewportFraction: .2,
-                          indicatorLayout: PageIndicatorLayout.COLOR,
-                          // scale: .5,
-                          itemCount: controller.playerList.length,
-                          outer: false,
-                          autoplay: true,
-                          // duration: 200,
-                          autoplayDelay: 1000,
-                          duration: 800, // 动画的过渡时间
-                          controller: controller.swiperControl,
-                          axisDirection: AxisDirection.right,
-                          onIndexChanged: (value) {
-                            controller.currentIndex = value;
-                          },
-                          itemBuilder: (context, index) {
-                            return Container(
-                              alignment: Alignment.center,
-                              child: PlayerAwater(
+                  child: SizedBox(
+                    width: 375.w,
+                    height: 86.h,
+                    child: Swiper(
+                      key: Key("${controller.playerList.length}"),
+                      physics: const NeverScrollableScrollPhysics(),
+                      containerWidth: 64.w,
+                      containerHeight: 86.h,
+                      itemHeight: 64.w,
+                      itemWidth: 64.w,
+                      viewportFraction: .2,
+                      indicatorLayout: PageIndicatorLayout.COLOR,
+                      scale: .9,
+                      itemCount: controller.playerList.length,
+                      outer: false,
+                      autoplay: true,
+                      // duration: 200,
+                      autoplayDelay: 800,
+                      duration: 500, // 动画的过渡时间
+                      controller: controller.swiperControl,
+                      axisDirection: AxisDirection.right,
+                      onIndexChanged: (value) {
+                        controller.currentIndex.value = value;
+                        if (controller.isShot.value) {
+                          controller.swiperControl.stopAutoplay();
+                        }
+                      },
+                      itemBuilder: (context, index) {
+                        return Container(
+                          alignment: Alignment.center,
+                          child: Obx(() {
+                            bool isCUrrent =
+                                controller.currentIndex.value == index;
+                            return Visibility(
+                              visible: !controller.isShot.value || isCUrrent,
+                              child: TrainingAvater(
                                 backgroudColor: AppColors.c666666,
                                 player: controller.playerList[index],
+                                isCurrent: isCUrrent && controller.isShot.value,
                               ),
                             );
-                          },
-                        ),
-                      );
-                    },
+                          }),
+                        );
+                      },
+                    ),
                   ),
                 ),
 
@@ -444,34 +484,34 @@ class TrainingPage extends GetView<TrainingController> {
                           ),
                         ),
                         5.vGap,
-                        if (controller.ballNum.value <
-                            (int.tryParse(
-                                    controller.trainDefineMap["ballMaxNum"] ??
-                                        "0") ??
-                                0))
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              IconWidget(
-                                iconWidth: 9.w,
-                                icon: Assets.icon_306Png,
-                                iconColor: AppColors.c666666,
-                              ),
-                              2.hGap,
-                              Text(
-                                "+${controller.trainDefineMap["ballRecoverNum"]}",
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            IconWidget(
+                              iconWidth: 9.w,
+                              icon: Assets.icon_306Png,
+                              iconColor: AppColors.c666666,
+                            ),
+                            2.hGap,
+                            Text(
+                              "+${controller.trainDefineMap["ballRecoverNum"]}",
+                              style: 10.w4(color: AppColors.c666666),
+                            ),
+                            7.5.hGap,
+                            Obx(() {
+                              var maxNum =
+                                  controller.trainDefineMap["ballMaxNum"] ??
+                                      "0";
+                              bool isMax = controller.ballNum.value >=
+                                  (int.tryParse(maxNum) ?? 0);
+                              return Text(
+                                "in ${isMax ? "00:00" : controller.remainString.value}",
                                 style: 10.w4(color: AppColors.c666666),
-                              ),
-                              7.5.hGap,
-                              Obx(() {
-                                return Text(
-                                  "in ${controller.remainString.value}",
-                                  style: 10.w4(color: AppColors.c666666),
-                                );
-                              }),
-                            ],
-                          ),
+                              );
+                            }),
+                          ],
+                        ),
                       ],
                     )),
 
@@ -483,7 +523,7 @@ class TrainingPage extends GetView<TrainingController> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(50.h),
                         border: Border.all(
-                          width: 5.h,
+                          width: 8.h,
                           color: Colors.white.withOpacity(0.4),
                         )),
                   ),
@@ -526,15 +566,15 @@ class TrainingPage extends GetView<TrainingController> {
                 //   ),
                 // ),
 
-                Positioned(
-                    top: 600.h,
-                    child: Container(
-                      width: 88.h,
-                      height: 88.h,
-                      decoration: BoxDecoration(
-                          color: AppColors.c262626,
-                          borderRadius: BorderRadius.circular(44.h)),
-                    )),
+                // Positioned(
+                //     top: 600.h,
+                //     child: Container(
+                //       width: 88.h,
+                //       height: 88.h,
+                //       decoration: BoxDecoration(
+                //           color: AppColors.c262626,
+                //           borderRadius: BorderRadius.circular(44.h)),
+                //     )),
 
                 ///篮球投篮
                 Obx(() {
@@ -552,8 +592,7 @@ class TrainingPage extends GetView<TrainingController> {
                         top: top, // 控制Y轴变化 (从下往上投)
                         left: left,
                         child: GestureDetector(
-                          onTap: () => controller.shootBall(
-                              "9451bb97-eead-435c-89cd-39a2f9e74897"), // 点击篮球触发投篮
+                          onTap: () => controller.shootBall(), // 点击篮球触发投篮
                           child: Opacity(
                             opacity: controller.opacityAnimation.value,
                             child: Transform.scale(

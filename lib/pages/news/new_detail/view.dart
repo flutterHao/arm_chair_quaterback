@@ -185,6 +185,7 @@ class NewsDetailItem extends StatelessWidget {
             ),
             10.vGap,
             Obx(() {
+              // ignore: unused_local_variable
               var a = newsDetail.isLike!.value;
               return NewsDetailPercentWidget(
                   leftTitle: "Agress",

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 17:29:19
- * @LastEditTime: 2024-10-29 18:43:29
+ * @LastEditTime: 2024-10-30 10:34:30
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
@@ -45,7 +45,7 @@ class ImageWidget extends StatelessWidget {
           width: width,
           height: height,
           decoration: BoxDecoration(
-            color: AppColors.cE6E6E,
+            // color: AppColors.cE6E6E,
             borderRadius: borderRadius ?? BorderRadius.circular((width??height)!/2),
           ),
           child: imageFailedPath != null
@@ -92,7 +92,7 @@ class ImageWidget extends StatelessWidget {
       loadStateChanged: (ExtendedImageState state) {
         switch (state.extendedImageLoadState) {
           case LoadState.failed:
-            Log.e("$url load failed");
+            // Log.e("$url load failed");
             return error;
           case LoadState.loading:
             return loadingWidgetTemp;

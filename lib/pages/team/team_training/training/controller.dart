@@ -18,7 +18,7 @@ import 'package:get/get.dart';
 class TrainingController extends GetxController
     with GetTickerProviderStateMixin {
   final random = Random();
-  RxBool showThirdCard = true.obs;
+  // RxBool showThirdCard = true.obs;
   var isShot = false.obs; // 使用 GetX 的响应式状态
   var isAscending = true.obs; // 动画是否在上升
   var isShowBuble = false.obs;
@@ -32,13 +32,23 @@ class TrainingController extends GetxController
   // List<RewardGroupEntity> rewardList = [];
   TrainingInfoEntity trainingInfo = TrainingInfoEntity();
   List<TeamPlayerInfoEntity> playerList = [];
-  int currentIndex = 0;
+  RxInt currentIndex = 0.obs;
   List<TrainTaskEntity> trainTaskList = [];
   Map<String, dynamic> trainDefineMap = {};
   late int _recoverSeconds;
   RxString remainString = "".obs;
   RxString taskCountDownString = "".obs;
   RxInt ballNum = 0.obs;
+  List<RxBool> slotCard = [true.obs, true.obs, true.obs];
+  Map<int, int> proCountMap = {
+    102: 0,
+    301: 0,
+    302: 0,
+    303: 0,
+    304: 0,
+    305: 0,
+    306: 0,
+  };
 
   ///篮球控制
   late AnimationController bllAnimationCtrl;
@@ -51,6 +61,7 @@ class TrainingController extends GetxController
   late AnimationController moneyCtrl;
   late AnimationController flyCtrl;
   late List<MoneyItem> moneyList;
+  late AnimationController slotCtrl;
 
   //球员滚动
   late SwiperController swiperControl;
@@ -62,6 +73,11 @@ class TrainingController extends GetxController
     super.onInit();
     // 初始化动画控制器
     setBallAnimationCtrl(1000);
+
+    slotCtrl = AnimationController(
+      duration: const Duration(milliseconds: 1500),
+      vsync: this,
+    );
 
     moneyCtrl = AnimationController(
       duration: const Duration(milliseconds: 1500),
@@ -118,7 +134,6 @@ class TrainingController extends GetxController
       playerList = (v[3] as MyTeamEntity).teamPlayers;
       ballNum.value = trainingInfo.prop.num;
       recoverTimeAndCountDown();
-      Log.d("球员id列表:${playerList.map((e) => e.playerId).toList()}");
       update(["training_page"]);
     });
   }
@@ -140,7 +155,7 @@ class TrainingController extends GetxController
       final remainingSeconds = _recoverSeconds % 60;
       remainString.value =
           '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
-      if (_recoverSeconds == 0) {
+      if (_recoverSeconds <= 0) {
         _timer.cancel();
         // 重新获取新的恢复时间进行倒计时
         trainingInfo = await TeamApi.getTrainingInfo();
@@ -167,14 +182,21 @@ class TrainingController extends GetxController
   }
 
   // 投篮的逻辑
-  void shootBall(String uuid) {
+  void shootBall() {
+    if (isShot.value) return;
+    int time = trainingInfo.training.ballRefreshTime;
     if (ballNum.value <= 0) return;
-    String id = playerList[currentIndex].uuid;
+    String id = playerList[currentIndex.value].uuid;
     ballNum.value = ballNum.value - 1;
+    swiperControl.stopAutoplay();
+    currentAward = [0, 0, 0];
     TeamApi.playerTraining(id).then((v) {
       trainingInfo = v;
       // update(["training_page"]);
-
+      if (time != trainingInfo.training.ballRefreshTime) {
+        _timer.cancel();
+        recoverTimeAndCountDown();
+      }
       swiperControl.stopAutoplay();
       currentAward = [0, 0, 0];
 
@@ -186,9 +208,11 @@ class TrainingController extends GetxController
       if (!isShot.value) {
         isShot.value = true;
         bllAnimationCtrl.forward().then((value) {
+          swiperControl.stopAutoplay();
           // isShot.value = false;
           // animationController.reset(); // 投篮完成后重置篮球位置
         });
+        slotAnimation();
       }
     });
   }
@@ -227,24 +251,61 @@ class TrainingController extends GetxController
       ),
     );
     // 透明度，消失
-    opacityAnimation = Tween<double>(
-      begin: 1,
-      end: 0, // 一圈，360度
-    ).animate(
-      CurvedAnimation(
-        parent: bllAnimationCtrl,
-        curve: const Interval(0.8, 1, curve: Curves.linear),
+    // opacityAnimation = Tween<double>(
+    //   begin: 1,
+    //   end: 0, // 一圈，360度
+    // ).animate(
+    //   CurvedAnimation(
+    //     parent: bllAnimationCtrl,
+    //     curve: const Interval(0.8, 1, curve: Curves.linear),
+    //   ),
+    // );
+    opacityAnimation = bllAnimationCtrl.drive(TweenSequence([
+      TweenSequenceItem(
+        tween: Tween<double>(
+          begin: 1,
+          end: 0.6,
+        ).chain(CurveTween(curve: Curves.decelerate)), // 设置动画曲线
+        weight: 10.0, // 占总动画时间的 30%
       ),
-    );
+      TweenSequenceItem(
+        tween: Tween<double>(
+          begin: 0.6,
+          end: 1,
+        ).chain(CurveTween(curve: Curves.decelerate)), // 设置动画曲线
+        weight: 10.0, // 占总动画时间的 30%
+      ),
+      TweenSequenceItem(
+        tween: Tween<double>(
+          begin: 1,
+          end: 1,
+        ).chain(CurveTween(curve: Curves.decelerate)), // 设置动画曲线
+        weight: 60.0, // 占总动画时间的 30%
+      ),
+      TweenSequenceItem(
+        tween: Tween<double>(
+          begin: 1,
+          end: 0,
+        ).chain(CurveTween(curve: Curves.decelerate)), // 设置动画曲线
+        weight: 20.0, // 占总动画时间的 30%
+      ),
+    ]));
   }
 
   ///进球动画
   void setAnimation0() {
-    setBallAnimationCtrl(1000);
+    setBallAnimationCtrl(1500);
     int type = random.nextInt(2);
     double x = random.nextDouble() * (type == 0 ? 0.1 : -0.1);
     positionAnimation = bllAnimationCtrl.drive(
       TweenSequence<Offset>([
+        TweenSequenceItem(
+          tween: Tween<Offset>(
+            begin: const Offset(0, 0),
+            end: const Offset(0, 0),
+          ).chain(CurveTween(curve: Curves.decelerate)), // 设置动画曲线
+          weight: 20.0, // 占总动画时间的 30%
+        ),
         // 第一阶段：从 (0, 0) 到 (0, -0.5)，时间占 30%
         TweenSequenceItem(
           tween: Tween<Offset>(
@@ -281,18 +342,39 @@ class TrainingController extends GetxController
     // 控制篮球大小变化的动画，变小后保持不变
     scaleAnimation = bllAnimationCtrl.drive(
       TweenSequence<double>([
-        // 第一阶段：篮球从正常大小变小 (1.0 到 0.7)
+        //点击响应
         TweenSequenceItem(
           tween: Tween<double>(
             begin: 1.0,
-            end: 0.5,
-          ).chain(CurveTween(curve: Curves.easeIn)), // 上升时缩小
-          weight: 30.0, // 第一阶段占 40% 的时间
+            end: 0.9,
+          ).chain(CurveTween(curve: Curves.easeIn)),
+          weight: 10.0,
         ),
-        // 第二阶段：篮球从缩小状态恢复到原大小 (0.7 到 1.0)
+        TweenSequenceItem(
+          tween: Tween<double>(
+            begin: 0.9,
+            end: 1.1,
+          ).chain(CurveTween(curve: Curves.easeIn)),
+          weight: 10.0,
+        ),
+        // 第一阶段
+        TweenSequenceItem(
+          tween: Tween<double>(
+            begin: 1.1,
+            end: 0.5,
+          ).chain(CurveTween(curve: Curves.easeIn)),
+          weight: 30.0,
+        ),
         TweenSequenceItem(
           tween: Tween<double>(
             begin: 0.5,
+            end: 0.35,
+          ).chain(CurveTween(curve: Curves.easeOut)),
+          weight: 20.0,
+        ),
+        TweenSequenceItem(
+          tween: Tween<double>(
+            begin: 0.35,
             end: 0.35,
           ).chain(CurveTween(curve: Curves.easeOut)), // 到达最高点时恢复原大小
           weight: 50.0, // 第二阶段占 40% 的时间
@@ -314,12 +396,19 @@ class TrainingController extends GetxController
 
   ///进球动画
   void setAnimation1() {
-    setBallAnimationCtrl(1200);
+    setBallAnimationCtrl(1500);
     int type = random.nextInt(2);
     // double x = random.nextDouble() * ();
     double x = type == 0 ? 0.1 : -0.1;
     positionAnimation = bllAnimationCtrl.drive(
       TweenSequence<Offset>([
+        TweenSequenceItem(
+          tween: Tween<Offset>(
+            begin: const Offset(0, 0),
+            end: const Offset(0, 0),
+          ).chain(CurveTween(curve: Curves.decelerate)), // 设置动画曲线
+          weight: 20.0, // 占总动画时间的 30%
+        ),
         //上升
         TweenSequenceItem(
           tween: Tween<Offset>(
@@ -374,20 +463,35 @@ class TrainingController extends GetxController
     // 控制篮球大小变化的动画，变小后保持不变
     scaleAnimation = bllAnimationCtrl.drive(
       TweenSequence<double>([
-        // 第一阶段：篮球从正常大小变小 (1.0 到 0.7)
+        //点击响应
+        TweenSequenceItem(
+          tween: Tween<double>(
+            begin: 1.0,
+            end: 0.9,
+          ).chain(CurveTween(curve: Curves.easeIn)),
+          weight: 10.0,
+        ),
+        TweenSequenceItem(
+          tween: Tween<double>(
+            begin: 0.9,
+            end: 1.1,
+          ).chain(CurveTween(curve: Curves.easeIn)),
+          weight: 10.0,
+        ),
+        //上升
         TweenSequenceItem(
           tween: Tween<double>(
             begin: 1.0,
             end: 0.5,
-          ).chain(CurveTween(curve: Curves.easeIn)), // 上升时缩小
-          weight: 30.0, // 第一阶段占 40% 的时间
+          ).chain(CurveTween(curve: Curves.easeIn)),
+          weight: 30.0,
         ),
-        // 第二阶段：篮球从缩小状态恢复到原大小 (0.7 到 1.0)
+        //下落
         TweenSequenceItem(
           tween: Tween<double>(
             begin: 0.5,
             end: 0.35,
-          ).chain(CurveTween(curve: Curves.easeOut)), // 到达最高点时恢复原大小
+          ).chain(CurveTween(curve: Curves.easeOut)),
           weight: 20.0, // 第二阶段占 40% 的时间
         ),
         // 第三阶段：投篮下落时，篮球可以保持原大小，或者继续变小或变大
@@ -469,15 +573,29 @@ class TrainingController extends GetxController
     // 控制篮球大小变化的动画，变小后保持不变
     scaleAnimation = bllAnimationCtrl.drive(
       TweenSequence<double>([
-        // 第一阶段：篮球从正常大小变小 (1.0 到 0.7)
+        //点击响应
+        TweenSequenceItem(
+          tween: Tween<double>(
+            begin: 1.0,
+            end: 0.9,
+          ).chain(CurveTween(curve: Curves.easeIn)),
+          weight: 10.0,
+        ),
+        TweenSequenceItem(
+          tween: Tween<double>(
+            begin: 0.9,
+            end: 1.1,
+          ).chain(CurveTween(curve: Curves.easeIn)),
+          weight: 10.0,
+        ),
+        // 第一阶段
         TweenSequenceItem(
           tween: Tween<double>(
             begin: 1.0,
             end: 0.5,
-          ).chain(CurveTween(curve: Curves.easeIn)), // 上升时缩小
-          weight: 30.0, // 第一阶段占 40% 的时间
+          ).chain(CurveTween(curve: Curves.easeIn)),
+          weight: 30.0,
         ),
-        // 第二阶段：篮球从缩小状态恢复到原大小 (0.7 到 1.0)
         TweenSequenceItem(
           tween: Tween<double>(
             begin: 0.5,
@@ -569,15 +687,29 @@ class TrainingController extends GetxController
     // 控制篮球大小变化的动画，变小后保持不变
     scaleAnimation = bllAnimationCtrl.drive(
       TweenSequence<double>([
-        // 第一阶段：篮球从正常大小变小 (1.0 到 0.7)
+        TweenSequenceItem(
+          tween: Tween<double>(
+            begin: 1.0,
+            end: 0.9,
+          ).chain(CurveTween(curve: Curves.easeIn)),
+          weight: 10.0,
+        ),
+        //点击响应
+        TweenSequenceItem(
+          tween: Tween<double>(
+            begin: 0.9,
+            end: 1.1,
+          ).chain(CurveTween(curve: Curves.easeIn)),
+          weight: 10.0,
+        ),
+        // 第一阶段
         TweenSequenceItem(
           tween: Tween<double>(
             begin: 1.0,
             end: 0.5,
-          ).chain(CurveTween(curve: Curves.easeIn)), // 上升时缩小
-          weight: 30.0, // 第一阶段占 40% 的时间
+          ).chain(CurveTween(curve: Curves.easeIn)),
+          weight: 30.0,
         ),
-        // 第二阶段：篮球从缩小状态恢复到原大小 (0.7 到 1.0)
         TweenSequenceItem(
           tween: Tween<double>(
             begin: 0.5,
@@ -614,15 +746,15 @@ class TrainingController extends GetxController
         isAscending.value = false; // 下降阶段
       }
 
-      if (bllAnimationCtrl.status.isCompleted) {
-        if (type <= 1) {
-          slotAnimation();
-        } else {
-          isShot.value = false;
-          bllAnimationCtrl.reset(); // 投篮完成后重置篮球位置
-          swiperControl.startAutoplay();
-        }
-      }
+      // if (bllAnimationCtrl.status.isCompleted) {
+      //   if (type <= 1) {
+      //     slotAnimation();
+      //   } else {
+      //     isShot.value = false;
+      //     bllAnimationCtrl.reset(); // 投篮完成后重置篮球位置
+      //     swiperControl.startAutoplay();
+      //   }
+      // }
     });
   }
 
@@ -634,25 +766,11 @@ class TrainingController extends GetxController
   void slotAnimation() {
     // if (rewardList.isEmpty) return;
     // List<int> props = rewardList[Random().nextInt(rewardList.length)].propOrder;
-    currentAward = [0, 0, 0];
-    List<int> props = trainingInfo.propArray;
-    if (props.isEmpty) return;
-    Future.delayed(const Duration(milliseconds: 200), () {
-      currentAward[0] = props[0];
+    slotCtrl.forward().then((v) {
+      currentAward = [0, 0, 0];
+      currentAward = trainingInfo.propArray;
       update(["slot"]);
-    });
-    Future.delayed(const Duration(milliseconds: 500), () {
-      currentAward[1] = props[1];
-      update(["slot"]);
-    });
-    Future.delayed(const Duration(milliseconds: 1000), () {
-      currentAward[2] = props[2];
-      update(["slot"]);
-      if (currentAward[0] == currentAward[1]) {
-        _flashCard(0);
-      } else {
-        awardFlyAnimation();
-      }
+      awardAnimation();
     });
   }
 
@@ -664,35 +782,36 @@ class TrainingController extends GetxController
   ///304:Buff
   ///305:任务
   ///306:球
-  void awardFlyAnimation() async {
-    Map<int, int> propMap = countProp();
+  void awardAnimation() async {
+    Map<int, int> propMap = countAward();
+    proCountMap = countProp();
+    await _flashCard(0);
     if (propMap[304]! > 0) isShowBuff.value = true;
     if (propMap[304]! > 1) isShowRipple.value = true;
     if (propMap[305]! > 0) isShowProp.value = true;
     if (propMap[306]! > 0) isShowBall.value = true;
-    await Future.delayed(const Duration(milliseconds: 300), () {
-      isShowRipple.value = false;
-      if (propMap[301]! > 0 || propMap[302]! > 0 || propMap[102]! > 0) {
-        updateMoney();
-        moneyCtrl.forward().then((v) {
-          moneyCtrl.reset();
-        });
-      }
-      flyCtrl.forward().then((v) {
-        isShowBuff.value = false;
-        isShowProp.value = false;
-        isShowBall.value = false;
-        Future.delayed(const Duration(seconds: 1), () {
-          showText.value = "TRAINING";
-        });
-        //更新界面
-        flyCtrl.reset();
-        isShot.value = false;
-        bllAnimationCtrl.reset();
-        ballNum.value = trainingInfo.prop.num;
-        swiperControl.startAutoplay();
-        update(["training_page"]);
+    isShowRipple.value = false;
+    if (propMap[301]! > 0 || propMap[302]! > 0 || propMap[102]! > 0) {
+      updateMoney();
+      moneyCtrl.forward().then((v) {
+        moneyCtrl.reset();
       });
+    }
+    flyCtrl.forward().then((v) {
+      isShowBuff.value = false;
+      isShowProp.value = false;
+      isShowBall.value = false;
+      Future.delayed(const Duration(seconds: 1), () {
+        showText.value = "TRAINING";
+      });
+      //更新界面
+      slotCtrl.reset();
+      flyCtrl.reset();
+      isShot.value = false;
+      bllAnimationCtrl.reset();
+      ballNum.value = trainingInfo.prop.num;
+      swiperControl.startAutoplay();
+      update(["training_page"]);
     });
   }
 
@@ -710,8 +829,8 @@ class TrainingController extends GetxController
     HomeController.to.update(["userInfo"]);
   }
 
-  Map<int, int> countProp() {
-    // 初始化所有可能的键，并设置它们的初始值为 0
+  ///计算由那些奖励
+  Map<int, int> countAward() {
     Map<int, int> map = {
       102: 0,
       301: 0,
@@ -726,10 +845,23 @@ class TrainingController extends GetxController
         map[award.id] = (map[award.id] ?? 0) + 1;
       }
     }
+    return map;
+  }
 
-    // for (int i in trainingInfo.propArray) {
-    //   map[i] = (map[i] ?? 0) + 1;
-    // }
+  ///计算每个的数量
+  Map<int, int> countProp() {
+    Map<int, int> map = {
+      102: 0,
+      301: 0,
+      302: 0,
+      303: 0,
+      304: 0,
+      305: 0,
+      306: 0,
+    };
+    for (int i in trainingInfo.propArray) {
+      map[i] = (map[i] ?? 0) + 1;
+    }
 
     return map;
   }
@@ -755,21 +887,22 @@ class TrainingController extends GetxController
 
   // }
 
-  void updateCard(int index, List<int> props) {
-    currentAward[index] = props[index];
-    update(["slot"]);
-  }
-
-  void _flashCard(int count) {
-    if (count >= 6) {
-      awardFlyAnimation();
-      return; // 闪烁5次后停止
+  Future _flashCard(int count) async {
+    if (count >= 5) {
+      // awardAnimation();
+      slotCard = [true.obs, true.obs, true.obs];
+      update(["slot"]);
+      return;
     }
 
-    showThirdCard.value = !showThirdCard.value;
+    for (int i = 0; i < 3; i++) {
+      if (proCountMap[currentAward[i]]! > 1) {
+        slotCard[i].value = !slotCard[i].value;
+      }
+    }
     update(["slot"]);
-    Future.delayed(const Duration(milliseconds: 100), () {
-      _flashCard(count + 1);
+    await Future.delayed(const Duration(milliseconds: 100), () async {
+      await _flashCard(count + 1);
     });
   }
 

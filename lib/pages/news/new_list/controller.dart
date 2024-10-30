@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2024-10-29 20:15:19
+ * @LastEditTime: 2024-10-30 09:45:49
  */
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
@@ -59,7 +59,6 @@ class NewListController extends GetxController {
       CacheApi.getNBAPlayerInfo(),
       getNewsBanner(),
       getNewsList(),
-      // getNewsFlow(123),
       getStatsRank(),
       getStarTeamList(),
     ]).then((v) {
