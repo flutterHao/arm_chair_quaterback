@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-11 16:57:58
- * @LastEditTime: 2024-10-22 15:08:36
+ * @LastEditTime: 2024-10-31 20:23:11
  */
 
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
@@ -125,17 +125,20 @@ class CommentController extends GetxController {
     ).then((item) {
       if (targetId == 0) {
         ///直接评论
-        mainList.add(item);
+        // mainList.add(item);
+        mainList.insert(0, item);
       } else if (reviews!.parentReviewId == 0) {
         ///回复主评论
-        reviews.subList.add(item);
+        // reviews.subList.add(item);
+        reviews.subList.insert(0, item);
         reviews.sonReviews++;
         reviews.current++;
       } else {
         ///回复二级评论
         for (var e in mainList) {
           if (e.id == reviews.parentReviewId) {
-            e.subList.add(item);
+            e.subList.insert(0, item);
+            // e.subList.add(item);
             e.sonReviews++;
             e.current++;
           }

@@ -2,10 +2,11 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-21 16:48:47
- * @LastEditTime: 2024-10-29 19:43:47
+ * @LastEditTime: 2024-10-31 15:18:00
  */
 import 'dart:math';
 
+import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
@@ -108,6 +109,7 @@ class _Item extends GetView<NewListController> {
           url: Utils.getWhiteTeamUrl(item.teams[0]),
           width: 60.w,
           height: 60.w,
+          imageFailedPath: Assets.uiDefault_05Png,
         ));
   }
 

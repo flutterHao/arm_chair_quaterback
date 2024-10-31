@@ -1,3 +1,10 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-10-30 11:43:53
+ * @LastEditTime: 2024-10-31 21:05:05
+ */
+
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
@@ -13,12 +20,8 @@ import 'package:get/get.dart';
 ///球员头像
 class TrainingAvater extends StatelessWidget {
   const TrainingAvater(
-      {super.key,
-      this.backgroudColor,
-      required this.player,
-      required this.isCurrent});
+      {super.key, required this.player, required this.isCurrent});
 
-  final Color? backgroudColor;
   final TeamPlayerInfoEntity player;
   final bool isCurrent;
 
@@ -38,16 +41,16 @@ class TrainingAvater extends StatelessWidget {
             alignment: Alignment.center,
             decoration: BoxDecoration(
               border: isCurrent
-                  ? Border.all(color: AppColors.cFF7954, width: 2)
+                  ? Border.all(color: AppColors.cFFFFFF, width: 2)
                   : null,
-              color: backgroudColor ?? AppColors.c262626,
+              color: AppColors.c666666,
               borderRadius: BorderRadius.circular(32.w),
             ),
           ),
           Positioned(
             child: ImageWidget(
               url: Utils.getPlayUrl(player.playerId),
-              imageFailedPath: Assets.head_0000Png,
+              imageFailedPath: Assets.uiDefault_04Png,
               width: 64.w,
               height: 64.w,
               borderRadius: BorderRadius.circular(32.w),

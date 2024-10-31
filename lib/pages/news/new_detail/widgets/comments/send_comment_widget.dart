@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-12 16:34:46
- * @LastEditTime: 2024-10-29 21:32:43
+ * @LastEditTime: 2024-10-31 20:20:25
  */
 import 'dart:math';
 
@@ -147,6 +147,7 @@ class _SendCommentWidgetState extends State<SendCommentWidget> {
                                         onPressed: () {
                                           String content = ctrl.text;
                                           ctrl.text = "";
+                                          FocusScope.of(context).unfocus();
                                           Get.find<CommentController>()
                                               .sendReviews(
                                             context,

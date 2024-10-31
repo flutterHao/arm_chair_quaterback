@@ -28,8 +28,8 @@ class PersonalCenterPage extends GetView<PersonalCenterController> {
 
   @override
   Widget build(BuildContext context) {
-    var args = ((ModalRoute.of(context)?.settings.arguments ?? Get.arguments)
-        as Map);
+    var args =
+        ((ModalRoute.of(context)?.settings.arguments ?? Get.arguments) as Map);
     var teamId = args["teamId"];
     var initTab = args["initTab"];
     return HorizontalDragBackWidget(
@@ -50,7 +50,7 @@ class PersonalCenterPage extends GetView<PersonalCenterController> {
                 child: Row(
                   children: [
                     InkWell(
-                      onTap: (){
+                      onTap: () {
                         Get.toNamed(RouteNames.mineMineInfo);
                       },
                       child: Container(
@@ -90,7 +90,7 @@ class PersonalCenterPage extends GetView<PersonalCenterController> {
                           ),
                           4.vGap,
                           Text(
-                            controller.teamSimpleEntity?.teamName??"--",
+                            controller.teamSimpleEntity?.teamName ?? "--",
                             style: 16.w4(color: AppColors.cE6E6E6, height: 1),
                           ),
                           9.vGap,
@@ -106,7 +106,7 @@ class PersonalCenterPage extends GetView<PersonalCenterController> {
                             child: Row(
                               children: [
                                 Text(
-                                  "UID:${controller.teamSimpleEntity?.teamId??"--"}",
+                                  "UID:${controller.teamSimpleEntity?.teamId ?? "--"}",
                                   style: 10
                                       .w4(color: AppColors.c666666, height: 1),
                                 ),
@@ -143,7 +143,7 @@ class PersonalCenterPage extends GetView<PersonalCenterController> {
                     ),
                     9.hGap,
                     InkWell(
-                      onTap: (){
+                      onTap: () {
                         //todo
                       },
                       child: Container(
@@ -187,10 +187,11 @@ class PersonalCenterPage extends GetView<PersonalCenterController> {
                           child: Container(
                             height: 34.w,
                             margin: EdgeInsets.only(
-                                top: appBarHeight+17.w, bottom: 16.w),
+                                top: appBarHeight + 17.w, bottom: 16.w),
                             decoration: BoxDecoration(
-                                color: AppColors.cEFEFEF,
-                                borderRadius: BorderRadius.circular(17.w),),
+                              color: AppColors.cEFEFEF,
+                              borderRadius: BorderRadius.circular(17.w),
+                            ),
                             child:
                                 LayoutBuilder(builder: (context, constraints) {
                               var itemWidth = (constraints.maxWidth - 8.w) /
@@ -301,7 +302,7 @@ class PersonalCenterPage extends GetView<PersonalCenterController> {
                     ),
                     24.vGap,
                     InkWell(
-                      onTap: (){
+                      onTap: () {
                         //todo
                       },
                       child: Container(
@@ -335,7 +336,7 @@ class PersonalCenterPage extends GetView<PersonalCenterController> {
                     ),
                     9.vGap,
                     InkWell(
-                      onTap: (){
+                      onTap: () {
                         //todo
                       },
                       child: Container(
@@ -369,7 +370,7 @@ class PersonalCenterPage extends GetView<PersonalCenterController> {
                     ),
                     9.vGap,
                     InkWell(
-                      onTap: (){
+                      onTap: () {
                         //todo
                       },
                       child: Container(

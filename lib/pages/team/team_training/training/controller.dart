@@ -19,6 +19,7 @@ class TrainingController extends GetxController
     with GetTickerProviderStateMixin {
   final random = Random();
   // RxBool showThirdCard = true.obs;
+  bool isPlaying = false;
   var isShot = false.obs; // 使用 GetX 的响应式状态
   var isAscending = true.obs; // 动画是否在上升
   var isShowBuble = false.obs;
@@ -75,17 +76,17 @@ class TrainingController extends GetxController
     setBallAnimationCtrl(1000);
 
     slotCtrl = AnimationController(
-      duration: const Duration(milliseconds: 1500),
+      duration: const Duration(milliseconds: 1000),
       vsync: this,
     );
 
     moneyCtrl = AnimationController(
-      duration: const Duration(milliseconds: 1500),
+      duration: const Duration(milliseconds: 800),
       vsync: this,
     );
 
     flyCtrl = AnimationController(
-      duration: const Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 800),
       vsync: this,
     );
 
@@ -135,6 +136,9 @@ class TrainingController extends GetxController
       ballNum.value = trainingInfo.prop.num;
       recoverTimeAndCountDown();
       update(["training_page"]);
+      Future.delayed(const Duration(milliseconds: 200), () {
+        swiperControl.startAutoplay();
+      });
     });
   }
 
@@ -183,7 +187,8 @@ class TrainingController extends GetxController
 
   // 投篮的逻辑
   void shootBall() {
-    if (isShot.value) return;
+    if (isShot.value || isPlaying) return;
+    isPlaying = true;
     int time = trainingInfo.training.ballRefreshTime;
     if (ballNum.value <= 0) return;
     String id = playerList[currentIndex.value].uuid;
@@ -214,6 +219,13 @@ class TrainingController extends GetxController
         });
         slotAnimation();
       }
+
+      // bllAnimationCtrl.forward().then((value) {
+      //   swiperControl.stopAutoplay();
+      //   // isShot.value = false;
+      //   // animationController.reset(); // 投篮完成后重置篮球位置
+      // });
+      // slotAnimation();
     });
   }
 
@@ -264,13 +276,13 @@ class TrainingController extends GetxController
       TweenSequenceItem(
         tween: Tween<double>(
           begin: 1,
-          end: 0.6,
+          end: 0.5,
         ).chain(CurveTween(curve: Curves.decelerate)), // 设置动画曲线
         weight: 10.0, // 占总动画时间的 30%
       ),
       TweenSequenceItem(
         tween: Tween<double>(
-          begin: 0.6,
+          begin: 0.5,
           end: 1,
         ).chain(CurveTween(curve: Curves.decelerate)), // 设置动画曲线
         weight: 10.0, // 占总动画时间的 30%
@@ -294,7 +306,7 @@ class TrainingController extends GetxController
 
   ///进球动画
   void setAnimation0() {
-    setBallAnimationCtrl(1500);
+    setBallAnimationCtrl(1000);
     int type = random.nextInt(2);
     double x = random.nextDouble() * (type == 0 ? 0.1 : -0.1);
     positionAnimation = bllAnimationCtrl.drive(
@@ -346,14 +358,14 @@ class TrainingController extends GetxController
         TweenSequenceItem(
           tween: Tween<double>(
             begin: 1.0,
-            end: 0.9,
+            end: 0.6,
           ).chain(CurveTween(curve: Curves.easeIn)),
           weight: 10.0,
         ),
         TweenSequenceItem(
           tween: Tween<double>(
             begin: 0.9,
-            end: 1.1,
+            end: 1.2,
           ).chain(CurveTween(curve: Curves.easeIn)),
           weight: 10.0,
         ),
@@ -467,7 +479,7 @@ class TrainingController extends GetxController
         TweenSequenceItem(
           tween: Tween<double>(
             begin: 1.0,
-            end: 0.9,
+            end: 0.8,
           ).chain(CurveTween(curve: Curves.easeIn)),
           weight: 10.0,
         ),
@@ -577,7 +589,7 @@ class TrainingController extends GetxController
         TweenSequenceItem(
           tween: Tween<double>(
             begin: 1.0,
-            end: 0.9,
+            end: 0.8,
           ).chain(CurveTween(curve: Curves.easeIn)),
           weight: 10.0,
         ),
@@ -690,7 +702,7 @@ class TrainingController extends GetxController
         TweenSequenceItem(
           tween: Tween<double>(
             begin: 1.0,
-            end: 0.9,
+            end: 0.8,
           ).chain(CurveTween(curve: Curves.easeIn)),
           weight: 10.0,
         ),
@@ -766,10 +778,15 @@ class TrainingController extends GetxController
   void slotAnimation() {
     // if (rewardList.isEmpty) return;
     // List<int> props = rewardList[Random().nextInt(rewardList.length)].propOrder;
-    slotCtrl.forward().then((v) {
+    slotCtrl.forward().then((v) async {
       currentAward = [0, 0, 0];
-      currentAward = trainingInfo.propArray;
-      update(["slot"]);
+      // currentAward = trainingInfo.propArray;
+      for (int i = 0; i < trainingInfo.propArray.length; i++) {
+        currentAward[i] = trainingInfo.propArray[i];
+        update(["slot"]);
+        await Future.delayed(const Duration(milliseconds: 100));
+      }
+      await Future.delayed(const Duration(milliseconds: 200));
       awardAnimation();
     });
   }
@@ -807,6 +824,7 @@ class TrainingController extends GetxController
       //更新界面
       slotCtrl.reset();
       flyCtrl.reset();
+      isPlaying = false;
       isShot.value = false;
       bllAnimationCtrl.reset();
       ballNum.value = trainingInfo.prop.num;

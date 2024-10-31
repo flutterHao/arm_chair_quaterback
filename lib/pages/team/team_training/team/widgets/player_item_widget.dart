@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2024-10-26 19:30:40
+ * @LastEditTime: 2024-10-31 21:14:20
  */
 /*
  * @Description: 
@@ -116,7 +116,7 @@ class PlayerItem extends GetView<TeamController> {
               ),
               7.hGap,
               Text(
-                "${item.buyPlayerScore}",
+                "${Utils.getPlayBaseInfo(item.playerId).playerScore}",
                 style: 10.w7(color: AppColors.c000000, height: 1),
               ),
             ],
@@ -292,21 +292,38 @@ class PlayerItem extends GetView<TeamController> {
 
   ///更换球员不可用阴影
   Widget _enableContainer() {
-    return Container(
-      // width: 343.w,
-      // height: 84.w,
-      margin: EdgeInsets.only(right: 16.w),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-          // color: AppColors.c323232.withOpacity(0.5),
-          color: Colors.black38,
-          borderRadius: BorderRadius.only(
-              topRight: Radius.circular(16.w),
-              bottomRight: Radius.circular(16.w)),
-          border: Border.all(
-            width: 1.w,
-            color: AppColors.c666666,
-          )),
+    return InkWell(
+      onTap: () {
+        // if (item.uuid == controller.item1.uuid ||
+        //     item.uuid == controller.item2.uuid) {
+        //   controller.item1.isChange.value = false;
+        //   controller.item2.isChange.value = false;
+        //   controller.item2.position = -1;
+        //   controller.isAdd = false;
+        //   controller.update();
+        // }
+        controller.item1.isChange.value = false;
+        controller.item2.isChange.value = false;
+        controller.item2.position = -1;
+        controller.isAdd = false;
+        controller.update();
+      },
+      child: Container(
+        // width: 343.w,
+        // height: 84.w,
+        margin: EdgeInsets.only(right: 16.w),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            // color: AppColors.c323232.withOpacity(0.5),
+            color: Colors.black38,
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(16.w),
+                bottomRight: Radius.circular(16.w)),
+            border: Border.all(
+              width: 1.w,
+              color: AppColors.c666666,
+            )),
+      ),
     );
   }
 
@@ -353,14 +370,12 @@ class PlayerAwater extends StatelessWidget {
               borderRadius: BorderRadius.circular(32.w),
             ),
           ),
-          Positioned(
-            child: ImageWidget(
-              url: Utils.getPlayUrl(player.playerId),
-              imageFailedPath:Assets.head_0000Png,
-              width: 64.w,
-              height: 64.w,
-              borderRadius: BorderRadius.circular(32.w),
-            ),
+          ImageWidget(
+            url: Utils.getPlayUrl(player.playerId),
+            imageFailedPath: Assets.uiDefault_04Png,
+            width: 64.w,
+            height: 64.w,
+            borderRadius: BorderRadius.circular(32.w),
           ),
           Positioned(
             left: 0,

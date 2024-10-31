@@ -2,7 +2,7 @@
  * @Description: 新闻的底部按钮点赞分享评论
  * @Author: lihonghao
  * @Date: 2024-10-17 17:02:35
- * @LastEditTime: 2024-10-28 11:49:54
+ * @LastEditTime: 2024-10-31 20:13:02
  */
 import 'dart:math';
 
@@ -63,6 +63,7 @@ class NewsBottomButton extends StatelessWidget {
           _container(
             width: 137.w,
             child: Obx(() {
+              int like = detail.likes! - detail.unLikes!;
               return Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -88,7 +89,7 @@ class NewsBottomButton extends StatelessWidget {
                           Container(
                             padding: EdgeInsets.only(left: 7.w),
                             child: Text(
-                              numFormat(detail.likes!),
+                              "${like > 0 ? numFormat(like) : 0}",
                               style: 14.w4(
                                 color: detail.isLike?.value == 1
                                     ? AppColors.c262626

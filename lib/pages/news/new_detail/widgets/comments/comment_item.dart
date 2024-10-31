@@ -18,149 +18,178 @@ class CommentItemView extends GetView<CommentController> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ImageWidget(
-          url: Utils.getAvaterUrl(item.teamLogo),
-          width: 36.w,
-          height: 36.w,
-          borderRadius: BorderRadius.circular(12.w),
-        ),
-        6.hGap,
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              /// 用户信息
-              Row(
-                children: [
-                  Text(
-                    item.teamName ?? "",
-                    style: 12.w4(color: AppColors.cB3B3B3, height: 1),
-                  ),
-                  // 6.hGap,
-                  // Container(
-                  //   width: 36.w,
-                  //   height: 14.w,
-                  //   alignment: Alignment.center,
-                  //   decoration: BoxDecoration(
-                  //       borderRadius: BorderRadius.circular(7.w),
-                  //       color: AppColors.cE7B6DF),
-                  //   child: Text(
-                  //     "KOI",
-                  //     style: 10.w4(color: Colors.white),
-                  //   ),
-                  // ),
-                  // 13.hGap,
-                  if (item.targetId != 0)
-                    Container(
-                      // width: 70.w,
-                      // constraints:
-                      //     BoxConstraints(maxWidth: 120.w, minWidth: 70.w),
-                      margin: EdgeInsets.only(left: 6.w),
-                      child: Text(
-                        " ${controller.getTeamName(item)}",
-                        style: 12.w4(color: AppColors.cB3B3B3, height: 1),
-                        overflow: TextOverflow.ellipsis,
-                      ),
+    return InkWell(
+      onTap: () async {
+        if (item.teamId != (controller.userEntity.team?.teamId ?? 0)) {
+          String name = "@${item.teamName}";
+          await showCommentBottomSheet(context,
+              newsId: item.newsId ?? 0,
+              reviewsItem: item,
+              // targetId: item.id ?? 0,
+              hintText: name);
+          if (context.mounted) {
+            FocusScope.of(context).unfocus();
+          }
+        }
+      },
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ImageWidget(
+            url: Utils.getAvaterUrl(item.teamLogo),
+            width: 36.w,
+            height: 36.w,
+            borderRadius: BorderRadius.circular(12.w),
+            errorWidget: Container(
+              width: 36.w,
+              height: 36.w,
+              alignment: Alignment.bottomCenter,
+              decoration: BoxDecoration(
+                  color: AppColors.cD9D9D9,
+                  borderRadius: BorderRadius.circular(4.w)),
+              child: Image.asset(
+                Assets.uiDefault_03Png,
+                width: 30.w,
+                fit: BoxFit.fitWidth,
+              ),
+            ),
+          ),
+          6.hGap,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                /// 用户信息
+                Row(
+                  children: [
+                    Text(
+                      item.teamName ?? "",
+                      style: 12.w4(color: AppColors.cB3B3B3, height: 1),
                     ),
-                  10.hGap,
-                  Text(
-                    controller.timeAgo(item.updateTime ?? 0),
-                    style: 12.w4(color: AppColors.cB3B3B3, height: 1),
-                  ),
-                  Expanded(child: Container()),
-                  if (item.teamId != (controller.userEntity.team?.teamId ?? 0))
-                    InkWell(
-                      onTap: () async {
-                        // int parentId = item.parentReviewId == 0
-                        //     ? item.id!
-                        //     : item.parentReviewId!;
-                        String name = "@${item.teamName}";
-                        await showCommentBottomSheet(context,
-                            newsId: item.newsId ?? 0,
-                            reviewsItem: item,
-                            // targetId: item.id ?? 0,
-                            hintText: name);
-                        if (context.mounted) {
-                          FocusScope.of(context).unfocus();
-                        }
-                      },
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                                color: AppColors.cB3B3B3, width: 0.6),
+                    // 6.hGap,
+                    // Container(
+                    //   width: 36.w,
+                    //   height: 14.w,
+                    //   alignment: Alignment.center,
+                    //   decoration: BoxDecoration(
+                    //       borderRadius: BorderRadius.circular(7.w),
+                    //       color: AppColors.cE7B6DF),
+                    //   child: Text(
+                    //     "KOI",
+                    //     style: 10.w4(color: Colors.white),
+                    //   ),
+                    // ),
+                    // 13.hGap,
+                    if (item.targetId != 0)
+                      Container(
+                        // width: 70.w,
+                        // constraints:
+                        //     BoxConstraints(maxWidth: 120.w, minWidth: 70.w),
+                        margin: EdgeInsets.only(left: 6.w),
+                        child: Text(
+                          " ${controller.getTeamName(item)}",
+                          style: 12.w4(color: AppColors.cB3B3B3, height: 1),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    10.hGap,
+                    Text(
+                      controller.timeAgo(item.updateTime ?? 0),
+                      style: 12.w4(color: AppColors.cB3B3B3, height: 1),
+                    ),
+                    Expanded(child: Container()),
+                    if (item.teamId !=
+                        (controller.userEntity.team?.teamId ?? 0))
+                      InkWell(
+                        onTap: () async {
+                          // int parentId = item.parentReviewId == 0
+                          //     ? item.id!
+                          //     : item.parentReviewId!;
+                          String name = "@${item.teamName}";
+                          await showCommentBottomSheet(context,
+                              newsId: item.newsId ?? 0,
+                              reviewsItem: item,
+                              // targetId: item.id ?? 0,
+                              hintText: name);
+                          if (context.mounted) {
+                            FocusScope.of(context).unfocus();
+                          }
+                        },
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                  color: AppColors.cB3B3B3, width: 0.6),
+                            ),
+                          ),
+                          child: Text(
+                            "Reply",
+                            style: TextStyle(
+                                color: AppColors.cB3B3B3,
+                                fontSize: 12.h,
+                                height: 1),
                           ),
                         ),
-                        child: Text(
-                          "Reple",
-                          style: TextStyle(
-                              color: AppColors.cB3B3B3,
-                              fontSize: 12.h,
-                              height: 1),
-                        ),
                       ),
-                    ),
-                ],
-              ),
-              9.vGap,
+                  ],
+                ),
+                9.vGap,
 
-              /// 评论内容
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                      child: Text(
-                    item.context ?? "",
-                    style: 14.w4(color: AppColors.c666666),
-                  )),
-                  30.hGap,
-                ],
-              ),
-              10.vGap,
-              const EmojiWidget(),
+                /// 评论内容
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                        child: Text(
+                      item.context ?? "",
+                      style: 14.w4(color: AppColors.c666666),
+                    )),
+                    30.hGap,
+                  ],
+                ),
+                10.vGap,
+                const EmojiWidget(),
 
-              /// 点赞和回复
-              // Row(
-              //   children: [
-              //     SizedBox(
-              //       width: 80.w,
-              //       child: Obx(() {
-              //         return Text(
-              //           "${item.likes} likes",
-              //           style: 12.w4(color: AppColors.cB3B3B3),
-              //         );
-              //       }),
-              //     ),
-              //     if (item.teamId != (controller.userEntity.team?.teamId ?? 0))
-              //       InkWell(
-              //         onTap: () {
-              //           int parentId = item.parentReviewId == 0
-              //               ? item.id!
-              //               : item.parentReviewId!;
-              //           String name = "@${item.teamName}";
-              //           showCommentBottomSheet(context,
-              //               newsId: item.newsId ?? 0,
-              //               parentId: parentId,
-              //               targetId: item.id ?? 0,
-              //               hintText: name);
-              //         },
-              //         child: Text(
-              //           "Reple",
-              //           style: 12.w4(color: AppColors.c666666),
-              //         ),
-              //       ),
-              //   ],
-              // ),
+                /// 点赞和回复
+                // Row(
+                //   children: [
+                //     SizedBox(
+                //       width: 80.w,
+                //       child: Obx(() {
+                //         return Text(
+                //           "${item.likes} likes",
+                //           style: 12.w4(color: AppColors.cB3B3B3),
+                //         );
+                //       }),
+                //     ),
+                //     if (item.teamId != (controller.userEntity.team?.teamId ?? 0))
+                //       InkWell(
+                //         onTap: () {
+                //           int parentId = item.parentReviewId == 0
+                //               ? item.id!
+                //               : item.parentReviewId!;
+                //           String name = "@${item.teamName}";
+                //           showCommentBottomSheet(context,
+                //               newsId: item.newsId ?? 0,
+                //               parentId: parentId,
+                //               targetId: item.id ?? 0,
+                //               hintText: name);
+                //         },
+                //         child: Text(
+                //           "Reply",
+                //           style: 12.w4(color: AppColors.c666666),
+                //         ),
+                //       ),
+                //   ],
+                // ),
 
-              /// 展开 收起
-              // if (index == controller.count.value - 1)
-            ],
-          ),
-        )
-      ],
+                /// 展开 收起
+                // if (index == controller.count.value - 1)
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }
@@ -187,6 +216,19 @@ class SubCommentItemView extends GetView<CommentController> {
                     width: 18.w,
                     height: 18.w,
                     borderRadius: BorderRadius.circular(6.w),
+                    errorWidget: Container(
+                      width: 18.w,
+                      height: 18.w,
+                      alignment: Alignment.bottomCenter,
+                      decoration: BoxDecoration(
+                          color: AppColors.cD9D9D9,
+                          borderRadius: BorderRadius.circular(4.w)),
+                      child: Image.asset(
+                        Assets.uiDefault_03Png,
+                        width: 15.w,
+                        fit: BoxFit.fitWidth,
+                      ),
+                    ),
                   ),
                   3.5.hGap,
                   item.teamId != (controller.userEntity.team?.teamId ?? 0)
@@ -244,7 +286,7 @@ class SubCommentItemView extends GetView<CommentController> {
                           ),
                         ),
                         child: Text(
-                          "Reple",
+                          "Reply",
                           style: TextStyle(
                               color: AppColors.cB3B3B3,
                               fontSize: 12.h,
@@ -307,6 +349,19 @@ class HotComment extends GetView<CommentController> {
               width: 36.w,
               height: 36.w,
               borderRadius: BorderRadius.circular(12.w),
+              errorWidget: Container(
+                width: 36.w,
+                height: 36.w,
+                alignment: Alignment.bottomCenter,
+                decoration: BoxDecoration(
+                    color: AppColors.cD9D9D9,
+                    borderRadius: BorderRadius.circular(4.w)),
+                child: Image.asset(
+                  Assets.uiDefault_03Png,
+                  width: 30.w,
+                  fit: BoxFit.fitWidth,
+                ),
+              ),
             ),
             6.hGap,
             Expanded(

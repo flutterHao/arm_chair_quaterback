@@ -35,7 +35,6 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
 
   @override
   Widget build(BuildContext context) {
-
     PlayerDetailPageArguments args = arguments ?? Get.arguments;
     return HorizontalDragBackWidget(
       child: GetBuilder<PlayerDetailController>(
@@ -74,7 +73,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                             borderRadius: BorderRadius.only(
                                 bottomLeft: Radius.circular(32.w)),
                             child: ImageWidget(
-                              imageFailedPath: Assets.head_0000Png,
+                              imageFailedPath: Assets.uiDefault_04Png,
                               url: Utils.getPlayUrl(
                                   controller.baseInfo?.playerId),
                               width: 100.w,

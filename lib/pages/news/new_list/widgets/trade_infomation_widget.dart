@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-24 18:04:19
- * @LastEditTime: 2024-10-29 18:42:59
+ * @LastEditTime: 2024-10-31 15:01:50
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
@@ -123,20 +123,22 @@ class _Item extends StatelessWidget {
                         ),
                       ),
                     ),
-                  if (item.teams.length >= 2)
-                    Positioned(
-                      right: -20.w,
-                      bottom: 0,
-                      child: Opacity(
-                        opacity: 0.6,
-                        child: ImageWidget(
-                          url: Utils.getWhiteTeamUrl(item.teams[1]),
-                          width: 110.w,
-                          fit: BoxFit.fitWidth,
-                          // color: Colors.red,
-                        ),
+                  // if (item.teams.length >= 2)
+                  Positioned(
+                    right: -20.w,
+                    bottom: 0,
+                    child: Opacity(
+                      opacity: 0.6,
+                      child: ImageWidget(
+                        url: item.teams.length >= 2
+                            ? Utils.getWhiteTeamUrl(item.teams[1])
+                            : "",
+                        width: 110.w,
+                        fit: BoxFit.fitWidth,
+                        // color: Colors.red,
                       ),
                     ),
+                  ),
 
                   ///箭头
                   Positioned(

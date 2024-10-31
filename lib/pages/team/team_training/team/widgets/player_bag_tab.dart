@@ -2,8 +2,9 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 20:08:22
- * @LastEditTime: 2024-10-24 11:38:11
+ * @LastEditTime: 2024-10-31 20:03:40
  */
+import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/player_item_widget.dart';
@@ -16,18 +17,30 @@ class PlayerBagTab extends GetView<TeamController> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      padding: EdgeInsets.symmetric(vertical: 10.w),
-      // physics: const NeverScrollableScrollPhysics(),
-      // shrinkWrap: true,
-      itemBuilder: (context, index) {
-        return PlayerItem(
-          item: controller.getBagPlayers[index],
-          isBag: true,
-        );
-      },
-      separatorBuilder: (context, index) => 9.vGap,
-      itemCount: controller.getBagPlayers.length,
-    );
+    return GetBuilder<TeamController>(builder: (_) {
+      var canSelect = controller.myBagList
+          .where((e) => controller.canChange(true, e))
+          .toList();
+      var cantSelect = controller.myBagList
+          .where((e) => !controller.canChange(true, e))
+          .toList();
+      canSelect.sort((a, b) => a.position.compareTo(b.position));
+      cantSelect.sort((a, b) => a.position.compareTo(b.position));
+      List<TeamPlayerInfoEntity> list = List.from(canSelect)
+        ..addAll(cantSelect);
+      return ListView.separated(
+        padding: EdgeInsets.symmetric(vertical: 10.w),
+        // physics: const NeverScrollableScrollPhysics(),
+        // shrinkWrap: true,
+        itemBuilder: (context, index) {
+          return PlayerItem(
+            item: list[index],
+            isBag: true,
+          );
+        },
+        separatorBuilder: (context, index) => 9.vGap,
+        itemCount: list.length,
+      );
+    });
   }
 }

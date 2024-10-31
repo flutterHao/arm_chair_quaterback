@@ -10,6 +10,7 @@ static const uiBgBackboard_01Png = 'assets/images/team/ui_bg_backboard_01.png';
 static const uiBgBackboard_02Png = 'assets/images/team/ui_bg_backboard_02.png';
 static const uiBgBattleJpg = 'assets/images/team/ui_bg_battle.jpg';
 static const uiBgCourtJpg = 'assets/images/team/ui_bg_court.jpg';
+static const uiBgCourtSeatlinePng = 'assets/images/team/ui_bg_court_seatline.png';
 static const uiBgFusePng = 'assets/images/team/ui_bg_fuse.png';
 static const uiBgLightPng = 'assets/images/team/ui_bg_light.png';
 static const uiBgMoneyPng = 'assets/images/team/ui_bg_money.png';

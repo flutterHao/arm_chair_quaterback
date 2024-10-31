@@ -2,10 +2,9 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 17:29:19
- * @LastEditTime: 2024-10-30 10:34:30
+ * @LastEditTime: 2024-10-31 15:26:23
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -46,14 +45,15 @@ class ImageWidget extends StatelessWidget {
           height: height,
           decoration: BoxDecoration(
             // color: AppColors.cE6E6E,
-            borderRadius: borderRadius ?? BorderRadius.circular((width??height)!/2),
+            borderRadius:
+                borderRadius ?? BorderRadius.circular((width ?? height)! / 2),
           ),
           child: imageFailedPath != null
               ? Image.asset(
                   imageFailedPath!,
                   width: width,
                   height: height,
-                  fit: BoxFit.fill,
+                  fit: BoxFit.cover,
                 )
               : null,
         );
@@ -88,7 +88,7 @@ class ImageWidget extends StatelessWidget {
       alignment: alignment ?? Alignment.center,
       borderRadius: borderRadius,
       shape: BoxShape.rectangle,
-      clearMemoryCacheWhenDispose: true,
+      clearMemoryCacheWhenDispose: false,
       loadStateChanged: (ExtendedImageState state) {
         switch (state.extendedImageLoadState) {
           case LoadState.failed:

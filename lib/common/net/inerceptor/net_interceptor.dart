@@ -12,6 +12,7 @@ import 'package:arm_chair_quaterback/common/utils/loading.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/pages/home/index.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 // import 'package:flutter_easyloading/flutter_easyloading.dart';
 // import 'package:get/get.dart' as getx;
 
@@ -199,7 +200,7 @@ class NetInterceptor extends InterceptorsWrapper {
 
     ///TODO
     // if (eInfo.code != 401) {
-    //   EasyLoading.showError(eInfo.message);
+    EasyLoading.showError(eInfo.message);
     // }
   }
 

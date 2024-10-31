@@ -20,8 +20,8 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   // double turns = 0;
   final List<String> tabs = ["Line-up", "Player bag"];
   final List<Widget> pages = [
-    LineUpTab(),
-    PlayerBagTab(),
+    const LineUpTab(),
+    const PlayerBagTab(),
   ];
   // RxBool isRecovering = false.obs;
   RxBool showThirdCard = true.obs;
@@ -78,18 +78,18 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
     });
   }
 
-  List<TeamPlayerInfoEntity> get getBagPlayers {
-    var canSelect = myBagList.where((e) => canChange(true, e)).toList();
-    var cantSelect = myBagList.where((e) => !canChange(true, e)).toList();
-    canSelect.sort((a, b) => a.position.compareTo(b.position));
-    cantSelect.sort((a, b) => a.position.compareTo(b.position));
-    List<TeamPlayerInfoEntity> list = List.from(canSelect)..addAll(cantSelect);
-    // var canSelect = myBagList.where((e) => e.position == -1).toList();
-    // var cantSelect = myBagList.where((e) => e.position != -1).toList();
-    // List<TeamPlayerInfoEntity> list = List.from(canSelect)..addAll(cantSelect);
+  // List<TeamPlayerInfoEntity> get getBagPlayers {
+  //   var canSelect = myBagList.where((e) => canChange(true, e)).toList();
+  //   var cantSelect = myBagList.where((e) => !canChange(true, e)).toList();
+  //   canSelect.sort((a, b) => a.position.compareTo(b.position));
+  //   cantSelect.sort((a, b) => a.position.compareTo(b.position));
+  //   List<TeamPlayerInfoEntity> list = List.from(canSelect)..addAll(cantSelect);
+  //   // var canSelect = myBagList.where((e) => e.position == -1).toList();
+  //   // var cantSelect = myBagList.where((e) => e.position != -1).toList();
+  //   // List<TeamPlayerInfoEntity> list = List.from(canSelect)..addAll(cantSelect);
 
-    return list;
-  }
+  //   return list;
+  // }
 
   void recoverPower({int type = 1, String? uuid}) {
     TeamApi.recoverPower(type: type, uuid: uuid).then((v) {
@@ -178,8 +178,8 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
       // isAdd = false;
       // update();
     }).whenComplete(() {
-      item1.isChange.value = false;
-      item2.isChange.value = false;
+      item1 = TeamPlayerInfoEntity();
+      item2 = TeamPlayerInfoEntity();
       item2.position = -1;
       isAdd = false;
       update();

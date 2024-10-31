@@ -20,6 +20,7 @@ class LineUpTab extends GetView<TeamController> {
       width: width,
       height: 70.w,
       padding: EdgeInsets.only(top: 11.w, left: 9.w, right: 9.w),
+      alignment: Alignment.center,
       decoration: BoxDecoration(
         color: Colors.black.withOpacity(0.5),
         borderRadius: BorderRadius.circular(16.w),
@@ -48,11 +49,11 @@ class LineUpTab extends GetView<TeamController> {
                       children: [
                         Text(
                           "${controller.myTeamEntity.oVR}",
-                          style: 19.w7(color: AppColors.cF2F2F2, height: 1),
+                          style: 16.w7(color: AppColors.cF2F2F2, height: 1),
                         ),
-                        22.vGap,
+                        10.vGap,
                         Text(
-                          "SCORE",
+                          "Team Power",
                           style: 12.w4(height: 1, color: AppColors.c666666),
                         ),
                       ],

@@ -2,9 +2,10 @@
  * @Description:队伍球员谣言
  * @Author: lihonghao
  * @Date: 2024-10-24 21:19:47
- * @LastEditTime: 2024-10-29 20:11:13
+ * @LastEditTime: 2024-10-31 15:20:14
  */
 
+import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';

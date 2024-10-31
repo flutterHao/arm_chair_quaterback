@@ -2,7 +2,7 @@
  * @Description: 明星球员
  * @Author: lihonghao
  * @Date: 2024-10-25 15:16:18
- * @LastEditTime: 2024-10-29 21:19:46
+ * @LastEditTime: 2024-10-31 15:25:24
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -81,6 +81,7 @@ class PopularPlayerWidget extends StatelessWidget {
                                       width: 55.w,
                                       height: 55.w,
                                       borderRadius: BorderRadius.circular(30.w),
+                                      imageFailedPath: Assets.uiDefault_04Png,
                                     ),
                                   ),
                                   SizedBox(

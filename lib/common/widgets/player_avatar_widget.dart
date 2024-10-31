@@ -1,3 +1,9 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-10-29 17:10:16
+ * @LastEditTime: 2024-10-31 15:24:07
+ */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
@@ -45,7 +51,7 @@ class PlayerAvatarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => Get.toNamed(RouteNames.picksPlayerDetail,
-          arguments: PlayerDetailPageArguments(playerId),id: getXRouteId),
+          arguments: PlayerDetailPageArguments(playerId), id: getXRouteId),
       child: ClipRRect(
         child: Stack(
           alignment: Alignment.bottomCenter,
@@ -64,8 +70,8 @@ class PlayerAvatarWidget extends StatelessWidget {
                       case LoadState.loading:
                       case LoadState.failed:
                         return IconWidget(
-                            iconWidth: width-10,
-                            icon: Assets.head_0000Png);
+                            iconWidth: width - 10,
+                            icon: Assets.uiDefault_04Png);
                       default:
                     }
                   },

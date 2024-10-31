@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2024-10-30 09:45:49
+ * @LastEditTime: 2024-10-31 09:43:44
  */
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
@@ -292,7 +292,7 @@ class NewListController extends GetxController {
     List<String> labelsList = labels.split(",");
     for (var label in labelsList) {
       label = label.trim();
-      if (ObjectUtil.isNotEmpty(label)) {
+      if (ObjectUtil.isNotEmpty(label) && CacheApi.playerInfo != null) {
         for (var player in CacheApi.playerInfo!.playerBaseInfoList) {
           if (player.elname.contains(label) || player.ename.contains(label)) {
             playerList.add(player.playerId);
