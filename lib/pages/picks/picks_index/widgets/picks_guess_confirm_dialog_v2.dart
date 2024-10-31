@@ -224,20 +224,23 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                     itemBuilder: (context, index) {
                                       var player = playerList[index];
                                       int currentIndex = player.status;
-                                      return _ItemWidget(
-                                        index: index,
-                                        currentIndex: currentIndex,
-                                        player: player,
-                                        picksIndexController:
-                                            picksIndexController,
+                                      bool lastItem =
+                                          index == playerList.length - 1;
+                                      return Container(
+                                        margin: EdgeInsets.only(bottom: lastItem?20.w:0),
+                                        child: _ItemWidget(
+                                          index: index,
+                                          currentIndex: currentIndex,
+                                          player: player,
+                                          picksIndexController:
+                                              picksIndexController,
+                                        ),
                                       );
                                     },
                                     separatorBuilder:
                                         (BuildContext context, int index) {
-                                      bool lastItem =
-                                          index == playerList.length - 1;
                                       return SizedBox(
-                                        height: lastItem ? 60.w : 9.w,
+                                        height: 9.w,
                                       );
                                     },
                                   )),

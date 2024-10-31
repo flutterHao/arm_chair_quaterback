@@ -141,6 +141,7 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                       itemCount: 3,
                       // autoplay: true,
                       // loop: false,
+                      index: 2,
                       viewportFraction: .8,
                       indicatorLayout: PageIndicatorLayout.COLOR,
                       scale: .9,
@@ -478,7 +479,7 @@ class _PicksIndexPageState extends State<PicksIndexPage>
 
         SliverToBoxAdapter(
           child: SizedBox(
-            height: 90.w,
+            height: 20.w,
           ),
         )
       ]

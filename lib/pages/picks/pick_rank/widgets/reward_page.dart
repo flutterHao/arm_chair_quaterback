@@ -58,7 +58,7 @@ class _RewardPageState extends State<RewardPage>
                         left: 11.w,
                         top: 12.w,
                         right: 11.w,
-                        bottom: 90.w,
+                        bottom: 20.w,
                       ),
                       decoration: BoxDecoration(
                           color: AppColors.cF2F2F2,

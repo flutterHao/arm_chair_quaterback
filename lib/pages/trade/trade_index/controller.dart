@@ -127,7 +127,6 @@ class TradeIndexController extends GetxController
 
   FlTitlesData get titlesData => const FlTitlesData(show: false);
 
-  FlGridData get gridData => const FlGridData(show: false);
 
   FlBorderData get borderData => FlBorderData(
         show: false,

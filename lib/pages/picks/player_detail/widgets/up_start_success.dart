@@ -184,7 +184,7 @@ class UpStarSuccess extends StatelessWidget {
                               double before =
                                   response.before.potential.toJson()[key];
                               double percent = ((after - before) / (before==0?1:before) * 100);
-                              var target = (before * gameController.starUpDefineEntity.getPotantialMax());
+                              var target = (before * (gameController.starUpDefineEntity?.getPotantialMax()??0));
                               double value = after==0?0:after/target;
                               return Opacity(
                                 opacity: percent<=0?0.7:1,

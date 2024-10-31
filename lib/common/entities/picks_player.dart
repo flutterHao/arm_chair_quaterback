@@ -28,7 +28,7 @@ class PicksPlayer {
 
   late ReciveAwardV2GuessInfo reciveAwardInfo;
 
-  late ReciveAwardV2GuessInfoGuessData? guessData;
+  ReciveAwardV2GuessInfoGuessData? guessData;
 }
 
 class PicksPlayerV2{
@@ -36,10 +36,10 @@ class PicksPlayerV2{
   late NbaPlayerInfosPlayerBaseInfoList baseInfoList;
 
   /// 数值
-  late NbaPlayerInfosPlayerDataAvgList dataAvgList;
+  NbaPlayerInfosPlayerDataAvgList? dataAvgList;
 
   /// 对手队伍信息
-  late NbaTeamEntity? awayTeamInfo;
+  NbaTeamEntity? awayTeamInfo;
 
   /// 竞猜信息
   late GuessGameInfoEntity guessInfo;

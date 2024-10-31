@@ -49,6 +49,10 @@ GuessGameInfoEntity $GuessGameInfoEntityFromJson(Map<String, dynamic> json) {
   if (playerId != null) {
     guessGameInfoEntity.playerId = playerId;
   }
+  final bool? success = jsonConvert.convert<bool>(json['success']);
+  if (success != null) {
+    guessGameInfoEntity.success = success;
+  }
   return guessGameInfoEntity;
 }
 
@@ -64,6 +68,7 @@ Map<String, dynamic> $GuessGameInfoEntityToJson(GuessGameInfoEntity entity) {
   data['type'] = entity.type;
   data['awayTeamId'] = entity.awayTeamId;
   data['playerId'] = entity.playerId;
+  data['success'] = entity.success;
   return data;
 }
 
@@ -79,6 +84,7 @@ extension GuessGameInfoEntityExtension on GuessGameInfoEntity {
     double? type,
     int? awayTeamId,
     int? playerId,
+    bool? success,
   }) {
     return GuessGameInfoEntity()
       ..gameId = gameId ?? this.gameId
@@ -90,6 +96,7 @@ extension GuessGameInfoEntityExtension on GuessGameInfoEntity {
       ..id = id ?? this.id
       ..type = type ?? this.type
       ..awayTeamId = awayTeamId ?? this.awayTeamId
-      ..playerId = playerId ?? this.playerId;
+      ..playerId = playerId ?? this.playerId
+      ..success = success ?? this.success;
   }
 }

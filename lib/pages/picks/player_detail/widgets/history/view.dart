@@ -43,7 +43,7 @@ class _HistoryPageState extends State<HistoryPage>
                   bool lastItem = index == controller.items.length - 1;
                   String year = controller.items[index];
                   return Container(
-                    margin: EdgeInsets.only(bottom: lastItem ? 150 : 0),
+                    margin: EdgeInsets.only(bottom: lastItem ? 20 : 0),
                     child: Theme(
                       data: ThemeData(
                         dividerColor: AppColors.cTransparent,
@@ -55,7 +55,7 @@ class _HistoryPageState extends State<HistoryPage>
                           year,
                           style: 16.w7(color: AppColors.c262626),
                         ),
-                        // initiallyExpanded: index == 0,
+                        initiallyExpanded: index == 0,
                         tilePadding: EdgeInsets.only(right: 5.w),
                         onExpansionChanged: (expanded) {
                           if (expanded) {

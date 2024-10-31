@@ -126,6 +126,10 @@ class Utils {
   static String formatMoney(num amount) {
     // amount = 123456789;
     amount *= 1000;
+    return _formatNum(amount);
+  }
+
+  static String _formatNum(num amount) {
     if (amount >= 1e12) {
       return '${formatToThreeSignificantDigits(amount / 1e12)}T';
     } else if (amount >= 1e9) {
@@ -137,6 +141,10 @@ class Utils {
     } else {
       return formatToThreeSignificantDigits(amount);
     }
+  }
+
+  static String formatChip(num chip){
+    return _formatNum(chip);
   }
 
   static String formatToThreeSignificantDigits(num value) {

@@ -531,7 +531,7 @@ class _GameState extends State<Game>
                       ),
                     );
                   }),
-                  100.vGap
+                  20.vGap
                 ],
               ),
             ),

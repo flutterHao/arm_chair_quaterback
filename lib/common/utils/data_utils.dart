@@ -733,7 +733,7 @@ class MyDateUtils {
   /// 获取英文月份
   static String getMonthEnName(DateTime dateTime, {bool short = false}) {
     String month = "";
-    switch (dateTime.weekday) {
+    switch (dateTime.month) {
       case 1:
         month = 'January';
         break;

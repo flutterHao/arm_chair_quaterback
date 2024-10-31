@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
+import 'package:arm_chair_quaterback/common/entities/rank_info_entity.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -163,7 +164,7 @@ class _RankPageState extends State<RankPage>
                                                                       BorderRadius
                                                                           .circular(30
                                                                               .w),
-                                                                  url: Utils.getTeamUrl(controller
+                                                                  url: Utils.getAvaterUrl(controller
                                                                       .rankInfo
                                                                       .ranks[1]
                                                                       .teamLogo
@@ -217,8 +218,14 @@ class _RankPageState extends State<RankPage>
                                                         : controller.rankInfo
                                                             .ranks[1].teamName,
                                                     style: 12.w7(
-                                                        color:
-                                                            AppColors.cB3B3B3,
+                                                        color: isMe(controller.rankInfo.ranks
+                                                            .length <
+                                                            2
+                                                            ?null:controller
+                                                                .rankInfo
+                                                                .ranks[1])
+                                                            ? AppColors.cFF7954
+                                                            : AppColors.cB3B3B3,
                                                         overflow: TextOverflow
                                                             .ellipsis),
                                                   ),
@@ -263,7 +270,7 @@ class _RankPageState extends State<RankPage>
                                                               .length <
                                                           2
                                                       ? "No Data"
-                                                      : "+${Utils.formatMoney(controller.rankInfo.ranks[1].chip)}",
+                                                      : "+${Utils.formatChip(controller.rankInfo.ranks[1].chip)}",
                                                   style: 14.w7(
                                                       color: AppColors.cF2F2F2),
                                                 )
@@ -334,7 +341,7 @@ class _RankPageState extends State<RankPage>
                                                                     borderRadius:
                                                                         BorderRadius.circular(30
                                                                             .w),
-                                                                    url: Utils.getTeamUrl(controller
+                                                                    url: Utils.getAvaterUrl(controller
                                                                         .rankInfo
                                                                         .ranks[
                                                                             0]
@@ -390,7 +397,13 @@ class _RankPageState extends State<RankPage>
                                                             .ranks[0].teamName,
                                                     style: 12.w7(
                                                         color:
-                                                            AppColors.cB3B3B3,
+                                                        isMe(controller.rankInfo.ranks
+                                                            .isEmpty
+                                                            ?null:controller
+                                                            .rankInfo
+                                                            .ranks[0])
+                                                            ? AppColors.cFF7954
+                                                            :AppColors.cB3B3B3,
                                                         overflow: TextOverflow
                                                             .ellipsis),
                                                   ),
@@ -434,7 +447,7 @@ class _RankPageState extends State<RankPage>
                                                   controller.rankInfo.ranks
                                                           .isEmpty
                                                       ? "No Data"
-                                                      : "+${Utils.formatMoney(controller.rankInfo.ranks[0].chip)}",
+                                                      : "+${Utils.formatChip(controller.rankInfo.ranks[0].chip)}",
                                                   style: 14.w7(
                                                       color: AppColors.cF2F2F2),
                                                 )
@@ -560,7 +573,14 @@ class _RankPageState extends State<RankPage>
                                                             .ranks[2].teamName,
                                                     style: 12.w7(
                                                         color:
-                                                            AppColors.cB3B3B3,
+                                                        isMe(controller.rankInfo.ranks
+                                                            .length <
+                                                            3
+                                                            ?null:controller
+                                                            .rankInfo
+                                                            .ranks[2])
+                                                            ? AppColors.cFF7954
+                                                            :AppColors.cB3B3B3,
                                                         overflow: TextOverflow
                                                             .ellipsis),
                                                   ),
@@ -605,7 +625,7 @@ class _RankPageState extends State<RankPage>
                                                               .length <
                                                           3
                                                       ? "No data"
-                                                      : "+${Utils.formatMoney(controller.rankInfo.ranks[2].chip)}",
+                                                      : "+${Utils.formatChip(controller.rankInfo.ranks[2].chip)}",
                                                   style: 14.w7(
                                                       color: AppColors.cF2F2F2),
                                                 )
@@ -636,7 +656,7 @@ class _RankPageState extends State<RankPage>
                             }),
                           ),
                         ),
-                        90.vGap,
+                        70.vGap,
                       ],
                     ),
                   ],
@@ -663,13 +683,15 @@ class _RankPageState extends State<RankPage>
                           children: [
                             Row(
                               children: [
-                                Text(
-                                  "${controller.rankInfo.myRank.rank == 0 ? '--' : controller.rankInfo.myRank.rank}",
-                                  style: 18.w7(color: AppColors.cFF7954),
+                                Container(
+                                  width: 30.w,
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    "${controller.rankInfo.myRank.rank == 0 ? '--' : controller.rankInfo.myRank.rank}",
+                                    style: 18.w7(color: AppColors.cFF7954),
+                                  ),
                                 ),
-                                SizedBox(
-                                  width: 4.w,
-                                ),
+                                7.hGap,
                                 InkWell(
                                     onTap: () => Get.toNamed(
                                             RouteNames.picksPersonalCenter,
@@ -684,7 +706,7 @@ class _RankPageState extends State<RankPage>
                                     child: ImageWidget(
                                       imageFailedPath: Assets.uiHead_01Png,
                                       borderRadius: BorderRadius.circular(30.w),
-                                      url: Utils.getTeamUrl(controller
+                                      url: Utils.getAvaterUrl(controller
                                           .rankInfo.myRank.teamLogo
                                           ?.toInt()),
                                       width: 48.w,
@@ -724,9 +746,7 @@ class _RankPageState extends State<RankPage>
                               ],
                             ),
                             Text(
-                              (controller.rankInfo.myRank.chip ?? 0)
-                                  .toDouble()
-                                  .toStringAsFixed(0),
+                              Utils.formatChip(controller.rankInfo.myRank.chip ?? 0),
                               style: 18.w7(color: AppColors.cFFFFFF),
                             )
                           ],
@@ -736,6 +756,15 @@ class _RankPageState extends State<RankPage>
             ],
           );
         });
+  }
+
+  bool isMe(RankInfoEntity? info) {
+    var teamId =
+        Get.find<HomeController>().userEntiry.teamLoginInfo?.team?.teamId;
+    if (teamId == info?.teamId) {
+      return true;
+    }
+    return false;
   }
 
   Widget _buildItem(int i) {
@@ -785,9 +814,7 @@ class _RankPageState extends State<RankPage>
               style: 19.w7(color: AppColors.c666666),
             ),
           ),
-          SizedBox(
-            width: 7.w,
-          ),
+          7.hGap,
           InkWell(
               onTap: () => Get.toNamed(RouteNames.picksPersonalCenter,
                       arguments: {
@@ -796,7 +823,7 @@ class _RankPageState extends State<RankPage>
               child: ImageWidget(
                 imageFailedPath: Assets.uiHead_01Png,
                 borderRadius: BorderRadius.circular(30.w),
-                url: Utils.getTeamUrl(
+                url: Utils.getAvaterUrl(
                     controller.rankInfo.ranks[index].teamLogo.toInt()),
                 width: 48.w,
                 height: 48.w,
@@ -810,7 +837,11 @@ class _RankPageState extends State<RankPage>
             children: [
               Text(
                 controller.rankInfo.ranks[index].teamName,
-                style: 12.w7(color: AppColors.c1A1A1A),
+                style: 12.w7(color: isMe(controller
+                    .rankInfo
+                    .ranks[index])
+                    ? AppColors.cFF7954
+                    :AppColors.c1A1A1A),
               ),
               Row(
                 children: [
@@ -848,7 +879,7 @@ class _RankPageState extends State<RankPage>
                   width: 3.w,
                 ),
                 Text(
-                  "+${Utils.formatMoney(controller.rankInfo.ranks[index].chip)}",
+                  "+${Utils.formatChip(controller.rankInfo.ranks[index].chip)}",
                   style: 14.w7(color: AppColors.c1A1A1A),
                 )
               ],

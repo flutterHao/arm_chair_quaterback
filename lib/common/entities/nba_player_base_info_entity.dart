@@ -1,3 +1,5 @@
+import 'package:arm_chair_quaterback/common/entities/guess_game_info_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/trade_entity/trade_info_entity.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/nba_player_base_info_entity.g.dart';
 import 'dart:convert';
@@ -14,6 +16,7 @@ class NbaPlayerBaseInfoEntity {
   late NbaPlayerBaseInfoPlayerPlayoffsMap playerPlayoffsMap;
   late List<NbaPlayerBaseInfoPlayerTrends> playerTrends;
   late List<NbaPlayerBaseInfoPlayerNews> playerNews;
+  TradeInfoTradePlayers? tradePlayers;
 
   NbaPlayerBaseInfoEntity();
 
@@ -85,7 +88,6 @@ class NbaPlayerBaseInfoGuessInfos {
     return jsonEncode(this);
   }
 }
-
 
 @JsonSerializable()
 class NbaPlayerBaseInfoGuessInfosAstCommunityPick {
@@ -336,16 +338,18 @@ class NbaPlayerBaseInfoGuessInfosRebTwoTeamGames {
 
 @JsonSerializable()
 class NbaPlayerBaseInfoGuessInfosProperty {
-   NbaPlayerBaseInfoGuessInfosPtsCommunityPick? communityPick;
-   NbaPlayerBaseInfoGuessInfosPtsPicks? picks;
-   List<NbaPlayerBaseInfoGuessInfosPtsTwoTeamGames>? twoTeamGames;
+  NbaPlayerBaseInfoGuessInfosPtsCommunityPick? communityPick;
+  GuessGameInfoEntity? picks;
+  List<NbaPlayerBaseInfoGuessInfosPtsTwoTeamGames>? twoTeamGames;
 
   NbaPlayerBaseInfoGuessInfosProperty();
 
-  factory NbaPlayerBaseInfoGuessInfosProperty.fromJson(Map<String, dynamic> json) =>
+  factory NbaPlayerBaseInfoGuessInfosProperty.fromJson(
+          Map<String, dynamic> json) =>
       $NbaPlayerBaseInfoGuessInfosPropertyFromJson(json);
 
-  Map<String, dynamic> toJson() => $NbaPlayerBaseInfoGuessInfosPropertyToJson(this);
+  Map<String, dynamic> toJson() =>
+      $NbaPlayerBaseInfoGuessInfosPropertyToJson(this);
 
   @override
   String toString() {
@@ -512,27 +516,25 @@ class NbaPlayerBaseInfoPlayerBaseInfo {
 
 @JsonSerializable()
 class NbaPlayerBaseInfoL5GameData {
-  late int blk;
-  late int fga;
-  late int ast;
-  late int dreb;
-  late int starterCount;
-  late int stl;
+  late double blk;
+  late double fga;
+  late double ast;
+  late double dreb;
+  late double stl;
   late int updateTime;
-  late int fgm;
-  late int pts;
-  late int threePa;
-  late int playCount;
-  late int fta;
-  late int min;
-  late int oreb;
+  late double fgm;
+  late double pts;
+  late double threePa;
+  late double fta;
+  late double min;
+  late double oreb;
   late int createTime;
-  late int seasonId;
-  late int pf;
-  late int threePm;
-  late int to;
-  late int ftm;
+  late double pf;
+  late double threePm;
+  late double to;
+  late double ftm;
   late int playerId;
+  late int awayTeamId;
 
   NbaPlayerBaseInfoL5GameData();
 
@@ -540,6 +542,16 @@ class NbaPlayerBaseInfoL5GameData {
       $NbaPlayerBaseInfoL5GameDataFromJson(json);
 
   Map<String, dynamic> toJson() => $NbaPlayerBaseInfoL5GameDataToJson(this);
+
+  double getValue(String key) {
+    if ("3pm" == key.toLowerCase()) {
+      return threePm;
+    }
+    if ("reb" == key.toLowerCase()) {
+      return (oreb  + dreb) / 2;
+    }
+    return toJson()[key.toLowerCase()];
+  }
 
   @override
   String toString() {
@@ -549,27 +561,27 @@ class NbaPlayerBaseInfoL5GameData {
 
 @JsonSerializable()
 class NbaPlayerBaseInfoL5DataAvg {
-   double? blk;
-   double? fga;
-   double? ast;
-   double? dreb;
-   double? starterCount;
-   double? stl;
-   double? updateTime;
-   double? fgm;
-   double? pts;
-   double? threePa;
-   double? playCount;
-   double? fta;
-   double? min;
-   double? oreb;
-   double? createTime;
-   double? seasonId;
-   double? pf;
-   double? threePm;
-   double? to;
-   double? ftm;
-   double? playerId;
+  double? blk;
+  double? fga;
+  double? ast;
+  double? dreb;
+  double? starterCount;
+  double? stl;
+  double? updateTime;
+  double? fgm;
+  double? pts;
+  double? threePa;
+  double? playCount;
+  double? fta;
+  double? min;
+  double? oreb;
+  double? createTime;
+  double? seasonId;
+  double? pf;
+  double? threePm;
+  double? to;
+  double? ftm;
+  double? playerId;
 
   NbaPlayerBaseInfoL5DataAvg();
 
@@ -580,10 +592,10 @@ class NbaPlayerBaseInfoL5DataAvg {
 
   double getValue(String key) {
     if ("3pm" == key.toLowerCase()) {
-      return threePm??0;
+      return threePm ?? 0;
     }
     if ("reb" == key.toLowerCase()) {
-      return ((oreb??0) + (dreb??0)) / 2;
+      return ((oreb ?? 0) + (dreb ?? 0)) / 2;
     }
     return toJson()[key.toLowerCase()];
   }
@@ -597,137 +609,137 @@ class NbaPlayerBaseInfoL5DataAvg {
 @JsonSerializable()
 class NbaPlayerBaseInfoPlayerRegularMap {
   @JSONField(name: "PFD_RANK")
-  late int pfdRank;
+  int? pfdRank;
   @JSONField(name: "FG3_PCT")
-  late double fg3Pct;
+  double? fg3Pct;
   @JSONField(name: "OREB_RANK")
-  late int orebRank;
+  int? orebRank;
   @JSONField(name: "STL")
-  late double sTL;
+  double? sTL;
   @JSONField(name: "DREB")
-  late double dREB;
+  double? dREB;
   @JSONField(name: "FG_PCT_RANK")
-  late int fgPctRank;
+  int? fgPctRank;
   @JSONField(name: "PLUS_MINUS_RANK")
-  late int plusMinusRank;
+  int? plusMinusRank;
   @JSONField(name: "PFD")
-  late double pFD;
+  double? pFD;
   @JSONField(name: "PF_RANK")
-  late int pfRank;
+  int? pfRank;
   @JSONField(name: "DREB_RANK")
-  late int drebRank;
+  int? drebRank;
   @JSONField(name: "TOV_RANK")
-  late int tovRank;
+  int? tovRank;
   @JSONField(name: "FGA")
-  late double fGA;
+  double? fGA;
   @JSONField(name: "FG3_PCT_RANK")
-  late int fg3PctRank;
+  int? fg3PctRank;
   @JSONField(name: "BLK_RANK")
-  late int blkRank;
+  int? blkRank;
   @JSONField(name: "TEAM_ABBREVIATION")
-  late String teamAbbreviation;
+  String? teamAbbreviation;
   @JSONField(name: "NBA_FANTASY_PTS")
-  late double nbaFantasyPts;
+  double? nbaFantasyPts;
   @JSONField(name: "FGM")
-  late double fGM;
+  double? fGM;
   @JSONField(name: "L_RANK")
-  late int lRank;
+  int? lRank;
   @JSONField(name: "W_PCT")
-  late double wPct;
+  double? wPct;
   @JSONField(name: "FG3A_RANK")
-  late int fg3aRank;
+  int? fg3aRank;
   @JSONField(name: "NICKNAME")
-  late String nICKNAME;
+  String? nICKNAME;
   @JSONField(name: "FTA")
-  late double fTA;
+  double? fTA;
   @JSONField(name: "NBA_FANTASY_PTS_RANK")
-  late int nbaFantasyPtsRank;
+  int? nbaFantasyPtsRank;
   @JSONField(name: "MIN")
-  late double mIN;
+  double? mIN;
   @JSONField(name: "DD2")
-  late int dD2;
+  int? dD2;
   @JSONField(name: "DD2_RANK")
-  late int dd2Rank;
+  int? dd2Rank;
   @JSONField(name: "PLAYER_ID")
-  late int playerId;
+  int? playerId;
   @JSONField(name: "TOV")
-  late double tOV;
+  double? tOV;
   @JSONField(name: "FG3M_RANK")
-  late int fg3mRank;
+  int? fg3mRank;
   @JSONField(name: "FTM")
-  late double fTM;
+  double? fTM;
   @JSONField(name: "TEAM_ID")
-  late int teamId;
+  int? teamId;
   @JSONField(name: "BLKA")
-  late double bLKA;
+  double? bLKA;
   @JSONField(name: "BLK")
-  late double bLK;
+  double? bLK;
   @JSONField(name: "PLUS_MINUS")
-  late double plusMinus;
+  double? plusMinus;
   @JSONField(name: "TD3")
-  late int tD3;
+  int? tD3;
   @JSONField(name: "W_RANK")
-  late int wRank;
+  int? wRank;
   @JSONField(name: "MIN_RANK")
-  late int minRank;
+  int? minRank;
   @JSONField(name: "FG_PCT")
-  late double fgPct;
+  double? fgPct;
   @JSONField(name: "L")
-  late int l;
+  int? l;
   @JSONField(name: "WNBA_FANTASY_PTS")
-  late double wnbaFantasyPts;
+  double? wnbaFantasyPts;
   @JSONField(name: "PTS")
-  late double pTS;
+  double? pTS;
   @JSONField(name: "FG3A")
-  late double fG3A;
+  double? fG3A;
   @JSONField(name: "FTM_RANK")
-  late int ftmRank;
+  int? ftmRank;
   @JSONField(name: "FTA_RANK")
-  late int ftaRank;
+  int? ftaRank;
   @JSONField(name: "FGA_RANK")
-  late int fgaRank;
+  int? fgaRank;
   @JSONField(name: "REB_RANK")
-  late int rebRank;
+  int? rebRank;
   @JSONField(name: "BLKA_RANK")
-  late int blkaRank;
+  int? blkaRank;
   @JSONField(name: "W")
-  late int w;
+  int? w;
   @JSONField(name: "TD3_RANK")
-  late int td3Rank;
+  int? td3Rank;
   @JSONField(name: "FG3M")
-  late double fG3M;
+  double? fG3M;
   @JSONField(name: "AGE")
-  late double aGE;
+  double? aGE;
   @JSONField(name: "W_PCT_RANK")
-  late int wPctRank;
+  int? wPctRank;
   @JSONField(name: "AST_RANK")
-  late int astRank;
+  int? astRank;
   @JSONField(name: "PLAYER_NAME")
-  late String playerName;
+  String? playerName;
   @JSONField(name: "AST")
-  late double aST;
+  double? aST;
   @JSONField(name: "OREB")
-  late double oREB;
+  double? oREB;
   @JSONField(name: "FT_PCT_RANK")
-  late int ftPctRank;
+  int? ftPctRank;
   @JSONField(name: "GP")
-  late int gP;
+  int? gP;
   @JSONField(name: "FGM_RANK")
-  late int fgmRank;
+  int? fgmRank;
   @JSONField(name: "REB")
-  late double rEB;
+  double? rEB;
   @JSONField(name: "FT_PCT")
-  late double ftPct;
+  double? ftPct;
   @JSONField(name: "WNBA_FANTASY_PTS_RANK")
-  late int wnbaFantasyPtsRank;
+  int? wnbaFantasyPtsRank;
   @JSONField(name: "PTS_RANK")
-  late int ptsRank;
+  int? ptsRank;
   @JSONField(name: "PF")
-  late double pF;
+  double? pF;
   @JSONField(name: "GP_RANK")
-  late int gpRank;
+  int? gpRank;
   @JSONField(name: "STL_RANK")
-  late int stlRank;
+  int? stlRank;
 
   NbaPlayerBaseInfoPlayerRegularMap();
 

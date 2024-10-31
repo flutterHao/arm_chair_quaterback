@@ -123,16 +123,16 @@ class MoneyAndCoinWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                iconText(Assets.uiIconJettonPng, info.getCoin()),
+                iconText(Assets.uiIconJettonPng, Utils.formatChip(info.getCoin())),
                 4.vGap,
-                iconText(Assets.uiIconMoneyPng, info.getMoney()),
+                iconText(Assets.uiIconMoneyPng, Utils.formatMoney(info.getMoney())),
               ],
             ),
           );
         });
   }
 
-  Widget iconText(String icon, num num) {
+  Widget iconText(String icon, String num) {
     return Container(
       width: 66.w,
       height: 16.w,
@@ -151,7 +151,7 @@ class MoneyAndCoinWidget extends StatelessWidget {
             iconColor: AppColors.cFFFFFF,
           ),
           Text(
-            Utils.formatMoney(num),
+            num,
             style: TextStyle(color: AppColors.cF2F2F2, fontSize: 10.sp),
           )
         ],

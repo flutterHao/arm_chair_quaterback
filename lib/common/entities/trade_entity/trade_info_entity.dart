@@ -80,6 +80,7 @@ class TradeInfoTradePlayers {
   int? buyPrice;
   int? removalTime;
   bool? top;
+  bool? isBuy;
 
   TradeInfoTradePlayers();
 

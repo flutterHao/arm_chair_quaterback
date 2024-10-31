@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/entities/config/prop_define_entity.dart';
@@ -33,11 +34,15 @@ class PickRankController extends GetxController
 
   var rewardDialogItemIndex = 0.obs;
 
+  var rewardOpenTime = "".obs;
+
   ///自己在榜单的什么区段
   int selfInRankListIndex = -1;
 
+  late Timer timer;
+
   //开奖剩余时间：周三周六零点开奖
-  String getRewardOpenTime(){
+  String getRewardOpenTime() {
     Duration difference = getTimeDifferenceToTarget();
     return formatDuration(difference);
   }
@@ -50,16 +55,19 @@ class PickRankController extends GetxController
     DateTime targetDate;
     if (currentWeekday < DateTime.wednesday) {
       // 当前时间在周三之前
-      targetDate = DateTime(now.year, now.month, now.day + (DateTime.wednesday - currentWeekday));
+      targetDate = DateTime(
+          now.year, now.month, now.day + (DateTime.wednesday - currentWeekday));
     } else if (currentWeekday == DateTime.wednesday && now.hour < 24) {
       // 当前时间是周三，并且还没到当天结束
       targetDate = DateTime(now.year, now.month, now.day + 1);
     } else if (currentWeekday < DateTime.saturday) {
       // 当前时间在周六之前
-      targetDate = DateTime(now.year, now.month, now.day + (DateTime.saturday - currentWeekday));
+      targetDate = DateTime(
+          now.year, now.month, now.day + (DateTime.saturday - currentWeekday));
     } else {
       // 当前时间已经过了周六，计算到下周三的时间
-      targetDate = DateTime(now.year, now.month, now.day + (7 - currentWeekday) + DateTime.wednesday);
+      targetDate = DateTime(now.year, now.month,
+          now.day + (7 - currentWeekday) + DateTime.wednesday);
     }
 
     // 将目标时间设为零点
@@ -75,16 +83,31 @@ class PickRankController extends GetxController
     int minutes = duration.inMinutes % 60;
     int seconds = duration.inSeconds % 60;
     // 格式化成 6d:08:19:63 的样式
-    var day = days>=0?"":"${days}d:";
-    var s = "$day${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}";
+    var day = days <= 0 ? "" : "${days}d:";
+    var hour =
+        hours == 0 && days == 0 ? "" : "${hours.toString().padLeft(2, '0')}:";
+    var minute = minutes == 0 && hours == 0 && days == 0
+        ? ""
+        : "${minutes.toString().padLeft(2, '0')}:";
+    var second = seconds == 0 && minutes == 0 && hours == 0 && days == 0
+        ? "0"
+        : seconds.toString().padLeft(2, '0');
+    var s = "$day$hour$minute$second";
     return s;
   }
-
 
   /// 在 widget 内存中分配后立即调用。
   @override
   void onInit() {
     super.onInit();
+    rewardOpenTime.value = getRewardOpenTime();
+    timer = Timer.periodic(const Duration(seconds: 1), (t) {
+      var openTime = getTimeDifferenceToTarget();
+      if (openTime == Duration.zero) {
+        timer.cancel();
+      }
+      rewardOpenTime.value = formatDuration(openTime);
+    });
     tabController = TabController(length: tabTitles.length, vsync: this)
       ..addListener(() {
         tabIndex.value = tabController.index;
@@ -188,6 +211,7 @@ class PickRankController extends GetxController
   /// dispose 释放内存
   @override
   void dispose() {
+    timer.cancel();
     super.dispose();
   }
 

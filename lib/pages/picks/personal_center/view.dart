@@ -61,11 +61,12 @@ class PersonalCenterPage extends GetView<PersonalCenterController> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(8.w),
                             child: ImageWidget(
-                              imageFailedPath: Assets.head_0000Png,
+                              imageFailedPath: Assets.uiHead_01Png,
                               color: AppColors.cFFFFFF,
-                              url: Utils.getTeamUrl(
+                              url: Utils.getAvaterUrl(
                                   controller.teamSimpleEntity?.teamLogo),
                               width: 48.w,
+                              height: 48.w,
                             ),
                           )),
                     ),
@@ -89,7 +90,7 @@ class PersonalCenterPage extends GetView<PersonalCenterController> {
                           ),
                           4.vGap,
                           Text(
-                            "${controller.teamSimpleEntity?.teamName}",
+                            controller.teamSimpleEntity?.teamName??"--",
                             style: 16.w4(color: AppColors.cE6E6E6, height: 1),
                           ),
                           9.vGap,
@@ -105,7 +106,7 @@ class PersonalCenterPage extends GetView<PersonalCenterController> {
                             child: Row(
                               children: [
                                 Text(
-                                  "UID:${controller.teamSimpleEntity?.teamId}",
+                                  "UID:${controller.teamSimpleEntity?.teamId??"--"}",
                                   style: 10
                                       .w4(color: AppColors.c666666, height: 1),
                                 ),
@@ -186,7 +187,7 @@ class PersonalCenterPage extends GetView<PersonalCenterController> {
                           child: Container(
                             height: 34.w,
                             margin: EdgeInsets.only(
-                                top: appBarHeight + 17.w, bottom: 16.w),
+                                top: appBarHeight+17.w, bottom: 16.w),
                             decoration: BoxDecoration(
                                 color: AppColors.cEFEFEF,
                                 borderRadius: BorderRadius.circular(17.w),),

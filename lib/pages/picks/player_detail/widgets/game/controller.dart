@@ -39,8 +39,6 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
 
   final isUpgrading = false.obs;
   final rateProgress = 0.0.obs;
-  final statsScrollController = ScrollController();
-  final statsIsScrolling = false.obs;
 
   var xDragValue = 0.0.obs;
 
@@ -56,7 +54,7 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
 
   late List<ChartSampleData> dataSource;
 
-  late StarUpDefineEntity starUpDefineEntity;
+  StarUpDefineEntity? starUpDefineEntity;
 
   late RxList<GradeUp> teamPlayerList = RxList();
 
@@ -105,14 +103,6 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
   void onInit() {
     super.onInit();
     _initData();
-    statsScrollController.addListener(() {
-      if (!statsIsScrolling.value && statsScrollController.offset > 5) {
-        statsIsScrolling.value = true;
-      }
-      if (statsIsScrolling.value && statsScrollController.offset <= 5) {
-        statsIsScrolling.value = false;
-      }
-    });
   }
 
   reloadData() {

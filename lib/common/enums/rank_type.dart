@@ -7,7 +7,7 @@ enum RankType {
   newsGuess(value: "news_guess_rank"),
 
   ///专家排行榜
-  newsGuessExpert(value: "news_guess_Expert_rank");
+  newsGuessExpert(value: "news_guess_expert_rank");
 
   const RankType({required this.value});
   final String value;

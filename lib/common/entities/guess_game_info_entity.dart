@@ -17,6 +17,7 @@ class GuessGameInfoEntity {
   late double type;
   late int awayTeamId;
   late int playerId;
+  bool? success;
 
   GuessGameInfoEntity();
 

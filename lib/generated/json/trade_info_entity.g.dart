@@ -227,6 +227,10 @@ TradeInfoTradePlayers $TradeInfoTradePlayersFromJson(
   if (top != null) {
     tradeInfoTradePlayers.top = top;
   }
+  final bool? isBuy = jsonConvert.convert<bool>(json['isBuy']);
+  if (isBuy != null) {
+    tradeInfoTradePlayers.isBuy = isBuy;
+  }
   return tradeInfoTradePlayers;
 }
 
@@ -265,6 +269,7 @@ Map<String, dynamic> $TradeInfoTradePlayersToJson(
   data['buyPrice'] = entity.buyPrice;
   data['removalTime'] = entity.removalTime;
   data['top'] = entity.top;
+  data['isBuy'] = entity.isBuy;
   return data;
 }
 
@@ -302,6 +307,7 @@ extension TradeInfoTradePlayersExtension on TradeInfoTradePlayers {
     int? buyPrice,
     int? removalTime,
     bool? top,
+    bool? isBuy,
   }) {
     return TradeInfoTradePlayers()
       ..marketPrice = marketPrice ?? this.marketPrice
@@ -336,7 +342,8 @@ extension TradeInfoTradePlayersExtension on TradeInfoTradePlayers {
       ..uuid = uuid ?? this.uuid
       ..buyPrice = buyPrice ?? this.buyPrice
       ..removalTime = removalTime ?? this.removalTime
-      ..top = top ?? this.top;
+      ..top = top ?? this.top
+      ..isBuy = isBuy ?? this.isBuy;
   }
 }
 

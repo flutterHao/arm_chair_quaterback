@@ -42,6 +42,9 @@ class ReciveAwardItemController extends GetxController {
       temps.replaceRange(start, winCount, bets);
       return temps[winCount - 1].toString();
     }else{
+      if(!data[0].reciveAwardInfo.success){
+        return "0";
+      }
       return bets[winCount-2].toString();
     }
   }
@@ -70,6 +73,10 @@ class ReciveAwardItemController extends GetxController {
     return costCount;
   }
 
+  bool getSuccess(){
+    return data[0].reciveAwardInfo.success;
+  }
+
   /// 获取总收益
   String? getAwardCoin() {
     double count = -1;
@@ -88,7 +95,7 @@ class ReciveAwardItemController extends GetxController {
   String getTime() {
     var dateTime =
         MyDateUtils.getDateTimeByMs(data[0].reciveAwardInfo.createTime);
-    return "${MyDateUtils.getWeekday(dateTime, short: true)},${MyDateUtils.getMonthEnName(dateTime, short: false)} ${dateTime.day},${dateTime.year}";
+    return "${MyDateUtils.getWeekday(dateTime, short: true)},${MyDateUtils.getMonthEnName(dateTime, short: false)} ${dateTime.day},${dateTime.year} ${MyDateUtils.formatHM_AM(dateTime)}";
   }
 
   /// 获取奖励

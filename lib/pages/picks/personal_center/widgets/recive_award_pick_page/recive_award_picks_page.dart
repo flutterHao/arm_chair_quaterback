@@ -94,7 +94,7 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "${controller.teamSimpleEntity?.betCoin ?? 0}",
+                                  "${controller.teamSimpleEntity.betCoin ?? 0}",
                                   style: 36
                                       .w7(color: AppColors.cFFFFFF, height: 1),
                                 ),
@@ -121,7 +121,7 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          "${controller.teamSimpleEntity?.winCount ?? 0}",
+                                          "${controller.teamSimpleEntity.winCount ?? 0}",
                                           style: 16.w7(
                                               color: AppColors.cFFFFFF,
                                               height: 1),
@@ -404,7 +404,7 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
                           ),
                           4.hGap,
                           Text(
-                            "+230,00",
+                            "+${controller.streakReward}",
                             style: 19.w7(
                                 color: AppColors.c10A86A,
                                 height: 1,
@@ -430,6 +430,7 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
               context: context,
               removeTop: true,
               child: ListView.builder(
+                physics: const BouncingScrollPhysics(),
                   itemCount: data.length,
                   itemBuilder: (context, index) {
                     List<PicksPlayer> items = data[index];

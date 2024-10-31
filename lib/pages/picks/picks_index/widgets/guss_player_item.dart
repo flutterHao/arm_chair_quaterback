@@ -69,7 +69,7 @@ class GussPlayerItem extends StatelessWidget {
                   child: ImageWidget(
                       imageFailedPath: Assets.uiHead_01Png,
                       borderRadius: BorderRadius.circular(8.w),
-                      url: Utils.getTeamUrl(rankInfoEntity.teamLogo.toInt()))),
+                      url: Utils.getAvaterUrl(rankInfoEntity.teamLogo.toInt()))),
             ],
           ),
         ),
@@ -97,12 +97,13 @@ class GussPlayerItem extends StatelessWidget {
             ],
           ),
         ),
-        Container(
-          alignment: Alignment.centerRight,
-          width: 55.w,
-          child: Text(
-            Utils.formatMoney(rankInfoEntity.chip.toDouble()),
-            style: 18.w7(color: AppColors.c262626),
+        Expanded(
+          child: Container(
+            alignment: Alignment.centerRight,
+            child: Text(
+              Utils.formatChip(rankInfoEntity.chip.toDouble()),
+              style: 18.w7(color: AppColors.c262626),
+            ),
           ),
         )
       ],
