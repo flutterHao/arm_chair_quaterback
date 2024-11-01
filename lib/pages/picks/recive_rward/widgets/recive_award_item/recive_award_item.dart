@@ -42,7 +42,7 @@ class ReciveAwardItem extends StatelessWidget {
           return InkWell(
             onTap: () => _buildDetailDialog(context),
             child: Container(
-              height: 105.w,
+              height: 107.w,
               width: double.infinity,
               margin: EdgeInsets.only(top: 9.w),
               padding: EdgeInsets.only(
