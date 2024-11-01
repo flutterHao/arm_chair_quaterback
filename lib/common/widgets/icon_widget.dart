@@ -25,6 +25,7 @@ class IconWidget extends StatelessWidget {
     this.border,
     // this.rotation = 0.0,
     this.rotateAngle,
+    this.fit,
   });
 
   final double iconWidth;
@@ -38,6 +39,7 @@ class IconWidget extends StatelessWidget {
   final Border? border;
   // final double rotation; // 添加旋转角度
   final double? rotateAngle;
+  final BoxFit? fit;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +47,7 @@ class IconWidget extends StatelessWidget {
       icon,
       width: iconWidth,
       height: iconHeight,
-      fit: BoxFit.fill,
+      fit: fit??BoxFit.fill,
       // errorBuilder: (context, error, stackTrace) {
       //   // 可能需要更换为缺省图
       //   return Container(

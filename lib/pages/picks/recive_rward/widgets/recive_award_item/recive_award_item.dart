@@ -93,7 +93,7 @@ class ReciveAwardItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
-                        height: 44.w,
+                        height: 46.w,
                         constraints: BoxConstraints(maxWidth: 200.w),
                         child: Stack(
                           children: List.generate(
@@ -109,6 +109,8 @@ class ReciveAwardItem extends StatelessWidget {
                                         1 -
                                         index),
                                 child: Container(
+                                  width: 46.w,
+                                  height: 46.w,
                                   decoration: BoxDecoration(
                                       color: AppColors.cD9D9D9,
                                       borderRadius: BorderRadius.circular(22.w),
@@ -120,7 +122,7 @@ class ReciveAwardItem extends StatelessWidget {
                                     child: Container(
                                         width: 44.w,
                                         height: 44.w,
-                                        alignment: Alignment.centerRight,
+                                        alignment: Alignment.bottomCenter,
                                         child: controller.data.length >= 5 &&
                                                 index == 0
                                             ? Container(

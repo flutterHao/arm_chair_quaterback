@@ -203,9 +203,9 @@ class NetInterceptor extends InterceptorsWrapper {
     // EasyLoading.showError(eInfo.message);
     // }
     ///服务器返回错误
-    if (eInfo.code < 500) {
-      EasyLoading.showError(eInfo.message);
-    }
+    // if (eInfo.code < 500) {
+    //   EasyLoading.showError(eInfo.message);
+    // }
   }
 
   /// 错误信息

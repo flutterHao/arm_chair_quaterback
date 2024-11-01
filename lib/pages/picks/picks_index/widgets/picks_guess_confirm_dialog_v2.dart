@@ -496,7 +496,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                       ),
                     ),
                   ),
-                  if (picksIndexController.guessWinningStreak > 0)
+                  // if (picksIndexController.guessWinningStreak > 0)
                     Flexible(
                         child: Container(
                       height: 40.w,
@@ -521,7 +521,6 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                     style: 18.w7(
                                         color: AppColors.cF1F1F1, height: 1),
                                   ),
-                                  3.vGap,
                                   Text(
                                     "Streak",
                                     style: 10.w4(
@@ -540,7 +539,6 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                 style:
                                     18.w7(color: AppColors.cF1F1F1, height: 1),
                               ),
-                              3.vGap,
                               Text(
                                 "streak bonus",
                                 style:

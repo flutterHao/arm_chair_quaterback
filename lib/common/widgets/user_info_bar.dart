@@ -43,27 +43,28 @@ class UserInfoBar extends StatelessWidget {
             child: Row(
               children: [
                 InkWell(
-                  onLongPress: () {
-                    final List<String> servers = [
-                      Address.personalDevUrl,
-                      Address.privateDevUrl,
-                      Address.publicDevUrl,
-                    ];
-                    String current = HttpUtil().getUrl;
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return ServerSwitchDialog(
-                          servers: servers,
-                          currentServer: current,
-                          onServerChanged: (newServer) {
-                            HttpUtil().setUrl(newServer);
-                            HomeController.to.login();
-                          },
-                        );
-                      },
-                    );
-                  },
+                  //todo 打包注释
+                  // onLongPress: () {
+                  //   final List<String> servers = [
+                  //     Address.personalDevUrl,
+                  //     Address.privateDevUrl,
+                  //     Address.publicDevUrl,
+                  //   ];
+                  //   String current = HttpUtil().getUrl;
+                  //   showDialog(
+                  //     context: context,
+                  //     builder: (BuildContext context) {
+                  //       return ServerSwitchDialog(
+                  //         servers: servers,
+                  //         currentServer: current,
+                  //         onServerChanged: (newServer) {
+                  //           HttpUtil().setUrl(newServer);
+                  //           HomeController.to.login();
+                  //         },
+                  //       );
+                  //     },
+                  //   );
+                  // },
                   onTap: () {
                     if (!enable) {
                       Navigator.pop(context);

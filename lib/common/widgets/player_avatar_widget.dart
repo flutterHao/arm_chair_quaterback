@@ -72,7 +72,9 @@ class PlayerAvatarWidget extends StatelessWidget {
                       case LoadState.loading:
                       case LoadState.failed:
                         return IconWidget(
-                            iconWidth: width - 10,
+                            iconWidth: width,
+                            iconHeight: width,
+                            fit: BoxFit.fitHeight,
                             icon: Assets.uiDefault_04Png);
                       default:
                     }
