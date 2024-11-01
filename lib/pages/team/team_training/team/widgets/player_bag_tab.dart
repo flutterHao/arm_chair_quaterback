@@ -6,6 +6,7 @@
  */
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/widgets/physics/one_boundary_scroll_physics.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/player_item_widget.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ class PlayerBagTab extends GetView<TeamController> {
 
   @override
   Widget build(BuildContext context) {
+    var scrollController = ScrollController();
     return GetBuilder<TeamController>(builder: (_) {
       var canSelect = controller.myBagList
           .where((e) => controller.canChange(true, e))
@@ -30,7 +32,8 @@ class PlayerBagTab extends GetView<TeamController> {
         ..addAll(cantSelect);
       return ListView.separated(
         padding: EdgeInsets.symmetric(vertical: 10.w),
-        // physics: const NeverScrollableScrollPhysics(),
+        controller: scrollController,
+        physics:  OneBoundaryScrollPhysics(scrollController: scrollController),
         // shrinkWrap: true,
         itemBuilder: (context, index) {
           return PlayerItem(

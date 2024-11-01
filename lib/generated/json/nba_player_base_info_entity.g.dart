@@ -81,8 +81,8 @@ Map<String, dynamic> $NbaPlayerBaseInfoEntityToJson(
   data['playerBaseInfo'] = entity.playerBaseInfo.toJson();
   data['l5GameData'] = entity.l5GameData.map((v) => v.toJson()).toList();
   data['l5DataAvg'] = entity.l5DataAvg.toJson();
-  data['playerRegularMap'] = entity.playerRegularMap.toJson();
-  data['playerPlayoffsMap'] = entity.playerPlayoffsMap.toJson();
+  data['playerRegularMap'] = entity.playerRegularMap?.toJson();
+  data['playerPlayoffsMap'] = entity.playerPlayoffsMap?.toJson();
   data['playerTrends'] = entity.playerTrends.map((v) => v.toJson()).toList();
   data['playerNews'] = entity.playerNews.map((v) => v.toJson()).toList();
   data['tradePlayers'] = entity.tradePlayers?.toJson();
@@ -311,10 +311,10 @@ NbaPlayerBaseInfoGuessInfos $NbaPlayerBaseInfoGuessInfosFromJson(
 Map<String, dynamic> $NbaPlayerBaseInfoGuessInfosToJson(
     NbaPlayerBaseInfoGuessInfos entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
-  data['3pm'] = entity.threePm.toJson();
-  data['ast'] = entity.ast.toJson();
-  data['reb'] = entity.reb.toJson();
-  data['pts'] = entity.pts.toJson();
+  data['3pm'] = entity.threePm?.toJson();
+  data['ast'] = entity.ast?.toJson();
+  data['reb'] = entity.reb?.toJson();
+  data['pts'] = entity.pts?.toJson();
   return data;
 }
 

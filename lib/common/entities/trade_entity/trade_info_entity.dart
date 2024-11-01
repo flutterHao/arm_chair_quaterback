@@ -75,7 +75,7 @@ class TradeInfoTradePlayers {
   late int teamId;
   late String name;
   int? basicMarketPrice;
-  late String position;
+  int? position;
   String? uuid;
   int? buyPrice;
   int? removalTime;

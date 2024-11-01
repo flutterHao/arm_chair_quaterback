@@ -228,7 +228,7 @@ class _PicksIndexPageState extends State<PicksIndexPage>
           picksIndexController.rankInfo.ranks.isEmpty)
         SliverToBoxAdapter(child: Obx(() {
           return Container(
-              height: 200.w,
+              height: 300.w,
               alignment: Alignment.center,
               child: LoadStatusWidget(
                 loadDataStatus: picksIndexController.loadStatusRx.value,
@@ -488,7 +488,7 @@ class _PicksIndexPageState extends State<PicksIndexPage>
 
   @override
   Widget build(BuildContext context) {
-    picksIndexController = Get.put(PicksIndexController());
+    picksIndexController = Get.find();
     return GetBuilder<PicksIndexController>(
       id: PicksIndexController.idMain,
       builder: (_) {

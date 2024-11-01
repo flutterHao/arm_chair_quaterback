@@ -62,7 +62,6 @@ class PersonalCenterPage extends GetView<PersonalCenterController> {
                             borderRadius: BorderRadius.circular(8.w),
                             child: ImageWidget(
                               imageFailedPath: Assets.uiHead_01Png,
-                              color: AppColors.cFFFFFF,
                               url: Utils.getAvaterUrl(
                                   controller.teamSimpleEntity?.teamLogo),
                               width: 48.w,

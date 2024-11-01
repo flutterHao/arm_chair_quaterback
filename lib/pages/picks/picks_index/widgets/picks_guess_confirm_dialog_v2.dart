@@ -5,6 +5,7 @@ import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/param_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/btn_background.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog_background.dart';
@@ -678,9 +679,24 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                   child: Stack(
                                     alignment: Alignment.center,
                                     children: [
-                                      Text(
-                                        "CONFIRM",
-                                        style: 18.w7(color: AppColors.cF2F2F2),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              IconWidget(iconWidth: 19.w, icon: Assets.uiIconJettonPng),
+                                              5.hGap,
+                                              Text(picksIndexController.newsDefine.betCost,style: 21.w7(color: AppColors.cF2F2F2,height: 1),),
+                                            ],
+                                          ),
+                                          2.vGap,
+                                          Text(
+                                            "CONFIRM",
+                                            style: 10.w4(color: AppColors.cF2F2F2,height: 1),
+                                          ),
+                                        ],
                                       ),
                                       Positioned(
                                           left: 9.w,
@@ -912,7 +928,7 @@ class _ItemWidgetState extends State<_ItemWidget>
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "${player.guessInfo.guessReferenceValue.getValue(picksIndexController.getCurrentTabStr())}",
+                    "${player.guessInfo.guessReferenceValue.getValue(ParamUtils.getProKey(player.tabStr))}",
                     style: 18.w7(color: AppColors.c262626, height: 1),
                   ),
                   5.vGap,

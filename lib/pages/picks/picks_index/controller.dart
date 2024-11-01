@@ -145,6 +145,8 @@ class PicksIndexController extends GetxController {
       Get.back();
       cleanAll();
       _initData();
+      Get.find<HomeController>().refreshMoneyCoinWidget();
+      EasyLoading.showToast("Pick successful!you can check it in History");
     },onError: (e){
       EasyLoading.showToast("SERVER ERROR");
     });

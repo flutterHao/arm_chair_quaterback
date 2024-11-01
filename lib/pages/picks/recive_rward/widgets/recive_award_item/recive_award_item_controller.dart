@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
@@ -18,6 +19,44 @@ class ReciveAwardItemController extends GetxController {
   List<PicksPlayer> data;
 
   final NewsDefineEntity newsDefineEntity;
+
+  var specialTime = "".obs;
+
+  Timer? timer;
+
+  @override
+  void onInit() {
+    super.onInit();
+    if(getStatus() == 1){
+      startCountDown();
+    }
+  }
+
+  @override
+  dispose(){
+    timer?.cancel();
+    super.dispose();
+  }
+
+  void startCountDown(){
+    timer = Timer.periodic(const Duration(seconds: 1), (t){
+      var nextDay = MyDateUtils.nextDay(MyDateUtils.getNowDateTime());
+      var nextDayStartTimeMS = MyDateUtils.getNextDayStartTimeMS(
+              nextDay);
+      var ms = nextDayStartTimeMS -
+              MyDateUtils.getNowDateMs();
+      var dateTimeByMs = MyDateUtils.getDateTimeByMs(ms);
+
+      if(ms == 0){
+        t.cancel();
+      }
+      var formatDate =  MyDateUtils.formatDate(
+          dateTimeByMs,
+          format: DateFormats.H_M_S);
+      specialTime.value = formatDate;
+    });
+
+  }
 
   int getWinCount() {
     return data[0]

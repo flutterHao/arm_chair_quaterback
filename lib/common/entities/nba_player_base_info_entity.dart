@@ -12,8 +12,8 @@ class NbaPlayerBaseInfoEntity {
   late NbaPlayerBaseInfoPlayerBaseInfo playerBaseInfo;
   late List<NbaPlayerBaseInfoL5GameData> l5GameData;
   late NbaPlayerBaseInfoL5DataAvg l5DataAvg;
-  late NbaPlayerBaseInfoPlayerRegularMap playerRegularMap;
-  late NbaPlayerBaseInfoPlayerPlayoffsMap playerPlayoffsMap;
+  late NbaPlayerBaseInfoPlayerRegularMap? playerRegularMap;
+  late NbaPlayerBaseInfoPlayerPlayoffsMap? playerPlayoffsMap;
   late List<NbaPlayerBaseInfoPlayerTrends> playerTrends;
   late List<NbaPlayerBaseInfoPlayerNews> playerNews;
   TradeInfoTradePlayers? tradePlayers;
@@ -71,10 +71,10 @@ class NbaPlayerBaseInfoPlayerDataAvg {
 @JsonSerializable()
 class NbaPlayerBaseInfoGuessInfos {
   @JSONField(name: "3pm")
-  late NbaPlayerBaseInfoGuessInfosProperty threePm;
-  late NbaPlayerBaseInfoGuessInfosProperty ast;
-  late NbaPlayerBaseInfoGuessInfosProperty reb;
-  late NbaPlayerBaseInfoGuessInfosProperty pts;
+  NbaPlayerBaseInfoGuessInfosProperty? threePm;
+  NbaPlayerBaseInfoGuessInfosProperty? ast;
+  NbaPlayerBaseInfoGuessInfosProperty? reb;
+  NbaPlayerBaseInfoGuessInfosProperty? pts;
 
   NbaPlayerBaseInfoGuessInfos();
 
@@ -548,7 +548,7 @@ class NbaPlayerBaseInfoL5GameData {
       return threePm;
     }
     if ("reb" == key.toLowerCase()) {
-      return (oreb  + dreb) / 2;
+      return (oreb + dreb) / 2;
     }
     return toJson()[key.toLowerCase()];
   }

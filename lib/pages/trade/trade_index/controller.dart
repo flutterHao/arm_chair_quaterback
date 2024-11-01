@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:arm_chair_quaterback/common/entities/trade_entity/trade_info_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/trade.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
+import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -26,6 +30,27 @@ class TradeIndexController extends GetxController
 
   late TabController tabController;
   List<String> tabs = ["Buy", "Sell"];
+  
+  var specialTime = "".obs;
+
+  Timer? timer;
+  
+  void startCountDown(trendPlayer){
+    timer = Timer.periodic(const Duration(seconds: 1), (t){
+      var dateTimeByMs = MyDateUtils.getDateTimeByMs(
+          (trendPlayer.removalTime ?? 0) -
+              MyDateUtils.getNowDateTime()
+                  .millisecondsSinceEpoch);
+      if(dateTimeByMs.millisecond == 0){
+        t.cancel();
+      }
+      var formatDate = MyDateUtils.formatDate(
+          dateTimeByMs,
+          format: DateFormats.H_M_S);
+      specialTime.value = formatDate;
+    });
+   
+  }
 
   /// 在 widget 内存中分配后立即调用。
   @override
@@ -43,7 +68,14 @@ class TradeIndexController extends GetxController
       TradeApi.getAllTeamPlayerByTrend(),
     ]).then((result) {
       tradeInfoEntity = result[0] as TradeInfoEntity;
+      var where = tradeInfoEntity?.tradePlayers.firstWhereOrNull((e)=>e.top??false);
+      if(where != null){
+        startCountDown(where);
+      }
       sellAllTradePlayers = result[2] as List<TradeInfoTradePlayers>;
+      sellAllTradePlayers.sort((a,b){
+        return a.position?.compareTo(b.position??-1)??1;
+      });
       if (tradeInfoEntity!.tradePlayers.isEmpty) {
         loadStatus.value = LoadDataStatus.noData;
       }
@@ -150,7 +182,7 @@ class TradeIndexController extends GetxController
     tabController.dispose();
     buyRefreshController.dispose();
     sellRefreshController.dispose();
-
+    timer?.cancel();
     super.dispose();
   }
 }

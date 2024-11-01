@@ -44,7 +44,7 @@ class LoadStatusWidget extends StatelessWidget {
               ),
             )
           else
-          IconWidget(iconWidth: 70.w, icon: icon??loadDataStatus?.icon??Assets.uiDefaultNonePng),
+          IconWidget(iconWidth: 123.w, icon: icon??loadDataStatus?.icon??Assets.uiDefault_01Png),
           5.vGap,
           Text(
             text??loadDataStatus?.desc??"",

@@ -3,6 +3,7 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/physics/one_boundary_scroll_physics.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/widgets/border_container.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/linear_progress_widget.dart';
@@ -32,8 +33,10 @@ class LineUpTab extends GetView<TeamController> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<TeamController>(builder: (_) {
+      var scrollController = ScrollController();
       return SingleChildScrollView(
-        // physics: const BouncingScrollPhysics(),
+        controller: scrollController,
+        physics:  OneBoundaryScrollPhysics(scrollController: scrollController),
         child: Column(
           children: [
             12.vGap,

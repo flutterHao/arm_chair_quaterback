@@ -98,6 +98,18 @@ class _VerticalDragBackWidgetState extends State<VerticalDragBackWidget>
     }
 
     Widget body = GestureDetector(
+      onHorizontalDragDown: (detail) {
+        //处理没有滚动子组件的情况
+        if (!teamCtrl.isOnTopSide) {
+          teamCtrl.isOnTopSide = true;
+        }
+      },
+      onHorizontalDragStart: (detail) {
+        //处理没有滚动子组件的情况
+        if (!teamCtrl.isOnTopSide) {
+          teamCtrl.isOnTopSide = true;
+        }
+      },
       onVerticalDragUpdate: (details) {
         offsetY = details.localPosition.dy - startY;
         if (teamCtrl.isOnTopSide) return;

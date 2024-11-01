@@ -6,8 +6,6 @@
  */
 class Assets {
   ///home
-  static const uiIconLeagues_01Png =
-      'assets/images/home/ui_icon_leagues_01.png';
   static const uiIconNews_01Png = 'assets/images/home/ui_icon_news_01.png';
   static const uiIconPicks_01Png = 'assets/images/home/ui_icon_picks_01.png';
   static const uiIconTeam_01Png = 'assets/images/home/ui_icon_team_01.png';
@@ -15,6 +13,7 @@ class Assets {
       'assets/images/home/ui_icon_training_01.png';
   static const uiNavibarSel_01Png = 'assets/images/home/ui_navibar_sel_01.png';
   static const uiNavubarSel_02Png = 'assets/images/home/ui_navubar_sel_02.png';
+  static const uiIconCommunity_01Png = 'assets/images/home/ui_icon_community_01.png';
 
   ///icon
   static const head_0000Png = 'assets/images/icon/head_0000.png';
@@ -32,9 +31,6 @@ class Assets {
   static const uiDefault_03Png = 'assets/images/icon/ui_default_03.png';
   static const uiDefault_04Png = 'assets/images/icon/ui_default_04.png';
   static const uiDefault_05Png = 'assets/images/icon/ui_default_05.png';
-  static const uiDefaultMistakePng =
-      'assets/images/icon/ui_default_mistake.png';
-  static const uiDefaultNonePng = 'assets/images/icon/ui_default_none.png';
   static const uiIconAddPng = 'assets/images/icon/ui_icon_add.png';
   static const uiIconApplePng = 'assets/images/icon/ui_icon_apple.png';
   static const uiIconArrowsPng = 'assets/images/icon/ui_icon_arrows.png';

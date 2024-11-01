@@ -147,11 +147,12 @@ class ReciveAwardDetailItem extends StatelessWidget {
                             ],
                           ),
                         ),
-                        Text(
-                          "Result:${player.guessData?.guessGameAttrValue}",
-                          style: TextStyle(
-                              fontSize: 10.sp, color: AppColors.cB3B3B3),
-                        )
+                        if (player.guessData?.status == 1)
+                          Text(
+                            "Result:${player.guessData?.guessGameAttrValue}",
+                            style: TextStyle(
+                                fontSize: 10.sp, color: AppColors.cB3B3B3),
+                          )
                       ],
                     ),
                   )

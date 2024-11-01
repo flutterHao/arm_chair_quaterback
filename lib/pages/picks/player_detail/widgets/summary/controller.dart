@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
@@ -13,6 +14,7 @@ import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/net/apis/trade.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -33,9 +35,10 @@ class PlayerRegular {
 }
 
 class SummaryController extends GetxController {
-  SummaryController(this.playerId);
+  SummaryController(this.playerId, {this.initTabStr});
 
   final int playerId;
+  final String? initTabStr;
 
   var currentIndex = 0.obs;
 
@@ -50,6 +53,27 @@ class SummaryController extends GetxController {
 
   var pickIndex = RxInt(-1);
 
+  var specialTime = "".obs;
+
+  Timer? timer;
+
+  void startCountDown(trendPlayer){
+    timer = Timer.periodic(const Duration(seconds: 1), (t){
+      var dateTimeByMs = MyDateUtils.getDateTimeByMs(
+          (trendPlayer.removalTime ?? 0) -
+              MyDateUtils.getNowDateTime()
+                  .millisecondsSinceEpoch);
+      if(dateTimeByMs.millisecond == 0){
+        t.cancel();
+      }
+      var formatDate = MyDateUtils.formatDate(
+          dateTimeByMs,
+          format: DateFormats.H_M_S);
+      specialTime.value = formatDate;
+    });
+
+  }
+
   onTabTap(int index) {
     currentIndex.value = index;
     update([idTabContent]);
@@ -59,6 +83,9 @@ class SummaryController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    if(initTabStr != null) {
+      currentIndex.value = Constant.guessTypeList.indexOf(initTabStr!.toUpperCase());
+    }
     statsScrollController.addListener(() {
       if (!statsIsScrolling.value && statsScrollController.offset > 5) {
         statsIsScrolling.value = true;
@@ -78,6 +105,9 @@ class SummaryController extends GetxController {
       CacheApi.getNBATeamDefine(),
     ]).then((result) {
       nbaPlayerBaseInfoEntity = result[0];
+      if(nbaPlayerBaseInfoEntity!.tradePlayers != null){
+        startCountDown(nbaPlayerBaseInfoEntity!.tradePlayers);
+      }
       loadStatus.value = LoadDataStatus.success;
       var choiceGuessPlayers = picksIndexController.getChoiceGuessPlayers();
       var pickInfo = getPickInfo();
@@ -99,16 +129,16 @@ class SummaryController extends GetxController {
     if (nbaPlayerBaseInfoEntity == null) {
       return [];
     }
-    var json = nbaPlayerBaseInfoEntity!.playerRegularMap.toJson();
+    var json = nbaPlayerBaseInfoEntity!.playerRegularMap?.toJson();
     List<PlayerRegular> list = Constant.statTypeList.fold([], (p, e) {
       var key = e;
       if (key == "TO") {
         key = "TOV";
       }
-      if (json.containsKey(key) && json.containsKey("${key}_RANK")) {
-        var value = json[key];
+      if (json?.containsKey(key) == true && json?.containsKey("${key}_RANK") == true) {
+        var value = json![key];
         var rank = json["${key}_RANK"];
-        p.add(PlayerRegular(rank, value, e));
+        p.add(PlayerRegular(rank??0, value??0, e));
       }
       return p;
     });
@@ -120,7 +150,7 @@ class SummaryController extends GetxController {
     if (key == "3PM") {
       key = "FG3M";
     }
-    return (nbaPlayerBaseInfoEntity!.playerRegularMap.toJson()[key] as num)
+    return ((nbaPlayerBaseInfoEntity!.playerRegularMap?.toJson()[key]??0) as num)
         .format();
   }
 
@@ -133,9 +163,7 @@ class SummaryController extends GetxController {
 
   _PickInfo? getPickInfo() {
     var key = getCurrentTabKey();
-    if (key == "3PM") {
-      key = "threePm";
-    }
+
     key = key.toLowerCase();
     var guessInfos = NbaPlayerBaseInfoGuessInfosProperty.fromJson(
         nbaPlayerBaseInfoEntity?.guessInfos.toJson()[key]);
@@ -147,6 +175,9 @@ class SummaryController extends GetxController {
     var month = MyDateUtils.getMonthEnName(dateTimeByMs, short: true);
     var day = dateTimeByMs.day;
     var teamInfo = Utils.getTeamInfo(picks.awayTeamId);
+    if (key == "3PM".toLowerCase()) {
+      key = "threePm";
+    }
     var value = picks.guessReferenceValue.toJson()[key];
     var picksPlayerV2 = PicksPlayerV2();
     picksPlayerV2.guessInfo = picks;
@@ -228,6 +259,7 @@ class SummaryController extends GetxController {
   /// dispose 释放内存
   @override
   void dispose() {
+    timer?.cancel();
     super.dispose();
   }
 

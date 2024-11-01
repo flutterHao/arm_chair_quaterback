@@ -5,6 +5,7 @@
  * @LastEditTime: 2024-09-27 21:39:01
  */
 import 'package:arm_chair_quaterback/pages/news/new_list/controller.dart';
+import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/trade/trade_index/controller.dart';
 import 'package:get/get.dart';
@@ -19,5 +20,6 @@ class AllControllerBindings extends Bindings {
     Get.lazyPut(() => TeamIndexController(), fenix: true);
     //数据加载太慢，启动提前加载
     Get.put(TradeIndexController());
+    Get.lazyPut(() => PicksIndexController(), fenix: true);
   }
 }

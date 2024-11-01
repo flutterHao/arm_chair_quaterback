@@ -24,8 +24,9 @@ import 'index.dart';
 
 class PlayerDetailPageArguments {
   final int playerId;
+  final String? tabStr;
 
-  PlayerDetailPageArguments(this.playerId);
+  PlayerDetailPageArguments(this.playerId, {this.tabStr});
 }
 
 class PlayerDetailPage extends GetView<PlayerDetailController> {
@@ -90,7 +91,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "${controller.baseInfo?.ename}",
+                                  "${controller.baseInfo?.elname}",
                                   style: 16
                                       .w4(color: AppColors.cF2F2F2, height: 1),
                                 ),
@@ -220,6 +221,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                         children: [
                           SummaryPage(
                             playerId: args.playerId,
+                            tabStr: args.tabStr,
                           ),
                           HistoryPage(
                             headHeight: appBarHeight + 66.w,

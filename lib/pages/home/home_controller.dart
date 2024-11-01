@@ -82,8 +82,8 @@ class HomeController extends GetxController{
     ),
     TabItemInfo(
       "COMMUNITIES",
-      Assets.uiIconLeagues_01Png,
-      Assets.uiIconLeagues_01Png,
+      Assets.uiIconCommunity_01Png,
+      Assets.uiIconCommunity_01Png,
       const LeaguePage(),
     ),
   ];

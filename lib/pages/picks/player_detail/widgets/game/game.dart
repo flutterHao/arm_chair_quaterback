@@ -59,297 +59,294 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Column(
-              children: [
-                _leverWidget(context),
-                9.vGap,
-                Container(
-                  decoration: BoxDecoration(
-                      color: AppColors.cF2F2F2,
-                      borderRadius: BorderRadius.circular(16.w)),
-                  padding: EdgeInsets.all(14.w),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Ability",
-                        style: 19.w7(color: AppColors.c262626, height: 1),
-                      ),
-                      if (playerDetailController.baseInfo != null)
-                        LayoutBuilder(builder: (context, constraints) {
-                          return SizedBox(
-                            height: 190.h,
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                _buildBackgroundSmartLabelPieChart(),
-                                _buildSmartLabelPieChart()
-                              ],
-                            ),
-                          );
-                        }),
-                      Text(
-                        "Potential",
-                        style: 19.w7(color: AppColors.c262626, height: 1),
-                      ),
-                      13.vGap,
-                      LayoutBuilder(builder: (context, constraints) {
-                        return Container(
-                          height: 130.h,
-                          width: double.infinity,
-                          margin: EdgeInsets.only(
-                              left: 14.w, right: 18.w, top: 5.w),
-                          child: AspectRatio(
-                            aspectRatio: 1.4,
-                            child: BarChart(BarChartData(
-                                maxY: controller.uuidPlayerInfo?.potential!
-                                    .getMax()
+            _leverWidget(context),
+            9.vGap,
+            Container(
+              decoration: BoxDecoration(
+                  color: AppColors.cF2F2F2,
+                  borderRadius: BorderRadius.circular(16.w)),
+              padding: EdgeInsets.all(14.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Ability",
+                    style: 19.w7(color: AppColors.c262626, height: 1),
+                  ),
+                  if (playerDetailController.baseInfo != null)
+                    LayoutBuilder(builder: (context, constraints) {
+                      return SizedBox(
+                        height: 190.h,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            _buildBackgroundSmartLabelPieChart(),
+                            _buildSmartLabelPieChart()
+                          ],
+                        ),
+                      );
+                    }),
+                  Text(
+                    "Potential",
+                    style: 19.w7(color: AppColors.c262626, height: 1),
+                  ),
+                  13.vGap,
+                  LayoutBuilder(builder: (context, constraints) {
+                    return Container(
+                      height: 130.h,
+                      width: double.infinity,
+                      margin: EdgeInsets.only(
+                          left: 14.w, right: 18.w, top: 5.w),
+                      child: AspectRatio(
+                        aspectRatio: 1.4,
+                        child: BarChart(BarChartData(
+                            maxY: controller.uuidPlayerInfo?.potential!
+                                .getMax()
+                                .toDouble(),
+                            borderData: FlBorderData(
+                                show: true,
+                                border: const Border(
+                                    bottom: BorderSide(
+                                        color: AppColors.cD9D9D9,
+                                        width: 1))),
+                            gridData: FlGridData(
+                                show: true,
+                                drawHorizontalLine: true,
+                                drawVerticalLine: false,
+                                horizontalInterval: controller
+                                    .uuidPlayerInfo?.potential
+                                    .getStep()
                                     .toDouble(),
-                                borderData: FlBorderData(
-                                    show: true,
-                                    border: const Border(
-                                        bottom: BorderSide(
-                                            color: AppColors.cD9D9D9,
-                                            width: 1))),
-                                gridData: FlGridData(
-                                    show: true,
-                                    drawHorizontalLine: true,
-                                    drawVerticalLine: false,
-                                    horizontalInterval: controller
-                                        .uuidPlayerInfo?.potential
-                                        .getStep()
-                                        .toDouble(),
-                                    getDrawingHorizontalLine: (value) {
-                                      return const FlLine(
-                                          color: AppColors.cD9D9D9,
-                                          strokeWidth: 1,
-                                          dashArray: [3]);
-                                    }),
-                                titlesData: FlTitlesData(
-                                    show: true,
-                                    leftTitles: AxisTitles(
-                                        sideTitles: SideTitles(
-                                            showTitles: true,
-                                            interval: 10,
-                                            getTitlesWidget: (value, meta) {
-                                              var text = value % 200 != 0
-                                                  ? ""
-                                                  : value.toStringAsFixed(0);
-                                              return Text(
-                                                text,
-                                                style: 9.w4(
-                                                    color: AppColors.cB2B2B2),
-                                              );
-                                            })),
-                                    bottomTitles: AxisTitles(
-                                        sideTitles: SideTitles(
-                                            showTitles: true,
-                                            getTitlesWidget: (value, meta) {
-                                              var text = "PTS";
-                                              switch (value.toInt()) {
-                                                case 1:
-                                                  text = "PTS";
-                                                  break;
-                                                case 2:
-                                                  text = "3PT";
-                                                  break;
-                                                case 3:
-                                                  text = "AST";
-                                                  break;
-                                                case 4:
-                                                  text = "REB";
-                                                  break;
-                                                case 5:
-                                                  text = "BLK";
-                                                  break;
-                                                case 6:
-                                                  text = "STL";
-                                                  break;
-                                              }
-                                              return Container(
-                                                margin:
-                                                    EdgeInsets.only(top: 2.h),
-                                                child: Text(
-                                                  text,
-                                                  style: 9.w4(
-                                                      color: AppColors.cB2B2B2),
-                                                ),
-                                              );
-                                            })),
-                                    rightTitles: const AxisTitles(),
-                                    topTitles: const AxisTitles()),
-                                barTouchData: BarTouchData(
-                                    enabled: true,
-                                    handleBuiltInTouches: false,
-                                    touchTooltipData: BarTouchTooltipData(
-                                      tooltipMargin: 0,
-                                      tooltipPadding: const EdgeInsets.all(0),
-                                      getTooltipColor: (_) =>
-                                          AppColors.cTransparent,
-                                      getTooltipItem: (BarChartGroupData group,
-                                          int groupIndex,
-                                          BarChartRodData rod,
-                                          int rodIndex) {
-                                        return BarTooltipItem(
-                                          rod.toY.toStringAsFixed(0),
-                                          11.w7(color: rod.color!, height: 1),
-                                        );
-                                      },
-                                    )),
-                                barGroups: [
-                                  BarChartGroupData(
-                                      showingTooltipIndicators: [0],
-                                      x: 1,
-                                      barRods: [
-                                        BarChartRodData(
-                                            width: 10.w,
-                                            borderRadius: BorderRadius.vertical(
-                                                top: Radius.circular(5.w)),
-                                            toY: controller.uuidPlayerInfo
+                                getDrawingHorizontalLine: (value) {
+                                  return const FlLine(
+                                      color: AppColors.cD9D9D9,
+                                      strokeWidth: 1,
+                                      dashArray: [3]);
+                                }),
+                            titlesData: FlTitlesData(
+                                show: true,
+                                leftTitles: AxisTitles(
+                                    sideTitles: SideTitles(
+                                        showTitles: true,
+                                        interval: 10,
+                                        getTitlesWidget: (value, meta) {
+                                          var text = value % 200 != 0
+                                              ? ""
+                                              : value.toStringAsFixed(0);
+                                          return Text(
+                                            text,
+                                            style: 9.w4(
+                                                color: AppColors.cB2B2B2),
+                                          );
+                                        })),
+                                bottomTitles: AxisTitles(
+                                    sideTitles: SideTitles(
+                                        showTitles: true,
+                                        getTitlesWidget: (value, meta) {
+                                          var text = "PTS";
+                                          switch (value.toInt()) {
+                                            case 1:
+                                              text = "PTS";
+                                              break;
+                                            case 2:
+                                              text = "3PT";
+                                              break;
+                                            case 3:
+                                              text = "AST";
+                                              break;
+                                            case 4:
+                                              text = "REB";
+                                              break;
+                                            case 5:
+                                              text = "BLK";
+                                              break;
+                                            case 6:
+                                              text = "STL";
+                                              break;
+                                          }
+                                          return Container(
+                                            margin:
+                                                EdgeInsets.only(top: 2.h),
+                                            child: Text(
+                                              text,
+                                              style: 9.w4(
+                                                  color: AppColors.cB2B2B2),
+                                            ),
+                                          );
+                                        })),
+                                rightTitles: const AxisTitles(),
+                                topTitles: const AxisTitles()),
+                            barTouchData: BarTouchData(
+                                enabled: true,
+                                handleBuiltInTouches: false,
+                                touchTooltipData: BarTouchTooltipData(
+                                  tooltipMargin: 0,
+                                  tooltipPadding: const EdgeInsets.all(0),
+                                  getTooltipColor: (_) =>
+                                      AppColors.cTransparent,
+                                  getTooltipItem: (BarChartGroupData group,
+                                      int groupIndex,
+                                      BarChartRodData rod,
+                                      int rodIndex) {
+                                    return BarTooltipItem(
+                                      rod.toY.toStringAsFixed(0),
+                                      11.w7(color: rod.color!, height: 1),
+                                    );
+                                  },
+                                )),
+                            barGroups: [
+                              BarChartGroupData(
+                                  showingTooltipIndicators: [0],
+                                  x: 1,
+                                  barRods: [
+                                    BarChartRodData(
+                                        width: 10.w,
+                                        borderRadius: BorderRadius.vertical(
+                                            top: Radius.circular(5.w)),
+                                        toY: controller.uuidPlayerInfo
+                                                ?.potential.pts
+                                                .toDouble() ??
+                                            0,
+                                        color: Utils.getChartColor(
+                                            controller.uuidPlayerInfo
                                                     ?.potential.pts
                                                     .toDouble() ??
-                                                0,
-                                            color: Utils.getChartColor(
-                                                controller.uuidPlayerInfo
-                                                        ?.potential.pts
-                                                        .toDouble() ??
-                                                    0))
-                                      ]),
-                                  BarChartGroupData(
-                                      showingTooltipIndicators: [0],
-                                      x: 2,
-                                      barRods: [
-                                        BarChartRodData(
-                                            width: 10.w,
-                                            borderRadius: BorderRadius.vertical(
-                                                top: Radius.circular(5.w)),
-                                            toY: controller.uuidPlayerInfo
+                                                0))
+                                  ]),
+                              BarChartGroupData(
+                                  showingTooltipIndicators: [0],
+                                  x: 2,
+                                  barRods: [
+                                    BarChartRodData(
+                                        width: 10.w,
+                                        borderRadius: BorderRadius.vertical(
+                                            top: Radius.circular(5.w)),
+                                        toY: controller.uuidPlayerInfo
+                                                ?.potential.threePts
+                                                .toDouble() ??
+                                            0,
+                                        color: Utils.getChartColor(
+                                            controller.uuidPlayerInfo
                                                     ?.potential.threePts
                                                     .toDouble() ??
-                                                0,
-                                            color: Utils.getChartColor(
-                                                controller.uuidPlayerInfo
-                                                        ?.potential.threePts
-                                                        .toDouble() ??
-                                                    0))
-                                      ]),
-                                  BarChartGroupData(
-                                      showingTooltipIndicators: [0],
-                                      x: 3,
-                                      barRods: [
-                                        BarChartRodData(
-                                            width: 10.w,
-                                            borderRadius: BorderRadius.vertical(
-                                                top: Radius.circular(5.w)),
-                                            toY: controller.uuidPlayerInfo
+                                                0))
+                                  ]),
+                              BarChartGroupData(
+                                  showingTooltipIndicators: [0],
+                                  x: 3,
+                                  barRods: [
+                                    BarChartRodData(
+                                        width: 10.w,
+                                        borderRadius: BorderRadius.vertical(
+                                            top: Radius.circular(5.w)),
+                                        toY: controller.uuidPlayerInfo
+                                                ?.potential.ast
+                                                .toDouble() ??
+                                            0,
+                                        color: Utils.getChartColor(
+                                            controller.uuidPlayerInfo
                                                     ?.potential.ast
                                                     .toDouble() ??
-                                                0,
-                                            color: Utils.getChartColor(
-                                                controller.uuidPlayerInfo
-                                                        ?.potential.ast
-                                                        .toDouble() ??
-                                                    0))
-                                      ]),
-                                  BarChartGroupData(
-                                      showingTooltipIndicators: [0],
-                                      x: 4,
-                                      barRods: [
-                                        BarChartRodData(
-                                            width: 10.w,
-                                            borderRadius: BorderRadius.vertical(
-                                                top: Radius.circular(5.w)),
-                                            toY: controller.uuidPlayerInfo
+                                                0))
+                                  ]),
+                              BarChartGroupData(
+                                  showingTooltipIndicators: [0],
+                                  x: 4,
+                                  barRods: [
+                                    BarChartRodData(
+                                        width: 10.w,
+                                        borderRadius: BorderRadius.vertical(
+                                            top: Radius.circular(5.w)),
+                                        toY: controller.uuidPlayerInfo
+                                                ?.potential.reb
+                                                .toDouble() ??
+                                            0,
+                                        color: Utils.getChartColor(
+                                            controller.uuidPlayerInfo
                                                     ?.potential.reb
                                                     .toDouble() ??
-                                                0,
-                                            color: Utils.getChartColor(
-                                                controller.uuidPlayerInfo
-                                                        ?.potential.reb
-                                                        .toDouble() ??
-                                                    0))
-                                      ]),
-                                  BarChartGroupData(
-                                      showingTooltipIndicators: [0],
-                                      x: 5,
-                                      barRods: [
-                                        BarChartRodData(
-                                            width: 10.w,
-                                            borderRadius: BorderRadius.vertical(
-                                                top: Radius.circular(5.w)),
-                                            toY: controller.uuidPlayerInfo
+                                                0))
+                                  ]),
+                              BarChartGroupData(
+                                  showingTooltipIndicators: [0],
+                                  x: 5,
+                                  barRods: [
+                                    BarChartRodData(
+                                        width: 10.w,
+                                        borderRadius: BorderRadius.vertical(
+                                            top: Radius.circular(5.w)),
+                                        toY: controller.uuidPlayerInfo
+                                                ?.potential.blk
+                                                .toDouble() ??
+                                            0,
+                                        color: Utils.getChartColor(
+                                            controller.uuidPlayerInfo
                                                     ?.potential.blk
                                                     .toDouble() ??
-                                                0,
-                                            color: Utils.getChartColor(
-                                                controller.uuidPlayerInfo
-                                                        ?.potential.blk
-                                                        .toDouble() ??
-                                                    0))
-                                      ]),
-                                  BarChartGroupData(
-                                      showingTooltipIndicators: [0],
-                                      x: 6,
-                                      barRods: [
-                                        BarChartRodData(
-                                            width: 10.w,
-                                            borderRadius: BorderRadius.vertical(
-                                                top: Radius.circular(5.w)),
-                                            toY: controller.uuidPlayerInfo
+                                                0))
+                                  ]),
+                              BarChartGroupData(
+                                  showingTooltipIndicators: [0],
+                                  x: 6,
+                                  barRods: [
+                                    BarChartRodData(
+                                        width: 10.w,
+                                        borderRadius: BorderRadius.vertical(
+                                            top: Radius.circular(5.w)),
+                                        toY: controller.uuidPlayerInfo
+                                                ?.potential.stl
+                                                .toDouble() ??
+                                            0,
+                                        color: Utils.getChartColor(
+                                            controller.uuidPlayerInfo
                                                     ?.potential.stl
                                                     .toDouble() ??
-                                                0,
-                                            color: Utils.getChartColor(
-                                                controller.uuidPlayerInfo
-                                                        ?.potential.stl
-                                                        .toDouble() ??
-                                                    0))
-                                      ]),
-                                ])),
-                          ),
-                        );
-                      }),
-                      18.vGap,
-                      if (controller.starUpDefineEntity != null)
-                        Center(
-                          child: InkWell(
-                            onTap: () {
-                              _upgradeDialog(context);
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: AppColors.cFF7954, width: 2.w),
-                                  borderRadius: BorderRadius.circular(18.h)),
-                              height: 36.h,
-                              width: 303.w,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const SizedBox.shrink(),
-                                  Text(
-                                    "UPGRADE",
-                                    style: 18.w7(color: AppColors.cFF7954),
-                                  ),
-                                  Container(
-                                      margin: EdgeInsets.only(right: 11.w),
-                                      child: IconWidget(
-                                        iconHeight: 14.w,
-                                        iconWidth: 14.w,
-                                        icon: Assets.uiIconArrowsPng,
-                                        iconColor: AppColors.cFF7954,
-                                      ))
-                                ],
+                                                0))
+                                  ]),
+                            ])),
+                      ),
+                    );
+                  }),
+                  18.vGap,
+                  if (controller.starUpDefineEntity != null)
+                    Center(
+                      child: InkWell(
+                        onTap: () {
+                          _upgradeDialog(context);
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: AppColors.cFF7954, width: 2.w),
+                              borderRadius: BorderRadius.circular(18.h)),
+                          height: 36.h,
+                          width: 303.w,
+                          child: Row(
+                            mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                            children: [
+                              const SizedBox.shrink(),
+                              Text(
+                                "UPGRADE",
+                                style: 18.w7(color: AppColors.cFF7954),
                               ),
-                            ),
+                              Container(
+                                  margin: EdgeInsets.only(right: 11.w),
+                                  child: IconWidget(
+                                    iconHeight: 14.w,
+                                    iconWidth: 14.w,
+                                    icon: Assets.uiIconArrowsPng,
+                                    iconColor: AppColors.cFF7954,
+                                  ))
+                            ],
                           ),
                         ),
-                    ],
-                  ),
-                ),
-              ],
+                      ),
+                    ),
+                ],
+              ),
             ),
+            20.vGap,
           ],
         ),
       ),

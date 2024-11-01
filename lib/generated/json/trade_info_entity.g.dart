@@ -207,7 +207,7 @@ TradeInfoTradePlayers $TradeInfoTradePlayersFromJson(
   if (basicMarketPrice != null) {
     tradeInfoTradePlayers.basicMarketPrice = basicMarketPrice;
   }
-  final String? position = jsonConvert.convert<String>(json['position']);
+  final int? position = jsonConvert.convert<int>(json['position']);
   if (position != null) {
     tradeInfoTradePlayers.position = position;
   }
@@ -302,7 +302,7 @@ extension TradeInfoTradePlayersExtension on TradeInfoTradePlayers {
     int? teamId,
     String? name,
     int? basicMarketPrice,
-    String? position,
+    int? position,
     String? uuid,
     int? buyPrice,
     int? removalTime,

@@ -55,6 +55,7 @@ class _GuessItemV2State extends State<GuessItemV2> {
                 playerId: player.guessInfo.playerId,
                 getXRouteId: GlobalNestedKey.PICKS,
                 backgroundColor: AppColors.cD9D9D9,
+                tabStr: player.tabStr,
                 showGrade: false,
               ),
               5.hGap,
