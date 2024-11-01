@@ -485,7 +485,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            Utils.formatMoney(maxWin),
+                            Utils.formatChip(maxWin),
                             style: 18.w7(color: AppColors.c262626, height: 1),
                           ),
                           Text(
@@ -496,7 +496,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                       ),
                     ),
                   ),
-                  // if (picksIndexController.guessWinningStreak > 0)
+                  if (picksIndexController.guessWinningStreak > 0)
                     Flexible(
                         child: Container(
                       height: 40.w,
@@ -534,7 +534,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
-                                Utils.formatMoney(
+                                Utils.formatChip(
                                     picksIndexController.streakReward),
                                 style:
                                     18.w7(color: AppColors.cF1F1F1, height: 1),

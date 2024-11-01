@@ -150,6 +150,36 @@ class NbaPlayerInfosPlayerDataCapList {
 
   Map<String, dynamic> toJson() => $NbaPlayerInfosPlayerDataCapListToJson(this);
 
+  num getValue(String key) {
+    if (key.toLowerCase() == "reb") {
+      return _getREB();
+    }
+    var json = toJson();
+    for (var k in json.keys) {
+      if (k.toLowerCase() == key.toLowerCase()) {
+        return json[k];
+      }
+    }
+    return 0;
+  }
+
+  double _getREB() {
+    return (oreb + dreb) / 2;
+  }
+
+  double getThreePT() {
+    return double.parse((threePm / threePa * 100).toStringAsFixed(0));
+  }
+
+  double getMaxValue() {
+    var value = max(pts, getThreePT());
+    value = max(value, ast);
+    value = max(value, (dreb + oreb) / 2);
+    value = max(value, blk);
+    value = max(value, stl);
+    return value + 20;
+  }
+
   @override
   String toString() {
     return jsonEncode(this);

@@ -46,7 +46,7 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
   Animation<double>? _rateAnimation;
 
   TeamPlayerInfoEntity? uuidPlayerInfo;
-  late NbaPlayerInfosPlayerDataAvgList avgList;
+  late NbaPlayerInfosPlayerDataCapList capList;
   NbaPlayerBaseInfoEntity? nbaPlayerBaseInfoEntity;
   List<BarChartGroupData> _barGroups = [];
 
@@ -129,8 +129,9 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
     }
 
     Future.wait(futures).then((result) {
-      avgList = (result[0] as NbaPlayerInfosEntity)
-          .playerDataAvgList
+      //todo 自己的球员需要使用其他接口获取ability的数据，接口暂未提供
+      capList = (result[0] as NbaPlayerInfosEntity)
+          .playerDataCapList
           .firstWhere((e) => e.playerId == arguments.playerId);
       nbaPlayerBaseInfoEntity = (result[1] as NbaPlayerBaseInfoEntity);
       _barGroups.clear();
@@ -176,38 +177,38 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
         ChartSampleData(x: 'STL', y: 55, yValue: 40),
       ];
 
-      var maxValue = avgList.getMaxValue();
+      var maxValue = capList.getMaxValue();
       var rate = (maxValue == 0) ? 1 : (maxValue / 55);
       maxValue = maxValue / rate;
       dataSource = <ChartSampleData>[
         ChartSampleData(
             x: 'PTS',
             y: maxValue.isNaN ? 0 : maxValue,
-            yValue: (avgList.pts / rate).isNaN ? 0 : avgList.pts / rate),
+            yValue: (capList.pts / rate).isNaN ? 0 : capList.pts / rate),
         ChartSampleData(
             x: '3PT',
             y: maxValue.isNaN ? 0 : maxValue,
-            yValue: (avgList.getThreePT() / rate).isNaN
+            yValue: (capList.getThreePT() / rate).isNaN
                 ? 0
-                : avgList.getThreePT() / rate),
+                : capList.getThreePT() / rate),
         ChartSampleData(
             x: 'AST',
             y: maxValue.isNaN ? 0 : maxValue,
-            yValue: (avgList.ast / rate).isNaN ? 0 : avgList.ast / rate),
+            yValue: (capList.ast / rate).isNaN ? 0 : capList.ast / rate),
         ChartSampleData(
             x: 'REB',
             y: maxValue.isNaN ? 0 : maxValue,
-            yValue: (avgList.getValue('reb') / rate).isNaN
+            yValue: (capList.getValue('reb') / rate).isNaN
                 ? 0
-                : avgList.getValue('reb') / rate),
+                : capList.getValue('reb') / rate),
         ChartSampleData(
             x: 'BLK',
             y: maxValue.isNaN ? 0 : maxValue,
-            yValue: (avgList.blk / rate).isNaN ? 0 : avgList.blk / rate),
+            yValue: (capList.blk / rate).isNaN ? 0 : capList.blk / rate),
         ChartSampleData(
             x: 'STL',
             y: maxValue.isNaN ? 0 : maxValue,
-            yValue: (avgList.stl / rate).isNaN ? 0 : avgList.stl / rate),
+            yValue: (capList.stl / rate).isNaN ? 0 : capList.stl / rate),
       ];
       if (cacheUuid != null) {
         uuidPlayerInfo = result[4] as TeamPlayerInfoEntity;
