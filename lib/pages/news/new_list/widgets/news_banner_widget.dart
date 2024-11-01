@@ -1,7 +1,12 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-10-25 15:29:28
+ * @LastEditTime: 2024-11-01 18:49:36
+ */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
-import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
+import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/net/http.dart';
-import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/swiper_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/controller.dart';
@@ -38,11 +43,13 @@ class NewsBannerWidget extends StatelessWidget {
               onTap: (index) {
                 // var newsId = controller.state.banners[index].id;
                 // controller.getNewsFlow(newsId, isRefresh: true);
-                Get.toNamed(RouteNames.newsDetail,
-                    arguments: controller.state.banners[index].id!,
-                    id: GlobalNestedKey.NEWS);
+                // Get.toNamed(RouteNames.newsDetail,
+                //     arguments: controller.state.banners[index].id!,
+                //     id: GlobalNestedKey.NEWS);
                 // Navigator.of(context).push(
                 //     createCustomRoute(this, NewsDetailPage(123)));
+                controller.pageToDetail(NewsListDetail.fromJson(
+                    controller.state.banners[index].toJson()));
               },
             ),
           );

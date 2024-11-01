@@ -142,7 +142,7 @@ class _Item extends StatelessWidget {
             ),
             8.vGap,
             Text(
-              item.content,
+              item.title,
               maxLines: 3,
               style: 12.w4(color: AppColors.c262626),
             ),

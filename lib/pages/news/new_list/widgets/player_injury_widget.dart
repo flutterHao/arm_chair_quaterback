@@ -88,7 +88,7 @@ class _Item extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    item.content,
+                    item.title,
                     maxLines: 2,
                     style: 12.w4(color: AppColors.c262626),
                   ),

@@ -194,7 +194,7 @@ class TrainingController extends GetxController
   void shootBall() {
     if (isShot.value || isPlaying) return;
     if (ballNum.value <= 0) {
-      EasyLoading.showToast("basketballs has been used up");
+      // EasyLoading.showToast("basketballs has been used up");
       return;
     }
     isPlaying = true;

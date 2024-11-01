@@ -154,7 +154,7 @@ class _Item1 extends GetView<NewListController> {
             Container(
               margin: EdgeInsets.symmetric(horizontal: 14.w),
               child: Text(
-                item.content,
+                item.title,
                 maxLines: 3,
                 style: 12.w4(color: AppColors.c262626),
               ),
@@ -282,7 +282,7 @@ class _Item2 extends StatelessWidget {
                     margin:
                         EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.w),
                     child: Text(
-                      item.content,
+                      item.title,
                       maxLines: 3,
                       style: 12.w4(color: AppColors.c262626),
                     ),

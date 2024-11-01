@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2024-10-31 21:14:20
+ * @LastEditTime: 2024-11-01 19:17:26
  */
 /*
  * @Description: 
@@ -381,7 +381,7 @@ class PlayerAwater extends StatelessWidget {
             left: 0,
             top: 2,
             child: Text(
-              Utils.getPlayBaseInfo(player.playerId).grade,
+              Utils.formatGrade(Utils.getPlayBaseInfo(player.playerId).grade),
               style: 17.w7(color: AppColors.c262626),
             ),
           ),

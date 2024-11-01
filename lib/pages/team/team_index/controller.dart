@@ -2,11 +2,12 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-11-01 17:25:51
+ * @LastEditTime: 2024-11-01 18:28:31
  */
 
 import 'dart:async';
 
+import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -51,6 +52,8 @@ class TeamIndexController extends GetxController
     //   pageLeft.value = pageAnimationCtrl.value;
     //   update(["team_index"]);
     // });
+    CacheApi.getNBATeamDefine();
+    CacheApi.getNBAPlayerInfo();
   }
 
   @override

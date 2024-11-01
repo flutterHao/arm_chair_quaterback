@@ -167,7 +167,7 @@ class _Item extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    item.content,
+                    item.title,
                     maxLines: 2,
                     style: 12.w4(color: AppColors.c262626),
                   ),

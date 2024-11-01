@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-11-01 17:25:35
+ * @LastEditTime: 2024-11-01 17:30:36
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -30,7 +30,6 @@ import 'package:arm_chair_quaterback/pages/news/rank/widgets/border_container.da
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/border_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/pie_chart.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/vertical_drag_widget.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/view.dart';
 import 'package:flutter/material.dart';
@@ -762,9 +761,6 @@ class _TeamView extends GetView<TeamIndexController> {
   @override
   Widget build(BuildContext context) {
     Get.put(BeautyController());
-    // TeamController teamController = Get.put(TeamController());
-    // teamController.initData();
-
     return GetBuilder<TeamIndexController>(
       init: TeamIndexController(),
       id: "team_index",

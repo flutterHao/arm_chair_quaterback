@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 19:00:39
- * @LastEditTime: 2024-11-01 11:47:17
+ * @LastEditTime: 2024-11-01 19:19:08
  */
 import 'dart:ui';
 
@@ -46,7 +46,7 @@ class NewListState {
   Map<int, Map<String, Color>> teamColorMap = {
     114: {"light": AppColors.c008348, "dart": AppColors.c000000},
     128: {"light": AppColors.c595959, "dart": AppColors.c000000},
-    109: {"light": AppColors.cAD5207, "dart": AppColors.c000000},
+    109: {"light": AppColors.c00438C, "dart": AppColors.c000000},
     120: {"light": AppColors.c003DA6, "dart": AppColors.c000000},
     129: {"light": AppColors.cBD1B21, "dart": AppColors.c000000},
     101: {"light": AppColors.c99152F, "dart": AppColors.c000000},

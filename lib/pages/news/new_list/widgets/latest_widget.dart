@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-25 16:33:07
- * @LastEditTime: 2024-11-01 10:51:10
+ * @LastEditTime: 2024-11-01 19:02:59
  */
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:flutter/material.dart';

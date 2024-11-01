@@ -135,7 +135,7 @@ class PopularPlayerWidget extends StatelessWidget {
                                     ),
                                     5.vGap,
                                     Text(
-                                      item.content,
+                                      item.title,
                                       maxLines: 3,
                                       style: 12.w4(color: AppColors.c262626),
                                     ),

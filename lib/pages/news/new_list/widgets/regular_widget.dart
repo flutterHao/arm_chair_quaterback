@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-21 16:48:47
- * @LastEditTime: 2024-10-31 15:18:00
+ * @LastEditTime: 2024-11-01 18:58:54
  */
 import 'dart:math';
 
@@ -193,7 +193,7 @@ class _Item extends GetView<NewListController> {
             Container(
               margin: EdgeInsets.symmetric(horizontal: 14.w, vertical: 11.5.w),
               child: Text(
-                item.content,
+                item.title,
                 maxLines: 4,
                 style: 12.w4(color: AppColors.c262626),
               ),
