@@ -12,6 +12,7 @@ import 'package:arm_chair_quaterback/pages/home/index.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -63,6 +64,10 @@ class TrainingController extends GetxController
   late AnimationController flyCtrl;
   late List<MoneyItem> moneyList;
   late AnimationController slotCtrl;
+  //奖励结果放大缩小
+  var isScaleBuff = 1.0.obs;
+  var isScaleProp = 1.0.obs;
+  var isScaleBall = 1.0.obs;
 
   //球员滚动
   late SwiperController swiperControl;
@@ -86,12 +91,12 @@ class TrainingController extends GetxController
     );
 
     flyCtrl = AnimationController(
-      duration: const Duration(milliseconds: 800),
+      duration: const Duration(milliseconds: 500),
       vsync: this,
     );
 
     // 初始化10片随机落叶
-    moneyList = List.generate(20, (index) => MoneyItem());
+    moneyList = List.generate(40, (index) => MoneyItem());
 
     swiperControl = SwiperController();
     setBallAnimation(0);
@@ -188,6 +193,10 @@ class TrainingController extends GetxController
   // 投篮的逻辑
   void shootBall() {
     if (isShot.value || isPlaying) return;
+    if (ballNum.value <= 0) {
+      EasyLoading.showToast("basketballs has been used up");
+      return;
+    }
     isPlaying = true;
     int time = trainingInfo.training.ballRefreshTime;
     if (ballNum.value <= 0) return;
@@ -814,22 +823,35 @@ class TrainingController extends GetxController
         moneyCtrl.reset();
       });
     }
-    flyCtrl.forward().then((v) {
-      isShowBuff.value = false;
-      isShowProp.value = false;
-      isShowBall.value = false;
-      Future.delayed(const Duration(seconds: 1), () {
-        showText.value = "TRAINING";
+    Future.delayed(const Duration(milliseconds: 300), () {
+      flyCtrl.forward().then((v) {
+        isShowBuff.value = false;
+        isShowProp.value = false;
+        isShowBall.value = false;
+        Future.delayed(const Duration(seconds: 1), () {
+          showText.value = "TRAINING";
+        });
+        //更新界面
+        slotCtrl.reset();
+        flyCtrl.reset();
+
+        bllAnimationCtrl.reset();
+        ballNum.value = trainingInfo.prop.num;
+        swiperControl.startAutoplay();
+        update(["training_page"]);
+        if (ballNum.value > 0) {
+          isPlaying = false;
+          isShot.value = false;
+        }
+        if (propMap[304]! > 0) isScaleBuff.value = 1.2;
+        if (propMap[305]! > 0) isScaleProp.value = 2;
+        if (propMap[306]! > 0) isScaleBall.value = 2;
+        Future.delayed(const Duration(milliseconds: 300), () {
+          isScaleBuff.value = 1;
+          isScaleProp.value = 1;
+          isScaleBall.value = 1;
+        });
       });
-      //更新界面
-      slotCtrl.reset();
-      flyCtrl.reset();
-      isPlaying = false;
-      isShot.value = false;
-      bllAnimationCtrl.reset();
-      ballNum.value = trainingInfo.prop.num;
-      swiperControl.startAutoplay();
-      update(["training_page"]);
     });
   }
 

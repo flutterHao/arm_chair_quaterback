@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-25 16:33:07
- * @LastEditTime: 2024-10-29 16:54:57
+ * @LastEditTime: 2024-11-01 10:51:10
  */
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +51,9 @@ class LatestWidget extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              item.content,
+                              ObjectUtil.isNotEmpty(item.title)
+                                  ? item.title
+                                  : item.content,
                               maxLines: 2,
                               style: 12.w4(color: AppColors.c262626),
                             ),

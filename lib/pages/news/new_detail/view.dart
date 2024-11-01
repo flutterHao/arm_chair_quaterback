@@ -5,8 +5,10 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/app_bar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/vertival_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comment_controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comment_item.dart';
+import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comments_dialog.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/news_bottom_button.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/index.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/widgets/shadow_container.dart';
@@ -200,17 +202,33 @@ class NewsDetailItem extends StatelessWidget {
 
   Widget _hotComment() {
     return newsDetail.reviewsList!.isNotEmpty
-        ? Container(
-            width: double.infinity,
-            // height: 110.w,
-            padding: EdgeInsets.symmetric(vertical: 15.w, horizontal: 20.w),
-            margin: EdgeInsets.symmetric(horizontal: 16.w),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: AppColors.cFFFFFF,
-              borderRadius: BorderRadius.circular(16.w),
+        ? InkWell(
+            onTap: () {
+              Get.find<CommentController>()
+                  .getReviews(newsDetail.id!, isRefresh: true);
+              showModalBottomSheet(
+                isScrollControlled: true,
+                context: Get.context!,
+                // barrierColor: Colors.transparent,
+                backgroundColor: Colors.transparent,
+                builder: (context) {
+                  return VerticalDragBackWidget(
+                      child: CommentsDialog(detail: newsDetail));
+                },
+              );
+            },
+            child: Container(
+              width: double.infinity,
+              // height: 110.w,
+              padding: EdgeInsets.symmetric(vertical: 15.w, horizontal: 20.w),
+              margin: EdgeInsets.symmetric(horizontal: 16.w),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: AppColors.cFFFFFF,
+                borderRadius: BorderRadius.circular(16.w),
+              ),
+              child: HotComment(item: newsDetail.reviewsList!.first),
             ),
-            child: HotComment(item: newsDetail.reviewsList!.first),
           )
         : const SizedBox();
   }

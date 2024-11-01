@@ -40,9 +40,11 @@ class _TrainingDragBackWidgetState extends State<TrainingDragBackWidget>
     with SingleTickerProviderStateMixin {
   ///手指按下的x位置
   double startX = -1;
+  double startY = -1;
 
   ///移动的距离
   double offsetX = 0;
+  double offSetY = 0;
 
   /// 布局宽度
   double width = 0;
@@ -127,6 +129,7 @@ class _TrainingDragBackWidgetState extends State<TrainingDragBackWidget>
       }
       // print('onHorizontalDragDown: ${detail.localPosition}');
       startX = detail.localPosition.dx;
+      startY = detail.localPosition.dy;
     }
 
     onHorizontalDragUpdate(DragUpdateDetails detail) {
@@ -147,10 +150,13 @@ class _TrainingDragBackWidgetState extends State<TrainingDragBackWidget>
       widget.onDragUpdate();
       if (startX <= 0) {
         startX = detail.localPosition.dx;
+        startY = detail.localPosition.dy;
       }
       offsetX = detail.localPosition.dx - startX;
+      offSetY = detail.localPosition.dy - startY;
       if (offsetX < 0) {
         offsetX = 0;
+        offSetY = 0;
       }
       setState(() {});
     }
@@ -202,7 +208,7 @@ class _TrainingDragBackWidgetState extends State<TrainingDragBackWidget>
               CustomTapGestureRecognizer: GestureRecognizerFactoryWithHandlers<
                   CustomTapGestureRecognizer>(
                 () => CustomTapGestureRecognizer(),
-                (HorizontalDragGestureRecognizer detector) {
+                (DragGestureRecognizer detector) {
                   detector
                     ..onDown = onHorizontalDragDown
                     ..onStart = onHorizontalDragStart

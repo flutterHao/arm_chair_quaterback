@@ -31,18 +31,19 @@ class TeamRankWidget extends GetView<NewListController> {
                 ),
               ),
               Container(
-                height: 225.w,
+                height: 175.w,
                 alignment: Alignment.centerLeft,
                 margin: EdgeInsets.only(bottom: 20.w),
                 child: PageView.builder(
+                  padEnds: false,
                   controller: PageController(
-                    viewportFraction: 0.9,
+                    viewportFraction: 283 / 375,
                   ),
                   physics: const BouncingScrollPhysics(),
                   itemCount: controller.state.teamMap.entries.length,
                   itemBuilder: (context, index) {
                     return Padding(
-                      padding: EdgeInsets.only(right: 20.w), // 控制左右间距
+                      padding: EdgeInsets.only(left: 16.w), // 控制左右间距
                       child: InkWell(
                         onTap: () {
                           Get.toNamed(
@@ -73,7 +74,7 @@ class TeamRankItem extends GetView<NewListController> {
     final item = controller.state.teamMap.entries.elementAt(index);
     return ShadowContainer(
       width: width,
-      height: 225.w,
+      height: 175.w,
       child: Column(
         children: [
           Container(
@@ -119,51 +120,53 @@ class TeamRankItem extends GetView<NewListController> {
             color: AppColors.cD9D9D9,
             margin: EdgeInsets.symmetric(horizontal: 9.w),
           ),
-          14.vGap,
-          Row(
-            children: [
-              Expanded(
-                flex: 2,
-                child: Container(
-                  alignment: Alignment.center,
-                  width: 100.w,
-                  child: Text(
-                    "TEAM",
-                    style: 11.w4(color: AppColors.cB3B3B3),
+          SizedBox(
+            height: 36.w,
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Container(
+                    alignment: Alignment.center,
+                    width: 100.w,
+                    child: Text(
+                      "TEAM",
+                      style: 11.w4(color: AppColors.cB3B3B3),
+                    ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: Container(
-                  width: 88.w,
-                  alignment: Alignment.center,
-                  child: Text(
-                    "W-L",
-                    style: 11.w4(color: AppColors.cB3B3B3),
+                Expanded(
+                  child: Container(
+                    width: 88.w,
+                    alignment: Alignment.center,
+                    child: Text(
+                      "W-L",
+                      style: 11.w4(color: AppColors.cB3B3B3),
+                    ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: Container(
-                  alignment: Alignment.center,
-                  width: 64.w,
-                  child: Text(
-                    "%",
-                    style: 11.w4(color: AppColors.cB3B3B3),
+                Expanded(
+                  child: Container(
+                    alignment: Alignment.center,
+                    width: 64.w,
+                    child: Text(
+                      "%",
+                      style: 11.w4(color: AppColors.cB3B3B3),
+                    ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: Container(
-                  alignment: Alignment.center,
-                  width: 40.w,
-                  child: Text(
-                    "GB",
-                    style: 11.w4(color: AppColors.cB3B3B3),
+                Expanded(
+                  child: Container(
+                    alignment: Alignment.center,
+                    width: 40.w,
+                    child: Text(
+                      "GB",
+                      style: 11.w4(color: AppColors.cB3B3B3),
+                    ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
           SizedBox(
               width: width,
@@ -184,7 +187,7 @@ class TeamListView extends StatelessWidget {
   Widget build(BuildContext context) {
     int count = list.length > 3 ? 3 : 0;
     return SizedBox(
-      height: 144.w,
+      height: 99.w,
       child: ListView.builder(
           padding: const EdgeInsets.all(0),
           shrinkWrap: true,
@@ -192,7 +195,7 @@ class TeamListView extends StatelessWidget {
           itemBuilder: (context, index) {
             final item = list[index];
             return SizedBox(
-              height: 48.w,
+              height: 30.w,
               child: Row(
                 children: [
                   Expanded(

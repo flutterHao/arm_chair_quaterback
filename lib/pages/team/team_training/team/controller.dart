@@ -47,7 +47,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   @override
   void onReady() {
     super.onReady();
-    _initData();
+    initData();
   }
 
   /// 在 [onDelete] 方法之前调用。
@@ -63,7 +63,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
     _timer.cancel();
   }
 
-  void _initData() async {
+  void initData() async {
     if (HomeController.to.userEntiry.teamLoginInfo == null) {
       await HomeController.to.refreshUserEntity();
     }
@@ -206,6 +206,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
           '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
       if (_recoverSeconds <= 0) {
         _timer.cancel();
+        // _initData();
       }
     });
   }

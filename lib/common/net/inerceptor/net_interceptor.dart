@@ -198,10 +198,10 @@ class NetInterceptor extends InterceptorsWrapper {
     Log.e(
         'url -> ${eInfo.url} \n error.code -> ${eInfo.code} \n error.message -> ${eInfo.message}');
 
-    ///TODO
-    // if (eInfo.code != 401) {
-    EasyLoading.showError(eInfo.message);
-    // }
+    ///服务器返回错误
+    if (eInfo.code < 500) {
+      EasyLoading.showError(eInfo.message);
+    }
   }
 
   /// 错误信息

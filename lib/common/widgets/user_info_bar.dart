@@ -123,9 +123,11 @@ class MoneyAndCoinWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                iconText(Assets.uiIconJettonPng, Utils.formatChip(info.getCoin())),
+                iconText(
+                    Assets.uiIconJettonPng, Utils.formatChip(info.getCoin())),
                 4.vGap,
-                iconText(Assets.uiIconMoneyPng, Utils.formatMoney(info.getMoney())),
+                iconText(
+                    Assets.uiIconMoneyPng, Utils.formatMoney(info.getMoney())),
               ],
             ),
           );
@@ -140,7 +142,8 @@ class MoneyAndCoinWidget extends StatelessWidget {
       // constraints: BoxConstraints(minWidth: 66.w),
       padding: EdgeInsets.only(left: 4.w, right: 9.w),
       decoration: BoxDecoration(
-          color: Colors.black, borderRadius: BorderRadius.circular(8.w)),
+          color: Colors.black.withOpacity(0.5),
+          borderRadius: BorderRadius.circular(8.w)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

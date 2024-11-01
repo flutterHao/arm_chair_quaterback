@@ -169,11 +169,11 @@ class LineUpTab extends GetView<TeamController> {
                   "Main",
                   style: 19.w7(color: AppColors.cF1F1F1),
                 ),
-                8.hGap,
-                Text(
-                  "expend more stamina",
-                  style: 10.w7(color: AppColors.cB3B3B3),
-                ),
+                // 8.hGap,
+                // Text(
+                //   "expend more stamina",
+                //   style: 10.w7(color: AppColors.cB3B3B3),
+                // ),
               ],
             ),
             // ignore: prefer_const_constructors
@@ -186,11 +186,11 @@ class LineUpTab extends GetView<TeamController> {
                   "Substitute",
                   style: 19.w7(color: AppColors.cF1F1F1),
                 ),
-                8.hGap,
-                Text(
-                  "expend less stamina",
-                  style: 10.w7(color: AppColors.cB3B3B3),
-                ),
+                // 8.hGap,
+                // Text(
+                //   "expend less stamina",
+                //   style: 10.w7(color: AppColors.cB3B3B3),
+                // ),
               ],
             ),
             // ignore: prefer_const_constructors

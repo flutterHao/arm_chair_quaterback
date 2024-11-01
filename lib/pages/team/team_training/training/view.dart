@@ -141,15 +141,21 @@ class TrainingPage extends GetView<TrainingController> {
                             left: 5.w,
                             child: InkWell(
                               onTap: () => controller.showBubles(),
-                              child: IconWidget(
-                                  iconWidth: 27.w,
-                                  iconHeight: 20.w,
-                                  icon: Assets.uiMoney_02Png),
+                              child: Obx(() {
+                                return AnimatedScale(
+                                  duration: const Duration(milliseconds: 300),
+                                  scale: controller.isScaleProp.value,
+                                  child: IconWidget(
+                                      iconWidth: 27.w,
+                                      iconHeight: 20.w,
+                                      icon: Assets.uiMoney_02Png),
+                                );
+                              }),
                             ),
                           ),
                           AnimatedPositioned(
                             left: 186.w,
-                            duration: Duration(milliseconds: 100),
+                            duration: const Duration(milliseconds: 100),
                             child: InkWell(
                               onTap: () => showDialog(
                                   context: context,
@@ -174,47 +180,34 @@ class TrainingPage extends GetView<TrainingController> {
                       alignment: FractionalOffset.center,
                       transform: Matrix4.identity()..setEntry(3, 2, 0.01),
                       // ..rotateX(-pi / 20),
-                      child: Container(
-                        // color: Colors.amber,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            // Image.asset(
-                            //   Assets.uiMoney_02Png,
-                            //   width: 60.h,
-                            //   fit: BoxFit.fitWidth,
-                            // ),
-                            // 10.hGap,
-                            AnimatedBuilder(
-                                animation: controller.moneyCtrl,
-                                builder: (context, child) {
-                                  var finish =
-                                      controller.moneyCtrl.value == 0 ||
-                                          controller.moneyCtrl.value == 1;
-                                  return Transform.scale(
-                                    scale: finish
-                                        ? 1
-                                        : 1.2 - controller.moneyCtrl.value * .2,
-                                    child: Obx(() {
-                                      return Text(
-                                        controller.showText.value,
-                                        style: TextStyle(
-                                            fontSize: 40.sp,
-                                            fontWeight: FontWeight.bold,
-                                            height: 1,
-                                            color: controller.showText.value ==
-                                                    "TRAINING"
-                                                ? AppColors.c3EC6FF
-                                                    .withOpacity(0.3)
-                                                : AppColors.cFF7954
-                                                    .withOpacity(0.5)),
-                                      );
-                                    }),
-                                  );
-                                })
-                          ],
-                        ),
-                      ),
+                      child: AnimatedBuilder(
+                          animation: controller.moneyCtrl,
+                          builder: (context, child) {
+                            var finish = controller.moneyCtrl.value == 0 ||
+                                controller.moneyCtrl.value == 1;
+                            return Obx(() {
+                              var isTraiing =
+                                  controller.showText.value == "TRAINING";
+                              return Transform.scale(
+                                  scale: isTraiing
+                                      ? 1.2
+                                      : (finish
+                                          ? 1.2
+                                          : 1.4 -
+                                              controller.moneyCtrl.value * .2),
+                                  child: Text(
+                                    controller.showText.value,
+                                    style: TextStyle(
+                                        fontSize: 40.sp,
+                                        fontWeight: FontWeight.bold,
+                                        height: 1,
+                                        color: isTraiing
+                                            ? AppColors.c3EC6FF.withOpacity(0.3)
+                                            : AppColors.cFF7954
+                                                .withOpacity(0.5)),
+                                  ));
+                            });
+                          }),
                     ),
                   ),
 
@@ -249,20 +242,59 @@ class TrainingPage extends GetView<TrainingController> {
                                     itemBuilder: (context, i) {
                                       return Stack(
                                         children: [
+                                          // Visibility(
+                                          //   visible: controller
+                                          //               .slotCtrl.value !=
+                                          //           0 &&
+                                          //       controller.slotCtrl.value != 1,
+                                          //   // visible: true,
+                                          //   child: Container(
+                                          //     height: 80.h,
+                                          //     width: 145.h,
+                                          //     // color: Colors.red.withOpacity(0.5),
+                                          //     padding: EdgeInsets.symmetric(
+                                          //         horizontal: 4.h,
+                                          //         vertical: 4.h),
+                                          //     child: GridView.builder(
+                                          //       padding:
+                                          //           const EdgeInsets.all(0),
+                                          //       gridDelegate:
+                                          //           const SliverGridDelegateWithFixedCrossAxisCount(
+                                          //         crossAxisCount: 15,
+                                          //       ),
+                                          //       itemCount: 180,
+                                          //       itemBuilder: (context, index) {
+                                          //         return Visibility(
+                                          //           visible:
+                                          //               random.nextInt(3) == 1,
+                                          //           child: Container(
+                                          //             margin:
+                                          //                 const EdgeInsets.all(
+                                          //                     1),
+                                          //             decoration: BoxDecoration(
+                                          //                 color: Colors.white
+                                          //                     .withOpacity(0.7),
+                                          //                 borderRadius:
+                                          //                     BorderRadius
+                                          //                         .circular(2)),
+                                          //           ),
+                                          //         );
+                                          //       },
+                                          //     ),
+                                          //   ),
+                                          // ),
+
                                           Visibility(
                                             visible: controller
                                                         .slotCtrl.value !=
                                                     0 &&
                                                 controller.slotCtrl.value != 1,
-                                            // visible: true,
                                             child: Container(
                                               height: 80.h,
                                               width: 145.h,
-                                              // color: Colors.red.withOpacity(0.5),
-                                              padding: EdgeInsets.only(
-                                                  left: 4.h,
-                                                  right: 4.h,
-                                                  bottom: 8.h),
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 4.h,
+                                                  vertical: 4.h),
                                               child: GridView.builder(
                                                 padding:
                                                     const EdgeInsets.all(0),
@@ -272,25 +304,50 @@ class TrainingPage extends GetView<TrainingController> {
                                                 ),
                                                 itemCount: 180,
                                                 itemBuilder: (context, index) {
+                                                  // 计算当前方块相对于中心的距离
+                                                  int rows = 180 ~/ 15; // 行数
+                                                  int row = index ~/ 15;
+                                                  int col = index % 15;
+                                                  double centerRow = rows / 2;
+                                                  double centerCol = 15 / 2;
+
+                                                  double distanceToCenter =
+                                                      sqrt(
+                                                    pow(centerRow - row, 2) +
+                                                        pow(centerCol - col, 2),
+                                                  );
+
+                                                  // 设置显示概率，更大的中心区域概率，边缘显著减少
+                                                  num visibilityProbability = (1 -
+                                                          pow(
+                                                              distanceToCenter /
+                                                                  (rows / 2),
+                                                              2))
+                                                      .clamp(0.1,
+                                                          1.0); // 中心显示概率接近1，边缘概率接近0
+
                                                   return Visibility(
-                                                    visible:
-                                                        random.nextInt(3) == 1,
+                                                    visible: random
+                                                            .nextDouble() <
+                                                        visibilityProbability,
                                                     child: Container(
                                                       margin:
                                                           const EdgeInsets.all(
                                                               1),
                                                       decoration: BoxDecoration(
-                                                          color: Colors.white
-                                                              .withOpacity(0.7),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(2)),
+                                                        color: Colors.white
+                                                            .withOpacity(0.7),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(2),
+                                                      ),
                                                     ),
                                                   );
                                                 },
                                               ),
                                             ),
                                           ),
+
                                           Container(
                                               // color: Colors.blue,
                                               width: 145.h,
@@ -298,15 +355,15 @@ class TrainingPage extends GetView<TrainingController> {
                                               child: Visibility(
                                                   visible: controller
                                                       .slotCard[i].value,
-                                                  child: ctrl.currentAward[i] != 0
+                                                  child: ctrl.currentAward[i] !=
+                                                          0
                                                       ? Image.asset(
                                                           Utils.getPropIconUrl(
                                                               ctrl.currentAward[
                                                                   i]),
                                                           width: 80.h,
                                                           fit: BoxFit.fitWidth,
-                                                          color: Colors.white
-                                                              .withOpacity(0.6),
+                                                          color: Colors.white,
                                                           errorBuilder: (context,
                                                                   error,
                                                                   stackTrace) =>
@@ -329,7 +386,7 @@ class TrainingPage extends GetView<TrainingController> {
                     child: Container(
                       // color: Colors.red,
                       child: Opacity(
-                        opacity: 0.3,
+                        opacity: 0.4,
                         child: MirrorImageWidget(
                             imagePath: Assets.uiBgCourtSeatlinePng,
                             fullWidth: 450.h,
@@ -384,15 +441,21 @@ class TrainingPage extends GetView<TrainingController> {
                         itemBuilder: (context, index) {
                           int count = controller.trainingInfo.buff.length;
                           return count > index
-                              ? CircleProgressView(
-                                  title: Utils.getPosition(controller
-                                      .trainingInfo.buff[index].position),
-                                  progressColor: AppColors.c31E99E,
-                                  progress: controller
-                                          .trainingInfo.buff[index].buffValue *
-                                      100,
-                                  width: 49.h,
-                                  height: 49.h)
+                              ? Obx(() {
+                                  return AnimatedScale(
+                                    duration: const Duration(milliseconds: 300),
+                                    scale: controller.isScaleBuff.value,
+                                    child: CircleProgressView(
+                                        title: Utils.getPosition(controller
+                                            .trainingInfo.buff[index].position),
+                                        progressColor: AppColors.c31E99E,
+                                        progress: controller.trainingInfo
+                                                .buff[index].buffValue *
+                                            100,
+                                        width: 49.h,
+                                        height: 49.h),
+                                  );
+                                })
                               : Container(
                                   width: 49.h,
                                   height: 49.h,
@@ -430,13 +493,13 @@ class TrainingPage extends GetView<TrainingController> {
                     top: 500.h,
                     child: SizedBox(
                       width: 375.w,
-                      height: 86.h,
+                      height: 75.w,
                       child: Swiper(
                         key: Key("${controller.playerList.length}"),
                         physics: const NeverScrollableScrollPhysics(),
                         containerWidth: 64.w,
-                        containerHeight: 86.h,
-                        // itemHeight: 64.w,
+                        containerHeight: 64.w,
+                        itemHeight: 64.w,
                         itemWidth: 64.w,
                         viewportFraction: .2,
                         indicatorLayout: PageIndicatorLayout.COLOR,
@@ -461,9 +524,16 @@ class TrainingPage extends GetView<TrainingController> {
                                 controller.currentIndex.value == index;
                             return Visibility(
                               visible: !controller.isShot.value || isCUrrent,
-                              child: TrainingAvater(
-                                player: controller.playerList[index],
-                                isCurrent: isCUrrent && controller.isShot.value,
+                              child: AnimatedScale(
+                                duration: const Duration(milliseconds: 200),
+                                scale: isCUrrent && controller.isShot.value
+                                    ? 1.13
+                                    : 1,
+                                child: TrainingAvater(
+                                  player: controller.playerList[index],
+                                  isCurrent:
+                                      isCUrrent && controller.isShot.value,
+                                ),
                               ),
                             );
                           });
@@ -495,11 +565,17 @@ class TrainingPage extends GetView<TrainingController> {
                                   style: 10.w4(color: AppColors.cFFFFFF),
                                 ),
                                 13.hGap,
-                                IconWidget(
-                                  iconWidth: 9.w,
-                                  icon: Assets.icon_306Png,
-                                  iconColor: AppColors.cFFFFFF,
-                                ),
+                                Obx(() {
+                                  return AnimatedScale(
+                                    duration: const Duration(milliseconds: 300),
+                                    scale: controller.isScaleBall.value,
+                                    child: IconWidget(
+                                      iconWidth: 12.w,
+                                      icon: Assets.icon_306Png,
+                                      iconColor: AppColors.cFFFFFF,
+                                    ),
+                                  );
+                                }),
                                 3.hGap,
                                 Obx(() {
                                   return Text(
@@ -523,7 +599,7 @@ class TrainingPage extends GetView<TrainingController> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       IconWidget(
-                                        iconWidth: 9.w,
+                                        iconWidth: 12.w,
                                         icon: Assets.icon_306Png,
                                         iconColor: AppColors.c666666,
                                       ),
@@ -666,7 +742,7 @@ class TrainingPage extends GetView<TrainingController> {
                     },
                   ),
 
-                  ///奖励money
+                  ///奖励道具
                   AnimatedBuilder(
                     animation: controller.flyCtrl,
                     builder: (BuildContext context, Widget? child) {
@@ -747,7 +823,9 @@ class TrainingPage extends GetView<TrainingController> {
                                 leaf.index * pi / 10,
                             child: Opacity(
                               opacity: controller.moneyCtrl.value != 0
-                                  ? (1 - (controller.moneyCtrl.value))
+                                  ? (1 -
+                                      (controller.moneyCtrl.value *
+                                          controller.moneyCtrl.value))
                                   : 0,
                               child: leaf.widget,
                             ),

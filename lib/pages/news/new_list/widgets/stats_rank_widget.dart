@@ -32,17 +32,18 @@ class StatsRankWidget extends GetView<NewListController> {
               ),
               Container(
                 alignment: Alignment.centerLeft,
-                height: 191.w,
+                height: 152.w,
                 child: PageView.builder(
+                  padEnds: false,
                   controller: PageController(
                     initialPage: 0,
-                    viewportFraction: 0.9,
+                    viewportFraction: 283 / 375,
                   ),
                   physics: const BouncingScrollPhysics(),
                   itemCount: controller.state.statsRankMap.entries.length,
                   itemBuilder: (context, index) {
                     return Padding(
-                      padding: EdgeInsets.only(right: 20.w), // 控制左右间距
+                      padding: EdgeInsets.only(left: 16.w), // 控制左右间距
                       child: InkWell(
                         onTap: () {
                           Get.toNamed(
@@ -73,12 +74,12 @@ class StatsRankItem extends GetView<NewListController> {
     final item = controller.state.statsRankMap.entries.elementAt(index);
     return ShadowContainer(
       width: width,
-      height: 190.w,
+      height: 152.w,
       child: Column(
         children: [
           Container(
             width: width,
-            height: 40.w,
+            height: 39.w,
             decoration: BoxDecoration(
                 color: AppColors.cF2F2F2,
                 borderRadius: BorderRadius.only(
@@ -136,14 +137,14 @@ class StatsListView extends GetView<NewListController> {
   Widget build(BuildContext context) {
     int count = list.length > 3 ? 3 : 0;
     return SizedBox(
-      height: 150.w,
+      height: 112.w,
       child: ListView.builder(
           padding: const EdgeInsets.all(0),
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
             final item = list[index];
             return SizedBox(
-              height: 50.w,
+              height: 36.w,
               child: Row(
                 children: [
                   20.hGap,

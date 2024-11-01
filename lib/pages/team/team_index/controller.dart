@@ -2,12 +2,13 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-10-24 10:14:24
+ * @LastEditTime: 2024-11-01 17:25:51
  */
 
 import 'dart:async';
 
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team/controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -82,6 +83,8 @@ class TeamIndexController extends GetxController
     turns.value += isShow.value ? 0 : 1 / 2;
     isShow.value = true;
     update(["team_index"]);
+    TeamController teamController = Get.find();
+    teamController.initData();
   }
 
   void closePage() {

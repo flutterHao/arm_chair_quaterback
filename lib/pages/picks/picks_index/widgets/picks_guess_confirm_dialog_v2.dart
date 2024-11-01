@@ -8,13 +8,13 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/btn_background.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog_background.dart';
+import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/physics/one_boundary_scroll_physics.dart';
 import 'package:arm_chair_quaterback/common/widgets/player_avatar_widget.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/drag_back_widget.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -227,7 +227,8 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                       bool lastItem =
                                           index == playerList.length - 1;
                                       return Container(
-                                        margin: EdgeInsets.only(bottom: lastItem?20.w:0),
+                                        margin: EdgeInsets.only(
+                                            bottom: lastItem ? 20.w : 0),
                                         child: _ItemWidget(
                                           index: index,
                                           currentIndex: currentIndex,
@@ -331,12 +332,13 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       "Flex play",
-                                      style: 14
-                                          .w7(color: AppColors.c262626, height: 1),
+                                      style: 14.w7(
+                                          color: AppColors.c262626, height: 1),
                                     ),
                                     _buildSelect(modelCurrentIndex.value == 0),
                                   ],
@@ -362,8 +364,8 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                     margin: EdgeInsets.only(left: 11.w),
                                     child: Text(
                                       "Hit 3out of 5 in the lineup",
-                                      style: 10
-                                          .w4(color: AppColors.cB3B3B3, height: 1),
+                                      style: 10.w4(
+                                          color: AppColors.cB3B3B3, height: 1),
                                     ))
                               ],
                             ),
@@ -400,12 +402,13 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       "Power play",
-                                      style: 14
-                                          .w7(color: AppColors.c262626, height: 1),
+                                      style: 14.w7(
+                                          color: AppColors.c262626, height: 1),
                                     ),
                                     _buildSelect(modelCurrentIndex.value == 1),
                                   ],
@@ -422,8 +425,10 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                         ? const SizedBox.shrink()
                                         : Column(
                                             children: [
-                                              _buildbet(length.toString(),
-                                                  powerBet[powerIndex].toString()),
+                                              _buildbet(
+                                                  length.toString(),
+                                                  powerBet[powerIndex]
+                                                      .toString()),
                                             ],
                                           );
                                   }),
@@ -432,8 +437,8 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                     margin: EdgeInsets.only(left: 11.w),
                                     child: Text(
                                       "Hit 3out of 5 in the lineup",
-                                      style: 10
-                                          .w4(color: AppColors.cB3B3B3, height: 1),
+                                      style: 10.w4(
+                                          color: AppColors.cB3B3B3, height: 1),
                                     ))
                               ],
                             ),

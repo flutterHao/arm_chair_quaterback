@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:23:17
- * @LastEditTime: 2024-10-28 19:48:25
+ * @LastEditTime: 2024-11-01 17:45:42
  */
 
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
@@ -63,13 +63,17 @@ class NewsDetailController extends GetxController {
   }
 
   void unLikeNews(NewsDetail item) {
-    if (item.isLike?.value == -1) return;
+    // if (item.isLike?.value == -1) return;
     NewsApi.newsUnLike(item.id!).then((value) {
       if (item.isLike?.value == 1) {
         item.likes = (item.likes ?? 0) - 1;
+      } else if (item.isLike?.value == -1) {
+        item.unLikes = (item.unLikes ?? 0) - 1;
+        item.isLike!.value = 0;
+      } else {
+        item.unLikes = (item.unLikes ?? 0) + 1;
+        item.isLike!.value = -1;
       }
-      item.unLikes = (item.unLikes ?? 0) + 1;
-      item.isLike!.value = -1;
 
       // update();
     });

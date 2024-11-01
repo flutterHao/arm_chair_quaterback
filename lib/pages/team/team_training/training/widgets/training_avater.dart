@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-30 11:43:53
- * @LastEditTime: 2024-10-31 21:05:05
+ * @LastEditTime: 2024-11-01 12:38:40
  */
 
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
@@ -34,11 +34,15 @@ class TrainingAvater extends StatelessWidget {
             arguments: PlayerDetailPageArguments(player.playerId));
       },
       child: Stack(
+        alignment: Alignment.center,
         children: [
           Container(
-            width: isCurrent ? 66.w : 64.w,
-            height: isCurrent ? 66.w : 64.w,
+            // width: isCurrent ? 66.w : 64.w,
+            // height: isCurrent ? 66.w : 64.w,
+            width: 64.w,
+            height: 64.w,
             alignment: Alignment.center,
+            // color: Colors.red,
             decoration: BoxDecoration(
               border: isCurrent
                   ? Border.all(color: AppColors.cFFFFFF, width: 2)
@@ -46,8 +50,6 @@ class TrainingAvater extends StatelessWidget {
               color: AppColors.c666666,
               borderRadius: BorderRadius.circular(32.w),
             ),
-          ),
-          Positioned(
             child: ImageWidget(
               url: Utils.getPlayUrl(player.playerId),
               imageFailedPath: Assets.uiDefault_04Png,
@@ -57,8 +59,8 @@ class TrainingAvater extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 1.5.w,
-            right: 0.5.w,
+            top: 4.w,
+            right: 2.w,
             child: Container(
               width: 19.w,
               height: 19.w,
