@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-11-01 17:30:36
+ * @LastEditTime: 2024-11-01 19:37:31
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -260,9 +260,9 @@ class _TeamView extends GetView<TeamIndexController> {
               style: 14.w4(color: AppColors.c262626),
             )),
         9.vGap,
-        ImageWidget(
-          url: "",
-          width: 64.w,
+        IconWidget(
+          icon: Assets.uiPropsMoenyPng,
+          iconWidth: 64.w,
         ),
         7.vGap,
         Text(

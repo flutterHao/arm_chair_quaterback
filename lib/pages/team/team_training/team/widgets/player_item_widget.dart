@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2024-11-01 19:17:26
+ * @LastEditTime: 2024-11-01 19:38:52
  */
 /*
  * @Description: 
@@ -399,7 +399,7 @@ class PlayerAwater extends StatelessWidget {
             top: 6.5.w,
             child: Text(
               player.breakThroughGrade.toString(),
-              style: 12.w7(color: AppColors.cFFFFFF, height: 1),
+              style: 11.w7(color: AppColors.cFFFFFF, height: 1),
             ),
           ),
         ],
