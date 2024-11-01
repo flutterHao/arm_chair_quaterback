@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-24 18:04:19
- * @LastEditTime: 2024-10-31 15:01:50
+ * @LastEditTime: 2024-11-01 20:08:27
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
@@ -162,39 +162,41 @@ class _Item extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 13.w, vertical: 10.w),
-              child: Column(
-                children: [
-                  Text(
-                    item.title,
-                    maxLines: 2,
-                    style: 12.w4(color: AppColors.c262626),
-                  ),
-                  8.vGap,
-                  Row(
-                    children: [
-                      Text(
-                        DateUtil.formatDateMs(
-                          item.postTime,
-                          format: DateFormats.y_mo_d_h_m,
-                        ),
-                        style: 10.w4(color: AppColors.cB3B3B3, height: 1),
-                      ),
-                      6.hGap,
-                      Expanded(
-                        child: Text(
-                          "-${item.source}",
-                          overflow: TextOverflow.ellipsis,
+            10.vGap,
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 13.w),
+                child: Column(
+                  children: [
+                    Text(
+                      item.title,
+                      maxLines: 2,
+                      style: 12.w4(color: AppColors.c262626),
+                    ),
+                    Expanded(child: Container()),
+                    Row(
+                      children: [
+                        Text(
+                          DateUtil.formatDateMs(
+                            item.postTime,
+                            format: DateFormats.y_mo_d_h_m,
+                          ),
                           style: 10.w4(color: AppColors.cB3B3B3, height: 1),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                        6.hGap,
+                        Expanded(
+                          child: Text(
+                            "-${item.source}",
+                            overflow: TextOverflow.ellipsis,
+                            style: 10.w4(color: AppColors.cB3B3B3, height: 1),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
-            const Expanded(child: SizedBox()),
             Container(
               padding: EdgeInsets.all(10.w),
               child: NewsPercentWidget(

@@ -2,7 +2,7 @@
  * @Description:队伍球员谣言
  * @Author: lihonghao
  * @Date: 2024-10-24 21:19:47
- * @LastEditTime: 2024-10-31 15:20:14
+ * @LastEditTime: 2024-11-01 20:17:37
  */
 
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
@@ -159,7 +159,7 @@ class _Item1 extends GetView<NewListController> {
                 style: 12.w4(color: AppColors.c262626),
               ),
             ),
-            10.vGap,
+            const Expanded(child: SizedBox()),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 10.w),
               child: Row(
@@ -182,7 +182,7 @@ class _Item1 extends GetView<NewListController> {
                 ],
               ),
             ),
-            const Expanded(child: SizedBox()),
+            10.vGap,
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.w),
               child: NewsPercentWidget(
@@ -243,77 +243,85 @@ class _Item2 extends StatelessWidget {
       //     borderRadius: BorderRadius.circular(16.w), color: AppColors.cF2F2F2),
       child: Column(
         children: [
-          Row(
-            children: [
-              Container(
-                width: 95.w,
-                height: 79.w,
-                // color: Colors.red,
-                child: Stack(
-                  children: [
-                    if (item.teams.isNotEmpty)
-                      Positioned(
-                        left: -20.w,
-                        top: -20.w,
-                        child: Opacity(
-                          opacity: 0.2,
-                          child: ImageWidget(
-                            url: Utils.getTeamUrl(item.teams[0]),
-                            width: 100.w,
-                          ),
-                        ),
-                      ),
-                    if (item.players.isNotEmpty)
-                      Positioned(
-                        bottom: 0.w,
-                        right: -10.w,
-                        child: ImageWidget(
-                          url: Utils.getPlayUrl(item.players[0]),
-                          width: 100.w,
-                        ),
-                      ),
-                  ],
-                ),
-              ),
-              Expanded(
-                  child: Column(
+          Expanded(
+            child: Container(
+              margin: EdgeInsets.only(bottom: 10.w),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    margin:
-                        EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.w),
-                    child: Text(
-                      item.title,
-                      maxLines: 3,
-                      style: 12.w4(color: AppColors.c262626),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 12.w),
-                    child: Row(
+                    width: 95.w,
+                    height: 79.w,
+                    // color: Colors.red,
+                    child: Stack(
                       children: [
-                        Text(
-                          DateUtil.formatDateMs(
-                            item.postTime,
-                            format: DateFormats.y_mo_d_h_m,
+                        if (item.teams.isNotEmpty)
+                          Positioned(
+                            left: -20.w,
+                            top: -20.w,
+                            child: Opacity(
+                              opacity: 0.2,
+                              child: ImageWidget(
+                                url: Utils.getTeamUrl(item.teams[0]),
+                                width: 100.w,
+                              ),
+                            ),
                           ),
-                          style: 10.w4(color: AppColors.cB3B3B3, height: 1),
-                        ),
-                        6.hGap,
-                        Expanded(
-                          child: Text(
-                            "-${item.source}",
-                            overflow: TextOverflow.ellipsis,
-                            style: 10.w4(color: AppColors.cB3B3B3, height: 1),
+                        if (item.players.isNotEmpty)
+                          Positioned(
+                            bottom: 0.w,
+                            right: -10.w,
+                            child: ImageWidget(
+                              url: Utils.getPlayUrl(item.players[0]),
+                              width: 100.w,
+                            ),
                           ),
-                        ),
                       ],
                     ),
                   ),
+                  Expanded(
+                      child: Column(
+                    children: [
+                      10.vGap,
+                      Expanded(
+                        child: Container(
+                          margin: EdgeInsets.symmetric(horizontal: 12.w),
+                          child: Text(
+                            item.title,
+                            maxLines: 3,
+                            style: 12.w4(color: AppColors.c262626),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 12.w),
+                        child: Row(
+                          children: [
+                            Text(
+                              DateUtil.formatDateMs(
+                                item.postTime,
+                                format: DateFormats.y_mo_d_h_m,
+                              ),
+                              style: 10.w4(color: AppColors.cB3B3B3, height: 1),
+                            ),
+                            6.hGap,
+                            Expanded(
+                              child: Text(
+                                "-${item.source}",
+                                overflow: TextOverflow.ellipsis,
+                                style:
+                                    10.w4(color: AppColors.cB3B3B3, height: 1),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  )),
                 ],
-              ))
-            ],
+              ),
+            ),
           ),
-          const Expanded(child: SizedBox()),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.w),
             child: NewsPercentWidget(

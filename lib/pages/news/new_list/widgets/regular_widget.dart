@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-21 16:48:47
- * @LastEditTime: 2024-11-01 18:58:54
+ * @LastEditTime: 2024-11-01 19:54:47
  */
 import 'dart:math';
 
@@ -183,7 +183,7 @@ class _Item extends GetView<NewListController> {
       alignment: Alignment.centerLeft,
       child: Container(
         width: 188.w,
-        height: 232.w,
+        height: 210.w,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16.w),
             color: AppColors.cF2F2F2),
@@ -194,10 +194,11 @@ class _Item extends GetView<NewListController> {
               margin: EdgeInsets.symmetric(horizontal: 14.w, vertical: 11.5.w),
               child: Text(
                 item.title,
-                maxLines: 4,
+                maxLines: 3,
                 style: 12.w4(color: AppColors.c262626),
               ),
             ),
+            const Expanded(child: SizedBox()),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 14.w),
               child: Row(
@@ -220,7 +221,6 @@ class _Item extends GetView<NewListController> {
                 ],
               ),
             ),
-            const Expanded(child: SizedBox()),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.w),
               child: NewsPercentWidget(
