@@ -704,7 +704,7 @@ class _TeamView extends GetView<TeamIndexController> {
                   children: [
                     IconWidget(
                       iconWidth: 35.h,
-                      icon: Assets.uiIconBasketballPng,
+                      icon: Assets.uiIconBasketballPng1,
                       iconColor: AppColors.cFF7954,
                     ),
                     5.hGap,

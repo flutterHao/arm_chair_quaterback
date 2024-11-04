@@ -28,7 +28,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
 
   MyTeamEntity myTeamEntity = MyTeamEntity();
   List<TeamPlayerInfoEntity> myBagList = [];
-  late Timer _timer;
+  Timer? _timer;
   late int _recoverSeconds;
   RxString remainString = "00:00".obs;
 
@@ -60,7 +60,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   @override
   void dispose() {
     super.dispose();
-    _timer.cancel();
+    _timer?.cancel();
   }
 
   void initData() async {
@@ -197,6 +197,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
     DateTime recoverTime =
         DateUtil.getDateTimeByMs(myTeamEntity.powerReplyTime);
     _recoverSeconds = recoverTime.difference(DateTime.now()).inSeconds;
+    _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (v) async {
       _recoverSeconds--;
       // final hours = _recoverSeconds ~/ 3600;
@@ -205,8 +206,8 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
       remainString.value =
           '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
       if (_recoverSeconds <= 0) {
-        _timer.cancel();
-        // _initData();
+        _timer?.cancel();
+        initData();
       }
     });
   }

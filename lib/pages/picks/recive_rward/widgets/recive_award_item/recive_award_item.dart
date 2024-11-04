@@ -253,14 +253,13 @@ class ReciveAwardItem extends StatelessWidget {
         ],
         IconWidget(
           iconWidth: 17.w,
-          icon: Assets.uiIconJettonPng,
-          iconColor: !controller.getSuccess()
-              ? AppColors.cB3B3B3
-              : AppColors.c10A86A,
+          icon: Assets.uiIconJettonBigPng,
+          iconColor:
+              !controller.getSuccess() ? AppColors.cB3B3B3 : AppColors.c10A86A,
         ),
         4.hGap,
         Text(
-          ("+${Utils.formatMoney(double.parse(controller.getSuccess()?(controller.getAwardCoin() ?? "0"):"0"))}"),
+          ("+${Utils.formatMoney(double.parse(controller.getSuccess() ? (controller.getAwardCoin() ?? "0") : "0"))}"),
           style: 16.w7(
               color: !controller.getSuccess()
                   ? AppColors.cB3B3B3

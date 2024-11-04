@@ -24,18 +24,20 @@ class RankStartButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    minLimit(){
-      var length = Get.find<PicksIndexController>().getChoiceGuessPlayers().length;
-      if(length<2){
+    minLimit() {
+      var length =
+          Get.find<PicksIndexController>().getChoiceGuessPlayers().length;
+      if (length < 2) {
         EasyLoading.showToast("Select at least 2");
         return true;
       }
       return false;
     }
+
     return InkWell(
       onTap: () async {
         print('InkWellds');
-        if(minLimit()){
+        if (minLimit()) {
           return;
         }
         await showModalBottomSheet(
@@ -43,7 +45,7 @@ class RankStartButton extends StatelessWidget {
             backgroundColor: AppColors.cTransparent,
             context: Get.context!,
             builder: (context) {
-              return  const PicksGuessConfirmDialogV2();
+              return const PicksGuessConfirmDialogV2();
             });
         Get.find<PicksIndexController>().batchDeleteOpen.value = false;
       },
@@ -77,7 +79,7 @@ class RankStartButton extends StatelessWidget {
                   ),
                 ),
               ),
-              Text("VIEW ENTRY", style: 16.w7(color: AppColors.cFFFFFF)),
+              Text("Submit", style: 16.w7(color: AppColors.cFFFFFF)),
             ],
           ),
         ),

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-11 17:18:41
- * @LastEditTime: 2024-10-31 16:01:34
+ * @LastEditTime: 2024-11-04 15:53:39
  */
 class Assets {
   ///home
@@ -13,7 +13,8 @@ class Assets {
       'assets/images/home/ui_icon_training_01.png';
   static const uiNavibarSel_01Png = 'assets/images/home/ui_navibar_sel_01.png';
   static const uiNavubarSel_02Png = 'assets/images/home/ui_navubar_sel_02.png';
-  static const uiIconCommunity_01Png = 'assets/images/home/ui_icon_community_01.png';
+  static const uiIconCommunity_01Png =
+      'assets/images/home/ui_icon_community_01.png';
 
   ///icon
   static const head_0000Png = 'assets/images/icon/head_0000.png';
@@ -31,11 +32,14 @@ class Assets {
   static const uiDefault_03Png = 'assets/images/icon/ui_default_03.png';
   static const uiDefault_04Png = 'assets/images/icon/ui_default_04.png';
   static const uiDefault_05Png = 'assets/images/icon/ui_default_05.png';
+  static const uiDefault_06Png = 'assets/images/icon/ui_default_06.png';
   static const uiIconAddPng = 'assets/images/icon/ui_icon_add.png';
   static const uiIconApplePng = 'assets/images/icon/ui_icon_apple.png';
   static const uiIconArrowsPng = 'assets/images/icon/ui_icon_arrows.png';
   static const uiIconArrows_04Png = 'assets/images/icon/ui_icon_arrows_04.png';
   static const uiIconAwardPng = 'assets/images/icon/ui_icon_award.png';
+  static const uiIconBasketballPng =
+      'assets/images/icon/ui_icon_basketball.png';
   static const uiIconBellPng = 'assets/images/icon/ui_icon_bell.png';
   static const uiIconBlockPng = 'assets/images/icon/ui_icon_block.png';
   static const uiIconCameraPng = 'assets/images/icon/ui_icon_camera.png';
@@ -82,6 +86,7 @@ class Assets {
   static const uiIconStaminaPng = 'assets/images/icon/ui_icon_stamina.png';
   static const uiIconSwitch_01Png = 'assets/images/icon/ui_icon_switch_01.png';
   static const uiIconSwitch_02Png = 'assets/images/icon/ui_icon_switch_02.png';
+  static const uiIconTaskPng = 'assets/images/icon/ui_icon_task.png';
   static const uiIconTriangle_03Png =
       'assets/images/icon/ui_icon_triangle_03.png';
   static const uiIconUnfoldPng = 'assets/images/icon/ui_icon_unfold.png';
@@ -196,7 +201,7 @@ class Assets {
   static const uiHead_11Png = 'assets/images/team/ui_head_11.png';
   static const uiHead_12Png = 'assets/images/team/ui_head_12.png';
   static const uiHeart_01Png = 'assets/images/team/ui_heart_01.png';
-  static const uiIconBasketballPng =
+  static const uiIconBasketballPng1 =
       'assets/images/team/ui_icon_basketball.png';
   static const uiIconBondPng = 'assets/images/team/ui_icon_bond.png';
   static const uiIconLocation_01Png =

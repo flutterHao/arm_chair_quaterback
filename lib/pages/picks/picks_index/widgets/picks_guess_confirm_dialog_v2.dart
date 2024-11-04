@@ -206,7 +206,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                           child: Row(
                                             children: [
                                               Text(
-                                                "Picks confirmation",
+                                                "Picks Line Up",
                                                 style: 16.w7(
                                                     color: AppColors.c262626,
                                                     height: 1),
@@ -468,7 +468,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                       ])),
                       2.vGap,
                       Text(
-                        "Correct",
+                        "Pick",
                         style: 10.w4(color: AppColors.c666666, height: 1),
                       )
                     ],
@@ -678,21 +678,35 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                     alignment: Alignment.center,
                                     children: [
                                       Column(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
                                           Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
                                             children: [
-                                              IconWidget(iconWidth: 19.w, icon: Assets.uiIconJettonPng),
+                                              IconWidget(
+                                                  iconWidth: 19.w,
+                                                  icon: Assets
+                                                      .uiIconJettonBigPng),
                                               5.hGap,
-                                              Text(picksIndexController.newsDefine.betCost,style: 21.w7(color: AppColors.cF2F2F2,height: 1),),
+                                              Text(
+                                                picksIndexController
+                                                    .newsDefine.betCost,
+                                                style: 21.w7(
+                                                    color: AppColors.cF2F2F2,
+                                                    height: 1),
+                                              ),
                                             ],
                                           ),
                                           2.vGap,
                                           Text(
                                             "CONFIRM",
-                                            style: 10.w4(color: AppColors.cF2F2F2,height: 1),
+                                            style: 10.w4(
+                                                color: AppColors.cF2F2F2,
+                                                height: 1),
                                           ),
                                         ],
                                       ),

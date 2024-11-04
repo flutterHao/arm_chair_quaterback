@@ -73,13 +73,15 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
                         padding: EdgeInsets.only(left: 25.w, top: 21.w),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(16.w),
-                            gradient: LinearGradient(colors: Get.find<PersonalCenterController>().rank>0?[
-                              AppColors.c7e2919,
-                              AppColors.c251a18,
-                            ]:[
-                              AppColors.c262626,
-                              AppColors.c4c4c4c
-                            ])),
+                            gradient: LinearGradient(
+                                colors: Get.find<PersonalCenterController>()
+                                            .rank >
+                                        0
+                                    ? [
+                                        AppColors.c7e2919,
+                                        AppColors.c251a18,
+                                      ]
+                                    : [AppColors.c262626, AppColors.c4c4c4c])),
                         child: Stack(
                           children: [
                             Positioned(
@@ -108,7 +110,7 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
                                     2.hGap,
                                     IconWidget(
                                       iconWidth: 10.w,
-                                      icon: Assets.uiIconJettonPng,
+                                      icon: Assets.uiIconJettonBigPng,
                                       iconColor: AppColors.cFFFFFF,
                                     )
                                   ],
@@ -399,7 +401,7 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
                         children: [
                           IconWidget(
                             iconWidth: 15.w,
-                            icon: Assets.uiIconJettonPng,
+                            icon: Assets.uiIconJettonBigPng,
                             iconColor: AppColors.c10A86A,
                           ),
                           4.hGap,
@@ -430,7 +432,7 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
               context: context,
               removeTop: true,
               child: ListView.builder(
-                physics: const BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   itemCount: data.length,
                   itemBuilder: (context, index) {
                     List<PicksPlayer> items = data[index];

@@ -36,7 +36,7 @@ class LineUpTab extends GetView<TeamController> {
       var scrollController = ScrollController();
       return SingleChildScrollView(
         controller: scrollController,
-        physics:  OneBoundaryScrollPhysics(scrollController: scrollController),
+        physics: OneBoundaryScrollPhysics(scrollController: scrollController),
         child: Column(
           children: [
             12.vGap,
@@ -112,7 +112,7 @@ class LineUpTab extends GetView<TeamController> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                    "${(controller.myTeamEntity.powerP * 100 / 120).toStringAsFixed(0)}%",
+                                    "${(controller.myTeamEntity.powerP * 100 / 100).toStringAsFixed(0)}%",
                                     style: 19.w4(
                                         color: AppColors.cF2F2F2, height: 1)),
                                 4.hGap,
@@ -129,9 +129,9 @@ class LineUpTab extends GetView<TeamController> {
                           SizedBox(height: 6.h),
                           CustomLinearProgressBar(
                             width: 138.w,
-                            progress: controller.myTeamEntity.powerP / 120,
+                            progress: controller.myTeamEntity.powerP / 100,
                             progressColor: controller.getProgressColor(
-                                controller.myTeamEntity.powerP / 120),
+                                controller.myTeamEntity.powerP / 100),
                           ),
                           SizedBox(height: 5.h),
                           Row(

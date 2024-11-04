@@ -93,8 +93,8 @@ class _VerticalDragBackWidgetState extends State<VerticalDragBackWidget>
       newBottom = newBottom.clamp(minBottom, maxBottom);
       teamCtrl.myTeamBottom.value = newBottom;
       offsetY = details.localPosition.dy - startY;
-      Log.d(
-          "位置信息：startY:$startY,localPosition.dy ${details.localPosition.dy}:,offsetY:$offsetY");
+      // Log.d(
+      //     "位置信息：startY:$startY,localPosition.dy ${details.localPosition.dy}:,offsetY:$offsetY");
     }
 
     Widget body = GestureDetector(
@@ -117,8 +117,8 @@ class _VerticalDragBackWidgetState extends State<VerticalDragBackWidget>
         double newBottom = teamCtrl.myTeamBottom.value - details.delta.dy;
         newBottom = newBottom.clamp(minBottom, maxBottom);
         teamCtrl.myTeamBottom.value = newBottom;
-        Log.d(
-            "位置信息：startY:$startY,localPosition.dy ${details.localPosition.dy}:,offsetY:$offsetY");
+        // Log.d(
+        //     "位置信息：startY:$startY,localPosition.dy ${details.localPosition.dy}:,offsetY:$offsetY");
       },
       onVerticalDragEnd: (details) {
         if (teamCtrl.isOnTopSide) return;
@@ -194,7 +194,7 @@ class _VerticalDragBackWidgetState extends State<VerticalDragBackWidget>
     // Log.d("details:___"+details.toString());
     if ((teamCtrl.isShow.value && details.localPosition.dy <= 0) ||
         (!teamCtrl.isShow.value && details.localPosition.dy >= 0)) {
-      teamCtrl.isShow.value ?teamCtrl.openPage():teamCtrl.closePage() ;   
+      teamCtrl.isShow.value ? teamCtrl.openPage() : teamCtrl.closePage();
       return;
     }
     if (details.velocity.pixelsPerSecond.dy < -1000 || offsetY < 100) {

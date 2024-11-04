@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-21 17:26:07
- * @LastEditTime: 2024-09-26 14:48:09
+ * @LastEditTime: 2024-11-04 15:37:22
  */
 import 'dart:math';
 
@@ -244,7 +244,7 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Point Guessing",
+                    "Pick M&L",
                     style: 19.w7(color: AppColors.c000000),
                   ),
                   // Text(
@@ -338,7 +338,7 @@ class _PicksIndexPageState extends State<PicksIndexPage>
               margin: EdgeInsets.only(
                   left: 16.w, right: 37.w, top: 20.w, bottom: 13.w),
               child: Text(
-                "Point Guessing",
+                "Pick M&L",
                 style: 19.w7(color: AppColors.c000000),
               ),
             ),

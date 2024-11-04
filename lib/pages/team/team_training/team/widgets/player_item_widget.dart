@@ -165,13 +165,13 @@ class PlayerItem extends GetView<TeamController> {
                 child: CustomLinearProgressBar(
                   height: 4.w,
                   width: 52.w,
-                  progress: item.power / 120,
-                  progressColor: controller.getProgressColor(item.power / 120),
+                  progress: item.power / 100,
+                  progressColor: controller.getProgressColor(item.power / 100),
                   backgroundColor: Colors.black12,
                 ),
               ),
               Text(
-                "${(item.power * 100 / 120).toStringAsFixed(0)}%",
+                "${(item.power * 100 / 100).toStringAsFixed(0)}%",
                 style: 10.w7(color: AppColors.c000000, height: 1),
               ),
             ],

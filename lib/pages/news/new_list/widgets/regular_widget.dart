@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-21 16:48:47
- * @LastEditTime: 2024-11-01 19:54:47
+ * @LastEditTime: 2024-11-04 14:43:07
  */
 import 'dart:math';
 
@@ -88,9 +88,10 @@ class _Item extends GetView<NewListController> {
   final NewsListDetail item;
 
   Widget _oneTeam() {
+    int teamId = item.teams.isNotEmpty ? item.teams[0] : 0;
     NewListController controller = Get.find();
     Color color = item.teams.isNotEmpty
-        ? controller.getTeamColor(item.teams[0])
+        ? controller.getTeamColor(teamId)
         : AppColors.c404040;
     return Container(
         width: 188.w,
@@ -106,10 +107,10 @@ class _Item extends GetView<NewListController> {
               topLeft: Radius.circular(16.w), topRight: Radius.circular(16.w)),
         ),
         child: ImageWidget(
-          url: Utils.getWhiteTeamUrl(item.teams[0]),
+          url: Utils.getWhiteTeamUrl(teamId),
           width: 60.w,
           height: 60.w,
-          imageFailedPath: Assets.uiDefault_05Png,
+          // imageFailedPath: Assets.uiDefault_05Png,
         ));
   }
 
@@ -268,8 +269,8 @@ class NewsPercentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String leftPercent = "50";
-    String rightPercent = "50";
+    String leftPercent = "50.0";
+    String rightPercent = "50.0";
     if (leftCount != 0 || rightCount != 0) {
       int total = leftCount + rightCount;
       if (total == 0) total = 1;
