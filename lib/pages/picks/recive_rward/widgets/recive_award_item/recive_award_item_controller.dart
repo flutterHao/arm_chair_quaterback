@@ -39,6 +39,7 @@ class ReciveAwardItemController extends GetxController {
   }
 
   void startCountDown(){
+    timer?.cancel();
     timer = Timer.periodic(const Duration(seconds: 1), (t){
       var nextDay = MyDateUtils.nextDay(MyDateUtils.getNowDateTime());
       var nextDayStartTimeMS = MyDateUtils.getNextDayStartTimeMS(

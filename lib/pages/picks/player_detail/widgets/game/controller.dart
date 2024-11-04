@@ -136,7 +136,7 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
       nbaPlayerBaseInfoEntity = (result[1] as NbaPlayerBaseInfoEntity);
       _barGroups.clear();
       maxPriceValue = 0;
-      minPriceValue = 100000000;
+      minPriceValue = 0;
       for (int i = 0;
           i < (nbaPlayerBaseInfoEntity?.playerTrends.length ?? 0);
           i++) {
@@ -145,10 +145,10 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
             .toDouble();
         maxPriceValue = max(maxPriceValue, toY);
         minPriceValue = min(minPriceValue, toY);
-        minPriceValue = (minPriceValue < (maxPriceValue - 500))
-            ? (maxPriceValue - 500)
-            : minPriceValue;
-        print('minPriceValue:${minPriceValue}');
+        // minPriceValue = (minPriceValue < (maxPriceValue - 500))
+        //     ? (maxPriceValue - 500)
+        //     : minPriceValue;
+        print('minPriceValue:${minPriceValue},maxPriceValue:$maxPriceValue');
         _barGroups.add(BarChartGroupData(
           x: MyDateUtils.getDateTimeByMs(
                   nbaPlayerBaseInfoEntity!.playerTrends[index].createTime)
@@ -166,8 +166,9 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
           // showingTooltipIndicators: [0],
         ));
       }
-      minPriceValue =
-          minPriceValue == maxPriceValue ? maxPriceValue / 5 : minPriceValue;
+      // minPriceValue =
+      //     minPriceValue == maxPriceValue ? maxPriceValue / 5 : minPriceValue;
+      print('maxPriceValue:$maxPriceValue');
       dataSource = <ChartSampleData>[
         ChartSampleData(x: 'PTS', y: 55, yValue: 30),
         ChartSampleData(x: '3PT', y: 55, yValue: 40),

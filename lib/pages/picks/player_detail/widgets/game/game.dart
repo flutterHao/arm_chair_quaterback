@@ -13,6 +13,7 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/physics/one_boundary_scroll_physics.dart';
+import 'package:arm_chair_quaterback/common/widgets/player_avatar_widget.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/game/controller.dart';
@@ -95,8 +96,8 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                     return Container(
                       height: 130.h,
                       width: double.infinity,
-                      margin: EdgeInsets.only(
-                          left: 14.w, right: 18.w, top: 5.w),
+                      margin:
+                          EdgeInsets.only(left: 14.w, right: 18.w, top: 5.w),
                       child: AspectRatio(
                         aspectRatio: 1.4,
                         child: BarChart(BarChartData(
@@ -107,8 +108,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                 show: true,
                                 border: const Border(
                                     bottom: BorderSide(
-                                        color: AppColors.cD9D9D9,
-                                        width: 1))),
+                                        color: AppColors.cD9D9D9, width: 1))),
                             gridData: FlGridData(
                                 show: true,
                                 drawHorizontalLine: true,
@@ -135,8 +135,8 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                               : value.toStringAsFixed(0);
                                           return Text(
                                             text,
-                                            style: 9.w4(
-                                                color: AppColors.cB2B2B2),
+                                            style:
+                                                9.w4(color: AppColors.cB2B2B2),
                                           );
                                         })),
                                 bottomTitles: AxisTitles(
@@ -165,12 +165,11 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                               break;
                                           }
                                           return Container(
-                                            margin:
-                                                EdgeInsets.only(top: 2.h),
+                                            margin: EdgeInsets.only(top: 2.h),
                                             child: Text(
                                               text,
-                                              style: 9.w4(
-                                                  color: AppColors.cB2B2B2),
+                                              style: 9
+                                                  .w4(color: AppColors.cB2B2B2),
                                             ),
                                           );
                                         })),
@@ -194,115 +193,14 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                     );
                                   },
                                 )),
+                            minY: getMaxValue(),
                             barGroups: [
-                              BarChartGroupData(
-                                  showingTooltipIndicators: [0],
-                                  x: 1,
-                                  barRods: [
-                                    BarChartRodData(
-                                        width: 10.w,
-                                        borderRadius: BorderRadius.vertical(
-                                            top: Radius.circular(5.w)),
-                                        toY: controller.uuidPlayerInfo
-                                                ?.potential.pts
-                                                .toDouble() ??
-                                            0,
-                                        color: Utils.getChartColor(
-                                            controller.uuidPlayerInfo
-                                                    ?.potential.pts
-                                                    .toDouble() ??
-                                                0))
-                                  ]),
-                              BarChartGroupData(
-                                  showingTooltipIndicators: [0],
-                                  x: 2,
-                                  barRods: [
-                                    BarChartRodData(
-                                        width: 10.w,
-                                        borderRadius: BorderRadius.vertical(
-                                            top: Radius.circular(5.w)),
-                                        toY: controller.uuidPlayerInfo
-                                                ?.potential.threePts
-                                                .toDouble() ??
-                                            0,
-                                        color: Utils.getChartColor(
-                                            controller.uuidPlayerInfo
-                                                    ?.potential.threePts
-                                                    .toDouble() ??
-                                                0))
-                                  ]),
-                              BarChartGroupData(
-                                  showingTooltipIndicators: [0],
-                                  x: 3,
-                                  barRods: [
-                                    BarChartRodData(
-                                        width: 10.w,
-                                        borderRadius: BorderRadius.vertical(
-                                            top: Radius.circular(5.w)),
-                                        toY: controller.uuidPlayerInfo
-                                                ?.potential.ast
-                                                .toDouble() ??
-                                            0,
-                                        color: Utils.getChartColor(
-                                            controller.uuidPlayerInfo
-                                                    ?.potential.ast
-                                                    .toDouble() ??
-                                                0))
-                                  ]),
-                              BarChartGroupData(
-                                  showingTooltipIndicators: [0],
-                                  x: 4,
-                                  barRods: [
-                                    BarChartRodData(
-                                        width: 10.w,
-                                        borderRadius: BorderRadius.vertical(
-                                            top: Radius.circular(5.w)),
-                                        toY: controller.uuidPlayerInfo
-                                                ?.potential.reb
-                                                .toDouble() ??
-                                            0,
-                                        color: Utils.getChartColor(
-                                            controller.uuidPlayerInfo
-                                                    ?.potential.reb
-                                                    .toDouble() ??
-                                                0))
-                                  ]),
-                              BarChartGroupData(
-                                  showingTooltipIndicators: [0],
-                                  x: 5,
-                                  barRods: [
-                                    BarChartRodData(
-                                        width: 10.w,
-                                        borderRadius: BorderRadius.vertical(
-                                            top: Radius.circular(5.w)),
-                                        toY: controller.uuidPlayerInfo
-                                                ?.potential.blk
-                                                .toDouble() ??
-                                            0,
-                                        color: Utils.getChartColor(
-                                            controller.uuidPlayerInfo
-                                                    ?.potential.blk
-                                                    .toDouble() ??
-                                                0))
-                                  ]),
-                              BarChartGroupData(
-                                  showingTooltipIndicators: [0],
-                                  x: 6,
-                                  barRods: [
-                                    BarChartRodData(
-                                        width: 10.w,
-                                        borderRadius: BorderRadius.vertical(
-                                            top: Radius.circular(5.w)),
-                                        toY: controller.uuidPlayerInfo
-                                                ?.potential.stl
-                                                .toDouble() ??
-                                            0,
-                                        color: Utils.getChartColor(
-                                            controller.uuidPlayerInfo
-                                                    ?.potential.stl
-                                                    .toDouble() ??
-                                                0))
-                                  ]),
+                              getBarchartGroupDataItem(1, "pts"),
+                              getBarchartGroupDataItem(2, "threePts"),
+                              getBarchartGroupDataItem(3, "ast"),
+                              getBarchartGroupDataItem(4, "reb"),
+                              getBarchartGroupDataItem(5, "blk"),
+                              getBarchartGroupDataItem(6, "stl"),
                             ])),
                       ),
                     );
@@ -322,8 +220,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                           height: 36.h,
                           width: 303.w,
                           child: Row(
-                            mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const SizedBox.shrink(),
                               Text(
@@ -351,6 +248,36 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
         ),
       ),
     );
+  }
+
+  BarChartGroupData getBarchartGroupDataItem(int xValue, String key) {
+    return BarChartGroupData(
+        showingTooltipIndicators: [0],
+        x: xValue,
+        barRods: [
+          BarChartRodData(
+              width: 10.w,
+              borderRadius: BorderRadius.vertical(top: Radius.circular(5.w)),
+              toY: formatYValue(key),
+              color: Utils.getChartColor(formatYValue(key)))
+        ]);
+  }
+
+  double getMaxValue() {
+    int maxVale = 1;
+    var keys =
+        controller.uuidPlayerInfo?.potential.toJson().keys.toList() ?? [];
+    for (int i = 0; i < keys!.length; i++) {
+      var key = keys[i];
+      var value = controller.uuidPlayerInfo?.potential.toJson()[key] as int;
+      maxVale = max(maxVale, value);
+    }
+    return maxVale.toDouble();
+  }
+
+  double formatYValue(String key) {
+    var json = controller.uuidPlayerInfo?.potential.toJson();
+    return max((json?[key].toDouble() ?? 0), 1);
   }
 
   Widget _leverWidget(BuildContext context) {
@@ -873,37 +800,43 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                       child: Row(
                                         children: [
                                           13.hGap,
-                                          Container(
+                                          // Container(
+                                          //   width: 64.w,
+                                          //   height: 64.w,
+                                          //   decoration: BoxDecoration(
+                                          //       color: AppColors.cE1E1E1,
+                                          //       borderRadius:
+                                          //           BorderRadius.circular(
+                                          //               32.w)),
+                                          //   child: Stack(
+                                          //     alignment: Alignment.bottomCenter,
+                                          //     children: [
+                                          //       ImageWidget(
+                                          //         url: Utils.getPlayUrl(item
+                                          //             .teamPlayer.playerId
+                                          //             .toInt()),
+                                          //         imageFailedPath:
+                                          //             Assets.head_0000Png,
+                                          //         width: 64.w,
+                                          //         height: 64.w,
+                                          //       ),
+                                          //       Positioned(
+                                          //           top: 0,
+                                          //           left: 0,
+                                          //           child: Text(
+                                          //             item.baseInfo.getGrade(),
+                                          //             style: 16.w7(
+                                          //                 color: AppColors
+                                          //                     .c262626),
+                                          //           ))
+                                          //     ],
+                                          //   ),
+                                          // ),
+                                          PlayerAvatarWidget(
                                             width: 64.w,
-                                            height: 64.w,
-                                            decoration: BoxDecoration(
-                                                color: AppColors.cE1E1E1,
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        32.w)),
-                                            child: Stack(
-                                              alignment: Alignment.bottomCenter,
-                                              children: [
-                                                ImageWidget(
-                                                  url: Utils.getPlayUrl(item
-                                                      .teamPlayer.playerId
-                                                      .toInt()),
-                                                  imageFailedPath:
-                                                      Assets.head_0000Png,
-                                                  width: 64.w,
-                                                  height: 64.w,
-                                                ),
-                                                Positioned(
-                                                    top: 0,
-                                                    left: 0,
-                                                    child: Text(
-                                                      item.baseInfo.getGrade(),
-                                                      style: 16.w7(
-                                                          color: AppColors
-                                                              .c262626),
-                                                    ))
-                                              ],
-                                            ),
+                                            playerId: item.teamPlayer.playerId
+                                                .toInt(),
+                                            fontColor: AppColors.c262626,
                                           ),
                                           9.hGap,
                                           Expanded(

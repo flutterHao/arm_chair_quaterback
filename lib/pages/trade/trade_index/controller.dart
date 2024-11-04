@@ -36,6 +36,7 @@ class TradeIndexController extends GetxController
   Timer? timer;
   
   void startCountDown(trendPlayer){
+    timer?.cancel();
     timer = Timer.periodic(const Duration(seconds: 1), (t){
       var dateTimeByMs = MyDateUtils.getDateTimeByMs(
           (trendPlayer.removalTime ?? 0) -
