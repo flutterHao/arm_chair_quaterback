@@ -80,7 +80,7 @@ Map<String, dynamic> $NbaPlayerBaseInfoEntityToJson(
   data['guessInfos'] = entity.guessInfos.toJson();
   data['playerBaseInfo'] = entity.playerBaseInfo.toJson();
   data['l5GameData'] = entity.l5GameData.map((v) => v.toJson()).toList();
-  data['l5DataAvg'] = entity.l5DataAvg.toJson();
+  data['l5DataAvg'] = entity.l5DataAvg?.toJson();
   data['playerRegularMap'] = entity.playerRegularMap?.toJson();
   data['playerPlayoffsMap'] = entity.playerPlayoffsMap?.toJson();
   data['playerTrends'] = entity.playerTrends.map((v) => v.toJson()).toList();

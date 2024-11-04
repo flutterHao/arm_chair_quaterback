@@ -159,7 +159,7 @@ class SummaryController extends GetxController {
 
   String getLast5AvgWithTab() {
     var key = getCurrentTabKey();
-    return (nbaPlayerBaseInfoEntity!.l5DataAvg.getValue(key)).format();
+    return (nbaPlayerBaseInfoEntity?.l5DataAvg?.getValue(key)??0).format();
   }
 
   _PickInfo? getPickInfo() {

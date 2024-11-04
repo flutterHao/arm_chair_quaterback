@@ -11,9 +11,9 @@ class NbaPlayerBaseInfoEntity {
   late NbaPlayerBaseInfoGuessInfos guessInfos;
   late NbaPlayerBaseInfoPlayerBaseInfo playerBaseInfo;
   late List<NbaPlayerBaseInfoL5GameData> l5GameData;
-  late NbaPlayerBaseInfoL5DataAvg l5DataAvg;
-  late NbaPlayerBaseInfoPlayerRegularMap? playerRegularMap;
-  late NbaPlayerBaseInfoPlayerPlayoffsMap? playerPlayoffsMap;
+  NbaPlayerBaseInfoL5DataAvg? l5DataAvg;
+  NbaPlayerBaseInfoPlayerRegularMap? playerRegularMap;
+  NbaPlayerBaseInfoPlayerPlayoffsMap? playerPlayoffsMap;
   late List<NbaPlayerBaseInfoPlayerTrends> playerTrends;
   late List<NbaPlayerBaseInfoPlayerNews> playerNews;
   TradeInfoTradePlayers? tradePlayers;
