@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-21 17:26:07
- * @LastEditTime: 2024-11-04 15:37:22
+ * @LastEditTime: 2024-11-04 16:14:16
  */
 import 'dart:math';
 
@@ -589,13 +589,14 @@ class _PicksIndexPageState extends State<PicksIndexPage>
             Obx(() {
               print('choiceSize-obx----');
               var value = picksIndexController.choiceSize.value;
-              if (value <= 0) {
-                return const SizedBox.shrink();
-              }
-              return Positioned(
+              // if (value <= 0) {
+              //   return const SizedBox.shrink();
+              // }
+              return AnimatedPositioned(
+                  duration: const Duration(milliseconds: 300),
                   left: 0,
                   right: 0,
-                  bottom: 20.w,
+                  bottom: value <= 0 ? -60.w : 20.w,
                   child: Center(
                     child: Container(
                         constraints: BoxConstraints(

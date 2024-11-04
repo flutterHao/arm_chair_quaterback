@@ -46,10 +46,15 @@ class StatsRankWidget extends GetView<NewListController> {
                       padding: EdgeInsets.only(left: 16.w), // 控制左右间距
                       child: InkWell(
                         onTap: () {
-                          Get.toNamed(
-                            RouteNames.statsRank,
-                            id: GlobalNestedKey.NEWS,
-                          );
+                          controller.type = controller
+                              .state.statsRankMap.entries
+                              .elementAt(index)
+                              .key;
+                          Get.toNamed(RouteNames.statsRank,
+                              id: GlobalNestedKey.NEWS,
+                              arguments: controller.state.statsRankMap.entries
+                                  .elementAt(index)
+                                  .key);
                         },
                         child: StatsRankItem(index: index),
                       ),

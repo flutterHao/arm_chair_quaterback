@@ -1,7 +1,12 @@
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
-import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-10-24 21:29:09
+ * @LastEditTime: 2024-11-04 16:19:29
+ */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/common/widgets/btn_background.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/picks_guess_confirm_dialog_v2.dart';
@@ -67,19 +72,20 @@ class RankStartButton extends StatelessWidget {
                         color: AppColors.cFF7954,
                         borderRadius: BorderRadius.circular(18.w)),
                     alignment: Alignment.center,
-                    child: Text.rich(
-                        textAlign: TextAlign.end,
-                        TextSpan(children: [
-                          TextSpan(
-                              text: "$size",
-                              style: TextStyle(
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.bold)),
-                        ])),
+                    child: AnimatedNumber(number: size),
+                    // child: Text.rich(
+                    //     textAlign: TextAlign.end,
+                    //     TextSpan(children: [
+                    //       TextSpan(
+                    //           text: "$size",
+                    //           style: TextStyle(
+                    //               fontSize: 14.sp,
+                    //               fontWeight: FontWeight.bold)),
+                    //     ])),
                   ),
                 ),
               ),
-              Text("Submit", style: 16.w7(color: AppColors.cFFFFFF)),
+              Text("SUBMIT", style: 16.w7(color: AppColors.cFFFFFF)),
             ],
           ),
         ),

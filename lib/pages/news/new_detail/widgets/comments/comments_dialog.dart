@@ -2,10 +2,11 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-18 15:38:51
- * @LastEditTime: 2024-10-29 21:37:04
+ * @LastEditTime: 2024-11-04 16:44:55
  */
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comment_controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/send_comment_widget.dart';
 import 'package:flutter/material.dart';
@@ -120,34 +121,39 @@ class CommentsList extends GetView<CommentController> {
               enablePullDown: false,
               onLoading: () =>
                   controller.getReviews(detail.id!, isRefresh: false),
-              child: ListView.separated(
-                  controller: ScrollController(),
-                  shrinkWrap: false,
-                  physics: const ClampingScrollPhysics(),
-                  padding: EdgeInsets.symmetric(vertical: 12.w),
-                  itemCount: list.length,
-                  separatorBuilder: (context, index) {
-                    return 30.vGap;
-                  },
-                  itemBuilder: (context, index) {
-                    // var subList = controller.subList
-                    //     .where((e) =>
-                    //         e.parentReviewId ==
-                    //         list[index].id)
-                    //     .toList();
-                    return Column(
-                      children: [
-                        CommentItemView(item: list[index]),
-                        if (list[index].sonReviews > 0 ||
-                            list[index].subList.isNotEmpty)
-                          Container(
-                            // width: 295.w,
-                            margin: EdgeInsets.only(left: 48.w),
-                            child: SubComentsListView(list[index]),
-                          )
-                      ],
-                    );
-                  }),
+              child: list.isNotEmpty
+                  ? ListView.separated(
+                      controller: ScrollController(),
+                      shrinkWrap: false,
+                      physics: const ClampingScrollPhysics(),
+                      padding: EdgeInsets.symmetric(vertical: 12.w),
+                      itemCount: list.length,
+                      separatorBuilder: (context, index) {
+                        return 30.vGap;
+                      },
+                      itemBuilder: (context, index) {
+                        // var subList = controller.subList
+                        //     .where((e) =>
+                        //         e.parentReviewId ==
+                        //         list[index].id)
+                        //     .toList();
+                        return Column(
+                          children: [
+                            CommentItemView(item: list[index]),
+                            if (list[index].sonReviews > 0 ||
+                                list[index].subList.isNotEmpty)
+                              Container(
+                                // width: 295.w,
+                                margin: EdgeInsets.only(left: 48.w),
+                                child: SubComentsListView(list[index]),
+                              )
+                          ],
+                        );
+                      })
+                  : const Center(
+                      child: LoadStatusWidget(
+                      text: "No Comment",
+                    )),
             )),
           ],
         ),

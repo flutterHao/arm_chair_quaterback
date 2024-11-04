@@ -5,6 +5,7 @@ import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/animation_buttom.dart';
 import 'package:arm_chair_quaterback/common/widgets/buble_box.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
@@ -156,7 +157,7 @@ class TrainingPage extends GetView<TrainingController> {
                           AnimatedPositioned(
                             left: 186.w,
                             duration: const Duration(milliseconds: 100),
-                            child: InkWell(
+                            child: AnimatedButton(
                               onTap: () => showDialog(
                                   context: context,
                                   builder: (context) {

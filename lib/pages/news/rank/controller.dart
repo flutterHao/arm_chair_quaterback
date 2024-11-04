@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:27:52
- * @LastEditTime: 2024-10-25 20:24:41
+ * @LastEditTime: 2024-11-04 17:07:07
  */
 import 'package:arm_chair_quaterback/common/entities/stats_rank/nba_player_stat.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank.dart';
@@ -66,6 +66,10 @@ class RankController extends GetxController
   @override
   void onReady() {
     super.onReady();
+    // if (Get.arguments != null) {
+    //   statType.value = Get.arguments;
+    // }
+    statType.value = Get.find<NewListController>().type;
     getStatRank();
     getAllTeamInfo();
   }

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2024-11-04 12:26:46
+ * @LastEditTime: 2024-11-04 17:03:34
  */
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
@@ -32,6 +32,7 @@ class NewListController extends GetxController {
   late RefreshController flowRefreshCtrl = RefreshController();
   ScrollController scrollController = ScrollController();
   bool isLoading = true;
+  String type = "";
 
   // @override
   // void onInit() {

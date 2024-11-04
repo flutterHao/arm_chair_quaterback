@@ -335,7 +335,7 @@ class HotComment extends GetView<CommentController> {
             IconWidget(iconWidth: 12.w, icon: Assets.uiIconFirePng),
             3.hGap,
             Text(
-              "Top Comments (${item.sonReviews})",
+              "Top Comments",
               style: 14.w7(color: AppColors.c262626, height: 1),
             ),
           ],
