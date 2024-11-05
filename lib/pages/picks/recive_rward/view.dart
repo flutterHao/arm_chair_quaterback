@@ -21,12 +21,11 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'index.dart';
 
-class ReciveRwardPage extends GetView<ReciveRwardController> {
-  const ReciveRwardPage({Key? key}) : super(key: key);
+class ReceiveRewardPage extends GetView<ReciveRwardController> {
+  const ReceiveRewardPage({super.key});
 
   // 主视图
   Widget _buildView(BuildContext context) {
-    /// 上一条数据的时间
     return Expanded(
         child: SmartRefresher(
       controller: controller.refreshController,
@@ -38,7 +37,6 @@ class ReciveRwardPage extends GetView<ReciveRwardController> {
             return Center(
                 child: LoadStatusWidget(
               loadDataStatus: controller.loadStatusRx.value,
-              onRefreshTap: () => controller.loading(),
             ));
           });
         }
@@ -54,7 +52,7 @@ class ReciveRwardPage extends GetView<ReciveRwardController> {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ReciveAwardItem(items, controller.newsDefineEntity!),
+                      ReceiveAwardItem(items, controller.newsDefineEntity!),
                     ],
                   );
                 },
@@ -69,6 +67,7 @@ class ReciveRwardPage extends GetView<ReciveRwardController> {
 
   @override
   Widget build(BuildContext context) {
+    print('ReceiveRwardPage-----build-----');
     return HorizontalDragBackWidget(
       child: GetBuilder<ReciveRwardController>(
         builder: (_) {

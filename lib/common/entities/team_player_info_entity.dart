@@ -31,6 +31,7 @@ class TeamPlayerInfoEntity {
   late bool bindStatus = false;
   late int breakThroughGrade = 0;
   late int playerId = 0;
+  TeamPlayerInfoPotential? upStarBase;
   @JSONField(deserialize: false, serialize: false)
   RxBool isChange = false.obs; //是否换人
 
@@ -93,7 +94,7 @@ class TeamPlayerInfoEntity {
 class TeamPlayerInfoPotential {
   late int blk = 0;
   late int ast = 0;
-  late int threePts = 0;
+  late int threePt = 0;
   late int stl = 0;
   late int pts = 0;
   late int reb = 0;
@@ -101,7 +102,7 @@ class TeamPlayerInfoPotential {
   TeamPlayerInfoPotential();
 
   int _getMaxValue() {
-    var value = max(pts ?? 0, threePts ?? 0);
+    var value = max(pts ?? 0, threePt ?? 0);
     value = max(value, ast ?? 0);
     value = max(value, reb ?? 0);
     value = max(value, blk ?? 0);
@@ -115,6 +116,15 @@ class TeamPlayerInfoPotential {
     var value =
         maxValue % step == 0 ? maxValue + step : (maxValue ~/ step + 1) * step;
     return value;
+  }
+
+  double getMaxValue() {
+    var value = max(pts, threePt);
+    value = max(value, ast);
+    value = max(value, reb);
+    value = max(value, blk);
+    value = max(value, stl);
+    return value.toDouble();
   }
 
   int getStep() {

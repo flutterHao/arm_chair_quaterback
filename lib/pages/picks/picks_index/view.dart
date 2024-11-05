@@ -63,7 +63,7 @@ class PicksIndex extends StatelessWidget {
             return GetPageRoute(
                 opaque: false,
                 settings: setting,
-                page: () => const ReciveRwardPage(),
+                page: () => const ReceiveRewardPage(),
                 binding: ReciveRwardBinding());
           case RouteNames.picksPickRank:
             return GetPageRoute(

@@ -64,7 +64,8 @@ class AppPages {
         opaque: false,
         name: RouteNames.picksPersonalCenter,
         page: () => const PersonalCenterPage(),
-        binding: PersonalCenterBinding()),
+        // binding: PersonalCenterBinding()
+    ),
     GetPage(
         opaque: false,
         name: RouteNames.mineMineInfo,

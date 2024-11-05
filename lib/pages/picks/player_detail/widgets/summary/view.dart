@@ -243,24 +243,37 @@ class _SummaryPageState extends State<SummaryPage>
                               ],
                             ),
                           ),
-                          9.vGap,
-                          Container(
-                            height: 162.w,
-                            margin: EdgeInsets.symmetric(horizontal: 16.w),
-                            padding: EdgeInsets.all(10.w),
-                            decoration: BoxDecoration(
-                                color: AppColors.cF2F2F2,
-                                borderRadius: BorderRadius.circular(16.w)),
-                            child: Stack(
+                          Builder(builder: (context) {
+                            if (controller.nbaPlayerBaseInfoEntity!.l5GameData
+                                .isEmpty) {
+                              return const SizedBox.shrink();
+                            }
+                            return Column(
                               children: [
-                                _buildDefaultColumnChart(context),
+                                9.vGap,
+                                Container(
+                                  height: 162.w,
+                                  margin:
+                                      EdgeInsets.symmetric(horizontal: 16.w),
+                                  padding: EdgeInsets.all(10.w),
+                                  decoration: BoxDecoration(
+                                      color: AppColors.cF2F2F2,
+                                      borderRadius:
+                                          BorderRadius.circular(16.w)),
+                                  child: Stack(
+                                    children: [
+                                      _buildDefaultColumnChart(context),
+                                    ],
+                                  ),
+                                ),
                               ],
-                            ),
-                          ),
+                            );
+                          }),
                           _buildPick(),
                           _buildCommunityPick(),
                           Builder(builder: (context) {
-                            if (controller.getVsTeams().isEmpty) {
+                            if (controller.getVsTeams().isEmpty ||
+                                controller.getPickInfo() == null) {
                               return const SizedBox.shrink();
                             }
                             return Column(
@@ -1264,65 +1277,11 @@ class _SummaryPageState extends State<SummaryPage>
     return list;
   }
 
-  SfCartesianChart _buildDefaultLineChart() {
-    return SfCartesianChart(
-      margin: const EdgeInsets.all(0),
-      plotAreaBorderWidth: 0,
-      primaryXAxis: const NumericAxis(
-          isVisible: false,
-          edgeLabelPlacement: EdgeLabelPlacement.shift,
-          interval: 2,
-          majorGridLines: MajorGridLines(width: 0)),
-      primaryYAxis: NumericAxis(
-          opposedPosition: true,
-          plotBands: <PlotBand>[
-            PlotBand(
-              start: 40,
-              // 虚线的起始位置（y 值）
-              end: 40,
-              // 虚线的终止位置（y 值），相同值表示一条线
-              borderWidth: 1,
-              // 虚线的宽度
-              borderColor: AppColors.cB3B3B3.withOpacity(0.5),
-              // 虚线的颜色
-              dashArray: const [3, 2],
-              // 设置虚线样式：[线段长度, 间隔长度]
-              horizontalTextAlignment: TextAnchor.end,
-              verticalTextAlignment: TextAnchor.end,
-            ),
-          ],
-          isVisible: true,
-          // labelStyle: 1.w4(color: AppColors.cTransparent),
-          axisLine: AxisLine(width: 0),
-          majorGridLines:
-              MajorGridLines(width: 1, color: Colors.red, dashArray: [2, 2]),
-          majorTickLines: MajorTickLines(color: Colors.transparent)),
-      series: controller.getDefaultLineSeries(),
-      tooltipBehavior: TooltipBehavior(enable: true),
-    );
-  }
-
   SfCartesianChart _buildDefaultColumnChart(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var pickInfo = controller.getPickInfo();
-    var annotations = <CartesianChartAnnotation>[];
     var plotBands = <PlotBand>[];
     if (pickInfo != null) {
-      annotations = <CartesianChartAnnotation>[
-        CartesianChartAnnotation(
-          horizontalAlignment: ChartAlignment.far,
-          widget: Text(
-            '${playerDetailController.baseInfo?.ename}\n${pickInfo.value}',
-            textAlign: TextAlign.end,
-            style: 9.w4(color: AppColors.c262626, height: 1),
-          ),
-          coordinateUnit: CoordinateUnit.logicalPixel,
-          // 设置标注的位置，使其位于虚线的右上方
-          x: width - 52.w,
-          // X 轴逻辑像素值
-          y: 58, // Y 轴逻辑像素值
-        ),
-      ];
       plotBands = <PlotBand>[
         PlotBand(
           start: pickInfo.value,
@@ -1330,8 +1289,14 @@ class _SummaryPageState extends State<SummaryPage>
           end: pickInfo.value,
           // 虚线的终止位置（y 值），相同值表示一条线
           borderWidth: 1,
+          text:'${playerDetailController.baseInfo?.ename}\n${pickInfo.value}',
+          verticalTextPadding: "-10",
+          horizontalTextAlignment: TextAnchor.end,
+          verticalTextAlignment: TextAnchor.end,
+          textStyle: 9.w4(color: AppColors.c262626, height: 1),
           // 虚线的宽度
           borderColor: AppColors.cFF7954.withOpacity(0.5),
+          shouldRenderAboveSeries: true,
           // 虚线的颜色
           dashArray: const [3, 2], // 设置虚线样式：[线段长度, 间隔长度]
         ),
@@ -1348,16 +1313,16 @@ class _SummaryPageState extends State<SummaryPage>
         labelStyle: 9.w4(color: AppColors.cB3B3B3),
       ),
       // 添加标注
-      annotations: annotations,
       primaryYAxis: NumericAxis(
         labelStyle: 9.w4(color: AppColors.cB3B3B3),
         plotBands: plotBands,
         axisLine: const AxisLine(width: 0),
+        // maximum: controller.getColumnMaxYValue().toDouble(),
         majorTickLines: const MajorTickLines(size: 0),
         majorGridLines: const MajorGridLines(
             width: 1, color: AppColors.cD9D9D9, dashArray: [2, 2]),
       ),
-      series: controller.getDefaultColumnSeries(),
+      series: controller.getDefaultColumnSeries(width),
       // tooltipBehavior: _tooltipBehavior,
     );
   }

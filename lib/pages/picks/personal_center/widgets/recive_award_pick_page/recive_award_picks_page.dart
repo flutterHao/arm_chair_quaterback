@@ -1,21 +1,16 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
-import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
-import 'package:arm_chair_quaterback/common/entities/recive_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_simple_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/TLBuilderWidget.dart';
 import 'package:arm_chair_quaterback/common/widgets/delegate/sliver_header_delegate.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/physics/one_boundary_page_scroll_physics.dart';
-import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/personal_center/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/personal_center/widgets/recive_award_pick_page/recive_award_picks_page_controller.dart';
-import 'package:arm_chair_quaterback/pages/picks/recive_rward/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/recive_rward/widgets/recive_award_item/recive_award_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -49,6 +44,7 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
 
   @override
   Widget build(BuildContext context) {
+    print('ReciveAwardPicksPage-----build----');
     return GetBuilder<ReciveAwardPicksPageController>(builder: (_) {
       return SmartRefresher(
         // enablePullUp: true,
@@ -63,6 +59,7 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
               }))
             : NestedScrollView(
                 headerSliverBuilder: (context, innerBoxIsScrolled) {
+                  var find = Get.find<PersonalCenterController>();
                   return <Widget>[
                     SliverToBoxAdapter(
                       child: Container(
@@ -74,9 +71,7 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(16.w),
                             gradient: LinearGradient(
-                                colors: Get.find<PersonalCenterController>()
-                                            .rank >
-                                        0
+                                colors: find.rank > 0
                                     ? [
                                         AppColors.c7e2919,
                                         AppColors.c251a18,
@@ -406,7 +401,7 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
                           ),
                           4.hGap,
                           Text(
-                            "+${controller.streakReward}",
+                            "+${Utils.formatChip(controller.streakReward)}",
                             style: 19.w7(
                                 color: AppColors.c10A86A,
                                 height: 1,
@@ -436,20 +431,21 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
                   itemCount: data.length,
                   itemBuilder: (context, index) {
                     List<PicksPlayer> items = data[index];
+
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        ReciveAwardItem(
+                        ReceiveAwardItem(
                           items,
                           controller.newsDefineEntity!,
                           personalCenterPage: true,
                         ),
+                        if (index == data.length - 1) 20.vGap,
                       ],
                     );
                   }),
             ),
           ),
-          20.vGap
         ],
       ),
     );

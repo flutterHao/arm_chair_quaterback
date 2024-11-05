@@ -14,8 +14,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 ///@auther gejiahui
 ///created at 2024/9/11/13:06
 
-class ReciveAwardDetailItem extends StatelessWidget {
-  const ReciveAwardDetailItem(this.player, this.newsDefineEntity, {super.key});
+class ReceiveAwardDetailItem extends StatelessWidget {
+  const ReceiveAwardDetailItem(this.player, this.newsDefineEntity, {super.key});
 
   final PicksPlayer player;
   final NewsDefineEntity newsDefineEntity;

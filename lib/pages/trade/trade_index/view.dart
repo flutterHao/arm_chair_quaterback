@@ -572,7 +572,7 @@ class _TradeIndexPageState extends State<TradeIndexPage>
   }
 
   Column _buildView(List<TradeInfoTradePlayers> tradePlayers,
-      BuildContext context, TradeIndexController controller, bool isBuy) {
+      BuildContext context, TradeIndexController controller, bool isBuyTab) {
     if (tradePlayers.isEmpty) {
       return const Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -602,7 +602,7 @@ class _TradeIndexPageState extends State<TradeIndexPage>
             removeTop: true,
             child: SmartRefresher(
               onRefresh: () => controller.refreshData(),
-              controller: isBuy
+              controller: isBuyTab
                   ? controller.buyRefreshController
                   : controller.sellRefreshController,
               child: ListView.separated(
@@ -611,9 +611,9 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                   itemBuilder: (context, index) {
                     var trendPlayer = tradePlayers[index];
                     var player = Utils.getPlayBaseInfo(trendPlayer.playerId);
-                    var basicMarketPrice = (isBuy
-                            ? trendPlayer.buyPrice
-                            : trendPlayer.basicMarketPrice) ??
+                    var basicMarketPrice = (isBuyTab
+                            ? trendPlayer.basicMarketPrice
+                            : trendPlayer.buyPrice) ??
                         player.basicMarketPrice;
                     var marketPrice = player.marketPrice;
                     bool isGood = basicMarketPrice < marketPrice;
@@ -808,6 +808,7 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                                                       width: 39.w,
                                                       margin: EdgeInsets.only(
                                                           top: 6.w, right: 3.w),
+                                                      padding: EdgeInsets.symmetric(horizontal: 2.w),
                                                       decoration: BoxDecoration(
                                                           color: color,
                                                           borderRadius:
@@ -816,12 +817,15 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                                                                       5.w)),
                                                       alignment:
                                                           Alignment.center,
-                                                      child: Text(
-                                                        "${isGood ? "+" : "-"}${percent.toStringAsFixed(0)}%",
-                                                        style: 12.w4(
-                                                            color: AppColors
-                                                                .cFFFFFF,
-                                                            height: 1),
+                                                      child: FittedBox(
+                                                        fit: BoxFit.scaleDown,
+                                                        child: Text(
+                                                          "${isGood ? "+" : "-"}${percent.toStringAsFixed(0)}%",
+                                                          style: 12.w4(
+                                                              color: AppColors
+                                                                  .cFFFFFF,
+                                                              height: 1),
+                                                        ),
                                                       )),
                                                 ],
                                               )
@@ -832,17 +836,17 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                                       InkWell(
                                         onTap: () {
                                           if ((trendPlayer.isBuy ?? false) &&
-                                              isBuy) {
+                                              isBuyTab) {
                                             return;
                                           }
                                           if ((trendPlayer.position ?? -1) >=
                                                   0 &&
-                                              !isBuy) {
+                                              !isBuyTab) {
                                             EasyLoading.showToast(
                                                 "can not sell the line up player");
                                             return;
                                           }
-                                          if (isBuy) {
+                                          if (isBuyTab) {
                                             controller.buy(player.playerId);
                                           } else {
                                             controller.sell(trendPlayer.uuid!);
@@ -861,22 +865,22 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                                                   width: 1)),
                                           alignment: Alignment.center,
                                           child: Text(
-                                            isBuy
+                                            isBuyTab
                                                 ? ((trendPlayer.isBuy ??
                                                             false) &&
-                                                        isBuy)
+                                                        isBuyTab)
                                                     ? "HAVE BOUGHT"
                                                     : "BUY"
                                                 : "SELL",
                                             style: 13.w7(
                                                 color: ((trendPlayer.isBuy ??
                                                             false) &&
-                                                        isBuy)
+                                                        isBuyTab)
                                                     ? AppColors.cB3B3B3
                                                     : ((trendPlayer.position ??
                                                                     -1) >=
                                                                 0 &&
-                                                            !isBuy)
+                                                            !isBuyTab)
                                                         ? AppColors.cB3B3B3
                                                         : AppColors.c262626,
                                                 height: 1),

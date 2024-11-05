@@ -142,6 +142,8 @@ class NbaPlayerInfosPlayerDataCapList {
   late int beforeOreb = 0;
   late int threePm = 0;
   late int to = 0;
+  int? reb;
+  int? threePt;
 
   NbaPlayerInfosPlayerDataCapList();
 
@@ -152,7 +154,7 @@ class NbaPlayerInfosPlayerDataCapList {
 
   num getValue(String key) {
     if (key.toLowerCase() == "reb") {
-      return _getREB();
+      return reb??_getREB();
     }
     var json = toJson();
     for (var k in json.keys) {
@@ -172,12 +174,12 @@ class NbaPlayerInfosPlayerDataCapList {
   }
 
   double getMaxValue() {
-    var value = max(pts, getThreePT());
+    var value = max(pts,threePt??threePts.toDouble());
     value = max(value, ast);
-    value = max(value, (dreb + oreb) / 2);
+    value = max(value, reb??(dreb + oreb) / 2);
     value = max(value, blk);
     value = max(value, stl);
-    return value + 20;
+    return value.toDouble();
   }
 
   @override

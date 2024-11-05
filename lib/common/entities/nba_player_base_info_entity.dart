@@ -13,6 +13,7 @@ class NbaPlayerBaseInfoEntity {
   late List<NbaPlayerBaseInfoL5GameData> l5GameData;
   NbaPlayerBaseInfoL5DataAvg? l5DataAvg;
   NbaPlayerBaseInfoPlayerRegularMap? playerRegularMap;
+  List<NbaPlayerBaseInfoGuessInfosPtsTwoTeamGames>? twoTeamGames;
   NbaPlayerBaseInfoPlayerPlayoffsMap? playerPlayoffsMap;
   late List<NbaPlayerBaseInfoPlayerTrends> playerTrends;
   late List<NbaPlayerBaseInfoPlayerNews> playerNews;
@@ -340,7 +341,6 @@ class NbaPlayerBaseInfoGuessInfosRebTwoTeamGames {
 class NbaPlayerBaseInfoGuessInfosProperty {
   NbaPlayerBaseInfoGuessInfosPtsCommunityPick? communityPick;
   GuessGameInfoEntity? picks;
-  List<NbaPlayerBaseInfoGuessInfosPtsTwoTeamGames>? twoTeamGames;
 
   NbaPlayerBaseInfoGuessInfosProperty();
 
@@ -595,7 +595,7 @@ class NbaPlayerBaseInfoL5DataAvg {
       return threePm ?? 0;
     }
     if ("reb" == key.toLowerCase()) {
-      return ((oreb ?? 0) + (dreb ?? 0)) / 2;
+      return ((oreb ?? 0) + (dreb ?? 0));
     }
     return toJson()[key.toLowerCase()];
   }

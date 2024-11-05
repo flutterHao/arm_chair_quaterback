@@ -73,6 +73,11 @@ TeamPlayerInfoEntity $TeamPlayerInfoEntityFromJson(Map<String, dynamic> json) {
   if (playerId != null) {
     teamPlayerInfoEntity.playerId = playerId;
   }
+  final TeamPlayerInfoPotential? upStarBase = jsonConvert.convert<
+      TeamPlayerInfoPotential>(json['upStarBase']);
+  if (upStarBase != null) {
+    teamPlayerInfoEntity.upStarBase = upStarBase;
+  }
   return teamPlayerInfoEntity;
 }
 
@@ -94,6 +99,7 @@ Map<String, dynamic> $TeamPlayerInfoEntityToJson(TeamPlayerInfoEntity entity) {
   data['bindStatus'] = entity.bindStatus;
   data['breakThroughGrade'] = entity.breakThroughGrade;
   data['playerId'] = entity.playerId;
+  data['upStarBase'] = entity.upStarBase?.toJson();
   return data;
 }
 
@@ -115,6 +121,7 @@ extension TeamPlayerInfoEntityExtension on TeamPlayerInfoEntity {
     bool? bindStatus,
     int? breakThroughGrade,
     int? playerId,
+    TeamPlayerInfoPotential? upStarBase,
     RxBool? isChange,
   }) {
     return TeamPlayerInfoEntity()
@@ -134,6 +141,7 @@ extension TeamPlayerInfoEntityExtension on TeamPlayerInfoEntity {
       ..bindStatus = bindStatus ?? this.bindStatus
       ..breakThroughGrade = breakThroughGrade ?? this.breakThroughGrade
       ..playerId = playerId ?? this.playerId
+      ..upStarBase = upStarBase ?? this.upStarBase
       ..isChange = isChange ?? this.isChange;
   }
 }
@@ -149,9 +157,9 @@ TeamPlayerInfoPotential $TeamPlayerInfoPotentialFromJson(
   if (ast != null) {
     teamPlayerInfoPotential.ast = ast;
   }
-  final int? threePts = jsonConvert.convert<int>(json['threePts']);
-  if (threePts != null) {
-    teamPlayerInfoPotential.threePts = threePts;
+  final int? threePt = jsonConvert.convert<int>(json['threePt']);
+  if (threePt != null) {
+    teamPlayerInfoPotential.threePt = threePt;
   }
   final int? stl = jsonConvert.convert<int>(json['stl']);
   if (stl != null) {
@@ -173,7 +181,7 @@ Map<String, dynamic> $TeamPlayerInfoPotentialToJson(
   final Map<String, dynamic> data = <String, dynamic>{};
   data['blk'] = entity.blk;
   data['ast'] = entity.ast;
-  data['threePts'] = entity.threePts;
+  data['threePt'] = entity.threePt;
   data['stl'] = entity.stl;
   data['pts'] = entity.pts;
   data['reb'] = entity.reb;
@@ -184,7 +192,7 @@ extension TeamPlayerInfoPotentialExtension on TeamPlayerInfoPotential {
   TeamPlayerInfoPotential copyWith({
     int? blk,
     int? ast,
-    int? threePts,
+    int? threePt,
     int? stl,
     int? pts,
     int? reb,
@@ -192,7 +200,7 @@ extension TeamPlayerInfoPotentialExtension on TeamPlayerInfoPotential {
     return TeamPlayerInfoPotential()
       ..blk = blk ?? this.blk
       ..ast = ast ?? this.ast
-      ..threePts = threePts ?? this.threePts
+      ..threePt = threePt ?? this.threePt
       ..stl = stl ?? this.stl
       ..pts = pts ?? this.pts
       ..reb = reb ?? this.reb;

@@ -1,27 +1,23 @@
-import 'dart:math';
-
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/chart_sample_data.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/arc_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/btn_background.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/physics/one_boundary_scroll_physics.dart';
 import 'package:arm_chair_quaterback/common/widgets/player_avatar_widget.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/game/controller.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:intl/intl.dart';
 
 ///
 ///@auther gejiahui
@@ -98,111 +94,71 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                       width: double.infinity,
                       margin:
                           EdgeInsets.only(left: 14.w, right: 18.w, top: 5.w),
-                      child: AspectRatio(
-                        aspectRatio: 1.4,
-                        child: BarChart(BarChartData(
-                            maxY: controller.uuidPlayerInfo?.potential!
-                                .getMax()
-                                .toDouble(),
-                            borderData: FlBorderData(
-                                show: true,
-                                border: const Border(
-                                    bottom: BorderSide(
-                                        color: AppColors.cD9D9D9, width: 1))),
-                            gridData: FlGridData(
-                                show: true,
-                                drawHorizontalLine: true,
-                                drawVerticalLine: false,
-                                horizontalInterval: controller
-                                    .uuidPlayerInfo?.potential
-                                    .getStep()
-                                    .toDouble(),
-                                getDrawingHorizontalLine: (value) {
-                                  return const FlLine(
-                                      color: AppColors.cD9D9D9,
-                                      strokeWidth: 1,
-                                      dashArray: [3]);
-                                }),
-                            titlesData: FlTitlesData(
-                                show: true,
-                                leftTitles: AxisTitles(
-                                    sideTitles: SideTitles(
-                                        showTitles: true,
-                                        interval: 10,
-                                        getTitlesWidget: (value, meta) {
-                                          var text = value % 200 != 0
-                                              ? ""
-                                              : value.toStringAsFixed(0);
-                                          return Text(
-                                            text,
-                                            style:
-                                                9.w4(color: AppColors.cB2B2B2),
-                                          );
-                                        })),
-                                bottomTitles: AxisTitles(
-                                    sideTitles: SideTitles(
-                                        showTitles: true,
-                                        getTitlesWidget: (value, meta) {
-                                          var text = "PTS";
-                                          switch (value.toInt()) {
-                                            case 1:
-                                              text = "PTS";
-                                              break;
-                                            case 2:
-                                              text = "3PT";
-                                              break;
-                                            case 3:
-                                              text = "AST";
-                                              break;
-                                            case 4:
-                                              text = "REB";
-                                              break;
-                                            case 5:
-                                              text = "BLK";
-                                              break;
-                                            case 6:
-                                              text = "STL";
-                                              break;
-                                          }
-                                          return Container(
-                                            margin: EdgeInsets.only(top: 2.h),
-                                            child: Text(
-                                              text,
-                                              style: 9
-                                                  .w4(color: AppColors.cB2B2B2),
-                                            ),
-                                          );
-                                        })),
-                                rightTitles: const AxisTitles(),
-                                topTitles: const AxisTitles()),
-                            barTouchData: BarTouchData(
-                                enabled: true,
-                                handleBuiltInTouches: false,
-                                touchTooltipData: BarTouchTooltipData(
-                                  tooltipMargin: 0,
-                                  tooltipPadding: const EdgeInsets.all(0),
-                                  getTooltipColor: (_) =>
-                                      AppColors.cTransparent,
-                                  getTooltipItem: (BarChartGroupData group,
-                                      int groupIndex,
-                                      BarChartRodData rod,
-                                      int rodIndex) {
-                                    return BarTooltipItem(
-                                      rod.toY.toStringAsFixed(0),
-                                      11.w7(color: rod.color!, height: 1),
-                                    );
-                                  },
-                                )),
-                            minY: getMaxValue(),
-                            barGroups: [
-                              getBarchartGroupDataItem(1, "pts"),
-                              getBarchartGroupDataItem(2, "threePts"),
-                              getBarchartGroupDataItem(3, "ast"),
-                              getBarchartGroupDataItem(4, "reb"),
-                              getBarchartGroupDataItem(5, "blk"),
-                              getBarchartGroupDataItem(6, "stl"),
-                            ])),
+                      child: SfCartesianChart(
+                        plotAreaBorderWidth: 0,
+                        primaryXAxis: CategoryAxis(
+                          majorGridLines: const MajorGridLines(width: 0),
+                          axisLine: const AxisLine(color: AppColors.cD9D9D9),
+                          majorTickLines: const MajorTickLines(
+                              color: AppColors.cTransparent),
+                          labelStyle: 10.w4(color: AppColors.cB2B2B2),
+                        ),
+                        primaryYAxis: NumericAxis(
+                          isVisible: true,
+                          minimum: 0,
+                          maximum: controller.getMaxValue(),
+                          labelStyle: 10.w4(color: AppColors.cB2B2B2),
+                          axisLine:
+                              const AxisLine(color: AppColors.cTransparent),
+                          majorGridLines: const MajorGridLines(
+                              color: AppColors.cD9D9D9,
+                              width: 1,
+                              dashArray: [3, 2]),
+                          majorTickLines: const MajorTickLines(
+                              color: AppColors.cTransparent),
+                        ),
+                        tooltipBehavior: TooltipBehavior(
+                            enable: true, header: '', canShowMarker: false),
+                        series: <ColumnSeries<ChartSampleData, String>>[
+                          ColumnSeries<ChartSampleData, String>(
+                            width: 0.2,
+                            borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(10.w)),
+                            dataSource: controller.getPotentialData(),
+                            xValueMapper: (ChartSampleData datum, int index) {
+                              return datum.x as String;
+                            },
+                            yValueMapper: (ChartSampleData datum, int index) {
+                              return datum.y;
+                            },
+                            pointColorMapper:
+                                (ChartSampleData datum, int index) {
+                              return datum.pointColor;
+                            },
+                            dataLabelSettings: DataLabelSettings(
+                                builder: (data, point, series, pointIndex,
+                                    seriesIndex) {
+                                  // 根据数据值设置标签颜色
+                                  Color labelColor =
+                                      Utils.getChartColor(point.y);
+                                  var y = point.y;
+                                  if (y == controller.SPECIALVALUE) {
+                                    y = 0;
+                                  }
+                                  return Text(
+                                    '${y?.toStringAsFixed(0)}',
+                                    style: TextStyle(
+                                      color: labelColor,
+                                      fontSize: 12,
+                                    ),
+                                  );
+                                },
+                                isVisible: true,
+                                textStyle: 10.w7(color: AppColors.c10A86A)),
+                          )
+                        ],
                       ),
+                      // child:
                     );
                   }),
                   18.vGap,
@@ -248,36 +204,6 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
         ),
       ),
     );
-  }
-
-  BarChartGroupData getBarchartGroupDataItem(int xValue, String key) {
-    return BarChartGroupData(
-        showingTooltipIndicators: [0],
-        x: xValue,
-        barRods: [
-          BarChartRodData(
-              width: 10.w,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(5.w)),
-              toY: formatYValue(key),
-              color: Utils.getChartColor(formatYValue(key)))
-        ]);
-  }
-
-  double getMaxValue() {
-    int maxVale = 1;
-    var keys =
-        controller.uuidPlayerInfo?.potential.toJson().keys.toList() ?? [];
-    for (int i = 0; i < keys!.length; i++) {
-      var key = keys[i];
-      var value = controller.uuidPlayerInfo?.potential.toJson()[key] as int;
-      maxVale = max(maxVale, value);
-    }
-    return maxVale.toDouble();
-  }
-
-  double formatYValue(String key) {
-    var json = controller.uuidPlayerInfo?.potential.toJson();
-    return max((json?[key].toDouble() ?? 0), 1);
   }
 
   Widget _leverWidget(BuildContext context) {
@@ -800,38 +726,6 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                       child: Row(
                                         children: [
                                           13.hGap,
-                                          // Container(
-                                          //   width: 64.w,
-                                          //   height: 64.w,
-                                          //   decoration: BoxDecoration(
-                                          //       color: AppColors.cE1E1E1,
-                                          //       borderRadius:
-                                          //           BorderRadius.circular(
-                                          //               32.w)),
-                                          //   child: Stack(
-                                          //     alignment: Alignment.bottomCenter,
-                                          //     children: [
-                                          //       ImageWidget(
-                                          //         url: Utils.getPlayUrl(item
-                                          //             .teamPlayer.playerId
-                                          //             .toInt()),
-                                          //         imageFailedPath:
-                                          //             Assets.head_0000Png,
-                                          //         width: 64.w,
-                                          //         height: 64.w,
-                                          //       ),
-                                          //       Positioned(
-                                          //           top: 0,
-                                          //           left: 0,
-                                          //           child: Text(
-                                          //             item.baseInfo.getGrade(),
-                                          //             style: 16.w7(
-                                          //                 color: AppColors
-                                          //                     .c262626),
-                                          //           ))
-                                          //     ],
-                                          //   ),
-                                          // ),
                                           PlayerAvatarWidget(
                                             width: 64.w,
                                             playerId: item.teamPlayer.playerId
@@ -1064,8 +958,8 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                           text: "${(data as ChartSampleData).x}:  ",
                           style: 10.w4(color: AppColors.cB3B3B3, height: 1)),
                       TextSpan(
-                          text: (data).yValue!.toStringAsFixed(0),
-                          style: 14.w7(color: AppColors.c262626, height: 1))
+                          text: (data).secondSeriesYValue!.toStringAsFixed(0),
+                          style: 12.w7(color: AppColors.c262626, height: 1))
                     ])),
                   );
                 },
@@ -1073,7 +967,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                 connectorLineSettings: const ConnectorLineSettings(
                     color: AppColors.cB3B3B3,
                     type: ConnectorType.curve,
-                    length: '20%'),
+                    length: '10%'),
                 labelIntersectAction: LabelIntersectAction.shift))
       ],
       // tooltipBehavior: _tooltipBehavior,
@@ -1089,9 +983,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
         yValueMapper: (ChartSampleData data, _) =>
             (data.yValue! < 5 ? 10 : data.yValue),
         pointColorMapper: (data, _) => AppColors.c3B93FF,
-        pointRadiusMapper: (data, _) =>
-            (data.yValue! < 5 ? (data.y! / 3 + data.yValue!) : data.yValue)
-                .toString(),
+        pointRadiusMapper: (data, _) => data.yValue.toString(),
         explodeAll: true,
         explodeOffset: '3%',
         explode: true,
@@ -1101,6 +993,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
 
   @override
   Widget build(BuildContext context) {
+    print('PlayerDetailGame----build---');
     playerDetailController = Get.find();
     controller = Get.put(GameController(
         playerDetailController.arguments, widget.upStarSuccessCallBack));

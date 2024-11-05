@@ -1,5 +1,4 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
-import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -9,8 +8,7 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog_background.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
-import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
+import 'package:arm_chair_quaterback/common/widgets/player_avatar_widget.dart';
 import 'package:arm_chair_quaterback/pages/picks/recive_rward/widgets/recive_award_detail_item.dart';
 import 'package:arm_chair_quaterback/pages/picks/recive_rward/widgets/recive_award_item/recive_award_item_controller.dart';
 import 'package:flutter/material.dart';
@@ -21,26 +19,32 @@ import 'package:get/get.dart';
 ///@auther gejiahui
 ///created at 2024/9/23/16:50
 
-class ReciveAwardItem extends StatelessWidget {
-  ReciveAwardItem(this.data, this.newsDefineEntity,
+class ReceiveAwardItem extends StatefulWidget {
+  const ReceiveAwardItem(this.data, this.newsDefineEntity,
       {this.personalCenterPage = false, super.key});
 
   final List<PicksPlayer> data;
   final NewsDefineEntity newsDefineEntity;
   final bool personalCenterPage;
 
-  late ReciveAwardItemController controller;
+  @override
+  State<ReceiveAwardItem> createState() => _ReceiveAwardItemState();
+}
+
+class _ReceiveAwardItemState extends State<ReceiveAwardItem> {
+  late ReceiveAwardItemController controller;
 
   @override
   Widget build(BuildContext context) {
-    controller = ReciveAwardItemController(data, newsDefineEntity);
-    return GetBuilder<ReciveAwardItemController>(
-        init: controller,
-        tag: data[0].reciveAwardInfo.id.toString(),
+    print('ReciveAwardItem---build----');
+    return GetBuilder<ReceiveAwardItemController>(
+        init: controller =
+            ReceiveAwardItemController(widget.data, widget.newsDefineEntity),
+        tag: widget.data[0].reciveAwardInfo.id.toString(),
         id: controller.idReciveAwardItem,
         builder: (_) {
           return InkWell(
-            onTap: () => _buildDetailDialog(context),
+            onTap: () => _buildDetailDialog(),
             child: Container(
               height: 107.w,
               width: double.infinity,
@@ -59,17 +63,15 @@ class ReciveAwardItem extends StatelessWidget {
 
                       //右上角结果
                       Row(
-                        children: List.generate(data.length, (index) {
+                        children: List.generate(widget.data.length, (index) {
                           return Container(
                             height: 12.w,
                             width: 12.w,
                             margin: EdgeInsets.only(left: 6.w),
                             decoration: BoxDecoration(
                                 color: controller.getStatus() != 1
-                                    ? data[index]
-                                            .reciveAwardInfo
-                                            .guessData[index]
-                                            .success
+                                    ? widget.data[index].reciveAwardInfo
+                                            .guessData[index].success
                                         ? AppColors.c10A86A
                                         : AppColors.cE72646
                                     : AppColors.cTransparent,
@@ -135,15 +137,14 @@ class ReciveAwardItem extends StatelessWidget {
                                                       color: AppColors.c666666),
                                                 ),
                                               )
-                                            : ImageWidget(
-                                                url: Utils.getPlayUrl(controller
-                                                    .data[index]
-                                                    .guessData
-                                                    ?.playerId),
-                                                imageFailedPath:
-                                                    Assets.uiDefault_04Png,
+                                            : PlayerAvatarWidget(
                                                 width: 40.w,
-                                                height: 40.w,
+                                                showGrade: false,
+                                                playerId: controller.data[index]
+                                                        .guessData?.playerId ??
+                                                    0,
+                                                backgroundColor:
+                                                    AppColors.cTransparent,
                                               )),
                                   ),
                                 ));
@@ -156,7 +157,7 @@ class ReciveAwardItem extends StatelessWidget {
                             "${MyDateUtils.getMonthEnName(MyDateUtils.getDateTimeByMs(controller.data[0].reciveAwardInfo.createTime), short: true)} ${MyDateUtils.getDateTimeByMs(controller.data[0].reciveAwardInfo.createTime).day}",
                             style: 12.w4(color: AppColors.cB3B3B3),
                           ),
-                          if (personalCenterPage)
+                          if (widget.personalCenterPage)
                             Container(
                               width: 68.w,
                               height: 27.w,
@@ -219,15 +220,12 @@ class ReciveAwardItem extends StatelessWidget {
             iconColor: AppColors.c262626,
           ),
           3.hGap,
-          Text(
-            MyDateUtils.formatDate(
-                MyDateUtils.getDateTimeByMs(MyDateUtils.getNextDayStartTimeMS(
-                        MyDateUtils.nextDay(MyDateUtils.getDateTimeByMs(
-                            controller.data[0].reciveAwardInfo.createTime))) -
-                    MyDateUtils.getNowDateMs()),
-                format: DateFormats.H_M_S),
-            style: 16.w4(color: AppColors.c262626, height: 1),
-          )
+          Obx(() {
+            return Text(
+              controller.specialTime.value,
+              style: 16.w4(color: AppColors.c262626, height: 1),
+            );
+          })
         ],
       );
     }
@@ -270,14 +268,14 @@ class ReciveAwardItem extends StatelessWidget {
     );
   }
 
-  Future<dynamic> _buildDetailDialog(BuildContext context) {
+  _buildDetailDialog() {
     int winTimesCount = controller.data[0].reciveAwardInfo.guessData
         .where((e) => e.success)
         .toList()
         .length;
     var status = controller.getStatus();
     var success = controller.data[0].reciveAwardInfo.success;
-    return showModalBottomSheet(
+    showModalBottomSheet(
         context: context,
         isScrollControlled: true,
         builder: (context) {
@@ -433,14 +431,16 @@ class ReciveAwardItem extends StatelessWidget {
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: List.generate(data.length, (index) {
+                                  children: List.generate(widget.data.length,
+                                      (index) {
                                     return Container(
                                       height: 12.w,
                                       width: 12.w,
                                       margin: EdgeInsets.only(left: 6.w),
                                       decoration: BoxDecoration(
                                           color: controller.getStatus() != 1
-                                              ? data[index]
+                                              ? widget
+                                                      .data[index]
                                                       .reciveAwardInfo
                                                       .guessData[index]
                                                       .success
@@ -478,8 +478,8 @@ class ReciveAwardItem extends StatelessWidget {
                             itemBuilder: (context, index) {
                               return Column(
                                 children: [
-                                  ReciveAwardDetailItem(
-                                      controller.data[index], newsDefineEntity),
+                                  ReceiveAwardDetailItem(controller.data[index],
+                                      widget.newsDefineEntity),
                                 ],
                               );
                             }),

@@ -42,6 +42,15 @@ NbaPlayerBaseInfoEntity $NbaPlayerBaseInfoEntityFromJson(
   if (playerRegularMap != null) {
     nbaPlayerBaseInfoEntity.playerRegularMap = playerRegularMap;
   }
+  final List<
+      NbaPlayerBaseInfoGuessInfosPtsTwoTeamGames>? twoTeamGames = (json['twoTeamGames'] as List<
+      dynamic>?)?.map(
+          (e) =>
+      jsonConvert.convert<NbaPlayerBaseInfoGuessInfosPtsTwoTeamGames>(
+          e) as NbaPlayerBaseInfoGuessInfosPtsTwoTeamGames).toList();
+  if (twoTeamGames != null) {
+    nbaPlayerBaseInfoEntity.twoTeamGames = twoTeamGames;
+  }
   final NbaPlayerBaseInfoPlayerPlayoffsMap? playerPlayoffsMap = jsonConvert
       .convert<NbaPlayerBaseInfoPlayerPlayoffsMap>(json['playerPlayoffsMap']);
   if (playerPlayoffsMap != null) {
@@ -82,6 +91,7 @@ Map<String, dynamic> $NbaPlayerBaseInfoEntityToJson(
   data['l5GameData'] = entity.l5GameData.map((v) => v.toJson()).toList();
   data['l5DataAvg'] = entity.l5DataAvg?.toJson();
   data['playerRegularMap'] = entity.playerRegularMap?.toJson();
+  data['twoTeamGames'] = entity.twoTeamGames?.map((v) => v.toJson()).toList();
   data['playerPlayoffsMap'] = entity.playerPlayoffsMap?.toJson();
   data['playerTrends'] = entity.playerTrends.map((v) => v.toJson()).toList();
   data['playerNews'] = entity.playerNews.map((v) => v.toJson()).toList();
@@ -97,6 +107,7 @@ extension NbaPlayerBaseInfoEntityExtension on NbaPlayerBaseInfoEntity {
     List<NbaPlayerBaseInfoL5GameData>? l5GameData,
     NbaPlayerBaseInfoL5DataAvg? l5DataAvg,
     NbaPlayerBaseInfoPlayerRegularMap? playerRegularMap,
+    List<NbaPlayerBaseInfoGuessInfosPtsTwoTeamGames>? twoTeamGames,
     NbaPlayerBaseInfoPlayerPlayoffsMap? playerPlayoffsMap,
     List<NbaPlayerBaseInfoPlayerTrends>? playerTrends,
     List<NbaPlayerBaseInfoPlayerNews>? playerNews,
@@ -109,6 +120,7 @@ extension NbaPlayerBaseInfoEntityExtension on NbaPlayerBaseInfoEntity {
       ..l5GameData = l5GameData ?? this.l5GameData
       ..l5DataAvg = l5DataAvg ?? this.l5DataAvg
       ..playerRegularMap = playerRegularMap ?? this.playerRegularMap
+      ..twoTeamGames = twoTeamGames ?? this.twoTeamGames
       ..playerPlayoffsMap = playerPlayoffsMap ?? this.playerPlayoffsMap
       ..playerTrends = playerTrends ?? this.playerTrends
       ..playerNews = playerNews ?? this.playerNews
@@ -1131,15 +1143,6 @@ NbaPlayerBaseInfoGuessInfosProperty $NbaPlayerBaseInfoGuessInfosPropertyFromJson
   if (picks != null) {
     nbaPlayerBaseInfoGuessInfosProperty.picks = picks;
   }
-  final List<
-      NbaPlayerBaseInfoGuessInfosPtsTwoTeamGames>? twoTeamGames = (json['twoTeamGames'] as List<
-      dynamic>?)?.map(
-          (e) =>
-      jsonConvert.convert<NbaPlayerBaseInfoGuessInfosPtsTwoTeamGames>(
-          e) as NbaPlayerBaseInfoGuessInfosPtsTwoTeamGames).toList();
-  if (twoTeamGames != null) {
-    nbaPlayerBaseInfoGuessInfosProperty.twoTeamGames = twoTeamGames;
-  }
   return nbaPlayerBaseInfoGuessInfosProperty;
 }
 
@@ -1148,7 +1151,6 @@ Map<String, dynamic> $NbaPlayerBaseInfoGuessInfosPropertyToJson(
   final Map<String, dynamic> data = <String, dynamic>{};
   data['communityPick'] = entity.communityPick?.toJson();
   data['picks'] = entity.picks?.toJson();
-  data['twoTeamGames'] = entity.twoTeamGames?.map((v) => v.toJson()).toList();
   return data;
 }
 
@@ -1156,12 +1158,10 @@ extension NbaPlayerBaseInfoGuessInfosPropertyExtension on NbaPlayerBaseInfoGuess
   NbaPlayerBaseInfoGuessInfosProperty copyWith({
     NbaPlayerBaseInfoGuessInfosPtsCommunityPick? communityPick,
     GuessGameInfoEntity? picks,
-    List<NbaPlayerBaseInfoGuessInfosPtsTwoTeamGames>? twoTeamGames,
   }) {
     return NbaPlayerBaseInfoGuessInfosProperty()
       ..communityPick = communityPick ?? this.communityPick
-      ..picks = picks ?? this.picks
-      ..twoTeamGames = twoTeamGames ?? this.twoTeamGames;
+      ..picks = picks ?? this.picks;
   }
 }
 

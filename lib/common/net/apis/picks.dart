@@ -114,6 +114,12 @@ class PicksApi {
     return TeamPlayerInfoEntity.fromJson(json);
   }
 
+  static Future<TeamPlayerInfoEntity> getPlayerUpGradeInfo(String uuid) async {
+    var json = await httpUtil
+        .post(Api.getPlayerUpGradeInfo, data: {"uuid": uuid});
+    return TeamPlayerInfoEntity.fromJson(json);
+  }
+
   static Future<NbaPlayerBaseInfoEntity> getNBAPlayerBaseInfo(
       int playerId) async {
     var json = await httpUtil

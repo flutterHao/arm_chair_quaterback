@@ -13,8 +13,8 @@ import 'package:get/get.dart';
 ///@auther gejiahui
 ///created at 2024/9/23/18:47
 
-class ReciveAwardItemController extends GetxController {
-  ReciveAwardItemController(this.data, this.newsDefineEntity);
+class ReceiveAwardItemController extends GetxController {
+  ReceiveAwardItemController(this.data, this.newsDefineEntity);
 
   List<PicksPlayer> data;
 

@@ -210,8 +210,7 @@ class SummaryController extends GetxController {
   }
 
   List<NbaPlayerBaseInfoGuessInfosPtsTwoTeamGames> getVsTeams() {
-    var guessInfos = getGuessInfo();
-    return guessInfos.twoTeamGames ?? [];
+    return nbaPlayerBaseInfoEntity?.twoTeamGames ?? [];
   }
 
   NbaPlayerBaseInfoGuessInfosProperty getGuessInfo() {
@@ -299,7 +298,7 @@ class SummaryController extends GetxController {
     ];
   }
 
-  List<ColumnSeries<ChartSampleData, String>> getDefaultColumnSeries() {
+  List<ColumnSeries<ChartSampleData, String>> getDefaultColumnSeries(double width) {
     var list = nbaPlayerBaseInfoEntity?.l5GameData.map((e) {
       var timeByMs = MyDateUtils.getDateTimeByMs(e.updateTime);
       var monthEnName = MyDateUtils.getMonthEnName(timeByMs, short: true);
@@ -313,9 +312,11 @@ class SummaryController extends GetxController {
           y: value,
           pointColor: color);
     }).toList();
+    var len = list?.length??0;
     return <ColumnSeries<ChartSampleData, String>>[
       ColumnSeries<ChartSampleData, String>(
-        spacing: 0.8,
+        spacing: len>1?0.5:0.9,
+        width: 0.2,
         borderRadius: BorderRadius.vertical(top: Radius.circular(20.w)),
         dataSource: list,
         xValueMapper: (ChartSampleData sales, _) => sales.x as String,

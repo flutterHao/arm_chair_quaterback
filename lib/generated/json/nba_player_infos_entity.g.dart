@@ -357,6 +357,14 @@ NbaPlayerInfosPlayerDataCapList $NbaPlayerInfosPlayerDataCapListFromJson(
   if (to != null) {
     nbaPlayerInfosPlayerDataCapList.to = to;
   }
+  final int? reb = jsonConvert.convert<int>(json['reb']);
+  if (reb != null) {
+    nbaPlayerInfosPlayerDataCapList.reb = reb;
+  }
+  final int? threePt = jsonConvert.convert<int>(json['threePt']);
+  if (threePt != null) {
+    nbaPlayerInfosPlayerDataCapList.threePt = threePt;
+  }
   return nbaPlayerInfosPlayerDataCapList;
 }
 
@@ -393,6 +401,8 @@ Map<String, dynamic> $NbaPlayerInfosPlayerDataCapListToJson(
   data['beforeOreb'] = entity.beforeOreb;
   data['threePm'] = entity.threePm;
   data['to'] = entity.to;
+  data['reb'] = entity.reb;
+  data['threePt'] = entity.threePt;
   return data;
 }
 
@@ -428,6 +438,8 @@ extension NbaPlayerInfosPlayerDataCapListExtension on NbaPlayerInfosPlayerDataCa
     int? beforeOreb,
     int? threePm,
     int? to,
+    int? reb,
+    int? threePt,
   }) {
     return NbaPlayerInfosPlayerDataCapList()
       ..fga = fga ?? this.fga
@@ -459,7 +471,9 @@ extension NbaPlayerInfosPlayerDataCapListExtension on NbaPlayerInfosPlayerDataCa
       ..pf = pf ?? this.pf
       ..beforeOreb = beforeOreb ?? this.beforeOreb
       ..threePm = threePm ?? this.threePm
-      ..to = to ?? this.to;
+      ..to = to ?? this.to
+      ..reb = reb ?? this.reb
+      ..threePt = threePt ?? this.threePt;
   }
 }
 
