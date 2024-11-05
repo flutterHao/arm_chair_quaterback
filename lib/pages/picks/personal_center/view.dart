@@ -24,7 +24,8 @@ import 'package:get/get.dart';
 import 'index.dart';
 
 class PersonalCenterPage extends StatefulWidget {
-  const PersonalCenterPage({super.key});
+  const PersonalCenterPage({super.key, this.teamId});
+  final int? teamId;
 
   @override
   State<PersonalCenterPage> createState() => _PersonalCenterPageState();
@@ -36,10 +37,7 @@ class _PersonalCenterPageState extends State<PersonalCenterPage> {
   @override
   Widget build(BuildContext context) {
     print('PersonalCenterPage--build---');
-    var args =
-        ((ModalRoute.of(context)?.settings.arguments ?? Get.arguments) as Map);
-    var teamId = args["teamId"];
-    var initTab = args["initTab"];
+    var teamId = widget.teamId??0;
     controller = Get.put(PersonalCenterController(teamId: teamId));
     return GetBuilder<PersonalCenterController>(
         id: PersonalCenterController.idPersonalCenterMain,

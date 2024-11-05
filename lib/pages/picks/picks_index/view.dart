@@ -153,16 +153,34 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                                 id: GlobalNestedKey.PICKS);
                             break;
                           case 1:
-                            Get.toNamed(RouteNames.picksPersonalCenter,
-                                arguments: {
-                                  "teamId": Get.find<HomeController>()
-                                          .userEntiry
-                                          .teamLoginInfo
-                                          ?.team
-                                          ?.teamId ??
-                                      0,
-                                  "initTab": 0
-                                });
+                            Navigator.push(context, PageRouteBuilder(pageBuilder: (context,a,b){
+                              return PersonalCenterPage(teamId: Get.find<HomeController>()
+                                  .userEntiry
+                                  .teamLoginInfo
+                                  ?.team
+                                  ?.teamId ??
+                                  0,);
+                            }));
+                            /// 用下面这两种方式进入个人中心，所有的dialog弹出消失时候会莫名其妙的刷新
+                            // Navigator.pushNamed(context, RouteNames.picksPersonalCenter,arguments: {
+                            //   "teamId": Get.find<HomeController>()
+                            //       .userEntiry
+                            //       .teamLoginInfo
+                            //       ?.team
+                            //       ?.teamId ??
+                            //       0,
+                            //   "initTab": 0
+                            // });
+                            // Get.toNamed(RouteNames.picksPersonalCenter,
+                            //     arguments: {
+                            //       "teamId": Get.find<HomeController>()
+                            //               .userEntiry
+                            //               .teamLoginInfo
+                            //               ?.team
+                            //               ?.teamId ??
+                            //           0,
+                            //       "initTab": 0
+                            //     });
                             break;
                           case 2:
                             Get.toNamed(RouteNames.picksPickRank,
