@@ -18,6 +18,7 @@ import 'package:arm_chair_quaterback/common/entities/nab_player_season_game_rank
 import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_season_game_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/nba_player_stat_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/new_test_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
@@ -401,6 +402,10 @@ class JsonConvert {
       return data.map<NbaPlayerSeasonGameEntity>((Map<String, dynamic> e) =>
           NbaPlayerSeasonGameEntity.fromJson(e)).toList() as M;
     }
+    if (<NbaPlayerStatEntity>[] is M) {
+      return data.map<NbaPlayerStatEntity>((Map<String, dynamic> e) =>
+          NbaPlayerStatEntity.fromJson(e)).toList() as M;
+    }
     if (<NbaTeamEntity>[] is M) {
       return data.map<NbaTeamEntity>((Map<String, dynamic> e) =>
           NbaTeamEntity.fromJson(e)).toList() as M;
@@ -724,6 +729,7 @@ class JsonConvertClassCollection {
         .toString(): NbaPlayerInfosPlayerBaseInfoList.fromJson,
     (NbaPlayerSeasonEntity).toString(): NbaPlayerSeasonEntity.fromJson,
     (NbaPlayerSeasonGameEntity).toString(): NbaPlayerSeasonGameEntity.fromJson,
+    (NbaPlayerStatEntity).toString(): NbaPlayerStatEntity.fromJson,
     (NbaTeamEntity).toString(): NbaTeamEntity.fromJson,
     (NewTestEntity).toString(): NewTestEntity.fromJson,
     (NewTestAst).toString(): NewTestAst.fromJson,

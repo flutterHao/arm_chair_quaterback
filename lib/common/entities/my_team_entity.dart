@@ -21,7 +21,6 @@ class MyTeamEntity {
   late int salaryCap = 1;
   late int benchCount = 0;
 
-
   MyTeamEntity();
 
   factory MyTeamEntity.fromJson(Map<String, dynamic> json) =>

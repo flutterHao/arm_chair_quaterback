@@ -15,10 +15,13 @@ class CircleClipper extends CustomClipper<Path> {
   getClip(Size size) {
     Path path = Path();
     path.moveTo(0, 0);
-    double radius = size.height /3;
+    double radius = size.height / 3;
     path.lineTo(size.width - radius, 0);
-    path.arcTo(Rect.fromLTWH(size.width - radius * 2, 0, radius*2, radius*2),
-        pi / 180 * -90, pi / 180 * 90, false);
+    path.arcTo(
+        Rect.fromLTWH(size.width - radius * 2, 0, radius * 2, radius * 2),
+        pi / 180 * -90,
+        pi / 180 * 90,
+        false);
 
     // path.lineTo(size.width, 0);
 
@@ -35,23 +38,22 @@ class CircleClipper extends CustomClipper<Path> {
         0,
         pi / 180 * 90,
         false);
-    if(leftCut){
-      path.arcTo(Rect.fromLTWH(0, size.height- 2 * radius, radius * 2, radius * 2),
-          pi / 180 * 90, pi / 180 * 90, false);
-
-      path.lineTo(
-          bottomRightRadius, bottomRightRadius);
-
+    if (leftCut) {
       path.arcTo(
-          Rect.fromLTWH(
-              bottomRightRadius ,
-              0,
-              bottomRightRadius * 2,
-              bottomRightRadius * 2),
-          pi ,
+          Rect.fromLTWH(0, size.height - 2 * radius, radius * 2, radius * 2),
+          pi / 180 * 90,
           pi / 180 * 90,
           false);
-    }else {
+
+      path.lineTo(bottomRightRadius, bottomRightRadius);
+
+      path.arcTo(
+          Rect.fromLTWH(bottomRightRadius, 0, bottomRightRadius * 2,
+              bottomRightRadius * 2),
+          pi,
+          pi / 180 * 90,
+          false);
+    } else {
       path.lineTo(0, size.height);
     }
     path.close();

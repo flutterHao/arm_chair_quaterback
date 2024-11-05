@@ -2,7 +2,6 @@
 ///@auther gejiahui
 ///created at 2024/10/8/10:45
 
-
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -14,7 +13,8 @@ class DashedLine extends StatelessWidget {
   final int count; // 虚线总个数
   final Color dashedColor; // 虚线颜色
 
-  const DashedLine({super.key,
+  const DashedLine({
+    super.key,
     required this.axis,
     this.dashedWidth = 1,
     this.dashedHeight = 1,
@@ -31,7 +31,10 @@ class DashedLine extends StatelessWidget {
           width: dashedWidth,
           height: dashedHeight,
           child: DecoratedBox(
-            decoration: BoxDecoration(color: dashedColor,borderRadius: BorderRadius.circular(max(dashedHeight, dashedWidth))),
+            decoration: BoxDecoration(
+                color: dashedColor,
+                borderRadius:
+                    BorderRadius.circular(max(dashedHeight, dashedWidth))),
           ),
         );
       }),
@@ -42,11 +45,11 @@ class DashedLine extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
-          return axis == Axis.horizontal
-              ? SizedBox(
+      return axis == Axis.horizontal
+          ? SizedBox(
               width: constraints.maxWidth, child: showDashedLineWidgets())
-              : SizedBox(
+          : SizedBox(
               height: constraints.minHeight, child: showDashedLineWidgets());
-        });
+    });
   }
 }

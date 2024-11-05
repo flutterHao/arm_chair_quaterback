@@ -27,7 +27,7 @@ class MineInfoPage extends GetView<MineInfoController> {
             title: "MINE",
             right: SizedBox.shrink(),
           ),
-          totalScreenBuilder: (_,h){
+          totalScreenBuilder: (_, h) {
             return SingleChildScrollView(
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 16.w),
@@ -117,11 +117,13 @@ class MineInfoPage extends GetView<MineInfoController> {
                               children: [
                                 Text(
                                   "UID",
-                                  style: 16.w7(color: AppColors.c262626, height: 1),
+                                  style: 16
+                                      .w7(color: AppColors.c262626, height: 1),
                                 ),
                                 Text(
                                   "12345",
-                                  style: 12.w4(color: AppColors.cB3B3B3, height: 1),
+                                  style: 12
+                                      .w4(color: AppColors.cB3B3B3, height: 1),
                                 )
                               ],
                             ),
@@ -134,7 +136,10 @@ class MineInfoPage extends GetView<MineInfoController> {
                             height: 78.w,
                             width: double.infinity,
                             padding: EdgeInsets.only(
-                                left: 24.w, top: 12.w, bottom: 14.w, right: 20.w),
+                                left: 24.w,
+                                top: 12.w,
+                                bottom: 14.w,
+                                right: 20.w),
                             decoration: BoxDecoration(
                                 color: AppColors.cF2F2F2,
                                 borderRadius: BorderRadius.circular(16.w)),
@@ -143,12 +148,13 @@ class MineInfoPage extends GetView<MineInfoController> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       "Birthday",
-                                      style: 16
-                                          .w7(color: AppColors.c262626, height: 1),
+                                      style: 16.w7(
+                                          color: AppColors.c262626, height: 1),
                                     ),
                                     IconWidget(
                                       iconWidth: 9.w,
@@ -159,7 +165,8 @@ class MineInfoPage extends GetView<MineInfoController> {
                                 ),
                                 Text(
                                   "2004-04-26",
-                                  style: 12.w4(color: AppColors.cB3B3B3, height: 1),
+                                  style: 12
+                                      .w4(color: AppColors.cB3B3B3, height: 1),
                                 )
                               ],
                             ),
@@ -169,9 +176,7 @@ class MineInfoPage extends GetView<MineInfoController> {
                     ),
                     10.vGap,
                     Container(
-                      constraints: BoxConstraints(
-                          minHeight: 198.w
-                      ),
+                      constraints: BoxConstraints(minHeight: 198.w),
                       width: double.infinity,
                       decoration: BoxDecoration(
                           color: AppColors.cF2F2F2,
@@ -185,7 +190,8 @@ class MineInfoPage extends GetView<MineInfoController> {
                             children: [
                               Text(
                                 "Signature",
-                                style: 16.w7(color: AppColors.c262626, height: 1),
+                                style:
+                                    16.w7(color: AppColors.c262626, height: 1),
                               ),
                               15.vGap,
                               Container(

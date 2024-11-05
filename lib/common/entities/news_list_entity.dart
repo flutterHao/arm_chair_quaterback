@@ -21,7 +21,7 @@ class NewsListEntity {
   late Map<String, NewsListDetail> playerRumors = {};
   @JSONField(name: "Latest")
   late List<NewsListDetail> latest = [];
-  late Map<String, List<NewsListDetail>> playerNews={};
+  late Map<String, List<NewsListDetail>> playerNews = {};
   @JSONField(name: "Injuries")
   late List<NewsListDetail> injuries = [];
 

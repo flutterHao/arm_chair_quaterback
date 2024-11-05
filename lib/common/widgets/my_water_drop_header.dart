@@ -10,7 +10,6 @@ import 'package:flutter/cupertino.dart';
 ///@auther gejiahui
 ///created at 2024/10/16/15:14
 
-
 /// QQ ios refresh  header effect
 class MyWaterDropHeader extends RefreshIndicator {
   /// refreshing content
@@ -43,9 +42,7 @@ class MyWaterDropHeader extends RefreshIndicator {
       color: Colors.white,
     ),
     this.topPadding,
-  }) : super(
-      height: 60.0,
-      refreshStyle: RefreshStyle.UnFollow);
+  }) : super(height: 60.0, refreshStyle: RefreshStyle.UnFollow);
 
   @override
   State<StatefulWidget> createState() {
@@ -123,7 +120,7 @@ class _WaterDropHeaderState extends RefreshIndicatorState<MyWaterDropHeader>
               ),
               Text(
                 (RefreshLocalizations.of(context)?.currentLocalization ??
-                    EnRefreshString())
+                        EnRefreshString())
                     .refreshCompleteText!,
                 style: const TextStyle(color: Colors.grey),
               )
@@ -143,7 +140,7 @@ class _WaterDropHeaderState extends RefreshIndicatorState<MyWaterDropHeader>
               ),
               Text(
                   (RefreshLocalizations.of(context)?.currentLocalization ??
-                      EnRefreshString())
+                          EnRefreshString())
                       .refreshFailedText!,
                   style: const TextStyle(color: Colors.grey))
             ],
@@ -152,15 +149,15 @@ class _WaterDropHeaderState extends RefreshIndicatorState<MyWaterDropHeader>
       return FadeTransition(
           opacity: _dismissCtl,
           child: Container(
-            margin: EdgeInsets.only(top: widget.topPadding??0),
+            margin: EdgeInsets.only(top: widget.topPadding ?? 0),
             height: 60.0,
             child: Stack(
               children: <Widget>[
                 RotatedBox(
                   quarterTurns:
-                  Scrollable.of(context)!.axisDirection == AxisDirection.up
-                      ? 10
-                      : 0,
+                      Scrollable.of(context)!.axisDirection == AxisDirection.up
+                          ? 10
+                          : 0,
                   child: CustomPaint(
                     painter: _QqPainter(
                       color: widget.waterDropColor,
@@ -173,13 +170,13 @@ class _WaterDropHeaderState extends RefreshIndicatorState<MyWaterDropHeader>
                 ),
                 Container(
                   alignment:
-                  Scrollable.of(context)!.axisDirection == AxisDirection.up
-                      ? Alignment.bottomCenter
-                      : Alignment.topCenter,
+                      Scrollable.of(context)!.axisDirection == AxisDirection.up
+                          ? Alignment.bottomCenter
+                          : Alignment.topCenter,
                   margin:
-                  Scrollable.of(context)!.axisDirection == AxisDirection.up
-                      ? const EdgeInsets.only(bottom: 12.0)
-                      : const EdgeInsets.only(top: 12.0),
+                      Scrollable.of(context)!.axisDirection == AxisDirection.up
+                          ? const EdgeInsets.only(bottom: 12.0)
+                          : const EdgeInsets.only(top: 12.0),
                   child: widget.idleIcon,
                 )
               ],
@@ -187,7 +184,7 @@ class _WaterDropHeaderState extends RefreshIndicatorState<MyWaterDropHeader>
           ));
     }
     return Container(
-      padding: EdgeInsets.only(top: widget.topPadding??0),
+      padding: EdgeInsets.only(top: widget.topPadding ?? 0),
       height: 60.0,
       alignment: Alignment.bottomCenter,
       child: child,

@@ -6,23 +6,24 @@ export 'package:arm_chair_quaterback/generated/json/team_player_list_entity.g.da
 
 @JsonSerializable()
 class TeamPlayerListEntity {
-	late int powerReplyTime;
-	late List<TeamPlayerInfoEntity> teamPlayers;
-	late int powerP;
-	@JSONField(name: "OVR")
-	late int oVR;
-	late int salary;
-	late int benchCount;
-	late int salaryCap;
+  late int powerReplyTime;
+  late List<TeamPlayerInfoEntity> teamPlayers;
+  late int powerP;
+  @JSONField(name: "OVR")
+  late int oVR;
+  late int salary;
+  late int benchCount;
+  late int salaryCap;
 
-	TeamPlayerListEntity();
+  TeamPlayerListEntity();
 
-	factory TeamPlayerListEntity.fromJson(Map<String, dynamic> json) => $TeamPlayerListEntityFromJson(json);
+  factory TeamPlayerListEntity.fromJson(Map<String, dynamic> json) =>
+      $TeamPlayerListEntityFromJson(json);
 
-	Map<String, dynamic> toJson() => $TeamPlayerListEntityToJson(this);
+  Map<String, dynamic> toJson() => $TeamPlayerListEntityToJson(this);
 
-	@override
-	String toString() {
-		return jsonEncode(this);
-	}
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
 }

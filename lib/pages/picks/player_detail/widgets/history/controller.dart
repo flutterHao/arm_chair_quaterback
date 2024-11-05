@@ -13,11 +13,12 @@ class SeasonHistoryItems {
   final NbaPlayerSeasonGameEntity playerSeasonGameEntity;
   final NabPlayerSeasonGameRankEntity playerSeasonGameRankEntity;
   final NbaTeamEntity teamEntity;
-  SeasonHistoryItems(this.playerSeasonGameEntity, this.teamEntity, this.playerSeasonGameRankEntity);
+  SeasonHistoryItems(this.playerSeasonGameEntity, this.teamEntity,
+      this.playerSeasonGameRankEntity);
 }
 
-class SeasonHistory{
-  late List<SeasonHistoryItems> seasonHistoryItems=[];
+class SeasonHistory {
+  late List<SeasonHistoryItems> seasonHistoryItems = [];
   var loadStatus = LoadDataStatus.loading.obs;
 }
 
@@ -31,7 +32,6 @@ class HistoryController extends GetxController {
   final List<String> items = List.generate(
       MyDateUtils.getNowDateTime().year - 2016,
       (index) => "${MyDateUtils.getNowDateTime().year - index}");
-
 
   Map<String, SeasonHistory> data = {};
 
@@ -47,7 +47,7 @@ class HistoryController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    data = items.fold({},(pre,e){
+    data = items.fold({}, (pre, e) {
       pre[e] = SeasonHistory();
       return pre;
     });
@@ -61,18 +61,21 @@ class HistoryController extends GetxController {
       CacheApi.getNBATeamDefine(getList: true)
     ];
     Future.wait(futures).then((result) {
-      NbaPlayerSeasonEntity nbaPlayerSeasonEntity = result[0] as NbaPlayerSeasonEntity;
-      List<NbaPlayerSeasonGameEntity> seasons = nbaPlayerSeasonEntity.playerGameData;
-      if(seasons.isEmpty){
+      NbaPlayerSeasonEntity nbaPlayerSeasonEntity =
+          result[0] as NbaPlayerSeasonEntity;
+      List<NbaPlayerSeasonGameEntity> seasons =
+          nbaPlayerSeasonEntity.playerGameData;
+      if (seasons.isEmpty) {
         data[season.toString()]!.loadStatus.value = LoadDataStatus.noData;
-      }else{
+      } else {
         data[season.toString()]!.seasonHistoryItems = seasons
-            .map((e) => SeasonHistoryItems(e, Utils.getTeamInfo(e.awayTeamId),nbaPlayerSeasonEntity.playerRank))
+            .map((e) => SeasonHistoryItems(e, Utils.getTeamInfo(e.awayTeamId),
+                nbaPlayerSeasonEntity.playerRank))
             .toList();
         data[season.toString()]!.loadStatus.value = LoadDataStatus.success;
       }
       update([season]);
-    },onError: (e){
+    }, onError: (e) {
       data[season.toString()]!.loadStatus.value = LoadDataStatus.error;
     });
   }

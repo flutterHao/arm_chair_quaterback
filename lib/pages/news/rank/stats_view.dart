@@ -98,13 +98,12 @@ class StatsRankPage extends GetView<RankController> {
                             context: Get.context!,
                             builder: (context) {
                               return SearchBottomDialog(
-                                controller.statType,
+                                controller.pointType,
                                 Constant.statTypeList,
                                 (item) {
-                                  controller.statType.value = item;
+                                  controller.pointType.value = item;
                                   controller.update(["search"]);
-                                  controller.getStatRank();
-                                  controller.getTeamRank();
+                                  controller.onTypeChange();
                                 },
                               );
                             });
@@ -117,7 +116,7 @@ class StatsRankPage extends GetView<RankController> {
                           children: [
                             Obx(() {
                               return Text(
-                                controller.statType.value,
+                                controller.pointType.value,
                                 style: 10.w7(),
                               );
                             }),
@@ -142,9 +141,9 @@ class StatsRankPage extends GetView<RankController> {
                                 controller.season,
                                 controller.seasonList,
                                 (item) {
-                                  controller.season = item;
+                                  controller.season.value = item;
                                   controller.update(["search"]);
-                                  controller.getStatRank();
+                                  controller.getRankData();
                                 },
                               );
                             });
@@ -156,10 +155,12 @@ class StatsRankPage extends GetView<RankController> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              "${controller.season} Regular Season",
-                              style: 10.w7(),
-                            ),
+                            Obx(() {
+                              return Text(
+                                "${controller.season} Regular Season",
+                                style: 10.w7(),
+                              );
+                            }),
                             10.hGap,
                             IconWidget(
                               iconWidth: 15.w,
@@ -194,7 +195,7 @@ class StatsRankPage extends GetView<RankController> {
         builder: (_) {
           return BlackAppWidget(
               const AppBarWidget(
-                title: "STATS",
+                title: "Stars",
               ),
               bodyWidget: Expanded(
                 child: _buildView(context),

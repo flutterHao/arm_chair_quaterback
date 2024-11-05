@@ -84,7 +84,7 @@ class AppBarWidget extends StatelessWidget {
                   child: SizedBox(
                     // width: 19.w,
                     // height: 19.w,
-                    child: right?? MoneyAndCoinWidget(),
+                    child: right ?? MoneyAndCoinWidget(),
                   ),
                 )
               ],

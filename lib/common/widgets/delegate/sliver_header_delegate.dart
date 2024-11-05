@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 ///@auther gejiahui
 ///created at 2024/10/24/18:33
 
-
 typedef SliverHeaderBuilder = Widget Function(
     BuildContext context, double shrinkOffset, bool overlapsContent);
 
@@ -38,10 +37,10 @@ class SliverHeaderDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   Widget build(
-      BuildContext context,
-      double shrinkOffset,
-      bool overlapsContent,
-      ) {
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
     Widget child = builder(context, shrinkOffset, overlapsContent);
     //测试代码：如果在调试模式，且子组件设置了key，则打印日志
     assert(() {

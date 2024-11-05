@@ -47,7 +47,7 @@ class IconWidget extends StatelessWidget {
       icon,
       width: iconWidth,
       height: iconHeight,
-      fit: fit??BoxFit.fill,
+      fit: fit ?? BoxFit.fill,
       // errorBuilder: (context, error, stackTrace) {
       //   // 可能需要更换为缺省图
       //   return Container(

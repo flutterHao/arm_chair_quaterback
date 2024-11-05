@@ -52,8 +52,7 @@ class _BattleGameOverState extends State<BattleGameOver>
                 decoration: BoxDecoration(
                     color: AppColors.cEFEFEF,
                     borderRadius: BorderRadius.circular(17.w),
-                  border: Border.all(color: AppColors.cB3B3B3,width: 1)
-                ),
+                    border: Border.all(color: AppColors.cB3B3B3, width: 1)),
                 child: LayoutBuilder(builder: (context, constraints) {
                   var itemWidth =
                       (constraints.maxWidth - 8.w) / tabController.length;

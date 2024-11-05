@@ -138,16 +138,18 @@ class _TopDialogState extends State<TopDialog>
                                     flex: 3,
                                     child: InkWell(
                                       onTap: () {
-                                        _popAndPushNamed(
-                                            context, RouteNames.picksPersonalCenter,useRootNavigator: true,arguments: {
-                                          "teamId": Get
-                                              .find<HomeController>()
-                                              .userEntiry
-                                              .teamLoginInfo
-                                              ?.team
-                                              ?.teamId ??
-                                              0
-                                        });
+                                        _popAndPushNamed(context,
+                                            RouteNames.picksPersonalCenter,
+                                            useRootNavigator: true,
+                                            arguments: {
+                                              "teamId":
+                                                  Get.find<HomeController>()
+                                                          .userEntiry
+                                                          .teamLoginInfo
+                                                          ?.team
+                                                          ?.teamId ??
+                                                      0
+                                            });
                                       },
                                       child: Container(
                                         height: 88.w,
@@ -357,7 +359,8 @@ class _TopDialogState extends State<TopDialog>
                             9.vGap,
                             InkWell(
                               onTap: () {
-                                _popAndPushNamed(context, RouteNames.mineMineAccount);
+                                _popAndPushNamed(
+                                    context, RouteNames.mineMineAccount);
                               },
                               child: Container(
                                 height: 51.w,
@@ -454,10 +457,10 @@ class _TopDialogState extends State<TopDialog>
   }
 
   void _popAndPushNamed(BuildContext context, String routeName,
-      {bool useRootNavigator=false,dynamic? arguments}) {
+      {bool useRootNavigator = false, dynamic? arguments}) {
     // Get.back(id: widget.routeId);
     Get.toNamed(routeName,
-        id: useRootNavigator?null:widget.routeId,arguments: arguments);
+        id: useRootNavigator ? null : widget.routeId, arguments: arguments);
     // Navigator.of(context).pushNamed(routeName,arguments: {"id":widget.routeId});
   }
 

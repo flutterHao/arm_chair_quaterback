@@ -43,7 +43,8 @@ class _BattleMainState extends State<BattleMain>
     animationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 400))
       ..addStatusListener((status) {
-        if (status == AnimationStatus.completed && !isStartAnimationComplete.value) {
+        if (status == AnimationStatus.completed &&
+            !isStartAnimationComplete.value) {
           isStartAnimationComplete.value = true;
           animation.removeListener(_startAnimationListener);
           animationController.reset();

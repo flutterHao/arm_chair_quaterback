@@ -33,7 +33,7 @@ class PlayerBagTab extends GetView<TeamController> {
       return ListView.separated(
         padding: EdgeInsets.symmetric(vertical: 10.w),
         controller: scrollController,
-        physics:  OneBoundaryScrollPhysics(scrollController: scrollController),
+        physics: OneBoundaryScrollPhysics(scrollController: scrollController),
         // shrinkWrap: true,
         itemBuilder: (context, index) {
           return PlayerItem(

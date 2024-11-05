@@ -98,7 +98,7 @@ class _MatchingState extends State<Matching>
     }
 
     List.generate(avatars.length, (_) {
-      sizes.add(Size.square((Random().nextInt(44)+20).toDouble()));
+      sizes.add(Size.square((Random().nextInt(44) + 20).toDouble()));
     });
     while (offsets.length <= avatars.length) {
       var nextInt = Random().nextInt(totalOffsets.length);
@@ -112,23 +112,24 @@ class _MatchingState extends State<Matching>
     if (mounted) setState(() {});
   }
 
-  _changeAvatar(String image){
+  _changeAvatar(String image) {
     var indexOf = avatars.indexOf(image);
-    while(true){
+    while (true) {
       var avatar = totalAvatars[Random().nextInt(totalOffsets.length)];
-      if(!avatars.contains(avatar)){
-        avatars.replaceRange(indexOf, indexOf+1, [avatar]);
+      if (!avatars.contains(avatar)) {
+        avatars.replaceRange(indexOf, indexOf + 1, [avatar]);
         break;
       }
     }
-    while(true){
+    while (true) {
       var offset = totalOffsets[Random().nextInt(totalOffsets.length)];
-      if(!offsets.contains(offset)){
-        offsets.replaceRange(indexOf, indexOf+1, [offset]);
+      if (!offsets.contains(offset)) {
+        offsets.replaceRange(indexOf, indexOf + 1, [offset]);
         break;
       }
     }
-    sizes.replaceRange(indexOf, indexOf+1, [Size.square((Random().nextInt(44)+20).toDouble())]);
+    sizes.replaceRange(indexOf, indexOf + 1,
+        [Size.square((Random().nextInt(44) + 20).toDouble())]);
 
     if (mounted) setState(() {});
 
@@ -248,8 +249,10 @@ class _MatchingState extends State<Matching>
                   height: sizes[index].height,
                   width: sizes[index].width,
                   child: Center(
-                    child: ScaleAnimationWidget(size: sizes[index], image: avatars[index],onComplete: _changeAvatar)
-                  ),
+                      child: ScaleAnimationWidget(
+                          size: sizes[index],
+                          image: avatars[index],
+                          onComplete: _changeAvatar)),
                 ),
               ))
     ];

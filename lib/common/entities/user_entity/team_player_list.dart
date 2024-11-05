@@ -37,20 +37,20 @@ class TeamPlayerList {
     this.uuid,
   });
 
-  int getBreakThroughGrade(){
-    if((breakThroughGrade??0)>=1){
+  int getBreakThroughGrade() {
+    if ((breakThroughGrade ?? 0) >= 1) {
       return breakThroughGrade!;
     }
     return 1;
   }
 
-  int getNextBreakThroughGrade(){
-    var i = getBreakThroughGrade()+1;
+  int getNextBreakThroughGrade() {
+    var i = getBreakThroughGrade() + 1;
     return i;
   }
 
-  int getPreBreakThroughGrade(){
-    var i = getBreakThroughGrade()-1;
+  int getPreBreakThroughGrade() {
+    var i = getBreakThroughGrade() - 1;
     return i;
   }
 

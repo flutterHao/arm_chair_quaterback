@@ -547,7 +547,6 @@ class _GameState extends State<Game>
         context: Get.context!,
         isScrollControlled: true,
         builder: (context) {
-
           return SizedBox(
             height: 675.h,
             child: DialogBackground(

@@ -27,36 +27,32 @@ class ReciveAwardItemController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    if(getStatus() == 1){
+    if (getStatus() == 1) {
       startCountDown();
     }
   }
 
   @override
-  dispose(){
+  dispose() {
     timer?.cancel();
     super.dispose();
   }
 
-  void startCountDown(){
+  void startCountDown() {
     timer?.cancel();
-    timer = Timer.periodic(const Duration(seconds: 1), (t){
+    timer = Timer.periodic(const Duration(seconds: 1), (t) {
       var nextDay = MyDateUtils.nextDay(MyDateUtils.getNowDateTime());
-      var nextDayStartTimeMS = MyDateUtils.getNextDayStartTimeMS(
-              nextDay);
-      var ms = nextDayStartTimeMS -
-              MyDateUtils.getNowDateMs();
+      var nextDayStartTimeMS = MyDateUtils.getNextDayStartTimeMS(nextDay);
+      var ms = nextDayStartTimeMS - MyDateUtils.getNowDateMs();
       var dateTimeByMs = MyDateUtils.getDateTimeByMs(ms);
 
-      if(ms == 0){
+      if (ms == 0) {
         t.cancel();
       }
-      var formatDate =  MyDateUtils.formatDate(
-          dateTimeByMs,
-          format: DateFormats.H_M_S);
+      var formatDate =
+          MyDateUtils.formatDate(dateTimeByMs, format: DateFormats.H_M_S);
       specialTime.value = formatDate;
     });
-
   }
 
   int getWinCount() {
@@ -76,16 +72,16 @@ class ReciveAwardItemController extends GetxController {
             ? newsDefineEntity.powerBetWin
             : [];
     var winCount = getWinCount();
-    if(data[0].reciveAwardInfo.type == 1) {
+    if (data[0].reciveAwardInfo.type == 1) {
       var start = data.length - bets.length;
       var temps = List.generate(data.length, (index) => -1.0).toList();
       temps.replaceRange(start, winCount, bets);
       return temps[winCount - 1].toString();
-    }else{
-      if(!data[0].reciveAwardInfo.success){
+    } else {
+      if (!data[0].reciveAwardInfo.success) {
         return "0";
       }
-      return bets[winCount-2].toString();
+      return bets[winCount - 2].toString();
     }
   }
 
@@ -113,7 +109,7 @@ class ReciveAwardItemController extends GetxController {
     return costCount;
   }
 
-  bool getSuccess(){
+  bool getSuccess() {
     return data[0].reciveAwardInfo.success;
   }
 
@@ -122,10 +118,10 @@ class ReciveAwardItemController extends GetxController {
     double count = -1;
     for (int i = 0; i < data.length; i++) {
       var item = data[i];
-      if ((item.guessData?.status??0) > 1) {
+      if ((item.guessData?.status ?? 0) > 1) {
         if (item.guessData?.awards.isNotEmpty == true) {
           var award = item.guessData?.awards[0];
-          count += award?.num??0;
+          count += award?.num ?? 0;
         }
       }
     }

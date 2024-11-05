@@ -22,7 +22,6 @@ class TradeIndexController extends GetxController
   final RefreshController buyRefreshController = RefreshController();
   final RefreshController sellRefreshController = RefreshController();
 
-
   var loadStatus = LoadDataStatus.loading.obs;
 
   TradeInfoEntity? tradeInfoEntity;
@@ -30,27 +29,24 @@ class TradeIndexController extends GetxController
 
   late TabController tabController;
   List<String> tabs = ["Buy", "Sell"];
-  
+
   var specialTime = "".obs;
 
   Timer? timer;
-  
-  void startCountDown(trendPlayer){
+
+  void startCountDown(trendPlayer) {
     timer?.cancel();
-    timer = Timer.periodic(const Duration(seconds: 1), (t){
+    timer = Timer.periodic(const Duration(seconds: 1), (t) {
       var dateTimeByMs = MyDateUtils.getDateTimeByMs(
           (trendPlayer.removalTime ?? 0) -
-              MyDateUtils.getNowDateTime()
-                  .millisecondsSinceEpoch);
-      if(dateTimeByMs.millisecond == 0){
+              MyDateUtils.getNowDateTime().millisecondsSinceEpoch);
+      if (dateTimeByMs.millisecond == 0) {
         t.cancel();
       }
-      var formatDate = MyDateUtils.formatDate(
-          dateTimeByMs,
-          format: DateFormats.H_M_S);
+      var formatDate =
+          MyDateUtils.formatDate(dateTimeByMs, format: DateFormats.H_M_S);
       specialTime.value = formatDate;
     });
-   
   }
 
   /// 在 widget 内存中分配后立即调用。
@@ -69,13 +65,14 @@ class TradeIndexController extends GetxController
       TradeApi.getAllTeamPlayerByTrend(),
     ]).then((result) {
       tradeInfoEntity = result[0] as TradeInfoEntity;
-      var where = tradeInfoEntity?.tradePlayers.firstWhereOrNull((e)=>e.top??false);
-      if(where != null){
+      var where =
+          tradeInfoEntity?.tradePlayers.firstWhereOrNull((e) => e.top ?? false);
+      if (where != null) {
         startCountDown(where);
       }
       sellAllTradePlayers = result[2] as List<TradeInfoTradePlayers>;
-      sellAllTradePlayers.sort((a,b){
-        return a.position?.compareTo(b.position??-1)??1;
+      sellAllTradePlayers.sort((a, b) {
+        return a.position?.compareTo(b.position ?? -1) ?? 1;
       });
       if (tradeInfoEntity!.tradePlayers.isEmpty) {
         loadStatus.value = LoadDataStatus.noData;
@@ -89,7 +86,6 @@ class TradeIndexController extends GetxController
       loadStatus.value = LoadDataStatus.error;
       buyRefreshController.refreshCompleted();
       sellRefreshController.refreshCompleted();
-
     });
   }
 
@@ -116,7 +112,7 @@ class TradeIndexController extends GetxController
     EasyLoading.dismiss();
   }
 
-  buy(int playerId) async{
+  buy(int playerId) async {
     EasyLoading.show();
     await TradeApi.buyPlayer(playerId).then((result) {
       refreshData();
@@ -159,7 +155,6 @@ class TradeIndexController extends GetxController
   }
 
   FlTitlesData get titlesData => const FlTitlesData(show: false);
-
 
   FlBorderData get borderData => FlBorderData(
         show: false,

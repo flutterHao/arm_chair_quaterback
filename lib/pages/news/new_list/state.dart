@@ -27,7 +27,7 @@ class NewListState {
   List<NewsBanner> banners = [];
   NewsDetail newsDetail = NewsDetail();
   List<StarsTeamRank> starTeamList = [];
-  List<TeamRankEntity> teamList = [];
+  List<TeamRankEntity> teamRankList = [];
   List<NbaPlayerStat> statsList = [];
   List<NbaTeamEntity> teamConfigList = [];
   Map<int, List<TeamRankEntity>> teamMap = {};

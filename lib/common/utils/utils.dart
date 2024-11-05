@@ -143,7 +143,7 @@ class Utils {
     }
   }
 
-  static String formatChip(num chip){
+  static String formatChip(num chip) {
     return _formatNum(chip);
   }
 
@@ -172,15 +172,15 @@ class Utils {
     return grade.replaceAll("-", "").replaceAll("+", "");
   }
 
-  static String getSortWithInt(int value){
+  static String getSortWithInt(int value) {
     var string = value.toString();
-    if(string.endsWith("1")){
+    if (string.endsWith("1")) {
       return "${string}st";
     }
-    if(string.endsWith("2")){
+    if (string.endsWith("2")) {
       return "${string}nd";
     }
-    if(string.endsWith("3")){
+    if (string.endsWith("3")) {
       return "${string}rd";
     }
     return "${string}th";

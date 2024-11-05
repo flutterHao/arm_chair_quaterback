@@ -11,7 +11,8 @@ class HeartbeatNumber extends StatefulWidget {
   _HeartbeatNumberState createState() => _HeartbeatNumberState();
 }
 
-class _HeartbeatNumberState extends State<HeartbeatNumber> with SingleTickerProviderStateMixin {
+class _HeartbeatNumberState extends State<HeartbeatNumber>
+    with SingleTickerProviderStateMixin {
   int _number = 0;
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
@@ -30,10 +31,10 @@ class _HeartbeatNumberState extends State<HeartbeatNumber> with SingleTickerProv
     _scaleAnimation = Tween<double>(begin: 1.0, end: 1.2).animate(
       CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
     )..addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        _controller.reverse(); // 动画完成时反向播放
-      }
-    });
+        if (status == AnimationStatus.completed) {
+          _controller.reverse(); // 动画完成时反向播放
+        }
+      });
   }
 
   @override

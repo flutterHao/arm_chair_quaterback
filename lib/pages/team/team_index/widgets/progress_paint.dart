@@ -111,7 +111,8 @@ class _CircleProgressViewState extends State<CircleProgressView>
       startAnimation();
     }
 
-    final currentProgress = widget.showAnimation ? animation.value : widget.progress;
+    final currentProgress =
+        widget.showAnimation ? animation.value : widget.progress;
 
     return Container(
       width: widget.width,
@@ -155,7 +156,6 @@ class _CircleProgressViewState extends State<CircleProgressView>
     );
   }
 }
-
 
 // class ProgressPaint extends CustomPainter {
 //   ProgressPaint(

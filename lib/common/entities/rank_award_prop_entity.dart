@@ -11,12 +11,11 @@ class RankAwardPropEntity {
   final int awardDataNum;
   final List<PropDefineNumEntity> awardPickData;
 
-
-  RankAwardPropEntity(this.rankAwardEntity, this.awardData, this.awardDataNum, this.awardPickData);
+  RankAwardPropEntity(this.rankAwardEntity, this.awardData, this.awardDataNum,
+      this.awardPickData);
 }
 
-class PropDefineNumEntity{
-
+class PropDefineNumEntity {
   final int num;
   final PropDefineEntity propDefineEntity;
 

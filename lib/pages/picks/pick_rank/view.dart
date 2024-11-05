@@ -40,8 +40,8 @@ class PickRankPage extends GetView<PickRankController> {
                       Obx(() {
                         return Text(
                           controller.rewardOpenTime.value,
-                          style:
-                          TextStyle(color: AppColors.c666666, fontSize: 12.sp),
+                          style: TextStyle(
+                              color: AppColors.c666666, fontSize: 12.sp),
                         );
                       })
                     ],
@@ -51,20 +51,18 @@ class PickRankPage extends GetView<PickRankController> {
             ),
             totalScreenBuilder: (context, appBarHeight) {
               return TabBarView(
-                  controller: controller.tabController, children: [
-                //rank
-                RankPage(appBarHeight),
-                //reward
-                RewardPage(appBarHeight),
-              ]);
+                  controller: controller.tabController,
+                  children: [
+                    //rank
+                    RankPage(appBarHeight),
+                    //reward
+                    RewardPage(appBarHeight),
+                  ]);
             },
             floatWidgets: [
               //悬浮tab
               Positioned(
-                top: MediaQuery
-                    .of(context)
-                    .padding
-                    .top +
+                top: MediaQuery.of(context).padding.top +
                     AppBarContainer.APPBARCONTAINERHEIGHT +
                     6.w +
                     16.w,
@@ -91,8 +89,9 @@ class PickRankPage extends GetView<PickRankController> {
                                 width: constraints.maxWidth /
                                     controller.tabController.length,
                                 margin: EdgeInsets.only(
-                                    left:
-                                    totalProgress * constraints.maxWidth / 2),
+                                    left: totalProgress *
+                                        constraints.maxWidth /
+                                        2),
                                 decoration: BoxDecoration(
                                     color: AppColors.cF2F2F2,
                                     borderRadius: BorderRadius.circular(17.w)),
@@ -107,23 +106,23 @@ class PickRankPage extends GetView<PickRankController> {
                                   controller: controller.tabController,
                                   builder: (current, next, progress, _) {
                                     return InkWell(
-                                      onTap: () =>
-                                          controller.tabController
-                                              .animateTo(index),
+                                      onTap: () => controller.tabController
+                                          .animateTo(index),
                                       child: Center(
                                         child: Text(
                                           e,
                                           style: TextStyle(
                                               color: current == index
                                                   ? Color.lerp(
-                                                  AppColors.c1A1A1A,
-                                                  AppColors.cB3B3B3, progress)
+                                                      AppColors.c1A1A1A,
+                                                      AppColors.cB3B3B3,
+                                                      progress)
                                                   : next == index
-                                                  ? Color.lerp(
-                                                  AppColors.cB3B3B3,
-                                                  AppColors.c1A1A1A,
-                                                  progress)
-                                                  : AppColors.cB3B3B3,
+                                                      ? Color.lerp(
+                                                          AppColors.cB3B3B3,
+                                                          AppColors.c1A1A1A,
+                                                          progress)
+                                                      : AppColors.cB3B3B3,
                                               fontSize: 13.sp),
                                         ),
                                       ),

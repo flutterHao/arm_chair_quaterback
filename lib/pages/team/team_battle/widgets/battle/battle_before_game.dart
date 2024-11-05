@@ -74,7 +74,10 @@ class _BattleBeforeGameState extends State<BattleBeforeGame>
     bottomAnimationController.forward();
 
     bottomProgressAnimationController = EasyAnimationController(
-        vsync: this, begin: 0.0, end: 6.0, duration: const Duration(seconds: 1));
+        vsync: this,
+        begin: 0.0,
+        end: 6.0,
+        duration: const Duration(seconds: 1));
     bottomProgressAnimationController.controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         Future.delayed(const Duration(milliseconds: 500), () {
@@ -151,8 +154,8 @@ class _BattleBeforeGameState extends State<BattleBeforeGame>
                     margin: EdgeInsets.only(top: 16.w),
                     decoration: BoxDecoration(
                         color: AppColors.cF2F2F2,
-                        borderRadius:
-                            BorderRadius.only(bottomLeft: Radius.circular(32.h))),
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(32.h))),
                     child: Container(
                       width: width,
                       padding:
@@ -170,7 +173,8 @@ class _BattleBeforeGameState extends State<BattleBeforeGame>
                                   color: AppColors.cFFFFFF,
                                   borderRadius: BorderRadius.circular(19.h)),
                               child: IconWidget(
-                                  iconWidth: 65.h, icon: Assets.uiBattleNewsPng)),
+                                  iconWidth: 65.h,
+                                  icon: Assets.uiBattleNewsPng)),
                           Expanded(
                               child: Text.rich(TextSpan(
                                   style: 12.w4(color: AppColors.cB2B2B2),

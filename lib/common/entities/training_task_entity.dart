@@ -5,19 +5,20 @@ export 'package:arm_chair_quaterback/generated/json/training_task_entity.g.dart'
 
 @JsonSerializable()
 class TrainingTaskEntity {
-	late String taskLevel = '';
-	late String taskNeed = '';
-	late String taskReward = '';
-	late String taskRound = '';
+  late String taskLevel = '';
+  late String taskNeed = '';
+  late String taskReward = '';
+  late String taskRound = '';
 
-	TrainingTaskEntity();
+  TrainingTaskEntity();
 
-	factory TrainingTaskEntity.fromJson(Map<String, dynamic> json) => $TrainingTaskEntityFromJson(json);
+  factory TrainingTaskEntity.fromJson(Map<String, dynamic> json) =>
+      $TrainingTaskEntityFromJson(json);
 
-	Map<String, dynamic> toJson() => $TrainingTaskEntityToJson(this);
+  Map<String, dynamic> toJson() => $TrainingTaskEntityToJson(this);
 
-	@override
-	String toString() {
-		return jsonEncode(this);
-	}
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
 }

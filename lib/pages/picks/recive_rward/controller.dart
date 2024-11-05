@@ -64,12 +64,10 @@ class ReciveRwardController extends GetxController {
       ///  STATUS_已结算未领取奖励 = 2;
       ///  STATUS_已结算已领取奖励 = 3;
       ///
-      var guessHistoryList = result0.pointGuessing
-          .where((e) => e.status == 2)
-          .toList();
-      guessHistoryList.addAll(result0.newsGuessing
-          .where((e) => e.status == 2)
-          .toList());
+      var guessHistoryList =
+          result0.pointGuessing.where((e) => e.status == 2).toList();
+      guessHistoryList
+          .addAll(result0.newsGuessing.where((e) => e.status == 2).toList());
       listData.clear();
       for (var l in guessHistoryList) {
         List<PicksPlayer> players = [];

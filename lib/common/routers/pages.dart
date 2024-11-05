@@ -64,20 +64,18 @@ class AppPages {
         opaque: false,
         name: RouteNames.picksPersonalCenter,
         page: () => const PersonalCenterPage(),
-        binding: PersonalCenterBinding()
-    ),
+        binding: PersonalCenterBinding()),
     GetPage(
         opaque: false,
         name: RouteNames.mineMineInfo,
         page: () => const MineInfoPage(),
-        binding: MineInfoBinding()
-    ),
+        binding: MineInfoBinding()),
     GetPage(
-        opaque: false,
-        name: RouteNames.newsDetail,
-        page: () {
-          return NewsDetailList(Get.arguments);
-        },
+      opaque: false,
+      name: RouteNames.newsDetail,
+      page: () {
+        return NewsDetailList(Get.arguments);
+      },
     ),
   ];
 }

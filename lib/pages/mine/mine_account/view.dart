@@ -51,29 +51,34 @@ class MineAccountPage extends GetView<MineAccountController> {
                       onTap: () => _showDialog(),
                       child: Container(
                         decoration: BoxDecoration(
-                          color: AppColors.c262626,
-                          borderRadius: BorderRadius.circular(22.w)
-                        ),
+                            color: AppColors.c262626,
+                            borderRadius: BorderRadius.circular(22.w)),
                         height: 44.w,
                         width: 260.w,
                         alignment: Alignment.center,
-                        child: Text("SWITCH ACCOUNT",style: 18.w7(color: AppColors.cF2F2F2),),
+                        child: Text(
+                          "SWITCH ACCOUNT",
+                          style: 18.w7(color: AppColors.cF2F2F2),
+                        ),
                       ),
                     ),
                     12.vGap,
                     InkWell(
-                      onTap: (){
+                      onTap: () {
                         print('logout --- ');
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                          border: Border.all(color: AppColors.cE41033,width: 1),
-                          borderRadius: BorderRadius.circular(22.w)
-                        ),
+                            border:
+                                Border.all(color: AppColors.cE41033, width: 1),
+                            borderRadius: BorderRadius.circular(22.w)),
                         height: 44.w,
                         width: 260.w,
                         alignment: Alignment.center,
-                        child: Text("LOGOUT",style: 18.w7(color: AppColors.cE41033),),
+                        child: Text(
+                          "LOGOUT",
+                          style: 18.w7(color: AppColors.cE41033),
+                        ),
                       ),
                     )
                   ],
@@ -108,12 +113,12 @@ class MineAccountPage extends GetView<MineAccountController> {
                     24.vGap,
                     Container(
                       height: 81.w,
-                      margin: EdgeInsets.only(left: 16.w,right: 16.w,bottom: 9.w),
+                      margin:
+                          EdgeInsets.only(left: 16.w, right: 16.w, bottom: 9.w),
                       decoration: BoxDecoration(
-                        color: AppColors.cF2F2F2,
-                        borderRadius: BorderRadius.circular(16.w)
-                      ),
-                      padding: EdgeInsets.only(left: 18.w,right: 25.w),
+                          color: AppColors.cF2F2F2,
+                          borderRadius: BorderRadius.circular(16.w)),
+                      padding: EdgeInsets.only(left: 18.w, right: 25.w),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -121,46 +126,69 @@ class MineAccountPage extends GetView<MineAccountController> {
                             children: [
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(8.w),
-                                child: ImageWidget(url: "",imageFailedPath:Assets.uiHead_01Png,width: 48.w,height: 48.w,),
+                                child: ImageWidget(
+                                  url: "",
+                                  imageFailedPath: Assets.uiHead_01Png,
+                                  width: 48.w,
+                                  height: 48.w,
+                                ),
                               ),
                               9.hGap,
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text("Player Name",style: 16.w4(color: AppColors.c333333,height: 1),),
+                                  Text(
+                                    "Player Name",
+                                    style: 16.w4(
+                                        color: AppColors.c333333, height: 1),
+                                  ),
                                   5.vGap,
-                                  Text("dasj98@dwhoi.com",style: 10.w4(color: AppColors.cB3B3B3,height: 1),)
+                                  Text(
+                                    "dasj98@dwhoi.com",
+                                    style: 10.w4(
+                                        color: AppColors.cB3B3B3, height: 1),
+                                  )
                                 ],
                               )
                             ],
                           ),
-                          IconWidget(iconWidth: 18.w, icon: Assets.uiIconRuidgtPng,iconColor: AppColors.c1BC27D,)
+                          IconWidget(
+                            iconWidth: 18.w,
+                            icon: Assets.uiIconRuidgtPng,
+                            iconColor: AppColors.c1BC27D,
+                          )
                         ],
                       ),
                     ),
                     Container(
                       height: 81.w,
-                      margin: EdgeInsets.only(left: 16.w,right: 16.w,bottom: 9.w),
+                      margin:
+                          EdgeInsets.only(left: 16.w, right: 16.w, bottom: 9.w),
                       decoration: BoxDecoration(
                           color: AppColors.cF2F2F2,
-                          borderRadius: BorderRadius.circular(16.w)
-                      ),
-                      padding: EdgeInsets.only(left: 18.w,right: 25.w),
+                          borderRadius: BorderRadius.circular(16.w)),
+                      padding: EdgeInsets.only(left: 18.w, right: 25.w),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(color: AppColors.cB3B3B3,width: 1),
-                              borderRadius: BorderRadius.circular(8.w)
-                            ),
-                            height: 48.w,
-                            width: 48.w,
-                            alignment: Alignment.center,
-                            child: IconWidget(iconWidth: 12.w, icon: Assets.uiIconPlusPng,iconColor: AppColors.c666666,)
-                          ),
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: AppColors.cB3B3B3, width: 1),
+                                  borderRadius: BorderRadius.circular(8.w)),
+                              height: 48.w,
+                              width: 48.w,
+                              alignment: Alignment.center,
+                              child: IconWidget(
+                                iconWidth: 12.w,
+                                icon: Assets.uiIconPlusPng,
+                                iconColor: AppColors.c666666,
+                              )),
                           9.hGap,
-                          Text("Add new account",style: 16.w4(color: AppColors.c666666),)
+                          Text(
+                            "Add new account",
+                            style: 16.w4(color: AppColors.c666666),
+                          )
                         ],
                       ),
                     ),
@@ -169,7 +197,6 @@ class MineAccountPage extends GetView<MineAccountController> {
           );
         });
   }
-
 
   Container _buildItem(String icon, String title, String text) {
     return Container(

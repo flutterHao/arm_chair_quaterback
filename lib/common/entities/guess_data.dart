@@ -7,7 +7,6 @@ import 'package:arm_chair_quaterback/generated/json/guess_data.g.dart';
 ///@auther gejiahui
 ///created at 2024/10/24/16:53
 
-
 @JsonSerializable()
 class GuessData {
   late String guessAttr;
@@ -41,8 +40,7 @@ class Awards {
 
   Awards();
 
-  factory Awards.fromJson(Map<String, dynamic> json) =>
-      $AwardsFromJson(json);
+  factory Awards.fromJson(Map<String, dynamic> json) => $AwardsFromJson(json);
 
   Map<String, dynamic> toJson() => $AwardsToJson(this);
 

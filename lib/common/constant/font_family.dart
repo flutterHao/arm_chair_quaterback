@@ -14,5 +14,5 @@ class FontFamily {
   static const fRobotoRegular = 'Roboto-Regular';
   static const fOswaldLight = 'Oswald-Light';
   static const fOswaldMedium = "Oswald-Medium";
-  static const fNotoSans="NotoSans";
+  static const fNotoSans = "NotoSans";
 }

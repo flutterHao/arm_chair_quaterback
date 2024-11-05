@@ -6,56 +6,59 @@ export 'package:arm_chair_quaterback/generated/json/nba_player_season_game_entit
 
 @JsonSerializable()
 class NbaPlayerSeasonEntity {
-	late List<NbaPlayerSeasonGameEntity> playerGameData;
-	late NabPlayerSeasonGameRankEntity playerRank;
+  late List<NbaPlayerSeasonGameEntity> playerGameData;
+  late NabPlayerSeasonGameRankEntity playerRank;
 
-	NbaPlayerSeasonEntity();
+  NbaPlayerSeasonEntity();
 
-	factory NbaPlayerSeasonEntity.fromJson(Map<String, dynamic> json) => $NbaPlayerSeasonEntityFromJson(json);
+  factory NbaPlayerSeasonEntity.fromJson(Map<String, dynamic> json) =>
+      $NbaPlayerSeasonEntityFromJson(json);
 
-	Map<String, dynamic> toJson() => $NbaPlayerSeasonEntityToJson(this);
+  Map<String, dynamic> toJson() => $NbaPlayerSeasonEntityToJson(this);
 
-	@override
-	String toString() {
-		return jsonEncode(this);
-	}
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
 }
+
 @JsonSerializable()
 class NbaPlayerSeasonGameEntity {
-	late double fga;
-	late double ast;
-	late double dreb;
-	late double espnId;
-	late double fgm;
-	late double reb;
-	late double fta;
-	late double min;
-	late bool isStarter;
-	late double ftm;
-	late double playerId;
-	late double blk;
-	late double gameId;
-	late double stl;
-	late double updateTime;
-	late double pts;
-	late double threePa;
-	late String ename;
-	late double oreb;
-	late double createTime;
-	late double pf;
-	late double teamId;
-	late double threePm;
-	late double to;
-	late int awayTeamId;
+  late double fga;
+  late double ast;
+  late double dreb;
+  late double espnId;
+  late double fgm;
+  late double reb;
+  late double fta;
+  late double min;
+  late bool isStarter;
+  late double ftm;
+  late double playerId;
+  late double blk;
+  late double gameId;
+  late double stl;
+  late double updateTime;
+  late double pts;
+  late double threePa;
+  late String ename;
+  late double oreb;
+  late double createTime;
+  late double pf;
+  late double teamId;
+  late double threePm;
+  late double to;
+  late int awayTeamId;
 
-	NbaPlayerSeasonGameEntity();
+  NbaPlayerSeasonGameEntity();
 
-	factory NbaPlayerSeasonGameEntity.fromJson(Map<String, dynamic> json) => $NbaPlayerSeasonGameEntityFromJson(json);
+  factory NbaPlayerSeasonGameEntity.fromJson(Map<String, dynamic> json) =>
+      $NbaPlayerSeasonGameEntityFromJson(json);
 
-	Map<String, dynamic> toJson() => $NbaPlayerSeasonGameEntityToJson(this);
+  Map<String, dynamic> toJson() => $NbaPlayerSeasonGameEntityToJson(this);
 
-	@override
-	String toString() {
-		return jsonEncode(this);
-	}
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
 }

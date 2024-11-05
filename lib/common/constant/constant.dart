@@ -30,7 +30,7 @@ class Constant {
     "TO"
   ];
 
-  static const List<String> guessTypeList = ["PTS","3PM",'AST','REB'];
+  static const List<String> guessTypeList = ["PTS", "3PM", 'AST', 'REB'];
 
   static String serviceUrl = "serviceUrl";
 }

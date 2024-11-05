@@ -468,7 +468,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                       ])),
                       2.vGap,
                       Text(
-                        "Pick",
+                        "Picks",
                         style: 10.w4(color: AppColors.c666666, height: 1),
                       )
                     ],

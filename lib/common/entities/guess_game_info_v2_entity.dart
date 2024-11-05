@@ -43,4 +43,3 @@ class GuessGameInfoV2GuessInfo {
     return jsonEncode(this);
   }
 }
-

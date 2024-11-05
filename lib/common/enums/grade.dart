@@ -3,30 +3,30 @@
 ///created at 2024/10/21/14:24
 
 enum Grade {
-  dDown(name: "D-", value: 0,grade: 0),
-  d(name: "D", value: 1,grade: 0),
-  dUP(name: "D+", value: 2,grade: 0),
-  cDown(name: "C-", value: 3,grade: 1),
-  c(name: "C", value: 4,grade: 1),
-  cUP(name: "C+", value: 5,grade: 1),
-  bDown(name: "B-", value: 6,grade: 2),
-  b(name: "B", value: 7,grade: 2),
-  bUP(name: "B+", value: 8,grade: 2),
-  aDown(name: "A-", value: 9,grade: 3),
-  a(name: "A", value: 10,grade: 3),
-  aUP(name: "A+", value: 11,grade: 3),
-  sDown(name: "S-", value: 12,grade: 4),
-  s(name: "S", value: 13,grade: 4),
-  sUP(name: "S+", value: 14,grade: 4),
-  ssDown(name: "SS-", value: 15,grade: 5),
-  ss(name: "SS", value: 16,grade: 5),
-  ssUP(name: "SS+", value: 17,grade: 5);
+  dDown(name: "D-", value: 0, grade: 0),
+  d(name: "D", value: 1, grade: 0),
+  dUP(name: "D+", value: 2, grade: 0),
+  cDown(name: "C-", value: 3, grade: 1),
+  c(name: "C", value: 4, grade: 1),
+  cUP(name: "C+", value: 5, grade: 1),
+  bDown(name: "B-", value: 6, grade: 2),
+  b(name: "B", value: 7, grade: 2),
+  bUP(name: "B+", value: 8, grade: 2),
+  aDown(name: "A-", value: 9, grade: 3),
+  a(name: "A", value: 10, grade: 3),
+  aUP(name: "A+", value: 11, grade: 3),
+  sDown(name: "S-", value: 12, grade: 4),
+  s(name: "S", value: 13, grade: 4),
+  sUP(name: "S+", value: 14, grade: 4),
+  ssDown(name: "SS-", value: 15, grade: 5),
+  ss(name: "SS", value: 16, grade: 5),
+  ssUP(name: "SS+", value: 17, grade: 5);
 
   final String name;
   final int value;
   final int grade;
 
-  const Grade({this.name = "", this.value = -1,this.grade = -1});
+  const Grade({this.name = "", this.value = -1, this.grade = -1});
 
   static Grade getGradeByName(String name) {
     if (name == "D-") {
@@ -148,5 +148,4 @@ enum Grade {
     var nextValue = value + 1;
     return getGradeByValue(nextValue);
   }
-
 }

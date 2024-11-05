@@ -51,8 +51,8 @@ class UpStarDefeat extends StatelessWidget {
             ),
             Positioned(
                 top: 20.w,
-                child:
-                    IconWidget(iconWidth: 111.w, icon: Assets.uiWindowsLosePng)),
+                child: IconWidget(
+                    iconWidth: 111.w, icon: Assets.uiWindowsLosePng)),
             Container(
               margin: EdgeInsets.only(top: 99.w),
               child: DialogBackground(

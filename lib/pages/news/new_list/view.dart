@@ -180,7 +180,10 @@ class NewsListPage extends GetView<NewListController> {
                 ),
               ],
             )
-          : const Center(child: LoadStatusWidget(text: "loading...",)),
+          : const Center(
+              child: LoadStatusWidget(
+              text: "loading...",
+            )),
     );
   }
 

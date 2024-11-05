@@ -805,7 +805,7 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
     return Obx(() {
       return Positioned(
         top: 320.h,
-        left: -fightAnimationValue.value/5,
+        left: -fightAnimationValue.value / 5,
         // right: 0,
         child: AnimatedOpacity(
           opacity: winAnimationValue.value ? 0 : 1,
@@ -895,7 +895,7 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
   void _buildFightAnimation() {
     var width = MediaQuery.of(context).size.width / 2;
     width = leftWin ? width : -width;
-    var curve = Random().nextBool()?Curves.elasticInOut:Curves.elasticInOut;
+    var curve = Random().nextBool() ? Curves.elasticInOut : Curves.elasticInOut;
     animation = TweenSequence([
       TweenSequenceItem(
           tween: Tween(begin: 0.0, end: width).chain(CurveTween(curve: curve)),

@@ -23,7 +23,7 @@ class TeamInfo {
 
 class PersonalCenterController extends GetxController
     with GetSingleTickerProviderStateMixin {
-  PersonalCenterController( {this.initTab,this.teamId});
+  PersonalCenterController({this.initTab, this.teamId});
 
   final int? teamId;
   final int? initTab;
@@ -38,7 +38,7 @@ class PersonalCenterController extends GetxController
   TeamSimpleEntity? teamSimpleEntity;
   var loadStatus = LoadDataStatus.loading.obs;
   TeamInfoEntity? teamInfoEntity;
-  TeamRuleConfigEntity? currentLevelRuleConfig,nextLevelRuleConfig;
+  TeamRuleConfigEntity? currentLevelRuleConfig, nextLevelRuleConfig;
   String? nextLevelTotalExp = "0";
   String? salaryCap = "0";
 
@@ -50,8 +50,8 @@ class PersonalCenterController extends GetxController
   @override
   void onInit() {
     super.onInit();
-    tabController =
-        TabController(length: titles.length, vsync: this, initialIndex: initTab??0);
+    tabController = TabController(
+        length: titles.length, vsync: this, initialIndex: initTab ?? 0);
     getData();
     _initGameData();
   }
@@ -74,8 +74,9 @@ class PersonalCenterController extends GetxController
           result[4] as List<TeamRuleConfigEntity>;
       currentLevelRuleConfig = teamRuleConfigList.firstWhereOrNull(
           (e) => e.grade.toString() == teamInfoEntity?.teamGrade.toString());
-      nextLevelRuleConfig = teamRuleConfigList.firstWhereOrNull(
-              (e) => e.grade.toString() == ((teamInfoEntity?.teamGrade??0)+1).toString());
+      nextLevelRuleConfig = teamRuleConfigList.firstWhereOrNull((e) =>
+          e.grade.toString() ==
+          ((teamInfoEntity?.teamGrade ?? 0) + 1).toString());
       nextLevelTotalExp = currentLevelRuleConfig?.totalTeamExp;
       salaryCap = currentLevelRuleConfig?.salaryCap;
 

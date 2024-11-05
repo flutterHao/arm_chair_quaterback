@@ -14,4 +14,3 @@ export './trade_infomation_widget.dart';
 export './rumor_widget.dart';
 export './popular_player_widget.dart';
 export './stats_rank_widget.dart';
-

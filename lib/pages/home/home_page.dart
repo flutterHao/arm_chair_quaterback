@@ -54,9 +54,9 @@ class _HomePageState extends State<HomePage>
               body: PageView(
                 physics: const NeverScrollableScrollPhysics(),
                 controller: controller.pageController,
-                  children: controller.tabItems
-                      .map((e) => Center(child: e.tabPage))
-                      .toList(),
+                children: controller.tabItems
+                    .map((e) => Center(child: e.tabPage))
+                    .toList(),
               ),
               bottomNavigationBar: Container(
                 color: AppColors.c262626,

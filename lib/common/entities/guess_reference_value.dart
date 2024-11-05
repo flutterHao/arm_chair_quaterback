@@ -7,7 +7,6 @@ import 'package:arm_chair_quaterback/generated/json/guess_reference_value.g.dart
 ///@auther gejiahui
 ///created at 2024/10/24/16:57
 
-
 @JsonSerializable()
 class GuessReferenceValue {
   double? ast;
@@ -17,12 +16,10 @@ class GuessReferenceValue {
 
   GuessReferenceValue();
 
-  factory GuessReferenceValue.fromJson(
-      Map<String, dynamic> json) =>
+  factory GuessReferenceValue.fromJson(Map<String, dynamic> json) =>
       $GuessReferenceValueFromJson(json);
 
-  Map<String, dynamic> toJson() =>
-      $GuessReferenceValueToJson(this);
+  Map<String, dynamic> toJson() => $GuessReferenceValueToJson(this);
 
   double getValue(String key) {
     if (key.toLowerCase() == "reb") {

@@ -31,4 +31,3 @@ class GuessGameInfoEntity {
     return jsonEncode(this);
   }
 }
-

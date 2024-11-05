@@ -31,7 +31,7 @@ class PicksPlayer {
   ReciveAwardV2GuessInfoGuessData? guessData;
 }
 
-class PicksPlayerV2{
+class PicksPlayerV2 {
   /// 基础数据
   late NbaPlayerInfosPlayerBaseInfoList baseInfoList;
 
@@ -51,5 +51,4 @@ class PicksPlayerV2{
   int status;
 
   PicksPlayerV2({this.status = -1});
-
 }

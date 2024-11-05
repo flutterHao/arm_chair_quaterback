@@ -135,19 +135,20 @@ class PicksIndexController extends GetxController {
           guessParamEntity.gameStartTime = playerV2.guessInfo.gameStartTime;
           guessParamEntity.guessAttr = playerV2.tabStr;
           guessParamEntity.guessChoice = playerV2.status == 0 ? 1 : 2;
-          guessParamEntity.guessReferenceValue = playerV2.guessInfo.guessReferenceValue
+          guessParamEntity.guessReferenceValue = playerV2
+              .guessInfo.guessReferenceValue
               .toJson()[ParamUtils.getProKey(playerV2.tabStr)];
           params.add(guessParamEntity);
         }
       }
     }
-    PicksApi.guess(type,params,0).then((result) {
+    PicksApi.guess(type, params, 0).then((result) {
       Get.back();
       cleanAll();
       _initData();
       Get.find<HomeController>().refreshMoneyCoinWidget();
       EasyLoading.showToast("Pick successful!you can check it in History");
-    },onError: (e){
+    }, onError: (e) {
       EasyLoading.showToast("SERVER ERROR");
     });
   }
@@ -156,7 +157,9 @@ class PicksIndexController extends GetxController {
   void _scrollListener() {
     // 获取目标 widget 的 RenderObject
     final targetContext = targetKey.currentContext;
-    if (targetContext != null && scrollController.position.pixels>0&&rankInfo.ranks.isNotEmpty) {
+    if (targetContext != null &&
+        scrollController.position.pixels > 0 &&
+        rankInfo.ranks.isNotEmpty) {
       final box = targetContext.findRenderObject() as RenderBox;
       final position = box.localToGlobal(Offset.zero); // 获取目标在屏幕中的位置
       final targetOffset = position.dy;
@@ -233,17 +236,17 @@ class PicksIndexController extends GetxController {
           item.add(playerV2);
         }
         //排序：选过的放后面
-        item.sort((a,b){
-          if(a.guessInfo.guessData.isNotEmpty) return 1;
-          if(b.guessInfo.guessData.isNotEmpty) return -1;
+        item.sort((a, b) {
+          if (a.guessInfo.guessData.isNotEmpty) return 1;
+          if (b.guessInfo.guessData.isNotEmpty) return -1;
           return 0;
         });
         temp[key] = item;
       }
       List<String> titles = Constant.guessTypeList;
-      guessGamePlayers =  titles.fold({}, (p,key){
+      guessGamePlayers = titles.fold({}, (p, key) {
         var e = key.toLowerCase();
-        if(temp.containsKey(e)){
+        if (temp.containsKey(e)) {
           p[e] = temp[e]!;
         }
         return p;

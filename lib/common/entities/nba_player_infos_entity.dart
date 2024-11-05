@@ -207,7 +207,7 @@ class NbaPlayerInfosPlayerBaseInfoList {
   late int teamId = 0;
   late String name = "";
   late int property = 0;
-  late String position = "";
+  late String position = "C";
   late List<int> tag = [];
   late int beforeMarketPrice = 0;
   late int playerId = 0;

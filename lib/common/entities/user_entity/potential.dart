@@ -35,7 +35,7 @@ class Potential {
         'threePts': threePt,
       };
 
-  int _getMaxValue(){
+  int _getMaxValue() {
     var value = max(pts ?? 0, threePt ?? 0);
     value = max(value, ast ?? 0);
     value = max(value, reb ?? 0);
@@ -43,16 +43,22 @@ class Potential {
     value = max(value, stl ?? 0);
     return value;
   }
+
   int getMax() {
     var maxValue = _getMaxValue();
-    int step  = getStep();
-    var value = maxValue%step==0? maxValue+step:(maxValue~/step+1)*step;
+    int step = getStep();
+    var value =
+        maxValue % step == 0 ? maxValue + step : (maxValue ~/ step + 1) * step;
     return value;
   }
 
-  int getStep(){
+  int getStep() {
     var value = _getMaxValue();
-    int step  = value>100?20:value>500?100:10;
+    int step = value > 100
+        ? 20
+        : value > 500
+            ? 100
+            : 10;
     return step;
   }
 }

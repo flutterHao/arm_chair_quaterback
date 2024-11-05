@@ -14,7 +14,7 @@ class MineSettingController extends GetxController {
 
   var currentLanguageIndex = 0.obs;
 
-  var languages =[
+  var languages = [
     Language("English", "UK", "English"),
     Language("Chinese", "ZH", "中文")
   ];

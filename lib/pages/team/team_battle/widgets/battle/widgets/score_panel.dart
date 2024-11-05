@@ -10,7 +10,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 ///created at 2024/9/30/17:43
 
 class ScorePanel extends StatelessWidget {
-  const ScorePanel({super.key, required this.leftScore, required this.rightScore});
+  const ScorePanel(
+      {super.key, required this.leftScore, required this.rightScore});
 
   final int leftScore;
   final int rightScore;
@@ -27,8 +28,7 @@ class ScorePanel extends StatelessWidget {
         maxWidth: 343.w,
       ),
       decoration: BoxDecoration(
-          color: AppColors.c262626,
-          borderRadius: BorderRadius.circular(16.w)),
+          color: AppColors.c262626, borderRadius: BorderRadius.circular(16.w)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -47,81 +47,79 @@ class ScorePanel extends StatelessWidget {
           ),
           Expanded(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(4, (index) {
-                  var section = index == 0
-                      ? "1ST"
-                      : index == 1
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(4, (index) {
+              var section = index == 0
+                  ? "1ST"
+                  : index == 1
                       ? "2ND"
                       : index == 2
-                      ? "3RD"
-                      : "4TH";
-                  var score = index == 0 ? 99 : -1;
-                  return Container(
-                    margin: EdgeInsets.only(bottom: 2.h),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                          ? "3RD"
+                          : "4TH";
+              var score = index == 0 ? 99 : -1;
+              return Container(
+                margin: EdgeInsets.only(bottom: 2.h),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "${score > 0 ? score : "--"}",
+                      style: 14.w7(
+                          color:
+                              score > 0 ? AppColors.c3B93FF : AppColors.c666666,
+                          height: 1),
+                    ),
+                    14.hGap,
+                    Row(
                       children: [
+                        SizedBox(
+                          width: 5.h,
+                          height: 5.h,
+                          child: Visibility(
+                              visible: score > 0,
+                              child: IconWidget(
+                                iconWidth: 5.h,
+                                icon: Assets.uiTriangleGPng,
+                                rotateAngle: -90,
+                                iconColor: AppColors.cB3B3B3,
+                              )),
+                        ),
+                        4.hGap,
                         Text(
-                          "${score > 0 ? score : "--"}",
-                          style: 14.w7(
+                          section,
+                          style: 10.w4(
                               color: score > 0
-                                  ? AppColors.c3B93FF
+                                  ? AppColors.cB3B3B3
                                   : AppColors.c666666,
                               height: 1),
                         ),
-                        14.hGap,
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: 5.h,
-                              height: 5.h,
-                              child: Visibility(
-                                  visible: score > 0,
-                                  child: IconWidget(
-                                    iconWidth: 5.h,
-                                    icon: Assets.uiTriangleGPng,
-                                    rotateAngle: -90,
-                                    iconColor: AppColors.cB3B3B3,
-                                  )),
-                            ),
-                            4.hGap,
-                            Text(
-                              section,
-                              style: 10.w4(
-                                  color: score > 0
-                                      ? AppColors.cB3B3B3
-                                      : AppColors.c666666,
-                                  height: 1),
-                            ),
-                            4.hGap,
-                            SizedBox(
-                                width: 5.h,
-                                height: 5.h,
-                                child: Visibility(
-                                    visible: score > 0,
-                                    child: IconWidget(
-                                      iconWidth: 5.h,
-                                      icon: Assets.uiTriangleGPng,
-                                      rotateAngle: 90,
-                                      iconColor: AppColors.cB3B3B3,
-                                    ))),
-                          ],
-                        ),
-                        14.hGap,
-                        Text(
-                          "${score > 0 ? score : "--"}",
-                          style: 14.w7(
-                              color: score > 0
-                                  ? AppColors.c3B93FF
-                                  : AppColors.c666666,
-                              height: 1),
-                        ),
+                        4.hGap,
+                        SizedBox(
+                            width: 5.h,
+                            height: 5.h,
+                            child: Visibility(
+                                visible: score > 0,
+                                child: IconWidget(
+                                  iconWidth: 5.h,
+                                  icon: Assets.uiTriangleGPng,
+                                  rotateAngle: 90,
+                                  iconColor: AppColors.cB3B3B3,
+                                ))),
                       ],
                     ),
-                  );
-                }),
-              )),
+                    14.hGap,
+                    Text(
+                      "${score > 0 ? score : "--"}",
+                      style: 14.w7(
+                          color:
+                              score > 0 ? AppColors.c3B93FF : AppColors.c666666,
+                          height: 1),
+                    ),
+                  ],
+                ),
+              );
+            }),
+          )),
           Container(
             width: 99.w,
             height: 63.h,
@@ -139,5 +137,4 @@ class ScorePanel extends StatelessWidget {
       ),
     );
   }
-
 }

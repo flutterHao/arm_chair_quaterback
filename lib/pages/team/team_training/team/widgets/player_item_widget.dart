@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2024-11-01 19:38:52
+ * @LastEditTime: 2024-11-04 20:18:46
  */
 /*
  * @Description: 
@@ -346,10 +346,19 @@ class PlayerItem extends GetView<TeamController> {
 
 ///球员头像
 class PlayerAwater extends StatelessWidget {
-  const PlayerAwater({super.key, this.backgroudColor, required this.player});
+  const PlayerAwater(
+      {super.key,
+      this.backgroudColor,
+      required this.player,
+      this.showGrade = true,
+      this.width,
+      this.height});
 
   final Color? backgroudColor;
   final TeamPlayerInfoEntity player;
+  final bool showGrade;
+  final double? width;
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
@@ -362,8 +371,8 @@ class PlayerAwater extends StatelessWidget {
       child: Stack(
         children: [
           Container(
-            width: 64.w,
-            height: 64.w,
+            width: width ?? 64.w,
+            height: width ?? 64.w,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: backgroudColor ?? AppColors.c262626,
@@ -373,35 +382,38 @@ class PlayerAwater extends StatelessWidget {
           ImageWidget(
             url: Utils.getPlayUrl(player.playerId),
             imageFailedPath: Assets.uiDefault_04Png,
-            width: 64.w,
-            height: 64.w,
+            width: width ?? 64.w,
+            height: width ?? 64.w,
             borderRadius: BorderRadius.circular(32.w),
           ),
-          Positioned(
-            left: 0,
-            top: 2,
-            child: Text(
-              Utils.formatGrade(Utils.getPlayBaseInfo(player.playerId).grade),
-              style: 17.w7(color: AppColors.c262626),
+          if (showGrade)
+            Positioned(
+              left: 0,
+              top: 2,
+              child: Text(
+                Utils.formatGrade(Utils.getPlayBaseInfo(player.playerId).grade),
+                style: 17.w7(color: AppColors.c262626),
+              ),
             ),
-          ),
-          Positioned(
-            top: 1.5.w,
-            right: 0.5.w,
-            child: IconWidget(
-              iconWidth: 17.w,
-              icon: Assets.uiIconStar_01Png,
-              iconColor: AppColors.cFF7954,
+          if (showGrade)
+            Positioned(
+              top: 1.5.w,
+              right: 0.5.w,
+              child: IconWidget(
+                iconWidth: 17.w,
+                icon: Assets.uiIconStar_01Png,
+                iconColor: AppColors.cFF7954,
+              ),
             ),
-          ),
-          Positioned(
-            right: 6.w,
-            top: 6.5.w,
-            child: Text(
-              player.breakThroughGrade.toString(),
-              style: 11.w7(color: AppColors.cFFFFFF, height: 1),
+          if (showGrade)
+            Positioned(
+              right: 6.w,
+              top: 6.5.w,
+              child: Text(
+                player.breakThroughGrade.toString(),
+                style: 11.w7(color: AppColors.cFFFFFF, height: 1),
+              ),
             ),
-          ),
         ],
       ),
     );

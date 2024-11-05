@@ -82,7 +82,6 @@ class NewsDetailController extends GetxController {
   }
 }
 
-
 // class NewsDetailController extends GetxController {
 //   NewsDetailController(this.newsId);
 //   final state = NewDetailState();

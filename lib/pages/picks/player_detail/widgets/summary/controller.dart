@@ -57,22 +57,19 @@ class SummaryController extends GetxController {
 
   Timer? timer;
 
-  void startCountDown(trendPlayer){
+  void startCountDown(trendPlayer) {
     timer?.cancel();
-    timer = Timer.periodic(const Duration(seconds: 1), (t){
+    timer = Timer.periodic(const Duration(seconds: 1), (t) {
       var dateTimeByMs = MyDateUtils.getDateTimeByMs(
           (trendPlayer.removalTime ?? 0) -
-              MyDateUtils.getNowDateTime()
-                  .millisecondsSinceEpoch);
-      if(dateTimeByMs.millisecond == 0){
+              MyDateUtils.getNowDateTime().millisecondsSinceEpoch);
+      if (dateTimeByMs.millisecond == 0) {
         t.cancel();
       }
-      var formatDate = MyDateUtils.formatDate(
-          dateTimeByMs,
-          format: DateFormats.H_M_S);
+      var formatDate =
+          MyDateUtils.formatDate(dateTimeByMs, format: DateFormats.H_M_S);
       specialTime.value = formatDate;
     });
-
   }
 
   onTabTap(int index) {
@@ -84,8 +81,9 @@ class SummaryController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    if(initTabStr != null) {
-      currentIndex.value = Constant.guessTypeList.indexOf(initTabStr!.toUpperCase());
+    if (initTabStr != null) {
+      currentIndex.value =
+          Constant.guessTypeList.indexOf(initTabStr!.toUpperCase());
     }
     statsScrollController.addListener(() {
       if (!statsIsScrolling.value && statsScrollController.offset > 5) {
@@ -106,7 +104,7 @@ class SummaryController extends GetxController {
       CacheApi.getNBATeamDefine(),
     ]).then((result) {
       nbaPlayerBaseInfoEntity = result[0];
-      if(nbaPlayerBaseInfoEntity!.tradePlayers != null){
+      if (nbaPlayerBaseInfoEntity!.tradePlayers != null) {
         startCountDown(nbaPlayerBaseInfoEntity!.tradePlayers);
       }
       loadStatus.value = LoadDataStatus.success;
@@ -136,10 +134,11 @@ class SummaryController extends GetxController {
       if (key == "TO") {
         key = "TOV";
       }
-      if (json?.containsKey(key) == true && json?.containsKey("${key}_RANK") == true) {
+      if (json?.containsKey(key) == true &&
+          json?.containsKey("${key}_RANK") == true) {
         var value = json![key];
         var rank = json["${key}_RANK"];
-        p.add(PlayerRegular(rank??0, value??0, e));
+        p.add(PlayerRegular(rank ?? 0, value ?? 0, e));
       }
       return p;
     });
@@ -151,7 +150,8 @@ class SummaryController extends GetxController {
     if (key == "3PM") {
       key = "FG3M";
     }
-    return ((nbaPlayerBaseInfoEntity!.playerRegularMap?.toJson()[key]??0) as num)
+    return ((nbaPlayerBaseInfoEntity!.playerRegularMap?.toJson()[key] ?? 0)
+            as num)
         .format();
   }
 
@@ -159,7 +159,7 @@ class SummaryController extends GetxController {
 
   String getLast5AvgWithTab() {
     var key = getCurrentTabKey();
-    return (nbaPlayerBaseInfoEntity?.l5DataAvg?.getValue(key)??0).format();
+    return (nbaPlayerBaseInfoEntity?.l5DataAvg?.getValue(key) ?? 0).format();
   }
 
   _PickInfo? getPickInfo() {
@@ -232,18 +232,17 @@ class SummaryController extends GetxController {
     return list ?? [];
   }
 
-  TradeInfoTradePlayers? getTradePlayer(){
+  TradeInfoTradePlayers? getTradePlayer() {
     return nbaPlayerBaseInfoEntity?.tradePlayers;
   }
 
   buyPlayer() {
-    TradeApi.buyPlayer(playerId).then((result){
+    TradeApi.buyPlayer(playerId).then((result) {
       initData();
-    },onError: (e){
+    }, onError: (e) {
       EasyLoading.showToast("Server Error");
     });
   }
-  
 
   /// 在 onInit() 之后调用 1 帧。这是进入的理想场所
   @override
@@ -327,7 +326,6 @@ class SummaryController extends GetxController {
       )
     ];
   }
-
 }
 
 class _PickInfo {

@@ -25,6 +25,3 @@ class GuessParamEntity {
     return jsonEncode(this);
   }
 }
-
-
-

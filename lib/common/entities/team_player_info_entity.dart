@@ -83,7 +83,6 @@ class TeamPlayerInfoEntity {
     return "";
   }
 
-
   @override
   String toString() {
     return jsonEncode(this);

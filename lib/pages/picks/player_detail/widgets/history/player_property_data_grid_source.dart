@@ -85,7 +85,11 @@ class PlayerPropertyDataGridSource extends DataGridSource {
           alignment: Alignment.center,
           margin: EdgeInsets.only(left: 8.w, bottom: 1.w),
           decoration: BoxDecoration(
-              color: value>avgValue?AppColors.c6DE9B6:value==avgValue?AppColors.cF2E2AC:AppColors.cFEC4C8,
+              color: value > avgValue
+                  ? AppColors.c6DE9B6
+                  : value == avgValue
+                      ? AppColors.cF2E2AC
+                      : AppColors.cFEC4C8,
               borderRadius: BorderRadius.circular(2.w)),
           child: Text(
             value.toString(),
@@ -100,7 +104,11 @@ class PlayerPropertyDataGridSource extends DataGridSource {
           alignment: Alignment.center,
           margin: EdgeInsets.only(left: 2.w, bottom: 1.w),
           decoration: BoxDecoration(
-              color: value>avgValue?AppColors.c6DE9B6:value==avgValue?AppColors.cF2E2AC:AppColors.cFEC4C8,
+              color: value > avgValue
+                  ? AppColors.c6DE9B6
+                  : value == avgValue
+                      ? AppColors.cF2E2AC
+                      : AppColors.cFEC4C8,
               borderRadius: BorderRadius.circular(2.w)),
           child: Text(
             value.toString(),

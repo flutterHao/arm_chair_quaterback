@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 17:28:14
- * @LastEditTime: 2024-10-28 14:59:55
+ * @LastEditTime: 2024-11-05 11:54:57
  */
 import 'package:arm_chair_quaterback/common/entities/news_banner.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
@@ -71,9 +71,9 @@ class NewsApi {
   }
 
   static Future<List<StarsTeamRank>> starTeamList(
-      {int page = 0, int pageSize = 30}) async {
-    List list = await HttpUtil()
-        .post(Api.teamStatRank, data: {"page": page, "pageSize": pageSize});
+      {required String seasonId, required String seasonType}) async {
+    List list = await HttpUtil().post(Api.teamStatRank,
+        data: {"seasonId": seasonId, "seasonType": seasonType});
     return list.map((e) => StarsTeamRank.fromJson(e)).toList();
   }
 

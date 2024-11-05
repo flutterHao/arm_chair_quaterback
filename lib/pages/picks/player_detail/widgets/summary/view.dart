@@ -1029,7 +1029,7 @@ class _SummaryPageState extends State<SummaryPage>
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         19.vGap,
         Text(
-          "Stats",
+          "Stars",
           style: 19.w7(color: AppColors.c262626, height: 1),
         ),
         13.vGap,

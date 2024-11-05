@@ -1,61 +1,69 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/common/entities/stats_rank/nba_player_stat.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/widgets/shadow_container.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/controller.dart';
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 /// author: lihonghao
 /// date: 2024/9/11
 /// 球员排名列表
-class PlayListView extends GetView<RankController> {
-  const PlayListView({super.key});
+
+class PlayerListView extends StatefulWidget {
+  const PlayerListView({super.key});
 
   @override
+  State<PlayerListView> createState() => _PlayerListViewState();
+}
+
+class _PlayerListViewState extends State<PlayerListView>
+    with AutomaticKeepAliveClientMixin {
+  final RankController controller = Get.find<RankController>();
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return GetBuilder<RankController>(
         id: "stars",
         builder: (_) {
           return Column(
             children: [
               Expanded(
-                child: SmartRefresher(
-                  controller: controller.refreshCtrl,
-                  enablePullUp: true,
-                  // header: const WaterDropHeader(), // 使用水滴风格的下拉刷新
-                  // footer: const ClassicFooter(), // 使用经典风格的上拉加载更多
-                  onRefresh: () => controller.getStatRank(),
-                  onLoading: () => controller.getStatRank(refresh: false),
-                  child: ListView.separated(
-                      itemCount: controller.statList.length,
-                      padding: EdgeInsets.symmetric(
-                          vertical: 10.w, horizontal: 16.w),
-                      separatorBuilder: (context, index) => 9.vGap,
-                      itemBuilder: (context, index) {
-                        return StatsItem(index: index);
-                      }),
-                ),
+                child: ListView.separated(
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: controller.statList.length,
+                    padding:
+                        EdgeInsets.symmetric(vertical: 10.w, horizontal: 16.w),
+                    separatorBuilder: (context, index) => 9.vGap,
+                    itemBuilder: (context, index) {
+                      return StatsItem(
+                          index: index, controller.statList[index]);
+                    }),
               ),
             ],
           );
         });
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class StatsItem extends GetView<RankController> {
-  const StatsItem({super.key, required this.index});
+  const StatsItem(this.item, {super.key, required this.index});
   final int index;
+  final NbaPlayerStat item;
 
   @override
   Widget build(BuildContext context) {
-    var item = controller.statList[index];
-
+    // var item = controller.statList[index];
+    // String teamName=ObjectUtil.isEmpty(Utils.getTeamInfo(item.teamId ?? 0).shortEname)?item.
     return ShadowContainer(
       height: 84.w,
       // width: 343.w,
@@ -71,12 +79,25 @@ class StatsItem extends GetView<RankController> {
               style: 21.w7(),
             ),
           ),
-          ImageWidget(
-            url: Utils.getPlayUrl(item.playerId),
-            width: 64.w,
-            height: 64.w,
-            imageFailedPath: Assets.uiDefault_04Png,
-            borderRadius: BorderRadius.circular(32.w),
+          Stack(
+            children: [
+              Container(
+                width: 64.w,
+                height: 64.w,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: AppColors.cE1E1E1,
+                  borderRadius: BorderRadius.circular(32.w),
+                ),
+              ),
+              ImageWidget(
+                url: Utils.getPlayUrl(item.playerId),
+                imageFailedPath: Assets.uiDefault_04Png,
+                width: 64.w,
+                height: 64.w,
+                borderRadius: BorderRadius.circular(32.w),
+              )
+            ],
           ),
           9.hGap,
           Expanded(
@@ -85,12 +106,19 @@ class StatsItem extends GetView<RankController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  Utils.getTeamInfo(item.teamId ?? 0).shortEname,
+                  // item.teamAbbreviation ?? "",
+                  ObjectUtil.isNotEmpty(
+                          Utils.getTeamInfo(item.teamId ?? 0).shortEname)
+                      ? Utils.getTeamInfo(item.teamId ?? 0).shortEname
+                      : item.teamAbbreviation!,
                   style: 10.w4(color: AppColors.cB3B3B3),
                 ),
                 5.vGap,
                 Text(
-                  Utils.getPlayBaseInfo(item.playerId ?? 0).ename,
+                  ObjectUtil.isNotEmpty(
+                          Utils.getPlayBaseInfo(item.playerId ?? 0).ename)
+                      ? Utils.getPlayBaseInfo(item.playerId ?? 0).ename
+                      : item.nickname!,
                   style: 16.w7(),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -119,11 +147,19 @@ class StatsItem extends GetView<RankController> {
   }
 }
 
-class TeamListView extends GetView<RankController> {
+class TeamListView extends StatefulWidget {
   const TeamListView({super.key});
 
   @override
+  State<TeamListView> createState() => _TeamListViewState();
+}
+
+class _TeamListViewState extends State<TeamListView>
+    with AutomaticKeepAliveClientMixin {
+  final RankController controller = Get.find<RankController>();
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return GetBuilder<RankController>(
         id: "starsTeam",
         builder: (_) {
@@ -138,6 +174,9 @@ class TeamListView extends GetView<RankController> {
               });
         });
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class StatsTeamItem extends GetView<RankController> {

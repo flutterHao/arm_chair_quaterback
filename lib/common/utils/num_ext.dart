@@ -70,8 +70,8 @@ extension NumExt on num {
         width: toDouble(),
       );
 
-  String format(){
+  String format() {
     var stringAsFixed = toStringAsFixed(1);
-    return stringAsFixed.endsWith(".0")?toInt().toString():stringAsFixed;
+    return stringAsFixed.endsWith(".0") ? toInt().toString() : stringAsFixed;
   }
 }

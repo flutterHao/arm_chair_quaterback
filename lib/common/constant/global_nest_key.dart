@@ -16,5 +16,4 @@ class GlobalNestedKey {
   static var TeamTabGlobalKey = Get.nestedKey(GlobalNestedKey.TEAM);
   static var TRADETabGlobalKey = Get.nestedKey(GlobalNestedKey.TRADE);
   static var LEAGUESTabGlobalKey = Get.nestedKey(GlobalNestedKey.LEAGUES);
-
 }

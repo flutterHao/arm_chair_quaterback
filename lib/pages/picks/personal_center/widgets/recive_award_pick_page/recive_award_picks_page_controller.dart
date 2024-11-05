@@ -15,7 +15,8 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 ///
 ///@auther gejiahui
 ///created at 2024/9/23/21:02
-class ReciveAwardPicksPageController extends GetxController with GetSingleTickerProviderStateMixin {
+class ReciveAwardPicksPageController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   ReciveAwardPicksPageController(this.teamId, this.teamSimpleEntity);
 
   final int teamId;
@@ -27,13 +28,12 @@ class ReciveAwardPicksPageController extends GetxController with GetSingleTicker
   late int guessWinningStreak;
   late int streakReward;
 
-
   NewsDefineEntity? newsDefineEntity;
 
   RefreshController refreshController = RefreshController();
 
-  late TabController tabController ;
-  var tabs = ["Points","News"];
+  late TabController tabController;
+  var tabs = ["Points", "News"];
 
   var loadStatusRx = LoadDataStatus.loading.obs;
 

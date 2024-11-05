@@ -218,12 +218,15 @@ class _RankPageState extends State<RankPage>
                                                         : controller.rankInfo
                                                             .ranks[1].teamName,
                                                     style: 12.w7(
-                                                        color: isMe(controller.rankInfo.ranks
-                                                            .length <
-                                                            2
-                                                            ?null:controller
-                                                                .rankInfo
-                                                                .ranks[1])
+                                                        color: isMe(controller
+                                                                        .rankInfo
+                                                                        .ranks
+                                                                        .length <
+                                                                    2
+                                                                ? null
+                                                                : controller
+                                                                    .rankInfo
+                                                                    .ranks[1])
                                                             ? AppColors.cFF7954
                                                             : AppColors.cB3B3B3,
                                                         overflow: TextOverflow
@@ -396,14 +399,16 @@ class _RankPageState extends State<RankPage>
                                                         : controller.rankInfo
                                                             .ranks[0].teamName,
                                                     style: 12.w7(
-                                                        color:
-                                                        isMe(controller.rankInfo.ranks
-                                                            .isEmpty
-                                                            ?null:controller
-                                                            .rankInfo
-                                                            .ranks[0])
+                                                        color: isMe(controller
+                                                                    .rankInfo
+                                                                    .ranks
+                                                                    .isEmpty
+                                                                ? null
+                                                                : controller
+                                                                    .rankInfo
+                                                                    .ranks[0])
                                                             ? AppColors.cFF7954
-                                                            :AppColors.cB3B3B3,
+                                                            : AppColors.cB3B3B3,
                                                         overflow: TextOverflow
                                                             .ellipsis),
                                                   ),
@@ -572,15 +577,17 @@ class _RankPageState extends State<RankPage>
                                                         : controller.rankInfo
                                                             .ranks[2].teamName,
                                                     style: 12.w7(
-                                                        color:
-                                                        isMe(controller.rankInfo.ranks
-                                                            .length <
-                                                            3
-                                                            ?null:controller
-                                                            .rankInfo
-                                                            .ranks[2])
+                                                        color: isMe(controller
+                                                                        .rankInfo
+                                                                        .ranks
+                                                                        .length <
+                                                                    3
+                                                                ? null
+                                                                : controller
+                                                                    .rankInfo
+                                                                    .ranks[2])
                                                             ? AppColors.cFF7954
-                                                            :AppColors.cB3B3B3,
+                                                            : AppColors.cB3B3B3,
                                                         overflow: TextOverflow
                                                             .ellipsis),
                                                   ),
@@ -746,7 +753,8 @@ class _RankPageState extends State<RankPage>
                               ],
                             ),
                             Text(
-                              Utils.formatChip(controller.rankInfo.myRank.chip ?? 0),
+                              Utils.formatChip(
+                                  controller.rankInfo.myRank.chip ?? 0),
                               style: 18.w7(color: AppColors.cFFFFFF),
                             )
                           ],
@@ -837,11 +845,10 @@ class _RankPageState extends State<RankPage>
             children: [
               Text(
                 controller.rankInfo.ranks[index].teamName,
-                style: 12.w7(color: isMe(controller
-                    .rankInfo
-                    .ranks[index])
-                    ? AppColors.cFF7954
-                    :AppColors.c1A1A1A),
+                style: 12.w7(
+                    color: isMe(controller.rankInfo.ranks[index])
+                        ? AppColors.cFF7954
+                        : AppColors.c1A1A1A),
               ),
               Row(
                 children: [

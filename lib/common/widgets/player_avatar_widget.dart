@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-29 17:10:16
- * @LastEditTime: 2024-10-31 15:24:07
+ * @LastEditTime: 2024-11-04 19:54:34
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
@@ -33,7 +33,7 @@ class PlayerAvatarWidget extends StatelessWidget {
     this.fontSize = 14,
     this.fontColor = AppColors.cFFFFFF,
     this.showGrade = true,
-    this.playerId = 1284,
+    this.playerId = 0,
     this.getXRouteId,
     this.tabStr,
   });
@@ -53,7 +53,8 @@ class PlayerAvatarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => Get.toNamed(RouteNames.picksPlayerDetail,
-          arguments: PlayerDetailPageArguments(playerId,tabStr: tabStr), id: getXRouteId),
+          arguments: PlayerDetailPageArguments(playerId, tabStr: tabStr),
+          id: getXRouteId),
       child: ClipRRect(
         child: Stack(
           alignment: Alignment.bottomCenter,

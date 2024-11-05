@@ -18,7 +18,7 @@ class JumpToPick extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return PageJumpCard( Assets.uiIconPicks_01Png, "Today’s Streak Picks", (){
+    return PageJumpCard(Assets.uiIconPicks_01Png, "Today’s Streak Picks", () {
       controller.onTap(1);
     });
   }
@@ -29,7 +29,7 @@ class JumpToTrading extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return PageJumpCard( Assets.uiIconPicks_01Png, "Today’s Player Trading", (){
+    return PageJumpCard(Assets.uiIconPicks_01Png, "Today’s Player Trading", () {
       controller.onTap(3);
     });
   }
@@ -72,7 +72,7 @@ class PageJumpCard extends StatelessWidget {
             children: [
               IconWidget(
                 iconWidth: 32.w,
-                icon:icon,
+                icon: icon,
                 iconColor: AppColors.cFF7954,
               ),
               14.hGap,
@@ -92,4 +92,3 @@ class PageJumpCard extends StatelessWidget {
     );
   }
 }
-

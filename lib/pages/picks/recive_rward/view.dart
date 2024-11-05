@@ -38,7 +38,7 @@ class ReciveRwardPage extends GetView<ReciveRwardController> {
             return Center(
                 child: LoadStatusWidget(
               loadDataStatus: controller.loadStatusRx.value,
-                  onRefreshTap: () => controller.loading(),
+              onRefreshTap: () => controller.loading(),
             ));
           });
         }

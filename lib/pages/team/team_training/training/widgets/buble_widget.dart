@@ -20,7 +20,7 @@ class PropBubleWidget extends StatelessWidget {
         _item(count >= 1),
         _item(count >= 2),
         _item(count >= 3),
-       const SizedBox(width: 8),
+        const SizedBox(width: 8),
         Text(
           "+$award",
           style: 16.w7(color: AppColors.cFF7954),

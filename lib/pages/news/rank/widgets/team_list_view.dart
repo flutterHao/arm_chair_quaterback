@@ -38,6 +38,7 @@ class EasTeamListView extends StatelessWidget {
         Row(children: columns.map((e) => _flexText(text: e)).toList()),
         Expanded(
           child: ListView.builder(
+              physics: const BouncingScrollPhysics(),
               itemCount: list.length,
               padding: EdgeInsets.symmetric(vertical: 10.w),
               itemBuilder: (context, index) {

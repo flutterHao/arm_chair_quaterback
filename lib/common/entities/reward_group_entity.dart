@@ -5,18 +5,19 @@ export 'package:arm_chair_quaterback/generated/json/reward_group_entity.g.dart';
 
 @JsonSerializable()
 class RewardGroupEntity {
-	late String cnBack = '';
-	late int groupId = 0;
-	late List<int> propOrder = [];
+  late String cnBack = '';
+  late int groupId = 0;
+  late List<int> propOrder = [];
 
-	RewardGroupEntity();
+  RewardGroupEntity();
 
-	factory RewardGroupEntity.fromJson(Map<String, dynamic> json) => $RewardGroupEntityFromJson(json);
+  factory RewardGroupEntity.fromJson(Map<String, dynamic> json) =>
+      $RewardGroupEntityFromJson(json);
 
-	Map<String, dynamic> toJson() => $RewardGroupEntityToJson(this);
+  Map<String, dynamic> toJson() => $RewardGroupEntityToJson(this);
 
-	@override
-	String toString() {
-		return jsonEncode(this);
-	}
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
 }

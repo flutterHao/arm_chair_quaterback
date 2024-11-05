@@ -7,7 +7,8 @@ import 'package:flutter/rendering.dart';
 ///created at 2024/10/17/18:42
 
 class OneBoundaryPageScrollPhysics extends ScrollPhysics {
-  const OneBoundaryPageScrollPhysics({required this.tabController, super.parent});
+  const OneBoundaryPageScrollPhysics(
+      {required this.tabController, super.parent});
 
   final TabController tabController;
 
@@ -26,5 +27,4 @@ class OneBoundaryPageScrollPhysics extends ScrollPhysics {
     }
     return super.applyBoundaryConditions(position, value);
   }
-
 }

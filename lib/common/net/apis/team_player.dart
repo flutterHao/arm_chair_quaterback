@@ -9,7 +9,6 @@ import '../../entities/team_player_list_entity.dart';
 ///created at 2024/10/15/16:37
 
 class TeamPlayerApi {
-
   static Future<TeamPlayerListEntity> getTeamPlayerList(int teamId) async {
     var json =
         await httpUtil.post(Api.getTeamPlayerList, data: {"teamId": teamId});

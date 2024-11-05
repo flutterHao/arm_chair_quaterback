@@ -5,26 +5,27 @@ export 'package:arm_chair_quaterback/generated/json/team_rule_config_entity.g.da
 
 @JsonSerializable()
 class TeamRuleConfigEntity {
-	late String benchCount;
-	late String dailyCoins;
-	late String draftSignList;
-	late String grade;
-	late String idleSlot;
-	late String playerExp;
-	late String playerSupportCount;
-	late String salaryCap;
-	late String scoutFavorPlayer;
-	late String totalPlayerExp;
-	late String totalTeamExp;
+  late String benchCount;
+  late String dailyCoins;
+  late String draftSignList;
+  late String grade;
+  late String idleSlot;
+  late String playerExp;
+  late String playerSupportCount;
+  late String salaryCap;
+  late String scoutFavorPlayer;
+  late String totalPlayerExp;
+  late String totalTeamExp;
 
-	TeamRuleConfigEntity();
+  TeamRuleConfigEntity();
 
-	factory TeamRuleConfigEntity.fromJson(Map<String, dynamic> json) => $TeamRuleConfigEntityFromJson(json);
+  factory TeamRuleConfigEntity.fromJson(Map<String, dynamic> json) =>
+      $TeamRuleConfigEntityFromJson(json);
 
-	Map<String, dynamic> toJson() => $TeamRuleConfigEntityToJson(this);
+  Map<String, dynamic> toJson() => $TeamRuleConfigEntityToJson(this);
 
-	@override
-	String toString() {
-		return jsonEncode(this);
-	}
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
 }

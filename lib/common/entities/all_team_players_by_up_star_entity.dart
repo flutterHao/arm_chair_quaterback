@@ -5,76 +5,81 @@ export 'package:arm_chair_quaterback/generated/json/all_team_players_by_up_star_
 
 @JsonSerializable()
 class AllTeamPlayersByUpStarEntity {
-	late double buyPrice;
-	late double buyPlayerScore;
-	late double probability;
-	late double cost;
-	late double updateTime;
-	late String uuid;
-	late double gradeExp;
-	late double fromType;
-	late double createTime;
-	late double playerGrade;
-	late double teamId;
-	late double id;
-	late double position;
-	late double power;
-	late AllTeamPlayersByUpStarPotential potential;
-	late bool bindStatus;
-	late double breakThroughGrade;
-	late double playerId;
-	late AllTeamPlayersByUpStarUpStarBase upStarBase;
+  late double buyPrice;
+  late double buyPlayerScore;
+  late double probability;
+  late double cost;
+  late double updateTime;
+  late String uuid;
+  late double gradeExp;
+  late double fromType;
+  late double createTime;
+  late double playerGrade;
+  late double teamId;
+  late double id;
+  late double position;
+  late double power;
+  late AllTeamPlayersByUpStarPotential potential;
+  late bool bindStatus;
+  late double breakThroughGrade;
+  late double playerId;
+  late AllTeamPlayersByUpStarUpStarBase upStarBase;
 
-	AllTeamPlayersByUpStarEntity();
+  AllTeamPlayersByUpStarEntity();
 
-	factory AllTeamPlayersByUpStarEntity.fromJson(Map<String, dynamic> json) => $AllTeamPlayersByUpStarEntityFromJson(json);
+  factory AllTeamPlayersByUpStarEntity.fromJson(Map<String, dynamic> json) =>
+      $AllTeamPlayersByUpStarEntityFromJson(json);
 
-	Map<String, dynamic> toJson() => $AllTeamPlayersByUpStarEntityToJson(this);
+  Map<String, dynamic> toJson() => $AllTeamPlayersByUpStarEntityToJson(this);
 
-	@override
-	String toString() {
-		return jsonEncode(this);
-	}
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
 }
 
 @JsonSerializable()
 class AllTeamPlayersByUpStarPotential {
-	late double blk;
-	late double threePt;
-	late double ast;
-	late double stl;
-	late double pts;
-	late double reb;
+  late double blk;
+  late double threePt;
+  late double ast;
+  late double stl;
+  late double pts;
+  late double reb;
 
-	AllTeamPlayersByUpStarPotential();
+  AllTeamPlayersByUpStarPotential();
 
-	factory AllTeamPlayersByUpStarPotential.fromJson(Map<String, dynamic> json) => $AllTeamPlayersByUpStarPotentialFromJson(json);
+  factory AllTeamPlayersByUpStarPotential.fromJson(Map<String, dynamic> json) =>
+      $AllTeamPlayersByUpStarPotentialFromJson(json);
 
-	Map<String, dynamic> toJson() => $AllTeamPlayersByUpStarPotentialToJson(this);
+  Map<String, dynamic> toJson() => $AllTeamPlayersByUpStarPotentialToJson(this);
 
-	@override
-	String toString() {
-		return jsonEncode(this);
-	}
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
 }
 
 @JsonSerializable()
 class AllTeamPlayersByUpStarUpStarBase {
-	late double blk;
-	late double threePt;
-	late double ast;
-	late double stl;
-	late double pts;
-	late double reb;
+  late double blk;
+  late double threePt;
+  late double ast;
+  late double stl;
+  late double pts;
+  late double reb;
 
-	AllTeamPlayersByUpStarUpStarBase();
+  AllTeamPlayersByUpStarUpStarBase();
 
-	factory AllTeamPlayersByUpStarUpStarBase.fromJson(Map<String, dynamic> json) => $AllTeamPlayersByUpStarUpStarBaseFromJson(json);
+  factory AllTeamPlayersByUpStarUpStarBase.fromJson(
+          Map<String, dynamic> json) =>
+      $AllTeamPlayersByUpStarUpStarBaseFromJson(json);
 
-	Map<String, dynamic> toJson() => $AllTeamPlayersByUpStarUpStarBaseToJson(this);
+  Map<String, dynamic> toJson() =>
+      $AllTeamPlayersByUpStarUpStarBaseToJson(this);
 
-	@override
-	String toString() {
-		return jsonEncode(this);
-	}
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
 }

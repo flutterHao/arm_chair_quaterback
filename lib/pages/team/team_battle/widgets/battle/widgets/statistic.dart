@@ -15,8 +15,8 @@ class Statistic extends StatefulWidget {
   State<Statistic> createState() => _StatisticState();
 }
 
-class _StatisticState extends State<Statistic> with AutomaticKeepAliveClientMixin {
-
+class _StatisticState extends State<Statistic>
+    with AutomaticKeepAliveClientMixin {
   LineChartBarData getLineBarsData(
       {required List<FlSpot> spots, required Color color}) {
     return LineChartBarData(

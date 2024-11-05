@@ -32,7 +32,7 @@ class LoadStatusWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          if(loadDataStatus == LoadDataStatus.loading)
+          if (loadDataStatus == LoadDataStatus.loading)
             Center(
               child: SizedBox(
                 width: 25.w,
@@ -44,10 +44,12 @@ class LoadStatusWidget extends StatelessWidget {
               ),
             )
           else
-          IconWidget(iconWidth: 123.w, icon: icon??loadDataStatus?.icon??Assets.uiDefault_01Png),
+            IconWidget(
+                iconWidth: 123.w,
+                icon: icon ?? loadDataStatus?.icon ?? Assets.uiDefault_01Png),
           5.vGap,
           Text(
-            text??loadDataStatus?.desc??"",
+            text ?? loadDataStatus?.desc ?? "",
             style: 12.w4(color: AppColors.cB3B3B3.withOpacity(.7)),
           ),
           // if (onRefreshTap != null && loadDataStatus != LoadDataStatus.loading && loadDataStatus != LoadDataStatus.noData)

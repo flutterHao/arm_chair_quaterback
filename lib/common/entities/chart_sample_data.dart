@@ -4,25 +4,24 @@ import 'dart:ui';
 ///@auther gejiahui
 ///created at 2024/10/12/14:51
 
-
 ///Chart sample data
 class ChartSampleData {
   /// Holds the datapoint values like x, y, etc.,
   ChartSampleData(
       {this.x,
-        this.y,
-        this.xValue,
-        this.yValue,
-        this.secondSeriesYValue,
-        this.thirdSeriesYValue,
-        this.pointColor,
-        this.size,
-        this.text,
-        this.open,
-        this.close,
-        this.low,
-        this.high,
-        this.volume});
+      this.y,
+      this.xValue,
+      this.yValue,
+      this.secondSeriesYValue,
+      this.thirdSeriesYValue,
+      this.pointColor,
+      this.size,
+      this.text,
+      this.open,
+      this.close,
+      this.low,
+      this.high,
+      this.volume});
 
   /// Holds x value of the datapoint
   final dynamic x;

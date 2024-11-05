@@ -2,8 +2,9 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2024-11-04 17:03:34
+ * @LastEditTime: 2024-11-05 12:12:10
  */
+import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
@@ -15,7 +16,6 @@ import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -32,7 +32,9 @@ class NewListController extends GetxController {
   late RefreshController flowRefreshCtrl = RefreshController();
   ScrollController scrollController = ScrollController();
   bool isLoading = true;
-  String type = "";
+  String season = "";
+  String seasonType = "Regular%20Season";
+  String pointType = "";
 
   // @override
   // void onInit() {
@@ -44,6 +46,8 @@ class NewListController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    int currentYear = DateTime.now().year;
+    season = "$currentYear-${(currentYear + 1) % 100}";
     refreshData();
     // scrollController.addListener(_onScroll);
   }
@@ -67,8 +71,8 @@ class NewListController extends GetxController {
     }).whenComplete(() {
       refreshCtrl.refreshCompleted();
     }).catchError((e) {
-      Log.e("getNewsList error,开始重试");
-      refreshData();
+      // Log.e("getNewsList error,开始重试");
+      // refreshData();
     });
   }
 
@@ -109,34 +113,29 @@ class NewListController extends GetxController {
   //   });
   // }
 
-  ///获取球员信息 //TODO 防止一次性加载过多
+  ///获取球员信息
   Future getStatsRank() async {
-    // for (var element in state.statsRankMap.entries) {
-    //   await NewsApi.startRank(season: "2023-24", statType: "PTS").then((value) {
-    //     state.statsRankMap[element.key] = value.nbaPlayerStats ?? [];
-    //   });
-    // }
-    //  update(['teamRank']);
-    await NewsApi.startRank(season: "2023-24", statType: "PTS").then((value) {
+    String type = Constant.statTypeList[0];
+    await NewsApi.startRank(season: season, statType: type).then((value) {
       state.statsList = value;
       setTeamMap();
       update(['statsRank']);
     });
   }
 
-  ///TODO 优化
+  ///获取球队信息
   Future getStarTeamList() async {
     await Future.wait([
       CacheApi.getNBATeamDefine(getList: true),
-      NewsApi.starTeamList(page: 0, pageSize: 30),
+      NewsApi.starTeamList(seasonId: season, seasonType: seasonType),
       NewsApi.getTeamList()
     ]).then((v) {
       state.teamConfigList = v[0] as List<NbaTeamEntity>;
       state.starTeamList = v[1] as List<StarsTeamRank>;
-      state.teamList = v[2] as List<TeamRankEntity>;
+      state.teamRankList = v[2] as List<TeamRankEntity>;
       state.teamMap = {
-        1: state.teamList.where((e) => hasContain(1, e)).toList(),
-        2: state.teamList.where((e) => hasContain(2, e)).toList(),
+        1: state.teamRankList.where((e) => hasContain(1, e)).toList(),
+        2: state.teamRankList.where((e) => hasContain(2, e)).toList(),
       };
       update(['teamRank']);
     });

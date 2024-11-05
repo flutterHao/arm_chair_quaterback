@@ -6,7 +6,7 @@ import 'package:arm_chair_quaterback/common/constant/assets.dart';
 
 enum LoadDataStatus {
   loading(desc: 'loading ...'),
-  error(desc: 'Network error ',icon: Assets.uiDefault_02Png),
+  error(desc: 'Network error ', icon: Assets.uiDefault_02Png),
   noData(desc: 'No content yet', icon: Assets.uiDefault_01Png),
   success(desc: ' ');
 

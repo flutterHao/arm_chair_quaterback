@@ -8,6 +8,7 @@ import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/main.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/widgets/shadow_container.dart';
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -26,7 +27,7 @@ class StatsRankWidget extends GetView<NewListController> {
               Padding(
                 padding: EdgeInsets.only(left: 16.w, top: 24.w, bottom: 10.w),
                 child: Text(
-                  "Stats",
+                  "Stars",
                   style: 19.w7(height: 1),
                 ),
               ),
@@ -46,7 +47,7 @@ class StatsRankWidget extends GetView<NewListController> {
                       padding: EdgeInsets.only(left: 16.w), // 控制左右间距
                       child: InkWell(
                         onTap: () {
-                          controller.type = controller
+                          controller.pointType = controller
                               .state.statsRankMap.entries
                               .elementAt(index)
                               .key;
@@ -176,17 +177,21 @@ class StatsListView extends GetView<NewListController> {
                     ],
                   ),
                   13.hGap,
-                  Text(
-                    Utils.getPlayBaseInfo(item.playerId!).ename,
-                    style: 12.w4(),
-                  ),
-                  15.hGap,
                   Expanded(
-                    child: Text(
-                      item.player ?? "",
-                      style: 12.w4(),
-                    ),
-                  ),
+                      child: Text(
+                    ObjectUtil.isNotEmpty(
+                            Utils.getPlayBaseInfo(item.playerId!).ename)
+                        ? Utils.getPlayBaseInfo(item.playerId!).ename
+                        : item.playerName!,
+                    style: 12.w4(),
+                  )),
+                  15.hGap,
+                  // Expanded(
+                  //   child: Text(
+                  //     item.playerName ?? "",
+                  //     style: 12.w4(),
+                  //   ),
+                  // ),
                   Text(
                     "${controller.getStartData(type, item)}",
                     style: 12.w4(),

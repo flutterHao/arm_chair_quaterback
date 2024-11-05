@@ -43,8 +43,7 @@ class _GuessItemV2State extends State<GuessItemV2> {
     return Container(
       padding: EdgeInsets.all(14.w),
       decoration: BoxDecoration(
-          color: AppColors.cF2F2F2,
-          borderRadius: BorderRadius.circular(16.w)),
+          color: AppColors.cF2F2F2, borderRadius: BorderRadius.circular(16.w)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -90,9 +89,9 @@ class _GuessItemV2State extends State<GuessItemV2> {
                 Expanded(
                     child: Center(
                         child: Text(
-                          "${player.guessInfo.guessReferenceValue.getValue(picksIndexController.getCurrentTabStr())}",
-                          style: 18.w7(color: AppColors.c262626, height: 1),
-                        ))),
+                  "${player.guessInfo.guessReferenceValue.getValue(picksIndexController.getCurrentTabStr())}",
+                  style: 18.w7(color: AppColors.c262626, height: 1),
+                ))),
                 Container(
                   height: 18.w,
                   width: 1,
@@ -101,10 +100,10 @@ class _GuessItemV2State extends State<GuessItemV2> {
                 Expanded(
                     child: Center(
                         child: Text(
-                          Utils.getLongName(picksIndexController.getCurrentTabStr()),
-                          style: 12.w4(color: AppColors.cB3B3B3, height: 1),
-                          textAlign: TextAlign.center,
-                        )))
+                  Utils.getLongName(picksIndexController.getCurrentTabStr()),
+                  style: 12.w4(color: AppColors.cB3B3B3, height: 1),
+                  textAlign: TextAlign.center,
+                )))
               ],
             ),
           ),

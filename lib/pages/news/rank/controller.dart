@@ -2,10 +2,11 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:27:52
- * @LastEditTime: 2024-11-04 17:07:07
+ * @LastEditTime: 2024-11-05 14:56:51
  */
 import 'package:arm_chair_quaterback/common/entities/stats_rank/nba_player_stat.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank.dart';
+import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/controller.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/widgets/stats_list_view.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/widgets/team_list_view.dart';
@@ -19,13 +20,13 @@ class RankController extends GetxController
 
   late TabController tabController;
   RefreshController refreshCtrl = RefreshController();
-  RxInt current = 0.obs;
+  RxInt tabIndex = 0.obs;
   List<String> tabs = ["Player", "Team"];
   List<String> tabs2 = ["Eastean", "Westen"];
 
   RxDouble progress = 0.0.obs;
   List statsPages = const [
-    PlayListView(),
+    PlayerListView(),
     TeamListView(),
   ];
 
@@ -34,30 +35,29 @@ class RankController extends GetxController
     EasTeamListView(type: 2),
   ];
 
-  // RxString divisionIndex = "PTS".obs;
-  // RxString seasonIndex = "2023-24".obs;
-
-  RxString statType = "PTS".obs;
-  RxString season = "2023-24".obs;
+  RxString pointType = "PTS".obs;
+  RxString season = "2024-25".obs;
+  String seasonType = "Regular Season";
   List<NbaPlayerStat> statList = [];
-  List<String> seasonList = ["2023-24"];
+  List<String> seasonList = ["2023-24", "2024-25"];
   List<StarsTeamRank> starsTeamRankList = [];
-
-  int page = 1;
-  int size = 20;
+  Map<String, List<NbaPlayerStat>> statsRankMap = {};
 
   /// 在 widget 内存中分配后立即调用。
   @override
   void onInit() {
     super.onInit();
+    pointType.value = Get.find<NewListController>().pointType;
+    int currentYear = DateTime.now().year;
+    season.value = "$currentYear-${(currentYear + 1) % 100}";
     tabController = TabController(length: tabs.length, vsync: this);
     tabController.animation?.addListener(() {
       progress.value = tabController.animation!.value;
     });
     tabController.addListener(() {
       int newIndex = tabController.index;
-      if (current.value != newIndex) {
-        current.value = newIndex;
+      if (tabIndex.value != newIndex) {
+        tabIndex.value = newIndex;
       }
     });
   }
@@ -66,78 +66,68 @@ class RankController extends GetxController
   @override
   void onReady() {
     super.onReady();
-    // if (Get.arguments != null) {
-    //   statType.value = Get.arguments;
-    // }
-    statType.value = Get.find<NewListController>().type;
-    getStatRank();
-    getAllTeamInfo();
+    getRankData();
   }
 
   void onTap(v) {
-    current.value = v;
+    tabIndex.value = v;
     tabController.animateTo(v);
   }
 
-  void getStatRank({bool refresh = true}) async {
-    // NewsApi.startRank(season: season, statType: statType).then((value) {
-    //   statList = value.nbaPlayerStats ?? [];
-    //   update(["stars"]);
-    // });
-    // 刷新或加载完成时停止动画
-    await Future.delayed(const Duration(milliseconds: 100));
-    page = refresh ? 1 : (page + 1);
-    NewListController ctrl = Get.find();
-    var list = ctrl.state.statsRankMap[statType.value] ?? [];
-    int end = page * size > list.length ? list.length : page * size;
-    statList = list.sublist(0, end);
-    if (refresh) {
-      refreshCtrl.refreshCompleted(); // 停止刷新动画
-    } else {
-      refreshCtrl.loadComplete();
-    }
-    update(["stars"]);
+  Future getRankData() async {
+    await Future.wait([
+      NewsApi.startRank(
+          season: season.value,
+          statType: pointType.value,
+          seasonType: seasonType),
+      NewsApi.starTeamList(seasonId: season.value, seasonType: seasonType)
+    ]).then((v) {
+      statList = v[0] as List<NbaPlayerStat>;
+      starsTeamRankList = v[1] as List<StarsTeamRank>;
+      onTypeChange();
+    });
   }
 
-  void getAllTeamInfo() {
-    NewListController ctrl = Get.find();
-    starsTeamRankList = List.from(ctrl.state.starTeamList);
-  }
-
-  void getTeamRank() {
-    switch (statType.value) {
+  void onTypeChange() async {
+    switch (pointType.value) {
       case "PTS":
         starsTeamRankList.sort((a, b) => b.pts!.compareTo(a.pts!));
+        statList.sort((a, b) => b.pts!.compareTo(a.pts!));
       case "AST":
         starsTeamRankList.sort((a, b) => b.ast!.compareTo(a.ast!));
+        statList.sort((a, b) => b.pts!.compareTo(a.pts!));
       case "REB":
         starsTeamRankList.sort((a, b) => b.reb!.compareTo(a.reb!));
+        statList.sort((a, b) => b.pts!.compareTo(a.pts!));
       case "FGP":
         starsTeamRankList.sort((a, b) => b.fgPct!.compareTo(a.fgPct!));
+        statList.sort((a, b) => b.pts!.compareTo(a.pts!));
       case "BLK":
         starsTeamRankList.sort((a, b) => b.blk!.compareTo(a.blk!));
+        statList.sort((a, b) => b.pts!.compareTo(a.pts!));
       case "STL":
         starsTeamRankList.sort((a, b) => b.stl!.compareTo(a.stl!));
+        statList.sort((a, b) => b.pts!.compareTo(a.pts!));
       case "FTP":
         starsTeamRankList.sort((a, b) => b.ftPct!.compareTo(a.ftPct!));
+        statList.sort((a, b) => b.pts!.compareTo(a.pts!));
       case "3PA":
         starsTeamRankList.sort((a, b) => b.fg3A!.compareTo(a.fg3A!));
+        statList.sort((a, b) => b.pts!.compareTo(a.pts!));
       case "3PP":
         starsTeamRankList.sort((a, b) => b.fg3Pct!.compareTo(a.fg3Pct!));
+        statList.sort((a, b) => b.pts!.compareTo(a.pts!));
       case "TO":
-        starsTeamRankList.sort((a, b) => a.tov!.compareTo(b.tov!));
+        starsTeamRankList.sort((a, b) => b.tov!.compareTo(a.tov!));
+        statList.sort((a, b) => b.tov!.compareTo(a.tov!));
       default:
     }
 
-    update(["starsTeam"]);
+    update(["stars", "starsTeam"]);
   }
 
-  // void getTeamRank() {
-  //   NewsApi.teamRank(page: 0, pageSize: 30).then((value) {});
-  // }
-
   dynamic getRankValue(dynamic item) {
-    switch (statType.value) {
+    switch (pointType.value) {
       case "PTS":
         return item.pts ?? 0;
       case "AST":

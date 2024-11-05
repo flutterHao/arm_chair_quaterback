@@ -16,7 +16,7 @@ class TeamBattleController extends GetxController
   ///
   var step = 0.obs;
 
-  static  bool _canPop = false;
+  static bool _canPop = false;
 
   _initData() {
     update(["team_battle"]);
@@ -42,16 +42,19 @@ class TeamBattleController extends GetxController
   late String meAvatar;
   late String opponentAvatar;
   var breakingNewsBreaking = false.obs;
-  double ovr = 75;///测试数据，需删除
+  double ovr = 75;
+
+  ///测试数据，需删除
 
   @override
   void onInit() {
     super.onInit();
     step.value = 1;
     _canPop = false;
-    meAvatar = totalAvatars[Random().nextInt(totalAvatars.length-1)];
+    meAvatar = totalAvatars[Random().nextInt(totalAvatars.length - 1)];
     totalAvatars.remove(meAvatar);
-    opponentAvatar = totalAvatars[Random().nextInt(totalAvatars.length-1)];
+    opponentAvatar = totalAvatars[Random().nextInt(totalAvatars.length - 1)];
+
     ///todo 模拟匹配的网络请求
     Future.delayed(const Duration(seconds: 3), () {
       nextStep();
@@ -59,28 +62,26 @@ class TeamBattleController extends GetxController
   }
 
   /// 是否有突发新闻
-  bool havaBreakingNews(){
+  bool havaBreakingNews() {
     return true;
   }
 
-  void onBreakingNewsStart(){
+  void onBreakingNewsStart() {
     ovr = 70;
     breakingNewsBreaking.value = true;
   }
 
-
   void nextStep() {
     step.value = step.value + 1;
     print('nextStep-------: ${step.value}');
-    if(step.value == 4){
+    if (step.value == 4) {
       breakingNewsBreaking.value = false;
     }
-    if(step.value == 5) {
+    if (step.value == 5) {
       _canPop = true;
       update(['team_battle']);
     }
   }
 
   static get canPop => _canPop;
-
 }

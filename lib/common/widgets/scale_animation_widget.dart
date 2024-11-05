@@ -42,7 +42,7 @@ class _ScaleAnimationWidgetState extends State<ScaleAnimationWidget>
         if (status == AnimationStatus.dismissed) {
           widget.onComplete!.call(widget.image);
         }
-        if(status == AnimationStatus.completed){
+        if (status == AnimationStatus.completed) {
           animationController.reverse();
         }
       });
@@ -50,7 +50,6 @@ class _ScaleAnimationWidgetState extends State<ScaleAnimationWidget>
     animation = Tween(begin: 0.0, end: 1.0).animate(animationController)
       ..addListener(() => progress.value = animation.value);
   }
-
 
   @override
   void dispose() {
