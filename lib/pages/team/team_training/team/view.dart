@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 16:18:58
- * @LastEditTime: 2024-11-01 17:31:04
+ * @LastEditTime: 2024-11-05 20:41:51
  */
 /*
  * @Description: 
@@ -69,19 +69,24 @@ class TeamMenberView extends StatelessWidget {
     final TeamIndexController indexCtrl = Get.find();
     return GetBuilder<TeamController>(
       builder: (_) {
-        return BorderWidget(
-          offset: Offset(0, 3.w),
-          width: 375.w,
+        return Container(
+          // offset: Offset(0, 3.w),
+          // width: 375.w,
+          width: double.infinity,
           height: 619.h,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(16.w),
-            topRight: Radius.circular(16.w),
+          padding: EdgeInsets.only(top: 3.w),
+          decoration: BoxDecoration(
+            color: AppColors.cFF7954,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(16.w),
+              topRight: Radius.circular(16.w),
+            ),
           ),
           child: Stack(
             alignment: Alignment.topCenter,
             children: [
               _head(),
-              MyAnimatedPointer(
+              ArrowAnimated(
                 child: InkWell(
                   onTap: () {
                     Get.find<TeamIndexController>().pageOnTap();
@@ -162,12 +167,12 @@ class TeamMenberView extends StatelessWidget {
   }
 }
 
-class MyAnimatedPointer extends StatefulWidget {
+class ArrowAnimated extends StatefulWidget {
   final Widget child;
   final double animationRange;
   final Duration animationDuration;
 
-  const MyAnimatedPointer({
+  const ArrowAnimated({
     super.key,
     required this.child,
     this.animationRange = 18.0,
@@ -175,10 +180,10 @@ class MyAnimatedPointer extends StatefulWidget {
   });
 
   @override
-  _MyAnimatedPointerState createState() => _MyAnimatedPointerState();
+  State<ArrowAnimated> createState() => _ArrowAnimatedState();
 }
 
-class _MyAnimatedPointerState extends State<MyAnimatedPointer>
+class _ArrowAnimatedState extends State<ArrowAnimated>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;

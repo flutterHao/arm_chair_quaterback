@@ -209,7 +209,7 @@ class NewsDetailItem extends StatelessWidget {
               showModalBottomSheet(
                 isScrollControlled: true,
                 context: Get.context!,
-                // barrierColor: Colors.transparent,
+                barrierColor: Colors.transparent,
                 backgroundColor: Colors.transparent,
                 builder: (context) {
                   return VerticalDragBackWidget(

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-18 15:38:51
- * @LastEditTime: 2024-11-04 16:44:55
+ * @LastEditTime: 2024-11-05 18:55:33
  */
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -36,8 +36,8 @@ class CommentsDialog extends GetView<CommentController> {
         clipBehavior: Clip.none, // 确保内容不被剪裁
         children: [
           Container(
-            width: 375.w,
-            height: 650.w,
+            width: double.infinity,
+            height: 650.h,
             decoration: BoxDecoration(
               color: AppColors.cFF7954,
               borderRadius: borderRadius,
@@ -49,7 +49,7 @@ class CommentsDialog extends GetView<CommentController> {
             top: 3,
             bottom: 0,
             child: Container(
-              width: 375.w,
+              width: double.infinity,
               height: 650.w,
               decoration: BoxDecoration(
                 color: AppColors.cF2F2F2,

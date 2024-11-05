@@ -2,7 +2,7 @@
  * @Description:队伍球员谣言
  * @Author: lihonghao
  * @Date: 2024-10-24 21:19:47
- * @LastEditTime: 2024-11-01 20:17:37
+ * @LastEditTime: 2024-11-05 20:35:06
  */
 
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
@@ -26,6 +26,10 @@ class RumorWidget extends StatelessWidget {
     return GetBuilder<NewListController>(
         id: "newsList",
         builder: (controller) {
+          if (controller.state.newsEntity.teamRumors.isEmpty &&
+              controller.state.newsEntity.playerRumors.isEmpty) {
+            return Container();
+          }
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

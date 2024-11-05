@@ -32,8 +32,8 @@ class LineUpTab extends GetView<TeamController> {
 
   @override
   Widget build(BuildContext context) {
+    var scrollController = ScrollController();
     return GetBuilder<TeamController>(builder: (_) {
-      var scrollController = ScrollController();
       return SingleChildScrollView(
         controller: scrollController,
         physics: OneBoundaryScrollPhysics(scrollController: scrollController),

@@ -106,7 +106,7 @@ class _TopDialogState extends State<TopDialog>
                       offset:
                           Offset(0, offsetDy.value >= 0 ? 0 : offsetDy.value),
                       child: Container(
-                        height: 500.h,
+                        // height: 500.h,
                         width: double.infinity,
                         decoration: BoxDecoration(
                             color: AppColors.c262626,

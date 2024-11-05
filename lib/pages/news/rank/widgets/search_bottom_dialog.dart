@@ -16,7 +16,7 @@ class SearchBottomDialog extends GetView<RankController> {
 
   Container _line() {
     return Container(
-      width: 375.w,
+      width: double.infinity,
       height: 1.w,
       decoration: const BoxDecoration(
         gradient: LinearGradient(

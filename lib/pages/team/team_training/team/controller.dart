@@ -95,12 +95,16 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
     TeamApi.recoverPower(type: type, uuid: uuid).then((v) {
       myTeamEntity.powerReplyTime = v.powerReplyTime;
       if (type == 1) {
+        if (v.teamPlayers.isEmpty) return;
+        int totalPw = 0;
         for (var e in myTeamEntity.teamPlayers) {
           if (e.uuid == uuid) {
             int pw = v.teamPlayers.firstWhere((e) => e.uuid == uuid).power;
             e.power = pw;
           }
+          totalPw += e.power;
         }
+        myTeamEntity.powerP = (totalPw ~/ myTeamEntity.teamPlayers.length);
       } else {
         myTeamEntity = v;
       }
