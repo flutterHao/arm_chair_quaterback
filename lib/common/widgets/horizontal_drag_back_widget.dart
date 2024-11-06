@@ -130,7 +130,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
       // print('onHorizontalDragUpdate: ${detail.localPosition}');
       // print('onHorizontalDragUpdate-offsetX:$offsetX');
       // print('detail.delta.dy:${detail.delta}');
-      if (detail.delta.dy.abs() > detail.delta.dx.abs()/2) {
+      if (detail.delta.dy.abs() > detail.delta.dx.abs()) {
         return;
       }
       if (startX <= 0) {
@@ -237,11 +237,11 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
     double beforeResetOffsetX = offsetX;
     animationController.reset();
     isReset = true;
-    if ((beforeResetOffsetX > 0 && velocity > 1500) ||
-        (beforeResetOffsetX > 100 && velocity > 1000) ||
+    if ((beforeResetOffsetX > 0 && velocity > 700) ||
+        (beforeResetOffsetX > 50 && velocity > 500) ||
         (beforeResetOffsetX > width / 5 && velocity >= 250) ||
         beforeResetOffsetX > width * 2 / 5) {
-      /// 最后距离大于宽度的 1/5 且停止接触屏幕时移动的速度大于 500 则进入退出动画
+      /// 最后距离大于宽度的 1/5 且停止接触屏幕时移动的速度大于 250 则进入退出动画
       /// 最后距离大于宽度的 2/5 进入退出动画
       tween.begin = beforeResetOffsetX;
       tween.end = width + 100;

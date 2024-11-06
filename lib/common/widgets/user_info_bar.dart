@@ -33,7 +33,8 @@ class UserInfoBar extends StatelessWidget {
           TeamLoginInfo info =
               controller.userEntiry.teamLoginInfo ?? TeamLoginInfo();
           return Container(
-            padding: EdgeInsets.only(left: 14.w, right: 14.w, bottom: 11.w),
+            padding: EdgeInsets.only(left: 14.w, right: 14.w),
+            constraints: BoxConstraints(minHeight: 63.w),
             decoration: BoxDecoration(
                 color: AppColors.c262626,
                 borderRadius: BorderRadius.only(
@@ -41,6 +42,7 @@ class UserInfoBar extends StatelessWidget {
                   bottomRight: Radius.circular(16.w),
                 )),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 InkWell(
                   onLongPress: () {
@@ -108,7 +110,8 @@ class UserInfoBar extends StatelessWidget {
 }
 
 class MoneyAndCoinWidget extends StatelessWidget {
-  const MoneyAndCoinWidget({super.key});
+  ///不要加const，会导致weiget不刷新
+  MoneyAndCoinWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
