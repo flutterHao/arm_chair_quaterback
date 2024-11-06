@@ -1,4 +1,4 @@
-import 'package:arm_chair_quaterback/firebase_options.dart';
+import 'package:arm_chair_quaterback/common/constant/firebase_options.dart';
 import 'package:arm_chair_quaterback/common/utils/loading.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
