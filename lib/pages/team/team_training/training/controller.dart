@@ -40,7 +40,8 @@ class TrainingController extends GetxController
   RxString remainString = "".obs;
   RxString taskCountDownString = "".obs;
   RxInt ballNum = 0.obs;
-  List<RxBool> slotCard = [true.obs, true.obs, true.obs];
+
+  List<RxBool> slotCard = [false.obs, false.obs, false.obs];
   Map<int, int> proCountMap = {
     102: 0,
     301: 0,
@@ -71,16 +72,18 @@ class TrainingController extends GetxController
   //球员滚动
   late SwiperController swiperControl;
   late Timer _timer;
+  late ScrollController playerScrollCtrl;
 
   /// 在 widget 内存中分配后立即调用。
   @override
   void onInit() {
     super.onInit();
+    playerScrollCtrl = ScrollController();
     // 初始化动画控制器
     setBallAnimationCtrl(1000);
 
     slotCtrl = AnimationController(
-      duration: const Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 5000),
       vsync: this,
     );
 
@@ -235,6 +238,40 @@ class TrainingController extends GetxController
       // });
       // slotAnimation();
     });
+  }
+
+  // 启动自动滚动
+  int max = 1;
+  void startScroll(int count) async {
+    if (count == 0) {
+      currentAward = [0, 0, 0];
+      slotCard = [true.obs, true.obs, true.obs];
+      slotCtrl.forward();
+      update(["slot"]);
+    }
+    if (playerScrollCtrl.hasClients) {
+      // int delay = (50 + pow(count, 2.8)).toInt(); // Start fast, then slow
+      await playerScrollCtrl.animateTo(
+        playerScrollCtrl.offset + 75.w * 20,
+        duration: const Duration(milliseconds: 2000),
+        // curve: const Cubic(0.32, 0.48, 0.32, 0.98),
+        // curve: const Cubic(0.22, 0.53, 0, 1.02),
+        curve: const Cubic(0.27, 0.59, 0.19, 1.02),
+      );
+
+      // 当滚动到最后一个可见项时，重置到起点
+      if (playerScrollCtrl.offset >=
+          playerScrollCtrl.position.maxScrollExtent) {
+        playerScrollCtrl.jumpTo(0);
+      }
+      count++;
+      currentIndex.value = (count) % playerList.length;
+    }
+    if (count < max) {
+      startScroll(count);
+    } else {
+      shootBall();
+    }
   }
 
   void setBallAnimation(int type) {
@@ -783,17 +820,32 @@ class TrainingController extends GetxController
   // }
 
   ///开始老虎机动画
-  void slotAnimation() {
+  void slotAnimation() async {
     // if (rewardList.isEmpty) return;
     // List<int> props = rewardList[Random().nextInt(rewardList.length)].propOrder;
-    slotCtrl.forward().then((v) async {
-      currentAward = [0, 0, 0];
-      // currentAward = trainingInfo.propArray;
-      for (int i = 0; i < trainingInfo.propArray.length; i++) {
-        currentAward[i] = trainingInfo.propArray[i];
-        update(["slot"]);
-        await Future.delayed(const Duration(milliseconds: 100));
-      }
+    // slotCtrl.forward().then((v) async {
+    //   currentAward = [0, 0, 0];
+    //   // currentAward = trainingInfo.propArray;
+    //   // for (int i = 0; i < trainingInfo.propArray.length; i++) {
+    //   //   currentAward[i] = trainingInfo.propArray[i];
+    //   //   update(["slot"]);
+    //   //   await Future.delayed(const Duration(milliseconds: 200));
+    //   // }
+    //   await _flashCard();
+    //   await Future.delayed(const Duration(milliseconds: 200));
+    //   awardAnimation();
+    // });
+
+    // currentAward = trainingInfo.propArray;
+    // for (int i = 0; i < trainingInfo.propArray.length; i++) {
+    //   currentAward[i] = trainingInfo.propArray[i];
+    //   update(["slot"]);
+    //   await Future.delayed(const Duration(milliseconds: 200));
+    // }
+    await Future.delayed(const Duration(milliseconds: 1000), () async {
+      // slotCtrl.stop();
+      // slotCtrl.value = 1;
+      await _flashCard();
       await Future.delayed(const Duration(milliseconds: 200));
       awardAnimation();
     });
@@ -810,7 +862,6 @@ class TrainingController extends GetxController
   void awardAnimation() async {
     Map<int, int> propMap = countAward();
     proCountMap = countProp();
-    await _flashCard(0);
     if (propMap[304]! > 0) isShowBuff.value = true;
     if (propMap[304]! > 1) isShowRipple.value = true;
     if (propMap[305]! > 0) isShowProp.value = true;
@@ -818,6 +869,10 @@ class TrainingController extends GetxController
     isShowRipple.value = false;
     if (propMap[301]! > 0 || propMap[302]! > 0 || propMap[102]! > 0) {
       updateMoney();
+
+      moneyList = List.generate(
+          proCountMap[302]! > 0 ? 50 : 30, (index) => MoneyItem());
+      update(["training_page"]);
       moneyCtrl.forward().then((v) {
         moneyCtrl.reset();
       });
@@ -926,22 +981,56 @@ class TrainingController extends GetxController
 
   // }
 
-  Future _flashCard(int count) async {
-    if (count >= 5) {
-      // awardAnimation();
-      slotCard = [true.obs, true.obs, true.obs];
-      update(["slot"]);
-      return;
-    }
+  // Future _flashCard(int count) async {
+  //   if (count >= 5) {
+  //     // awardAnimation();
+  //     slotCard = [true.obs, true.obs, true.obs];
+  //     update(["slot"]);
+  //     return;
+  //   }
 
-    for (int i = 0; i < 3; i++) {
-      if (proCountMap[currentAward[i]]! > 1) {
-        slotCard[i].value = !slotCard[i].value;
+  //   for (int i = 0; i < 3; i++) {
+  //     if (proCountMap[currentAward[i]]! > 1) {
+  //       slotCard[i].value = !slotCard[i].value;
+  //     }
+  //   }
+  //   update(["slot"]);
+  //   await Future.delayed(const Duration(milliseconds: 100), () async {
+  //     await _flashCard(count + 1);
+  //   });
+  // }
+
+  ///开始老虎机动画
+  Future _flashCard() async {
+    // if (rewardList.isEmpty) return;
+    // List<int> props = rewardList[Random().nextInt(rewardList.length)].propOrder;
+    currentAward = [0, 0, 0];
+    List<int> props = trainingInfo.propArray;
+    if (props.isEmpty) return;
+    await Future.delayed(const Duration(milliseconds: 200), () {
+      currentAward[0] = props[0];
+      slotCard[0].value = false;
+      update(["slot"]);
+    });
+    await Future.delayed(const Duration(milliseconds: 300), () {
+      slotCard[1].value = false;
+      currentAward[1] = props[1];
+      update(["slot"]);
+    });
+    await Future.delayed(const Duration(milliseconds: 300), () async {
+      slotCard[2].value = false;
+      if (currentAward[0] == currentAward[1]) {
+        for (int i = 0; i < 4; i++) {
+          currentAward[2] = 300 + random.nextInt(7);
+          update(["slot"]);
+          await Future.delayed(const Duration(milliseconds: 120));
+          currentAward[2] = 0;
+          update(["slot"]);
+          await Future.delayed(const Duration(milliseconds: 120));
+        }
       }
-    }
-    update(["slot"]);
-    await Future.delayed(const Duration(milliseconds: 100), () async {
-      await _flashCard(count + 1);
+      currentAward[2] = props[2];
+      update(["slot"]);
     });
   }
 

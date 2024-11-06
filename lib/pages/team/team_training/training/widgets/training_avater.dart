@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-30 11:43:53
- * @LastEditTime: 2024-11-01 12:38:40
+ * @LastEditTime: 2024-11-06 16:41:49
  */
 
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
@@ -33,47 +33,52 @@ class TrainingAvater extends StatelessWidget {
         Get.toNamed(RouteNames.picksPlayerDetail,
             arguments: PlayerDetailPageArguments(player.playerId));
       },
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          Container(
-            // width: isCurrent ? 66.w : 64.w,
-            // height: isCurrent ? 66.w : 64.w,
-            width: 64.w,
-            height: 64.w,
-            alignment: Alignment.center,
-            // color: Colors.red,
-            decoration: BoxDecoration(
-              border: isCurrent
-                  ? Border.all(color: AppColors.cFFFFFF, width: 2)
-                  : null,
-              color: AppColors.c666666,
-              borderRadius: BorderRadius.circular(32.w),
-            ),
-            child: ImageWidget(
-              url: Utils.getPlayUrl(player.playerId),
-              imageFailedPath: Assets.uiDefault_04Png,
+      child: AnimatedScale(
+        duration: const Duration(milliseconds: 100),
+        // scale: isCurrent ? 1 : 0.9,
+        scale: 0.9,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Container(
+              // width: isCurrent ? 66.w : 64.w,
+              // height: isCurrent ? 66.w : 64.w,
               width: 64.w,
               height: 64.w,
-              borderRadius: BorderRadius.circular(32.w),
-            ),
-          ),
-          Positioned(
-            top: 4.w,
-            right: 2.w,
-            child: Container(
-              width: 19.w,
-              height: 19.w,
+              alignment: Alignment.center,
+              // color: Colors.red,
               decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10.w)),
-              child: IconWidget(
-                iconWidth: 17.w,
-                icon: Assets.uiStateBestPng,
+                // border: isCurrent
+                //     ? Border.all(color: AppColors.cFFFFFF, width: 2)
+                //     : null,
+                color: AppColors.c666666,
+                borderRadius: BorderRadius.circular(32.w),
+              ),
+              child: ImageWidget(
+                url: Utils.getPlayUrl(player.playerId),
+                imageFailedPath: Assets.uiDefault_04Png,
+                width: 64.w,
+                height: 64.w,
+                borderRadius: BorderRadius.circular(32.w),
               ),
             ),
-          ),
-        ],
+            Positioned(
+              top: 4.w,
+              right: 2.w,
+              child: Container(
+                width: 19.w,
+                height: 19.w,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10.w)),
+                child: IconWidget(
+                  iconWidth: 17.w,
+                  icon: Assets.uiStateBestPng,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

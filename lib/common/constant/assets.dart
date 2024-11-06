@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-11 17:18:41
- * @LastEditTime: 2024-11-04 15:53:39
+ * @LastEditTime: 2024-11-06 10:42:43
  */
 class Assets {
   ///home
@@ -27,6 +27,10 @@ class Assets {
   static const iconBackPng = 'assets/images/icon/icon_back.png';
   static const iconClosePng = 'assets/images/icon/icon_close.png';
   static const iconSharePng = 'assets/images/icon/icon_share.png';
+  static const status_101Png = 'assets/images/icon/status_101.png';
+  static const status_102Png = 'assets/images/icon/status_102.png';
+  static const status_103Png = 'assets/images/icon/status_103.png';
+  static const status_104Png = 'assets/images/icon/status_104.png';
   static const uiDefault_01Png = 'assets/images/icon/ui_default_01.png';
   static const uiDefault_02Png = 'assets/images/icon/ui_default_02.png';
   static const uiDefault_03Png = 'assets/images/icon/ui_default_03.png';

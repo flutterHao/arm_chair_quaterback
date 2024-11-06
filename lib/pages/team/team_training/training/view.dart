@@ -15,6 +15,7 @@ import 'package:arm_chair_quaterback/pages/team/team_training/training/controlle
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/award_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/buble_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/drag_back_widget.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/player_slot_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/ripple_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/training_avater.dart';
 import 'package:card_swiper/card_swiper.dart';
@@ -286,10 +287,8 @@ class TrainingPage extends GetView<TrainingController> {
                                           // ),
 
                                           Visibility(
-                                            visible: controller
-                                                        .slotCtrl.value !=
-                                                    0 &&
-                                                controller.slotCtrl.value != 1,
+                                            visible:
+                                                controller.slotCard[i].value,
                                             child: Container(
                                               height: 80.h,
                                               width: 145.h,
@@ -353,24 +352,19 @@ class TrainingPage extends GetView<TrainingController> {
                                               // color: Colors.blue,
                                               width: 145.h,
                                               alignment: Alignment.center,
-                                              child: Visibility(
-                                                  visible: controller
-                                                      .slotCard[i].value,
-                                                  child: ctrl.currentAward[i] !=
-                                                          0
-                                                      ? Image.asset(
-                                                          Utils.getPropIconUrl(
-                                                              ctrl.currentAward[
-                                                                  i]),
-                                                          width: 80.h,
-                                                          fit: BoxFit.fitWidth,
-                                                          color: Colors.white,
-                                                          errorBuilder: (context,
-                                                                  error,
-                                                                  stackTrace) =>
-                                                              Container(
-                                                                  width: 80.h))
-                                                      : Container())),
+                                              child: ctrl.currentAward[i] != 0
+                                                  ? Image.asset(
+                                                      Utils.getPropIconUrl(
+                                                          ctrl.currentAward[i]),
+                                                      width: 80.h,
+                                                      fit: BoxFit.fitWidth,
+                                                      color: Colors.white,
+                                                      errorBuilder: (context,
+                                                              error,
+                                                              stackTrace) =>
+                                                          Container(
+                                                              width: 80.h))
+                                                  : Container()),
                                         ],
                                       );
                                     });
@@ -475,7 +469,6 @@ class TrainingPage extends GetView<TrainingController> {
                     ),
                   ),
 
-                  ///球员
                   Positioned(
                     top: 550.h,
                     child: MirrorImageWidget(
@@ -484,57 +477,35 @@ class TrainingPage extends GetView<TrainingController> {
                         imageHeight: 65.h),
                   ),
 
-                  // Positioned(child: ListView.builder(
-                  //   itemCount:10 ,
-                  //   itemBuilder: (context,index){
-                  //   return PlayerAwater();
-                  // })),
-
+                  ///球员
                   Positioned(
                     top: 500.h,
                     child: SizedBox(
                       width: 375.w,
                       height: 75.w,
-                      child: Swiper(
+                      child: ListView.builder(
+                        padding: const EdgeInsets.all(0),
+                        scrollDirection: Axis.horizontal,
                         key: Key("${controller.playerList.length}"),
                         physics: const NeverScrollableScrollPhysics(),
-                        containerWidth: 64.w,
-                        containerHeight: 64.w,
-                        itemHeight: 64.w,
-                        itemWidth: 64.w,
-                        viewportFraction: .2,
-                        indicatorLayout: PageIndicatorLayout.COLOR,
-                        scale: .3,
-                        itemCount: controller.playerList.length,
-                        outer: false,
-                        // autoplay: true,
-                        // duration: 200,
-                        autoplayDelay: 400,
-                        duration: 400, // 动画的过渡时间
-                        controller: controller.swiperControl,
-                        axisDirection: AxisDirection.right,
-                        onIndexChanged: (value) {
-                          controller.currentIndex.value = value;
-                          if (controller.isShot.value) {
-                            controller.swiperControl.stopAutoplay();
-                          }
-                        },
+                        itemCount: controller.playerList.length * 200,
+                        controller: controller.playerScrollCtrl,
+                        itemExtent: 75.w,
                         itemBuilder: (context, index) {
+                          int actualIndex =
+                              index % controller.playerList.length;
+                          int centerIndex = 2;
                           return Obx(() {
-                            bool isCUrrent =
-                                controller.currentIndex.value == index;
-                            return Visibility(
-                              visible: !controller.isShot.value || isCUrrent,
-                              child: AnimatedScale(
-                                duration: const Duration(milliseconds: 200),
-                                scale: isCUrrent && controller.isShot.value
-                                    ? 1.13
-                                    : 1,
-                                child: TrainingAvater(
-                                  player: controller.playerList[index],
-                                  isCurrent:
-                                      isCUrrent && controller.isShot.value,
-                                ),
+                            bool isCurrent =
+                                controller.currentIndex.value == actualIndex;
+                            bool isCenterItem = actualIndex % 5 == centerIndex;
+                            return Container(
+                              width: 75.w,
+                              height: 75.w,
+                              alignment: Alignment.center,
+                              child: TrainingAvater(
+                                player: controller.playerList[actualIndex],
+                                isCurrent: isCenterItem,
                               ),
                             );
                           });
@@ -542,6 +513,59 @@ class TrainingPage extends GetView<TrainingController> {
                       ),
                     ),
                   ),
+
+                  // Positioned(
+                  //   top: 500.h,
+                  //   child: SizedBox(
+                  //     width: 375.w,
+                  //     height: 75.w,
+                  //     child: Swiper(
+                  //       key: Key("${controller.playerList.length}"),
+                  //       physics: const NeverScrollableScrollPhysics(),
+                  //       containerWidth: 64.w,
+                  //       containerHeight: 64.w,
+                  //       itemHeight: 64.w,
+                  //       itemWidth: 64.w,
+                  //       viewportFraction: .2,
+                  //       indicatorLayout: PageIndicatorLayout.COLOR,
+                  //       scale: .3,
+                  //       itemCount: controller.playerList.length,
+                  //       outer: false,
+                  //       // autoplay: true,
+                  //       // duration: 200,
+                  //       autoplayDelay: 50,
+                  //       duration: 200, // 动画的过渡时间
+                  //       controller: controller.swiperControl,
+                  //       axisDirection: AxisDirection.right,
+                  //       onIndexChanged: (value) {
+                  //         controller.currentIndex.value = value;
+                  //         if (controller.isShot.value) {
+                  //           controller.swiperControl.stopAutoplay();
+                  //         }
+                  //       },
+                  //       itemBuilder: (context, index) {
+                  //         return Obx(() {
+                  //           bool isCUrrent =
+                  //               controller.currentIndex.value == index;
+                  //           return Visibility(
+                  //             visible: !controller.isShot.value || isCUrrent,
+                  //             child: AnimatedScale(
+                  //               duration: const Duration(milliseconds: 200),
+                  //               scale: isCUrrent && controller.isShot.value
+                  //                   ? 1.13
+                  //                   : 1,
+                  //               child: TrainingAvater(
+                  //                 player: controller.playerList[index],
+                  //                 isCurrent:
+                  //                     isCUrrent && controller.isShot.value,
+                  //               ),
+                  //             ),
+                  //           );
+                  //         });
+                  //       },
+                  //     ),
+                  //   ),
+                  // ),
 
                   Positioned(
                       top: 635.h,
@@ -673,7 +697,10 @@ class TrainingPage extends GetView<TrainingController> {
                           top: top, // 控制Y轴变化 (从下往上投)
                           left: left,
                           child: GestureDetector(
-                            onTap: () => controller.shootBall(), // 点击篮球触发投篮
+                            onTap: () {
+                              controller.startScroll(0);
+                              // controller.shootBall();
+                            }, // 点击篮球触发投篮
                             child: Opacity(
                               opacity: controller.opacityAnimation.value,
                               child: Transform.scale(

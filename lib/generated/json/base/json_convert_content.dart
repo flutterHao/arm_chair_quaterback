@@ -25,6 +25,7 @@ import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_day_data_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/player_status_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
@@ -462,6 +463,10 @@ class JsonConvert {
       return data.map<PlayerDayDataEntity>((Map<String, dynamic> e) =>
           PlayerDayDataEntity.fromJson(e)).toList() as M;
     }
+    if (<PlayerStatusEntity>[] is M) {
+      return data.map<PlayerStatusEntity>((Map<String, dynamic> e) =>
+          PlayerStatusEntity.fromJson(e)).toList() as M;
+    }
     if (<RankAwardEntity>[] is M) {
       return data.map<RankAwardEntity>((Map<String, dynamic> e) =>
           RankAwardEntity.fromJson(e)).toList() as M;
@@ -747,6 +752,7 @@ class JsonConvertClassCollection {
     (NewsListDetail).toString(): NewsListDetail.fromJson,
     (NewsListDraft).toString(): NewsListDraft.fromJson,
     (PlayerDayDataEntity).toString(): PlayerDayDataEntity.fromJson,
+    (PlayerStatusEntity).toString(): PlayerStatusEntity.fromJson,
     (RankAwardEntity).toString(): RankAwardEntity.fromJson,
     (RankInfoEntity).toString(): RankInfoEntity.fromJson,
     (RankListEntity).toString(): RankListEntity.fromJson,

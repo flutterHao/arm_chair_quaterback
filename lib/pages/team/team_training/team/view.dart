@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 16:18:58
- * @LastEditTime: 2024-11-05 20:41:51
+ * @LastEditTime: 2024-11-06 09:50:45
  */
 /*
  * @Description: 
@@ -69,18 +69,13 @@ class TeamMenberView extends StatelessWidget {
     final TeamIndexController indexCtrl = Get.find();
     return GetBuilder<TeamController>(
       builder: (_) {
-        return Container(
-          // offset: Offset(0, 3.w),
-          // width: 375.w,
-          width: double.infinity,
+        return BorderWidget(
+          offset: Offset(0, 3.w),
+          width: 375.w,
           height: 619.h,
-          padding: EdgeInsets.only(top: 3.w),
-          decoration: BoxDecoration(
-            color: AppColors.cFF7954,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(16.w),
-              topRight: Radius.circular(16.w),
-            ),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(16.w),
+            topRight: Radius.circular(16.w),
           ),
           child: Stack(
             alignment: Alignment.topCenter,

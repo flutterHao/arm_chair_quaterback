@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-06 15:16:54
- * @LastEditTime: 2024-10-23 18:48:46
+ * @LastEditTime: 2024-11-06 10:53:19
  */
 class Api {
   /// base
@@ -75,6 +75,8 @@ class Api {
   static const String cGradeInStarDefine =
       "$CONFIG_BASE_PATH/GradeInStarDefine.json";
   static const String cTeamRuleConfig = "$CONFIG_BASE_PATH/TeamRuleConfig.json";
+  static const String cPlayerStatsDefine =
+      "$CONFIG_BASE_PATH/PlayerStatsDefine.json";
 
   /// TeamPlayer
   static const String getTeamPlayerByUUID =
@@ -95,7 +97,8 @@ class Api {
   static const String getTeamPlayers =
       "$API_BASE_PATH/TeamPlayer/getTeamPlayers";
   static const changeTeamPlayer = "$API_BASE_PATH/TeamPlayer/changeTeamPlayer";
-  static const getPlayerUpGradeInfo = "$API_BASE_PATH/TeamPlayer/getPlayerUpGradeInfo";
+  static const getPlayerUpGradeInfo =
+      "$API_BASE_PATH/TeamPlayer/getPlayerUpGradeInfo";
 
   ///trade
   static const String getTradeInfo = "$API_BASE_PATH/Trade/getTradeInfo";

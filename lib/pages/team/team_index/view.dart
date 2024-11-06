@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-11-04 16:20:47
+ * @LastEditTime: 2024-11-06 09:51:02
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -620,6 +620,13 @@ class _TeamView extends GetView<TeamIndexController> {
           //       left: 0,
           //       right: 0,
           //       child: const VerticalDragBackWidget(child: TeamTrainingPage())),
+
+          // Positioned(
+          //   top: 0,
+          //   right: 0,
+          //   left: 0,
+          //   child: TeamMenberView(),
+          // ),
           const VerticalDragBackWidget(child: TeamMenberView()),
 
           ///战斗按键
