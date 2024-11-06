@@ -10,6 +10,7 @@
 // import 'package:arm_chair_quaterback/pages/news/rank/bindings.dart';
 // import 'package:arm_chair_quaterback/pages/news/rank/stats_view.dart';
 // import 'package:arm_chair_quaterback/pages/news/rank/team_view.dart';
+import 'package:arm_chair_quaterback/common/widgets/transitions/half_slide_right_to_left_transition.dart';
 import 'package:arm_chair_quaterback/pages/league/bindings.dart';
 import 'package:arm_chair_quaterback/pages/league/view.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_info/bindings.dart';

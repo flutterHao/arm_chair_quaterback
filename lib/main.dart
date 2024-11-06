@@ -4,6 +4,7 @@
  * @Date: 2024-09-09 16:17:35
  * @LastEditTime: 2024-10-26 15:32:26
  */
+import 'package:arm_chair_quaterback/common/widgets/transitions/half_slide_right_to_left_transition.dart';
 import 'package:arm_chair_quaterback/pages/home/home_binding.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -31,8 +32,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isMax = MediaQuery.of(context).size.width > MAXWEBWIDTH && kIsWeb;
     Get.config(
-        // defaultOpaqueRoute: false,// 此全局配置无效，使用GetPageRoute的opaque属性
-        defaultPopGesture: false);
+      // defaultOpaqueRoute: false,// 此全局配置无效，使用GetPageRoute的opaque属性
+      defaultPopGesture: false,
+      // defaultDurationTransition: const Duration(seconds: 5),
+    );
     return Center(
       child: Container(
         constraints: const BoxConstraints(maxWidth: MAXWEBWIDTH),
@@ -62,7 +65,9 @@ class MyApp extends StatelessWidget {
                 fallbackLocale: const Locale('en', 'US'),
                 enableLog: true,
                 // logWriterCallback: Log.write,
-                defaultTransition: Transition.rightToLeft,
+                // defaultTransition: Transition.rightToLeft,
+                customTransition:
+                    HalfSlideRightToLeftTransition(), //只作用在一级路由，局部路由需要单独加
                 //  defaultTransition: Transition.noTransition,
               ),
             ),

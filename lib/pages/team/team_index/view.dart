@@ -13,6 +13,7 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/custom_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/transitions/half_slide_right_to_left_transition.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_account/bindings.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_account/view.dart';
@@ -61,12 +62,14 @@ class _TeamIndexPageState extends State<TeamIndexPage>
           case RouteNames.teamTeamIndex:
             return GetPageRoute(
               settings: settings,
+              customTransition: HalfSlideRightToLeftTransition(),
               page: () => const _TeamView(),
             );
           case RouteNames.teamTrainingPage:
             return GetPageRoute(
               opaque: false,
               settings: settings,
+              customTransition: HalfSlideRightToLeftTransition(),
               page: () => const TrainingPage(),
               // binding: NewDetailBinding(), /*  */
             );
@@ -74,12 +77,14 @@ class _TeamIndexPageState extends State<TeamIndexPage>
             return GetPageRoute(
               opaque: false,
               settings: settings,
+              customTransition: HalfSlideRightToLeftTransition(),
               page: () => const BeautyPage(),
             );
           case RouteNames.mineMineInfo:
             return GetPageRoute(
                 opaque: false,
                 settings: settings,
+                customTransition: HalfSlideRightToLeftTransition(),
                 page: () => const MineInfoPage(),
                 binding: MineInfoBinding());
           case RouteNames.mineMineSetting:
@@ -92,6 +97,7 @@ class _TeamIndexPageState extends State<TeamIndexPage>
             return GetPageRoute(
                 opaque: false,
                 settings: settings,
+                customTransition: HalfSlideRightToLeftTransition(),
                 page: () => const MineAccountPage(),
                 binding: MineAccountBinding());
         }

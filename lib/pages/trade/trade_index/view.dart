@@ -19,6 +19,7 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/physics/one_boundary_scroll_physics.dart';
 import 'package:arm_chair_quaterback/common/widgets/player_avatar_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/transitions/half_slide_right_to_left_transition.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_account/bindings.dart';
@@ -53,6 +54,7 @@ class TradeIndex extends StatelessWidget {
             return GetPageRoute(
               opaque: false,
               settings: setting,
+              customTransition: HalfSlideRightToLeftTransition(),
               page: () => const TradeIndexPage(),
               // binding: TradeIndexBinding(),
             );
@@ -60,6 +62,7 @@ class TradeIndex extends StatelessWidget {
             return GetPageRoute(
                 opaque: false,
                 settings: setting,
+                customTransition: HalfSlideRightToLeftTransition(),
                 barrierColor: Colors.transparent,
                 page: () => PlayerDetailPage(
                       arguments: setting.arguments as PlayerDetailPageArguments,
@@ -68,18 +71,21 @@ class TradeIndex extends StatelessWidget {
             return GetPageRoute(
                 opaque: false,
                 settings: setting,
+                customTransition: HalfSlideRightToLeftTransition(),
                 page: () => const MineInfoPage(),
                 binding: MineInfoBinding());
           case RouteNames.mineMineSetting:
             return GetPageRoute(
                 opaque: false,
                 settings: setting,
+                customTransition: HalfSlideRightToLeftTransition(),
                 page: () => const MineSettingPage(),
                 binding: MineSettingBinding());
           case RouteNames.mineMineAccount:
             return GetPageRoute(
                 opaque: false,
                 settings: setting,
+                customTransition: HalfSlideRightToLeftTransition(),
                 page: () => const MineAccountPage(),
                 binding: MineAccountBinding());
         }

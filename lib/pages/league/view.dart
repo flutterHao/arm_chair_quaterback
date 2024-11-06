@@ -3,6 +3,7 @@ import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/transitions/half_slide_right_to_left_transition.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_account/bindings.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_account/view.dart';
@@ -30,24 +31,28 @@ class LeaguePage extends StatelessWidget {
             return GetPageRoute(
                 opaque: false,
                 settings: setting,
+                customTransition: HalfSlideRightToLeftTransition(),
                 page: () => const LeagueIndexPage(),
                 binding: LeagueBinding());
           case RouteNames.mineMineInfo:
             return GetPageRoute(
                 opaque: false,
                 settings: setting,
+                customTransition: HalfSlideRightToLeftTransition(),
                 page: () => const MineInfoPage(),
                 binding: MineInfoBinding());
           case RouteNames.mineMineSetting:
             return GetPageRoute(
                 opaque: false,
                 settings: setting,
+                customTransition: HalfSlideRightToLeftTransition(),
                 page: () => const MineSettingPage(),
                 binding: MineSettingBinding());
           case RouteNames.mineMineAccount:
             return GetPageRoute(
                 opaque: false,
                 settings: setting,
+                customTransition: HalfSlideRightToLeftTransition(),
                 page: () => const MineAccountPage(),
                 binding: MineAccountBinding());
         }

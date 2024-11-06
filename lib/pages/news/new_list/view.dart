@@ -8,6 +8,7 @@ import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/transitions/half_slide_right_to_left_transition.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_account/bindings.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_account/view.dart';
@@ -53,6 +54,7 @@ class _NewsPageState extends State<NewsPage>
           case RouteNames.newList:
             return GetPageRoute(
               settings: settings,
+              customTransition: HalfSlideRightToLeftTransition(),
               page: () => const NewsListPage(),
             );
           case RouteNames.newsDetail:
@@ -60,6 +62,7 @@ class _NewsPageState extends State<NewsPage>
             return GetPageRoute(
               opaque: false,
               settings: settings,
+              customTransition: HalfSlideRightToLeftTransition(),
               page: () => NewsDetailList(newsId),
               // binding: NewDetailBinding(), /*  */
             );
@@ -67,12 +70,14 @@ class _NewsPageState extends State<NewsPage>
             return GetPageRoute(
                 opaque: false,
                 settings: settings,
+                customTransition: HalfSlideRightToLeftTransition(),
                 page: () => const StatsRankPage(),
                 binding: RankBinding());
           case RouteNames.teamRank:
             return GetPageRoute(
                 opaque: false,
                 settings: settings,
+                customTransition: HalfSlideRightToLeftTransition(),
                 page: () => const TeamRankPage(),
                 binding: RankBinding());
           case RouteNames.mineMineInfo:
@@ -85,12 +90,14 @@ class _NewsPageState extends State<NewsPage>
             return GetPageRoute(
                 opaque: false,
                 settings: settings,
+                customTransition: HalfSlideRightToLeftTransition(),
                 page: () => const MineSettingPage(),
                 binding: MineSettingBinding());
           case RouteNames.mineMineAccount:
             return GetPageRoute(
                 opaque: false,
                 settings: settings,
+                customTransition: HalfSlideRightToLeftTransition(),
                 page: () => const MineAccountPage(),
                 binding: MineAccountBinding());
         }

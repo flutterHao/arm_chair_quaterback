@@ -17,6 +17,7 @@ import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/my_water_drop_header.dart';
+import 'package:arm_chair_quaterback/common/widgets/transitions/half_slide_right_to_left_transition.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_account/bindings.dart';
@@ -56,25 +57,30 @@ class PicksIndex extends StatelessWidget {
         switch (setting.name) {
           case RouteNames.picksPicksIndex:
             return GetPageRoute(
-                opaque: false,
-                settings: setting,
-                page: () => const PicksIndexPage());
+              opaque: false,
+              settings: setting,
+              customTransition: HalfSlideRightToLeftTransition(),
+              page: () => const PicksIndexPage(),
+            );
           case RouteNames.picksReciveRward:
             return GetPageRoute(
                 opaque: false,
                 settings: setting,
+                customTransition: HalfSlideRightToLeftTransition(),
                 page: () => const ReceiveRewardPage(),
                 binding: ReciveRwardBinding());
           case RouteNames.picksPickRank:
             return GetPageRoute(
                 opaque: false,
                 settings: setting,
+                customTransition: HalfSlideRightToLeftTransition(),
                 page: () => const PickRankPage(),
                 binding: PickRankBinding());
           case RouteNames.picksPlayerDetail:
             return GetPageRoute(
                 opaque: false,
                 settings: setting,
+                customTransition: HalfSlideRightToLeftTransition(),
                 barrierColor: Colors.transparent,
                 page: () => PlayerDetailPage(
                       arguments: setting.arguments as PlayerDetailPageArguments,
@@ -83,18 +89,21 @@ class PicksIndex extends StatelessWidget {
             return GetPageRoute(
                 opaque: false,
                 settings: setting,
+                customTransition: HalfSlideRightToLeftTransition(),
                 page: () => const MineInfoPage(),
                 binding: MineInfoBinding());
           case RouteNames.mineMineSetting:
             return GetPageRoute(
                 opaque: false,
                 settings: setting,
+                customTransition: HalfSlideRightToLeftTransition(),
                 page: () => const MineSettingPage(),
                 binding: MineSettingBinding());
           case RouteNames.mineMineAccount:
             return GetPageRoute(
                 opaque: false,
                 settings: setting,
+                customTransition: HalfSlideRightToLeftTransition(),
                 page: () => const MineAccountPage(),
                 binding: MineAccountBinding());
         }
@@ -153,26 +162,6 @@ class _PicksIndexPageState extends State<PicksIndexPage>
                                 id: GlobalNestedKey.PICKS);
                             break;
                           case 1:
-                            // Navigator.push(context, PageRouteBuilder(
-                            //   opaque: false,
-                            //     pageBuilder: (context,a,b){
-                            //   return PersonalCenterPage(teamId: Get.find<HomeController>()
-                            //       .userEntiry
-                            //       .teamLoginInfo
-                            //       ?.team
-                            //       ?.teamId ??
-                            //       0,);
-                            // }));
-                            // /// 用下面这两种方式进入个人中心，所有的dialog弹出消失时候会莫名其妙的刷新
-                            // Navigator.pushNamed(context, RouteNames.picksPersonalCenter,arguments: {
-                            //   "teamId": Get.find<HomeController>()
-                            //       .userEntiry
-                            //       .teamLoginInfo
-                            //       ?.team
-                            //       ?.teamId ??
-                            //       0,
-                            //   "initTab": 0
-                            // });
                             Get.toNamed(RouteNames.picksPersonalCenter,
                                 arguments: {
                                   "teamId": Get.find<HomeController>()
