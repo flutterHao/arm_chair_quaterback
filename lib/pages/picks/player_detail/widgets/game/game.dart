@@ -277,7 +277,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
               Obx(() {
                 return AnimatedPositioned(
                   duration: const Duration(milliseconds: 300),
-                  right: controller.other.value * -100,
+                  right: controller.other.value * -100.w,
                   top: 14.w,
                   child: Column(
                     children: [
@@ -781,11 +781,14 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                                             iconColor: AppColors
                                                                 .cFF7954,
                                                           ),
-                                                          Text(
-                                                            "${item.teamPlayer.breakThroughGrade}",
-                                                            style: 9.w4(
-                                                                color: AppColors
-                                                                    .cFFFFFF),
+                                                          Positioned(
+                                                            top: 2,
+                                                            child: Text(
+                                                              item.teamPlayer.breakThroughGrade.toStringAsFixed(0),
+                                                              style: 9.w4(
+                                                                  color: AppColors
+                                                                      .cFFFFFF),
+                                                            ),
                                                           ),
                                                         ],
                                                       ),
