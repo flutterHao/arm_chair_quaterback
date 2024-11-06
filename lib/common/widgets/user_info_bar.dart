@@ -110,7 +110,7 @@ class UserInfoBar extends StatelessWidget {
 }
 
 class MoneyAndCoinWidget extends StatelessWidget {
-  ///不要加const，会导致weiget不刷新
+  ///不要加const，会导致widget不刷新
   MoneyAndCoinWidget({super.key});
 
   @override

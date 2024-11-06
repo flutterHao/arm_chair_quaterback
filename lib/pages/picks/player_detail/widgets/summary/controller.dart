@@ -298,6 +298,26 @@ class SummaryController extends GetxController {
     ];
   }
 
+  num getColumnMaxYValue(){
+    var list = nbaPlayerBaseInfoEntity?.l5GameData.map((e) {
+      var timeByMs = MyDateUtils.getDateTimeByMs(e.updateTime);
+      var monthEnName = MyDateUtils.getMonthEnName(timeByMs, short: true);
+      var currentTabKey = getCurrentTabKey();
+      var value = e.getValue(currentTabKey);
+      Color color = double.parse(getSeasonAvgWithTab()) <= value
+          ? AppColors.cFF7954
+          : AppColors.cD9D9D9;
+      return ChartSampleData(
+          x: '$monthEnName ${timeByMs.day}\nvs ${Utils.getTeamInfo(e.awayTeamId).shortEname}',
+          y: value,
+          pointColor: color);
+    }).toList()??[];
+    list.sort((a,b)=> a.y!.compareTo(b.y!));
+    var pickInfo = getPickInfo();
+    return list.isEmpty?pickInfo?.value??0:list[list.length-1].y!;
+  }
+
+
   List<ColumnSeries<ChartSampleData, String>> getDefaultColumnSeries(double width) {
     var list = nbaPlayerBaseInfoEntity?.l5GameData.map((e) {
       var timeByMs = MyDateUtils.getDateTimeByMs(e.updateTime);
@@ -327,6 +347,17 @@ class SummaryController extends GetxController {
       )
     ];
   }
+
+  List<String> getStatsKeys(){
+    var excludeKeys = ["NICKNAME"];
+    return nbaPlayerBaseInfoEntity?.playerRegularMap?.toJson().keys.where((e)=>!e.contains("_")&&!excludeKeys.contains(e)).toList()??[];
+  }
+}
+
+class StatsData{
+  final List<String> keys;
+
+  StatsData(this.keys);
 }
 
 class _PickInfo {

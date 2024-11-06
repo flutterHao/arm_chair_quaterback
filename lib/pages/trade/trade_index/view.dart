@@ -1079,7 +1079,8 @@ class _TradeIndexPageState extends State<TradeIndexPage>
     num lastDayCost = _getLastDayCost();
     lastDayCost = lastDayCost == 0 ? 1 : lastDayCost;
     var percent = (todayCost - lastDayCost).abs() / lastDayCost;
-    return percent;
+    var d = percent.isNaN?0:(percent*100);
+    return d;
   }
 
   Row _buildPieDot(Color color, String text) {

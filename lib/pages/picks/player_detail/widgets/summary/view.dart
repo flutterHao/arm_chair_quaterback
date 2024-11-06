@@ -244,8 +244,8 @@ class _SummaryPageState extends State<SummaryPage>
                             ),
                           ),
                           Builder(builder: (context) {
-                            if (controller.nbaPlayerBaseInfoEntity!.l5GameData
-                                .isEmpty) {
+                            if (controller
+                                .nbaPlayerBaseInfoEntity!.l5GameData.isEmpty) {
                               return const SizedBox.shrink();
                             }
                             return Column(
@@ -365,10 +365,13 @@ class _SummaryPageState extends State<SummaryPage>
                                         reservedSize: 25.w,
                                         showTitles: true,
                                         getTitlesWidget: (value, _) {
-                                          return Text(
-                                            Utils.formatMoney(value),
-                                            style:
-                                                9.w4(color: AppColors.cB3B3B3),
+                                          return FittedBox(
+                                            fit: BoxFit.scaleDown,
+                                            child: Text(
+                                              Utils.formatMoney(value),
+                                              style: 9
+                                                  .w4(color: AppColors.cB3B3B3),
+                                            ),
                                           );
                                         })),
                                 bottomTitles: const AxisTitles(),
@@ -1042,7 +1045,7 @@ class _SummaryPageState extends State<SummaryPage>
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         19.vGap,
         Text(
-          "Stars",
+          "Stats",
           style: 19.w7(color: AppColors.c262626, height: 1),
         ),
         13.vGap,
@@ -1114,127 +1117,69 @@ class _SummaryPageState extends State<SummaryPage>
                             controller.nbaPlayerBaseInfoEntity!.playerRegularMap
                                     ?.isNotEmpty() ==
                                 true))
-                      SingleChildScrollView(
-                        physics: const BouncingScrollPhysics(),
-                        controller: controller.statsScrollController,
-                        scrollDirection: Axis.horizontal,
-                        child: Container(
-                          margin: EdgeInsets.symmetric(vertical: 7.w),
-                          padding: EdgeInsets.only(left: 10.w),
-                          child: Column(
-                            children: [
-                              Table(
-                                columnWidths: List.generate(
-                                        8, (index) => FixedColumnWidth(40.w))
-                                    .asMap(),
-                                children: List.generate(1, (index) {
-                                  List<String> keys = controller
-                                          .nbaPlayerBaseInfoEntity!
-                                          .playerPlayoffsMap!
-                                          .isNotEmpty()
-                                      ? controller.nbaPlayerBaseInfoEntity!
-                                          .playerPlayoffsMap!
-                                          .toJson()
-                                          .keys
-                                          .toList()
-                                      : controller.nbaPlayerBaseInfoEntity!
-                                          .playerRegularMap!
-                                          .toJson()
-                                          .keys
-                                          .toList();
-                                  return TableRow(
-                                      children: List.generate(
-                                          keys.length,
-                                          (index) => Container(
-                                              height: 30.w,
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                keys[index].split("_")[0],
-                                                style: 10.w4(
-                                                    color: AppColors.cB3B3B3),
-                                              ))));
-                                }),
-                              ),
-                              //常规赛
-                              if (controller
-                                      .nbaPlayerBaseInfoEntity!.playerRegularMap
-                                      ?.isNotEmpty() ==
-                                  true)
+                      Builder(builder: (context) {
+                        var keys = controller.getStatsKeys();
+                        var children = List.generate(3, (index) {
+                          if (index == 0) {
+                            return TableRow(
+                                children: List.generate(
+                                    keys.length,
+                                    (index) => Container(
+                                        height: 30.w,
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          keys[index],
+                                          style:
+                                              10.w4(color: AppColors.cB3B3B3),
+                                        ))));
+                          } else if (index == 1) {
+                            return TableRow(
+                                children: List.generate(keys.length, (index) {
+                              return Container(
+                                  height: 30.w,
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    (controller.nbaPlayerBaseInfoEntity!
+                                        .playerRegularMap!
+                                        .toJson()[keys[index]]??0).toString(),
+                                    style: 12.w4(color: AppColors.c545454),
+                                  ));
+                            }));
+                          }else{
+                            return TableRow(
+                                children: List.generate(keys.length, (index) {
+                                  return Container(
+                                      height: 30.w,
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        (controller.nbaPlayerBaseInfoEntity!
+                                            .playerPlayoffsMap!
+                                            .toJson()[keys[index]]??0).toString(),
+                                        style: 12.w4(color: AppColors.c545454),
+                                      ));
+                                }));
+                          }
+                        }).toList();
+                        return SingleChildScrollView(
+                          physics: const BouncingScrollPhysics(),
+                          controller: controller.statsScrollController,
+                          scrollDirection: Axis.horizontal,
+                          child: Container(
+                            margin: EdgeInsets.symmetric(vertical: 7.w),
+                            padding: EdgeInsets.only(left: 10.w),
+                            child: Column(
+                              children: [
                                 Table(
-                                  columnWidths: List.generate(
-                                          8, (index) => FixedColumnWidth(40.w))
+                                  columnWidths: List.generate((keys).length,
+                                          (index) => FixedColumnWidth(40.w))
                                       .asMap(),
-                                  children: List.generate(
-                                      1,
-                                      (index) => TableRow(
-                                          children: List.generate(
-                                              controller
-                                                  .nbaPlayerBaseInfoEntity!
-                                                  .playerRegularMap!
-                                                  .toJson()
-                                                  .keys
-                                                  .length,
-                                              (index) => Container(
-                                                  height: 30.w,
-                                                  alignment: Alignment.center,
-                                                  child: Text(
-                                                    controller
-                                                        .nbaPlayerBaseInfoEntity!
-                                                        .playerRegularMap!
-                                                        .getValue(controller
-                                                            .nbaPlayerBaseInfoEntity!
-                                                            .playerRegularMap!
-                                                            .toJson()
-                                                            .keys
-                                                            .toList()[index])
-                                                        .toString(),
-                                                    style: 12.w4(
-                                                        color:
-                                                            AppColors.c545454),
-                                                  ))))),
+                                  children: children,
                                 ),
-                              //季后赛
-                              if (controller.nbaPlayerBaseInfoEntity!
-                                      .playerPlayoffsMap
-                                      ?.isNotEmpty() ==
-                                  true)
-                                Table(
-                                  columnWidths: List.generate(
-                                          8, (index) => FixedColumnWidth(40.w))
-                                      .asMap(),
-                                  children: List.generate(
-                                      1,
-                                      (index) => TableRow(
-                                          children: List.generate(
-                                              controller
-                                                  .nbaPlayerBaseInfoEntity!
-                                                  .playerPlayoffsMap!
-                                                  .toJson()
-                                                  .keys
-                                                  .length,
-                                              (index) => Container(
-                                                  height: 30.w,
-                                                  alignment: Alignment.center,
-                                                  child: Text(
-                                                    controller
-                                                        .nbaPlayerBaseInfoEntity!
-                                                        .playerPlayoffsMap!
-                                                        .getValue(controller
-                                                            .nbaPlayerBaseInfoEntity!
-                                                            .playerPlayoffsMap!
-                                                            .toJson()
-                                                            .keys
-                                                            .toList()[index])
-                                                        .toString(),
-                                                    style: 12.w4(
-                                                        color:
-                                                            AppColors.c545454),
-                                                  ))))),
-                                ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      ),
+                        );
+                      }),
                   ],
                 ),
               ),
@@ -1282,6 +1227,8 @@ class _SummaryPageState extends State<SummaryPage>
     var pickInfo = controller.getPickInfo();
     var plotBands = <PlotBand>[];
     if (pickInfo != null) {
+      var verticalTextPadding =
+          controller.getColumnMaxYValue() / 2 > pickInfo.value ? "0" : "-20";
       plotBands = <PlotBand>[
         PlotBand(
           start: pickInfo.value,
@@ -1289,8 +1236,8 @@ class _SummaryPageState extends State<SummaryPage>
           end: pickInfo.value,
           // 虚线的终止位置（y 值），相同值表示一条线
           borderWidth: 1,
-          text:'${playerDetailController.baseInfo?.ename}\n${pickInfo.value}',
-          verticalTextPadding: "-10",
+          text: '${playerDetailController.baseInfo?.ename}\n${pickInfo.value}',
+          verticalTextPadding: verticalTextPadding,
           horizontalTextAlignment: TextAnchor.end,
           verticalTextAlignment: TextAnchor.end,
           textStyle: 9.w4(color: AppColors.c262626, height: 1),

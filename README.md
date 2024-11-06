@@ -15,3 +15,9 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 安装插件 FlutterBeanFactory
+
+打包命令：压缩+混淆
+flutter build apk --release --split-debug-info=./symbols --obfuscate
+
+上传调试符号
+firebase crashlytics:symbols:upload --app=1:312389703114:android:dbe6d6e9cfb459d121eb33 PATH/TO/symbols

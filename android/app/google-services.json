@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "312389703114",
+    "project_id": "arm-chair-quaterback",
+    "storage_bucket": "arm-chair-quaterback.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:312389703114:android:dbe6d6e9cfb459d121eb33",
+        "android_client_info": {
+          "package_name": "com.ftxapp.arm_chair_quaterback"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5rXqVUdmtNPTdaTdzFgjArDiMLv42P0o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

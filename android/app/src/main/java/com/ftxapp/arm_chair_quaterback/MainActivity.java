@@ -1,4 +1,4 @@
-package com.example.arm_chair_quaterback;
+package com.ftxapp.arm_chair_quaterback;
 
 import io.flutter.embedding.android.FlutterActivity;
 
