@@ -25,6 +25,7 @@ import 'index.dart';
 
 class PersonalCenterPage extends StatefulWidget {
   const PersonalCenterPage({super.key, this.teamId});
+
   final int? teamId;
 
   @override
@@ -37,8 +38,15 @@ class _PersonalCenterPageState extends State<PersonalCenterPage> {
   @override
   Widget build(BuildContext context) {
     print('PersonalCenterPage--build---');
-    var teamId = widget.teamId??0;
-    controller = Get.put(PersonalCenterController(teamId: teamId));
+    var args = (Get.arguments);
+    var teamId = widget.teamId;
+    var initTab = 0;
+    if (args != null) {
+      initTab = args["initTab"] ?? 0;
+      teamId = widget.teamId ?? args["teamId"];
+    }
+    controller =
+        Get.put(PersonalCenterController(teamId: teamId, initTab: initTab));
     return GetBuilder<PersonalCenterController>(
         id: PersonalCenterController.idPersonalCenterMain,
         builder: (_) {
@@ -111,21 +119,23 @@ class _PersonalCenterPageState extends State<PersonalCenterPage> {
                                         EasyLoadingToastPosition.bottom,
                                     maskType: EasyLoadingMaskType.none);
                               },
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "UID:${controller.teamSimpleEntity?.teamId ?? "--"}",
-                                    style: 10.w4(
-                                        color: AppColors.c666666, height: 1),
-                                  ),
-                                  7.hGap,
-                                  InkWell(
-                                      child: IconWidget(
-                                    iconWidth: 10.w,
-                                    icon: Assets.uiIconCopyPng,
-                                    iconColor: AppColors.c666666,
-                                  )),
-                                ],
+                              child: FittedBox(
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "UID:${controller.teamSimpleEntity?.teamId ?? "--"}",
+                                      style: 10.w4(
+                                          color: AppColors.c666666, height: 1),
+                                    ),
+                                    7.hGap,
+                                    InkWell(
+                                        child: IconWidget(
+                                      iconWidth: 10.w,
+                                      icon: Assets.uiIconCopyPng,
+                                      iconColor: AppColors.c666666,
+                                    )),
+                                  ],
+                                ),
                               ),
                             )
                           ],
@@ -275,7 +285,7 @@ class _PersonalCenterPageState extends State<PersonalCenterPage> {
                                   controller: controller.tabController,
                                   children: [
                                     ReciveAwardPicksPage(
-                                        teamId, controller.teamSimpleEntity!),
+                                        teamId!, controller.teamSimpleEntity!),
                                     const Game(),
                                     // const Center(child: LoadStatusWidget()),
                                   ]),
@@ -326,9 +336,9 @@ class _PersonalCenterPageState extends State<PersonalCenterPage> {
                       7.hGap,
                       Expanded(
                           child: Text(
-                            "Unreported",
-                            style: 14.w4(color: AppColors.c262626),
-                          )),
+                        "Unreported",
+                        style: 14.w4(color: AppColors.c262626),
+                      )),
                       IconWidget(
                         iconWidth: 13.w,
                         icon: Assets.uiIconArrowsPng,
@@ -360,9 +370,9 @@ class _PersonalCenterPageState extends State<PersonalCenterPage> {
                       7.hGap,
                       Expanded(
                           child: Text(
-                            "Blacklist",
-                            style: 14.w4(color: AppColors.c262626),
-                          )),
+                        "Blacklist",
+                        style: 14.w4(color: AppColors.c262626),
+                      )),
                       IconWidget(
                         iconWidth: 13.w,
                         icon: Assets.uiIconArrowsPng,
@@ -394,9 +404,9 @@ class _PersonalCenterPageState extends State<PersonalCenterPage> {
                       7.hGap,
                       Expanded(
                           child: Text(
-                            "Transpond",
-                            style: 14.w4(color: AppColors.c262626),
-                          )),
+                        "Transpond",
+                        style: 14.w4(color: AppColors.c262626),
+                      )),
                       IconWidget(
                         iconWidth: 13.w,
                         icon: Assets.uiIconArrowsPng,

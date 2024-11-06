@@ -11,6 +11,7 @@ class DateFormats {
   static const String Y_M = 'yyyy-MM';
   static const String M_D = 'MM-dd';
   static const String M_D_H_M = 'MM-dd HH:mm';
+  static const String D_H_M_S = 'dd:HH:mm:ss';
   static const String H_M_S = 'HH:mm:ss';
   static const String H_M = 'HH:mm';
 

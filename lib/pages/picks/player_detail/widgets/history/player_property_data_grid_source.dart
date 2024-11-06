@@ -70,6 +70,9 @@ class PlayerPropertyDataGridSource extends DataGridSource {
           .toJson()[(columnName == "to" ? "TOV" : columnName).toUpperCase()];
       Widget widget;
       if (i == 0 || i == 1) {
+        if(i == 0){
+          value = value+1;
+        }
         widget = Container(
           alignment: Alignment.center,
           child: Text(

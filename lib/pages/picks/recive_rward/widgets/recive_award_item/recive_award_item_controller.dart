@@ -40,19 +40,29 @@ class ReceiveAwardItemController extends GetxController {
 
   void startCountDown() {
     timer?.cancel();
+    int ms = getLastTime();
+    var dateTimeByMs = MyDateUtils.getDateTimeByMs(ms);
+    var formatDate =
+    MyDateUtils.formatDate(dateTimeByMs, format: DateFormats.H_M_S);
+    specialTime.value = formatDate;
     timer = Timer.periodic(const Duration(seconds: 1), (t) {
-      var nextDay = MyDateUtils.nextDay(MyDateUtils.getNowDateTime());
-      var nextDayStartTimeMS = MyDateUtils.getNextDayStartTimeMS(nextDay);
-      var ms = nextDayStartTimeMS - MyDateUtils.getNowDateMs();
+      int ms = getLastTime();
       var dateTimeByMs = MyDateUtils.getDateTimeByMs(ms);
-
+      var formatDate =
+          MyDateUtils.formatDate(dateTimeByMs, format: DateFormats.H_M_S);
       if (ms == 0) {
         t.cancel();
       }
-      var formatDate =
-          MyDateUtils.formatDate(dateTimeByMs, format: DateFormats.H_M_S);
+
       specialTime.value = formatDate;
     });
+  }
+
+  int getLastTime() {
+    var nextDay = MyDateUtils.nextDay(MyDateUtils.getNowDateTime());
+    var nextDayStartTimeMS = MyDateUtils.getNextDayStartTimeMS(nextDay);
+    var ms = nextDayStartTimeMS - MyDateUtils.getNowDateMs();
+    return ms;
   }
 
   int getWinCount() {
