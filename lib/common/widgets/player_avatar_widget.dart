@@ -36,6 +36,7 @@ class PlayerAvatarWidget extends StatelessWidget {
     this.playerId = 0,
     this.getXRouteId,
     this.tabStr,
+    this.canTap = true,
   });
 
   final String? grade;
@@ -48,13 +49,14 @@ class PlayerAvatarWidget extends StatelessWidget {
   final bool showGrade;
   final int? getXRouteId;
   final String? tabStr;
+  final bool canTap;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Get.toNamed(RouteNames.picksPlayerDetail,
+      onTap: () => canTap?Get.toNamed(RouteNames.picksPlayerDetail,
           arguments: PlayerDetailPageArguments(playerId, tabStr: tabStr),
-          id: getXRouteId),
+          id: getXRouteId):null,
       child: ClipRRect(
         child: Stack(
           alignment: Alignment.bottomCenter,
