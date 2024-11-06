@@ -8,6 +8,7 @@ import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -49,19 +50,16 @@ class AppBarWidget extends StatelessWidget {
                 Positioned(
                   left: 0,
                   child: SizedBox(
-                    width: 68.w,
+                    width: 48.w,
                     height: 48.w,
                     child: left ??
-                        InkWell(
+                        MtInkwell(
                           onTap: () {
                             Navigator.of(context).pop();
                           },
-                          highlightColor: Colors.red,
-                          splashColor: Colors.green,
-                          child: Container(
-                            width: 68.w,
+                          child: SizedBox(
+                            width: 48.w,
                             height: 48.w,
-                            padding: EdgeInsets.only(left: 20.w),
                             child: IconWidget(
                               iconWidth: 19.w,
                               iconHeight: 19.w,

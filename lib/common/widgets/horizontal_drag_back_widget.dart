@@ -1,19 +1,10 @@
+import 'package:arm_chair_quaterback/common/widgets/getsure_recognizer/custom_drag_gesture_recognizer.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 ///
 ///@auther gejiahui
 ///created at 2024/9/26/09:35
-
-class CustomTapGestureRecognizer extends HorizontalDragGestureRecognizer {
-  @override
-  void rejectGesture(int pointer) {
-    //不，我不要失败，我要成功
-    //super.rejectGesture(pointer);
-    //宣布成功
-    super.acceptGesture(pointer);
-  }
-}
 
 class HorizontalDragBackWidget extends StatefulWidget {
   const HorizontalDragBackWidget(
@@ -138,13 +129,15 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
       }
       // print('onHorizontalDragUpdate: ${detail.localPosition}');
       // print('onHorizontalDragUpdate-offsetX:$offsetX');
-      if (detail.delta.dy.abs() > detail.delta.dx.abs()) {
+      // print('detail.delta.dy:${detail.delta}');
+      if (detail.delta.dy.abs() > detail.delta.dx.abs()/2) {
         return;
       }
       if (startX <= 0) {
         startX = detail.localPosition.dx;
       }
-      offsetX = detail.localPosition.dx - startX;
+      // offsetX = detail.localPosition.dx - startX;
+      offsetX+=detail.delta.dx;
       if (offsetX < 0) {
         offsetX = 0;
       }
@@ -210,10 +203,10 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
           },
           child: RawGestureDetector(
             gestures: {
-              CustomTapGestureRecognizer: GestureRecognizerFactoryWithHandlers<
-                  CustomTapGestureRecognizer>(
-                () => CustomTapGestureRecognizer(),
-                (HorizontalDragGestureRecognizer detector) {
+              CustomDragGestureRecognizer: GestureRecognizerFactoryWithHandlers<
+                  CustomDragGestureRecognizer>(
+                () => CustomDragGestureRecognizer(),
+                (DragGestureRecognizer detector) {
                   detector
                     ..onDown = onHorizontalDragDown
                     ..onStart = onHorizontalDragStart

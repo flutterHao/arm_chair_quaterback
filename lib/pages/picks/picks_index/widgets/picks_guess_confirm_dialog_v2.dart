@@ -9,6 +9,7 @@ import 'package:arm_chair_quaterback/common/utils/param_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/btn_background.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog_background.dart';
+import 'package:arm_chair_quaterback/common/widgets/getsure_recognizer/custom_drag_gesture_recognizer.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
@@ -163,11 +164,11 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                     )),
                     RawGestureDetector(
                       gestures: {
-                        CustomTapGestureRecognizer:
+                        CustomDragGestureRecognizer:
                             GestureRecognizerFactoryWithHandlers<
-                                CustomTapGestureRecognizer>(
-                          () => CustomTapGestureRecognizer(),
-                          (HorizontalDragGestureRecognizer detector) {
+                                CustomDragGestureRecognizer>(
+                          () => CustomDragGestureRecognizer(),
+                          (DragGestureRecognizer detector) {
                             detector
                               ..onDown = onVerticalDragDown
                               ..onStart = onVerticalDragStart
