@@ -2,11 +2,12 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-30 11:43:53
- * @LastEditTime: 2024-11-06 16:41:49
+ * @LastEditTime: 2024-11-07 11:00:59
  */
 
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
+import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -62,21 +63,22 @@ class TrainingAvater extends StatelessWidget {
                 borderRadius: BorderRadius.circular(32.w),
               ),
             ),
-            Positioned(
-              top: 4.w,
-              right: 2.w,
-              child: Container(
-                width: 19.w,
-                height: 19.w,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10.w)),
-                child: IconWidget(
-                  iconWidth: 17.w,
-                  icon: Assets.uiStateBestPng,
+            if (CacheApi.playerStatusMap[player.playerStatus]?.statsId != null)
+              Positioned(
+                top: 4.w,
+                right: 2.w,
+                child: Container(
+                  width: 19.w,
+                  height: 19.w,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10.w)),
+                  child: IconWidget(
+                    iconWidth: 17.w,
+                    icon: Assets.uiStateBestPng,
+                  ),
                 ),
               ),
-            ),
           ],
         ),
       ),

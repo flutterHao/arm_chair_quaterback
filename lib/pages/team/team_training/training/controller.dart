@@ -240,15 +240,12 @@ class TrainingController extends GetxController
     });
   }
 
-  // 启动自动滚动
-  int max = 1;
   void startScroll(int count) async {
-    if (count == 0) {
-      currentAward = [0, 0, 0];
-      slotCard = [true.obs, true.obs, true.obs];
-      slotCtrl.forward();
-      update(["slot"]);
-    }
+    currentAward = [0, 0, 0];
+    slotCard = [true.obs, true.obs, true.obs];
+    slotCtrl.forward();
+    update(["slot"]);
+
     if (playerScrollCtrl.hasClients) {
       // int delay = (50 + pow(count, 2.8)).toInt(); // Start fast, then slow
       await playerScrollCtrl.animateTo(
@@ -264,13 +261,9 @@ class TrainingController extends GetxController
           playerScrollCtrl.position.maxScrollExtent) {
         playerScrollCtrl.jumpTo(0);
       }
-      count++;
-      currentIndex.value = (count) % playerList.length;
-    }
-    if (count < max) {
-      startScroll(count);
-    } else {
-      shootBall();
+      currentIndex.value =
+          ((playerScrollCtrl.offset % 75.w).ceil()) % (playerList.length);
+      // shootBall();
     }
   }
 

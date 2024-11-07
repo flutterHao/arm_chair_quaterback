@@ -37,7 +37,6 @@ class ReceiveAwardDetailItem extends StatelessWidget {
               PlayerAvatarWidget(
                 width: 42.w,
                 playerId: player.baseInfoList.playerId,
-                showGrade: false,
                 backgroundColor: AppColors.cE6E6E6,
               ),
               Container(

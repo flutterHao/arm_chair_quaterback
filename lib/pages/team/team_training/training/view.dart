@@ -354,7 +354,7 @@ class TrainingPage extends GetView<TrainingController> {
                                               alignment: Alignment.center,
                                               child: ctrl.currentAward[i] != 0
                                                   ? Image.asset(
-                                                      Utils.getPropIconUrl(
+                                                      Utils.getIconUrl(
                                                           ctrl.currentAward[i]),
                                                       width: 80.h,
                                                       fit: BoxFit.fitWidth,

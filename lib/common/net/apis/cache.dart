@@ -99,6 +99,7 @@ import 'package:arm_chair_quaterback/common/entities/grade_in_star_define_entity
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/player_status_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/reward_group_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/star_up_define_entity.dart';
@@ -129,6 +130,7 @@ class CacheApi {
 
   static List<StarUpDefineEntity>? _starUpDefines;
   static List<GradeInStarDefineEntity>? _gradeInStars;
+  static Map<int, PlayerStatusEntity> playerStatusMap = {};
 
   static Future<void> init() async {
     await Future.wait([
@@ -230,5 +232,14 @@ class CacheApi {
     teamRuleConfigList =
         list.map((e) => TeamRuleConfigEntity.fromJson(e)).toList();
     return teamRuleConfigList!;
+  }
+
+  ///获取球员状态定义
+  static Future<Map<int, PlayerStatusEntity>> getPlayerStatusConfig() async {
+    if (playerStatusMap.isNotEmpty) return playerStatusMap;
+    List data = await HttpUtil().post(Api.cPlayerStatsDefine);
+    var statusList = data.map((e) => PlayerStatusEntity.fromJson(e)).toList();
+    playerStatusMap = {for (var item in statusList) item.statsId: item};
+    return playerStatusMap;
   }
 }

@@ -2,12 +2,13 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 17:28:14
- * @LastEditTime: 2024-11-05 11:54:57
+ * @LastEditTime: 2024-11-06 20:56:15
  */
 import 'package:arm_chair_quaterback/common/entities/news_banner.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/player_status_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/receive_prop_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/stats_rank/nba_player_stat.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank.dart';
@@ -77,8 +78,10 @@ class NewsApi {
     return list.map((e) => StarsTeamRank.fromJson(e)).toList();
   }
 
-  static Future<List<TeamRankEntity>> getTeamList() async {
-    List list = await HttpUtil().post(Api.teamRank);
+  static Future<List<TeamRankEntity>> getTeamList(
+      {required String seasonId, required String seasonType}) async {
+    List list = await HttpUtil().post(Api.teamRank,
+        data: {"seasonId": seasonId, "seasonType": seasonType});
     return list.map((e) => TeamRankEntity.fromJson(e)).toList();
   }
 

@@ -55,6 +55,10 @@ TeamPlayerInfoEntity $TeamPlayerInfoEntityFromJson(Map<String, dynamic> json) {
   if (power != null) {
     teamPlayerInfoEntity.power = power;
   }
+  final int? playerStatus = jsonConvert.convert<int>(json['playerStatus']);
+  if (playerStatus != null) {
+    teamPlayerInfoEntity.playerStatus = playerStatus;
+  }
   final TeamPlayerInfoPotential? potential = jsonConvert.convert<
       TeamPlayerInfoPotential>(json['potential']);
   if (potential != null) {
@@ -95,6 +99,7 @@ Map<String, dynamic> $TeamPlayerInfoEntityToJson(TeamPlayerInfoEntity entity) {
   data['id'] = entity.id;
   data['position'] = entity.position;
   data['power'] = entity.power;
+  data['playerStatus'] = entity.playerStatus;
   data['potential'] = entity.potential.toJson();
   data['bindStatus'] = entity.bindStatus;
   data['breakThroughGrade'] = entity.breakThroughGrade;
@@ -117,6 +122,7 @@ extension TeamPlayerInfoEntityExtension on TeamPlayerInfoEntity {
     int? id,
     int? position,
     int? power,
+    int? playerStatus,
     TeamPlayerInfoPotential? potential,
     bool? bindStatus,
     int? breakThroughGrade,
@@ -137,6 +143,7 @@ extension TeamPlayerInfoEntityExtension on TeamPlayerInfoEntity {
       ..id = id ?? this.id
       ..position = position ?? this.position
       ..power = power ?? this.power
+      ..playerStatus = playerStatus ?? this.playerStatus
       ..potential = potential ?? this.potential
       ..bindStatus = bindStatus ?? this.bindStatus
       ..breakThroughGrade = breakThroughGrade ?? this.breakThroughGrade

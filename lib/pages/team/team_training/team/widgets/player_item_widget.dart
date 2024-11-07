@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2024-11-04 20:18:46
+ * @LastEditTime: 2024-11-07 11:37:11
  */
 /*
  * @Description: 
@@ -13,6 +13,7 @@
 
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
+import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -217,11 +218,14 @@ class PlayerItem extends GetView<TeamController> {
                       style: 10.w7(color: AppColors.cFFFFFF, height: 1),
                     )),
                 6.hGap,
-                IconWidget(
-                  iconWidth: 12.w,
-                  iconHeight: 12.w,
-                  icon: Assets.uiStateBestPng,
-                )
+                if (CacheApi.playerStatusMap[item.playerStatus]?.statsId !=
+                    null)
+                  IconWidget(
+                    iconWidth: 12.w,
+                    iconHeight: 12.w,
+                    icon: Utils.getIconUrl(
+                        CacheApi.playerStatusMap[item.playerStatus]?.statsId),
+                  )
               ],
             ),
           ],

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-21 20:20:49
- * @LastEditTime: 2024-10-29 16:23:44
+ * @LastEditTime: 2024-11-07 10:46:14
  */
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
@@ -37,7 +37,8 @@ class Utils {
     return "$url/image/team_white/$teamId.png";
   }
 
-  static String getPropIconUrl(id) {
+  ///道具、状态...
+  static String getIconUrl(id) {
     // String url = ConfigStore.to.getServiceUrl();
     return "assets/images/icon/icon_$id.png";
   }

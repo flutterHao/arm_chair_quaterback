@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/entities/my_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
+import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -69,8 +70,11 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
     }
     int teamId = HomeController.to.userEntiry.teamLoginInfo!.team!.teamId ?? 0;
 
-    Future.wait([TeamApi.getMyTeamPlayer(teamId), TeamApi.getMyBagPlayers()])
-        .then((v) {
+    Future.wait([
+      TeamApi.getMyTeamPlayer(teamId),
+      TeamApi.getMyBagPlayers(),
+      CacheApi.getPlayerStatusConfig(),
+    ]).then((v) {
       myTeamEntity = v[0] as MyTeamEntity;
       myBagList = v[1] as List<TeamPlayerInfoEntity>;
       recoverTimeAndCountDown();

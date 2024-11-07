@@ -178,7 +178,7 @@ class AwardDialog extends GetView<TrainingController> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Image.asset(
-                Utils.getPropIconUrl(award[2]),
+                Utils.getIconUrl(award[2]),
                 width: 32.w,
                 fit: BoxFit.fitWidth,
                 errorBuilder: (context, error, stackTrace) => IconWidget(
@@ -222,7 +222,7 @@ class AwardDialog extends GetView<TrainingController> {
       child: Row(
         children: [
           Image.asset(
-            Utils.getPropIconUrl(award[2]),
+            Utils.getIconUrl(award[2]),
             width: 32.w,
             fit: BoxFit.fitWidth,
             errorBuilder: (context, error, stackTrace) => IconWidget(

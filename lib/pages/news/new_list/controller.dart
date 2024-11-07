@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2024-11-05 12:12:10
+ * @LastEditTime: 2024-11-06 21:00:51
  */
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
@@ -72,7 +72,9 @@ class NewListController extends GetxController {
       refreshCtrl.refreshCompleted();
     }).catchError((e) {
       // Log.e("getNewsList error,开始重试");
-      // refreshData();
+      Future.delayed(const Duration(seconds: 1)).then((value) {
+        // refreshData();
+      });
     });
   }
 
@@ -128,7 +130,7 @@ class NewListController extends GetxController {
     await Future.wait([
       CacheApi.getNBATeamDefine(getList: true),
       NewsApi.starTeamList(seasonId: season, seasonType: seasonType),
-      NewsApi.getTeamList()
+      NewsApi.getTeamList(seasonId: season, seasonType: seasonType)
     ]).then((v) {
       state.teamConfigList = v[0] as List<NbaTeamEntity>;
       state.starTeamList = v[1] as List<StarsTeamRank>;

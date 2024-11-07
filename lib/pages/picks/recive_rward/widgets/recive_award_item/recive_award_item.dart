@@ -139,7 +139,6 @@ class _ReceiveAwardItemState extends State<ReceiveAwardItem> {
                                               )
                                             : PlayerAvatarWidget(
                                                 width: 40.w,
-                                                showGrade: false,
                                                 playerId: controller.data[index]
                                                         .guessData?.playerId ??
                                                     0,

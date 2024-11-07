@@ -906,7 +906,6 @@ class _ItemWidgetState extends State<_ItemWidget>
           children: [
             PlayerAvatarWidget(
               width: 42.w,
-              showGrade: false,
               playerId: player.baseInfoList.playerId,
             ),
             4.hGap,

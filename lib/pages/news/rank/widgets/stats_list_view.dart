@@ -4,6 +4,7 @@ import 'package:arm_chair_quaterback/common/entities/team_rank.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/player_avatar_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/widgets/shadow_container.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/controller.dart';
 import 'package:common_utils/common_utils.dart';
@@ -90,13 +91,17 @@ class StatsItem extends GetView<RankController> {
                   borderRadius: BorderRadius.circular(32.w),
                 ),
               ),
-              ImageWidget(
-                url: Utils.getPlayUrl(item.playerId),
-                imageFailedPath: Assets.uiDefault_04Png,
+              // ImageWidget(
+              //   url: Utils.getPlayUrl(item.playerId),
+              //   imageFailedPath: Assets.uiDefault_04Png,
+              //   width: 64.w,
+              //   height: 64.w,
+              //   borderRadius: BorderRadius.circular(32.w),
+              // )
+              PlayerAvatarWidget(
                 width: 64.w,
-                height: 64.w,
-                borderRadius: BorderRadius.circular(32.w),
-              )
+                playerId: item.playerId ?? 0,
+              ),
             ],
           ),
           9.hGap,

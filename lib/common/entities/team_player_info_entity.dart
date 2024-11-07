@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-15 20:19:57
- * @LastEditTime: 2024-10-23 20:58:34
+ * @LastEditTime: 2024-11-07 10:43:13
  */
 import 'dart:math';
 
@@ -27,6 +27,7 @@ class TeamPlayerInfoEntity {
   late int id = 0;
   late int position = 0;
   late int power = 0;
+  late int playerStatus = 1;
   late TeamPlayerInfoPotential potential;
   late bool bindStatus = false;
   late int breakThroughGrade = 0;
