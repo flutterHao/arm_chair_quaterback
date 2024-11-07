@@ -42,6 +42,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
     controller = Get.put(GuessItemControllerV2(player),
         tag: "${player.guessInfo.playerId}_${widget.index}_${player.tabStr}");
     controller.currentIndex.value = player.status;
+    controller.formatGameStartTime();
     return Container(
       padding: EdgeInsets.all(14.w),
       decoration: BoxDecoration(

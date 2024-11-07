@@ -33,6 +33,7 @@ class PlayerAvatarWidget extends StatelessWidget {
     this.tabStr,
     this.level,
     this.canTap = true,
+    this.isMyPlayer = false,
   });
 
   final double width;
@@ -48,13 +49,14 @@ class PlayerAvatarWidget extends StatelessWidget {
   final int? getXRouteId;
   final String? tabStr;
   final bool canTap;
+  final bool isMyPlayer;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => canTap
           ? Get.toNamed(RouteNames.picksPlayerDetail,
-              arguments: PlayerDetailPageArguments(playerId, tabStr: tabStr),
+              arguments: PlayerDetailPageArguments(playerId,isMyPlayer: isMyPlayer, tabStr: tabStr),
               id: getXRouteId)
           : null,
       child: Stack(
@@ -111,83 +113,3 @@ class PlayerAvatarWidget extends StatelessWidget {
 }
 
 
-// ///
-// ///@auther gejiahui
-// ///created at 2024/9/29/11:08
-
-// class PlayerAvatarWidget extends StatelessWidget {
-//   const PlayerAvatarWidget({
-//     super.key,
-//     this.grade,
-//     required this.width,
-//     this.backgroundColor = AppColors.c666666,
-//     this.radius,
-//     this.fontSize = 14,
-//     this.fontColor = AppColors.cFFFFFF,
-//     this.showGrade = true,
-//     this.playerId = 0,
-//     this.getXRouteId,
-//     this.tabStr,
-//   });
-
-//   final String? grade;
-//   final int playerId;
-//   final double width;
-//   final Color? backgroundColor;
-//   final double? radius;
-//   final double fontSize;
-//   final Color fontColor;
-//   final bool showGrade;
-//   final int? getXRouteId;
-//   final String? tabStr;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return InkWell(
-//       onTap: () => Get.toNamed(RouteNames.picksPlayerDetail,
-//           arguments: PlayerDetailPageArguments(playerId, tabStr: tabStr),
-//           id: getXRouteId),
-//       child: ClipRRect(
-//         child: Stack(
-//           alignment: Alignment.bottomCenter,
-//           children: [
-//             ClipRRect(
-//               borderRadius: BorderRadius.circular(radius ?? (width / 2)),
-//               child: Container(
-//                 color: backgroundColor,
-//                 height: width,
-//                 width: width,
-//                 child: ExtendedImage.network(
-//                   Utils.getPlayUrl(playerId),
-//                   fit: BoxFit.fitHeight,
-//                   loadStateChanged: (status) {
-//                     switch (status.extendedImageLoadState) {
-//                       case LoadState.loading:
-//                       case LoadState.failed:
-//                         return IconWidget(
-//                             iconWidth: width,
-//                             iconHeight: width,
-//                             fit: BoxFit.fitHeight,
-//                             icon: Assets.uiDefault_04Png);
-//                       default:
-//                     }
-//                   },
-//                 ),
-//               ),
-//             ),
-//             Positioned(
-//                 top: 0,
-//                 left: 0,
-//                 child: Visibility(
-//                   visible: showGrade,
-//                   child: Text(
-//                     Utils.formatGrade(grade ?? 'SS'),
-//                     style: 14.w7(color: fontColor),
-//                   ),
-//                 ))
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }

@@ -327,7 +327,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                             ),
                             10.hGap,
                             Text(
-                              "${playerDetailController.baseInfo?.salary}",
+                              Utils.formatMoney(playerDetailController.baseInfo?.salary??0),
                               style: TextStyle(
                                   color: AppColors.cF1F1F1, fontSize: 12.sp),
                             )
@@ -961,8 +961,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
             animationDuration: 0,
             dataSource: controller.dataSource,
             xValueMapper: (ChartSampleData data, _) => data.x as String,
-            yValueMapper: (ChartSampleData data, _) =>
-                (data.yValue! < 5 ? 10 : data.yValue),
+            yValueMapper: (ChartSampleData data, _) => data.y,
             pointColorMapper: (data, _) => AppColors.ce5e5e5,
             pointRadiusMapper: (data, _) => data.y.toString(),
             explodeAll: true,
@@ -1001,15 +1000,15 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
   }
 
   List<PieSeries<ChartSampleData, String>> _getSmartLabelPieSeries() {
+    int minRadius = 10;
     return <PieSeries<ChartSampleData, String>>[
       PieSeries<ChartSampleData, String>(
         animationDuration: 0,
         dataSource: controller.dataSource,
         xValueMapper: (ChartSampleData data, _) => data.x as String,
-        yValueMapper: (ChartSampleData data, _) =>
-            (data.yValue! < 5 ? 10 : data.yValue),
+        yValueMapper: (ChartSampleData data, _) => data.y,
         pointColorMapper: (data, _) => AppColors.c3B93FF,
-        pointRadiusMapper: (data, _) => data.yValue.toString(),
+        pointRadiusMapper: (data, _) => (data.yValue!<minRadius?minRadius:data.yValue).toString(),
         explodeAll: true,
         explodeOffset: '3%',
         explode: true,

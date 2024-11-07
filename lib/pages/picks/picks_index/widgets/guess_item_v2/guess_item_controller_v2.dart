@@ -61,12 +61,6 @@ class GuessItemControllerV2 extends GetxController {
   }
 
   @override
-  void onInit() {
-    super.onInit();
-    formatGameStartTime();
-  }
-
-  @override
   void dispose() {
     timer?.cancel();
     super.dispose();
