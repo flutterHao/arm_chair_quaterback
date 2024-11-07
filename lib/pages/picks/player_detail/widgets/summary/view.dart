@@ -163,7 +163,7 @@ class _SummaryPageState extends State<SummaryPage>
                                                 ? AppColors.c262626
                                                 : AppColors.cD9D9D9,
                                             borderRadius:
-                                                BorderRadius.circular(10.w)),
+                                            BorderRadius.circular(10.w)),
                                         child: Text(
                                           key,
                                           style: 13.w4(
@@ -183,63 +183,65 @@ class _SummaryPageState extends State<SummaryPage>
                               children: [
                                 Expanded(
                                     child: Container(
-                                  height: 70.w,
-                                  padding: EdgeInsets.only(left: 14.w),
-                                  decoration: BoxDecoration(
-                                      color: AppColors.cF2F2F2,
-                                      borderRadius:
+                                      height: 70.w,
+                                      padding: EdgeInsets.only(left: 14.w),
+                                      decoration: BoxDecoration(
+                                          color: AppColors.cF2F2F2,
+                                          borderRadius:
                                           BorderRadius.circular(16.w)),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment
+                                            .center,
+                                        crossAxisAlignment:
                                         CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Season Avg",
-                                        style: 14.w4(
-                                            color: AppColors.c666666,
-                                            height: 1),
+                                        children: [
+                                          Text(
+                                            "Season Avg",
+                                            style: 14.w4(
+                                                color: AppColors.c666666,
+                                                height: 1),
+                                          ),
+                                          10.vGap,
+                                          Text(
+                                            controller.getSeasonAvgWithTab(),
+                                            style: 27.w7(
+                                                color: AppColors.c262626,
+                                                height: 1),
+                                          )
+                                        ],
                                       ),
-                                      10.vGap,
-                                      Text(
-                                        controller.getSeasonAvgWithTab(),
-                                        style: 27.w7(
-                                            color: AppColors.c262626,
-                                            height: 1),
-                                      )
-                                    ],
-                                  ),
-                                )),
+                                    )),
                                 9.hGap,
                                 Expanded(
                                     child: Container(
-                                  height: 70.w,
-                                  padding: EdgeInsets.only(left: 14.w),
-                                  decoration: BoxDecoration(
-                                      color: AppColors.cF2F2F2,
-                                      borderRadius:
+                                      height: 70.w,
+                                      padding: EdgeInsets.only(left: 14.w),
+                                      decoration: BoxDecoration(
+                                          color: AppColors.cF2F2F2,
+                                          borderRadius:
                                           BorderRadius.circular(16.w)),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment
+                                            .center,
+                                        crossAxisAlignment:
                                         CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Last 5 Avg",
-                                        style: 14.w4(
-                                            color: AppColors.c666666,
-                                            height: 1),
+                                        children: [
+                                          Text(
+                                            "Last 5 Avg",
+                                            style: 14.w4(
+                                                color: AppColors.c666666,
+                                                height: 1),
+                                          ),
+                                          10.vGap,
+                                          Text(
+                                            controller.getLast5AvgWithTab(),
+                                            style: 27.w7(
+                                                color: AppColors.c262626,
+                                                height: 1),
+                                          )
+                                        ],
                                       ),
-                                      10.vGap,
-                                      Text(
-                                        controller.getLast5AvgWithTab(),
-                                        style: 27.w7(
-                                            color: AppColors.c262626,
-                                            height: 1),
-                                      )
-                                    ],
-                                  ),
-                                )),
+                                    )),
                               ],
                             ),
                           ),
@@ -254,12 +256,12 @@ class _SummaryPageState extends State<SummaryPage>
                                 Container(
                                   height: 162.w,
                                   margin:
-                                      EdgeInsets.symmetric(horizontal: 16.w),
+                                  EdgeInsets.symmetric(horizontal: 16.w),
                                   padding: EdgeInsets.all(10.w),
                                   decoration: BoxDecoration(
                                       color: AppColors.cF2F2F2,
                                       borderRadius:
-                                          BorderRadius.circular(16.w)),
+                                      BorderRadius.circular(16.w)),
                                   child: Stack(
                                     children: [
                                       _buildDefaultColumnChart(context),
@@ -272,7 +274,9 @@ class _SummaryPageState extends State<SummaryPage>
                           _buildPick(),
                           _buildCommunityPick(),
                           Builder(builder: (context) {
-                            if (controller.getVsTeams().isEmpty ||
+                            if (controller
+                                .getVsTeams()
+                                .isEmpty ||
                                 controller.getPickInfo() == null) {
                               return const SizedBox.shrink();
                             }
@@ -283,7 +287,7 @@ class _SummaryPageState extends State<SummaryPage>
                                   height: 87.w,
                                   width: double.infinity,
                                   margin:
-                                      EdgeInsets.symmetric(horizontal: 16.w),
+                                  EdgeInsets.symmetric(horizontal: 16.w),
                                   decoration: BoxDecoration(
                                       color: AppColors.cF2F2F2,
                                       image: const DecorationImage(
@@ -293,16 +297,19 @@ class _SummaryPageState extends State<SummaryPage>
                                           alignment: Alignment.topRight,
                                           opacity: 0.1),
                                       borderRadius:
-                                          BorderRadius.circular(16.w)),
+                                      BorderRadius.circular(16.w)),
                                   padding:
-                                      EdgeInsets.symmetric(horizontal: 14.w),
+                                  EdgeInsets.symmetric(horizontal: 14.w),
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
                                       Text(
-                                        "vs ${controller.getPickInfo()?.teamInfo.shortEname}",
+                                        "vs ${controller
+                                            .getPickInfo()
+                                            ?.teamInfo
+                                            .shortEname}",
                                         style: 14.w7(
                                             color: AppColors.c262626,
                                             height: 1),
@@ -310,7 +317,7 @@ class _SummaryPageState extends State<SummaryPage>
                                       10.vGap,
                                       Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                         children: getVsWidget(),
                                       ),
                                       9.vGap
@@ -331,7 +338,9 @@ class _SummaryPageState extends State<SummaryPage>
                         text: "Trade",
                         style: 16.w7(color: AppColors.c262626, height: 1)),
                     if (controller.getTradePlayer() != null &&
-                        controller.getTradePlayer()?.isBuy == true)
+                        controller
+                            .getTradePlayer()
+                            ?.isBuy == true)
                       TextSpan(
                           text: " (You already have this player )",
                           style: 10.w4(color: AppColors.cB3B3B3, height: 1))
@@ -416,8 +425,8 @@ class _SummaryPageState extends State<SummaryPage>
                   bool isGood = (tradePlayer.basicMarketPrice ?? 0) <
                       (tradePlayer.marketPrice ?? 0);
                   double percent = ((tradePlayer.basicMarketPrice ?? 0) -
-                              (tradePlayer.marketPrice ?? 0))
-                          .abs() /
+                      (tradePlayer.marketPrice ?? 0))
+                      .abs() /
                       (tradePlayer.basicMarketPrice ?? 0) *
                       100;
                   if (percent.isNaN) {
@@ -425,6 +434,8 @@ class _SummaryPageState extends State<SummaryPage>
                   }
                   var baseInfo =
                       controller.nbaPlayerBaseInfoEntity!.playerBaseInfo;
+                  bool isSpecial = tradePlayer.top ?? false;
+                  var color = isGood ? AppColors.c10A86A : AppColors.cE72646;
                   return Column(
                     children: [
                       9.vGap,
@@ -446,7 +457,7 @@ class _SummaryPageState extends State<SummaryPage>
                               alignment: Alignment.center,
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     "Discount in limited time",
@@ -477,10 +488,10 @@ class _SummaryPageState extends State<SummaryPage>
                               margin: EdgeInsets.only(top: 25.w),
                               child: Container(
                                 margin:
-                                    EdgeInsets.only(left: 16.w, right: 16.w),
+                                EdgeInsets.only(left: 16.w, right: 16.w),
                                 height: 79.w,
                                 padding:
-                                    EdgeInsets.only(left: 17.w, right: 12.w),
+                                EdgeInsets.only(left: 17.w, right: 12.w),
                                 decoration: BoxDecoration(
                                     image: DecorationImage(
                                         alignment: Alignment.centerLeft,
@@ -494,20 +505,20 @@ class _SummaryPageState extends State<SummaryPage>
                                     borderRadius: BorderRadius.circular(16.w)),
                                 child: Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   children: [
                                     Column(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                      MainAxisAlignment.center,
                                       children: [
                                         Text(
                                           "Game Quality",
                                           style:
-                                              14.w4(color: AppColors.c666666),
+                                          14.w4(color: AppColors.c666666),
                                         ),
                                         Row(
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.center,
+                                          CrossAxisAlignment.center,
                                           children: [
                                             Text(
                                               Utils.formatGrade(baseInfo.grade),
@@ -530,7 +541,7 @@ class _SummaryPageState extends State<SummaryPage>
                                                       "1",
                                                       style: 23.w7(
                                                           color:
-                                                              AppColors.cF2F2F2,
+                                                          AppColors.cF2F2F2,
                                                           height: 1),
                                                     ))
                                               ],
@@ -541,17 +552,17 @@ class _SummaryPageState extends State<SummaryPage>
                                     ),
                                     Column(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                      MainAxisAlignment.center,
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                      CrossAxisAlignment.center,
                                       children: [
                                         SizedBox(
                                           width: 121.w,
                                           child: Row(
                                             crossAxisAlignment:
-                                                CrossAxisAlignment.end,
+                                            CrossAxisAlignment.end,
                                             mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.spaceBetween,
                                             children: [
                                               IconWidget(
                                                   iconWidth: 19.w,
@@ -559,15 +570,15 @@ class _SummaryPageState extends State<SummaryPage>
                                               3.hGap,
                                               Text(
                                                 Utils.formatMoney(tradePlayer
-                                                        .marketPrice
-                                                        ?.toDouble() ??
+                                                    .marketPrice
+                                                    ?.toDouble() ??
                                                     0),
                                                 style: 16.w7(
                                                     color: (tradePlayer
-                                                                    .marketPrice
-                                                                    ?.toDouble() ??
-                                                                0) ==
-                                                            0
+                                                        .marketPrice
+                                                        ?.toDouble() ??
+                                                        0) ==
+                                                        0
                                                         ? AppColors.cB3B3B3
                                                         : AppColors.cE72646,
                                                     height: 1),
@@ -595,21 +606,29 @@ class _SummaryPageState extends State<SummaryPage>
                                                       decoration: BoxDecoration(
                                                           color: percent == 0
                                                               ? AppColors
-                                                                  .cB3B3B3
+                                                              .cB3B3B3
                                                               : AppColors
-                                                                  .cE72646,
+                                                              .cE72646,
                                                           borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      5.w)),
+                                                          BorderRadius
+                                                              .circular(
+                                                              5.w)),
                                                       alignment:
-                                                          Alignment.center,
-                                                      child: Text(
-                                                        "${isGood ? "+" : percent == 0 ? "" : "-"}${percent.toStringAsFixed(0)}%",
-                                                        style: 12.w4(
-                                                            color: AppColors
-                                                                .cFFFFFF,
-                                                            height: 1),
+                                                      Alignment.center,
+                                                      child: FittedBox(
+                                                        child: Text(
+                                                          "${isGood
+                                                              ? "+"
+                                                              : percent == 0
+                                                              ? ""
+                                                              : "-"}${percent
+                                                              .toStringAsFixed(
+                                                              0)}%",
+                                                          style: 12.w4(
+                                                              color: AppColors
+                                                                  .cFFFFFF,
+                                                              height: 1),
+                                                        ),
                                                       )),
                                                 ],
                                               )
@@ -629,7 +648,7 @@ class _SummaryPageState extends State<SummaryPage>
                                             width: 121.w,
                                             decoration: BoxDecoration(
                                                 borderRadius:
-                                                    BorderRadius.circular(13.w),
+                                                BorderRadius.circular(13.w),
                                                 border: Border.all(
                                                     color: AppColors.c262626
                                                         .withOpacity(0.4),
@@ -641,7 +660,7 @@ class _SummaryPageState extends State<SummaryPage>
                                                   : "BUY",
                                               style: 13.w7(
                                                   color: (tradePlayer.isBuy ??
-                                                          false)
+                                                      false)
                                                       ? AppColors.cB3B3B3
                                                       : AppColors.c262626,
                                                   height: 1),
@@ -688,11 +707,12 @@ class _SummaryPageState extends State<SummaryPage>
           ...List.generate(
               controller.nbaPlayerBaseInfoEntity!.playerNews.length, (index) {
             var playerNew =
-                controller.nbaPlayerBaseInfoEntity!.playerNews[index];
+            controller.nbaPlayerBaseInfoEntity!.playerNews[index];
             return InkWell(
               onTap: () {
                 print('playerNew:${playerNew.id}');
-                Get.find<NewListController>().getNewsFlow(playerNew.id,isRefresh: true);
+                Get.find<NewListController>().getNewsFlow(
+                    playerNew.id, isRefresh: true);
                 Get.toNamed(RouteNames.newsDetail, arguments: playerNew.id);
               },
               child: Container(
@@ -723,7 +743,10 @@ class _SummaryPageState extends State<SummaryPage>
                     ),
                     10.vGap,
                     Text(
-                      "${MyDateUtils.formatDate(MyDateUtils.getDateTimeByMs(playerNew.createTime), format: DateFormats.PARAM_Y_M_D_H_M)} -${playerNew.source}",
+                      "${MyDateUtils.formatDate(
+                          MyDateUtils.getDateTimeByMs(playerNew.createTime),
+                          format: DateFormats.PARAM_Y_M_D_H_M)} -${playerNew
+                          .source}",
                       style: 10.w4(color: AppColors.cB3B3B3, height: 1),
                     )
                   ],
@@ -742,7 +765,7 @@ class _SummaryPageState extends State<SummaryPage>
         return const SizedBox.shrink();
       }
       NbaPlayerBaseInfoGuessInfosPtsCommunityPick communityPick =
-          controller.getCommunityPick()!;
+      controller.getCommunityPick()!;
       return Column(
         children: [
           9.vGap,
@@ -789,7 +812,9 @@ class _SummaryPageState extends State<SummaryPage>
                               style: 10.w4(color: AppColors.c262626),
                             ),
                             Text(
-                              "${controller.getCurrentTabKey()} ${controller.getPickInfo()?.value}",
+                              "${controller.getCurrentTabKey()} ${controller
+                                  .getPickInfo()
+                                  ?.value}",
                               style: 12.w4(color: AppColors.c262626),
                             ),
                             Text(
@@ -872,7 +897,8 @@ class _SummaryPageState extends State<SummaryPage>
                     ),
                     5.vGap,
                     Text(
-                        "${pickInfo.month} ${pickInfo.day} vs ${pickInfo.teamInfo.shortEname}",
+                        "${pickInfo.month} ${pickInfo.day} vs ${pickInfo
+                            .teamInfo.shortEname}",
                         style: 9.w4(color: AppColors.c666666, height: 1))
                   ],
                 ),
@@ -884,7 +910,7 @@ class _SummaryPageState extends State<SummaryPage>
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8.w),
                           border:
-                              Border.all(color: AppColors.cE6E6E6, width: 1)),
+                          Border.all(color: AppColors.cE6E6E6, width: 1)),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -900,10 +926,10 @@ class _SummaryPageState extends State<SummaryPage>
                       ),
                     ),
                     9.hGap,
-                    Obx(() {
+                    Builder(builder: (_) {
                       if (pickInfo.picks.guessData.isNotEmpty) {
                         var choiceMore = pickInfo
-                                .playerV2.guessInfo.guessData[0].guessChoice ==
+                            .playerV2.guessInfo.guessData[0].guessChoice ==
                             1;
                         return Container(
                           height: 39.w,
@@ -914,6 +940,7 @@ class _SummaryPageState extends State<SummaryPage>
                               borderRadius: BorderRadius.circular(8.w)),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -928,15 +955,13 @@ class _SummaryPageState extends State<SummaryPage>
                                   5.hGap,
                                   Text(
                                     pickInfo.playerV2.guessInfo.guessData[0]
-                                                .guessChoice ==
-                                            1
+                                        .guessChoice ==
+                                        1
                                         ? "MORE"
                                         : "LESS",
                                     style: 12.w7(
                                         color:
-                                            controller.currentIndex.value == 0
-                                                ? AppColors.cF2F2F2
-                                                : AppColors.cFF7954,
+                                        AppColors.cFF7954,
                                         height: 1),
                                   )
                                 ],
@@ -949,86 +974,94 @@ class _SummaryPageState extends State<SummaryPage>
                           ),
                         );
                       }
-                      return Container(
-                        height: 39.w,
-                        width: 110.w,
-                        decoration: BoxDecoration(
-                            border:
-                                Border.all(color: AppColors.cFF7954, width: 1),
-                            borderRadius: BorderRadius.circular(8.w)),
-                        child: Row(
-                          children: [
-                            Expanded(
-                                child: InkWell(
-                              onTap: () => controller.pickTap(0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    color: controller.pickIndex.value == 0
-                                        ? AppColors.cFF7954
-                                        : AppColors.cF2F2F2,
-                                    borderRadius: BorderRadius.horizontal(
-                                        left: Radius.circular(8.w))),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    IconWidget(
-                                      iconWidth: 14.w,
-                                      icon: Assets.uiIconUpPng,
-                                      iconColor: controller.pickIndex.value == 0
-                                          ? AppColors.cF2F2F2
-                                          : AppColors.cFF7954,
-                                    ),
-                                    Text(
-                                      "MORE",
-                                      style: 10.w7(
+                      return Obx(() {
+                        return Container(
+                          height: 39.w,
+                          width: 110.w,
+                          decoration: BoxDecoration(
+                              border:
+                              Border.all(color: AppColors.cFF7954, width: 1),
+                              borderRadius: BorderRadius.circular(8.w)),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                  child: InkWell(
+                                    onTap: () => controller.pickTap(0),
+                                    child: Container(
+                                      decoration: BoxDecoration(
                                           color: controller.pickIndex.value == 0
-                                              ? AppColors.cF2F2F2
-                                              : AppColors.cFF7954),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            )),
-                            Container(
-                              width: 1,
-                              height: double.infinity,
-                              color: AppColors.cFF7954,
-                            ),
-                            Expanded(
-                                child: InkWell(
-                              onTap: () => controller.pickTap(1),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    color: controller.pickIndex.value == 1
-                                        ? AppColors.cFF7954
-                                        : AppColors.cF2F2F2,
-                                    borderRadius: BorderRadius.horizontal(
-                                        right: Radius.circular(8.w))),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    IconWidget(
-                                      iconWidth: 14.w,
-                                      icon: Assets.uiIconUpPng,
-                                      iconColor: controller.pickIndex.value == 1
-                                          ? AppColors.cF2F2F2
-                                          : AppColors.cFF7954,
-                                      rotateAngle: 180,
+                                              ? AppColors.cFF7954
+                                              : AppColors.cF2F2F2,
+                                          borderRadius: BorderRadius.horizontal(
+                                              left: Radius.circular(8.w))),
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment
+                                            .center,
+                                        children: [
+                                          IconWidget(
+                                            iconWidth: 14.w,
+                                            icon: Assets.uiIconUpPng,
+                                            iconColor: controller.pickIndex
+                                                .value == 0
+                                                ? AppColors.cF2F2F2
+                                                : AppColors.cFF7954,
+                                          ),
+                                          Text(
+                                            "MORE",
+                                            style: 10.w7(
+                                                color: controller.pickIndex
+                                                    .value == 0
+                                                    ? AppColors.cF2F2F2
+                                                    : AppColors.cFF7954),
+                                          )
+                                        ],
+                                      ),
                                     ),
-                                    Text(
-                                      "LESS",
-                                      style: 10.w7(
-                                          color: controller.pickIndex.value == 1
-                                              ? AppColors.cF2F2F2
-                                              : AppColors.cFF7954),
-                                    )
-                                  ],
-                                ),
+                                  )),
+                              Container(
+                                width: 1,
+                                height: double.infinity,
+                                color: AppColors.cFF7954,
                               ),
-                            ))
-                          ],
-                        ),
-                      );
+                              Expanded(
+                                  child: InkWell(
+                                    onTap: () => controller.pickTap(1),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: controller.pickIndex.value == 1
+                                              ? AppColors.cFF7954
+                                              : AppColors.cF2F2F2,
+                                          borderRadius: BorderRadius.horizontal(
+                                              right: Radius.circular(8.w))),
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment
+                                            .center,
+                                        children: [
+                                          IconWidget(
+                                            iconWidth: 14.w,
+                                            icon: Assets.uiIconUpPng,
+                                            iconColor: controller.pickIndex
+                                                .value == 1
+                                                ? AppColors.cF2F2F2
+                                                : AppColors.cFF7954,
+                                            rotateAngle: 180,
+                                          ),
+                                          Text(
+                                            "LESS",
+                                            style: 10.w7(
+                                                color: controller.pickIndex
+                                                    .value == 1
+                                                    ? AppColors.cF2F2F2
+                                                    : AppColors.cFF7954),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ))
+                            ],
+                          ),
+                        );
+                      });
                     })
                   ],
                 )
@@ -1070,7 +1103,7 @@ class _SummaryPageState extends State<SummaryPage>
                             style: 10.w4(color: AppColors.cB3B3B3))),
                     if (controller.nbaPlayerBaseInfoEntity != null &&
                         controller.nbaPlayerBaseInfoEntity!.playerRegularMap
-                                ?.isNotEmpty() ==
+                            ?.isNotEmpty() ==
                             true)
                       Container(
                           height: 30.w,
@@ -1080,7 +1113,7 @@ class _SummaryPageState extends State<SummaryPage>
                               style: 12.w4(color: AppColors.c818181))),
                     if (controller.nbaPlayerBaseInfoEntity != null &&
                         controller.nbaPlayerBaseInfoEntity!.playerPlayoffsMap
-                                ?.isNotEmpty() ==
+                            ?.isNotEmpty() ==
                             true)
                       Container(
                           height: 30.w,
@@ -1101,22 +1134,22 @@ class _SummaryPageState extends State<SummaryPage>
                         decoration: BoxDecoration(
                             boxShadow: controller.statsIsScrolling.value
                                 ? [
-                                    BoxShadow(
-                                      color: AppColors.c262626.withOpacity(.1),
-                                      offset: const Offset(0, 2),
-                                      blurRadius: 1,
-                                      // spreadRadius: 1.0,
-                                    )
-                                  ]
+                              BoxShadow(
+                                color: AppColors.c262626.withOpacity(.1),
+                                offset: const Offset(0, 2),
+                                blurRadius: 1,
+                                // spreadRadius: 1.0,
+                              )
+                            ]
                                 : []),
                       );
                     }),
                     if (controller.nbaPlayerBaseInfoEntity != null &&
                         (controller.nbaPlayerBaseInfoEntity!.playerPlayoffsMap
-                                    ?.isNotEmpty() ==
-                                true ||
+                            ?.isNotEmpty() ==
+                            true ||
                             controller.nbaPlayerBaseInfoEntity!.playerRegularMap
-                                    ?.isNotEmpty() ==
+                                ?.isNotEmpty() ==
                                 true))
                       Builder(builder: (context) {
                         var keys = controller.getStatsKeys();
@@ -1125,28 +1158,30 @@ class _SummaryPageState extends State<SummaryPage>
                             return TableRow(
                                 children: List.generate(
                                     keys.length,
-                                    (index) => Container(
-                                        height: 30.w,
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          keys[index],
-                                          style:
+                                        (index) =>
+                                        Container(
+                                            height: 30.w,
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              keys[index],
+                                              style:
                                               10.w4(color: AppColors.cB3B3B3),
-                                        ))));
+                                            ))));
                           } else if (index == 1) {
                             return TableRow(
                                 children: List.generate(keys.length, (index) {
-                              return Container(
-                                  height: 30.w,
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    (controller.nbaPlayerBaseInfoEntity!
-                                        .playerRegularMap!
-                                        .toJson()[keys[index]]??0).toString(),
-                                    style: 12.w4(color: AppColors.c545454),
-                                  ));
-                            }));
-                          }else{
+                                  return Container(
+                                      height: 30.w,
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        (controller.nbaPlayerBaseInfoEntity!
+                                            .playerRegularMap!
+                                            .toJson()[keys[index]] ?? 0)
+                                            .toString(),
+                                        style: 12.w4(color: AppColors.c545454),
+                                      ));
+                                }));
+                          } else {
                             return TableRow(
                                 children: List.generate(keys.length, (index) {
                                   return Container(
@@ -1155,7 +1190,8 @@ class _SummaryPageState extends State<SummaryPage>
                                       child: Text(
                                         (controller.nbaPlayerBaseInfoEntity!
                                             .playerPlayoffsMap!
-                                            .toJson()[keys[index]]??0).toString(),
+                                            .toJson()[keys[index]] ?? 0)
+                                            .toString(),
                                         style: 12.w4(color: AppColors.c545454),
                                       ));
                                 }));
@@ -1224,12 +1260,15 @@ class _SummaryPageState extends State<SummaryPage>
   }
 
   SfCartesianChart _buildDefaultColumnChart(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
+    var width = MediaQuery
+        .of(context)
+        .size
+        .width;
     var pickInfo = controller.getPickInfo();
     var plotBands = <PlotBand>[];
     if (pickInfo != null) {
       var verticalTextPadding =
-          controller.getColumnMaxYValue() / 2 > pickInfo.value ? "0" : "-20";
+      controller.getColumnMaxYValue() / 2 > pickInfo.value ? "0" : "-20";
       plotBands = <PlotBand>[
         PlotBand(
           start: pickInfo.value,

@@ -274,22 +274,16 @@ class _PersonalCenterPageState extends State<PersonalCenterPage> {
                             ),
                           ),
                           Expanded(
-                            child: NestedScrollView(
-                              headerSliverBuilder: (BuildContext context,
-                                  bool innerBoxIsScrolled) {
-                                return <Widget>[];
-                              },
-                              body: TabBarView(
-                                  physics: OneBoundaryPageScrollPhysics(
-                                      tabController: controller.tabController),
-                                  controller: controller.tabController,
-                                  children: [
-                                    ReciveAwardPicksPage(
-                                        teamId!, controller.teamSimpleEntity!),
-                                    const Game(),
-                                    // const Center(child: LoadStatusWidget()),
-                                  ]),
-                            ),
+                            child: TabBarView(
+                                physics: OneBoundaryPageScrollPhysics(
+                                    tabController: controller.tabController),
+                                controller: controller.tabController,
+                                children: [
+                                  ReciveAwardPicksPage(
+                                      teamId!, controller.teamSimpleEntity!),
+                                  const Game(),
+                                  // const Center(child: LoadStatusWidget()),
+                                ]),
                           ),
                         ],
                       );

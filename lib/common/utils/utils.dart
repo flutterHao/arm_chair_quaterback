@@ -116,7 +116,7 @@ class Utils {
   }
 
   static Color getChartColor(value) {
-    return value < 30
+    return value==0?AppColors.c666666:value < 30
         ? AppColors.cE72646
         : value < 60
             ? AppColors.cE8B94C

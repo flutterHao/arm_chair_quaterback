@@ -41,295 +41,238 @@ class _GameState extends State<Game>
           end: 1,
           duration: const Duration(milliseconds: 500));
       easyAnimationController?.forward(from: 0);
-      return SingleChildScrollView(
+      return CustomScrollView(
         physics: const BouncingScrollPhysics(),
-        child: Container(
-          margin: EdgeInsets.only(top: 16.w),
-          child: Column(
-            children: [
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 16.w),
-                height: 306.w,
-                child: Row(
-                  children: [
-                    Flexible(
-                      flex: 2,
-                      child: Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            color: AppColors.c262626,
-                            borderRadius: BorderRadius.circular(16.w)),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
+        slivers: [
+          SliverToBoxAdapter(
+            child: Container(
+              margin: EdgeInsets.only(top: 16.w),
+              child: Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 16.w),
+                    height: 306.w,
+                    child: Row(
+                      children: [
+                        Flexible(
+                          flex: 2,
+                          child: Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                color: AppColors.c262626,
+                                borderRadius: BorderRadius.circular(16.w)),
+                            child: Column(
                               children: [
-                                Container(
-                                    width: 18.w,
-                                    height: 18.w,
-                                    margin: EdgeInsets.only(
-                                        top: 9.w, right: 9.w),
-                                    child: IconWidget(
-                                      iconWidth: 18.w,
-                                      icon: Assets.uiIconEyesPng,
-                                      iconColor: AppColors.c666666,
-                                    )),
-                              ],
-                            ),
-                            5.vGap,
-                            InkWell(
-                              onTap: () {
-                                _showLevelDetailDialog(context);
-                              },
-                              child: Stack(
-                                alignment: Alignment.bottomCenter,
-                                children: [
-                                  Obx(() {
-                                    var p = (controller
-                                        .teamInfoEntity?.teamExp ??
-                                        0) /
-                                        double.parse(
-                                            controller
-                                                .nextLevelTotalExp!) *
-                                        180;
-                                    p = easyAnimationController
-                                        ?.value.value *
-                                        p;
-                                    return ArcWidget(
-                                      85.w,
-                                      borderColor: AppColors.c666666,
-                                      progressColor: AppColors.cFF7954,
-                                      progressWidth: 16,
-                                      progressSweepAngle: p,
-                                      borderWidth: 16,
-                                    );
-                                  }),
-                                  Column(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.center,
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.end,
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Container(
+                                        width: 18.w,
+                                        height: 18.w,
+                                        margin: EdgeInsets.only(
+                                            top: 9.w, right: 9.w),
+                                        child: IconWidget(
+                                          iconWidth: 18.w,
+                                          icon: Assets.uiIconEyesPng,
+                                          iconColor: AppColors.c666666,
+                                        )),
+                                  ],
+                                ),
+                                5.vGap,
+                                InkWell(
+                                  onTap: () {
+                                    _showLevelDetailDialog(context);
+                                  },
+                                  child: Stack(
+                                    alignment: Alignment.bottomCenter,
                                     children: [
-                                      Text(
-                                        "${controller.teamInfoEntity
-                                            ?.teamGrade ?? 0}",
-                                        style: 42.w7(
-                                            color: AppColors.cFF7954,
-                                            height: 1),
-                                      ),
-                                      Row(
+                                      Obx(() {
+                                        var p = (controller
+                                            .teamInfoEntity?.teamExp ??
+                                            0) /
+                                            double.parse(
+                                                controller
+                                                    .nextLevelTotalExp!) *
+                                            180;
+                                        p = easyAnimationController
+                                            ?.value.value *
+                                            p;
+                                        return ArcWidget(
+                                          85.w,
+                                          borderColor: AppColors.c666666,
+                                          progressColor: AppColors.cFF7954,
+                                          progressWidth: 16,
+                                          progressSweepAngle: p,
+                                          borderWidth: 16,
+                                        );
+                                      }),
+                                      Column(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                         mainAxisAlignment:
-                                        MainAxisAlignment.center,
+                                        MainAxisAlignment.end,
                                         children: [
                                           Text(
-                                            "TEAM LEVEL",
-                                            style: 12.w7(
-                                                color: AppColors.c666666,
+                                            "${controller.teamInfoEntity
+                                                ?.teamGrade ?? 0}",
+                                            style: 42.w7(
+                                                color: AppColors.cFF7954,
                                                 height: 1),
                                           ),
-                                          3.hGap,
-                                          IconWidget(
-                                            iconWidth: 12.w,
-                                            icon: Assets.uiIconMsg_02Png,
-                                            iconColor: AppColors.c666666,
+                                          Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                "TEAM LEVEL",
+                                                style: 12.w7(
+                                                    color: AppColors.c666666,
+                                                    height: 1),
+                                              ),
+                                              3.hGap,
+                                              IconWidget(
+                                                iconWidth: 12.w,
+                                                icon: Assets.uiIconMsg_02Png,
+                                                iconColor: AppColors.c666666,
+                                              ),
+                                            ],
                                           ),
+                                          Text(
+                                            "${controller.teamInfoEntity
+                                                ?.teamExp ?? 0}/${controller
+                                                .nextLevelTotalExp ?? 0}",
+                                            style:
+                                            10.w4(color: AppColors.c666666),
+                                          )
                                         ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                24.vGap,
+                                Container(
+                                    margin:
+                                    EdgeInsets.symmetric(horizontal: 24.w),
+                                    child: const Divider(
+                                      height: 1,
+                                      color: AppColors.c666666,
+                                    )),
+                                Container(
+                                  height: 46.w,
+                                  margin:
+                                  EdgeInsets.symmetric(horizontal: 24.w),
+                                  padding:
+                                  EdgeInsets.symmetric(horizontal: 8.w),
+                                  child: Row(
+                                    children: [
+                                      IconWidget(
+                                        iconWidth: 18.w,
+                                        icon: Assets.uiIconWinPng,
+                                        iconColor: AppColors.cFF7954,
                                       ),
+                                      10.hGap,
+                                      Expanded(
+                                          child: Text(
+                                            "Win rate",
+                                            style: 12.w4(
+                                                color: AppColors.c666666),
+                                          )),
                                       Text(
                                         "${controller.teamInfoEntity
-                                            ?.teamExp ?? 0}/${controller
-                                            .nextLevelTotalExp ?? 0}",
-                                        style:
-                                        10.w4(color: AppColors.c666666),
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                            24.vGap,
-                            Container(
-                                margin:
-                                EdgeInsets.symmetric(horizontal: 24.w),
-                                child: const Divider(
-                                  height: 1,
-                                  color: AppColors.c666666,
-                                )),
-                            Container(
-                              height: 46.w,
-                              margin:
-                              EdgeInsets.symmetric(horizontal: 24.w),
-                              padding:
-                              EdgeInsets.symmetric(horizontal: 8.w),
-                              child: Row(
-                                children: [
-                                  IconWidget(
-                                    iconWidth: 18.w,
-                                    icon: Assets.uiIconWinPng,
-                                    iconColor: AppColors.cFF7954,
-                                  ),
-                                  10.hGap,
-                                  Expanded(
-                                      child: Text(
-                                        "Win rate",
-                                        style: 12.w4(
-                                            color: AppColors.c666666),
-                                      )),
-                                  Text(
-                                    "${controller.teamInfoEntity
-                                        ?.gameWinRate.toStringAsFixed(
-                                        0) ?? 0}%",
-                                    style: 16.w7(
-                                        color: AppColors.cFFFFFF),
-                                  )
-                                ],
-                              ),
-                            ),
-                            Container(
-                                margin:
-                                EdgeInsets.symmetric(horizontal: 24.w),
-                                child: const Divider(
-                                  height: 1,
-                                  color: AppColors.c666666,
-                                )),
-                            Container(
-                              height: 46.w,
-                              margin:
-                              EdgeInsets.symmetric(horizontal: 24.w),
-                              padding:
-                              EdgeInsets.symmetric(horizontal: 8.w),
-                              child: Row(
-                                children: [
-                                  IconWidget(
-                                    iconWidth: 18.w,
-                                    icon: Assets.uiIconScorePng,
-                                    iconColor: AppColors.cFF7954,
-                                  ),
-                                  10.hGap,
-                                  Expanded(
-                                      child: Text(
-                                        "Top score",
-                                        style: 12.w4(
-                                            color: AppColors.c666666),
-                                      )),
-                                  Text(
-                                    "${controller.teamInfoEntity
-                                        ?.currentWinGames ?? 0}",
-                                    style: 16.w7(
-                                        color: AppColors.cFFFFFF),
-                                  )
-                                ],
-                              ),
-                            ),
-                            Container(
-                                margin:
-                                EdgeInsets.symmetric(horizontal: 24.w),
-                                child: const Divider(
-                                  height: 1,
-                                  color: AppColors.c666666,
-                                )),
-                            Container(
-                              height: 46.w,
-                              margin:
-                              EdgeInsets.symmetric(horizontal: 24.w),
-                              padding:
-                              EdgeInsets.symmetric(horizontal: 8.w),
-                              child: Row(
-                                children: [
-                                  IconWidget(
-                                    iconWidth: 18.w,
-                                    icon: Assets.uiIconWinningPng,
-                                    iconColor: AppColors.cFF7954,
-                                  ),
-                                  10.hGap,
-                                  Expanded(
-                                      child: Text(
-                                        "Winning streak",
-                                        style: 12.w4(
-                                            color: AppColors.c666666),
-                                      )),
-                                  Text(
-                                    "${controller.teamInfoEntity
-                                        ?.maxGameWinningStreak}",
-                                    style: 16.w7(
-                                        color: AppColors.cFFFFFF),
-                                  )
-                                ],
-                              ),
-                            ),
-                            14.vGap
-                          ],
-                        ),
-                      ),
-                    ),
-                    8.hGap,
-                    Flexible(
-                        flex: 1,
-                        child: Column(
-                          children: [
-                            Container(
-                              height: 84.w,
-                              padding:
-                              EdgeInsets.only(left: 14.w, right: 16.w),
-                              decoration: BoxDecoration(
-                                  color: AppColors.c262626,
-                                  borderRadius:
-                                  BorderRadius.circular(16.w)),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment
-                                    .center,
-                                crossAxisAlignment:
-                                CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        Utils.formatMoney(controller
-                                            .teamInfoEntity?.salary ??
-                                            0),
+                                            ?.gameWinRate.toStringAsFixed(
+                                            0) ?? 0}%",
                                         style: 16.w7(
-                                            color: AppColors.cFFFFFF,
-                                            height: 1),
-                                      ),
-                                      8.hGap,
-                                      Text(
-                                        "/${Utils.formatMoney(
-                                            double.parse(
-                                                controller.salaryCap ??
-                                                    "0"))}",
-                                        style: 10.w4(
-                                            color: AppColors.c666666,
-                                            height: 1),
+                                            color: AppColors.cFFFFFF),
                                       )
                                     ],
                                   ),
-                                  7.vGap,
-                                  LinearProgressIndicator(
-                                    color: AppColors.cB3B3B3,
-                                    value: 0.8,
-                                    minHeight: 4.w,
-                                    backgroundColor: AppColors.c666666,
-                                    borderRadius:
-                                    BorderRadius.circular(2.w),
-                                  ),
-                                  15.vGap,
-                                  Text(
-                                    "Salary",
-                                    style: 12.w4(
-                                        color: AppColors.c666666,
-                                        height: 1),
-                                  )
-                                ],
-                              ),
-                            ),
-                            9.vGap,
-                            Expanded(
-                                child: Container(
+                                ),
+                                Container(
+                                    margin:
+                                    EdgeInsets.symmetric(horizontal: 24.w),
+                                    child: const Divider(
+                                      height: 1,
+                                      color: AppColors.c666666,
+                                    )),
+                                Container(
+                                  height: 46.w,
+                                  margin:
+                                  EdgeInsets.symmetric(horizontal: 24.w),
                                   padding:
-                                  EdgeInsets.only(
-                                      left: 14.w, right: 16.w),
+                                  EdgeInsets.symmetric(horizontal: 8.w),
+                                  child: Row(
+                                    children: [
+                                      IconWidget(
+                                        iconWidth: 18.w,
+                                        icon: Assets.uiIconScorePng,
+                                        iconColor: AppColors.cFF7954,
+                                      ),
+                                      10.hGap,
+                                      Expanded(
+                                          child: Text(
+                                            "Top score",
+                                            style: 12.w4(
+                                                color: AppColors.c666666),
+                                          )),
+                                      Text(
+                                        "${controller.teamInfoEntity
+                                            ?.currentWinGames ?? 0}",
+                                        style: 16.w7(
+                                            color: AppColors.cFFFFFF),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                    margin:
+                                    EdgeInsets.symmetric(horizontal: 24.w),
+                                    child: const Divider(
+                                      height: 1,
+                                      color: AppColors.c666666,
+                                    )),
+                                Container(
+                                  height: 46.w,
+                                  margin:
+                                  EdgeInsets.symmetric(horizontal: 24.w),
+                                  padding:
+                                  EdgeInsets.symmetric(horizontal: 8.w),
+                                  child: Row(
+                                    children: [
+                                      IconWidget(
+                                        iconWidth: 18.w,
+                                        icon: Assets.uiIconWinningPng,
+                                        iconColor: AppColors.cFF7954,
+                                      ),
+                                      10.hGap,
+                                      Expanded(
+                                          child: Text(
+                                            "Winning streak",
+                                            style: 12.w4(
+                                                color: AppColors.c666666),
+                                          )),
+                                      Text(
+                                        "${controller.teamInfoEntity
+                                            ?.maxGameWinningStreak}",
+                                        style: 16.w7(
+                                            color: AppColors.cFFFFFF),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                14.vGap
+                              ],
+                            ),
+                          ),
+                        ),
+                        8.hGap,
+                        Flexible(
+                            flex: 1,
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 84.w,
+                                  padding:
+                                  EdgeInsets.only(left: 14.w, right: 16.w),
                                   decoration: BoxDecoration(
                                       color: AppColors.c262626,
                                       borderRadius:
@@ -337,80 +280,146 @@ class _GameState extends State<Game>
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment
                                         .center,
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
                                     children: [
-                                      IconWidget(
-                                          iconWidth: 40.w,
-                                          icon: Assets
-                                              .uiIconTrophy_01Png),
-                                      28.vGap,
-                                      Text(
-                                        "${controller.teamInfoEntity
-                                            ?.cup ?? 0}",
-                                        style: 21.w7(
-                                            color: AppColors.cFFFFFF,
-                                            height: 1),
+                                      Row(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            Utils.formatMoney(controller
+                                                .teamInfoEntity?.salary ??
+                                                0),
+                                            style: 16.w7(
+                                                color: AppColors.cFFFFFF,
+                                                height: 1),
+                                          ),
+                                          8.hGap,
+                                          Text(
+                                            "/${Utils.formatMoney(
+                                                double.parse(
+                                                    controller.salaryCap ??
+                                                        "0"))}",
+                                            style: 10.w4(
+                                                color: AppColors.c666666,
+                                                height: 1),
+                                          )
+                                        ],
                                       ),
-                                      9.vGap,
+                                      7.vGap,
+                                      LinearProgressIndicator(
+                                        color: AppColors.cB3B3B3,
+                                        value: 0.8,
+                                        minHeight: 4.w,
+                                        backgroundColor: AppColors.c666666,
+                                        borderRadius:
+                                        BorderRadius.circular(2.w),
+                                      ),
+                                      15.vGap,
                                       Text(
-                                        "Current",
+                                        "Salary",
                                         style: 12.w4(
-                                            color: AppColors.c666666),
-                                      ),
-                                      20.vGap,
-                                      Text(
-                                        "${controller.teamInfoEntity
-                                            ?.maxCup ?? 0}",
-                                        style: 21.w7(
-                                            color: AppColors.cFFFFFF,
+                                            color: AppColors.c666666,
                                             height: 1),
-                                      ),
-                                      9.vGap,
-                                      Text(
-                                        "Highest",
-                                        style: 12.w4(
-                                            color: AppColors.c666666),
-                                      ),
+                                      )
                                     ],
                                   ),
-                                ))
-                          ],
-                        ))
-                  ],
-                ),
-              ),
-              33.vGap,
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 16.w),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      "Main",
-                      style: 19.w7(color: AppColors.c262626, height: 1),
+                                ),
+                                9.vGap,
+                                Expanded(
+                                    child: Container(
+                                      padding:
+                                      EdgeInsets.only(
+                                          left: 14.w, right: 16.w),
+                                      decoration: BoxDecoration(
+                                          color: AppColors.c262626,
+                                          borderRadius:
+                                          BorderRadius.circular(16.w)),
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment
+                                            .center,
+                                        children: [
+                                          IconWidget(
+                                              iconWidth: 40.w,
+                                              icon: Assets
+                                                  .uiIconTrophy_01Png),
+                                          28.vGap,
+                                          Text(
+                                            "${controller.teamInfoEntity
+                                                ?.cup ?? 0}",
+                                            style: 21.w7(
+                                                color: AppColors.cFFFFFF,
+                                                height: 1),
+                                          ),
+                                          9.vGap,
+                                          Text(
+                                            "Current",
+                                            style: 12.w4(
+                                                color: AppColors.c666666),
+                                          ),
+                                          20.vGap,
+                                          Text(
+                                            "${controller.teamInfoEntity
+                                                ?.maxCup ?? 0}",
+                                            style: 21.w7(
+                                                color: AppColors.cFFFFFF,
+                                                height: 1),
+                                          ),
+                                          9.vGap,
+                                          Text(
+                                            "Highest",
+                                            style: 12.w4(
+                                                color: AppColors.c666666),
+                                          ),
+                                        ],
+                                      ),
+                                    ))
+                              ],
+                            ))
+                      ],
                     ),
-                    8.hGap,
-                    Expanded(
-                        child: Text(
-                          "expend more stamina",
-                          style: 10.w4(
-                              color: AppColors.c666666, height: 1),
-                        )),
-                    SizedBox(
-                      width: 18.w,
-                      height: 18.w,
-                      child: IconWidget(
-                        iconWidth: 18.w,
-                        icon: Assets.uiIconEyesPng,
-                        iconColor: AppColors.cB3B3B3,
-                      ),
-                    )
-                  ],
-                ),
+                  ),
+                  33.vGap,
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 16.w),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          "Main",
+                          style: 19.w7(color: AppColors.c262626, height: 1),
+                        ),
+                        8.hGap,
+                        Expanded(
+                            child: Text(
+                              "expend more stamina",
+                              style: 10.w4(
+                                  color: AppColors.c666666, height: 1),
+                            )),
+                        SizedBox(
+                          width: 18.w,
+                          height: 18.w,
+                          child: IconWidget(
+                            iconWidth: 18.w,
+                            icon: Assets.uiIconEyesPng,
+                            iconColor: AppColors.cB3B3B3,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              ...List.generate(controller.teamPlayers.length, (index) {
+            ),
+          ),
+          SliverList.builder(
+            itemCount: controller.teamPlayers.length,
+              itemBuilder: (context,index){
                 TeamInfo player = controller.teamPlayers[index];
+                bool lastItem = index == controller.teamPlayers.length-1;
                 return Container(
-                  margin: EdgeInsets.only(top: 13.w, right: 16.w),
+                  margin: EdgeInsets.only(top: 13.w, right: 16.w,bottom: lastItem?20.w:0),
                   height: 84.w,
                   width: double.infinity,
                   child: Stack(
@@ -542,9 +551,9 @@ class _GameState extends State<Game>
                                       6.hGap,
 
                                       ///todo 后段缺少状态字段
-                                      // IconWidget(
-                                      //     iconWidth: 12.w,
-                                      //     icon: Assets.uiStateBestPng)
+                                      IconWidget(
+                                          iconWidth: 12.w,
+                                          icon: Assets.uiStateBestPng)
                                     ],
                                   ),
                                 ),
@@ -556,11 +565,8 @@ class _GameState extends State<Game>
                     ],
                   ),
                 );
-              }),
-              20.vGap
-            ],
-          ),
-        ),
+          })
+        ],
       );
     });
   }

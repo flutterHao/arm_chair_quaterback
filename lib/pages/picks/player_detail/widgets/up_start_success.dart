@@ -137,7 +137,7 @@ class UpStarSuccess extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    diff <= 0 ? "" : "+$diff",
+                                    diff <= 0 ? "" : "+${diff.toStringAsFixed(0)}",
                                     style: 12.w4(
                                         color: AppColors.c10A86A, height: 1),
                                   ),

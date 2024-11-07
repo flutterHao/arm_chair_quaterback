@@ -370,7 +370,7 @@ class PlayerAwater extends StatelessWidget {
     return InkWell(
       onTap: () {
         Get.toNamed(RouteNames.picksPlayerDetail,
-            arguments: PlayerDetailPageArguments(player.playerId));
+            arguments: PlayerDetailPageArguments(player.playerId,isMyPlayer: true));
       },
       child: Stack(
         children: [
@@ -414,7 +414,7 @@ class PlayerAwater extends StatelessWidget {
               right: 6.w,
               top: 6.5.w,
               child: Text(
-                player.breakThroughGrade.toString(),
+                player.getBreakThroughGrade().toString(),
                 style: 11.w7(color: AppColors.cFFFFFF, height: 1),
               ),
             ),

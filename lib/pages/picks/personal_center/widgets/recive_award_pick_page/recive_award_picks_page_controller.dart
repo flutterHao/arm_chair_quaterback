@@ -125,10 +125,12 @@ class ReciveAwardPicksPageController extends GetxController
         loadStatusRx.value = LoadDataStatus.success;
       }
       refreshController.refreshCompleted();
-      update();
+      update([idReceivePageMain]);
     }, onError: (e) {
       refreshController.refreshCompleted();
       loadStatusRx.value = LoadDataStatus.error;
     });
   }
+
+  static String get idReceivePageMain => "id_receive_page_main";
 }

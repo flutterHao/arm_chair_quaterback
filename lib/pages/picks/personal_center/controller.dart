@@ -88,6 +88,11 @@ class PersonalCenterController extends GetxController
         TeamInfo teamInfo = TeamInfo(playerEntity, item);
         teamPlayers.add(teamInfo);
       }
+      var zeroList = teamPlayers.where((e)=>e.teamPlayerEntity.position == 0).toList();
+      var notZeroList = teamPlayers.where((e)=>e.teamPlayerEntity.position != 0).toList();
+      notZeroList.sort((a,b)=>a.teamPlayerEntity.position.compareTo(b.teamPlayerEntity.position));
+
+      teamPlayers = [...notZeroList,...zeroList];
       update([idPersonalCenterGameMain]);
     });
   }

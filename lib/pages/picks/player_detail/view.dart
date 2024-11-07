@@ -24,9 +24,10 @@ import 'index.dart';
 
 class PlayerDetailPageArguments {
   final int playerId;
-  final String? tabStr;
+  final String? tabStr;//选中的初始tab属性
+  final bool isMyPlayer;//是不是我的球员
 
-  PlayerDetailPageArguments(this.playerId, {this.tabStr});
+  PlayerDetailPageArguments(this.playerId, {this.tabStr,this.isMyPlayer = false});
 }
 
 class PlayerDetailPage extends GetView<PlayerDetailController> {

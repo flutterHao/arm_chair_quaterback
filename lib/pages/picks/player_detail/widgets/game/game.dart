@@ -138,13 +138,12 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                             dataLabelSettings: DataLabelSettings(
                                 builder: (data, point, series, pointIndex,
                                     seriesIndex) {
-                                  // 根据数据值设置标签颜色
-                                  Color labelColor =
-                                      Utils.getChartColor(point.y);
                                   var y = point.y;
                                   if (y == controller.SPECIALVALUE) {
                                     y = 0;
                                   }
+                                  // 根据数据值设置标签颜色
+                                  Color labelColor = Utils.getChartColor(y);
                                   return Text(
                                     '${y?.toStringAsFixed(0)}',
                                     style: TextStyle(
@@ -196,26 +195,26 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                         ),
                       ),
                     )
-                  else
-                    Center(
-                      child: Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                color: AppColors.cD9D9D9, width: 2.w),
-                            borderRadius: BorderRadius.circular(18.h)),
-                        height: 36.h,
-                        width: 303.w,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "NOT OWNED",
-                              style: 18.w7(color: AppColors.cD9D9D9),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                  // else
+                  //   Center(
+                  //     child: Container(
+                  //       decoration: BoxDecoration(
+                  //           border: Border.all(
+                  //               color: AppColors.cD9D9D9, width: 2.w),
+                  //           borderRadius: BorderRadius.circular(18.h)),
+                  //       height: 36.h,
+                  //       width: 303.w,
+                  //       child: Row(
+                  //         mainAxisAlignment: MainAxisAlignment.center,
+                  //         children: [
+                  //           Text(
+                  //             "NOT OWNED",
+                  //             style: 18.w7(color: AppColors.cD9D9D9),
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ),
                 ],
               ),
             ),
@@ -751,6 +750,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                             playerId: item.teamPlayer.playerId
                                                 .toInt(),
                                             fontColor: AppColors.c262626,
+                                            grade: item.baseInfo.getGrade(),
                                           ),
                                           9.hGap,
                                           Expanded(
@@ -804,7 +804,10 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                                           Positioned(
                                                             top: 2,
                                                             child: Text(
-                                                              item.teamPlayer.breakThroughGrade.toStringAsFixed(0),
+                                                              item.teamPlayer
+                                                                  .breakThroughGrade
+                                                                  .toStringAsFixed(
+                                                                      0),
                                                               style: 9.w4(
                                                                   color: AppColors
                                                                       .cFFFFFF),

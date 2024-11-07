@@ -2,12 +2,14 @@ import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/player_avatar_widget.dart';
+import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guess_item_v2/guess_item_controller_v2.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/player_item_widget.dart';
@@ -30,7 +32,7 @@ class GuessItemV2 extends StatefulWidget {
   State<GuessItemV2> createState() => _GuessItemV2State();
 }
 
-class _GuessItemV2State extends State<GuessItemV2> {
+class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
   late GuessItemControllerV2 controller;
 
   @override
@@ -67,11 +69,17 @@ class _GuessItemV2State extends State<GuessItemV2> {
                       overflow: TextOverflow.ellipsis,
                     ),
                     3.5.vGap,
-                    Text(
-                      "VS ${player.awayTeamInfo?.shortEname ?? ""}   ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(player.guessInfo.gameStartTime))}",
-                      style: 10.w4(color: AppColors.cB3B3B3, height: 1),
-                      overflow: TextOverflow.ellipsis,
-                    )
+                    Obx(() {
+                      return FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          "VS ${player.awayTeamInfo?.shortEname ??
+                              ""}   ${controller.gameStartTimeStr.value}",
+                          style: 10.w4(color: AppColors.cB3B3B3, height: 1),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      );
+                    })
                   ],
                 ),
               )
@@ -88,9 +96,10 @@ class _GuessItemV2State extends State<GuessItemV2> {
                 Expanded(
                     child: Center(
                         child: Text(
-                  "${player.guessInfo.guessReferenceValue.getValue(picksIndexController.getCurrentTabStr())}",
-                  style: 18.w7(color: AppColors.c262626, height: 1),
-                ))),
+                          "${player.guessInfo.guessReferenceValue.getValue(
+                              picksIndexController.getCurrentTabStr())}",
+                          style: 18.w7(color: AppColors.c262626, height: 1),
+                        ))),
                 Container(
                   height: 18.w,
                   width: 1,
@@ -99,10 +108,11 @@ class _GuessItemV2State extends State<GuessItemV2> {
                 Expanded(
                     child: Center(
                         child: Text(
-                  Utils.getLongName(picksIndexController.getCurrentTabStr()),
-                  style: 12.w4(color: AppColors.cB3B3B3, height: 1),
-                  textAlign: TextAlign.center,
-                )))
+                          Utils.getLongName(
+                              picksIndexController.getCurrentTabStr()),
+                          style: 12.w4(color: AppColors.cB3B3B3, height: 1),
+                          textAlign: TextAlign.center,
+                        )))
               ],
             ),
           ),
@@ -260,11 +270,39 @@ class _GuessItemV2State extends State<GuessItemV2> {
   }
 
   maxLimit(PicksIndexController picksIndexController, PicksPlayerV2 player) {
-    var length = picksIndexController.getChoiceGuessPlayers().length;
+    var length = picksIndexController
+        .getChoiceGuessPlayers()
+        .length;
     if (length >= 6 && player.status == -1) {
       EasyLoading.showToast("Select up to 6");
       return true;
     }
     return false;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    Get.find<HomeController>().tabIndex.listen((value) {
+      if (value == 1) {
+        controller.formatGameStartTime();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    var value = Get.find<HomeController>().tabIndex.value;
+    if (state == AppLifecycleState.resumed && value == 1) {
+      controller.formatGameStartTime();
+    }
   }
 }

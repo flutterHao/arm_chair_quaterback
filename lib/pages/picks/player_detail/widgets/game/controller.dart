@@ -86,28 +86,26 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
     EasyLoading.dismiss();
   }
 
-  List<ChartSampleData> getPotentialData(){
-    List<String> keys = ["pts","threePt","ast","reb","blk","stl"];
-    List<ChartSampleData> res= [];
+  List<ChartSampleData> getPotentialData() {
+    List<String> keys = ["pts", "threePt", "ast", "reb", "blk", "stl"];
+    List<ChartSampleData> res = [];
     for (int i = 0; i < keys.length; i++) {
       var key = keys[i];
-      if(key == "threePt"){
+      if (key == "threePt") {
         key = "3PT";
       }
       res.add(ChartSampleData(
-        x: key.toUpperCase(),
-        y: formatYValue(keys[i]),
-        pointColor: Utils.getChartColor(formatYValue(keys[i]))
-      ));
+          x: key.toUpperCase(),
+          y: formatYValue(keys[i]),
+          pointColor: Utils.getChartColor(
+              uuidPlayerInfo?.potential.toJson()[keys[i]] ?? 0)));
     }
     return res;
   }
 
-
   double getMaxValue() {
     int maxVale = 10;
-    var keys =
-        uuidPlayerInfo?.potential.toJson().keys.toList() ?? [];
+    var keys = uuidPlayerInfo?.potential.toJson().keys.toList() ?? [];
     for (int i = 0; i < keys.length; i++) {
       var key = keys[i];
       var value = uuidPlayerInfo?.potential.toJson()[key] as int;
@@ -117,6 +115,7 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
   }
 
   var SPECIALVALUE = 0.59999999;
+
   double formatYValue(String key) {
     var json = uuidPlayerInfo?.potential.toJson();
     return max((json?[key].toDouble() ?? 0), SPECIALVALUE);
@@ -151,17 +150,19 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
       CacheApi.getNBAPlayerInfo(),
       PicksApi.getNBAPlayerBaseInfo(arguments.playerId),
     ];
-    var homeController = Get.find<HomeController>();
-    var uuidInfo = homeController.userEntiry.teamLoginInfo?.teamPlayerList
-        ?.firstWhereOrNull((e) => e.playerId == arguments.playerId);
-    print('uuidInfo----:${uuidInfo?.toJson()}');
-    if (uuidInfo != null) {
-      cacheUuid = uuidInfo.uuid;
-      futures.addAll([
-        CacheApi.getStarUpDefine(),
-        PicksApi.getAllTeamPlayersByUpStar(cacheUuid!),
-        PicksApi.getTeamPlayerByUUID(uuidInfo.teamId,cacheUuid!)
-      ]);
+    if (arguments.isMyPlayer) {
+      var homeController = Get.find<HomeController>();
+      var uuidInfo = homeController.userEntiry.teamLoginInfo?.teamPlayerList
+          ?.firstWhereOrNull((e) => e.playerId == arguments.playerId);
+      print('uuidInfo----:${uuidInfo?.toJson()}');
+      if (uuidInfo != null) {
+        cacheUuid = uuidInfo.uuid;
+        futures.addAll([
+          CacheApi.getStarUpDefine(),
+          PicksApi.getAllTeamPlayersByUpStar(cacheUuid!),
+          PicksApi.getTeamPlayerByUUID(uuidInfo.teamId, cacheUuid!)
+        ]);
+      }
     }
 
     Future.wait(futures).then((result) {
@@ -182,7 +183,7 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
       getDataSource(capList.toJson());
       if (cacheUuid != null) {
         uuidPlayerInfo = result[4] as TeamPlayerInfoEntity;
-        getDataSource(uuidPlayerInfo!.upStarBase?.toJson()??{});
+        getDataSource(uuidPlayerInfo!.upStarBase?.toJson() ?? {});
         starUpDefineEntity = (result[2] as List<StarUpDefineEntity>).firstWhere(
             (e) => e.starUp == uuidPlayerInfo?.getNextBreakThroughGrade());
         var allTeamPlayer = result[3] as List<AllTeamPlayersByUpStarEntity>;
@@ -202,8 +203,12 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
             //只展示与球员卡同阶或低一阶的
             continue;
           }
-          if(player.position>=0){
+          if (player.position >= 0) {
             //剔除上阵的球员
+            continue;
+          }
+          if (player.playerId == uuidPlayerInfo!.playerId) {
+            //剔除自己
             continue;
           }
           GradeUp gradeUp = GradeUp(
@@ -221,7 +226,7 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
     });
   }
 
-  void getDataSource(Map<String,dynamic> json) {
+  void getDataSource(Map<String, dynamic> json) {
     var obj = NbaPlayerInfosPlayerDataCapList.fromJson(json);
     var maxValue = obj.getMaxValue();
     var rate = (maxValue == 0) ? 1 : (maxValue / 50);
@@ -229,41 +234,42 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
     var y = 55;
     dataSource = <ChartSampleData>[
       ChartSampleData(
-          x: 'PTS',
-          y: y,//后面圆弧的半径
-          yValue: (obj.pts / rate).isNaN ? 0 : obj.pts / rate,//前面圆弧的半径
-          secondSeriesYValue: obj.pts,//显示用这个字段
-     ),
+        x: 'PTS',
+        y: y, //后面圆弧的半径
+        yValue: (obj.pts / rate).isNaN ? 0 : obj.pts / rate, //前面圆弧的半径
+        secondSeriesYValue: obj.pts, //显示用这个字段
+      ),
       ChartSampleData(
-          x: '3PT',
-          y: y,
-          yValue: (obj.threePts / rate).isNaN
-              ? 0
-              : obj.threePts / rate,
+        x: '3PT',
+        y: y,
+        yValue: (obj.threePts / rate).isNaN ? 0 : obj.threePts / rate,
         secondSeriesYValue: obj.threePts,
       ),
       ChartSampleData(
-          x: 'AST',
-          y: y,
-          yValue: (obj.ast / rate).isNaN ? 0 : obj.ast / rate,
-        secondSeriesYValue: obj.ast,),
+        x: 'AST',
+        y: y,
+        yValue: (obj.ast / rate).isNaN ? 0 : obj.ast / rate,
+        secondSeriesYValue: obj.ast,
+      ),
       ChartSampleData(
-          x: 'REB',
-          y: y,
-          yValue: (obj.getValue('reb') / rate).isNaN
-              ? 0
-              : obj.getValue('reb') / rate,
-        secondSeriesYValue: obj.getValue('reb'),),
+        x: 'REB',
+        y: y,
+        yValue:
+            (obj.getValue('reb') / rate).isNaN ? 0 : obj.getValue('reb') / rate,
+        secondSeriesYValue: obj.getValue('reb'),
+      ),
       ChartSampleData(
-          x: 'BLK',
-          y: y,
-          yValue: (obj.blk / rate).isNaN ? 0 : obj.blk / rate,
-        secondSeriesYValue: obj.blk,),
+        x: 'BLK',
+        y: y,
+        yValue: (obj.blk / rate).isNaN ? 0 : obj.blk / rate,
+        secondSeriesYValue: obj.blk,
+      ),
       ChartSampleData(
-          x: 'STL',
-          y: y,
-          yValue: (obj.stl / rate).isNaN ? 0 : obj.stl / rate,
-        secondSeriesYValue: obj.stl,),
+        x: 'STL',
+        y: y,
+        yValue: (obj.stl / rate).isNaN ? 0 : obj.stl / rate,
+        secondSeriesYValue: obj.stl,
+      ),
     ];
   }
 
@@ -416,7 +422,6 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
         show: false,
       );
 
-
   late AnimationController _animationController;
   late Animation<double> _starTranslateAnimation,
       _propertyBoxAnimation,
@@ -489,7 +494,6 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
       _rateAnimationStart(0, target);
     }
   }
-
 
   dialogListItemTap(int index) {
     var current = teamPlayerList[index];

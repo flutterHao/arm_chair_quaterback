@@ -22,6 +22,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:vibration/vibration.dart';
 import '';
 
 import '../../../common/entities/guess_game_info_entity.dart';
@@ -147,6 +148,7 @@ class PicksIndexController extends GetxController {
       cleanAll();
       _initData();
       Get.find<HomeController>().refreshMoneyCoinWidget();
+      Vibration.vibrate();
       EasyLoading.showToast("Pick successful!you can check it in History");
     }, onError: (e) {
       EasyLoading.showToast("SERVER ERROR");
