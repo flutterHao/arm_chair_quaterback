@@ -691,7 +691,8 @@ class _SummaryPageState extends State<SummaryPage>
                 controller.nbaPlayerBaseInfoEntity!.playerNews[index];
             return InkWell(
               onTap: () {
-                Get.find<NewListController>().getNewsFlow(playerNew.id);
+                print('playerNew:${playerNew.id}');
+                Get.find<NewListController>().getNewsFlow(playerNew.id,isRefresh: true);
                 Get.toNamed(RouteNames.newsDetail, arguments: playerNew.id);
               },
               child: Container(
@@ -1236,7 +1237,7 @@ class _SummaryPageState extends State<SummaryPage>
           end: pickInfo.value,
           // 虚线的终止位置（y 值），相同值表示一条线
           borderWidth: 1,
-          text: '${playerDetailController.baseInfo?.ename}\n${pickInfo.value}',
+          text: 'Pick.\n${pickInfo.value}',
           verticalTextPadding: verticalTextPadding,
           horizontalTextAlignment: TextAnchor.end,
           verticalTextAlignment: TextAnchor.end,

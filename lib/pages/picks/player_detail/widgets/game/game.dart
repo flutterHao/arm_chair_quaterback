@@ -195,6 +195,26 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                           ),
                         ),
                       ),
+                    )
+                  else
+                    Center(
+                      child: Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: AppColors.cD9D9D9, width: 2.w),
+                            borderRadius: BorderRadius.circular(18.h)),
+                        height: 36.h,
+                        width: 303.w,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "NOT OWNED",
+                              style: 18.w7(color: AppColors.cD9D9D9),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                 ],
               ),

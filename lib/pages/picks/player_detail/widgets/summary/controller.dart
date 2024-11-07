@@ -179,7 +179,7 @@ class SummaryController extends GetxController {
     if (key == "3PM".toLowerCase()) {
       key = "threePm";
     }
-    var value = picks.guessReferenceValue.toJson()[key];
+    var value = picks.guessReferenceValue.toJson()[key]??0;
     var picksPlayerV2 = PicksPlayerV2();
     picksPlayerV2.guessInfo = picks;
     var currentTabKey = getCurrentTabKey();
@@ -324,7 +324,7 @@ class SummaryController extends GetxController {
       var monthEnName = MyDateUtils.getMonthEnName(timeByMs, short: true);
       var currentTabKey = getCurrentTabKey();
       var value = e.getValue(currentTabKey);
-      Color color = double.parse(getSeasonAvgWithTab()) <= value
+      Color color = double.parse(getLast5AvgWithTab()) <= value
           ? AppColors.cFF7954
           : AppColors.cD9D9D9;
       return ChartSampleData(

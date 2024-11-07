@@ -2,6 +2,8 @@ import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/physics/one_boundary_page_scroll_physics.dart';
+import 'package:arm_chair_quaterback/pages/picks/player_detail/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/history/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/history/player_property_data_grid_source.dart';
 import 'package:flutter/material.dart';
@@ -187,6 +189,7 @@ class _HistoryPageState extends State<HistoryPage>
       headerRowHeight: 20.w,
       rowHeight: 20.w,
       verticalScrollPhysics: const NeverScrollableScrollPhysics(),
+      horizontalScrollPhysics: OneBoundaryPageScrollPhysics(tabController: Get.find<PlayerDetailController>().tabController),
       frozenColumnsCount: 2,
       headerGridLinesVisibility: GridLinesVisibility.none,
       columns: _obtainColumns(itemData),

@@ -28,7 +28,7 @@ class GuessReferenceValue {
     var json = toJson();
     for (var k in json.keys) {
       if (k.toLowerCase() == key.toLowerCase()) {
-        return json[k];
+        return json[k]??0;
       }
     }
     return 0;
