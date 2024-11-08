@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
     Get.config(
       // defaultOpaqueRoute: false,// 此全局配置无效，使用GetPageRoute的opaque属性
       defaultPopGesture: false,
-      // defaultDurationTransition: const Duration(seconds: 5),
+      defaultDurationTransition: const Duration(milliseconds: 100),
     );
     return Center(
       child: Container(

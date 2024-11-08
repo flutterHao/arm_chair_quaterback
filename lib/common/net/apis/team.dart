@@ -4,6 +4,7 @@
  * @Date: 2024-10-14 17:25:31
  * @LastEditTime: 2024-11-06 11:28:46
  */
+import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/my_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_status_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
@@ -67,5 +68,10 @@ class TeamApi {
   static Future<PlayerStatusEntity> getPlayerStatusConfig() async {
     var json = await HttpUtil().post(Api.cPlayerStatsDefine);
     return PlayerStatusEntity.fromJson(json);
+  }
+
+  static Future<BattleEntity> teamMatch() async {
+    var json = await HttpUtil().post(Api.teamMatch);
+    return BattleEntity.fromJson(json);
   }
 }

@@ -105,4 +105,8 @@ class Api {
   static const String getTradeInfo = "$API_BASE_PATH/Trade/getTradeInfo";
   static const String buyPlayer = "$API_BASE_PATH/Trade/buyPlayer";
   static const String sellPlayer = "$API_BASE_PATH/Trade/sellPlayer";
+
+  ///match
+  static const String teamMatch = "$API_BASE_PATH/match/teamMatch";
+
 }

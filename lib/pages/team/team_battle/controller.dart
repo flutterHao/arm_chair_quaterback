@@ -1,6 +1,10 @@
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
+import 'package:arm_chair_quaterback/common/net/apis/team.dart';
+import 'package:extended_image/extended_image.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
 class TeamBattleController extends GetxController
@@ -18,11 +22,6 @@ class TeamBattleController extends GetxController
 
   static bool _canPop = false;
 
-  _initData() {
-    update(["team_battle"]);
-  }
-
-  void onTap() {}
 
   List<String> totalAvatars = [
     Assets.uiHead_01Png,
@@ -44,6 +43,8 @@ class TeamBattleController extends GetxController
   var breakingNewsBreaking = false.obs;
   double ovr = 75;
 
+  late BattleEntity battleEntity;
+
   ///测试数据，需删除
 
   @override
@@ -54,10 +55,30 @@ class TeamBattleController extends GetxController
     meAvatar = totalAvatars[Random().nextInt(totalAvatars.length - 1)];
     totalAvatars.remove(meAvatar);
     opponentAvatar = totalAvatars[Random().nextInt(totalAvatars.length - 1)];
-
-    ///todo 模拟匹配的网络请求
-    Future.delayed(const Duration(seconds: 3), () {
+    ///todo 测试代码
+    Future.delayed(const Duration(milliseconds: 3000), () {
       nextStep();
+    });
+    // teamMatch();
+  }
+
+  teamMatch(){
+    var startMatchTimeMs = DateTime.now().millisecondsSinceEpoch;
+    var minMatchTimeMs = 3000;
+    TeamApi.teamMatch().then((result){
+      battleEntity = result;
+      var currentMs = DateTime.now().millisecondsSinceEpoch;
+      var diff = currentMs - startMatchTimeMs;
+      if(diff >= minMatchTimeMs){
+        nextStep();
+      }else{
+        Future.delayed(Duration(milliseconds: minMatchTimeMs-diff), () {
+          nextStep();
+        });
+      }
+    },onError: (e){
+      EasyLoading.showToast("MATCH FAILED");
+      Get.back();
     });
   }
 
