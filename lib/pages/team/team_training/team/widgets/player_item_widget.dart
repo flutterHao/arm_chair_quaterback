@@ -83,6 +83,7 @@ class PlayerItem extends GetView<TeamController> {
               backgroundColor: AppColors.cE1E1E1,
               playerId: item.playerId,
               width: 64.w,
+              isMyPlayer: true,
               grade:
                   Utils.formatGrade(Utils.getPlayBaseInfo(item.playerId).grade),
               level: item.breakThroughGrade,

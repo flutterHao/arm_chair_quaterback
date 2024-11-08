@@ -7,6 +7,8 @@ import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/arc_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog_background.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/player_avatar_widget.dart';
+import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/personal_center/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/widgets/battle_animation_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/player_item_widget.dart';
@@ -88,14 +90,13 @@ class _GameState extends State<Game>
                                     children: [
                                       Obx(() {
                                         var p = (controller
-                                            .teamInfoEntity?.teamExp ??
-                                            0) /
+                                                    .teamInfoEntity?.teamExp ??
+                                                0) /
                                             double.parse(
-                                                controller
-                                                    .nextLevelTotalExp!) *
+                                                controller.nextLevelTotalExp!) *
                                             180;
                                         p = easyAnimationController
-                                            ?.value.value *
+                                                ?.value.value *
                                             p;
                                         return ArcWidget(
                                           85.w,
@@ -108,20 +109,19 @@ class _GameState extends State<Game>
                                       }),
                                       Column(
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                            CrossAxisAlignment.center,
                                         mainAxisAlignment:
-                                        MainAxisAlignment.end,
+                                            MainAxisAlignment.end,
                                         children: [
                                           Text(
-                                            "${controller.teamInfoEntity
-                                                ?.teamGrade ?? 0}",
+                                            "${controller.teamInfoEntity?.teamGrade ?? 0}",
                                             style: 42.w7(
                                                 color: AppColors.cFF7954,
                                                 height: 1),
                                           ),
                                           Row(
                                             mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                                MainAxisAlignment.center,
                                             children: [
                                               Text(
                                                 "TEAM LEVEL",
@@ -138,11 +138,9 @@ class _GameState extends State<Game>
                                             ],
                                           ),
                                           Text(
-                                            "${controller.teamInfoEntity
-                                                ?.teamExp ?? 0}/${controller
-                                                .nextLevelTotalExp ?? 0}",
+                                            "${controller.teamInfoEntity?.teamExp ?? 0}/${controller.nextLevelTotalExp ?? 0}",
                                             style:
-                                            10.w4(color: AppColors.c666666),
+                                                10.w4(color: AppColors.c666666),
                                           )
                                         ],
                                       )
@@ -152,7 +150,7 @@ class _GameState extends State<Game>
                                 24.vGap,
                                 Container(
                                     margin:
-                                    EdgeInsets.symmetric(horizontal: 24.w),
+                                        EdgeInsets.symmetric(horizontal: 24.w),
                                     child: const Divider(
                                       height: 1,
                                       color: AppColors.c666666,
@@ -160,9 +158,9 @@ class _GameState extends State<Game>
                                 Container(
                                   height: 46.w,
                                   margin:
-                                  EdgeInsets.symmetric(horizontal: 24.w),
+                                      EdgeInsets.symmetric(horizontal: 24.w),
                                   padding:
-                                  EdgeInsets.symmetric(horizontal: 8.w),
+                                      EdgeInsets.symmetric(horizontal: 8.w),
                                   child: Row(
                                     children: [
                                       IconWidget(
@@ -173,23 +171,19 @@ class _GameState extends State<Game>
                                       10.hGap,
                                       Expanded(
                                           child: Text(
-                                            "Win rate",
-                                            style: 12.w4(
-                                                color: AppColors.c666666),
-                                          )),
+                                        "Win rate",
+                                        style: 12.w4(color: AppColors.c666666),
+                                      )),
                                       Text(
-                                        "${controller.teamInfoEntity
-                                            ?.gameWinRate.toStringAsFixed(
-                                            0) ?? 0}%",
-                                        style: 16.w7(
-                                            color: AppColors.cFFFFFF),
+                                        "${controller.teamInfoEntity?.gameWinRate.toStringAsFixed(0) ?? 0}%",
+                                        style: 16.w7(color: AppColors.cFFFFFF),
                                       )
                                     ],
                                   ),
                                 ),
                                 Container(
                                     margin:
-                                    EdgeInsets.symmetric(horizontal: 24.w),
+                                        EdgeInsets.symmetric(horizontal: 24.w),
                                     child: const Divider(
                                       height: 1,
                                       color: AppColors.c666666,
@@ -197,9 +191,9 @@ class _GameState extends State<Game>
                                 Container(
                                   height: 46.w,
                                   margin:
-                                  EdgeInsets.symmetric(horizontal: 24.w),
+                                      EdgeInsets.symmetric(horizontal: 24.w),
                                   padding:
-                                  EdgeInsets.symmetric(horizontal: 8.w),
+                                      EdgeInsets.symmetric(horizontal: 8.w),
                                   child: Row(
                                     children: [
                                       IconWidget(
@@ -210,22 +204,19 @@ class _GameState extends State<Game>
                                       10.hGap,
                                       Expanded(
                                           child: Text(
-                                            "Top score",
-                                            style: 12.w4(
-                                                color: AppColors.c666666),
-                                          )),
+                                        "Top score",
+                                        style: 12.w4(color: AppColors.c666666),
+                                      )),
                                       Text(
-                                        "${controller.teamInfoEntity
-                                            ?.currentWinGames ?? 0}",
-                                        style: 16.w7(
-                                            color: AppColors.cFFFFFF),
+                                        "${controller.teamInfoEntity?.currentWinGames ?? 0}",
+                                        style: 16.w7(color: AppColors.cFFFFFF),
                                       )
                                     ],
                                   ),
                                 ),
                                 Container(
                                     margin:
-                                    EdgeInsets.symmetric(horizontal: 24.w),
+                                        EdgeInsets.symmetric(horizontal: 24.w),
                                     child: const Divider(
                                       height: 1,
                                       color: AppColors.c666666,
@@ -233,9 +224,9 @@ class _GameState extends State<Game>
                                 Container(
                                   height: 46.w,
                                   margin:
-                                  EdgeInsets.symmetric(horizontal: 24.w),
+                                      EdgeInsets.symmetric(horizontal: 24.w),
                                   padding:
-                                  EdgeInsets.symmetric(horizontal: 8.w),
+                                      EdgeInsets.symmetric(horizontal: 8.w),
                                   child: Row(
                                     children: [
                                       IconWidget(
@@ -246,15 +237,12 @@ class _GameState extends State<Game>
                                       10.hGap,
                                       Expanded(
                                           child: Text(
-                                            "Winning streak",
-                                            style: 12.w4(
-                                                color: AppColors.c666666),
-                                          )),
+                                        "Winning streak",
+                                        style: 12.w4(color: AppColors.c666666),
+                                      )),
                                       Text(
-                                        "${controller.teamInfoEntity
-                                            ?.maxGameWinningStreak}",
-                                        style: 16.w7(
-                                            color: AppColors.cFFFFFF),
+                                        "${controller.teamInfoEntity?.maxGameWinningStreak}",
+                                        style: 16.w7(color: AppColors.cFFFFFF),
                                       )
                                     ],
                                   ),
@@ -272,24 +260,23 @@ class _GameState extends State<Game>
                                 Container(
                                   height: 84.w,
                                   padding:
-                                  EdgeInsets.only(left: 14.w, right: 16.w),
+                                      EdgeInsets.only(left: 14.w, right: 16.w),
                                   decoration: BoxDecoration(
                                       color: AppColors.c262626,
                                       borderRadius:
-                                      BorderRadius.circular(16.w)),
+                                          BorderRadius.circular(16.w)),
                                   child: Column(
-                                    mainAxisAlignment: MainAxisAlignment
-                                        .center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Row(
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             Utils.formatMoney(controller
-                                                .teamInfoEntity?.salary ??
+                                                    .teamInfoEntity?.salary ??
                                                 0),
                                             style: 16.w7(
                                                 color: AppColors.cFFFFFF,
@@ -297,10 +284,7 @@ class _GameState extends State<Game>
                                           ),
                                           8.hGap,
                                           Text(
-                                            "/${Utils.formatMoney(
-                                                double.parse(
-                                                    controller.salaryCap ??
-                                                        "0"))}",
+                                            "/${Utils.formatMoney(double.parse(controller.salaryCap ?? "0"))}",
                                             style: 10.w4(
                                                 color: AppColors.c666666,
                                                 height: 1),
@@ -314,7 +298,7 @@ class _GameState extends State<Game>
                                         minHeight: 4.w,
                                         backgroundColor: AppColors.c666666,
                                         borderRadius:
-                                        BorderRadius.circular(2.w),
+                                            BorderRadius.circular(2.w),
                                       ),
                                       15.vGap,
                                       Text(
@@ -329,52 +313,45 @@ class _GameState extends State<Game>
                                 9.vGap,
                                 Expanded(
                                     child: Container(
-                                      padding:
-                                      EdgeInsets.only(
-                                          left: 14.w, right: 16.w),
-                                      decoration: BoxDecoration(
-                                          color: AppColors.c262626,
-                                          borderRadius:
+                                  padding:
+                                      EdgeInsets.only(left: 14.w, right: 16.w),
+                                  decoration: BoxDecoration(
+                                      color: AppColors.c262626,
+                                      borderRadius:
                                           BorderRadius.circular(16.w)),
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment
-                                            .center,
-                                        children: [
-                                          IconWidget(
-                                              iconWidth: 40.w,
-                                              icon: Assets
-                                                  .uiIconTrophy_01Png),
-                                          28.vGap,
-                                          Text(
-                                            "${controller.teamInfoEntity
-                                                ?.cup ?? 0}",
-                                            style: 21.w7(
-                                                color: AppColors.cFFFFFF,
-                                                height: 1),
-                                          ),
-                                          9.vGap,
-                                          Text(
-                                            "Current",
-                                            style: 12.w4(
-                                                color: AppColors.c666666),
-                                          ),
-                                          20.vGap,
-                                          Text(
-                                            "${controller.teamInfoEntity
-                                                ?.maxCup ?? 0}",
-                                            style: 21.w7(
-                                                color: AppColors.cFFFFFF,
-                                                height: 1),
-                                          ),
-                                          9.vGap,
-                                          Text(
-                                            "Highest",
-                                            style: 12.w4(
-                                                color: AppColors.c666666),
-                                          ),
-                                        ],
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      IconWidget(
+                                          iconWidth: 40.w,
+                                          icon: Assets.uiIconTrophy_01Png),
+                                      28.vGap,
+                                      Text(
+                                        "${controller.teamInfoEntity?.cup ?? 0}",
+                                        style: 21.w7(
+                                            color: AppColors.cFFFFFF,
+                                            height: 1),
                                       ),
-                                    ))
+                                      9.vGap,
+                                      Text(
+                                        "Current",
+                                        style: 12.w4(color: AppColors.c666666),
+                                      ),
+                                      20.vGap,
+                                      Text(
+                                        "${controller.teamInfoEntity?.maxCup ?? 0}",
+                                        style: 21.w7(
+                                            color: AppColors.cFFFFFF,
+                                            height: 1),
+                                      ),
+                                      9.vGap,
+                                      Text(
+                                        "Highest",
+                                        style: 12.w4(color: AppColors.c666666),
+                                      ),
+                                    ],
+                                  ),
+                                ))
                               ],
                             ))
                       ],
@@ -393,10 +370,9 @@ class _GameState extends State<Game>
                         8.hGap,
                         Expanded(
                             child: Text(
-                              "expend more stamina",
-                              style: 10.w4(
-                                  color: AppColors.c666666, height: 1),
-                            )),
+                          "expend more stamina",
+                          style: 10.w4(color: AppColors.c666666, height: 1),
+                        )),
                         SizedBox(
                           width: 18.w,
                           height: 18.w,
@@ -414,12 +390,13 @@ class _GameState extends State<Game>
             ),
           ),
           SliverList.builder(
-            itemCount: controller.teamPlayers.length,
-              itemBuilder: (context,index){
+              itemCount: controller.teamPlayers.length,
+              itemBuilder: (context, index) {
                 TeamInfo player = controller.teamPlayers[index];
-                bool lastItem = index == controller.teamPlayers.length-1;
+                bool lastItem = index == controller.teamPlayers.length - 1;
                 return Container(
-                  margin: EdgeInsets.only(top: 13.w, right: 16.w,bottom: lastItem?20.w:0),
+                  margin: EdgeInsets.only(
+                      top: 13.w, right: 16.w, bottom: lastItem ? 20.w : 0),
                   height: 84.w,
                   width: double.infinity,
                   child: Stack(
@@ -436,8 +413,8 @@ class _GameState extends State<Game>
                               child: Text(
                                 player.teamPlayerEntity.getPosition(),
                                 textAlign: TextAlign.center,
-                                style: 21.w7(
-                                    color: AppColors.c2170D2, height: 1),
+                                style:
+                                    21.w7(color: AppColors.c2170D2, height: 1),
                               )),
                         ),
                       Container(
@@ -449,27 +426,36 @@ class _GameState extends State<Game>
                         child: Row(
                           children: [
                             10.hGap,
-                            PlayerAwater(
-                              player: player.teamPlayerEntity,
-                              backgroudColor: AppColors.cE1E1E1,
+                            PlayerAvatarWidget(
+                              width: 64.w,
+                              playerId: player.baseInfo.playerId,
+                              isMyPlayer: controller.teamId ==
+                                  Get.find<HomeController>()
+                                      .userEntiry
+                                      .teamLoginInfo
+                                      ?.team
+                                      ?.teamId,
+                              grade: player.baseInfo.grade,
+                              level: player.teamPlayerEntity
+                                  .getBreakThroughGrade(),
+                              backgroundColor: AppColors.cE1E1E1,
                             ),
                             4.hGap,
                             Column(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment
-                                  .start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
                                   children: [
                                     Container(
                                       height: 12.w,
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 5.w),
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 5.w),
                                       decoration: BoxDecoration(
                                           color: AppColors.c000000
                                               .withOpacity(0.05),
                                           borderRadius:
-                                          BorderRadius.circular(6.w)),
+                                              BorderRadius.circular(6.w)),
                                       child: Row(
                                         children: [
                                           Text(
@@ -480,8 +466,7 @@ class _GameState extends State<Game>
                                           ),
                                           8.hGap,
                                           Text(
-                                            "${player.baseInfo
-                                                .playerScore}",
+                                            "${player.baseInfo.playerScore}",
                                             style: 10.w4(
                                                 color: AppColors.c262626,
                                                 height: 1),
@@ -492,13 +477,13 @@ class _GameState extends State<Game>
                                     4.hGap,
                                     Container(
                                       height: 12.w,
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 5.w),
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 5.w),
                                       decoration: BoxDecoration(
                                           color: AppColors.c000000
                                               .withOpacity(0.05),
                                           borderRadius:
-                                          BorderRadius.circular(6.w)),
+                                              BorderRadius.circular(6.w)),
                                       child: Row(
                                         children: [
                                           Text(
@@ -524,8 +509,7 @@ class _GameState extends State<Game>
                                     margin: EdgeInsets.only(left: 6.w),
                                     child: Text(
                                       player.baseInfo.ename,
-                                      style:
-                                      16.w4(color: AppColors.c262626),
+                                      style: 16.w4(color: AppColors.c262626),
                                     )),
                                 6.vGap,
                                 Container(
@@ -540,7 +524,7 @@ class _GameState extends State<Game>
                                         decoration: BoxDecoration(
                                             color: AppColors.c666666,
                                             borderRadius:
-                                            BorderRadius.circular(2.w)),
+                                                BorderRadius.circular(2.w)),
                                         child: Text(
                                           player.baseInfo.position,
                                           style: 10.w7(
@@ -565,7 +549,7 @@ class _GameState extends State<Game>
                     ],
                   ),
                 );
-          })
+              })
         ],
       );
     });
@@ -612,7 +596,7 @@ class _GameState extends State<Game>
                                   Obx(() {
                                     var p =
                                         (controller.teamInfoEntity?.teamExp ??
-                                            0) /
+                                                0) /
                                             double.parse(
                                                 controller.nextLevelTotalExp!) *
                                             180;
@@ -629,12 +613,11 @@ class _GameState extends State<Game>
                                   }),
                                   Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.center,
+                                        CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
                                       Text(
-                                        "${controller.teamInfoEntity
-                                            ?.teamGrade ?? 0}",
+                                        "${controller.teamInfoEntity?.teamGrade ?? 0}",
                                         style: 42.w7(
                                             color: AppColors.cFF7954,
                                             height: 1),
@@ -646,8 +629,7 @@ class _GameState extends State<Game>
                                             height: 1),
                                       ),
                                       Text(
-                                        "${controller.teamInfoEntity?.teamExp ??
-                                            0}/${controller.nextLevelTotalExp}",
+                                        "${controller.teamInfoEntity?.teamExp ?? 0}/${controller.nextLevelTotalExp}",
                                         style: 10.w4(color: AppColors.c666666),
                                       )
                                     ],
@@ -660,10 +642,9 @@ class _GameState extends State<Game>
                           Row(
                             children: [
                               Text(
-                                "Next stage (lv.${controller.nextLevelRuleConfig
-                                    ?.grade ?? 0})",
+                                "Next stage (lv.${controller.nextLevelRuleConfig?.grade ?? 0})",
                                 style:
-                                16.w7(color: AppColors.c262626, height: 1),
+                                    16.w7(color: AppColors.c262626, height: 1),
                               ),
                             ],
                           ),
@@ -693,8 +674,7 @@ class _GameState extends State<Game>
                                 Row(
                                   children: [
                                     Text(
-                                      "${controller.currentLevelRuleConfig
-                                          ?.salaryCap ?? 0}",
+                                      "${controller.currentLevelRuleConfig?.salaryCap ?? 0}",
                                       style: 18.w7(color: AppColors.cB3B3B3),
                                     ),
                                     SizedBox(
@@ -726,8 +706,7 @@ class _GameState extends State<Game>
                                       ),
                                     ),
                                     Text(
-                                      "${controller.nextLevelRuleConfig
-                                          ?.salaryCap ?? 0}",
+                                      "${controller.nextLevelRuleConfig?.salaryCap ?? 0}",
                                       style: 18.w7(color: AppColors.c1BC27D),
                                     ),
                                   ],
@@ -736,11 +715,11 @@ class _GameState extends State<Game>
                             ),
                           ),
                           if (double.parse(controller
-                              .nextLevelRuleConfig?.benchCount ??
-                              "0") -
-                              double.parse(controller
-                                  .currentLevelRuleConfig?.benchCount ??
-                                  "0") !=
+                                          .nextLevelRuleConfig?.benchCount ??
+                                      "0") -
+                                  double.parse(controller
+                                          .currentLevelRuleConfig?.benchCount ??
+                                      "0") !=
                               0) ...[
                             9.vGap,
                             Container(
@@ -751,7 +730,7 @@ class _GameState extends State<Game>
                               height: 90.w,
                               child: Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -767,11 +746,7 @@ class _GameState extends State<Game>
                                     ],
                                   ),
                                   Text(
-                                    "${double.parse(
-                                        controller.nextLevelRuleConfig
-                                            ?.benchCount ?? "0") - double.parse(
-                                        controller.currentLevelRuleConfig
-                                            ?.benchCount ?? "0")}",
+                                    "${double.parse(controller.nextLevelRuleConfig?.benchCount ?? "0") - double.parse(controller.currentLevelRuleConfig?.benchCount ?? "0")}",
                                     style: 18.w7(color: AppColors.c1BC27D),
                                   ),
                                 ],

@@ -2,8 +2,8 @@ import 'dart:math';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/widgets/battle_animation_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:vibration/vibration.dart';
 
 ///
 /// 点击反馈组件
@@ -91,16 +91,8 @@ class _MtInkwellState extends State<MtInkwell>
     }
   }
 
-  vibrate() async {
-    var bool = await Vibration.hasVibrator();
-    var hasAmplitudeControl = await Vibration.hasAmplitudeControl();
-    var hasCustomVibrationsSupport =
-        await Vibration.hasCustomVibrationsSupport();
-    if ((bool ?? false) &&
-        (hasAmplitudeControl ?? false) &&
-        (hasCustomVibrationsSupport ?? false)) {
-      Vibration.vibrate(amplitude: 1, duration: 1);
-    }
+  vibrate() {
+    HapticFeedback.selectionClick();
   }
 
   @override

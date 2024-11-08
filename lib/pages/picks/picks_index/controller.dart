@@ -1,9 +1,6 @@
-import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
-import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_game_info_v2_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/guess_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_param_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
@@ -16,17 +13,15 @@ import 'package:arm_chair_quaterback/common/enums/rank_type.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/utils/param_utils.dart';
-import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:vibration/vibration.dart';
 import '';
 
 import '../../../common/entities/guess_game_info_entity.dart';
-import 'index.dart';
 
 class PicksIndexController extends GetxController {
   PicksIndexController();
@@ -148,7 +143,7 @@ class PicksIndexController extends GetxController {
       cleanAll();
       _initData();
       Get.find<HomeController>().refreshMoneyCoinWidget();
-      Vibration.vibrate();
+      HapticFeedback.selectionClick();
       EasyLoading.showToast("Pick successful!you can check it in History");
     }, onError: (e) {
       EasyLoading.showToast("SERVER ERROR");
