@@ -18,7 +18,7 @@ class TeamRankWidget extends GetView<NewListController> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<NewListController>(
-        id: "teamRank",
+        id: "newsList",
         builder: (context) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,

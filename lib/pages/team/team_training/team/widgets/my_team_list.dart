@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 21:19:02
- * @LastEditTime: 2024-10-24 12:05:36
+ * @LastEditTime: 2024-11-08 09:51:37
  */
 /*
  * @Description: 
@@ -49,10 +49,13 @@ class MainPlayerList extends GetView<TeamController> {
 class SubPlayerList extends GetView<TeamController> {
   const SubPlayerList({super.key});
 
-  Widget _addPlayer() {
+  Widget _addPlayer(list) {
+    bool canAdd = list.length < controller.myTeamEntity.benchCount;
     return InkWell(
         onTap: () {
-          controller.addPlay();
+          if (canAdd) {
+            controller.addPlay();
+          }
         },
         child: Align(
           alignment: Alignment.center,
@@ -67,25 +70,45 @@ class SubPlayerList extends GetView<TeamController> {
                   width: 1.w,
                   color: AppColors.c666666,
                 )),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                IconWidget(
-                  iconWidth: 15.w,
-                  backgroudWitdh: 38.w,
-                  backgroudheight: 38.w,
-                  icon: Assets.uiIconPlusPng,
-                  borderRadius: BorderRadius.circular(19.w),
-                  backgroudColor: AppColors.c666666,
-                  iconColor: AppColors.cFF7954,
-                ),
-                8.vGap,
-                Text(
-                  "Add Player",
-                  style: 12.w4(color: AppColors.cFF7954),
-                )
-              ],
-            ),
+            child: canAdd
+                ? Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconWidget(
+                        iconWidth: 15.w,
+                        backgroudWitdh: 38.w,
+                        backgroudheight: 38.w,
+                        icon: Assets.uiIconPlusPng,
+                        borderRadius: BorderRadius.circular(19.w),
+                        backgroudColor: AppColors.c666666,
+                        iconColor: AppColors.cFF7954,
+                      ),
+                      8.vGap,
+                      Text(
+                        "Add Player",
+                        style: 12.w4(color: AppColors.cFF7954),
+                      )
+                    ],
+                  )
+                : Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconWidget(
+                        iconWidth: 15.w,
+                        backgroudWitdh: 38.w,
+                        backgroudheight: 38.w,
+                        icon: Assets.uiIconLockPng,
+                        borderRadius: BorderRadius.circular(19.w),
+                        backgroudColor: AppColors.c666666,
+                        iconColor: AppColors.cFF7954,
+                      ),
+                      8.vGap,
+                      Text(
+                        "The substitute is full",
+                        style: 12.w4(color: AppColors.cFF7954),
+                      )
+                    ],
+                  ),
           ),
         ));
   }
@@ -109,7 +132,7 @@ class SubPlayerList extends GetView<TeamController> {
             separatorBuilder: (context, index) => 9.vGap,
             itemCount: list.length,
           ),
-          if (list.length < controller.myTeamEntity.benchCount) _addPlayer()
+          _addPlayer(list)
         ],
       ),
     );

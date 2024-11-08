@@ -13,9 +13,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class LineUpTab extends GetView<TeamController> {
+class LineUpTab extends StatefulWidget {
   const LineUpTab({super.key});
 
+  @override
+  State<LineUpTab> createState() => _LineUpTabState();
+}
+
+class _LineUpTabState extends State<LineUpTab>
+    with AutomaticKeepAliveClientMixin {
+  final controller = Get.find<TeamController>();
   Widget _blackContainer({required double width, required Widget child}) {
     return Container(
       width: width,
@@ -32,6 +39,7 @@ class LineUpTab extends GetView<TeamController> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     var scrollController = ScrollController();
     return GetBuilder<TeamController>(builder: (_) {
       return SingleChildScrollView(
@@ -84,6 +92,8 @@ class LineUpTab extends GetView<TeamController> {
                       SizedBox(height: 6.h),
                       CustomLinearProgressBar(
                           width: 91.w,
+                          progressColor: AppColors.cF2F2F2,
+                          backgroundColor: AppColors.c666666,
                           progress: controller.myTeamEntity.salary /
                               controller.myTeamEntity.salaryCap),
                       12.vGap,
@@ -177,6 +187,11 @@ class LineUpTab extends GetView<TeamController> {
                 //   "expend more stamina",
                 //   style: 10.w7(color: AppColors.cB3B3B3),
                 // ),
+                // Expanded(child: Container()),
+                //  Text(
+                //   "Cancel",
+                //   style: 19.w7(color: AppColors.cF1F1F1),
+                // ),
               ],
             ),
             // ignore: prefer_const_constructors
@@ -203,4 +218,7 @@ class LineUpTab extends GetView<TeamController> {
       );
     });
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

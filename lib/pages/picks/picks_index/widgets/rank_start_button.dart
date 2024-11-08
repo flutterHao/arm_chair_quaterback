@@ -75,7 +75,7 @@ class RankStartButton extends StatelessWidget {
                         color: AppColors.cFF7954,
                         borderRadius: BorderRadius.circular(18.w)),
                     alignment: Alignment.center,
-                    child: AnimatedNumber(number: size),
+                    child: AnimatedScaleNumber(number: size),
                     // child: Text.rich(
                     //     textAlign: TextAlign.end,
                     //     TextSpan(children: [

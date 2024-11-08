@@ -19,7 +19,7 @@ class StatsRankWidget extends GetView<NewListController> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<NewListController>(
-        id: "statsRank",
+        id: "newsList",
         builder: (_) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,

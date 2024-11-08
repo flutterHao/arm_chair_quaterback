@@ -8,6 +8,7 @@ import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comm
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/emoji_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/send_comment_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
+import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/user_avater_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -35,25 +36,30 @@ class CommentItemView extends GetView<CommentController> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ImageWidget(
+          UserAvaterWidget(
             url: Utils.getAvaterUrl(item.teamLogo),
             width: 36.w,
             height: 36.w,
-            borderRadius: BorderRadius.circular(12.w),
-            errorWidget: Container(
-              width: 36.w,
-              height: 36.w,
-              alignment: Alignment.bottomCenter,
-              decoration: BoxDecoration(
-                  color: AppColors.cD9D9D9,
-                  borderRadius: BorderRadius.circular(4.w)),
-              child: Image.asset(
-                Assets.uiDefault_03Png,
-                width: 30.w,
-                fit: BoxFit.fitWidth,
-              ),
-            ),
           ),
+          // ImageWidget(
+          //   url: Utils.getAvaterUrl(item.teamLogo),
+          //   width: 36.w,
+          //   height: 36.w,
+          //   borderRadius: BorderRadius.circular(12.w),
+          //   errorWidget: Container(
+          //     width: 36.w,
+          //     height: 36.w,
+          //     alignment: Alignment.bottomCenter,
+          //     decoration: BoxDecoration(
+          //         color: AppColors.cD9D9D9,
+          //         borderRadius: BorderRadius.circular(4.w)),
+          //     child: Image.asset(
+          //       Assets.uiDefault_03Png,
+          //       width: 30.w,
+          //       fit: BoxFit.fitWidth,
+          //     ),
+          //   ),
+          // ),
           6.hGap,
           Expanded(
             child: Column(
@@ -211,25 +217,30 @@ class SubCommentItemView extends GetView<CommentController> {
               /// 用户信息
               Row(
                 children: [
-                  ImageWidget(
+                  UserAvaterWidget(
                     url: Utils.getAvaterUrl(item.teamLogo),
                     width: 18.w,
                     height: 18.w,
-                    borderRadius: BorderRadius.circular(6.w),
-                    errorWidget: Container(
-                      width: 18.w,
-                      height: 18.w,
-                      alignment: Alignment.bottomCenter,
-                      decoration: BoxDecoration(
-                          color: AppColors.cD9D9D9,
-                          borderRadius: BorderRadius.circular(4.w)),
-                      child: Image.asset(
-                        Assets.uiDefault_03Png,
-                        width: 15.w,
-                        fit: BoxFit.fitWidth,
-                      ),
-                    ),
                   ),
+                  // ImageWidget
+                  //   url: Utils.getAvaterUrl(item.teamLogo),
+                  //   width: 18.w,
+                  //   height: 18.w,
+                  //   borderRadius: BorderRadius.circular(6.w),
+                  //   errorWidget: Container(
+                  //     width: 18.w,
+                  //     height: 18.w,
+                  //     alignment: Alignment.bottomCenter,
+                  //     decoration: BoxDecoration(
+                  //         color: AppColors.cD9D9D9,
+                  //         borderRadius: BorderRadius.circular(4.w)),
+                  //     child: Image.asset(
+                  //       Assets.uiDefault_03Png,
+                  //       width: 15.w,
+                  //       fit: BoxFit.fitWidth,
+                  //     ),
+                  //   ),
+                  // ),
                   3.5.hGap,
                   item.teamId != (controller.userEntity.team?.teamId ?? 0)
                       ? Text(
@@ -344,25 +355,30 @@ class HotComment extends GetView<CommentController> {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ImageWidget(
+            UserAvaterWidget(
               url: Utils.getAvaterUrl(item.teamLogo),
               width: 36.w,
               height: 36.w,
-              borderRadius: BorderRadius.circular(12.w),
-              errorWidget: Container(
-                width: 36.w,
-                height: 36.w,
-                alignment: Alignment.bottomCenter,
-                decoration: BoxDecoration(
-                    color: AppColors.cD9D9D9,
-                    borderRadius: BorderRadius.circular(4.w)),
-                child: Image.asset(
-                  Assets.uiDefault_03Png,
-                  width: 30.w,
-                  fit: BoxFit.fitWidth,
-                ),
-              ),
             ),
+            // ImageWidget(
+            //   url: Utils.getAvaterUrl(item.teamLogo),
+            //   width: 36.w,
+            //   height: 36.w,
+            //   borderRadius: BorderRadius.circular(12.w),
+            //   errorWidget: Container(
+            //     width: 36.w,
+            //     height: 36.w,
+            //     alignment: Alignment.bottomCenter,
+            //     decoration: BoxDecoration(
+            //         color: AppColors.cD9D9D9,
+            //         borderRadius: BorderRadius.circular(4.w)),
+            //     child: Image.asset(
+            //       Assets.uiDefault_03Png,
+            //       width: 30.w,
+            //       fit: BoxFit.fitWidth,
+            //     ),
+            //   ),
+            // ),
             6.hGap,
             Expanded(
               child: Column(

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 20:08:22
- * @LastEditTime: 2024-10-31 20:03:40
+ * @LastEditTime: 2024-11-08 15:42:07
  */
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -13,19 +13,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class PlayerBagTab extends GetView<TeamController> {
+class PlayerBagTab extends StatefulWidget {
   const PlayerBagTab({super.key});
 
   @override
+  State<PlayerBagTab> createState() => _PlayerBagTabState();
+}
+
+class _PlayerBagTabState extends State<PlayerBagTab>
+    with AutomaticKeepAliveClientMixin {
+  final controller = Get.find<TeamController>();
+  final scrollController = ScrollController();
+
+  @override
   Widget build(BuildContext context) {
-    var scrollController = ScrollController();
+    super.build(context);
     return GetBuilder<TeamController>(builder: (_) {
-      var canSelect = controller.myBagList
-          .where((e) => controller.canChange(true, e))
-          .toList();
-      var cantSelect = controller.myBagList
-          .where((e) => !controller.canChange(true, e))
-          .toList();
+      var canSelect =
+          controller.myBagList.where((e) => controller.isSame(e)).toList();
+      var cantSelect =
+          controller.myBagList.where((e) => !(controller.isSame(e))).toList();
       canSelect.sort((a, b) => a.position.compareTo(b.position));
       cantSelect.sort((a, b) => a.position.compareTo(b.position));
       List<TeamPlayerInfoEntity> list = List.from(canSelect)
@@ -46,4 +53,7 @@ class PlayerBagTab extends GetView<TeamController> {
       );
     });
   }
+
+  @override
+  bool get wantKeepAlive => false;
 }

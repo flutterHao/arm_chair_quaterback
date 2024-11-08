@@ -154,7 +154,7 @@ class NbaPlayerInfosPlayerDataCapList {
 
   num getValue(String key) {
     if (key.toLowerCase() == "reb") {
-      return reb??_getREB();
+      return reb ?? _getREB();
     }
     var json = toJson();
     for (var k in json.keys) {
@@ -170,13 +170,13 @@ class NbaPlayerInfosPlayerDataCapList {
   }
 
   double getThreePT() {
-    return double.parse((threePt??threePm).toStringAsFixed(0));
+    return double.parse((threePt ?? threePm).toStringAsFixed(0));
   }
 
   double getMaxValue() {
-    var value = max(pts,(threePt??threePm).toDouble());
+    var value = max(pts, (threePt ?? threePm).toDouble());
     value = max(value, ast);
-    value = max(value, reb??(dreb + oreb));
+    value = max(value, reb ?? (dreb + oreb));
     value = max(value, blk);
     value = max(value, stl);
     return value.toDouble();
@@ -209,7 +209,7 @@ class NbaPlayerInfosPlayerBaseInfoList {
   late int teamId = 0;
   late String name = "";
   late int property = 0;
-  late String position = "C";
+  late String position = "";
   late List<int> tag = [];
   late int beforeMarketPrice = 0;
   late int playerId = 0;

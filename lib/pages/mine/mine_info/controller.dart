@@ -1,3 +1,9 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-10-15 19:27:27
+ * @LastEditTime: 2024-11-07 16:05:13
+ */
 import 'package:get/get.dart';
 
 import 'index.dart';
@@ -6,14 +12,6 @@ class MineInfoController extends GetxController {
   MineInfoController();
 
   final state = MineInfoState();
-
-  // tap
-  void handleTap(int index) {
-    Get.snackbar(
-      "标题",
-      "消息",
-    );
-  }
 
   /// 在 widget 内存中分配后立即调用。
   @override

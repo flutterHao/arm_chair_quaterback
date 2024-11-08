@@ -192,6 +192,33 @@ class TrainingController extends GetxController
     return 1;
   }
 
+  void startScroll(int count) async {
+    currentAward = [0, 0, 0];
+    slotCard = [true.obs, true.obs, true.obs];
+    slotCtrl.forward();
+    update(["slot"]);
+
+    if (playerScrollCtrl.hasClients) {
+      // int delay = (50 + pow(count, 2.8)).toInt(); // Start fast, then slow
+      await playerScrollCtrl.animateTo(
+        playerScrollCtrl.offset + 75.w * 20,
+        duration: const Duration(milliseconds: 2000),
+        // curve: const Cubic(0.32, 0.48, 0.32, 0.98),
+        // curve: const Cubic(0.22, 0.53, 0, 1.02),
+        curve: const Cubic(0.27, 0.59, 0.19, 1.02),
+      );
+
+      // 当滚动到最后一个可见项时，重置到起点
+      if (playerScrollCtrl.offset >=
+          playerScrollCtrl.position.maxScrollExtent) {
+        playerScrollCtrl.jumpTo(0);
+      }
+      currentIndex.value =
+          ((playerScrollCtrl.offset ~/ 75.w).ceil() + 2) % (playerList.length);
+      shootBall();
+    }
+  }
+
   // 投篮的逻辑
   void shootBall() {
     if (isShot.value || isPlaying) return;
@@ -238,33 +265,6 @@ class TrainingController extends GetxController
       // });
       // slotAnimation();
     });
-  }
-
-  void startScroll(int count) async {
-    currentAward = [0, 0, 0];
-    slotCard = [true.obs, true.obs, true.obs];
-    slotCtrl.forward();
-    update(["slot"]);
-
-    if (playerScrollCtrl.hasClients) {
-      // int delay = (50 + pow(count, 2.8)).toInt(); // Start fast, then slow
-      await playerScrollCtrl.animateTo(
-        playerScrollCtrl.offset + 75.w * 20,
-        duration: const Duration(milliseconds: 2000),
-        // curve: const Cubic(0.32, 0.48, 0.32, 0.98),
-        // curve: const Cubic(0.22, 0.53, 0, 1.02),
-        curve: const Cubic(0.27, 0.59, 0.19, 1.02),
-      );
-
-      // 当滚动到最后一个可见项时，重置到起点
-      if (playerScrollCtrl.offset >=
-          playerScrollCtrl.position.maxScrollExtent) {
-        playerScrollCtrl.jumpTo(0);
-      }
-      currentIndex.value =
-          ((playerScrollCtrl.offset % 75.w).ceil()) % (playerList.length);
-      // shootBall();
-    }
   }
 
   void setBallAnimation(int type) {

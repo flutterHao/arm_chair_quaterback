@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-14 17:34:35
- * @LastEditTime: 2024-09-14 18:22:32
+ * @LastEditTime: 2024-11-07 18:24:10
  */
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/services/storage.dart';
@@ -21,6 +21,8 @@ class DeviceUtils {
       case TargetPlatform.android:
         AndroidDeviceInfo androidInfo = await DeviceInfoPlugin().androidInfo;
         deviceId = androidInfo.id; // Android 设备 ID
+        // String? fingerprint = androidInfo.fingerprint.split(":user").first;
+        // deviceId = fingerprint;
         break;
       case TargetPlatform.iOS:
         IosDeviceInfo iosInfo = await DeviceInfoPlugin().iosInfo;
@@ -31,12 +33,9 @@ class DeviceUtils {
     }
 
     // 如果设备 ID 为空，生成并保存一个唯一标识符
-    if (deviceId == null) {
-      // 生成一个唯一 ID（使用 UUID）
-      deviceId = const Uuid().v4();
-      StorageService.to.setString(
-          Constant.deviceId, deviceId); // 将生成的 ID 存储到 SharedPreferences
-    }
+    deviceId ??= const Uuid().v4();
+    StorageService.to.setString(
+        Constant.deviceId, deviceId); // 将生成的 ID 存储到 SharedPreferences
 
     return deviceId;
   }

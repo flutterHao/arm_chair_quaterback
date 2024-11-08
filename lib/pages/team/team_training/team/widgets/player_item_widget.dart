@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2024-11-07 11:37:11
+ * @LastEditTime: 2024-11-08 16:58:10
  */
 /*
  * @Description: 
@@ -17,6 +17,9 @@ import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
+import 'package:arm_chair_quaterback/common/widgets/animation_buttom.dart';
+import 'package:arm_chair_quaterback/common/widgets/player_avatar_widget.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/linear_progress_widget.dart';
@@ -76,9 +79,13 @@ class PlayerItem extends GetView<TeamController> {
         child: Row(
           children: [
             10.hGap,
-            PlayerAwater(
-              backgroudColor: AppColors.cE1E1E1,
-              player: item,
+            PlayerAvatarWidget(
+              backgroundColor: AppColors.cE1E1E1,
+              playerId: item.playerId,
+              width: 64.w,
+              grade:
+                  Utils.formatGrade(Utils.getPlayBaseInfo(item.playerId).grade),
+              level: item.breakThroughGrade,
             ),
             SizedBox(
               width: 3.w,
@@ -171,8 +178,12 @@ class PlayerItem extends GetView<TeamController> {
                   backgroundColor: Colors.black12,
                 ),
               ),
+              AnimatedNum(
+                number: item.power * 100 ~/ 100,
+                textStyle: 10.w7(color: AppColors.c000000, height: 1),
+              ),
               Text(
-                "${(item.power * 100 / 100).toStringAsFixed(0)}%",
+                "%",
                 style: 10.w7(color: AppColors.c000000, height: 1),
               ),
             ],
@@ -207,8 +218,9 @@ class PlayerItem extends GetView<TeamController> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                    width: 18.w,
+                    // width: 18.w,
                     height: 12.w,
+                    padding: EdgeInsets.symmetric(horizontal: 3.w),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(2.w),
@@ -240,7 +252,7 @@ class PlayerItem extends GetView<TeamController> {
         isBag ? 96.hGap : _recover(),
         9.hGap,
 
-        InkWell(
+        AnimatedButton(
           onTap: () {
             controller.playerItemOnTap(isBag, item);
           },
@@ -260,7 +272,7 @@ class PlayerItem extends GetView<TeamController> {
   }
 
   Widget _recover() {
-    return InkWell(
+    return AnimatedButton(
       onTap: () {
         controller.recoverPower(uuid: item.uuid);
       },
@@ -370,7 +382,8 @@ class PlayerAwater extends StatelessWidget {
     return InkWell(
       onTap: () {
         Get.toNamed(RouteNames.picksPlayerDetail,
-            arguments: PlayerDetailPageArguments(player.playerId,isMyPlayer: true));
+            arguments:
+                PlayerDetailPageArguments(player.playerId, isMyPlayer: true));
       },
       child: Stack(
         children: [

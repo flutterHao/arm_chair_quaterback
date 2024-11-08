@@ -82,9 +82,9 @@ class NetInterceptor extends InterceptorsWrapper {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
     Loading.dismiss();
-
     ErrorEntity eInfo = createErrorEntity(err);
-    handlerError(eInfo);
+    Log.e(
+        'url -> ${eInfo.url} \n error.code -> ${eInfo.code} \n error.message -> ${eInfo.message}');
     handler.next(err);
   }
 
@@ -193,19 +193,15 @@ class NetInterceptor extends InterceptorsWrapper {
     return headers;
   }
 
-  /// 错误处理
+  /// 处理服务器端返回的错误
   void handlerError(ErrorEntity eInfo) {
-    Log.e(
+    Log.i(
         'url -> ${eInfo.url} \n error.code -> ${eInfo.code} \n error.message -> ${eInfo.message}');
 
-    ///TODO
-    // if (eInfo.code != 401) {
-    // EasyLoading.showError(eInfo.message);
-    // }
     ///服务器返回错误
-    // if (eInfo.code < 500) {
-    //   EasyLoading.showError(eInfo.message);
-    // }
+    if (eInfo.code > 1000) {
+      EasyLoading.showError(eInfo.message);
+    }
   }
 
   /// 错误信息

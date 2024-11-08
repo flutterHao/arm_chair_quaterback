@@ -2,10 +2,12 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/entities/my_team_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/line_up_tab.dart';
@@ -133,18 +135,19 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   void playerItemOnTap(bool isBag, TeamPlayerInfoEntity item) {
     /// 如果是上阵
     if (!isBag) {
-      item1 = item;
+      item1 = TeamPlayerInfoEntity.fromJson(item.toJson());
       item1.isChange.value = true;
       if (item2.isChange.value == true) {
         ///已经选择了背包直接替换
         changeTeamPlayer();
+      } else {
+        onTabChange(1);
       }
-      onTabChange(1);
     }
 
     /// 如果是背包
     else {
-      item2 = item;
+      item2 = TeamPlayerInfoEntity.fromJson(item.toJson());
       item2.isChange.value = true;
       if (isAdd) {
         ///如果选择了添加直接添加
@@ -158,40 +161,66 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   }
 
 //是否能够切换
+  // bool canChange0(bool isBag, TeamPlayerInfoEntity item) {
+  //   bool canSelect = true;
+  //   if (!item1.isChange.value && !item2.isChange.value && !isAdd) {
+  //     return canSelect;
+  //   }
+  //   String thisPos = Utils.getPlayBaseInfo(item.playerId).position;
+
+  //   if (isBag) {
+  //     String pos = Utils.getPlayBaseInfo(item1.playerId).position;
+  //     canSelect = isAdd
+  //         ? item.position == -1
+  //         : item.position == -1 &&
+  //             thisPos == pos &&
+  //             item.playerId != item1.playerId;
+  //   } else {
+  //     String pos = Utils.getPlayBaseInfo(item2.playerId).position;
+  //     canSelect = thisPos == pos && item.playerId != item2.playerId;
+  //   }
+  //   return canSelect;
+  // }
+
+  //是否能够切换
   bool canChange(bool isBag, TeamPlayerInfoEntity item) {
     bool canSelect = true;
-    if (!item1.isChange.value && !item2.isChange.value) {
+    if (!item1.isChange.value && !item2.isChange.value && !isAdd) {
       return canSelect;
     }
-    String thisPos = Utils.getPlayBaseInfo(item.playerId).position;
-
     if (isBag) {
-      String pos = Utils.getPlayBaseInfo(item1.playerId).position;
       canSelect = isAdd
-          ? item.position == -1
-          : thisPos == pos && item.playerId != item1.playerId;
+          ? item.position <= 0
+          : item.position <= 0 && item.playerId != item1.playerId;
     } else {
-      String pos = Utils.getPlayBaseInfo(item2.playerId).position;
-      canSelect = thisPos == pos && item.playerId != item2.playerId;
+      canSelect = item.playerId != item2.playerId;
     }
     return canSelect;
   }
 
+  bool isSame(TeamPlayerInfoEntity item) {
+    // String thisPos = Utils.getPlayBaseInfo(item.playerId).position;
+    if (!item1.isChange.value && !item2.isChange.value && !isAdd) {
+      return true;
+    }
+    NbaPlayerInfosPlayerBaseInfoList player =
+        Utils.getPlayBaseInfo(item.playerId);
+    var isSame = isAdd
+        ? item.position == -1
+        : item.position == -1 &&
+            player.position.contains(Utils.getPosition(item1.position)) &&
+            item.playerId != item1.playerId;
+    return isSame;
+  }
+
   void changeTeamPlayer() async {
-    await TeamApi.changeTeamPlayer(item1.uuid, isAdd ? null : item2.uuid)
-        .then((v) {
-      myTeamEntity = v;
-      // item1.isChange.value = false;
-      // item2.isChange.value = false;
-      // isAdd = false;
-      // update();
-    }).whenComplete(() {
-      item1 = TeamPlayerInfoEntity();
-      item2 = TeamPlayerInfoEntity();
-      item2.position = -1;
-      isAdd = false;
-      update();
-    });
+    myTeamEntity =
+        await TeamApi.changeTeamPlayer(item1.uuid, isAdd ? null : item2.uuid);
+    myBagList = await TeamApi.getMyBagPlayers();
+    item1.isChange.value = false;
+    item2.isChange.value = false;
+    isAdd = false;
+    update();
   }
 
   void onTabChange(v) {

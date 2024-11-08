@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-29 17:10:16
- * @LastEditTime: 2024-11-07 12:52:31
+ * @LastEditTime: 2024-11-07 14:51:51
  */
 
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
@@ -26,7 +26,7 @@ class PlayerAvatarWidget extends StatelessWidget {
     this.backgroundColor = AppColors.cD9D9D9,
     this.radius,
     this.fontSize = 14,
-    this.fontColor = AppColors.cFFFFFF,
+    this.fontColor = AppColors.c262626,
     // this.showGrade = true,
     this.playerId = 0,
     this.getXRouteId,
@@ -39,7 +39,7 @@ class PlayerAvatarWidget extends StatelessWidget {
   final double width;
   final int playerId;
   final String? grade;
-  final String? level;
+  final int? level;
   final Color? backgroundColor;
   final double? radius;
   final double fontSize;
@@ -60,7 +60,6 @@ class PlayerAvatarWidget extends StatelessWidget {
               id: getXRouteId)
           : null,
       child: Stack(
-        // alignment: Alignment.bottomCenter,
         children: [
           Container(
               height: width,
@@ -78,11 +77,11 @@ class PlayerAvatarWidget extends StatelessWidget {
           //球员等级
           if (ObjectUtil.isNotEmpty(grade))
             Positioned(
-              top: 0,
-              left: 0,
+              top: 4.5.w,
+              left: 0.w,
               child: Text(
                 Utils.formatGrade(grade ?? 'SS'),
-                style: 14.w7(color: fontColor),
+                style: 14.w7(color: fontColor, height: 1),
               ),
             ),
 
@@ -91,19 +90,22 @@ class PlayerAvatarWidget extends StatelessWidget {
             Positioned(
               top: 1.5.w,
               right: 0.5.w,
-              child: IconWidget(
-                iconWidth: 17.w,
-                icon: Assets.uiIconStar_01Png,
-                iconColor: AppColors.cFF7954,
-              ),
-            ),
-          if (ObjectUtil.isNotEmpty(level))
-            Positioned(
-              right: 6.w,
-              top: 6.5.w,
-              child: Text(
-                level!,
-                style: 11.w7(color: AppColors.cFFFFFF, height: 1),
+              child: Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  IconWidget(
+                    iconWidth: 18.w,
+                    icon: Assets.uiIconStar_01Png,
+                    iconColor: AppColors.cFF7954,
+                  ),
+                  Positioned(
+                    top: 5.w,
+                    child: Text(
+                      "$level",
+                      style: 11.w7(color: AppColors.cFFFFFF, height: 1),
+                    ),
+                  ),
+                ],
               ),
             ),
         ],

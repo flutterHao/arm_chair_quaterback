@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-25 11:48:38
- * @LastEditTime: 2024-09-27 21:40:42
+ * @LastEditTime: 2024-11-07 18:17:34
  */
 /*
  * @Description: 
@@ -130,8 +130,7 @@ class HomeController extends GetxController {
 
   ///鉴权、获取用户信息
   Future login() async {
-    // await UserStore.to.setToken("");
-    // return;
+    await UserStore.to.setToken("");
     String accountName = await getUid();
     int serviceId = 0;
     String userIp = "192.168.12.46";
@@ -143,16 +142,19 @@ class HomeController extends GetxController {
       id: id,
     );
     await UserStore.to.setToken(v);
-    Log.d("鉴权获取到token=$v，开始游客登陆");
+    Log.d("用户=$accountName ，鉴权获取到token=$v，开始游客登陆");
     userEntiry = await UserApi.visitorLogin();
     update([GetXBuilderIds.idGlobalUserEntityRefresh]);
   }
 
   Future<String> getUid() async {
     String accountName = StorageService.to.getString(Constant.deviceId);
-    if (ObjectUtil.isEmpty(accountName)) {
-      accountName = await DeviceUtils.getDeviceId();
-    }
+    accountName = await DeviceUtils.getDeviceId();
+    // if (ObjectUtil.isEmpty(accountName)) {
+    //   accountName = await DeviceUtils.getDeviceId();
+    // }
+
+    Log.d("deviceId=$accountName");
     return accountName;
   }
 

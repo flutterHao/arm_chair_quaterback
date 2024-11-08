@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2024-11-06 21:00:51
+ * @LastEditTime: 2024-11-07 18:14:16
  */
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
@@ -16,6 +16,7 @@ import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -35,6 +36,7 @@ class NewListController extends GetxController {
   String season = "";
   String seasonType = "Regular%20Season";
   String pointType = "";
+  int errCount = 0;
 
   // @override
   // void onInit() {
@@ -68,12 +70,15 @@ class NewListController extends GetxController {
       getStarTeamList(),
     ]).then((v) {
       // refreshCtrl.refreshCompleted();
+      update(['newsList']);
     }).whenComplete(() {
       refreshCtrl.refreshCompleted();
     }).catchError((e) {
-      // Log.e("getNewsList error,开始重试");
+      if (errCount >= 3) return;
       Future.delayed(const Duration(seconds: 1)).then((value) {
-        // refreshData();
+        errCount++;
+        refreshData();
+        Log.e("getNewsList error,开始重试$errCount");
       });
     });
   }
@@ -88,7 +93,7 @@ class NewListController extends GetxController {
   Future getNewsList() async {
     await NewsApi.getNewsList().then((value) {
       state.newsEntity = value;
-      update(['newsList']);
+      // update(['newsList']);
     });
   }
 
@@ -121,7 +126,7 @@ class NewListController extends GetxController {
     await NewsApi.startRank(season: season, statType: type).then((value) {
       state.statsList = value;
       setTeamMap();
-      update(['statsRank']);
+      // update(['statsRank']);
     });
   }
 
@@ -139,7 +144,7 @@ class NewListController extends GetxController {
         1: state.teamRankList.where((e) => hasContain(1, e)).toList(),
         2: state.teamRankList.where((e) => hasContain(2, e)).toList(),
       };
-      update(['teamRank']);
+      // update(['teamRank']);
     });
   }
 

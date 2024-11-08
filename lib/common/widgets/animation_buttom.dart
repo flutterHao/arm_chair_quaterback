@@ -1,17 +1,11 @@
 /*
- * @Description: 
- * @Author: lihonghao
- * @Date: 2024-11-04 11:52:50
- * @LastEditTime: 2024-11-04 16:59:06
- */
-import 'package:flutter/material.dart';
-
-/*
  * @Description: 动画按钮缩小放大
  * @Author: lihonghao
  * @Date:  2024-11-04 09:46:00
- * @LastEditTime: 2024-11-04 16:55:07
+ * @LastEditTime: 2024-11-08 10:48:54
  */
+import 'package:flutter/material.dart';
+
 class AnimatedButton extends StatefulWidget {
   final VoidCallback onTap;
   final Widget child;
@@ -30,6 +24,7 @@ class _AnimatedButtonState extends State<AnimatedButton>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
+  // bool _isLongTap = false;
 
   @override
   void initState() {
@@ -48,6 +43,14 @@ class _AnimatedButtonState extends State<AnimatedButton>
         curve: Curves.easeInOut,
       ),
     );
+
+    // 添加状态监听器
+    // _controller.addStatusListener((status) {
+    //   if (status == AnimationStatus.completed && _isLongTap) {
+    //     _controller.reverse();
+    //     _isLongTap = false;
+    //   }
+    // });
   }
 
   @override
@@ -58,12 +61,19 @@ class _AnimatedButtonState extends State<AnimatedButton>
 
   void _onTap() {
     if (_controller.isDismissed) {
-      _controller.forward().then((_) {
+      _controller.forward().then((v) {
         _controller.reverse();
       });
     }
     widget.onTap.call();
   }
+
+  // void _onTapDown(TapDownDetails details) {
+  //   if (_controller.isDismissed) {
+  //     _controller.forward();
+  //     _isLongTap = true;
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -72,8 +82,9 @@ class _AnimatedButtonState extends State<AnimatedButton>
       builder: (context, child) {
         return Transform.scale(
           scale: _scaleAnimation.value,
-          child: InkWell(
+          child: GestureDetector(
             onTap: _onTap,
+            // onTapDown: _onTapDown,
             child: widget.child,
           ),
         );

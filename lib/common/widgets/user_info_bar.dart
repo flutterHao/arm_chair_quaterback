@@ -13,6 +13,7 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/top_dialog.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
+import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/user_avater_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -73,15 +74,20 @@ class UserInfoBar extends StatelessWidget {
                     }
                     _showDialog(context, routeId);
                   },
-                  child: Container(
-                    width: 80.w,
-                    alignment: Alignment.centerLeft,
-                    child: ImageWidget(
-                        width: 36.w,
-                        height: 36.w,
-                        borderRadius: BorderRadius.circular(12.w),
-                        imageFailedPath: Assets.uiHead_01Png,
-                        url: Utils.getAvaterUrl(info.team?.teamLogo ?? 0)),
+                  // child: Container(
+                  //   width: 80.w,
+                  //   alignment: Alignment.centerLeft,
+                  //   child: ImageWidget(
+                  //       width: 36.w,
+                  //       height: 36.w,
+                  //       borderRadius: BorderRadius.circular(12.w),
+                  //       imageFailedPath: Assets.uiHead_01Png,
+                  //       url: Utils.getAvaterUrl(info.team?.teamLogo ?? 0)),
+                  // ),
+                  child: UserAvaterWidget(
+                    url: Utils.getAvaterUrl(info.team?.teamLogo ?? 0),
+                    width: 36.w,
+                    height: 36.w,
                   ),
                 ),
                 Expanded(
