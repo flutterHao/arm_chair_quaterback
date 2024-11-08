@@ -42,7 +42,7 @@ class RankStartButton extends StatelessWidget {
 
     return MtInkwell(
       scaleX: true,
-      minScale: 0.98,
+      minScale: 0.96,
       onTap: () async {
         print('InkWellds');
         if (minLimit()) {
