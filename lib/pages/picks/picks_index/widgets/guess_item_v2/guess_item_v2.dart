@@ -8,6 +8,7 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/player_avatar_widget.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
@@ -178,7 +179,8 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
           children: [
             Flexible(
               flex: 1,
-              child: InkWell(
+              child: MtInkwell(
+                vibrate: true,
                 onTap: () {
                   if (maxLimit(picksIndexController, player)) {
                     return;
@@ -224,7 +226,8 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
             ),
             Flexible(
               flex: 1,
-              child: InkWell(
+              child: MtInkwell(
+                vibrate: true,
                 onTap: () {
                   if (maxLimit(picksIndexController, player)) {
                     return;

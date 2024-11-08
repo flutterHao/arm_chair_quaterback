@@ -242,8 +242,8 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
       ChartSampleData(
         x: '3PT',
         y: y,
-        yValue: (obj.threePts / rate).isNaN ? 0 : obj.threePts / rate,
-        secondSeriesYValue: obj.threePts,
+        yValue: (obj.getThreePT() / rate).isNaN ? 0 : obj.getThreePT() / rate,
+        secondSeriesYValue: obj.getThreePT(),
       ),
       ChartSampleData(
         x: 'AST',

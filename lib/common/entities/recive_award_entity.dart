@@ -78,7 +78,7 @@ class ReciveAwardL5Avg {
   }
 
   double _getREB() {
-    return (oreb + dreb) / 2;
+    return (oreb + dreb);
   }
 
   @override

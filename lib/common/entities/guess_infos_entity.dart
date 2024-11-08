@@ -137,7 +137,7 @@ class GuessInfosGuessReferenceValue {
   }
 
   double _getREB() {
-    return (dreb + oreb) / 2;
+    return (dreb + oreb);
   }
 
   @override

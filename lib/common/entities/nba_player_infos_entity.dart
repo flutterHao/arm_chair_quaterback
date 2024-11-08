@@ -88,17 +88,17 @@ class NbaPlayerInfosPlayerDataAvgList {
   }
 
   double _getREB() {
-    return (oreb + dreb) / 2;
+    return (oreb + dreb);
   }
 
   double getThreePT() {
-    return double.parse((threePm / threePa * 100).toStringAsFixed(0));
+    return double.parse((threePm).toStringAsFixed(0));
   }
 
   double getMaxValue() {
     var value = max(pts, getThreePT());
     value = max(value, ast);
-    value = max(value, (dreb + oreb) / 2);
+    value = max(value, (dreb + oreb));
     value = max(value, blk);
     value = max(value, stl);
     return value + 20;
@@ -166,17 +166,17 @@ class NbaPlayerInfosPlayerDataCapList {
   }
 
   double _getREB() {
-    return (oreb + dreb) / 2;
+    return (oreb + dreb).toDouble();
   }
 
   double getThreePT() {
-    return double.parse((threePm / threePa * 100).toStringAsFixed(0));
+    return double.parse((threePt??threePm).toStringAsFixed(0));
   }
 
   double getMaxValue() {
-    var value = max(pts,threePt??threePts.toDouble());
+    var value = max(pts,(threePt??threePm).toDouble());
     value = max(value, ast);
-    value = max(value, reb??(dreb + oreb) / 2);
+    value = max(value, reb??(dreb + oreb));
     value = max(value, blk);
     value = max(value, stl);
     return value.toDouble();
