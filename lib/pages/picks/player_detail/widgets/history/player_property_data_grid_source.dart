@@ -67,7 +67,7 @@ class PlayerPropertyDataGridSource extends DataGridSource {
       var value = row.getCells()[i].value;
       var columnName = row.getCells()[i].columnName;
       var avgValue = playerSeasonGameRankEntity
-          .toJson()[(columnName == "to" ? "TOV" : columnName).toUpperCase()];
+          .toJson()[(columnName == "to" ? "TOV" : columnName).toUpperCase()]??0;
       Widget widget;
       if (i == 0 || i == 1) {
         if(i == 0){

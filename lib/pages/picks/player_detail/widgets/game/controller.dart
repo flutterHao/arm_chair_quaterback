@@ -146,9 +146,9 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
 
   _initData() {
     loadStatus.value = LoadDataStatus.loading;
-    var futures = [
+    List<Future> futures = [
       CacheApi.getNBAPlayerInfo(),
-      PicksApi.getNBAPlayerBaseInfo(arguments.playerId),
+      // PicksApi.getNBAPlayerBaseInfo(arguments.playerId),
     ];
     if (arguments.isMyPlayer) {
       var homeController = Get.find<HomeController>();
@@ -165,11 +165,10 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
       }
     }
 
-    Future.wait(futures).then((result) {
+    Future.wait(futures as List<Future>).then((result) {
       capList = (result[0] as NbaPlayerInfosEntity)
           .playerDataCapList
           .firstWhere((e) => e.playerId == arguments.playerId);
-      nbaPlayerBaseInfoEntity = (result[1] as NbaPlayerBaseInfoEntity);
       //示例
       // dataSource = <ChartSampleData>[
       //   ChartSampleData(x: 'PTS', y: 55, yValue: 30),

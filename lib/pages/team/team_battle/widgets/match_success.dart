@@ -3,7 +3,9 @@ import 'dart:math';
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -60,8 +62,14 @@ class _MatchSuccessState extends State<MatchSuccess>
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery
+        .of(context)
+        .size
+        .width;
+    var height = MediaQuery
+        .of(context)
+        .size
+        .height;
     return Obx(() {
       return Stack(
         children: _buildStartWidget(width, height),
@@ -73,6 +81,7 @@ class _MatchSuccessState extends State<MatchSuccess>
     TeamBattleController controller = Get.find();
     double designHeight = 261.w;
     return [
+
       /// left
       Positioned(
         left: -282.w * (progress.value < 2 ? (1 - progress.value) : 0),
@@ -122,37 +131,29 @@ class _MatchSuccessState extends State<MatchSuccess>
                               Text(
                                 "ME",
                                 style:
-                                    10.w4(color: AppColors.c3B93FF, height: 1),
+                                10.w4(color: AppColors.c3B93FF, height: 1),
                               ),
                               Text(
-                                "USER NAME",
+                                controller.battleEntity.homeTeam.teamName,
                                 style:
-                                    19.w7(color: AppColors.c262626, height: 1),
+                                19.w7(color: AppColors.c262626, height: 1),
                               )
                             ],
                           ),
                         ),
                         7.vGap,
-                        Container(
+                        SizedBox(
                           width: 143.w,
                           height: 20.w,
-                          padding: EdgeInsets.symmetric(horizontal: 8.w),
-                          decoration: BoxDecoration(
-                              color: AppColors.c3B93FF,
-                              borderRadius: BorderRadius.circular(10.w)),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Text(
-                                "OVR",
-                                style:
-                                    14.w4(color: AppColors.cF2F2F2, height: 1),
-                              ),
-                              Text(
-                                "75%",
-                                style:
-                                    14.w4(color: AppColors.cF2F2F2, height: 1),
-                              )
+                              IconWidget(iconWidth: 18.w,
+                                  icon: Assets.uiIconTrophy_01Png),
+                              6.hGap,
+                              Text("${controller.battleEntity.homeTeam.cup}",
+                                style: 16.w7(
+                                    color: AppColors.c262626, height: 1),),
                             ],
                           ),
                         )
@@ -168,8 +169,10 @@ class _MatchSuccessState extends State<MatchSuccess>
                                 color: AppColors.c3B93FF, width: 2.w)),
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(14.w),
-                            child: IconWidget(
-                                iconWidth: 64.w, icon: controller.meAvatar))),
+                            child: ImageWidget(url: Utils.getAvaterUrl(
+                                controller.battleEntity.homeTeam.teamLogo),
+                              width: 64.w,
+                              height: 64.w,))),
                     12.hGap,
                     IconWidget(
                       iconWidth: 7.w,
@@ -267,12 +270,13 @@ class _MatchSuccessState extends State<MatchSuccess>
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(14.w),
                           border:
-                              Border.all(color: AppColors.cFF7954, width: 2.w)),
+                          Border.all(color: AppColors.cFF7954, width: 2.w)),
                       child: ClipRRect(
                           borderRadius: BorderRadius.circular(14.w),
-                          child: IconWidget(
-                              iconWidth: 64.w,
-                              icon: controller.opponentAvatar))),
+                          child: ImageWidget(url: Utils.getAvaterUrl(
+                              controller.battleEntity.awayTeam.teamLogo),
+                              width: 64.w,
+                              height: 64.w,))),
                   9.hGap,
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -288,31 +292,25 @@ class _MatchSuccessState extends State<MatchSuccess>
                               style: 10.w4(color: AppColors.cFF7954, height: 1),
                             ),
                             Text(
-                              "USER NAME",
+                              controller.battleEntity.awayTeam.teamName,
                               style: 19.w7(color: AppColors.c262626, height: 1),
                             )
                           ],
                         ),
                       ),
                       7.vGap,
-                      Container(
+                      SizedBox(
                         width: 143.w,
                         height: 20.w,
-                        padding: EdgeInsets.symmetric(horizontal: 8.w),
-                        decoration: BoxDecoration(
-                            color: AppColors.cFF7954,
-                            borderRadius: BorderRadius.circular(10.w)),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(
-                              "OVR",
-                              style: 14.w4(color: AppColors.cF2F2F2, height: 1),
-                            ),
-                            Text(
-                              "75%",
-                              style: 14.w4(color: AppColors.cF2F2F2, height: 1),
-                            )
+                            IconWidget(iconWidth: 18.w,
+                                icon: Assets.uiIconTrophy_01Png),
+                            6.hGap,
+                            Text("${controller.battleEntity.awayTeam.cup}",
+                              style: 16.w7(color: AppColors.c262626,
+                                  height: 1),),
                           ],
                         ),
                       )

@@ -4,7 +4,6 @@ import 'dart:convert';
 
 @JsonSerializable()
 class StarUpDefineEntity {
-  @JSONField(name: "StarUpRange")
   late double starUpRange;
   late String potantialRang;
   late double starUp;

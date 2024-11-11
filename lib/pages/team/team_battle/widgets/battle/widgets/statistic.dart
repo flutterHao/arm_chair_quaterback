@@ -1,8 +1,10 @@
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 ///
 ///@auther gejiahui
@@ -17,6 +19,8 @@ class Statistic extends StatefulWidget {
 
 class _StatisticState extends State<Statistic>
     with AutomaticKeepAliveClientMixin {
+  late TeamBattleController controller;
+
   LineChartBarData getLineBarsData(
       {required List<FlSpot> spots, required Color color}) {
     return LineChartBarData(
@@ -53,19 +57,9 @@ class _StatisticState extends State<Statistic>
     );
   }
 
-  List<BarChartGroupData> get barGroups => [
-        makeGroupData(0, 15, 25),
-        makeGroupData(1, 55, 88),
-        makeGroupData(2, 85, 59),
-        makeGroupData(3, 55, 63),
-        makeGroupData(4, 87, 115),
-        makeGroupData(5, 85, 100),
-        makeGroupData(6, 70, 59),
-        makeGroupData(7, 85, 59),
-        makeGroupData(8, 55, 63),
-        makeGroupData(9, 87, 115),
-        makeGroupData(10, 85, 100),
-      ];
+  List<BarChartGroupData> get barGroups => getBarData();
+
+
 
   BarChartGroupData makeGroupData(int x, double y1, double y2) {
     return BarChartGroupData(
@@ -86,29 +80,29 @@ class _StatisticState extends State<Statistic>
     );
   }
 
+  List<FlSpot> getSpots(bool left) {
+    List<FlSpot> spots = [];
+    var scoreBoard = left
+        ? controller.battleEntity.gameData.homeScoreBoard
+        : controller.battleEntity.gameData.awayScoreBoard;
+    spots.add(const FlSpot(0, 0));
+    spots.add(FlSpot(1, scoreBoard.quarter1.toDouble()));
+    spots.add(FlSpot(2, (scoreBoard.quarter1+scoreBoard.quarter2).toDouble()));
+    spots.add(FlSpot(3, (scoreBoard.quarter1+scoreBoard.quarter2+scoreBoard.quarter3).toDouble()));
+    spots.add(FlSpot(4, (scoreBoard.quarter1+scoreBoard.quarter2+scoreBoard.quarter3+scoreBoard.quarter4).toDouble()));
+    return spots;
+  }
+
   @override
   Widget build(BuildContext context) {
+    controller = Get.find();
     var lineBarsData = [
       getLineBarsData(
-        spots: const [
-          FlSpot(0, 0),
-          FlSpot(1, 31),
-          FlSpot(2, 92),
-          FlSpot(3, 114),
-          FlSpot(4, 120),
-          FlSpot(5, 146),
-        ],
+        spots: getSpots(true),
         color: AppColors.c3B93FF,
       ),
       getLineBarsData(
-        spots: const [
-          FlSpot(0, 0),
-          FlSpot(1, 42),
-          FlSpot(2, 62),
-          FlSpot(3, 79),
-          FlSpot(4, 100),
-          FlSpot(5, 110),
-        ],
+        spots: getSpots(false),
         color: AppColors.cFF7954,
       ),
     ];
@@ -131,14 +125,14 @@ class _StatisticState extends State<Statistic>
                       LineBarSpot(
                         lineBarsData[0],
                         lineBarsData.indexOf(lineBarsData[0]),
-                        lineBarsData[0].spots[5],
+                        lineBarsData[0].spots[4],
                       ),
                     ]),
                     ShowingTooltipIndicators([
                       LineBarSpot(
                         lineBarsData[1],
                         lineBarsData.indexOf(lineBarsData[1]),
-                        lineBarsData[1].spots[5],
+                        lineBarsData[1].spots[4],
                       ),
                     ])
                   ],
@@ -355,37 +349,36 @@ class _StatisticState extends State<Statistic>
         margin: EdgeInsets.only(right: 4.w),
         child: Text(text, style: 9.w4(color: AppColors.c8A8A8A)));
   }
+  List<String> keys = ['fga','ast','reb','fgm','fta','ftm','blk','stl','pts','threePa','pf','threePm','to'];
+
+  List<BarChartGroupData> getBarData(){
+    List<BarChartGroupData> res = [];
+    var homeScoreBoardDetails = controller.battleEntity.gameData.homeScoreBoardDetails;
+    var awayScoreBoardDetails = controller.battleEntity.gameData.awayScoreBoardDetails;
+    for (int i = 0; i < keys.length; i++) {
+      String key = keys[i];
+      var homeValue = homeScoreBoardDetails.fold(0.0, (p,e){
+        p = p + (e.toJson()[key]??0);
+        return p;
+      });
+      var awayValue = awayScoreBoardDetails.fold(0.0, (p,e){
+        p = p + (e.toJson()[key]??0);
+        return p;
+      });
+      var gd = makeGroupData(i, homeValue.toDouble(), awayValue.toDouble());
+      print('$i:$gd');
+      res.add(gd);
+    }
+    return res;
+  }
 
   Widget getBarBottomTitlesWidget(double value, TitleMeta meta) {
     String text = '';
-    switch (value.toInt()) {
-      case 0:
-        text = "REB";
-        break;
-      case 1:
-        text = "FGM";
-        break;
-      case 2:
-        text = "FGA";
-        break;
-      case 3:
-        text = "3PM";
-        break;
-      case 4:
-        text = "3PA";
-        break;
-      case 5:
-        text = "FTM";
-        break;
-      case 6:
-        text = "FTA";
-        break;
-      case 7:
-        text = "AST";
-        break;
-      default:
-        text = "AST";
+    text = keys[value.toInt()];
+    if(text.contains("three")){
+      text = text.replaceAll("three", "3");
     }
+    text = text.toUpperCase();
     return Container(
         margin: EdgeInsets.only(top: 5.h),
         child: Text(text, style: 9.w4(color: AppColors.c8A8A8A)));

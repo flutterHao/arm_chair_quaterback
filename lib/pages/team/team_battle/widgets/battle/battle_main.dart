@@ -1,7 +1,9 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/battle_before_game.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/battle_game.dart';
@@ -151,16 +153,19 @@ class _BattleMainState extends State<BattleMain>
                             style: 10.w4(color: AppColors.c3B93FF, height: 1),
                           ),
                           Text(
-                            "USERNAME",
+                            controller.battleEntity.homeTeam.teamName,
                             style: 14.w7(color: AppColors.cF2F2F2, height: 1),
-                          )
+                          ),
+                          Text("${controller.battleEntity.homeTeamPower} POW",style: 10.w4(color: AppColors.cF2F2F2,height: 1),),
                         ],
                       ),
                       10.hGap,
                       ClipRRect(
                           borderRadius: BorderRadius.circular(10.w),
-                          child: IconWidget(
-                              iconWidth: 36.h, icon: controller.meAvatar)),
+                          child: ImageWidget(url: Utils.getAvaterUrl(
+                              controller.battleEntity.awayTeam.teamLogo),
+                            width: 36.h,
+                            height: 36.h,)),
                     ],
                   ),
                   Container(
@@ -175,9 +180,10 @@ class _BattleMainState extends State<BattleMain>
                     children: [
                       ClipRRect(
                           borderRadius: BorderRadius.circular(10.w),
-                          child: IconWidget(
-                              iconWidth: 36.h,
-                              icon: controller.opponentAvatar)),
+                          child: ImageWidget(url: Utils.getAvaterUrl(
+                              controller.battleEntity.awayTeam.teamLogo),
+                            width: 36.h,
+                            height: 36.h,)),
                       10.hGap,
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -187,9 +193,10 @@ class _BattleMainState extends State<BattleMain>
                             style: 10.w4(color: AppColors.cFF7954, height: 1),
                           ),
                           Text(
-                            "USERNAME",
+                            controller.battleEntity.awayTeam.teamName,
                             style: 14.w7(color: AppColors.cF2F2F2, height: 1),
-                          )
+                          ),
+                          Text("POW ${controller.battleEntity.homeTeamPower}",style: 10.w4(color: AppColors.cF2F2F2,height: 1),),
                         ],
                       ),
                     ],
@@ -203,9 +210,6 @@ class _BattleMainState extends State<BattleMain>
                     child: Container(
                       height: 20.w,
                       padding: EdgeInsets.symmetric(horizontal: 8.w),
-                      decoration: BoxDecoration(
-                          color: AppColors.cFFFFFF.withOpacity(.1),
-                          borderRadius: BorderRadius.circular(10.w)),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -229,12 +233,9 @@ class _BattleMainState extends State<BattleMain>
                                 ),
                                 5.hGap,
                                 Text(
-                                  "${controller.ovr}%",
+                                  "${(controller.battleEntity.homeTeam.playerReadiness*100)}%",
                                   style: 14.w4(
-                                      color:
-                                          controller.breakingNewsBreaking.value
-                                              ? AppColors.cFF3B5C
-                                              : AppColors.cF2F2F2,
+                                      color:AppColors.cF2F2F2,
                                       height: 1),
                                 ),
                               ],
@@ -256,7 +257,7 @@ class _BattleMainState extends State<BattleMain>
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "75%",
+                            "${controller.battleEntity.awayTeam.playerReadiness*100}%",
                             style: 14.w4(color: AppColors.cF2F2F2, height: 1),
                           ),
                           Text(

@@ -66,8 +66,9 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    controller = Get.find();
 
-    leftWin = Random().nextBool();
+    leftWin = getScore(true)>getScore(false);
 
     startAnimationController = EasyAnimationController(
         vsync: this,
@@ -138,7 +139,6 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    controller = Get.find();
     var width = MediaQuery.of(context).size.width;
     return InkWell(
       // onTap: () => _gameStart(),
@@ -843,16 +843,207 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
     });
   }
 
+  int getScore(bool left) {
+    var scoreBoard = left
+        ? controller.battleEntity.gameData.homeScoreBoard
+        : controller.battleEntity.gameData.awayScoreBoard;
+    var score = scoreBoard.quarter1 +
+        scoreBoard.quarter2 +
+        scoreBoard.quarter3 +
+        scoreBoard.quarter4;
+    return score;
+  }
+
   Widget _buildScore() {
     return Obx(() {
       return Positioned(
         top: max(145.h * startAnimationController.value.value, 70.h),
         child: Opacity(
           opacity: max(startAnimationController.value.value, 0.5),
-          child: ScorePanel(
-              leftScore: (otherAnimationWithFightingValue.value * 172).toInt(),
-              rightScore:
-                  (otherAnimationWithFightingValue.value * 146).toInt()),
+          child: Container(
+            height: 81.h,
+            constraints: BoxConstraints(
+              maxWidth: 343.w,
+            ),
+            decoration: BoxDecoration(
+                color: AppColors.c262626,
+                borderRadius: BorderRadius.circular(16.w)),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                9.hGap,
+                Container(
+                  width: 99.w,
+                  height: 63.h,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      color: AppColors.cFFFFFF.withOpacity(.1),
+                      borderRadius: BorderRadius.circular(9.h)),
+                  child: Text(
+                    "${(otherAnimationWithFightingValue.value * getScore(true)).toInt()}",
+                    style: 40.w7(color: AppColors.c3B93FF),
+                  ),
+                ),
+                Expanded(
+                    child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(4, (index) {
+                    var section = index == 0
+                        ? "1ST"
+                        : index == 1
+                            ? "2ND"
+                            : index == 2
+                                ? "3RD"
+                                : "4TH";
+                    var leftQuarterScore =
+                        (otherAnimationWithFightingValue.value * getScore(true))
+                            .toInt();
+                    var rightQuarterScore =
+                        (otherAnimationWithFightingValue.value *
+                                getScore(false))
+                            .toInt();
+
+                    getQuarterScore(int index, bool left, int score) {
+                      var result = score;
+                      var scoreBoard = left
+                          ? controller.battleEntity.gameData.homeScoreBoard
+                          : controller.battleEntity.gameData.awayScoreBoard;
+                      if (index == 0) {
+                        result = min(scoreBoard.quarter1, result);
+                      }
+
+                      if (index == 1) {
+                        result = min(
+                            scoreBoard.quarter1 + scoreBoard.quarter2, result);
+                        result = result > scoreBoard.quarter1
+                            ? result - scoreBoard.quarter1
+                            : 0;
+                      }
+
+                      if (index == 2) {
+                        result = min(
+                            scoreBoard.quarter1 +
+                                scoreBoard.quarter2 +
+                                scoreBoard.quarter3,
+                            result);
+                        result =
+                            result > (scoreBoard.quarter1 + scoreBoard.quarter2)
+                                ? result -
+                                    (scoreBoard.quarter1 + scoreBoard.quarter2)
+                                : 0;
+                      }
+
+                      if (index == 3) {
+                        result = min(
+                            scoreBoard.quarter1 +
+                                scoreBoard.quarter2 +
+                                scoreBoard.quarter3 +
+                                scoreBoard.quarter4,
+                            result);
+                        result = result >
+                                (scoreBoard.quarter1 +
+                                    scoreBoard.quarter2 +
+                                    scoreBoard.quarter3)
+                            ? result -
+                                (scoreBoard.quarter1 +
+                                    scoreBoard.quarter2 +
+                                    scoreBoard.quarter3)
+                            : 0;
+                      }
+                      return result;
+                    }
+
+                    leftQuarterScore =
+                        getQuarterScore(index, true, leftQuarterScore);
+                    rightQuarterScore =
+                        getQuarterScore(index, false, rightQuarterScore);
+
+                    return Container(
+                      margin: EdgeInsets.only(bottom: 2.h),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              "${leftQuarterScore > 0 ? leftQuarterScore : "--"}",
+                              textAlign: TextAlign.end,
+                              style: 14.w7(
+                                  color: leftQuarterScore > 0
+                                      ? AppColors.c3B93FF
+                                      : AppColors.c666666,
+                                  height: 1),
+                            ),
+                          ),
+                          14.hGap,
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 5.h,
+                                height: 5.h,
+                                child: Visibility(
+                                    visible: leftQuarterScore > 0,
+                                    child: IconWidget(
+                                      iconWidth: 5.h,
+                                      icon: Assets.uiTriangleGPng,
+                                      rotateAngle: -90,
+                                      iconColor: AppColors.cB3B3B3,
+                                    )),
+                              ),
+                              4.hGap,
+                              Text(
+                                section,
+                                style: 10.w4(
+                                    color: leftQuarterScore > 0
+                                        ? AppColors.cB3B3B3
+                                        : AppColors.c666666,
+                                    height: 1),
+                              ),
+                              4.hGap,
+                              SizedBox(
+                                  width: 5.h,
+                                  height: 5.h,
+                                  child: Visibility(
+                                      visible: leftQuarterScore > 0,
+                                      child: IconWidget(
+                                        iconWidth: 5.h,
+                                        icon: Assets.uiTriangleGPng,
+                                        rotateAngle: 90,
+                                        iconColor: AppColors.cB3B3B3,
+                                      ))),
+                            ],
+                          ),
+                          14.hGap,
+                          Expanded(
+                            child: Text(
+                              "${rightQuarterScore > 0 ? rightQuarterScore : "--"}",
+                              style: 14.w7(
+                                  color: leftQuarterScore > 0
+                                      ? AppColors.c3B93FF
+                                      : AppColors.c666666,
+                                  height: 1),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
+                )),
+                Container(
+                  width: 99.w,
+                  height: 63.h,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      color: AppColors.cFFFFFF.withOpacity(.1),
+                      borderRadius: BorderRadius.circular(9.h)),
+                  child: Text(
+                    "${(otherAnimationWithFightingValue.value * getScore(false)).toInt()}",
+                    style: 40.w7(color: AppColors.cFF7954),
+                  ),
+                ),
+                9.hGap,
+              ],
+            ),
+          ),
         ),
       );
     });

@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/player_avatar_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
@@ -141,7 +142,7 @@ class _BattleBeforeGameState extends State<BattleBeforeGame>
       var value = breakingNewsAnimationValue.value / width;
       return SizedBox(
         width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
+        // height: MediaQuery.of(context).size.height,
         child: Opacity(
           opacity: max(value, 0.5),
           child: Stack(
@@ -176,25 +177,13 @@ class _BattleBeforeGameState extends State<BattleBeforeGame>
                                   iconWidth: 65.h,
                                   icon: Assets.uiBattleNewsPng)),
                           Expanded(
-                              child: Text.rich(TextSpan(
-                                  style: 12.w4(color: AppColors.cB2B2B2),
-                                  children: [
-                                const TextSpan(
-                                    text:
-                                        "Recently, Kevin Durant because of drinking some unknown substances, resulting in infection to the team.so that"),
-                                TextSpan(
-                                    text: " the physical value of ",
-                                    style: 12.w7(color: AppColors.c000000)),
-                                TextSpan(
-                                    text: "the team's",
-                                    style: 12.w7(color: AppColors.c3B93FF)),
-                                TextSpan(
-                                    text: " starting players",
-                                    style: 12.w7(color: AppColors.c000000)),
-                                TextSpan(
-                                    text: " -5%.",
-                                    style: 12.w7(color: AppColors.cE72646)),
-                              ])))
+                            child: Text(
+                              "${controller.battleEntity.news?.title}",
+                              style: 12.w4(
+                                color: AppColors.cB2B2B2,
+                              ),
+                            ),
+                          )
                         ],
                       ),
                     ),
@@ -298,6 +287,17 @@ class _BattleBeforeGameState extends State<BattleBeforeGame>
   }
 
   Widget _buildBottom() {
+    double getPercent(String key, bool isMe) {
+      var d = ((isMe
+              ? controller.battleEntity.homeAbilityValue.toJson()[key]!
+              : controller.battleEntity.awayAbilityValue
+            .toJson()[key]!) /
+          (controller.battleEntity.homeAbilityValue.toJson()[key]! +
+              controller.battleEntity.awayAbilityValue
+            .toJson()[key]!));
+      return d;
+    }
+
     return Obx(() {
       return Positioned(
         bottom: 40.h - 200.h * (1 - bottomAnimationValue.value),
@@ -323,23 +323,29 @@ class _BattleBeforeGameState extends State<BattleBeforeGame>
                     context: context,
                     removeTop: true,
                     child: AnimatedList.separated(
-                      initialItemCount: 6,
+                      initialItemCount: controller.battleEntity.homeAbilityValue
+                          .toJson()
+                          .keys
+                          .length,
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index, animation) {
+                        String key = controller.battleEntity.homeAbilityValue
+                            .toJson()
+                            .keys
+                            .toList()[index];
                         return Obx(() {
                           double value = max(
                               bottomProgressAnimationController.value.value -
                                   calculate(index),
                               0);
                           value = min(1, value);
-
                           return Row(
                             children: [
                               Container(
                                 width: 30.w,
                                 alignment: Alignment.centerRight,
                                 child: Text(
-                                  "${(75 * value).toStringAsFixed(0)}%",
+                                  "${(getPercent(key, true) * 100 * value).toStringAsFixed(0)}%",
                                   style: 14.w7(color: AppColors.c3B93FF),
                                 ),
                               ),
@@ -351,7 +357,7 @@ class _BattleBeforeGameState extends State<BattleBeforeGame>
                                     angle: pi / 180 * 180,
                                     child: LinearProgressIndicator(
                                       borderRadius: BorderRadius.circular(4.w),
-                                      value: .75 * value,
+                                      value: getPercent(key, true) * value,
                                       color: AppColors.c3B93FF,
                                       backgroundColor: AppColors.c666666,
                                     ),
@@ -370,7 +376,7 @@ class _BattleBeforeGameState extends State<BattleBeforeGame>
                                   height: 8.w,
                                   child: LinearProgressIndicator(
                                     borderRadius: BorderRadius.circular(4.w),
-                                    value: .3 * value,
+                                    value: getPercent(key, false) * value,
                                     color: AppColors.cB2B2B2,
                                     backgroundColor: AppColors.c666666,
                                   ),
@@ -381,7 +387,7 @@ class _BattleBeforeGameState extends State<BattleBeforeGame>
                                 width: 30.w,
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  "${(30 * value).toStringAsFixed(0)}%",
+                                  "${(getPercent(key, false) * 100 * value).toStringAsFixed(0)}%",
                                   style: 14.w7(color: AppColors.cFF7954),
                                 ),
                               ),
@@ -416,6 +422,9 @@ class _BattleBeforeGameState extends State<BattleBeforeGame>
                       physics: const NeverScrollableScrollPhysics(),
                       initialItemCount: 5,
                       itemBuilder: (context, index, animation) {
+                        var position = ["C","PF","SF","SG","PG"][index];
+                        var homePlayer = controller.battleEntity.homeTeamPlayerList.firstWhere((e)=> Utils.getPosition(e.position) == position);
+                        var awayPlayer = controller.battleEntity.awayTeamPlayerList.firstWhere((e)=> Utils.getPosition(e.position) == position);
                         return Obx(() {
                           double value = max(
                               bottomAvatarAnimationController.value.value -
@@ -442,7 +451,7 @@ class _BattleBeforeGameState extends State<BattleBeforeGame>
                                       width: 113.w,
                                       alignment: Alignment.center,
                                       child: Text(
-                                        "C",
+                                        position,
                                         style: 21.w7(color: AppColors.c666666),
                                       ),
                                     ),
@@ -482,7 +491,7 @@ class _BattleBeforeGameState extends State<BattleBeforeGame>
                                                   child: Visibility(
                                                     visible: controller
                                                         .breakingNewsBreaking
-                                                        .value,
+                                                        .value && controller.battleEntity.newsBuffPlayerId == homePlayer.playerId,
                                                     child: Stack(
                                                       alignment:
                                                           Alignment.center,
@@ -521,6 +530,10 @@ class _BattleBeforeGameState extends State<BattleBeforeGame>
                                         ),
                                         8.hGap,
                                         PlayerAvatarWidget(
+                                          playerId: homePlayer.playerId,
+                                          grade: Utils.getPlayBaseInfo(homePlayer.playerId).grade,
+                                          fontColor: AppColors.cFFFFFF,
+                                          backgroundColor: AppColors.c404040,
                                           canTap: false,
                                           width: 48.h,
                                         ),
@@ -535,6 +548,10 @@ class _BattleBeforeGameState extends State<BattleBeforeGame>
                                     child: Row(
                                       children: [
                                         PlayerAvatarWidget(
+                                          playerId: awayPlayer.playerId,
+                                          grade: Utils.getPlayBaseInfo(awayPlayer.playerId).grade,
+                                          fontColor: AppColors.cFFFFFF,
+                                          backgroundColor: AppColors.c404040,
                                           canTap: false,
                                           width: 48.h,
                                         ),
@@ -560,7 +577,7 @@ class _BattleBeforeGameState extends State<BattleBeforeGame>
                                                   child: Visibility(
                                                     visible: controller
                                                         .breakingNewsBreaking
-                                                        .value,
+                                                        .value && controller.battleEntity.newsBuffPlayerId == awayPlayer.playerId,
                                                     child: Stack(
                                                       alignment:
                                                           Alignment.center,

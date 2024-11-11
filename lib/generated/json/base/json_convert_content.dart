@@ -201,6 +201,10 @@ class JsonConvert {
       return data.map<BattleEntity>((Map<String, dynamic> e) =>
           BattleEntity.fromJson(e)).toList() as M;
     }
+    if (<BattleNew>[] is M) {
+      return data.map<BattleNew>((Map<String, dynamic> e) =>
+          BattleNew.fromJson(e)).toList() as M;
+    }
     if (<TeamBuffer>[] is M) {
       return data.map<TeamBuffer>((Map<String, dynamic> e) =>
           TeamBuffer.fromJson(e)).toList() as M;
@@ -712,6 +716,7 @@ class JsonConvertClassCollection {
     (AllTeamPlayersByUpStarUpStarBase)
         .toString(): AllTeamPlayersByUpStarUpStarBase.fromJson,
     (BattleEntity).toString(): BattleEntity.fromJson,
+    (BattleNew).toString(): BattleNew.fromJson,
     (TeamBuffer).toString(): TeamBuffer.fromJson,
     (TeamPlayerList).toString(): TeamPlayerList.fromJson,
     (Potential).toString(): Potential.fromJson,

@@ -255,4 +255,10 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
     animationController.forward();
     isReset = false;
   }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
 }

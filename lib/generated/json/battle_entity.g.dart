@@ -9,7 +9,7 @@ BattleEntity $BattleEntityFromJson(Map<String, dynamic> json) {
   if (awayTeamPower != null) {
     battleEntity.awayTeamPower = awayTeamPower;
   }
-  final NewsDetail? news = jsonConvert.convert<NewsDetail>(json['news']);
+  final BattleNew? news = jsonConvert.convert<BattleNew>(json['news']);
   if (news != null) {
     battleEntity.news = news;
   }
@@ -76,13 +76,18 @@ BattleEntity $BattleEntityFromJson(Map<String, dynamic> json) {
   if (newsBuffAdd != null) {
     battleEntity.newsBuffAdd = newsBuffAdd;
   }
+  final int? newsBuffPlayerId = jsonConvert.convert<int>(
+      json['newsBuffPlayerId']);
+  if (newsBuffPlayerId != null) {
+    battleEntity.newsBuffPlayerId = newsBuffPlayerId;
+  }
   return battleEntity;
 }
 
 Map<String, dynamic> $BattleEntityToJson(BattleEntity entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['awayTeamPower'] = entity.awayTeamPower;
-  data['news'] = entity.news.toJson();
+  data['news'] = entity.news?.toJson();
   data['homeTeamPlayerList'] =
       entity.homeTeamPlayerList.map((v) => v.toJson()).toList();
   data['awayTeam'] = entity.awayTeam.toJson();
@@ -96,13 +101,14 @@ Map<String, dynamic> $BattleEntityToJson(BattleEntity entity) {
   data['gameData'] = entity.gameData.toJson();
   data['homeAbilityValue'] = entity.homeAbilityValue.toJson();
   data['newsBuffAdd'] = entity.newsBuffAdd;
+  data['newsBuffPlayerId'] = entity.newsBuffPlayerId;
   return data;
 }
 
 extension BattleEntityExtension on BattleEntity {
   BattleEntity copyWith({
     int? awayTeamPower,
-    NewsDetail? news,
+    BattleNew? news,
     List<TeamPlayerList>? homeTeamPlayerList,
     BattleTeam? awayTeam,
     AbilityValue? awayAbilityValue,
@@ -114,6 +120,7 @@ extension BattleEntityExtension on BattleEntity {
     BattleGameData? gameData,
     AbilityValue? homeAbilityValue,
     double? newsBuffAdd,
+    int? newsBuffPlayerId,
   }) {
     return BattleEntity()
       ..awayTeamPower = awayTeamPower ?? this.awayTeamPower
@@ -128,7 +135,140 @@ extension BattleEntityExtension on BattleEntity {
       ..homeTeam = homeTeam ?? this.homeTeam
       ..gameData = gameData ?? this.gameData
       ..homeAbilityValue = homeAbilityValue ?? this.homeAbilityValue
-      ..newsBuffAdd = newsBuffAdd ?? this.newsBuffAdd;
+      ..newsBuffAdd = newsBuffAdd ?? this.newsBuffAdd
+      ..newsBuffPlayerId = newsBuffPlayerId ?? this.newsBuffPlayerId;
+  }
+}
+
+BattleNew $BattleNewFromJson(Map<String, dynamic> json) {
+  final BattleNew battleNew = BattleNew();
+  final int? isLike = jsonConvert.convert<int>(json['isLike']);
+  if (isLike != null) {
+    battleNew.isLike = isLike;
+  }
+  final int? isView = jsonConvert.convert<int>(json['isView']);
+  if (isView != null) {
+    battleNew.isView = isView;
+  }
+  final String? dataLabel = jsonConvert.convert<String>(json['dataLabel']);
+  if (dataLabel != null) {
+    battleNew.dataLabel = dataLabel;
+  }
+  final int? updateTime = jsonConvert.convert<int>(json['updateTime']);
+  if (updateTime != null) {
+    battleNew.updateTime = updateTime;
+  }
+  final int? reviewsCount = jsonConvert.convert<int>(json['reviewsCount']);
+  if (reviewsCount != null) {
+    battleNew.reviewsCount = reviewsCount;
+  }
+  final String? source = jsonConvert.convert<String>(json['source']);
+  if (source != null) {
+    battleNew.source = source;
+  }
+  final String? title = jsonConvert.convert<String>(json['title']);
+  if (title != null) {
+    battleNew.title = title;
+  }
+  final int? unLikes = jsonConvert.convert<int>(json['unLikes']);
+  if (unLikes != null) {
+    battleNew.unLikes = unLikes;
+  }
+  final String? content = jsonConvert.convert<String>(json['content']);
+  if (content != null) {
+    battleNew.content = content;
+  }
+  final List<dynamic>? reviewsList = (json['reviewsList'] as List<dynamic>?)
+      ?.map(
+          (e) => e)
+      .toList();
+  if (reviewsList != null) {
+    battleNew.reviewsList = reviewsList;
+  }
+  final int? postTime = jsonConvert.convert<int>(json['postTime']);
+  if (postTime != null) {
+    battleNew.postTime = postTime;
+  }
+  final int? award = jsonConvert.convert<int>(json['award']);
+  if (award != null) {
+    battleNew.award = award;
+  }
+  final int? createTime = jsonConvert.convert<int>(json['createTime']);
+  if (createTime != null) {
+    battleNew.createTime = createTime;
+  }
+  final int? id = jsonConvert.convert<int>(json['id']);
+  if (id != null) {
+    battleNew.id = id;
+  }
+  final int? views = jsonConvert.convert<int>(json['views']);
+  if (views != null) {
+    battleNew.views = views;
+  }
+  final int? likes = jsonConvert.convert<int>(json['likes']);
+  if (likes != null) {
+    battleNew.likes = likes;
+  }
+  return battleNew;
+}
+
+Map<String, dynamic> $BattleNewToJson(BattleNew entity) {
+  final Map<String, dynamic> data = <String, dynamic>{};
+  data['isLike'] = entity.isLike;
+  data['isView'] = entity.isView;
+  data['dataLabel'] = entity.dataLabel;
+  data['updateTime'] = entity.updateTime;
+  data['reviewsCount'] = entity.reviewsCount;
+  data['source'] = entity.source;
+  data['title'] = entity.title;
+  data['unLikes'] = entity.unLikes;
+  data['content'] = entity.content;
+  data['reviewsList'] = entity.reviewsList;
+  data['postTime'] = entity.postTime;
+  data['award'] = entity.award;
+  data['createTime'] = entity.createTime;
+  data['id'] = entity.id;
+  data['views'] = entity.views;
+  data['likes'] = entity.likes;
+  return data;
+}
+
+extension BattleNewExtension on BattleNew {
+  BattleNew copyWith({
+    int? isLike,
+    int? isView,
+    String? dataLabel,
+    int? updateTime,
+    int? reviewsCount,
+    String? source,
+    String? title,
+    int? unLikes,
+    String? content,
+    List<dynamic>? reviewsList,
+    int? postTime,
+    int? award,
+    int? createTime,
+    int? id,
+    int? views,
+    int? likes,
+  }) {
+    return BattleNew()
+      ..isLike = isLike ?? this.isLike
+      ..isView = isView ?? this.isView
+      ..dataLabel = dataLabel ?? this.dataLabel
+      ..updateTime = updateTime ?? this.updateTime
+      ..reviewsCount = reviewsCount ?? this.reviewsCount
+      ..source = source ?? this.source
+      ..title = title ?? this.title
+      ..unLikes = unLikes ?? this.unLikes
+      ..content = content ?? this.content
+      ..reviewsList = reviewsList ?? this.reviewsList
+      ..postTime = postTime ?? this.postTime
+      ..award = award ?? this.award
+      ..createTime = createTime ?? this.createTime
+      ..id = id ?? this.id
+      ..views = views ?? this.views
+      ..likes = likes ?? this.likes;
   }
 }
 

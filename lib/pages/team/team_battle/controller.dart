@@ -56,10 +56,10 @@ class TeamBattleController extends GetxController
     totalAvatars.remove(meAvatar);
     opponentAvatar = totalAvatars[Random().nextInt(totalAvatars.length - 1)];
     ///todo 测试代码
-    Future.delayed(const Duration(milliseconds: 3000), () {
-      nextStep();
-    });
-    // teamMatch();
+    // Future.delayed(const Duration(milliseconds: 3000), () {
+    //   nextStep();
+    // });
+    teamMatch();
   }
 
   teamMatch(){
@@ -84,7 +84,7 @@ class TeamBattleController extends GetxController
 
   /// 是否有突发新闻
   bool havaBreakingNews() {
-    return true;
+    return battleEntity.news != null;
   }
 
   void onBreakingNewsStart() {

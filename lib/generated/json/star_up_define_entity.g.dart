@@ -3,7 +3,7 @@ import 'package:arm_chair_quaterback/common/entities/star_up_define_entity.dart'
 
 StarUpDefineEntity $StarUpDefineEntityFromJson(Map<String, dynamic> json) {
   final StarUpDefineEntity starUpDefineEntity = StarUpDefineEntity();
-  final double? starUpRange = jsonConvert.convert<double>(json['StarUpRange']);
+  final double? starUpRange = jsonConvert.convert<double>(json['starUpRange']);
   if (starUpRange != null) {
     starUpDefineEntity.starUpRange = starUpRange;
   }
@@ -29,7 +29,7 @@ StarUpDefineEntity $StarUpDefineEntityFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> $StarUpDefineEntityToJson(StarUpDefineEntity entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
-  data['StarUpRange'] = entity.starUpRange;
+  data['starUpRange'] = entity.starUpRange;
   data['potantialRang'] = entity.potantialRang;
   data['starUp'] = entity.starUp;
   data['starUpSell'] = entity.starUpSell;
