@@ -7,7 +7,6 @@ import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dar
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/line_up_tab.dart';
@@ -185,6 +184,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   //是否能够切换
   bool canChange(bool isBag, TeamPlayerInfoEntity item) {
     bool canSelect = true;
+
     if (!item1.isChange.value && !item2.isChange.value && !isAdd) {
       return canSelect;
     }
@@ -192,6 +192,10 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
       canSelect = isAdd
           ? item.position <= 0
           : item.position <= 0 && item.playerId != item1.playerId;
+      canSelect = canSelect &&
+          !myTeamEntity.teamPlayers
+              .map((e) => e.playerId)
+              .contains(item.playerId);
     } else {
       canSelect = item.playerId != item2.playerId;
     }

@@ -1,15 +1,10 @@
 /*
- * @Description: 
+ * @Description: 换人换装页面
  * @Author: lihonghao
  * @Date: 2024-10-12 17:33:59
- * @LastEditTime: 2024-10-29 20:32:54
+ * @LastEditTime: 2024-11-11 14:36:02
  */
-/*
- * @Description: 
- * @Author: lihonghao
- * @Date: 2024-10-12 17:33:59
- * @LastEditTime: 2024-10-16 17:13:00
- */
+
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
