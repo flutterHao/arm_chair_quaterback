@@ -108,7 +108,7 @@ class AppBarContainer extends StatelessWidget {
       // width: 361.w,
       constraints: BoxConstraints(minHeight: 63.w),
       decoration: BoxDecoration(
-        color: AppColors.c262626,
+        color: AppColors.c000000,
         borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(borderRadius ?? 16.w),
             bottomRight: Radius.circular(borderRadius ?? 16.w)),

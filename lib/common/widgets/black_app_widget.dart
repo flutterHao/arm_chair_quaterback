@@ -69,7 +69,7 @@ class _BlackAppWidgetState extends State<BlackAppWidget> {
                     children: [
                       Container(
                         height: MediaQuery.of(context).padding.top + 10.w,
-                        color: AppColors.c262626,
+                        color: AppColors.c000000,
                       ),
                       Container(
                         margin: EdgeInsets.only(

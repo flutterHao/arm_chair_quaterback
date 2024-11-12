@@ -9,6 +9,7 @@ import 'package:arm_chair_quaterback/common/net/http.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/clipper/title_bar_clipper.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/top_dialog.dart';
@@ -33,6 +34,103 @@ class UserInfoBar extends StatelessWidget {
         builder: (controller) {
           TeamLoginInfo info =
               controller.userEntiry.teamLoginInfo ?? TeamLoginInfo();
+          return Stack(
+            alignment: Alignment.center,
+            children: [
+              Container(
+                height: 45.w,
+                width: double.infinity,
+                color: AppColors.c000000,
+                child: ClipPath(
+                  clipper: TitleBarClipper(),
+                  child: Container(
+                    color: AppColors.c666666,
+                  ),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(child: Row(
+                    children: [
+                      16.hGap,
+                      InkWell(
+                        onLongPress: () {
+                          final List<String> servers = [
+                            Address.personalDevUrl,
+                            Address.privateDevUrl,
+                            Address.publicDevUrl,
+                          ];
+                          String current = HttpUtil().getUrl;
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return ServerSwitchDialog(
+                                servers: servers,
+                                currentServer: current,
+                                onServerChanged: (newServer) {
+                                  HttpUtil().setUrl(newServer);
+                                  HomeController.to.login();
+                                },
+                              );
+                            },
+                          );
+                        },
+                        onTap: () {
+                          if (!enable) {
+                            Navigator.pop(context);
+                            return;
+                          }
+                          _showDialog(context, routeId);
+                        },
+                        child: Container(
+                          width: 36.w,
+                          height: 36.w,
+                          decoration: BoxDecoration(
+                            border: Border.all(width: 1,color: AppColors.cFFFFFF),
+                            borderRadius: BorderRadius.circular(18.w)
+                          ),
+                          child: Center(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(18.w),
+                              child: UserAvaterWidget(
+                                url: Utils.getAvaterUrl(info.team?.teamLogo ?? 0),
+                                width: 35.w,
+                                height: 35.w,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      16.hGap,
+                      MoneyAndCoinWidget(home: true,),
+                    ],
+                  )),
+                  SizedBox(
+                    width: 55.w,
+                    height: 43.w,
+                    child: Stack(
+                      children: [
+                        IconWidget(iconWidth: 20.w, icon: Assets.uiIconAwardPng),
+                        Positioned(
+                          top: 5.w,
+                          right: 10.w,
+                            child: Container(
+                          width: 16.w,
+                          height: 16.w,
+                          decoration: BoxDecoration(
+                            color: AppColors.c000000,
+                            borderRadius: BorderRadius.circular(8.w)
+                          ),
+                          child: Center(child: Text("3",style: 12.w4(color: AppColors.cFF7954),)),
+                        ))
+                      ],
+                    ),
+                  )
+                ],
+              )
+            ],
+          );
           return Container(
             padding: EdgeInsets.only(left: 14.w, right: 14.w),
             constraints: BoxConstraints(minHeight: 63.w),
@@ -107,7 +205,9 @@ class UserInfoBar extends StatelessWidget {
 
 class MoneyAndCoinWidget extends StatelessWidget {
   ///不要加const，会导致widget不刷新
-  MoneyAndCoinWidget({super.key});
+  MoneyAndCoinWidget({super.key,this.home=false});
+
+  final bool home;
 
   @override
   Widget build(BuildContext context) {
@@ -116,9 +216,31 @@ class MoneyAndCoinWidget extends StatelessWidget {
         builder: (controller) {
           TeamLoginInfo info =
               controller.userEntiry.teamLoginInfo ?? TeamLoginInfo();
-          return Container(
-            alignment: Alignment.centerRight,
-            child: Column(
+          var child;
+          if(home) {
+             child = Row(
+              children: [
+                IconWidget(iconWidth: 21.w, icon: Assets.uiIconJettonPng),
+                4.hGap,
+                Text(Utils.formatChip(info.getCoin()),style: 16.w4(color: AppColors.cF2F2F2,height: 1),),
+                15.hGap,
+                IconWidget(iconWidth: 24.w, icon: Assets.uiMoney_02Png),
+                4.hGap,
+                Text(Utils.formatChip(info.getMoney()),style: 16.w4(color: AppColors.cF2F2F2,height: 1),),
+                13.hGap,
+                Container(
+                  height: 24.w,
+                  width: 24.w,
+                  decoration: BoxDecoration(
+                    color: AppColors.c262626,
+                    borderRadius: BorderRadius.circular(4.w),
+                  ),
+                  child: IconWidget(iconWidth: 12.w, icon: Assets.uiIconPlusPng,iconColor: AppColors.cFF7954,),//todo 功能待定
+                )
+              ],
+            );
+          }else{
+            child = Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
@@ -128,7 +250,11 @@ class MoneyAndCoinWidget extends StatelessWidget {
                 iconText(
                     Assets.uiIconMoneyPng, Utils.formatMoney(info.getMoney())),
               ],
-            ),
+            );
+          }
+          return Container(
+            alignment: Alignment.centerRight,
+            child: child,
           );
         });
   }
