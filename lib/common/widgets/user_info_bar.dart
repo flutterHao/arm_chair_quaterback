@@ -74,16 +74,6 @@ class UserInfoBar extends StatelessWidget {
                     }
                     _showDialog(context, routeId);
                   },
-                  // child: Container(
-                  //   width: 80.w,
-                  //   alignment: Alignment.centerLeft,
-                  //   child: ImageWidget(
-                  //       width: 36.w,
-                  //       height: 36.w,
-                  //       borderRadius: BorderRadius.circular(12.w),
-                  //       imageFailedPath: Assets.uiHead_01Png,
-                  //       url: Utils.getAvaterUrl(info.team?.teamLogo ?? 0)),
-                  // ),
                   child: UserAvaterWidget(
                     url: Utils.getAvaterUrl(info.team?.teamLogo ?? 0),
                     width: 36.w,

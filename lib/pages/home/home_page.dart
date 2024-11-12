@@ -1,8 +1,11 @@
 import 'dart:ui';
 
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/common/entities/tab_item_info.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -32,7 +35,6 @@ class _HomePageState extends State<HomePage>
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, result) {
-        print('home_page->onPopInvokedWithResult');
         if (didPop) {
           return;
         }
@@ -41,8 +43,6 @@ class _HomePageState extends State<HomePage>
       child: GetBuilder<HomeController>(
         assignId: true,
         builder: (logic) {
-          // final double navigationBarHeight =
-          //     MediaQuery.of(context).padding.bottom;
           return ScrollConfiguration(
             behavior: ScrollConfiguration.of(context).copyWith(
               dragDevices: {
@@ -51,82 +51,114 @@ class _HomePageState extends State<HomePage>
               },
             ),
             child: Scaffold(
-              body: PageView(
-                physics: const NeverScrollableScrollPhysics(),
-                controller: controller.pageController,
-                children: controller.tabItems
-                    .map((e) => Center(child: e.tabPage))
-                    .toList(),
-              ),
-              bottomNavigationBar: Container(
-                color: AppColors.c262626,
-                height: 80.w,
-                alignment: Alignment.bottomCenter,
-                padding: EdgeInsets.only(left: 10.w, right: 10.w),
-                child: Row(
-                  // onTap: (v) => controller.onTap(v),
-                  // controller: controller.tabController,
-                  // dividerHeight: 0,
-                  // indicatorColor: Colors.transparent,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: controller.tabItems.map((e) {
-                    int index = controller.tabItems.indexOf(e);
-                    bool select = index == controller.tabIndex.value;
-                    return InkWell(
-                      onTap: () => controller.onTap(index),
-                      child: Container(
-                        width: 53.w,
-                        height: 74.w,
-                        decoration: BoxDecoration(
-                          color: select ? AppColors.cFF7954 : null,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(26.5.w),
-                              topRight: Radius.circular(26.5.w)),
-                        ),
-                        child: Column(
-                          // mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(height: 12.w),
-                            IconWidget(
-                              iconWidth: 30.w,
-                              icon: e.tabIconNormal,
-                              iconColor: select
-                                  ? AppColors.c262626
-                                  : AppColors.c666666,
-                            ),
-                            // Image.asset(
-                            //   select ? e.tabIconSelected : e.tabIconNormal,
-                            //   width: 30.w,
-                            //   fit: BoxFit.fill,
-                            //   // height: 22.5.w,
-                            // ),
-                            // SizedBox(height: 7.w),
-                            // Text(
-                            //   e.label,
-                            //   style: TextStyle(
-                            //       fontSize: 10.sp,
-                            //       color: select
-                            //           ? Colors.black
-                            //           : AppColors.c666666),
-                            // ),
-                            SizedBox(height: 11.w),
-                            if (select)
-                              Image.asset(
-                                Assets.uiNavubarSel_02Png,
-                                width: 22.5.w,
-                                // height: 22.5.w,
-                                fit: BoxFit.fill,
-                              ),
-                          ],
+              body: Stack(
+                children: [
+                  Column(
+                    children: [
+                      Expanded(
+                        child: PageView(
+                          physics: const NeverScrollableScrollPhysics(),
+                          controller: controller.pageController,
+                          children: controller.tabItems
+                              .map((e) => Center(child: e.tabPage))
+                              .toList(),
                         ),
                       ),
-                    );
-                  }).toList(),
-                ),
+                      66.vGap,
+                    ],
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.ce5e5e5.withOpacity(0.6),
+                            offset: Offset(0, -5.w),
+                            blurRadius: 9.w,
+                            spreadRadius: 0.w,
+                          )
+                        ],
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: controller.tabItems.map((e) {
+                          int index = controller.tabItems.indexOf(e);
+                          bool select = index == controller.tabIndex.value;
+                          if (index == 2) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                  color: AppColors.cFFFFFF,
+                                  borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(9.w))),
+                              child: MtInkwell(
+                                onTap: () => controller.onTap(2),
+                                child: Container(
+                                    height: 75.w,
+                                    width: 74.w,
+                                    padding: EdgeInsets.all(4.w),
+
+                                    child: Container(
+                                        height: 58.w,
+                                        margin: EdgeInsets.only(bottom: 9.w),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(5.w),
+                                            border: Border.all(
+                                                color: AppColors.cE6E6E6,
+                                                width: 1)),
+                                        child: _barItem(controller.tabItems[2],
+                                            controller.tabIndex.value == 2, 58.w))),
+                              ),
+                            );
+                          }
+                          return Flexible(
+                            flex: 1,
+                            child: Container(
+                              color: AppColors.cFFFFFF,
+                              child: MtInkwell(
+                                onTap: () => controller.onTap(index),
+                                child: _barItem(e, select, 66.w),
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  )
+                ],
               ),
             ),
           );
         },
+      ),
+    );
+  }
+
+  Container _barItem(TabItemInfo e, bool select, double height) {
+    return Container(
+      height: height,
+      color: AppColors.cFFFFFF,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          IconWidget(
+            iconWidth: 24.w,
+            icon: e.tabIconNormal,
+            iconColor: select ? AppColors.c262626 : AppColors.c666666,
+          ),
+          5.vGap,
+          Text(
+            e.label,
+            style: 12.w4(
+                color: select
+                    ? AppColors.c000000
+                    : AppColors.c000000.withOpacity(0.3),
+                height: 1),
+          )
+        ],
       ),
     );
   }

@@ -57,31 +57,31 @@ class HomeController extends GetxController {
 
   List<TabItemInfo> tabItems = [
     TabItemInfo(
-      "NEWS",
+      "Picks",
       Assets.uiIconNews_01Png,
       Assets.uiIconNews_01Png,
       const NewsPage(),
     ),
     TabItemInfo(
-      "PICKS",
+      "Scores",
       Assets.uiIconPicks_01Png,
       Assets.uiIconPicks_01Png,
       const PicksIndex(),
     ),
     TabItemInfo(
-      "TEAM",
+      "NBA",
       Assets.uiIconTeam_01Png,
       Assets.uiIconTeam_01Png,
       const TeamIndexPage(),
     ),
     TabItemInfo(
-      "TRADE",
+      "Manager",
       Assets.uiIconTraining_01Png,
       Assets.uiIconTraining_01Png,
       const TradeIndex(),
     ),
     TabItemInfo(
-      "COMMUNITIES",
+      "Portfolio",
       Assets.uiIconCommunity_01Png,
       Assets.uiIconCommunity_01Png,
       const LeaguePage(),
