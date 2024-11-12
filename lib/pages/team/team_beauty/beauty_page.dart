@@ -2,7 +2,7 @@
  * @Description: 换人换装页面
  * @Author: lihonghao
  * @Date: 2024-10-12 17:33:59
- * @LastEditTime: 2024-11-11 14:36:02
+ * @LastEditTime: 2024-11-11 17:36:42
  */
 
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
@@ -57,6 +57,7 @@ class BeautyPage extends GetView<BeautyController> {
       key: Key("${controller.beautyList.length}"),
       // containerWidth: 64.h,
       // containerHeight: 86.h,
+      index: controller.beautyIndex.value,
       itemWidth: 247.0,
       itemHeight: 375.0,
       // viewportFraction: 247 / 375,

@@ -2,17 +2,11 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-16 17:24:51
- * @LastEditTime: 2024-10-26 19:06:30
+ * @LastEditTime: 2024-11-11 17:38:53
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:get/get.dart';
 import 'dart:async';
-
-import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
-import 'package:arm_chair_quaterback/common/utils/logger.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team/controller.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 
 class BeautyController extends GetxController {
   RxInt beautyIndex = 0.obs;
@@ -50,11 +44,9 @@ class BeautyController extends GetxController {
     if (boxNumber == 1 && !box1Claimed.value) {
       box1Claimed.value = true;
       box1Timer.value = 4 * 60 * 60; // 4小时
-      Log.d("领取宝箱$boxNumber");
     } else if (boxNumber == 2 && !box2Claimed.value) {
       box2Claimed.value = true;
       box2Timer.value = 4 * 60 * 60; // 4小时
-      Log.d("领取宝箱$boxNumber");
     }
 
     // 如果两个都已领取，开始倒计时
