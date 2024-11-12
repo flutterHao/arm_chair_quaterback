@@ -99,7 +99,6 @@ class _HomePageState extends State<HomePage>
                                     height: 75.w,
                                     width: 74.w,
                                     padding: EdgeInsets.all(4.w),
-
                                     child: Container(
                                         height: 58.w,
                                         margin: EdgeInsets.only(bottom: 9.w),
@@ -109,8 +108,10 @@ class _HomePageState extends State<HomePage>
                                             border: Border.all(
                                                 color: AppColors.cE6E6E6,
                                                 width: 1)),
-                                        child: _barItem(controller.tabItems[2],
-                                            controller.tabIndex.value == 2, 58.w))),
+                                        child: _barItem(
+                                            controller.tabItems[2],
+                                            controller.tabIndex.value == 2,
+                                            58.w))),
                               ),
                             );
                           }

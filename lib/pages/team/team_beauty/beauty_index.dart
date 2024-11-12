@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -28,22 +29,36 @@ class BeautyIndex extends GetView<BeautyController> {
         alignment: Alignment.topCenter,
         children: [
           Positioned(
-            top: 0,
+            top: -10.w,
             left: 0,
-            child: Container(
-              height: 100.w,
-              decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                      colors: [
-                    Colors.white,
-                    Colors.transparent,
-                  ])),
-              child: Text(
-                "ARMCHAIR",
-                style: 121.w7(color: AppColors.c262626, height: 0.74),
-              ),
+            child: Stack(
+              children: [
+                Text(
+                  "ARMCHAIR",
+                  style: 121.w7(
+                      color: AppColors.c262626,
+                      height: 0.9,
+                      fontFamily: FontFamily.fOswaldBold),
+                ),
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  bottom: 0,
+                  right: 0,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.center,
+                        colors: [
+                          Colors.white.withOpacity(0.5),
+                          Colors.white.withOpacity(0),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
           Positioned(
@@ -56,7 +71,10 @@ class BeautyIndex extends GetView<BeautyController> {
               alignment: Alignment.center,
               child: Text(
                 "QUARTERBACK",
-                style: TextStyle(fontSize: 21.sp, letterSpacing: 15),
+                style: TextStyle(
+                    fontSize: 21.sp,
+                    letterSpacing: 18,
+                    fontFamily: FontFamily.fOswaldBold),
               ),
             ),
           ),

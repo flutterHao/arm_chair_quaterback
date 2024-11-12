@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-30 11:43:53
- * @LastEditTime: 2024-11-12 14:06:50
+ * @LastEditTime: 2024-11-12 14:42:35
  */
 
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
@@ -27,33 +27,27 @@ class TrainingAvater extends StatelessWidget {
     return AnimatedScale(
       duration: const Duration(milliseconds: 100),
       // scale: isCurrent ? 1 : 0.9,
-      scale: 0.9,
-      child: Stack(
+      scale: 1,
+      child: Container(
+        width: 46.w,
+        height: 61.w,
         alignment: Alignment.center,
-        children: [
-          Container(
-            width: 46.w,
-            height: 61.w,
-            alignment: Alignment.center,
-            // color: Colors.red,
-            clipBehavior: Clip.antiAlias,
-            margin: EdgeInsets.symmetric(horizontal: 2.w),
-            decoration: BoxDecoration(
-              border: isCurrent
-                  ? Border.all(color: AppColors.cFF7954, width: 2)
-                  : null,
-              color: AppColors.cF2F2F2,
-              borderRadius: BorderRadius.circular(9.w),
-            ),
-            child: ImageWidget(
-              url: Utils.getPlayUrl(player.playerId),
-              imageFailedPath: Assets.uiDefault_04Png,
-              width: 46.w,
-              height: 61.w,
-              fit: BoxFit.cover,
-            ),
-          ),
-        ],
+        // color: Colors.red,
+        clipBehavior: Clip.antiAlias,
+        margin: EdgeInsets.symmetric(horizontal: 2.w),
+        decoration: BoxDecoration(
+          border: Border.all(color: AppColors.cFF7954, width: 2),
+          color: AppColors.cF2F2F2,
+          borderRadius: BorderRadius.circular(9.w),
+        ),
+        child: ImageWidget(
+          url: Utils.getPlayUrl(player.playerId),
+          imageFailedPath: Assets.uiDefault_04Png,
+          borderRadius: BorderRadius.circular(7.w),
+          width: 46.w,
+          height: 61.w,
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }

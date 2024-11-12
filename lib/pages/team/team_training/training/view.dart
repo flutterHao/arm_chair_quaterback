@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-11 15:57:44
- * @LastEditTime: 2024-11-12 12:19:03
+ * @LastEditTime: 2024-11-12 15:25:12
  */
 
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
@@ -13,6 +13,7 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/progress_paint.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/player_slot_widget.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/slot_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -218,7 +219,17 @@ class TrainingPage extends GetView<TrainingController> {
                   ),
 
                   ///球员列表
-                  Positioned(top: 46.w, child: SlotMachineWheelView())
+                  Positioned(
+                    top: 46.w,
+                    left: -0.w,
+                    child: const PlayerSrollerView(),
+                  ),
+
+                  ///slot
+                  Positioned(
+                    top: 140.w,
+                    child: const SlotMachine(),
+                  ),
                 ],
               ),
             )

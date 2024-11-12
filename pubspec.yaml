@@ -132,19 +132,16 @@ flutter:
           weight: 400
 
 
-    - family: Oswald-Light
+    - family: Oswald-Bold
       fonts:
-        - asset: assets/fonts/Oswald-Light.ttf
+        - asset: assets/fonts/Oswald-Bold.ttf
           weight: 700
     - family: Oswald-Medium
       fonts:
         - asset: assets/fonts/Oswald-Medium.ttf
           weight: 400
 
-    - family: NotoSans
-      fonts:
-        - asset: assets/fonts/NotoSans-Medium.ttf
-          weight: 400
+
 
   #   - family: Trajan Pro
   #     fonts:
