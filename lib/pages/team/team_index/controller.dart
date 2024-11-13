@@ -2,31 +2,21 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-11-01 18:28:31
+ * @LastEditTime: 2024-11-12 20:21:21
  */
 
 import 'dart:async';
 
-import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
+import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
+import 'package:arm_chair_quaterback/common/net/apis.dart';
+import 'package:arm_chair_quaterback/common/net/apis/team.dart';
+import 'package:arm_chair_quaterback/common/net/http.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team/controller.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class TeamIndexController extends GetxController
     with GetSingleTickerProviderStateMixin {
   TeamIndexController();
-
-  ///布局
-  RxBool isShow = false.obs;
-  RxDouble trainingLeft = 0.0.obs;
-  RxDouble bettleRight = 0.0.obs;
-  RxDouble myTeamBottom = (-556.h).obs;
-  RxDouble pageX = 0.0.obs;
-  RxDouble turns = 0.5.obs;
-  bool isOnTopSide = true;
-  // late AnimationController pageAnimationCtrl;
-  // late Animation<double> pageAnimation;
 
   ///宝箱
   var box1Claimed = false.obs;
@@ -36,81 +26,36 @@ class TeamIndexController extends GetxController
   var isCountdownActive = false.obs; // 倒计时是否激活
   Timer? boxTimer;
 
-  // MyTeamEntity myTeamEntity = MyTeamEntity();
+  CardPackInfoEntity cardPackInfo = CardPackInfoEntity();
 
-  @override
-  void onInit() {
-    super.onInit();
-    // pageAnimationCtrl = AnimationController(
-    //   duration: const Duration(milliseconds: 500),
-    //   vsync: this,
-    // );
-
-    // pageAnimation =
-    //     Tween<double>(begin: 0.0, end: 1.0).animate(pageAnimationCtrl);
-    // pageAnimationCtrl.addListener(() {
-    //   pageLeft.value = pageAnimationCtrl.value;
-    //   update(["team_index"]);
-    // });
-    CacheApi.getNBATeamDefine();
-    CacheApi.getNBAPlayerInfo();
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  //   CacheApi.getNBATeamDefine();
+  //   CacheApi.getNBAPlayerInfo();
+  // }
 
   @override
   void onReady() {
     super.onReady();
+    getBattleBox();
   }
 
-  // void getMyTeamPlayer() {
-  //   int teamId =
-  //       Get.find<HomeController>().userEntiry.teamLoginInfo!.team!.teamId ?? 0;
-  //   TeamApi.getMyTeamPlayer(teamId).then((v) {
-  //     myTeamEntity = v;
-  //   });
-  // }
-
-  void pageOnTap() {
-    // pageAnimation = Tween<double>(
-    //         begin: !isShow.value ? 0.w : -250, end: !isShow.value ? -250.w : 0)
-    //     .animate(pageAnimationCtrl);
-    // pageAnimationCtrl.forward(from: pageLeft.value);
-    !isShow.value ? openPage() : closePage();
+  void getBattleBox() async {
+    cardPackInfo = await TeamApi.getBattleBox();
+    if (cardPackInfo.card.length < 4) {
+      cardPackInfo.card.add(CardPackInfoCard(status: -1));
+    }
+    update(["battleBox"]);
   }
 
-  void openPage() {
-    Log.d("打开");
-    trainingLeft.value = -152.h;
-    bettleRight.value = -163.h;
-    myTeamBottom.value = 0.h;
-    pageX.value = -250.w;
-    turns.value += isShow.value ? 0 : 1 / 2;
-    isShow.value = true;
-    update(["team_index"]);
-    TeamController teamController = Get.find();
-    teamController.initData();
+  void activeBattleBox(int index) async {
+    cardPackInfo = await TeamApi.activeBox(index);
+    if (cardPackInfo.card.length < 4) {
+      cardPackInfo.card.add(CardPackInfoCard(status: -1));
+    }
+    update(["battleBox"]);
   }
-
-  void closePage() {
-    Log.d("关闭");
-    trainingLeft.value = 0.0;
-    bettleRight.value = 0.0;
-    myTeamBottom.value = -556.0.h;
-    pageX.value = 0.0;
-    turns.value -= !isShow.value ? 0 : 1 / 2;
-    isShow.value = false;
-    isOnTopSide = true;
-    update(["team_index"]);
-  }
-
-  // void updatePagePosition() {
-  //   trainingLeft.value = 0.0;
-  //   bettleRight.value = 0.0;
-  //   myTeamBottom.value = -556.0.h;
-  //   pageLeft.value = 0.0;
-  //   pageRight.value = 0.0;
-  //   isShow.value = false;
-  //   isOnTopSide = true;
-  // }
 
   ///打开宝箱
   void claimBox(int boxNumber) {

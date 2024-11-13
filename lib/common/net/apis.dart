@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-06 15:16:54
- * @LastEditTime: 2024-11-07 15:42:31
+ * @LastEditTime: 2024-11-12 18:33:07
  */
 class Api {
   /// base
@@ -100,6 +100,8 @@ class Api {
   static const changeTeamPlayer = "$API_BASE_PATH/TeamPlayer/changeTeamPlayer";
   static const getPlayerUpGradeInfo =
       "$API_BASE_PATH/TeamPlayer/getPlayerUpGradeInfo";
+  static const String getCardPackInfo = "$API_BASE_PATH/match/getCardPackInfo";
+  static const String activeBox = "$API_BASE_PATH/match/activeBox";
 
   ///trade
   static const String getTradeInfo = "$API_BASE_PATH/Trade/getTradeInfo";
@@ -108,5 +110,4 @@ class Api {
 
   ///match
   static const String teamMatch = "$API_BASE_PATH/match/teamMatch";
-
 }

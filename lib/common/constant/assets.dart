@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-11 17:18:41
- * @LastEditTime: 2024-11-12 15:57:53
+ * @LastEditTime: 2024-11-12 18:01:42
  */
 class Assets {
   ///home
@@ -248,21 +248,27 @@ class Assets {
 
   ///manager
   static const uiManagerFreegift_01Png =
-      'assets/manager/ui_manager_freegift_01.png';
+      'assets/images/manager/ui_manager_freegift_01.png';
   static const uiManagerFreegift_02Png =
-      'assets/manager/ui_manager_freegift_02.png';
-  static const uiManagerGift_01Png = 'assets/manager/ui_manager_gift_01.png';
-  static const uiManagerGift_02Png = 'assets/manager/ui_manager_gift_02.png';
-  static const uiManagerGift_03Png = 'assets/manager/ui_manager_gift_03.png';
+      'assets/images/manager/ui_manager_freegift_02.png';
+  static const uiManagerGift_01Png =
+      'assets/images/manager/ui_manager_gift_01.png';
+  static const uiManagerGift_02Png =
+      'assets/images/manager/ui_manager_gift_02.png';
+  static const uiManagerGift_03Png =
+      'assets/images/manager/ui_manager_gift_03.png';
   static const uiManagerIconCurrency_04Png =
-      'assets/manager/ui_manager_icon_currency_04.png';
+      'assets/images/manager/ui_manager_icon_currency_04.png';
   static const uiManagerIconRecoverPng =
-      'assets/manager/ui_manager_icon_recover.png';
+      'assets/images/manager/ui_manager_icon_recover.png';
   static const uiManagerMatchgameBgJpg =
-      'assets/manager/ui_manager_matchgame_bg.jpg';
+      'assets/images/manager/ui_manager_matchgame_bg.jpg';
   static const uiManagerMatchgameImagePng =
-      'assets/manager/ui_manager_matchgame_image.png';
-  static const uiManagerMyteamBgJpg = 'assets/manager/ui_manager_myteam_bg.jpg';
+      'assets/images/manager/ui_manager_matchgame_image.png';
+  static const uiManagerMyteamBgJpg =
+      'assets/images/manager/ui_manager_myteam_bg.jpg';
   static const uiManagerTrainingBgJpg =
-      'assets/manager/ui_manager_training_bg.jpg';
+      'assets/images/manager/ui_manager_training_bg.jpg';
+  static const uiManagerTrainingUnknownPng =
+      'assets/images/manager/ui_manager_training_unknown.png';
 }

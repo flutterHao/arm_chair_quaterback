@@ -2,9 +2,10 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-14 17:25:31
- * @LastEditTime: 2024-11-06 11:28:46
+ * @LastEditTime: 2024-11-12 18:35:09
  */
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/my_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_status_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
@@ -73,5 +74,17 @@ class TeamApi {
   static Future<BattleEntity> teamMatch() async {
     var json = await HttpUtil().post(Api.teamMatch);
     return BattleEntity.fromJson(json);
+  }
+
+  ///获取战斗宝箱信息
+  static Future<CardPackInfoEntity> getBattleBox() async {
+    var json = await HttpUtil().post(Api.getCardPackInfo);
+    return CardPackInfoEntity.fromJson(json);
+  }
+
+  ///激活宝箱
+  static Future<CardPackInfoEntity> activeBox(int index) async {
+    var json = await HttpUtil().post(Api.activeBox);
+    return CardPackInfoEntity.fromJson(json);
   }
 }

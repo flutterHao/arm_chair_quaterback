@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-11 15:57:44
- * @LastEditTime: 2024-11-12 15:25:12
+ * @LastEditTime: 2024-11-12 17:22:05
  */
 
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
@@ -222,13 +222,13 @@ class TrainingPage extends GetView<TrainingController> {
                   Positioned(
                     top: 46.w,
                     left: -0.w,
-                    child: const PlayerSrollerView(),
+                    child: PlayerSrollerView(),
                   ),
 
                   ///slot
                   Positioned(
                     top: 140.w,
-                    child: const SlotMachine(),
+                    child: SlotMachine(),
                   ),
                 ],
               ),

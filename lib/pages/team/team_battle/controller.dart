@@ -22,7 +22,6 @@ class TeamBattleController extends GetxController
 
   static bool _canPop = false;
 
-
   List<String> totalAvatars = [
     Assets.uiHead_01Png,
     Assets.uiHead_02Png,
@@ -55,6 +54,7 @@ class TeamBattleController extends GetxController
     meAvatar = totalAvatars[Random().nextInt(totalAvatars.length - 1)];
     totalAvatars.remove(meAvatar);
     opponentAvatar = totalAvatars[Random().nextInt(totalAvatars.length - 1)];
+
     ///todo 测试代码
     // Future.delayed(const Duration(milliseconds: 3000), () {
     //   nextStep();
@@ -62,21 +62,21 @@ class TeamBattleController extends GetxController
     teamMatch();
   }
 
-  teamMatch(){
+  teamMatch() {
     var startMatchTimeMs = DateTime.now().millisecondsSinceEpoch;
     var minMatchTimeMs = 3000;
-    TeamApi.teamMatch().then((result){
+    TeamApi.teamMatch().then((result) {
       battleEntity = result;
       var currentMs = DateTime.now().millisecondsSinceEpoch;
       var diff = currentMs - startMatchTimeMs;
-      if(diff >= minMatchTimeMs){
+      if (diff >= minMatchTimeMs) {
         nextStep();
-      }else{
-        Future.delayed(Duration(milliseconds: minMatchTimeMs-diff), () {
+      } else {
+        Future.delayed(Duration(milliseconds: minMatchTimeMs - diff), () {
           nextStep();
         });
       }
-    },onError: (e){
+    }, onError: (e) {
       EasyLoading.showToast("MATCH FAILED");
       Get.back();
     });

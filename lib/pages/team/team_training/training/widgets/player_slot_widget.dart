@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-06 11:51:15
- * @LastEditTime: 2024-11-12 14:45:16
+ * @LastEditTime: 2024-11-12 17:41:13
  */
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/training_avater.dart';
@@ -20,7 +20,6 @@ class PlayerSrollerView extends StatefulWidget {
 class _PlayerSrollerViewState extends State<PlayerSrollerView> {
   final TrainingController controller = Get.find();
   late ScrollController _scrollController;
-  bool _isAutoScrolling = true;
 
   @override
   void initState() {
@@ -34,9 +33,8 @@ class _PlayerSrollerViewState extends State<PlayerSrollerView> {
     super.dispose();
   }
 
-  // 启动自动滚动
   void _startAutoScroll(int count) async {
-    if (_scrollController.hasClients && _isAutoScrolling) {
+    if (_scrollController.hasClients) {
       await _scrollController.animateTo(
         _scrollController.offset + 50.w * 20,
         duration: const Duration(milliseconds: 1500),
@@ -71,7 +69,7 @@ class _PlayerSrollerViewState extends State<PlayerSrollerView> {
             int current = index % controller.playerList.length;
             return TrainingAvater(
               player: controller.playerList[current],
-              isCurrent: isCUrrent && controller.isShot.value,
+              isCurrent: isCUrrent && controller.isPlaying,
             );
           },
         ),

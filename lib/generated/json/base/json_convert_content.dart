@@ -6,6 +6,7 @@
 import 'package:flutter/material.dart' show debugPrint;
 import 'package:arm_chair_quaterback/common/entities/all_team_players_by_up_star_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/config/prop_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/grade_in_star_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_data.dart';
@@ -252,6 +253,14 @@ class JsonConvert {
     if (<TestDataMap>[] is M) {
       return data.map<TestDataMap>((Map<String, dynamic> e) =>
           TestDataMap.fromJson(e)).toList() as M;
+    }
+    if (<CardPackInfoEntity>[] is M) {
+      return data.map<CardPackInfoEntity>((Map<String, dynamic> e) =>
+          CardPackInfoEntity.fromJson(e)).toList() as M;
+    }
+    if (<CardPackInfoCard>[] is M) {
+      return data.map<CardPackInfoCard>((Map<String, dynamic> e) =>
+          CardPackInfoCard.fromJson(e)).toList() as M;
     }
     if (<PropDefineEntity>[] is M) {
       return data.map<PropDefineEntity>((Map<String, dynamic> e) =>
@@ -729,6 +738,8 @@ class JsonConvertClassCollection {
     (ScoreBoard).toString(): ScoreBoard.fromJson,
     (GameSchedule).toString(): GameSchedule.fromJson,
     (TestDataMap).toString(): TestDataMap.fromJson,
+    (CardPackInfoEntity).toString(): CardPackInfoEntity.fromJson,
+    (CardPackInfoCard).toString(): CardPackInfoCard.fromJson,
     (PropDefineEntity).toString(): PropDefineEntity.fromJson,
     (GradeInStarDefineEntity).toString(): GradeInStarDefineEntity.fromJson,
     (GuessData).toString(): GuessData.fromJson,
