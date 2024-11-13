@@ -36,6 +36,10 @@ CardPackInfoEntity $CardPackInfoEntityFromJson(Map<String, dynamic> json) {
   if (card != null) {
     cardPackInfoEntity.card = card;
   }
+  final int? freeGiftCount = jsonConvert.convert<int>(json['freeGiftCount']);
+  if (freeGiftCount != null) {
+    cardPackInfoEntity.freeGiftCount = freeGiftCount;
+  }
   return cardPackInfoEntity;
 }
 
@@ -48,6 +52,8 @@ Map<String, dynamic> $CardPackInfoEntityToJson(CardPackInfoEntity entity) {
   data['freeGiftTime'] = entity.freeGiftTime;
   data['updateTime'] = entity.updateTime;
   data['card'] = entity.card.map((v) => v.toJson()).toList();
+  data['freeGiftCount'] = entity.freeGiftCount;
+  data['freeTimeString'] = entity.freeTimeString.toJson();
   return data;
 }
 
@@ -60,6 +66,8 @@ extension CardPackInfoEntityExtension on CardPackInfoEntity {
     int? freeGiftTime,
     int? updateTime,
     List<CardPackInfoCard>? card,
+    int? freeGiftCount,
+    RxString? freeTimeString,
   }) {
     return CardPackInfoEntity()
       ..rankIndex = rankIndex ?? this.rankIndex
@@ -68,7 +76,9 @@ extension CardPackInfoEntityExtension on CardPackInfoEntity {
       ..cardPackGrade = cardPackGrade ?? this.cardPackGrade
       ..freeGiftTime = freeGiftTime ?? this.freeGiftTime
       ..updateTime = updateTime ?? this.updateTime
-      ..card = card ?? this.card;
+      ..card = card ?? this.card
+      ..freeGiftCount = freeGiftCount ?? this.freeGiftCount
+      ..freeTimeString = freeTimeString ?? this.freeTimeString;
   }
 }
 

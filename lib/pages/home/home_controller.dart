@@ -64,9 +64,9 @@ class HomeController extends GetxController {
     ),
     TabItemInfo(
       "Scores",
-      Assets.uiIconTraining_01Png,
-      Assets.uiIconTraining_01Png,
-      const TradeIndex(),
+      Assets.uiIconCommunity_01Png,
+      Assets.uiIconCommunity_01Png,
+      const LeaguePage(),
     ),
     TabItemInfo(
       "NBA",
@@ -82,9 +82,9 @@ class HomeController extends GetxController {
     ),
     TabItemInfo(
       "Portfolio",
-      Assets.uiIconCommunity_01Png,
-      Assets.uiIconCommunity_01Png,
-      const LeaguePage(),
+      Assets.uiIconTraining_01Png,
+      Assets.uiIconTraining_01Png,
+      const TradeIndex(),
     ),
   ];
 

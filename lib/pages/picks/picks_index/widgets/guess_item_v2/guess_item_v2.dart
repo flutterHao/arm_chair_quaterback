@@ -50,30 +50,6 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
   late GuessItemControllerV2 controller;
   final GlobalKey _repaintBoundaryKey = GlobalKey();
 
-  Future<void> _generateAndShareImage() async {
-    try {
-      // 使用RepaintBoundary生成widget的图像
-      RenderRepaintBoundary boundary = _repaintBoundaryKey.currentContext!
-          .findRenderObject() as RenderRepaintBoundary;
-      var image = await boundary.toImage(pixelRatio: 3.0); // 设置图像像素密度
-      ByteData? byteData = await image.toByteData(format: ImageByteFormat.png);
-      Uint8List uint8List = byteData!.buffer.asUint8List();
-
-      // 获取临时文件目录
-      final directory = await getTemporaryDirectory();
-      final filePath = '${directory.path}/shared_image.png';
-
-      // 将图像保存为PNG文件
-      File file = File(filePath)..writeAsBytesSync(uint8List);
-
-      // 使用share_plus插件分享文件
-      Share.shareXFiles([XFile(filePath)],
-          text: 'Check out this generated image!');
-    } catch (e) {
-      print('Error generating image: $e');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     PicksPlayerV2 player = widget.playerV2;
@@ -127,8 +103,16 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                           Positioned(
                               top: 4.w,
                               right: 4.w,
-                              child: IconWidget(
-                                  iconWidth: 16.w, icon: Assets.testTeamLogoPng))
+                              child: Container(
+                                height: 16.w,
+                                width: 16.w,
+                                decoration: BoxDecoration(
+                                  color: AppColors.cFFFFFF,
+                                  borderRadius: BorderRadius.circular(4.w)
+                                ),
+                                child: IconWidget(
+                                    iconWidth: 9.w, icon: Assets.uiIconReadPng,iconColor: AppColors.c000000,),
+                              ))
                         ],
                       ),
                       14.hGap,
@@ -342,7 +326,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                     border: Border.all(color: AppColors.c666666, width: 1)),
                 child: MtInkwell(
                     vibrate: true,
-                    onTap: () => _generateAndShareImage(),
+                    onTap: () => Utils.generateAndShareImage(_repaintBoundaryKey),
                     child: IconWidget(
                         iconWidth: 15.w, icon: Assets.testTeamLogoPng))))
       ],

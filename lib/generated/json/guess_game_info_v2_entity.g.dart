@@ -87,10 +87,10 @@ GuessGameInfoV2GuessInfo $GuessGameInfoV2GuessInfoFromJson(
 Map<String, dynamic> $GuessGameInfoV2GuessInfoToJson(
     GuessGameInfoV2GuessInfo entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
-  data['3pm'] = entity.threePm.map((v) => v.toJson()).toList();
-  data['ast'] = entity.ast.map((v) => v.toJson()).toList();
-  data['reb'] = entity.reb.map((v) => v.toJson()).toList();
-  data['pts'] = entity.pts.map((v) => v.toJson()).toList();
+  data['3pm'] = entity.threePm?.map((v) => v.toJson()).toList();
+  data['ast'] = entity.ast?.map((v) => v.toJson()).toList();
+  data['reb'] = entity.reb?.map((v) => v.toJson()).toList();
+  data['pts'] = entity.pts?.map((v) => v.toJson()).toList();
   return data;
 }
 

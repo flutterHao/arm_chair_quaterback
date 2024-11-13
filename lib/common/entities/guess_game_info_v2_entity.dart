@@ -26,10 +26,10 @@ class GuessGameInfoV2Entity {
 @JsonSerializable()
 class GuessGameInfoV2GuessInfo {
   @JSONField(name: "3pm")
-  late List<GuessGameInfoEntity> threePm;
-  late List<GuessGameInfoEntity> ast;
-  late List<GuessGameInfoEntity> reb;
-  late List<GuessGameInfoEntity> pts;
+  List<GuessGameInfoEntity>? threePm;
+  List<GuessGameInfoEntity>? ast;
+  List<GuessGameInfoEntity>? reb;
+  List<GuessGameInfoEntity>? pts;
 
   GuessGameInfoV2GuessInfo();
 

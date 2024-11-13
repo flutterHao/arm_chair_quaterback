@@ -1,4 +1,7 @@
+import 'package:arm_chair_quaterback/common/utils/click_feed_back.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'index.dart';
 
@@ -7,12 +10,17 @@ class LeagueController extends GetxController {
 
   final state = LeagueState();
 
-  // tap
-  void handleTap(int index) {
-    Get.snackbar(
-      "标题",
-      "消息",
-    );
+  RefreshController refreshController = RefreshController();
+
+  List<String> pageText = ["YESTERDAY","TODAY","TOMORROW"];
+
+  PageController pageController = PageController();
+  var currentPageIndex = 0;
+
+  loading(){
+    Future.delayed(const Duration(seconds: 2),(){
+      refreshController.refreshCompleted();
+    });
   }
 
   /// 在 widget 内存中分配后立即调用。
@@ -37,5 +45,22 @@ class LeagueController extends GetxController {
   @override
   void dispose() {
     super.dispose();
+  }
+
+  prePage() {
+    if(currentPageIndex == 0){
+      ClickFeedBack.selectionClick();
+      return;
+    }
+    pageController.jumpToPage(--currentPageIndex);
+  }
+
+  nextPage(){
+    if(currentPageIndex == pageText.length-1){
+      ClickFeedBack.selectionClick();
+      return;
+    }
+    pageController.jumpToPage(++currentPageIndex);
+
   }
 }

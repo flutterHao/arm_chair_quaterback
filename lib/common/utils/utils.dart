@@ -4,12 +4,19 @@
  * @Date: 2024-09-21 20:20:49
  * @LastEditTime: 2024-11-13 15:15:20
  */
+import 'dart:io';
+import 'dart:typed_data';
+import 'dart:ui';
+
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/store/config.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 class Utils {
   ///深色队徽
@@ -190,5 +197,29 @@ class Utils {
       return "${string}rd";
     }
     return "${string}th";
+  }
+
+  static generateAndShareImage(GlobalKey globalKey) async {
+    try {
+      // 使用RepaintBoundary生成widget的图像
+      RenderRepaintBoundary boundary = globalKey.currentContext!
+          .findRenderObject() as RenderRepaintBoundary;
+      var image = await boundary.toImage(pixelRatio: 3.0); // 设置图像像素密度
+      ByteData? byteData = await image.toByteData(format: ImageByteFormat.png);
+      Uint8List uint8List = byteData!.buffer.asUint8List();
+
+      // 获取临时文件目录
+      final directory = await getTemporaryDirectory();
+      final filePath = '${directory.path}/shared_image.png';
+
+      // 将图像保存为PNG文件
+      File file = File(filePath)..writeAsBytesSync(uint8List);
+
+      // 使用share_plus插件分享文件
+      Share.shareXFiles([XFile(filePath)],
+          text: 'Check out this generated image!');
+    } catch (e) {
+      print('Error generating image: $e');
+    }
   }
 }

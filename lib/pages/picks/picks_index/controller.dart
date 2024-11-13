@@ -233,7 +233,7 @@ class PicksIndexController extends GetxController
       for (int i = 0; i < res.keys.length; i++) {
         List<PicksPlayerV2> item = [];
         var key = res.keys.toList()[i];
-        var list = res[key]!;
+        var list = res[key]??[];
         for (int i1 = 0; i1 < list.length; i1++) {
           GuessGameInfoEntity guessGameInfoEntity =
               GuessGameInfoEntity.fromJson(list[i1]);
