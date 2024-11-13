@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-12 17:54:17
- * @LastEditTime: 2024-11-13 10:03:32
+ * @LastEditTime: 2024-11-13 12:17:01
  */
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/card_pack_info_entity.g.dart';
@@ -20,6 +20,9 @@ class CardPackInfoEntity {
   late int freeGiftTime = 0;
   late int updateTime = 0;
   late List<CardPackInfoCard> card = [];
+  late int freeGiftCount = 0;
+  @JSONField(deserialize: false)
+  RxString freeTimeString = "".obs;
 
   CardPackInfoEntity();
 

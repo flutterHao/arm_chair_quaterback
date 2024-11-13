@@ -690,8 +690,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                             children: [
                                               IconWidget(
                                                   iconWidth: 19.w,
-                                                  icon: Assets
-                                                      .uiIconJettonBigPng),
+                                                  icon: Assets.prop_102Png),
                                               5.hGap,
                                               Text(
                                                 picksIndexController

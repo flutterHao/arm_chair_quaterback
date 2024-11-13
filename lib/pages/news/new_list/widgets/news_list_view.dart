@@ -172,7 +172,7 @@ class NewsItemView extends GetView<NewListController> {
         //           ),
         //           IconWidget(
         //             iconWidth: 16.w,
-        //             icon: Assets.uiIconJettonBigPng,
+        //             icon: Assets.prop_102Png,
         //             iconColor: Colors.white,
         //           ),
         //         ],

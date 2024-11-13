@@ -51,7 +51,8 @@ class UserInfoBar extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(child: Row(
+                  Expanded(
+                      child: Row(
                     children: [
                       16.hGap,
                       InkWell(
@@ -87,14 +88,15 @@ class UserInfoBar extends StatelessWidget {
                           width: 36.w,
                           height: 36.w,
                           decoration: BoxDecoration(
-                            border: Border.all(width: 1,color: AppColors.cFFFFFF),
-                            borderRadius: BorderRadius.circular(18.w)
-                          ),
+                              border: Border.all(
+                                  width: 1, color: AppColors.cFFFFFF),
+                              borderRadius: BorderRadius.circular(18.w)),
                           child: Center(
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(18.w),
                               child: UserAvaterWidget(
-                                url: Utils.getAvaterUrl(info.team?.teamLogo ?? 0),
+                                url: Utils.getAvaterUrl(
+                                    info.team?.teamLogo ?? 0),
                                 width: 35.w,
                                 height: 35.w,
                               ),
@@ -103,7 +105,9 @@ class UserInfoBar extends StatelessWidget {
                         ),
                       ),
                       16.hGap,
-                      MoneyAndCoinWidget(home: true,),
+                      MoneyAndCoinWidget(
+                        home: true,
+                      ),
                     ],
                   )),
                   SizedBox(
@@ -111,19 +115,23 @@ class UserInfoBar extends StatelessWidget {
                     height: 43.w,
                     child: Stack(
                       children: [
-                        IconWidget(iconWidth: 20.w, icon: Assets.uiIconAwardPng),
+                        IconWidget(
+                            iconWidth: 20.w, icon: Assets.uiIconAwardPng),
                         Positioned(
-                          top: 5.w,
-                          right: 10.w,
+                            top: 5.w,
+                            right: 10.w,
                             child: Container(
-                          width: 16.w,
-                          height: 16.w,
-                          decoration: BoxDecoration(
-                            color: AppColors.c000000,
-                            borderRadius: BorderRadius.circular(8.w)
-                          ),
-                          child: Center(child: Text("3",style: 12.w4(color: AppColors.cFF7954),)),
-                        ))
+                              width: 16.w,
+                              height: 16.w,
+                              decoration: BoxDecoration(
+                                  color: AppColors.c000000,
+                                  borderRadius: BorderRadius.circular(8.w)),
+                              child: Center(
+                                  child: Text(
+                                "3",
+                                style: 12.w4(color: AppColors.cFF7954),
+                              )),
+                            ))
                       ],
                     ),
                   )
@@ -205,7 +213,7 @@ class UserInfoBar extends StatelessWidget {
 
 class MoneyAndCoinWidget extends StatelessWidget {
   ///不要加const，会导致widget不刷新
-  MoneyAndCoinWidget({super.key,this.home=false});
+  MoneyAndCoinWidget({super.key, this.home = false});
 
   final bool home;
 
@@ -217,16 +225,22 @@ class MoneyAndCoinWidget extends StatelessWidget {
           TeamLoginInfo info =
               controller.userEntiry.teamLoginInfo ?? TeamLoginInfo();
           var child;
-          if(home) {
-             child = Row(
+          if (home) {
+            child = Row(
               children: [
                 IconWidget(iconWidth: 21.w, icon: Assets.uiIconJettonPng),
                 4.hGap,
-                Text(Utils.formatChip(info.getCoin()),style: 16.w4(color: AppColors.cF2F2F2,height: 1),),
+                Text(
+                  Utils.formatChip(info.getCoin()),
+                  style: 16.w4(color: AppColors.cF2F2F2, height: 1),
+                ),
                 15.hGap,
                 IconWidget(iconWidth: 24.w, icon: Assets.uiMoney_02Png),
                 4.hGap,
-                Text(Utils.formatChip(info.getMoney()),style: 16.w4(color: AppColors.cF2F2F2,height: 1),),
+                Text(
+                  Utils.formatChip(info.getMoney()),
+                  style: 16.w4(color: AppColors.cF2F2F2, height: 1),
+                ),
                 13.hGap,
                 Container(
                   height: 24.w,
@@ -235,17 +249,20 @@ class MoneyAndCoinWidget extends StatelessWidget {
                     color: AppColors.c262626,
                     borderRadius: BorderRadius.circular(4.w),
                   ),
-                  child: IconWidget(iconWidth: 12.w, icon: Assets.uiIconPlusPng,iconColor: AppColors.cFF7954,),//todo 功能待定
+                  child: IconWidget(
+                    iconWidth: 12.w,
+                    icon: Assets.uiIconPlusPng,
+                    iconColor: AppColors.cFF7954,
+                  ), //todo 功能待定
                 )
               ],
             );
-          }else{
+          } else {
             child = Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                iconText(Assets.uiIconJettonBigPng,
-                    Utils.formatChip(info.getCoin())),
+                iconText(Assets.prop_102Png, Utils.formatChip(info.getCoin())),
                 4.vGap,
                 iconText(
                     Assets.uiIconMoneyPng, Utils.formatMoney(info.getMoney())),

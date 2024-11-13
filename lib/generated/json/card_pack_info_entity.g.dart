@@ -1,5 +1,7 @@
 import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.dart';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
+import 'package:get/get.dart';
+
 
 CardPackInfoEntity $CardPackInfoEntityFromJson(Map<String, dynamic> json) {
   final CardPackInfoEntity cardPackInfoEntity = CardPackInfoEntity();
@@ -92,6 +94,7 @@ Map<String, dynamic> $CardPackInfoCardToJson(CardPackInfoCard entity) {
   data['cardId'] = entity.cardId;
   data['openTime'] = entity.openTime;
   data['status'] = entity.status;
+  data['remainTime'] = entity.remainTime.toJson();
   return data;
 }
 
@@ -100,10 +103,12 @@ extension CardPackInfoCardExtension on CardPackInfoCard {
     int? cardId,
     int? openTime,
     int? status,
+    RxString? remainTime,
   }) {
     return CardPackInfoCard()
       ..cardId = cardId ?? this.cardId
       ..openTime = openTime ?? this.openTime
-      ..status = status ?? this.status;
+      ..status = status ?? this.status
+      ..remainTime = remainTime ?? this.remainTime;
   }
 }

@@ -236,7 +236,7 @@ class PlayerItem extends GetView<TeamController> {
                   IconWidget(
                     iconWidth: 12.w,
                     iconHeight: 12.w,
-                    icon: Utils.getIconUrl(
+                    icon: Utils.getStatusUrl(
                         CacheApi.playerStatusMap[item.playerStatus]?.statsId),
                   )
               ],

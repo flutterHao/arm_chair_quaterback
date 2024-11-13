@@ -25,7 +25,7 @@ class SlotMachine extends GetView<TrainingController> {
         height: 68.w,
         child: IconWidget(
           iconWidth: 30.w,
-          icon: Utils.getIconUrl(controller.propList[realIndex]),
+          icon: Utils.getPropIconUrl(controller.propList[realIndex]),
           iconColor: Colors.black,
         ));
   }

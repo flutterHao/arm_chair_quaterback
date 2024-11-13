@@ -37,7 +37,8 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
                       children: [
                         Image.asset(
                           Assets.uiManagerGift_03Png,
-                          width: 79.w,
+                          width: 73.w,
+                          fit: BoxFit.fitWidth,
                         ),
                         3.vGap,
                         IconWidget(
@@ -62,17 +63,20 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
                       children: [
                         Image.asset(
                           Assets.uiManagerGift_01Png,
-                          width: 79.w,
+                          width: 73.w,
+                          fit: BoxFit.fitWidth,
                         ),
                         // 9.vGap,
-                        Text(
-                          "09:51",
-                          style: 16.w4(
-                            color: AppColors.c262626,
-                            height: 1,
-                            fontFamily: FontFamily.fOswaldMedium,
-                          ),
-                        )
+                        Obx(() {
+                          return Text(
+                            item.remainTime.value,
+                            style: 16.w4(
+                              color: AppColors.c262626,
+                              height: 1,
+                              fontFamily: FontFamily.fRobotoRegular,
+                            ),
+                          );
+                        })
                       ],
                     );
                   } else if (item.status == 0) {
@@ -81,7 +85,7 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
                       children: [
                         Image.asset(
                           Assets.uiManagerGift_02Png,
-                          width: 79.w,
+                          width: 73.w,
                           fit: BoxFit.fitWidth,
                         ),
                         // 15.vGap,
@@ -118,17 +122,26 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
                       if (item.status == -1) {
                         await Get.toNamed(RouteNames.teamTeamBattle);
                         controller.getBattleBox();
+                      } else if (item.status == 0) {
+                        controller.activeBattleBox(index);
+                      } else if (item.status == 1) {
+                        controller.speedOpneBattleBox(index);
+                      } else if (item.status == 2) {
+                        controller.openBattleBox(index);
                       }
                     },
                     child: Container(
                         width: 79.w,
                         height: 112.w,
                         decoration: BoxDecoration(
+                          color: item.status != 2 ? AppColors.cF2F2F2 : null,
                           borderRadius: BorderRadius.circular(9.w),
-                          border: Border.all(
-                            width: 1,
-                            color: AppColors.c666666,
-                          ),
+                          border: item.status == 2
+                              ? Border.all(
+                                  width: 1,
+                                  color: AppColors.c666666,
+                                )
+                              : null,
                         ),
                         child: child),
                   );

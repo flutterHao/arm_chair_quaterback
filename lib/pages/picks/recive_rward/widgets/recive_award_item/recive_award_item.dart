@@ -250,7 +250,7 @@ class _ReceiveAwardItemState extends State<ReceiveAwardItem> {
         ],
         IconWidget(
           iconWidth: 17.w,
-          icon: Assets.uiIconJettonBigPng,
+          icon: Assets.prop_102Png,
           iconColor:
               !controller.getSuccess() ? AppColors.cB3B3B3 : AppColors.c10A86A,
         ),

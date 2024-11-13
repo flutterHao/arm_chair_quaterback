@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-14 17:25:31
- * @LastEditTime: 2024-11-12 18:35:09
+ * @LastEditTime: 2024-11-13 14:18:25
  */
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
@@ -84,7 +84,26 @@ class TeamApi {
 
   ///激活宝箱
   static Future<CardPackInfoEntity> activeBox(int index) async {
-    var json = await HttpUtil().post(Api.activeBox);
+    var json = await HttpUtil().post(Api.activeBox, data: {"index": index});
     return CardPackInfoEntity.fromJson(json);
+  }
+
+  ///开启宝箱
+  static Future<List<TrainingInfoAward>> opneBattleBox(int index) async {
+    List list = await HttpUtil().post(Api.openCardPack, data: {"index": index});
+    return list.map((e) => TrainingInfoAward.fromJson(e)).toList();
+  }
+
+  ///加速开启宝箱
+  static Future<List<TrainingInfoAward>> speedOpneBattleBox(int index) async {
+    List list =
+        await HttpUtil().post(Api.speedOpenCardPack, data: {"index": index});
+    return list.map((e) => TrainingInfoAward.fromJson(e)).toList();
+  }
+
+  ///开启免费宝箱
+  static Future<List<TrainingInfoAward>> openFreeGift() async {
+    List list = await HttpUtil().post(Api.getFreeGift);
+    return list.map((e) => TrainingInfoAward.fromJson(e)).toList();
   }
 }

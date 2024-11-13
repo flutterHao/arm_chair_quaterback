@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-11 17:18:41
- * @LastEditTime: 2024-11-12 18:01:42
+ * @LastEditTime: 2024-11-13 14:59:25
  */
 class Assets {
   ///home
@@ -18,19 +18,21 @@ class Assets {
 
   ///icon
   static const head_0000Png = 'assets/images/icon/head_0000.png';
-  static const icon_101Png = 'assets/images/icon/icon_101.png';
-  static const icon_102Png = 'assets/images/icon/icon_102.png';
-  static const icon_103Png = 'assets/images/icon/icon_103.png';
-  static const icon_104Png = 'assets/images/icon/icon_104.png';
-  static const icon_301Png = 'assets/images/icon/icon_301.png';
-  static const icon_302Png = 'assets/images/icon/icon_302.png';
-  static const icon_303Png = 'assets/images/icon/icon_303.png';
-  static const icon_304Png = 'assets/images/icon/icon_304.png';
-  static const icon_305Png = 'assets/images/icon/icon_305.png';
-  static const icon_306Png = 'assets/images/icon/icon_306.png';
   static const iconBackPng = 'assets/images/icon/icon_back.png';
   static const iconClosePng = 'assets/images/icon/icon_close.png';
   static const iconSharePng = 'assets/images/icon/icon_share.png';
+  static const prop_101Png = 'assets/images/icon/prop_101.png';
+  static const prop_102Png = 'assets/images/icon/prop_102.png';
+  static const prop_301Png = 'assets/images/icon/prop_301.png';
+  static const prop_302Png = 'assets/images/icon/prop_302.png';
+  static const prop_303Png = 'assets/images/icon/prop_303.png';
+  static const prop_304Png = 'assets/images/icon/prop_304.png';
+  static const prop_305Png = 'assets/images/icon/prop_305.png';
+  static const prop_306Png = 'assets/images/icon/prop_306.png';
+  static const status_101Png = 'assets/images/icon/status_101.png';
+  static const status_102Png = 'assets/images/icon/status_102.png';
+  static const status_103Png = 'assets/images/icon/status_103.png';
+  static const status_104Png = 'assets/images/icon/status_104.png';
   static const uiDefault_01Png = 'assets/images/icon/ui_default_01.png';
   static const uiDefault_02Png = 'assets/images/icon/ui_default_02.png';
   static const uiDefault_03Png = 'assets/images/icon/ui_default_03.png';
@@ -125,8 +127,8 @@ class Assets {
   static const uiPropsBoxPng = 'assets/images/picks/ui_props_box.png';
   static const uiPropsMoenyPng = 'assets/images/picks/ui_props_moeny.png';
   static const uiBellePng = 'assets/images/picks/ui_belle.png';
-  static const uiIconJettonBigPng =
-      'assets/images/picks/ui_icon_jetton_big.png';
+  // static const uiIconJettonBigPng =
+  //     'assets/images/picks/ui_icon_jetton_big.png';
 
   ///player
   static const uiIconPingjiPng = 'assets/images/player/ui_icon_pingji.png';

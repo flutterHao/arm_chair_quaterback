@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-21 20:20:49
- * @LastEditTime: 2024-11-07 10:46:14
+ * @LastEditTime: 2024-11-13 15:15:20
  */
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
@@ -37,10 +37,13 @@ class Utils {
     return "$url/image/team_white/$teamId.png";
   }
 
-  ///道具、状态...
-  static String getIconUrl(id) {
-    // String url = ConfigStore.to.getServiceUrl();
-    return "assets/images/icon/icon_$id.png";
+  ///道具
+  static String getPropIconUrl(id) {
+    return "assets/images/icon/prop_$id.png";
+  }
+
+  static String getStatusUrl(id) {
+    return "assets/images/icon/status_$id.png";
   }
 
   static String getPosition(int position) {
@@ -116,11 +119,13 @@ class Utils {
   }
 
   static Color getChartColor(value) {
-    return value==0?AppColors.c666666:value < 30
-        ? AppColors.cE72646
-        : value < 60
-            ? AppColors.cE8B94C
-            : AppColors.c10A86A;
+    return value == 0
+        ? AppColors.c666666
+        : value < 30
+            ? AppColors.cE72646
+            : value < 60
+                ? AppColors.cE8B94C
+                : AppColors.c10A86A;
   }
 
   ///金额格式化

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-06 15:16:54
- * @LastEditTime: 2024-11-12 18:33:07
+ * @LastEditTime: 2024-11-13 11:38:23
  */
 class Api {
   /// base
@@ -102,6 +102,10 @@ class Api {
       "$API_BASE_PATH/TeamPlayer/getPlayerUpGradeInfo";
   static const String getCardPackInfo = "$API_BASE_PATH/match/getCardPackInfo";
   static const String activeBox = "$API_BASE_PATH/match/activeBox";
+  static const String getFreeGift = "$API_BASE_PATH/match/getFreeGift";
+  static const String openCardPack = "$API_BASE_PATH/match/openCardPack";
+  static const String speedOpenCardPack =
+      "$API_BASE_PATH/match/speedOpenCardPack";
 
   ///trade
   static const String getTradeInfo = "$API_BASE_PATH/Trade/getTradeInfo";

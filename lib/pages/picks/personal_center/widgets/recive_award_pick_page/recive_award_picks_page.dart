@@ -91,7 +91,7 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
                                         opacity: .05,
                                         child: IconWidget(
                                             iconWidth: 120.w,
-                                            icon: Assets.uiIconJettonBigPng))),
+                                            icon: Assets.prop_102Png))),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -111,7 +111,7 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
                                         2.hGap,
                                         IconWidget(
                                           iconWidth: 10.w,
-                                          icon: Assets.uiIconJettonBigPng,
+                                          icon: Assets.prop_102Png,
                                           iconColor: AppColors.cFFFFFF,
                                         )
                                       ],
@@ -386,7 +386,7 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
                         children: [
                           IconWidget(
                             iconWidth: 15.w,
-                            icon: Assets.uiIconJettonBigPng,
+                            icon: Assets.prop_102Png,
                             iconColor: AppColors.c10A86A,
                           ),
                           4.hGap,
