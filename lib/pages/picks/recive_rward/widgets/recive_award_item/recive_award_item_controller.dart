@@ -91,7 +91,7 @@ class ReceiveAwardItemController extends GetxController {
       if (!data[0].reciveAwardInfo.success) {
         return "0";
       }
-      return bets[winCount - 2].toString();
+      return bets[winCount - 1].toString();
     }
   }
 

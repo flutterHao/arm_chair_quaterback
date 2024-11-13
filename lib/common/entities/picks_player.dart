@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/entities/guess_game_info_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/guess_top_reviews_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/recive_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/recive_award_v2_entity.dart';
@@ -43,6 +44,9 @@ class PicksPlayerV2 {
 
   /// 竞猜信息
   late GuessGameInfoEntity guessInfo;
+
+  //评论
+  late GuessTopReviewsEntity? guessTopReviews;
 
   /// tab的下标
   late String tabStr;

@@ -1,7 +1,7 @@
-
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_game_info_v2_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_param_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/guess_top_reviews_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
@@ -12,6 +12,7 @@ import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/enums/rank_type.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
+import 'package:arm_chair_quaterback/common/utils/click_feed_back.dart';
 import 'package:arm_chair_quaterback/common/utils/param_utils.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:flutter/material.dart';
@@ -23,9 +24,21 @@ import '';
 
 import '../../../common/entities/guess_game_info_entity.dart';
 
-class PicksIndexController extends GetxController {
+class PicksIndexController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   PicksIndexController();
 
+  TabController? tabController;
+  List<String> tabTitles = [
+    "POINTS",
+    "REBOUNDS",
+    "ASSISTS",
+    "3POINT",
+    "POINTS",
+    "REBOUNDS",
+    "ASSISTS",
+    "3POINT",
+  ];
   late ScrollController scrollController = ScrollController();
   final GlobalKey targetKey = GlobalKey(); // 用来标记目标 widget
   var isSelfInfoFloatShow = false.obs; //竞猜榜单自己的信息浮窗是否显示
@@ -46,6 +59,7 @@ class PicksIndexController extends GetxController {
   var betCount = 0.0.obs; // 总赔率
   var costCount = 0.0.obs; // 总花费
   var choiceSize = 0.obs; //选中个数
+  var maxBet = 0.0.obs;//赔率
 
   var batchDeleteOpen = false.obs;
 
@@ -143,7 +157,7 @@ class PicksIndexController extends GetxController {
       cleanAll();
       _initData();
       Get.find<HomeController>().refreshMoneyCoinWidget();
-      HapticFeedback.selectionClick();
+      ClickFeedBack.selectionClick();
       EasyLoading.showToast("Pick successful!you can check it in History");
     }, onError: (e) {
       EasyLoading.showToast("SERVER ERROR");
@@ -200,9 +214,10 @@ class PicksIndexController extends GetxController {
     Future.wait([
       PicksApi.getGuessGamesInfo(),
       CacheApi.getNBAPlayerInfo(),
-      CacheApi.getNewsDefine(),
+      CacheApi.getPickDefine(),
       CacheApi.getNBATeamDefine(getList: true),
-      PicksApi.getRedisRankInfo(type: RankType.newsGuessExpert)
+      PicksApi.getRedisRankInfo(type: RankType.newsGuessExpert),
+      PicksApi.getGuessTopReviews(),
     ]).then((results) {
       guessGamePlayers.clear();
       _count(false);
@@ -212,6 +227,7 @@ class PicksIndexController extends GetxController {
       guessWinningStreak = guessGameInfo.guessWinningStreak;
       var nbaPlayers = results[1] as NbaPlayerInfosEntity;
       newsDefine = results[2];
+      List<GuessTopReviewsEntity> guessTopReviewsEntity = results[5] as List<GuessTopReviewsEntity>;
       Map<String, List<PicksPlayerV2>> temp = {};
       List<NbaTeamEntity> teamList = results[3] as List<NbaTeamEntity>;
       for (int i = 0; i < res.keys.length; i++) {
@@ -230,6 +246,7 @@ class PicksIndexController extends GetxController {
           playerV2.awayTeamInfo = teamList
               .firstWhereOrNull((e) => e.id == guessGameInfoEntity.awayTeamId);
           playerV2.guessInfo = guessGameInfoEntity;
+          playerV2.guessTopReviews = guessTopReviewsEntity.firstWhereOrNull((e)=> e.playerId == guessGameInfoEntity.playerId);
           item.add(playerV2);
         }
 
@@ -256,6 +273,8 @@ class PicksIndexController extends GetxController {
 
       ///rank 排行榜
       rankInfo = results[4] as RankListEntity;
+      tabController ??= TabController(length: guessGamePlayers.keys.length, vsync: this);
+
       if (guessGamePlayers.isEmpty && rankInfo.ranks.isEmpty) {
         loadStatusRx.value = LoadDataStatus.noData;
       } else {

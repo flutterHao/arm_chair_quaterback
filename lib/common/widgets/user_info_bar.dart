@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/constant/getx_builder_ids.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entity/team_login_info.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entity/team_prop_list.dart';
@@ -44,7 +45,7 @@ class UserInfoBar extends StatelessWidget {
                 child: ClipPath(
                   clipper: TitleBarClipper(),
                   child: Container(
-                    color: AppColors.c666666,
+                    color: AppColors.c262626,
                   ),
                 ),
               ),
@@ -115,8 +116,7 @@ class UserInfoBar extends StatelessWidget {
                     height: 43.w,
                     child: Stack(
                       children: [
-                        IconWidget(
-                            iconWidth: 20.w, icon: Assets.uiIconAwardPng),
+                        IconWidget(iconWidth: 20.w, icon: Assets.testTeamLogoPng),
                         Positioned(
                             top: 5.w,
                             right: 10.w,

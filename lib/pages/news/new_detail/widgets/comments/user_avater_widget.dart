@@ -11,14 +11,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class UserAvaterWidget extends StatelessWidget {
-  const UserAvaterWidget(
-      {super.key,
-      required this.url,
-      required this.width,
-      required this.height});
+  const UserAvaterWidget({
+    super.key,
+    required this.url,
+    required this.width,
+    required this.height,
+    this.radius,
+  });
+
   final String url;
   final double width;
   final double height;
+  final double? radius;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +30,7 @@ class UserAvaterWidget extends StatelessWidget {
       url: url,
       width: width,
       height: height,
-      borderRadius: BorderRadius.circular(width / 3),
+      borderRadius: BorderRadius.circular(radius??width / 3),
       errorWidget: Container(
         width: width,
         height: height,

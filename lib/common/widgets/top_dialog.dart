@@ -120,7 +120,7 @@ class _TopDialogState extends State<TopDialog>
                               child: Container(
                                   margin: EdgeInsets.only(
                                       top: MediaQuery.of(context).padding.top +
-                                          6.w),
+                                          0.w),
                                   child: UserInfoBar(
                                     title: widget.title,
                                     enable: false,
@@ -432,11 +432,11 @@ class _TopDialogState extends State<TopDialog>
                 ),
                 Container(
                     decoration: BoxDecoration(
-                        color: AppColors.c262626,
+                        color: AppColors.c000000,
                         borderRadius: BorderRadius.vertical(
                             bottom: Radius.circular(16.w))),
                     padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).padding.top + 6.w),
+                        top: MediaQuery.of(context).padding.top + 0.w),
                     child: UserInfoBar(
                       title: widget.title,
                       enable: false,

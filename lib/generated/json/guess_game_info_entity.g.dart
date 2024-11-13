@@ -49,6 +49,14 @@ GuessGameInfoEntity $GuessGameInfoEntityFromJson(Map<String, dynamic> json) {
   if (playerId != null) {
     guessGameInfoEntity.playerId = playerId;
   }
+  final int? moreCount = jsonConvert.convert<int>(json['moreCount']);
+  if (moreCount != null) {
+    guessGameInfoEntity.moreCount = moreCount;
+  }
+  final int? lessCount = jsonConvert.convert<int>(json['lessCount']);
+  if (lessCount != null) {
+    guessGameInfoEntity.lessCount = lessCount;
+  }
   final bool? success = jsonConvert.convert<bool>(json['success']);
   if (success != null) {
     guessGameInfoEntity.success = success;
@@ -68,6 +76,8 @@ Map<String, dynamic> $GuessGameInfoEntityToJson(GuessGameInfoEntity entity) {
   data['type'] = entity.type;
   data['awayTeamId'] = entity.awayTeamId;
   data['playerId'] = entity.playerId;
+  data['moreCount'] = entity.moreCount;
+  data['lessCount'] = entity.lessCount;
   data['success'] = entity.success;
   return data;
 }
@@ -84,6 +94,8 @@ extension GuessGameInfoEntityExtension on GuessGameInfoEntity {
     double? type,
     int? awayTeamId,
     int? playerId,
+    int? moreCount,
+    int? lessCount,
     bool? success,
   }) {
     return GuessGameInfoEntity()
@@ -97,6 +109,8 @@ extension GuessGameInfoEntityExtension on GuessGameInfoEntity {
       ..type = type ?? this.type
       ..awayTeamId = awayTeamId ?? this.awayTeamId
       ..playerId = playerId ?? this.playerId
+      ..moreCount = moreCount ?? this.moreCount
+      ..lessCount = lessCount ?? this.lessCount
       ..success = success ?? this.success;
   }
 }

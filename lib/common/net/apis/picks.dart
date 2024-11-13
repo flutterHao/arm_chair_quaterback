@@ -11,6 +11,7 @@ import 'package:arm_chair_quaterback/common/entities/all_team_players_by_up_star
 import 'package:arm_chair_quaterback/common/entities/guess_game_info_v2_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_param_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/guess_top_reviews_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_season_game_entity.dart';
@@ -115,8 +116,8 @@ class PicksApi {
   }
 
   static Future<TeamPlayerInfoEntity> getPlayerUpGradeInfo(String uuid) async {
-    var json = await httpUtil
-        .post(Api.getPlayerUpGradeInfo, data: {"uuid": uuid});
+    var json =
+        await httpUtil.post(Api.getPlayerUpGradeInfo, data: {"uuid": uuid});
     return TeamPlayerInfoEntity.fromJson(json);
   }
 
@@ -155,5 +156,10 @@ class PicksApi {
       "pageSize": pageSize,
     });
     return NbaPlayerSeasonEntity.fromJson(json);
+  }
+
+  static Future<List<GuessTopReviewsEntity>> getGuessTopReviews() async {
+    List json = await httpUtil.post(Api.getGuessTopReviews);
+    return json.map((e) => GuessTopReviewsEntity.fromJson(e)).toList();
   }
 }

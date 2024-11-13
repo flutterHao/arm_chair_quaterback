@@ -1,23 +1,36 @@
+import 'dart:io';
+import 'dart:math';
+import 'dart:typed_data';
+import 'dart:ui';
+
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
+import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/param_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/player_avatar_widget.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
+import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/user_avater_widget.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guess_item_v2/guess_item_controller_v2.dart';
+import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/player_item_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 ///
 ///@auther gejiahui
@@ -35,6 +48,31 @@ class GuessItemV2 extends StatefulWidget {
 
 class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
   late GuessItemControllerV2 controller;
+  final GlobalKey _repaintBoundaryKey = GlobalKey();
+
+  Future<void> _generateAndShareImage() async {
+    try {
+      // 使用RepaintBoundary生成widget的图像
+      RenderRepaintBoundary boundary = _repaintBoundaryKey.currentContext!
+          .findRenderObject() as RenderRepaintBoundary;
+      var image = await boundary.toImage(pixelRatio: 3.0); // 设置图像像素密度
+      ByteData? byteData = await image.toByteData(format: ImageByteFormat.png);
+      Uint8List uint8List = byteData!.buffer.asUint8List();
+
+      // 获取临时文件目录
+      final directory = await getTemporaryDirectory();
+      final filePath = '${directory.path}/shared_image.png';
+
+      // 将图像保存为PNG文件
+      File file = File(filePath)..writeAsBytesSync(uint8List);
+
+      // 使用share_plus插件分享文件
+      Share.shareXFiles([XFile(filePath)],
+          text: 'Check out this generated image!');
+    } catch (e) {
+      print('Error generating image: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,95 +82,282 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
         tag: "${player.guessInfo.playerId}_${widget.index}_${player.tabStr}");
     controller.currentIndex.value = player.status;
     controller.formatGameStartTime();
-    return Container(
-      padding: EdgeInsets.all(14.w),
-      decoration: BoxDecoration(
-          color: AppColors.cF2F2F2, borderRadius: BorderRadius.circular(16.w)),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              PlayerAvatarWidget(
-                width: 42.w,
-                playerId: player.guessInfo.playerId,
-                getXRouteId: GlobalNestedKey.PICKS,
-                backgroundColor: AppColors.cD9D9D9,
-                tabStr: player.tabStr,
-              ),
-              5.hGap,
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      player.baseInfoList.ename,
-                      style: 14.w4(color: AppColors.c262626, height: 1),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    3.5.vGap,
-                    Obx(() {
-                      return FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Text(
-                          "VS ${player.awayTeamInfo?.shortEname ??
-                              ""}   ${controller.gameStartTimeStr.value}",
-                          style: 10.w4(color: AppColors.cB3B3B3, height: 1),
+    var count = player.guessInfo.moreCount + player.guessInfo.lessCount;
+    var morePercent = player.guessInfo.moreCount / count;
+    if (player.guessInfo.moreCount == 0 && player.guessInfo.lessCount == 0) {
+      morePercent = 50;
+    } else if (player.guessInfo.moreCount == 0) {
+      morePercent = 0;
+    } else if (player.guessInfo.lessCount == 0) {
+      morePercent = 100;
+    } else {
+      morePercent = player.guessInfo.moreCount /
+          (player.guessInfo.moreCount + player.guessInfo.lessCount);
+    }
+    int moreFlex = int.parse((morePercent).toStringAsFixed(0));
+    return Stack(
+      children: [
+        RepaintBoundary(
+          key: _repaintBoundaryKey,
+          child: Container(
+            decoration: BoxDecoration(
+                color: AppColors.cF2F2F2,
+                borderRadius: BorderRadius.circular(16.w)),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                25.vGap,
+                InkWell(
+                  onTap: ()=> Get.toNamed(RouteNames.picksPlayerDetail,
+                      arguments: PlayerDetailPageArguments(player.guessInfo.playerId,isMyPlayer: false, tabStr: player.tabStr)),
+                  child: Row(
+                    children: [
+                      29.hGap,
+                      Stack(
+                        children: [
+                          PlayerAvatarWidget(
+                            width: 73.w,
+                            height: 93.w,
+                            radius: 9.w,
+                            playerId: player.guessInfo.playerId,
+                            getXRouteId: GlobalNestedKey.PICKS,
+                            backgroundColor: AppColors.cD9D9D9,
+                            tabStr: player.tabStr,
+                          ),
+                          Positioned(
+                              top: 4.w,
+                              right: 4.w,
+                              child: IconWidget(
+                                  iconWidth: 16.w, icon: Assets.testTeamLogoPng))
+                        ],
+                      ),
+                      14.hGap,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              player.baseInfoList.ename,
+                              style: 16.w4(
+                                  color: AppColors.c000000,
+                                  fontFamily: FontFamily.fOswaldRegular,
+                                  height: 1),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            8.vGap,
+                            Row(
+                              children: [
+                                Text(
+                                  "${player.guessInfo.guessReferenceValue.getValue(ParamUtils.getProKey(player.tabStr))}",
+                                  style: 24.w7(
+                                      color: AppColors.c262626,
+                                      fontFamily: FontFamily.fOswaldMedium,
+                                      height: 1),
+                                ),
+                                14.hGap,
+                                Expanded(
+                                  child: Text(
+                                    Utils.getLongName(
+                                        ParamUtils.getProKey(player.tabStr)),
+                                    style: 19.w7(
+                                        color: AppColors.c262626,
+                                        fontFamily: FontFamily.fOswaldMedium,
+                                        height: 1),
+                                  ),
+                                ),
+                                IconWidget(
+                                  iconWidth: 8.w,
+                                  icon: Assets.uiIconArrows_01Png,
+                                  iconColor: AppColors.c000000,
+                                ),
+                                18.hGap,
+                              ],
+                            ),
+                            16.vGap,
+                            Obx(() {
+                              return FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  "${Utils.getTeamInfo(player.baseInfoList.teamId).shortEname}@${player.awayTeamInfo?.shortEname ?? ""}   ${controller.gameStartTimeStr.value}",
+                                  style: 12.w4(
+                                      color: AppColors.c000000,
+                                      fontFamily: FontFamily.fRobotoRegular,
+                                      height: 1),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              );
+                            })
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                11.vGap,
+                _buildBtn(picksIndexController, player, controller),
+                16.vGap,
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 29.w),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "MORE",
+                            style: 10.w4(
+                                color: AppColors.c000000,
+                                height: 1,
+                                fontFamily: FontFamily.fRobotoRegular),
+                          ),
+                          Text(
+                            "% OF BETS PLACED",
+                            style: 10.w4(
+                                color: AppColors.c000000,
+                                height: 1,
+                                fontFamily: FontFamily.fRobotoRegular),
+                          ),
+                          Text(
+                            "LESS",
+                            style: 10.w4(
+                                color: AppColors.c000000,
+                                height: 1,
+                                fontFamily: FontFamily.fRobotoRegular),
+                          )
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            "$moreFlex%",
+                            style: 14.w5(
+                                color: AppColors.c000000,
+                                height: 1,
+                                fontFamily: FontFamily.fOswaldMedium),
+                          ),
+                          Expanded(
+                            child: Container(
+                              margin: EdgeInsets.symmetric(horizontal: 8.w),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    flex: max(moreFlex, 2), //todo
+                                    child: SizedBox(
+                                      height: 18.w,
+                                      child: LinearProgressIndicator(
+                                        borderRadius: BorderRadius.horizontal(
+                                            left: Radius.circular(9.w)),
+                                        color: AppColors.c000000,
+                                        value: 1,
+                                      ),
+                                    ),
+                                  ),
+                                  1.hGap,
+                                  Expanded(
+                                    flex: max(100 - moreFlex, 2), //todo
+                                    child: SizedBox(
+                                      height: 18.w,
+                                      child: LinearProgressIndicator(
+                                        borderRadius: BorderRadius.horizontal(
+                                            right: Radius.circular(9.w)),
+                                        color: AppColors.cB3B3B3,
+                                        value: 1,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Text(
+                            "${100 - moreFlex}%",
+                            style: 14.w5(
+                                color: AppColors.c000000,
+                                height: 1,
+                                fontFamily: FontFamily.fOswaldMedium),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                21.vGap,
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 16.w),
+                  height: 1,
+                  width: double.infinity,
+                  color: AppColors.cE6E6E,
+                ),
+                11.vGap,
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 15.w),
+                  child: Row(
+                    children: [
+                      UserAvaterWidget(
+                        url: Utils.getAvaterUrl(player.guessTopReviews?.teamLogo),
+                        width: 26.w,
+                        height: 26.w,
+                        radius: 13.w,
+                      ),
+                      5.hGap,
+                      Expanded(
+                          child: Text(
+                        player.guessTopReviews?.context??"Add a comment about this stake about",
+                        style: 14.w4(
+                          color: AppColors.c4D4D4D,
+                          height: 1,
+                          fontFamily: FontFamily.fRobotoRegular,
                           overflow: TextOverflow.ellipsis,
                         ),
-                      );
-                    })
-                  ],
+                      )),
+                      9.hGap,
+                      IconWidget(iconWidth: 18.w, icon: Assets.uiIconJettonPng),
+                      2.hGap,
+                      Text(
+                        Utils.formatChip((double.parse(
+                                picksIndexController.newsDefine.betCost) *
+                            count)),
+                        style: 12.w5(
+                          color: AppColors.c4D4D4D,
+                          fontFamily: FontFamily.fRobotoMedium,
+                          height: 1,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              )
-            ],
-          ),
-          Container(
-            height: 37.w,
-            width: double.infinity,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.w),
-                border: Border.all(color: AppColors.ccccccc, width: 1)),
-            child: Row(
-              children: [
-                Expanded(
-                    child: Center(
-                        child: Text(
-                          "${player.guessInfo.guessReferenceValue.getValue(
-                              picksIndexController.getCurrentTabStr())}",
-                          style: 18.w7(color: AppColors.c262626, height: 1),
-                        ))),
-                Container(
-                  height: 18.w,
-                  width: 1,
-                  decoration: const BoxDecoration(color: AppColors.cC4C4C4),
-                ),
-                Expanded(
-                    child: Center(
-                        child: Text(
-                          Utils.getLongName(
-                              picksIndexController.getCurrentTabStr()),
-                          style: 12.w4(color: AppColors.cB3B3B3, height: 1),
-                          textAlign: TextAlign.center,
-                        )))
+                11.vGap
               ],
             ),
           ),
-          _buildBtn(picksIndexController, player, controller)
-        ],
-      ),
+        ),
+        Positioned(
+            top: 11.w,
+            right: 10.w,
+            child: Container(
+                width: 24.w,
+                height: 24.w,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4.w),
+                    border: Border.all(color: AppColors.c666666, width: 1)),
+                child: MtInkwell(
+                    vibrate: true,
+                    onTap: () => _generateAndShareImage(),
+                    child: IconWidget(
+                        iconWidth: 15.w, icon: Assets.testTeamLogoPng))))
+      ],
     );
   }
 
   Widget _buildBtn(PicksIndexController picksIndexController,
       PicksPlayerV2 player, GuessItemControllerV2 controller) {
     if (player.guessInfo.guessData.isNotEmpty) {
-      var choiceMore = player.guessInfo.guessData[0].guessChoice == 1;
       return Container(
         height: 46.w,
         width: double.infinity,
+        margin: EdgeInsets.symmetric(horizontal: 29.w),
         decoration: BoxDecoration(
-            border: Border.all(color: AppColors.cB3B3B3, width: 1),
+            border: Border.all(color: AppColors.c666666, width: 1),
             borderRadius: BorderRadius.circular(8.w)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -141,21 +366,13 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                IconWidget(
-                  iconWidth: 11.w,
-                  icon: Assets.uiIconUpPng,
-                  iconColor: AppColors.cFF7954,
-                  rotateAngle: choiceMore ? 0 : 180,
-                ),
-                5.hGap,
                 Text(
                   player.guessInfo.guessData[0].guessChoice == 1
                       ? "MORE"
                       : "LESS",
-                  style: 12.w7(
-                      color: controller.currentIndex.value == 0
-                          ? AppColors.cF2F2F2
-                          : AppColors.cFF7954,
+                  style: 19.w5(
+                      color: AppColors.c000000,
+                      fontFamily: FontFamily.fOswaldMedium,
                       height: 1),
                 )
               ],
@@ -172,13 +389,10 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
       return Container(
         height: 46.w,
         width: double.infinity,
-        decoration: BoxDecoration(
-            border: Border.all(color: AppColors.cFF7954, width: 1),
-            borderRadius: BorderRadius.circular(8.w)),
+        margin: EdgeInsets.symmetric(horizontal: 29.w),
         child: Row(
           children: [
-            Flexible(
-              flex: 1,
+            Expanded(
               child: MtInkwell(
                 vibrate: true,
                 onTap: () {
@@ -188,44 +402,28 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                   controller.guessItemTap(0);
                 },
                 child: Container(
+                  alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      color: controller.currentIndex.value == 0
-                          ? AppColors.cFF7954
-                          : AppColors.cTransparent,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(7.w),
-                          bottomLeft: Radius.circular(7.w))),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      IconWidget(
-                        iconWidth: 15.w,
-                        icon: Assets.uiIconUpPng,
-                        iconColor: controller.currentIndex.value == 0
-                            ? AppColors.cF2F2F2
-                            : AppColors.cFF7954,
-                      ),
-                      5.vGap,
-                      Text(
-                        "MORE",
-                        style: 12.w7(
-                            color: controller.currentIndex.value == 0
-                                ? AppColors.cF2F2F2
-                                : AppColors.cFF7954,
-                            height: 1),
-                      )
-                    ],
+                    color: controller.currentIndex.value == 0
+                        ? AppColors.c000000
+                        : AppColors.cTransparent,
+                    border: Border.all(color: AppColors.c666666, width: 1),
+                    borderRadius: BorderRadius.circular(9.w),
+                  ),
+                  child: Text(
+                    "MORE",
+                    style: 19.w5(
+                        color: controller.currentIndex.value == 0
+                            ? AppColors.cFFFFFF
+                            : AppColors.c000000,
+                        fontFamily: FontFamily.fOswaldMedium,
+                        height: 1),
                   ),
                 ),
               ),
             ),
-            Container(
-              height: double.infinity,
-              width: 1,
-              color: AppColors.cFF7954,
-            ),
-            Flexible(
-              flex: 1,
+            9.hGap,
+            Expanded(
               child: MtInkwell(
                 vibrate: true,
                 onTap: () {
@@ -236,30 +434,22 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                      color: controller.currentIndex.value == 1
-                          ? AppColors.cFF7954
-                          : AppColors.cTransparent,
-                      borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(7.w),
-                          bottomRight: Radius.circular(7.w))),
+                    color: controller.currentIndex.value == 1
+                        ? AppColors.c000000
+                        : AppColors.cTransparent,
+                    border: Border.all(color: AppColors.c666666, width: 1),
+                    borderRadius: BorderRadius.circular(9.w),
+                  ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      IconWidget(
-                        iconWidth: 15.w,
-                        icon: Assets.uiIconUpPng,
-                        iconColor: controller.currentIndex.value == 1
-                            ? AppColors.cF2F2F2
-                            : AppColors.cFF7954,
-                        rotateAngle: 180,
-                      ),
-                      5.vGap,
                       Text(
                         "LESS",
-                        style: 12.w7(
+                        style: 19.w5(
                             color: controller.currentIndex.value == 1
-                                ? AppColors.cF2F2F2
-                                : AppColors.cFF7954,
+                                ? AppColors.cFFFFFF
+                                : AppColors.c000000,
+                            fontFamily: FontFamily.fOswaldMedium,
                             height: 1),
                       )
                     ],
@@ -274,9 +464,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
   }
 
   maxLimit(PicksIndexController picksIndexController, PicksPlayerV2 player) {
-    var length = picksIndexController
-        .getChoiceGuessPlayers()
-        .length;
+    var length = picksIndexController.getChoiceGuessPlayers().length;
     if (length >= 6 && player.status == -1) {
       EasyLoading.showToast("Select up to 6");
       return true;

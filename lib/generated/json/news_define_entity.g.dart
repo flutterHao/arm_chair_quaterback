@@ -89,35 +89,6 @@ NewsDefineEntity $NewsDefineEntityFromJson(Map<String, dynamic> json) {
   if (gamePlayRecent != null) {
     newsDefineEntity.gamePlayRecent = gamePlayRecent;
   }
-  final List<double>? newsBaseRead = (json['newsBaseRead'] as List<dynamic>?)
-      ?.map(
-          (e) => jsonConvert.convert<double>(e) as double)
-      .toList();
-  if (newsBaseRead != null) {
-    newsDefineEntity.newsBaseRead = newsBaseRead;
-  }
-  final double? newsCreatePickMax = jsonConvert.convert<double>(
-      json['newsCreatePickMax']);
-  if (newsCreatePickMax != null) {
-    newsDefineEntity.newsCreatePickMax = newsCreatePickMax;
-  }
-  final double? newsCreatePlayerMax = jsonConvert.convert<double>(
-      json['newsCreatePlayerMax']);
-  if (newsCreatePlayerMax != null) {
-    newsDefineEntity.newsCreatePlayerMax = newsCreatePlayerMax;
-  }
-  final List<double>? newsRefresh = (json['newsRefresh'] as List<dynamic>?)
-      ?.map(
-          (e) => jsonConvert.convert<double>(e) as double)
-      .toList();
-  if (newsRefresh != null) {
-    newsDefineEntity.newsRefresh = newsRefresh;
-  }
-  final int? newsReviewOpenNum = jsonConvert.convert<int>(
-      json['newsReviewOpenNum']);
-  if (newsReviewOpenNum != null) {
-    newsDefineEntity.newsReviewOpenNum = newsReviewOpenNum;
-  }
   final double? pfBetData = jsonConvert.convert<double>(json['pfBetData']);
   if (pfBetData != null) {
     newsDefineEntity.pfBetData = pfBetData;
@@ -174,11 +145,6 @@ Map<String, dynamic> $NewsDefineEntityToJson(NewsDefineEntity entity) {
   data['flexBet6'] = entity.flexBet6;
   data['gamePlay'] = entity.gamePlay;
   data['gamePlayRecent'] = entity.gamePlayRecent;
-  data['newsBaseRead'] = entity.newsBaseRead;
-  data['newsCreatePickMax'] = entity.newsCreatePickMax;
-  data['newsCreatePlayerMax'] = entity.newsCreatePlayerMax;
-  data['newsRefresh'] = entity.newsRefresh;
-  data['newsReviewOpenNum'] = entity.newsReviewOpenNum;
   data['pfBetData'] = entity.pfBetData;
   data['powerBetWin'] = entity.powerBetWin;
   data['professorMax'] = entity.professorMax;
@@ -208,11 +174,6 @@ extension NewsDefineEntityExtension on NewsDefineEntity {
     List<double>? flexBet6,
     double? gamePlay,
     double? gamePlayRecent,
-    List<double>? newsBaseRead,
-    double? newsCreatePickMax,
-    double? newsCreatePlayerMax,
-    List<double>? newsRefresh,
-    int? newsReviewOpenNum,
     double? pfBetData,
     List<double>? powerBetWin,
     double? professorMax,
@@ -239,11 +200,6 @@ extension NewsDefineEntityExtension on NewsDefineEntity {
       ..flexBet6 = flexBet6 ?? this.flexBet6
       ..gamePlay = gamePlay ?? this.gamePlay
       ..gamePlayRecent = gamePlayRecent ?? this.gamePlayRecent
-      ..newsBaseRead = newsBaseRead ?? this.newsBaseRead
-      ..newsCreatePickMax = newsCreatePickMax ?? this.newsCreatePickMax
-      ..newsCreatePlayerMax = newsCreatePlayerMax ?? this.newsCreatePlayerMax
-      ..newsRefresh = newsRefresh ?? this.newsRefresh
-      ..newsReviewOpenNum = newsReviewOpenNum ?? this.newsReviewOpenNum
       ..pfBetData = pfBetData ?? this.pfBetData
       ..powerBetWin = powerBetWin ?? this.powerBetWin
       ..professorMax = professorMax ?? this.professorMax

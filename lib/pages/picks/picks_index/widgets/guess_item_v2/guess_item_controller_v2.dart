@@ -54,9 +54,11 @@ class GuessItemControllerV2 extends GetxController {
             MyDateUtils.getDateTimeByMs(lastTimeMs),
             format: DateFormats.M_S);
       });
-    } else {
+    } else if(MyDateUtils.isTomorrow(MyDateUtils.getDateTimeByMs(nowDateMs), gameStart)){
+      gameStartTimeStr.value = "Tomorrow ${MyDateUtils.formatHM_AM(gameStart)}";
+    }else {
       gameStartTimeStr.value =
-          MyDateUtils.formatDate(gameStart, format: DateFormats.PARAM_M_D_H);
+          "${MyDateUtils.formatDate(gameStart, format: DateFormats.PARAM_M_D)} ${MyDateUtils.formatHM_AM(gameStart)}";
     }
   }
 

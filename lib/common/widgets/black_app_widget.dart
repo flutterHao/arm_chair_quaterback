@@ -73,7 +73,7 @@ class _BlackAppWidgetState extends State<BlackAppWidget> {
                       ),
                       Container(
                         margin: EdgeInsets.only(
-                            top: MediaQuery.of(context).padding.top + 6.w),
+                            top: MediaQuery.of(context).padding.top + 0.w),
                         child: widget.appbarWidget,
                       ),
                     ],

@@ -44,5 +44,24 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+    <!--  add  -->
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>We need access to your photo album to save or select pictures.</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>We need to save pictures to your photo album.</string>
+    <!-- Push notification permissions -->
+    <key>UIBackgroundModes</key>
+    <array>
+      <string>remote-notification</string>
+    </array>
+    <!-- Optional: Allowing all HTTP loads for specific purposes -->
+    <key>NSAppTransportSecurity</key>
+    <dict>
+      <key>NSAllowsArbitraryLoads</key>
+      <true/>
+    </dict>
+    <!-- Notification usage description -->
+    <key>NSUserTrackingUsageDescription</key>
+    <string>We need your permission to send you notifications about important updates.</string>
 </dict>
 </plist>

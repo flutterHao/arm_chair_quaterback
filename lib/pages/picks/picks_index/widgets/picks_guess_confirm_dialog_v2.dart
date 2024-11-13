@@ -145,12 +145,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
           builder: (_) {
             var bottom = _buildBottom(context);
             var playerList = picksIndexController.getChoiceGuessPlayers();
-            if (playerList.length == 2) {
-              modelCurrentIndex.value = 1;
-            }
-            if (playerList.length >= 5) {
-              modelCurrentIndex.value = 0;
-            }
+            modelCurrentIndex.value = 1;
             return Stack(
               children: [
                 Column(
@@ -278,20 +273,15 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
       }
       List<double> powerBet = picksIndexController.newsDefine.powerBetWin;
       var length = players.length;
-      var powerIndex = length == 2
-          ? 0
-          : length == 3
-              ? 1
-              : length == 4
-                  ? 2
-                  : -1;
+      var powerIndex = length - 1;
+      if(powerIndex<0){
+        powerIndex = 0;
+      }
       double maxBet = modelCurrentIndex.value == 0
           ? flexBet.isEmpty
               ? 0
               : flexBet[flexBet.length - 1]
-          : powerIndex == -1
-              ? 0
-              : powerBet[powerIndex];
+          : powerBet[powerIndex];
       double maxWin =
           maxBet * double.parse(picksIndexController.newsDefine.betCost);
       return Container(
@@ -311,9 +301,6 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                       child: Center(
                         child: InkWell(
                           onTap: () {
-                            if (players.length <= 2) {
-                              return;
-                            }
                             modelCurrentIndex.value = 0;
                           },
                           child: Container(
@@ -381,9 +368,6 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                       child: Center(
                         child: InkWell(
                           onTap: () {
-                            if (players.length >= 5) {
-                              return;
-                            }
                             modelCurrentIndex.value = 1;
                           },
                           child: Container(
@@ -664,10 +648,6 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                             }
                             return InkWell(
                               onTap: () {
-                                if (players.length < 2) {
-                                  EasyLoading.showToast("Select at least 2");
-                                  return;
-                                }
                                 picksIndexController.guess(
                                     modelCurrentIndex.value == 0 ? 1 : 2);
                               },

@@ -23,6 +23,7 @@ class PlayerAvatarWidget extends StatelessWidget {
     super.key,
     this.grade,
     required this.width,
+    this.height,
     this.backgroundColor = AppColors.cD9D9D9,
     this.radius,
     this.fontSize = 14,
@@ -37,6 +38,7 @@ class PlayerAvatarWidget extends StatelessWidget {
   });
 
   final double width;
+  final double? height;
   final int playerId;
   final String? grade;
   final int? level;
@@ -62,7 +64,7 @@ class PlayerAvatarWidget extends StatelessWidget {
       child: Stack(
         children: [
           Container(
-              height: width,
+              height: height??width,
               width: width,
               decoration: BoxDecoration(
                 color: backgroundColor,
@@ -72,7 +74,8 @@ class PlayerAvatarWidget extends StatelessWidget {
                 url: Utils.getPlayUrl(playerId),
                 imageFailedPath: Assets.uiDefault_04Png,
                 width: width,
-                borderRadius: BorderRadius.circular(32.w),
+                height: height??width,
+                borderRadius: BorderRadius.circular(radius??32.w),
               )),
           //球员等级
           if (ObjectUtil.isNotEmpty(grade))

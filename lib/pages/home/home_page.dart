@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/tab_item_info.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -157,7 +158,7 @@ class _HomePageState extends State<HomePage>
                 color: select
                     ? AppColors.c000000
                     : AppColors.c000000.withOpacity(0.3),
-                height: 1),
+                height: 1,fontFamily: FontFamily.fRobotoRegular),
           )
         ],
       ),

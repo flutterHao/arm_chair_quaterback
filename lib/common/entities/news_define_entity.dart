@@ -23,11 +23,6 @@ class NewsDefineEntity {
   late List<double> flexBet6;
   late double gamePlay;
   late double gamePlayRecent;
-  late List<double> newsBaseRead;
-  late double newsCreatePickMax;
-  late double newsCreatePlayerMax;
-  late List<double> newsRefresh;
-  late int newsReviewOpenNum;
   late double pfBetData;
   late List<double> powerBetWin;
   late double professorMax;

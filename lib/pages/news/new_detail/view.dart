@@ -158,7 +158,7 @@ class NewsDetailItem extends StatelessWidget {
                 newsDetail.content ?? "",
                 style: TextStyle(
                   fontSize: 16.h,
-                  // fontFamily: FontFamily.fNotoSans,
+                  fontFamily: FontFamily.fRobotoMedium,
                   color: AppColors.c262626,
                   // fontWeight: FontWeight.w500,
                   height: 1.6,

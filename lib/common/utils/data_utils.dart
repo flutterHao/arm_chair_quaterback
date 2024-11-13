@@ -238,6 +238,21 @@ class MyDateUtils {
     }
   }
 
+  static bool isTomorrow(DateTime dateTime, DateTime locDateTime) {
+    // 获取当前日期（不包含时分秒）
+    DateTime now = dateTime;
+    DateTime currentDate = DateTime(now.year, now.month, now.day);
+
+    // 获取明天的日期（不包含时分秒）
+    DateTime tomorrow = currentDate.add(Duration(days: 1));
+
+    // 比较目标日期的年月日部分是否等于明天的日期
+    return locDateTime.year == tomorrow.year &&
+        locDateTime.month == tomorrow.month &&
+        locDateTime.day == tomorrow.day;
+  }
+
+
   /// is yesterday by millis.
   /// 是否是昨天.
   static bool isYesterdayByMilliseconds(int ms, int locMs) {

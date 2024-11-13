@@ -48,7 +48,7 @@ class ReciveRwardController extends GetxController {
       CacheApi.getNBAPlayerInfo(),
     ];
     if (newsDefineEntity == null) {
-      futures.add(CacheApi.getNewsDefine());
+      futures.add(CacheApi.getPickDefine());
     }
     Future.wait(futures).then((result) {
       ReciveAwardV2Entity result0 = result[0] as ReciveAwardV2Entity;

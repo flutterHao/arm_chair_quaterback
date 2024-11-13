@@ -44,8 +44,9 @@ class Api {
   static const String getGuessAllAward =
       "$API_BASE_PATH/NBANews/getGuessAllAward";
   static const String getRankRewards = "$API_BASE_PATH/NBANews/getRankRewards";
-
   static const String getAward = "$API_BASE_PATH/NBANews/getTodayAward";
+  static const String getGuessTopReviews = "$API_BASE_PATH/NBANews/getGuessTopReviews";
+
 
   //NBAData
   static const String teamStatRank =
@@ -64,7 +65,7 @@ class Api {
 
   /// config
   static const String cNewsBanner = "$CONFIG_BASE_PATH/HightlightNews.json";
-  static const String cNewsDefine = "$CONFIG_BASE_PATH/NewsDefine.json";
+  static const String cPickDefine = "$CONFIG_BASE_PATH/PickDefine.json";
   static const String cNBATeamDefine = "$CONFIG_BASE_PATH/NBATeamDefine.json";
   static const String cGameRankAwardRule =
       "$CONFIG_BASE_PATH/GameRankAwardRule.json";

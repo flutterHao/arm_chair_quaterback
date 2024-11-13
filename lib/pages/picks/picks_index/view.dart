@@ -7,16 +7,22 @@
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_info_entity.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/param_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/delegate/fixed_height_sliver_header_delegate.dart';
+import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/my_water_drop_header.dart';
+import 'package:arm_chair_quaterback/common/widgets/player_avatar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/transitions/half_slide_right_to_left_transition.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
@@ -32,6 +38,7 @@ import 'package:arm_chair_quaterback/pages/picks/pick_rank/bindings.dart';
 import 'package:arm_chair_quaterback/pages/picks/pick_rank/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guess_item_v2/guess_item_v2.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guss_player_item.dart';
+import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/picks_guess_confirm_dialog_v2.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/picks_swiper_pagination_builder.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/rank_start_button.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
@@ -60,7 +67,7 @@ class PicksIndex extends StatelessWidget {
               opaque: false,
               settings: setting,
               customTransition: HalfSlideRightToLeftTransition(),
-              page: () => const PicksIndexPage(),
+              page: () => const PicksIndexPageV2(),
             );
           case RouteNames.picksReciveRward:
             return GetPageRoute(
@@ -110,6 +117,388 @@ class PicksIndex extends StatelessWidget {
       },
     );
   }
+}
+
+class PicksIndexPageV2 extends StatefulWidget {
+  const PicksIndexPageV2({super.key});
+
+  @override
+  State<PicksIndexPageV2> createState() => _PicksIndexPageV2State();
+}
+
+class _PicksIndexPageV2State extends State<PicksIndexPageV2>
+    with AutomaticKeepAliveClientMixin {
+  late PicksIndexController picksIndexController;
+
+  double lastScrollPixels = 0;
+  var top = 0.0.obs;
+  var floatTitleBarHeight = 75.w;
+
+  Widget _buildView(BuildContext context) {
+    if (picksIndexController.guessGamePlayers.isEmpty &&
+        picksIndexController.rankInfo.ranks.isEmpty) {
+      return Expanded(
+        child: SmartRefresher(
+          controller: picksIndexController.refreshController,
+          onRefresh: () => picksIndexController.loading(),
+          child: Obx(() {
+            return Center(
+                child: LoadStatusWidget(
+              loadDataStatus: picksIndexController.loadStatusRx.value,
+            ));
+          }),
+        ),
+      );
+    }
+    return Expanded(
+        child: Stack(
+      children: [
+        NotificationListener<ScrollNotification>(
+          onNotification: (notification) {
+            if (notification.metrics.axisDirection == AxisDirection.down &&
+                !picksIndexController.refreshController.isRefresh) {
+              if (lastScrollPixels < notification.metrics.pixels) {
+                //向上滑
+                var result =
+                    lastScrollPixels - notification.metrics.pixels + top.value;
+                // print('result-111:$result,${top.value},$floatTitleBarHeight');
+                if (result < -floatTitleBarHeight) {
+                  if (top.value != -floatTitleBarHeight && top.value != 0) {
+                    top.value = -floatTitleBarHeight;
+                  }
+                } else {
+                  top.value = result;
+                }
+              }
+              if (lastScrollPixels > notification.metrics.pixels) {
+                //向下滑
+                var result =
+                    lastScrollPixels - notification.metrics.pixels + top.value;
+                // print('result-222:$result,${top.value},${floatTitleBarHeight}');
+                if (result > 0) {
+                  if (top.value != 0 && top.value != -floatTitleBarHeight) {
+                    top.value = 0;
+                  }
+                } else {
+                  top.value = result;
+                }
+              }
+              lastScrollPixels = notification.metrics.pixels;
+            }
+            return true;
+          },
+          child: TabBarView(
+              controller: picksIndexController.tabController,
+              children: picksIndexController.guessGamePlayers.keys.map((e) {
+                var list = picksIndexController.guessGamePlayers[e]!;
+                return Builder(builder: (context) {
+                  return CustomScrollView(
+                    key: PageStorageKey<String>(e),
+                    slivers: [
+                      Obx(() {
+                        return SliverPadding(
+                            padding: EdgeInsets.only(top: 119.w + top.value));
+                      }),
+                      SliverList.separated(
+                        itemCount: list.length,
+                        itemBuilder: (context, index) {
+                          var item = list[index];
+                          return GuessItemV2(
+                            index: index,
+                            playerV2: item,
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return 9.vGap;
+                        },
+                      ),
+                      SliverPadding(padding: EdgeInsets.only(bottom: 20.w))
+                    ],
+                  );
+                });
+              }).toList()),
+        ),
+        Obx(() {
+          return Positioned(
+              top: top.value,
+              left: 0,
+              right: 0,
+              child: Column(
+                children: [
+                  Container(
+                    height: floatTitleBarHeight,
+                    color: AppColors.c262626,
+                    padding: EdgeInsets.only(
+                        bottom: 10.w, right: 6.w, left: 16.w, top: 3.w),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 204,
+                          child: InkWell(
+                            onTap: ()=>   Get.toNamed(RouteNames.picksPickRank,
+                                id: GlobalNestedKey.PICKS),
+                            child: Container(
+                              height: 51.w,
+                              padding: EdgeInsets.only(
+                                  left: 14.w, right: 24.w, bottom: 6.w),
+                              margin: EdgeInsets.only(top: 4.w),
+                              decoration: BoxDecoration(
+                                  color: AppColors.c3B3B3B,
+                                  borderRadius: BorderRadius.circular(9.w)),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      IconWidget(
+                                          iconWidth: 23.w,
+                                          icon: Assets.testTeamLogoPng),
+                                      16.hGap,
+                                      Text(
+                                        "RANK",
+                                        style: 19.w5(
+                                            color: AppColors.cFFFFFF,
+                                            height: 1,
+                                            fontFamily: FontFamily.fOswaldMedium),
+                                      )
+                                    ],
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "${picksIndexController.rankInfo.myRank.rank ?? "--"}",
+                                        style: 19.w4(
+                                            color: AppColors.cFFFFFF, height: 1),
+                                      ),
+                                      7.vGap,
+                                      Text(
+                                        "ME",
+                                        style: 10.w4(
+                                            color: AppColors.cFF7954,
+                                            height: 1,
+                                            fontFamily:
+                                                FontFamily.fRobotoRegular),
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        9.hGap,
+                        Expanded(
+                            flex: 130,
+                            child: Stack(
+                              children: [
+                                InkWell(
+                                  onTap: ()=> Get.toNamed(RouteNames.picksPersonalCenter,
+                                      arguments: {
+                                        "teamId": Get.find<HomeController>()
+                                            .userEntiry
+                                            .teamLoginInfo
+                                            ?.team
+                                            ?.teamId ??
+                                            0,
+                                        "initTab": 0
+                                      }),
+                                  child: Container(
+                                    height: 51.w,
+                                    margin: EdgeInsets.only(right: 7.w, top: 4.w),
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: AppColors.c666666, width: 1),
+                                        borderRadius: BorderRadius.circular(9.w)),
+                                    child: Row(
+                                      children: [
+                                        11.hGap,
+                                        IconWidget(
+                                            iconWidth: 24.w,
+                                            icon: Assets.testTeamLogoPng),
+                                        Expanded(
+                                            child: Center(
+                                                child: Text(
+                                          "PICKS",
+                                          style: 19.w4(
+                                              color: AppColors.cFFFFFF,
+                                              height: 1,
+                                              fontFamily:
+                                                  FontFamily.fOswaldMedium),
+                                        )))
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                    right: 0,
+                                    child: Container(
+                                      height: 16.w,
+                                      width: 16.w,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(8.w),
+                                          color: AppColors.c000000),
+                                      child: Center(
+                                        child: Obx(() {
+                                          return Text(
+                                            "${picksIndexController.choiceSize.value}",
+                                            style: 12.w5(
+                                                color: AppColors.cF37350,
+                                                height: 1,
+                                                fontFamily:
+                                                    FontFamily.fRobotoMedium),
+                                          );
+                                        }),
+                                      ),
+                                    ))
+                              ],
+                            ))
+                      ],
+                    ),
+                  ),
+                  Container(
+                    alignment: Alignment.bottomCenter,
+                    color: AppColors.c262626,
+                    child: TabBar(
+                        isScrollable: true,
+                        tabAlignment: TabAlignment.start,
+                        labelColor: AppColors.cFFFFFF,
+                        labelPadding: EdgeInsets.symmetric(
+                            vertical: 5.w, horizontal: 20.w),
+                        indicatorPadding: EdgeInsets.only(top: 5.w),
+                        labelStyle: 16.w5(
+                            color: AppColors.cFFFFFF,
+                            fontFamily: FontFamily.fOswaldMedium),
+                        unselectedLabelColor: AppColors.c666666,
+                        dividerHeight: 0,
+                        indicator: UnderlineTabIndicator(
+                            borderSide: BorderSide(
+                                color: AppColors.cFF7954, width: 3.w),
+                            insets: EdgeInsets.symmetric(horizontal: -20.w)),
+                        indicatorWeight: 4,
+                        controller: picksIndexController.tabController,
+                        tabs:
+                            picksIndexController.guessGamePlayers.keys.map((e) {
+                          return Text(Utils.getLongName(ParamUtils.getProKey(e))
+                              .toUpperCase());
+                        }).toList()),
+                  )
+                ],
+              ));
+        }),
+      ],
+    ));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    picksIndexController = Get.find();
+    return GetBuilder<PicksIndexController>(
+        id: PicksIndexController.idMain,
+        builder: (logic) {
+          return BlackAppWidget(
+            const UserInfoBar(
+              title: "PICKS",
+              routeId: GlobalNestedKey.PICKS,
+            ),
+            bodyWidget: _buildView(context),
+            floatWidgets: [
+              //下注
+              Obx(() {
+                var value = picksIndexController.choiceSize.value;
+                return AnimatedPositioned(
+                    duration: const Duration(milliseconds: 300),
+                    left: 0,
+                    right: 0,
+                    bottom: value <= 0 ? -70.w : 20.w,
+                    child: Center(
+                      child: MtInkwell(
+                        onTap: () async {
+                          await showModalBottomSheet(
+                              isScrollControlled: true,
+                              backgroundColor: AppColors.cTransparent,
+                              context: Get.context!,
+                              builder: (context) {
+                                return const PicksGuessConfirmDialogV2();
+                              });
+                          Get.find<PicksIndexController>()
+                              .batchDeleteOpen
+                              .value = false;
+                        },
+                        child: Container(
+                            decoration: BoxDecoration(
+                                color: AppColors.c000000,
+                                borderRadius: BorderRadius.circular(16.w),
+                                border: Border.all(
+                                    color: AppColors.cFF7954, width: 2.w)),
+                            width: 360.w,
+                            height: 66.w,
+                            padding: EdgeInsets.only(left: 17.w, right: 10.w),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "CREATE A COMBO",
+                                  style: 16.w5(
+                                      color: AppColors.cFFFFFF,
+                                      height: 1,
+                                      fontFamily: FontFamily.fOswaldMedium),
+                                ),
+                                9.vGap,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: List.generate(6, (index) {
+                                        Color color = AppColors.c4D4D4D;
+                                        if (index + 1 <=
+                                            picksIndexController
+                                                .choiceSize.value) {
+                                          color = AppColors.cFF7954;
+                                        }
+                                        return IconWidget(
+                                          iconWidth: 19.w,
+                                          icon: Assets.testTeamLogoPng,
+                                          iconColor: color,
+                                        );
+                                      }),
+                                    ),
+                                    Container(
+                                      height: 24.w,
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 13.w),
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                          color: AppColors.cFF7954,
+                                          borderRadius:
+                                              BorderRadius.circular(12.w)),
+                                      child: Text(
+                                        "${picksIndexController.choiceSize.value > 0 ? picksIndexController.newsDefine.powerBetWin[picksIndexController.choiceSize.value - 1] : "0"}x",
+                                        style: 16.w5(
+                                            color: AppColors.c000000,
+                                            height: 1,
+                                            fontFamily:
+                                                FontFamily.fOswaldMedium),
+                                      ),
+                                    )
+                                  ],
+                                )
+                              ],
+                            )),
+                      ),
+                    ));
+              })
+            ],
+          );
+        });
+  }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class PicksIndexPage extends StatefulWidget {
