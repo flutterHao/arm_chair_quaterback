@@ -2,13 +2,11 @@
 class Assets {
   Assets._();
 
-  static const String fontsNotoSansMedium = 'assets/fonts/NotoSans-Medium.ttf';
-  static const String fontsOswaldLight = 'assets/fonts/Oswald-Light.ttf';
+  static const String fontsOswaldBold = 'assets/fonts/Oswald-Bold.ttf';
   static const String fontsOswaldMedium = 'assets/fonts/Oswald-Medium.ttf';
-  static const String fontsRobotoBlack = 'assets/fonts/Roboto-Black.ttf';
+  static const String fontsOswaldRegular = 'assets/fonts/Oswald-Regular.ttf';
   static const String fontsRobotoMedium = 'assets/fonts/Roboto-Medium.ttf';
   static const String fontsRobotoRegular = 'assets/fonts/Roboto-Regular.ttf';
-  static const String homeFiles = 'assets/images/home/files.txt';
   static const String homeUiIconCommunity01 = 'assets/images/home/ui_icon_community_01.png';
   static const String homeUiIconNews01 = 'assets/images/home/ui_icon_news_01.png';
   static const String homeUiIconPicks01 = 'assets/images/home/ui_icon_picks_01.png';
@@ -16,21 +14,22 @@ class Assets {
   static const String homeUiIconTraining01 = 'assets/images/home/ui_icon_training_01.png';
   static const String homeUiNavibarSel01 = 'assets/images/home/ui_navibar_sel_01.png';
   static const String homeUiNavubarSel02 = 'assets/images/home/ui_navubar_sel_02.png';
-  static const String iconFiles = 'assets/images/icon/files.txt';
   static const String iconHead0000 = 'assets/images/icon/head_0000.png';
   static const String iconIcon101 = 'assets/images/icon/icon_101.png';
   static const String iconIcon102 = 'assets/images/icon/icon_102.png';
   static const String iconIcon103 = 'assets/images/icon/icon_103.png';
   static const String iconIcon104 = 'assets/images/icon/icon_104.png';
-  static const String iconIcon301 = 'assets/images/icon/icon_301.png';
-  static const String iconIcon302 = 'assets/images/icon/icon_302.png';
-  static const String iconIcon303 = 'assets/images/icon/icon_303.png';
-  static const String iconIcon304 = 'assets/images/icon/icon_304.png';
-  static const String iconIcon305 = 'assets/images/icon/icon_305.png';
-  static const String iconIcon306 = 'assets/images/icon/icon_306.png';
   static const String iconIconBack = 'assets/images/icon/icon_back.png';
   static const String iconIconClose = 'assets/images/icon/icon_close.png';
   static const String iconIconShare = 'assets/images/icon/icon_share.png';
+  static const String iconProp101 = 'assets/images/icon/prop_101.png';
+  static const String iconProp102 = 'assets/images/icon/prop_102.png';
+  static const String iconProp301 = 'assets/images/icon/prop_301.png';
+  static const String iconProp302 = 'assets/images/icon/prop_302.png';
+  static const String iconProp303 = 'assets/images/icon/prop_303.png';
+  static const String iconProp304 = 'assets/images/icon/prop_304.png';
+  static const String iconProp305 = 'assets/images/icon/prop_305.png';
+  static const String iconProp306 = 'assets/images/icon/prop_306.png';
   static const String iconStatus101 = 'assets/images/icon/status_101.png';
   static const String iconStatus102 = 'assets/images/icon/status_102.png';
   static const String iconStatus103 = 'assets/images/icon/status_103.png';
@@ -98,19 +97,18 @@ class Assets {
   static const String iconUiIconWinning = 'assets/images/icon/ui_icon_winning.png';
   static const String iconUiWindowsAward = 'assets/images/icon/ui_windows_award.png';
   static const String iconUiWindowsLose = 'assets/images/icon/ui_windows_lose.png';
-  static const String managerFiles = 'assets/manager/files.txt';
-  static const String managerUiManagerFreegift01 = 'assets/manager/ui_manager_freegift_01.png';
-  static const String managerUiManagerFreegift02 = 'assets/manager/ui_manager_freegift_02.png';
-  static const String managerUiManagerGift01 = 'assets/manager/ui_manager_gift_01.png';
-  static const String managerUiManagerGift02 = 'assets/manager/ui_manager_gift_02.png';
-  static const String managerUiManagerGift03 = 'assets/manager/ui_manager_gift_03.png';
-  static const String managerUiManagerIconCurrency04 = 'assets/manager/ui_manager_icon_currency_04.png';
-  static const String managerUiManagerIconRecover = 'assets/manager/ui_manager_icon_recover.png';
-  static const String managerUiManagerMatchgameBg = 'assets/manager/ui_manager_matchgame_bg.jpg';
-  static const String managerUiManagerMatchgameImage = 'assets/manager/ui_manager_matchgame_image.png';
-  static const String managerUiManagerMyteamBg = 'assets/manager/ui_manager_myteam_bg.jpg';
-  static const String managerUiManagerTrainingBg = 'assets/manager/ui_manager_training_bg.jpg';
-  static const String newsFiles = 'assets/images/news/files.txt';
+  static const String managerUiManagerFreegift01 = 'assets/images/manager/ui_manager_freegift_01.png';
+  static const String managerUiManagerFreegift02 = 'assets/images/manager/ui_manager_freegift_02.png';
+  static const String managerUiManagerGift01 = 'assets/images/manager/ui_manager_gift_01.png';
+  static const String managerUiManagerGift02 = 'assets/images/manager/ui_manager_gift_02.png';
+  static const String managerUiManagerGift03 = 'assets/images/manager/ui_manager_gift_03.png';
+  static const String managerUiManagerIconCurrency04 = 'assets/images/manager/ui_manager_icon_currency_04.png';
+  static const String managerUiManagerIconRecover = 'assets/images/manager/ui_manager_icon_recover.png';
+  static const String managerUiManagerMatchgameBg = 'assets/images/manager/ui_manager_matchgame_bg.jpg';
+  static const String managerUiManagerMatchgameImage = 'assets/images/manager/ui_manager_matchgame_image.png';
+  static const String managerUiManagerMyteamBg = 'assets/images/manager/ui_manager_myteam_bg.jpg';
+  static const String managerUiManagerTrainingBg = 'assets/images/manager/ui_manager_training_bg.jpg';
+  static const String managerUiManagerTrainingUnknown = 'assets/images/manager/ui_manager_training_unknown.png';
   static const String newsUiEmojiArrogance = 'assets/images/news/ui_emoji_arrogance.png';
   static const String newsUiEmojiJoker = 'assets/images/news/ui_emoji_joker.png';
   static const String newsUiEmojiLaugh = 'assets/images/news/ui_emoji_laugh.png';
@@ -169,7 +167,6 @@ class Assets {
   static const String playerUiIconTriangle03 = 'assets/images/player/ui_icon_triangle_03.png';
   static const String playerUiLight01 = 'assets/images/player/ui_light_01.png';
   static const String playerUiStateBest = 'assets/images/player/ui_state_best.png';
-  static const String teamFiles = 'assets/images/team/files.txt';
   static const String teamUICommonGrain = 'assets/images/team/UI_common_grain.png';
   static const String teamUICommonTCBg3 = 'assets/images/team/UI_common_TC_bg3.png';
   static const String teamUiBattleNews = 'assets/images/team/ui_battle_news.png';
@@ -232,7 +229,6 @@ class Assets {
   static const String teamUiWindowsBox = 'assets/images/team/ui_windows_box.png';
   static const String teamUiWindowsLose = 'assets/images/team/ui_windows_lose.png';
   static const String teamUiWindowsStamina = 'assets/images/team/ui_windows_Stamina.png';
-  static const String testFiles = 'assets/test/files.txt';
   static const String testTestTeamLogo = 'assets/test/test_team_logo.png';
 
 }
