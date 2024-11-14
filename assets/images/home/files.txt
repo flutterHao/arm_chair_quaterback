@@ -1,7 +1,0 @@
-static const uiIconCommunity_01Png = 'assets/images/home/ui_icon_community_01.png';
-static const uiIconNews_01Png = 'assets/images/home/ui_icon_news_01.png';
-static const uiIconPicks_01Png = 'assets/images/home/ui_icon_picks_01.png';
-static const uiIconTeam_01Png = 'assets/images/home/ui_icon_team_01.png';
-static const uiIconTraining_01Png = 'assets/images/home/ui_icon_training_01.png';
-static const uiNavibarSel_01Png = 'assets/images/home/ui_navibar_sel_01.png';
-static const uiNavubarSel_02Png = 'assets/images/home/ui_navubar_sel_02.png';
