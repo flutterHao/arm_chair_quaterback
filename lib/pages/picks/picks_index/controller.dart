@@ -52,7 +52,7 @@ class PicksIndexController extends GetxController
   double streakReward = 0;
   int guessWinningStreak = 0;
 
-  late NewsDefineEntity newsDefine;
+  late PicksDefineEntity picksDefine;
 
   var currentIndex = 0.obs;
 
@@ -146,8 +146,7 @@ class PicksIndexController extends GetxController
           guessParamEntity.guessAttr = playerV2.tabStr;
           guessParamEntity.guessChoice = playerV2.status == 0 ? 1 : 2;
           guessParamEntity.guessReferenceValue = playerV2
-              .guessInfo.guessReferenceValue
-              .toJson()[ParamUtils.getProKey(playerV2.tabStr)];
+              .guessInfo.guessReferenceValue[ParamUtils.getProKey(playerV2.tabStr)]??0;
           params.add(guessParamEntity);
         }
       }
@@ -222,11 +221,11 @@ class PicksIndexController extends GetxController
       guessGamePlayers.clear();
       _count(false);
       var guessGameInfo = results[0] as GuessGameInfoV2Entity;
-      var res = guessGameInfo.guessInfo.toJson();
+      var res = guessGameInfo.guessInfo;
       streakReward = guessGameInfo.streakReward;
       guessWinningStreak = guessGameInfo.guessWinningStreak;
       var nbaPlayers = results[1] as NbaPlayerInfosEntity;
-      newsDefine = results[2];
+      picksDefine = results[2];
       List<GuessTopReviewsEntity> guessTopReviewsEntity = results[5] as List<GuessTopReviewsEntity>;
       Map<String, List<PicksPlayerV2>> temp = {};
       List<NbaTeamEntity> teamList = results[3] as List<NbaTeamEntity>;
@@ -235,8 +234,7 @@ class PicksIndexController extends GetxController
         var key = res.keys.toList()[i];
         var list = res[key]??[];
         for (int i1 = 0; i1 < list.length; i1++) {
-          GuessGameInfoEntity guessGameInfoEntity =
-              GuessGameInfoEntity.fromJson(list[i1]);
+          GuessGameInfoEntity guessGameInfoEntity =list[i1];
           PicksPlayerV2 playerV2 = PicksPlayerV2();
           playerV2.tabStr = key;
           playerV2.baseInfoList = nbaPlayers.playerBaseInfoList
@@ -263,13 +261,7 @@ class PicksIndexController extends GetxController
         temp[key] = item;
       }
       List<String> titles = Constant.guessTypeList;
-      guessGamePlayers = titles.fold({}, (p, key) {
-        var e = key.toLowerCase();
-        if (temp.containsKey(e)) {
-          p[e] = temp[e]!;
-        }
-        return p;
-      });
+      guessGamePlayers = temp;
 
       ///rank 排行榜
       rankInfo = results[4] as RankListEntity;

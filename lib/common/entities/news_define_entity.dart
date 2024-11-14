@@ -4,7 +4,7 @@ import 'dart:convert';
 export 'package:arm_chair_quaterback/generated/json/news_define_entity.g.dart';
 
 @JsonSerializable()
-class NewsDefineEntity {
+class PicksDefineEntity {
   @JSONField(name: "ID")
   late int iD;
   late String betCost;
@@ -31,9 +31,9 @@ class NewsDefineEntity {
   late double sgBetData;
   late double winCoinPoint;
 
-  NewsDefineEntity();
+  PicksDefineEntity();
 
-  factory NewsDefineEntity.fromJson(Map<String, dynamic> json) =>
+  factory PicksDefineEntity.fromJson(Map<String, dynamic> json) =>
       $NewsDefineEntityFromJson(json);
 
   Map<String, dynamic> toJson() => $NewsDefineEntityToJson(this);

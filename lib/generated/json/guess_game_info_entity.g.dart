@@ -28,8 +28,9 @@ GuessGameInfoEntity $GuessGameInfoEntityFromJson(Map<String, dynamic> json) {
   if (guessData != null) {
     guessGameInfoEntity.guessData = guessData;
   }
-  final GuessReferenceValue? guessReferenceValue = jsonConvert.convert<
-      GuessReferenceValue>(json['guessReferenceValue']);
+  final Map<String, double>? guessReferenceValue =
+  (json['guessReferenceValue'] as Map<String, dynamic>).map(
+          (k, e) => MapEntry(k, jsonConvert.convert<double>(e) as double));
   if (guessReferenceValue != null) {
     guessGameInfoEntity.guessReferenceValue = guessReferenceValue;
   }
@@ -71,7 +72,7 @@ Map<String, dynamic> $GuessGameInfoEntityToJson(GuessGameInfoEntity entity) {
   data['gameStartTime'] = entity.gameStartTime;
   data['teamId'] = entity.teamId;
   data['guessData'] = entity.guessData.map((v) => v.toJson()).toList();
-  data['guessReferenceValue'] = entity.guessReferenceValue.toJson();
+  data['guessReferenceValue'] = entity.guessReferenceValue;
   data['id'] = entity.id;
   data['type'] = entity.type;
   data['awayTeamId'] = entity.awayTeamId;
@@ -89,7 +90,7 @@ extension GuessGameInfoEntityExtension on GuessGameInfoEntity {
     int? gameStartTime,
     int? teamId,
     List<GuessData>? guessData,
-    GuessReferenceValue? guessReferenceValue,
+    Map<String, double>? guessReferenceValue,
     double? id,
     double? type,
     int? awayTeamId,

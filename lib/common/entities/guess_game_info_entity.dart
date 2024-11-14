@@ -12,7 +12,7 @@ class GuessGameInfoEntity {
   late int gameStartTime;
   late int teamId;
   late List<GuessData> guessData;
-  late GuessReferenceValue guessReferenceValue;
+  late Map<String,double> guessReferenceValue;
   late double id;
   late double type;
   late int awayTeamId;

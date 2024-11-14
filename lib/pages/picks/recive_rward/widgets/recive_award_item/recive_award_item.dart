@@ -20,11 +20,11 @@ import 'package:get/get.dart';
 ///created at 2024/9/23/16:50
 
 class ReceiveAwardItem extends StatefulWidget {
-  const ReceiveAwardItem(this.data, this.newsDefineEntity,
+  const ReceiveAwardItem(this.data, this.picksDefineEntity,
       {this.personalCenterPage = false, super.key});
 
   final List<PicksPlayer> data;
-  final NewsDefineEntity newsDefineEntity;
+  final PicksDefineEntity picksDefineEntity;
   final bool personalCenterPage;
 
   @override
@@ -39,7 +39,7 @@ class _ReceiveAwardItemState extends State<ReceiveAwardItem> {
     print('ReciveAwardItem---build----');
     return GetBuilder<ReceiveAwardItemController>(
         init: controller =
-            ReceiveAwardItemController(widget.data, widget.newsDefineEntity),
+            ReceiveAwardItemController(widget.data, widget.picksDefineEntity),
         tag: widget.data[0].reciveAwardInfo.id.toString(),
         id: controller.idReciveAwardItem,
         builder: (_) {
@@ -478,7 +478,7 @@ class _ReceiveAwardItemState extends State<ReceiveAwardItem> {
                               return Column(
                                 children: [
                                   ReceiveAwardDetailItem(controller.data[index],
-                                      widget.newsDefineEntity),
+                                      widget.picksDefineEntity),
                                 ],
                               );
                             }),

@@ -15,10 +15,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 ///created at 2024/9/11/13:06
 
 class ReceiveAwardDetailItem extends StatelessWidget {
-  const ReceiveAwardDetailItem(this.player, this.newsDefineEntity, {super.key});
+  const ReceiveAwardDetailItem(this.player, this.picksDefineEntity, {super.key});
 
   final PicksPlayer player;
-  final NewsDefineEntity newsDefineEntity;
+  final PicksDefineEntity picksDefineEntity;
 
   @override
   Widget build(BuildContext context) {

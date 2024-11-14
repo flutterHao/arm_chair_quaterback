@@ -117,7 +117,7 @@ class CacheApi {
   static NbaPlayerInfosEntity? playerInfo;
 
   ///新闻定义
-  static NewsDefineEntity? pickDefine;
+  static PicksDefineEntity? pickDefine;
 
   ///道具定义
   static List<PropDefineEntity>? propDefineList;
@@ -174,12 +174,12 @@ class CacheApi {
   }
 
   ///
-  static Future<NewsDefineEntity> getPickDefine() async {
+  static Future<PicksDefineEntity> getPickDefine() async {
     if (pickDefine != null) {
       return pickDefine!;
     }
     List json = await httpUtil.get(Api.cPickDefine);
-    pickDefine = NewsDefineEntity.fromJson(json[0]);
+    pickDefine = PicksDefineEntity.fromJson(json[0]);
     return pickDefine!;
   }
 

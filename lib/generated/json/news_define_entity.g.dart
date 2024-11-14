@@ -1,8 +1,8 @@
 import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 
-NewsDefineEntity $NewsDefineEntityFromJson(Map<String, dynamic> json) {
-  final NewsDefineEntity newsDefineEntity = NewsDefineEntity();
+PicksDefineEntity $NewsDefineEntityFromJson(Map<String, dynamic> json) {
+  final PicksDefineEntity newsDefineEntity = PicksDefineEntity();
   final int? iD = jsonConvert.convert<int>(json['ID']);
   if (iD != null) {
     newsDefineEntity.iD = iD;
@@ -126,7 +126,7 @@ NewsDefineEntity $NewsDefineEntityFromJson(Map<String, dynamic> json) {
   return newsDefineEntity;
 }
 
-Map<String, dynamic> $NewsDefineEntityToJson(NewsDefineEntity entity) {
+Map<String, dynamic> $NewsDefineEntityToJson(PicksDefineEntity entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['ID'] = entity.iD;
   data['betCost'] = entity.betCost;
@@ -155,8 +155,8 @@ Map<String, dynamic> $NewsDefineEntityToJson(NewsDefineEntity entity) {
   return data;
 }
 
-extension NewsDefineEntityExtension on NewsDefineEntity {
-  NewsDefineEntity copyWith({
+extension NewsDefineEntityExtension on PicksDefineEntity {
+  PicksDefineEntity copyWith({
     int? iD,
     String? betCost,
     double? betNearDouble,
@@ -182,7 +182,7 @@ extension NewsDefineEntityExtension on NewsDefineEntity {
     double? sgBetData,
     double? winCoinPoint,
   }) {
-    return NewsDefineEntity()
+    return PicksDefineEntity()
       ..iD = iD ?? this.iD
       ..betCost = betCost ?? this.betCost
       ..betNearDouble = betNearDouble ?? this.betNearDouble

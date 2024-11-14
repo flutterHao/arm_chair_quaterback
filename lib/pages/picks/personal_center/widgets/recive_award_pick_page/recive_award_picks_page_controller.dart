@@ -28,7 +28,7 @@ class ReciveAwardPicksPageController extends GetxController
   late int guessWinningStreak;
   late int streakReward;
 
-  NewsDefineEntity? newsDefineEntity;
+  PicksDefineEntity? picksDefineEntity;
 
   RefreshController refreshController = RefreshController();
 
@@ -67,7 +67,7 @@ class ReciveAwardPicksPageController extends GetxController
       CacheApi.getNBATeamDefine(getList: true),
       CacheApi.getNBAPlayerInfo(),
     ];
-    if (newsDefineEntity == null) {
+    if (picksDefineEntity == null) {
       futures.add(CacheApi.getPickDefine());
     }
     Future.wait(futures).then((result) {
@@ -79,7 +79,7 @@ class ReciveAwardPicksPageController extends GetxController
       streakReward = result0.streakReward;
 
       if (result.length == 4) {
-        newsDefineEntity = result[3] as NewsDefineEntity;
+        picksDefineEntity = result[3] as PicksDefineEntity;
       }
 
       /// 1.剔除status为2（未开奖）的数据项
@@ -119,7 +119,7 @@ class ReciveAwardPicksPageController extends GetxController
         listNewsData.add(players);
       }
 
-      if (newsDefineEntity == null) {
+      if (picksDefineEntity == null) {
         loadStatusRx.value = LoadDataStatus.noData;
       } else {
         loadStatusRx.value = LoadDataStatus.success;

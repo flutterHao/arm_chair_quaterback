@@ -404,9 +404,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                           controller: picksIndexController.tabController,
                           tabs: picksIndexController.guessGamePlayers.keys
                               .map((e) {
-                            return Text(
-                                Utils.getLongName(ParamUtils.getProKey(e))
-                                    .toUpperCase());
+                            return Text(e.replaceAll(",", "+"));
                           }).toList()),
                     )
                   ],
@@ -502,7 +500,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                           borderRadius:
                                               BorderRadius.circular(12.w)),
                                       child: Text(
-                                        "${picksIndexController.choiceSize.value > 0 ? picksIndexController.newsDefine.powerBetWin[picksIndexController.choiceSize.value - 1] : "0"}x",
+                                        "${picksIndexController.choiceSize.value > 0 ? picksIndexController.picksDefine.powerBetWin[picksIndexController.choiceSize.value - 1] : "0"}x",
                                         style: 16.w5(
                                             color: AppColors.c000000,
                                             height: 1,

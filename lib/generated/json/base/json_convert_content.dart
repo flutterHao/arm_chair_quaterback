@@ -287,10 +287,6 @@ class JsonConvert {
       return data.map<GuessGameInfoV2Entity>((Map<String, dynamic> e) =>
           GuessGameInfoV2Entity.fromJson(e)).toList() as M;
     }
-    if (<GuessGameInfoV2GuessInfo>[] is M) {
-      return data.map<GuessGameInfoV2GuessInfo>((Map<String, dynamic> e) =>
-          GuessGameInfoV2GuessInfo.fromJson(e)).toList() as M;
-    }
     if (<GuessInfosEntity>[] is M) {
       return data.map<GuessInfosEntity>((Map<String, dynamic> e) =>
           GuessInfosEntity.fromJson(e)).toList() as M;
@@ -510,9 +506,9 @@ class JsonConvert {
       return data.map<NewTestPtsGuessReferenceValue>((Map<String, dynamic> e) =>
           NewTestPtsGuessReferenceValue.fromJson(e)).toList() as M;
     }
-    if (<NewsDefineEntity>[] is M) {
-      return data.map<NewsDefineEntity>((Map<String, dynamic> e) =>
-          NewsDefineEntity.fromJson(e)).toList() as M;
+    if (<PicksDefineEntity>[] is M) {
+      return data.map<PicksDefineEntity>((Map<String, dynamic> e) =>
+          PicksDefineEntity.fromJson(e)).toList() as M;
     }
     if (<NewsEntity>[] is M) {
       return data.map<NewsEntity>((Map<String, dynamic> e) =>
@@ -751,7 +747,6 @@ class JsonConvertClassCollection {
     (Awards).toString(): Awards.fromJson,
     (GuessGameInfoEntity).toString(): GuessGameInfoEntity.fromJson,
     (GuessGameInfoV2Entity).toString(): GuessGameInfoV2Entity.fromJson,
-    (GuessGameInfoV2GuessInfo).toString(): GuessGameInfoV2GuessInfo.fromJson,
     (GuessInfosEntity).toString(): GuessInfosEntity.fromJson,
     (GuessInfosL5Avg).toString(): GuessInfosL5Avg.fromJson,
     (GuessInfosGuessData).toString(): GuessInfosGuessData.fromJson,
@@ -834,7 +829,7 @@ class JsonConvertClassCollection {
     (NewTestPts).toString(): NewTestPts.fromJson,
     (NewTestPtsGuessReferenceValue).toString(): NewTestPtsGuessReferenceValue
         .fromJson,
-    (NewsDefineEntity).toString(): NewsDefineEntity.fromJson,
+    (PicksDefineEntity).toString(): PicksDefineEntity.fromJson,
     (NewsEntity).toString(): NewsEntity.fromJson,
     (NewsListEntity).toString(): NewsListEntity.fromJson,
     (NewsListDetail).toString(): NewsListDetail.fromJson,

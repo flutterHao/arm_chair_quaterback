@@ -137,7 +137,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                             Row(
                               children: [
                                 Text(
-                                  "${player.guessInfo.guessReferenceValue.getValue(ParamUtils.getProKey(player.tabStr))}",
+                                  "${player.guessInfo.guessReferenceValue[player.tabStr]??0}",
                                   style: 24.w7(
                                       color: AppColors.c262626,
                                       fontFamily: FontFamily.fOswaldMedium,
@@ -146,8 +146,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                                 14.hGap,
                                 Expanded(
                                   child: Text(
-                                    Utils.getLongName(
-                                        ParamUtils.getProKey(player.tabStr)),
+                                    Utils.getLongName(player.tabStr),
                                     style: 19.w7(
                                         color: AppColors.c262626,
                                         fontFamily: FontFamily.fOswaldMedium,
@@ -307,7 +306,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                       2.hGap,
                       Text(
                         Utils.formatChip((double.parse(
-                                picksIndexController.newsDefine.betCost) *
+                                picksIndexController.picksDefine.betCost) *
                             count)),
                         style: 12.w5(
                           color: AppColors.c4D4D4D,

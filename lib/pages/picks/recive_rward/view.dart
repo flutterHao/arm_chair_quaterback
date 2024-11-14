@@ -31,7 +31,7 @@ class ReceiveRewardPage extends GetView<ReciveRwardController> {
       controller: controller.refreshController,
       onRefresh: () => controller.loading(),
       child: Builder(builder: (context) {
-        if (controller.newsDefineEntity == null ||
+        if (controller.picksDefineEntity == null ||
             controller.listData.isEmpty) {
           return Obx(() {
             return Center(
@@ -52,7 +52,7 @@ class ReceiveRewardPage extends GetView<ReciveRwardController> {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ReceiveAwardItem(items, controller.newsDefineEntity!),
+                      ReceiveAwardItem(items, controller.picksDefineEntity!),
                     ],
                   );
                 },
@@ -77,7 +77,7 @@ class ReceiveRewardPage extends GetView<ReciveRwardController> {
             ),
             bodyWidget: _buildView(context),
             floatWidgets: [
-              if (!(controller.newsDefineEntity == null ||
+              if (!(controller.picksDefineEntity == null ||
                   controller.listData.isEmpty))
                 //下注
                 Positioned(

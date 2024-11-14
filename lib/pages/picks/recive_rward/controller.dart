@@ -19,7 +19,7 @@ class ReciveRwardController extends GetxController {
   List<List<PicksPlayer>> listData = [];
   RefreshController refreshController = RefreshController();
 
-  NewsDefineEntity? newsDefineEntity;
+  PicksDefineEntity? picksDefineEntity;
 
   var loadStatusRx = LoadDataStatus.loading.obs;
 
@@ -47,7 +47,7 @@ class ReciveRwardController extends GetxController {
       CacheApi.getNBATeamDefine(getList: true),
       CacheApi.getNBAPlayerInfo(),
     ];
-    if (newsDefineEntity == null) {
+    if (picksDefineEntity == null) {
       futures.add(CacheApi.getPickDefine());
     }
     Future.wait(futures).then((result) {
@@ -55,7 +55,7 @@ class ReciveRwardController extends GetxController {
       List<NbaTeamEntity> result1 = result[1] as List<NbaTeamEntity>;
       NbaPlayerInfosEntity result2 = result[2] as NbaPlayerInfosEntity;
       if (result.length == 4) {
-        newsDefineEntity = result[3] as NewsDefineEntity;
+        picksDefineEntity = result[3] as PicksDefineEntity;
       }
 
       /// 1.只取status为2的项
@@ -84,7 +84,7 @@ class ReciveRwardController extends GetxController {
         }
         listData.add(players);
       }
-      if (newsDefineEntity == null || listData.isEmpty) {
+      if (picksDefineEntity == null || listData.isEmpty) {
         loadStatusRx.value = LoadDataStatus.noData;
       } else {
         loadStatusRx.value = LoadDataStatus.success;

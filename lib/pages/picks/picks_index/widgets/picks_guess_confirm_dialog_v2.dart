@@ -265,13 +265,13 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
   Widget _buildBottom(BuildContext context) {
     return Obx(() {
       var players = picksIndexController.getChoiceGuessPlayers();
-      var json = picksIndexController.newsDefine.toJson();
+      var json = picksIndexController.picksDefine.toJson();
       var key = "flexBet${players.length}";
       List<double> flexBet = [];
       if (json.containsKey(key)) {
         flexBet = json[key];
       }
-      List<double> powerBet = picksIndexController.newsDefine.powerBetWin;
+      List<double> powerBet = picksIndexController.picksDefine.powerBetWin;
       var length = players.length;
       var powerIndex = length - 1;
       if(powerIndex<0){
@@ -283,7 +283,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
               : flexBet[flexBet.length - 1]
           : powerBet[powerIndex];
       double maxWin =
-          maxBet * double.parse(picksIndexController.newsDefine.betCost);
+          maxBet * double.parse(picksIndexController.picksDefine.betCost);
       return Container(
         color: AppColors.cF2F2F2,
         width: MediaQuery.of(context).size.width,
@@ -634,7 +634,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                 0;
                             if (money <
                                 double.parse(
-                                    picksIndexController.newsDefine.betCost)) {
+                                    picksIndexController.picksDefine.betCost)) {
                               return Container(
                                 decoration: BoxDecoration(
                                     color: AppColors.ccccccc,
@@ -674,7 +674,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                               5.hGap,
                                               Text(
                                                 picksIndexController
-                                                    .newsDefine.betCost,
+                                                    .picksDefine.betCost,
                                                 style: 21.w7(
                                                     color: AppColors.cF2F2F2,
                                                     height: 1),
@@ -919,7 +919,7 @@ class _ItemWidgetState extends State<_ItemWidget>
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "${player.guessInfo.guessReferenceValue.getValue(ParamUtils.getProKey(player.tabStr))}",
+                    "${player.guessInfo.guessReferenceValue[ParamUtils.getProKey(player.tabStr)]??0}",
                     style: 18.w7(color: AppColors.c262626, height: 1),
                   ),
                   5.vGap,

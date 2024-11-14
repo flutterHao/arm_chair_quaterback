@@ -53,7 +53,7 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
             controller: controller.refreshController,
             onRefresh: () => controller.loading(),
             // onLoading: () => controller.loadMore(),
-            child: controller.newsDefineEntity == null
+            child: controller.picksDefineEntity == null
                 ? Center(child: Obx(() {
                     return LoadStatusWidget(
                       text: controller.loadStatusRx.value.desc,
@@ -427,7 +427,7 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
                       children: [
                         ReceiveAwardItem(
                           items,
-                          controller.newsDefineEntity!,
+                          controller.picksDefineEntity!,
                           personalCenterPage: true,
                         ),
                         if (index == data.length - 1) 20.vGap,

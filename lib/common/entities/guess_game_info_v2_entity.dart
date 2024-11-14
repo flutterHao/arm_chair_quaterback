@@ -6,7 +6,7 @@ export 'package:arm_chair_quaterback/generated/json/guess_game_info_v2_entity.g.
 
 @JsonSerializable()
 class GuessGameInfoV2Entity {
-  late GuessGameInfoV2GuessInfo guessInfo;
+  late Map<String,List<GuessGameInfoEntity>?> guessInfo;
   late double streakReward;
   late int guessWinningStreak;
 
@@ -23,23 +23,3 @@ class GuessGameInfoV2Entity {
   }
 }
 
-@JsonSerializable()
-class GuessGameInfoV2GuessInfo {
-  @JSONField(name: "3pm")
-  List<GuessGameInfoEntity>? threePm;
-  List<GuessGameInfoEntity>? ast;
-  List<GuessGameInfoEntity>? reb;
-  List<GuessGameInfoEntity>? pts;
-
-  GuessGameInfoV2GuessInfo();
-
-  factory GuessGameInfoV2GuessInfo.fromJson(Map<String, dynamic> json) =>
-      $GuessGameInfoV2GuessInfoFromJson(json);
-
-  Map<String, dynamic> toJson() => $GuessGameInfoV2GuessInfoToJson(this);
-
-  @override
-  String toString() {
-    return jsonEncode(this);
-  }
-}

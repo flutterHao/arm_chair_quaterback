@@ -179,7 +179,7 @@ class SummaryController extends GetxController {
     if (key == "3PM".toLowerCase()) {
       key = "threePm";
     }
-    var value = picks.guessReferenceValue.toJson()[key]??0;
+    var value = picks.guessReferenceValue[key]??0;
     var picksPlayerV2 = PicksPlayerV2();
     picksPlayerV2.guessInfo = picks;
     var currentTabKey = getCurrentTabKey();

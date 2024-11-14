@@ -14,11 +14,11 @@ import 'package:get/get.dart';
 ///created at 2024/9/23/18:47
 
 class ReceiveAwardItemController extends GetxController {
-  ReceiveAwardItemController(this.data, this.newsDefineEntity);
+  ReceiveAwardItemController(this.data, this.picksDefineEntity);
 
   List<PicksPlayer> data;
 
-  final NewsDefineEntity newsDefineEntity;
+  final PicksDefineEntity picksDefineEntity;
 
   var specialTime = "".obs;
 
@@ -77,9 +77,9 @@ class ReceiveAwardItemController extends GetxController {
   /// 获取总赔率
   String getBetCount() {
     List<double> bets = data[0].reciveAwardInfo.type == 1
-        ? newsDefineEntity.toJson()["flexBet${data.length}"]
+        ? picksDefineEntity.toJson()["flexBet${data.length}"]
         : data[0].reciveAwardInfo.type == 2
-            ? newsDefineEntity.powerBetWin
+            ? picksDefineEntity.powerBetWin
             : [];
     var winCount = getWinCount();
     if (data[0].reciveAwardInfo.type == 1) {
@@ -114,7 +114,7 @@ class ReceiveAwardItemController extends GetxController {
   String getCostCount() {
     int len = data.length;
     var costCount =
-        double.parse((len * double.parse(newsDefineEntity.betCost)).toString())
+        double.parse((len * double.parse(picksDefineEntity.betCost)).toString())
             .toStringAsFixed(1);
     return costCount;
   }
