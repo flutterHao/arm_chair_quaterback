@@ -7,6 +7,7 @@ import 'package:arm_chair_quaterback/common/entities/train_task_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/pages/home/index.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -101,7 +102,18 @@ class TrainingController extends GetxController
     });
   }
 
-  void startSlot() {
+  void startSlot() async {
+    final teamIndexCtrl = Get.find<TeamIndexController>();
+    if (teamIndexCtrl.scrollController.offset < (800.w) ||
+        teamIndexCtrl.scrollController.offset > (890.w)) {
+      teamIndexCtrl.scrollController.animateTo(
+        890.w,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    }
+    trainingInfo = await TeamApi.playerTraining(playerList[0].uuid);
+    update(["training_page"]);
     for (int i = 0; i < slotCard.length; i++) {
       slotCard[i].value = false;
       scrollerCtrlList[i].jumpTo(0);

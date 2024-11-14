@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-12 17:54:17
- * @LastEditTime: 2024-11-13 12:17:01
+ * @LastEditTime: 2024-11-13 18:20:50
  */
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/card_pack_info_entity.g.dart';
@@ -22,7 +22,7 @@ class CardPackInfoEntity {
   late List<CardPackInfoCard> card = [];
   late int freeGiftCount = 0;
   @JSONField(deserialize: false)
-  RxString freeTimeString = "".obs;
+  RxString freeTimeString = "00:00:00".obs;
 
   CardPackInfoEntity();
 
@@ -43,7 +43,7 @@ class CardPackInfoCard {
   late int openTime = 0;
   late int status = 0;
   @JSONField(deserialize: false)
-  late RxString remainTime = "".obs;
+  late RxString remainTime = "00:00".obs;
 
   CardPackInfoCard({this.status = 0});
 

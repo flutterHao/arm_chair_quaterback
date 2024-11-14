@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-11-12 20:10:11
+ * @LastEditTime: 2024-11-13 21:15:50
  */
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
@@ -19,6 +19,8 @@ import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_controller.da
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/beauty_and_box.dart';
 import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_page.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/battle_box_widget.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/widgets/match_card.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/my_team_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -51,14 +53,6 @@ class _TeamIndexPageState extends State<TeamIndexPage>
               settings: settings,
               customTransition: HalfSlideRightToLeftTransition(),
               page: () => const _TeamView(),
-            );
-          case RouteNames.teamTrainingPage:
-            return GetPageRoute(
-              opaque: false,
-              settings: settings,
-              customTransition: HalfSlideRightToLeftTransition(),
-              page: () => const TrainingPage(),
-              // binding: NewDetailBinding(), /*  */
             );
           case RouteNames.teamBeautyPage:
             return GetPageRoute(
@@ -104,17 +98,20 @@ class _TeamView extends GetView<TeamIndexController> {
       init: TeamIndexController(),
       id: "team_index",
       builder: (ctrl) {
-        return const BlackAppWidget(
-          UserInfoBar(
+        return BlackAppWidget(
+          const UserInfoBar(
             title: "TEAM",
             routeId: GlobalNestedKey.TEAM,
           ),
           bodyWidget: Expanded(
             child: SingleChildScrollView(
-              child: Column(
+              controller: ctrl.scrollController,
+              child: const Column(
                 children: [
                   BeautyAndBoxView(),
+                  MatchCard(),
                   TrainingPage(),
+                  MyTeamWidget(),
                 ],
               ),
             ),

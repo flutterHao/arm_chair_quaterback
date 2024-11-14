@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-12 14:47:24
- * @LastEditTime: 2024-11-12 18:22:02
+ * @LastEditTime: 2024-11-13 18:52:44
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -54,6 +54,7 @@ class SlotMachine extends GetView<TrainingController> {
                         child: Stack(
                           children: [
                             ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
                               padding: const EdgeInsets.all(0),
                               controller: controller.scrollerCtrlList[index],
                               itemCount: controller.propList.length * 10,

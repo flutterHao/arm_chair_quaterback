@@ -2,8 +2,9 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 20:30:20
- * @LastEditTime: 2024-11-01 16:36:37
+ * @LastEditTime: 2024-11-13 17:39:33
  */
+import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -84,8 +85,8 @@ class _CustomLinearProgressBarState extends State<CustomLinearProgressBar>
             borderRadius: BorderRadius.circular((widget.height ?? 20) / 2),
             child: LinearProgressIndicator(
               value: _animation.value,
-              backgroundColor: widget.backgroundColor ?? Colors.grey[300],
-              color: widget.progressColor ?? Colors.blue,
+              backgroundColor: widget.backgroundColor ?? AppColors.cD7D7D7,
+              color: widget.progressColor ?? AppColors.c10A86A,
               borderRadius: BorderRadius.circular((widget.height ?? 4.w) / 2),
             ),
           );

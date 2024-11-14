@@ -2,21 +2,22 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-11-13 15:10:51
+ * @LastEditTime: 2024-11-14 11:06:23
  */
 
 import 'dart:async';
 
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
-import 'package:arm_chair_quaterback/common/net/apis.dart';
+import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
-import 'package:arm_chair_quaterback/common/net/http.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
+import 'package:arm_chair_quaterback/pages/picks/personal_center/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/box_dialog.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/training_avater.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class TeamIndexController extends GetxController
@@ -34,18 +35,23 @@ class TeamIndexController extends GetxController
 
   List<TrainingInfoAward> awardList = [];
   CardPackInfoEntity cardPackInfo = CardPackInfoEntity();
+  ScrollController scrollController = ScrollController();
+  bool recieved = false;
+  RxInt cup = 0.obs;
 
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  //   CacheApi.getNBATeamDefine();
-  //   CacheApi.getNBAPlayerInfo();
-  // }
+  @override
+  void onInit() {
+    super.onInit();
+    scrollController.addListener(() {
+      Log.d("监听滚动${scrollController.offset}");
+    });
+  }
 
   @override
   void onReady() {
     super.onReady();
     getBattleBox();
+    getTeamInfo();
   }
 
   ///获取战斗宝箱信息
@@ -78,6 +84,12 @@ class TeamIndexController extends GetxController
     showBoxDialog();
   }
 
+  ///获取队伍信息
+  void getTeamInfo() async {
+    TeamInfoEntity team = await PicksApi.getTeamInfo();
+    cup.value = team.cup;
+  }
+
   ///宝箱奖励弹窗
   void showBoxDialog() async {
     update(["boxDialog"]);
@@ -90,104 +102,136 @@ class TeamIndexController extends GetxController
   }
 
   void handlerBatterBoxData() {
-    ///免费宝箱
-    if (cardPackInfo.freeGiftCount == 2) {
-      freeBoxTimer?.cancel();
-      freeBoxTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
-        DateTime now = DateTime.now();
-        DateTime endTime = DateUtil.getDateTimeByMs(cardPackInfo.freeGiftTime);
-        int diff = endTime.difference(now).inSeconds;
-        if (diff <= 0) {
-          battleBoxTimer?.cancel();
-          getBattleBox();
-        } else {
-          final hours = (diff ~/ 3600).toString().padLeft(2, '0');
-          final minutes = ((diff % 3600) ~/ 60).toString().padLeft(2, '0');
-          final secs = (diff % 60).toString().padLeft(2, '0');
+    /// 免费宝箱
+    recieved = cardPackInfo.freeGiftCount == 0 &&
+        cardPackInfo.freeGiftTime > DateTime.now().millisecondsSinceEpoch;
+    if (recieved) {
+      _startTimer(
+        time: cardPackInfo.freeGiftTime,
+        onTick: (s) {
+          final hours = (s ~/ 3600).toString().padLeft(2, '0');
+          final minutes = ((s % 3600) ~/ 60).toString().padLeft(2, '0');
+          final secs = (s % 60).toString().padLeft(2, '0');
           cardPackInfo.freeTimeString.value = "$hours:$minutes:$secs";
-        }
-      });
+        },
+        onComplete: getBattleBox,
+        timer: freeBoxTimer,
+      );
     }
 
-    ///战斗宝箱
-    if (cardPackInfo.card.length < 4) {
+    /// 战斗宝箱
+    int lenght = cardPackInfo.card.length;
+    for (int i = lenght; i < 4; i++) {
       cardPackInfo.card.add(CardPackInfoCard(status: -1));
     }
+
     for (var item in cardPackInfo.card) {
       if (item.status == 1) {
-        battleBoxTimer?.cancel();
-        battleBoxTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
-          DateTime now = DateTime.now();
-          DateTime endTime = DateUtil.getDateTimeByMs(item.openTime);
-          int diff = endTime.difference(now).inSeconds;
-          if (diff <= 0) {
-            battleBoxTimer?.cancel();
-            getBattleBox();
-          } else {
-            final minutes = ((diff % 3600) ~/ 60).toString().padLeft(2, '0');
-            final secs = (diff % 60).toString().padLeft(2, '0');
+        _startTimer(
+          time: item.openTime,
+          onTick: (v) {
+            final minutes = ((v % 3600) ~/ 60).toString().padLeft(2, '0');
+            final secs = (v % 60).toString().padLeft(2, '0');
             item.remainTime.value = "$minutes:$secs";
-          }
-        });
+          },
+          onComplete: getBattleBox,
+          timer: battleBoxTimer,
+        );
       }
     }
     update(["battleBox"]);
   }
 
-  ///打开宝箱
-  // void claimBox(int boxNumber) {
-  //   if (boxNumber == 1 && !box1Claimed.value) {
-  //     box1Claimed.value = true;
-  //     box1Timer.value = 4 * 60 * 60; // 4小时
-  //     Log.d("领取宝箱$boxNumber");
-  //   } else if (boxNumber == 2 && !box2Claimed.value) {
-  //     box2Claimed.value = true;
-  //     box2Timer.value = 4 * 60 * 60; // 4小时
-  //     Log.d("领取宝箱$boxNumber");
-  //   }
-
-  //   // 如果两个都已领取，开始倒计时
-  //   if (box1Claimed.value && box2Claimed.value) {
-  //     freeBoxStartTimer();
-  //   }
-  // }
-
-  // void freeBoxStartTimer() {
-  //   if (freeBoxTimer != null) {
-  //     freeBoxTimer!.cancel();
-  //   }
-
-  //   isCountdownActive.value = true;
-
-  //   // 每秒更新倒计时
-  //   freeBoxTimer = Timer.periodic(const Duration(seconds: 1), (Timer t) {
-  //     if (box1Timer.value > 0 || box2Timer.value > 0) {
-  //       if (box1Timer.value > 0) box1Timer.value--;
-  //       if (box2Timer.value > 0) box2Timer.value--;
-
-  //       // 确保只显示剩余时间较短的一个
-  //       if (box1Timer.value <= 0 && box2Timer.value <= 0) {
-  //         t.cancel();
-  //         isCountdownActive.value = false;
-  //       }
-  //     } else {
-  //       t.cancel();
-  //       isCountdownActive.value = false;
-  //     }
-  //   });
-  // }
-
-  String getCountDownTimeStr() {
-    int seconds = isCountdownActive.value
-        ? (box1Timer.value < box2Timer.value
-            ? box1Timer.value
-            : box2Timer.value)
-        : 0;
-    final hours = (seconds ~/ 3600).toString().padLeft(2, '0');
-    final minutes = ((seconds % 3600) ~/ 60).toString().padLeft(2, '0');
-    final secs = (seconds % 60).toString().padLeft(2, '0');
-    return "$hours:$minutes:$secs";
+  /// 通用计时器启动函数
+  void _startTimer({
+    required int time,
+    required void Function(int) onTick,
+    required VoidCallback onComplete,
+    Timer? timer,
+  }) {
+    timer?.cancel();
+    timer = Timer.periodic(const Duration(seconds: 1), (t) {
+      // Log.e("开始倒计时");
+      final now = DateTime.now();
+      final endTime = DateUtil.getDateTimeByMs(time);
+      final diff = endTime.difference(now).inSeconds;
+      // Log.e("倒计时$diff");
+      if (time <= 0) {
+        t.cancel();
+        onComplete();
+      } else {
+        onTick(diff);
+      }
+    });
   }
+
+  ///滚动到老虎机
+  void scroToSlot() {
+    if (scrollController.offset < (800.w) ||
+        scrollController.offset > (890.w)) {
+      scrollController.animateTo(
+        890.w,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    }
+  }
+
+  ///滚动到战斗
+  void scroToMatch() {
+    if (scrollController.offset != (610.w)) {
+      scrollController.animateTo(
+        610.w,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    }
+  }
+
+  // void handlerBatterBoxData() {
+  //   ///免费宝箱
+  //   if (cardPackInfo.freeGiftCount == 2) {
+  //     freeBoxTimer?.cancel();
+  //     freeBoxTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+  //       DateTime now = DateTime.now();
+  //       DateTime endTime = DateUtil.getDateTimeByMs(cardPackInfo.freeGiftTime);
+  //       int diff = endTime.difference(now).inSeconds;
+  //       if (diff <= 0) {
+  //         battleBoxTimer?.cancel();
+  //         getBattleBox();
+  //       } else {
+  //         final hours = (diff ~/ 3600).toString().padLeft(2, '0');
+  //         final minutes = ((diff % 3600) ~/ 60).toString().padLeft(2, '0');
+  //         final secs = (diff % 60).toString().padLeft(2, '0');
+  //         cardPackInfo.freeTimeString.value = "$hours:$minutes:$secs";
+  //       }
+  //     });
+  //   }
+
+  //   ///战斗宝箱
+  //   if (cardPackInfo.card.length < 4) {
+  //     cardPackInfo.card.add(CardPackInfoCard(status: -1));
+  //   }
+  //   for (var item in cardPackInfo.card) {
+  //     if (item.status == 1) {
+  //       battleBoxTimer?.cancel();
+  //       battleBoxTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+  //         DateTime now = DateTime.now();
+  //         DateTime endTime = DateUtil.getDateTimeByMs(item.openTime);
+  //         int diff = endTime.difference(now).inSeconds;
+  //         if (diff <= 0) {
+  //           battleBoxTimer?.cancel();
+  //           getBattleBox();
+  //         } else {
+  //           final minutes = ((diff % 3600) ~/ 60).toString().padLeft(2, '0');
+  //           final secs = (diff % 60).toString().padLeft(2, '0');
+  //           item.remainTime.value = "$minutes:$secs";
+  //         }
+  //       });
+  //     }
+  //   }
+  //   update(["battleBox"]);
+  // }
 
   @override
   void onClose() {

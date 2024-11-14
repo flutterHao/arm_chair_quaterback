@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 14:09:29
- * @LastEditTime: 2024-11-13 15:24:11
+ * @LastEditTime: 2024-11-13 17:56:18
  */
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -37,28 +37,33 @@ class BoxDialog extends StatelessWidget {
                       "Award",
                       style: 14.w4(color: AppColors.c262626),
                     )),
-                5.vGap,
-                ...controller.awardList.map((e) {
-                  return Container(
-                    margin: EdgeInsets.all(4.w),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        e.type == 1
-                            ? ImageWidget(
-                                url: Utils.getPlayUrl(e.id),
-                                width: 64.w,
-                              )
-                            : Image.asset(Utils.getPropIconUrl(e.id)),
-                        7.hGap,
-                        Text(
-                          "x ${e.num}",
-                          style: 14.w4(color: AppColors.c262626),
-                        )
-                      ],
-                    ),
-                  );
-                }),
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 10.w),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: controller.awardList.map((e) {
+                      return Container(
+                        margin: EdgeInsets.all(4.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            e.type == 2
+                                ? ImageWidget(
+                                    url: Utils.getPlayUrl(e.id),
+                                    width: 64.w,
+                                  )
+                                : Image.asset(Utils.getPropIconUrl(e.id)),
+                            10.hGap,
+                            Text(
+                              "x ${e.num}",
+                              style: 14.w4(color: AppColors.c262626),
+                            )
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ),
               ],
             ),
             onTap: () {

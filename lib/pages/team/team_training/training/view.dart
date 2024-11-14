@@ -2,13 +2,15 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-11 15:57:44
- * @LastEditTime: 2024-11-12 17:22:05
+ * @LastEditTime: 2024-11-13 18:55:20
  */
 
 import 'package:arm_chair_quaterback/common/constant/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/progress_paint.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
@@ -22,7 +24,7 @@ class TrainingPage extends GetView<TrainingController> {
   const TrainingPage({super.key});
 
   /// 准备和buff
-  Widget _preparationAndBouns() {
+  Widget _preparationAndBouns(TrainingInfoEntity trainingInfo) {
     return Container(
       width: double.infinity,
       alignment: Alignment.center,
@@ -47,7 +49,7 @@ class TrainingPage extends GetView<TrainingController> {
                 ),
               )),
               Text(
-                "32%",
+                "${(trainingInfo.playerReadiness * 100).toInt()}%",
                 style: 19.w4(color: AppColors.c000000, height: 1),
               ),
               9.hGap,
@@ -60,57 +62,91 @@ class TrainingPage extends GetView<TrainingController> {
             alignment: Alignment.centerLeft,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(9.w),
-              border: Border.all(
-                width: 0.5,
-                color: AppColors.c666666,
-              ),
+              border: trainingInfo.playerReadiness < 1
+                  ? Border.all(
+                      width: 0.5,
+                      color: AppColors.c666666,
+                    )
+                  : null,
             ),
-            child: Container(
-              width: 317.w * 0.4,
-              height: 18.w,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.horizontal(
-                  left: Radius.circular(9.w),
+            child: Stack(
+              children: [
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  width: 317.w * trainingInfo.playerReadiness,
+                  height: 18.w,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(9.w),
+                    gradient: const LinearGradient(
+                      colors: [
+                        AppColors.cB3B3B3,
+                        AppColors.c000000,
+                      ],
+                    ),
+                  ),
                 ),
-                gradient: const LinearGradient(
-                  colors: [
-                    AppColors.cB3B3B3,
-                    AppColors.c000000,
-                  ],
-                ),
-              ),
+                if (trainingInfo.playerReadiness > 1)
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 300),
+                    width: 317.w * (trainingInfo.playerReadiness - 1),
+                    height: 18.w,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(9.w),
+                      gradient: const LinearGradient(
+                        colors: [
+                          AppColors.c022A1D,
+                          AppColors.c23E8A9,
+                        ],
+                      ),
+                    ),
+                  ),
+              ],
             ),
           ),
           19.vGap,
-          SizedBox(
-            height: 55.w,
-            width: double.infinity,
-            child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                itemCount: 5,
-                separatorBuilder: (context, index) => 10.hGap,
-                itemBuilder: (context, index) {
-                  return index < 4
-                      ? CircleProgressView(
-                          title: "PF",
-                          progress: 50,
-                          width: 55.w,
-                          height: 55.w,
-                          progressWidth: 4.w,
-                        )
-                      : Container(
-                          width: 55.w,
-                          height: 55.w,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              color: AppColors.cEEEEEE,
-                              borderRadius: BorderRadius.circular(30.w)),
-                          child: Text(
-                            "NONE",
-                            style: 14.w4(color: AppColors.ccccccc),
-                          ),
-                        );
-                }),
+          Stack(
+            children: [
+              SizedBox(
+                height: 55.w,
+                width: double.infinity,
+                child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 5,
+                    separatorBuilder: (context, index) => 10.hGap,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        width: 55.w,
+                        height: 55.w,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            color: AppColors.cEEEEEE,
+                            borderRadius: BorderRadius.circular(30.w)),
+                        child: Text(
+                          "NONE",
+                          style: 14.w4(color: AppColors.ccccccc),
+                        ),
+                      );
+                    }),
+              ),
+              SizedBox(
+                height: 55.w,
+                width: double.infinity,
+                child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: trainingInfo.buff.length,
+                    separatorBuilder: (context, index) => 10.hGap,
+                    itemBuilder: (context, index) {
+                      var item = trainingInfo.buff[index];
+                      return CircleProgressView(
+                        title: Utils.getPosition(item.position),
+                        progress: item.buffValue * 100,
+                        width: 55.w,
+                        height: 55.w,
+                        progressWidth: 4.5.w,
+                      );
+                    }),
+              )
+            ],
           )
         ],
       ),
@@ -118,7 +154,7 @@ class TrainingPage extends GetView<TrainingController> {
   }
 
   // 训练
-  Widget _training() {
+  Widget _training(TrainingInfoEntity trainingInfo) {
     return AspectRatio(
       aspectRatio: 375 / 390.5,
       child: Container(
@@ -147,10 +183,13 @@ class TrainingPage extends GetView<TrainingController> {
                     ),
                   ),
                   IconWidget(iconWidth: 21.w, icon: Assets.uiIconBasketballPng),
-                  3.hGap,
+                  4.hGap,
                   Text(
-                    "156",
-                    style: 16.w7(color: AppColors.c262626),
+                    "${trainingInfo.prop.num}",
+                    style: 16.w7(
+                      color: AppColors.c262626,
+                      fontFamily: FontFamily.fOswaldMedium,
+                    ),
                   ),
                   7.hGap,
                   InkWell(
@@ -184,7 +223,7 @@ class TrainingPage extends GetView<TrainingController> {
                     fit: BoxFit.fitWidth,
                   ),
 
-                  ///金钱
+                  ///金钱奖励
                   Positioned(
                     top: 46.w,
                     child: Visibility(
@@ -247,11 +286,11 @@ class TrainingPage extends GetView<TrainingController> {
         id: "training_page",
         builder: (_) {
           // controller.swiperControl.startAutoplay();
-          var trainInfo = controller.trainingInfo.training;
+          var trainInfo = controller.trainingInfo;
           return Column(
             children: [
-              _preparationAndBouns(),
-              _training(),
+              _preparationAndBouns(trainInfo),
+              _training(trainInfo),
             ],
           );
         });

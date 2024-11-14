@@ -5,6 +5,11 @@ import 'package:get/get.dart';
 
 TrainingInfoEntity $TrainingInfoEntityFromJson(Map<String, dynamic> json) {
   final TrainingInfoEntity trainingInfoEntity = TrainingInfoEntity();
+  final double? playerReadiness = jsonConvert.convert<double>(
+      json['playerReadiness']);
+  if (playerReadiness != null) {
+    trainingInfoEntity.playerReadiness = playerReadiness;
+  }
   final List<TrainingInfoAward>? award = (json['award'] as List<dynamic>?)
       ?.map(
           (e) => jsonConvert.convert<TrainingInfoAward>(e) as TrainingInfoAward)
@@ -43,6 +48,7 @@ TrainingInfoEntity $TrainingInfoEntityFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> $TrainingInfoEntityToJson(TrainingInfoEntity entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
+  data['playerReadiness'] = entity.playerReadiness;
   data['award'] = entity.award.map((v) => v.toJson()).toList();
   data['propArray'] = entity.propArray;
   data['prop'] = entity.prop.toJson();
@@ -54,6 +60,7 @@ Map<String, dynamic> $TrainingInfoEntityToJson(TrainingInfoEntity entity) {
 
 extension TrainingInfoEntityExtension on TrainingInfoEntity {
   TrainingInfoEntity copyWith({
+    double? playerReadiness,
     List<TrainingInfoAward>? award,
     List<int>? propArray,
     TrainingInfoProp? prop,
@@ -62,6 +69,7 @@ extension TrainingInfoEntityExtension on TrainingInfoEntity {
     List<TrainingInfoBuff>? buff,
   }) {
     return TrainingInfoEntity()
+      ..playerReadiness = playerReadiness ?? this.playerReadiness
       ..award = award ?? this.award
       ..propArray = propArray ?? this.propArray
       ..prop = prop ?? this.prop

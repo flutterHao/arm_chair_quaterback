@@ -7,7 +7,7 @@ export 'package:arm_chair_quaterback/generated/json/battle_entity.g.dart';
 @JsonSerializable()
 class BattleEntity {
   late int awayTeamPower;
-  late BattleNew? news;
+  BattleNew? news;
   late List<TeamPlayerList> homeTeamPlayerList;
   late BattleTeam awayTeam;
   late AbilityValue awayAbilityValue;
@@ -58,7 +58,7 @@ class BattleNew {
   factory BattleNew.fromJson(Map<String, dynamic> json) =>
       $BattleNewFromJson(json);
 
-  	Map<String, dynamic> toJson() => $BattleNewToJson(this);
+  Map<String, dynamic> toJson() => $BattleNewToJson(this);
 
   @override
   String toString() {

@@ -70,7 +70,7 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
                         Obx(() {
                           return Text(
                             item.remainTime.value,
-                            style: 16.w4(
+                            style: 12.w4(
                               color: AppColors.c262626,
                               height: 1,
                               fontFamily: FontFamily.fRobotoRegular,
@@ -91,7 +91,7 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
                         // 15.vGap,
                         Text(
                           "WAITING",
-                          style: 16.w4(
+                          style: 12.w4(
                             color: AppColors.c262626,
                             height: 1,
                             fontFamily: FontFamily.fRobotoRegular,
@@ -108,7 +108,7 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
                           icon: Assets.uiIconPlusPng,
                           iconColor: AppColors.c000000,
                         ),
-                        // 14.vGap,
+                        14.vGap,
                         Text(
                           "GO MATCH",
                           style: 10.w4(color: AppColors.cB2B2B2, height: 1),
@@ -120,8 +120,10 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
                   return MtInkwell(
                     onTap: () async {
                       if (item.status == -1) {
-                        await Get.toNamed(RouteNames.teamTeamBattle);
-                        controller.getBattleBox();
+                        // await Get.toNamed(RouteNames.teamTeamBattle);
+                        // controller.getBattleBox();
+                        final teamIndexCtrl = Get.find<TeamIndexController>();
+                        teamIndexCtrl.scroToMatch();
                       } else if (item.status == 0) {
                         controller.activeBattleBox(index);
                       } else if (item.status == 1) {

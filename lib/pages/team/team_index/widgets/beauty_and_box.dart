@@ -32,7 +32,7 @@ class BeautyAndBoxView extends StatelessWidget {
         builder: (ctrl) {
           return SizedBox(
             width: double.infinity,
-            height: 389.w + 219.w,
+            height: 608.w,
             child: Stack(
               alignment: Alignment.topCenter,
               children: [
@@ -228,8 +228,7 @@ class BeautyAndBoxView extends StatelessWidget {
                                                     height: 0.75),
                                               ),
                                               10.vGap,
-                                              ctrl.cardPackInfo.freeGiftCount <
-                                                      2
+                                              !ctrl.recieved
                                                   ? Row(
                                                       children: [
                                                         Text(
@@ -278,9 +277,7 @@ class BeautyAndBoxView extends StatelessWidget {
                                                   top: 0,
                                                   right: 0,
                                                   child: Image.asset(
-                                                    ctrl.cardPackInfo
-                                                                .freeGiftCount ==
-                                                            2
+                                                    ctrl.recieved
                                                         ? Assets.uiTeamBox_04Png
                                                         : Assets
                                                             .uiTeamBox_03Png,
@@ -292,8 +289,9 @@ class BeautyAndBoxView extends StatelessWidget {
                                                 left: 0,
                                                 child: Image.asset(
                                                   ctrl.cardPackInfo
-                                                              .freeGiftCount >=
-                                                          1
+                                                                  .freeGiftCount >=
+                                                              1 ||
+                                                          ctrl.recieved
                                                       ? Assets.uiTeamBox_02Png
                                                       : Assets.uiTeamBox_01Png,
                                                   width: 42.w,
