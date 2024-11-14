@@ -60,7 +60,7 @@ class ReceiveAwardItemController extends GetxController {
 
   int getLastTime() {
     var nextDay = MyDateUtils.nextDay(MyDateUtils.getNowDateTime());
-    var nextDayStartTimeMS = MyDateUtils.getNextDayStartTimeMS(nextDay);
+    var nextDayStartTimeMS = MyDateUtils.getDayStartTimeMS(nextDay);
     var ms = nextDayStartTimeMS - MyDateUtils.getNowDateMs();
     return ms;
   }

@@ -108,7 +108,28 @@ class Utils {
 
   static String getLongName(String key) {
     key = key.toLowerCase();
-    List<String> shortNameList = ["FGM","FGA","3PM","3PA","FTM","FTA","REB","AST","STL","BLK","FOUL","TO","PTS","","","","","","",""];
+    List<String> shortNameList = [
+      "FGM",
+      "FGA",
+      "3PM",
+      "3PA",
+      "FTM",
+      "FTA",
+      "REB",
+      "AST",
+      "STL",
+      "BLK",
+      "FOUL",
+      "TO",
+      "PTS",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ];
     if (key == "blk") {
       return "Blocks";
     }
@@ -204,8 +225,8 @@ class Utils {
   static generateAndShareImage(GlobalKey globalKey) async {
     try {
       // 使用RepaintBoundary生成widget的图像
-      RenderRepaintBoundary boundary = globalKey.currentContext!
-          .findRenderObject() as RenderRepaintBoundary;
+      RenderRepaintBoundary boundary =
+          globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
       var image = await boundary.toImage(pixelRatio: 3.0); // 设置图像像素密度
       ByteData? byteData = await image.toByteData(format: ImageByteFormat.png);
       Uint8List uint8List = byteData!.buffer.asUint8List();
@@ -223,5 +244,21 @@ class Utils {
     } catch (e) {
       print('Error generating image: $e');
     }
+  }
+
+  ///
+  ///事件间隔控制工具类（防止短时间内多次响应事件）
+  ///
+  static const int minClickDelayTime = 1000;
+  static int lastClickTime = 0;
+
+  static bool canOperate({int delayTime = minClickDelayTime}) {
+    bool todo = false;
+    int currentClickTime = DateTime.now().millisecondsSinceEpoch;
+    if ((currentClickTime - lastClickTime) >= delayTime) {
+      todo = true;
+      lastClickTime = currentClickTime;
+    }
+    return todo;
   }
 }

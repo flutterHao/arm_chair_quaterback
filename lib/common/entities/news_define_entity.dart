@@ -34,9 +34,9 @@ class PicksDefineEntity {
   PicksDefineEntity();
 
   factory PicksDefineEntity.fromJson(Map<String, dynamic> json) =>
-      $NewsDefineEntityFromJson(json);
+      $PicksDefineEntityFromJson(json);
 
-  Map<String, dynamic> toJson() => $NewsDefineEntityToJson(this);
+  Map<String, dynamic> toJson() => $PicksDefineEntityToJson(this);
 
   @override
   String toString() {

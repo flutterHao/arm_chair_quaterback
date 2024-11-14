@@ -39,12 +39,6 @@ import '../../entities/guess_game_info_entity.dart';
 ///created at 2024/9/20/10:42
 
 class PicksApi {
-  static Future<List<GuessInfosEntity>> getGuessGamesInfo_v1() async {
-    List json = await httpUtil.post(Api.getGuessGamesInfo);
-    var guessInfosEntitys =
-        json.map((e) => GuessInfosEntity.fromJson(e)).toList();
-    return guessInfosEntitys;
-  }
 
   static Future<GuessGameInfoV2Entity> getGuessGamesInfo() async {
     var json = await httpUtil.post(Api.getGuessGamesInfo);

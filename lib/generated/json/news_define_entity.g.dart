@@ -1,132 +1,132 @@
 import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 
-PicksDefineEntity $NewsDefineEntityFromJson(Map<String, dynamic> json) {
-  final PicksDefineEntity newsDefineEntity = PicksDefineEntity();
+PicksDefineEntity $PicksDefineEntityFromJson(Map<String, dynamic> json) {
+  final PicksDefineEntity picksDefineEntity = PicksDefineEntity();
   final int? iD = jsonConvert.convert<int>(json['ID']);
   if (iD != null) {
-    newsDefineEntity.iD = iD;
+    picksDefineEntity.iD = iD;
   }
   final String? betCost = jsonConvert.convert<String>(json['betCost']);
   if (betCost != null) {
-    newsDefineEntity.betCost = betCost;
+    picksDefineEntity.betCost = betCost;
   }
   final double? betNearDouble = jsonConvert.convert<double>(
       json['betNearDouble']);
   if (betNearDouble != null) {
-    newsDefineEntity.betNearDouble = betNearDouble;
+    picksDefineEntity.betNearDouble = betNearDouble;
   }
   final double? betOddsPoint = jsonConvert.convert<double>(
       json['betOddsPoint']);
   if (betOddsPoint != null) {
-    newsDefineEntity.betOddsPoint = betOddsPoint;
+    picksDefineEntity.betOddsPoint = betOddsPoint;
   }
   final List<double>? betPlayerNum = (json['betPlayerNum'] as List<dynamic>?)
       ?.map(
           (e) => jsonConvert.convert<double>(e) as double)
       .toList();
   if (betPlayerNum != null) {
-    newsDefineEntity.betPlayerNum = betPlayerNum;
+    picksDefineEntity.betPlayerNum = betPlayerNum;
   }
   final double? betRewardRank = jsonConvert.convert<double>(
       json['betRewardRank']);
   if (betRewardRank != null) {
-    newsDefineEntity.betRewardRank = betRewardRank;
+    picksDefineEntity.betRewardRank = betRewardRank;
   }
   final double? betSuccessPoint = jsonConvert.convert<double>(
       json['betSuccessPoint']);
   if (betSuccessPoint != null) {
-    newsDefineEntity.betSuccessPoint = betSuccessPoint;
+    picksDefineEntity.betSuccessPoint = betSuccessPoint;
   }
   final double? betSuccessTimes = jsonConvert.convert<double>(
       json['betSuccessTimes']);
   if (betSuccessTimes != null) {
-    newsDefineEntity.betSuccessTimes = betSuccessTimes;
+    picksDefineEntity.betSuccessTimes = betSuccessTimes;
   }
   final double? betSuccessTimesPoint = jsonConvert.convert<double>(
       json['betSuccessTimesPoint']);
   if (betSuccessTimesPoint != null) {
-    newsDefineEntity.betSuccessTimesPoint = betSuccessTimesPoint;
+    picksDefineEntity.betSuccessTimesPoint = betSuccessTimesPoint;
   }
   final List<String>? btRankClose = (json['btRankClose'] as List<dynamic>?)
       ?.map(
           (e) => jsonConvert.convert<String>(e) as String)
       .toList();
   if (btRankClose != null) {
-    newsDefineEntity.btRankClose = btRankClose;
+    picksDefineEntity.btRankClose = btRankClose;
   }
   final List<String>? btRankOpen = (json['btRankOpen'] as List<dynamic>?)?.map(
           (e) => jsonConvert.convert<String>(e) as String).toList();
   if (btRankOpen != null) {
-    newsDefineEntity.btRankOpen = btRankOpen;
+    picksDefineEntity.btRankOpen = btRankOpen;
   }
   final List<double>? flexBet3 = (json['flexBet3'] as List<dynamic>?)?.map(
           (e) => jsonConvert.convert<double>(e) as double).toList();
   if (flexBet3 != null) {
-    newsDefineEntity.flexBet3 = flexBet3;
+    picksDefineEntity.flexBet3 = flexBet3;
   }
   final List<double>? flexBet4 = (json['flexBet4'] as List<dynamic>?)?.map(
           (e) => jsonConvert.convert<double>(e) as double).toList();
   if (flexBet4 != null) {
-    newsDefineEntity.flexBet4 = flexBet4;
+    picksDefineEntity.flexBet4 = flexBet4;
   }
   final List<double>? flexBet5 = (json['flexBet5'] as List<dynamic>?)?.map(
           (e) => jsonConvert.convert<double>(e) as double).toList();
   if (flexBet5 != null) {
-    newsDefineEntity.flexBet5 = flexBet5;
+    picksDefineEntity.flexBet5 = flexBet5;
   }
   final List<double>? flexBet6 = (json['flexBet6'] as List<dynamic>?)?.map(
           (e) => jsonConvert.convert<double>(e) as double).toList();
   if (flexBet6 != null) {
-    newsDefineEntity.flexBet6 = flexBet6;
+    picksDefineEntity.flexBet6 = flexBet6;
   }
   final double? gamePlay = jsonConvert.convert<double>(json['gamePlay']);
   if (gamePlay != null) {
-    newsDefineEntity.gamePlay = gamePlay;
+    picksDefineEntity.gamePlay = gamePlay;
   }
   final double? gamePlayRecent = jsonConvert.convert<double>(
       json['gamePlayRecent']);
   if (gamePlayRecent != null) {
-    newsDefineEntity.gamePlayRecent = gamePlayRecent;
+    picksDefineEntity.gamePlayRecent = gamePlayRecent;
   }
   final double? pfBetData = jsonConvert.convert<double>(json['pfBetData']);
   if (pfBetData != null) {
-    newsDefineEntity.pfBetData = pfBetData;
+    picksDefineEntity.pfBetData = pfBetData;
   }
   final List<double>? powerBetWin = (json['powerBetWin'] as List<dynamic>?)
       ?.map(
           (e) => jsonConvert.convert<double>(e) as double)
       .toList();
   if (powerBetWin != null) {
-    newsDefineEntity.powerBetWin = powerBetWin;
+    picksDefineEntity.powerBetWin = powerBetWin;
   }
   final double? professorMax = jsonConvert.convert<double>(
       json['professorMax']);
   if (professorMax != null) {
-    newsDefineEntity.professorMax = professorMax;
+    picksDefineEntity.professorMax = professorMax;
   }
   final double? ptsGuessLine = jsonConvert.convert<double>(
       json['ptsGuessLine']);
   if (ptsGuessLine != null) {
-    newsDefineEntity.ptsGuessLine = ptsGuessLine;
+    picksDefineEntity.ptsGuessLine = ptsGuessLine;
   }
   final double? sfBetData = jsonConvert.convert<double>(json['sfBetData']);
   if (sfBetData != null) {
-    newsDefineEntity.sfBetData = sfBetData;
+    picksDefineEntity.sfBetData = sfBetData;
   }
   final double? sgBetData = jsonConvert.convert<double>(json['sgBetData']);
   if (sgBetData != null) {
-    newsDefineEntity.sgBetData = sgBetData;
+    picksDefineEntity.sgBetData = sgBetData;
   }
   final double? winCoinPoint = jsonConvert.convert<double>(
       json['winCoinPoint']);
   if (winCoinPoint != null) {
-    newsDefineEntity.winCoinPoint = winCoinPoint;
+    picksDefineEntity.winCoinPoint = winCoinPoint;
   }
-  return newsDefineEntity;
+  return picksDefineEntity;
 }
 
-Map<String, dynamic> $NewsDefineEntityToJson(PicksDefineEntity entity) {
+Map<String, dynamic> $PicksDefineEntityToJson(PicksDefineEntity entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['ID'] = entity.iD;
   data['betCost'] = entity.betCost;
@@ -155,7 +155,7 @@ Map<String, dynamic> $NewsDefineEntityToJson(PicksDefineEntity entity) {
   return data;
 }
 
-extension NewsDefineEntityExtension on PicksDefineEntity {
+extension PicksDefineEntityExtension on PicksDefineEntity {
   PicksDefineEntity copyWith({
     int? iD,
     String? betCost,

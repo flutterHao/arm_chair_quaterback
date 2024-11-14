@@ -12,7 +12,7 @@ class Api {
   /// api
   static const String authAccount = '$API_BASE_PATH/account/authAccount';
 
-  //team
+  ///team
   static const String login = "$API_BASE_PATH/team/teamLogin";
   static const String visitorLogin = "$API_BASE_PATH/team/visitorLogin";
   static const String getTeamSimple = "$API_BASE_PATH/team/getTeamSimple";
@@ -20,7 +20,7 @@ class Api {
   static const String getTeamInfo = "$API_BASE_PATH/team/getTeamInfo";
   static const String updateTeamInfo = "$API_BASE_PATH/team/updateTeamInfo";
 
-  //NBANews
+  ///NBANews
   static const String getNewsList = "$API_BASE_PATH/NBANews/getNBANews";
   static const String getNewsDetail = "$API_BASE_PATH/NBANews/viewNews";
   static const String newsLike = "$API_BASE_PATH/NBANews/like";
@@ -48,7 +48,7 @@ class Api {
   static const String getGuessTopReviews = "$API_BASE_PATH/NBANews/getGuessTopReviews";
 
 
-  //NBAData
+  ///NBAData
   static const String teamStatRank =
       "$API_BASE_PATH/NBAData/queryNBATeamStatRank";
   static const String teamRank = "$API_BASE_PATH/NBAData/queryNBATeamRank";
@@ -115,4 +115,7 @@ class Api {
 
   ///match
   static const String teamMatch = "$API_BASE_PATH/match/teamMatch";
+
+  ///league
+  static const String getNBAGameSchedules = "$API_BASE_PATH/NBAData/getNBAGameSchedules";
 }

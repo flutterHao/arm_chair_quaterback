@@ -1,7 +1,11 @@
+import 'dart:math';
+
+import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
+import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
+import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
-import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -12,9 +16,9 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
-import 'package:arm_chair_quaterback/common/widgets/my_water_drop_header.dart';
 import 'package:arm_chair_quaterback/common/widgets/transitions/half_slide_right_to_left_transition.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
+import 'package:arm_chair_quaterback/pages/league/controller.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_account/bindings.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_account/view.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_info/bindings.dart';
@@ -26,9 +30,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-
-import 'index.dart';
-import 'widgets/widgets.dart';
 
 class LeaguePage extends StatelessWidget {
   const LeaguePage({super.key});
@@ -42,11 +43,11 @@ class LeaguePage extends StatelessWidget {
         switch (setting.name) {
           case RouteNames.league:
             return GetPageRoute(
-                opaque: false,
-                settings: setting,
-                customTransition: HalfSlideRightToLeftTransition(),
-                page: () => const LeagueIndexPage(),
-                binding: LeagueBinding());
+              opaque: false,
+              settings: setting,
+              customTransition: HalfSlideRightToLeftTransition(),
+              page: () => const LeagueIndexPage(),
+            );
           case RouteNames.mineMineInfo:
             return GetPageRoute(
                 opaque: false,
@@ -93,133 +94,144 @@ class _LeagueIndexPageState extends State<LeagueIndexPage>
 
   // 主视图
   Widget _buildView() {
-    return Expanded(
-      child: CustomScrollView(
-        physics: const BouncingScrollPhysics(),
-        slivers: [
-          SliverPersistentHeader(
-            floating: true,
-            delegate: FixedHeightSliverHeaderDelegate(
-                child: Container(
-                  height: 58.w,
-                  width: double.infinity,
-                  color: AppColors.c262626,
-                  child: Row(
-                    children: [
-                      16.hGap,
-                      Expanded(
-                          child: Container(
-                        height: 40.w,
-                        decoration: BoxDecoration(
-                          color: AppColors.c000000,
-                          borderRadius: BorderRadius.circular(9.w),
-                        ),
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              width: 40.w,
-                              height: 40.w,
-                              child: MtInkwell(
-                                onTap: () => controller.prePage(),
-                                child: IconWidget(
-                                    iconWidth: 8.w,
-                                    icon: Assets.playerUiIconArrows02),
+    if (controller.scoreList.isNotEmpty &&
+        controller.picksDefineEntity != null) {
+      return Expanded(
+        child: CustomScrollView(
+          physics: const BouncingScrollPhysics(),
+          slivers: [
+            SliverPersistentHeader(
+              floating: true,
+              delegate: FixedHeightSliverHeaderDelegate(
+                  child: Container(
+                    height: 58.w,
+                    width: double.infinity,
+                    color: AppColors.c262626,
+                    child: Row(
+                      children: [
+                        16.hGap,
+                        Expanded(
+                            child: Container(
+                          height: 40.w,
+                          decoration: BoxDecoration(
+                            color: AppColors.c000000,
+                            borderRadius: BorderRadius.circular(9.w),
+                          ),
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 40.w,
+                                height: 40.w,
+                                child: MtInkwell(
+                                  onTap: () => controller.prePage(),
+                                  child: IconWidget(
+                                      iconWidth: 8.w,
+                                      icon: Assets.playerUiIconArrows02),
+                                ),
                               ),
+                              Expanded(
+                                  child: PageView.builder(
+                                      controller: controller.pageController,
+                                      itemCount: controller.pageText.length,
+                                      onPageChanged: (index) =>
+                                          controller.onPageChanged(index),
+                                      itemBuilder: (context, index) {
+                                        return Center(
+                                          child: Text(
+                                            controller.pageText[index],
+                                            style: 16.w5(
+                                                color: AppColors.cB3B3B3,
+                                                fontFamily:
+                                                    FontFamily.fOswaldMedium),
+                                          ),
+                                        );
+                                      })),
+                              SizedBox(
+                                width: 40.w,
+                                height: 40.w,
+                                child: MtInkwell(
+                                  onTap: () => controller.nextPage(),
+                                  child: IconWidget(
+                                      iconWidth: 8.w,
+                                      icon: Assets.playerUiIconArrows01),
+                                ),
+                              )
+                            ],
+                          ),
+                        )),
+                        9.hGap,
+                        Container(
+                          width: 112.w,
+                          height: 40.w,
+                          decoration: BoxDecoration(
+                              color: AppColors.c3B3B3B,
+                              borderRadius: BorderRadius.circular(9.w)),
+                          child: Center(
+                            child: Text(
+                              "STANDINGS",
+                              style: 16.w5(
+                                  color: AppColors.cFFFFFF,
+                                  fontFamily: FontFamily.fOswaldMedium),
                             ),
-                            Expanded(
-                                child: PageView.builder(
-                                    controller: controller.pageController,
-                                    itemCount: controller.pageText.length,
-                                    itemBuilder: (context, index) {
-                                      return Center(
-                                        child: Text(
-                                          controller.pageText[index],
-                                          style: 16.w5(
-                                              color: AppColors.cB3B3B3,
-                                              fontFamily:
-                                                  FontFamily.fOswaldMedium),
-                                        ),
-                                      );
-                                    })),
-                            SizedBox(
-                              width: 40.w,
-                              height: 40.w,
-                              child: MtInkwell(
-                                onTap: () => controller.nextPage(),
-                                child: IconWidget(
-                                    iconWidth: 8.w,
-                                    icon: Assets.playerUiIconArrows01),
-                              ),
-                            )
-                          ],
-                        ),
-                      )),
-                      9.hGap,
-                      Container(
-                        width: 112.w,
-                        height: 40.w,
-                        decoration: BoxDecoration(
-                            color: AppColors.c3B3B3B,
-                            borderRadius: BorderRadius.circular(9.w)),
-                        child: Center(
-                          child: Text(
-                            "STANDINGS",
-                            style: 16.w5(
-                                color: AppColors.cFFFFFF,
-                                fontFamily: FontFamily.fOswaldMedium),
                           ),
                         ),
-                      ),
-                      16.hGap,
-                    ],
+                        16.hGap,
+                      ],
+                    ),
                   ),
-                ),
-                height: 58.w),
-          ),
-          SliverList.separated(
-            itemCount: 20,
-            itemBuilder: (context, index) {
-              bool lastIndex = index == 19; //todo
-              return Container(
-                  margin: EdgeInsets.only(
-                      top: index == 0 ? 9.w : 0, bottom: lastIndex ? 20.w : 0),
-                  child: _buildItem());
-            },
-            separatorBuilder: (BuildContext context, int index) {
-              return 9.vGap;
-            },
-          )
-        ],
-      ),
-    );
+                  height: 58.w),
+            ),
+            SliverList.separated(
+              itemCount: controller.scoreList.length,
+              itemBuilder: (context, index) {
+                bool lastIndex = index == controller.scoreList.length - 1;
+                var item = controller.scoreList[index];
+                return Container(
+                    margin: EdgeInsets.only(
+                        top: index == 0 ? 9.w : 0,
+                        bottom: lastIndex ? 20.w : 0),
+                    child: _buildItem(item));
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return 9.vGap;
+              },
+            )
+          ],
+        ),
+      );
+    }
     return Expanded(
       child: SmartRefresher(
         controller: controller.refreshController,
         onRefresh: () => controller.loading(),
-        child: const Center(
-          child: LoadStatusWidget(
-            text: "COMING SOON...",
-          ),
+        child: Center(
+          child: Obx(() {
+            return LoadStatusWidget(
+              loadDataStatus: controller.loadStatus.value,
+            );
+          }),
         ),
       ),
     );
   }
 
-  Widget _buildItem() {
-    return _ItemWidget();
+  Widget _buildItem(GameGuess item) {
+    return _ItemWidget(item);
   }
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<LeagueController>(builder: (_) {
-      return BlackAppWidget(
-        const UserInfoBar(
-          title: "COMMUNITIES",
-          routeId: GlobalNestedKey.LEAGUES,
-        ),
-        bodyWidget: _buildView(),
-      );
-    });
+    return GetBuilder<LeagueController>(
+        id: LeagueController.idLeagueMain,
+        builder: (_) {
+          return BlackAppWidget(
+            const UserInfoBar(
+              title: "COMMUNITIES",
+              routeId: GlobalNestedKey.LEAGUES,
+            ),
+            bodyWidget: _buildView(),
+          );
+        });
   }
 
   @override
@@ -227,22 +239,24 @@ class _LeagueIndexPageState extends State<LeagueIndexPage>
 }
 
 class _ItemWidget extends StatelessWidget {
-  _ItemWidget({super.key});
+  _ItemWidget(this.gameGuess) : item = gameGuess.scoresEntity;
 
+  final GameGuess gameGuess;
+  late ScoresEntity item;
   var globalKey = GlobalKey();
 
-  Column _buildTeamInfo() {
+  Column _buildTeamInfo(bool home) {
     return Column(
       children: [
         ImageWidget(
-          url: "url",
+          url: Utils.getTeamUrl(home ? item.homeTeamId : item.awayTeamId),
           imageFailedPath: Assets.testTestTeamLogo,
-          color: AppColors.c000000,
           width: 44.w,
         ),
         10.vGap,
         Text(
-          "DAS",
+          Utils.getTeamInfo(home ? item.homeTeamId : item.awayTeamId)
+              .shortEname,
           style: 12.w4(
               color: AppColors.c000000,
               height: 1,
@@ -250,7 +264,7 @@ class _ItemWidget extends StatelessWidget {
         ),
         4.vGap,
         Text(
-          "8-2",
+          home ? item.homeTeamWL : item.awayTeamWL,
           style: 10.w4(
               color: AppColors.c000000,
               height: 1,
@@ -260,24 +274,53 @@ class _ItemWidget extends StatelessWidget {
     );
   }
 
+  Widget getStatus() {
+    String text = '';
+    Color color;
+    if (item.status == 2) {
+      color = AppColors.c000000;
+      text = "FINAL";
+    } else if (item.status == 1) {
+      color = AppColors.c10A86A;
+      text =
+          "In the game: ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(item.gameStartTime))}";
+    } else {
+      color = AppColors.c000000;
+      if (MyDateUtils.isTomorrow(MyDateUtils.getNowDateTime(),
+          MyDateUtils.getDateTimeByMs(item.gameStartTime))) {
+        text =
+            "Tomorrow ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(item.gameStartTime))}";
+      } else {
+        text =
+            "${MyDateUtils.formatDate(MyDateUtils.getDateTimeByMs(item.gameStartTime), format: DateFormats.PARAM_M_D)} ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(item.gameStartTime))}";
+      }
+    }
+
+    return Text(
+      text,
+      style:
+          12.w4(color: color, height: 1, fontFamily: FontFamily.fRobotoRegular),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.cFFFFFF,
-        borderRadius: BorderRadius.circular(12.w),
-      ),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          RepaintBoundary(
-            key: globalKey,
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        RepaintBoundary(
+          key: globalKey,
+          child: Container(
+            decoration: BoxDecoration(
+              color: AppColors.cFFFFFF,
+              borderRadius: BorderRadius.circular(12.w),
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 18.vGap,
                 Text(
-                  "IN-SEASON TOURNAMENT GROUP PLAY",
+                  "NBA",
                   style: 12.w5(
                       color: AppColors.c000000,
                       height: 1,
@@ -287,13 +330,7 @@ class _ItemWidget extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      "FINAL",
-                      style: 12.w4(
-                          color: AppColors.c000000,
-                          height: 1,
-                          fontFamily: FontFamily.fRobotoRegular),
-                    ),
+                    getStatus(),
                     6.hGap,
                     IconWidget(
                       iconWidth: 5.w,
@@ -307,25 +344,36 @@ class _ItemWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildTeamInfo(),
+                    _buildTeamInfo(true),
                     12.hGap,
                     Container(
                       height: 44.w,
                       alignment: Alignment.center,
                       child: Text(
-                        "198",
+                        "${item.homeTeamScore}",
                         style: 30.w7(
                             color: AppColors.cB3B3B3,
                             height: 1,
                             fontFamily: FontFamily.fOswaldBold),
                       ),
                     ),
-                    70.hGap,
+                    Container(
+                      height: 44.w,
+                      width: 70.w,
+                      alignment: Alignment.center,
+                      child: Text(
+                        item.status == 2 ? "" : "VS",
+                        style: 30.w7(
+                            color: AppColors.cB3B3B3,
+                            height: 1,
+                            fontFamily: FontFamily.fOswaldBold),
+                      ),
+                    ),
                     Container(
                       height: 44.w,
                       alignment: Alignment.center,
                       child: Text(
-                        "198",
+                        "${item.awayTeamScore}",
                         style: 30.w7(
                             color: AppColors.c000000,
                             height: 1,
@@ -333,10 +381,11 @@ class _ItemWidget extends StatelessWidget {
                       ),
                     ),
                     12.hGap,
-                    _buildTeamInfo()
+                    _buildTeamInfo(false)
                   ],
                 ),
                 16.vGap,
+                if (item.status == 0) _buildGuess(),
                 Container(
                   height: 1,
                   width: double.infinity,
@@ -349,7 +398,7 @@ class _ItemWidget extends StatelessWidget {
                   child: Row(
                     children: [
                       UserAvaterWidget(
-                        url: "",
+                        url: Utils.getPlayUrl(item.guessTopReviews?.playerId),
                         width: 26.w,
                         height: 26.w,
                         radius: 13.w,
@@ -357,7 +406,8 @@ class _ItemWidget extends StatelessWidget {
                       5.hGap,
                       Expanded(
                           child: Text(
-                        "Add a comment about this stake about",
+                        item.guessTopReviews?.context ??
+                            "Add a comment about this stake about",
                         style: 14.w4(
                           color: AppColors.c4D4D4D,
                           height: 1,
@@ -366,10 +416,11 @@ class _ItemWidget extends StatelessWidget {
                         ),
                       )),
                       9.hGap,
-                      IconWidget(iconWidth: 18.w, icon: Assets.iconUiIconJetton),
+                      IconWidget(
+                          iconWidth: 18.w, icon: Assets.iconUiIconJetton),
                       2.hGap,
                       Text(
-                        "294k",
+                        getChip(),
                         style: 12.w5(
                           color: AppColors.c4D4D4D,
                           fontFamily: FontFamily.fRobotoMedium,
@@ -383,21 +434,197 @@ class _ItemWidget extends StatelessWidget {
               ],
             ),
           ),
-          Positioned(
-              top: 11.w,
-              right: 10.w,
-              child: Container(
-                  width: 24.w,
-                  height: 24.w,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4.w),
-                      border: Border.all(color: AppColors.c666666, width: 1)),
-                  child: MtInkwell(
-                      vibrate: true,
-                      onTap: () => Utils.generateAndShareImage(globalKey),
-                      child: IconWidget(
-                          iconWidth: 15.w, icon: Assets.testTestTeamLogo))))
-        ],
+        ),
+        Positioned(
+            top: 11.w,
+            right: 10.w,
+            child: Container(
+                width: 24.w,
+                height: 24.w,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4.w),
+                    border: Border.all(color: AppColors.c666666, width: 1)),
+                child: MtInkwell(
+                    vibrate: true,
+                    onTap: () => Utils.generateAndShareImage(globalKey),
+                    child: IconWidget(
+                        iconWidth: 15.w, icon: Assets.testTestTeamLogo))))
+      ],
+    );
+  }
+
+  String getChip() => Utils.formatChip((item.awayTeamWins + item.homeTeamWins) *
+      int.parse(
+          Get.find<LeagueController>().picksDefineEntity?.betCost ?? "0"));
+
+  Column _buildGuess() {
+    var count = item.homeTeamWins + item.awayTeamWins;
+    var homePercent = 0;
+    if (item.homeTeamWins == 0 && item.awayTeamWins == 0) {
+      homePercent = 50;
+    } else if (item.homeTeamWins == 0) {
+      homePercent = 0;
+    } else if (item.awayTeamWins == 0) {
+      homePercent = 100;
+    } else {
+      homePercent =
+          int.parse((item.homeTeamWins / count * 100).toStringAsFixed(0));
+    }
+    var homeTeamInfo = Utils.getTeamInfo(item.homeTeamId);
+    var awayTeamInfo = Utils.getTeamInfo(item.awayTeamId);
+    return Column(
+      children: [
+        Obx(() {
+          return Row(
+            children: [
+              29.hGap,
+              _buildBtn(gameGuess.choiceTeamId.value == homeTeamInfo.id,
+                  homeTeamInfo.id,
+                  isGuessed: item.isGuess == homeTeamInfo.id),
+              9.hGap,
+              _buildBtn(gameGuess.choiceTeamId.value == awayTeamInfo.id,
+                  awayTeamInfo.id,
+                  isGuessed: item.isGuess == awayTeamInfo.id),
+              29.hGap,
+            ],
+          );
+        }),
+        16.vGap,
+        Row(
+          children: [
+            29.hGap,
+            Text(
+              homeTeamInfo.shortEname,
+              style: 10.w4(
+                  color: AppColors.c000000,
+                  height: 1,
+                  fontFamily: FontFamily.fRobotoRegular),
+            ),
+            Expanded(
+              child: Center(
+                child: Text(
+                  "WHO WILL WIN",
+                  style: 10.w4(
+                      color: AppColors.c000000,
+                      height: 1,
+                      fontFamily: FontFamily.fRobotoRegular),
+                ),
+              ),
+            ),
+            Text(
+              awayTeamInfo.shortEname,
+              style: 10.w4(
+                  color: AppColors.c000000,
+                  height: 1,
+                  fontFamily: FontFamily.fRobotoRegular),
+            ),
+            29.hGap,
+          ],
+        ),
+        3.vGap,
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            29.hGap,
+            Text(
+              "$homePercent%",
+              style: 14.w5(
+                  color: AppColors.c000000,
+                  height: 1,
+                  fontFamily: FontFamily.fOswaldMedium),
+            ),
+            3.hGap,
+            Expanded(
+                child: Row(
+              children: [
+                Expanded(
+                    flex: max(2, homePercent),
+                    child: Container(
+                      height: 18.w,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          color: AppColors.c000000,
+                          borderRadius: BorderRadius.horizontal(
+                              left: Radius.circular(9.w))),
+                    )),
+                2.hGap,
+                Expanded(
+                    flex: max(2, 100 - homePercent),
+                    child: Container(
+                      height: 18.w,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          color: AppColors.cB3B3B3,
+                          borderRadius: BorderRadius.horizontal(
+                              right: Radius.circular(9.w))),
+                    )),
+              ],
+            )),
+            3.hGap,
+            Text(
+              "${100 - homePercent}%",
+              style: 14.w5(
+                  color: AppColors.c000000,
+                  height: 1,
+                  fontFamily: FontFamily.fOswaldMedium),
+            ),
+            29.hGap,
+          ],
+        ),
+        21.vGap,
+      ],
+    );
+  }
+
+  Expanded _buildBtn(bool isChoice, int teamId, {bool isGuessed = false}) {
+    return Expanded(
+      child: MtInkwell(
+        vibrate: true,
+        onTap: () {
+          if (item.isGuess != 0) {
+            return;
+          }
+          Get.find<LeagueController>().btnTap(gameGuess, teamId);
+        },
+        child: Container(
+          height: 41.w,
+          decoration: BoxDecoration(
+              color: item.isGuess != 0
+                  ? isGuessed
+                      ? AppColors.c000000
+                      : AppColors.cEEEEEE
+                  : isChoice
+                      ? AppColors.c000000
+                      : AppColors.cTransparent,
+              borderRadius: BorderRadius.circular(9.w),
+              border: Border.all(color: AppColors.c666666, width: 1)),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Text(
+                "${Utils.getTeamInfo(teamId).shortEname} WIN",
+                style: 19.w5(
+                    color: item.isGuess != 0
+                        ? isGuessed
+                            ? AppColors.cFFFFFF
+                            : AppColors.ccccccc
+                        : isChoice
+                            ? AppColors.cFFFFFF
+                            : AppColors.c000000,
+                    height: 1,
+                    fontFamily: FontFamily.fOswaldMedium),
+              ),
+              if (isGuessed)
+                Positioned(
+                    left: 11.w,
+                    child: IconWidget(
+                      iconWidth: 19.w,
+                      icon: Assets.testTestTeamLogo,
+                      iconColor: AppColors.cFFFFFF,
+                    ))
+            ],
+          ),
+        ),
       ),
     );
   }

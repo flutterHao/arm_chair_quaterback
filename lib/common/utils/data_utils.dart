@@ -791,11 +791,12 @@ class MyDateUtils {
     return month.substring(0, short ? 3 : month.length);
   }
 
-  static int getNextDayStartTimeMS(DateTime dateTime) {
+  static int getDayStartTimeMS(DateTime dateTime) {
     var dateTime2 =
         DateTime(dateTime.year, dateTime.month, dateTime.day, 0, 0, 0, 0, 0);
     return dateTime2.millisecondsSinceEpoch;
   }
+
 }
 
 /// month->days.
