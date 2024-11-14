@@ -4,26 +4,26 @@
  * @Date: 2024-10-16 17:24:51
  * @LastEditTime: 2024-11-11 17:38:53
  */
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:get/get.dart';
 import 'dart:async';
 
 class BeautyController extends GetxController {
   RxInt beautyIndex = 0.obs;
   List beautyList = [
-    Assets.uiBelle_01Png,
-    Assets.uiBelle_04Png,
-    Assets.uiBelle_02Png,
-    Assets.uiBelle_05Png,
-    Assets.uiBelle_03Png,
-    Assets.uiBelle_06Png
+    Assets.teamUiBelle01,
+    Assets.teamUiBelle02,
+    Assets.teamUiBelle03,
+    Assets.teamUiBelle04,
+    Assets.teamUiBelle05,
+    Assets.teamUiBelle06
   ];
 
   int clothingIndex = 0;
   List<String> clothingList = [
-    Assets.uiClothing_01Png,
-    Assets.uiClothing_02Png,
-    Assets.uiClothing_03Png,
+    Assets.teamUiClothing01,
+    Assets.teamUiClothing02,
+    Assets.teamUiEnsignBr,
   ];
 
   ///宝箱

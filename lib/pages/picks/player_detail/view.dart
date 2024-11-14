@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -75,7 +75,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                             borderRadius: BorderRadius.only(
                                 bottomLeft: Radius.circular(32.w)),
                             child: ImageWidget(
-                              imageFailedPath: Assets.uiDefault_04Png,
+                              imageFailedPath: Assets.iconUiDefault04,
                               url: Utils.getPlayUrl(
                                   controller.baseInfo?.playerId),
                               width: 100.w,
@@ -98,7 +98,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                                 ),
                                 IconWidget(
                                     iconWidth: 17.w,
-                                    icon: Assets.uiIconFollowPng),
+                                    icon: Assets.playerUiIconFollow),
                               ],
                             ),
                             Text.rich(

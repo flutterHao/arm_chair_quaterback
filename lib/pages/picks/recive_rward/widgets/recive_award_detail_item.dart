@@ -1,4 +1,4 @@
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -102,7 +102,7 @@ class ReceiveAwardDetailItem extends StatelessWidget {
                       children: [
                         IconWidget(
                             iconWidth: 9.w,
-                            icon: Assets.uiIconUpPng,
+                            icon: Assets.iconUiIconUp,
                             iconColor: AppColors.cFF7954,
                             rotateAngle:
                                 player.guessData?.guessChoice == 1 ? 0 : 180),
@@ -130,7 +130,7 @@ class ReceiveAwardDetailItem extends StatelessWidget {
                             children: [
                               IconWidget(
                                 iconWidth: 83.w,
-                                icon: Assets.uiBingoPng,
+                                icon: Assets.picksUiBingo,
                                 iconColor: player.guessData?.success ?? false
                                     ? AppColors.c10A86A
                                     : AppColors.cB3B3B3,

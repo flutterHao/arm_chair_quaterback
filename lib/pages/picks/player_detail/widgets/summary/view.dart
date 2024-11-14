@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
@@ -292,7 +292,7 @@ class _SummaryPageState extends State<SummaryPage>
                                       color: AppColors.cF2F2F2,
                                       image: const DecorationImage(
                                           image: AssetImage(
-                                            Assets.testTeamLogoPng,
+                                            Assets.testTestTeamLogo,
                                           ),
                                           alignment: Alignment.topRight,
                                           opacity: 0.1),
@@ -468,7 +468,7 @@ class _SummaryPageState extends State<SummaryPage>
                                     children: [
                                       IconWidget(
                                           iconWidth: 13.w,
-                                          icon: Assets.uiIconCountdownPng),
+                                          icon: Assets.iconUiIconCountdown),
                                       3.hGap,
                                       Obx(() {
                                         return Text(
@@ -497,7 +497,7 @@ class _SummaryPageState extends State<SummaryPage>
                                         alignment: Alignment.centerLeft,
                                         scale: 0.5,
                                         image: const AssetImage(
-                                            Assets.uiIconTradePng),
+                                            Assets.playerUiIconTrade),
                                         colorFilter: ColorFilter.mode(
                                             AppColors.cFF7954.withOpacity(.1),
                                             BlendMode.srcIn)),
@@ -532,7 +532,7 @@ class _SummaryPageState extends State<SummaryPage>
                                               children: [
                                                 IconWidget(
                                                   iconWidth: 37.w,
-                                                  icon: Assets.uiIconStar_01Png,
+                                                  icon: Assets.playerUiIconStar01,
                                                   iconColor: AppColors.cFF7954,
                                                 ),
                                                 Positioned(
@@ -566,7 +566,7 @@ class _SummaryPageState extends State<SummaryPage>
                                             children: [
                                               IconWidget(
                                                   iconWidth: 19.w,
-                                                  icon: Assets.uiMoney_02Png),
+                                                  icon: Assets.teamUiMoney02),
                                               3.hGap,
                                               Text(
                                                 Utils.formatMoney(tradePlayer
@@ -593,7 +593,7 @@ class _SummaryPageState extends State<SummaryPage>
                                                       child: IconWidget(
                                                         iconWidth: 14.w,
                                                         icon: Assets
-                                                            .uiIconDecreasingAmplitudePng,
+                                                            .iconUiIconDecreasingAmplitude,
                                                         iconColor: percent == 0
                                                             ? AppColors.cB3B3B3
                                                             : AppColors.cE72646,
@@ -878,7 +878,7 @@ class _SummaryPageState extends State<SummaryPage>
             decoration: BoxDecoration(
                 color: AppColors.cF2F2F2,
                 image: DecorationImage(
-                    image: const AssetImage(Assets.uiIconPickPng),
+                    image: const AssetImage(Assets.playerUiIconPick),
                     alignment: Alignment.bottomLeft,
                     scale: 0.5,
                     colorFilter: ColorFilter.mode(
@@ -948,7 +948,7 @@ class _SummaryPageState extends State<SummaryPage>
                                 children: [
                                   IconWidget(
                                     iconWidth: 11.w,
-                                    icon: Assets.uiIconUpPng,
+                                    icon: Assets.iconUiIconUp,
                                     iconColor: AppColors.cFF7954,
                                     rotateAngle: choiceMore ? 0 : 180,
                                   ),
@@ -1000,7 +1000,7 @@ class _SummaryPageState extends State<SummaryPage>
                                         children: [
                                           IconWidget(
                                             iconWidth: 14.w,
-                                            icon: Assets.uiIconUpPng,
+                                            icon: Assets.iconUiIconUp,
                                             iconColor: controller.pickIndex
                                                 .value == 0
                                                 ? AppColors.cF2F2F2
@@ -1039,7 +1039,7 @@ class _SummaryPageState extends State<SummaryPage>
                                         children: [
                                           IconWidget(
                                             iconWidth: 14.w,
-                                            icon: Assets.uiIconUpPng,
+                                            icon: Assets.iconUiIconUp,
                                             iconColor: controller.pickIndex
                                                 .value == 1
                                                 ? AppColors.cF2F2F2

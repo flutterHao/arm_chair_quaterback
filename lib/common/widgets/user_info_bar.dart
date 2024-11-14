@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/constant/getx_builder_ids.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entity/team_login_info.dart';
@@ -116,7 +116,7 @@ class UserInfoBar extends StatelessWidget {
                     height: 43.w,
                     child: Stack(
                       children: [
-                        IconWidget(iconWidth: 20.w, icon: Assets.testTeamLogoPng),
+                        IconWidget(iconWidth: 20.w, icon: Assets.testTestTeamLogo),
                         Positioned(
                             top: 5.w,
                             right: 10.w,
@@ -228,14 +228,14 @@ class MoneyAndCoinWidget extends StatelessWidget {
           if (home) {
             child = Row(
               children: [
-                IconWidget(iconWidth: 21.w, icon: Assets.uiIconJettonPng),
+                IconWidget(iconWidth: 21.w, icon: Assets.iconUiIconJetton),
                 4.hGap,
                 Text(
                   Utils.formatChip(info.getCoin()),
                   style: 16.w4(color: AppColors.cF2F2F2, height: 1),
                 ),
                 15.hGap,
-                IconWidget(iconWidth: 24.w, icon: Assets.uiMoney_02Png),
+                IconWidget(iconWidth: 24.w, icon: Assets.teamUiMoney02),
                 4.hGap,
                 Text(
                   Utils.formatChip(info.getMoney()),
@@ -251,7 +251,7 @@ class MoneyAndCoinWidget extends StatelessWidget {
                   ),
                   child: IconWidget(
                     iconWidth: 12.w,
-                    icon: Assets.uiIconPlusPng,
+                    icon: Assets.iconUiIconPlus,
                     iconColor: AppColors.cFF7954,
                   ), //todo 功能待定
                 )
@@ -262,10 +262,10 @@ class MoneyAndCoinWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                iconText(Assets.prop_102Png, Utils.formatChip(info.getCoin())),
+                iconText(Assets.iconProp102, Utils.formatChip(info.getCoin())),
                 4.vGap,
                 iconText(
-                    Assets.uiIconMoneyPng, Utils.formatMoney(info.getMoney())),
+                    Assets.iconUiIconMoney, Utils.formatMoney(info.getMoney())),
               ],
             );
           }

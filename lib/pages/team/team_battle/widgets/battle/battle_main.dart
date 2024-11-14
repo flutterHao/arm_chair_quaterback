@@ -1,4 +1,4 @@
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -93,7 +93,7 @@ class _BattleMainState extends State<BattleMain>
                     child: SizedBox(
                   height: 530.h,
                   child: Image.asset(
-                    Assets.uiBgBattleJpg,
+                    Assets.teamUiBgBattle,
                     fit: BoxFit.cover,
                   ),
                 )),
@@ -228,7 +228,7 @@ class _BattleMainState extends State<BattleMain>
                                     width: 8.h,
                                     child: IconWidget(
                                         iconWidth: 7.h,
-                                        icon: Assets.uiTriangleRPng),
+                                        icon: Assets.picksUiTriangleR),
                                   ),
                                 ),
                                 5.hGap,

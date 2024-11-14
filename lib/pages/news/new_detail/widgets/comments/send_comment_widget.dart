@@ -6,7 +6,7 @@
  */
 import 'dart:math';
 
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -136,7 +136,7 @@ class _SendCommentWidgetState extends State<SendCommentWidget> {
                                             angle: 90 * (pi / 180),
                                             child: IconWidget(
                                               iconWidth: 15.w,
-                                              icon: Assets.iconBackPng,
+                                              icon: Assets.iconIconBack,
                                               iconColor: !isDarkMode
                                                   ? AppColors.cF2F2F2
                                                   : AppColors.c262626,
@@ -276,7 +276,7 @@ class _SendCommentWidgetState extends State<SendCommentWidget> {
 //                                             angle: 90 * (pi / 180),
 //                                             child: IconWidget(
 //                                               iconWidth: 15.w,
-//                                               icon: Assets.iconBackPng,
+//                                               icon: Assets.iconIconBack,
 //                                               iconColor: AppColors.c262626,
 //                                             ),
 //                                           ),
@@ -314,8 +314,8 @@ class _SendCommentWidgetState extends State<SendCommentWidget> {
 //                       //         IconWidget(
 //                       //           iconWidth: 30.w,
 //                       //           icon: detail.isLike?.value == true
-//                       //               ? Assets.uiIconLike_01Png
-//                       //               : Assets.uiIconLike_02Png,
+//                       //               ? Assets.iconUiIconLike01
+//                       //               : Assets.iconUiIconLike02,
 //                       //           iconColor: detail.isLike?.value == true
 //                       //               ? AppColors.cFF7954
 //                       //               : AppColors.cB3B3B3,

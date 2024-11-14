@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/chart_sample_data.dart';
 import 'package:arm_chair_quaterback/common/entities/trade_entity/trade_info_entity.dart';
@@ -285,7 +285,7 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                                                                   iconWidth:
                                                                       8.w,
                                                                   icon: Assets
-                                                                      .uiTriangleGPng,
+                                                                      .picksUiTriangleG,
                                                                   iconColor: _getTodayCost() >
                                                                           _getLastDayCost()
                                                                       ? AppColors
@@ -495,7 +495,7 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                                                           IconWidget(
                                                             iconWidth: 28.w,
                                                             icon: Assets
-                                                                .uiMoney_02Png,
+                                                                .teamUiMoney02,
                                                           ),
                                                           3.hGap,
                                                           Text(
@@ -782,7 +782,7 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                                               children: [
                                                 IconWidget(
                                                     iconWidth: 19.w,
-                                                    icon: Assets.uiMoney_02Png),
+                                                    icon: Assets.teamUiMoney02),
                                                 3.hGap,
                                                 Text(
                                                   Utils.formatMoney(
@@ -803,7 +803,7 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                                                         child: IconWidget(
                                                           iconWidth: 14.w,
                                                           icon: Assets
-                                                              .uiIconDecreasingAmplitudePng,
+                                                              .iconUiIconDecreasingAmplitude,
                                                           iconColor: color,
                                                         )),
                                                   Container(
@@ -930,7 +930,7 @@ class _TradeIndexPageState extends State<TradeIndexPage>
                                     children: [
                                       IconWidget(
                                           iconWidth: 13.w,
-                                          icon: Assets.uiIconCountdownPng),
+                                          icon: Assets.iconUiIconCountdown),
                                       3.hGap,
                                       Obx(() {
                                         return Text(

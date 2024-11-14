@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -138,14 +138,14 @@ class _PlayerState extends State<Player> {
                                         angle: -90 * pi / 180,
                                         child: IconWidget(
                                           iconWidth: 5.w,
-                                          icon: Assets.uiIconArrows_01Png,
+                                          icon: Assets.playerUiIconArrows01,
                                           iconColor: AppColors.cB3B3B3,
                                         )),
                                     Transform.rotate(
                                         angle: 90 * pi / 180,
                                         child: IconWidget(
                                           iconWidth: 5.w,
-                                          icon: Assets.uiIconArrows_01Png,
+                                          icon: Assets.playerUiIconArrows01,
                                           iconColor: AppColors.cFF7954,
                                         ))
                                   ],
@@ -171,14 +171,14 @@ class _PlayerState extends State<Player> {
                                           angle: -90 * pi / 180,
                                           child: IconWidget(
                                             iconWidth: 5.w,
-                                            icon: Assets.uiIconArrows_01Png,
+                                            icon: Assets.playerUiIconArrows01,
                                             iconColor: AppColors.cB3B3B3,
                                           )),
                                       Transform.rotate(
                                           angle: 90 * pi / 180,
                                           child: IconWidget(
                                             iconWidth: 5.w,
-                                            icon: Assets.uiIconArrows_01Png,
+                                            icon: Assets.playerUiIconArrows01,
                                             iconColor: AppColors.cFF7954,
                                           ))
                                     ],
@@ -205,14 +205,14 @@ class _PlayerState extends State<Player> {
                                           angle: -90 * pi / 180,
                                           child: IconWidget(
                                             iconWidth: 5.w,
-                                            icon: Assets.uiIconArrows_01Png,
+                                            icon: Assets.playerUiIconArrows01,
                                             iconColor: AppColors.cB3B3B3,
                                           )),
                                       Transform.rotate(
                                           angle: 90 * pi / 180,
                                           child: IconWidget(
                                             iconWidth: 5.w,
-                                            icon: Assets.uiIconArrows_01Png,
+                                            icon: Assets.playerUiIconArrows01,
                                             iconColor: AppColors.cFF7954,
                                           ))
                                     ],
@@ -239,14 +239,14 @@ class _PlayerState extends State<Player> {
                                           angle: -90 * pi / 180,
                                           child: IconWidget(
                                             iconWidth: 5.w,
-                                            icon: Assets.uiIconArrows_01Png,
+                                            icon: Assets.playerUiIconArrows01,
                                             iconColor: AppColors.cB3B3B3,
                                           )),
                                       Transform.rotate(
                                           angle: 90 * pi / 180,
                                           child: IconWidget(
                                             iconWidth: 5.w,
-                                            icon: Assets.uiIconArrows_01Png,
+                                            icon: Assets.playerUiIconArrows01,
                                             iconColor: AppColors.cFF7954,
                                           ))
                                     ],
@@ -376,7 +376,7 @@ class _PlayerState extends State<Player> {
                                                             iconWidth: 14
                                                                 .w,
                                                             icon: Assets
-                                                                .uiIconStar_01Png,
+                                                                .playerUiIconStar01,
                                                             iconColor:
                                                             AppColors
                                                                 .cFF7954,
@@ -397,7 +397,7 @@ class _PlayerState extends State<Player> {
                                                       IconWidget(
                                                           iconWidth: 12.w,
                                                           icon: Assets
-                                                              .uiStateBestPng)
+                                                              .playerUiStateBest)
                                                     ],
                                                   )
                                                 ],

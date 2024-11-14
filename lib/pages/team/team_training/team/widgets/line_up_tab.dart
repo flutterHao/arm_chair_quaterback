@@ -1,4 +1,4 @@
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -161,7 +161,7 @@ class _LineUpTabState extends State<LineUpTab>
                                 borderColor: AppColors.cB3B3B3,
                                 child: IconWidget(
                                   iconWidth: 11.w,
-                                  icon: Assets.uiIconPlusPng,
+                                  icon: Assets.iconUiIconPlus,
                                 ),
                               ),
                             ],

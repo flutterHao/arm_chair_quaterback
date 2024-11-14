@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_info_entity.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
@@ -49,7 +49,7 @@ class _RankPageState extends State<RankPage>
                       height: 599.w,
                       child: Image.asset(
                         alignment: Alignment.bottomCenter,
-                        Assets.bgRank_01Jpg,
+                        Assets.picksBgRank01,
                         width: double.infinity,
                         fit: BoxFit.fitWidth,
                       ),
@@ -159,7 +159,7 @@ class _RankPageState extends State<RankPage>
                                                               : ImageWidget(
                                                                   imageFailedPath:
                                                                       Assets
-                                                                          .uiHead_01Png,
+                                                                          .teamUiHead01,
                                                                   borderRadius:
                                                                       BorderRadius
                                                                           .circular(30
@@ -261,7 +261,7 @@ class _RankPageState extends State<RankPage>
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Image.asset(
-                                                  Assets.uiIconMoneyWPng,
+                                                  Assets.iconUiIconMoney,
                                                   width: 14.w,
                                                   fit: BoxFit.fitWidth,
                                                 ),
@@ -340,7 +340,7 @@ class _RankPageState extends State<RankPage>
                                                                 : ImageWidget(
                                                                     imageFailedPath:
                                                                         Assets
-                                                                            .uiHead_01Png,
+                                                                            .teamUiHead01,
                                                                     borderRadius:
                                                                         BorderRadius.circular(30
                                                                             .w),
@@ -441,7 +441,7 @@ class _RankPageState extends State<RankPage>
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Image.asset(
-                                                  Assets.uiIconMoneyWPng,
+                                                  Assets.iconUiIconMoney,
                                                   width: 14.w,
                                                   fit: BoxFit.fitWidth,
                                                 ),
@@ -518,7 +518,7 @@ class _RankPageState extends State<RankPage>
                                                               : ImageWidget(
                                                                   imageFailedPath:
                                                                       Assets
-                                                                          .uiHead_01Png,
+                                                                          .teamUiHead01,
                                                                   borderRadius:
                                                                       BorderRadius
                                                                           .circular(30
@@ -620,7 +620,7 @@ class _RankPageState extends State<RankPage>
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Image.asset(
-                                                  Assets.uiIconMoneyWPng,
+                                                  Assets.iconUiIconMoney,
                                                   width: 14.w,
                                                   fit: BoxFit.fitWidth,
                                                 ),
@@ -711,7 +711,7 @@ class _RankPageState extends State<RankPage>
                                                       ?.teamId
                                             }),
                                     child: ImageWidget(
-                                      imageFailedPath: Assets.uiHead_01Png,
+                                      imageFailedPath: Assets.teamUiHead01,
                                       borderRadius: BorderRadius.circular(30.w),
                                       url: Utils.getAvaterUrl(controller
                                           .rankInfo.myRank.teamLogo
@@ -829,7 +829,7 @@ class _RankPageState extends State<RankPage>
                         "teamId": controller.rankInfo.ranks[index].teamId
                       }),
               child: ImageWidget(
-                imageFailedPath: Assets.uiHead_01Png,
+                imageFailedPath: Assets.teamUiHead01,
                 borderRadius: BorderRadius.circular(30.w),
                 url: Utils.getAvaterUrl(
                     controller.rankInfo.ranks[index].teamLogo.toInt()),
@@ -878,7 +878,7 @@ class _RankPageState extends State<RankPage>
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Image.asset(
-                  Assets.uiIconMoneyBPng,
+                  Assets.iconUiIconMoney,
                   width: 16.w,
                   fit: BoxFit.fitWidth,
                 ),

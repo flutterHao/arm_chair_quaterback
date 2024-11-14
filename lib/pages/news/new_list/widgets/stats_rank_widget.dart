@@ -1,4 +1,4 @@
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/stats_rank/nba_player_stat.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
@@ -162,10 +162,10 @@ class StatsListView extends GetView<NewListController> {
                           width: 18.w,
                           fit: BoxFit.fitWidth,
                           index == 0
-                              ? Assets.iconRankGoldPng
+                              ? Assets.picksIconRankGold
                               : index == 1
-                                  ? Assets.iconRankSilverPng
-                                  : Assets.iconRankCopperPng,
+                                  ? Assets.picksIconRankSilver
+                                  : Assets.picksIconRankCopper,
                         ),
                       Positioned(
                         top: 4.5.w,

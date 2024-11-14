@@ -4,7 +4,7 @@
  * @Date: 2024-11-13 14:09:29
  * @LastEditTime: 2024-11-13 17:56:18
  */
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';

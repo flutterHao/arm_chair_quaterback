@@ -1,4 +1,4 @@
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_info_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -35,10 +35,10 @@ class GussPlayerItem extends StatelessWidget {
                       width: 26.w,
                       fit: BoxFit.fitWidth,
                       index == 0
-                          ? Assets.iconRankGoldPng
+                          ? Assets.picksIconRankGold
                           : index == 1
-                              ? Assets.iconRankSilverPng
-                              : Assets.iconRankCopperPng,
+                              ? Assets.picksIconRankSilver
+                              : Assets.picksIconRankCopper,
                     ),
                   if (index > 2)
                     Container(
@@ -67,7 +67,7 @@ class GussPlayerItem extends StatelessWidget {
                       color: AppColors.cB3B3B3,
                       borderRadius: BorderRadius.circular(20.w)),
                   child: ImageWidget(
-                      imageFailedPath: Assets.uiHead_01Png,
+                      imageFailedPath: Assets.teamUiHead01,
                       borderRadius: BorderRadius.circular(8.w),
                       url:
                           Utils.getAvaterUrl(rankInfoEntity.teamLogo.toInt()))),

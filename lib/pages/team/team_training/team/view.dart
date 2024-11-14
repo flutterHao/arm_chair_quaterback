@@ -11,7 +11,7 @@
  * @LastEditTime: 2024-10-12 20:29:16
  */
 
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
@@ -45,7 +45,7 @@ class TeamMenberView extends StatelessWidget {
               opacity: 0.05,
               repeat: ImageRepeat.repeat,
               image: AssetImage(
-                Assets.uiBgDiagonalPng,
+                Assets.teamUiBgDiagonal,
               ),
             ),
             gradient: const LinearGradient(
@@ -98,14 +98,14 @@ class TeamMenberView extends StatelessWidget {
               //             children: [
               //               IconWidget(
               //                 iconWidth: 21.w,
-              //                 icon: Assets.uiIconArrows_04Png,
+              //                 icon: Assets.iconUiIconArrows04,
               //                 iconColor: AppColors.cB3B3B3.withOpacity(0.7),
               //               ),
               //               Container(
               //                 margin: EdgeInsets.only(top: 9.w),
               //                 child: IconWidget(
               //                   iconWidth: 21.w,
-              //                   icon: Assets.uiIconArrows_04Png,
+              //                   icon: Assets.iconUiIconArrows04,
               //                   iconColor: AppColors.cB3B3B3,
               //                 ),
               //               ),

@@ -1,4 +1,4 @@
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/app_bar_widget.dart';
@@ -40,7 +40,7 @@ class MineSettingPage extends GetView<MineSettingController> {
                         children: [
                           IconWidget(
                             iconWidth: 20.w,
-                            icon: Assets.uiIconLanguagePng,
+                            icon: Assets.iconUiIconLanguage,
                             iconColor: AppColors.c262626,
                           ),
                           9.hGap,
@@ -59,7 +59,7 @@ class MineSettingPage extends GetView<MineSettingController> {
                           18.hGap,
                           IconWidget(
                             iconWidth: 9.w,
-                            icon: Assets.uiIconArrows_01Png,
+                            icon: Assets.playerUiIconArrows01,
                             iconColor: AppColors.c666666,
                           )
                         ],
@@ -68,13 +68,13 @@ class MineSettingPage extends GetView<MineSettingController> {
                   ),
                 )),
                 9.vGap,
-                _buildCBox(_buildItem(Assets.uiIconMuisicPng, "Music",
+                _buildCBox(_buildItem(Assets.iconUiIconMuisic, "Music",
                     controller.musicSwitchStatus)),
                 9.vGap,
-                _buildCBox(_buildItem(Assets.uiIconSoundPng, "Sound effect",
+                _buildCBox(_buildItem(Assets.iconUiIconSound, "Sound effect",
                     controller.soundSwitchStatus)),
                 9.vGap,
-                _buildCBox(_buildItem(Assets.uiIconBellPng,
+                _buildCBox(_buildItem(Assets.iconUiIconBell,
                     "Systematic notification", controller.notifySwitchStatus)),
                 9.vGap,
               ],
@@ -168,7 +168,7 @@ class MineSettingPage extends GetView<MineSettingController> {
                                             index,
                                         child: IconWidget(
                                           iconWidth: 18.w,
-                                          icon: Assets.uiIconRuidgtPng,
+                                          icon: Assets.iconUiIconRuidgt,
                                           iconColor: AppColors.c1BC27D,
                                         ),
                                       );

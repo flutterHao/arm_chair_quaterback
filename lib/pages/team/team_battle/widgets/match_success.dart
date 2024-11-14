@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -96,7 +96,7 @@ class _MatchSuccessState extends State<MatchSuccess>
                 decoration: const BoxDecoration(
                   image: DecorationImage(
                     centerSlice: Rect.fromLTWH(0, 0, 2, 50),
-                    image: AssetImage(Assets.uiBattlePanel_01Png),
+                    image: AssetImage(Assets.teamUiBattlePanel01),
                     colorFilter: ColorFilter.mode(
                       AppColors.c3B93FF, // 修改为你想要的颜色
                       BlendMode.srcIn,
@@ -109,7 +109,7 @@ class _MatchSuccessState extends State<MatchSuccess>
                 decoration: const BoxDecoration(
                   image: DecorationImage(
                     centerSlice: Rect.fromLTWH(0, 0, 2, 50),
-                    image: AssetImage(Assets.uiBattlePanel_01Png),
+                    image: AssetImage(Assets.teamUiBattlePanel01),
                     colorFilter: ColorFilter.mode(
                       AppColors.cFFFFFF, // 修改为你想要的颜色
                       BlendMode.srcIn,
@@ -149,7 +149,7 @@ class _MatchSuccessState extends State<MatchSuccess>
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               IconWidget(iconWidth: 18.w,
-                                  icon: Assets.uiIconTrophy_01Png),
+                                  icon: Assets.teamUiIconTrophy01),
                               6.hGap,
                               Text("${controller.battleEntity.homeTeam.cup}",
                                 style: 16.w7(
@@ -176,7 +176,7 @@ class _MatchSuccessState extends State<MatchSuccess>
                     12.hGap,
                     IconWidget(
                       iconWidth: 7.w,
-                      icon: Assets.uiTriangleGPng,
+                      icon: Assets.picksUiTriangleG,
                       iconColor: AppColors.c3B93FF,
                       rotateAngle: 90,
                     ),
@@ -228,7 +228,7 @@ class _MatchSuccessState extends State<MatchSuccess>
                         decoration: const BoxDecoration(
                           image: DecorationImage(
                             centerSlice: Rect.fromLTWH(0, 0, 2, 50),
-                            image: AssetImage(Assets.uiBattlePanel_01Png),
+                            image: AssetImage(Assets.teamUiBattlePanel01),
                             colorFilter: ColorFilter.mode(
                               AppColors.cFF7954, // 修改为你想要的颜色
                               BlendMode.srcIn,
@@ -241,7 +241,7 @@ class _MatchSuccessState extends State<MatchSuccess>
                         decoration: const BoxDecoration(
                           image: DecorationImage(
                             centerSlice: Rect.fromLTWH(0, 0, 2, 50),
-                            image: AssetImage(Assets.uiBattlePanel_01Png),
+                            image: AssetImage(Assets.teamUiBattlePanel01),
                             colorFilter: ColorFilter.mode(
                               AppColors.cFFFFFF, // 修改为你想要的颜色
                               BlendMode.srcIn,
@@ -259,7 +259,7 @@ class _MatchSuccessState extends State<MatchSuccess>
                   25.hGap,
                   IconWidget(
                     iconWidth: 7.w,
-                    icon: Assets.uiTriangleGPng,
+                    icon: Assets.picksUiTriangleG,
                     iconColor: AppColors.cFF7954,
                     rotateAngle: -90,
                   ),
@@ -306,7 +306,7 @@ class _MatchSuccessState extends State<MatchSuccess>
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             IconWidget(iconWidth: 18.w,
-                                icon: Assets.uiIconTrophy_01Png),
+                                icon: Assets.teamUiIconTrophy01),
                             6.hGap,
                             Text("${controller.battleEntity.awayTeam.cup}",
                               style: 16.w7(color: AppColors.c262626,

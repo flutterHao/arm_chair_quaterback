@@ -4,7 +4,7 @@
 //  * @Date: 2024-09-29 16:33:17
 //  * @LastEditTime: 2024-09-30 12:16:25
 //  */
-// import 'package:arm_chair_quaterback/common/constant/assets.dart';
+// import 'package:arm_chair_quaterback/generated/assets.dart';
 // import 'package:arm_chair_quaterback/common/style/color.dart';
 // import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 // import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
@@ -34,7 +34,7 @@
 //           borderRadius: BorderRadius.circular(22.w),
 //           child: IconWidget(
 //             iconWidth: 18.w,
-//             icon: Assets.iconClosePng,
+//             icon: Assets.iconIconClose,
 //             iconColor: AppColors.cE72646,
 //           ),
 //         ),
@@ -62,13 +62,13 @@
 //                   height: 26.w,
 //                   child: Stack(
 //                     children: [
-//                       IconWidget(iconWidth: 26.w, icon: Assets.uiIconRingPng),
+//                       IconWidget(iconWidth: 26.w, icon: Assets.iconUiIconRing),
 //                       Positioned(
 //                           left: 7.w,
 //                           bottom: 7.w,
 //                           child: IconWidget(
 //                             iconWidth: 17.w,
-//                             icon: Assets.uiIconRuidgtPng,
+//                             icon: Assets.iconUiIconRuidgt,
 //                             iconColor: AppColors.c10A86A,
 //                           ))
 //                     ],

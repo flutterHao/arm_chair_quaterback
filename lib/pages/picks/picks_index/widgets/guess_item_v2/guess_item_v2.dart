@@ -3,7 +3,7 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui';
 
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
@@ -84,8 +84,11 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
               children: [
                 25.vGap,
                 InkWell(
-                  onTap: ()=> Get.toNamed(RouteNames.picksPlayerDetail,
-                      arguments: PlayerDetailPageArguments(player.guessInfo.playerId,isMyPlayer: false, tabStr: player.tabStr)),
+                  onTap: () => Get.toNamed(RouteNames.picksPlayerDetail,
+                      arguments: PlayerDetailPageArguments(
+                          player.guessInfo.playerId,
+                          isMyPlayer: false,
+                          tabStr: player.tabStr)),
                   child: Row(
                     children: [
                       29.hGap,
@@ -107,11 +110,13 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                                 height: 16.w,
                                 width: 16.w,
                                 decoration: BoxDecoration(
-                                  color: AppColors.cFFFFFF,
-                                  borderRadius: BorderRadius.circular(4.w)
-                                ),
+                                    color: AppColors.cFFFFFF,
+                                    borderRadius: BorderRadius.circular(4.w)),
                                 child: IconWidget(
-                                    iconWidth: 9.w, icon: Assets.uiIconReadPng,iconColor: AppColors.c000000,),
+                                  iconWidth: 9.w,
+                                  icon: Assets.iconUiIconRead,
+                                  iconColor: AppColors.c000000,
+                                ),
                               ))
                         ],
                       ),
@@ -151,7 +156,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                                 ),
                                 IconWidget(
                                   iconWidth: 8.w,
-                                  icon: Assets.uiIconArrows_01Png,
+                                  icon: Assets.playerUiIconArrows01,
                                   iconColor: AppColors.c000000,
                                 ),
                                 18.hGap,
@@ -210,6 +215,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                           )
                         ],
                       ),
+                      2.vGap,
                       Row(
                         children: [
                           Text(
@@ -278,7 +284,8 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                   child: Row(
                     children: [
                       UserAvaterWidget(
-                        url: Utils.getAvaterUrl(player.guessTopReviews?.teamLogo),
+                        url: Utils.getAvaterUrl(
+                            player.guessTopReviews?.teamLogo),
                         width: 26.w,
                         height: 26.w,
                         radius: 13.w,
@@ -286,7 +293,8 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                       5.hGap,
                       Expanded(
                           child: Text(
-                        player.guessTopReviews?.context??"Add a comment about this stake about",
+                        player.guessTopReviews?.context ??
+                            "Add a comment about this stake about",
                         style: 14.w4(
                           color: AppColors.c4D4D4D,
                           height: 1,
@@ -295,7 +303,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                         ),
                       )),
                       9.hGap,
-                      IconWidget(iconWidth: 18.w, icon: Assets.uiIconJettonPng),
+                      IconWidget(iconWidth: 18.w, icon: Assets.iconUiIconJetton),
                       2.hGap,
                       Text(
                         Utils.formatChip((double.parse(
@@ -326,9 +334,10 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                     border: Border.all(color: AppColors.c666666, width: 1)),
                 child: MtInkwell(
                     vibrate: true,
-                    onTap: () => Utils.generateAndShareImage(_repaintBoundaryKey),
+                    onTap: () =>
+                        Utils.generateAndShareImage(_repaintBoundaryKey),
                     child: IconWidget(
-                        iconWidth: 15.w, icon: Assets.testTeamLogoPng))))
+                        iconWidth: 15.w, icon: Assets.testTestTeamLogo))))
       ],
     );
   }
@@ -336,35 +345,47 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
   Widget _buildBtn(PicksIndexController picksIndexController,
       PicksPlayerV2 player, GuessItemControllerV2 controller) {
     if (player.guessInfo.guessData.isNotEmpty) {
-      return Container(
-        height: 46.w,
-        width: double.infinity,
-        margin: EdgeInsets.symmetric(horizontal: 29.w),
-        decoration: BoxDecoration(
-            border: Border.all(color: AppColors.c666666, width: 1),
-            borderRadius: BorderRadius.circular(8.w)),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+      getBtn(bool choice,String text) {
+        var bgColor = choice ? AppColors.c000000 : AppColors.cEEEEEE;
+        var textColor = choice ? AppColors.cFFFFFF : AppColors.ccccccc;
+        return Expanded(
+          child: Container(
+            height: 46.w,
+            decoration: BoxDecoration(
+                color: bgColor, borderRadius: BorderRadius.circular(9.w)),
+            child: Stack(
+              alignment: Alignment.center,
               children: [
                 Text(
-                  player.guessInfo.guessData[0].guessChoice == 1
-                      ? "MORE"
-                      : "LESS",
+                  text,
                   style: 19.w5(
-                      color: AppColors.c000000,
-                      fontFamily: FontFamily.fOswaldMedium,
-                      height: 1),
-                )
+                      color: textColor,
+                      height: 1,
+                      fontFamily: FontFamily.fOswaldMedium),
+                ),
+                if (choice)
+                  Positioned(
+                      left: 11.w,
+                      child: IconWidget(
+                        iconWidth: 19.w,
+                        icon: Assets.testTestTeamLogo,
+                        iconColor: AppColors.cFFFFFF,
+                      )),
               ],
             ),
-            Text(
-              "Be settling",
-              style: 10.w4(color: AppColors.cB3B3B3),
-            )
+          ),
+        );
+      }
+
+      return Container(
+        margin: EdgeInsets.symmetric(horizontal: 29.w),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            getBtn(player.guessInfo.guessData[0].guessChoice == 1,"MORE"),
+            9.hGap,
+            getBtn(player.guessInfo.guessData[0].guessChoice != 1,"LESS"),
           ],
         ),
       );

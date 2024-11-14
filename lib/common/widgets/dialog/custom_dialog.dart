@@ -1,6 +1,6 @@
 import 'package:arm_chair_quaterback/common/widgets/dialog/comfirm_button.dart';
 import 'package:flutter/material.dart';
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -57,7 +57,7 @@ class CustomDialog extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(top: 10.w),
               child: Image.asset(
-                image ?? Assets.uiWindowsAwardPng,
+                image ?? Assets.iconUiWindowsAward,
                 height: 96.w,
                 fit: BoxFit.cover,
               ),

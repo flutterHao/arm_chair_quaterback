@@ -4,7 +4,7 @@
  * @Date: 2024-10-24 18:04:19
  * @LastEditTime: 2024-10-29 15:28:39
  */
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -77,7 +77,7 @@ class _Item extends StatelessWidget {
         child: Row(
           children: [
             Image.asset(
-              Assets.uiIconInjuryPng,
+              Assets.newsUiIconInjury,
               width: 45.w,
               height: 51.w,
               fit: BoxFit.fill,

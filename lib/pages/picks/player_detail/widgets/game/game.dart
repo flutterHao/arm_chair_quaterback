@@ -1,4 +1,4 @@
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/chart_sample_data.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -187,7 +187,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                   child: IconWidget(
                                     iconHeight: 14.w,
                                     iconWidth: 14.w,
-                                    icon: Assets.uiIconArrowsPng,
+                                    icon: Assets.iconUiIconArrows,
                                     iconColor: AppColors.cFF7954,
                                   ))
                             ],
@@ -259,7 +259,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                           height: 32.w,
                           child: IconWidget(
                             iconWidth: 32.w,
-                            icon: Assets.uiIconPingjiPng,
+                            icon: Assets.playerUiIconPingji,
                             iconHeight: 32.w,
                           )),
                       6.vGap,
@@ -306,7 +306,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                           height: 32.w,
                           child: IconWidget(
                             iconWidth: 32.w,
-                            icon: Assets.uiStateBestPng,
+                            icon: Assets.playerUiStateBest,
                             iconHeight: 32.w,
                           )),
                       6.vGap,
@@ -354,7 +354,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                           BorderRadius.only(topLeft: Radius.circular(16.w)),
                       child: Image.asset(
                         alignment: Alignment.center,
-                        Assets.uiLight_01Png,
+                        Assets.playerUiLight01,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -436,7 +436,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                     right: 17.w,
                                     child: IconWidget(
                                       iconWidth: 8.w,
-                                      icon: Assets.uiIconArrows_01Png,
+                                      icon: Assets.playerUiIconArrows01,
                                       iconColor:
                                           AppColors.cF2F2F2.withOpacity(.2),
                                     ),
@@ -445,7 +445,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                     right: 11.w,
                                     child: IconWidget(
                                       iconWidth: 8.w,
-                                      icon: Assets.uiIconArrows_01Png,
+                                      icon: Assets.playerUiIconArrows01,
                                       iconColor:
                                           AppColors.cF2F2F2.withOpacity(.5),
                                     ),
@@ -454,7 +454,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                     right: 5.w,
                                     child: IconWidget(
                                       iconWidth: 8.w,
-                                      icon: Assets.uiIconArrows_01Png,
+                                      icon: Assets.playerUiIconArrows01,
                                       iconColor: AppColors.cF2F2F2,
                                     ),
                                   )
@@ -467,7 +467,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                               children: [
                                 IconWidget(
                                   iconWidth: 35.w,
-                                  icon: Assets.uiIconStar_01Png,
+                                  icon: Assets.playerUiIconStar01,
                                   iconColor: AppColors.cFF7954,
                                 ),
                                 Container(
@@ -525,13 +525,13 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                         alignment: Alignment.center,
                         children: [
                           Image.asset(
-                            Assets.uiIconStar_02Png,
+                            Assets.playerUiIconStar02,
                             height: controller.starSize.value,
                             fit: BoxFit.fitHeight,
                           ),
                           IconWidget(
                             iconWidth: 68.w,
-                            icon: Assets.uiIconStar_01Png,
+                            icon: Assets.playerUiIconStar01,
                             iconColor: AppColors.cFF7954,
                           ),
                           Container(
@@ -613,7 +613,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                   children: [
                                     IconWidget(
                                       iconWidth: 8.w,
-                                      icon: Assets.uiIconShrinkPng,
+                                      icon: Assets.iconUiIconShrink,
                                       iconColor: !controller.isGradeSort &&
                                               !controller.breakThroughGradeSort
                                           ? AppColors.cF2F2F2
@@ -622,7 +622,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                     3.vGap,
                                     IconWidget(
                                       iconWidth: 8.w,
-                                      icon: Assets.uiIconUnfoldPng,
+                                      icon: Assets.iconUiIconUnfold,
                                       iconColor: !controller.isGradeSort &&
                                               controller.breakThroughGradeSort
                                           ? AppColors.cF2F2F2
@@ -653,7 +653,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                   children: [
                                     IconWidget(
                                       iconWidth: 8.w,
-                                      icon: Assets.uiIconShrinkPng,
+                                      icon: Assets.iconUiIconShrink,
                                       iconColor: controller.isGradeSort &&
                                               !controller.gradeSort
                                           ? AppColors.cF2F2F2
@@ -662,7 +662,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                     3.vGap,
                                     IconWidget(
                                       iconWidth: 8.w,
-                                      icon: Assets.uiIconUnfoldPng,
+                                      icon: Assets.iconUiIconUnfold,
                                       iconColor: controller.isGradeSort &&
                                               controller.gradeSort
                                           ? AppColors.cF2F2F2
@@ -695,7 +695,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                             onTap: () => Get.back(),
                             child: IconWidget(
                               iconWidth: 18.w,
-                              icon: Assets.iconClosePng,
+                              icon: Assets.iconIconClose,
                               iconColor: AppColors.c262626,
                             ))
                       ],
@@ -797,7 +797,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                                           IconWidget(
                                                             iconWidth: 14.w,
                                                             icon: Assets
-                                                                .uiIconStar_01Png,
+                                                                .playerUiIconStar01,
                                                             iconColor: AppColors
                                                                 .cFF7954,
                                                           ),
@@ -820,7 +820,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                                     IconWidget(
                                                         iconWidth: 12.w,
                                                         icon: Assets
-                                                            .uiStateBestPng)
+                                                            .playerUiStateBest)
                                                   ],
                                                 )
                                               ],
@@ -868,7 +868,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                                         16.w)),
                                             child: IconWidget(
                                                 iconWidth: 16.w,
-                                                icon: Assets.uiIconRuidgtPng),
+                                                icon: Assets.iconUiIconRuidgt),
                                           ),
                                           12.hGap
                                         ],
@@ -913,7 +913,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                         children: [
                                           IconWidget(
                                             iconWidth: 15.w,
-                                            icon: Assets.uiIconMoneyPng,
+                                            icon: Assets.iconUiIconMoney,
                                             iconColor: AppColors.cF2F2F2,
                                           ),
                                           4.hGap,

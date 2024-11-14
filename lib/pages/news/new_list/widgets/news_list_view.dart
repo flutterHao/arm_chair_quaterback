@@ -1,4 +1,4 @@
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -63,7 +63,7 @@ class NewsItemView extends GetView<NewListController> {
                   IconWidget(
                     iconHeight: 12.w,
                     iconWidth: 15.w,
-                    icon: Assets.uiIconReadPng,
+                    icon: Assets.iconUiIconRead,
                     iconColor: AppColors.cFF7954,
                   ),
                   8.hGap,
@@ -113,8 +113,8 @@ class NewsItemView extends GetView<NewListController> {
                       child: TextIconWidget(
                         width: 20.w,
                         icon: item.isView == 0
-                            ? Assets.uiIconEye_02Png
-                            : Assets.uiIconEye_01Png,
+                            ? Assets.iconUiIconEye02
+                            : Assets.iconUiIconEye01,
                         color: item.isView == 0
                             ? AppColors.c666666
                             : AppColors.cB3B3B3,
@@ -131,8 +131,8 @@ class NewsItemView extends GetView<NewListController> {
                         width: 60.w,
                         child: TextIconWidget(
                           icon: item.isLike?.value == 1
-                              ? Assets.uiIconLike_01Png
-                              : Assets.uiIconLike_02Png,
+                              ? Assets.iconUiIconLike01
+                              : Assets.iconUiIconLike02,
                           color: item.isLike?.value == 1
                               ? AppColors.cFF7954
                               : AppColors.cB3B3B3,
@@ -152,7 +152,7 @@ class NewsItemView extends GetView<NewListController> {
             iconWidth: 14.w,
             backgroudWitdh: 32.w,
             backgroudheight: 32.w,
-            icon: Assets.uiIconArrowsPng,
+            icon: Assets.iconUiIconArrows,
             iconColor: item.isView == 0 ? AppColors.c262626 : AppColors.c666666,
             borderRadius: BorderRadius.circular(16.w),
             border: Border.all(width: 1, color: AppColors.cB3B3B3),
@@ -172,7 +172,7 @@ class NewsItemView extends GetView<NewListController> {
         //           ),
         //           IconWidget(
         //             iconWidth: 16.w,
-        //             icon: Assets.prop_102Png,
+        //             icon: Assets.iconProp102,
         //             iconColor: Colors.white,
         //           ),
         //         ],

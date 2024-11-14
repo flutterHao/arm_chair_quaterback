@@ -5,7 +5,7 @@
  * @LastEditTime: 2024-11-11 17:36:42
  */
 
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -172,7 +172,7 @@ Widget beautyInfo({color = AppColors.c000000}) {
             4.hGap,
             IconWidget(
               iconWidth: 17.5.h,
-              icon: Assets.uiEnsignUkPng,
+              icon: Assets.teamUiEnsignUk,
             )
           ],
         )
@@ -186,7 +186,7 @@ Widget heartAndCard(type) {
     tag: "heart",
     child: Column(
       children: [
-        IconWidget(iconWidth: 38.h, icon: Assets.uiHeart_01Png),
+        IconWidget(iconWidth: 38.h, icon: Assets.teamUiHeart01),
         SizedBox(height: 5.h),
         Text(
           "999K",
@@ -195,7 +195,7 @@ Widget heartAndCard(type) {
               height: 1),
         ),
         SizedBox(height: 17.h),
-        IconWidget(iconWidth: 38.h, icon: Assets.uiJigsaw_01Png),
+        IconWidget(iconWidth: 38.h, icon: Assets.teamUiJigsaw01),
         SizedBox(height: 5.h),
         Text(
           "999K",

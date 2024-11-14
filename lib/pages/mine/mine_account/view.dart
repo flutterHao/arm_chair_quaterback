@@ -1,4 +1,4 @@
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/app_bar_widget.dart';
@@ -32,9 +32,9 @@ class MineAccountPage extends GetView<MineAccountController> {
               children: [
                 24.vGap,
                 _buildItem(
-                    Assets.uiIconGooglePng, "Google", "dasj98@dwhoi.com"),
-                _buildItem(Assets.uiIconFactbookPng, "Facebook", "not bound"),
-                _buildItem(Assets.uiIconApplePng, "Apple", "not bound"),
+                    Assets.iconUiIconGoogle, "Google", "dasj98@dwhoi.com"),
+                _buildItem(Assets.iconUiIconFactbook, "Facebook", "not bound"),
+                _buildItem(Assets.iconUiIconApple , "Apple", "not bound"),
               ],
             ),
           ),
@@ -128,7 +128,7 @@ class MineAccountPage extends GetView<MineAccountController> {
                                 borderRadius: BorderRadius.circular(8.w),
                                 child: ImageWidget(
                                   url: "",
-                                  imageFailedPath: Assets.uiHead_01Png,
+                                  imageFailedPath: Assets.teamUiHead01,
                                   width: 48.w,
                                   height: 48.w,
                                 ),
@@ -154,7 +154,7 @@ class MineAccountPage extends GetView<MineAccountController> {
                           ),
                           IconWidget(
                             iconWidth: 18.w,
-                            icon: Assets.uiIconRuidgtPng,
+                            icon: Assets.iconUiIconRuidgt,
                             iconColor: AppColors.c1BC27D,
                           )
                         ],
@@ -181,7 +181,7 @@ class MineAccountPage extends GetView<MineAccountController> {
                               alignment: Alignment.center,
                               child: IconWidget(
                                 iconWidth: 12.w,
-                                icon: Assets.uiIconPlusPng,
+                                icon: Assets.iconUiIconPlus,
                                 iconColor: AppColors.c666666,
                               )),
                           9.hGap,
@@ -227,7 +227,7 @@ class MineAccountPage extends GetView<MineAccountController> {
               15.hGap,
               IconWidget(
                 iconWidth: 9.w,
-                icon: Assets.uiIconArrows_01Png,
+                icon: Assets.playerUiIconArrows01,
                 iconColor: AppColors.c666666,
               )
             ],

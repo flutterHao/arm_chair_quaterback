@@ -1,4 +1,4 @@
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/btn_background.dart';
@@ -46,7 +46,7 @@ class _RewardPageState extends State<RewardPage>
                       height: 599.w,
                       child: Image.asset(
                         alignment: Alignment.bottomCenter,
-                        Assets.bgRank_02Jpg,
+                        Assets.picksBgRank02,
                         width: double.infinity,
                         fit: BoxFit.fitWidth,
                       ),
@@ -95,7 +95,7 @@ class _RewardPageState extends State<RewardPage>
                                               decoration: const BoxDecoration(
                                                   image: DecorationImage(
                                                       image: AssetImage(
-                                                          Assets.uiRankBoxPng),
+                                                          Assets.picksUiRankBox),
                                                       fit: BoxFit.fill)),
                                               child: Column(
                                                 mainAxisAlignment:
@@ -138,7 +138,7 @@ class _RewardPageState extends State<RewardPage>
                                               decoration: const BoxDecoration(
                                                   image: DecorationImage(
                                                       image: AssetImage(Assets
-                                                          .uiRankMoneyPng),
+                                                          .picksUiRankMoney),
                                                       fit: BoxFit.fitWidth)),
                                               child: Column(
                                                 mainAxisAlignment:
@@ -211,7 +211,7 @@ class _RewardPageState extends State<RewardPage>
                                                     CrossAxisAlignment.end,
                                                 children: [
                                                   Image.asset(
-                                                    Assets.uiPropsBoxPng,
+                                                    Assets.picksUiPropsBox,
                                                     width: 28.w,
                                                   ),
                                                   Text(
@@ -231,7 +231,7 @@ class _RewardPageState extends State<RewardPage>
                                                   CrossAxisAlignment.end,
                                               children: [
                                                 Image.asset(
-                                                  Assets.uiPropsMoenyPng,
+                                                  Assets.picksUiPropsMoeny,
                                                   width: 32.w,
                                                 ),
                                                 SizedBox(
@@ -293,7 +293,7 @@ class _RewardPageState extends State<RewardPage>
                                   Container(
                                     margin: EdgeInsets.only(top: 10.w),
                                     child: Image.asset(
-                                      Assets.uiWindowsAwardPng,
+                                      Assets.iconUiWindowsAward,
                                       height: 104,
                                       fit: BoxFit.cover,
                                     ),
@@ -337,7 +337,7 @@ class _RewardPageState extends State<RewardPage>
                                         14.vGap,
                                         IconWidget(
                                             iconWidth: 64.w,
-                                            icon: Assets.uiPropsMoenyPng),
+                                            icon: Assets.picksUiPropsMoeny),
                                         Text(
                                           "x${controller.awardInfo[controller.selfInRankListIndex].awardDataNum}",
                                           style:
@@ -418,7 +418,7 @@ class _RewardPageState extends State<RewardPage>
                                                                   url: "url",
                                                                   imageFailedPath:
                                                                       Assets
-                                                                          .uiBellePng,
+                                                                          .picksUiBelle,
                                                                   width: 58.w,
                                                                 )),
                                                             Text(
@@ -481,14 +481,14 @@ class _RewardPageState extends State<RewardPage>
                                                         IconWidget(
                                                             iconWidth: 26.w,
                                                             icon: Assets
-                                                                .uiIconRingPng),
+                                                                .iconUiIconRing),
                                                         Positioned(
                                                             left: 7.w,
                                                             bottom: 7.w,
                                                             child: IconWidget(
                                                               iconWidth: 17.w,
                                                               icon: Assets
-                                                                  .uiIconRuidgtPng,
+                                                                  .iconUiIconRuidgt,
                                                               iconColor:
                                                                   AppColors
                                                                       .c10A86A,

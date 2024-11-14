@@ -1,4 +1,4 @@
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -52,7 +52,7 @@ class MineInfoPage extends GetView<MineInfoController> {
                                     width: 3.w)),
                             child: ImageWidget(
                               url: "",
-                              imageFailedPath: Assets.uiHead_01Png,
+                              imageFailedPath: Assets.teamUiHead01,
                               width: 100.w,
                               height: 100.w,
                               borderRadius: BorderRadius.circular(50.w),
@@ -69,7 +69,7 @@ class MineInfoPage extends GetView<MineInfoController> {
                                     borderRadius: BorderRadius.circular(15.w)),
                                 child: IconWidget(
                                   iconWidth: 19.w,
-                                  icon: Assets.uiIconCameraPng,
+                                  icon: Assets.iconUiIconCamera,
                                   iconColor: AppColors.c666666,
                                 )),
                           )
@@ -92,7 +92,7 @@ class MineInfoPage extends GetView<MineInfoController> {
                           ),
                           IconWidget(
                             iconWidth: 15.w,
-                            icon: Assets.uiIconCompilePng,
+                            icon: Assets.iconUiIconCompile,
                             iconColor: AppColors.c666666,
                           )
                         ],
@@ -158,7 +158,7 @@ class MineInfoPage extends GetView<MineInfoController> {
                                     ),
                                     IconWidget(
                                       iconWidth: 9.w,
-                                      icon: Assets.uiIconArrows_01Png,
+                                      icon: Assets.playerUiIconArrows01,
                                       iconColor: AppColors.c666666,
                                     ),
                                   ],
@@ -208,7 +208,7 @@ class MineInfoPage extends GetView<MineInfoController> {
                               bottom: 0,
                               child: IconWidget(
                                 iconWidth: 15.w,
-                                icon: Assets.uiIconCompilePng,
+                                icon: Assets.iconUiIconCompile,
                                 iconColor: AppColors.c666666,
                               ))
                         ],

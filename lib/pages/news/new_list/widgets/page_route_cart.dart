@@ -4,7 +4,7 @@
  * @Date: 2024-10-28 17:18:15
  * @LastEditTime: 2024-10-29 14:38:54
  */
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
@@ -18,7 +18,7 @@ class JumpToPick extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return PageJumpCard(Assets.uiIconPicks_01Png, "Today’s Streak Picks", () {
+    return PageJumpCard(Assets.homeUiIconPicks01, "Today’s Streak Picks", () {
       controller.onTap(1);
     });
   }
@@ -29,7 +29,7 @@ class JumpToTrading extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return PageJumpCard(Assets.uiIconPicks_01Png, "Today’s Player Trading", () {
+    return PageJumpCard(Assets.homeUiIconPicks01, "Today’s Player Trading", () {
       controller.onTap(3);
     });
   }
@@ -59,7 +59,7 @@ class PageJumpCard extends StatelessWidget {
             color: AppColors.c262626,
             borderRadius: BorderRadius.circular(16.w),
             image: const DecorationImage(
-                image: AssetImage(Assets.uiIconPickPng),
+                image: AssetImage(Assets.playerUiIconPick),
                 fit: BoxFit.fitHeight,
                 opacity: 0.15,
                 colorFilter: ColorFilter.mode(
@@ -84,7 +84,7 @@ class PageJumpCard extends StatelessWidget {
               IconWidget(
                   iconWidth: 18.w,
                   iconColor: AppColors.cE6E6E,
-                  icon: Assets.uiIconArrowsPng)
+                  icon: Assets.iconUiIconArrows)
             ],
           ),
         ),

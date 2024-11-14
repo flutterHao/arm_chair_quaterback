@@ -24,7 +24,7 @@ import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/linear_progress_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
@@ -264,7 +264,7 @@ class PlayerItem extends GetView<TeamController> {
             borderRadius: BorderRadius.circular(16.w),
             border: Border.all(width: 1.w, color: AppColors.cB3B3B3),
             // backgroudColor: isBag ? AppColors.cFF7954 : null,
-            icon: Assets.uiIconSwitch_02Png,
+            icon: Assets.iconUiIconSwitch02,
             iconColor: isBag ? AppColors.c000000 : AppColors.c000000,
           ),
         ),
@@ -293,7 +293,7 @@ class PlayerItem extends GetView<TeamController> {
           children: [
             IconWidget(
               iconWidth: 9.w,
-              icon: Assets.uiIconStaminaPng,
+              icon: Assets.iconUiIconStamina,
               iconColor: AppColors.c262626,
             ),
             6.hGap,
@@ -399,7 +399,7 @@ class PlayerAwater extends StatelessWidget {
           ),
           ImageWidget(
             url: Utils.getPlayUrl(player.playerId),
-            imageFailedPath: Assets.uiDefault_04Png,
+            imageFailedPath: Assets.iconUiDefault04,
             width: width ?? 64.w,
             height: width ?? 64.w,
             borderRadius: BorderRadius.circular(32.w),
@@ -419,7 +419,7 @@ class PlayerAwater extends StatelessWidget {
               right: 0.5.w,
               child: IconWidget(
                 iconWidth: 17.w,
-                icon: Assets.uiIconStar_01Png,
+                icon: Assets.playerUiIconStar01,
                 iconColor: AppColors.cFF7954,
               ),
             ),

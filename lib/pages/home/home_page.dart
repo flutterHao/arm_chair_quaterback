@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/tab_item_info.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -65,7 +65,9 @@ class _HomePageState extends State<HomePage>
                               .toList(),
                         ),
                       ),
-                      66.vGap,
+                      SizedBox(
+                        height: 66.w+MediaQuery.of(context).padding.bottom,
+                      ),
                     ],
                   ),
                   Positioned(
@@ -83,50 +85,59 @@ class _HomePageState extends State<HomePage>
                           )
                         ],
                       ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: controller.tabItems.map((e) {
-                          int index = controller.tabItems.indexOf(e);
-                          bool select = index == controller.tabIndex.value;
-                          if (index == 2) {
-                            return Container(
-                              decoration: BoxDecoration(
-                                  color: AppColors.cFFFFFF,
-                                  borderRadius: BorderRadius.vertical(
-                                      top: Radius.circular(9.w))),
-                              child: MtInkwell(
-                                onTap: () => controller.onTap(2),
-                                child: Container(
-                                    height: 75.w,
-                                    width: 74.w,
-                                    padding: EdgeInsets.all(4.w),
+                      child: Column(
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: controller.tabItems.map((e) {
+                              int index = controller.tabItems.indexOf(e);
+                              bool select = index == controller.tabIndex.value;
+                              if (index == 2) {
+                                return Container(
+                                  decoration: BoxDecoration(
+                                      color: AppColors.cFFFFFF,
+                                      borderRadius: BorderRadius.vertical(
+                                          top: Radius.circular(9.w))),
+                                  child: MtInkwell(
+                                    onTap: () => controller.onTap(2),
                                     child: Container(
-                                        height: 58.w,
-                                        margin: EdgeInsets.only(bottom: 9.w),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(5.w),
-                                            border: Border.all(
-                                                color: AppColors.cE6E6E6,
-                                                width: 1)),
-                                        child: _barItem(
-                                            controller.tabItems[2],
-                                            controller.tabIndex.value == 2,
-                                            58.w))),
-                              ),
-                            );
-                          }
-                          return Flexible(
-                            flex: 1,
-                            child: Container(
-                              color: AppColors.cFFFFFF,
-                              child: MtInkwell(
-                                onTap: () => controller.onTap(index),
-                                child: _barItem(e, select, 66.w),
-                              ),
-                            ),
-                          );
-                        }).toList(),
+                                        height: 75.w,
+                                        width: 74.w,
+                                        padding: EdgeInsets.all(4.w),
+                                        child: Container(
+                                            height: 58.w,
+                                            margin: EdgeInsets.only(bottom: 9.w),
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(5.w),
+                                                border: Border.all(
+                                                    color: AppColors.cE6E6E6,
+                                                    width: 1)),
+                                            child: _barItem(
+                                                controller.tabItems[2],
+                                                controller.tabIndex.value == 2,
+                                                58.w))),
+                                  ),
+                                );
+                              }
+                              return Flexible(
+                                flex: 1,
+                                child: Container(
+                                  color: AppColors.cFFFFFF,
+                                  child: MtInkwell(
+                                    onTap: () => controller.onTap(index),
+                                    child: _barItem(e, select, 66.w),
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                          Container(
+                            height: MediaQuery.of(context).padding.bottom,
+                            width: double.infinity,
+                            color: AppColors.cFFFFFF,
+                          )
+                        ],
                       ),
                     ),
                   )

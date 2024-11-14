@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
@@ -538,7 +538,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                               child: Center(
                                   child: IconWidget(
                                       iconWidth: 8.w,
-                                      icon: Assets.uiIconDetailsPng)))
+                                      icon: Assets.iconUiIconDetails)))
                         ],
                       ),
                     )),
@@ -569,7 +569,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                           width: 69.w,
                           child: IconWidget(
                             iconWidth: 18.w,
-                            icon: Assets.iconClosePng,
+                            icon: Assets.iconIconClose,
                             iconColor: AppColors.cE72646,
                           ),
                         ),
@@ -617,7 +617,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                   color: AppColors.cB3B3B3, width: 1)),
                           child: IconWidget(
                             iconWidth: 16.w,
-                            icon: Assets.uiIconDelete_02Png, // 批量删除
+                            icon: Assets.iconUiIconDelete02, // 批量删除
                             iconColor: AppColors.c262626,
                           ),
                         ),
@@ -670,7 +670,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                             children: [
                                               IconWidget(
                                                   iconWidth: 19.w,
-                                                  icon: Assets.prop_102Png),
+                                                  icon: Assets.iconProp102),
                                               5.hGap,
                                               Text(
                                                 picksIndexController
@@ -696,14 +696,14 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                             children: [
                                               IconWidget(
                                                   iconWidth: 26.w,
-                                                  icon: Assets.uiIconRingPng),
+                                                  icon: Assets.iconUiIconRing),
                                               Positioned(
                                                   left: 7.w,
                                                   top: 5.5.w,
                                                   child: IconWidget(
                                                     iconWidth: 17.w,
                                                     icon:
-                                                        Assets.uiIconConfirmPng,
+                                                        Assets.iconUiIconConfirm,
                                                     iconColor:
                                                         AppColors.c31E99E,
                                                   ))
@@ -865,7 +865,7 @@ class _ItemWidgetState extends State<_ItemWidget>
                         BorderRadius.horizontal(left: Radius.circular(16.w))),
                 child: IconWidget(
                   iconWidth: 23.w,
-                  icon: Assets.uiIconDelete_02Png, //右滑删除按钮
+                  icon: Assets.iconUiIconDelete02, //右滑删除按钮
                   iconColor: AppColors.c333333,
                 ),
               ),
@@ -957,7 +957,7 @@ class _ItemWidgetState extends State<_ItemWidget>
                         children: [
                           IconWidget(
                             iconWidth: 15.w,
-                            icon: Assets.uiIconUpPng,
+                            icon: Assets.iconUiIconUp,
                             iconColor: currentIndex == 0
                                 ? AppColors.cF2F2F2
                                 : AppColors.cFF7954,
@@ -997,7 +997,7 @@ class _ItemWidgetState extends State<_ItemWidget>
                         children: [
                           IconWidget(
                             iconWidth: 15.w,
-                            icon: Assets.uiIconUpPng,
+                            icon: Assets.iconUiIconUp,
                             iconColor: currentIndex == 1
                                 ? AppColors.cF2F2F2
                                 : AppColors.cFF7954,

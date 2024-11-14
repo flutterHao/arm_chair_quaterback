@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -175,7 +175,7 @@ class _BattleBeforeGameState extends State<BattleBeforeGame>
                                   borderRadius: BorderRadius.circular(19.h)),
                               child: IconWidget(
                                   iconWidth: 65.h,
-                                  icon: Assets.uiBattleNewsPng)),
+                                  icon: Assets.teamUiBattleNews)),
                           Expanded(
                             child: Text(
                               "${controller.battleEntity.news?.title}",
@@ -255,7 +255,7 @@ class _BattleBeforeGameState extends State<BattleBeforeGame>
                     child: Opacity(
                       opacity: value,
                       child: IconWidget(
-                          iconWidth: 15.h, icon: Assets.uiIconLocation_02Png),
+                          iconWidth: 15.h, icon: Assets.teamUiIconLocation02),
                     ));
               });
             }),
@@ -276,7 +276,7 @@ class _BattleBeforeGameState extends State<BattleBeforeGame>
                     child: Opacity(
                       opacity: value,
                       child: IconWidget(
-                          iconWidth: 15.h, icon: Assets.uiIconLocation_01Png),
+                          iconWidth: 15.h, icon: Assets.teamUiIconLocation01),
                     ));
               });
             }),
@@ -444,7 +444,7 @@ class _BattleBeforeGameState extends State<BattleBeforeGame>
                                         angle: pi / 180 * 90,
                                         child: IconWidget(
                                           iconWidth: 7.h,
-                                          icon: Assets.uiTriangleGPng,
+                                          icon: Assets.picksUiTriangleG,
                                           iconColor: AppColors.c3B93FF,
                                         )),
                                     Container(
@@ -459,7 +459,7 @@ class _BattleBeforeGameState extends State<BattleBeforeGame>
                                         angle: -pi / 180 * 90,
                                         child: IconWidget(
                                           iconWidth: 7.h,
-                                          icon: Assets.uiTriangleGPng,
+                                          icon: Assets.picksUiTriangleG,
                                           iconColor: AppColors.cFF7954,
                                         )),
                                   ],
@@ -503,7 +503,7 @@ class _BattleBeforeGameState extends State<BattleBeforeGame>
                                                           child: IconWidget(
                                                             iconWidth: 14.h,
                                                             icon: Assets
-                                                                .uiIconArrows_04Png,
+                                                                .iconUiIconArrows04,
                                                             iconColor: AppColors
                                                                 .cE72646,
                                                           ),
@@ -515,7 +515,7 @@ class _BattleBeforeGameState extends State<BattleBeforeGame>
                                                             child: IconWidget(
                                                               iconWidth: 14.h,
                                                               icon: Assets
-                                                                  .uiIconArrows_04Png,
+                                                                  .iconUiIconArrows04,
                                                               iconColor:
                                                                   AppColors
                                                                       .cE72646,
@@ -589,7 +589,7 @@ class _BattleBeforeGameState extends State<BattleBeforeGame>
                                                           child: IconWidget(
                                                             iconWidth: 14.h,
                                                             icon: Assets
-                                                                .uiIconArrows_04Png,
+                                                                .iconUiIconArrows04,
                                                             iconColor: AppColors
                                                                 .cE72646,
                                                           ),
@@ -601,7 +601,7 @@ class _BattleBeforeGameState extends State<BattleBeforeGame>
                                                             child: IconWidget(
                                                               iconWidth: 14.h,
                                                               icon: Assets
-                                                                  .uiIconArrows_04Png,
+                                                                  .iconUiIconArrows04,
                                                               iconColor:
                                                                   AppColors
                                                                       .cE72646,

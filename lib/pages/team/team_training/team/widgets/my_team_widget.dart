@@ -4,7 +4,7 @@
  * @Date: 2024-11-13 17:22:13
  * @LastEditTime: 2024-11-13 21:04:56
  */
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -119,7 +119,7 @@ class MyTeamWidget extends StatelessWidget {
                   margin: EdgeInsets.only(top: 18.w),
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage(Assets.uiManagerMyteamBgJpg),
+                      image: AssetImage(Assets.managerUiManagerMyteamBg),
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -179,7 +179,7 @@ class MyTeamWidget extends StatelessWidget {
                             right: 10.w,
                             child: IconWidget(
                               iconWidth: 15.w,
-                              icon: Assets.uiIconTriangle_03Png,
+                              icon: Assets.playerUiIconTriangle03,
                               iconColor: AppColors.cFFFFFF,
                               rotateAngle: 90,
                             ))
@@ -247,7 +247,7 @@ class PlayerCardWidget extends GetView<TeamController> {
                       color: AppColors.cF2F2F2),
                   child: IconWidget(
                     iconWidth: 10.w,
-                    icon: Assets.uiIconReadPng,
+                    icon: Assets.iconUiIconRead,
                     iconColor: AppColors.c262626,
                   ),
                 ),

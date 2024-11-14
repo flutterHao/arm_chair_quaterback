@@ -1,4 +1,4 @@
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/entities/team_simple_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
@@ -91,7 +91,7 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
                                         opacity: .05,
                                         child: IconWidget(
                                             iconWidth: 120.w,
-                                            icon: Assets.prop_102Png))),
+                                            icon: Assets.iconProp102))),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -111,7 +111,7 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
                                         2.hGap,
                                         IconWidget(
                                           iconWidth: 10.w,
-                                          icon: Assets.prop_102Png,
+                                          icon: Assets.iconProp102,
                                           iconColor: AppColors.cFFFFFF,
                                         )
                                       ],
@@ -386,7 +386,7 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
                         children: [
                           IconWidget(
                             iconWidth: 15.w,
-                            icon: Assets.prop_102Png,
+                            icon: Assets.iconProp102,
                             iconColor: AppColors.c10A86A,
                           ),
                           4.hGap,

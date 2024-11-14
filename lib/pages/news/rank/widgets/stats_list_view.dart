@@ -1,4 +1,4 @@
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/stats_rank/nba_player_stat.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -93,7 +93,7 @@ class StatsItem extends GetView<RankController> {
               ),
               // ImageWidget(
               //   url: Utils.getPlayUrl(item.playerId),
-              //   imageFailedPath: Assets.uiDefault_04Png,
+              //   imageFailedPath: Assets.iconUiDefault04,
               //   width: 64.w,
               //   height: 64.w,
               //   borderRadius: BorderRadius.circular(32.w),
@@ -210,7 +210,7 @@ class StatsTeamItem extends GetView<RankController> {
             url: Utils.getTeamUrl(item.teamId),
             width: 56.w,
             height: 56.w,
-            // imageFailedPath: Assets.uiDefault_04Png,
+            // imageFailedPath: Assets.iconUiDefault04,
             borderRadius: BorderRadius.circular(30.w),
           ),
           9.hGap,

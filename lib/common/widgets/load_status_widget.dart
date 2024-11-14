@@ -1,4 +1,4 @@
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -46,7 +46,7 @@ class LoadStatusWidget extends StatelessWidget {
           else
             IconWidget(
                 iconWidth: 123.w,
-                icon: icon ?? loadDataStatus?.icon ?? Assets.uiDefault_01Png),
+                icon: icon ?? loadDataStatus?.icon ?? Assets.iconUiDefault01),
           5.vGap,
           Text(
             text ?? loadDataStatus?.desc ?? "",

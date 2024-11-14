@@ -4,7 +4,7 @@
  * @Date: 2024-09-12 19:09:06
  * @LastEditTime: 2024-10-22 09:46:00
  */
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
@@ -63,7 +63,7 @@ class AppBarWidget extends StatelessWidget {
                             child: IconWidget(
                               iconWidth: 19.w,
                               iconHeight: 19.w,
-                              icon: Assets.iconBackPng,
+                              icon: Assets.iconIconBack,
                               iconColor: Colors.white,
                             ),
                           ),

@@ -5,7 +5,7 @@
  * @LastEditTime: 2024-11-07 14:51:51
  */
 
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/routers/routes.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -72,7 +72,7 @@ class PlayerAvatarWidget extends StatelessWidget {
               ),
               child: ImageWidget(
                 url: Utils.getPlayUrl(playerId),
-                imageFailedPath: Assets.uiDefault_04Png,
+                imageFailedPath: Assets.iconUiDefault04,
                 width: width,
                 height: height??width,
                 borderRadius: BorderRadius.circular(radius??32.w),
@@ -98,7 +98,7 @@ class PlayerAvatarWidget extends StatelessWidget {
                 children: [
                   IconWidget(
                     iconWidth: 18.w,
-                    icon: Assets.uiIconStar_01Png,
+                    icon: Assets.playerUiIconStar01,
                     iconColor: AppColors.cFF7954,
                   ),
                   Positioned(

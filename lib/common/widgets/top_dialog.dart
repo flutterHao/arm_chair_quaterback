@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -175,7 +175,7 @@ class _TopDialogState extends State<TopDialog>
                                                 BlendMode.srcIn,
                                               ),
                                               child: Image.asset(
-                                                Assets.uiIconCenterPng,
+                                                Assets.playerUiIconCenter,
                                                 width: 21.w,
                                                 fit: BoxFit.fill,
                                               ),
@@ -194,7 +194,7 @@ class _TopDialogState extends State<TopDialog>
                                                     angle: pi,
                                                     child: IconWidget(
                                                       iconWidth: 13.w,
-                                                      icon: Assets.iconBackPng,
+                                                      icon: Assets.iconIconBack,
                                                       iconColor:
                                                           AppColors.c666666,
                                                     ))
@@ -236,7 +236,7 @@ class _TopDialogState extends State<TopDialog>
                                                 BlendMode.srcIn,
                                               ),
                                               child: Image.asset(
-                                                Assets.uiIconFriendPng,
+                                                Assets.playerUiIconFriend,
                                                 width: 21.w,
                                                 fit: BoxFit.fill,
                                               ),
@@ -255,7 +255,7 @@ class _TopDialogState extends State<TopDialog>
                                                     angle: pi,
                                                     child: IconWidget(
                                                       iconWidth: 13.w,
-                                                      icon: Assets.iconBackPng,
+                                                      icon: Assets.iconIconBack,
                                                       iconColor:
                                                           AppColors.c666666,
                                                     ))
@@ -290,7 +290,7 @@ class _TopDialogState extends State<TopDialog>
                                       children: [
                                         IconWidget(
                                           iconWidth: 20.w,
-                                          icon: Assets.uiIconMailPng,
+                                          icon: Assets.playerUiIconMail,
                                           iconColor: AppColors.cFF7954,
                                         ),
                                         9.hGap,
@@ -305,7 +305,7 @@ class _TopDialogState extends State<TopDialog>
                                         angle: pi,
                                         child: IconWidget(
                                           iconWidth: 13.w,
-                                          icon: Assets.iconBackPng,
+                                          icon: Assets.iconIconBack,
                                           iconColor: AppColors.c666666,
                                         ))
                                   ],
@@ -334,7 +334,7 @@ class _TopDialogState extends State<TopDialog>
                                       children: [
                                         IconWidget(
                                           iconWidth: 20.w,
-                                          icon: Assets.uiIconSettingPng,
+                                          icon: Assets.playerUiIconSetting,
                                           iconColor: AppColors.cFF7954,
                                         ),
                                         9.hGap,
@@ -349,7 +349,7 @@ class _TopDialogState extends State<TopDialog>
                                         angle: pi,
                                         child: IconWidget(
                                           iconWidth: 13.w,
-                                          icon: Assets.iconBackPng,
+                                          icon: Assets.iconIconBack,
                                           iconColor: AppColors.c666666,
                                         ))
                                   ],
@@ -378,7 +378,7 @@ class _TopDialogState extends State<TopDialog>
                                       children: [
                                         IconWidget(
                                           iconWidth: 20.w,
-                                          icon: Assets.uiIconAccountPng,
+                                          icon: Assets.playerUiIconAccount,
                                           iconColor: AppColors.cFF7954,
                                         ),
                                         9.hGap,
@@ -393,7 +393,7 @@ class _TopDialogState extends State<TopDialog>
                                         angle: pi,
                                         child: IconWidget(
                                           iconWidth: 13.w,
-                                          icon: Assets.iconBackPng,
+                                          icon: Assets.iconIconBack,
                                           iconColor: AppColors.c666666,
                                         ))
                                   ],

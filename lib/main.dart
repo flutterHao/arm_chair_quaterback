@@ -53,6 +53,7 @@ class MyApp extends StatelessWidget {
               child: GetMaterialApp(
                 title: 'arm chair puaterback',
                 theme: AppTheme.light,
+                // darkTheme: AppTheme.light,
                 debugShowCheckedModeBanner: false,
                 initialRoute: AppPages.main,
                 getPages: AppPages.routes,

@@ -1,4 +1,4 @@
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/btn_background.dart';
@@ -52,7 +52,7 @@ class UpStarDefeat extends StatelessWidget {
             Positioned(
                 top: 20.w,
                 child: IconWidget(
-                    iconWidth: 111.w, icon: Assets.uiWindowsLosePng)),
+                    iconWidth: 111.w, icon: Assets.teamUiWindowsLose)),
             Container(
               margin: EdgeInsets.only(top: 99.w),
               child: DialogBackground(
@@ -72,7 +72,7 @@ class UpStarDefeat extends StatelessWidget {
                             children: [
                               IconWidget(
                                 iconWidth: 97.w,
-                                icon: Assets.uiIconStar_01Png,
+                                icon: Assets.playerUiIconStar01,
                                 iconColor: AppColors.cBFBFBF,
                               ),
                               Positioned(
@@ -119,14 +119,14 @@ class UpStarDefeat extends StatelessWidget {
                                             children: [
                                               IconWidget(
                                                   iconWidth: 26.w,
-                                                  icon: Assets.uiIconRingPng),
+                                                  icon: Assets.iconUiIconRing),
                                               Positioned(
                                                   left: 7.w,
                                                   top: 5.5.w,
                                                   child: IconWidget(
                                                     iconWidth: 17.w,
                                                     icon:
-                                                        Assets.uiIconConfirmPng,
+                                                        Assets.iconUiIconConfirm,
                                                     iconColor:
                                                         AppColors.c31E99E,
                                                   ))

@@ -5,7 +5,7 @@
  * @LastEditTime: 2024-11-12 14:42:35
  */
 
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -42,7 +42,7 @@ class TrainingAvater extends StatelessWidget {
         ),
         child: ImageWidget(
           url: Utils.getPlayUrl(player.playerId),
-          imageFailedPath: Assets.uiDefault_04Png,
+          imageFailedPath: Assets.iconUiDefault04,
           borderRadius: BorderRadius.circular(7.w),
           width: 46.w,
           height: 61.w,

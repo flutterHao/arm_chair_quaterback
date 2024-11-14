@@ -48,16 +48,16 @@ class LeagueController extends GetxController {
   }
 
   prePage() {
+    ClickFeedBack.selectionClick();
     if(currentPageIndex == 0){
-      ClickFeedBack.selectionClick();
       return;
     }
     pageController.jumpToPage(--currentPageIndex);
   }
 
   nextPage(){
+    ClickFeedBack.selectionClick();
     if(currentPageIndex == pageText.length-1){
-      ClickFeedBack.selectionClick();
       return;
     }
     pageController.jumpToPage(++currentPageIndex);

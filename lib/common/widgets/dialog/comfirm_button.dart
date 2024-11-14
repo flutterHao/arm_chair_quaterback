@@ -4,7 +4,7 @@
  * @Date: 2024-09-28 15:59:52
  * @LastEditTime: 2024-09-28 16:04:36
  */
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/btn_background.dart';
@@ -43,13 +43,13 @@ class ConfirmButton extends StatelessWidget {
                 height: 26.w,
                 child: Stack(
                   children: [
-                    IconWidget(iconWidth: 26.w, icon: Assets.uiIconRingPng),
+                    IconWidget(iconWidth: 26.w, icon: Assets.iconUiIconRing),
                     Positioned(
                         left: 7.w,
                         bottom: 7.w,
                         child: IconWidget(
                           iconWidth: 17.w,
-                          icon: Assets.uiIconRuidgtPng,
+                          icon: Assets.iconUiIconRuidgt,
                           iconColor: AppColors.c10A86A,
                         ))
                   ],

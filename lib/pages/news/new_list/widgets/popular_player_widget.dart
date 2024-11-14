@@ -4,7 +4,7 @@
  * @Date: 2024-10-25 15:16:18
  * @LastEditTime: 2024-10-31 15:25:24
  */
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -81,7 +81,7 @@ class PopularPlayerWidget extends StatelessWidget {
                                       width: 55.w,
                                       height: 55.w,
                                       borderRadius: BorderRadius.circular(30.w),
-                                      imageFailedPath: Assets.uiDefault_04Png,
+                                      imageFailedPath: Assets.iconUiDefault04,
                                     ),
                                   ),
                                   SizedBox(
@@ -162,7 +162,7 @@ class PopularPlayerWidget extends StatelessWidget {
                                         Expanded(child: Container()),
                                         IconWidget(
                                           iconWidth: 14.w,
-                                          icon: Assets.uiIconArrowsPng,
+                                          icon: Assets.iconUiIconArrows,
                                           iconColor: AppColors.c262626,
                                         ),
                                         5.hGap,

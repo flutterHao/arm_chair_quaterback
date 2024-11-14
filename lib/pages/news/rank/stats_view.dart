@@ -1,4 +1,4 @@
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/TLBuilderWidget.dart';
@@ -124,7 +124,7 @@ class StatsRankPage extends GetView<RankController> {
                             IconWidget(
                               iconWidth: 15.w,
                               iconHeight: 8.w,
-                              icon: Assets.uiIconExpansionPng,
+                              icon: Assets.iconUiIconExpansion,
                             ),
                           ],
                         ),
@@ -165,7 +165,7 @@ class StatsRankPage extends GetView<RankController> {
                             IconWidget(
                               iconWidth: 15.w,
                               iconHeight: 8.w,
-                              icon: Assets.uiIconExpansionPng,
+                              icon: Assets.iconUiIconExpansion,
                             ),
                           ],
                         ),

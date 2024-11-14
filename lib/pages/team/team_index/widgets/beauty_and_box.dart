@@ -1,4 +1,4 @@
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
@@ -118,7 +118,7 @@ class BeautyAndBoxView extends StatelessWidget {
                       ),
                       child: IconWidget(
                         iconWidth: 18.w,
-                        icon: Assets.uiIconSwitch_02Png,
+                        icon: Assets.iconUiIconSwitch02,
                         iconColor: AppColors.cFFFFFF,
                       ),
                     ),
@@ -169,7 +169,7 @@ class BeautyAndBoxView extends StatelessWidget {
                                           )),
                                           IconWidget(
                                             iconWidth: 14.w,
-                                            icon: Assets.uiIconReadPng,
+                                            icon: Assets.iconUiIconRead,
                                             iconColor: AppColors.cFFFFFF,
                                           )
                                         ],
@@ -242,7 +242,7 @@ class BeautyAndBoxView extends StatelessWidget {
                                                         IconWidget(
                                                           iconWidth: 5.w,
                                                           icon: Assets
-                                                              .uiIconShrinkPng,
+                                                              .iconUiIconShrink,
                                                           iconColor:
                                                               AppColors.cFF7954,
                                                           rotateAngle: 90,
@@ -278,9 +278,9 @@ class BeautyAndBoxView extends StatelessWidget {
                                                   right: 0,
                                                   child: Image.asset(
                                                     ctrl.recieved
-                                                        ? Assets.uiTeamBox_04Png
+                                                        ? Assets.teamUiTeamBox04
                                                         : Assets
-                                                            .uiTeamBox_03Png,
+                                                            .teamUiTeamBox03,
                                                     width: 30.h,
                                                     fit: BoxFit.fill,
                                                   )),
@@ -292,8 +292,8 @@ class BeautyAndBoxView extends StatelessWidget {
                                                                   .freeGiftCount >=
                                                               1 ||
                                                           ctrl.recieved
-                                                      ? Assets.uiTeamBox_02Png
-                                                      : Assets.uiTeamBox_01Png,
+                                                      ? Assets.teamUiTeamBox02
+                                                      : Assets.teamUiTeamBox01,
                                                   width: 42.w,
                                                   fit: BoxFit.fill,
                                                 ),

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/scale_animation_widget.dart';
 import 'package:flutter/material.dart';
@@ -52,18 +52,18 @@ class _MatchingState extends State<Matching>
   }
 
   List<String> totalAvatars = [
-    Assets.uiHead_01Png,
-    Assets.uiHead_02Png,
-    Assets.uiHead_03Png,
-    Assets.uiHead_04Png,
-    Assets.uiHead_05Png,
-    Assets.uiHead_06Png,
-    Assets.uiHead_07Png,
-    Assets.uiHead_08Png,
-    Assets.uiHead_09Png,
-    Assets.uiHead_10Png,
-    Assets.uiHead_11Png,
-    Assets.uiHead_12Png,
+    Assets.teamUiHead01,
+    Assets.teamUiHead02,
+    Assets.teamUiHead03,
+    Assets.teamUiHead04,
+    Assets.teamUiHead05,
+    Assets.teamUiHead06,
+    Assets.teamUiHead07,
+    Assets.teamUiHead08,
+    Assets.teamUiHead09,
+    Assets.teamUiHead10,
+    Assets.teamUiHead11,
+    Assets.teamUiHead12,
   ];
   List<String> avatars = [];
   List<Size> sizes = [];
@@ -213,7 +213,7 @@ class _MatchingState extends State<Matching>
         child: Stack(
           alignment: Alignment.center,
           children: [
-            IconWidget(iconWidth: 143.w, icon: Assets.uiBgRadarPng),
+            IconWidget(iconWidth: 143.w, icon: Assets.teamUiBgRadar),
             Obx(() {
               return Positioned(
                   child: Transform.rotate(
@@ -228,7 +228,7 @@ class _MatchingState extends State<Matching>
                         bottom: 13.w,
                         child: IconWidget(
                           iconWidth: 91.w,
-                          icon: Assets.uiBgScanPng,
+                          icon: Assets.teamUiBgScan,
                         ),
                       ),
                     ],

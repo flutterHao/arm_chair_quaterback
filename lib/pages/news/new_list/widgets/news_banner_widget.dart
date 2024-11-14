@@ -4,7 +4,7 @@
  * @Date: 2024-10-25 15:29:28
  * @LastEditTime: 2024-11-01 18:49:36
  */
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/net/http.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
@@ -34,7 +34,7 @@ class NewsBannerWidget extends StatelessWidget {
               footer: IconWidget(
                 iconWidth: 14.w,
                 iconHeight: 14.w,
-                icon: Assets.uiIconArrowsPng,
+                icon: Assets.iconUiIconArrows,
                 backgroudWitdh: 32.w,
                 backgroudheight: 32.w,
                 borderRadius: BorderRadius.circular(16.w),

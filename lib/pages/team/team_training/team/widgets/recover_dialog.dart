@@ -4,7 +4,7 @@
  * @Date: 2024-09-29 16:06:50
  * @LastEditTime: 2024-10-23 17:33:56
  */
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/custom_dialog.dart';
@@ -22,7 +22,7 @@ class RecoverDialog extends GetView<TeamController> {
     return CustomDialog(
         title: "RECOVED",
         backgroudColor: AppColors.cBBE736,
-        image: Assets.uiWindowsStaminaPng,
+        image: Assets.teamUiWindowsStamina,
         content: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
@@ -47,7 +47,7 @@ class RecoverDialog extends GetView<TeamController> {
                 5.hGap,
                 IconWidget(
                   iconWidth: 15.w,
-                  icon: Assets.uiIconMoneyBPng,
+                  icon: Assets.picksUiIconMoneyB,
                   iconColor: AppColors.c262626,
                 ),
                 5.hGap,

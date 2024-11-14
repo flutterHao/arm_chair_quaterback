@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -187,7 +187,7 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
                               ..scale(-1.0, 1.0), // X 轴翻转
                             child: IconWidget(
                               iconWidth: 21.w,
-                              icon: Assets.uiTeamFramePng,
+                              icon: Assets.teamUiTeamFrame,
                               iconColor: AppColors.c161616,
                             ),
                           )),
@@ -196,7 +196,7 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
                           right: 0,
                           child: IconWidget(
                             iconWidth: 21.w,
-                            icon: Assets.uiTeamFramePng,
+                            icon: Assets.teamUiTeamFrame,
                             iconColor: AppColors.c161616,
                           )),
                       //左下
@@ -207,7 +207,7 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
                             angle: pi / 180 * 180,
                             child: IconWidget(
                               iconWidth: 21.w,
-                              icon: Assets.uiTeamFramePng,
+                              icon: Assets.teamUiTeamFrame,
                               iconColor: AppColors.c161616,
                             ),
                           )),
@@ -221,7 +221,7 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
                               ..scale(1.0, -1.0), // X 轴翻转
                             child: IconWidget(
                               iconWidth: 21.w,
-                              icon: Assets.uiTeamFramePng,
+                              icon: Assets.teamUiTeamFrame,
                               iconColor: AppColors.c161616,
                             ),
                           )),
@@ -596,7 +596,7 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
                                                 decoration: const BoxDecoration(
                                                     image: DecorationImage(
                                                         image: AssetImage(Assets
-                                                            .uiBgDiagonalPng),
+                                                            .teamUiBgDiagonal),
                                                         repeat: ImageRepeat
                                                             .repeat)),
                                               ),
@@ -823,7 +823,7 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
                       left: dx,
                       top: dy,
                       child: IconWidget(
-                          iconWidth: 15.h, icon: Assets.uiIconLocation_02Png));
+                          iconWidth: 15.h, icon: Assets.teamUiIconLocation02));
                 }),
                 // right
                 ...List.generate(positions.length, (index) {
@@ -833,7 +833,7 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
                       right: dx,
                       top: dy,
                       child: IconWidget(
-                          iconWidth: 15.h, icon: Assets.uiIconLocation_01Png));
+                          iconWidth: 15.h, icon: Assets.teamUiIconLocation01));
                 }),
               ],
             ),
@@ -984,7 +984,7 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
                                     visible: leftQuarterScore > 0,
                                     child: IconWidget(
                                       iconWidth: 5.h,
-                                      icon: Assets.uiTriangleGPng,
+                                      icon: Assets.picksUiTriangleG,
                                       rotateAngle: -90,
                                       iconColor: AppColors.cB3B3B3,
                                     )),
@@ -1006,7 +1006,7 @@ class _BattleGameState extends State<BattleGame> with TickerProviderStateMixin {
                                       visible: leftQuarterScore > 0,
                                       child: IconWidget(
                                         iconWidth: 5.h,
-                                        icon: Assets.uiTriangleGPng,
+                                        icon: Assets.picksUiTriangleG,
                                         rotateAngle: 90,
                                         iconColor: AppColors.cB3B3B3,
                                       ))),

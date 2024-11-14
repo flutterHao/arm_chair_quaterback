@@ -548,7 +548,7 @@ class NbaPlayerBaseInfoL5GameData {
       return threePm;
     }
     if ("reb" == key.toLowerCase()) {
-      return (oreb + dreb) / 2;
+      return (oreb + dreb);
     }
     return toJson()[key.toLowerCase()];
   }

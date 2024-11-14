@@ -4,7 +4,7 @@
  * @Date: 2024-10-24 18:04:19
  * @LastEditTime: 2024-11-01 20:08:27
  */
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -74,7 +74,7 @@ class _Item extends StatelessWidget {
     return List.generate(4, (index) {
       return IconWidget(
         iconWidth: 46.w,
-        icon: Assets.uiImageArrow,
+        icon: Assets.iconUiIconArrows04,
         iconColor: AppColors.c42e5fa.withOpacity((index + 1) / 4),
       );
     });

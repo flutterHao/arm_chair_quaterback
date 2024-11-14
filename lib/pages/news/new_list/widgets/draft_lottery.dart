@@ -4,7 +4,7 @@
  * @Date: 2024-10-24 18:39:28
  * @LastEditTime: 2024-10-29 16:11:01
  */
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -46,7 +46,7 @@ class DraftLotteryWidget extends StatelessWidget {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16.w),
                         image: const DecorationImage(
-                            image: AssetImage(Assets.uiNewsBanner_01Png),
+                            image: AssetImage(Assets.newsUiNewsBanner01),
                             fit: BoxFit.fitWidth,
                             alignment: Alignment.topCenter),
                         border: Border.all(

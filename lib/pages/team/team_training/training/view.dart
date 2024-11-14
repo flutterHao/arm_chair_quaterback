@@ -5,7 +5,7 @@
  * @LastEditTime: 2024-11-13 18:55:20
  */
 
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -182,7 +182,7 @@ class TrainingPage extends GetView<TrainingController> {
                           height: 0.7),
                     ),
                   ),
-                  IconWidget(iconWidth: 21.w, icon: Assets.uiIconBasketballPng),
+                  IconWidget(iconWidth: 21.w, icon: Assets.teamUiIconBasketball),
                   4.hGap,
                   Text(
                     "${trainingInfo.prop.num}",
@@ -202,7 +202,7 @@ class TrainingPage extends GetView<TrainingController> {
                         border: Border.all(width: 1, color: AppColors.c666666),
                       ),
                       child: IconWidget(
-                        icon: Assets.uiIconPlusPng,
+                        icon: Assets.iconUiIconPlus,
                         iconWidth: 12.w,
                         iconHeight: 12.w,
                         iconColor: AppColors.c000000,
@@ -217,7 +217,7 @@ class TrainingPage extends GetView<TrainingController> {
                 alignment: Alignment.topCenter,
                 children: [
                   Image.asset(
-                    Assets.uiBgBattleJpg,
+                    Assets.teamUiBgBattle,
                     width: 375.w,
                     height: 275.5.w,
                     fit: BoxFit.fitWidth,
@@ -244,7 +244,7 @@ class TrainingPage extends GetView<TrainingController> {
                           children: [
                             IconWidget(
                               iconWidth: 32.5.w,
-                              icon: Assets.uiMoney_02Png,
+                              icon: Assets.teamUiMoney02,
                             ),
                             5.hGap,
                             Text(

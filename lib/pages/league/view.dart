@@ -1,4 +1,4 @@
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
@@ -81,8 +81,8 @@ class LeagueIndexPage extends StatefulWidget {
   State<LeagueIndexPage> createState() => _LeagueIndexPageState();
 }
 
-class _LeagueIndexPageState extends State<LeagueIndexPage> with AutomaticKeepAliveClientMixin {
-
+class _LeagueIndexPageState extends State<LeagueIndexPage>
+    with AutomaticKeepAliveClientMixin {
   late LeagueController controller;
 
   @override
@@ -90,6 +90,7 @@ class _LeagueIndexPageState extends State<LeagueIndexPage> with AutomaticKeepAli
     super.initState();
     controller = Get.find();
   }
+
   // 主视图
   Widget _buildView() {
     return Expanded(
@@ -122,7 +123,7 @@ class _LeagueIndexPageState extends State<LeagueIndexPage> with AutomaticKeepAli
                                 onTap: () => controller.prePage(),
                                 child: IconWidget(
                                     iconWidth: 8.w,
-                                    icon: Assets.uiIconArrows_02Png),
+                                    icon: Assets.playerUiIconArrows02),
                               ),
                             ),
                             Expanded(
@@ -147,7 +148,7 @@ class _LeagueIndexPageState extends State<LeagueIndexPage> with AutomaticKeepAli
                                 onTap: () => controller.nextPage(),
                                 child: IconWidget(
                                     iconWidth: 8.w,
-                                    icon: Assets.uiIconArrows_01Png),
+                                    icon: Assets.playerUiIconArrows01),
                               ),
                             )
                           ],
@@ -178,7 +179,11 @@ class _LeagueIndexPageState extends State<LeagueIndexPage> with AutomaticKeepAli
           SliverList.separated(
             itemCount: 20,
             itemBuilder: (context, index) {
-              return _buildItem(index);
+              bool lastIndex = index == 19; //todo
+              return Container(
+                  margin: EdgeInsets.only(
+                      top: index == 0 ? 9.w : 0, bottom: lastIndex ? 20.w : 0),
+                  child: _buildItem());
             },
             separatorBuilder: (BuildContext context, int index) {
               return 9.vGap;
@@ -200,14 +205,13 @@ class _LeagueIndexPageState extends State<LeagueIndexPage> with AutomaticKeepAli
     );
   }
 
-  Widget _buildItem(int index) {
-    return _ItemWidget(index: index);
+  Widget _buildItem() {
+    return _ItemWidget();
   }
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<LeagueController>(
-        builder: (_) {
+    return GetBuilder<LeagueController>(builder: (_) {
       return BlackAppWidget(
         const UserInfoBar(
           title: "COMMUNITIES",
@@ -223,9 +227,7 @@ class _LeagueIndexPageState extends State<LeagueIndexPage> with AutomaticKeepAli
 }
 
 class _ItemWidget extends StatelessWidget {
-  _ItemWidget({super.key, required this.index});
-
-  final int index;
+  _ItemWidget({super.key});
 
   var globalKey = GlobalKey();
 
@@ -234,7 +236,7 @@ class _ItemWidget extends StatelessWidget {
       children: [
         ImageWidget(
           url: "url",
-          imageFailedPath: Assets.testTeamLogoPng,
+          imageFailedPath: Assets.testTestTeamLogo,
           color: AppColors.c000000,
           width: 44.w,
         ),
@@ -261,7 +263,6 @@ class _ItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: index == 0 ? 9.w : 0),
       decoration: BoxDecoration(
         color: AppColors.cFFFFFF,
         borderRadius: BorderRadius.circular(12.w),
@@ -296,7 +297,7 @@ class _ItemWidget extends StatelessWidget {
                     6.hGap,
                     IconWidget(
                       iconWidth: 5.w,
-                      icon: Assets.uiIconArrows_01Png,
+                      icon: Assets.playerUiIconArrows01,
                       iconColor: AppColors.c000000,
                     )
                   ],
@@ -365,7 +366,7 @@ class _ItemWidget extends StatelessWidget {
                         ),
                       )),
                       9.hGap,
-                      IconWidget(iconWidth: 18.w, icon: Assets.uiIconJettonPng),
+                      IconWidget(iconWidth: 18.w, icon: Assets.iconUiIconJetton),
                       2.hGap,
                       Text(
                         "294k",
@@ -395,7 +396,7 @@ class _ItemWidget extends StatelessWidget {
                       vibrate: true,
                       onTap: () => Utils.generateAndShareImage(globalKey),
                       child: IconWidget(
-                          iconWidth: 15.w, icon: Assets.testTeamLogoPng))))
+                          iconWidth: 15.w, icon: Assets.testTestTeamLogo))))
         ],
       ),
     );

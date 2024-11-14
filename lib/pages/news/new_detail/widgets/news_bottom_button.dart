@@ -6,7 +6,7 @@
  */
 import 'dart:math';
 
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -79,8 +79,8 @@ class NewsBottomButton extends StatelessWidget {
                             child: IconWidget(
                               iconWidth: 18.w,
                               icon: detail.isLike?.value == 1
-                                  ? Assets.uiIconLike_01Png
-                                  : Assets.uiIconLike_02Png,
+                                  ? Assets.iconUiIconLike01
+                                  : Assets.iconUiIconLike02,
                               iconColor: detail.isLike?.value == 1
                                   ? AppColors.c262626
                                   : AppColors.c666666,
@@ -118,8 +118,8 @@ class NewsBottomButton extends StatelessWidget {
                         child: IconWidget(
                           iconWidth: 18.w,
                           icon: detail.isLike?.value == -1
-                              ? Assets.uiIconLike_01Png
-                              : Assets.uiIconLike_02Png,
+                              ? Assets.iconUiIconLike01
+                              : Assets.iconUiIconLike02,
                           iconColor: detail.isLike?.value == -1
                               ? AppColors.c262626
                               : AppColors.c666666,
@@ -156,7 +156,7 @@ class NewsBottomButton extends StatelessWidget {
                 children: [
                   IconWidget(
                     iconWidth: 18.w,
-                    icon: Assets.uiIconChatting_02Png,
+                    icon: Assets.iconUiIconChatting02,
                     iconColor: AppColors.c666666,
                   ),
                   // if (detail.likes != 0)
@@ -181,7 +181,7 @@ class NewsBottomButton extends StatelessWidget {
               children: [
                 IconWidget(
                   iconWidth: 15.w,
-                  icon: Assets.iconSharePng,
+                  icon: Assets.iconIconShare,
                   iconColor: AppColors.c666666,
                 ),
                 // if (detail.likes != 0)

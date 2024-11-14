@@ -10,7 +10,7 @@
  * @Date: 2024-09-12 16:53:47
  * @LastEditTime: 2024-09-24 10:57:13
  */
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/getx_builder_ids.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
@@ -58,32 +58,32 @@ class HomeController extends GetxController {
   List<TabItemInfo> tabItems = [
     TabItemInfo(
       "Picks",
-      Assets.uiIconPicks_01Png,
-      Assets.uiIconPicks_01Png,
+      Assets.homeUiIconPicks01,
+      Assets.homeUiIconPicks01,
       const PicksIndex(),
     ),
     TabItemInfo(
       "Scores",
-      Assets.uiIconCommunity_01Png,
-      Assets.uiIconCommunity_01Png,
+      Assets.homeUiIconCommunity01,
+      Assets.homeUiIconCommunity01,
       const LeaguePage(),
     ),
     TabItemInfo(
       "NBA",
-      Assets.uiIconNews_01Png,
-      Assets.uiIconNews_01Png,
+      Assets.homeUiIconNews01,
+      Assets.homeUiIconNews01,
       const NewsPage(),
     ),
     TabItemInfo(
       "Manager",
-      Assets.uiIconTeam_01Png,
-      Assets.uiIconTeam_01Png,
+      Assets.homeUiIconTeam01,
+      Assets.homeUiIconTeam01,
       const TeamIndexPage(),
     ),
     TabItemInfo(
       "Portfolio",
-      Assets.uiIconTraining_01Png,
-      Assets.uiIconTraining_01Png,
+      Assets.homeUiIconTraining01,
+      Assets.homeUiIconTraining01,
       const TradeIndex(),
     ),
   ];

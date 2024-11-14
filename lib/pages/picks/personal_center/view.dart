@@ -1,4 +1,4 @@
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -77,7 +77,7 @@ class _PersonalCenterPageState extends State<PersonalCenterPage> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(8.w),
                               child: ImageWidget(
-                                imageFailedPath: Assets.uiHead_01Png,
+                                imageFailedPath: Assets.teamUiHead01,
                                 url: Utils.getAvaterUrl(
                                     controller.teamSimpleEntity?.teamLogo),
                                 width: 48.w,
@@ -131,7 +131,7 @@ class _PersonalCenterPageState extends State<PersonalCenterPage> {
                                     InkWell(
                                         child: IconWidget(
                                       iconWidth: 10.w,
-                                      icon: Assets.uiIconCopyPng,
+                                      icon: Assets.iconUiIconCopy,
                                       iconColor: AppColors.c666666,
                                     )),
                                   ],
@@ -152,7 +152,7 @@ class _PersonalCenterPageState extends State<PersonalCenterPage> {
                                   color: AppColors.c666666, width: 1)),
                           child: IconWidget(
                             iconWidth: 16.w,
-                            icon: Assets.uiIconMorePng,
+                            icon: Assets.iconUiIconMore,
                             iconColor: AppColors.cB3B3B3,
                           ),
                         ),
@@ -171,7 +171,7 @@ class _PersonalCenterPageState extends State<PersonalCenterPage> {
                                   color: AppColors.c666666, width: 1)),
                           child: IconWidget(
                             iconWidth: 16.w,
-                            icon: Assets.uiIconAddPng,
+                            icon: Assets.iconUiIconAdd,
                             iconColor: AppColors.cB3B3B3,
                           ),
                         ),
@@ -324,7 +324,7 @@ class _PersonalCenterPageState extends State<PersonalCenterPage> {
                     children: [
                       IconWidget(
                         iconWidth: 22.w,
-                        icon: Assets.uiIconInformPng,
+                        icon: Assets.iconUiIconInform,
                         iconColor: AppColors.cFF7954,
                       ),
                       7.hGap,
@@ -335,7 +335,7 @@ class _PersonalCenterPageState extends State<PersonalCenterPage> {
                       )),
                       IconWidget(
                         iconWidth: 13.w,
-                        icon: Assets.uiIconArrowsPng,
+                        icon: Assets.iconUiIconArrows,
                         iconColor: AppColors.c666666,
                       )
                     ],
@@ -358,7 +358,7 @@ class _PersonalCenterPageState extends State<PersonalCenterPage> {
                     children: [
                       IconWidget(
                         iconWidth: 22.w,
-                        icon: Assets.uiIconBlockPng,
+                        icon: Assets.iconUiIconBlock,
                         iconColor: AppColors.cFF7954,
                       ),
                       7.hGap,
@@ -369,7 +369,7 @@ class _PersonalCenterPageState extends State<PersonalCenterPage> {
                       )),
                       IconWidget(
                         iconWidth: 13.w,
-                        icon: Assets.uiIconArrowsPng,
+                        icon: Assets.iconUiIconArrows,
                         iconColor: AppColors.c666666,
                       )
                     ],
@@ -392,7 +392,7 @@ class _PersonalCenterPageState extends State<PersonalCenterPage> {
                     children: [
                       IconWidget(
                         iconWidth: 22.w,
-                        icon: Assets.iconSharePng,
+                        icon: Assets.iconIconShare,
                         iconColor: AppColors.cFF7954,
                       ),
                       7.hGap,
@@ -403,7 +403,7 @@ class _PersonalCenterPageState extends State<PersonalCenterPage> {
                       )),
                       IconWidget(
                         iconWidth: 13.w,
-                        icon: Assets.uiIconArrowsPng,
+                        icon: Assets.iconUiIconArrows,
                         iconColor: AppColors.c666666,
                       )
                     ],

@@ -4,7 +4,7 @@
  * @Date: 2024-11-12 14:47:24
  * @LastEditTime: 2024-11-13 18:52:44
  */
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -77,7 +77,7 @@ class SlotMachine extends GetView<TrainingController> {
                                   ),
                                   child: IconWidget(
                                     iconWidth: 16.w,
-                                    icon: Assets.uiManagerTrainingUnknownPng,
+                                    icon: Assets.managerUiManagerTrainingUnknown,
                                     iconColor: Colors.black.withOpacity(0.2),
                                   ),
                                 ),
@@ -100,7 +100,7 @@ class SlotMachine extends GetView<TrainingController> {
                   height: 0.7),
             ),
             7.hGap,
-            IconWidget(iconWidth: 21.w, icon: Assets.uiIconBasketballPng),
+            IconWidget(iconWidth: 21.w, icon: Assets.teamUiIconBasketball),
             4.hGap,
             Text(
               "1",

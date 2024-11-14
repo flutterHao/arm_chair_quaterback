@@ -6,7 +6,7 @@
  */
 import 'dart:math';
 
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_info_entity.dart';
@@ -201,7 +201,9 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
               controller: picksIndexController.tabController,
               children: picksIndexController.guessGamePlayers.keys.map((e) {
                 var list = picksIndexController.guessGamePlayers[e]!;
-                return Builder(builder: (context) {
+                return GetBuilder<PicksIndexController>(
+                    id: PicksIndexController.idGuessList,
+                    builder: (logic) {
                   return CustomScrollView(
                     physics: const BouncingScrollPhysics(),
                     key: PageStorageKey<String>(e),
@@ -266,7 +268,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                       children: [
                                         IconWidget(
                                             iconWidth: 23.w,
-                                            icon: Assets.testTeamLogoPng),
+                                            icon: Assets.testTestTeamLogo),
                                         16.hGap,
                                         Text(
                                           "RANK",
@@ -337,7 +339,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                           11.hGap,
                                           IconWidget(
                                               iconWidth: 24.w,
-                                              icon: Assets.testTeamLogoPng),
+                                              icon: Assets.testTestTeamLogo),
                                           Expanded(
                                               child: Center(
                                                   child: Text(
@@ -485,7 +487,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                         }
                                         return IconWidget(
                                           iconWidth: 19.w,
-                                          icon: Assets.testTeamLogoPng,
+                                          icon: Assets.testTestTeamLogo,
                                           iconColor: color,
                                         );
                                       }),

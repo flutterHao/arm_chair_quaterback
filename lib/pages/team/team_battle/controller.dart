@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:extended_image/extended_image.dart';
@@ -23,18 +23,18 @@ class TeamBattleController extends GetxController
   static bool _canPop = false;
 
   List<String> totalAvatars = [
-    Assets.uiHead_01Png,
-    Assets.uiHead_02Png,
-    Assets.uiHead_03Png,
-    Assets.uiHead_04Png,
-    Assets.uiHead_05Png,
-    Assets.uiHead_06Png,
-    Assets.uiHead_07Png,
-    Assets.uiHead_08Png,
-    Assets.uiHead_09Png,
-    Assets.uiHead_10Png,
-    Assets.uiHead_11Png,
-    Assets.uiHead_12Png,
+    Assets.teamUiHead01,
+    Assets.teamUiHead02,
+    Assets.teamUiHead03,
+    Assets.teamUiHead04,
+    Assets.teamUiHead05,
+    Assets.teamUiHead06,
+    Assets.teamUiHead07,
+    Assets.teamUiHead08,
+    Assets.teamUiHead09,
+    Assets.teamUiHead10,
+    Assets.teamUiHead11,
+    Assets.teamUiHead11,
   ];
 
   late String meAvatar;

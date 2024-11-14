@@ -11,7 +11,7 @@
  * @LastEditTime: 2024-09-29 16:03:41
  */
 
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
@@ -78,7 +78,7 @@ class SubPlayerList extends GetView<TeamController> {
                         iconWidth: 15.w,
                         backgroudWitdh: 38.w,
                         backgroudheight: 38.w,
-                        icon: Assets.uiIconPlusPng,
+                        icon: Assets.iconUiIconPlus,
                         borderRadius: BorderRadius.circular(19.w),
                         backgroudColor: AppColors.c666666,
                         iconColor: AppColors.cFF7954,
@@ -97,7 +97,7 @@ class SubPlayerList extends GetView<TeamController> {
                         iconWidth: 15.w,
                         backgroudWitdh: 38.w,
                         backgroudheight: 38.w,
-                        icon: Assets.uiIconLockPng,
+                        icon: Assets.iconUiIconLock,
                         borderRadius: BorderRadius.circular(19.w),
                         backgroudColor: AppColors.c666666,
                         iconColor: AppColors.cFF7954,

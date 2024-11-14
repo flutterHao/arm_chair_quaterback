@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -75,7 +75,7 @@ class _GameState extends State<Game>
                                             top: 9.w, right: 9.w),
                                         child: IconWidget(
                                           iconWidth: 18.w,
-                                          icon: Assets.uiIconEyesPng,
+                                          icon: Assets.iconUiIconEyes,
                                           iconColor: AppColors.c666666,
                                         )),
                                   ],
@@ -132,7 +132,7 @@ class _GameState extends State<Game>
                                               3.hGap,
                                               IconWidget(
                                                 iconWidth: 12.w,
-                                                icon: Assets.uiIconMsg_02Png,
+                                                icon: Assets.iconUiIconMsg02,
                                                 iconColor: AppColors.c666666,
                                               ),
                                             ],
@@ -165,7 +165,7 @@ class _GameState extends State<Game>
                                     children: [
                                       IconWidget(
                                         iconWidth: 18.w,
-                                        icon: Assets.uiIconWinPng,
+                                        icon: Assets.iconUiIconWin,
                                         iconColor: AppColors.cFF7954,
                                       ),
                                       10.hGap,
@@ -198,7 +198,7 @@ class _GameState extends State<Game>
                                     children: [
                                       IconWidget(
                                         iconWidth: 18.w,
-                                        icon: Assets.uiIconScorePng,
+                                        icon: Assets.iconUiIconScore,
                                         iconColor: AppColors.cFF7954,
                                       ),
                                       10.hGap,
@@ -231,7 +231,7 @@ class _GameState extends State<Game>
                                     children: [
                                       IconWidget(
                                         iconWidth: 18.w,
-                                        icon: Assets.uiIconWinningPng,
+                                        icon: Assets.iconUiIconWinning,
                                         iconColor: AppColors.cFF7954,
                                       ),
                                       10.hGap,
@@ -324,7 +324,7 @@ class _GameState extends State<Game>
                                     children: [
                                       IconWidget(
                                           iconWidth: 40.w,
-                                          icon: Assets.uiIconTrophy_01Png),
+                                          icon: Assets.teamUiIconTrophy01),
                                       28.vGap,
                                       Text(
                                         "${controller.teamInfoEntity?.cup ?? 0}",
@@ -378,7 +378,7 @@ class _GameState extends State<Game>
                           height: 18.w,
                           child: IconWidget(
                             iconWidth: 18.w,
-                            icon: Assets.uiIconEyesPng,
+                            icon: Assets.iconUiIconEyes,
                             iconColor: AppColors.cB3B3B3,
                           ),
                         )
@@ -537,7 +537,7 @@ class _GameState extends State<Game>
                                       ///todo 后段缺少状态字段
                                       IconWidget(
                                           iconWidth: 12.w,
-                                          icon: Assets.uiStateBestPng)
+                                          icon: Assets.playerUiStateBest)
                                     ],
                                   ),
                                 ),
@@ -663,7 +663,7 @@ class _GameState extends State<Game>
                                   children: [
                                     IconWidget(
                                       iconWidth: 40.w,
-                                      icon: Assets.uiIconCapsPng,
+                                      icon: Assets.personalUiIconCaps,
                                     ),
                                     Text(
                                       "Salary caps",
@@ -691,7 +691,7 @@ class _GameState extends State<Game>
                                               right: 0,
                                               child: IconWidget(
                                                 iconWidth: 7.w,
-                                                icon: Assets.uiIconArrows_01Png,
+                                                icon: Assets.playerUiIconArrows01,
                                                 iconColor: AppColors.c1BC27D,
                                               )),
                                           Positioned(
@@ -699,7 +699,7 @@ class _GameState extends State<Game>
                                               right: 0,
                                               child: IconWidget(
                                                 iconWidth: 7.w,
-                                                icon: Assets.uiIconArrows_01Png,
+                                                icon: Assets.playerUiIconArrows01,
                                                 iconColor: AppColors.c1BC27D,
                                               )),
                                         ],
@@ -737,7 +737,7 @@ class _GameState extends State<Game>
                                     children: [
                                       IconWidget(
                                         iconWidth: 40.w,
-                                        icon: Assets.uiIconPlayerPng,
+                                        icon: Assets.personalUiIconPlayer,
                                       ),
                                       Text(
                                         "Bench player",
@@ -768,7 +768,7 @@ class _GameState extends State<Game>
                                   children: [
                                     IconWidget(
                                       iconWidth: 40.w,
-                                      icon: Assets.uiIconSalaryPng,
+                                      icon: Assets.personalUiIconSalary,
                                     ),
                                     Text(
                                       "Salary caps",

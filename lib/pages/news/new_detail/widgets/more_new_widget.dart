@@ -10,7 +10,7 @@
  * @Date: 2024-09-10 17:28:39
  * @LastEditTime: 2024-09-20 17:51:56
  */
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
 import 'package:arm_chair_quaterback/common/routers/routes.dart';
@@ -64,7 +64,7 @@ class MoreNewsWidget extends StatelessWidget {
                       children: [
                         IconWidget(
                           iconWidth: 15.w,
-                          icon: Assets.uiIconReadPng,
+                          icon: Assets.iconUiIconRead,
                           iconColor: item.isView == 0
                               ? AppColors.cFF7954
                               : AppColors.cB3B3B3,
@@ -83,7 +83,7 @@ class MoreNewsWidget extends StatelessWidget {
                         IconWidget(
                           iconWidth: 12.w,
                           iconHeight: 12.w,
-                          icon: Assets.uiIconArrowsPng,
+                          icon: Assets.iconUiIconArrows,
                           iconColor: color,
                         )
                       ],

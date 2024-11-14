@@ -1,4 +1,4 @@
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/routers/routes.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -36,14 +36,14 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(
-                          Assets.uiManagerGift_03Png,
+                          Assets.managerUiManagerGift03,
                           width: 73.w,
                           fit: BoxFit.fitWidth,
                         ),
                         3.vGap,
                         IconWidget(
                           iconWidth: 5.w,
-                          icon: Assets.uiIconShrinkPng,
+                          icon: Assets.iconUiIconShrink,
                           iconColor: AppColors.cFF7954,
                         ),
                         3.vGap,
@@ -62,7 +62,7 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(
-                          Assets.uiManagerGift_01Png,
+                          Assets.managerUiManagerGift01,
                           width: 73.w,
                           fit: BoxFit.fitWidth,
                         ),
@@ -84,7 +84,7 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(
-                          Assets.uiManagerGift_02Png,
+                          Assets.managerUiManagerGift02,
                           width: 73.w,
                           fit: BoxFit.fitWidth,
                         ),
@@ -105,7 +105,7 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
                       children: [
                         IconWidget(
                           iconWidth: 20.w,
-                          icon: Assets.uiIconPlusPng,
+                          icon: Assets.iconUiIconPlus,
                           iconColor: AppColors.c000000,
                         ),
                         14.vGap,

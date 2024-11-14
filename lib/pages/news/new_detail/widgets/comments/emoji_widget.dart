@@ -4,7 +4,7 @@
  * @Date: 2024-10-22 15:19:24
  * @LastEditTime: 2024-10-29 20:45:41
  */
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
@@ -20,9 +20,9 @@ class EmojiWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     RxInt current = 0.obs;
     List<String> emojiList = [
-      Assets.uiEmojiJokerPng,
-      Assets.uiEmojiArrogancePng,
-      Assets.uiEmojiLaughPng,
+      Assets.newsUiEmojiJoker,
+      Assets.newsUiEmojiArrogance,
+      Assets.newsUiEmojiLaugh,
     ];
     return Wrap(
       spacing: 5.w,
@@ -79,7 +79,7 @@ class EmojiWidget extends StatelessWidget {
             ),
             child: IconWidget(
               iconWidth: 16.w,
-              icon: Assets.uiIconEmojiPng,
+              icon: Assets.newsUiIconEmoji,
               iconColor: AppColors.c262626,
             ),
           ),

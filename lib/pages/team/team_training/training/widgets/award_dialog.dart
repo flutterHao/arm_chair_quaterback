@@ -4,7 +4,7 @@
  * @Date: 2024-10-12 15:43:49
  * @LastEditTime: 2024-11-12 17:41:40
  */
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/train_task_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -183,7 +183,7 @@ class AwardDialog extends GetView<TrainingController> {
                 fit: BoxFit.fitWidth,
                 errorBuilder: (context, error, stackTrace) => IconWidget(
                   iconWidth: 32.w,
-                  icon: Assets.uiMoney_02Png,
+                  icon: Assets.teamUiMoney02,
                 ),
               ),
               8.hGap,
@@ -195,7 +195,7 @@ class AwardDialog extends GetView<TrainingController> {
               if (level < _currentLevel)
                 IconWidget(
                   iconWidth: 16.w,
-                  icon: Assets.uiIconRuidgtPng,
+                  icon: Assets.iconUiIconRuidgt,
                   iconColor: AppColors.c10A86A,
                 ),
               16.hGap,
@@ -227,7 +227,7 @@ class AwardDialog extends GetView<TrainingController> {
             fit: BoxFit.fitWidth,
             errorBuilder: (context, error, stackTrace) => IconWidget(
               iconWidth: 32.w,
-              icon: Assets.uiMoney_02Png,
+              icon: Assets.teamUiMoney02,
             ),
           ),
           8.hGap,
@@ -240,7 +240,7 @@ class AwardDialog extends GetView<TrainingController> {
           if (level < _currentLevel)
             IconWidget(
               iconWidth: 16.w,
-              icon: Assets.uiIconRuidgtPng,
+              icon: Assets.iconUiIconRuidgt,
               iconColor: AppColors.c10A86A,
             ),
         ],
@@ -298,7 +298,7 @@ class AwardDialog extends GetView<TrainingController> {
             Container(
               margin: EdgeInsets.only(top: 10.w),
               child: Image.asset(
-                Assets.uiWindowsAwardPng,
+                Assets.iconUiWindowsAward,
                 height: 104,
                 fit: BoxFit.cover,
               ),
@@ -347,7 +347,7 @@ class AwardDialog extends GetView<TrainingController> {
                   padding: EdgeInsets.all(8.w),
                   child: IconWidget(
                     iconWidth: 18.w,
-                    icon: Assets.iconClosePng,
+                    icon: Assets.iconIconClose,
                     iconColor: AppColors.c262626,
                   ),
                 ),

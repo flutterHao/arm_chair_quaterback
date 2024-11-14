@@ -1,4 +1,4 @@
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 
 ///
 ///@auther gejiahui
@@ -6,8 +6,8 @@ import 'package:arm_chair_quaterback/common/constant/assets.dart';
 
 enum LoadDataStatus {
   loading(desc: 'loading ...'),
-  error(desc: 'Network error ', icon: Assets.uiDefault_02Png),
-  noData(desc: 'No content yet', icon: Assets.uiDefault_01Png),
+  error(desc: 'Network error ', icon: Assets.iconUiDefault02),
+  noData(desc: 'No content yet', icon: Assets.iconUiDefault01),
   success(desc: ' ');
 
   const LoadDataStatus({required this.desc, this.icon});

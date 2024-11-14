@@ -12,7 +12,7 @@ import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/send
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
@@ -213,7 +213,7 @@ class SubComentsListView extends GetView<CommentController> {
                                   children: [
                                     IconWidget(
                                       iconWidth: 11.w,
-                                      icon: Assets.uiIconTriangle_03Png,
+                                      icon: Assets.playerUiIconTriangle03,
                                       iconColor: AppColors.c333333,
                                       rotateAngle: 180,
                                     ),
@@ -242,7 +242,7 @@ class SubComentsListView extends GetView<CommentController> {
                                 children: [
                                   IconWidget(
                                     iconWidth: 11.w,
-                                    icon: Assets.uiIconTriangle_03Png,
+                                    icon: Assets.playerUiIconTriangle03,
                                     iconColor: AppColors.c333333,
                                   ),
                                   4.hGap,

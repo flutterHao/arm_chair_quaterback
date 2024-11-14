@@ -4,7 +4,7 @@
  * @Date: 2024-11-13 21:12:10
  * @LastEditTime: 2024-11-14 10:50:53
  */
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -45,7 +45,7 @@ class MatchCard extends GetView<TeamIndexController> {
             left: 16,
             bottom: 13.w,
             child: Image.asset(
-              Assets.uiManagerMatchgameBgJpg,
+              Assets.managerUiManagerMatchgameBg,
               fit: BoxFit.fitWidth,
               alignment: Alignment.topCenter,
             ),
@@ -55,7 +55,7 @@ class MatchCard extends GetView<TeamIndexController> {
             child: Image.asset(
               width: 146.w,
               height: 135.w,
-              Assets.uiManagerMatchgameImagePng,
+              Assets.managerUiManagerMatchgameImage,
               fit: BoxFit.fill,
             ),
           ),
@@ -66,7 +66,7 @@ class MatchCard extends GetView<TeamIndexController> {
             child: Row(
               children: [
                 IconWidget(
-                    iconWidth: 18.w, icon: Assets.uiManagerIconCurrency_04Png),
+                    iconWidth: 18.w, icon: Assets.managerUiManagerIconCurrency04),
                 4.hGap,
                 Obx(() {
                   return Text("${controller.cup.value}",
@@ -104,7 +104,7 @@ class MatchCard extends GetView<TeamIndexController> {
                             right: 10.w,
                             child: IconWidget(
                               iconWidth: 15.w,
-                              icon: Assets.uiIconTriangle_03Png,
+                              icon: Assets.playerUiIconTriangle03,
                               iconColor: AppColors.cFFFFFF,
                               rotateAngle: 90,
                             ))
@@ -123,7 +123,7 @@ class MatchCard extends GetView<TeamIndexController> {
                       border: Border.all(color: AppColors.c666666),
                     ),
                     child: Image.asset(
-                      Assets.uiManagerIconRecoverPng,
+                      Assets.managerUiManagerIconRecover,
                       width: 26.w,
                     ),
                   ),

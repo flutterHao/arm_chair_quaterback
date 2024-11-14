@@ -1,4 +1,4 @@
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -215,7 +215,7 @@ class _ReceiveAwardItemState extends State<ReceiveAwardItem> {
         children: [
           IconWidget(
             iconWidth: 13.w,
-            icon: Assets.uiIconCountdownPng,
+            icon: Assets.iconUiIconCountdown,
             iconColor: AppColors.c262626,
           ),
           3.hGap,
@@ -250,7 +250,7 @@ class _ReceiveAwardItemState extends State<ReceiveAwardItem> {
         ],
         IconWidget(
           iconWidth: 17.w,
-          icon: Assets.prop_102Png,
+          icon: Assets.iconProp102,
           iconColor:
               !controller.getSuccess() ? AppColors.cB3B3B3 : AppColors.c10A86A,
         ),
@@ -329,7 +329,7 @@ class _ReceiveAwardItemState extends State<ReceiveAwardItem> {
                                     borderRadius: BorderRadius.circular(18.w)),
                                 child: IconWidget(
                                   iconWidth: 18.w,
-                                  icon: Assets.uiIconRuidgtPng,
+                                  icon: Assets.iconUiIconRuidgt,
                                   iconColor: mid,
                                 ),
                               ),

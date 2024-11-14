@@ -1,4 +1,4 @@
-import 'package:arm_chair_quaterback/common/constant/assets.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
@@ -79,7 +79,7 @@ class ScorePanel extends StatelessWidget {
                               visible: score > 0,
                               child: IconWidget(
                                 iconWidth: 5.h,
-                                icon: Assets.uiTriangleGPng,
+                                icon: Assets.picksUiTriangleG,
                                 rotateAngle: -90,
                                 iconColor: AppColors.cB3B3B3,
                               )),
@@ -101,7 +101,7 @@ class ScorePanel extends StatelessWidget {
                                 visible: score > 0,
                                 child: IconWidget(
                                   iconWidth: 5.h,
-                                  icon: Assets.uiTriangleGPng,
+                                  icon: Assets.picksUiTriangleG,
                                   rotateAngle: 90,
                                   iconColor: AppColors.cB3B3B3,
                                 ))),
