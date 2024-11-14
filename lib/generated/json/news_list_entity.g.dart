@@ -1,5 +1,11 @@
 import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
+import 'package:arm_chair_quaterback/common/utils/image_ext.dart';
+
+import 'package:common_utils/common_utils.dart';
+
+import 'package:flutter/material.dart';
+
 
 NewsListEntity $NewsListEntityFromJson(Map<String, dynamic> json) {
   final NewsListEntity newsListEntity = NewsListEntity();
@@ -181,6 +187,10 @@ NewsListDetail $NewsListDetailFromJson(Map<String, dynamic> json) {
   if (players != null) {
     newsListDetail.players = players;
   }
+  final String? imgUrl = jsonConvert.convert<String>(json['imgUrl']);
+  if (imgUrl != null) {
+    newsListDetail.imgUrl = imgUrl;
+  }
   return newsListDetail;
 }
 
@@ -204,6 +214,8 @@ Map<String, dynamic> $NewsListDetailToJson(NewsListDetail entity) {
   data['likes'] = entity.likes;
   data['teams'] = entity.teams;
   data['players'] = entity.players;
+  data['imgUrl'] = entity.imgUrl;
+  data['type'] = entity.type;
   return data;
 }
 
@@ -227,6 +239,8 @@ extension NewsListDetailExtension on NewsListDetail {
     int? likes,
     List<int>? teams,
     List<int>? players,
+    String? imgUrl,
+    int? type,
   }) {
     return NewsListDetail()
       ..isLike = isLike ?? this.isLike
@@ -246,7 +260,9 @@ extension NewsListDetailExtension on NewsListDetail {
       ..views = views ?? this.views
       ..likes = likes ?? this.likes
       ..teams = teams ?? this.teams
-      ..players = players ?? this.players;
+      ..players = players ?? this.players
+      ..imgUrl = imgUrl ?? this.imgUrl
+      ..type = type ?? this.type;
   }
 }
 

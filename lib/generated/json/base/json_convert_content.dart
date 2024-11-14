@@ -45,6 +45,7 @@ import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.
 import 'package:arm_chair_quaterback/common/entities/team_rule_config_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_simple_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/trade_entity/trade_info_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/train_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/train_task_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/training_task_entity.dart';
@@ -636,6 +637,10 @@ class JsonConvert {
       return data.map<TradeInfoTradePlayersTrend>((Map<String, dynamic> e) =>
           TradeInfoTradePlayersTrend.fromJson(e)).toList() as M;
     }
+    if (<TrainDefineEntity>[] is M) {
+      return data.map<TrainDefineEntity>((Map<String, dynamic> e) =>
+          TrainDefineEntity.fromJson(e)).toList() as M;
+    }
     if (<TrainTaskEntity>[] is M) {
       return data.map<TrainTaskEntity>((Map<String, dynamic> e) =>
           TrainTaskEntity.fromJson(e)).toList() as M;
@@ -868,6 +873,7 @@ class JsonConvertClassCollection {
     (TradeInfoTradePlayers).toString(): TradeInfoTradePlayers.fromJson,
     (TradeInfoTradePlayersTrend).toString(): TradeInfoTradePlayersTrend
         .fromJson,
+    (TrainDefineEntity).toString(): TrainDefineEntity.fromJson,
     (TrainTaskEntity).toString(): TrainTaskEntity.fromJson,
     (TrainingInfoEntity).toString(): TrainingInfoEntity.fromJson,
     (TrainingInfoAward).toString(): TrainingInfoAward.fromJson,

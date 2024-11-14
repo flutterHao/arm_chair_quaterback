@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 21:12:10
- * @LastEditTime: 2024-11-14 10:50:53
+ * @LastEditTime: 2024-11-14 19:23:32
  */
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -13,6 +13,7 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/recover_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -66,7 +67,8 @@ class MatchCard extends GetView<TeamIndexController> {
             child: Row(
               children: [
                 IconWidget(
-                    iconWidth: 18.w, icon: Assets.managerUiManagerIconCurrency04),
+                    iconWidth: 18.w,
+                    icon: Assets.managerUiManagerIconCurrency04),
                 4.hGap,
                 Obx(() {
                   return Text("${controller.cup.value}",
@@ -95,9 +97,9 @@ class MatchCard extends GetView<TeamIndexController> {
                           alignment: Alignment.center,
                           child: Text(
                             "MATCH",
-                            style: 23.w4(
+                            style: 19.w4(
                                 color: AppColors.cFFFFFF,
-                                fontFamily: FontFamily.fRobotoMedium),
+                                fontFamily: FontFamily.fOswaldMedium),
                           ),
                         ),
                         Positioned(
@@ -114,17 +116,24 @@ class MatchCard extends GetView<TeamIndexController> {
                 ),
                 8.hGap,
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    showDialog(
+                        context: Get.context!,
+                        builder: (context) {
+                          return const RecoverDialog();
+                        });
+                  },
                   child: Container(
                     width: 60.w,
                     height: 41.w,
+                    alignment: Alignment.center,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(9.w),
                       border: Border.all(color: AppColors.c666666),
                     ),
                     child: Image.asset(
                       Assets.managerUiManagerIconRecover,
-                      width: 26.w,
+                      width: 30.w,
                     ),
                   ),
                 ),

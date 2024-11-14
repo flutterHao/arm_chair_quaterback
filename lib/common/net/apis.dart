@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-06 15:16:54
- * @LastEditTime: 2024-11-13 11:38:23
+ * @LastEditTime: 2024-11-14 14:13:26
  */
 class Api {
   /// base
@@ -45,8 +45,8 @@ class Api {
       "$API_BASE_PATH/NBANews/getGuessAllAward";
   static const String getRankRewards = "$API_BASE_PATH/NBANews/getRankRewards";
   static const String getAward = "$API_BASE_PATH/NBANews/getTodayAward";
-  static const String getGuessTopReviews = "$API_BASE_PATH/NBANews/getGuessTopReviews";
-
+  static const String getGuessTopReviews =
+      "$API_BASE_PATH/NBANews/getGuessTopReviews";
 
   ///NBAData
   static const String teamStatRank =
@@ -101,6 +101,9 @@ class Api {
   static const changeTeamPlayer = "$API_BASE_PATH/TeamPlayer/changeTeamPlayer";
   static const getPlayerUpGradeInfo =
       "$API_BASE_PATH/TeamPlayer/getPlayerUpGradeInfo";
+  static const String buyTrainingBall =
+      "$API_BASE_PATH/TeamPlayer/buyTrainingBall";
+
   static const String getCardPackInfo = "$API_BASE_PATH/match/getCardPackInfo";
   static const String activeBox = "$API_BASE_PATH/match/activeBox";
   static const String getFreeGift = "$API_BASE_PATH/match/getFreeGift";

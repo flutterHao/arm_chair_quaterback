@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-11-13 21:15:50
+ * @LastEditTime: 2024-11-14 11:35:08
  */
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
@@ -20,7 +20,9 @@ import 'package:arm_chair_quaterback/pages/team/team_index/widgets/beauty_and_bo
 import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_page.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/battle_box_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/match_card.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/my_team_widget.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/widgets/my_team_widget.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -94,6 +96,8 @@ class _TeamView extends GetView<TeamIndexController> {
   @override
   Widget build(BuildContext context) {
     Get.put(BeautyController());
+    Get.put(TeamController());
+    Get.put(TrainingController());
     return GetBuilder<TeamIndexController>(
       init: TeamIndexController(),
       id: "team_index",

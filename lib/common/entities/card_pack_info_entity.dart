@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-12 17:54:17
- * @LastEditTime: 2024-11-13 18:20:50
+ * @LastEditTime: 2024-11-14 14:41:00
  */
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/card_pack_info_entity.g.dart';
@@ -44,6 +44,8 @@ class CardPackInfoCard {
   late int status = 0;
   @JSONField(deserialize: false)
   late RxString remainTime = "00:00".obs;
+  @JSONField(deserialize: false)
+  double progress = 0;
 
   CardPackInfoCard({this.status = 0});
 

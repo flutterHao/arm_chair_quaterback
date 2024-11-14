@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 18:19:28
- * @LastEditTime: 2024-10-19 19:06:08
+ * @LastEditTime: 2024-11-14 17:00:33
  */
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_guess.dart';
 import 'package:get/get.dart';
@@ -28,6 +28,7 @@ class NewsDetail {
   int? updateTime;
   int? views;
   NewsGuess? guess;
+  String? imgUrl;
 
   NewsDetail({
     this.award = 0,
@@ -47,6 +48,7 @@ class NewsDetail {
     this.updateTime = 0,
     this.views = 0,
     this.guess,
+    this.imgUrl,
   });
 
   factory NewsDetail.fromJson(Map<String, dynamic> json) {
@@ -68,6 +70,7 @@ class NewsDetail {
           .toList(),
       source: json['source'] as String?,
       title: json['title'] as String?,
+      imgUrl: json['imgUrl'] as String?,
       unLikes: json['unLikes'] as int?,
       updateTime: json['updateTime'] as int?,
       views: json['views'] as int?,

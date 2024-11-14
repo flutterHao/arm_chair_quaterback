@@ -2,9 +2,10 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-11 15:57:44
- * @LastEditTime: 2024-11-13 18:55:20
+ * @LastEditTime: 2024-11-14 19:27:07
  */
 
+import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
@@ -12,7 +13,9 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/progress_paint.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/add_ball_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/player_slot_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/slot_widget.dart';
@@ -167,10 +170,11 @@ class TrainingPage extends GetView<TrainingController> {
         ),
         child: Column(
           children: [
+            25.vGap,
             Container(
               // height: 72.5.w,
               // color: Colors.amber,
-              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.w),
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Row(
                 children: [
                   Expanded(
@@ -182,10 +186,11 @@ class TrainingPage extends GetView<TrainingController> {
                           height: 0.7),
                     ),
                   ),
-                  IconWidget(iconWidth: 21.w, icon: Assets.teamUiIconBasketball),
+                  IconWidget(
+                      iconWidth: 21.w, icon: Assets.iconUiIconBasketball),
                   4.hGap,
                   Text(
-                    "${trainingInfo.prop.num}",
+                    "${trainingInfo.prop.num}/${controller.trainDefine.ballMaxNum}",
                     style: 16.w7(
                       color: AppColors.c262626,
                       fontFamily: FontFamily.fOswaldMedium,
@@ -193,7 +198,13 @@ class TrainingPage extends GetView<TrainingController> {
                   ),
                   7.hGap,
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      showDialog(
+                          context: Get.context!,
+                          builder: (context) {
+                            return const AddBallDialog();
+                          });
+                    },
                     child: Container(
                       width: 24.w,
                       height: 24.w,
@@ -212,15 +223,38 @@ class TrainingPage extends GetView<TrainingController> {
                 ],
               ),
             ),
+            if (trainingInfo.prop.num < controller.trainDefine.ballMaxNum)
+              Container(
+                margin: EdgeInsets.only(top: 4.w),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      "${controller.trainDefine.ballRecoverNum} balls ready in ",
+                      style: 12.w4(fontFamily: FontFamily.fRobotoRegular),
+                    ),
+                    Obx(() {
+                      return Text(
+                        controller.recoverTimeStr.value,
+                        style: 12.w4(
+                          color: AppColors.c10A86A,
+                          fontFamily: FontFamily.fRobotoRegular,
+                        ),
+                      );
+                    }),
+                    16.hGap,
+                  ],
+                ),
+              ),
+            10.vGap,
             Expanded(
               child: Stack(
                 alignment: Alignment.topCenter,
                 children: [
-                  Image.asset(
-                    Assets.teamUiBgBattle,
-                    width: 375.w,
-                    height: 275.5.w,
-                    fit: BoxFit.fitWidth,
+                  MirrorImageWidget(
+                    imagePath: Assets.managerUiManagerTrainingBg,
+                    fullWidth: 375.w,
+                    imageHeight: 275.5.w,
                   ),
 
                   ///金钱奖励

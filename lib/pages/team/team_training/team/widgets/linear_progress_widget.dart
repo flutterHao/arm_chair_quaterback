@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 20:30:20
- * @LastEditTime: 2024-11-13 17:39:33
+ * @LastEditTime: 2024-11-14 19:19:31
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +40,7 @@ class _CustomLinearProgressBarState extends State<CustomLinearProgressBar>
 
     // 初始化 AnimationController
     _controller = AnimationController(
-      duration: const Duration(microseconds: 500),
+      duration: const Duration(milliseconds: 500),
       vsync: this,
     );
 

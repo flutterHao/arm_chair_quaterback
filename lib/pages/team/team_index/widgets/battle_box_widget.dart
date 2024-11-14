@@ -6,6 +6,7 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/linear_progress_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -68,13 +69,25 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
                         ),
                         // 9.vGap,
                         Obx(() {
-                          return Text(
-                            item.remainTime.value,
-                            style: 12.w4(
-                              color: AppColors.c262626,
-                              height: 1,
-                              fontFamily: FontFamily.fRobotoRegular,
-                            ),
+                          return Column(
+                            children: [
+                              Text(
+                                item.remainTime.value,
+                                style: 12.w4(
+                                  color: AppColors.c262626,
+                                  height: 1,
+                                  fontFamily: FontFamily.fRobotoRegular,
+                                ),
+                              ),
+                              5.vGap,
+                              CustomLinearProgressBar(
+                                progress: item.progress,
+                                height: 6.w,
+                                width: 68.w,
+                                backgroundColor: AppColors.ccccccc,
+                                progressColor: AppColors.c262626,
+                              ),
+                            ],
                           );
                         })
                       ],
@@ -118,6 +131,7 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
                   }
 
                   return MtInkwell(
+                    minScale: 0.9,
                     onTap: () async {
                       if (item.status == -1) {
                         // await Get.toNamed(RouteNames.teamTeamBattle);

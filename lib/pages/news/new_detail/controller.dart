@@ -2,11 +2,12 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:23:17
- * @LastEditTime: 2024-11-01 20:31:55
+ * @LastEditTime: 2024-11-14 18:47:40
  */
 
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'index.dart';
 
@@ -15,6 +16,7 @@ class NewsDetailController extends GetxController {
   final state = NewDetailState();
 
   final Object? newsId;
+  GlobalKey globalKey = GlobalKey();
 
   /// 在 widget 内存中分配后立即调用。
   @override

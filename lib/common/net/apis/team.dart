@@ -2,13 +2,14 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-14 17:25:31
- * @LastEditTime: 2024-11-13 14:18:25
+ * @LastEditTime: 2024-11-14 14:14:16
  */
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/my_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_status_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/train_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/train_task_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis.dart';
@@ -42,10 +43,9 @@ class TeamApi {
     return list.map((e) => TrainTaskEntity.fromJson(e)).toList();
   }
 
-  static Future<Map<String, dynamic>> getTrainDefine() async {
-    var list = await HttpUtil().post(Api.cTrainDefine);
-    Map<String, dynamic> map = list.length > 0 ? list[0] : {};
-    return map;
+  static Future<TrainDefineEntity> getTrainDefine() async {
+    List list = await HttpUtil().post(Api.cTrainDefine);
+    return TrainDefineEntity.fromJson(list.first);
   }
 
   static Future<List<TeamPlayerInfoEntity>> getMyBagPlayers() async {
@@ -105,5 +105,11 @@ class TeamApi {
   static Future<List<TrainingInfoAward>> openFreeGift() async {
     List list = await HttpUtil().post(Api.getFreeGift);
     return list.map((e) => TrainingInfoAward.fromJson(e)).toList();
+  }
+
+  static Future<int> buyTrainingBall(count) async {
+    var json =
+        await HttpUtil().post(Api.buyTrainingBall, data: {"buyCount": count});
+    return json["num"];
   }
 }

@@ -2,8 +2,9 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-21 20:20:49
- * @LastEditTime: 2024-11-13 15:15:20
+ * @LastEditTime: 2024-11-14 21:06:41
  */
+import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
@@ -17,6 +18,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'dart:async' show Completer;
+import 'dart:ui' show ImmutableBuffer, ImageDescriptor;
+import 'package:flutter/widgets.dart';
 
 class Utils {
   ///深色队徽
@@ -243,6 +247,27 @@ class Utils {
           text: 'Check out this generated image!');
     } catch (e) {
       print('Error generating image: $e');
+    }
+  }
+
+  static String timeAgo(int inputTime) {
+    // 将 int 时间戳转换为 DateTime
+    final inputDateTime = DateTime.fromMillisecondsSinceEpoch(inputTime);
+    final now = DateTime.now();
+    final difference = now.difference(inputDateTime); // 计算时间差
+
+    if (difference.inMinutes < 1) {
+      return 'just now';
+    } else if (difference.inMinutes < 60) {
+      return '${difference.inMinutes} min';
+    } else if (difference.inHours < 24) {
+      return '${difference.inHours} h';
+    } else if (difference.inDays < 30) {
+      return '${difference.inDays} day${difference.inDays > 1 ? 's' : ''}';
+    } else if (difference.inDays < 365) {
+      return '${(difference.inDays / 30).floor()} month${(difference.inDays / 30).floor() > 1 ? 's' : ''}';
+    } else {
+      return '${(difference.inDays / 365).floor()} year${(difference.inDays / 365).floor() > 1 ? 's' : ''}';
     }
   }
 

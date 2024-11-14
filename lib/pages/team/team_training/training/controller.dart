@@ -3,11 +3,14 @@ import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/entities/my_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/train_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/train_task_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
+import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/pages/home/index.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -21,9 +24,9 @@ class TrainingController extends GetxController
   TrainingInfoEntity trainingInfo = TrainingInfoEntity();
   List<TeamPlayerInfoEntity> playerList = [];
   List<TrainTaskEntity> trainTaskList = [];
-  Map<String, dynamic> trainDefineMap = {};
+  TrainDefineEntity trainDefine = TrainDefineEntity();
   RxInt ballNum = 0.obs;
-
+  RxString recoverTimeStr = "".obs;
   List<RxBool> slotCard = [
     false.obs,
     false.obs,
@@ -94,24 +97,51 @@ class TrainingController extends GetxController
       // rewardList = v[0] as List<RewardGroupEntity>;
       trainingInfo = v[0] as TrainingInfoEntity;
       trainTaskList = v[1] as List<TrainTaskEntity>;
-      trainDefineMap = v[2] as Map<String, dynamic>;
+      trainDefine = v[2] as TrainDefineEntity;
       playerList = (v[3] as MyTeamEntity).teamPlayers;
       ballNum.value = trainingInfo.prop.num;
+      recoverTimeAndCountDown();
       update(["training_page"]);
       Future.delayed(const Duration(milliseconds: 200), () {});
     });
   }
 
+  ///获取配置数据计算倒计时
+  void recoverTimeAndCountDown() {
+    int recover = trainDefine.ballRecoverTime;
+    DateTime recoverTime =
+        DateUtil.getDateTimeByMs(trainingInfo.training.ballRefreshTime)
+            .add(Duration(seconds: recover));
+    Log.d("恢复时间:$recoverTime");
+    Log.d("现在时间:${DateTime.now()}");
+    int seconds = recoverTime.difference(DateTime.now()).inSeconds;
+    _timer = Timer.periodic(const Duration(seconds: 1), (v) async {
+      seconds--;
+
+      ///获取回复篮球与当前时间倒计时，转换成mm:ss
+      final minutes = seconds ~/ 60;
+      final remainingSeconds = seconds % 60;
+      recoverTimeStr.value =
+          '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
+      if (seconds <= 0) {
+        _timer.cancel();
+        // 重新获取新的恢复时间进行倒计时
+        trainingInfo = await TeamApi.getTrainingInfo();
+        recoverTimeAndCountDown();
+      }
+    });
+  }
+
+  void buyTrainingBall(int count) {
+    TeamApi.buyTrainingBall(count).then((v) {
+      trainingInfo.prop.num = v;
+      update(["training_page"]);
+    });
+  }
+
   void startSlot() async {
     final teamIndexCtrl = Get.find<TeamIndexController>();
-    if (teamIndexCtrl.scrollController.offset < (800.w) ||
-        teamIndexCtrl.scrollController.offset > (890.w)) {
-      teamIndexCtrl.scrollController.animateTo(
-        890.w,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeOut,
-      );
-    }
+    teamIndexCtrl.scroToSlot();
     trainingInfo = await TeamApi.playerTraining(playerList[0].uuid);
     update(["training_page"]);
     for (int i = 0; i < slotCard.length; i++) {

@@ -101,6 +101,7 @@ flutter:
     - assets/images/team/
     - assets/images/personal/
     - assets/images/manager/
+    - assets/images/Common/
 
 
 
@@ -152,14 +153,14 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
 
-# flutter_assets_generator:
-#   # Optional. Sets the directory of generated localization files. Provided value should be a valid path on lib dir. Default: generated
-#   output_dir: generated
-#   # Optional. Sets whether utomatic monitoring of file changes. Default: true
-#   auto_detection: true
-#   # Optional. Sets file name conversion rules. Default: true
-#   named_with_parent: false
-#   # Optional. Sets the name for the generated localization file. Default: assets
-#   output_filename: r
-#   # Optional. Sets the name for the generated localization class. Default: Assets
-#   class_name: R
+flutter_assets_generator:
+   # Optional. Sets the directory of generated localization files. Provided value should be a valid path on lib dir. Default: generated
+   output_dir: generated
+   # Optional. Sets whether utomatic monitoring of file changes. Default: true
+   auto_detection: true
+   # Optional. Sets file name conversion rules. Default: true
+   named_with_parent: true
+   # Optional. Sets the name for the generated localization file. Default: assets
+   output_filename: assets
+   # Optional. Sets the name for the generated localization class. Default: Assets
+   class_name: Assets

@@ -105,6 +105,7 @@ Map<String, dynamic> $CardPackInfoCardToJson(CardPackInfoCard entity) {
   data['openTime'] = entity.openTime;
   data['status'] = entity.status;
   data['remainTime'] = entity.remainTime.toJson();
+  data['progress'] = entity.progress;
   return data;
 }
 
@@ -114,11 +115,13 @@ extension CardPackInfoCardExtension on CardPackInfoCard {
     int? openTime,
     int? status,
     RxString? remainTime,
+    double? progress,
   }) {
     return CardPackInfoCard()
       ..cardId = cardId ?? this.cardId
       ..openTime = openTime ?? this.openTime
       ..status = status ?? this.status
-      ..remainTime = remainTime ?? this.remainTime;
+      ..remainTime = remainTime ?? this.remainTime
+      ..progress = progress ?? this.progress;
   }
 }

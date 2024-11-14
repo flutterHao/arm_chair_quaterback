@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-11-14 11:06:23
+ * @LastEditTime: 2024-11-14 19:18:34
  */
 
 import 'dart:async';
@@ -127,12 +127,16 @@ class TeamIndexController extends GetxController
 
     for (var item in cardPackInfo.card) {
       if (item.status == 1) {
+        final now = DateTime.now();
+        final endTime = DateUtil.getDateTimeByMs(item.openTime);
+        final diff = endTime.difference(now).inSeconds;
         _startTimer(
           time: item.openTime,
           onTick: (v) {
             final minutes = ((v % 3600) ~/ 60).toString().padLeft(2, '0');
             final secs = (v % 60).toString().padLeft(2, '0');
             item.remainTime.value = "$minutes:$secs";
+            item.progress = (diff - v) / diff;
           },
           onComplete: getBattleBox,
           timer: battleBoxTimer,
@@ -156,7 +160,8 @@ class TeamIndexController extends GetxController
       final endTime = DateUtil.getDateTimeByMs(time);
       final diff = endTime.difference(now).inSeconds;
       // Log.e("倒计时$diff");
-      if (time <= 0) {
+      if (diff <= 0) {
+        Log.i("倒计时完成");
         t.cancel();
         onComplete();
       } else {
@@ -179,9 +184,9 @@ class TeamIndexController extends GetxController
 
   ///滚动到战斗
   void scroToMatch() {
-    if (scrollController.offset != (610.w)) {
+    if (scrollController.offset != (479.w)) {
       scrollController.animateTo(
-        610.w,
+        479.w,
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeOut,
       );
