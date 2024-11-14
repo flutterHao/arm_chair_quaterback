@@ -15,6 +15,10 @@ class Assets {
   static const String homeUiNavibarSel01 = 'assets/images/home/ui_navibar_sel_01.png';
   static const String homeUiNavubarSel02 = 'assets/images/home/ui_navubar_sel_02.png';
   static const String iconHead0000 = 'assets/images/icon/head_0000.png';
+  static const String iconIcon101 = 'assets/images/icon/icon_101.png';
+  static const String iconIcon102 = 'assets/images/icon/icon_102.png';
+  static const String iconIcon103 = 'assets/images/icon/icon_103.png';
+  static const String iconIcon104 = 'assets/images/icon/icon_104.png';
   static const String iconIconBack = 'assets/images/icon/icon_back.png';
   static const String iconIconClose = 'assets/images/icon/icon_close.png';
   static const String iconIconShare = 'assets/images/icon/icon_share.png';
