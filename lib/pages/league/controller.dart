@@ -233,19 +233,9 @@ class LeagueController extends GetxController {
   }
 
   void changeGuessSuccessDataStatusAndRefreshUi() {
-    for (int i = 0; i < cacheGameGuessData.keys.length; i++) {
-      var key = cacheGameGuessData.keys.toList()[i];
-      var item = cacheGameGuessData[key]!;
-      for (int j = 0; j < item.length; j++) {
-        var gameGuessItem = item[j];
-        if(gameGuessItem.choiceTeamId.value != 0){
-          gameGuessItem.scoresEntity.isGuess = gameGuessItem.choiceTeamId.value;
-          gameGuessItem.choiceTeamId.value = 0;
-        }
-      }
-    }
-    sortScoreList();
+    cacheGameGuessData.clear();
     choiceSize.value = getAllChoiceData().length;
+    getData(isRefresh: true);
     update([idLeagueMain]);
   }
 }

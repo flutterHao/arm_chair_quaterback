@@ -111,7 +111,12 @@ class _LeagueIndexPageState extends State<LeagueIndexPage>
     );
     var emptyWidget = SliverToBoxAdapter(
       child: SizedBox(
-        height: MediaQuery.of(context).size.height / 2,
+        height: (MediaQuery.of(context).size.height -
+                75.w -
+                58.w -
+                MediaQuery.of(context).padding.top -
+                MediaQuery.of(context).padding.bottom -
+                46.w),
         child: SmartRefresher(
           controller: controller.refreshController,
           onRefresh: () => controller.loading(),
