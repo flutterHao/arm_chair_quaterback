@@ -210,7 +210,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                     slivers: [
                       Obx(() {
                         return SliverPadding(
-                            padding: EdgeInsets.only(top: 119.w + top.value-topOverScrollPixels));
+                            padding: EdgeInsets.only(top: 119.w + top.value));
                       }),
                       SliverList.separated(
                         itemCount: list.length,
@@ -233,7 +233,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
         ),
         Obx(() {
           return Positioned(
-              top: top.value-1,
+              top: top.value-topOverScrollPixels,
               left: 0,
               right: 0,
               child: Container(
@@ -268,7 +268,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                       children: [
                                         IconWidget(
                                             iconWidth: 23.w,
-                                            icon: Assets.testTestTeamLogo),
+                                            icon: Assets.picksUiPicksStatusBarRank),
                                         16.hGap,
                                         Text(
                                           "RANK",
@@ -339,7 +339,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                           11.hGap,
                                           IconWidget(
                                               iconWidth: 24.w,
-                                              icon: Assets.testTestTeamLogo),
+                                              icon: Assets.picksUiPicksStatusBarPicks),
                                           Expanded(
                                               child: Center(
                                                   child: Text(
@@ -427,95 +427,6 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
               routeId: GlobalNestedKey.PICKS,
             ),
             bodyWidget: _buildView(context),
-            floatWidgets: [
-              //下注
-              Obx(() {
-                var value = picksIndexController.choiceSize.value;
-                return AnimatedPositioned(
-                    duration: const Duration(milliseconds: 300),
-                    left: 0,
-                    right: 0,
-                    bottom: value <= 0 ? -70.w : 20.w,
-                    child: Center(
-                      child: MtInkwell(
-                        onTap: () async {
-                          await showModalBottomSheet(
-                              isScrollControlled: true,
-                              backgroundColor: AppColors.cTransparent,
-                              context: Get.context!,
-                              builder: (context) {
-                                return const PicksGuessConfirmDialogV2();
-                              });
-                          Get.find<PicksIndexController>()
-                              .batchDeleteOpen
-                              .value = false;
-                        },
-                        child: Container(
-                            decoration: BoxDecoration(
-                                color: AppColors.c000000,
-                                borderRadius: BorderRadius.circular(16.w),
-                                border: Border.all(
-                                    color: AppColors.cFF7954, width: 2.w)),
-                            width: 360.w,
-                            height: 66.w,
-                            padding: EdgeInsets.only(left: 17.w, right: 10.w),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "CREATE A COMBO",
-                                  style: 16.w5(
-                                      color: AppColors.cFFFFFF,
-                                      height: 1,
-                                      fontFamily: FontFamily.fOswaldMedium),
-                                ),
-                                9.vGap,
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: List.generate(6, (index) {
-                                        Color color = AppColors.c4D4D4D;
-                                        if (index + 1 <=
-                                            picksIndexController
-                                                .choiceSize.value) {
-                                          color = AppColors.cFF7954;
-                                        }
-                                        return IconWidget(
-                                          iconWidth: 19.w,
-                                          icon: Assets.testTestTeamLogo,
-                                          iconColor: color,
-                                        );
-                                      }),
-                                    ),
-                                    Container(
-                                      height: 24.w,
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 13.w),
-                                      alignment: Alignment.center,
-                                      decoration: BoxDecoration(
-                                          color: AppColors.cFF7954,
-                                          borderRadius:
-                                              BorderRadius.circular(12.w)),
-                                      child: Text(
-                                        "${picksIndexController.choiceSize.value > 0 ? picksIndexController.picksDefine.powerBetWin[picksIndexController.choiceSize.value - 1] : "0"}x",
-                                        style: 16.w5(
-                                            color: AppColors.c000000,
-                                            height: 1,
-                                            fontFamily:
-                                                FontFamily.fOswaldMedium),
-                                      ),
-                                    )
-                                  ],
-                                )
-                              ],
-                            )),
-                      ),
-                    ));
-              })
-            ],
           );
         });
   }

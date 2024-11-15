@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
@@ -94,129 +95,132 @@ class _LeagueIndexPageState extends State<LeagueIndexPage>
 
   // 主视图
   Widget _buildView() {
-    if (controller.scoreList.isNotEmpty &&
-        controller.picksDefineEntity != null) {
-      return Expanded(
-        child: CustomScrollView(
-          physics: const BouncingScrollPhysics(),
-          slivers: [
-            SliverPersistentHeader(
-              floating: true,
-              delegate: FixedHeightSliverHeaderDelegate(
-                  child: Container(
-                    height: 58.w,
-                    width: double.infinity,
-                    color: AppColors.c262626,
-                    child: Row(
-                      children: [
-                        16.hGap,
-                        Expanded(
-                            child: Container(
-                          height: 40.w,
-                          decoration: BoxDecoration(
-                            color: AppColors.c000000,
-                            borderRadius: BorderRadius.circular(9.w),
-                          ),
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 40.w,
-                                height: 40.w,
-                                child: MtInkwell(
-                                  onTap: () => controller.prePage(),
-                                  child: IconWidget(
-                                      iconWidth: 8.w,
-                                      icon: Assets.playerUiIconArrows02),
-                                ),
-                              ),
-                              Expanded(
-                                  child: PageView.builder(
-                                      controller: controller.pageController,
-                                      itemCount: controller.pageText.length,
-                                      onPageChanged: (index) =>
-                                          controller.onPageChanged(index),
-                                      itemBuilder: (context, index) {
-                                        return Center(
-                                          child: Text(
-                                            controller.pageText[index],
-                                            style: 16.w5(
-                                                color: AppColors.cB3B3B3,
-                                                fontFamily:
-                                                    FontFamily.fOswaldMedium),
-                                          ),
-                                        );
-                                      })),
-                              SizedBox(
-                                width: 40.w,
-                                height: 40.w,
-                                child: MtInkwell(
-                                  onTap: () => controller.nextPage(),
-                                  child: IconWidget(
-                                      iconWidth: 8.w,
-                                      icon: Assets.playerUiIconArrows01),
-                                ),
-                              )
-                            ],
-                          ),
-                        )),
-                        9.hGap,
-                        Container(
-                          width: 112.w,
-                          height: 40.w,
-                          decoration: BoxDecoration(
-                              color: AppColors.c3B3B3B,
-                              borderRadius: BorderRadius.circular(9.w)),
-                          child: Center(
-                            child: Text(
-                              "STANDINGS",
-                              style: 16.w5(
-                                  color: AppColors.cFFFFFF,
-                                  fontFamily: FontFamily.fOswaldMedium),
-                            ),
-                          ),
-                        ),
-                        16.hGap,
-                      ],
-                    ),
-                  ),
-                  height: 58.w),
-            ),
-            SliverList.separated(
-              itemCount: controller.scoreList.length,
-              itemBuilder: (context, index) {
-                bool lastIndex = index == controller.scoreList.length - 1;
-                var item = controller.scoreList[index];
-                return Container(
-                    margin: EdgeInsets.only(
-                        top: index == 0 ? 9.w : 0,
-                        bottom: lastIndex ? 20.w : 0),
-                    child: _buildItem(item));
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return 9.vGap;
-              },
-            )
-          ],
+    var listView = SliverList.separated(
+      itemCount: controller.scoreList.length,
+      itemBuilder: (context, index) {
+        bool lastIndex = index == controller.scoreList.length - 1;
+        var item = controller.scoreList[index];
+        return Container(
+            margin: EdgeInsets.only(
+                top: index == 0 ? 9.w : 0, bottom: lastIndex ? 20.w : 0),
+            child: _ItemWidget(gameGuess: item));
+      },
+      separatorBuilder: (BuildContext context, int index) {
+        return 9.vGap;
+      },
+    );
+    var emptyWidget = SliverToBoxAdapter(
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height / 2,
+        child: SmartRefresher(
+          controller: controller.refreshController,
+          onRefresh: () => controller.loading(),
+          child: Center(
+            child: Obx(() {
+              return LoadStatusWidget(
+                loadDataStatus: controller.loadStatus.value,
+              );
+            }),
+          ),
         ),
-      );
-    }
+      ),
+    );
     return Expanded(
-      child: SmartRefresher(
-        controller: controller.refreshController,
-        onRefresh: () => controller.loading(),
-        child: Center(
-          child: Obx(() {
-            return LoadStatusWidget(
-              loadDataStatus: controller.loadStatus.value,
-            );
-          }),
-        ),
+      child: CustomScrollView(
+        physics: const BouncingScrollPhysics(),
+        slivers: [
+          buildHeader(),
+          if (controller.scoreList.isNotEmpty &&
+              controller.picksDefineEntity != null)
+            listView
+          else
+            emptyWidget
+        ],
       ),
     );
   }
 
-  Widget _buildItem(GameGuess item) {
-    return _ItemWidget(item);
+  SliverPersistentHeader buildHeader() {
+    return SliverPersistentHeader(
+      floating: true,
+      delegate: FixedHeightSliverHeaderDelegate(
+          child: Container(
+            height: 58.w,
+            width: double.infinity,
+            color: AppColors.c262626,
+            child: Row(
+              children: [
+                16.hGap,
+                Expanded(
+                    child: Container(
+                  height: 40.w,
+                  decoration: BoxDecoration(
+                    color: AppColors.c000000,
+                    borderRadius: BorderRadius.circular(9.w),
+                  ),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 40.w,
+                        height: 40.w,
+                        child: MtInkwell(
+                          onTap: () => controller.prePage(),
+                          child: IconWidget(
+                              iconWidth: 8.w,
+                              icon: Assets.playerUiIconArrows02),
+                        ),
+                      ),
+                      Expanded(
+                          child: PageView.builder(
+                              controller: controller.pageController,
+                              itemCount: controller.pageText.length,
+                              onPageChanged: (index) =>
+                                  controller.onPageChanged(index),
+                              itemBuilder: (context, index) {
+                                return Center(
+                                  child: Text(
+                                    controller.pageText[index],
+                                    style: 16.w5(
+                                        color: AppColors.cB3B3B3,
+                                        fontFamily: FontFamily.fOswaldMedium),
+                                  ),
+                                );
+                              })),
+                      SizedBox(
+                        width: 40.w,
+                        height: 40.w,
+                        child: MtInkwell(
+                          onTap: () => controller.nextPage(),
+                          child: IconWidget(
+                              iconWidth: 8.w,
+                              icon: Assets.playerUiIconArrows01),
+                        ),
+                      )
+                    ],
+                  ),
+                )),
+                9.hGap,
+                Container(
+                  width: 112.w,
+                  height: 40.w,
+                  decoration: BoxDecoration(
+                      color: AppColors.c3B3B3B,
+                      borderRadius: BorderRadius.circular(9.w)),
+                  child: Center(
+                    child: Text(
+                      "STANDINGS",
+                      style: 16.w5(
+                          color: AppColors.cFFFFFF,
+                          fontFamily: FontFamily.fOswaldMedium),
+                    ),
+                  ),
+                ),
+                16.hGap,
+              ],
+            ),
+          ),
+          height: 58.w),
+    );
   }
 
   @override
@@ -238,19 +242,35 @@ class _LeagueIndexPageState extends State<LeagueIndexPage>
   bool get wantKeepAlive => true;
 }
 
-class _ItemWidget extends StatelessWidget {
-  _ItemWidget(this.gameGuess) : item = gameGuess.scoresEntity;
+class _ItemWidget extends StatefulWidget {
+  const _ItemWidget({required this.gameGuess});
 
   final GameGuess gameGuess;
+
+  @override
+  State<_ItemWidget> createState() => _ItemWidgetState();
+}
+
+class _ItemWidgetState extends State<_ItemWidget> {
+  late GameGuess gameGuess;
   late ScoresEntity item;
   var globalKey = GlobalKey();
+
+  Timer? timer;
+  var gameStartTimeStr = "".obs;
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
 
   Column _buildTeamInfo(bool home) {
     return Column(
       children: [
         ImageWidget(
           url: Utils.getTeamUrl(home ? item.homeTeamId : item.awayTeamId),
-          imageFailedPath: Assets.testTestTeamLogo,
+          imageFailedPath: Assets.iconUiDefault06,
           width: 44.w,
         ),
         10.vGap,
@@ -275,36 +295,60 @@ class _ItemWidget extends StatelessWidget {
   }
 
   Widget getStatus() {
-    String text = '';
     Color color;
     if (item.status == 2) {
       color = AppColors.c000000;
-      text = "FINAL";
+      gameStartTimeStr.value = "FINAL";
     } else if (item.status == 1) {
       color = AppColors.c10A86A;
-      text =
+      gameStartTimeStr.value =
           "In the game: ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(item.gameStartTime))}";
     } else {
       color = AppColors.c000000;
-      if (MyDateUtils.isTomorrow(MyDateUtils.getNowDateTime(),
+      var nowDateMs = MyDateUtils.getNowDateMs();
+      var gameStart = MyDateUtils.getDateTimeByMs(item.gameStartTime);
+      var lastTimeMs = gameStart.millisecondsSinceEpoch - nowDateMs;
+      if (lastTimeMs <= 15 * 60 * 1000 && lastTimeMs > 0) {
+        //距离比赛开始时间小于15分钟开始倒计时
+        timer?.cancel();
+        gameStartTimeStr.value = MyDateUtils.formatDate(
+            MyDateUtils.getDateTimeByMs(lastTimeMs),
+            format: DateFormats.M_S);
+        timer = Timer.periodic(const Duration(seconds: 1), (t) {
+          var nowDateMs = MyDateUtils.getNowDateMs();
+          var gameStart = MyDateUtils.getDateTimeByMs(item.gameStartTime);
+          var lastTimeMs = gameStart.millisecondsSinceEpoch - nowDateMs;
+          if (lastTimeMs == 0) {
+            t.cancel();
+            gameStartTimeStr.value =
+                "In the game: ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(item.gameStartTime))}";
+          }
+          gameStartTimeStr.value =
+              "Coming ${MyDateUtils.formatDate(MyDateUtils.getDateTimeByMs(lastTimeMs), format: DateFormats.M_S)}";
+        });
+      } else if (MyDateUtils.isTomorrow(MyDateUtils.getNowDateTime(),
           MyDateUtils.getDateTimeByMs(item.gameStartTime))) {
-        text =
+        gameStartTimeStr.value =
             "Tomorrow ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(item.gameStartTime))}";
       } else {
-        text =
+        gameStartTimeStr.value =
             "${MyDateUtils.formatDate(MyDateUtils.getDateTimeByMs(item.gameStartTime), format: DateFormats.PARAM_M_D)} ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(item.gameStartTime))}";
       }
     }
 
-    return Text(
-      text,
-      style:
-          12.w4(color: color, height: 1, fontFamily: FontFamily.fRobotoRegular),
-    );
+    return Obx(() {
+      return Text(
+        gameStartTimeStr.value,
+        style: 12
+            .w4(color: color, height: 1, fontFamily: FontFamily.fRobotoRegular),
+      );
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    item = widget.gameGuess.scoresEntity;
+    gameGuess = widget.gameGuess;
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -350,7 +394,7 @@ class _ItemWidget extends StatelessWidget {
                       height: 44.w,
                       alignment: Alignment.center,
                       child: Text(
-                        "${item.homeTeamScore}",
+                        "${item.status == 2 ? item.homeTeamScore : "   "}",
                         style: 30.w7(
                             color: AppColors.cB3B3B3,
                             height: 1,
@@ -373,7 +417,7 @@ class _ItemWidget extends StatelessWidget {
                       height: 44.w,
                       alignment: Alignment.center,
                       child: Text(
-                        "${item.awayTeamScore}",
+                        "${item.status == 2 ? item.awayTeamScore : "   "}",
                         style: 30.w7(
                             color: AppColors.c000000,
                             height: 1,
@@ -398,7 +442,7 @@ class _ItemWidget extends StatelessWidget {
                   child: Row(
                     children: [
                       UserAvaterWidget(
-                        url: Utils.getPlayUrl(item.guessTopReviews?.playerId),
+                        url: Utils.getAvaterUrl(item.guessTopReviews?.teamLogo),
                         width: 26.w,
                         height: 26.w,
                         radius: 13.w,
@@ -448,7 +492,10 @@ class _ItemWidget extends StatelessWidget {
                     vibrate: true,
                     onTap: () => Utils.generateAndShareImage(globalKey),
                     child: IconWidget(
-                        iconWidth: 15.w, icon: Assets.testTestTeamLogo))))
+                      iconWidth: 15.w,
+                      icon: Assets.commonUiCommonIconSystemShare,
+                      iconColor: AppColors.c000000,
+                    ))))
       ],
     );
   }
@@ -619,7 +666,7 @@ class _ItemWidget extends StatelessWidget {
                     left: 11.w,
                     child: IconWidget(
                       iconWidth: 19.w,
-                      icon: Assets.testTestTeamLogo,
+                      icon: Assets.commonUiCommonIconPick,
                       iconColor: AppColors.cFFFFFF,
                     ))
             ],

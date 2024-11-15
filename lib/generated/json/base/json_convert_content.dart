@@ -305,9 +305,13 @@ class JsonConvert {
       return data.map<GuessInfosGuessReferenceValue>((Map<String, dynamic> e) =>
           GuessInfosGuessReferenceValue.fromJson(e)).toList() as M;
     }
-    if (<GuessParamEntity>[] is M) {
-      return data.map<GuessParamEntity>((Map<String, dynamic> e) =>
-          GuessParamEntity.fromJson(e)).toList() as M;
+    if (<GuessPlayerParamEntity>[] is M) {
+      return data.map<GuessPlayerParamEntity>((Map<String, dynamic> e) =>
+          GuessPlayerParamEntity.fromJson(e)).toList() as M;
+    }
+    if (<GuessGameParamEntity>[] is M) {
+      return data.map<GuessGameParamEntity>((Map<String, dynamic> e) =>
+          GuessGameParamEntity.fromJson(e)).toList() as M;
     }
     if (<GuessReferenceValue>[] is M) {
       return data.map<GuessReferenceValue>((Map<String, dynamic> e) =>
@@ -762,7 +766,8 @@ class JsonConvertClassCollection {
     (GuessInfosGuessData).toString(): GuessInfosGuessData.fromJson,
     (GuessInfosGuessReferenceValue).toString(): GuessInfosGuessReferenceValue
         .fromJson,
-    (GuessParamEntity).toString(): GuessParamEntity.fromJson,
+    (GuessPlayerParamEntity).toString(): GuessPlayerParamEntity.fromJson,
+    (GuessGameParamEntity).toString(): GuessGameParamEntity.fromJson,
     (GuessReferenceValue).toString(): GuessReferenceValue.fromJson,
     (GuessTopReviewsEntity).toString(): GuessTopReviewsEntity.fromJson,
     (MyTeamEntity).toString(): MyTeamEntity.fromJson,

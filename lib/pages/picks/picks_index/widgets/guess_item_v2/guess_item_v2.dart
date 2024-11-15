@@ -29,8 +29,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:share_plus/share_plus.dart';
 
 ///
 ///@auther gejiahui
@@ -336,7 +334,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                     onTap: () =>
                         Utils.generateAndShareImage(_repaintBoundaryKey),
                     child: IconWidget(
-                        iconWidth: 15.w, icon: Assets.testTestTeamLogo))))
+                        iconWidth: 15.w, icon: Assets.commonUiCommonIconSystemShare,iconColor: AppColors.c000000,))))
       ],
     );
   }
@@ -367,7 +365,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                       left: 11.w,
                       child: IconWidget(
                         iconWidth: 19.w,
-                        icon: Assets.testTestTeamLogo,
+                        icon: Assets.commonUiCommonIconPick,
                         iconColor: AppColors.cFFFFFF,
                       )),
               ],

@@ -116,9 +116,8 @@ class UserInfoBar extends StatelessWidget {
                     height: 43.w,
                     child: Stack(
                       children: [
-                        IconWidget(iconWidth: 20.w, icon: Assets.testTestTeamLogo),
+                        IconWidget(iconWidth: 20.w, icon: Assets.commonUiCommonStatusBarNoticeOn/* commonUiCommonStatusBarNoticeOff*/),//todo 根据数量显示图标
                         Positioned(
-                            top: 5.w,
                             right: 10.w,
                             child: Container(
                               width: 16.w,

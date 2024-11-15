@@ -49,6 +49,8 @@ class GuessItemControllerV2 extends GetxController {
         var lastTimeMs = gameStart.millisecondsSinceEpoch - nowDateMs;
         if (lastTimeMs == 0) {
           t.cancel();
+          gameStartTimeStr.value =
+          "In the game: ${MyDateUtils.formatHM_AM(gameStart)}";
         }
         gameStartTimeStr.value = MyDateUtils.formatDate(
             MyDateUtils.getDateTimeByMs(lastTimeMs),

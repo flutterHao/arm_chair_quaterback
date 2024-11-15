@@ -16,6 +16,7 @@ import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/physics/one_boundary_scroll_physics.dart';
 import 'package:arm_chair_quaterback/common/widgets/player_avatar_widget.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
+import 'package:arm_chair_quaterback/pages/league/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -53,6 +54,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
   var offsetY = 0.0.obs;
 
   late PicksIndexController picksIndexController;
+  late LeagueController leagueController;
 
   @override
   void initState() {
@@ -84,6 +86,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
   @override
   Widget build(BuildContext context) {
     picksIndexController = Get.find();
+    leagueController = Get.find();
     var queryData = MediaQuery.of(context);
     maxHeight = min(
         maxHeight,
@@ -143,9 +146,11 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
       child: GetBuilder<PicksIndexController>(
           id: PicksIndexController.idGuessConfirmDialog,
           builder: (_) {
-            var bottom = _buildBottom(context);
-            var playerList = picksIndexController.getChoiceGuessPlayers();
+            var guessPlayerList = picksIndexController.getChoiceGuessPlayers();
+            var guessGameList = leagueController.getAllChoiceData();
+            List list = [...guessGameList, ...guessPlayerList];
             modelCurrentIndex.value = 1;
+            var bottom = _buildBottom(context,list);
             return Stack(
               children: [
                 Column(
@@ -214,21 +219,47 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                   ),
                                   Expanded(
                                       child: ListView.separated(
-                                    itemCount: playerList.length,
+                                    itemCount: list.length,
                                     controller: scrollController,
                                     physics: OneBoundaryScrollPhysics(
                                         scrollController: scrollController),
                                     itemBuilder: (context, index) {
-                                      var player = playerList[index];
-                                      int currentIndex = player.status;
-                                      bool lastItem =
-                                          index == playerList.length - 1;
+                                      var item = list[index];
+                                      bool lastItem = index == list.length - 1;
+                                      if (item is GameGuess) {
+                                        var homeTeamInfo = Utils.getTeamInfo(
+                                            item.scoresEntity.homeTeamId);
+                                        var awayTeamInfo = Utils.getTeamInfo(
+                                            item.scoresEntity.awayTeamId);
+                                        return Container(
+                                          height: 70.w,
+                                          margin: EdgeInsets.only(
+                                              left: 16.w,
+                                              right: 16.w,
+                                              bottom: lastItem ? 20.w : 0),
+                                          decoration: BoxDecoration(
+                                              color: AppColors.cF2F2F2,
+                                              borderRadius:
+                                                  BorderRadius.circular(16.w)),
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 11.w),
+                                          alignment:
+                                              FractionalOffset.centerLeft,
+                                          child: Text(
+                                            "${homeTeamInfo.shortEname} VS ${awayTeamInfo.shortEname}",
+                                            style:
+                                                16.w5(color: AppColors.c000000),
+                                          ),
+                                        );
+                                      }
+                                      var player = list[index];
+                                      int choice = player.status;
                                       return Container(
                                         margin: EdgeInsets.only(
                                             bottom: lastItem ? 20.w : 0),
                                         child: _ItemWidget(
                                           index: index,
-                                          currentIndex: currentIndex,
+                                          choice: choice,
                                           player: player,
                                           picksIndexController:
                                               picksIndexController,
@@ -262,19 +293,18 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
     );
   }
 
-  Widget _buildBottom(BuildContext context) {
+  Widget _buildBottom(BuildContext context,List list) {
     return Obx(() {
-      var players = picksIndexController.getChoiceGuessPlayers();
       var json = picksIndexController.picksDefine.toJson();
-      var key = "flexBet${players.length}";
+      var key = "flexBet${list.length}";
       List<double> flexBet = [];
       if (json.containsKey(key)) {
         flexBet = json[key];
       }
       List<double> powerBet = picksIndexController.picksDefine.powerBetWin;
-      var length = players.length;
+      var length = list.length;
       var powerIndex = length - 1;
-      if(powerIndex<0){
+      if (powerIndex < 0) {
         powerIndex = 0;
       }
       double maxBet = modelCurrentIndex.value == 0
@@ -342,7 +372,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                   child: ListView.builder(
                                       itemCount: flexBet.length,
                                       itemBuilder: (context, index) {
-                                        var num = players.length - index;
+                                        var num = list.length - index;
                                         var bet =
                                             flexBet[flexBet.length - 1 - index];
                                         return _buildbet(
@@ -444,7 +474,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                     children: [
                       Text.rich(TextSpan(children: [
                         TextSpan(
-                          text: "${players.length}",
+                          text: "${list.length}",
                           style: 18.w7(color: AppColors.c262626, height: 1),
                         ),
                         TextSpan(
@@ -702,8 +732,8 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                                   top: 5.5.w,
                                                   child: IconWidget(
                                                     iconWidth: 17.w,
-                                                    icon:
-                                                        Assets.iconUiIconConfirm,
+                                                    icon: Assets
+                                                        .iconUiIconConfirm,
                                                     iconColor:
                                                         AppColors.c31E99E,
                                                   ))
@@ -791,13 +821,13 @@ class _ItemWidget extends StatefulWidget {
   const _ItemWidget({
     required this.index,
     required this.player,
-    required this.currentIndex,
+    required this.choice,
     required this.picksIndexController,
   });
 
   final int index;
   final PicksPlayerV2 player;
-  final int currentIndex;
+  final int choice;
   final PicksIndexController picksIndexController;
 
   @override
@@ -840,7 +870,7 @@ class _ItemWidgetState extends State<_ItemWidget>
   Widget build(BuildContext context) {
     var index = widget.index;
     var player = widget.player;
-    var currentIndex = widget.currentIndex;
+    var currentIndex = widget.choice;
     return Slidable(
       controller: slidableController,
       key: ValueKey("$index"),
@@ -919,7 +949,7 @@ class _ItemWidgetState extends State<_ItemWidget>
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "${player.guessInfo.guessReferenceValue[ParamUtils.getProKey(player.tabStr)]??0}",
+                    "${player.guessInfo.guessReferenceValue[ParamUtils.getProKey(player.tabStr)] ?? 0}",
                     style: 18.w7(color: AppColors.c262626, height: 1),
                   ),
                   5.vGap,

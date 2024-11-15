@@ -7,6 +7,9 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
+import 'package:arm_chair_quaterback/pages/league/controller.dart';
+import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
+import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/picks_guess_confirm_dialog_v2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -66,10 +69,103 @@ class _HomePageState extends State<HomePage>
                         ),
                       ),
                       SizedBox(
-                        height: 66.w+MediaQuery.of(context).padding.bottom,
+                        height: 66.w + MediaQuery.of(context).padding.bottom,
                       ),
                     ],
                   ),
+                  Obx(() {
+                    var picksIndexController = Get.find<PicksIndexController>();
+                    var leagueController = Get.find<LeagueController>();
+                    var value = picksIndexController.choiceSize.value;
+                    value += leagueController.choiceSize.value;
+                    return AnimatedPositioned(
+                        duration: const Duration(milliseconds: 300),
+                        left: 0,
+                        right: 0,
+                        bottom: value <= 0
+                            ? 0.w
+                            : 75.w +
+                                7.w +
+                                MediaQuery.of(context).padding.bottom,
+                        child: Center(
+                          child: MtInkwell(
+                            scaleX: true,
+                            minScale: 0.95,
+                            onTap: () async {
+                              await showModalBottomSheet(
+                                  isScrollControlled: true,
+                                  backgroundColor: AppColors.cTransparent,
+                                  context: Get.context!,
+                                  builder: (context) {
+                                    return const PicksGuessConfirmDialogV2();
+                                  });
+                              picksIndexController.batchDeleteOpen.value =
+                                  false;
+                            },
+                            child: Container(
+                                decoration: BoxDecoration(
+                                    color: AppColors.c000000,
+                                    borderRadius: BorderRadius.circular(16.w),
+                                    border: Border.all(
+                                        color: AppColors.cFF7954, width: 2.w)),
+                                width: 360.w,
+                                height: 66.w,
+                                padding:
+                                    EdgeInsets.only(left: 17.w, right: 10.w),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "CREATE A COMBO",
+                                      style: 16.w5(
+                                          color: AppColors.cFFFFFF,
+                                          height: 1,
+                                          fontFamily: FontFamily.fOswaldMedium),
+                                    ),
+                                    9.vGap,
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: List.generate(6, (index) {
+                                            Color color = AppColors.c4D4D4D;
+                                            if (index + 1 <= value) {
+                                              color = AppColors.cFF7954;
+                                            }
+                                            return IconWidget(
+                                              iconWidth: 19.w,
+                                              icon: Assets.commonUiCommonIconPick,
+                                              iconColor: color,
+                                            );
+                                          }),
+                                        ),
+                                        Container(
+                                          height: 24.w,
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 13.w),
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                              color: AppColors.cFF7954,
+                                              borderRadius:
+                                                  BorderRadius.circular(12.w)),
+                                          child: Text(
+                                            "${value > 0 ? picksIndexController.picksDefine.powerBetWin[value - 1] : "0"}x",
+                                            style: 16.w5(
+                                                color: AppColors.c000000,
+                                                height: 1,
+                                                fontFamily:
+                                                    FontFamily.fOswaldMedium),
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                )),
+                          ),
+                        ));
+                  }),
                   Positioned(
                     bottom: 0,
                     left: 0,
@@ -106,7 +202,8 @@ class _HomePageState extends State<HomePage>
                                         padding: EdgeInsets.all(4.w),
                                         child: Container(
                                             height: 58.w,
-                                            margin: EdgeInsets.only(bottom: 9.w),
+                                            margin:
+                                                EdgeInsets.only(bottom: 9.w),
                                             decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(5.w),
@@ -169,7 +266,8 @@ class _HomePageState extends State<HomePage>
                 color: select
                     ? AppColors.c000000
                     : AppColors.c000000.withOpacity(0.3),
-                height: 1,fontFamily: FontFamily.fRobotoRegular),
+                height: 1,
+                fontFamily: FontFamily.fRobotoRegular),
           )
         ],
       ),

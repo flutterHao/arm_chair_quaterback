@@ -4,7 +4,7 @@ import 'dart:convert';
 export 'package:arm_chair_quaterback/generated/json/guess_param_entity.g.dart';
 
 @JsonSerializable()
-class GuessParamEntity {
+class GuessPlayerParamEntity {
   late int awayTeamId;
   late int gameId;
   late int playerId;
@@ -12,13 +12,39 @@ class GuessParamEntity {
   late String guessAttr;
   late int guessChoice;
   late double guessReferenceValue;
+  int type =1;
 
-  GuessParamEntity();
+  GuessPlayerParamEntity();
 
-  factory GuessParamEntity.fromJson(Map<String, dynamic> json) =>
-      $GuessParamEntityFromJson(json);
+  factory GuessPlayerParamEntity.fromJson(Map<String, dynamic> json) =>
+      $GuessPlayerParamEntityFromJson(json);
 
-  Map<String, dynamic> toJson() => $GuessParamEntityToJson(this);
+  Map<String, dynamic> toJson() => $GuessPlayerParamEntityToJson(this);
+
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
+}
+
+
+@JsonSerializable()
+class GuessGameParamEntity {
+  late int awayTeamId;
+  late int homeTeamId;
+  late int gameId;
+  late int gameStartTime;
+  late int guessChoice;
+  int type =2;
+  //后端要求，前端不使用
+  String guessAttr="";
+
+  GuessGameParamEntity();
+
+  factory GuessGameParamEntity.fromJson(Map<String, dynamic> json) =>
+      $GuessGameParamEntityFromJson(json);
+
+  	Map<String, dynamic> toJson() => $GuessGameParamEntityToJson(this);
 
   @override
   String toString() {

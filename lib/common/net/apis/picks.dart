@@ -58,7 +58,7 @@ class PicksApi {
   }
 
   static Future guess(
-      int type, List<GuessParamEntity> guessParams, int newsId) async {
+      int type, List guessParams, int newsId) async {
     //newsId:新闻id，不是新闻竞猜填0
     var json = await httpUtil.post(Api.guess,
         data: ({

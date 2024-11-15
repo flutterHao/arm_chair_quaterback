@@ -15,6 +15,8 @@ import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/utils/click_feed_back.dart';
 import 'package:arm_chair_quaterback/common/utils/param_utils.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
+import 'package:arm_chair_quaterback/pages/league/controller.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -59,7 +61,7 @@ class PicksIndexController extends GetxController
   var betCount = 0.0.obs; // 总赔率
   var costCount = 0.0.obs; // 总花费
   var choiceSize = 0.obs; //选中个数
-  var maxBet = 0.0.obs;//赔率
+  var maxBet = 0.0.obs; //赔率
 
   var batchDeleteOpen = false.obs;
 
@@ -131,34 +133,51 @@ class PicksIndexController extends GetxController
   }
 
   guess(int type) {
-    List<GuessParamEntity> params = [];
-    for (int i = 0; i < guessGamePlayers.keys.length; i++) {
-      var key = guessGamePlayers.keys.toList()[i];
-      var list2 = guessGamePlayers[key]!;
-      for (int i1 = 0; i1 < list2.length; i1++) {
-        var playerV2 = list2[i1];
-        if (playerV2.status != -1) {
-          GuessParamEntity guessParamEntity = GuessParamEntity();
-          guessParamEntity.awayTeamId = playerV2.awayTeamInfo!.id;
-          guessParamEntity.gameId = playerV2.guessInfo.gameId;
-          guessParamEntity.playerId = playerV2.guessInfo.playerId;
-          guessParamEntity.gameStartTime = playerV2.guessInfo.gameStartTime;
-          guessParamEntity.guessAttr = playerV2.tabStr;
-          guessParamEntity.guessChoice = playerV2.status == 0 ? 1 : 2;
-          guessParamEntity.guessReferenceValue = playerV2
-              .guessInfo.guessReferenceValue[ParamUtils.getProKey(playerV2.tabStr)]??0;
-          params.add(guessParamEntity);
-        }
-      }
-    }
+    List params = [];
+    //组装已下注的球员的参数列表
+    var fold = guessGamePlayers.keys.fold([], (p,key){
+      var list = guessGamePlayers[key]!;
+      var list2 = list.where((e)=> e.status != -1).map((playerV2){
+        GuessPlayerParamEntity guessParamEntity = GuessPlayerParamEntity();
+        guessParamEntity.awayTeamId = playerV2.awayTeamInfo!.id;
+        guessParamEntity.gameId = playerV2.guessInfo.gameId;
+        guessParamEntity.playerId = playerV2.guessInfo.playerId;
+        guessParamEntity.gameStartTime = playerV2.guessInfo.gameStartTime;
+        guessParamEntity.guessAttr = playerV2.tabStr;
+        guessParamEntity.guessChoice = playerV2.status == 0 ? 1 : 2;
+        guessParamEntity.guessReferenceValue = playerV2.guessInfo
+            .guessReferenceValue[ParamUtils.getProKey(playerV2.tabStr)] ??
+            0;
+        return guessParamEntity;
+      }).toList();
+      p.addAll(list2);
+      return p;
+    });
+    params.addAll(fold);
+    //组装已下注的赛程参数列表
+    var leagueController = Get.find<LeagueController>();
+    List<GameGuess> guessGameList =
+        leagueController.getAllChoiceData();
+    var list = guessGameList.map((e) {
+      var guessGameParamEntity = GuessGameParamEntity();
+      guessGameParamEntity.awayTeamId = e.scoresEntity.awayTeamId;
+      guessGameParamEntity.homeTeamId = e.scoresEntity.homeTeamId;
+      guessGameParamEntity.gameId = e.scoresEntity.gameId;
+      guessGameParamEntity.gameStartTime = e.scoresEntity.gameStartTime;
+      guessGameParamEntity.guessChoice = e.choiceTeamId.value;
+      return guessGameParamEntity;
+    }).toList();
+    params.addAll(list);
     PicksApi.guess(type, params, 0).then((result) {
       Get.back();
       cleanAll();
       _initData();
       Get.find<HomeController>().refreshMoneyCoinWidget();
+      leagueController.changeGuessSuccessDataStatusAndRefreshUi();
       ClickFeedBack.selectionClick();
       EasyLoading.showToast("Pick successful!you can check it in History");
     }, onError: (e) {
+      print('-_- : ${e.stackTrace}');
       EasyLoading.showToast("SERVER ERROR");
     });
   }
@@ -226,15 +245,16 @@ class PicksIndexController extends GetxController
       guessWinningStreak = guessGameInfo.guessWinningStreak;
       var nbaPlayers = results[1] as NbaPlayerInfosEntity;
       picksDefine = results[2];
-      List<GuessTopReviewsEntity> guessTopReviewsEntity = results[5] as List<GuessTopReviewsEntity>;
+      List<GuessTopReviewsEntity> guessTopReviewsEntity =
+          results[5] as List<GuessTopReviewsEntity>;
       Map<String, List<PicksPlayerV2>> temp = {};
       List<NbaTeamEntity> teamList = results[3] as List<NbaTeamEntity>;
       for (int i = 0; i < res.keys.length; i++) {
         List<PicksPlayerV2> item = [];
         var key = res.keys.toList()[i];
-        var list = res[key]??[];
+        var list = res[key] ?? [];
         for (int i1 = 0; i1 < list.length; i1++) {
-          GuessGameInfoEntity guessGameInfoEntity =list[i1];
+          GuessGameInfoEntity guessGameInfoEntity = list[i1];
           PicksPlayerV2 playerV2 = PicksPlayerV2();
           playerV2.tabStr = key;
           playerV2.baseInfoList = nbaPlayers.playerBaseInfoList
@@ -244,7 +264,8 @@ class PicksIndexController extends GetxController
           playerV2.awayTeamInfo = teamList
               .firstWhereOrNull((e) => e.id == guessGameInfoEntity.awayTeamId);
           playerV2.guessInfo = guessGameInfoEntity;
-          playerV2.guessTopReviews = guessTopReviewsEntity.firstWhereOrNull((e)=> e.playerId == guessGameInfoEntity.playerId);
+          playerV2.guessTopReviews = guessTopReviewsEntity.firstWhereOrNull(
+              (e) => e.playerId == guessGameInfoEntity.playerId);
           item.add(playerV2);
         }
 
@@ -265,7 +286,8 @@ class PicksIndexController extends GetxController
 
       ///rank 排行榜
       rankInfo = results[4] as RankListEntity;
-      tabController ??= TabController(length: guessGamePlayers.keys.length, vsync: this);
+      tabController ??=
+          TabController(length: guessGamePlayers.keys.length, vsync: this);
 
       if (guessGamePlayers.isEmpty && rankInfo.ranks.isEmpty) {
         loadStatusRx.value = LoadDataStatus.noData;
