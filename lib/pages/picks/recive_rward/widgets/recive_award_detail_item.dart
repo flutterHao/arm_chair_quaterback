@@ -1,3 +1,5 @@
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
@@ -22,13 +24,12 @@ class ReceiveAwardDetailItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 69.w,
-      margin: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 9.w),
-      padding: EdgeInsets.only(left: 12.w, right: 10.w),
-      decoration: BoxDecoration(
-          color: AppColors.cF2F2F2, borderRadius: BorderRadius.circular(20.w)),
-      child: Row(
+
+    Widget child;
+    if(player.guessData?.type == 2){
+      child = Center(child: ImageWidget(url: Utils.getTeamUrl(player.guessData?.guessChoice),width: 42.w,));
+    }else{
+      child = Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -95,7 +96,7 @@ class ReceiveAwardDetailItem extends StatelessWidget {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8.w),
                         border:
-                            Border.all(width: 0.5, color: AppColors.ccccccc)),
+                        Border.all(width: 0.5, color: AppColors.ccccccc)),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -105,7 +106,7 @@ class ReceiveAwardDetailItem extends StatelessWidget {
                             icon: Assets.iconUiIconUp,
                             iconColor: AppColors.cFF7954,
                             rotateAngle:
-                                player.guessData?.guessChoice == 1 ? 0 : 180),
+                            player.guessData?.guessChoice == 1 ? 0 : 180),
                         9.hGap,
                         Text(
                           player.guessData?.guessChoice == 1 ? "MORE" : "LESS",
@@ -159,7 +160,16 @@ class ReceiveAwardDetailItem extends StatelessWidget {
             ),
           )
         ],
-      ),
+      );
+    }
+    return Container(
+      height: 69.w,
+      width: double.infinity,
+      margin: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 9.w),
+      padding: EdgeInsets.only(left: 12.w, right: 10.w),
+      decoration: BoxDecoration(
+          color: AppColors.cF2F2F2, borderRadius: BorderRadius.circular(20.w)),
+      child: child,
     );
   }
 }

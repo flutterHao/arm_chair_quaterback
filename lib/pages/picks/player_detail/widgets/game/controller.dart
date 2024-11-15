@@ -165,7 +165,7 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
       }
     }
 
-    Future.wait(futures as List<Future>).then((result) {
+    Future.wait(futures).then((result) {
       capList = (result[0] as NbaPlayerInfosEntity)
           .playerDataCapList
           .firstWhere((e) => e.playerId == arguments.playerId);
@@ -181,11 +181,11 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
 
       getDataSource(capList.toJson());
       if (cacheUuid != null) {
-        uuidPlayerInfo = result[4] as TeamPlayerInfoEntity;
+        uuidPlayerInfo = result[3] as TeamPlayerInfoEntity;
         getDataSource(uuidPlayerInfo!.upStarBase?.toJson() ?? {});
-        starUpDefineEntity = (result[2] as List<StarUpDefineEntity>).firstWhere(
+        starUpDefineEntity = (result[1] as List<StarUpDefineEntity>).firstWhere(
             (e) => e.starUp == uuidPlayerInfo?.getNextBreakThroughGrade());
-        var allTeamPlayer = result[3] as List<AllTeamPlayersByUpStarEntity>;
+        var allTeamPlayer = result[2] as List<AllTeamPlayersByUpStarEntity>;
         var playerBaseInfoList =
             (result[0] as NbaPlayerInfosEntity).playerBaseInfoList;
         var selfBaseInfoList = playerBaseInfoList

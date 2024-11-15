@@ -167,7 +167,7 @@ class SummaryController extends GetxController {
 
     key = key.toLowerCase();
     var guessInfos = NbaPlayerBaseInfoGuessInfosProperty.fromJson(
-        nbaPlayerBaseInfoEntity?.guessInfos.toJson()[key]);
+        nbaPlayerBaseInfoEntity?.guessInfos.toJson()[key]??{});
     var picks = guessInfos.picks;
     if (picks == null) {
       return null;
@@ -204,19 +204,22 @@ class SummaryController extends GetxController {
   }
 
   NbaPlayerBaseInfoGuessInfosPtsCommunityPick? getCommunityPick() {
-    NbaPlayerBaseInfoGuessInfosProperty nbaPlayerBaseInfoGuessInfosProperty =
+    NbaPlayerBaseInfoGuessInfosProperty? nbaPlayerBaseInfoGuessInfosProperty =
         getGuessInfo();
-    return nbaPlayerBaseInfoGuessInfosProperty.communityPick;
+    return nbaPlayerBaseInfoGuessInfosProperty?.communityPick;
   }
 
   List<NbaPlayerBaseInfoGuessInfosPtsTwoTeamGames> getVsTeams() {
     return nbaPlayerBaseInfoEntity?.twoTeamGames ?? [];
   }
 
-  NbaPlayerBaseInfoGuessInfosProperty getGuessInfo() {
+  NbaPlayerBaseInfoGuessInfosProperty? getGuessInfo() {
     var currentTabKey = getCurrentTabKey();
     var json = nbaPlayerBaseInfoEntity?.guessInfos
         .toJson()[currentTabKey.toLowerCase()];
+    if(json == null){
+      return null;
+    }
     var nbaPlayerBaseInfoGuessInfosProperty =
         NbaPlayerBaseInfoGuessInfosProperty.fromJson(json);
     return nbaPlayerBaseInfoGuessInfosProperty;

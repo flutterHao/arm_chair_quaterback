@@ -210,6 +210,22 @@ ReciveAwardV2GuessInfoGuessData $ReciveAwardV2GuessInfoGuessDataFromJson(
   if (status != null) {
     reciveAwardV2GuessInfoGuessData.status = status;
   }
+  final int? type = jsonConvert.convert<int>(json['type']);
+  if (type != null) {
+    reciveAwardV2GuessInfoGuessData.type = type;
+  }
+  final int? homeTeamScore = jsonConvert.convert<int>(json['homeTeamScore']);
+  if (homeTeamScore != null) {
+    reciveAwardV2GuessInfoGuessData.homeTeamScore = homeTeamScore;
+  }
+  final int? awayTeamScore = jsonConvert.convert<int>(json['awayTeamScore']);
+  if (awayTeamScore != null) {
+    reciveAwardV2GuessInfoGuessData.awayTeamScore = awayTeamScore;
+  }
+  final int? homeTeamId = jsonConvert.convert<int>(json['homeTeamId']);
+  if (homeTeamId != null) {
+    reciveAwardV2GuessInfoGuessData.homeTeamId = homeTeamId;
+  }
   return reciveAwardV2GuessInfoGuessData;
 }
 
@@ -228,6 +244,10 @@ Map<String, dynamic> $ReciveAwardV2GuessInfoGuessDataToJson(
   data['awayTeamId'] = entity.awayTeamId;
   data['playerId'] = entity.playerId;
   data['status'] = entity.status;
+  data['type'] = entity.type;
+  data['homeTeamScore'] = entity.homeTeamScore;
+  data['awayTeamScore'] = entity.awayTeamScore;
+  data['homeTeamId'] = entity.homeTeamId;
   return data;
 }
 
@@ -245,6 +265,10 @@ extension ReciveAwardV2GuessInfoGuessDataExtension on ReciveAwardV2GuessInfoGues
     int? awayTeamId,
     int? playerId,
     int? status,
+    int? type,
+    int? homeTeamScore,
+    int? awayTeamScore,
+    int? homeTeamId,
   }) {
     return ReciveAwardV2GuessInfoGuessData()
       ..gameId = gameId ?? this.gameId
@@ -258,6 +282,10 @@ extension ReciveAwardV2GuessInfoGuessDataExtension on ReciveAwardV2GuessInfoGues
       ..winPro = winPro ?? this.winPro
       ..awayTeamId = awayTeamId ?? this.awayTeamId
       ..playerId = playerId ?? this.playerId
-      ..status = status ?? this.status;
+      ..status = status ?? this.status
+      ..type = type ?? this.type
+      ..homeTeamScore = homeTeamScore ?? this.homeTeamScore
+      ..awayTeamScore = awayTeamScore ?? this.awayTeamScore
+      ..homeTeamId = homeTeamId ?? this.homeTeamId;
   }
 }

@@ -54,6 +54,8 @@ class ReciveAwardV2GuessInfo {
 class ReciveAwardV2GuessInfoGuessData {
   late int gameId;
   late String guessAttr;
+  /// type 1: 1 more 2 less
+  /// type 2: 队伍id
   late int guessChoice;
   late int gameStartTime;
   late List<Awards> awards;
@@ -64,6 +66,12 @@ class ReciveAwardV2GuessInfoGuessData {
   late int awayTeamId;
   late int playerId;
   late int status;
+  ///type=1：球员，type=2：比赛
+  late int type;
+  late int homeTeamScore;
+  late int awayTeamScore;
+  late int homeTeamId;
+
 
   ReciveAwardV2GuessInfoGuessData();
 

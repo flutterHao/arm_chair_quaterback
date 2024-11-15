@@ -56,7 +56,7 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
             child: controller.picksDefineEntity == null
                 ? Center(child: Obx(() {
                     return LoadStatusWidget(
-                      text: controller.loadStatusRx.value.desc,
+                      loadDataStatus: controller.loadStatusRx.value,
                     );
                   }))
                 : NestedScrollView(
@@ -177,8 +177,6 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
                                                                   right: 5.w),
                                                           decoration:
                                                               BoxDecoration(
-
-                                                                  ///todo 判断条件
                                                                   color: controller.teamSimpleEntity!.lastGuess[
                                                                               index] ==
                                                                           "0"

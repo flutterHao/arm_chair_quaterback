@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
@@ -137,14 +138,25 @@ class _ReceiveAwardItemState extends State<ReceiveAwardItem> {
                                                       color: AppColors.c666666),
                                                 ),
                                               )
-                                            : PlayerAvatarWidget(
-                                                width: 40.w,
-                                                playerId: controller.data[index]
-                                                        .guessData?.playerId ??
-                                                    0,
-                                                backgroundColor:
-                                                    AppColors.cTransparent,
-                                              )),
+                                            : controller.data[index].guessData
+                                                        ?.type ==
+                                                    2
+                                                ? ImageWidget(
+                                                    url: Utils.getTeamUrl(
+                                                        controller
+                                                            .data[index]
+                                                            .guessData
+                                                            ?.guessChoice),width: 40.w,)
+                                                : PlayerAvatarWidget(
+                                                    width: 40.w,
+                                                    playerId: controller
+                                                            .data[index]
+                                                            .guessData
+                                                            ?.playerId ??
+                                                        0,
+                                                    backgroundColor:
+                                                        AppColors.cTransparent,
+                                                  )),
                                   ),
                                 ));
                           }),

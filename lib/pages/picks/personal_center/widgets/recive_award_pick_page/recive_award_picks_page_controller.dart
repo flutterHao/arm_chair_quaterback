@@ -91,11 +91,14 @@ class ReciveAwardPicksPageController extends GetxController
         List<PicksPlayer> players = [];
         for (var r in l.guessData) {
           PicksPlayer player = PicksPlayer();
-          player.baseInfoList = result2.playerBaseInfoList
-              .firstWhere((e) => r.playerId == e.playerId);
-          player.dataAvgList = result2.playerDataAvgList
-              .firstWhere((e) => r.playerId == e.playerId);
-          player.awayTeamInfo = result1.firstWhere((e) => e.id == r.awayTeamId);
+          if(r.type == 1) {
+            player.baseInfoList = result2.playerBaseInfoList
+                .firstWhere((e) => r.playerId == e.playerId);
+            player.dataAvgList = result2.playerDataAvgList
+                .firstWhere((e) => r.playerId == e.playerId);
+            player.awayTeamInfo =
+                result1.firstWhere((e) => e.id == r.awayTeamId);
+          }
           player.reciveAwardInfo = l;
           player.guessData = r;
           players.add(player);
@@ -108,11 +111,14 @@ class ReciveAwardPicksPageController extends GetxController
         List<PicksPlayer> players = [];
         for (var r in l.guessData) {
           PicksPlayer player = PicksPlayer();
-          player.baseInfoList = result2.playerBaseInfoList
-              .firstWhere((e) => r.playerId == e.playerId);
-          player.dataAvgList = result2.playerDataAvgList
-              .firstWhere((e) => r.playerId == e.playerId);
-          player.awayTeamInfo = result1.firstWhere((e) => e.id == r.awayTeamId);
+          if(r.type == 1) {
+            player.baseInfoList = result2.playerBaseInfoList
+                .firstWhere((e) => r.playerId == e.playerId);
+            player.dataAvgList = result2.playerDataAvgList
+                .firstWhere((e) => r.playerId == e.playerId);
+            player.awayTeamInfo =
+                result1.firstWhere((e) => e.id == r.awayTeamId);
+          }
           player.reciveAwardInfo = l;
           players.add(player);
         }
