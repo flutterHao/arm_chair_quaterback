@@ -2,12 +2,13 @@
  * @Description: 新闻的底部按钮点赞分享评论
  * @Author: lihonghao
  * @Date: 2024-10-17 17:02:35
- * @LastEditTime: 2024-11-14 18:38:55
+ * @LastEditTime: 2024-11-15 18:12:22
  */
 import 'dart:math';
 
+import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
-import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
+
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
@@ -21,7 +22,7 @@ import 'package:get/get.dart';
 
 class NewsBottomButton extends StatelessWidget {
   const NewsBottomButton(this.detail, {super.key});
-  final NewsDetail detail;
+  final NewsListDetail detail;
 
   NewsDetailController get controller => Get.find<NewsDetailController>();
 
@@ -64,7 +65,7 @@ class NewsBottomButton extends StatelessWidget {
         _container(
           width: 113.w,
           child: Obx(() {
-            int like = detail.likes! - detail.unLikes!;
+            int like = detail.likes - detail.unLikes;
             return Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -80,10 +81,10 @@ class NewsBottomButton extends StatelessWidget {
                         InkWell(
                           child: IconWidget(
                             iconWidth: 18.w,
-                            icon: detail.isLike?.value == 1
+                            icon: detail.isLike.value == 1
                                 ? Assets.iconUiIconLike01
                                 : Assets.iconUiIconLike02,
-                            iconColor: detail.isLike?.value == 1
+                            iconColor: detail.isLike.value == 1
                                 ? AppColors.cFF7954
                                 : AppColors.c000000,
                           ),
@@ -93,7 +94,7 @@ class NewsBottomButton extends StatelessWidget {
                           child: Text(
                             "${like > 0 ? numFormat(like) : 0}",
                             style: 14.w4(
-                              color: detail.isLike?.value == 1
+                              color: detail.isLike.value == 1
                                   ? AppColors.cFF7954
                                   : AppColors.c000000,
                             ),
@@ -114,6 +115,7 @@ class NewsBottomButton extends StatelessWidget {
                   onTap: () => controller.unLikeNews(detail),
                   child: Container(
                     width: 37.w,
+                    padding: EdgeInsets.only(top: 3.w),
                     alignment: Alignment.center,
                     // padding: EdgeInsets.symmetric(horizontal: 7.w),
                     child: Transform(
@@ -121,11 +123,11 @@ class NewsBottomButton extends StatelessWidget {
                       transform: Matrix4.rotationX(pi),
                       child: IconWidget(
                         iconWidth: 18.w,
-                        icon: detail.isLike?.value == -1
+                        icon: detail.isLike.value == -1
                             ? Assets.iconUiIconLike01
                             : Assets.iconUiIconLike02,
-                        iconColor: detail.isLike?.value == -1
-                            ? AppColors.cFF7954
+                        iconColor: detail.isLike.value == -1
+                            ? AppColors.c2D84EF
                             : AppColors.c000000,
                       ),
                     ),
@@ -142,7 +144,7 @@ class NewsBottomButton extends StatelessWidget {
             width: 76.w,
             onTap: () {
               Get.find<CommentController>()
-                  .getReviews(detail.id!, isRefresh: true);
+                  .getReviews(detail.id, isRefresh: true);
 
               showModalBottomSheet(
                 isScrollControlled: true,
@@ -168,7 +170,7 @@ class NewsBottomButton extends StatelessWidget {
                   return Container(
                     margin: EdgeInsets.only(left: 7.w),
                     child: Text(
-                      numFormat(detail.reviewsCount!.value),
+                      numFormat(detail.reviewsCount.value),
                       style: 14.w4(color: AppColors.c000000),
                     ),
                   );

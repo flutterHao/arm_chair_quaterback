@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 21:12:10
- * @LastEditTime: 2024-11-14 19:23:32
+ * @LastEditTime: 2024-11-15 09:59:59
  */
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -14,6 +14,7 @@ import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/recover_dialog.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -80,10 +81,8 @@ class MatchCard extends GetView<TeamIndexController> {
                 Expanded(
                   child: MtInkwell(
                     minScale: 0.9,
-                    onTap: () async {
-                      await Get.toNamed(RouteNames.teamTeamBattle);
-                      controller.getBattleBox();
-                      controller.getTeamInfo();
+                    onTap: () {
+                      controller.matchBattle();
                     },
                     child: Stack(
                       alignment: Alignment.centerRight,

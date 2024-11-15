@@ -1,5 +1,6 @@
+import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
-import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
+
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
@@ -46,7 +47,7 @@ class NewsListView extends GetView<NewListController> {
 
 class NewsItemView extends GetView<NewListController> {
   const NewsItemView({super.key, required this.item});
-  final NewsDetail item;
+  final NewsListDetail item;
 
   @override
   Widget build(BuildContext context) {

@@ -2,9 +2,10 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-18 15:38:51
- * @LastEditTime: 2024-11-05 18:55:33
+ * @LastEditTime: 2024-11-15 17:40:04
  */
-import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
+
+import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comment_controller.dart';
@@ -21,7 +22,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class CommentsDialog extends GetView<CommentController> {
   const CommentsDialog({super.key, required this.detail});
-  final NewsDetail detail;
+  final NewsListDetail detail;
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +91,7 @@ class CommentsDialog extends GetView<CommentController> {
 
 class CommentsList extends GetView<CommentController> {
   const CommentsList({super.key, required this.detail});
-  final NewsDetail detail;
+  final NewsListDetail detail;
 
   @override
   Widget build(BuildContext context) {

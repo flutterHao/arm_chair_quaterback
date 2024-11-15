@@ -2,10 +2,10 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:23:17
- * @LastEditTime: 2024-11-14 18:47:40
+ * @LastEditTime: 2024-11-15 17:34:47
  */
 
-import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
+import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -41,7 +41,7 @@ class NewsDetailController extends GetxController {
   //   }).catchError((e) {});
   // }
 
-  void likeNews(NewsDetail item) {
+  void likeNews(NewsListDetail item) {
     // if (item.isLike?.value == 1) return;
     NewsApi.newsLike(item.id!).then((value) {
       if (item.isLike?.value == 0) {
@@ -64,7 +64,7 @@ class NewsDetailController extends GetxController {
     });
   }
 
-  void unLikeNews(NewsDetail item) {
+  void unLikeNews(NewsListDetail item) {
     // if (item.isLike?.value == -1) return;
     NewsApi.newsUnLike(item.id!).then((value) {
       if (item.isLike?.value == 1) {

@@ -1,0 +1,307 @@
+import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
+
+import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
+import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/utils/image_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/vertival_drag_back_widget.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/news/new_detail/controller.dart';
+import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comment_controller.dart';
+import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comment_item.dart';
+import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comments_dialog.dart';
+import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/emoji_widget.dart';
+import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/news_bottom_button.dart';
+import 'package:common_utils/common_utils.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+
+class NewsListItem extends StatelessWidget {
+  const NewsListItem({super.key, required this.newsDetail});
+  final NewsListDetail newsDetail;
+
+  // GlobalKey get _globalKey => GlobalKey();
+
+  Widget _head(globalKey) {
+    return Row(
+      children: [
+        ImageWidget(
+          url: newsDetail.imgUrl,
+          width: 32.w,
+          height: 32.w,
+          fit: BoxFit.cover,
+          borderRadius: BorderRadius.circular(16.w),
+        ),
+        7.5.hGap,
+        Container(
+          constraints: BoxConstraints(maxWidth: 120.w),
+          child: Text(
+            newsDetail.source,
+            overflow: TextOverflow.ellipsis,
+            style: 14.w4(
+              color: AppColors.c000000,
+              fontFamily: FontFamily.fRobotoRegular,
+            ),
+          ),
+        ),
+        9.hGap,
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.w),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              color: AppColors.c000000,
+              borderRadius: BorderRadius.circular(4.w)),
+          child: Text(
+            "OFFICIAL",
+            style: 12.w4(
+              color: AppColors.cFFFFFF,
+              fontFamily: FontFamily.fOswaldMedium,
+            ),
+          ),
+        ),
+        const Expanded(child: SizedBox.shrink()),
+        Text(
+          Utils.timeAgo(newsDetail.postTime),
+          style: 12.w4(
+            color: AppColors.cB3B3B3,
+            fontFamily: FontFamily.fRobotoRegular,
+          ),
+        ),
+        13.hGap,
+        InkWell(
+          onTap: () {
+            Utils.generateAndShareImage(globalKey);
+          },
+          child: Container(
+            width: 24.w,
+            height: 24.w,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4.w),
+              border: Border.all(color: AppColors.c666666.withOpacity(0.3)),
+            ),
+            child: IconWidget(
+              iconWidth: 16.w,
+              icon: Assets.commonUiCommonIconSystemShare,
+              iconColor: AppColors.c000000,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  // 新闻内容部分
+  Widget _buildNewsContent(BuildContext context) {
+    if (ObjectUtil.isNotEmpty(newsDetail.imgUrl)) {
+      final ImageProvider provider = NetworkImage(newsDetail.imgUrl);
+      provider.getImageSize().then((v) {
+        LogUtil.e("${newsDetail.title}图片尺寸：${v?.width}x${v?.height}");
+      });
+    }
+    // newsDetail.type = 2;
+    if (newsDetail.type == 0) {
+      return Column(
+        ///无图
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            newsDetail.title.toUpperCase(),
+            style: 19.w4(
+              color: AppColors.c000000,
+              height: 1.25,
+              fontFamily: FontFamily.fOswaldMedium,
+            ),
+          ),
+          10.vGap,
+          Text(
+            newsDetail.content,
+            maxLines: 4,
+            style: TextStyle(
+              fontSize: 16.h,
+              fontFamily: FontFamily.fRobotoRegular,
+              color: AppColors.c000000,
+              overflow: TextOverflow.ellipsis,
+              height: 1.6,
+              // letterSpacing: 0.5,
+            ),
+            // style: 17.w4(color: AppColors.c262626, height: 1.7,),
+          ),
+        ],
+      );
+    } else if (newsDetail.type == 1) {
+      return Column(
+        ///大图
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            newsDetail.title.toUpperCase(),
+            style: 19.w4(
+              color: AppColors.c000000,
+              height: 1.25,
+              fontFamily: FontFamily.fOswaldMedium,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 10.w),
+            child: ImageWidget(
+              url: newsDetail.imgUrl,
+              // width: 343.w,
+              // fit: BoxFit.fitWidth,
+              borderRadius: BorderRadius.circular(12.w),
+            ),
+          ),
+          Text(
+            newsDetail.content,
+            maxLines: 4,
+            style: TextStyle(
+              fontSize: 16.h,
+              fontFamily: FontFamily.fRobotoRegular,
+              color: AppColors.c000000,
+              overflow: TextOverflow.ellipsis,
+              height: 1.6,
+              // letterSpacing: 0.5,
+            ),
+            // style: 17.w4(color: AppColors.c262626, height: 1.7,),
+          ),
+        ],
+      );
+    } else {
+      return Column(
+        ///小图
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width - 20.w,
+            // height: 97.w,
+            constraints: BoxConstraints(minHeight: 97.w, maxHeight: 110.w),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        newsDetail.title,
+                        style: 19.w4(
+                          color: AppColors.c000000,
+                          height: 1.25,
+                          fontFamily: FontFamily.fOswaldMedium,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 4,
+                      ),
+                      10.vGap,
+                      Expanded(
+                          child: Text(
+                        newsDetail.content,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          fontFamily: FontFamily.fRobotoRegular,
+                          color: AppColors.c000000,
+                          height: 19 / 14,
+                          // letterSpacing: 0.5,
+                        ),
+                      )),
+                    ],
+                  ),
+                ),
+                10.hGap,
+                ImageWidget(
+                  url: newsDetail.imgUrl,
+                  // width: 97.w,
+                  height: 97.w,
+                  fit: BoxFit.fitHeight,
+                  borderRadius: BorderRadius.circular(12.w),
+                )
+              ],
+            ),
+          ),
+          // 10.vGap,
+          // Text(
+          //   newsDetail.content,
+          //   overflow: TextOverflow.ellipsis,
+          //   maxLines: 2,
+          //   style: TextStyle(
+          //     fontSize: 16.sp,
+          //     fontFamily: FontFamily.fRobotoRegular,
+          //     color: AppColors.c000000,
+          //     height: 19 / 14,
+          //     // letterSpacing: 0.5,
+          //   ),
+          // )
+        ],
+      );
+    }
+  }
+
+  Widget _hotComment() {
+    return newsDetail.reviewsList.isNotEmpty
+        ? InkWell(
+            onTap: () {
+              Get.find<CommentController>()
+                  .getReviews(newsDetail.id, isRefresh: true);
+              showModalBottomSheet(
+                isScrollControlled: true,
+                context: Get.context!,
+                barrierColor: Colors.transparent,
+                backgroundColor: Colors.transparent,
+                builder: (context) {
+                  return VerticalDragBackWidget(
+                      child: CommentsDialog(detail: newsDetail));
+                },
+              );
+            },
+            child: Container(
+              width: double.infinity,
+              // height: 110.w,
+              padding: EdgeInsets.symmetric(vertical: 11.w, horizontal: 15.w),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: AppColors.cFFFFFF,
+                borderRadius: BorderRadius.circular(16.w),
+              ),
+              child: HotComment(
+                  item:
+                      Reviews.fromJson(newsDetail.reviewsList.first.toJson())),
+            ),
+          )
+        : const SizedBox();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    GlobalKey globalKey = GlobalKey();
+    Get.put(NewsDetailController(newsDetail.id));
+    Get.put(CommentController());
+    return RepaintBoundary(
+      key: globalKey,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.w),
+        decoration: BoxDecoration(
+            color: AppColors.cFFFFFF,
+            borderRadius: BorderRadius.circular(12.w)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _head(globalKey),
+            14.vGap,
+            _buildNewsContent(context),
+            20.vGap,
+            NewsBottomButton(newsDetail),
+            16.vGap,
+            EmojiWidget(),
+            _hotComment()
+          ],
+        ),
+      ),
+    );
+  }
+}

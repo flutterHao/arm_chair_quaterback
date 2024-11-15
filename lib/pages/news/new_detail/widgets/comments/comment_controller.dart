@@ -2,11 +2,12 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-11 16:57:58
- * @LastEditTime: 2024-10-31 20:23:11
+ * @LastEditTime: 2024-11-15 17:52:36
  */
 
-import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
+import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/review_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entity/team_login_info.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
@@ -145,7 +146,7 @@ class CommentController extends GetxController {
         }
       }
       NewListController controller = Get.find();
-      NewsDetail newsDetail =
+      NewsListDetail newsDetail =
           controller.state.newsFlowList.where((e) => e.id == newsId).first;
       newsDetail.reviewsCount!.value++;
       update();

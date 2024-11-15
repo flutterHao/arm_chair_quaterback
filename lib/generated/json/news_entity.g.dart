@@ -1,56 +1,67 @@
 import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.dart';
 import 'package:arm_chair_quaterback/common/entities/news_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
+import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 
 
 NewsEntity $NewsEntityFromJson(Map<String, dynamic> json) {
   final NewsEntity newsEntity = NewsEntity();
-  final List<NewsDetail>? trade = (json['Trade'] as List<dynamic>?)?.map(
-          (e) => jsonConvert.convert<NewsDetail>(e) as NewsDetail).toList();
+  final List<NewsListDetail>? trade = (json['Trade'] as List<dynamic>?)
+      ?.map(
+          (e) => jsonConvert.convert<NewsListDetail>(e) as NewsListDetail)
+      .toList();
   if (trade != null) {
     newsEntity.trade = trade;
   }
-  final List<NewsDetail>? draft = (json['Draft'] as List<dynamic>?)?.map(
-          (e) => jsonConvert.convert<NewsDetail>(e) as NewsDetail).toList();
+  final List<NewsListDetail>? draft = (json['Draft'] as List<dynamic>?)
+      ?.map(
+          (e) => jsonConvert.convert<NewsListDetail>(e) as NewsListDetail)
+      .toList();
   if (draft != null) {
     newsEntity.draft = draft;
   }
-  final Map<String, NewsDetail>? teamRumors =
+  final Map<String, NewsListDetail>? teamRumors =
   (json['teamRumors'] as Map<String, dynamic>).map(
-          (k, e) =>
-          MapEntry(k, jsonConvert.convert<NewsDetail>(e) as NewsDetail));
+          (k, e) => MapEntry(
+          k, jsonConvert.convert<NewsListDetail>(e) as NewsListDetail));
   if (teamRumors != null) {
     newsEntity.teamRumors = teamRumors;
   }
-  final List<NewsDetail>? match = (json['match'] as List<dynamic>?)?.map(
-          (e) => jsonConvert.convert<NewsDetail>(e) as NewsDetail).toList();
+  final List<NewsListDetail>? match = (json['match'] as List<dynamic>?)
+      ?.map(
+          (e) => jsonConvert.convert<NewsListDetail>(e) as NewsListDetail)
+      .toList();
   if (match != null) {
     newsEntity.match = match;
   }
-  final Map<String, NewsDetail>? playerRumors =
+  final Map<String, NewsListDetail>? playerRumors =
   (json['playerRumors'] as Map<String, dynamic>).map(
-          (k, e) =>
-          MapEntry(k, jsonConvert.convert<NewsDetail>(e) as NewsDetail));
+          (k, e) => MapEntry(
+          k, jsonConvert.convert<NewsListDetail>(e) as NewsListDetail));
   if (playerRumors != null) {
     newsEntity.playerRumors = playerRumors;
   }
-  final List<NewsDetail>? latest = (json['Latest'] as List<dynamic>?)?.map(
-          (e) => jsonConvert.convert<NewsDetail>(e) as NewsDetail).toList();
+  final List<NewsListDetail>? latest = (json['Latest'] as List<dynamic>?)
+      ?.map(
+          (e) => jsonConvert.convert<NewsListDetail>(e) as NewsListDetail)
+      .toList();
   if (latest != null) {
     newsEntity.latest = latest;
   }
-  final Map<String, List<NewsDetail>>? playerNews =
+  final Map<String, List<NewsListDetail>>? playerNews =
   (json['playerNews'] as Map<String, dynamic>).map(
           (k, e) =>
           MapEntry(k, (e as List<dynamic>)
               .map(
-                  (e) => jsonConvert.convert<NewsDetail>(e) as NewsDetail)
+                  (e) =>
+              jsonConvert.convert<NewsListDetail>(e) as NewsListDetail)
               .toList()));
   if (playerNews != null) {
     newsEntity.playerNews = playerNews;
   }
-  final List<NewsDetail>? injuries = (json['Injuries'] as List<dynamic>?)?.map(
-          (e) => jsonConvert.convert<NewsDetail>(e) as NewsDetail).toList();
+  final List<NewsListDetail>? injuries = (json['Injuries'] as List<dynamic>?)
+      ?.map(
+          (e) => jsonConvert.convert<NewsListDetail>(e) as NewsListDetail)
+      .toList();
   if (injuries != null) {
     newsEntity.injuries = injuries;
   }
@@ -72,14 +83,14 @@ Map<String, dynamic> $NewsEntityToJson(NewsEntity entity) {
 
 extension NewsEntityExtension on NewsEntity {
   NewsEntity copyWith({
-    List<NewsDetail>? trade,
-    List<NewsDetail>? draft,
-    Map<String, NewsDetail>? teamRumors,
-    List<NewsDetail>? match,
-    Map<String, NewsDetail>? playerRumors,
-    List<NewsDetail>? latest,
-    Map<String, List<NewsDetail>>? playerNews,
-    List<NewsDetail>? injuries,
+    List<NewsListDetail>? trade,
+    List<NewsListDetail>? draft,
+    Map<String, NewsListDetail>? teamRumors,
+    List<NewsListDetail>? match,
+    Map<String, NewsListDetail>? playerRumors,
+    List<NewsListDetail>? latest,
+    Map<String, List<NewsListDetail>>? playerNews,
+    List<NewsListDetail>? injuries,
   }) {
     return NewsEntity()
       ..trade = trade ?? this.trade

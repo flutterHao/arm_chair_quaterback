@@ -1,8 +1,9 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
-import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
+import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
+
+import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/image_ext.dart';
-import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
@@ -21,7 +22,7 @@ import 'package:get/get.dart';
 
 class NewsDetailItem extends StatelessWidget {
   const NewsDetailItem({super.key, required this.newsDetail});
-  final NewsDetail newsDetail;
+  final NewsListDetail newsDetail;
 
   // GlobalKey get _globalKey => GlobalKey();
 
@@ -90,44 +91,108 @@ class NewsDetailItem extends StatelessWidget {
   }
 
   // 新闻内容部分
-  Widget _buildNewsContent(NewsDetailController controller) {
-    return SizedBox(
-      // width: 311.w,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            newsDetail.title!.toUpperCase(),
-            style: 19.w4(
-              color: AppColors.c000000,
-              height: 1.25,
-              fontFamily: FontFamily.fOswaldMedium,
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 10.w),
-            child: ImageWidget(
-              url: newsDetail.imgUrl ?? "",
-              width: 343.w,
-              fit: BoxFit.fitWidth,
-              borderRadius: BorderRadius.circular(12.w),
-            ),
-          ),
-          Text(
-            newsDetail.content ?? "",
-            style: TextStyle(
-              fontSize: 16.h,
-              fontFamily: FontFamily.fRobotoRegular,
-              color: AppColors.c000000,
-              // fontWeight: FontWeight.w500,
-              height: 1.6,
-              // letterSpacing: 0.5,
-            ),
-            // style: 17.w4(color: AppColors.c262626, height: 1.7,),
-          ),
-        ],
-      ),
-    );
+  Widget _buildNewsContent(
+      BuildContext context, NewsDetailController controller) {
+    if (ObjectUtil.isNotEmpty(newsDetail.imgUrl)) {
+      final ImageProvider provider = NetworkImage(newsDetail.imgUrl!);
+      provider.getImageSize().then((v) {
+        LogUtil.e("图片尺寸：${v?.width}x${v?.height}");
+      });
+    }
+    return newsDetail.type <= 1
+        ? Column(
+            ///大图
+            children: [
+              Text(
+                newsDetail.title!.toUpperCase(),
+                style: 19.w4(
+                  color: AppColors.c000000,
+                  height: 1.25,
+                  fontFamily: FontFamily.fOswaldMedium,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.w),
+                child: ImageWidget(
+                  url: newsDetail.imgUrl ?? "",
+                  width: 343.w,
+                  fit: BoxFit.fitWidth,
+                  borderRadius: BorderRadius.circular(12.w),
+                ),
+              ),
+              Text(
+                newsDetail.content ?? "",
+                style: TextStyle(
+                  fontSize: 16.h,
+                  fontFamily: FontFamily.fRobotoRegular,
+                  color: AppColors.c000000,
+                  // fontWeight: FontWeight.w500,
+                  height: 1.6,
+                  // letterSpacing: 0.5,
+                ),
+                // style: 17.w4(color: AppColors.c262626, height: 1.7,),
+              ),
+            ],
+          )
+        : Column(
+            ///小图
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width - 20.w,
+                constraints: BoxConstraints(maxHeight: 110.w),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            newsDetail.title,
+                            style: 19.w4(
+                              color: AppColors.c000000,
+                              height: 1.25,
+                              fontFamily: FontFamily.fOswaldMedium,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 4,
+                          ),
+                          10.vGap,
+                          Expanded(
+                            child: Text(
+                              newsDetail.content ?? "",
+                              maxLines: 4,
+                              style: TextStyle(
+                                fontSize: 16.h,
+                                fontFamily: FontFamily.fRobotoRegular,
+                                color: AppColors.c000000,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    10.hGap,
+                    newsDetail.type == 2
+                        ? ImageWidget(
+                            url: newsDetail.imgUrl ?? "",
+                            width: 143.w,
+                            fit: BoxFit.fitWidth,
+                            borderRadius: BorderRadius.circular(12.w),
+                          )
+                        : ImageWidget(
+                            url: newsDetail.imgUrl ?? "",
+                            height: 97.w,
+                            fit: BoxFit.fitHeight,
+                            borderRadius: BorderRadius.circular(12.w),
+                          ),
+                  ],
+                ),
+              )
+            ],
+          );
   }
 
   Widget _hotComment() {
@@ -150,14 +215,10 @@ class NewsDetailItem extends StatelessWidget {
             child: Container(
               width: double.infinity,
               // height: 110.w,
-              padding: EdgeInsets.symmetric(vertical: 15.w, horizontal: 20.w),
-              margin: EdgeInsets.symmetric(horizontal: 16.w),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: AppColors.cFFFFFF,
-                borderRadius: BorderRadius.circular(16.w),
-              ),
-              child: HotComment(item: newsDetail.reviewsList!.first),
+              padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 11.w),
+              child: HotComment(
+                  item:
+                      Reviews.fromJson(newsDetail.reviewsList!.first.toJson())),
             ),
           )
         : const SizedBox();
@@ -180,7 +241,7 @@ class NewsDetailItem extends StatelessWidget {
               children: [
                 _head(globalKey),
                 14.vGap,
-                _buildNewsContent(controller),
+                _buildNewsContent(context, controller),
                 20.vGap,
                 NewsBottomButton(newsDetail),
                 10.vGap,

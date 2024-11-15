@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-11-14 19:18:34
+ * @LastEditTime: 2024-11-15 09:46:49
  */
 
 import 'dart:async';
@@ -12,9 +12,11 @@ import 'package:arm_chair_quaterback/common/entities/team_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
+import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/pages/picks/personal_center/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/box_dialog.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -42,9 +44,9 @@ class TeamIndexController extends GetxController
   @override
   void onInit() {
     super.onInit();
-    scrollController.addListener(() {
-      Log.d("监听滚动${scrollController.offset}");
-    });
+    // scrollController.addListener(() {
+    //   Log.d("监听滚动${scrollController.offset}");
+    // });
   }
 
   @override
@@ -52,6 +54,15 @@ class TeamIndexController extends GetxController
     super.onReady();
     getBattleBox();
     getTeamInfo();
+  }
+
+  void matchBattle() async {
+    await Get.toNamed(RouteNames.teamTeamBattle);
+    getBattleBox();
+    getTeamInfo();
+    final ctrl = Get.find<TrainingController>();
+    ctrl.trainingInfo = await TeamApi.getTrainingInfo();
+    update(["training_page"]);
   }
 
   ///获取战斗宝箱信息

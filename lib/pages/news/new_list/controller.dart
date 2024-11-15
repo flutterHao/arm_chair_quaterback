@@ -2,16 +2,17 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2024-11-07 18:14:16
+ * @LastEditTime: 2024-11-15 17:35:44
  */
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
+
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/stats_rank/nba_player_stat.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
+import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
@@ -37,6 +38,7 @@ class NewListController extends GetxController {
   String seasonType = "Regular%20Season";
   String pointType = "";
   int errCount = 0;
+  Rx<LoadDataStatus> loadingStatus = LoadDataStatus.loading.obs;
 
   // @override
   // void onInit() {
@@ -61,6 +63,7 @@ class NewListController extends GetxController {
   // }
 
   void refreshData() async {
+    loadingStatus.value = LoadDataStatus.loading;
     Future.wait([
       CacheApi.getNBATeamDefine(),
       CacheApi.getNBAPlayerInfo(),
@@ -73,12 +76,14 @@ class NewListController extends GetxController {
       update(['newsList']);
     }).whenComplete(() {
       refreshCtrl.refreshCompleted();
+      loadingStatus.value = LoadDataStatus.success;
     }).catchError((e) {
       if (errCount >= 3) return;
       Future.delayed(const Duration(seconds: 1)).then((value) {
         errCount++;
         refreshData();
         Log.e("getNewsList error,开始重试$errCount");
+        loadingStatus.value = LoadDataStatus.error;
       });
     });
   }
@@ -97,7 +102,7 @@ class NewListController extends GetxController {
     });
   }
 
-  void likeNews(NewsDetail item) {
+  void likeNews(NewsListDetail item) {
     // if (item.isLike?.value == 1) return;
     NewsApi.newsLike(item.id!).then((value) {
       if ((item.isLike?.value != 1)) {

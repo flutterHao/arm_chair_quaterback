@@ -47,10 +47,10 @@ extension NumExt on num {
           fontFamily: fontFamily);
 
   TextStyle w5(
-      {Color color = AppColors.c262626,
-        TextOverflow? overflow,
-        double? height,
-        String? fontFamily}) =>
+          {Color color = AppColors.c262626,
+          TextOverflow? overflow,
+          double? height,
+          String? fontFamily}) =>
       TextStyle(
           fontWeight: FontWeight.w500,
           height: height,

@@ -1,4 +1,4 @@
-import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
+import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/app_bar_widget.dart';
@@ -77,14 +77,14 @@ class NewsDetailList extends GetView<NewListController> {
                   onLoading: () =>
                       controller.getNewsFlow(newsId, isRefresh: false),
                   child: ListView.separated(
-                      controller: controller.scrollController,
                       padding: EdgeInsets.symmetric(vertical: 30.w),
                       itemCount: controller.state.newsFlowList.length,
                       separatorBuilder: (context, index) {
                         return 9.vGap;
                       },
                       itemBuilder: (context, index) {
-                        NewsDetail item = controller.state.newsFlowList[index];
+                        NewsListDetail item =
+                            controller.state.newsFlowList[index];
                         return NewsDetailItem(
                           newsDetail: item,
                           key: Key(newsId.toString()),

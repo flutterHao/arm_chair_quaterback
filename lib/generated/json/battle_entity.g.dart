@@ -1,7 +1,5 @@
 import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.dart';
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
-
 
 BattleEntity $BattleEntityFromJson(Map<String, dynamic> json) {
   final BattleEntity battleEntity = BattleEntity();

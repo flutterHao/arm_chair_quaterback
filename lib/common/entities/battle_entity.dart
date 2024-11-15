@@ -1,4 +1,3 @@
-import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/battle_entity.g.dart';
 import 'dart:convert';

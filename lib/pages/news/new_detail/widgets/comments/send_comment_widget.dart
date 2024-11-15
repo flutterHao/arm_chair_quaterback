@@ -302,7 +302,7 @@ class _SendCommentWidgetState extends State<SendCommentWidget> {
 //                       ),
 //                       // InkWell(
 //                       //   onTap: () {
-//                       //     detail.isLike?.value == true
+//                       //     detail.isLike.value == true
 //                       //         ? controller.unLikeNews(detail)
 //                       //         : controller.likeNews(detail);
 //                       //   },
@@ -313,10 +313,10 @@ class _SendCommentWidgetState extends State<SendCommentWidget> {
 //                       //       children: [
 //                       //         IconWidget(
 //                       //           iconWidth: 30.w,
-//                       //           icon: detail.isLike?.value == true
+//                       //           icon: detail.isLike.value == true
 //                       //               ? Assets.iconUiIconLike01
 //                       //               : Assets.iconUiIconLike02,
-//                       //           iconColor: detail.isLike?.value == true
+//                       //           iconColor: detail.isLike.value == true
 //                       //               ? AppColors.cFF7954
 //                       //               : AppColors.cB3B3B3,
 //                       //         ),
@@ -324,7 +324,7 @@ class _SendCommentWidgetState extends State<SendCommentWidget> {
 //                       //         Text(
 //                       //           "${detail.likes}",
 //                       //           style: 14.w4(
-//                       //             color: detail.isLike?.value == true
+//                       //             color: detail.isLike.value == true
 //                       //                 ? AppColors.cFF7954
 //                       //                 : AppColors.cB3B3B3,
 //                       //           ),

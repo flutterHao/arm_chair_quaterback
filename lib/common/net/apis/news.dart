@@ -2,13 +2,12 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 17:28:14
- * @LastEditTime: 2024-11-06 20:56:15
+ * @LastEditTime: 2024-11-15 17:55:40
  */
 import 'package:arm_chair_quaterback/common/entities/news_banner.dart';
-import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
+
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/player_status_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/receive_prop_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/stats_rank/nba_player_stat.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank.dart';
@@ -28,9 +27,9 @@ class NewsApi {
     return NewsListEntity.fromJson(json);
   }
 
-  static Future<NewsDetail> getNewsDetail(id) async {
+  static Future<NewsListDetail> getNewsDetail(id) async {
     var json = await HttpUtil().post(Api.getNewsDetail, data: {"newsId": id});
-    return NewsDetail.fromJson(json["newsContent"]);
+    return NewsListDetail.fromJson(json["newsContent"]);
   }
 
   static Future<bool> newsLike(int id) async {
@@ -58,17 +57,17 @@ class NewsApi {
     return Reviews.fromJson(json);
   }
 
-  static Future<NewsDetail> deleteReviews(int id, int reviewsId) async {
+  static Future<NewsListDetail> deleteReviews(int id, int reviewsId) async {
     var json = await HttpUtil()
         .post(Api.deleteReviews, data: {"newsId": id, "reviewsId": reviewsId});
-    return NewsDetail.fromJson(json);
+    return NewsListDetail.fromJson(json);
   }
 
-  static Future<NewsDetail> likeReviews(
+  static Future<NewsListDetail> likeReviews(
       int newsId, int reviewsId, bool isLike) async {
     var json = await HttpUtil().post(Api.likeReviews,
         data: {"newsId": newsId, "reviewsId": reviewsId, "isLike": isLike});
-    return NewsDetail.fromJson(json);
+    return NewsListDetail.fromJson(json);
   }
 
   static Future<List<StarsTeamRank>> starTeamList(
@@ -105,10 +104,11 @@ class NewsApi {
     return ReceivePropEntity.fromJson(json);
   }
 
-  static Future<List<NewsDetail>> newsFlow(newsId, int page, int limit) async {
+  static Future<List<NewsListDetail>> newsFlow(
+      newsId, int page, int limit) async {
     List list = await HttpUtil().post(Api.newsFlow,
         data: {"newsId": newsId, "page": page, "limit": limit});
-    return list.map((e) => NewsDetail.fromJson(e)).toList();
+    return list.map((e) => NewsListDetail.fromJson(e)).toList();
   }
 
   static Future<List<Reviews>> getReviewsByNewsId(

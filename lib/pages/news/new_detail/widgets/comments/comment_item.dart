@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -338,85 +339,31 @@ class HotComment extends GetView<CommentController> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Row(
       children: [
-        Row(
-          children: [
-            IconWidget(iconWidth: 12.w, icon: Assets.newsUiIconFire),
-            3.hGap,
-            Text(
-              "Top Comments",
-              style: 14.w7(color: AppColors.c262626, height: 1),
-            ),
-          ],
+        UserAvaterWidget(
+            url: Utils.getAvaterUrl(item.teamLogo),
+            width: 26.w,
+            height: 26.w,
+            radius: 23.w),
+        6.hGap,
+        Expanded(
+          child: Text(
+            item.context ?? "",
+            style: 14.w4(color: AppColors.c4D4D4D, height: 1),
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
-        10.vGap,
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            UserAvaterWidget(
-              url: Utils.getAvaterUrl(item.teamLogo),
-              width: 36.w,
-              height: 36.w,
-            ),
-            // ImageWidget(
-            //   url: Utils.getAvaterUrl(item.teamLogo),
-            //   width: 36.w,
-            //   height: 36.w,
-            //   borderRadius: BorderRadius.circular(12.w),
-            //   errorWidget: Container(
-            //     width: 36.w,
-            //     height: 36.w,
-            //     alignment: Alignment.bottomCenter,
-            //     decoration: BoxDecoration(
-            //         color: AppColors.cD9D9D9,
-            //         borderRadius: BorderRadius.circular(4.w)),
-            //     child: Image.asset(
-            //       Assets.uiDefault_03Png,
-            //       width: 30.w,
-            //       fit: BoxFit.fitWidth,
-            //     ),
-            //   ),
-            // ),
-            6.hGap,
-            Expanded(
-              child: Column(
-                children: [
-                  /// 用户信息
-                  Row(
-                    children: [
-                      Text(
-                        item.teamName ?? "",
-                        style: 12.w4(color: AppColors.cB3B3B3, height: 1),
-                      ),
-                      13.hGap,
-                      Text(
-                        controller.timeAgo(item.updateTime ?? 0),
-                        style: 12.w4(color: AppColors.cB3B3B3, height: 1),
-                      ),
-                    ],
-                  ),
-                  10.vGap,
-
-                  /// 评论内容
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                          child: Text(
-                        item.context ?? "",
-                        style: 14.w4(color: AppColors.c666666, height: 1),
-                      )),
-                    ],
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
-        10.vGap,
-        const Center(child: EmojiWidget())
+        11.hGap,
+        IconWidget(iconWidth: 12.w, icon: Assets.newsUiIconFire),
+        4.hGap,
+        Text(
+          "999K",
+          style: 12.w4(
+            color: AppColors.c000000,
+            fontFamily: FontFamily.fRobotoRegular,
+          ),
+        )
       ],
     );
   }

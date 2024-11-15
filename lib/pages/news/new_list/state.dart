@@ -2,14 +2,14 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 19:00:39
- * @LastEditTime: 2024-11-01 19:19:08
+ * @LastEditTime: 2024-11-15 17:33:31
  */
 import 'dart:ui';
 
 import 'package:arm_chair_quaterback/common/entities/config/prop_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_banner.dart';
-import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
+
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/stats_rank/nba_player_stat.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank.dart';
@@ -23,9 +23,9 @@ class NewListState {
   // get title => _title.value;
 
   NewsListEntity newsEntity = NewsListEntity();
-  List<NewsDetail> newsList = [];
+  List<NewsListDetail> newsList = [];
   List<NewsBanner> banners = [];
-  NewsDetail newsDetail = NewsDetail();
+  NewsListDetail newsDetail = NewsListDetail();
   List<StarsTeamRank> starTeamList = [];
   List<TeamRankEntity> teamRankList = [];
   List<NbaPlayerStat> statsList = [];
@@ -39,7 +39,7 @@ class NewListState {
     ///Initialize variables
   }
 
-  List<NewsDetail> newsFlowList = [];
+  List<NewsListDetail> newsFlowList = [];
   int page = 0;
   int pageSize = 5;
 

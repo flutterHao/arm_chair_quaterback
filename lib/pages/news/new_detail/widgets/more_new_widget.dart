@@ -10,9 +10,10 @@
  * @Date: 2024-09-10 17:28:39
  * @LastEditTime: 2024-09-20 17:51:56
  */
+import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
-import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
+
 import 'package:arm_chair_quaterback/common/routers/routes.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -47,7 +48,7 @@ class MoreNewsWidget extends StatelessWidget {
                 padding: const EdgeInsets.all(0),
                 separatorBuilder: (context, index) => SizedBox(height: 10.w),
                 itemBuilder: (context, index) {
-                  NewsDetail item = controller.state.moreList[index];
+                  NewsListDetail item = controller.state.moreList[index];
                   Color color =
                       item.isView == 1 ? AppColors.cB3B3B3 : AppColors.c666666;
                   return InkWell(

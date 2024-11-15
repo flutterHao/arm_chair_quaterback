@@ -35,6 +35,7 @@ import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/receive_prop_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/recive_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/recive_award_v2_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/review_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/reward_group_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/star_up_define_entity.dart';
@@ -528,10 +529,6 @@ class JsonConvert {
       return data.map<NewsListDetail>((Map<String, dynamic> e) =>
           NewsListDetail.fromJson(e)).toList() as M;
     }
-    if (<NewsListDraft>[] is M) {
-      return data.map<NewsListDraft>((Map<String, dynamic> e) =>
-          NewsListDraft.fromJson(e)).toList() as M;
-    }
     if (<PlayerDayDataEntity>[] is M) {
       return data.map<PlayerDayDataEntity>((Map<String, dynamic> e) =>
           PlayerDayDataEntity.fromJson(e)).toList() as M;
@@ -580,6 +577,10 @@ class JsonConvert {
       return data.map<ReciveAwardV2GuessInfoGuessData>((
           Map<String, dynamic> e) =>
           ReciveAwardV2GuessInfoGuessData.fromJson(e)).toList() as M;
+    }
+    if (<ReviewEntity>[] is M) {
+      return data.map<ReviewEntity>((Map<String, dynamic> e) =>
+          ReviewEntity.fromJson(e)).toList() as M;
     }
     if (<RewardGroupEntity>[] is M) {
       return data.map<RewardGroupEntity>((Map<String, dynamic> e) =>
@@ -848,7 +849,6 @@ class JsonConvertClassCollection {
     (NewsEntity).toString(): NewsEntity.fromJson,
     (NewsListEntity).toString(): NewsListEntity.fromJson,
     (NewsListDetail).toString(): NewsListDetail.fromJson,
-    (NewsListDraft).toString(): NewsListDraft.fromJson,
     (PlayerDayDataEntity).toString(): PlayerDayDataEntity.fromJson,
     (PlayerStatusEntity).toString(): PlayerStatusEntity.fromJson,
     (RankAwardEntity).toString(): RankAwardEntity.fromJson,
@@ -862,6 +862,7 @@ class JsonConvertClassCollection {
     (ReciveAwardV2GuessInfo).toString(): ReciveAwardV2GuessInfo.fromJson,
     (ReciveAwardV2GuessInfoGuessData)
         .toString(): ReciveAwardV2GuessInfoGuessData.fromJson,
+    (ReviewEntity).toString(): ReviewEntity.fromJson,
     (RewardGroupEntity).toString(): RewardGroupEntity.fromJson,
     (ScoresEntity).toString(): ScoresEntity.fromJson,
     (StarUpDefineEntity).toString(): StarUpDefineEntity.fromJson,

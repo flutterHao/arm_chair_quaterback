@@ -1,5 +1,5 @@
-import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/news_detail.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
+import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:get/get.dart';
 
 class NewDetailState {
@@ -10,8 +10,8 @@ class NewDetailState {
   // RxBool isLoading = true.obs;
 
   bool isLoading = true;
-  NewsDetail newDetail = NewsDetail();
-  List<NewsDetail> moreList = [];
+  NewsListDetail newDetail = NewsListDetail();
+  List<NewsListDetail> moreList = [];
   RxDouble dragPosition = 0.0.obs;
   int page = 0;
   int pageSize = 10;
