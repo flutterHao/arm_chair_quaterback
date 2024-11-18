@@ -611,6 +611,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                             //批量删除
                             Navigator.pop(context);
                             picksIndexController.cleanAll();
+                            leagueController.cleanAll();
                           },
                           child: Container(
                             decoration: BoxDecoration(

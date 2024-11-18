@@ -136,7 +136,8 @@ class _HomePageState extends State<HomePage>
                                             }
                                             return IconWidget(
                                               iconWidth: 19.w,
-                                              icon: Assets.commonUiCommonIconPick,
+                                              icon:
+                                                  Assets.commonUiCommonIconPick,
                                               iconColor: color,
                                             );
                                           }),
@@ -189,31 +190,44 @@ class _HomePageState extends State<HomePage>
                               int index = controller.tabItems.indexOf(e);
                               bool select = index == controller.tabIndex.value;
                               if (index == 2) {
-                                return Container(
-                                  decoration: BoxDecoration(
-                                      color: AppColors.cFFFFFF,
-                                      borderRadius: BorderRadius.vertical(
-                                          top: Radius.circular(9.w))),
-                                  child: MtInkwell(
-                                    onTap: () => controller.onTap(2),
-                                    child: Container(
-                                        height: 75.w,
-                                        width: 74.w,
-                                        padding: EdgeInsets.all(4.w),
-                                        child: Container(
-                                            height: 58.w,
-                                            margin:
-                                                EdgeInsets.only(bottom: 9.w),
-                                            decoration: BoxDecoration(
+                                return Expanded(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: AppColors.cFFFFFF,
+                                        borderRadius: BorderRadius.vertical(
+                                            top: Radius.circular(9.w))),
+                                    child: MtInkwell(
+                                      onTap: () => controller.onTap(2),
+                                      child: Container(
+                                          height: 66.w,
+                                          width: 74.w,
+                                          padding: EdgeInsets.all(4.w),
+                                          decoration: BoxDecoration(
+                                              color: select
+                                                  ? AppColors.cFFDAD0
+                                                  : AppColors.cFFFFFF,
+                                              borderRadius:
+                                                  BorderRadius.circular(9.w)),
+                                          margin: EdgeInsets.only(bottom: 9.w),
+                                          child: Container(
+                                              height: 58.w,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.w),
+                                                  border: Border.all(
+                                                      color: AppColors.cE6E6E6,
+                                                      width: 1)),
+                                              child: ClipRRect(
                                                 borderRadius:
-                                                    BorderRadius.circular(5.w),
-                                                border: Border.all(
-                                                    color: AppColors.cE6E6E6,
-                                                    width: 1)),
-                                            child: _barItem(
-                                                controller.tabItems[2],
-                                                controller.tabIndex.value == 2,
-                                                58.w))),
+                                                    BorderRadius.circular(4.w),
+                                                child: _barItem(
+                                                    controller.tabItems[2],
+                                                    select,
+                                                    58.w,
+                                                    isCenter: true),
+                                              ))),
+                                    ),
                                   ),
                                 );
                               }
@@ -247,17 +261,52 @@ class _HomePageState extends State<HomePage>
     );
   }
 
-  Container _barItem(TabItemInfo e, bool select, double height) {
+  Widget _barItem(TabItemInfo e, bool select, double height,
+      {bool isCenter = false}) {
     return Container(
       height: height,
-      color: AppColors.cFFFFFF,
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: isCenter && select
+                  ? [AppColors.cFF6A41, AppColors.cFF9071]
+                  : [AppColors.cFFFFFF, AppColors.cFFFFFF])),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          IconWidget(
-            iconWidth: 24.w,
-            icon: e.tabIconNormal,
-            iconColor: select ? AppColors.c262626 : AppColors.c666666,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (isCenter && select)
+                Expanded(
+                    child: SizedBox(
+                  width: 4.w,
+                )),
+              IconWidget(
+                iconWidth: 24.w,
+                icon: select ? e.tabIconSelected : e.tabIconNormal,
+              ),
+              if (isCenter && select)
+                Expanded(
+                  child: Column(
+                    children: [
+                      IconWidget(
+                        iconWidth: 4.w,
+                        icon: Assets.commonUiCommonIconSystemArrow,
+                        iconColor: AppColors.c000000,
+                        rotateAngle: -90,
+                      ),
+                      IconWidget(
+                        iconWidth: 4.w,
+                        icon: Assets.commonUiCommonIconSystemArrow,
+                        iconColor: AppColors.c000000,
+                        rotateAngle: 90,
+                      )
+                    ],
+                  ),
+                )
+            ],
           ),
           5.vGap,
           Text(

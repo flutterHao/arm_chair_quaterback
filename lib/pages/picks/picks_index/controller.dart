@@ -5,6 +5,7 @@ import 'package:arm_chair_quaterback/common/entities/guess_top_reviews_entity.da
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/pick_type_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entity/user_entiry.dart';
@@ -55,6 +56,8 @@ class PicksIndexController extends GetxController
   int guessWinningStreak = 0;
 
   late PicksDefineEntity picksDefine;
+
+  late List<PickTypeEntity> _pickTypeEntity;
 
   var currentIndex = 0.obs;
 
@@ -173,7 +176,7 @@ class PicksIndexController extends GetxController
       cleanAll();
       _initData();
       Get.find<HomeController>().refreshMoneyCoinWidget();
-      leagueController.changeGuessSuccessDataStatusAndRefreshUi();
+      leagueController.refreshDataAfterGuessSuccess();
       ClickFeedBack.selectionClick();
       EasyLoading.showToast("Pick successful!you can check it in History");
     }, onError: (e) {
@@ -236,6 +239,7 @@ class PicksIndexController extends GetxController
       CacheApi.getNBATeamDefine(getList: true),
       PicksApi.getRedisRankInfo(type: RankType.newsGuessExpert),
       PicksApi.getGuessTopReviews(),
+      CacheApi.getPickType(),
     ]).then((results) {
       guessGamePlayers.clear();
       _count(false);
@@ -245,6 +249,7 @@ class PicksIndexController extends GetxController
       guessWinningStreak = guessGameInfo.guessWinningStreak;
       var nbaPlayers = results[1] as NbaPlayerInfosEntity;
       picksDefine = results[2];
+      _pickTypeEntity = results[6];
       List<GuessTopReviewsEntity> guessTopReviewsEntity =
           results[5] as List<GuessTopReviewsEntity>;
       Map<String, List<PicksPlayerV2>> temp = {};
@@ -281,8 +286,12 @@ class PicksIndexController extends GetxController
         });
         temp[key] = item;
       }
-      List<String> titles = Constant.guessTypeList;
-      guessGamePlayers = temp;
+      for(var item in _pickTypeEntity){
+        var key = item.pickTypeName;
+        if(temp.containsKey(key)){
+          guessGamePlayers[key] = temp[key]!;
+        }
+      }
 
       ///rank 排行榜
       rankInfo = results[4] as RankListEntity;

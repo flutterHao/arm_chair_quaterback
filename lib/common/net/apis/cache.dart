@@ -99,6 +99,7 @@ import 'package:arm_chair_quaterback/common/entities/grade_in_star_define_entity
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/pick_type_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_status_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/reward_group_entity.dart';
@@ -117,7 +118,9 @@ class CacheApi {
   static NbaPlayerInfosEntity? playerInfo;
 
   ///新闻定义
-  static PicksDefineEntity? pickDefine;
+  static PicksDefineEntity? _pickDefine;
+
+  static List<PickTypeEntity>? _pickType;
 
   ///道具定义
   static List<PropDefineEntity>? propDefineList;
@@ -175,12 +178,21 @@ class CacheApi {
 
   ///
   static Future<PicksDefineEntity> getPickDefine() async {
-    if (pickDefine != null) {
-      return pickDefine!;
+    if (_pickDefine != null) {
+      return _pickDefine!;
     }
     List json = await httpUtil.get(Api.cPickDefine);
-    pickDefine = PicksDefineEntity.fromJson(json[0]);
-    return pickDefine!;
+    _pickDefine = PicksDefineEntity.fromJson(json[0]);
+    return _pickDefine!;
+  }
+
+  static Future<List<PickTypeEntity>> getPickType() async {
+    if (_pickType != null) {
+      return _pickType!;
+    }
+    List json = await httpUtil.get(Api.cPickType);
+    _pickType = json.map((e) => PickTypeEntity.fromJson(e)).toList();
+    return _pickType!;
   }
 
   ///排行奖励规则

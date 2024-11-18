@@ -232,10 +232,31 @@ class LeagueController extends GetxController {
     });
   }
 
-  void changeGuessSuccessDataStatusAndRefreshUi() {
+  void refreshDataAfterGuessSuccess() {
     cacheGameGuessData.clear();
     choiceSize.value = getAllChoiceData().length;
     getData(isRefresh: true);
+  }
+
+  void cleanAll() {
+    for (int i = 0; i < cacheGameGuessData.keys.length; i++) {
+      var key = cacheGameGuessData.keys.toList()[i];
+      var list = cacheGameGuessData[key]??[];
+      if(list.isNotEmpty){
+        for (int j = 0; j < list.length; j++) {
+          var guessItem = list[j];
+          if(guessItem.choiceTeamId.value == 0){
+            continue;
+          }
+          guessItem.choiceTeamId.value = 0;
+        }
+      }
+    }
+    var startTime = getStartTime();
+    var endTime = getEndTime();
+    var cacheKey = "${startTime}_$endTime";
+    scoreList = cacheGameGuessData[cacheKey]??[];
+    choiceSize.value = getAllChoiceData().length;
     update([idLeagueMain]);
   }
 }

@@ -35,7 +35,7 @@ import 'package:get/get.dart';
 class HomeController extends GetxController {
   static HomeController get to => Get.find();
   late PageController pageController;
-  RxInt tabIndex = 0.obs;
+  RxInt tabIndex = 2.obs;
   Map<int, GlobalKey<NavigatorState>?> navigatorKeys = {
     0: GlobalNestedKey.NewsTabGlobalKey,
     1: GlobalNestedKey.PicksTabGlobalKey,
@@ -58,32 +58,32 @@ class HomeController extends GetxController {
   List<TabItemInfo> tabItems = [
     TabItemInfo(
       "Picks",
-      Assets.homeUiIconPicks01,
-      Assets.homeUiIconPicks01,
+      Assets.commonUiCommonTabBottom01Off,
+      Assets.commonUiCommonTabBottom01On,
       const PicksIndex(),
     ),
     TabItemInfo(
       "Scores",
-      Assets.homeUiIconCommunity01,
-      Assets.homeUiIconCommunity01,
+      Assets.commonUiCommonTabBottom02Off,
+      Assets.commonUiCommonTabBottom02On,
       const LeaguePage(),
     ),
     TabItemInfo(
       "NBA",
-      Assets.homeUiIconNews01,
-      Assets.homeUiIconNews01,
+      Assets.commonUiCommonTabBottom03,
+      Assets.commonUiCommonTabBottom03,
       const NewsPage(),
     ),
     TabItemInfo(
       "Manager",
-      Assets.homeUiIconTeam01,
-      Assets.homeUiIconTeam01,
+      Assets.commonUiCommonTabBottom04Off,
+      Assets.commonUiCommonTabBottom04On,
       const TeamIndexPage(),
     ),
     TabItemInfo(
       "Portfolio",
-      Assets.homeUiIconTraining01,
-      Assets.homeUiIconTraining01,
+      Assets.commonUiCommonTabBottom05Off,
+      Assets.commonUiCommonTabBottom05On,
       const TradeIndex(),
     ),
   ];
@@ -94,7 +94,7 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     // auth();
-    pageController = PageController();
+    pageController = PageController(initialPage: 2);
     // 监听 TabController 的页面改变，更新 tabIndex
     // tabController.addListener(() {
     //   tabIndex.value = tabController.index;

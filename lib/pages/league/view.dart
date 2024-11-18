@@ -112,11 +112,11 @@ class _LeagueIndexPageState extends State<LeagueIndexPage>
     var emptyWidget = SliverToBoxAdapter(
       child: SizedBox(
         height: (MediaQuery.of(context).size.height -
-                75.w -
-                58.w -
-                MediaQuery.of(context).padding.top -
-                MediaQuery.of(context).padding.bottom -
-                46.w),
+            75.w -
+            58.w -
+            MediaQuery.of(context).padding.top -
+            MediaQuery.of(context).padding.bottom -
+            46.w),
         child: SmartRefresher(
           controller: controller.refreshController,
           onRefresh: () => controller.loading(),
@@ -301,6 +301,7 @@ class _ItemWidgetState extends State<_ItemWidget> {
 
   Widget getStatus() {
     Color color;
+    var nowDateMs = MyDateUtils.getNowDateMs();
     if (item.status == 2) {
       color = AppColors.c000000;
       gameStartTimeStr.value = "FINAL";
@@ -310,7 +311,6 @@ class _ItemWidgetState extends State<_ItemWidget> {
           "In the game: ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(item.gameStartTime))}";
     } else {
       color = AppColors.c000000;
-      var nowDateMs = MyDateUtils.getNowDateMs();
       var gameStart = MyDateUtils.getDateTimeByMs(item.gameStartTime);
       var lastTimeMs = gameStart.millisecondsSinceEpoch - nowDateMs;
       if (lastTimeMs <= 15 * 60 * 1000 && lastTimeMs > 0) {
@@ -325,11 +325,12 @@ class _ItemWidgetState extends State<_ItemWidget> {
           var lastTimeMs = gameStart.millisecondsSinceEpoch - nowDateMs;
           if (lastTimeMs == 0) {
             t.cancel();
+            color = AppColors.c10A86A;
             gameStartTimeStr.value =
                 "In the game: ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(item.gameStartTime))}";
           }
           gameStartTimeStr.value =
-              "Coming ${MyDateUtils.formatDate(MyDateUtils.getDateTimeByMs(lastTimeMs), format: DateFormats.M_S)}";
+              "Coming ${(lastTimeMs / 1000 ~/ 60).toStringAsFixed(0).padLeft(2, "0")}:${(lastTimeMs / 1000 % 60).toStringAsFixed(0).padLeft(2, "0")}";
         });
       } else if (MyDateUtils.isTomorrow(MyDateUtils.getNowDateTime(),
           MyDateUtils.getDateTimeByMs(item.gameStartTime))) {
