@@ -208,10 +208,8 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                     physics: const BouncingScrollPhysics(),
                     key: PageStorageKey<String>(e),
                     slivers: [
-                      Obx(() {
-                        return SliverPadding(
-                            padding: EdgeInsets.only(top: 119.w + top.value));
-                      }),
+                      SliverPadding(
+                            padding: EdgeInsets.only(top: 119.w)),
                       SliverList.separated(
                         itemCount: list.length,
                         itemBuilder: (context, index) {

@@ -479,7 +479,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     Get.find<HomeController>().tabIndex.listen((value) {
-      if (value == 1) {
+      if (value == 0) {
         controller.formatGameStartTime();
       }
     });
@@ -495,7 +495,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
     var value = Get.find<HomeController>().tabIndex.value;
-    if (state == AppLifecycleState.resumed && value == 1) {
+    if (state == AppLifecycleState.resumed && value == 0) {
       controller.formatGameStartTime();
     }
   }

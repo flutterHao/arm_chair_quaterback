@@ -192,6 +192,7 @@ class Assets {
   static const String playerUiIconTriangle03 = 'assets/images/player/ui_icon_triangle_03.png';
   static const String playerUiLight01 = 'assets/images/player/ui_light_01.png';
   static const String playerUiStateBest = 'assets/images/player/ui_state_best.png';
+  static const String scoresUiScoresIconSystemRank = 'assets/images/scores/ui_scores_icon_system_rank.png';
   static const String teamUICommonGrain = 'assets/images/team/UI_common_grain.png';
   static const String teamUICommonTCBg3 = 'assets/images/team/UI_common_TC_bg3.png';
   static const String teamUiBattleNews = 'assets/images/team/ui_battle_news.png';

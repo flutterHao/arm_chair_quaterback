@@ -8,6 +8,7 @@ import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -20,14 +21,15 @@ class GameGuess {
   GameGuess(this.scoresEntity);
 }
 
-class LeagueController extends GetxController {
+class LeagueController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   LeagueController();
 
   RefreshController refreshController = RefreshController();
 
   List<String> pageText = ["YESTERDAY", "TODAY", "TOMORROW"];
 
-  var currentPageIndex = 1;
+  var currentPageIndex = 1.obs;
   PageController pageController = PageController(initialPage: 1);
   List<GameGuess> scoreList = [];
 
@@ -37,14 +39,39 @@ class LeagueController extends GetxController {
   var loadStatus = LoadDataStatus.noData.obs;
   var choiceSize = 0.obs;
 
+  late TabController tabController;
+
   loading() {
     getData(isRefresh: true);
+  }
+
+  List<DateTime> getDataTimes() {
+    // 获取今天的日期
+    DateTime today = DateTime.now();
+
+    // 计算前六天、今天和后七天的零点日期
+    List<DateTime> dateList = List.generate(
+      6 + 1 + 7, // 前六天 + 今天 + 后七天
+      (index) {
+        DateTime date = today.add(Duration(days: index - 6));
+        return DateTime(date.year, date.month, date.day); // 设置时间为零点
+      },
+    );
+    return dateList;
   }
 
   /// 在 widget 内存中分配后立即调用。
   @override
   void onInit() {
     super.onInit();
+    currentPageIndex.value = 6;
+    tabController = TabController(
+      initialIndex: currentPageIndex.value,
+        length:
+            getDataTimes().map((e) => e.millisecondsSinceEpoch).toList().length,
+        vsync: this)..addListener((){
+          onPageChanged(tabController.index);
+    });
     getData();
   }
 
@@ -71,7 +98,7 @@ class LeagueController extends GetxController {
     getDataFromNet(startTime, endTime, cacheKey, temp);
   }
 
-  String getCurrentCacheKey(){
+  String getCurrentCacheKey() {
     int startTime = getStartTime();
     int endTime = getEndTime();
     var cacheKey = "${startTime}_$endTime";
@@ -79,36 +106,13 @@ class LeagueController extends GetxController {
   }
 
   int getStartTime() {
-    var nowDateTime = MyDateUtils.getNowDateTime();
-    var nowDay =
-        MyDateUtils.getDateTimeByMs(MyDateUtils.getDayStartTimeMS(nowDateTime));
-    var previousDay = MyDateUtils.previousDay(nowDay);
-    var nextDay = MyDateUtils.nextDay(nowDay);
-    int startTime;
-    if (currentPageIndex == 0) {
-      startTime = previousDay.millisecondsSinceEpoch;
-    } else if (currentPageIndex == 1) {
-      startTime = nowDay.millisecondsSinceEpoch;
-    } else {
-      startTime = nextDay.millisecondsSinceEpoch;
-    }
-    return startTime;
+    var dataTime = getDataTimes()[currentPageIndex.value];
+    return dataTime.millisecondsSinceEpoch;
   }
 
   int getEndTime() {
-    var nowDateTime = MyDateUtils.getNowDateTime();
-    var nowDay =
-        MyDateUtils.getDateTimeByMs(MyDateUtils.getDayStartTimeMS(nowDateTime));
-    var nextDay = MyDateUtils.nextDay(nowDay);
-    int endTime;
-    if (currentPageIndex == 0) {
-      endTime = nowDay.millisecondsSinceEpoch;
-    } else if (currentPageIndex == 1) {
-      endTime = nextDay.millisecondsSinceEpoch;
-    } else {
-      endTime = MyDateUtils.nextDay(nextDay).millisecondsSinceEpoch;
-    }
-    return endTime;
+    var dataTime = getDataTimes()[currentPageIndex.value];
+    return MyDateUtils.nextDay(dataTime).millisecondsSinceEpoch;
   }
 
   void getDataFromCache(String cacheKey) {
@@ -123,10 +127,10 @@ class LeagueController extends GetxController {
     update([idLeagueMain]);
   }
 
-  void sortScoreList(){
-    scoreList.sort((a,b){
-      if(a.scoresEntity.isGuess != 0) return 1;
-      if(b.scoresEntity.isGuess != 0) return -1;
+  void sortScoreList() {
+    scoreList.sort((a, b) {
+      if (a.scoresEntity.isGuess != 0) return 1;
+      if (b.scoresEntity.isGuess != 0) return -1;
       return 0;
     });
   }
@@ -187,32 +191,8 @@ class LeagueController extends GetxController {
     super.dispose();
   }
 
-  prePage() {
-    if (!Utils.canOperate(delayTime: 300)) {
-      return;
-    }
-    ClickFeedBack.selectionClick();
-    if (currentPageIndex == 0) {
-      return;
-    }
-    pageController.jumpToPage(--currentPageIndex);
-    getData();
-  }
-
-  nextPage() {
-    if (!Utils.canOperate(delayTime: 300)) {
-      return;
-    }
-    ClickFeedBack.selectionClick();
-    if (currentPageIndex == pageText.length - 1) {
-      return;
-    }
-    pageController.jumpToPage(++currentPageIndex);
-    getData();
-  }
-
   onPageChanged(int index) {
-    currentPageIndex = index;
+    currentPageIndex.value = index;
     if (!Utils.canOperate(delayTime: 300)) {
       return;
     }
@@ -226,8 +206,10 @@ class LeagueController extends GetxController {
   }
 
   List<GameGuess> getAllChoiceData() {
-    return cacheGameGuessData.keys.fold([], (p,e){
-      var list = cacheGameGuessData[e]!.where((e) => e.choiceTeamId.value != 0).toList();
+    return cacheGameGuessData.keys.fold([], (p, e) {
+      var list = cacheGameGuessData[e]!
+          .where((e) => e.choiceTeamId.value != 0)
+          .toList();
       p.addAll(list);
       return p;
     });
@@ -242,11 +224,11 @@ class LeagueController extends GetxController {
   void cleanAll() {
     for (int i = 0; i < cacheGameGuessData.keys.length; i++) {
       var key = cacheGameGuessData.keys.toList()[i];
-      var list = cacheGameGuessData[key]??[];
-      if(list.isNotEmpty){
+      var list = cacheGameGuessData[key] ?? [];
+      if (list.isNotEmpty) {
         for (int j = 0; j < list.length; j++) {
           var guessItem = list[j];
-          if(guessItem.choiceTeamId.value == 0){
+          if (guessItem.choiceTeamId.value == 0) {
             continue;
           }
           guessItem.choiceTeamId.value = 0;
@@ -256,7 +238,7 @@ class LeagueController extends GetxController {
     var startTime = getStartTime();
     var endTime = getEndTime();
     var cacheKey = "${startTime}_$endTime";
-    scoreList = cacheGameGuessData[cacheKey]??[];
+    scoreList = cacheGameGuessData[cacheKey] ?? [];
     choiceSize.value = getAllChoiceData().length;
     update([idLeagueMain]);
   }

@@ -13,9 +13,9 @@ class TitleBarClipper extends CustomClipper<Path>{
   @override
   Path getClip(Size size) {
     var path = Path();  
-    path.moveTo(0, size.height-2.w);
-    path.lineTo(size.width-12.w-55.w, size.height-2.w);
-    path.arcTo(Rect.fromLTWH(size.width-24.w-55.w, 19.w, 24.w, 24.w), pi/180*90, pi/180 * -90, false);
+    path.moveTo(0, size.height-3.w);
+    path.lineTo(size.width-12.w-55.w, size.height-3.w);
+    path.arcTo(Rect.fromLTWH(size.width-24.w-55.w, 20.w, 24.w, 24.w), pi/180*90, pi/180 * -90, false);
     path.lineTo(size.width-55.w, 12.w);
     path.arcTo(Rect.fromLTWH(size.width-55.w, 0, 24.w, 24.w), pi/180*180, pi/180*90, false);
     path.lineTo(size.width, 0);

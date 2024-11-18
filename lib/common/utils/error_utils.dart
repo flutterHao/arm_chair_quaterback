@@ -13,6 +13,7 @@ import 'package:get/get.dart';
 ///created at 2024/11/18/11:53
 
 class ErrorUtils {
+
   static void toast(dynamic error) {
     var str = DEFAULTERRORSTRING;
     if (error is DioException) {

@@ -39,7 +39,7 @@ class UserInfoBar extends StatelessWidget {
             alignment: Alignment.center,
             children: [
               Container(
-                height: 45.w,
+                height: 47.w,
                 width: double.infinity,
                 color: AppColors.c000000,
                 child: ClipPath(
@@ -237,7 +237,7 @@ class MoneyAndCoinWidget extends StatelessWidget {
                 IconWidget(iconWidth: 24.w, icon: Assets.teamUiMoney02),
                 4.hGap,
                 Text(
-                  Utils.formatChip(info.getMoney()),
+                  Utils.formatMoney(info.getMoney()),
                   style: 16.w4(color: AppColors.cF2F2F2, height: 1),
                 ),
                 13.hGap,

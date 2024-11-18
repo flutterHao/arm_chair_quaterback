@@ -1107,7 +1107,7 @@ class _TradeIndexPageState extends State<TradeIndexPage>
     // 注册监听器
     WidgetsBinding.instance.addObserver(this);
     Get.find<HomeController>().tabIndex.listen((value) {
-      if (value == 3) {
+      if (value == 4) {
         controller.refreshData();
       }
     });
@@ -1124,7 +1124,7 @@ class _TradeIndexPageState extends State<TradeIndexPage>
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
     var value = Get.find<HomeController>().tabIndex.value;
-    if (state == AppLifecycleState.resumed && value == 3) {
+    if (state == AppLifecycleState.resumed && value == 4) {
       controller.refreshData();
     }
   }
