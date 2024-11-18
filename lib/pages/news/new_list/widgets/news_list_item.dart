@@ -1,22 +1,18 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
-
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/utils/image_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/vertival_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
-import 'package:arm_chair_quaterback/pages/news/new_detail/controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comment_controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comment_item.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comments_dialog.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/emoji_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/news_bottom_button.dart';
-import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -27,7 +23,7 @@ class NewsListItem extends StatelessWidget {
 
   // GlobalKey get _globalKey => GlobalKey();
 
-  Widget _head(globalKey) {
+  Widget _head() {
     return Row(
       children: [
         ImageWidget(
@@ -75,7 +71,7 @@ class NewsListItem extends StatelessWidget {
         13.hGap,
         InkWell(
           onTap: () {
-            Utils.generateAndShareImage(globalKey);
+            // Utils.generateAndShareImage(_globalKey);
           },
           child: Container(
             width: 24.w,
@@ -97,12 +93,6 @@ class NewsListItem extends StatelessWidget {
 
   // 新闻内容部分
   Widget _buildNewsContent(BuildContext context) {
-    if (ObjectUtil.isNotEmpty(newsDetail.imgUrl)) {
-      final ImageProvider provider = NetworkImage(newsDetail.imgUrl);
-      provider.getImageSize().then((v) {
-        LogUtil.e("${newsDetail.title}图片尺寸：${v?.width}x${v?.height}");
-      });
-    }
     // newsDetail.type = 2;
     if (newsDetail.type == 0) {
       return Column(
@@ -150,7 +140,15 @@ class NewsListItem extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 10.w),
             child: ImageWidget(
               url: newsDetail.imgUrl,
-              // width: 343.w,
+              width: 343.w,
+              height: newsDetail.imageHeight,
+              errorWidget: Container(
+                height: 40.w,
+                alignment: Alignment.center,
+                child: const Text("field error"),
+                // child: Image.asset(
+                //     height: 40.w, Assets.commonUiCommonIconCurrency01),
+              ),
               // fit: BoxFit.fitWidth,
               borderRadius: BorderRadius.circular(12.w),
             ),
@@ -218,6 +216,7 @@ class NewsListItem extends StatelessWidget {
                   url: newsDetail.imgUrl,
                   // width: 97.w,
                   height: 97.w,
+                  width: newsDetail.imamgeWidth,
                   fit: BoxFit.fitHeight,
                   borderRadius: BorderRadius.circular(12.w),
                 )
@@ -262,15 +261,24 @@ class NewsListItem extends StatelessWidget {
             child: Container(
               width: double.infinity,
               // height: 110.w,
-              padding: EdgeInsets.symmetric(vertical: 11.w, horizontal: 15.w),
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: AppColors.cFFFFFF,
                 borderRadius: BorderRadius.circular(16.w),
               ),
-              child: HotComment(
-                  item:
-                      Reviews.fromJson(newsDetail.reviewsList.first.toJson())),
+              child: Column(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    height: 1,
+                    color: AppColors.cE6E6E,
+                    margin: EdgeInsets.symmetric(vertical: 11.w),
+                  ),
+                  HotComment(
+                      item: Reviews.fromJson(
+                          newsDetail.reviewsList.first.toJson())),
+                ],
+              ),
             ),
           )
         : const SizedBox();
@@ -278,29 +286,24 @@ class NewsListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GlobalKey globalKey = GlobalKey();
-    Get.put(NewsDetailController(newsDetail.id));
-    Get.put(CommentController());
-    return RepaintBoundary(
-      key: globalKey,
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.w),
-        decoration: BoxDecoration(
-            color: AppColors.cFFFFFF,
-            borderRadius: BorderRadius.circular(12.w)),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _head(globalKey),
-            14.vGap,
-            _buildNewsContent(context),
-            20.vGap,
-            NewsBottomButton(newsDetail),
-            16.vGap,
-            EmojiWidget(),
-            _hotComment()
-          ],
-        ),
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.w),
+      decoration: BoxDecoration(
+          color: AppColors.cFFFFFF, borderRadius: BorderRadius.circular(12.w)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _head(),
+          14.vGap,
+          _buildNewsContent(context),
+          20.vGap,
+          NewsBottomButton(newsDetail),
+          16.vGap,
+          const EmojiWidget(),
+          _hotComment(),
+          2.vGap,
+          // Text("zzdsa")
+        ],
       ),
     );
   }

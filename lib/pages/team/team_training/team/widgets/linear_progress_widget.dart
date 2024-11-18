@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 20:30:20
- * @LastEditTime: 2024-11-14 19:19:31
+ * @LastEditTime: 2024-11-18 14:47:03
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +14,7 @@ class CustomLinearProgressBar extends StatefulWidget {
   final double? height; // 高度
   final Color? backgroundColor; // 背景颜色
   final Color? progressColor; // 进度颜色
+  final int milliseconds;
 
   const CustomLinearProgressBar({
     super.key,
@@ -22,6 +23,7 @@ class CustomLinearProgressBar extends StatefulWidget {
     this.height,
     this.backgroundColor,
     this.progressColor,
+    this.milliseconds = 500,
   });
 
   @override

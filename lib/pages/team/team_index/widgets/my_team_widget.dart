@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 17:22:13
- * @LastEditTime: 2024-11-14 14:48:19
+ * @LastEditTime: 2024-11-18 14:12:42
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
@@ -12,6 +12,7 @@ import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
+import 'package:arm_chair_quaterback/common/widgets/player_card.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/linear_progress_widget.dart';
@@ -139,12 +140,12 @@ class MyTeamWidget extends StatelessWidget {
                   ),
                   Positioned(
                     top: 195.5.w,
-                    left: 51.w,
+                    left: 87.w,
                     child: PlayerCardWidget(position: 4),
                   ),
                   Positioned(
                     top: 195.5.w,
-                    right: 51.w,
+                    right: 87.w,
                     child: PlayerCardWidget(position: 5),
                   )
                 ],
@@ -152,6 +153,8 @@ class MyTeamWidget extends StatelessWidget {
             ),
             20.vGap,
             MtInkwell(
+              vibrate: true,
+              minScale: 0.8,
               onTap: () {},
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 16.w),
@@ -205,53 +208,10 @@ class PlayerCardWidget extends GetView<TeamController> {
             orElse: () => TeamPlayerInfoEntity());
     return Column(
       children: [
-        Container(
-          width: 74.w,
-          height: 93.w,
-          clipBehavior: Clip.antiAlias,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(9.w),
-            color: AppColors.cFFFFFF,
-          ),
-          child: Stack(
-            alignment: Alignment.topCenter,
-            children: [
-              ImageWidget(
-                width: 74.w,
-                height: 93.w,
-                url: Utils.getPlayUrl(player.playerId),
-              ),
-              Positioned(
-                left: 4.4.w,
-                top: 5.5.w,
-                child: Text(
-                  "${Utils.getPlayBaseInfo(player.playerId).playerScore}",
-                  style: 16.w4(
-                    color: AppColors.c262626,
-                    height: 0.75,
-                    fontFamily: FontFamily.fOswaldMedium,
-                  ),
-                ),
-              ),
-              Positioned(
-                top: 4.w,
-                right: 4.w,
-                child: Container(
-                  width: 16.w,
-                  height: 16.w,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4.w),
-                      color: AppColors.cF2F2F2),
-                  child: IconWidget(
-                    iconWidth: 10.w,
-                    icon: Assets.iconUiIconRead,
-                    iconColor: AppColors.c262626,
-                  ),
-                ),
-              ),
-            ],
-          ),
+        PlayerCard(
+          playerId: player.playerId,
+          score: Utils.getPlayBaseInfo(player.playerId).playerScore,
+          isMyPlayer: true,
         ),
         5.vGap,
         Text(

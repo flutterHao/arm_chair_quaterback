@@ -2,10 +2,11 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 17:29:19
- * @LastEditTime: 2024-11-15 15:10:28
+ * @LastEditTime: 2024-11-18 20:48:06
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -44,8 +45,9 @@ class ImageWidget extends StatelessWidget {
         Container(
           width: width,
           height: height,
+          alignment: Alignment.center,
           decoration: BoxDecoration(
-            // color: AppColors.cE6E6E,
+            color: AppColors.cE6E6E,
             borderRadius:
                 borderRadius ?? BorderRadius.circular((width ?? height)! / 2),
           ),
@@ -60,9 +62,10 @@ class ImageWidget extends StatelessWidget {
         );
     Widget loadingWidgetTemp = Center(
       child: loadingWidget ??
-          SizedBox(
-              width: 25.w,
-              height: 25.w,
+          Container(
+              width: width,
+              height: height,
+              alignment: Alignment.center,
               child: const CircularProgressIndicator(
                 color: AppColors.cE6E6E6,
                 strokeWidth: 2,
@@ -79,6 +82,25 @@ class ImageWidget extends StatelessWidget {
         child: loadingWidgetTemp,
       );
     }
+    // return CachedNetworkImage(
+    //   imageUrl: url,
+    //   fit: fit,
+    //   width: width,
+    //   height: height,
+    //   color: color,
+    //   imageBuilder: (context, imageProvider) => Container(
+    //     decoration: BoxDecoration(
+    //       image: DecorationImage(
+    //         image: imageProvider,
+    //         fit: BoxFit.cover,
+    //       ),
+    //     ),
+    //   ),
+    //   alignment: alignment ?? Alignment.center,
+    //   // placeholder: (context, url) => CircularProgressIndicator(),
+    //   // errorWidget: (context, url, error) => Icon(Icons.error),
+    // );
+
     return ExtendedImage.network(
       url,
       fit: fit,

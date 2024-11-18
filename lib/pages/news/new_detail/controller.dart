@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:23:17
- * @LastEditTime: 2024-11-15 17:34:47
+ * @LastEditTime: 2024-11-18 17:23:01
  */
 
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
@@ -12,10 +12,9 @@ import 'package:get/get.dart';
 import 'index.dart';
 
 class NewsDetailController extends GetxController {
-  NewsDetailController(this.newsId);
+  NewsDetailController();
   final state = NewDetailState();
 
-  final Object? newsId;
   GlobalKey globalKey = GlobalKey();
 
   /// 在 widget 内存中分配后立即调用。
@@ -42,21 +41,21 @@ class NewsDetailController extends GetxController {
   // }
 
   void likeNews(NewsListDetail item) {
-    // if (item.isLike?.value == 1) return;
-    NewsApi.newsLike(item.id!).then((value) {
-      if (item.isLike?.value == 0) {
+    // if (item.isLike.value == 1) return;
+    NewsApi.newsLike(item.id).then((value) {
+      if (item.isLike.value == 0) {
         /// 未点赞状态
-        item.likes = (item.likes ?? 0) + 1;
-        item.isLike!.value = 1;
-      } else if (item.isLike?.value == 1) {
+        item.likes = item.likes + 1;
+        item.isLike.value = 1;
+      } else if (item.isLike.value == 1) {
         /// 已点赞状态
-        item.likes = (item.likes ?? 0) - 1;
-        item.isLike!.value = 0;
-      } else if (item.isLike?.value == -1) {
+        item.likes = item.likes - 1;
+        item.isLike.value = 0;
+      } else if (item.isLike.value == -1) {
         /// 点踩状态
-        item.unLikes = (item.unLikes ?? 0) - 1;
-        item.likes = (item.likes ?? 0) + 1;
-        item.isLike!.value = 1;
+        item.unLikes = item.unLikes - 1;
+        item.likes = item.likes + 1;
+        item.isLike.value = 1;
       }
 
       // update();
@@ -65,18 +64,18 @@ class NewsDetailController extends GetxController {
   }
 
   void unLikeNews(NewsListDetail item) {
-    // if (item.isLike?.value == -1) return;
-    NewsApi.newsUnLike(item.id!).then((value) {
-      if (item.isLike?.value == 1) {
-        item.likes = (item.likes ?? 0) - 1;
-        item.unLikes = (item.unLikes ?? 0) + 1;
-        item.isLike!.value = -1;
-      } else if (item.isLike?.value == -1) {
-        item.unLikes = (item.unLikes ?? 0) - 1;
-        item.isLike!.value = 0;
+    // if (item.isLike.value == -1) return;
+    NewsApi.newsUnLike(item.id).then((value) {
+      if (item.isLike.value == 1) {
+        item.likes = item.likes - 1;
+        item.unLikes = (item.unLikes) + 1;
+        item.isLike.value = -1;
+      } else if (item.isLike.value == -1) {
+        item.unLikes = (item.unLikes) - 1;
+        item.isLike.value = 0;
       } else {
-        item.unLikes = (item.unLikes ?? 0) + 1;
-        item.isLike!.value = -1;
+        item.unLikes = (item.unLikes) + 1;
+        item.isLike.value = -1;
       }
 
       // update();

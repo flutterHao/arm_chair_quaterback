@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-18 21:01:04
- * @LastEditTime: 2024-11-15 15:47:33
+ * @LastEditTime: 2024-11-18 20:03:29
  */
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
@@ -10,6 +10,7 @@ import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/transitions/half_slide_right_to_left_transition.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_account/bindings.dart';
@@ -18,13 +19,10 @@ import 'package:arm_chair_quaterback/pages/mine/mine_info/bindings.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_info/view.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_setting/bindings.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_setting/view.dart';
+import 'package:arm_chair_quaterback/pages/news/new_detail/controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/view.dart';
-import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/news_item_widget.dart';
-import 'package:arm_chair_quaterback/pages/news/new_list/widgets/latest_widget.dart';
+import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comment_controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/widgets/news_list_item.dart';
-import 'package:arm_chair_quaterback/pages/news/new_list/widgets/page_route_cart.dart';
-import 'package:arm_chair_quaterback/pages/news/new_list/widgets/player_injury_widget.dart';
-import 'package:arm_chair_quaterback/pages/news/new_list/widgets/team_rank_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/bindings.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/stats_view.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/team_view.dart';
@@ -33,7 +31,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'index.dart';
-import './widgets/widgets.dart';
 
 class NewsPage extends StatefulWidget {
   const NewsPage({super.key});
@@ -63,12 +60,12 @@ class _NewsPageState extends State<NewsPage>
               page: () => const NewsListPage(),
             );
           case RouteNames.newsDetail:
-            final newsId = settings.arguments;
+            final item = settings.arguments as NewsListDetail;
             return GetPageRoute(
               opaque: false,
               settings: settings,
               customTransition: HalfSlideRightToLeftTransition(),
-              page: () => NewsDetailList(newsId),
+              page: () => NewsDetailPage(newsDetail: item),
               // binding: NewDetailBinding(), /*  */
             );
           case RouteNames.statsRank:
@@ -117,10 +114,12 @@ class NewsListPage extends GetView<NewListController> {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(NewsDetailController());
+    Get.put(CommentController());
     return GetBuilder<NewListController>(
       id: "newsList",
       builder: (_) {
-        var hasData = controller.state.newsEntity.all.isNotEmpty;
+        var hasData = controller.state.newsFlowList.isNotEmpty;
         return BlackAppWidget(
           const UserInfoBar(
             title: "NEWS",
@@ -128,27 +127,29 @@ class NewsListPage extends GetView<NewListController> {
           ),
           bodyWidget: Expanded(
               child: SmartRefresher(
-            controller: controller.refreshCtrl,
-            onRefresh: () => controller.refreshData(),
+            enablePullUp: true,
+            controller: controller.flowRefreshCtrl,
+            onRefresh: () => controller.getNewsFlow(isRefresh: true),
+            onLoading: () => controller.getNewsFlow(),
             physics: const BouncingScrollPhysics(),
             child: hasData
                 ? ListView.separated(
-                    // controller: controller.scrollController,
+                    controller: controller.scrollController,
                     padding: EdgeInsets.symmetric(vertical: 9.w),
-                    itemCount: controller.state.newsEntity.all.length,
+                    itemCount: controller.state.newsFlowList.length,
                     separatorBuilder: (context, index) {
                       return 9.vGap;
                     },
                     itemBuilder: (context, index) {
                       NewsListDetail item =
-                          controller.state.newsEntity.all[index];
+                          controller.state.newsFlowList[index];
                       return InkWell(
                         onTap: () {
                           controller.pageToDetail(item);
                         },
                         child: NewsListItem(
                           newsDetail: item,
-                          // key: Key(item.id.toString()),
+                          key: Key(item.id.toString()),
                         ),
                       );
                     })

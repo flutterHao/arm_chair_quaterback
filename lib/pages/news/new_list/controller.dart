@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2024-11-15 17:35:44
+ * @LastEditTime: 2024-11-18 19:35:13
  */
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
@@ -30,10 +30,9 @@ class NewListController extends GetxController {
   NewListController();
 
   final state = NewListState();
-  late RefreshController refreshCtrl = RefreshController();
   late RefreshController flowRefreshCtrl = RefreshController();
   ScrollController scrollController = ScrollController();
-  bool isLoading = true;
+  bool isLoading = false;
   String season = "";
   String seasonType = "Regular%20Season";
   String pointType = "";
@@ -52,41 +51,44 @@ class NewListController extends GetxController {
     super.onInit();
     int currentYear = DateTime.now().year;
     season = "$currentYear-${(currentYear + 1) % 100}";
-    refreshData();
-    // scrollController.addListener(_onScroll);
-  }
-
-  // 滚动时调用此函数
-  // void _onScroll() {
-  //   print(
-  //       "zzzzz${scrollController.position.pixels}/${scrollController.position.maxScrollExtent}}");
-  // }
-
-  void refreshData() async {
-    loadingStatus.value = LoadDataStatus.loading;
-    Future.wait([
-      CacheApi.getNBATeamDefine(),
-      CacheApi.getNBAPlayerInfo(),
-      getNewsBanner(),
-      getNewsList(),
-      getStatsRank(),
-      getStarTeamList(),
-    ]).then((v) {
-      // refreshCtrl.refreshCompleted();
-      update(['newsList']);
-    }).whenComplete(() {
-      refreshCtrl.refreshCompleted();
-      loadingStatus.value = LoadDataStatus.success;
-    }).catchError((e) {
-      if (errCount >= 3) return;
-      Future.delayed(const Duration(seconds: 1)).then((value) {
-        errCount++;
-        refreshData();
-        Log.e("getNewsList error,开始重试$errCount");
-        loadingStatus.value = LoadDataStatus.error;
-      });
+    getNewsFlow(isRefresh: true);
+    // refreshData();
+    scrollController.addListener(() {
+      if (scrollController.position.maxScrollExtent -
+              scrollController.position.pixels <=
+          2000) {
+        if (isLoading) return;
+        Log.d("提前加载瀑布流数据");
+        getNewsFlow();
+      }
     });
   }
+
+  // void refreshData() async {
+  //   loadingStatus.value = LoadDataStatus.loading;
+  //   Future.wait([
+  //     CacheApi.getNBATeamDefine(),
+  //     CacheApi.getNBAPlayerInfo(),
+  //     getNewsBanner(),
+  //     getNewsList(),
+  //     getStatsRank(),
+  //     getStarTeamList(),
+  //   ]).then((v) {
+  //     // refreshCtrl.refreshCompleted();
+  //     update(['newsList']);
+  //   }).whenComplete(() {
+  //     refreshCtrl.refreshCompleted();
+  //     loadingStatus.value = LoadDataStatus.success;
+  //   }).catchError((e) {
+  //     if (errCount >= 3) return;
+  //     Future.delayed(const Duration(seconds: 1)).then((value) {
+  //       errCount++;
+  //       refreshData();
+  //       Log.e("getNewsList error,开始重试$errCount");
+  //       loadingStatus.value = LoadDataStatus.error;
+  //     });
+  //   });
+  // }
 
   Future getNewsBanner() async {
     await NewsApi.getNewsBanner().then((value) {
@@ -247,7 +249,7 @@ class NewListController extends GetxController {
     });
   }
 
-  Future getNewsFlow(newsId, {bool isRefresh = false}) async {
+  Future getNewsFlow({bool isRefresh = false}) async {
     if (isRefresh) {
       state.newsFlowList.clear();
       state.page = 0;
@@ -255,21 +257,22 @@ class NewListController extends GetxController {
       state.page++;
     }
 
-    await NewsApi.newsFlow(newsId, state.page, 10).then((value) {
+    await NewsApi.newsFlow(state.page, 10).then((value) {
       state.newsFlowList.addAll(value);
       state.newsList = value;
-      update(['newsFlow']);
+      update(['newsList']);
     }).whenComplete(() {
       isRefresh
           ? flowRefreshCtrl.refreshCompleted()
           : flowRefreshCtrl.loadComplete();
+      isLoading = false;
     });
   }
 
   void pageToDetail(NewsListDetail item, {Function? callBack}) async {
-    getNewsFlow(item.id, isRefresh: true);
+    getNewsFlow(isRefresh: true);
     await Get.toNamed(RouteNames.newsDetail,
-        arguments: item.id, id: GlobalNestedKey.NEWS);
+        arguments: item, id: GlobalNestedKey.NEWS);
     if (callBack != null) {
       callBack();
     }

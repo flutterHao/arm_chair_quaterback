@@ -350,7 +350,11 @@ class HotComment extends GetView<CommentController> {
         Expanded(
           child: Text(
             item.context ?? "",
-            style: 14.w4(color: AppColors.c4D4D4D, height: 1),
+            style: 14.w4(
+              color: AppColors.c4D4D4D,
+              height: 1,
+              fontFamily: FontFamily.fRobotoRegular,
+            ),
             overflow: TextOverflow.ellipsis,
           ),
         ),
@@ -358,7 +362,7 @@ class HotComment extends GetView<CommentController> {
         IconWidget(iconWidth: 12.w, icon: Assets.newsUiIconFire),
         4.hGap,
         Text(
-          "999K",
+          "${item.likes}",
           style: 12.w4(
             color: AppColors.c000000,
             fontFamily: FontFamily.fRobotoRegular,

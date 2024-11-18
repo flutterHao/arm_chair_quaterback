@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-14 15:06:14
- * @LastEditTime: 2024-11-11 18:56:34
+ * @LastEditTime: 2024-11-18 11:55:43
  */
 import 'dart:math';
 
@@ -35,6 +35,9 @@ class CircleProgressView extends StatefulWidget {
   ///是否展示动画
   final bool showAnimation;
 
+  ///文字颜色
+  final Color textColor;
+
   const CircleProgressView({
     super.key,
     required this.title,
@@ -44,7 +47,8 @@ class CircleProgressView extends StatefulWidget {
     this.backgroundColor = const Color(0xFFEEEEEE),
     this.progressColor = const Color(0xFF10A86A),
     this.progressWidth = 2,
-    this.showAnimation = true, // 默认展示动画
+    this.showAnimation = true,
+    this.textColor = const Color(0xFF000000), // 默认展示动画
   });
 
   @override
@@ -143,11 +147,12 @@ class _CircleProgressViewState extends State<CircleProgressView>
             children: [
               Text(
                 widget.title,
-                style: 16.w7(color: widget.progressColor, height: 1),
+                style: 21.w7(color: widget.progressColor, height: 1),
               ),
+              4.vGap,
               Text(
-                "${currentProgress.toInt()}%",
-                style: 10.w4(color: widget.progressColor, height: 1),
+                "+${currentProgress.toInt()}%",
+                style: 12.w4(color: widget.textColor, height: 1),
               ),
             ],
           ),

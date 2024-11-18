@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:33:28
- * @LastEditTime: 2024-10-17 10:07:22
+ * @LastEditTime: 2024-11-18 17:31:20
  */
 // import 'package:arm_chair_quaterback/pages/news/new_detail/bindings.dart';
 // import 'package:arm_chair_quaterback/pages/news/new_detail/view.dart';
@@ -10,10 +10,12 @@
 // import 'package:arm_chair_quaterback/pages/news/rank/bindings.dart';
 // import 'package:arm_chair_quaterback/pages/news/rank/stats_view.dart';
 // import 'package:arm_chair_quaterback/pages/news/rank/team_view.dart';
+import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/pages/league/view.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_info/bindings.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_info/view.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/view.dart';
+import 'package:arm_chair_quaterback/pages/news/new_list/widgets/news_list_item.dart';
 import 'package:arm_chair_quaterback/pages/picks/personal_center/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
@@ -58,22 +60,24 @@ class AppPages {
       page: () => const LeaguePage(),
     ),
     GetPage(
-        opaque: false,
-        name: RouteNames.picksPersonalCenter,
-        page: () => const PersonalCenterPage(),
-        // binding: PersonalCenterBinding()
+      opaque: false,
+      name: RouteNames.picksPersonalCenter,
+      page: () => const PersonalCenterPage(),
+      // binding: PersonalCenterBinding()
     ),
     GetPage(
         opaque: false,
         name: RouteNames.mineMineInfo,
         page: () => const MineInfoPage(),
         binding: MineInfoBinding()),
-    GetPage(
-      opaque: false,
-      name: RouteNames.newsDetail,
-      page: () {
-        return NewsDetailList(Get.arguments);
-      },
-    ),
+    // GetPage(
+    //   opaque: false,
+    //   name: RouteNames.newsDetail,
+    //   page: () {
+    //     return NewsListItem(
+    //       newsDetail: NewsListDetail(),
+    //     );
+    //   },
+    // ),
   ];
 }

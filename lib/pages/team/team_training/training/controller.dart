@@ -20,7 +20,10 @@ class TrainingController extends GetxController
   final random = Random();
   bool isPlaying = false;
   RxInt currentIndex = 0.obs;
-  List<int> currentAward = [0, 0, 0].obs;
+  var showBall = false.obs;
+  var showSlot = false.obs;
+  var showPlayer = false.obs;
+  var showCash = false.obs;
   TrainingInfoEntity trainingInfo = TrainingInfoEntity();
   List<TeamPlayerInfoEntity> playerList = [];
   List<TrainTaskEntity> trainTaskList = [];
@@ -37,7 +40,6 @@ class TrainingController extends GetxController
   ];
   final List<ScrollController> scrollerCtrlList =
       List.generate(6, (_) => ScrollController());
-  final int _scrollDuration = 1000; // 每列滚动持续时间（毫秒）
   final List<int> propList = [301, 302, 303, 304, 305, 306];
 
   Map<int, int> proCountMap = {
@@ -149,7 +151,7 @@ class TrainingController extends GetxController
       scrollerCtrlList[i].jumpTo(0);
     }
     for (int i = 0; i < scrollerCtrlList.length; i++) {
-      Future.delayed(Duration(milliseconds: i * 500), () {
+      Future.delayed(Duration(milliseconds: i * 200), () {
         _scrollColumn(i);
       });
     }
@@ -157,12 +159,13 @@ class TrainingController extends GetxController
 
   void _scrollColumn(int index) {
     slotCard[index].value = true;
-    double offset = 68.w * (random.nextInt(5) + 10);
+    double offset = 68.w * (random.nextInt(5) + 5);
     scrollerCtrlList[index]
         .animateTo(
       offset,
-      duration: Duration(milliseconds: _scrollDuration),
-      curve: Curves.easeOut,
+      duration: Duration(milliseconds: 600),
+      // curve: Curves.easeOut,
+      curve: const Cubic(0.27, 0.59, 0.19, 1.1),
     )
         .then((_) {
       // 滚动完成后重置位置
@@ -171,7 +174,6 @@ class TrainingController extends GetxController
   }
 
   void startScroll(int count) async {
-    currentAward = [0, 0, 0];
     slotCard = [true.obs, true.obs, true.obs];
     update(["slot"]);
 

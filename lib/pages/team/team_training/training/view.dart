@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-11 15:57:44
- * @LastEditTime: 2024-11-14 19:27:07
+ * @LastEditTime: 2024-11-18 12:12:44
  */
 
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
@@ -63,6 +63,7 @@ class TrainingPage extends GetView<TrainingController> {
             width: 317.w,
             height: 18.w,
             alignment: Alignment.centerLeft,
+            clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(9.w),
               border: trainingInfo.playerReadiness < 1
@@ -78,8 +79,10 @@ class TrainingPage extends GetView<TrainingController> {
                   duration: const Duration(milliseconds: 300),
                   width: 317.w * trainingInfo.playerReadiness,
                   height: 18.w,
+                  constraints: BoxConstraints(maxWidth: 317.w),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(9.w),
+                    borderRadius:
+                        BorderRadius.horizontal(left: Radius.circular(9.w)),
                     gradient: const LinearGradient(
                       colors: [
                         AppColors.cB3B3B3,
@@ -87,21 +90,40 @@ class TrainingPage extends GetView<TrainingController> {
                       ],
                     ),
                   ),
+                  // child: Container(
+                  //   width: 2.w,
+                  //   height: 18.w,
+                  //   color: AppColors.cFFFFFF,
+                  //   margin: EdgeInsets.only(
+                  //       left: 317.w * trainingInfo.playerReadiness),
+                  // ),
                 ),
                 if (trainingInfo.playerReadiness > 1)
-                  AnimatedContainer(
-                    duration: const Duration(milliseconds: 300),
-                    width: 317.w * (trainingInfo.playerReadiness - 1),
-                    height: 18.w,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(9.w),
-                      gradient: const LinearGradient(
-                        colors: [
-                          AppColors.c022A1D,
-                          AppColors.c23E8A9,
-                        ],
+                  Row(
+                    children: [
+                      AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        width: 317.w * (trainingInfo.playerReadiness - 1),
+                        height: 18.w,
+                        constraints: BoxConstraints(maxWidth: 317.w),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.horizontal(
+                              left: Radius.circular(9.w)),
+                          gradient: const LinearGradient(
+                            colors: [
+                              AppColors.c022A1D,
+                              AppColors.c23E8A9,
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
+                      if ((trainingInfo.playerReadiness - 1) < 0.99)
+                        Container(
+                          width: 2.w,
+                          height: 18.w,
+                          color: AppColors.cFFFFFF,
+                        )
+                    ],
                   ),
               ],
             ),
@@ -197,7 +219,7 @@ class TrainingPage extends GetView<TrainingController> {
                     ),
                   ),
                   7.hGap,
-                  InkWell(
+                  MtInkwell(
                     onTap: () {
                       showDialog(
                           context: Get.context!,

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-11-15 09:46:49
+ * @LastEditTime: 2024-11-18 14:44:08
  */
 
 import 'dart:async';
@@ -14,7 +14,6 @@ import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
-import 'package:arm_chair_quaterback/pages/picks/personal_center/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/box_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:common_utils/common_utils.dart';
@@ -141,6 +140,9 @@ class TeamIndexController extends GetxController
         final now = DateTime.now();
         final endTime = DateUtil.getDateTimeByMs(item.openTime);
         final diff = endTime.difference(now).inSeconds;
+        final minutes = ((diff % 3600) ~/ 60).toString().padLeft(2, '0');
+        final secs = (diff % 60).toString().padLeft(2, '0');
+        item.remainTime.value = "$minutes:$secs";
         _startTimer(
           time: item.openTime,
           onTick: (v) {
@@ -171,7 +173,7 @@ class TeamIndexController extends GetxController
       final endTime = DateUtil.getDateTimeByMs(time);
       final diff = endTime.difference(now).inSeconds;
       // Log.e("倒计时$diff");
-      if (diff <= 0) {
+      if (diff < 0) {
         Log.i("倒计时完成");
         t.cancel();
         onComplete();

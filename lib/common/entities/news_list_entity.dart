@@ -2,17 +2,12 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-26 18:53:41
- * @LastEditTime: 2024-11-15 18:12:48
+ * @LastEditTime: 2024-11-18 21:28:55
  */
-import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
 import 'package:arm_chair_quaterback/common/entities/review_entity.dart';
-import 'package:arm_chair_quaterback/common/utils/image_ext.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/news_list_entity.g.dart';
 import 'dart:convert';
-
-import 'package:common_utils/common_utils.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 export 'package:arm_chair_quaterback/generated/json/news_list_entity.g.dart';
 
@@ -91,6 +86,10 @@ class NewsListDetail {
   late String imgUrl = "";
   @JSONField(deserialize: false)
   late int type = 1;
+  @JSONField(deserialize: false)
+  double? imageHeight;
+  @JSONField(deserialize: false)
+  double? imamgeWidth;
 
   NewsListDetail();
 
@@ -98,18 +97,6 @@ class NewsListDetail {
     NewsListDetail newsDetail = $NewsListDetailFromJson(json);
     newsDetail.reviewsCount.value = newsDetail.reviewsCountInt;
     newsDetail.isLike.value = newsDetail.isLikeInt;
-    if (ObjectUtil.isNotEmpty(newsDetail.imgUrl)) {
-      final ImageProvider provider = NetworkImage(newsDetail.imgUrl!);
-      provider.getImageSize().then((size) {
-        if (size != null) {
-          if (size.width > 400) {
-            newsDetail.type = 1;
-          } else {
-            newsDetail.type = size.width > size.height ? 2 : 3;
-          }
-        }
-      });
-    }
     return newsDetail;
   }
 

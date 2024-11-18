@@ -84,6 +84,7 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
                                 progress: item.progress,
                                 height: 6.w,
                                 width: 68.w,
+                                milliseconds: 1000,
                                 backgroundColor: AppColors.ccccccc,
                                 progressColor: AppColors.c262626,
                               ),

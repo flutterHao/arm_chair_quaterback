@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 17:28:14
- * @LastEditTime: 2024-11-15 17:55:40
+ * @LastEditTime: 2024-11-18 21:41:39
  */
 import 'package:arm_chair_quaterback/common/entities/news_banner.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
@@ -13,6 +13,10 @@ import 'package:arm_chair_quaterback/common/entities/stats_rank/nba_player_stat.
 import 'package:arm_chair_quaterback/common/entities/team_rank.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/net/index.dart';
+import 'package:arm_chair_quaterback/common/utils/image_ext.dart';
+import 'package:common_utils/common_utils.dart';
+import 'package:extended_image/extended_image.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class NewsApi {
   static Future<List<NewsBanner>> getNewsBanner() async {
@@ -104,11 +108,33 @@ class NewsApi {
     return ReceivePropEntity.fromJson(json);
   }
 
-  static Future<List<NewsListDetail>> newsFlow(
-      newsId, int page, int limit) async {
-    List list = await HttpUtil().post(Api.newsFlow,
-        data: {"newsId": newsId, "page": page, "limit": limit});
-    return list.map((e) => NewsListDetail.fromJson(e)).toList();
+  static Future<List<NewsListDetail>> newsFlow(int page, int limit) async {
+    List list = await HttpUtil()
+        .post(Api.newsFlow, data: {"page": page, "limit": limit});
+    var details = list.map((e) {
+      var newsDetail = NewsListDetail.fromJson(e);
+      if (ObjectUtil.isNotEmpty(newsDetail.imgUrl)) {
+        final ExtendedNetworkImageProvider provider =
+            ExtendedNetworkImageProvider(newsDetail.imgUrl);
+        provider.getImageSize().then((size) {
+          if (size != null) {
+            if (size.width > 250.w) {
+              newsDetail.type = 1;
+              newsDetail.imageHeight = size.height / size.width * 343.w;
+            } else {
+              if (newsDetail.imgUrl.contains(".gif")) {
+                newsDetail.type = 1;
+              } else {
+                newsDetail.type = size.width > size.height ? 2 : 3;
+                newsDetail.imamgeWidth = size.width / size.height * 97.w;
+              }
+            }
+          }
+        });
+      }
+      return newsDetail;
+    }).toList();
+    return details;
   }
 
   static Future<List<Reviews>> getReviewsByNewsId(

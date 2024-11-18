@@ -9,7 +9,6 @@ import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/battle_box_widget.dart';
-import 'package:arm_chair_quaterback/pages/team/team_index/widgets/box_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/linear_progress_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -106,7 +105,7 @@ class BeautyAndBoxView extends StatelessWidget {
                 Positioned(
                   right: 16.w,
                   top: 116.w,
-                  child: InkWell(
+                  child: MtInkwell(
                     onTap: () => Get.toNamed(RouteNames.teamBeautyPage,
                         id: GlobalNestedKey.TEAM),
                     child: Container(
@@ -192,8 +191,7 @@ class BeautyAndBoxView extends StatelessWidget {
                               flex: 134,
                               child: MtInkwell(
                                 onTap: () async {
-                                  int count = ctrl.cardPackInfo.freeGiftCount;
-                                  if (count == 2) return;
+                                  if (ctrl.recieved) return;
                                   ctrl.openFreeGift();
                                 },
                                 child: SizedBox(

@@ -2,7 +2,7 @@
  * @Description: 新闻的底部按钮点赞分享评论
  * @Author: lihonghao
  * @Date: 2024-10-17 17:02:35
- * @LastEditTime: 2024-11-15 18:12:22
+ * @LastEditTime: 2024-11-18 20:18:53
  */
 import 'dart:math';
 
@@ -20,11 +20,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class NewsBottomButton extends StatelessWidget {
+class NewsBottomButton extends GetView<NewsDetailController> {
   const NewsBottomButton(this.detail, {super.key});
   final NewsListDetail detail;
-
-  NewsDetailController get controller => Get.find<NewsDetailController>();
 
   Widget _container(
       {required double width, Function? onTap, required Widget child}) {
@@ -118,18 +116,15 @@ class NewsBottomButton extends StatelessWidget {
                     padding: EdgeInsets.only(top: 3.w),
                     alignment: Alignment.center,
                     // padding: EdgeInsets.symmetric(horizontal: 7.w),
-                    child: Transform(
-                      alignment: Alignment.center,
-                      transform: Matrix4.rotationX(pi),
-                      child: IconWidget(
-                        iconWidth: 18.w,
-                        icon: detail.isLike.value == -1
-                            ? Assets.iconUiIconLike01
-                            : Assets.iconUiIconLike02,
-                        iconColor: detail.isLike.value == -1
-                            ? AppColors.c2D84EF
-                            : AppColors.c000000,
-                      ),
+                    child: IconWidget(
+                      rotateAngle: 180,
+                      iconWidth: 18.w,
+                      icon: detail.isLike.value == -1
+                          ? Assets.iconUiIconLike01
+                          : Assets.iconUiIconLike02,
+                      iconColor: detail.isLike.value == -1
+                          ? AppColors.c2D84EF
+                          : AppColors.c000000,
                     ),
                   ),
                 ),

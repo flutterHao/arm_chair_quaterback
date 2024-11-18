@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 21:12:10
- * @LastEditTime: 2024-11-15 09:59:59
+ * @LastEditTime: 2024-11-18 12:11:20
  */
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -63,76 +63,87 @@ class MatchCard extends GetView<TeamIndexController> {
           ),
           Positioned(
             bottom: 21.w,
-            left: 29.w,
-            right: 29.w,
             child: Row(
               children: [
-                IconWidget(
-                    iconWidth: 18.w,
-                    icon: Assets.managerUiManagerIconCurrency04),
-                4.hGap,
-                Obx(() {
-                  return Text("${controller.cup.value}",
-                      style: 14.w7(color: AppColors.c000000));
-                }),
-                14.hGap,
+                SizedBox(
+                  width: 81.w,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      IconWidget(
+                          iconWidth: 18.w,
+                          icon: Assets.managerUiManagerIconCurrency04),
+                      4.hGap,
+                      Obx(() {
+                        return Text("${controller.cup.value}",
+                            style: 14.w7(color: AppColors.c000000));
+                      }),
+                      13.hGap,
+                    ],
+                  ),
+                ),
 
                 ///比赛按钮
-                Expanded(
+                MtInkwell(
+                  vibrate: true,
+                  minScale: 0.9,
+                  onTap: () {
+                    controller.matchBattle();
+                  },
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Container(
+                        width: 181,
+                        height: 41.w,
+                        decoration: BoxDecoration(
+                            color: AppColors.c000000,
+                            borderRadius: BorderRadius.circular(9.w)),
+                        alignment: Alignment.center,
+                        child: Text(
+                          "MATCH",
+                          style: 19.w4(
+                              color: AppColors.cFFFFFF,
+                              fontFamily: FontFamily.fOswaldMedium),
+                        ),
+                      ),
+                      Positioned(
+                          right: 10.w,
+                          child: IconWidget(
+                            iconWidth: 15.w,
+                            icon: Assets.playerUiIconTriangle03,
+                            iconColor: AppColors.cFFFFFF,
+                            rotateAngle: 90,
+                          ))
+                    ],
+                  ),
+                ),
+
+                Container(
+                  width: 81.w,
+                  alignment: Alignment.centerLeft,
                   child: MtInkwell(
                     minScale: 0.9,
                     onTap: () {
-                      controller.matchBattle();
+                      showDialog(
+                          context: Get.context!,
+                          builder: (context) {
+                            return const RecoverDialog();
+                          });
                     },
-                    child: Stack(
-                      alignment: Alignment.centerRight,
-                      children: [
-                        Container(
-                          width: 181,
-                          height: 41.w,
-                          decoration: BoxDecoration(
-                              color: AppColors.c000000,
-                              borderRadius: BorderRadius.circular(9.w)),
-                          alignment: Alignment.center,
-                          child: Text(
-                            "MATCH",
-                            style: 19.w4(
-                                color: AppColors.cFFFFFF,
-                                fontFamily: FontFamily.fOswaldMedium),
-                          ),
-                        ),
-                        Positioned(
-                            right: 10.w,
-                            child: IconWidget(
-                              iconWidth: 15.w,
-                              icon: Assets.playerUiIconTriangle03,
-                              iconColor: AppColors.cFFFFFF,
-                              rotateAngle: 90,
-                            ))
-                      ],
-                    ),
-                  ),
-                ),
-                8.hGap,
-                InkWell(
-                  onTap: () {
-                    showDialog(
-                        context: Get.context!,
-                        builder: (context) {
-                          return const RecoverDialog();
-                        });
-                  },
-                  child: Container(
-                    width: 60.w,
-                    height: 41.w,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(9.w),
-                      border: Border.all(color: AppColors.c666666),
-                    ),
-                    child: Image.asset(
-                      Assets.managerUiManagerIconRecover,
-                      width: 30.w,
+                    child: Container(
+                      width: 60.w,
+                      height: 41.w,
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.only(left: 8.w),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(9.w),
+                        border: Border.all(color: AppColors.c666666),
+                      ),
+                      child: Image.asset(
+                        Assets.managerUiManagerIconRecover,
+                        width: 30.w,
+                      ),
                     ),
                   ),
                 ),

@@ -2,8 +2,10 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-12 14:47:24
- * @LastEditTime: 2024-11-13 18:52:44
+ * @LastEditTime: 2024-11-18 15:32:19
  */
+import 'dart:ui';
+
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -54,6 +56,11 @@ class SlotMachine extends GetView<TrainingController> {
                         child: Stack(
                           children: [
                             ListView.builder(
+                              reverse: true,
+                              // itemExtent: 68.w,
+                              addAutomaticKeepAlives: true, // 保留已构建的子项
+                              addRepaintBoundaries: true, // 优化重绘
+                              addSemanticIndexes: true, // 语义化索引
                               physics: const NeverScrollableScrollPhysics(),
                               padding: const EdgeInsets.all(0),
                               controller: controller.scrollerCtrlList[index],
@@ -77,7 +84,8 @@ class SlotMachine extends GetView<TrainingController> {
                                   ),
                                   child: IconWidget(
                                     iconWidth: 16.w,
-                                    icon: Assets.managerUiManagerTrainingUnknown,
+                                    icon:
+                                        Assets.managerUiManagerTrainingUnknown,
                                     iconColor: Colors.black.withOpacity(0.2),
                                   ),
                                 ),
@@ -100,7 +108,7 @@ class SlotMachine extends GetView<TrainingController> {
                   height: 0.7),
             ),
             7.hGap,
-            IconWidget(iconWidth: 21.w, icon: Assets.teamUiIconBasketball),
+            IconWidget(iconWidth: 21.w, icon: Assets.iconUiIconBasketball),
             4.hGap,
             Text(
               "1",

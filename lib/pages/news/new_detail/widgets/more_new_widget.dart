@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-10 17:28:39
- * @LastEditTime: 2024-10-18 18:00:45
+ * @LastEditTime: 2024-11-18 17:30:36
  */
 /*
  * @Description: 
@@ -55,7 +55,7 @@ class MoreNewsWidget extends StatelessWidget {
                     onTap: () async {
                       item.isView = 1;
                       await Get.toNamed(RouteNames.newsDetail,
-                          arguments: item.id, id: GlobalNestedKey.NEWS);
+                          arguments: item, id: GlobalNestedKey.NEWS);
                       controller.update();
                     },
                     // onTap: (){

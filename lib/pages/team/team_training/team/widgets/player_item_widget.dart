@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2024-11-08 16:58:10
+ * @LastEditTime: 2024-11-18 12:19:14
  */
 /*
  * @Description: 
@@ -355,83 +355,6 @@ class PlayerItem extends GetView<TeamController> {
           _playCard(),
           if (!controller.canChange(isBag, item)) _enableContainer()
           // (item > 5 && !isMain && !isBag) ? _addPlayer() : _playCard(),
-        ],
-      ),
-    );
-  }
-}
-
-///球员头像
-class PlayerAwater extends StatelessWidget {
-  const PlayerAwater(
-      {super.key,
-      this.backgroudColor,
-      required this.player,
-      this.showGrade = true,
-      this.width,
-      this.height});
-
-  final Color? backgroudColor;
-  final TeamPlayerInfoEntity player;
-  final bool showGrade;
-  final double? width;
-  final double? height;
-
-  @override
-  Widget build(BuildContext context) {
-    ///头像
-    return InkWell(
-      onTap: () {
-        Get.toNamed(RouteNames.picksPlayerDetail,
-            arguments:
-                PlayerDetailPageArguments(player.playerId, isMyPlayer: true));
-      },
-      child: Stack(
-        children: [
-          Container(
-            width: width ?? 64.w,
-            height: width ?? 64.w,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: backgroudColor ?? AppColors.c262626,
-              borderRadius: BorderRadius.circular(32.w),
-            ),
-          ),
-          ImageWidget(
-            url: Utils.getPlayUrl(player.playerId),
-            imageFailedPath: Assets.iconUiDefault04,
-            width: width ?? 64.w,
-            height: width ?? 64.w,
-            borderRadius: BorderRadius.circular(32.w),
-          ),
-          if (showGrade)
-            Positioned(
-              left: 0,
-              top: 2,
-              child: Text(
-                Utils.formatGrade(Utils.getPlayBaseInfo(player.playerId).grade),
-                style: 17.w7(color: AppColors.c262626),
-              ),
-            ),
-          if (showGrade)
-            Positioned(
-              top: 1.5.w,
-              right: 0.5.w,
-              child: IconWidget(
-                iconWidth: 17.w,
-                icon: Assets.playerUiIconStar01,
-                iconColor: AppColors.cFF7954,
-              ),
-            ),
-          if (showGrade)
-            Positioned(
-              right: 6.w,
-              top: 6.5.w,
-              child: Text(
-                player.getBreakThroughGrade().toString(),
-                style: 11.w7(color: AppColors.cFFFFFF, height: 1),
-              ),
-            ),
         ],
       ),
     );
