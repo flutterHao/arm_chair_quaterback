@@ -80,6 +80,7 @@ class Api {
   static const String cPlayerStatsDefine =
       "$CONFIG_BASE_PATH/PlayerStatsDefine.json";
   static const String cPickType = "$CONFIG_BASE_PATH/PickType.json";
+  static const String cErrorCode = "$CONFIG_BASE_PATH/ErrorCode.json";
 
   /// TeamPlayer
   static const String getTeamPlayerByUUID =

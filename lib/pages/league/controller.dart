@@ -5,6 +5,7 @@ import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/league.dart';
 import 'package:arm_chair_quaterback/common/utils/click_feed_back.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
+import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -159,7 +160,7 @@ class LeagueController extends GetxController {
       update([idLeagueMain]);
       refreshController.refreshCompleted();
     }, onError: (e) {
-      print(":-_-: ${e.stackTrace}");
+      ErrorUtils.toast(e);
       loadStatus.value = LoadDataStatus.error;
       refreshController.refreshCompleted();
       update([idLeagueMain]);

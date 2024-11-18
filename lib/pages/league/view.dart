@@ -400,7 +400,7 @@ class _ItemWidgetState extends State<_ItemWidget> {
                       height: 44.w,
                       alignment: Alignment.center,
                       child: Text(
-                        "${item.status == 2 ? item.homeTeamScore : "   "}",
+                        "${item.status != 0 ? item.homeTeamScore : "   "}",
                         style: 30.w7(
                             color: AppColors.cB3B3B3,
                             height: 1,
@@ -423,7 +423,7 @@ class _ItemWidgetState extends State<_ItemWidget> {
                       height: 44.w,
                       alignment: Alignment.center,
                       child: Text(
-                        "${item.status == 2 ? item.awayTeamScore : "   "}",
+                        "${item.status != 0 ? item.awayTeamScore : "   "}",
                         style: 30.w7(
                             color: AppColors.c000000,
                             height: 1,

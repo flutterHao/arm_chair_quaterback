@@ -244,7 +244,7 @@ class Utils {
 
       // 使用share_plus插件分享文件
       Share.shareXFiles([XFile(filePath)],
-          text: 'Check out this generated image!');
+          text: 'https://google.com');
     } catch (e) {
       print('Error generating image: $e');
     }

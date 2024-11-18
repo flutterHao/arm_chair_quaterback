@@ -13,7 +13,9 @@ import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/enums/rank_type.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
+import 'package:arm_chair_quaterback/common/net/base/result_entity.dart';
 import 'package:arm_chair_quaterback/common/utils/click_feed_back.dart';
+import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/param_utils.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/league/controller.dart';
@@ -180,8 +182,7 @@ class PicksIndexController extends GetxController
       ClickFeedBack.selectionClick();
       EasyLoading.showToast("Pick successful!you can check it in History");
     }, onError: (e) {
-      print('-_- : ${e.stackTrace}');
-      EasyLoading.showToast("SERVER ERROR");
+      ErrorUtils.toast(e);
     });
   }
 

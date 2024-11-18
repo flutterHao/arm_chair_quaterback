@@ -14,7 +14,7 @@ class DateFormats {
   static const String D_H_M_S = 'dd:HH:mm:ss';
   static const String H_M_S = 'HH:mm:ss';
   static const String H_M = 'HH:mm';
-  static const String M_S = 'MM:ss';
+  static const String M_S = 'mm:ss';
 
 
   static const String ZH_FULL = 'yyyy年MM月dd日 HH时mm分ss秒';
@@ -30,7 +30,7 @@ class DateFormats {
   static const String PARAM_Y_M_D_H_M = 'yyyy/MM/dd HH:mm';
   static const String PARAM_Y_M_D = "yyyy/MM/dd";
   static const String PARAM_Y_M = 'yyyy/MM';
-  static const String PARAM_M_D = 'MM/dd';
-  static const String PARAM_M_D_H = 'MM/dd HH';
-  static const String PARAM_M_D_H_M = 'MM/dd HH:mm';
+  static const String PARAM_M_D = 'dd/MM';
+  static const String PARAM_M_D_H = 'dd/MM HH';
+  static const String PARAM_M_D_H_M = 'dd/MM HH:mm';
 }

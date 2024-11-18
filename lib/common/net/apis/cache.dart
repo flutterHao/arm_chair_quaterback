@@ -94,6 +94,7 @@
 //   }
 // }
 
+import 'package:arm_chair_quaterback/common/entities/api_error_code_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/config/prop_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/grade_in_star_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
@@ -121,6 +122,7 @@ class CacheApi {
   static PicksDefineEntity? _pickDefine;
 
   static List<PickTypeEntity>? _pickType;
+  static List<ApiErrorCodeEntity>? apiErrorCode;
 
   ///道具定义
   static List<PropDefineEntity>? propDefineList;
@@ -137,6 +139,7 @@ class CacheApi {
 
   static Future<void> init() async {
     await Future.wait([
+      getErrorCode(),
       getNBATeamDefine(),
       getNBAPlayerInfo(),
       // getNewsDefine(),
@@ -253,5 +256,14 @@ class CacheApi {
     var statusList = data.map((e) => PlayerStatusEntity.fromJson(e)).toList();
     playerStatusMap = {for (var item in statusList) item.statsId: item};
     return playerStatusMap;
+  }
+
+  static Future<List<ApiErrorCodeEntity>> getErrorCode() async {
+    if (apiErrorCode != null) {
+      return apiErrorCode!;
+    }
+    List json = await httpUtil.get(Api.cErrorCode);
+    apiErrorCode = json.map((e)=> ApiErrorCodeEntity.fromJson(e)).toList();
+    return apiErrorCode!;
   }
 }
