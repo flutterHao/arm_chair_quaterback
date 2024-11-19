@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-12 14:47:24
- * @LastEditTime: 2024-11-19 18:23:32
+ * @LastEditTime: 2024-11-19 21:57:59
  */
 
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -57,9 +57,6 @@ class SlotMachine extends GetView<TrainingController> {
                             ListView.builder(
                               reverse: true,
                               // itemExtent: 68.w,
-                              addAutomaticKeepAlives: true, // 保留已构建的子项
-                              addRepaintBoundaries: true, // 优化重绘
-                              addSemanticIndexes: true, // 语义化索引
                               physics: const NeverScrollableScrollPhysics(),
                               padding: const EdgeInsets.all(0),
                               controller: controller.scrollerCtrlList[index],
@@ -117,6 +114,7 @@ class SlotMachine extends GetView<TrainingController> {
         ),
         5.vGap,
         MtInkwell(
+          // vibrate: true,
           onTap: () => controller.startSlot(),
           child: Container(
             width: 188.w,

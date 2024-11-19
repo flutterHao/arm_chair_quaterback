@@ -60,6 +60,8 @@ class _LineUpTabState extends State<LineUpTab>
                       children: [
                         Text(
                           "${controller.myTeamEntity.oVR}",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: 16.w7(color: AppColors.cF2F2F2, height: 1),
                         ),
                         10.vGap,

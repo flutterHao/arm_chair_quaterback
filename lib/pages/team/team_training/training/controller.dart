@@ -12,6 +12,7 @@ import 'package:arm_chair_quaterback/pages/home/index.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -61,6 +62,35 @@ class TrainingController extends GetxController
   void onInit() {
     super.onInit();
     playerScrollCtrl = ScrollController();
+    for (var controller in scrollerCtrlList) {
+      controller.addListener(_onScroll);
+    }
+  }
+
+  void _onScroll() {
+    for (int i = 0; i < scrollerCtrlList.length; i++) {
+      final controller = scrollerCtrlList[i];
+      if (controller.positions.isNotEmpty) {
+        final position = controller.position;
+        if (position.userScrollDirection == ScrollDirection.forward) {
+          // 用户正在向上滚动
+          print('Scrolling forward in slot $i');
+        } else if (position.userScrollDirection == ScrollDirection.reverse) {
+          // 用户正在向下滚动
+          print('Scrolling reverse in slot $i');
+        } else if (position.userScrollDirection == ScrollDirection.idle) {
+          // 滚动停止
+          print('Scrolling idle in slot $i');
+          if (position.pixels == position.maxScrollExtent) {
+            // 滚动到底部
+            print('Scrolled to the bottom in slot $i');
+          } else if (position.pixels == 0) {
+            // 滚动到顶部
+            print('Scrolled to the top in slot $i');
+          }
+        }
+      }
+    }
   }
 
   /// 在 onInit() 之后调用 1 帧。这是进入的理想场所
@@ -176,7 +206,10 @@ class TrainingController extends GetxController
         showCash.value = true;
         showBall.value = true;
         showPlayer.value = true;
-        Future.delayed(const Duration(milliseconds: 2000)).then((v) {
+        Future.delayed(const Duration(milliseconds: 1000)).then((v) {
+          showCash.value = false;
+          showBall.value = false;
+          showPlayer.value = false;
           _animateResult();
           reset();
         });

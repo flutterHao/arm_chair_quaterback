@@ -2,10 +2,12 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 17:22:13
- * @LastEditTime: 2024-11-18 22:01:32
+ * @LastEditTime: 2024-11-19 22:47:28
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
+import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -13,8 +15,10 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/player_card.dart';
+import 'package:arm_chair_quaterback/common/widgets/vertival_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/linear_progress_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -155,7 +159,16 @@ class MyTeamWidget extends StatelessWidget {
             MtInkwell(
               vibrate: true,
               minScale: 0.8,
-              onTap: () {},
+              onTap: () {
+                // Get.toNamed(RouteNames.teamMemberPage,
+                //     id: GlobalNestedKey.TEAM);
+                showBottomSheet(
+                    backgroundColor: Colors.transparent,
+                    context: context,
+                    builder: (context) {
+                      return VerticalDragBackWidget(child: TeamMenberView());
+                    });
+              },
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 16.w),
                 child: Stack(

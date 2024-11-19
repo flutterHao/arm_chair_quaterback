@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-11-19 15:46:17
+ * @LastEditTime: 2024-11-19 22:38:24
  */
 
 import 'dart:async';
@@ -42,6 +42,12 @@ class TeamIndexController extends GetxController
   RefreshController refreshController = RefreshController();
   bool recieved = false;
   RxInt cup = 0.obs;
+
+  bool isOnTopSide = true;
+
+  get myTeamBottom => null;
+
+  get isShow => null;
 
   @override
   void onInit() {
@@ -273,4 +279,8 @@ class TeamIndexController extends GetxController
     battleBoxTimer?.cancel();
     super.onClose();
   }
+
+  openPage() {}
+
+  closePage() {}
 }

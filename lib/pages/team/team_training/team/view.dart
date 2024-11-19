@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 16:18:58
- * @LastEditTime: 2024-11-13 19:57:13
+ * @LastEditTime: 2024-11-19 22:51:33
  */
 /*
  * @Description: 
@@ -11,10 +11,10 @@
  * @LastEditTime: 2024-10-12 20:29:16
  */
 
-import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/border_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/team_tab_bar.dart';
@@ -80,42 +80,34 @@ class TeamMenberView extends StatelessWidget {
           child: Stack(
             alignment: Alignment.topCenter,
             children: [
-              // _head(),
-              // ArrowAnimated(
-              //   child: InkWell(
-              //     onTap: () {
-              //       Get.find<TeamIndexController>().pageOnTap();
-              //     },
-              //     child: Padding(
-              //       padding: EdgeInsets.all(10.w),
-              //       child: Obx(() {
-              //         // bool isOpen = indexCtrl.isShow.value;
-              //         // controller.turns = isOpen ? 1 / 2 : -1 / 2;
-              //         return AnimatedRotation(
-              //           duration: const Duration(milliseconds: 300),
-              //           turns: indexCtrl.turns.value,
-              //           child: Stack(
-              //             children: [
-              //               IconWidget(
-              //                 iconWidth: 21.w,
-              //                 icon: Assets.iconUiIconArrows04,
-              //                 iconColor: AppColors.cB3B3B3.withOpacity(0.7),
-              //               ),
-              //               Container(
-              //                 margin: EdgeInsets.only(top: 9.w),
-              //                 child: IconWidget(
-              //                   iconWidth: 21.w,
-              //                   icon: Assets.iconUiIconArrows04,
-              //                   iconColor: AppColors.cB3B3B3,
-              //                 ),
-              //               ),
-              //             ],
-              //           ),
-              //         );
-              //       }),
-              //     ),
-              //   ),
-              // ),
+              _head(),
+              ArrowAnimated(
+                child: InkWell(
+                  onTap: () {
+                    // Get.find<TeamIndexController>().pageOnTap();
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.all(10.w),
+                    child: Stack(
+                      children: [
+                        IconWidget(
+                          iconWidth: 21.w,
+                          icon: Assets.iconUiIconArrows04,
+                          iconColor: AppColors.cB3B3B3.withOpacity(0.7),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 9.w),
+                          child: IconWidget(
+                            iconWidth: 21.w,
+                            icon: Assets.iconUiIconArrows04,
+                            iconColor: AppColors.cB3B3B3,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
 
               ///Tabar容器
               Positioned(

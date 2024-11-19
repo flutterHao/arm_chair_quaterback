@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-11 15:57:44
- * @LastEditTime: 2024-11-19 17:49:46
+ * @LastEditTime: 2024-11-19 21:51:10
  */
 
 import 'dart:math';
@@ -205,8 +205,14 @@ class TrainingPage extends GetView<TrainingController> {
                           height: 0.7),
                     ),
                   ),
-                  IconWidget(
-                      iconWidth: 21.w, icon: Assets.iconUiIconBasketball),
+                  Obx(() {
+                    return AnimatedScale(
+                      scale: controller.showBall.value ? 1.2 : 1,
+                      duration: const Duration(milliseconds: 300),
+                      child: IconWidget(
+                          iconWidth: 21.w, icon: Assets.iconUiIconBasketball),
+                    );
+                  }),
                   4.hGap,
                   Text(
                     "${trainingInfo.prop.num}/${controller.trainDefine.ballMaxNum}",
@@ -280,8 +286,9 @@ class TrainingPage extends GetView<TrainingController> {
                   Positioned(
                     top: 46.w,
                     child: Obx(() {
-                      return Visibility(
-                        visible: controller.showCash.value,
+                      return AnimatedOpacity(
+                        opacity: controller.showCash.value ? 1 : 0,
+                        duration: const Duration(milliseconds: 500),
                         child: Container(
                           width: 126.w,
                           height: 61.w,
