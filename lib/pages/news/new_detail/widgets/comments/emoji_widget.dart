@@ -2,8 +2,9 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-22 15:19:24
- * @LastEditTime: 2024-10-29 20:45:41
+ * @LastEditTime: 2024-11-19 21:20:37
  */
+import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -66,19 +67,21 @@ class EmojiWidget extends StatelessWidget {
             );
           });
         }),
-        InkWell(
+        5.hGap,
+        MtInkwell(
           onTap: () {},
           child: Container(
             height: 24.w,
-            width: 43.w,
+            width: 24.w,
             alignment: Alignment.center,
-            padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.w),
             decoration: BoxDecoration(
-              color: AppColors.cE6E6E,
-              borderRadius: BorderRadius.circular(12.w),
+              color: AppColors.cFFFFFF,
+              borderRadius: BorderRadius.circular(4.w),
+              border: Border.all(
+                  color: AppColors.c666666.withOpacity(0.3), width: 1.w),
             ),
             child: IconWidget(
-              iconWidth: 16.w,
+              iconWidth: 14.w,
               icon: Assets.newsUiIconEmoji,
               iconColor: AppColors.c262626,
             ),

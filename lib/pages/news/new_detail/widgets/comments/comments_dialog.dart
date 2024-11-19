@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-18 15:38:51
- * @LastEditTime: 2024-11-15 17:40:04
+ * @LastEditTime: 2024-11-19 21:35:11
  */
 
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
@@ -53,7 +53,7 @@ class CommentsDialog extends GetView<CommentController> {
               width: double.infinity,
               height: 650.w,
               decoration: BoxDecoration(
-                color: AppColors.cF2F2F2,
+                color: AppColors.cFFFFFF,
                 borderRadius: borderRadius,
               ),
               child: Column(
@@ -78,7 +78,7 @@ class CommentsDialog extends GetView<CommentController> {
               right: 0,
               left: 0,
               child: SendCommentWidget(
-                newsId: detail.id!,
+                newsId: detail.id,
                 // key: UniqueKey(),
                 // isReply: true,
                 // key: Key("bottom"),
@@ -107,7 +107,7 @@ class CommentsList extends GetView<CommentController> {
               margin: EdgeInsets.symmetric(vertical: 12.w),
               child: Obx(() {
                 return Text(
-                  "Comments (${detail.reviewsCount!.value})",
+                  "Comments (${detail.reviewsCount.value})",
                   style: 16.w7(height: 1),
                 );
               }),
@@ -121,7 +121,7 @@ class CommentsList extends GetView<CommentController> {
               enablePullUp: true,
               enablePullDown: false,
               onLoading: () =>
-                  controller.getReviews(detail.id!, isRefresh: false),
+                  controller.getReviews(detail.id, isRefresh: false),
               child: list.isNotEmpty
                   ? ListView.separated(
                       controller: ScrollController(),

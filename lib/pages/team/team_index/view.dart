@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-11-18 14:18:23
+ * @LastEditTime: 2024-11-19 15:50:28
  */
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
@@ -25,6 +25,7 @@ import 'package:arm_chair_quaterback/pages/team/team_training/training/controlle
 import 'package:arm_chair_quaterback/pages/team/team_training/training/view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'index.dart';
 
@@ -108,6 +109,7 @@ class _TeamView extends GetView<TeamIndexController> {
           ),
           bodyWidget: Expanded(
             child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
               controller: ctrl.scrollController,
               child: const Column(
                 children: [

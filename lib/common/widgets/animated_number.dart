@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-04 16:18:54
- * @LastEditTime: 2024-11-08 16:57:08
+ * @LastEditTime: 2024-11-19 17:21:24
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -89,12 +89,16 @@ class _AnimatedScaleNumberState extends State<AnimatedScaleNumber>
 
 class AnimatedNum extends StatefulWidget {
   final int number;
+  final String? unit;
+
+  ///单位
   final TextStyle textStyle;
 
   const AnimatedNum({
     super.key,
     required this.number,
     required this.textStyle,
+    this.unit = "",
   });
 
   @override
@@ -144,7 +148,7 @@ class AnimState extends State<AnimatedNum> with SingleTickerProviderStateMixin {
       animation: controller,
       builder: (context, child) {
         return Text(
-          '${animation.value}',
+          '${animation.value}${widget.unit}',
           style: widget.textStyle,
         );
       },

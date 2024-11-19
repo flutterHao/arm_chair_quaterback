@@ -21,7 +21,6 @@ class TrainingController extends GetxController
   bool isPlaying = false;
   RxInt currentIndex = 0.obs;
   var showBall = false.obs;
-  var showSlot = false.obs;
   var showPlayer = false.obs;
   var showCash = false.obs;
   TrainingInfoEntity trainingInfo = TrainingInfoEntity();
@@ -40,6 +39,7 @@ class TrainingController extends GetxController
   ];
   final List<ScrollController> scrollerCtrlList =
       List.generate(6, (_) => ScrollController());
+
   final List<int> propList = [301, 302, 303, 304, 305, 306];
 
   Map<int, int> proCountMap = {
@@ -86,7 +86,7 @@ class TrainingController extends GetxController
     }
   }
 
-  void getData() async {
+  Future getData() async {
     int teamId = HomeController.to.userEntiry.teamLoginInfo!.team!.teamId!;
     await Future.wait([
       // CacheApi.getRewardGroup(),
@@ -144,12 +144,16 @@ class TrainingController extends GetxController
   void startSlot() async {
     final teamIndexCtrl = Get.find<TeamIndexController>();
     teamIndexCtrl.scroToSlot();
-    trainingInfo = await TeamApi.playerTraining(playerList[0].uuid);
-    update(["training_page"]);
+    // trainingInfo = await TeamApi.playerTraining(playerList[0].uuid);
+    // update(["training_page"]);
+    trainingInfo.propArray.clear();
     for (int i = 0; i < slotCard.length; i++) {
       slotCard[i].value = false;
       scrollerCtrlList[i].jumpTo(0);
+      int prop = random.nextInt(propList.length);
+      trainingInfo.propArray.add(prop);
     }
+
     for (int i = 0; i < scrollerCtrlList.length; i++) {
       Future.delayed(Duration(milliseconds: i * 200), () {
         _scrollColumn(i);
@@ -159,21 +163,67 @@ class TrainingController extends GetxController
 
   void _scrollColumn(int index) {
     slotCard[index].value = true;
-    double offset = 68.w * (random.nextInt(5) + 5);
+
+    ///在获奖的结果基础上旋转两周
+    double offset =
+        68.w * (trainingInfo.propArray[index] + propList.length * 2);
     scrollerCtrlList[index]
-        .animateTo(
-      offset,
-      duration: Duration(milliseconds: 600),
-      // curve: Curves.easeOut,
-      curve: const Cubic(0.27, 0.59, 0.19, 1.1),
-    )
+        .animateTo(offset,
+            duration: const Duration(milliseconds: 600),
+            curve: const Cubic(0.27, 0.59, 0.19, 1.1))
         .then((_) {
-      // 滚动完成后重置位置
-      // _controllers[index].jumpTo(0);
+      if (index == 5) {
+        showCash.value = true;
+        showBall.value = true;
+        showPlayer.value = true;
+        Future.delayed(const Duration(milliseconds: 2000)).then((v) {
+          _animateResult();
+          reset();
+        });
+      }
     });
   }
 
-  void startScroll(int count) async {
+  void reset() {
+    showCash.value = false;
+    showBall.value = false;
+    showPlayer.value = false;
+  }
+
+  void _animateResult() {
+    for (int i = 0; i < slotCard.length; i++) {
+      if (i < trainingInfo.propArray.length) {
+        int prop = trainingInfo.propArray[i];
+        _animateIcon(i, prop);
+      }
+    }
+  }
+
+  void _animateIcon(int index, int prop) {
+    final AnimationController controller = AnimationController(
+      duration: const Duration(milliseconds: 500),
+      vsync: this,
+    );
+
+    final Animation<double> sizeAnimation = TweenSequence([
+      TweenSequenceItem<double>(tween: Tween(begin: 1.0, end: 1.2), weight: 50),
+      TweenSequenceItem<double>(tween: Tween(begin: 1.2, end: 1.0), weight: 50),
+    ]).animate(CurvedAnimation(parent: controller, curve: Curves.easeInOut));
+
+    controller.forward();
+
+    sizeAnimation.addListener(() {
+      update(["slot"]);
+    });
+
+    controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        controller.dispose();
+      }
+    });
+  }
+
+  void startPlayerScroll(int count) async {
     slotCard = [true.obs, true.obs, true.obs];
     update(["slot"]);
 
@@ -202,7 +252,7 @@ class TrainingController extends GetxController
   ///301:钱
   ///302:中钱
   ///303:状态
-  ///304:Buff
+  ///304:Buff、战术
   ///305:任务
   ///306:球
   void awardAnimation() async {

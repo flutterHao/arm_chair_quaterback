@@ -2,7 +2,7 @@
  * @Description: 新闻的底部按钮点赞分享评论
  * @Author: lihonghao
  * @Date: 2024-10-17 17:02:35
- * @LastEditTime: 2024-11-19 10:05:31
+ * @LastEditTime: 2024-11-19 21:26:03
  */
 import 'dart:math';
 
@@ -22,8 +22,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class NewsBottomButton extends GetView<NewListController> {
-  const NewsBottomButton(this.detail, {super.key});
+  const NewsBottomButton(this.detail, {super.key, this.showCommentBt = true});
   final NewsListDetail detail;
+  final bool showCommentBt;
 
   Widget _container(
       {required double width, Function? onTap, required Widget child}) {
@@ -136,43 +137,44 @@ class NewsBottomButton extends GetView<NewListController> {
         12.hGap,
 
         ///评论
-        _container(
-            width: 76.w,
-            onTap: () {
-              Get.find<CommentController>()
-                  .getReviews(detail.id, isRefresh: true);
+        if (showCommentBt)
+          _container(
+              width: 76.w,
+              onTap: () {
+                Get.find<CommentController>()
+                    .getReviews(detail.id, isRefresh: true);
 
-              showModalBottomSheet(
-                isScrollControlled: true,
-                context: Get.context!,
-                // barrierColor: Colors.transparent,
-                backgroundColor: Colors.transparent,
-                builder: (context) {
-                  return VerticalDragBackWidget(
-                      child: CommentsDialog(detail: detail));
-                },
-              );
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                IconWidget(
-                  iconWidth: 18.w,
-                  icon: Assets.iconUiIconChatting02,
-                  iconColor: AppColors.c000000,
-                ),
-                // if (detail.likes != 0)
-                Obx(() {
-                  return Container(
-                    margin: EdgeInsets.only(left: 7.w),
-                    child: Text(
-                      numFormat(detail.reviewsCount.value),
-                      style: 14.w4(color: AppColors.c000000),
-                    ),
-                  );
-                }),
-              ],
-            )),
+                showModalBottomSheet(
+                  isScrollControlled: true,
+                  context: Get.context!,
+                  // barrierColor: Colors.transparent,
+                  backgroundColor: Colors.transparent,
+                  builder: (context) {
+                    return VerticalDragBackWidget(
+                        child: CommentsDialog(detail: detail));
+                  },
+                );
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconWidget(
+                    iconWidth: 18.w,
+                    icon: Assets.iconUiIconChatting02,
+                    iconColor: AppColors.c000000,
+                  ),
+                  // if (detail.likes != 0)
+                  Obx(() {
+                    return Container(
+                      margin: EdgeInsets.only(left: 7.w),
+                      child: Text(
+                        numFormat(detail.reviewsCount.value),
+                        style: 14.w4(color: AppColors.c000000),
+                      ),
+                    );
+                  }),
+                ],
+              )),
         // 4.hGap,
       ],
     );

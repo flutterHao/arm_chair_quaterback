@@ -1,3 +1,9 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-11-14 14:41:22
+ * @LastEditTime: 2024-11-19 20:37:01
+ */
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -47,7 +53,7 @@ class LoadStatusWidget extends StatelessWidget {
             IconWidget(
                 iconWidth: 123.w,
                 icon: icon ?? loadDataStatus?.icon ?? Assets.iconUiDefault01),
-          5.vGap,
+          20.vGap,
           Text(
             text ?? loadDataStatus?.desc ?? "",
             style: 12.w4(color: AppColors.cB3B3B3.withOpacity(.7)),

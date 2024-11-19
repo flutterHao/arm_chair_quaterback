@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2024-11-19 14:05:13
+ * @LastEditTime: 2024-11-19 20:58:52
  */
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
@@ -72,8 +72,7 @@ class NewListController extends GetxController {
   }
 
   void pageToDetail(NewsListDetail item, {Function? callBack}) async {
-    await Get.toNamed(RouteNames.newsDetail,
-        arguments: item, id: GlobalNestedKey.NEWS);
+    await Get.toNamed(RouteNames.newsDetail, arguments: item);
     if (callBack != null) {
       callBack();
     }

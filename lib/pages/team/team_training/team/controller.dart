@@ -65,13 +65,13 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
     _timer?.cancel();
   }
 
-  void initData() async {
+  Future initData() async {
     if (HomeController.to.userEntiry.teamLoginInfo == null) {
       await HomeController.to.refreshUserEntity();
     }
     int teamId = HomeController.to.userEntiry.teamLoginInfo!.team!.teamId ?? 0;
 
-    Future.wait([
+    await Future.wait([
       TeamApi.getMyTeamPlayer(teamId),
       TeamApi.getMyBagPlayers(),
       CacheApi.getPlayerStatusConfig(),

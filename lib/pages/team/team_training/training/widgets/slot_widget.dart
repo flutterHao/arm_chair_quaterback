@@ -2,9 +2,8 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-12 14:47:24
- * @LastEditTime: 2024-11-18 15:32:19
+ * @LastEditTime: 2024-11-19 18:23:32
  */
-import 'dart:ui';
 
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';

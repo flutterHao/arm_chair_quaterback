@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-11-18 14:44:08
+ * @LastEditTime: 2024-11-19 15:46:17
  */
 
 import 'dart:async';
@@ -15,11 +15,13 @@ import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/box_dialog.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class TeamIndexController extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -37,6 +39,7 @@ class TeamIndexController extends GetxController
   List<TrainingInfoAward> awardList = [];
   CardPackInfoEntity cardPackInfo = CardPackInfoEntity();
   ScrollController scrollController = ScrollController();
+  RefreshController refreshController = RefreshController();
   bool recieved = false;
   RxInt cup = 0.obs;
 
@@ -52,20 +55,33 @@ class TeamIndexController extends GetxController
   void onReady() {
     super.onReady();
     getBattleBox();
-    getTeamInfo();
+    getTeamInfoCup();
+  }
+
+  void onRefresh() async {
+    final trainingCtrl = Get.find<TrainingController>();
+    final teamCtrl = Get.find<TeamController>();
+    Future.wait([
+      getBattleBox(),
+      getTeamInfoCup(),
+      trainingCtrl.getData(),
+      teamCtrl.initData()
+    ]).then((v) {}).whenComplete(() {
+      refreshController.refreshCompleted();
+    });
   }
 
   void matchBattle() async {
     await Get.toNamed(RouteNames.teamTeamBattle);
     getBattleBox();
-    getTeamInfo();
+    getTeamInfoCup();
     final ctrl = Get.find<TrainingController>();
     ctrl.trainingInfo = await TeamApi.getTrainingInfo();
     update(["training_page"]);
   }
 
   ///获取战斗宝箱信息
-  void getBattleBox() async {
+  Future getBattleBox() async {
     cardPackInfo = await TeamApi.getBattleBox();
     handlerBatterBoxData();
   }
@@ -94,8 +110,8 @@ class TeamIndexController extends GetxController
     showBoxDialog();
   }
 
-  ///获取队伍信息
-  void getTeamInfo() async {
+  ///获取队伍信息Cup
+  Future getTeamInfoCup() async {
     TeamInfoEntity team = await PicksApi.getTeamInfo();
     cup.value = team.cup;
   }

@@ -2,9 +2,12 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-11 15:57:44
- * @LastEditTime: 2024-11-18 12:12:44
+ * @LastEditTime: 2024-11-19 17:49:46
  */
 
+import 'dart:math';
+
+import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -90,13 +93,6 @@ class TrainingPage extends GetView<TrainingController> {
                       ],
                     ),
                   ),
-                  // child: Container(
-                  //   width: 2.w,
-                  //   height: 18.w,
-                  //   color: AppColors.cFFFFFF,
-                  //   margin: EdgeInsets.only(
-                  //       left: 317.w * trainingInfo.playerReadiness),
-                  // ),
                 ),
                 if (trainingInfo.playerReadiness > 1)
                   Row(
@@ -180,6 +176,7 @@ class TrainingPage extends GetView<TrainingController> {
 
   // 训练
   Widget _training(TrainingInfoEntity trainingInfo) {
+    // final randon = Random();
     return AspectRatio(
       aspectRatio: 375 / 390.5,
       child: Container(
@@ -282,49 +279,67 @@ class TrainingPage extends GetView<TrainingController> {
                   ///金钱奖励
                   Positioned(
                     top: 46.w,
-                    child: Visibility(
-                      visible: false,
-                      child: Container(
-                        width: 126.w,
-                        height: 61.w,
-                        decoration: BoxDecoration(
-                          color: AppColors.c000000,
-                          borderRadius: BorderRadius.circular(9.w),
-                          border: Border.all(
-                            width: 2.w,
-                            color: AppColors.cFF7954,
+                    child: Obx(() {
+                      return Visibility(
+                        visible: controller.showCash.value,
+                        child: Container(
+                          width: 126.w,
+                          height: 61.w,
+                          decoration: BoxDecoration(
+                            color: AppColors.c000000,
+                            borderRadius: BorderRadius.circular(9.w),
+                            border: Border.all(
+                              width: 2.w,
+                              color: AppColors.cFF7954,
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              IconWidget(
+                                iconWidth: 32.5.w,
+                                icon: Assets.teamUiMoney02,
+                              ),
+                              5.hGap,
+                              AnimatedNum(
+                                number: 200,
+                                unit: "K",
+                                textStyle: 16.w4(color: AppColors.cFFFFFF),
+                              )
+                            ],
                           ),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            IconWidget(
-                              iconWidth: 32.5.w,
-                              icon: Assets.teamUiMoney02,
-                            ),
-                            5.hGap,
-                            Text(
-                              "250K",
-                              style: 16.w4(color: AppColors.cFFFFFF),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                      );
+                    }),
                   ),
 
                   ///球员列表
-                  Positioned(
-                    top: 46.w,
-                    left: -0.w,
-                    child: PlayerSrollerView(),
-                  ),
+                  // Positioned(
+                  //   top: 46.w,
+                  //   left: -0.w,
+                  //   child: PlayerSrollerView(),
+                  // ),
 
                   ///slot
                   Positioned(
                     top: 140.w,
                     child: SlotMachine(),
                   ),
+                  // if (!controller.showCash.value)
+                  // Visibility(
+                  //     visible: controller.showCash.value,
+                  //     child: Stack(
+                  //       children: [
+                  //         ...List.generate(6, (index) {
+                  //           double x = 50.w * index + 50.w;
+                  //           return CoinAnimation(
+                  //             fromPosition: Offset(x, 140.w), // 从 slot 位置开始
+                  //             toPosition: Offset(165.w, 70.w), // 到金钱奖励组件的位置
+                  //             coinSize: 20.0,
+                  //           );
+                  //         })
+                  //       ],
+                  //     )),
                 ],
               ),
             )
@@ -350,5 +365,69 @@ class TrainingPage extends GetView<TrainingController> {
             ],
           );
         });
+  }
+}
+
+class CoinAnimation extends StatefulWidget {
+  final Offset fromPosition;
+  final Offset toPosition;
+  final double coinSize;
+
+  const CoinAnimation({
+    Key? key,
+    required this.fromPosition,
+    required this.toPosition,
+    this.coinSize = 20.0,
+  }) : super(key: key);
+
+  @override
+  _CoinAnimationState createState() => _CoinAnimationState();
+}
+
+class _CoinAnimationState extends State<CoinAnimation>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<Offset> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 500),
+      vsync: this,
+    );
+
+    _animation = Tween<Offset>(
+      begin: widget.fromPosition,
+      end: widget.toPosition,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+
+    _controller.forward().then((v) {
+      _controller.repeat();
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _animation,
+      builder: (context, child) {
+        return Positioned(
+          left: _animation.value.dx,
+          top: _animation.value.dy,
+          child: Image.asset(
+            Assets.teamUiMoney02,
+            width: widget.coinSize.w,
+            height: widget.coinSize.w,
+          ),
+        );
+      },
+    );
   }
 }

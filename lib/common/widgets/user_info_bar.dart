@@ -22,11 +22,16 @@ import 'package:get/get.dart';
 
 class UserInfoBar extends StatelessWidget {
   const UserInfoBar(
-      {super.key, this.title = "Title", this.enable = true, this.routeId});
+      {super.key,
+      this.title = "Title",
+      this.enable = true,
+      this.routeId,
+      this.showPop = false});
 
   final String title;
   final bool enable; //头像是否可点击显示弹框
   final int? routeId;
+  final bool showPop;
 
   @override
   Widget build(BuildContext context) {
@@ -53,70 +58,98 @@ class UserInfoBar extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
-                      child: Row(
-                    children: [
-                      16.hGap,
-                      InkWell(
-                        onLongPress: () {
-                          final List<String> servers = [
-                            Address.personalDevUrl,
-                            Address.privateDevUrl,
-                            Address.publicDevUrl,
-                          ];
-                          String current = HttpUtil().getUrl;
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return ServerSwitchDialog(
-                                servers: servers,
-                                currentServer: current,
-                                onServerChanged: (newServer) {
-                                  HttpUtil().setUrl(newServer);
-                                  HomeController.to.login();
-                                },
-                              );
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        if (showPop)
+                          InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
                             },
-                          );
-                        },
-                        onTap: () {
-                          if (!enable) {
-                            Navigator.pop(context);
-                            return;
-                          }
-                          _showDialog(context, routeId);
-                        },
-                        child: Container(
-                          width: 36.w,
-                          height: 36.w,
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  width: 1, color: AppColors.cFFFFFF),
-                              borderRadius: BorderRadius.circular(18.w)),
-                          child: Center(
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(18.w),
-                              child: UserAvaterWidget(
-                                url: Utils.getAvaterUrl(
-                                    info.team?.teamLogo ?? 0),
-                                width: 35.w,
-                                height: 35.w,
+                            child: Container(
+                                width: 36.w,
+                                height: 36.w,
+                                margin: EdgeInsets.only(left: 15.w),
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(36.w),
+                                  border: Border.all(
+                                    color: AppColors.cFFFFFF.withOpacity(0.3),
+                                  ),
+                                ),
+                                child: IconWidget(
+                                  iconWidth: 21.5.w,
+                                  iconHeight: 18.5.w,
+                                  icon: Assets.iconIconBack,
+                                  iconColor: AppColors.cFFFFFF,
+                                )),
+                          ),
+                        showPop ? 12.hGap : 16.hGap,
+                        InkWell(
+                          onLongPress: () {
+                            final List<String> servers = [
+                              Address.personalDevUrl,
+                              Address.privateDevUrl,
+                              Address.publicDevUrl,
+                            ];
+                            String current = HttpUtil().getUrl;
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return ServerSwitchDialog(
+                                  servers: servers,
+                                  currentServer: current,
+                                  onServerChanged: (newServer) {
+                                    HttpUtil().setUrl(newServer);
+                                    HomeController.to.login();
+                                  },
+                                );
+                              },
+                            );
+                          },
+                          onTap: () {
+                            if (!enable) {
+                              Navigator.pop(context);
+                              return;
+                            }
+                            _showDialog(context, routeId);
+                          },
+                          child: Container(
+                            width: 36.w,
+                            height: 36.w,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    width: 1, color: AppColors.cFFFFFF),
+                                borderRadius: BorderRadius.circular(18.w)),
+                            child: Center(
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(18.w),
+                                child: UserAvaterWidget(
+                                  url: Utils.getAvaterUrl(
+                                      info.team?.teamLogo ?? 0),
+                                  width: 35.w,
+                                  height: 35.w,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      16.hGap,
-                      MoneyAndCoinWidget(
-                        home: true,
-                      ),
-                    ],
-                  )),
+                        11.hGap,
+                        MoneyAndCoinWidget(
+                          home: true,
+                        ),
+                      ],
+                    ),
+                  ),
                   SizedBox(
                     width: 55.w,
                     height: 43.w,
                     child: Stack(
                       children: [
-                        IconWidget(iconWidth: 20.w, icon: Assets.commonUiCommonStatusBarNoticeOn/* commonUiCommonStatusBarNoticeOff*/),//todo 根据数量显示图标
+                        IconWidget(
+                            iconWidth: 20.w,
+                            icon: Assets
+                                .commonUiCommonStatusBarNoticeOn /* commonUiCommonStatusBarNoticeOff*/), //todo 根据数量显示图标
                         Positioned(
                             right: 10.w,
                             child: Container(
@@ -137,63 +170,6 @@ class UserInfoBar extends StatelessWidget {
                 ],
               )
             ],
-          );
-          return Container(
-            padding: EdgeInsets.only(left: 14.w, right: 14.w),
-            constraints: BoxConstraints(minHeight: 63.w),
-            decoration: BoxDecoration(
-                color: AppColors.c262626,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(16.w),
-                  bottomRight: Radius.circular(16.w),
-                )),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                InkWell(
-                  onLongPress: () {
-                    final List<String> servers = [
-                      Address.personalDevUrl,
-                      Address.privateDevUrl,
-                      Address.publicDevUrl,
-                    ];
-                    String current = HttpUtil().getUrl;
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return ServerSwitchDialog(
-                          servers: servers,
-                          currentServer: current,
-                          onServerChanged: (newServer) {
-                            HttpUtil().setUrl(newServer);
-                            HomeController.to.login();
-                          },
-                        );
-                      },
-                    );
-                  },
-                  onTap: () {
-                    if (!enable) {
-                      Navigator.pop(context);
-                      return;
-                    }
-                    _showDialog(context, routeId);
-                  },
-                  child: UserAvaterWidget(
-                    url: Utils.getAvaterUrl(info.team?.teamLogo ?? 0),
-                    width: 36.w,
-                    height: 36.w,
-                  ),
-                ),
-                Expanded(
-                    child: Text(
-                  title,
-                  textAlign: TextAlign.center,
-                  style: 19.w7(color: AppColors.cF2F2F2),
-                )),
-                MoneyAndCoinWidget(),
-              ],
-            ),
           );
         });
   }

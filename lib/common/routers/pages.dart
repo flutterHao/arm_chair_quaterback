@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:33:28
- * @LastEditTime: 2024-11-18 17:31:20
+ * @LastEditTime: 2024-11-19 21:19:08
  */
 // import 'package:arm_chair_quaterback/pages/news/new_detail/bindings.dart';
 // import 'package:arm_chair_quaterback/pages/news/new_detail/view.dart';
@@ -11,6 +11,7 @@
 // import 'package:arm_chair_quaterback/pages/news/rank/stats_view.dart';
 // import 'package:arm_chair_quaterback/pages/news/rank/team_view.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
+import 'package:arm_chair_quaterback/common/widgets/transitions/half_slide_right_to_left_transition.dart';
 import 'package:arm_chair_quaterback/pages/league/view.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_info/bindings.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_info/view.dart';
@@ -70,6 +71,13 @@ class AppPages {
         name: RouteNames.mineMineInfo,
         page: () => const MineInfoPage(),
         binding: MineInfoBinding()),
+    GetPage(
+      opaque: false,
+      // customTransition: HalfSlideRightToLeftTransition(),
+      page: () => NewsDetailPage(newsDetail: Get.arguments),
+      name: RouteNames.newsDetail,
+    ),
+
     // GetPage(
     //   opaque: false,
     //   name: RouteNames.newsDetail,

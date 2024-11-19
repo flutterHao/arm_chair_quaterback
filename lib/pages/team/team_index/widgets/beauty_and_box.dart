@@ -38,34 +38,24 @@ class BeautyAndBoxView extends StatelessWidget {
                 Positioned(
                   top: -10.w,
                   left: 0,
-                  child: Stack(
-                    children: [
-                      Text(
-                        "ARMCHAIR",
-                        style: 121.w7(
-                            color: AppColors.c262626,
-                            height: 0.9,
-                            fontFamily: FontFamily.fOswaldBold),
-                      ),
-                      Positioned(
-                        top: 0,
-                        left: 0,
-                        bottom: 0,
-                        right: 0,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.bottomCenter,
-                              end: Alignment.center,
-                              colors: [
-                                Colors.white.withOpacity(0.5),
-                                Colors.white.withOpacity(0),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                  child: ShaderMask(
+                    shaderCallback: (Rect bounds) {
+                      return LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.white.withOpacity(1),
+                          Colors.white.withOpacity(0.3),
+                        ],
+                      ).createShader(bounds);
+                    },
+                    child: Text(
+                      "ARMCHAIR",
+                      style: 121.w7(
+                          color: AppColors.c262626,
+                          height: 0.95,
+                          fontFamily: FontFamily.fOswaldBold),
+                    ),
                   ),
                 ),
                 Positioned(

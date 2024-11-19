@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-11 16:57:58
- * @LastEditTime: 2024-11-19 11:01:15
+ * @LastEditTime: 2024-11-19 20:48:46
  */
 
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
@@ -28,13 +28,14 @@ class CommentController extends GetxController {
   late TeamLoginInfo userEntity;
 
   RefreshController refhreshCtrl = RefreshController();
-  @override
-  void onInit() {
-    super.onInit();
-    // setComments(commentList);
-    userEntity =
-        Get.find<HomeController>().userEntiry.teamLoginInfo ?? TeamLoginInfo();
-  }
+  // RefreshController detailRefhreshCtrl = RefreshController();
+
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  //   // setComments(commentList);
+
+  // }
 
   String timeAgo(int inputTime) {
     // 将 int 时间戳转换为 DateTime
@@ -59,6 +60,8 @@ class CommentController extends GetxController {
 
   ///获取主要评论列表
   void getReviews(id, {bool isRefresh = false}) {
+    userEntity =
+        Get.find<HomeController>().userEntiry.teamLoginInfo ?? TeamLoginInfo();
     const pageSize = 10;
     if (isRefresh) {
       mainList.clear();
