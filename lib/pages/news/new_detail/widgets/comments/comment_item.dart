@@ -361,13 +361,15 @@ class HotComment extends GetView<CommentController> {
         11.hGap,
         IconWidget(iconWidth: 12.w, icon: Assets.newsUiIconFire),
         4.hGap,
-        Text(
-          "${item.likes}",
-          style: 12.w4(
-            color: AppColors.c000000,
-            fontFamily: FontFamily.fRobotoRegular,
-          ),
-        )
+
+        ///TODO:热度
+        // Text(
+        //   "${item.likes}",
+        //   style: 12.w4(
+        //     color: AppColors.c000000,
+        //     fontFamily: FontFamily.fRobotoRegular,
+        //   ),
+        // )
       ],
     );
   }

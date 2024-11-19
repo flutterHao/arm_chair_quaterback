@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:27:52
- * @LastEditTime: 2024-11-05 14:56:51
+ * @LastEditTime: 2024-11-19 10:21:22
  */
 import 'package:arm_chair_quaterback/common/entities/stats_rank/nba_player_stat.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank.dart';
@@ -47,7 +47,7 @@ class RankController extends GetxController
   @override
   void onInit() {
     super.onInit();
-    pointType.value = Get.find<NewListController>().pointType;
+    // pointType.value = Get.find<NewListController>().pointType;
     int currentYear = DateTime.now().year;
     season.value = "$currentYear-${(currentYear + 1) % 100}";
     tabController = TabController(length: tabs.length, vsync: this);

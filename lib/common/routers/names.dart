@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:33:28
- * @LastEditTime: 2024-10-08 12:21:38
+ * @LastEditTime: 2024-11-18 22:03:59
  */
 class RouteNames {
   static const main = '/';
@@ -33,6 +33,7 @@ class RouteNames {
   static const teamTrainingPage = '/team_training_page';
   static const teamBeautyPage = "/beauty_page";
   static const teamBeautyDetail = "/beauty_detail";
+  static const teamMenber = "/teamMenberView";
   //mine
   static const mineMineAccount = '/mine_mine_account';
   static const mineMineInfo = '/mine_mine_info';

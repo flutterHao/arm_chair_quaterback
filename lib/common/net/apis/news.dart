@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 17:28:14
- * @LastEditTime: 2024-11-18 21:41:39
+ * @LastEditTime: 2024-11-19 12:06:51
  */
 import 'package:arm_chair_quaterback/common/entities/news_banner.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
@@ -111,7 +111,7 @@ class NewsApi {
   static Future<List<NewsListDetail>> newsFlow(int page, int limit) async {
     List list = await HttpUtil()
         .post(Api.newsFlow, data: {"page": page, "limit": limit});
-    var details = list.map((e) {
+    var details = list.map((e) async {
       var newsDetail = NewsListDetail.fromJson(e);
       if (ObjectUtil.isNotEmpty(newsDetail.imgUrl)) {
         final ExtendedNetworkImageProvider provider =
@@ -134,7 +134,7 @@ class NewsApi {
       }
       return newsDetail;
     }).toList();
-    return details;
+    return Future.wait(details);
   }
 
   static Future<List<Reviews>> getReviewsByNewsId(

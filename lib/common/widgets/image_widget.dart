@@ -2,11 +2,12 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 17:29:19
- * @LastEditTime: 2024-11-18 20:48:06
+ * @LastEditTime: 2024-11-19 11:49:31
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:common_utils/common_utils.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -72,16 +73,16 @@ class ImageWidget extends StatelessWidget {
               )),
     );
 
-    if (borderRadius != null) {
-      error = ClipRRect(
-        borderRadius: borderRadius!,
-        child: error,
-      );
-      loadingWidgetTemp = ClipRRect(
-        borderRadius: borderRadius!,
-        child: loadingWidgetTemp,
-      );
-    }
+    // if (borderRadius != null) {
+    //   error = ClipRRect(
+    //     borderRadius: borderRadius!,
+    //     child: error,
+    //   );
+    //   loadingWidgetTemp = ClipRRect(
+    //     borderRadius: borderRadius!,
+    //     child: loadingWidgetTemp,
+    //   );
+    // }
     // return CachedNetworkImage(
     //   imageUrl: url,
     //   fit: fit,
@@ -118,7 +119,10 @@ class ImageWidget extends StatelessWidget {
             // Log.e("$url load failed");
             return error;
           case LoadState.loading:
-            return loadingWidgetTemp;
+            return SizedBox(
+              width: width,
+              height: height,
+            );
           case LoadState.completed:
             // TODO: Handle this case.
             break;

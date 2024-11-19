@@ -16,6 +16,7 @@ import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/news_bottom_b
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
 
 class NewsListItem extends StatelessWidget {
   const NewsListItem({super.key, required this.newsDetail});
@@ -72,6 +73,10 @@ class NewsListItem extends StatelessWidget {
         InkWell(
           onTap: () {
             // Utils.generateAndShareImage(_globalKey);
+            Share.share("${newsDetail.title}\n${newsDetail.content}",
+                subject: newsDetail.title);
+            // Share.shareXFiles([XFile(newsDetail.imgUrl)],
+            //     text: newsDetail.content, subject: newsDetail.title);
           },
           child: Container(
             width: 24.w,
@@ -142,13 +147,6 @@ class NewsListItem extends StatelessWidget {
               url: newsDetail.imgUrl,
               width: 343.w,
               height: newsDetail.imageHeight,
-              errorWidget: Container(
-                height: 40.w,
-                alignment: Alignment.center,
-                child: const Text("field error"),
-                // child: Image.asset(
-                //     height: 40.w, Assets.commonUiCommonIconCurrency01),
-              ),
               // fit: BoxFit.fitWidth,
               borderRadius: BorderRadius.circular(12.w),
             ),
@@ -174,7 +172,7 @@ class NewsListItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: MediaQuery.of(context).size.width - 20.w,
+            width: 355.w,
             // height: 97.w,
             constraints: BoxConstraints(minHeight: 97.w, maxHeight: 110.w),
             child: Row(
@@ -302,7 +300,6 @@ class NewsListItem extends StatelessWidget {
           const EmojiWidget(),
           _hotComment(),
           2.vGap,
-          // Text("zzdsa")
         ],
       ),
     );
