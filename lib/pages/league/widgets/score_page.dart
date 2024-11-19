@@ -1,294 +1,105 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
+import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
-import 'package:arm_chair_quaterback/common/widgets/TLBuilderWidget.dart';
-import 'package:arm_chair_quaterback/common/widgets/support_percent_progress_widget.dart';
-import 'package:arm_chair_quaterback/generated/assets.dart';
-import 'package:arm_chair_quaterback/common/constant/font_family.dart';
-import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
-import 'package:arm_chair_quaterback/common/routers/names.dart';
-import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
-import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/delegate/fixed_height_sliver_header_delegate.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
-import 'package:arm_chair_quaterback/common/widgets/transitions/half_slide_right_to_left_transition.dart';
-import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/league/controller.dart';
-import 'package:arm_chair_quaterback/pages/league/widgets/score_page.dart';
-import 'package:arm_chair_quaterback/pages/mine/mine_account/bindings.dart';
-import 'package:arm_chair_quaterback/pages/mine/mine_account/view.dart';
-import 'package:arm_chair_quaterback/pages/mine/mine_info/bindings.dart';
-import 'package:arm_chair_quaterback/pages/mine/mine_info/view.dart';
-import 'package:arm_chair_quaterback/pages/mine/mine_setting/bindings.dart';
-import 'package:arm_chair_quaterback/pages/mine/mine_setting/view.dart';
+import 'package:arm_chair_quaterback/pages/league/widgets/score_page_controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/user_avater_widget.dart';
-import 'package:arm_chair_quaterback/pages/news/rank/bindings.dart';
-import 'package:arm_chair_quaterback/pages/news/rank/stats_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class LeaguePage extends StatelessWidget {
-  const LeaguePage({super.key});
+///
+///@auther gejiahui
+///created at 2024/11/19/11:02
+
+class ScorePage extends StatefulWidget {
+  const ScorePage(this.time, {super.key});
+
+  final DateTime time;
 
   @override
-  Widget build(BuildContext context) {
-    return Navigator(
-      key: GlobalNestedKey.LEAGUESTabGlobalKey,
-      initialRoute: RouteNames.league,
-      onGenerateRoute: (setting) {
-        switch (setting.name) {
-          case RouteNames.league:
-            return GetPageRoute(
-              opaque: false,
-              settings: setting,
-              customTransition: HalfSlideRightToLeftTransition(),
-              page: () => const LeagueIndexPage(),
-            );
-          case RouteNames.mineMineInfo:
-            return GetPageRoute(
-                opaque: false,
-                settings: setting,
-                customTransition: HalfSlideRightToLeftTransition(),
-                page: () => const MineInfoPage(),
-                binding: MineInfoBinding());
-          case RouteNames.mineMineSetting:
-            return GetPageRoute(
-                opaque: false,
-                settings: setting,
-                customTransition: HalfSlideRightToLeftTransition(),
-                page: () => const MineSettingPage(),
-                binding: MineSettingBinding());
-          case RouteNames.mineMineAccount:
-            return GetPageRoute(
-                opaque: false,
-                settings: setting,
-                customTransition: HalfSlideRightToLeftTransition(),
-                page: () => const MineAccountPage(),
-                binding: MineAccountBinding());
-          case RouteNames.statsRank:
-            return GetPageRoute(
-                opaque: false,
-                settings: setting,
-                customTransition: HalfSlideRightToLeftTransition(),
-                page: () => const StatsRankPage(),
-                binding: RankBinding());
-        }
-      },
-    );
-  }
+  State<ScorePage> createState() => _ScorePageState();
 }
 
-class LeagueIndexPage extends StatefulWidget {
-  const LeagueIndexPage({super.key});
-
-  @override
-  State<LeagueIndexPage> createState() => _LeagueIndexPageState();
-}
-
-class _LeagueIndexPageState extends State<LeagueIndexPage>
+class _ScorePageState extends State<ScorePage>
     with AutomaticKeepAliveClientMixin {
-  late LeagueController controller;
+
+  late LeagueController leagueController;
+
+  late ScorePageController controller;
+
+  late RefreshController refreshController = RefreshController();
 
   @override
   void initState() {
     super.initState();
-    controller = Get.find();
-  }
+    leagueController = Get.find();
+    Get.find<LeagueController>().loadStatus.listen((v){
+      print('------:$v');
+      if(v != LoadDataStatus.loading){
 
-  // 主视图
-  Widget _buildView() {
-    var listView = SliverList.separated(
-      itemCount: controller.scoreList.length,
-      itemBuilder: (context, index) {
-        bool lastIndex = index == controller.scoreList.length - 1;
-        var item = controller.scoreList[index];
-        return Container(
-            margin: EdgeInsets.only(
-                top: index == 0 ? 9.w : 0, bottom: lastIndex ? 20.w : 0),
-            child: _ItemWidget(gameGuess: item));
-      },
-      separatorBuilder: (BuildContext context, int index) {
-        return 9.vGap;
-      },
-    );
-    var emptyWidget = SliverToBoxAdapter(
-      child: SizedBox(
-        height: (MediaQuery.of(context).size.height -
-            75.w -
-            58.w -
-            MediaQuery.of(context).padding.top -
-            MediaQuery.of(context).padding.bottom -
-            46.w),
-        child: SmartRefresher(
-          controller: controller.refreshController,
-          onRefresh: () => controller.loading(),
-          child: Center(
-            child: Obx(() {
-              return LoadStatusWidget(
-                loadDataStatus: controller.loadStatus.value,
-              );
-            }),
-          ),
-        ),
-      ),
-    );
-    return Expanded(
-      child: CustomScrollView(
-        physics: const BouncingScrollPhysics(),
-        slivers: [
-          buildHeader(),
-          if (controller.scoreList.isNotEmpty &&
-              controller.picksDefineEntity != null)
-            listView
-          else
-            emptyWidget
-        ],
-      ),
-    );
-    // tabview 方案
-    return Expanded(
-      child: NestedScrollView(
-          floatHeaderSlivers: true,
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return <Widget>[
-              buildHeader(),
-            ];
-          },
-          body: TabBarView(
-              controller: controller.tabController,
-              children:
-                  controller.getDataTimes().map((e) => ScorePage(e)).toList())),
-    );
-  }
-
-  SliverPersistentHeader buildHeader() {
-    return SliverPersistentHeader(
-      floating: true,
-      delegate: FixedHeightSliverHeaderDelegate(
-          child: Container(
-            height: 58.w,
-            width: double.infinity,
-            color: AppColors.c262626,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                16.hGap,
-                Expanded(
-                    child: Container(
-                  height: 44.w,
-                  decoration: BoxDecoration(
-                    color: AppColors.c000000,
-                    borderRadius: BorderRadius.circular(9.w),
-                  ),
-                  child: TabBar(
-                    isScrollable: true,
-                    dividerHeight: 0,
-                    tabAlignment: TabAlignment.start,
-                    labelStyle: 12.w4(
-                        color: AppColors.cFFFFFF,
-                        height: 1,
-                        fontFamily: FontFamily.fRobotoRegular),
-                    unselectedLabelStyle: 12.w4(
-                        color: AppColors.c808080,
-                        height: 1,
-                        fontFamily: FontFamily.fRobotoRegular),
-                    controller: controller.tabController,
-                    indicator: BoxDecoration(
-                        color: AppColors.c262626,
-                        borderRadius: BorderRadius.circular(7.w)),
-                    indicatorPadding: EdgeInsets.symmetric(vertical: 3.w),
-                    indicatorSize: TabBarIndicatorSize.tab,
-                    onTap: controller.onPageChanged,
-                    tabs: controller.getDataTimes().map((e) {
-                      var today = MyDateUtils.isToday(e.millisecondsSinceEpoch);
-                      int index = controller.getDataTimes().indexOf(e);
-                      return Obx(() {
-                        var currentIndex = controller.currentPageIndex.value;
-                        var select = currentIndex == index;
-                        return Container(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                (today
-                                        ? "TODAY"
-                                        : MyDateUtils.getWeekday(e,
-                                            short: true))
-                                    .toUpperCase(),
-                                style: 12.w4(
-                                    color: today
-                                        ? AppColors.cFF7954
-                                        : select
-                                            ? AppColors.cFFFFFF
-                                            : AppColors.c808080,
-                                    height: 1,
-                                    fontFamily: FontFamily.fRobotoRegular),
-                              ),
-                              2.vGap,
-                              Text(
-                                e.day.toString(),
-                                style: 16.w5(
-                                    color: select
-                                        ? AppColors.cFFFFFF
-                                        : AppColors.c808080,
-                                    fontFamily: FontFamily.fOswaldMedium,
-                                    height: 1),
-                              )
-                            ],
-                          ),
-                        );
-                      });
-                    }).toList(),
-                  ),
-                )),
-                21.hGap,
-                Container(
-                  width: 40.w,
-                  height: 40.w,
-                  decoration: BoxDecoration(
-                      border: Border.all(color: AppColors.c666666, width: 1),
-                      borderRadius: BorderRadius.circular(9.w)),
-                  child: MtInkwell(
-                      onTap: () => Get.toNamed(
-                            RouteNames.statsRank,
-                            id: GlobalNestedKey.LEAGUES,
-                          ),
-                      child: IconWidget(
-                          iconWidth: 21.w,
-                          icon: Assets.scoresUiScoresIconSystemRank)),
-                ),
-                10.hGap,
-              ],
-            ),
-          ),
-          height: 58.w),
-    );
+        print('------ttt---${this.toString()}');
+        refreshController.refreshCompleted();
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<LeagueController>(
-        id: LeagueController.idLeagueMain,
+    var key = "${widget.time.millisecondsSinceEpoch}_${MyDateUtils.nextDay(widget.time).millisecondsSinceEpoch}";
+    print('$key,kes--:${leagueController.cacheGameGuessData.keys}');
+    var list = leagueController.cacheGameGuessData[key] ?? [];
+    print('lenght:${list.length}');
+    var listView = MediaQuery.removePadding(
+      removeTop: true,
+      context: context,
+      child: ListView.separated(
+        itemCount: list.length,
+        itemBuilder: (context, index) {
+          bool lastIndex = index == list.length - 1;
+          var item = list[index];
+          return Container(
+              margin: EdgeInsets.only(
+                  top: index == 0 ? 9.w : 0, bottom: lastIndex ? 20.w : 0),
+              child: _ItemWidget(gameGuess: item));
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return 9.vGap;
+        },
+      ),
+    );
+
+    var emptyWidget = Center(
+      child: Obx(() {
+        return LoadStatusWidget(
+          loadDataStatus: leagueController.loadStatus.value,
+        );
+      }),
+    );
+    return GetBuilder<ScorePageController>(
+      init: controller = ScorePageController(),
+        tag: widget.time.millisecondsSinceEpoch.toString(),
         builder: (_) {
-          return BlackAppWidget(
-            const UserInfoBar(
-              title: "COMMUNITIES",
-              routeId: GlobalNestedKey.LEAGUES,
-            ),
-            bodyWidget: _buildView(),
-          );
-        });
+      return SmartRefresher(
+          controller: refreshController,
+          onRefresh: leagueController.loading,
+          child: list.isEmpty ? emptyWidget : listView);
+    });
   }
 
   @override
@@ -316,7 +127,10 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    Get.find<HomeController>().tabIndex.listen((value) {
+    Get
+        .find<HomeController>()
+        .tabIndex
+        .listen((value) {
       if (value == 1) {
         setGameStartTimeStr();
       }
@@ -332,7 +146,10 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    var value = Get.find<HomeController>().tabIndex.value;
+    var value = Get
+        .find<HomeController>()
+        .tabIndex
+        .value;
     if (state == AppLifecycleState.resumed && value == 1) {
       setGameStartTimeStr();
     }
@@ -356,21 +173,28 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
         if (lastTimeMs == 0) {
           t.cancel();
           gameStartTimeStr.value =
-              "Today ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(item.gameStartTime))}";
+          "Today ${MyDateUtils.formatHM_AM(
+              MyDateUtils.getDateTimeByMs(item.gameStartTime))}";
         }
         gameStartTimeStr.value =
-            "Coming ${(lastTimeMs / 1000 ~/ 60).toStringAsFixed(0).padLeft(2, "0")}:${(lastTimeMs / 1000 % 60).toStringAsFixed(0).padLeft(2, "0")}";
+        "Coming ${(lastTimeMs / 1000 ~/ 60).toStringAsFixed(0).padLeft(
+            2, "0")}:${(lastTimeMs / 1000 % 60).toStringAsFixed(0).padLeft(
+            2, "0")}";
       });
     } else if (MyDateUtils.isToday(item.gameStartTime)) {
       gameStartTimeStr.value =
-          "Today ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(item.gameStartTime))}";
+      "Today ${MyDateUtils.formatHM_AM(
+          MyDateUtils.getDateTimeByMs(item.gameStartTime))}";
     } else if (MyDateUtils.isTomorrow(MyDateUtils.getNowDateTime(),
         MyDateUtils.getDateTimeByMs(item.gameStartTime))) {
       gameStartTimeStr.value =
-          "Tomorrow ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(item.gameStartTime))}";
+      "Tomorrow ${MyDateUtils.formatHM_AM(
+          MyDateUtils.getDateTimeByMs(item.gameStartTime))}";
     } else {
       gameStartTimeStr.value =
-          "${MyDateUtils.formatDate(MyDateUtils.getDateTimeByMs(item.gameStartTime), format: DateFormats.PARAM_M_D)} ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(item.gameStartTime))}";
+      "${MyDateUtils.formatDate(MyDateUtils.getDateTimeByMs(item.gameStartTime),
+          format: DateFormats.PARAM_M_D)} ${MyDateUtils.formatHM_AM(
+          MyDateUtils.getDateTimeByMs(item.gameStartTime))}";
     }
   }
 
@@ -394,7 +218,11 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
               children: [
                 18.vGap,
                 Text(
-                  "${Utils.getTeamInfo(item.homeTeamId).shortEname} @ ${Utils.getTeamInfo(item.awayTeamId).shortEname}",
+                  "${Utils
+                      .getTeamInfo(item.homeTeamId)
+                      .shortEname} @ ${Utils
+                      .getTeamInfo(item.awayTeamId)
+                      .shortEname}",
                   style: 24.w5(
                       color: AppColors.c000000,
                       height: 1,
@@ -524,8 +352,8 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
                         item.status == 0
                             ? ""
                             : item.status == 1
-                                ? "In the game"
-                                : "FINAL",
+                            ? "In the game"
+                            : "FINAL",
                         style: 12.w4(
                             color: item.status == 2
                                 ? AppColors.c000000
@@ -566,15 +394,15 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
                       5.hGap,
                       Expanded(
                           child: Text(
-                        item.guessTopReviews?.context ??
-                            "Add a comment about this stake about",
-                        style: 14.w4(
-                          color: AppColors.c4D4D4D,
-                          height: 1,
-                          fontFamily: FontFamily.fRobotoRegular,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      )),
+                            item.guessTopReviews?.context ??
+                                "Add a comment about this stake about",
+                            style: 14.w4(
+                              color: AppColors.c4D4D4D,
+                              height: 1,
+                              fontFamily: FontFamily.fRobotoRegular,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          )),
                       9.hGap,
                       IconWidget(
                           iconWidth: 18.w, icon: Assets.iconUiIconJetton),
@@ -616,9 +444,13 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
     );
   }
 
-  String getChip() => Utils.formatChip((item.awayTeamWins + item.homeTeamWins) *
-      int.parse(
-          Get.find<LeagueController>().picksDefineEntity?.betCost ?? "0"));
+  String getChip() =>
+      Utils.formatChip((item.awayTeamWins + item.homeTeamWins) *
+          int.parse(
+              Get
+                  .find<LeagueController>()
+                  .picksDefineEntity
+                  ?.betCost ?? "0"));
 
   Column _buildGuess() {
     var count = item.homeTeamWins + item.awayTeamWins;
@@ -642,10 +474,12 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
             children: [
               29.hGap,
               _buildBtn(gameGuess.choiceTeamId.value == homeTeamInfo.id,
-                  homeTeamInfo.id,),
+                  homeTeamInfo.id,
+                  isGuessed: item.isGuess == homeTeamInfo.id),
               9.hGap,
               _buildBtn(gameGuess.choiceTeamId.value == awayTeamInfo.id,
-                  awayTeamInfo.id,),
+                  awayTeamInfo.id,
+                  isGuessed: item.isGuess == awayTeamInfo.id),
               29.hGap,
             ],
           );
@@ -696,7 +530,31 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
             ),
             3.hGap,
             Expanded(
-                child: SupportPercentProgressWidget(leftPercent: homePercent, rightPercent: 100-homePercent)),
+                child: Row(
+                  children: [
+                    Expanded(
+                        flex: max(2, homePercent),
+                        child: Container(
+                          height: 18.w,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              color: AppColors.c000000,
+                              borderRadius: BorderRadius.horizontal(
+                                  left: Radius.circular(9.w))),
+                        )),
+                    2.hGap,
+                    Expanded(
+                        flex: max(2, 100 - homePercent),
+                        child: Container(
+                          height: 18.w,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              color: AppColors.cB3B3B3,
+                              borderRadius: BorderRadius.horizontal(
+                                  right: Radius.circular(9.w))),
+                        )),
+                  ],
+                )),
             3.hGap,
             Text(
               "${100 - homePercent}%",
@@ -713,7 +571,7 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
     );
   }
 
-  Expanded _buildBtn(bool isChoice, int teamId) {
+  Expanded _buildBtn(bool isChoice, int teamId, {bool isGuessed = false}) {
     return Expanded(
       child: MtInkwell(
         vibrate: true,
@@ -727,45 +585,43 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
           height: 41.w,
           decoration: BoxDecoration(
               color: item.isGuess != 0
-                  ? item.isGuess==teamId
-                      ? AppColors.c000000
-                      : AppColors.cEEEEEE
+                  ? isGuessed
+                  ? AppColors.c000000
+                  : AppColors.cEEEEEE
                   : isChoice
-                      ? AppColors.c000000
-                      : AppColors.cTransparent,
+                  ? AppColors.c000000
+                  : AppColors.cTransparent,
               borderRadius: BorderRadius.circular(9.w),
-              border: Border.all(color: item.isGuess!=0?AppColors.cTransparent:AppColors.c666666, width: 1)),
+              border: Border.all(color: AppColors.c666666, width: 1)),
           child: Stack(
             alignment: Alignment.center,
             children: [
               Text(
-                "${Utils.getTeamInfo(teamId).shortEname} WIN",
+                "${Utils
+                    .getTeamInfo(teamId)
+                    .shortEname} WIN",
                 style: 19.w5(
                     color: item.isGuess != 0
-                        ? item.isGuess==teamId
-                            ? AppColors.cFFFFFF
-                            : AppColors.ccccccc
+                        ? isGuessed
+                        ? AppColors.cFFFFFF
+                        : AppColors.ccccccc
                         : isChoice
-                            ? AppColors.cFFFFFF
-                            : AppColors.c000000,
+                        ? AppColors.cFFFFFF
+                        : AppColors.c000000,
                     height: 1,
                     fontFamily: FontFamily.fOswaldMedium),
               ),
-              if (item.isGuess==teamId)
+              if (isGuessed)
                 Positioned(
                     left: 11.w,
                     child: Builder(builder: (context) {
-                      if(item.guessStatus != 1){
-                        return Container(
-                          width: 19.w,
-                          height: 19.w,
-                          decoration: BoxDecoration(
-                            color: item.isGuess == teamId?AppColors.c10A86A:AppColors.cD60D20,
-                            borderRadius: BorderRadius.circular(10.w)
-                          ),
-                          child: IconWidget(iconWidth: 11.w, icon: item.isGuess == teamId?Assets.iconUiIconRuidgt:Assets.iconIconClose),
-                        );
-                      }
+                      // if(item.status == 2){
+                      //   return Container(
+                      //     width: 19.w,
+                      //     height: 19.w,
+                      //     child: IconWidget(iconWidth: 11.w, icon: :Assets.iconUiIconRuidgt),
+                      //   );
+                      // }
                       return IconWidget(
                         iconWidth: 19.w,
                         icon: Assets.commonUiCommonIconPick,
@@ -782,7 +638,7 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
   String formatDate() {
     var gameStartTime = MyDateUtils.getDateTimeByMs(item.gameStartTime);
     var formatDate =
-        MyDateUtils.formatDate(gameStartTime, format: DateFormats.PARAM_M_D);
+    MyDateUtils.formatDate(gameStartTime, format: DateFormats.PARAM_M_D);
     var formatHmAm = MyDateUtils.formatHM_AM(gameStartTime);
     if (MyDateUtils.isToday(item.gameStartTime)) {
       return "Today $formatHmAm";

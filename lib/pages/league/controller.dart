@@ -128,6 +128,7 @@ class LeagueController extends GetxController
   }
 
   void sortScoreList() {
+    scoreList.sort((a,b) => a.scoresEntity.gameStartTime.compareTo(b.scoresEntity.gameStartTime));
     scoreList.sort((a, b) {
       if (a.scoresEntity.isGuess != 0) return 1;
       if (b.scoresEntity.isGuess != 0) return -1;

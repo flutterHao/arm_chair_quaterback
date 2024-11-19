@@ -25,6 +25,9 @@ class ScoresEntity {
   ///
   /// 0 未开始 1 进行中 2 已结束
   late int status;
+  ///
+  /// 1：未结算 2：已结算未领取奖励 3：已结算已领取奖励
+  late int guessStatus;
 
   ScoresEntity();
 

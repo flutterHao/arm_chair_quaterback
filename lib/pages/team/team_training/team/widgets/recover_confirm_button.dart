@@ -9,7 +9,7 @@
 // import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 // import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 // import 'package:arm_chair_quaterback/pages/team/team_index/widgets/border_widget.dart';
-// import 'package:arm_chair_quaterback/pages/team/team_training/team/controller.dart';
+// import 'package:arm_chair_quaterback/pages/team/team_training/team/score_page_controller.dart';
 // import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/recover_dialog.dart';
 // import 'package:flutter/material.dart';
 // import 'package:flutter_screenutil/flutter_screenutil.dart';

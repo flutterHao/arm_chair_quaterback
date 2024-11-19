@@ -74,6 +74,10 @@ ScoresEntity $ScoresEntityFromJson(Map<String, dynamic> json) {
   if (status != null) {
     scoresEntity.status = status;
   }
+  final int? guessStatus = jsonConvert.convert<int>(json['guessStatus']);
+  if (guessStatus != null) {
+    scoresEntity.guessStatus = guessStatus;
+  }
   return scoresEntity;
 }
 
@@ -96,6 +100,7 @@ Map<String, dynamic> $ScoresEntityToJson(ScoresEntity entity) {
   data['homeTeamId'] = entity.homeTeamId;
   data['awayTeamId'] = entity.awayTeamId;
   data['status'] = entity.status;
+  data['guessStatus'] = entity.guessStatus;
   return data;
 }
 
@@ -118,6 +123,7 @@ extension ScoresEntityExtension on ScoresEntity {
     int? homeTeamId,
     int? awayTeamId,
     int? status,
+    int? guessStatus,
   }) {
     return ScoresEntity()
       ..gameId = gameId ?? this.gameId
@@ -136,6 +142,7 @@ extension ScoresEntityExtension on ScoresEntity {
       ..awayTeamWL = awayTeamWL ?? this.awayTeamWL
       ..homeTeamId = homeTeamId ?? this.homeTeamId
       ..awayTeamId = awayTeamId ?? this.awayTeamId
-      ..status = status ?? this.status;
+      ..status = status ?? this.status
+      ..guessStatus = guessStatus ?? this.guessStatus;
   }
 }

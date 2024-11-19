@@ -243,8 +243,11 @@ class Utils {
       File file = File(filePath)..writeAsBytesSync(uint8List);
 
       // 使用share_plus插件分享文件
-      Share.shareXFiles([XFile(filePath)],
-          text: 'https://google.com');
+      Share.shareXFiles(
+        [XFile(filePath)],
+        subject: "This is a share link from me",
+        // text: 'This is a share link from me',
+      );
     } catch (e) {
       print('Error generating image: $e');
     }

@@ -3,6 +3,7 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui';
 
+import 'package:arm_chair_quaterback/common/widgets/support_percent_progress_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
@@ -214,6 +215,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                       ),
                       2.vGap,
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
                             "$moreFlex%",
@@ -222,40 +224,11 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                                 height: 1,
                                 fontFamily: FontFamily.fOswaldMedium),
                           ),
+                          3.hGap,
                           Expanded(
-                            child: Container(
-                              margin: EdgeInsets.symmetric(horizontal: 8.w),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    flex: max(moreFlex, 2), //todo
-                                    child: SizedBox(
-                                      height: 18.w,
-                                      child: LinearProgressIndicator(
-                                        borderRadius: BorderRadius.horizontal(
-                                            left: Radius.circular(9.w)),
-                                        color: AppColors.c000000,
-                                        value: 1,
-                                      ),
-                                    ),
-                                  ),
-                                  1.hGap,
-                                  Expanded(
-                                    flex: max(100 - moreFlex, 2), //todo
-                                    child: SizedBox(
-                                      height: 18.w,
-                                      child: LinearProgressIndicator(
-                                        borderRadius: BorderRadius.horizontal(
-                                            right: Radius.circular(9.w)),
-                                        color: AppColors.cB3B3B3,
-                                        value: 1,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                            child: SupportPercentProgressWidget(leftPercent: moreFlex, rightPercent: 100-moreFlex),
                           ),
+                          3.hGap,
                           Text(
                             "${100 - moreFlex}%",
                             style: 14.w5(

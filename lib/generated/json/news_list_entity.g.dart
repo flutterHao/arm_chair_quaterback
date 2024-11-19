@@ -1,14 +1,6 @@
 import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
-
 import 'package:arm_chair_quaterback/common/entities/review_entity.dart';
-
-import 'package:arm_chair_quaterback/common/utils/image_ext.dart';
-
-import 'package:common_utils/common_utils.dart';
-
-import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
@@ -231,6 +223,8 @@ Map<String, dynamic> $NewsListDetailToJson(NewsListDetail entity) {
   data['players'] = entity.players;
   data['imgUrl'] = entity.imgUrl;
   data['type'] = entity.type;
+  data['imageHeight'] = entity.imageHeight;
+  data['imamgeWidth'] = entity.imamgeWidth;
   return data;
 }
 
@@ -258,6 +252,8 @@ extension NewsListDetailExtension on NewsListDetail {
     List<int>? players,
     String? imgUrl,
     int? type,
+    double? imageHeight,
+    double? imamgeWidth,
   }) {
     return NewsListDetail()
       ..isLikeInt = isLikeInt ?? this.isLikeInt
@@ -281,6 +277,8 @@ extension NewsListDetailExtension on NewsListDetail {
       ..teams = teams ?? this.teams
       ..players = players ?? this.players
       ..imgUrl = imgUrl ?? this.imgUrl
-      ..type = type ?? this.type;
+      ..type = type ?? this.type
+      ..imageHeight = imageHeight ?? this.imageHeight
+      ..imamgeWidth = imamgeWidth ?? this.imamgeWidth;
   }
 }

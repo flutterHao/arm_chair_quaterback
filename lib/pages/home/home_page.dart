@@ -73,7 +73,12 @@ class _HomePageState extends State<HomePage>
                       ),
                     ],
                   ),
+                  // 竞猜选择结果底部弹框
                   Obx(() {
+                    var tabIndex = Get.find<HomeController>().tabIndex.value;
+                    if(![0,1].contains(tabIndex)){
+                      return const SizedBox.shrink();
+                    }
                     var picksIndexController = Get.find<PicksIndexController>();
                     var leagueController = Get.find<LeagueController>();
                     var value = picksIndexController.choiceSize.value;
@@ -167,6 +172,7 @@ class _HomePageState extends State<HomePage>
                           ),
                         ));
                   }),
+                  // 底部tabBar
                   Positioned(
                     bottom: 0,
                     left: 0,
@@ -278,7 +284,7 @@ class _HomePageState extends State<HomePage>
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              if (isCenter && select)
+              if (isCenter && select && false)//二期功能
                 Expanded(
                     child: SizedBox(
                   width: 4.w,
@@ -287,7 +293,7 @@ class _HomePageState extends State<HomePage>
                 iconWidth: 24.w,
                 icon: select ? e.tabIconSelected : e.tabIconNormal,
               ),
-              if (isCenter && select)
+              if (isCenter && select&& false)//二期功能
                 Expanded(
                   child: Column(
                     children: [
