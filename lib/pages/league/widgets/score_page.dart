@@ -39,67 +39,43 @@ class ScorePage extends StatefulWidget {
 class _ScorePageState extends State<ScorePage>
     with AutomaticKeepAliveClientMixin {
 
-  late LeagueController leagueController;
 
   late ScorePageController controller;
 
-  late RefreshController refreshController = RefreshController();
-
-  @override
-  void initState() {
-    super.initState();
-    leagueController = Get.find();
-    Get.find<LeagueController>().loadStatus.listen((v){
-      print('------:$v');
-      if(v != LoadDataStatus.loading){
-
-        print('------ttt---${this.toString()}');
-        refreshController.refreshCompleted();
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    var key = "${widget.time.millisecondsSinceEpoch}_${MyDateUtils.nextDay(widget.time).millisecondsSinceEpoch}";
-    print('$key,kes--:${leagueController.cacheGameGuessData.keys}');
-    var list = leagueController.cacheGameGuessData[key] ?? [];
-    print('lenght:${list.length}');
-    var listView = MediaQuery.removePadding(
-      removeTop: true,
-      context: context,
-      child: ListView.separated(
-        itemCount: list.length,
-        itemBuilder: (context, index) {
-          bool lastIndex = index == list.length - 1;
-          var item = list[index];
-          return Container(
-              margin: EdgeInsets.only(
-                  top: index == 0 ? 9.w : 0, bottom: lastIndex ? 20.w : 0),
-              child: _ItemWidget(gameGuess: item));
-        },
-        separatorBuilder: (BuildContext context, int index) {
-          return 9.vGap;
-        },
-      ),
-    );
-
-    var emptyWidget = Center(
-      child: Obx(() {
-        return LoadStatusWidget(
-          loadDataStatus: leagueController.loadStatus.value,
-        );
-      }),
-    );
     return GetBuilder<ScorePageController>(
-      init: controller = ScorePageController(),
+      init: controller = ScorePageController(widget.time),
         tag: widget.time.millisecondsSinceEpoch.toString(),
+        id: controller.idScorePage,
         builder: (_) {
-      return SmartRefresher(
-          controller: refreshController,
-          onRefresh: leagueController.loading,
-          child: list.isEmpty ? emptyWidget : listView);
-    });
+          print('tttt:${controller.scoreList}');
+          return SmartRefresher(
+              controller: controller.refreshController,
+              onRefresh: controller.loading,
+              child: controller.scoreList.isEmpty ? Center(
+                child: Obx(() {
+                  return LoadStatusWidget(
+                    loadDataStatus: controller.loadStatus.value,
+                  );
+                }),
+              ) : ListView.separated(
+                itemCount: controller.scoreList.length,
+                physics: const BouncingScrollPhysics(),
+                itemBuilder: (context, index) {
+                  bool lastIndex = index == controller.scoreList.length - 1;
+                  var item = controller.scoreList[index];
+                  return Container(
+                      margin: EdgeInsets.only(
+                          top: index == 0 ? 9.w : 0,
+                          bottom: lastIndex ? 20.w : 0),
+                      child: _ItemWidget(gameGuess: item));
+                },
+                separatorBuilder: (BuildContext context, int index) {
+                  return 9.vGap;
+                },
+              ));
+        });
   }
 
   @override
@@ -452,7 +428,14 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
                   .picksDefineEntity
                   ?.betCost ?? "0"));
 
-  Column _buildGuess() {
+  Widget _buildGuess() {
+    var nowDateTime = MyDateUtils.getNowDateTime();
+    var nextDay = MyDateUtils.nextDay(nowDateTime);
+    var dayStartTimeMS = MyDateUtils.getDayStartTimeMS(MyDateUtils.nextDay(nextDay));
+    ///只能猜今明两天的赛程
+    if(item.gameStartTime>= dayStartTimeMS){
+      return const SizedBox.shrink();
+    }
     var count = item.homeTeamWins + item.awayTeamWins;
     var homePercent = 0;
     if (item.homeTeamWins == 0 && item.awayTeamWins == 0) {

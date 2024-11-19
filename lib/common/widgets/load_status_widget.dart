@@ -1,14 +1,11 @@
-/*
- * @Description: 
- * @Author: lihonghao
- * @Date: 2024-11-14 14:41:22
- * @LastEditTime: 2024-11-19 20:37:01
- */
+import 'dart:io';
+
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -43,17 +40,17 @@ class LoadStatusWidget extends StatelessWidget {
               child: SizedBox(
                 width: 25.w,
                 height: 25.w,
-                child: const CircularProgressIndicator(
+                child: Platform.isAndroid?const CircularProgressIndicator(
                   color: AppColors.cB3B3B3,
                   strokeWidth: 2,
-                ),
+                ):const CupertinoActivityIndicator(),
               ),
             )
           else
             IconWidget(
                 iconWidth: 123.w,
                 icon: icon ?? loadDataStatus?.icon ?? Assets.iconUiDefault01),
-          20.vGap,
+          15.vGap,
           Text(
             text ?? loadDataStatus?.desc ?? "",
             style: 12.w4(color: AppColors.cB3B3B3.withOpacity(.7)),

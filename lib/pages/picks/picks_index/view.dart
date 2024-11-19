@@ -5,6 +5,11 @@
  * @LastEditTime: 2024-11-04 16:14:16
  */
 
+import 'dart:math';
+
+import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
+import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/widgets/delegate/fixed_height_sliver_header_delegate.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
@@ -72,8 +77,7 @@ class PicksIndex extends StatelessWidget {
                 settings: setting,
                 customTransition: HalfSlideRightToLeftTransition(),
                 barrierColor: Colors.transparent,
-                page: () =>
-                    PlayerDetailPage(
+                page: () => PlayerDetailPage(
                       arguments: setting.arguments as PlayerDetailPageArguments,
                     ));
           case RouteNames.mineMineInfo:
@@ -125,105 +129,22 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
       return Expanded(
         child: SmartRefresher(
           controller: picksIndexController.refreshController,
-          onRefresh: () => picksIndexController.loading(),
+          onRefresh: picksIndexController.loading,
           child: Obx(() {
             return Center(
                 child: LoadStatusWidget(
-                  loadDataStatus: picksIndexController.loadStatusRx.value,
-                ));
+              loadDataStatus: picksIndexController.loadStatusRx.value,
+            ));
           }),
         ),
       );
     }
-    return Expanded(
-        child: Stack(
-          children: [
-            NotificationListener<ScrollNotification>(
-              onNotification: (notification) {
-                // print('notification-----: ${notification.metrics.pixels}');
-                if (notification.metrics.pixels >=
-                    notification.metrics.minScrollExtent &&
-                    notification.metrics.pixels <=
-                        notification.metrics.maxScrollExtent &&
-                    notification.metrics.axisDirection == AxisDirection.down) {
-                  topOverScrollPixels = 0;
-                  if (lastScrollPixels < notification.metrics.pixels) {
-                    //向上滑
-                    var result =
-                        lastScrollPixels - notification.metrics.pixels +
-                            top.value;
-                    // print('result-111:$result,${top.value},$floatTitleBarHeight');
-                    if (result < -floatTitleBarHeight) {
-                      if (top.value != -floatTitleBarHeight && top.value != 0) {
-                        top.value = -floatTitleBarHeight;
-                      }
-                    } else {
-                      top.value = result;
-                    }
-                  }
-                  if (lastScrollPixels > notification.metrics.pixels) {
-                    //向下滑
-                    var result =
-                        lastScrollPixels - notification.metrics.pixels +
-                            top.value;
-                    // print('result-222:$result,${top.value},${floatTitleBarHeight}');
-                    if (result > 0) {
-                      if (top.value != 0 && top.value != -floatTitleBarHeight) {
-                        top.value = 0;
-                      }
-                    } else {
-                      top.value = result;
-                    }
-                  }
-                  lastScrollPixels = notification.metrics.pixels;
-                } else {
-                  if (notification.metrics.pixels <
-                      notification.metrics.minScrollExtent) {
-                    top.value = topOverScrollPixels =
-                    -notification.metrics.pixels;
-                  }
-                }
-                return true;
-              },
-              child: TabBarView(
-                  controller: picksIndexController.tabController,
-                  children: picksIndexController.guessGamePlayers.keys.map((e) {
-                    var list = picksIndexController.guessGamePlayers[e]!;
-                    return GetBuilder<PicksIndexController>(
-                        id: PicksIndexController.idGuessList,
-                        builder: (logic) {
-                          return CustomScrollView(
-                            physics: const BouncingScrollPhysics(),
-                            key: PageStorageKey<String>(e),
-                            slivers: [
-                              SliverPadding(
-                                  padding: EdgeInsets.only(top: 119.w)),
-                              SliverList.separated(
-                                itemCount: list.length,
-                                itemBuilder: (context, index) {
-                                  var item = list[index];
-                                  return GuessItemV2(
-                                    index: index,
-                                    playerV2: item,
-                                  );
-                                },
-                                separatorBuilder: (BuildContext context,
-                                    int index) {
-                                  return 9.vGap;
-                                },
-                              ),
-                              SliverPadding(
-                                  padding: EdgeInsets.only(bottom: 20.w))
-                            ],
-                          );
-                        });
-                  }).toList()),
-            ),
-            Obx(() {
-              return Positioned(
-                  top: top.value - topOverScrollPixels,
-                  left: 0,
-                  right: 0,
+    return Expanded(child: NestedScrollView(  floatHeaderSlivers: true,
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[
+            SliverPersistentHeader(
+              floating: true,
+              delegate: FixedHeightSliverHeaderDelegate(
                   child: Container(
                     color: AppColors.c262626,
                     child: Column(
@@ -238,9 +159,8 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                               Expanded(
                                 flex: 204,
                                 child: InkWell(
-                                  onTap: () =>
-                                      Get.toNamed(RouteNames.picksPickRank,
-                                          id: GlobalNestedKey.PICKS),
+                                  onTap: () => Get.toNamed(RouteNames.picksPickRank,
+                                      id: GlobalNestedKey.PICKS),
                                   child: Container(
                                     height: 51.w,
                                     padding: EdgeInsets.only(
@@ -248,8 +168,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                     margin: EdgeInsets.only(top: 4.w),
                                     decoration: BoxDecoration(
                                         color: AppColors.c3B3B3B,
-                                        borderRadius: BorderRadius.circular(
-                                            9.w)),
+                                        borderRadius: BorderRadius.circular(9.w)),
                                     child: Row(
                                       mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -272,14 +191,12 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                           ],
                                         ),
                                         Column(
-                                          mainAxisAlignment: MainAxisAlignment
-                                              .end,
+                                          mainAxisAlignment: MainAxisAlignment.end,
                                           crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                           children: [
                                             Text(
-                                              "${picksIndexController.rankInfo
-                                                  .myRank.rank ?? "--"}",
+                                              "${picksIndexController.rankInfo.myRank.rank ?? "--"}",
                                               style: 19.w4(
                                                   color: AppColors.cFFFFFF,
                                                   height: 1),
@@ -306,19 +223,17 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                   child: Stack(
                                     children: [
                                       InkWell(
-                                        onTap: () =>
-                                            Get.toNamed(
-                                                RouteNames.picksPersonalCenter,
-                                                arguments: {
-                                                  "teamId": Get
-                                                      .find<HomeController>()
-                                                      .userEntiry
-                                                      .teamLoginInfo
-                                                      ?.team
-                                                      ?.teamId ??
-                                                      0,
-                                                  "initTab": 0
-                                                }),
+                                        onTap: () => Get.toNamed(
+                                            RouteNames.picksPersonalCenter,
+                                            arguments: {
+                                              "teamId": Get.find<HomeController>()
+                                                  .userEntiry
+                                                  .teamLoginInfo
+                                                  ?.team
+                                                  ?.teamId ??
+                                                  0,
+                                              "initTab": 0
+                                            }),
                                         child: Container(
                                           height: 51.w,
                                           margin:
@@ -341,12 +256,10 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                                       child: Text(
                                                         "PICKS",
                                                         style: 19.w4(
-                                                            color: AppColors
-                                                                .cFFFFFF,
+                                                            color: AppColors.cFFFFFF,
                                                             height: 1,
                                                             fontFamily:
-                                                            FontFamily
-                                                                .fOswaldMedium),
+                                                            FontFamily.fOswaldMedium),
                                                       )))
                                             ],
                                           ),
@@ -357,7 +270,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                           child: Obx(() {
                                             var value = picksIndexController
                                                 .choiceSize.value;
-                                            if(value<=0){
+                                            if (value <= 0) {
                                               return const SizedBox.shrink();
                                             }
                                             return Container(
@@ -371,12 +284,10 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                                 child: Text(
                                                   "$value",
                                                   style: 12.w5(
-                                                      color: AppColors
-                                                          .cF37350,
+                                                      color: AppColors.cF37350,
                                                       height: 1,
                                                       fontFamily:
-                                                      FontFamily
-                                                          .fRobotoMedium),
+                                                      FontFamily.fRobotoMedium),
                                                 ),
                                               ),
                                             );
@@ -404,8 +315,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                               indicator: UnderlineTabIndicator(
                                   borderSide: BorderSide(
                                       color: AppColors.cFF7954, width: 3.w),
-                                  insets: EdgeInsets.symmetric(
-                                      horizontal: -20.w)),
+                                  insets: EdgeInsets.symmetric(horizontal: -20.w)),
                               indicatorWeight: 4,
                               controller: picksIndexController.tabController,
                               tabs: picksIndexController.guessGamePlayers.keys
@@ -415,10 +325,16 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                         )
                       ],
                     ),
-                  ));
-            }),
-          ],
-        ));
+                  ),
+                  height: 111.w),
+            )
+          ];
+        }, body: TabBarView(
+            controller: picksIndexController.tabController,
+            children: picksIndexController.guessGamePlayers.keys.map((e) {
+              var list = picksIndexController.guessGamePlayers[e]!;
+              return _TabViewItemPage(list: list);
+            }).toList())));
   }
 
   @override
@@ -435,6 +351,63 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
             bodyWidget: _buildView(context),
           );
         });
+  }
+
+  @override
+  bool get wantKeepAlive => true;
+}
+
+class _TabViewItemPage extends StatefulWidget {
+  const _TabViewItemPage({super.key, required this.list});
+
+  final List<PicksPlayerV2> list;
+
+  @override
+  State<_TabViewItemPage> createState() => _TabViewItemPageState();
+}
+
+class _TabViewItemPageState extends State<_TabViewItemPage> with AutomaticKeepAliveClientMixin {
+  RefreshController refreshController = RefreshController();
+
+  SmartRefresher _buildTabViewItemPage(List<PicksPlayerV2> list) {
+    return SmartRefresher(
+      controller: refreshController,
+      onRefresh: () => Get.find<PicksIndexController>().loading(),
+      child: ListView.separated(
+        itemCount: list.length,
+        physics: const BouncingScrollPhysics(),
+        itemBuilder: (context, index) {
+          var item = list[index];
+          bool lastIndex = list.length - 1 == index;
+          return Container(
+            margin: EdgeInsets.only(
+                top: index == 0 ? 9.w : 0, bottom: lastIndex ? 20.w : 0),
+            child: GuessItemV2(
+              index: index,
+              playerV2: item,
+            ),
+          );
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return 9.vGap;
+        },
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Get.find<PicksIndexController>().loadStatusRx.listen((v) {
+      if (v != LoadDataStatus.loading) {
+        refreshController.refreshCompleted();
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _buildTabViewItemPage(widget.list);
   }
 
   @override
