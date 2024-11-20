@@ -202,7 +202,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                                 fontFamily: FontFamily.fRobotoRegular),
                           ),
                           Text(
-                            "% OF BETS PLACED",
+                            "APPROVAL RATING",
                             style: 10.w4(
                                 color: AppColors.c000000,
                                 height: 1,
