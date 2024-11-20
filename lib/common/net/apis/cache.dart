@@ -121,7 +121,7 @@ class CacheApi {
   ///新闻定义
   static PicksDefineEntity? _pickDefine;
 
-  static List<PickTypeEntity>? _pickType;
+  static List<PickTypeEntity>? pickType;
   static List<ApiErrorCodeEntity>? apiErrorCode;
 
   ///道具定义
@@ -190,12 +190,12 @@ class CacheApi {
   }
 
   static Future<List<PickTypeEntity>> getPickType() async {
-    if (_pickType != null) {
-      return _pickType!;
+    if (pickType != null) {
+      return pickType!;
     }
     List json = await httpUtil.get(Api.cPickType);
-    _pickType = json.map((e) => PickTypeEntity.fromJson(e)).toList();
-    return _pickType!;
+    pickType = json.map((e) => PickTypeEntity.fromJson(e)).toList();
+    return pickType!;
   }
 
   ///排行奖励规则

@@ -13,8 +13,11 @@ NbaPlayerBaseInfoEntity $NbaPlayerBaseInfoEntityFromJson(
   if (playerDataAvg != null) {
     nbaPlayerBaseInfoEntity.playerDataAvg = playerDataAvg;
   }
-  final NbaPlayerBaseInfoGuessInfos? guessInfos = jsonConvert.convert<
-      NbaPlayerBaseInfoGuessInfos>(json['guessInfos']);
+  final Map<String, NbaPlayerBaseInfoGuessInfosProperty>? guessInfos =
+  (json['guessInfos'] as Map<String, dynamic>).map(
+          (k, e) => MapEntry(k,
+          jsonConvert.convert<NbaPlayerBaseInfoGuessInfosProperty>(
+              e) as NbaPlayerBaseInfoGuessInfosProperty));
   if (guessInfos != null) {
     nbaPlayerBaseInfoEntity.guessInfos = guessInfos;
   }
@@ -86,7 +89,7 @@ Map<String, dynamic> $NbaPlayerBaseInfoEntityToJson(
     NbaPlayerBaseInfoEntity entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['playerDataAvg'] = entity.playerDataAvg.toJson();
-  data['guessInfos'] = entity.guessInfos.toJson();
+  data['guessInfos'] = entity.guessInfos;
   data['playerBaseInfo'] = entity.playerBaseInfo.toJson();
   data['l5GameData'] = entity.l5GameData.map((v) => v.toJson()).toList();
   data['l5DataAvg'] = entity.l5DataAvg?.toJson();
@@ -102,7 +105,7 @@ Map<String, dynamic> $NbaPlayerBaseInfoEntityToJson(
 extension NbaPlayerBaseInfoEntityExtension on NbaPlayerBaseInfoEntity {
   NbaPlayerBaseInfoEntity copyWith({
     NbaPlayerBaseInfoPlayerDataAvg? playerDataAvg,
-    NbaPlayerBaseInfoGuessInfos? guessInfos,
+    Map<String, NbaPlayerBaseInfoGuessInfosProperty>? guessInfos,
     NbaPlayerBaseInfoPlayerBaseInfo? playerBaseInfo,
     List<NbaPlayerBaseInfoL5GameData>? l5GameData,
     NbaPlayerBaseInfoL5DataAvg? l5DataAvg,

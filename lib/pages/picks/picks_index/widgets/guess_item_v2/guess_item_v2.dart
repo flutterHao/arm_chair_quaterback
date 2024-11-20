@@ -149,7 +149,9 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                                     style: 19.w7(
                                         color: AppColors.c262626,
                                         fontFamily: FontFamily.fOswaldMedium,
-                                        height: 1),
+                                        height: 1,
+                                      overflow: TextOverflow.ellipsis
+                                    ),
                                   ),
                                 ),
                                 IconWidget(

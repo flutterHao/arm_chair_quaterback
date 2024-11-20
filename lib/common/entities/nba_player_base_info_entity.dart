@@ -8,7 +8,7 @@ export 'package:arm_chair_quaterback/generated/json/nba_player_base_info_entity.
 @JsonSerializable()
 class NbaPlayerBaseInfoEntity {
   late NbaPlayerBaseInfoPlayerDataAvg playerDataAvg;
-  late NbaPlayerBaseInfoGuessInfos guessInfos;
+  late Map<String, NbaPlayerBaseInfoGuessInfosProperty> guessInfos;
   late NbaPlayerBaseInfoPlayerBaseInfo playerBaseInfo;
   late List<NbaPlayerBaseInfoL5GameData> l5GameData;
   NbaPlayerBaseInfoL5DataAvg? l5DataAvg;
@@ -550,6 +550,21 @@ class NbaPlayerBaseInfoL5GameData {
     if ("reb" == key.toLowerCase()) {
       return (oreb + dreb);
     }
+    if (key.contains(",")) {
+      var split = key.split(",");
+      var value = 0.0;
+      for (int i = 0; i < split.length; i++) {
+        var str = split[i];
+        if ("3pm" == str.toLowerCase()) {
+          value += threePm;
+        } else if ("reb" == str.toLowerCase()) {
+          value += ((oreb) + (dreb));
+        } else {
+          value += toJson()[str.toLowerCase()];
+        }
+      }
+      return value;
+    }
     return toJson()[key.toLowerCase()];
   }
 
@@ -596,6 +611,21 @@ class NbaPlayerBaseInfoL5DataAvg {
     }
     if ("reb" == key.toLowerCase()) {
       return ((oreb ?? 0) + (dreb ?? 0));
+    }
+    if (key.contains(",")) {
+      var split = key.split(",");
+      var value = 0.0;
+      for (int i = 0; i < split.length; i++) {
+        var str = split[i];
+        if ("3pm" == str.toLowerCase()) {
+          value += threePm ?? 0;
+        } else if ("reb" == str.toLowerCase()) {
+          value += ((oreb ?? 0) + (dreb ?? 0));
+        } else {
+          value += toJson()[split[i].toLowerCase()];
+        }
+      }
+      return value;
     }
     return toJson()[key.toLowerCase()];
   }

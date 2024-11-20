@@ -111,45 +111,7 @@ class Utils {
   }
 
   static String getLongName(String key) {
-    key = key.toLowerCase();
-    List<String> shortNameList = [
-      "FGM",
-      "FGA",
-      "3PM",
-      "3PA",
-      "FTM",
-      "FTA",
-      "REB",
-      "AST",
-      "STL",
-      "BLK",
-      "FOUL",
-      "TO",
-      "PTS",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      ""
-    ];
-    if (key == "blk") {
-      return "Blocks";
-    }
-    if (key == "ast") {
-      return "Assists";
-    }
-    if (key == "stl") {
-      return "Steals";
-    }
-    if (key == "pts") {
-      return "Points";
-    }
-    if (key == "reb") {
-      return "Rebounds";
-    }
-    return "3 Points";
+    return CacheApi.pickType?.firstWhere((e) => e.pickTypeName == key).pickTypeFullName??"";
   }
 
   static Color getChartColor(value) {

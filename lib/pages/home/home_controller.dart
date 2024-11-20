@@ -37,11 +37,11 @@ class HomeController extends GetxController {
   late PageController pageController;
   RxInt tabIndex = 2.obs;
   Map<int, GlobalKey<NavigatorState>?> navigatorKeys = {
-    0: GlobalNestedKey.NewsTabGlobalKey,
-    1: GlobalNestedKey.PicksTabGlobalKey,
-    2: GlobalNestedKey.TeamTabGlobalKey,
-    3: GlobalNestedKey.TRADETabGlobalKey,
-    4: GlobalNestedKey.LEAGUESTabGlobalKey,
+    0: GlobalNestedKey.PicksTabGlobalKey,
+    1: GlobalNestedKey.LEAGUESTabGlobalKey,
+    2: GlobalNestedKey.NewsTabGlobalKey,
+    3: GlobalNestedKey.TeamTabGlobalKey,
+    4: GlobalNestedKey.TRADETabGlobalKey,
   };
 
   UserEntity userEntiry = UserEntity();

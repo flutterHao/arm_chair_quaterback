@@ -81,10 +81,7 @@ class SummaryController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    if (initTabStr != null) {
-      currentIndex.value =
-          Constant.guessTypeList.indexOf(initTabStr!.toUpperCase());
-    }
+
     statsScrollController.addListener(() {
       if (!statsIsScrolling.value && statsScrollController.offset > 5) {
         statsIsScrolling.value = true;
@@ -104,6 +101,10 @@ class SummaryController extends GetxController {
       CacheApi.getNBATeamDefine(),
     ]).then((result) {
       nbaPlayerBaseInfoEntity = result[0];
+      if (initTabStr != null) {
+        var i = nbaPlayerBaseInfoEntity?.guessInfos.keys.toList().indexOf(initTabStr!.toUpperCase())??-1;
+        currentIndex.value = i==-1?0:i;
+      }
       if (nbaPlayerBaseInfoEntity!.tradePlayers != null) {
         startCountDown(nbaPlayerBaseInfoEntity!.tradePlayers);
       }
@@ -150,12 +151,21 @@ class SummaryController extends GetxController {
     if (key == "3PM") {
       key = "FG3M";
     }
+    if (key.contains(",")) {
+      var split = key.split(",");
+      var value = 0.0;
+      for (int i = 0; i < split.length; i++) {
+        var str = split[i];
+          value += nbaPlayerBaseInfoEntity?.playerRegularMap?.toJson()[str]??0;
+      }
+      return value.format();
+    }
     return ((nbaPlayerBaseInfoEntity!.playerRegularMap?.toJson()[key] ?? 0)
             as num)
         .format();
   }
 
-  String getCurrentTabKey() => Constant.guessTypeList[currentIndex.value];
+  String getCurrentTabKey() => (nbaPlayerBaseInfoEntity?.guessInfos.keys.toList()[currentIndex.value])!;
 
   String getLast5AvgWithTab() {
     var key = getCurrentTabKey();
@@ -166,9 +176,8 @@ class SummaryController extends GetxController {
     var key = getCurrentTabKey();
 
     key = key.toLowerCase();
-    var guessInfos = NbaPlayerBaseInfoGuessInfosProperty.fromJson(
-        nbaPlayerBaseInfoEntity?.guessInfos.toJson()[key]??{});
-    var picks = guessInfos.picks;
+    var guessInfos = nbaPlayerBaseInfoEntity?.guessInfos[key];
+    var picks = guessInfos?.picks;
     if (picks == null) {
       return null;
     }
@@ -215,13 +224,7 @@ class SummaryController extends GetxController {
 
   NbaPlayerBaseInfoGuessInfosProperty? getGuessInfo() {
     var currentTabKey = getCurrentTabKey();
-    var json = nbaPlayerBaseInfoEntity?.guessInfos
-        .toJson()[currentTabKey.toLowerCase()];
-    if(json == null){
-      return null;
-    }
-    var nbaPlayerBaseInfoGuessInfosProperty =
-        NbaPlayerBaseInfoGuessInfosProperty.fromJson(json);
+    var nbaPlayerBaseInfoGuessInfosProperty = nbaPlayerBaseInfoEntity?.guessInfos[currentTabKey.toLowerCase()];
     return nbaPlayerBaseInfoGuessInfosProperty;
   }
 

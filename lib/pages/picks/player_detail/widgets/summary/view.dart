@@ -137,13 +137,13 @@ class _SummaryPageState extends State<SummaryPage>
                           SizedBox(
                             height: 48.w,
                             child: ListView.builder(
-                                itemCount: Constant.guessTypeList.length,
+                                itemCount: controller.nbaPlayerBaseInfoEntity?.guessInfos.keys.length,
                                 controller: scrollController,
                                 physics: OneBoundaryScrollPhysics(
                                     scrollController: scrollController),
                                 scrollDirection: Axis.horizontal,
                                 itemBuilder: (context, index) {
-                                  var key = Constant.guessTypeList[index];
+                                  var key = (controller.nbaPlayerBaseInfoEntity?.guessInfos.keys.toList()[index])!;
                                   return Obx(() {
                                     bool isSelected =
                                         controller.currentIndex.value == index;
@@ -165,7 +165,7 @@ class _SummaryPageState extends State<SummaryPage>
                                             borderRadius:
                                                 BorderRadius.circular(10.w)),
                                         child: Text(
-                                          key,
+                                          key.replaceAll(",", "+"),
                                           style: 13.w4(
                                               color: isSelected
                                                   ? AppColors.cF2F2F2
