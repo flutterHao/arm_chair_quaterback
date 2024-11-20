@@ -698,7 +698,7 @@ class _SummaryPageState extends State<SummaryPage>
               onTap: () {
                 print('playerNew:${playerNew.id}');
                 Get.find<NewListController>().getNewsFlow(isRefresh: true);
-                Get.toNamed(RouteNames.newsDetail, arguments: playerNew.id);
+                Get.toNamed(RouteNames.newsDetail, arguments: playerNew);
               },
               child: Container(
                 width: double.infinity,

@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/entities/guess_game_info_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/trade_entity/trade_info_entity.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/nba_player_base_info_entity.g.dart';
@@ -16,7 +17,7 @@ class NbaPlayerBaseInfoEntity {
   List<NbaPlayerBaseInfoGuessInfosPtsTwoTeamGames>? twoTeamGames;
   NbaPlayerBaseInfoPlayerPlayoffsMap? playerPlayoffsMap;
   late List<NbaPlayerBaseInfoPlayerTrends> playerTrends;
-  late List<NbaPlayerBaseInfoPlayerNews> playerNews;
+  late List<NewsListDetail> playerNews;
   TradeInfoTradePlayers? tradePlayers;
 
   NbaPlayerBaseInfoEntity();

@@ -2,6 +2,8 @@ import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.da
 import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_game_info_entity.dart';
 
+import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
+
 import 'package:arm_chair_quaterback/common/entities/trade_entity/trade_info_entity.dart';
 
 
@@ -68,12 +70,11 @@ NbaPlayerBaseInfoEntity $NbaPlayerBaseInfoEntityFromJson(
   if (playerTrends != null) {
     nbaPlayerBaseInfoEntity.playerTrends = playerTrends;
   }
-  final List<
-      NbaPlayerBaseInfoPlayerNews>? playerNews = (json['playerNews'] as List<
-      dynamic>?)?.map(
-          (e) =>
-      jsonConvert.convert<NbaPlayerBaseInfoPlayerNews>(
-          e) as NbaPlayerBaseInfoPlayerNews).toList();
+  final List<NewsListDetail>? playerNews = (json['playerNews'] as List<
+      dynamic>?)
+      ?.map(
+          (e) => jsonConvert.convert<NewsListDetail>(e) as NewsListDetail)
+      .toList();
   if (playerNews != null) {
     nbaPlayerBaseInfoEntity.playerNews = playerNews;
   }
@@ -113,7 +114,7 @@ extension NbaPlayerBaseInfoEntityExtension on NbaPlayerBaseInfoEntity {
     List<NbaPlayerBaseInfoGuessInfosPtsTwoTeamGames>? twoTeamGames,
     NbaPlayerBaseInfoPlayerPlayoffsMap? playerPlayoffsMap,
     List<NbaPlayerBaseInfoPlayerTrends>? playerTrends,
-    List<NbaPlayerBaseInfoPlayerNews>? playerNews,
+    List<NewsListDetail>? playerNews,
     TradeInfoTradePlayers? tradePlayers,
   }) {
     return NbaPlayerBaseInfoEntity()
