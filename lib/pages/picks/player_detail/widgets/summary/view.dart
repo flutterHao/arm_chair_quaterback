@@ -41,9 +41,9 @@ class _SummaryPageState extends State<SummaryPage>
   @override
   Widget build(BuildContext context) {
     playerDetailController = Get.find();
+    controller = Get.put(SummaryController(widget.playerId, initTabStr: widget.tabStr));
     return GetBuilder<SummaryController>(
-      init: controller =
-          SummaryController(widget.playerId, initTabStr: widget.tabStr),
+      init: controller ,
       id: SummaryController.idSummaryMain,
       builder: (_) {
         var scrollController1 = ScrollController();

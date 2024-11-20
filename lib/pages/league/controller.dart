@@ -97,6 +97,10 @@ class LeagueController extends GetxController
     choiceSize.value = getAllChoiceData().length;
   }
 
+  deleteOne(){
+    choiceSize.value = getAllChoiceData().length;
+  }
+
   List<GameGuess> getAllChoiceData() {
     return cacheGameGuessData.keys.fold([], (p, e) {
       var list = cacheGameGuessData[e]!

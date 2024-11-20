@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:arm_chair_quaterback/common/entities/guess_data.dart';
+import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -150,7 +152,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
             var guessGameList = leagueController.getAllChoiceData();
             List list = [...guessGameList, ...guessPlayerList];
             modelCurrentIndex.value = 1;
-            var bottom = _buildBottom(context,list);
+            var bottom = _buildBottom(context, list);
             return Stack(
               children: [
                 Column(
@@ -231,33 +233,15 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                             item.scoresEntity.homeTeamId);
                                         var awayTeamInfo = Utils.getTeamInfo(
                                             item.scoresEntity.awayTeamId);
-                                        return Container(
-                                          height: 70.w,
-                                          margin: EdgeInsets.only(
-                                              left: 16.w,
-                                              right: 16.w,
-                                              bottom: lastItem ? 20.w : 0),
-                                          decoration: BoxDecoration(
-                                              color: AppColors.cF2F2F2,
-                                              borderRadius:
-                                                  BorderRadius.circular(16.w)),
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 11.w),
-                                          alignment:
-                                              FractionalOffset.centerLeft,
-                                          child: Text(
-                                            "${homeTeamInfo.shortEname} VS ${awayTeamInfo.shortEname}",
-                                            style:
-                                                16.w5(color: AppColors.c000000),
-                                          ),
-                                        );
+                                        return _ScoresItemWidget(item,lastItem,
+                                            homeTeamInfo, awayTeamInfo,picksIndexController);
                                       }
                                       var player = list[index];
                                       int choice = player.status;
                                       return Container(
                                         margin: EdgeInsets.only(
                                             bottom: lastItem ? 20.w : 0),
-                                        child: _ItemWidget(
+                                        child: _PlayerItemWidget(
                                           index: index,
                                           choice: choice,
                                           player: player,
@@ -293,7 +277,24 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
     );
   }
 
-  Widget _buildBottom(BuildContext context,List list) {
+  Container buildContainer(
+      bool lastItem, NbaTeamEntity homeTeamInfo, NbaTeamEntity awayTeamInfo) {
+    return Container(
+      height: 70.w,
+      margin:
+          EdgeInsets.only(left: 16.w, right: 16.w, bottom: lastItem ? 20.w : 0),
+      decoration: BoxDecoration(
+          color: AppColors.cF2F2F2, borderRadius: BorderRadius.circular(16.w)),
+      padding: EdgeInsets.symmetric(horizontal: 11.w),
+      alignment: FractionalOffset.centerLeft,
+      child: Text(
+        "${homeTeamInfo.shortEname} VS ${awayTeamInfo.shortEname}",
+        style: 16.w5(color: AppColors.c000000),
+      ),
+    );
+  }
+
+  Widget _buildBottom(BuildContext context, List list) {
     return Obx(() {
       var json = picksIndexController.picksDefine.toJson();
       var key = "flexBet${list.length}";
@@ -818,8 +819,109 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
   }
 }
 
-class _ItemWidget extends StatefulWidget {
-  const _ItemWidget({
+class _ScoresItemWidget extends StatefulWidget {
+  const _ScoresItemWidget(
+      this.item,
+    this.lastItem,
+    this.homeTeamInfo,
+    this.awayTeamInfo,
+    this.picksIndexController, {
+    super.key,
+  });
+
+  final GameGuess item;
+  final bool lastItem;
+  final NbaTeamEntity homeTeamInfo;
+  final NbaTeamEntity awayTeamInfo;
+  final PicksIndexController picksIndexController;
+
+  @override
+  State<_ScoresItemWidget> createState() => _ScoresItemWidgetState();
+}
+
+class _ScoresItemWidgetState extends State<_ScoresItemWidget>
+    with SingleTickerProviderStateMixin {
+  late SlidableController slidAbleController;
+
+  late PicksIndexController picksIndexController;
+
+  @override
+  void initState() {
+    super.initState();
+    picksIndexController = widget.picksIndexController;
+    slidAbleController = SlidableController(this);
+    picksIndexController.batchDeleteOpen.listen(_listen);
+  }
+
+  void _listen(value) {
+    if (!mounted) {
+      return;
+    }
+    print('batchDeleteOpen--value:$value');
+    if (value) {
+      slidAbleController.openEndActionPane();
+    } else {
+      slidAbleController.close();
+    }
+  }
+
+  @override
+  void dispose() {
+    slidAbleController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Slidable(
+      controller: slidAbleController,
+      key: ValueKey("${widget.item.scoresEntity.gameId}"),
+      endActionPane: ActionPane(
+          extentRatio: 64 / 375,
+          motion: const ScrollMotion(),
+          children: [
+            InkWell(
+              onTap: () async {
+                if (!Get.find<PicksIndexController>().batchDeleteOpen.value) {
+                  await slidAbleController.close();
+                }
+                widget.item.choiceTeamId.value = 0;
+                Get.find<LeagueController>().deleteOne();
+              },
+              child: Container(
+                width: 64.w,
+                height: 70.w,
+                decoration: BoxDecoration(
+                    color: AppColors.cF2F2F2,
+                    borderRadius:
+                    BorderRadius.horizontal(left: Radius.circular(16.w))),
+                child: IconWidget(
+                  iconWidth: 23.w,
+                  icon: Assets.iconUiIconDelete02, //右滑删除按钮
+                  iconColor: AppColors.c333333,
+                ),
+              ),
+            )
+          ]),
+      child: Container(
+        height: 70.w,
+        margin: EdgeInsets.only(
+            left: 16.w, right: 16.w, bottom: widget.lastItem ? 20.w : 0),
+        decoration: BoxDecoration(
+            color: AppColors.cF2F2F2, borderRadius: BorderRadius.circular(16.w)),
+        padding: EdgeInsets.symmetric(horizontal: 11.w),
+        alignment: FractionalOffset.centerLeft,
+        child: Text(
+          "${widget.homeTeamInfo.shortEname} VS ${widget.awayTeamInfo.shortEname}",
+          style: 16.w5(color: AppColors.c000000),
+        ),
+      ),
+    );
+  }
+}
+
+class _PlayerItemWidget extends StatefulWidget {
+  const _PlayerItemWidget({
     required this.index,
     required this.player,
     required this.choice,
@@ -832,12 +934,12 @@ class _ItemWidget extends StatefulWidget {
   final PicksIndexController picksIndexController;
 
   @override
-  State<_ItemWidget> createState() => _ItemWidgetState();
+  State<_PlayerItemWidget> createState() => _PlayerItemWidgetState();
 }
 
-class _ItemWidgetState extends State<_ItemWidget>
+class _PlayerItemWidgetState extends State<_PlayerItemWidget>
     with SingleTickerProviderStateMixin {
-  late SlidableController slidableController;
+  late SlidableController slidAbleController;
 
   late PicksIndexController picksIndexController;
 
@@ -845,7 +947,7 @@ class _ItemWidgetState extends State<_ItemWidget>
   void initState() {
     super.initState();
     picksIndexController = widget.picksIndexController;
-    slidableController = SlidableController(this);
+    slidAbleController = SlidableController(this);
     picksIndexController.batchDeleteOpen.listen(_listen);
   }
 
@@ -855,15 +957,15 @@ class _ItemWidgetState extends State<_ItemWidget>
     }
     print('batchDeleteOpen--value:$value');
     if (value) {
-      slidableController.openEndActionPane();
+      slidAbleController.openEndActionPane();
     } else {
-      slidableController.close();
+      slidAbleController.close();
     }
   }
 
   @override
   void dispose() {
-    slidableController.dispose();
+    slidAbleController.dispose();
     super.dispose();
   }
 
@@ -873,7 +975,7 @@ class _ItemWidgetState extends State<_ItemWidget>
     var player = widget.player;
     var currentIndex = widget.choice;
     return Slidable(
-      controller: slidableController,
+      controller: slidAbleController,
       key: ValueKey("$index"),
       endActionPane: ActionPane(
           extentRatio: 64 / 375,
@@ -882,7 +984,7 @@ class _ItemWidgetState extends State<_ItemWidget>
             InkWell(
               onTap: () async {
                 if (!Get.find<PicksIndexController>().batchDeleteOpen.value) {
-                  await slidableController.close();
+                  await slidAbleController.close();
                 }
                 player.status = -1;
                 Get.find<PicksIndexController>().deleteChoice();
@@ -950,7 +1052,7 @@ class _ItemWidgetState extends State<_ItemWidget>
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "${player.guessInfo.guessReferenceValue[ParamUtils.getProKey(player.tabStr)] ?? 0}",
+                    "${player.guessInfo.guessReferenceValue[player.tabStr] ?? 0}",
                     style: 18.w7(color: AppColors.c262626, height: 1),
                   ),
                   5.vGap,

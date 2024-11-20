@@ -111,7 +111,9 @@ class _LeagueIndexPageState extends State<LeagueIndexPage>
   Widget _buildView() {
     // tabview 方案
     return Expanded(
-      child: NestedScrollView(
+      child: PageStorage(
+        bucket: PageStorageBucket(),
+        child: NestedScrollView(
           floatHeaderSlivers: true,
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
@@ -120,10 +122,11 @@ class _LeagueIndexPageState extends State<LeagueIndexPage>
           },
           body: TabBarView(
               controller: controller.tabController,
-              children:
-                  controller.getDataTimes().map((e) {
-                    return ScorePage(e);
-                  }).toList())),
+              children: controller.getDataTimes().map((e) {
+                return ScorePage(e);
+              }).toList()),
+        ),
+      ),
     );
   }
 
@@ -233,16 +236,15 @@ class _LeagueIndexPageState extends State<LeagueIndexPage>
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<LeagueController>(
-        builder: (_) {
-          return BlackAppWidget(
-            const UserInfoBar(
-              title: "COMMUNITIES",
-              routeId: GlobalNestedKey.LEAGUES,
-            ),
-            bodyWidget: _buildView(),
-          );
-        });
+    return GetBuilder<LeagueController>(builder: (_) {
+      return BlackAppWidget(
+        const UserInfoBar(
+          title: "COMMUNITIES",
+          routeId: GlobalNestedKey.LEAGUES,
+        ),
+        bodyWidget: _buildView(),
+      );
+    });
   }
 
   @override

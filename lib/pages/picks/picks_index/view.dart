@@ -77,7 +77,8 @@ class PicksIndex extends StatelessWidget {
                 settings: setting,
                 customTransition: HalfSlideRightToLeftTransition(),
                 barrierColor: Colors.transparent,
-                page: () => PlayerDetailPage(
+                page: () =>
+                    PlayerDetailPage(
                       arguments: setting.arguments as PlayerDetailPageArguments,
                     ));
           case RouteNames.mineMineInfo:
@@ -133,211 +134,249 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
           child: Obx(() {
             return Center(
                 child: LoadStatusWidget(
-              loadDataStatus: picksIndexController.loadStatusRx.value,
-            ));
+                  loadDataStatus: picksIndexController.loadStatusRx.value,
+                ));
           }),
         ),
       );
     }
-    return Expanded(child: NestedScrollView(  floatHeaderSlivers: true,
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return <Widget>[
-            SliverPersistentHeader(
-              floating: true,
-              delegate: FixedHeightSliverHeaderDelegate(
-                  child: Container(
-                    color: AppColors.c262626,
-                    height: 109.w,
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            height: floatTitleBarHeight,
-                            color: AppColors.c262626,
-                            padding: EdgeInsets.only(
-                                bottom: 10.w, right: 6.w, left: 16.w, top: 3.w),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex: 204,
-                                  child: InkWell(
-                                    onTap: () => Get.toNamed(RouteNames.picksPickRank,
-                                        id: GlobalNestedKey.PICKS),
-                                    child: Container(
-                                      height: 51.w,
-                                      padding: EdgeInsets.only(
-                                          left: 14.w, right: 24.w, bottom: 6.w),
-                                      margin: EdgeInsets.only(top: 4.w),
-                                      decoration: BoxDecoration(
-                                          color: AppColors.c3B3B3B,
-                                          borderRadius: BorderRadius.circular(9.w)),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              IconWidget(
-                                                  iconWidth: 23.w,
-                                                  icon: Assets
-                                                      .picksUiPicksStatusBarRank),
-                                              16.hGap,
-                                              Text(
-                                                "RANK",
-                                                style: 19.w5(
-                                                    color: AppColors.cFFFFFF,
-                                                    height: 1,
-                                                    fontFamily:
-                                                    FontFamily.fOswaldMedium),
-                                              )
-                                            ],
-                                          ),
-                                          Column(
-                                            mainAxisAlignment: MainAxisAlignment.end,
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                "${picksIndexController.rankInfo.myRank.rank ?? "--"}",
-                                                style: 19.w4(
-                                                    color: AppColors.cFFFFFF,
-                                                    height: 1),
-                                              ),
-                                              7.vGap,
-                                              Text(
-                                                "ME",
-                                                style: 10.w4(
-                                                    color: AppColors.cFF7954,
-                                                    height: 1,
-                                                    fontFamily:
-                                                    FontFamily.fRobotoRegular),
-                                              )
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                9.hGap,
-                                Expanded(
-                                    flex: 130,
-                                    child: Stack(
-                                      children: [
-                                        InkWell(
-                                          onTap: () => Get.toNamed(
-                                              RouteNames.picksPersonalCenter,
-                                              arguments: {
-                                                "teamId": Get.find<HomeController>()
-                                                    .userEntiry
-                                                    .teamLoginInfo
-                                                    ?.team
-                                                    ?.teamId ??
-                                                    0,
-                                                "initTab": 0
-                                              }),
+    return Expanded(
+        child: PageStorage(
+          bucket: PageStorageBucket(),
+          child: NestedScrollView(
+              floatHeaderSlivers: true,
+              headerSliverBuilder:
+                  (BuildContext context, bool innerBoxIsScrolled) {
+                return <Widget>[
+                  SliverPersistentHeader(
+                    floating: true,
+                    delegate: FixedHeightSliverHeaderDelegate(
+                        child: Container(
+                          color: AppColors.c262626,
+                          height: 109.w,
+                          child: Column(
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  height: floatTitleBarHeight,
+                                  color: AppColors.c262626,
+                                  padding: EdgeInsets.only(
+                                      bottom: 10.w,
+                                      right: 6.w,
+                                      left: 16.w,
+                                      top: 3.w),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        flex: 204,
+                                        child: InkWell(
+                                          onTap: () =>
+                                              Get.toNamed(
+                                                  RouteNames.picksPickRank,
+                                                  id: GlobalNestedKey.PICKS),
                                           child: Container(
                                             height: 51.w,
-                                            margin:
-                                            EdgeInsets.only(right: 7.w, top: 4.w),
+                                            padding: EdgeInsets.only(
+                                                left: 14.w,
+                                                right: 24.w,
+                                                bottom: 6.w),
+                                            margin: EdgeInsets.only(top: 4.w),
                                             decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color: AppColors.c666666,
-                                                    width: 1),
+                                                color: AppColors.c3B3B3B,
                                                 borderRadius:
                                                 BorderRadius.circular(9.w)),
                                             child: Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                               children: [
-                                                11.hGap,
-                                                IconWidget(
-                                                    iconWidth: 24.w,
-                                                    icon: Assets
-                                                        .picksUiPicksStatusBarPicks),
-                                                Expanded(
-                                                    child: Center(
-                                                        child: Text(
-                                                          "PICKS",
-                                                          style: 19.w4(
-                                                              color: AppColors.cFFFFFF,
-                                                              height: 1,
-                                                              fontFamily:
-                                                              FontFamily.fOswaldMedium),
-                                                        )))
+                                                Row(
+                                                  children: [
+                                                    IconWidget(
+                                                        iconWidth: 23.w,
+                                                        icon: Assets
+                                                            .picksUiPicksStatusBarRank),
+                                                    16.hGap,
+                                                    Text(
+                                                      "RANK",
+                                                      style: 19.w5(
+                                                          color:
+                                                          AppColors.cFFFFFF,
+                                                          height: 1,
+                                                          fontFamily: FontFamily
+                                                              .fOswaldMedium),
+                                                    )
+                                                  ],
+                                                ),
+                                                Column(
+                                                  mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                                  crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      "${picksIndexController
+                                                          .rankInfo.myRank
+                                                          .rank ?? "--"}",
+                                                      style: 19.w4(
+                                                          color:
+                                                          AppColors.cFFFFFF,
+                                                          height: 1),
+                                                    ),
+                                                    7.vGap,
+                                                    Text(
+                                                      "ME",
+                                                      style: 10.w4(
+                                                          color:
+                                                          AppColors.cFF7954,
+                                                          height: 1,
+                                                          fontFamily: FontFamily
+                                                              .fRobotoRegular),
+                                                    )
+                                                  ],
+                                                )
                                               ],
                                             ),
                                           ),
                                         ),
-                                        Positioned(
-                                            right: 0,
-                                            child: Obx(() {
-                                              var value = picksIndexController
-                                                  .choiceSize.value;
-                                              if (value <= 0) {
-                                                return const SizedBox.shrink();
-                                              }
-                                              return Container(
-                                                height: 16.w,
-                                                width: 16.w,
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                    BorderRadius.circular(8.w),
-                                                    color: AppColors.c000000),
-                                                child: Center(
-                                                  child: Text(
-                                                    "$value",
-                                                    style: 12.w5(
-                                                        color: AppColors.cF37350,
-                                                        height: 1,
-                                                        fontFamily:
-                                                        FontFamily.fRobotoMedium),
+                                      ),
+                                      9.hGap,
+                                      Expanded(
+                                          flex: 130,
+                                          child: Stack(
+                                            children: [
+                                              InkWell(
+                                                onTap: () =>
+                                                    Get.toNamed(
+                                                        RouteNames
+                                                            .picksPersonalCenter,
+                                                        arguments: {
+                                                          "teamId": Get
+                                                              .find<
+                                                              HomeController>()
+                                                              .userEntiry
+                                                              .teamLoginInfo
+                                                              ?.team
+                                                              ?.teamId ??
+                                                              0,
+                                                          "initTab": 0
+                                                        }),
+                                                child: Container(
+                                                  height: 51.w,
+                                                  margin: EdgeInsets.only(
+                                                      right: 7.w, top: 4.w),
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          color:
+                                                          AppColors.c666666,
+                                                          width: 1),
+                                                      borderRadius:
+                                                      BorderRadius.circular(
+                                                          9.w)),
+                                                  child: Row(
+                                                    children: [
+                                                      11.hGap,
+                                                      IconWidget(
+                                                          iconWidth: 24.w,
+                                                          icon: Assets
+                                                              .picksUiPicksStatusBarPicks),
+                                                      Expanded(
+                                                          child: Center(
+                                                              child: Text(
+                                                                "PICKS",
+                                                                style: 19.w4(
+                                                                    color:
+                                                                    AppColors
+                                                                        .cFFFFFF,
+                                                                    height: 1,
+                                                                    fontFamily: FontFamily
+                                                                        .fOswaldMedium),
+                                                              )))
+                                                    ],
                                                   ),
                                                 ),
-                                              );
-                                            }))
-                                      ],
-                                    ))
-                              ],
-                            ),
+                                              ),
+                                              Positioned(
+                                                  right: 0,
+                                                  child: Obx(() {
+                                                    var value =
+                                                        picksIndexController
+                                                            .choiceSize.value;
+                                                    if (value <= 0) {
+                                                      return const SizedBox
+                                                          .shrink();
+                                                    }
+                                                    return Container(
+                                                      height: 16.w,
+                                                      width: 16.w,
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                          BorderRadius
+                                                              .circular(8.w),
+                                                          color:
+                                                          AppColors.c000000),
+                                                      child: Center(
+                                                        child: Text(
+                                                          "$value",
+                                                          style: 12.w5(
+                                                              color: AppColors
+                                                                  .cF37350,
+                                                              height: 1,
+                                                              fontFamily: FontFamily
+                                                                  .fRobotoMedium),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  }))
+                                            ],
+                                          ))
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                alignment: Alignment.bottomCenter,
+                                color: AppColors.c262626,
+                                child: TabBar(
+                                    isScrollable: true,
+                                    tabAlignment: TabAlignment.start,
+                                    labelColor: AppColors.cFFFFFF,
+                                    labelPadding: EdgeInsets.symmetric(
+                                        vertical: 5.w, horizontal: 20.w),
+                                    indicatorPadding: EdgeInsets.only(top: 5.w),
+                                    labelStyle: 16.w5(
+                                        color: AppColors.cFFFFFF,
+                                        fontFamily: FontFamily.fOswaldMedium),
+                                    unselectedLabelColor: AppColors.c666666,
+                                    dividerHeight: 0,
+                                    indicator: UnderlineTabIndicator(
+                                        borderSide: BorderSide(
+                                            color: AppColors.cFF7954,
+                                            width: 3.w),
+                                        insets: EdgeInsets.symmetric(
+                                            horizontal: -20.w)),
+                                    indicatorWeight: 4,
+                                    controller:
+                                    picksIndexController.tabController,
+                                    tabs: picksIndexController
+                                        .guessGamePlayers.keys
+                                        .map((e) {
+                                      return Text(e.replaceAll(",", "+"));
+                                    }).toList()),
+                              )
+                            ],
                           ),
                         ),
-                        Container(
-                          alignment: Alignment.bottomCenter,
-                          color: AppColors.c262626,
-                          child: TabBar(
-                              isScrollable: true,
-                              tabAlignment: TabAlignment.start,
-                              labelColor: AppColors.cFFFFFF,
-                              labelPadding: EdgeInsets.symmetric(
-                                  vertical: 5.w, horizontal: 20.w),
-                              indicatorPadding: EdgeInsets.only(top: 5.w),
-                              labelStyle: 16.w5(
-                                  color: AppColors.cFFFFFF,
-                                  fontFamily: FontFamily.fOswaldMedium),
-                              unselectedLabelColor: AppColors.c666666,
-                              dividerHeight: 0,
-                              indicator: UnderlineTabIndicator(
-                                  borderSide: BorderSide(
-                                      color: AppColors.cFF7954, width: 3.w),
-                                  insets: EdgeInsets.symmetric(horizontal: -20.w)),
-                              indicatorWeight: 4,
-                              controller: picksIndexController.tabController,
-                              tabs: picksIndexController.guessGamePlayers.keys
-                                  .map((e) {
-                                return Text(e.replaceAll(",", "+"));
-                              }).toList()),
-                        )
-                      ],
-                    ),
-                  ),
-                  height: 109.w),
-            )
-          ];
-        }, body: TabBarView(
-            controller: picksIndexController.tabController,
-            children: picksIndexController.guessGamePlayers.keys.map((e) {
-              var list = picksIndexController.guessGamePlayers[e]!;
-              return _TabViewItemPage(list: list);
-            }).toList())));
+                        height: 109.w),
+                  )
+                ];
+              },
+              body: TabBarView(
+                  controller: picksIndexController.tabController,
+                  children: picksIndexController.guessGamePlayers.keys.map((e) {
+                    var list = picksIndexController.guessGamePlayers[e]!;
+                    return _TabViewItemPage(list: list, keyStr: e);
+                  }).toList())),
+        ));
   }
 
   @override
@@ -361,15 +400,17 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
 }
 
 class _TabViewItemPage extends StatefulWidget {
-  const _TabViewItemPage({super.key, required this.list});
+  const _TabViewItemPage({super.key, required this.list, required this.keyStr});
 
   final List<PicksPlayerV2> list;
+  final String keyStr;
 
   @override
   State<_TabViewItemPage> createState() => _TabViewItemPageState();
 }
 
-class _TabViewItemPageState extends State<_TabViewItemPage> with AutomaticKeepAliveClientMixin {
+class _TabViewItemPageState extends State<_TabViewItemPage>
+    with AutomaticKeepAliveClientMixin {
   RefreshController refreshController = RefreshController();
 
   SmartRefresher _buildTabViewItemPage(List<PicksPlayerV2> list) {
@@ -378,7 +419,8 @@ class _TabViewItemPageState extends State<_TabViewItemPage> with AutomaticKeepAl
       onRefresh: () => Get.find<PicksIndexController>().loading(),
       child: ListView.separated(
         itemCount: list.length,
-        physics: const BouncingScrollPhysics(),
+        key: PageStorageKey(widget.keyStr),
+        physics: const ClampingScrollPhysics(),
         itemBuilder: (context, index) {
           var item = list[index];
           bool lastIndex = list.length - 1 == index;
@@ -401,7 +443,10 @@ class _TabViewItemPageState extends State<_TabViewItemPage> with AutomaticKeepAl
   @override
   void initState() {
     super.initState();
-    Get.find<PicksIndexController>().loadStatusRx.listen((v) {
+    Get
+        .find<PicksIndexController>()
+        .loadStatusRx
+        .listen((v) {
       if (v != LoadDataStatus.loading) {
         refreshController.refreshCompleted();
       }
@@ -410,7 +455,11 @@ class _TabViewItemPageState extends State<_TabViewItemPage> with AutomaticKeepAl
 
   @override
   Widget build(BuildContext context) {
-    return _buildTabViewItemPage(widget.list);
+    return GetBuilder<PicksIndexController>(
+      id: PicksIndexController.idGuessList,
+        builder: (logic) {
+      return _buildTabViewItemPage(widget.list);
+    });
   }
 
   @override

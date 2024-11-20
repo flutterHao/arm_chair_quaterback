@@ -26,6 +26,7 @@ class ScorePageController extends GetxController {
 
   @override
   void onInit() {
+    print('ScorePageController----onInit-----');
     super.onInit();
     getDataFromNet([]);
     Get.find<LeagueController>().guessSuccessTabKeys.listen((v){
@@ -41,15 +42,25 @@ class ScorePageController extends GetxController {
     getDataFromNet(List.from(scoreList));
   }
 
-
-
   void getDataFromNet(List<GameGuess> temp) {
+    loadStatus.value = LoadDataStatus.loading;
     var startTime = time.millisecondsSinceEpoch;
     var endTime = MyDateUtils.nextDay(time).millisecondsSinceEpoch;
-    Future.wait([
+    print('scores -------->>> startTime: $startTime -> ${time.day}');
+    var futures = <Future>[
       LeagueApi.getNBAGameSchedules(startTime, endTime),
-    ]).then((result) {
-      var list = result[0];
+      CacheApi.getNBATeamDefine()
+    ];
+    var leagueController = Get.find<LeagueController>();
+    if(leagueController.picksDefineEntity == null){
+      futures.add(CacheApi.getPickDefine());
+    }
+
+    Future.wait(futures).then((result) {
+      var list = result[0] as List<ScoresEntity>;
+      if(futures.length==3){
+        leagueController.picksDefineEntity = result[2] as PicksDefineEntity;
+      }
       scoreList = list.map((e) {
         var gameGuess = GameGuess(e);
         if (temp.isNotEmpty) {
@@ -62,21 +73,19 @@ class ScorePageController extends GetxController {
         return gameGuess;
       }).toList();
       sortScoreList();
-      Get.find<LeagueController>().cacheGameGuessData["${startTime}_$endTime"] = scoreList;
+      leagueController.cacheGameGuessData["${startTime}_$endTime"] = scoreList;
       if (scoreList.isEmpty) {
         loadStatus.value = LoadDataStatus.noData;
       } else {
         loadStatus.value = LoadDataStatus.success;
       }
-      update([idScorePage]);
+      update();
       refreshController.refreshCompleted();
     }, onError: (e) {
       ErrorUtils.toast(e);
       loadStatus.value = LoadDataStatus.error;
     });
   }
-
-  String get idScorePage => "id_score_page_$time";
 
   void sortScoreList() {
     scoreList.sort((a,b) => a.scoresEntity.gameStartTime.compareTo(b.scoresEntity.gameStartTime));

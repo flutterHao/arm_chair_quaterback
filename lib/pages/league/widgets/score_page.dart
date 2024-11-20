@@ -13,6 +13,7 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
+import 'package:arm_chair_quaterback/common/widgets/support_percent_progress_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/league/controller.dart';
@@ -38,43 +39,47 @@ class ScorePage extends StatefulWidget {
 
 class _ScorePageState extends State<ScorePage>
     with AutomaticKeepAliveClientMixin {
-
-
   late ScorePageController controller;
 
   @override
   Widget build(BuildContext context) {
+    controller = Get.put(
+      ScorePageController(widget.time),
+      tag: widget.time.millisecondsSinceEpoch.toString(),
+    );
     return GetBuilder<ScorePageController>(
-      init: controller = ScorePageController(widget.time),
+        init: controller,
         tag: widget.time.millisecondsSinceEpoch.toString(),
-        id: controller.idScorePage,
         builder: (_) {
-          print('tttt:${controller.scoreList}');
           return SmartRefresher(
               controller: controller.refreshController,
               onRefresh: controller.loading,
-              child: controller.scoreList.isEmpty ? Center(
-                child: Obx(() {
-                  return LoadStatusWidget(
-                    loadDataStatus: controller.loadStatus.value,
-                  );
-                }),
-              ) : ListView.separated(
-                itemCount: controller.scoreList.length,
-                physics: const BouncingScrollPhysics(),
-                itemBuilder: (context, index) {
-                  bool lastIndex = index == controller.scoreList.length - 1;
-                  var item = controller.scoreList[index];
-                  return Container(
-                      margin: EdgeInsets.only(
-                          top: index == 0 ? 9.w : 0,
-                          bottom: lastIndex ? 20.w : 0),
-                      child: _ItemWidget(gameGuess: item));
-                },
-                separatorBuilder: (BuildContext context, int index) {
-                  return 9.vGap;
-                },
-              ));
+              child: controller.scoreList.isEmpty
+                  ? Center(
+                      child: Obx(() {
+                        return LoadStatusWidget(
+                          loadDataStatus: controller.loadStatus.value,
+                        );
+                      }),
+                    )
+                  : ListView.separated(
+                      itemCount: controller.scoreList.length,
+                      key: PageStorageKey(widget.time.millisecondsSinceEpoch.toString()),
+                      physics: const BouncingScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        bool lastIndex =
+                            index == controller.scoreList.length - 1;
+                        var item = controller.scoreList[index];
+                        return Container(
+                            margin: EdgeInsets.only(
+                                top: index == 0 ? 9.w : 0,
+                                bottom: lastIndex ? 20.w : 0),
+                            child: _ItemWidget(gameGuess: item));
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return 9.vGap;
+                      },
+                    ));
         });
   }
 
@@ -103,10 +108,7 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    Get
-        .find<HomeController>()
-        .tabIndex
-        .listen((value) {
+    Get.find<HomeController>().tabIndex.listen((value) {
       if (value == 1) {
         setGameStartTimeStr();
       }
@@ -122,10 +124,7 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    var value = Get
-        .find<HomeController>()
-        .tabIndex
-        .value;
+    var value = Get.find<HomeController>().tabIndex.value;
     if (state == AppLifecycleState.resumed && value == 1) {
       setGameStartTimeStr();
     }
@@ -139,9 +138,8 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
     if (lastTimeMs <= 15 * 60 * 1000 && lastTimeMs > 0) {
       //距离比赛开始时间小于15分钟开始倒计时
       timer?.cancel();
-      gameStartTimeStr.value = MyDateUtils.formatDate(
-          MyDateUtils.getDateTimeByMs(lastTimeMs),
-          format: DateFormats.M_S);
+      gameStartTimeStr.value =
+          "Coming ${MyDateUtils.formatDate(MyDateUtils.getDateTimeByMs(lastTimeMs), format: DateFormats.M_S)}";
       timer = Timer.periodic(const Duration(seconds: 1), (t) {
         var nowDateMs = MyDateUtils.getNowDateMs();
         var gameStart = MyDateUtils.getDateTimeByMs(item.gameStartTime);
@@ -149,28 +147,21 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
         if (lastTimeMs == 0) {
           t.cancel();
           gameStartTimeStr.value =
-          "Today ${MyDateUtils.formatHM_AM(
-              MyDateUtils.getDateTimeByMs(item.gameStartTime))}";
+              "Today ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(item.gameStartTime))}";
         }
         gameStartTimeStr.value =
-        "Coming ${(lastTimeMs / 1000 ~/ 60).toStringAsFixed(0).padLeft(
-            2, "0")}:${(lastTimeMs / 1000 % 60).toStringAsFixed(0).padLeft(
-            2, "0")}";
+            "Coming ${MyDateUtils.formatDate(MyDateUtils.getDateTimeByMs(lastTimeMs), format: DateFormats.M_S)}";
       });
     } else if (MyDateUtils.isToday(item.gameStartTime)) {
       gameStartTimeStr.value =
-      "Today ${MyDateUtils.formatHM_AM(
-          MyDateUtils.getDateTimeByMs(item.gameStartTime))}";
+          "Today ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(item.gameStartTime))}";
     } else if (MyDateUtils.isTomorrow(MyDateUtils.getNowDateTime(),
         MyDateUtils.getDateTimeByMs(item.gameStartTime))) {
       gameStartTimeStr.value =
-      "Tomorrow ${MyDateUtils.formatHM_AM(
-          MyDateUtils.getDateTimeByMs(item.gameStartTime))}";
+          "Tomorrow ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(item.gameStartTime))}";
     } else {
       gameStartTimeStr.value =
-      "${MyDateUtils.formatDate(MyDateUtils.getDateTimeByMs(item.gameStartTime),
-          format: DateFormats.PARAM_M_D)} ${MyDateUtils.formatHM_AM(
-          MyDateUtils.getDateTimeByMs(item.gameStartTime))}";
+          "${MyDateUtils.formatDate(MyDateUtils.getDateTimeByMs(item.gameStartTime), format: DateFormats.PARAM_M_D)} ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(item.gameStartTime))}";
     }
   }
 
@@ -194,11 +185,7 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
               children: [
                 18.vGap,
                 Text(
-                  "${Utils
-                      .getTeamInfo(item.homeTeamId)
-                      .shortEname} @ ${Utils
-                      .getTeamInfo(item.awayTeamId)
-                      .shortEname}",
+                  "${Utils.getTeamInfo(item.homeTeamId).shortEname} @ ${Utils.getTeamInfo(item.awayTeamId).shortEname}",
                   style: 24.w5(
                       color: AppColors.c000000,
                       height: 1,
@@ -328,8 +315,8 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
                         item.status == 0
                             ? ""
                             : item.status == 1
-                            ? "In the game"
-                            : "FINAL",
+                                ? "In the game"
+                                : "FINAL",
                         style: 12.w4(
                             color: item.status == 2
                                 ? AppColors.c000000
@@ -370,15 +357,15 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
                       5.hGap,
                       Expanded(
                           child: Text(
-                            item.guessTopReviews?.context ??
-                                "Add a comment about this stake about",
-                            style: 14.w4(
-                              color: AppColors.c4D4D4D,
-                              height: 1,
-                              fontFamily: FontFamily.fRobotoRegular,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          )),
+                        item.guessTopReviews?.context ??
+                            "Add a comment about this stake about",
+                        style: 14.w4(
+                          color: AppColors.c4D4D4D,
+                          height: 1,
+                          fontFamily: FontFamily.fRobotoRegular,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      )),
                       9.hGap,
                       IconWidget(
                           iconWidth: 18.w, icon: Assets.iconUiIconJetton),
@@ -420,20 +407,18 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
     );
   }
 
-  String getChip() =>
-      Utils.formatChip((item.awayTeamWins + item.homeTeamWins) *
-          int.parse(
-              Get
-                  .find<LeagueController>()
-                  .picksDefineEntity
-                  ?.betCost ?? "0"));
+  String getChip() => Utils.formatChip((item.awayTeamWins + item.homeTeamWins) *
+      int.parse(
+          Get.find<LeagueController>().picksDefineEntity?.betCost ?? "0"));
 
   Widget _buildGuess() {
     var nowDateTime = MyDateUtils.getNowDateTime();
     var nextDay = MyDateUtils.nextDay(nowDateTime);
-    var dayStartTimeMS = MyDateUtils.getDayStartTimeMS(MyDateUtils.nextDay(nextDay));
+    var dayStartTimeMS =
+        MyDateUtils.getDayStartTimeMS(MyDateUtils.nextDay(nextDay));
+
     ///只能猜今明两天的赛程
-    if(item.gameStartTime>= dayStartTimeMS){
+    if (item.gameStartTime >= dayStartTimeMS) {
       return const SizedBox.shrink();
     }
     var count = item.homeTeamWins + item.awayTeamWins;
@@ -513,31 +498,8 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
             ),
             3.hGap,
             Expanded(
-                child: Row(
-                  children: [
-                    Expanded(
-                        flex: max(2, homePercent),
-                        child: Container(
-                          height: 18.w,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                              color: AppColors.c000000,
-                              borderRadius: BorderRadius.horizontal(
-                                  left: Radius.circular(9.w))),
-                        )),
-                    2.hGap,
-                    Expanded(
-                        flex: max(2, 100 - homePercent),
-                        child: Container(
-                          height: 18.w,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                              color: AppColors.cB3B3B3,
-                              borderRadius: BorderRadius.horizontal(
-                                  right: Radius.circular(9.w))),
-                        )),
-                  ],
-                )),
+                child: SupportPercentProgressWidget(
+                    leftPercent: homePercent, rightPercent: 100 - homePercent)),
             3.hGap,
             Text(
               "${100 - homePercent}%",
@@ -569,28 +531,26 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
           decoration: BoxDecoration(
               color: item.isGuess != 0
                   ? isGuessed
-                  ? AppColors.c000000
-                  : AppColors.cEEEEEE
+                      ? AppColors.c000000
+                      : AppColors.cEEEEEE
                   : isChoice
-                  ? AppColors.c000000
-                  : AppColors.cTransparent,
+                      ? AppColors.c000000
+                      : AppColors.cTransparent,
               borderRadius: BorderRadius.circular(9.w),
               border: Border.all(color: AppColors.c666666, width: 1)),
           child: Stack(
             alignment: Alignment.center,
             children: [
               Text(
-                "${Utils
-                    .getTeamInfo(teamId)
-                    .shortEname} WIN",
+                "${Utils.getTeamInfo(teamId).shortEname} WIN",
                 style: 19.w5(
                     color: item.isGuess != 0
                         ? isGuessed
-                        ? AppColors.cFFFFFF
-                        : AppColors.ccccccc
+                            ? AppColors.cFFFFFF
+                            : AppColors.ccccccc
                         : isChoice
-                        ? AppColors.cFFFFFF
-                        : AppColors.c000000,
+                            ? AppColors.cFFFFFF
+                            : AppColors.c000000,
                     height: 1,
                     fontFamily: FontFamily.fOswaldMedium),
               ),
@@ -621,7 +581,7 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
   String formatDate() {
     var gameStartTime = MyDateUtils.getDateTimeByMs(item.gameStartTime);
     var formatDate =
-    MyDateUtils.formatDate(gameStartTime, format: DateFormats.PARAM_M_D);
+        MyDateUtils.formatDate(gameStartTime, format: DateFormats.PARAM_M_D);
     var formatHmAm = MyDateUtils.formatHM_AM(gameStartTime);
     if (MyDateUtils.isToday(item.gameStartTime)) {
       return "Today $formatHmAm";
