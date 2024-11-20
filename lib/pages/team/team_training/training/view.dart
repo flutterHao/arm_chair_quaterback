@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-11 15:57:44
- * @LastEditTime: 2024-11-19 21:51:10
+ * @LastEditTime: 2024-11-20 15:01:31
  */
 
 import 'dart:math';
@@ -21,7 +21,6 @@ import 'package:arm_chair_quaterback/pages/team/team_index/widgets/progress_pain
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/add_ball_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/player_slot_widget.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/slot_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -326,27 +325,169 @@ class TrainingPage extends GetView<TrainingController> {
                   //   left: -0.w,
                   //   child: PlayerSrollerView(),
                   // ),
-
-                  ///slot
                   Positioned(
-                    top: 140.w,
-                    child: SlotMachine(),
+                    top: 130.w,
+                    child: Container(
+                      width: 375.w,
+                      height: 80.w,
+                      padding: EdgeInsets.symmetric(horizontal: 20.w),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: List.generate(6, (index) {
+                          return Expanded(
+                            child: Container(
+                                alignment: Alignment.center,
+                                child: AnimatedBuilder(
+                                    animation: controller.slotsAnimlList[index],
+                                    builder: (context, child) {
+                                      double v = controller
+                                          .sizeAnimations[index].value;
+                                      return Container(
+                                          width: 50.w * (2 - v),
+                                          height: 68.w * v,
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(9.w),
+                                          ),
+                                          child: Stack(
+                                            children: [
+                                              SizeTransition(
+                                                sizeFactor: controller
+                                                    .sizeAnimations[index],
+                                                child: ListView.builder(
+                                                  reverse: true,
+                                                  // itemExtent: 68.w,
+                                                  physics:
+                                                      const NeverScrollableScrollPhysics(),
+                                                  padding:
+                                                      const EdgeInsets.all(0),
+                                                  controller: controller
+                                                      .scrollerCtrlList[index],
+                                                  itemCount: controller
+                                                          .propList.length *
+                                                      10,
+                                                  itemBuilder:
+                                                      (context, itemIndex) {
+                                                    int realIndex = itemIndex %
+                                                        controller
+                                                            .propList.length;
+                                                    double scale = controller
+                                                        .scaleAnimations[index]
+                                                        .value;
+                                                    return SizedBox(
+                                                        width: 50.w,
+                                                        height: 68.w,
+                                                        child: IconWidget(
+                                                          iconWidth:
+                                                              30.w * scale,
+                                                          icon: Utils.getPropIconUrl(
+                                                              controller
+                                                                      .propList[
+                                                                  realIndex]),
+                                                          iconColor:
+                                                              Colors.black,
+                                                        ));
+                                                  },
+                                                ),
+                                              ),
+                                              Obx(() {
+                                                return Visibility(
+                                                  visible: !controller
+                                                      .slotCard[index].value,
+                                                  child: Container(
+                                                    width: 50.w,
+                                                    height: 68.w,
+                                                    alignment: Alignment.center,
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              9.w),
+                                                    ),
+                                                    child: IconWidget(
+                                                      iconWidth: 16.w,
+                                                      icon: Assets
+                                                          .managerUiManagerTrainingUnknown,
+                                                      iconColor: Colors.black
+                                                          .withOpacity(0.2),
+                                                    ),
+                                                  ),
+                                                );
+                                              })
+                                            ],
+                                          ));
+                                    })),
+                          );
+                        }),
+                      ),
+                    ),
                   ),
-                  // if (!controller.showCash.value)
-                  // Visibility(
-                  //     visible: controller.showCash.value,
-                  //     child: Stack(
-                  //       children: [
-                  //         ...List.generate(6, (index) {
-                  //           double x = 50.w * index + 50.w;
-                  //           return CoinAnimation(
-                  //             fromPosition: Offset(x, 140.w), // 从 slot 位置开始
-                  //             toPosition: Offset(165.w, 70.w), // 到金钱奖励组件的位置
-                  //             coinSize: 20.0,
-                  //           );
-                  //         })
-                  //       ],
-                  //     )),
+
+                  Positioned(
+                    top: 230.w,
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              "COST:",
+                              style: 16.w7(
+                                  color: AppColors.c262626,
+                                  fontFamily: FontFamily.fOswaldMedium,
+                                  height: 0.7),
+                            ),
+                            7.hGap,
+                            IconWidget(
+                                iconWidth: 21.w,
+                                icon: Assets.iconUiIconBasketball),
+                            4.hGap,
+                            Text(
+                              "1",
+                              style: 16.w7(color: AppColors.c262626),
+                            )
+                          ],
+                        ),
+                        5.vGap,
+                        MtInkwell(
+                          // vibrate: true,
+                          onTap: () => controller.startSlot(),
+                          child: Container(
+                            width: 188.w,
+                            height: 41.w,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                color: AppColors.c000000,
+                                borderRadius: BorderRadius.circular(9.w)),
+                            child: Text(
+                              "Start",
+                              style: 19.w4(
+                                color: AppColors.cFFFFFF,
+                                fontFamily: FontFamily.fOswaldMedium,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  if (!controller.showCash.value)
+                    Visibility(
+                        visible: controller.showCash.value,
+                        child: Stack(
+                          children: [
+                            ...List.generate(6, (index) {
+                              double x = 50.w * index + 50.w;
+                              return CoinAnimation(
+                                fromPosition: Offset(x, 140.w), // 从 slot 位置开始
+                                toPosition: Offset(165.w, 70.w), // 到金钱奖励组件的位置
+                                coinSize: 20.0,
+                              );
+                            })
+                          ],
+                        )),
                 ],
               ),
             )

@@ -12,7 +12,6 @@ import 'package:arm_chair_quaterback/pages/home/index.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -41,6 +40,10 @@ class TrainingController extends GetxController
   final List<ScrollController> scrollerCtrlList =
       List.generate(6, (_) => ScrollController());
 
+  List<AnimationController> slotsAnimlList = [];
+  List<Animation<double>> sizeAnimations = [];
+  List<Animation<double>> scaleAnimations = [];
+
   final List<int> propList = [301, 302, 303, 304, 305, 306];
 
   Map<int, int> proCountMap = {
@@ -62,36 +65,62 @@ class TrainingController extends GetxController
   void onInit() {
     super.onInit();
     playerScrollCtrl = ScrollController();
-    for (var controller in scrollerCtrlList) {
-      controller.addListener(_onScroll);
-    }
+    slotsAnimlList = List.generate(6, (_) {
+      return AnimationController(
+        duration: const Duration(milliseconds: 800),
+        vsync: this,
+      );
+    });
+    sizeAnimations = List.generate(6, (index) {
+      return TweenSequence([
+        TweenSequenceItem<double>(tween: Tween(begin: 1, end: 0.9), weight: 1),
+        TweenSequenceItem<double>(
+            tween: Tween(begin: 0.9, end: 0.9), weight: 40),
+        TweenSequenceItem<double>(
+            tween: Tween(begin: 0.9, end: 0.8), weight: 10),
+        TweenSequenceItem<double>(
+            tween: Tween(begin: 0.8, end: 1.0), weight: 10),
+        TweenSequenceItem<double>(tween: Tween(begin: 1, end: 1.1), weight: 10),
+        TweenSequenceItem<double>(
+            tween: Tween(begin: 1.1, end: 1.0), weight: 10),
+      ]).animate(CurvedAnimation(
+          parent: slotsAnimlList[index], curve: Curves.easeInOut));
+    });
+    scaleAnimations = List.generate(6, (index) {
+      return TweenSequence([
+        TweenSequenceItem<double>(tween: Tween(begin: 1, end: 1), weight: 60),
+        TweenSequenceItem<double>(tween: Tween(begin: 1, end: 1.5), weight: 10),
+        TweenSequenceItem<double>(tween: Tween(begin: 1.5, end: 1), weight: 10),
+      ]).animate(CurvedAnimation(
+          parent: slotsAnimlList[index], curve: Curves.easeInOut));
+    });
   }
 
-  void _onScroll() {
-    for (int i = 0; i < scrollerCtrlList.length; i++) {
-      final controller = scrollerCtrlList[i];
-      if (controller.positions.isNotEmpty) {
-        final position = controller.position;
-        if (position.userScrollDirection == ScrollDirection.forward) {
-          // 用户正在向上滚动
-          print('Scrolling forward in slot $i');
-        } else if (position.userScrollDirection == ScrollDirection.reverse) {
-          // 用户正在向下滚动
-          print('Scrolling reverse in slot $i');
-        } else if (position.userScrollDirection == ScrollDirection.idle) {
-          // 滚动停止
-          print('Scrolling idle in slot $i');
-          if (position.pixels == position.maxScrollExtent) {
-            // 滚动到底部
-            print('Scrolled to the bottom in slot $i');
-          } else if (position.pixels == 0) {
-            // 滚动到顶部
-            print('Scrolled to the top in slot $i');
-          }
-        }
-      }
-    }
-  }
+  // void _onScroll() {
+  //   for (int i = 0; i < scrollerCtrlList.length; i++) {
+  //     final controller = scrollerCtrlList[i];
+  //     if (controller.positions.isNotEmpty) {
+  //       final position = controller.position;
+  //       if (position.userScrollDirection == ScrollDirection.forward) {
+  //         // 用户正在向上滚动
+  //         print('Scrolling forward in slot $i');
+  //       } else if (position.userScrollDirection == ScrollDirection.reverse) {
+  //         // 用户正在向下滚动
+  //         print('Scrolling reverse in slot $i');
+  //       } else if (position.userScrollDirection == ScrollDirection.idle) {
+  //         // 滚动停止
+  //         print('Scrolling idle in slot $i');
+  //         if (position.pixels == position.maxScrollExtent) {
+  //           // 滚动到底部
+  //           print('Scrolled to the bottom in slot $i');
+  //         } else if (position.pixels == 0) {
+  //           // 滚动到顶部
+  //           print('Scrolled to the top in slot $i');
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
 
   /// 在 onInit() 之后调用 1 帧。这是进入的理想场所
   @override
@@ -174,14 +203,10 @@ class TrainingController extends GetxController
   void startSlot() async {
     final teamIndexCtrl = Get.find<TeamIndexController>();
     teamIndexCtrl.scroToSlot();
-    // trainingInfo = await TeamApi.playerTraining(playerList[0].uuid);
-    // update(["training_page"]);
-    trainingInfo.propArray.clear();
+    trainingInfo = await TeamApi.playerTraining(playerList[0].uuid);
     for (int i = 0; i < slotCard.length; i++) {
       slotCard[i].value = false;
       scrollerCtrlList[i].jumpTo(0);
-      int prop = random.nextInt(propList.length);
-      trainingInfo.propArray.add(prop);
     }
 
     for (int i = 0; i < scrollerCtrlList.length; i++) {
@@ -193,10 +218,11 @@ class TrainingController extends GetxController
 
   void _scrollColumn(int index) {
     slotCard[index].value = true;
+    int propIndex = propList.indexOf(trainingInfo.propArray[index]);
 
     ///在获奖的结果基础上旋转两周
-    double offset =
-        68.w * (trainingInfo.propArray[index] + propList.length * 2);
+    double offset = 68.w * (propIndex + propList.length * 3);
+    slotsAnimlList[index].forward();
     scrollerCtrlList[index]
         .animateTo(offset,
             duration: const Duration(milliseconds: 600),
@@ -210,8 +236,8 @@ class TrainingController extends GetxController
           showCash.value = false;
           showBall.value = false;
           showPlayer.value = false;
-          _animateResult();
           reset();
+          update(["training_page"]);
         });
       }
     });
@@ -221,6 +247,9 @@ class TrainingController extends GetxController
     showCash.value = false;
     showBall.value = false;
     showPlayer.value = false;
+    for (var element in slotsAnimlList) {
+      element.reset();
+    }
   }
 
   void _animateResult() {
@@ -345,4 +374,32 @@ class TrainingController extends GetxController
 
     return map;
   }
+
+//   ///返回大于3的元素
+//   List<int> findConsecutiveElements(List<int> slots) {
+//     List<int> result = [];
+//     if (slots.isEmpty) return result;
+
+//     int currentElement = slots[0];
+//     int count = 1;
+
+//     for (int i = 1; i < slots.length; i++) {
+//       if (slots[i] == currentElement) {
+//         count++;
+//       } else {
+//         if (count >= 3) {
+//           result.add(currentElement);
+//         }
+//         currentElement = slots[i];
+//         count = 1;
+//       }
+//     }
+
+//     // 检查最后一个元素的连续出现次数
+//     if (count >= 3) {
+//       result.add(currentElement);
+//     }
+
+//     return result;
+//   }
 }

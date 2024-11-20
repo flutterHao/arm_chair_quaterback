@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 17:22:13
- * @LastEditTime: 2024-11-19 22:47:28
+ * @LastEditTime: 2024-11-20 11:53:12
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
@@ -162,8 +162,10 @@ class MyTeamWidget extends StatelessWidget {
               onTap: () {
                 // Get.toNamed(RouteNames.teamMemberPage,
                 //     id: GlobalNestedKey.TEAM);
-                showBottomSheet(
+                showModalBottomSheet(
+                    barrierColor: Colors.transparent,
                     backgroundColor: Colors.transparent,
+                    isScrollControlled: true,
                     context: context,
                     builder: (context) {
                       return VerticalDragBackWidget(child: TeamMenberView());

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 16:18:58
- * @LastEditTime: 2024-11-19 22:51:33
+ * @LastEditTime: 2024-11-20 11:49:36
  */
 /*
  * @Description: 
@@ -85,6 +85,7 @@ class TeamMenberView extends StatelessWidget {
                 child: InkWell(
                   onTap: () {
                     // Get.find<TeamIndexController>().pageOnTap();
+                    Navigator.pop(context);
                   },
                   child: Padding(
                     padding: EdgeInsets.all(10.w),

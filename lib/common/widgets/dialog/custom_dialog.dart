@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/comfirm_button.dart';
 import 'package:flutter/material.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -9,7 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
  * @Description: 自定义弹窗
  * @Author: lihonghao
  * @Date: 2024-09-28 15:59:52
- * @LastEditTime: 2024-10-28 17:04:10
+ * @LastEditTime: 2024-11-20 11:01:01
  */
 class CustomDialog extends StatelessWidget {
   const CustomDialog(
@@ -43,7 +44,9 @@ class CustomDialog extends StatelessWidget {
                 child: Text(
                   title,
                   style: 52.w7(
-                      color: backgroudColor ?? AppColors.cFF7954, height: 1),
+                      color: backgroudColor ?? AppColors.cFF7954,
+                      height: 1,
+                      fontFamily: FontFamily.fRobotoMedium),
                 )),
             Container(
               height: 93.w,

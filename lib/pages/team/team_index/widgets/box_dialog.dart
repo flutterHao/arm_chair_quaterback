@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 14:09:29
- * @LastEditTime: 2024-11-14 14:46:29
+ * @LastEditTime: 2024-11-20 10:58:44
  */
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -36,32 +36,68 @@ class BoxDialog extends StatelessWidget {
                       "Award",
                       style: 14.w4(color: AppColors.c262626),
                     )),
+                10.vGap,
                 Container(
                   margin: EdgeInsets.symmetric(vertical: 10.w),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: controller.awardList.map((e) {
-                      return Container(
-                        margin: EdgeInsets.all(4.w),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            e.type == 2
-                                ? ImageWidget(
-                                    url: Utils.getPlayUrl(e.id),
-                                    width: 64.w,
-                                  )
-                                : Image.asset(Utils.getPropIconUrl(e.id)),
-                            10.hGap,
-                            Text(
-                              "x ${e.num}",
-                              style: 14.w4(color: AppColors.c262626),
-                            )
-                          ],
-                        ),
-                      );
-                    }).toList(),
-                  ),
+                  child: controller.awardList.isNotEmpty
+                      ? Container(
+                          margin: EdgeInsets.all(4.w),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              // e.type == 2
+                              //     ? ImageWidget(
+                              //         url: Utils.getPlayUrl(e.id),
+                              //         width: 64.w,
+                              //       )
+                              //     : Image.asset(
+                              //         Utils.getPropIconUrl(e.id),
+                              //         width: 40.w,
+                              //       ),
+                              Image.asset(
+                                Assets.picksUiPropsMoeny,
+                                width: 60.w,
+                              ),
+                              10.hGap,
+                              Text(
+                                "x ${Utils.formatMoney(controller.awardList.first.num)}",
+                                style: 14.w4(color: AppColors.c262626),
+                              )
+                            ],
+                          ),
+                        )
+                      : Container(),
+                  // child: Column(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: controller.awardList.map((e) {
+                  //     return Container(
+                  //       margin: EdgeInsets.all(4.w),
+                  //       child: Row(
+                  //         mainAxisAlignment: MainAxisAlignment.center,
+                  //         children: [
+                  //           // e.type == 2
+                  //           //     ? ImageWidget(
+                  //           //         url: Utils.getPlayUrl(e.id),
+                  //           //         width: 64.w,
+                  //           //       )
+                  //           //     : Image.asset(
+                  //           //         Utils.getPropIconUrl(e.id),
+                  //           //         width: 40.w,
+                  //           //       ),
+                  //           Image.asset(
+                  //             Assets.picksUiPropsMoeny,
+                  //             width: 60.w,
+                  //           ),
+                  //           10.hGap,
+                  //           Text(
+                  //             "x ${Utils.formatMoney(e.num)}",
+                  //             style: 14.w4(color: AppColors.c262626),
+                  //           )
+                  //         ],
+                  //       ),
+                  //     );
+                  //   }).toList(),
+                  // ),
                 ),
               ],
             ),
