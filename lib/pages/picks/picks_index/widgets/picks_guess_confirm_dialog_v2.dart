@@ -42,7 +42,8 @@ class PicksGuessConfirmDialogV2 extends StatefulWidget {
 class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
   var modelCurrentIndex = 0.obs;
 
-  double maxHeight = 750.h, minHeight = 620.h;
+  double maxHeight = 750.h,
+      minHeight = 620.h;
   double height = 620.h;
 
   ScrollController scrollController = ScrollController();
@@ -66,7 +67,8 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
         scrollController.position.isScrollingNotifier
             .addListener(listener = () {
           print(
-              'scrollController.position.isScrollingNotifier.value:${scrollController.position.isScrollingNotifier.value}');
+              'scrollController.position.isScrollingNotifier.value:${scrollController
+                  .position.isScrollingNotifier.value}');
           if (scrollController.position.isScrollingNotifier.value) {
             startPixels = scrollController.position.pixels;
           } else {
@@ -112,7 +114,8 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
       print('---------:${offsetY.value}');
       print('height:$height , $maxHeight');
       print(
-          'startPixels: $startPixels , ${scrollController.position.minScrollExtent}');
+          'startPixels: $startPixels , ${scrollController.position
+              .minScrollExtent}');
       if (height >= maxHeight &&
           startPixels != scrollController.position.minScrollExtent) {
         return;
@@ -127,8 +130,8 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
       height = _height < minHeight
           ? minHeight
           : _height > maxHeight
-              ? maxHeight
-              : _height;
+          ? maxHeight
+          : _height;
     }
 
     onVerticalDragEnd(detail) {
@@ -138,8 +141,8 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
       height = _height < minHeight
           ? minHeight
           : _height > maxHeight
-              ? maxHeight
-              : _height;
+          ? maxHeight
+          : _height;
     }
 
     return SizedBox(
@@ -148,141 +151,152 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
       child: GetBuilder<PicksIndexController>(
           id: PicksIndexController.idGuessConfirmDialog,
           builder: (_) {
-            var guessPlayerList = picksIndexController.getChoiceGuessPlayers();
-            var guessGameList = leagueController.getAllChoiceData();
-            List list = [...guessGameList, ...guessPlayerList];
-            modelCurrentIndex.value = 1;
-            var bottom = _buildBottom(context, list);
-            return Stack(
-              children: [
-                Column(
-                  children: [
-                    Expanded(
-                        child: InkWell(
-                      onTap: () => Navigator.pop(context),
-                      child: Container(
-                        color: AppColors.cTransparent,
-                      ),
-                    )),
-                    RawGestureDetector(
-                      gestures: {
-                        CustomDragGestureRecognizer:
-                            GestureRecognizerFactoryWithHandlers<
-                                CustomDragGestureRecognizer>(
-                          () => CustomDragGestureRecognizer(),
-                          (DragGestureRecognizer detector) {
-                            detector
-                              ..onDown = onVerticalDragDown
-                              ..onStart = onVerticalDragStart
-                              ..onUpdate = onVerticalDragUpdate
-                              ..onEnd = onVerticalDragEnd
-                              ..onCancel = onVerticalDragCancel();
-                          },
-                        )
-                      },
-                      child: Obx(() {
-                        var h = height + offsetY.value;
-                        h = min(h, maxHeight);
-                        h = max(h, minHeight);
+        return GetBuilder<LeagueController>(
+          id: LeagueController.idGameGuessConfirmDialog,
+            builder: (_) {
+              var guessPlayerList = picksIndexController
+                  .getChoiceGuessPlayers();
+              var guessGameList = leagueController.getAllChoiceData();
+              List list = [...guessGameList, ...guessPlayerList];
+              modelCurrentIndex.value = 1;
+              var bottom = _buildBottom(context, list);
+              return Stack(
+                children: [
+                  Column(
+                    children: [
+                      Expanded(
+                          child: InkWell(
+                            onTap: () => Navigator.pop(context),
+                            child: Container(
+                              color: AppColors.cTransparent,
+                            ),
+                          )),
+                      RawGestureDetector(
+                        gestures: {
+                          CustomDragGestureRecognizer:
+                          GestureRecognizerFactoryWithHandlers<
+                              CustomDragGestureRecognizer>(
+                                () => CustomDragGestureRecognizer(),
+                                (DragGestureRecognizer detector) {
+                              detector
+                                ..onDown = onVerticalDragDown
+                                ..onStart = onVerticalDragStart
+                                ..onUpdate = onVerticalDragUpdate
+                                ..onEnd = onVerticalDragEnd
+                                ..onCancel = onVerticalDragCancel();
+                            },
+                          )
+                        },
+                        child: Obx(() {
+                          var h = height + offsetY.value;
+                          h = min(h, maxHeight);
+                          h = max(h, minHeight);
 
-                        return SizedBox(
-                          height: h,
-                          child: DialogBackground(
-                              frontColor: AppColors.cE6E6E6,
-                              child: Column(
-                                children: [
-                                  Column(
-                                    children: [
-                                      12.vGap,
-                                      Container(
-                                        decoration: BoxDecoration(
-                                            color: AppColors.ccccccc,
-                                            borderRadius:
-                                                BorderRadius.circular(2.w)),
-                                        height: 4.w,
-                                        width: 64.w,
-                                      ),
-                                      24.vGap,
-                                      Container(
-                                          margin: EdgeInsets.symmetric(
-                                              horizontal: 16.w),
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                "Picks Line Up",
-                                                style: 16.w7(
-                                                    color: AppColors.c262626,
-                                                    height: 1),
-                                              ),
-                                            ],
-                                          )),
-                                      14.vGap,
-                                    ],
-                                  ),
-                                  Expanded(
-                                      child: ListView.separated(
-                                    itemCount: list.length,
-                                    controller: scrollController,
-                                    physics: OneBoundaryScrollPhysics(
-                                        scrollController: scrollController),
-                                    itemBuilder: (context, index) {
-                                      var item = list[index];
-                                      bool lastItem = index == list.length - 1;
-                                      if (item is GameGuess) {
-                                        var homeTeamInfo = Utils.getTeamInfo(
-                                            item.scoresEntity.homeTeamId);
-                                        var awayTeamInfo = Utils.getTeamInfo(
-                                            item.scoresEntity.awayTeamId);
-                                        return _ScoresItemWidget(item,lastItem,
-                                            homeTeamInfo, awayTeamInfo,picksIndexController);
-                                      }
-                                      var player = list[index];
-                                      int choice = player.status;
-                                      return Container(
-                                        margin: EdgeInsets.only(
-                                            bottom: lastItem ? 20.w : 0),
-                                        child: _PlayerItemWidget(
-                                          index: index,
-                                          choice: choice,
-                                          player: player,
-                                          picksIndexController:
-                                              picksIndexController,
+                          return SizedBox(
+                            height: h,
+                            child: DialogBackground(
+                                frontColor: AppColors.cE6E6E6,
+                                child: Column(
+                                  children: [
+                                    Column(
+                                      children: [
+                                        12.vGap,
+                                        Container(
+                                          decoration: BoxDecoration(
+                                              color: AppColors.ccccccc,
+                                              borderRadius:
+                                              BorderRadius.circular(2.w)),
+                                          height: 4.w,
+                                          width: 64.w,
                                         ),
-                                      );
-                                    },
-                                    separatorBuilder:
-                                        (BuildContext context, int index) {
-                                      return SizedBox(
-                                        height: 9.w,
-                                      );
-                                    },
-                                  )),
-                                  bottom,
-                                ],
-                              )),
-                        );
-                      }),
-                    ),
-                  ],
-                ),
-                Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: bottom,
-                )
-              ],
-            );
-          }),
+                                        24.vGap,
+                                        Container(
+                                            margin: EdgeInsets.symmetric(
+                                                horizontal: 16.w),
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  "Picks Line Up",
+                                                  style: 16.w7(
+                                                      color: AppColors.c262626,
+                                                      height: 1),
+                                                ),
+                                              ],
+                                            )),
+                                        14.vGap,
+                                      ],
+                                    ),
+                                    Expanded(
+                                        child: ListView.separated(
+                                          itemCount: list.length,
+                                          controller: scrollController,
+                                          physics: OneBoundaryScrollPhysics(
+                                              scrollController: scrollController),
+                                          itemBuilder: (context, index) {
+                                            var item = list[index];
+                                            bool lastItem = index ==
+                                                list.length - 1;
+                                            if (item is GameGuess) {
+                                              var homeTeamInfo = Utils
+                                                  .getTeamInfo(
+                                                  item.scoresEntity.homeTeamId);
+                                              var awayTeamInfo = Utils
+                                                  .getTeamInfo(
+                                                  item.scoresEntity.awayTeamId);
+                                              return _ScoresItemWidget(
+                                                  item, lastItem,
+                                                  homeTeamInfo, awayTeamInfo,
+                                                  picksIndexController);
+                                            }
+                                            var player = list[index];
+                                            int choice = player.status;
+                                            return Container(
+                                              margin: EdgeInsets.only(
+                                                  bottom: lastItem ? 20.w : 0),
+                                              child: _PlayerItemWidget(
+                                                index: index,
+                                                choice: choice,
+                                                player: player,
+                                                picksIndexController:
+                                                picksIndexController,
+                                              ),
+                                            );
+                                          },
+                                          separatorBuilder:
+                                              (BuildContext context,
+                                              int index) {
+                                            return SizedBox(
+                                              height: 9.w,
+                                            );
+                                          },
+                                        )),
+                                    bottom,
+                                  ],
+                                )),
+                          );
+                        }),
+                      ),
+                    ],
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: bottom,
+                  )
+                ],
+              );
+            });
+      }),
     );
   }
 
-  Container buildContainer(
-      bool lastItem, NbaTeamEntity homeTeamInfo, NbaTeamEntity awayTeamInfo) {
+  Container buildContainer(bool lastItem, NbaTeamEntity homeTeamInfo,
+      NbaTeamEntity awayTeamInfo) {
     return Container(
       height: 70.w,
       margin:
-          EdgeInsets.only(left: 16.w, right: 16.w, bottom: lastItem ? 20.w : 0),
+      EdgeInsets.only(left: 16.w, right: 16.w, bottom: lastItem ? 20.w : 0),
       decoration: BoxDecoration(
           color: AppColors.cF2F2F2, borderRadius: BorderRadius.circular(16.w)),
       padding: EdgeInsets.symmetric(horizontal: 11.w),
@@ -310,20 +324,26 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
       }
       double maxBet = modelCurrentIndex.value == 0
           ? flexBet.isEmpty
-              ? 0
-              : flexBet[flexBet.length - 1]
+          ? 0
+          : flexBet[flexBet.length - 1]
           : powerBet[powerIndex];
       double maxWin =
           maxBet * double.parse(picksIndexController.picksDefine.betCost);
       return Container(
         color: AppColors.cF2F2F2,
-        width: MediaQuery.of(context).size.width,
+        width: MediaQuery
+            .of(context)
+            .size
+            .width,
         padding:
-            EdgeInsets.only(left: 16.w, right: 16.w, top: 13.w, bottom: 31.w),
+        EdgeInsets.only(left: 16.w, right: 16.w, top: 13.w, bottom: 31.w),
         child: Column(
           children: [
             SizedBox(
-              width: MediaQuery.of(context).size.width,
+              width: MediaQuery
+                  .of(context)
+                  .size
+                  .width,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -353,7 +373,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                               children: [
                                 Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       "Flex play",
@@ -375,7 +395,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                       itemBuilder: (context, index) {
                                         var num = list.length - index;
                                         var bet =
-                                            flexBet[flexBet.length - 1 - index];
+                                        flexBet[flexBet.length - 1 - index];
                                         return _buildbet(
                                             num.toString(), bet.toString());
                                       }),
@@ -420,7 +440,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                               children: [
                                 Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       "Power play",
@@ -441,13 +461,13 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                     return powerIndex == -1
                                         ? const SizedBox.shrink()
                                         : Column(
-                                            children: [
-                                              _buildbet(
-                                                  length.toString(),
-                                                  powerBet[powerIndex]
-                                                      .toString()),
-                                            ],
-                                          );
+                                      children: [
+                                        _buildbet(
+                                            length.toString(),
+                                            powerBet[powerIndex]
+                                                .toString()),
+                                      ],
+                                    );
                                   }),
                                 ),
                                 Container(
@@ -515,64 +535,67 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                   if (picksIndexController.guessWinningStreak > 0)
                     Flexible(
                         child: Container(
-                      height: 40.w,
-                      margin: EdgeInsets.only(left: 9.w),
-                      padding: EdgeInsets.only(right: 6.w, top: 8.w),
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          color: AppColors.c10A86A,
-                          borderRadius: BorderRadius.circular(4.w)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Flexible(
-                            child: SizedBox(
-                              width: double.infinity,
-                              child: Column(
+                          height: 40.w,
+                          margin: EdgeInsets.only(left: 9.w),
+                          padding: EdgeInsets.only(right: 6.w, top: 8.w),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              color: AppColors.c10A86A,
+                              borderRadius: BorderRadius.circular(4.w)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Flexible(
+                                child: SizedBox(
+                                  width: double.infinity,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "${picksIndexController
+                                            .guessWinningStreak}",
+                                        style: 18.w7(
+                                            color: AppColors.cF1F1F1,
+                                            height: 1),
+                                      ),
+                                      Text(
+                                        "Streak",
+                                        style: 10.w4(
+                                            color: AppColors.cF1F1F1,
+                                            height: 1),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "${picksIndexController.guessWinningStreak}",
-                                    style: 18.w7(
-                                        color: AppColors.cF1F1F1, height: 1),
+                                    Utils.formatChip(
+                                        picksIndexController.streakReward),
+                                    style:
+                                    18.w7(color: AppColors.cF1F1F1, height: 1),
                                   ),
                                   Text(
-                                    "Streak",
-                                    style: 10.w4(
-                                        color: AppColors.cF1F1F1, height: 1),
+                                    "streak bonus",
+                                    style:
+                                    10.w4(color: AppColors.cF1F1F1, height: 1),
                                   )
                                 ],
                               ),
-                            ),
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                Utils.formatChip(
-                                    picksIndexController.streakReward),
-                                style:
-                                    18.w7(color: AppColors.cF1F1F1, height: 1),
-                              ),
-                              Text(
-                                "streak bonus",
-                                style:
-                                    10.w4(color: AppColors.cF1F1F1, height: 1),
-                              )
+                              Container(
+                                  width: 8.w,
+                                  height: 8.w,
+                                  margin: EdgeInsets.only(left: 2.w),
+                                  child: Center(
+                                      child: IconWidget(
+                                          iconWidth: 8.w,
+                                          icon: Assets.iconUiIconDetails)))
                             ],
                           ),
-                          Container(
-                              width: 8.w,
-                              height: 8.w,
-                              margin: EdgeInsets.only(left: 2.w),
-                              child: Center(
-                                  child: IconWidget(
-                                      iconWidth: 8.w,
-                                      icon: Assets.iconUiIconDetails)))
-                        ],
-                      ),
-                    )),
+                        )),
                 ],
               ),
             ),
@@ -591,7 +614,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                     children: [
                       InkWell(
                         onTap: () =>
-                            picksIndexController.batchDeleteOpen.value = false,
+                        picksIndexController.batchDeleteOpen.value = false,
                         child: Container(
                           decoration: BoxDecoration(
                               color: AppColors.c262626,
@@ -624,7 +647,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                               child: Text(
                                 "CLEAN ALL",
                                 style:
-                                    21.w7(color: AppColors.cF2F2F2, height: 1),
+                                21.w7(color: AppColors.cF2F2F2, height: 1),
                               ),
                             ),
                           ),
@@ -659,10 +682,11 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                         child: SizedBox(
                           height: 44.w,
                           child: Builder(builder: (context) {
-                            var money = Get.find<HomeController>()
-                                    .userEntiry
-                                    .teamLoginInfo
-                                    ?.getMoney() ??
+                            var money = Get
+                                .find<HomeController>()
+                                .userEntiry
+                                .teamLoginInfo
+                                ?.getMoney() ??
                                 0;
                             if (money <
                                 double.parse(
@@ -692,13 +716,13 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                     children: [
                                       Column(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.center,
+                                        CrossAxisAlignment.center,
                                         mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                        MainAxisAlignment.center,
                                         children: [
                                           Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                            MainAxisAlignment.center,
                                             children: [
                                               IconWidget(
                                                   iconWidth: 19.w,
@@ -737,7 +761,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                                     icon: Assets
                                                         .iconUiIconConfirm,
                                                     iconColor:
-                                                        AppColors.c31E99E,
+                                                    AppColors.c31E99E,
                                                   ))
                                             ],
                                           ))
@@ -773,9 +797,9 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
           8.hGap,
           Expanded(
               child: Text(
-            "correct",
-            style: 12.w4(color: AppColors.c666666),
-          )),
+                "correct",
+                style: 12.w4(color: AppColors.c666666),
+              )),
           Container(
             height: 15.w,
             width: 40.w,
@@ -820,14 +844,13 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
 }
 
 class _ScoresItemWidget extends StatefulWidget {
-  const _ScoresItemWidget(
-      this.item,
-    this.lastItem,
-    this.homeTeamInfo,
-    this.awayTeamInfo,
-    this.picksIndexController, {
-    super.key,
-  });
+  const _ScoresItemWidget(this.item,
+      this.lastItem,
+      this.homeTeamInfo,
+      this.awayTeamInfo,
+      this.picksIndexController, {
+        super.key,
+      });
 
   final GameGuess item;
   final bool lastItem;
@@ -873,47 +896,55 @@ class _ScoresItemWidgetState extends State<_ScoresItemWidget>
 
   @override
   Widget build(BuildContext context) {
-    return Slidable(
-      controller: slidAbleController,
-      key: ValueKey("${widget.item.scoresEntity.gameId}"),
-      endActionPane: ActionPane(
-          extentRatio: 64 / 375,
-          motion: const ScrollMotion(),
-          children: [
-            InkWell(
-              onTap: () async {
-                if (!Get.find<PicksIndexController>().batchDeleteOpen.value) {
-                  await slidAbleController.close();
-                }
-                widget.item.choiceTeamId.value = 0;
-                Get.find<LeagueController>().deleteOne();
-              },
-              child: Container(
-                width: 64.w,
-                height: 70.w,
-                decoration: BoxDecoration(
-                    color: AppColors.cF2F2F2,
-                    borderRadius:
-                    BorderRadius.horizontal(left: Radius.circular(16.w))),
-                child: IconWidget(
-                  iconWidth: 23.w,
-                  icon: Assets.iconUiIconDelete02, //右滑删除按钮
-                  iconColor: AppColors.c333333,
+    return Container(
+      margin: EdgeInsets.only(bottom: widget.lastItem ? 20.w : 0),
+      child: Slidable(
+        controller: slidAbleController,
+        key: ValueKey("${widget.item.scoresEntity.gameId}"),
+        endActionPane: ActionPane(
+            extentRatio: 64 / 375,
+            motion: const ScrollMotion(),
+            children: [
+              InkWell(
+                onTap: () async {
+                  if (!Get
+                      .find<PicksIndexController>()
+                      .batchDeleteOpen
+                      .value) {
+                    await slidAbleController.close();
+                  }
+                  widget.item.choiceTeamId.value = 0;
+                  Get.find<LeagueController>().deleteOne();
+                },
+                child: Container(
+                  width: 64.w,
+                  height: 70.w,
+                  decoration: BoxDecoration(
+                      color: AppColors.cF2F2F2,
+                      borderRadius:
+                      BorderRadius.horizontal(left: Radius.circular(16.w))),
+                  child: IconWidget(
+                    iconWidth: 23.w,
+                    icon: Assets.iconUiIconDelete02, //右滑删除按钮
+                    iconColor: AppColors.c333333,
+                  ),
                 ),
-              ),
-            )
-          ]),
-      child: Container(
-        height: 70.w,
-        margin: EdgeInsets.only(
-            left: 16.w, right: 16.w, bottom: widget.lastItem ? 20.w : 0),
-        decoration: BoxDecoration(
-            color: AppColors.cF2F2F2, borderRadius: BorderRadius.circular(16.w)),
-        padding: EdgeInsets.symmetric(horizontal: 11.w),
-        alignment: FractionalOffset.centerLeft,
-        child: Text(
-          "${widget.homeTeamInfo.shortEname} VS ${widget.awayTeamInfo.shortEname}",
-          style: 16.w5(color: AppColors.c000000),
+              )
+            ]),
+        child: Container(
+          height: 70.w,
+          margin: EdgeInsets.only(
+              left: 16.w, right: 16.w,),
+          decoration: BoxDecoration(
+              color: AppColors.cF2F2F2,
+              borderRadius: BorderRadius.circular(16.w)),
+          padding: EdgeInsets.symmetric(horizontal: 11.w),
+          alignment: FractionalOffset.centerLeft,
+          child: Text(
+            "${widget.homeTeamInfo.shortEname} VS ${widget.awayTeamInfo
+                .shortEname}",
+            style: 16.w5(color: AppColors.c000000),
+          ),
         ),
       ),
     );
@@ -983,7 +1014,10 @@ class _PlayerItemWidgetState extends State<_PlayerItemWidget>
           children: [
             InkWell(
               onTap: () async {
-                if (!Get.find<PicksIndexController>().batchDeleteOpen.value) {
+                if (!Get
+                    .find<PicksIndexController>()
+                    .batchDeleteOpen
+                    .value) {
                   await slidAbleController.close();
                 }
                 player.status = -1;
@@ -995,7 +1029,7 @@ class _PlayerItemWidgetState extends State<_PlayerItemWidget>
                 decoration: BoxDecoration(
                     color: AppColors.cF2F2F2,
                     borderRadius:
-                        BorderRadius.horizontal(left: Radius.circular(16.w))),
+                    BorderRadius.horizontal(left: Radius.circular(16.w))),
                 child: IconWidget(
                   iconWidth: 23.w,
                   icon: Assets.iconUiIconDelete02, //右滑删除按钮
@@ -1035,7 +1069,9 @@ class _PlayerItemWidgetState extends State<_PlayerItemWidget>
                   ),
                   6.vGap,
                   Text(
-                    "VS ${player.awayTeamInfo?.shortEname} ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(player.guessInfo.gameStartTime))}",
+                    "VS ${player.awayTeamInfo?.shortEname} ${MyDateUtils
+                        .formatHM_AM(MyDateUtils.getDateTimeByMs(
+                        player.guessInfo.gameStartTime))}",
                     style: 10.w4(color: AppColors.cB3B3B3, height: 1),
                   )
                 ],
@@ -1052,7 +1088,8 @@ class _PlayerItemWidgetState extends State<_PlayerItemWidget>
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "${player.guessInfo.guessReferenceValue[player.tabStr] ?? 0}",
+                    "${player.guessInfo.guessReferenceValue[player.tabStr] ??
+                        0}",
                     style: 18.w7(color: AppColors.c262626, height: 1),
                   ),
                   5.vGap,
@@ -1074,81 +1111,81 @@ class _PlayerItemWidgetState extends State<_PlayerItemWidget>
                 children: [
                   Flexible(
                       child: InkWell(
-                    onTap: () {
-                      player.status = 0;
-                      picksIndexController.choiceOne(needRefreshList: true);
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: currentIndex == 0
-                              ? AppColors.cFF7954
-                              : AppColors.cTransparent,
-                          borderRadius: BorderRadius.horizontal(
-                              left: Radius.circular(7.w))),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          IconWidget(
-                            iconWidth: 15.w,
-                            icon: Assets.iconUiIconUp,
-                            iconColor: currentIndex == 0
-                                ? AppColors.cF2F2F2
-                                : AppColors.cFF7954,
-                          ),
-                          5.vGap,
-                          Text(
-                            "MORE",
-                            style: 12.w7(
-                                color: currentIndex == 0
+                        onTap: () {
+                          player.status = 0;
+                          picksIndexController.choiceOne(needRefreshList: true);
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: currentIndex == 0
+                                  ? AppColors.cFF7954
+                                  : AppColors.cTransparent,
+                              borderRadius: BorderRadius.horizontal(
+                                  left: Radius.circular(7.w))),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              IconWidget(
+                                iconWidth: 15.w,
+                                icon: Assets.iconUiIconUp,
+                                iconColor: currentIndex == 0
                                     ? AppColors.cF2F2F2
                                     : AppColors.cFF7954,
-                                height: 1),
-                          )
-                        ],
-                      ),
-                    ),
-                  )),
+                              ),
+                              5.vGap,
+                              Text(
+                                "MORE",
+                                style: 12.w7(
+                                    color: currentIndex == 0
+                                        ? AppColors.cF2F2F2
+                                        : AppColors.cFF7954,
+                                    height: 1),
+                              )
+                            ],
+                          ),
+                        ),
+                      )),
                   Divider(
                     height: 46.w,
                     color: AppColors.cFF7954,
                   ),
                   Flexible(
                       child: InkWell(
-                    onTap: () {
-                      player.status = 1;
-                      picksIndexController.choiceOne(needRefreshList: true);
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: currentIndex == 1
-                              ? AppColors.cFF7954
-                              : AppColors.cTransparent,
-                          borderRadius: BorderRadius.horizontal(
-                              right: Radius.circular(7.w))),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          IconWidget(
-                            iconWidth: 15.w,
-                            icon: Assets.iconUiIconUp,
-                            iconColor: currentIndex == 1
-                                ? AppColors.cF2F2F2
-                                : AppColors.cFF7954,
-                            rotateAngle: 180,
-                          ),
-                          5.vGap,
-                          Text(
-                            "LESS",
-                            style: 12.w7(
-                                color: currentIndex == 1
+                        onTap: () {
+                          player.status = 1;
+                          picksIndexController.choiceOne(needRefreshList: true);
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: currentIndex == 1
+                                  ? AppColors.cFF7954
+                                  : AppColors.cTransparent,
+                              borderRadius: BorderRadius.horizontal(
+                                  right: Radius.circular(7.w))),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              IconWidget(
+                                iconWidth: 15.w,
+                                icon: Assets.iconUiIconUp,
+                                iconColor: currentIndex == 1
                                     ? AppColors.cF2F2F2
                                     : AppColors.cFF7954,
-                                height: 1),
-                          )
-                        ],
-                      ),
-                    ),
-                  )),
+                                rotateAngle: 180,
+                              ),
+                              5.vGap,
+                              Text(
+                                "LESS",
+                                style: 12.w7(
+                                    color: currentIndex == 1
+                                        ? AppColors.cF2F2F2
+                                        : AppColors.cFF7954,
+                                    height: 1),
+                              )
+                            ],
+                          ),
+                        ),
+                      )),
                 ],
               ),
             )

@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
               headerBuilder: () => const WaterDropHeader(),
               footerBuilder: () => const ClassicFooter(),
               child: GetMaterialApp(
-                title: 'arm chair puaterback',
+                title: 'arm chair quaterback',
                 theme: AppTheme.light,
                 debugShowCheckedModeBanner: false,
                 initialRoute: AppPages.main,

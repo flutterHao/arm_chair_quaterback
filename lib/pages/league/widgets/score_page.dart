@@ -64,7 +64,8 @@ class _ScorePageState extends State<ScorePage>
                     )
                   : ListView.separated(
                       itemCount: controller.scoreList.length,
-                      key: PageStorageKey(widget.time.millisecondsSinceEpoch.toString()),
+                      key: PageStorageKey(
+                          widget.time.millisecondsSinceEpoch.toString()),
                       physics: const BouncingScrollPhysics(),
                       itemBuilder: (context, index) {
                         bool lastIndex =
@@ -418,7 +419,8 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
         MyDateUtils.getDayStartTimeMS(MyDateUtils.nextDay(nextDay));
 
     ///只能猜今明两天的赛程
-    if (item.gameStartTime >= dayStartTimeMS) {
+    if (item.gameStartTime >= dayStartTimeMS ||
+        item.gameStartTime < MyDateUtils.getDayStartTimeMS(nowDateTime)) {
       return const SizedBox.shrink();
     }
     var count = item.homeTeamWins + item.awayTeamWins;

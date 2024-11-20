@@ -97,8 +97,12 @@ class LeagueController extends GetxController
     choiceSize.value = getAllChoiceData().length;
   }
 
+  static String get idGameGuessConfirmDialog => "id_game_guess_confirm_dialog";
+
+
   deleteOne(){
     choiceSize.value = getAllChoiceData().length;
+    update([idGameGuessConfirmDialog]);
   }
 
   List<GameGuess> getAllChoiceData() {

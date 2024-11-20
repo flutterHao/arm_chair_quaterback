@@ -67,9 +67,8 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
       morePercent = 100;
     } else {
       morePercent = player.guessInfo.moreCount /
-          (player.guessInfo.moreCount + player.guessInfo.lessCount);
+          (player.guessInfo.moreCount + player.guessInfo.lessCount) * 100;
     }
-    int moreFlex = int.parse((morePercent).toStringAsFixed(0));
     return Stack(
       children: [
         RepaintBoundary(
@@ -144,13 +143,16 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                                 ),
                                 14.hGap,
                                 Expanded(
-                                  child: Text(
-                                    Utils.getLongName(player.tabStr),
-                                    style: 19.w7(
-                                        color: AppColors.c262626,
-                                        fontFamily: FontFamily.fOswaldMedium,
-                                        height: 1,
-                                      overflow: TextOverflow.ellipsis
+                                  child: FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      Utils.getLongName(player.tabStr),
+                                      style: 19.w7(
+                                          color: AppColors.c262626,
+                                          fontFamily: FontFamily.fOswaldMedium,
+                                          height: 1,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -220,7 +222,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            "$moreFlex%",
+                            "${morePercent.toStringAsFixed(0)}%",
                             style: 14.w5(
                                 color: AppColors.c000000,
                                 height: 1,
@@ -228,11 +230,11 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                           ),
                           3.hGap,
                           Expanded(
-                            child: SupportPercentProgressWidget(leftPercent: moreFlex, rightPercent: 100-moreFlex),
+                            child: SupportPercentProgressWidget(leftPercent: morePercent.toInt(), rightPercent: 100-morePercent.toInt()),
                           ),
                           3.hGap,
                           Text(
-                            "${100 - moreFlex}%",
+                            "${(100 - morePercent).toStringAsFixed(0)}%",
                             style: 14.w5(
                                 color: AppColors.c000000,
                                 height: 1,

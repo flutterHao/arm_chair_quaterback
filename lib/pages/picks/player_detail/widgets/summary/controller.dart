@@ -99,6 +99,7 @@ class SummaryController extends GetxController {
     Future.wait([
       PicksApi.getNBAPlayerBaseInfo(playerId),
       CacheApi.getNBATeamDefine(),
+      CacheApi.getPickType()
     ]).then((result) {
       nbaPlayerBaseInfoEntity = result[0];
       if (initTabStr != null) {
@@ -119,6 +120,17 @@ class SummaryController extends GetxController {
     }, onError: (e) {
       loadStatus.value = LoadDataStatus.error;
     });
+  }
+
+  List<String> getTitles(){
+    var list = (CacheApi.pickType??[]).fold(<String>[], (p,e){
+      var contains = nbaPlayerBaseInfoEntity?.guessInfos.keys.toList().contains(e.pickTypeName);
+      if(contains??false){
+        p.add(e.pickTypeName);
+      }
+      return p;
+    });
+    return list;
   }
 
   static String get idSummaryMain => "id_summary_main";

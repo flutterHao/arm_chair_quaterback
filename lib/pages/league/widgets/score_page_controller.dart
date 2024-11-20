@@ -33,7 +33,8 @@ class ScorePageController extends GetxController {
       var startTime = time.millisecondsSinceEpoch;
       var endTime = MyDateUtils.nextDay(time).millisecondsSinceEpoch;
       if(v.contains("${startTime}_$endTime")){
-        getDataFromNet(List.from(scoreList));
+        //刷新数据，不计入缓存
+        getDataFromNet([]);
       }
     });
   }
