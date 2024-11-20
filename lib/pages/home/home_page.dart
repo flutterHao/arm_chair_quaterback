@@ -7,7 +7,7 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
-import 'package:arm_chair_quaterback/pages/league/controller.dart';
+import 'package:arm_chair_quaterback/pages/league/league_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/picks_guess_confirm_dialog_v2.dart';
 import 'package:flutter/material.dart';

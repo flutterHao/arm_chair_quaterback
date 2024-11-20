@@ -156,6 +156,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                                     ),
                                   ),
                                 ),
+                                20.hGap,
                                 IconWidget(
                                   iconWidth: 8.w,
                                   icon: Assets.playerUiIconArrows01,

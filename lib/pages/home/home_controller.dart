@@ -23,7 +23,7 @@ import 'package:arm_chair_quaterback/common/services/services.dart';
 import 'package:arm_chair_quaterback/common/store/user.dart';
 import 'package:arm_chair_quaterback/common/utils/device_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
-import 'package:arm_chair_quaterback/pages/league/view.dart';
+import 'package:arm_chair_quaterback/pages/league/league_index/view.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/index.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/view.dart';

@@ -18,7 +18,7 @@ import 'package:arm_chair_quaterback/common/utils/click_feed_back.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/param_utils.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
-import 'package:arm_chair_quaterback/pages/league/controller.dart';
+import 'package:arm_chair_quaterback/pages/league/league_index/controller.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

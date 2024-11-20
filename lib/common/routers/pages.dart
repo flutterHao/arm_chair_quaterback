@@ -12,7 +12,8 @@
 // import 'package:arm_chair_quaterback/pages/news/rank/team_view.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/widgets/transitions/half_slide_right_to_left_transition.dart';
-import 'package:arm_chair_quaterback/pages/league/view.dart';
+import 'package:arm_chair_quaterback/pages/league/league_detail/view.dart';
+import 'package:arm_chair_quaterback/pages/league/league_index/view.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_info/bindings.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_info/view.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/view.dart';
@@ -77,7 +78,10 @@ class AppPages {
       page: () => NewsDetailPage(newsDetail: Get.arguments),
       name: RouteNames.newsDetail,
     ),
-
+    GetPage(
+      name: RouteNames.leagueLeagueDetail,
+      page: () => const LeagueDetailPage(),
+    ),
     // GetPage(
     //   opaque: false,
     //   name: RouteNames.newsDetail,

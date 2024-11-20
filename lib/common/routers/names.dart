@@ -44,4 +44,6 @@ class RouteNames {
   static const tradeTradeIndex = '/trade_trade_index';
 
   //league
+  static const leagueLeagueDetail = '/league_league_detail';
+
 }

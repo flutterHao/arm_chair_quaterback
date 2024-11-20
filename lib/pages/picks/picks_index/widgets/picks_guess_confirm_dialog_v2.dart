@@ -18,7 +18,7 @@ import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/physics/one_boundary_scroll_physics.dart';
 import 'package:arm_chair_quaterback/common/widgets/player_avatar_widget.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
-import 'package:arm_chair_quaterback/pages/league/controller.dart';
+import 'package:arm_chair_quaterback/pages/league/league_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
