@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-11 15:57:44
- * @LastEditTime: 2024-11-20 15:01:31
+ * @LastEditTime: 2024-11-20 17:07:31
  */
 
 import 'dart:math';
@@ -287,7 +287,7 @@ class TrainingPage extends GetView<TrainingController> {
                     child: Obx(() {
                       return AnimatedOpacity(
                         opacity: controller.showCash.value ? 1 : 0,
-                        duration: const Duration(milliseconds: 500),
+                        duration: const Duration(milliseconds: 1000),
                         child: Container(
                           width: 126.w,
                           height: 61.w,
@@ -320,11 +320,18 @@ class TrainingPage extends GetView<TrainingController> {
                   ),
 
                   ///球员列表
-                  // Positioned(
-                  //   top: 46.w,
-                  //   left: -0.w,
-                  //   child: PlayerSrollerView(),
-                  // ),
+                  Positioned(
+                    top: 46.w,
+                    left: -0.w,
+                    child: Obx(() {
+                      return Visibility(
+                        visible: controller.showPlayer.value,
+                        child: PlayerSrollerView(),
+                      );
+                    }),
+                  ),
+
+                  ///Slot
                   Positioned(
                     top: 130.w,
                     child: Container(
@@ -343,6 +350,7 @@ class TrainingPage extends GetView<TrainingController> {
                                     builder: (context, child) {
                                       double v = controller
                                           .sizeAnimations[index].value;
+                                      int length = controller.propList.length;
                                       return Container(
                                           width: 50.w * (2 - v),
                                           height: 68.w * v,
@@ -366,30 +374,41 @@ class TrainingPage extends GetView<TrainingController> {
                                                       const EdgeInsets.all(0),
                                                   controller: controller
                                                       .scrollerCtrlList[index],
-                                                  itemCount: controller
-                                                          .propList.length *
-                                                      10,
+                                                  itemCount: length * 10,
                                                   itemBuilder:
                                                       (context, itemIndex) {
-                                                    int realIndex = itemIndex %
-                                                        controller
-                                                            .propList.length;
+                                                    int realIndex =
+                                                        itemIndex % length;
                                                     double scale = controller
                                                         .scaleAnimations[index]
                                                         .value;
                                                     return SizedBox(
                                                         width: 50.w,
                                                         height: 68.w,
-                                                        child: IconWidget(
-                                                          iconWidth:
-                                                              30.w * scale,
-                                                          icon: Utils.getPropIconUrl(
-                                                              controller
-                                                                      .propList[
-                                                                  realIndex]),
-                                                          iconColor:
-                                                              Colors.black,
-                                                        ));
+                                                        child: Obx(() {
+                                                          return AnimatedScale(
+                                                            duration:
+                                                                const Duration(
+                                                                    milliseconds:
+                                                                        300),
+                                                            scale: controller
+                                                                    .isAwards[
+                                                                        index]
+                                                                    .value
+                                                                ? 1.5
+                                                                : 1,
+                                                            child: IconWidget(
+                                                              iconWidth:
+                                                                  30.w * scale,
+                                                              icon: Utils.getPropIconUrl(
+                                                                  controller
+                                                                          .propList[
+                                                                      realIndex]),
+                                                              iconColor:
+                                                                  Colors.black,
+                                                            ),
+                                                          );
+                                                        }));
                                                   },
                                                 ),
                                               ),
@@ -454,21 +473,25 @@ class TrainingPage extends GetView<TrainingController> {
                         MtInkwell(
                           // vibrate: true,
                           onTap: () => controller.startSlot(),
-                          child: Container(
-                            width: 188.w,
-                            height: 41.w,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                color: AppColors.c000000,
-                                borderRadius: BorderRadius.circular(9.w)),
-                            child: Text(
-                              "Start",
-                              style: 19.w4(
-                                color: AppColors.cFFFFFF,
-                                fontFamily: FontFamily.fOswaldMedium,
+                          child: Obx(() {
+                            return Container(
+                              width: 188.w,
+                              height: 41.w,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  color: controller.isPlaying.value
+                                      ? AppColors.cEEEEEE
+                                      : AppColors.c000000,
+                                  borderRadius: BorderRadius.circular(9.w)),
+                              child: Text(
+                                "START",
+                                style: 19.w4(
+                                  color: AppColors.cFFFFFF,
+                                  fontFamily: FontFamily.fOswaldMedium,
+                                ),
                               ),
-                            ),
-                          ),
+                            );
+                          }),
                         )
                       ],
                     ),

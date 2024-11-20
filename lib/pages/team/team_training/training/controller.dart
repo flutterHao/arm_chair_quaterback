@@ -18,8 +18,8 @@ import 'package:get/get.dart';
 class TrainingController extends GetxController
     with GetTickerProviderStateMixin {
   final random = Random();
-  bool isPlaying = false;
-  RxInt currentIndex = 0.obs;
+  RxBool isPlaying = false.obs;
+  // RxInt currentIndex = 0.obs;
   var showBall = false.obs;
   var showPlayer = false.obs;
   var showCash = false.obs;
@@ -43,8 +43,16 @@ class TrainingController extends GetxController
   List<AnimationController> slotsAnimlList = [];
   List<Animation<double>> sizeAnimations = [];
   List<Animation<double>> scaleAnimations = [];
+  List<RxBool> isAwards = [
+    false.obs,
+    false.obs,
+    false.obs,
+    false.obs,
+    false.obs,
+    false.obs
+  ];
 
-  final List<int> propList = [301, 302, 303, 304, 305, 306];
+  final List<int> propList = [1, 2, 3, 4, 5];
 
   Map<int, int> proCountMap = {
     102: 0,
@@ -58,13 +66,13 @@ class TrainingController extends GetxController
 
   //球员滚动
   late Timer _timer;
-  late ScrollController playerScrollCtrl;
+  late ScrollController playerScollCtrl;
 
   /// 在 widget 内存中分配后立即调用。
   @override
   void onInit() {
     super.onInit();
-    playerScrollCtrl = ScrollController();
+    playerScollCtrl = ScrollController();
     slotsAnimlList = List.generate(6, (_) {
       return AnimationController(
         duration: const Duration(milliseconds: 800),
@@ -89,38 +97,12 @@ class TrainingController extends GetxController
     scaleAnimations = List.generate(6, (index) {
       return TweenSequence([
         TweenSequenceItem<double>(tween: Tween(begin: 1, end: 1), weight: 60),
-        TweenSequenceItem<double>(tween: Tween(begin: 1, end: 1.5), weight: 10),
-        TweenSequenceItem<double>(tween: Tween(begin: 1.5, end: 1), weight: 10),
-      ]).animate(CurvedAnimation(
-          parent: slotsAnimlList[index], curve: Curves.easeInOut));
+        TweenSequenceItem<double>(tween: Tween(begin: 1, end: 1.2), weight: 10),
+        TweenSequenceItem<double>(tween: Tween(begin: 1.2, end: 1), weight: 10),
+      ]).animate(
+          CurvedAnimation(parent: slotsAnimlList[index], curve: Curves.linear));
     });
   }
-
-  // void _onScroll() {
-  //   for (int i = 0; i < scrollerCtrlList.length; i++) {
-  //     final controller = scrollerCtrlList[i];
-  //     if (controller.positions.isNotEmpty) {
-  //       final position = controller.position;
-  //       if (position.userScrollDirection == ScrollDirection.forward) {
-  //         // 用户正在向上滚动
-  //         print('Scrolling forward in slot $i');
-  //       } else if (position.userScrollDirection == ScrollDirection.reverse) {
-  //         // 用户正在向下滚动
-  //         print('Scrolling reverse in slot $i');
-  //       } else if (position.userScrollDirection == ScrollDirection.idle) {
-  //         // 滚动停止
-  //         print('Scrolling idle in slot $i');
-  //         if (position.pixels == position.maxScrollExtent) {
-  //           // 滚动到底部
-  //           print('Scrolled to the bottom in slot $i');
-  //         } else if (position.pixels == 0) {
-  //           // 滚动到顶部
-  //           print('Scrolled to the top in slot $i');
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
 
   /// 在 onInit() 之后调用 1 帧。这是进入的理想场所
   @override
@@ -201,6 +183,7 @@ class TrainingController extends GetxController
   }
 
   void startSlot() async {
+    if (isPlaying.value) return;
     final teamIndexCtrl = Get.find<TeamIndexController>();
     teamIndexCtrl.scroToSlot();
     trainingInfo = await TeamApi.playerTraining(playerList[0].uuid);
@@ -220,7 +203,7 @@ class TrainingController extends GetxController
     slotCard[index].value = true;
     int propIndex = propList.indexOf(trainingInfo.propArray[index]);
 
-    ///在获奖的结果基础上旋转两周
+    ///在获奖的结果基础上旋转三周
     double offset = 68.w * (propIndex + propList.length * 3);
     slotsAnimlList[index].forward();
     scrollerCtrlList[index]
@@ -229,94 +212,82 @@ class TrainingController extends GetxController
             curve: const Cubic(0.27, 0.59, 0.19, 1.1))
         .then((_) {
       if (index == 5) {
-        showCash.value = true;
-        showBall.value = true;
-        showPlayer.value = true;
+        ///最后一个旋转结束
+        List<int> awads = [];
+        for (var e in trainingInfo.award) {
+          ///槽位显示中奖放大动画
+          for (int i = 0; i < trainingInfo.propArray.length; i++) {
+            if (trainingInfo.propArray[i] == e.id) {
+              isAwards[i].value = true;
+              //槽位恢复
+              Future.delayed(const Duration(milliseconds: 200), () {
+                isAwards[i].value = false;
+              });
+            }
+          }
+          awads.add(e.id);
+        }
+
+        ///奖励表达
+        // showPlayer.value = true;
+        // startAutoScroll(0);
+        if (awads.contains(1)) {}
+        if (awads.contains(2)) {}
+        // if (awads.contains(3)) {
+        //   showPlayer.value = true;
+        //   startAutoScroll(0);
+        // }
+        if (awads.contains(4)) {
+          showBall.value = true;
+          Future.delayed(const Duration(milliseconds: 300), () {
+            showBall.value = false;
+          });
+        }
+        if (awads.contains(5)) {
+          showCash.value = true;
+          Future.delayed(const Duration(milliseconds: 1000), () {
+            showBall.value = false;
+          });
+        }
+
         Future.delayed(const Duration(milliseconds: 1000)).then((v) {
           showCash.value = false;
-          showBall.value = false;
-          showPlayer.value = false;
-          reset();
+          for (var element in slotsAnimlList) {
+            element.reset();
+          }
           update(["training_page"]);
         });
       }
     });
   }
 
-  void reset() {
-    showCash.value = false;
-    showBall.value = false;
-    showPlayer.value = false;
-    for (var element in slotsAnimlList) {
-      element.reset();
-    }
-  }
-
-  void _animateResult() {
-    for (int i = 0; i < slotCard.length; i++) {
-      if (i < trainingInfo.propArray.length) {
-        int prop = trainingInfo.propArray[i];
-        _animateIcon(i, prop);
-      }
-    }
-  }
-
-  void _animateIcon(int index, int prop) {
-    final AnimationController controller = AnimationController(
-      duration: const Duration(milliseconds: 500),
-      vsync: this,
-    );
-
-    final Animation<double> sizeAnimation = TweenSequence([
-      TweenSequenceItem<double>(tween: Tween(begin: 1.0, end: 1.2), weight: 50),
-      TweenSequenceItem<double>(tween: Tween(begin: 1.2, end: 1.0), weight: 50),
-    ]).animate(CurvedAnimation(parent: controller, curve: Curves.easeInOut));
-
-    controller.forward();
-
-    sizeAnimation.addListener(() {
-      update(["slot"]);
-    });
-
-    controller.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        controller.dispose();
-      }
-    });
-  }
-
-  void startPlayerScroll(int count) async {
-    slotCard = [true.obs, true.obs, true.obs];
-    update(["slot"]);
-
-    if (playerScrollCtrl.hasClients) {
-      // int delay = (50 + pow(count, 2.8)).toInt(); // Start fast, then slow
-      await playerScrollCtrl.animateTo(
-        playerScrollCtrl.offset + 75.w * 20,
-        duration: const Duration(milliseconds: 2000),
-        // curve: const Cubic(0.32, 0.48, 0.32, 0.98),
-        // curve: const Cubic(0.22, 0.53, 0, 1.02),
-        curve: const Cubic(0.27, 0.59, 0.19, 1.02),
-      );
+  void startAutoScroll(int count) async {
+    playerScollCtrl.jumpTo(0);
+    if (playerScollCtrl.hasClients) {
+      await playerScollCtrl
+          .animateTo(
+        playerScollCtrl.offset + 50.w * 20,
+        duration: const Duration(milliseconds: 1500),
+        curve: Curves.easeOut,
+      )
+          .then((v) {
+        Future.delayed(const Duration(milliseconds: 500), () {
+          showPlayer.value = false;
+        });
+      });
 
       // 当滚动到最后一个可见项时，重置到起点
-      if (playerScrollCtrl.offset >=
-          playerScrollCtrl.position.maxScrollExtent) {
-        playerScrollCtrl.jumpTo(0);
+      if (playerScollCtrl.offset >= playerScollCtrl.position.maxScrollExtent) {
+        playerScollCtrl.jumpTo(0);
       }
-      currentIndex.value =
-          ((playerScrollCtrl.offset ~/ 75.w).ceil() + 2) % (playerList.length);
     }
   }
 
-  ///奖励飞跃动画
-  ///102:钱
-  ///301:钱
-  ///302:中钱
-  ///303:状态
-  ///304:Buff、战术
-  ///305:任务
-  ///306:球
+  ///1:战术(buff)
+  ///2:状态
+  ///3:道具
+  ///4:篮球
+  ///5:钞票
   void awardAnimation() async {
     Map<int, int> propMap = countAward();
     proCountMap = countProp();

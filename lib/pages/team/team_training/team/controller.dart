@@ -248,7 +248,12 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
           '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
       if (_recoverSeconds <= 0) {
         _timer?.cancel();
-        initData();
+
+        /// 恢复体力刷新数据
+        int teamId =
+            HomeController.to.userEntiry.teamLoginInfo!.team!.teamId ?? 0;
+        myTeamEntity = await TeamApi.getMyTeamPlayer(teamId);
+        // initData();
       }
     });
   }

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-30 11:43:53
- * @LastEditTime: 2024-11-12 14:42:35
+ * @LastEditTime: 2024-11-20 16:49:00
  */
 
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -36,7 +36,8 @@ class TrainingAvater extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         margin: EdgeInsets.symmetric(horizontal: 2.w),
         decoration: BoxDecoration(
-          border: Border.all(color: AppColors.cFF7954, width: 2),
+          border:
+              isCurrent ? Border.all(color: AppColors.cFF7954, width: 2) : null,
           color: AppColors.cF2F2F2,
           borderRadius: BorderRadius.circular(9.w),
         ),
