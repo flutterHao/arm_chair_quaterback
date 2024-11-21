@@ -33,13 +33,19 @@ class ScorePageController extends GetxController {
       var startTime = time.millisecondsSinceEpoch;
       var endTime = MyDateUtils.nextDay(time).millisecondsSinceEpoch;
       if(v.contains("${startTime}_$endTime")){
-        //刷新数据，不计入缓存
+        //下注成功，刷新数据，清除所有选中状态
         getDataFromNet([]);
       }
     });
   }
 
   loading(){
+    var leagueController = Get.find<LeagueController>();
+    if(leagueController.getDataTimes()[leagueController.currentPageIndex.value] != time){
+      refreshController.refreshCompleted();
+      return;
+    }
+    //下拉刷新，把之前选中的项恢复为选中状态
     getDataFromNet(List.from(scoreList));
   }
 
@@ -80,13 +86,15 @@ class ScorePageController extends GetxController {
       } else {
         loadStatus.value = LoadDataStatus.success;
       }
-      update();
+      update([idScorePageMain]);
       refreshController.refreshCompleted();
     }, onError: (e) {
       ErrorUtils.toast(e);
       loadStatus.value = LoadDataStatus.error;
     });
   }
+
+  String get idScorePageMain => "id_score_page_main_${time.day}";
 
   void sortScoreList() {
     scoreList.sort((a,b) => a.scoresEntity.gameStartTime.compareTo(b.scoresEntity.gameStartTime));

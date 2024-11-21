@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
@@ -49,6 +50,7 @@ class _ScorePageState extends State<ScorePage>
     );
     return GetBuilder<ScorePageController>(
         init: controller,
+        id: controller.idScorePageMain,
         tag: widget.time.millisecondsSinceEpoch.toString(),
         builder: (_) {
           return SmartRefresher(
@@ -63,9 +65,9 @@ class _ScorePageState extends State<ScorePage>
                       }),
                     )
                   : ListView.separated(
-                      itemCount: controller.scoreList.length,
                       key: PageStorageKey(
                           widget.time.millisecondsSinceEpoch.toString()),
+                      itemCount: controller.scoreList.length,
                       physics: const BouncingScrollPhysics(),
                       itemBuilder: (context, index) {
                         bool lastIndex =
@@ -156,8 +158,7 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
     } else if (MyDateUtils.isToday(item.gameStartTime)) {
       gameStartTimeStr.value =
           "Today ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(item.gameStartTime))}";
-    } else if (MyDateUtils.isTomorrow(MyDateUtils.getNowDateTime(),
-        MyDateUtils.getDateTimeByMs(item.gameStartTime))) {
+    } else if (MyDateUtils.isTomorrow(item.gameStartTime)) {
       gameStartTimeStr.value =
           "Tomorrow ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(item.gameStartTime))}";
     } else {
@@ -185,101 +186,177 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 18.vGap,
-                Text(
-                  "${Utils.getTeamInfo(item.homeTeamId).shortEname} @ ${Utils.getTeamInfo(item.awayTeamId).shortEname}",
-                  style: 24.w5(
-                      color: AppColors.c000000,
-                      height: 1,
-                      fontFamily: FontFamily.fOswaldMedium),
-                ),
-                7.vGap,
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 52.w),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                MtInkwell(
+                  minScale: 1,
+                  onTap: () {
+                    Get.toNamed(RouteNames.leagueLeagueDetail,
+                        arguments: {"item": item});
+                  },
+                  child: Column(
                     children: [
-                      ImageWidget(
-                        url: Utils.getTeamUrl(item.homeTeamId),
-                        imageFailedPath: Assets.iconUiDefault06,
-                        width: 52.w,
-                      ),
-                      12.hGap,
-                      Container(
-                        height: 52.w,
-                        alignment: Alignment.center,
-                        child: Text(
-                          "${item.status != 0 ? item.homeTeamScore : "   "}",
-                          style: 30.w7(
-                              color: AppColors.cB3B3B3,
-                              height: 1,
-                              fontFamily: FontFamily.fOswaldBold),
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          height: 52.w,
-                          alignment: Alignment.center,
-                          child: Text(
-                            item.status == 2 ? "" : "VS",
-                            style: 30.w7(
-                                color: AppColors.cB3B3B3,
-                                height: 1,
-                                fontFamily: FontFamily.fOswaldBold),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              Utils.getTeamInfo(item.homeTeamId).shortEname,
+                              textAlign: TextAlign.right,
+                              style: 24.w5(
+                                  color: AppColors.c000000,
+                                  height: 1,
+                                  fontFamily: FontFamily.fOswaldMedium),
+                            ),
                           ),
-                        ),
-                      ),
-                      Container(
-                        height: 52.w,
-                        alignment: Alignment.center,
-                        child: Text(
-                          "${item.status != 0 ? item.awayTeamScore : "   "}",
-                          style: 30.w7(
-                              color: AppColors.c000000,
-                              height: 1,
-                              fontFamily: FontFamily.fOswaldBold),
-                        ),
-                      ),
-                      12.hGap,
-                      ImageWidget(
-                        url: Utils.getTeamUrl(item.awayTeamId),
-                        imageFailedPath: Assets.iconUiDefault06,
-                        width: 52.w,
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 52.w),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: 52.w,
-                        child: Center(
-                          child: Text(
-                            item.homeTeamWL,
-                            style: 10.w4(
+                          Text(
+                            " @ ",
+                            style: 24.w5(
                                 color: AppColors.c000000,
                                 height: 1,
-                                fontFamily: FontFamily.fRobotoRegular),
+                                fontFamily: FontFamily.fOswaldMedium),
                           ),
+                          Expanded(
+                            child: Text(
+                              Utils.getTeamInfo(item.awayTeamId).shortEname,
+                              style: 24.w5(
+                                  color: AppColors.c000000,
+                                  height: 1,
+                                  fontFamily: FontFamily.fOswaldMedium),
+                            ),
+                          ),
+                        ],
+                      ),
+                      7.vGap,
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 52.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ImageWidget(
+                              url: Utils.getTeamUrl(item.homeTeamId),
+                              imageFailedPath: Assets.iconUiDefault06,
+                              width: 52.w,
+                            ),
+                            12.hGap,
+                            Container(
+                              height: 52.w,
+                              alignment: Alignment.center,
+                              child: Text(
+                                "${item.status != 0 ? item.homeTeamScore : "   "}",
+                                style: 30.w7(
+                                    color: AppColors.cB3B3B3,
+                                    height: 1,
+                                    fontFamily: FontFamily.fOswaldBold),
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(
+                                height: 52.w,
+                                alignment: Alignment.center,
+                                child: Text(
+                                  item.status == 2 ? "" : "VS",
+                                  style: 30.w7(
+                                      color: AppColors.cB3B3B3,
+                                      height: 1,
+                                      fontFamily: FontFamily.fOswaldBold),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              height: 52.w,
+                              alignment: Alignment.center,
+                              child: Text(
+                                "${item.status != 0 ? item.awayTeamScore : "   "}",
+                                style: 30.w7(
+                                    color: AppColors.c000000,
+                                    height: 1,
+                                    fontFamily: FontFamily.fOswaldBold),
+                              ),
+                            ),
+                            12.hGap,
+                            ImageWidget(
+                              url: Utils.getTeamUrl(item.awayTeamId),
+                              imageFailedPath: Assets.iconUiDefault06,
+                              width: 52.w,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 52.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              width: 52.w,
+                              child: Center(
+                                child: Text(
+                                  item.homeTeamWL,
+                                  style: 10.w4(
+                                      color: AppColors.c000000,
+                                      height: 1,
+                                      fontFamily: FontFamily.fRobotoRegular),
+                                ),
+                              ),
+                            ),
+                            Obx(() {
+                              gameStartTimeStr.value;
+                              return Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    gameStartTimeStr.value,
+                                    style: 12.w4(
+                                        color: AppColors.c000000,
+                                        height: 1,
+                                        fontFamily: FontFamily.fRobotoRegular),
+                                  ),
+                                  if (item.status != 2)
+                                    Container(
+                                      margin: EdgeInsets.only(left: 6.w),
+                                      child: IconWidget(
+                                        iconWidth: 5.w,
+                                        icon: Assets.playerUiIconArrows01,
+                                        iconColor: AppColors.c000000,
+                                      ),
+                                    )
+                                ],
+                              );
+                            }),
+                            SizedBox(
+                              width: 52.w,
+                              child: Center(
+                                child: Text(
+                                  item.awayTeamWL,
+                                  style: 10.w4(
+                                      color: AppColors.c000000,
+                                      height: 1,
+                                      fontFamily: FontFamily.fRobotoRegular),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       Obx(() {
                         gameStartTimeStr.value;
                         return Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                              gameStartTimeStr.value,
+                              item.status == 0
+                                  ? ""
+                                  : item.status == 1
+                                      ? "In the game"
+                                      : "FINAL",
                               style: 12.w4(
-                                  color: AppColors.c000000,
-                                  height: 1,
+                                  color: item.status == 2
+                                      ? AppColors.c000000
+                                      : AppColors.c10A86A,
                                   fontFamily: FontFamily.fRobotoRegular),
                             ),
-                            if (item.status != 2)
+                            if (item.status == 2)
                               Container(
                                 margin: EdgeInsets.only(left: 6.w),
                                 child: IconWidget(
@@ -291,53 +368,11 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
                           ],
                         );
                       }),
-                      SizedBox(
-                        width: 52.w,
-                        child: Center(
-                          child: Text(
-                            item.awayTeamWL,
-                            style: 10.w4(
-                                color: AppColors.c000000,
-                                height: 1,
-                                fontFamily: FontFamily.fRobotoRegular),
-                          ),
-                        ),
-                      ),
+                      12.vGap,
+                      if (item.status == 0 || item.isGuess != 0) _buildGuess(),
                     ],
                   ),
                 ),
-                Obx(() {
-                  gameStartTimeStr.value;
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        item.status == 0
-                            ? ""
-                            : item.status == 1
-                                ? "In the game"
-                                : "FINAL",
-                        style: 12.w4(
-                            color: item.status == 2
-                                ? AppColors.c000000
-                                : AppColors.c10A86A,
-                            fontFamily: FontFamily.fRobotoRegular),
-                      ),
-                      if (item.status == 2)
-                        Container(
-                          margin: EdgeInsets.only(left: 6.w),
-                          child: IconWidget(
-                            iconWidth: 5.w,
-                            icon: Assets.playerUiIconArrows01,
-                            iconColor: AppColors.c000000,
-                          ),
-                        )
-                    ],
-                  );
-                }),
-                12.vGap,
-                if (item.status == 0 || item.isGuess != 0) _buildGuess(),
                 Container(
                   height: 1,
                   width: double.infinity,
@@ -578,19 +613,5 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
         ),
       ),
     );
-  }
-
-  String formatDate() {
-    var gameStartTime = MyDateUtils.getDateTimeByMs(item.gameStartTime);
-    var formatDate =
-        MyDateUtils.formatDate(gameStartTime, format: DateFormats.PARAM_M_D);
-    var formatHmAm = MyDateUtils.formatHM_AM(gameStartTime);
-    if (MyDateUtils.isToday(item.gameStartTime)) {
-      return "Today $formatHmAm";
-    } else if (MyDateUtils.isTomorrow(DateTime.now(), gameStartTime)) {
-      return "Tomorrow $formatHmAm";
-    } else {
-      return "$formatDate $formatHmAm";
-    }
   }
 }

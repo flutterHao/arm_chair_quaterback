@@ -239,18 +239,19 @@ class MyDateUtils {
   }
 
   /// dateTime 今天 ,locDateTime 要比较的时间
-  static bool isTomorrow(DateTime dateTime, DateTime otherDateTime) {
+  static bool isTomorrow(int tomorrowMs,{DateTime? nowDateTime}) {
     // 获取当前日期（不包含时分秒）
-    DateTime now = dateTime;
+    DateTime now = nowDateTime??DateTime.now();
     DateTime currentDate = DateTime(now.year, now.month, now.day);
 
     // 获取明天的日期（不包含时分秒）
     DateTime tomorrow = currentDate.add(const Duration(days: 1));
 
+    var tomorrowDateTime = getDateTimeByMs(tomorrowMs);
     // 比较目标日期的年月日部分是否等于明天的日期
-    return otherDateTime.year == tomorrow.year &&
-        otherDateTime.month == tomorrow.month &&
-        otherDateTime.day == tomorrow.day;
+    return tomorrowDateTime.year == tomorrow.year &&
+        tomorrowDateTime.month == tomorrow.month &&
+        tomorrowDateTime.day == tomorrow.day;
   }
 
 

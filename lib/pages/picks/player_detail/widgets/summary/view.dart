@@ -1151,7 +1151,7 @@ class _SummaryPageState extends State<SummaryPage>
                                     (controller.nbaPlayerBaseInfoEntity!
                                                 .playerRegularMap!
                                                 .toJson()[keys[index]] ??
-                                            0)
+                                            "/")
                                         .toString(),
                                     style: 12.w4(color: AppColors.c545454),
                                   ));
@@ -1166,7 +1166,7 @@ class _SummaryPageState extends State<SummaryPage>
                                     (controller.nbaPlayerBaseInfoEntity!
                                                 .playerPlayoffsMap!
                                                 .toJson()[keys[index]] ??
-                                            0)
+                                            "/")
                                         .toString(),
                                     style: 12.w4(color: AppColors.c545454),
                                   ));

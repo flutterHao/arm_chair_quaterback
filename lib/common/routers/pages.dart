@@ -10,14 +10,11 @@
 // import 'package:arm_chair_quaterback/pages/news/rank/bindings.dart';
 // import 'package:arm_chair_quaterback/pages/news/rank/stats_view.dart';
 // import 'package:arm_chair_quaterback/pages/news/rank/team_view.dart';
-import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
-import 'package:arm_chair_quaterback/common/widgets/transitions/half_slide_right_to_left_transition.dart';
 import 'package:arm_chair_quaterback/pages/league/league_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/view.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_info/bindings.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_info/view.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/view.dart';
-import 'package:arm_chair_quaterback/pages/news/new_list/widgets/news_list_item.dart';
 import 'package:arm_chair_quaterback/pages/picks/personal_center/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
@@ -79,8 +76,9 @@ class AppPages {
       name: RouteNames.newsDetail,
     ),
     GetPage(
+      opaque: false,
       name: RouteNames.leagueLeagueDetail,
-      page: () => const LeagueDetailPage(),
+      page: () => LeagueDetailPage(),
     ),
     // GetPage(
     //   opaque: false,

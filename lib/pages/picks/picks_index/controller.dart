@@ -34,16 +34,6 @@ class PicksIndexController extends GetxController
   PicksIndexController();
 
   TabController? tabController;
-  List<String> tabTitles = [
-    "POINTS",
-    "REBOUNDS",
-    "ASSISTS",
-    "3POINT",
-    "POINTS",
-    "REBOUNDS",
-    "ASSISTS",
-    "3POINT",
-  ];
   late ScrollController scrollController = ScrollController();
   final GlobalKey targetKey = GlobalKey(); // 用来标记目标 widget
   var isSelfInfoFloatShow = false.obs; //竞猜榜单自己的信息浮窗是否显示

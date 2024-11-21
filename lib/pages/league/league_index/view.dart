@@ -1,43 +1,30 @@
-import 'dart:async';
-import 'dart:math';
 
-import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
-import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
-import 'package:arm_chair_quaterback/common/widgets/TLBuilderWidget.dart';
-import 'package:arm_chair_quaterback/common/widgets/support_percent_progress_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
-import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/delegate/fixed_height_sliver_header_delegate.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/transitions/half_slide_right_to_left_transition.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
-import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/widgets/score_page.dart';
-import 'package:arm_chair_quaterback/pages/league/league_index/widgets/score_page_controller.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_account/bindings.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_account/view.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_info/bindings.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_info/view.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_setting/bindings.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_setting/view.dart';
-import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/user_avater_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/bindings.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/stats_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class LeaguePage extends StatelessWidget {
   const LeaguePage({super.key});
@@ -132,7 +119,7 @@ class _LeagueIndexPageState extends State<LeagueIndexPage>
 
   SliverPersistentHeader buildHeader() {
     return SliverPersistentHeader(
-      floating: true,
+      pinned: true,
       delegate: FixedHeightSliverHeaderDelegate(
           child: Container(
             height: 58.w,

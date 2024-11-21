@@ -73,8 +73,11 @@ class LeagueController extends GetxController
     });
   }
 
-
-
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
+  }
 
   int getStartTime() {
     var dataTime = getDataTimes()[currentPageIndex.value];

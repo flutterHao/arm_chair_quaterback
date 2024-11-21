@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:arm_chair_quaterback/common/widgets/clipper/circle_clipper.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -62,14 +63,8 @@ class _MatchSuccessState extends State<MatchSuccess>
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery
-        .of(context)
-        .size
-        .width;
-    var height = MediaQuery
-        .of(context)
-        .size
-        .height;
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
     return Obx(() {
       return Stack(
         children: _buildStartWidget(width, height),
@@ -80,8 +75,8 @@ class _MatchSuccessState extends State<MatchSuccess>
   List<Widget> _buildStartWidget(double width, double height) {
     TeamBattleController controller = Get.find();
     double designHeight = 261.w;
-    return [
 
+    return [
       /// left
       Positioned(
         left: -282.w * (progress.value < 2 ? (1 - progress.value) : 0),
@@ -91,97 +86,93 @@ class _MatchSuccessState extends State<MatchSuccess>
           height: 86.w,
           child: Stack(
             children: [
-              Container(
-                margin: EdgeInsets.only(bottom: 3.w),
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    centerSlice: Rect.fromLTWH(0, 0, 2, 50),
-                    image: AssetImage(Assets.teamUiBattlePanel01),
-                    colorFilter: ColorFilter.mode(
-                      AppColors.c3B93FF, // 修改为你想要的颜色
-                      BlendMode.srcIn,
-                    ),
-                  ),
+              ClipPath(
+                clipper: CircleClipper(),
+                child: Container(
+                  margin: EdgeInsets.only(bottom: 3.w),
+                  color: AppColors.c3B93FF,
                 ),
               ),
               Container(
                 margin: EdgeInsets.only(top: 3.w, right: 3.w),
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    centerSlice: Rect.fromLTWH(0, 0, 2, 50),
-                    image: AssetImage(Assets.teamUiBattlePanel01),
-                    colorFilter: ColorFilter.mode(
-                      AppColors.cFFFFFF, // 修改为你想要的颜色
-                      BlendMode.srcIn,
-                    ),
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.end,
+                child: ClipPath(
+                  clipper: CircleClipper(),
+                  child: Container(
+                    color: AppColors.cFFFFFF,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Container(
-                          margin: EdgeInsets.only(right: 8.w),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                "ME",
-                                style:
-                                10.w4(color: AppColors.c3B93FF, height: 1),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(right: 8.w),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    "ME",
+                                    style:
+                                        10.w4(color: AppColors.c3B93FF, height: 1),
+                                  ),
+                                  Text(
+                                    controller.battleEntity.homeTeam.teamName,
+                                    style:
+                                        19.w7(color: AppColors.c262626, height: 1),
+                                  )
+                                ],
                               ),
-                              Text(
-                                controller.battleEntity.homeTeam.teamName,
-                                style:
-                                19.w7(color: AppColors.c262626, height: 1),
-                              )
-                            ],
-                          ),
+                            ),
+                            7.vGap,
+                            SizedBox(
+                              width: 143.w,
+                              height: 20.w,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  IconWidget(
+                                      iconWidth: 18.w,
+                                      icon: Assets.teamUiIconTrophy01),
+                                  6.hGap,
+                                  Text(
+                                    "${controller.battleEntity.homeTeam.cup}",
+                                    style:
+                                        16.w7(color: AppColors.c262626, height: 1),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
                         ),
-                        7.vGap,
-                        SizedBox(
-                          width: 143.w,
-                          height: 20.w,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              IconWidget(iconWidth: 18.w,
-                                  icon: Assets.teamUiIconTrophy01),
-                              6.hGap,
-                              Text("${controller.battleEntity.homeTeam.cup}",
-                                style: 16.w7(
-                                    color: AppColors.c262626, height: 1),),
-                            ],
-                          ),
-                        )
+                        9.hGap,
+                        Container(
+                            width: 64.w,
+                            height: 64.w,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(14.w),
+                                border: Border.all(
+                                    color: AppColors.c3B93FF, width: 2.w)),
+                            child: ClipRRect(
+                                borderRadius: BorderRadius.circular(14.w),
+                                child: ImageWidget(
+                                  url: Utils.getAvaterUrl(
+                                      controller.battleEntity.homeTeam.teamLogo),
+                                  imageFailedPath: Assets.teamUiHead01,
+                                  width: 64.w,
+                                  height: 64.w,
+                                ))),
+                        12.hGap,
+                        IconWidget(
+                          iconWidth: 7.w,
+                          icon: Assets.picksUiTriangleG,
+                          iconColor: AppColors.c3B93FF,
+                          rotateAngle: 90,
+                        ),
+                        25.hGap
                       ],
                     ),
-                    9.hGap,
-                    Container(
-                        width: 64.w,
-                        height: 64.w,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(14.w),
-                            border: Border.all(
-                                color: AppColors.c3B93FF, width: 2.w)),
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.circular(14.w),
-                            child: ImageWidget(url: Utils.getAvaterUrl(
-                                controller.battleEntity.homeTeam.teamLogo),
-                              width: 64.w,
-                              height: 64.w,))),
-                    12.hGap,
-                    IconWidget(
-                      iconWidth: 7.w,
-                      icon: Assets.picksUiTriangleG,
-                      iconColor: AppColors.c3B93FF,
-                      rotateAngle: 90,
-                    ),
-                    25.hGap
-                  ],
+                  ),
                 ),
               )
             ],
@@ -223,29 +214,19 @@ class _MatchSuccessState extends State<MatchSuccess>
                   height: 86.w,
                   child: Stack(
                     children: [
-                      Container(
-                        margin: EdgeInsets.only(bottom: 3.w),
-                        decoration: const BoxDecoration(
-                          image: DecorationImage(
-                            centerSlice: Rect.fromLTWH(0, 0, 2, 50),
-                            image: AssetImage(Assets.teamUiBattlePanel01),
-                            colorFilter: ColorFilter.mode(
-                              AppColors.cFF7954, // 修改为你想要的颜色
-                              BlendMode.srcIn,
-                            ),
-                          ),
+                      ClipPath(
+                        clipper: CircleClipper(),
+                        child: Container(
+                          margin: EdgeInsets.only(bottom: 3.w),
+                          color: AppColors.cFF7954,
                         ),
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 3.w, right: 3.w),
-                        decoration: const BoxDecoration(
-                          image: DecorationImage(
-                            centerSlice: Rect.fromLTWH(0, 0, 2, 50),
-                            image: AssetImage(Assets.teamUiBattlePanel01),
-                            colorFilter: ColorFilter.mode(
-                              AppColors.cFFFFFF, // 修改为你想要的颜色
-                              BlendMode.srcIn,
-                            ),
+                        child: ClipPath(
+                          clipper: CircleClipper(),
+                          child: Container(
+                            color: AppColors.cFFFFFF,
                           ),
                         ),
                       )
@@ -270,13 +251,15 @@ class _MatchSuccessState extends State<MatchSuccess>
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(14.w),
                           border:
-                          Border.all(color: AppColors.cFF7954, width: 2.w)),
+                              Border.all(color: AppColors.cFF7954, width: 2.w)),
                       child: ClipRRect(
                           borderRadius: BorderRadius.circular(14.w),
-                          child: ImageWidget(url: Utils.getAvaterUrl(
-                              controller.battleEntity.awayTeam.teamLogo),
-                              width: 64.w,
-                              height: 64.w,))),
+                          child: ImageWidget(
+                            url: Utils.getAvaterUrl(
+                                controller.battleEntity.awayTeam.teamLogo),
+                            width: 64.w,
+                            height: 64.w,
+                          ))),
                   9.hGap,
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -305,12 +288,14 @@ class _MatchSuccessState extends State<MatchSuccess>
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            IconWidget(iconWidth: 18.w,
+                            IconWidget(
+                                iconWidth: 18.w,
                                 icon: Assets.teamUiIconTrophy01),
                             6.hGap,
-                            Text("${controller.battleEntity.awayTeam.cup}",
-                              style: 16.w7(color: AppColors.c262626,
-                                  height: 1),),
+                            Text(
+                              "${controller.battleEntity.awayTeam.cup}",
+                              style: 16.w7(color: AppColors.c262626, height: 1),
+                            ),
                           ],
                         ),
                       )

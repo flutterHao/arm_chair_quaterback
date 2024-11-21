@@ -48,14 +48,14 @@ class Assets {
   static const String iconIconBack = 'assets/images/icon/icon_back.png';
   static const String iconIconClose = 'assets/images/icon/icon_close.png';
   static const String iconIconShare = 'assets/images/icon/icon_share.png';
+  static const String iconProp1 = 'assets/images/icon/prop_1.png';
   static const String iconProp101 = 'assets/images/icon/prop_101.png';
   static const String iconProp102 = 'assets/images/icon/prop_102.png';
-  static const String iconProp301 = 'assets/images/icon/prop_301.png';
+  static const String iconProp2 = 'assets/images/icon/prop_2.png';
+  static const String iconProp3 = 'assets/images/icon/prop_3.png';
   static const String iconProp302 = 'assets/images/icon/prop_302.png';
-  static const String iconProp303 = 'assets/images/icon/prop_303.png';
-  static const String iconProp304 = 'assets/images/icon/prop_304.png';
-  static const String iconProp305 = 'assets/images/icon/prop_305.png';
-  static const String iconProp306 = 'assets/images/icon/prop_306.png';
+  static const String iconProp4 = 'assets/images/icon/prop_4.png';
+  static const String iconProp5 = 'assets/images/icon/prop_5.png';
   static const String iconStatus101 = 'assets/images/icon/status_101.png';
   static const String iconStatus102 = 'assets/images/icon/status_102.png';
   static const String iconStatus103 = 'assets/images/icon/status_103.png';
@@ -196,7 +196,6 @@ class Assets {
   static const String teamUICommonGrain = 'assets/images/team/UI_common_grain.png';
   static const String teamUICommonTCBg3 = 'assets/images/team/UI_common_TC_bg3.png';
   static const String teamUiBattleNews = 'assets/images/team/ui_battle_news.png';
-  static const String teamUiBattlePanel01 = 'assets/images/team/ui_battle_panel_01.png';
   static const String teamUiBelle01 = 'assets/images/team/ui_belle_01.png';
   static const String teamUiBelle02 = 'assets/images/team/ui_belle_02.png';
   static const String teamUiBelle03 = 'assets/images/team/ui_belle_03.png';

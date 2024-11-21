@@ -9,16 +9,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 class PlayerPropertyDataGridSource extends DataGridSource {
-  PlayerPropertyDataGridSource({required this.data}) {
-    _buildDataGridRows();
-  }
+  PlayerPropertyDataGridSource({required this.data});
 
   final List<SeasonHistoryItems> data;
 
-  List<DataGridRow> _dataGridRows = <DataGridRow>[];
 
   /// Build DataGridRows
-  void _buildDataGridRows() {
+  List<DataGridRow> _buildDataGridRows() {
     List<DataGridRow> result = [];
     for (int i = 0; i < data.length; i++) {
       var items = data[i];
@@ -39,7 +36,7 @@ class PlayerPropertyDataGridSource extends DataGridSource {
       var dataGridRow = DataGridRow(cells: where);
       result.add(dataGridRow);
     }
-    _dataGridRows = result;
+    return result;
   }
 
   static List<String> get excludeKeys => [
@@ -57,7 +54,7 @@ class PlayerPropertyDataGridSource extends DataGridSource {
       ];
 
   @override
-  List<DataGridRow> get rows => _dataGridRows;
+  List<DataGridRow> get rows => _buildDataGridRows();
 
   @override
   DataGridRowAdapter buildRow(DataGridRow row) {

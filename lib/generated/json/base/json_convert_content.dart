@@ -19,6 +19,7 @@ import 'package:arm_chair_quaterback/common/entities/guess_reference_value.dart'
 import 'package:arm_chair_quaterback/common/entities/guess_top_reviews_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/my_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nab_player_season_game_rank_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/nba_game_detail_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_season_game_entity.dart';
@@ -335,6 +336,33 @@ class JsonConvert {
     if (<NabPlayerSeasonGameRankEntity>[] is M) {
       return data.map<NabPlayerSeasonGameRankEntity>((Map<String, dynamic> e) =>
           NabPlayerSeasonGameRankEntity.fromJson(e)).toList() as M;
+    }
+    if (<NbaGameDetailEntity>[] is M) {
+      return data.map<NbaGameDetailEntity>((Map<String, dynamic> e) =>
+          NbaGameDetailEntity.fromJson(e)).toList() as M;
+    }
+    if (<NbaGameDetailScoreBoardDetails>[] is M) {
+      return data.map<NbaGameDetailScoreBoardDetails>((
+          Map<String, dynamic> e) => NbaGameDetailScoreBoardDetails.fromJson(e))
+          .toList() as M;
+    }
+    if (<NbaGameDetailGameData>[] is M) {
+      return data.map<NbaGameDetailGameData>((Map<String, dynamic> e) =>
+          NbaGameDetailGameData.fromJson(e)).toList() as M;
+    }
+    if (<NbaGameDetailGameDataSchedule>[] is M) {
+      return data.map<NbaGameDetailGameDataSchedule>((Map<String, dynamic> e) =>
+          NbaGameDetailGameDataSchedule.fromJson(e)).toList() as M;
+    }
+    if (<NbaGameDetailGameDataTeamScore>[] is M) {
+      return data.map<NbaGameDetailGameDataTeamScore>((
+          Map<String, dynamic> e) => NbaGameDetailGameDataTeamScore.fromJson(e))
+          .toList() as M;
+    }
+    if (<NbaGameDetailGameDataPlayerScores>[] is M) {
+      return data.map<NbaGameDetailGameDataPlayerScores>((
+          Map<String, dynamic> e) =>
+          NbaGameDetailGameDataPlayerScores.fromJson(e)).toList() as M;
     }
     if (<NbaPlayerBaseInfoEntity>[] is M) {
       return data.map<NbaPlayerBaseInfoEntity>((Map<String, dynamic> e) =>
@@ -785,6 +813,16 @@ class JsonConvertClassCollection {
     (MyTeamEntity).toString(): MyTeamEntity.fromJson,
     (NabPlayerSeasonGameRankEntity).toString(): NabPlayerSeasonGameRankEntity
         .fromJson,
+    (NbaGameDetailEntity).toString(): NbaGameDetailEntity.fromJson,
+    (NbaGameDetailScoreBoardDetails).toString(): NbaGameDetailScoreBoardDetails
+        .fromJson,
+    (NbaGameDetailGameData).toString(): NbaGameDetailGameData.fromJson,
+    (NbaGameDetailGameDataSchedule).toString(): NbaGameDetailGameDataSchedule
+        .fromJson,
+    (NbaGameDetailGameDataTeamScore).toString(): NbaGameDetailGameDataTeamScore
+        .fromJson,
+    (NbaGameDetailGameDataPlayerScores)
+        .toString(): NbaGameDetailGameDataPlayerScores.fromJson,
     (NbaPlayerBaseInfoEntity).toString(): NbaPlayerBaseInfoEntity.fromJson,
     (NbaPlayerBaseInfoPlayerDataAvg).toString(): NbaPlayerBaseInfoPlayerDataAvg
         .fromJson,
