@@ -1,11 +1,15 @@
 /*
  * @Description: 
  * @Author: lihonghao
- * @Date: 2024-10-11 15:57:44
- * @LastEditTime: 2024-11-20 17:07:31
+ * @Date: 2024-11-14 14:41:22
+ * @LastEditTime: 2024-11-21 21:08:22
  */
-
-import 'dart:math';
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-10-11 15:57:44
+ * @LastEditTime: 2024-11-21 20:25:47
+ */
 
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
@@ -20,7 +24,9 @@ import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/progress_paint.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/add_ball_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/player_slot_widget.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/clip_card.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/player_sroller_view.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/training_slot.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -213,8 +219,15 @@ class TrainingPage extends GetView<TrainingController> {
                     );
                   }),
                   4.hGap,
+                  AnimatedNum(
+                    number: trainingInfo.prop.num,
+                    textStyle: 16.w7(
+                      color: AppColors.c262626,
+                      fontFamily: FontFamily.fOswaldMedium,
+                    ),
+                  ),
                   Text(
-                    "${trainingInfo.prop.num}/${controller.trainDefine.ballMaxNum}",
+                    "/${controller.trainDefine.ballMaxNum}",
                     style: 16.w7(
                       color: AppColors.c262626,
                       fontFamily: FontFamily.fOswaldMedium,
@@ -287,7 +300,7 @@ class TrainingPage extends GetView<TrainingController> {
                     child: Obx(() {
                       return AnimatedOpacity(
                         opacity: controller.showCash.value ? 1 : 0,
-                        duration: const Duration(milliseconds: 1000),
+                        duration: const Duration(milliseconds: 300),
                         child: Container(
                           width: 126.w,
                           height: 61.w,
@@ -307,11 +320,17 @@ class TrainingPage extends GetView<TrainingController> {
                                 icon: Assets.teamUiMoney02,
                               ),
                               5.hGap,
-                              AnimatedNum(
-                                number: 200,
-                                unit: "K",
-                                textStyle: 16.w4(color: AppColors.cFFFFFF),
-                              )
+                              Obx(() {
+                                // return AnimatedNum(
+                                //   number: controller.cash.value,
+                                //   unit: "K",
+                                //   textStyle: 16.w4(color: AppColors.cFFFFFF),
+                                // );
+                                return Text(
+                                  Utils.formatMoney(controller.cash.value),
+                                  style: 16.w4(color: AppColors.cFFFFFF),
+                                );
+                              })
                             ],
                           ),
                         ),
@@ -322,128 +341,19 @@ class TrainingPage extends GetView<TrainingController> {
                   ///球员列表
                   Positioned(
                     top: 46.w,
-                    left: -0.w,
+                    left: -37.w,
+                    right: -37.w,
                     child: Obx(() {
-                      return Visibility(
-                        visible: controller.showPlayer.value,
+                      return AnimatedOpacity(
+                        duration: const Duration(milliseconds: 300),
+                        opacity: controller.showPlayer.value ? 1 : 0,
                         child: PlayerSrollerView(),
                       );
                     }),
                   ),
 
                   ///Slot
-                  Positioned(
-                    top: 130.w,
-                    child: Container(
-                      width: 375.w,
-                      height: 80.w,
-                      padding: EdgeInsets.symmetric(horizontal: 20.w),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: List.generate(6, (index) {
-                          return Expanded(
-                            child: Container(
-                                alignment: Alignment.center,
-                                child: AnimatedBuilder(
-                                    animation: controller.slotsAnimlList[index],
-                                    builder: (context, child) {
-                                      double v = controller
-                                          .sizeAnimations[index].value;
-                                      int length = controller.propList.length;
-                                      return Container(
-                                          width: 50.w * (2 - v),
-                                          height: 68.w * v,
-                                          alignment: Alignment.center,
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(9.w),
-                                          ),
-                                          child: Stack(
-                                            children: [
-                                              SizeTransition(
-                                                sizeFactor: controller
-                                                    .sizeAnimations[index],
-                                                child: ListView.builder(
-                                                  reverse: true,
-                                                  // itemExtent: 68.w,
-                                                  physics:
-                                                      const NeverScrollableScrollPhysics(),
-                                                  padding:
-                                                      const EdgeInsets.all(0),
-                                                  controller: controller
-                                                      .scrollerCtrlList[index],
-                                                  itemCount: length * 10,
-                                                  itemBuilder:
-                                                      (context, itemIndex) {
-                                                    int realIndex =
-                                                        itemIndex % length;
-                                                    double scale = controller
-                                                        .scaleAnimations[index]
-                                                        .value;
-                                                    return SizedBox(
-                                                        width: 50.w,
-                                                        height: 68.w,
-                                                        child: Obx(() {
-                                                          return AnimatedScale(
-                                                            duration:
-                                                                const Duration(
-                                                                    milliseconds:
-                                                                        300),
-                                                            scale: controller
-                                                                    .isAwards[
-                                                                        index]
-                                                                    .value
-                                                                ? 1.5
-                                                                : 1,
-                                                            child: IconWidget(
-                                                              iconWidth:
-                                                                  30.w * scale,
-                                                              icon: Utils.getPropIconUrl(
-                                                                  controller
-                                                                          .propList[
-                                                                      realIndex]),
-                                                              iconColor:
-                                                                  Colors.black,
-                                                            ),
-                                                          );
-                                                        }));
-                                                  },
-                                                ),
-                                              ),
-                                              Obx(() {
-                                                return Visibility(
-                                                  visible: !controller
-                                                      .slotCard[index].value,
-                                                  child: Container(
-                                                    width: 50.w,
-                                                    height: 68.w,
-                                                    alignment: Alignment.center,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              9.w),
-                                                    ),
-                                                    child: IconWidget(
-                                                      iconWidth: 16.w,
-                                                      icon: Assets
-                                                          .managerUiManagerTrainingUnknown,
-                                                      iconColor: Colors.black
-                                                          .withOpacity(0.2),
-                                                    ),
-                                                  ),
-                                                );
-                                              })
-                                            ],
-                                          ));
-                                    })),
-                          );
-                        }),
-                      ),
-                    ),
-                  ),
+                  Positioned(top: 130.w, child: const TrainingSlot()),
 
                   Positioned(
                     top: 230.w,
@@ -484,9 +394,13 @@ class TrainingPage extends GetView<TrainingController> {
                                       : AppColors.c000000,
                                   borderRadius: BorderRadius.circular(9.w)),
                               child: Text(
-                                "START",
+                                controller.isPlaying.value
+                                    ? "ROLLING"
+                                    : "START",
                                 style: 19.w4(
-                                  color: AppColors.cFFFFFF,
+                                  color: controller.isPlaying.value
+                                      ? AppColors.ccccccc
+                                      : AppColors.cFFFFFF,
                                   fontFamily: FontFamily.fOswaldMedium,
                                 ),
                               ),
@@ -496,21 +410,42 @@ class TrainingPage extends GetView<TrainingController> {
                       ],
                     ),
                   ),
-                  if (!controller.showCash.value)
-                    Visibility(
-                        visible: controller.showCash.value,
-                        child: Stack(
-                          children: [
-                            ...List.generate(6, (index) {
-                              double x = 50.w * index + 50.w;
-                              return CoinAnimation(
-                                fromPosition: Offset(x, 140.w), // 从 slot 位置开始
-                                toPosition: Offset(165.w, 70.w), // 到金钱奖励组件的位置
-                                coinSize: 20.0,
-                              );
-                            })
-                          ],
-                        )),
+                  // Obx(() {
+                  //   var a = controller.showCash.value;
+                  //   return Visibility(
+                  //     visible: true,
+                  //     child: Stack(
+                  //       children: [
+                  //         ...List.generate(6, (index) {
+                  //           double x = 50.w * index + 50.w;
+                  //           return CoinAnimation(
+                  //             fromPosition: Offset(x, 140.w), // 从 slot 位置开始
+                  //             toPosition: Offset(165.w, 70.w), // 到金钱奖励组件的位置
+                  //             coinSize: 20.0,
+                  //           );
+                  //         })
+                  //       ],
+                  //     ),
+                  //   );
+                  // }),
+                  // Positioned(
+                  //     top: 140.w,
+                  //     child: FlipCard(
+                  //       front: Container(
+                  //         color: Colors.blue,
+                  //         child: Center(
+                  //             child: Text('Front',
+                  //                 style: TextStyle(
+                  //                     color: Colors.white, fontSize: 24))),
+                  //       ),
+                  //       back: Container(
+                  //         color: Colors.red,
+                  //         child: Center(
+                  //             child: Text('Back',
+                  //                 style: TextStyle(
+                  //                     color: Colors.white, fontSize: 24))),
+                  //       ),
+                  //     ))
                 ],
               ),
             )

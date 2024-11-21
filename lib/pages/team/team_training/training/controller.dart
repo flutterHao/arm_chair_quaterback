@@ -15,6 +15,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+///1:战术(buff)
+///2:状态
+///3:道具
+///4:篮球
+///5:钞票
 class TrainingController extends GetxController
     with GetTickerProviderStateMixin {
   final random = Random();
@@ -23,6 +28,7 @@ class TrainingController extends GetxController
   var showBall = false.obs;
   var showPlayer = false.obs;
   var showCash = false.obs;
+  RxInt cash = 0.obs;
   TrainingInfoEntity trainingInfo = TrainingInfoEntity();
   List<TeamPlayerInfoEntity> playerList = [];
   List<TrainTaskEntity> trainTaskList = [];
@@ -67,6 +73,8 @@ class TrainingController extends GetxController
   //球员滚动
   late Timer _timer;
   late ScrollController playerScollCtrl;
+  int playerIdx = 0;
+  bool showResult = false;
 
   /// 在 widget 内存中分配后立即调用。
   @override
@@ -88,9 +96,9 @@ class TrainingController extends GetxController
             tween: Tween(begin: 0.9, end: 0.8), weight: 10),
         TweenSequenceItem<double>(
             tween: Tween(begin: 0.8, end: 1.0), weight: 10),
-        TweenSequenceItem<double>(tween: Tween(begin: 1, end: 1.1), weight: 10),
+        TweenSequenceItem<double>(tween: Tween(begin: 1, end: 1.2), weight: 10),
         TweenSequenceItem<double>(
-            tween: Tween(begin: 1.1, end: 1.0), weight: 10),
+            tween: Tween(begin: 1.2, end: 1.0), weight: 10),
       ]).animate(CurvedAnimation(
           parent: slotsAnimlList[index], curve: Curves.easeInOut));
     });
@@ -151,6 +159,9 @@ class TrainingController extends GetxController
 
   ///获取配置数据计算倒计时
   void recoverTimeAndCountDown() {
+    if (trainingInfo.prop.num >= trainDefine.ballMaxNum) {
+      return;
+    }
     int recover = trainDefine.ballRecoverTime;
     DateTime recoverTime =
         DateUtil.getDateTimeByMs(trainingInfo.training.ballRefreshTime)
@@ -170,6 +181,7 @@ class TrainingController extends GetxController
         _timer.cancel();
         // 重新获取新的恢复时间进行倒计时
         trainingInfo = await TeamApi.getTrainingInfo();
+        update(["training_page"]);
         recoverTimeAndCountDown();
       }
     });
@@ -184,9 +196,12 @@ class TrainingController extends GetxController
 
   void startSlot() async {
     if (isPlaying.value) return;
+    isPlaying.value = true;
     final teamIndexCtrl = Get.find<TeamIndexController>();
     teamIndexCtrl.scroToSlot();
-    trainingInfo = await TeamApi.playerTraining(playerList[0].uuid);
+    playerIdx = random.nextInt(playerList.length);
+    trainingInfo = await TeamApi.playerTraining(playerList[playerIdx].uuid);
+    update(["training_page"]);
     for (int i = 0; i < slotCard.length; i++) {
       slotCard[i].value = false;
       scrollerCtrlList[i].jumpTo(0);
@@ -199,110 +214,98 @@ class TrainingController extends GetxController
     }
   }
 
-  void _scrollColumn(int index) {
+  void _scrollColumn(int index) async {
     slotCard[index].value = true;
     int propIndex = propList.indexOf(trainingInfo.propArray[index]);
 
     ///在获奖的结果基础上旋转三周
     double offset = 68.w * (propIndex + propList.length * 3);
     slotsAnimlList[index].forward();
-    scrollerCtrlList[index]
-        .animateTo(offset,
-            duration: const Duration(milliseconds: 600),
-            curve: const Cubic(0.27, 0.59, 0.19, 1.1))
-        .then((_) {
-      if (index == 5) {
-        ///最后一个旋转结束
-        List<int> awads = [];
-        for (var e in trainingInfo.award) {
-          ///槽位显示中奖放大动画
-          for (int i = 0; i < trainingInfo.propArray.length; i++) {
-            if (trainingInfo.propArray[i] == e.id) {
-              isAwards[i].value = true;
-              //槽位恢复
-              Future.delayed(const Duration(milliseconds: 200), () {
-                isAwards[i].value = false;
-              });
-            }
+    await scrollerCtrlList[index].animateTo(offset,
+        duration: const Duration(milliseconds: 600),
+        curve: const Cubic(0.27, 0.59, 0.19, 1.1));
+    if (index == 5) {
+      ///最后一个旋转结束
+      List<int> awads = [];
+      for (var e in trainingInfo.award) {
+        ///槽位显示中奖放大动画
+        for (int i = 0; i < trainingInfo.propArray.length; i++) {
+          if (trainingInfo.propArray[i] == e.id) {
+            isAwards[i].value = true;
+            //槽位恢复
+            Future.delayed(const Duration(milliseconds: 200), () {
+              isAwards[i].value = false;
+            });
           }
-          awads.add(e.id);
         }
+        if (e.id == 5) {
+          cash.value = e.num;
+        }
+        awads.add(e.id);
+      }
 
-        ///奖励表达
-        // showPlayer.value = true;
-        // startAutoScroll(0);
-        if (awads.contains(1)) {}
-        if (awads.contains(2)) {}
-        // if (awads.contains(3)) {
-        //   showPlayer.value = true;
-        //   startAutoScroll(0);
-        // }
-        if (awads.contains(4)) {
-          showBall.value = true;
-          Future.delayed(const Duration(milliseconds: 300), () {
-            showBall.value = false;
-          });
-        }
-        if (awads.contains(5)) {
-          showCash.value = true;
-          Future.delayed(const Duration(milliseconds: 1000), () {
-            showBall.value = false;
-          });
-        }
-
-        Future.delayed(const Duration(milliseconds: 1000)).then((v) {
+      ///奖励表达
+      if (awads.contains(1)) {}
+      if (awads.contains(2)) {
+        showPlayer.value = true;
+        await startPlayerScroll(0);
+      }
+      if (awads.contains(3)) {
+        //道具
+      }
+      if (awads.contains(4)) {
+        showBall.value = true;
+        await Future.delayed(const Duration(milliseconds: 300), () {
+          showBall.value = false;
+        });
+      }
+      if (awads.contains(5)) {
+        showCash.value = true;
+        await Future.delayed(const Duration(milliseconds: 600), () {
+          showBall.value = false;
           showCash.value = false;
-          for (var element in slotsAnimlList) {
-            element.reset();
-          }
-          update(["training_page"]);
         });
       }
-    });
-  }
-
-  void startAutoScroll(int count) async {
-    playerScollCtrl.jumpTo(0);
-    if (playerScollCtrl.hasClients) {
-      await playerScollCtrl
-          .animateTo(
-        playerScollCtrl.offset + 50.w * 20,
-        duration: const Duration(milliseconds: 1500),
-        curve: Curves.easeOut,
-      )
-          .then((v) {
-        Future.delayed(const Duration(milliseconds: 500), () {
-          showPlayer.value = false;
-        });
-      });
-
-      // 当滚动到最后一个可见项时，重置到起点
-      if (playerScollCtrl.offset >= playerScollCtrl.position.maxScrollExtent) {
-        playerScollCtrl.jumpTo(0);
+      isPlaying.value = false;
+      for (var element in slotsAnimlList) {
+        element.reset();
       }
+      update(["training_page"]);
     }
   }
 
-  ///1:战术(buff)
-  ///2:状态
-  ///3:道具
-  ///4:篮球
-  ///5:钞票
-  void awardAnimation() async {
-    Map<int, int> propMap = countAward();
-    proCountMap = countProp();
-    if (propMap[301]! > 0 || propMap[302]! > 0 || propMap[102]! > 0) {
-      updateMoney();
+  ///球员滚动
+  Future startPlayerScroll(int count) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    playerScollCtrl.jumpTo(0);
+    double offset = (playerIdx + playerList.length * 3 - 4) * 50.w;
+    if (playerScollCtrl.hasClients) {
+      await playerScollCtrl
+          .animateTo(
+        playerScollCtrl.offset + offset,
+        duration: const Duration(milliseconds: 1500),
+        // curve: Curves.easeInOut,
+        curve: const Cubic(0.27, 0.59, 0.19, 1.05),
+      )
+          .then((v) async {
+        showResult = true;
+        trainingInfo.selectPlayer.value = trainingInfo.statusReplyPlayers;
+        await Future.delayed(const Duration(milliseconds: 1500), () {
+          showPlayer.value = false;
+          showResult = false;
+        });
+      });
     }
   }
 
   void updateMoney() {
     for (var e in trainingInfo.award) {
-      for (var element
-          in HomeController.to.userEntiry.teamLoginInfo!.teamPropList!) {
-        if ((e.id == 102 && element.propId == 102) ||
-            (e.id == 103 && element.propId == 103)) {
-          element.num = element.num! + e.num;
+      if (e.id == 5) {
+        for (var element
+            in HomeController.to.userEntiry.teamLoginInfo!.teamPropList!) {
+          if (element.propId == 102) {
+            element.num = element.num! + e.num;
+          }
         }
       }
     }
