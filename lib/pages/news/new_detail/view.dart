@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-14 11:11:48
- * @LastEditTime: 2024-11-19 21:39:58
+ * @LastEditTime: 2024-11-22 14:48:50
  */
 /*
  * @Description: 
@@ -26,6 +26,7 @@ import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/send_comment_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/index.dart';
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -133,16 +134,18 @@ class NewsDetailPage extends GetView<NewListController> {
             fontFamily: FontFamily.fOswaldMedium,
           ),
         ),
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: 15.w),
-          child: ImageWidget(
-            url: newsDetail.imgUrl,
-            width: 343.w,
-            height: newsDetail.imageHeight,
-            // fit: BoxFit.fitWidth,
-            borderRadius: BorderRadius.circular(12.w),
-          ),
-        ),
+        ObjectUtil.isNotEmpty(newsDetail.imgUrl)
+            ? Padding(
+                padding: EdgeInsets.symmetric(vertical: 15.w),
+                child: ImageWidget(
+                  url: newsDetail.imgUrl,
+                  width: newsDetail.type == 1 ? 343.w : newsDetail.imamgeWidth,
+                  height: newsDetail.imageHeight,
+                  // fit: BoxFit.fitWidth,
+                  borderRadius: BorderRadius.circular(9.w),
+                ),
+              )
+            : 10.vGap,
         10.vGap,
         Text(
           newsDetail.content,

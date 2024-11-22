@@ -168,12 +168,26 @@ class NewsListItem extends StatelessWidget {
         ],
       );
     } else {
+      var titleStyle = 19.w4(
+        color: AppColors.c000000,
+        height: 1.25,
+        fontFamily: FontFamily.fOswaldMedium,
+      );
+      int col = Utils.calculateActualLines(newsDetail.title,
+          343.w - (newsDetail.imamgeWidth ?? 0) - 20.w, titleStyle);
+
+      int subClo = 1;
+      if (col <= 2) {
+        subClo = 5 - col;
+      } else {
+        subClo = 4 - col;
+      }
       return Column(
         ///小图
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: 355.w,
+            width: 343.w,
             // height: 97.w,
             constraints: BoxConstraints(minHeight: 97.w, maxHeight: 110.w),
             child: Row(
@@ -194,19 +208,20 @@ class NewsListItem extends StatelessWidget {
                         maxLines: 4,
                       ),
                       10.vGap,
-                      Expanded(
-                          child: Text(
-                        newsDetail.content,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontFamily: FontFamily.fRobotoRegular,
-                          color: AppColors.c000000,
-                          height: 19 / 14,
-                          // letterSpacing: 0.5,
-                        ),
-                      )),
+                      if (subClo > 0)
+                        Expanded(
+                            child: Text(
+                          newsDetail.content,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: subClo,
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            fontFamily: FontFamily.fRobotoRegular,
+                            color: AppColors.c000000,
+                            height: 19 / 14,
+                            // letterSpacing: 0.5,
+                          ),
+                        )),
                     ],
                   ),
                 ),

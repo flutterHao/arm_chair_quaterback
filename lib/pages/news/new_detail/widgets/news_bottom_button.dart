@@ -2,10 +2,11 @@
  * @Description: 新闻的底部按钮点赞分享评论
  * @Author: lihonghao
  * @Date: 2024-10-17 17:02:35
- * @LastEditTime: 2024-11-22 11:57:29
+ * @LastEditTime: 2024-11-22 14:47:18
  */
 
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
+import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -138,43 +139,45 @@ class NewsBottomButton extends GetView<NewListController> {
         if (showCommentBt)
           _container(
               width: 76.w,
-              onTap: () async {
-                final ctrl = Get.find<CommentController>();
-                ctrl.getReviews(detail.id, isRefresh: true);
+              child: InkWell(
+                onTap: () async {
+                  final ctrl = Get.find<CommentController>();
+                  ctrl.getReviews(detail.id, isRefresh: true);
 
-                await showModalBottomSheet(
-                  isScrollControlled: true,
-                  context: Get.context!,
-                  // barrierColor: Colors.transparent,
-                  backgroundColor: Colors.transparent,
-                  builder: (context) {
-                    return VerticalDragBackWidget(
-                        child: CommentsDialog(detail: detail));
-                  },
-                );
+                  await showModalBottomSheet(
+                    isScrollControlled: true,
+                    context: Get.context!,
+                    // barrierColor: Colors.transparent,
+                    backgroundColor: Colors.transparent,
+                    builder: (context) {
+                      return VerticalDragBackWidget(
+                          child: CommentsDialog(detail: detail));
+                    },
+                  );
 
-                detail.reviewsList = ctrl.mainList.value;
-                ctrl.update();
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconWidget(
-                    iconWidth: 18.w,
-                    icon: Assets.iconUiIconChatting02,
-                    iconColor: AppColors.c000000,
-                  ),
-                  // if (detail.likes != 0)
-                  Obx(() {
-                    return Container(
-                      margin: EdgeInsets.only(left: 7.w),
-                      child: Text(
-                        numFormat(detail.reviewsCount.value),
-                        style: 14.w4(color: AppColors.c000000),
-                      ),
-                    );
-                  }),
-                ],
+                  detail.reviewsList = ctrl.mainList.value;
+                  ctrl.update();
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconWidget(
+                      iconWidth: 18.w,
+                      icon: Assets.iconUiIconChatting02,
+                      iconColor: AppColors.c000000,
+                    ),
+                    // if (detail.likes != 0)
+                    Obx(() {
+                      return Container(
+                        margin: EdgeInsets.only(left: 7.w),
+                        child: Text(
+                          numFormat(detail.reviewsCount.value),
+                          style: 14.w4(color: AppColors.c000000),
+                        ),
+                      );
+                    }),
+                  ],
+                ),
               )),
         // 4.hGap,
       ],

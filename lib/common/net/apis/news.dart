@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 17:28:14
- * @LastEditTime: 2024-11-22 11:19:43
+ * @LastEditTime: 2024-11-22 14:36:26
  */
 import 'package:arm_chair_quaterback/common/entities/news_banner.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
@@ -113,27 +113,28 @@ class NewsApi {
     List list = await HttpUtil()
         .post(Api.newsFlow, data: {"page": page, "limit": limit});
     var details = list.map((e) async {
-      var newsDetail = NewsListDetail.fromJson(e);
-      if (ObjectUtil.isNotEmpty(newsDetail.imgUrl)) {
-        final ExtendedNetworkImageProvider provider =
-            ExtendedNetworkImageProvider(newsDetail.imgUrl);
-        provider.getImageSize().then((size) {
-          if (size != null) {
-            if (size.width > 250.w) {
-              newsDetail.type = 1;
-              newsDetail.imageHeight = size.height / size.width * 343.w;
+      var item = NewsListDetail.fromJson(e);
+      if (ObjectUtil.isNotEmpty(item.imgUrl)) {
+        final uri = Uri.parse(item.imgUrl);
+        double? h = double.tryParse(uri.queryParameters["height"] ?? '');
+        double? w = double.tryParse(uri.queryParameters["width"] ?? '');
+        if (ObjectUtil.isNotEmpty(h) && ObjectUtil.isNotEmpty(w)) {
+          if (w! > 250.w) {
+            item.type = 1;
+            item.imageHeight = h! / w * 343.w;
+          } else {
+            if (item.imgUrl.contains(".gif")) {
+              item.type = 1;
             } else {
-              if (newsDetail.imgUrl.contains(".gif")) {
-                newsDetail.type = 1;
-              } else {
-                newsDetail.type = size.width > size.height ? 2 : 3;
-                newsDetail.imamgeWidth = size.width / size.height * 97.w;
-              }
+              item.type = w > h! ? 2 : 3;
+              item.imamgeWidth = w / h * 97.w;
             }
           }
-        });
+        }
+      } else {
+        item.type = 0;
       }
-      return newsDetail;
+      return item;
     }).toList();
     return Future.wait(details);
   }

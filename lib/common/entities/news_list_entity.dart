@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-26 18:53:41
- * @LastEditTime: 2024-11-18 21:28:55
+ * @LastEditTime: 2024-11-22 14:35:39
  */
 import 'package:arm_chair_quaterback/common/entities/review_entity.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
@@ -85,7 +85,7 @@ class NewsListDetail {
   late List<int> players = [];
   late String imgUrl = "";
   @JSONField(deserialize: false)
-  late int type = 1;
+  late int type = 0;
   @JSONField(deserialize: false)
   double? imageHeight;
   @JSONField(deserialize: false)

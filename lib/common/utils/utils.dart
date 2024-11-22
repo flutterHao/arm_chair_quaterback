@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-21 20:20:49
- * @LastEditTime: 2024-11-14 21:06:41
+ * @LastEditTime: 2024-11-22 15:00:08
  */
 import 'dart:async';
 import 'dart:io';
@@ -111,7 +111,10 @@ class Utils {
   }
 
   static String getLongName(String key) {
-    return CacheApi.pickType?.firstWhere((e) => e.pickTypeName == key).pickTypeFullName??"";
+    return CacheApi.pickType
+            ?.firstWhere((e) => e.pickTypeName == key)
+            .pickTypeFullName ??
+        "";
   }
 
   static Color getChartColor(value) {
@@ -250,5 +253,16 @@ class Utils {
       lastClickTime = currentClickTime;
     }
     return todo;
+  }
+
+  ///计算行数
+  static int calculateActualLines(
+      String text, double containerWidth, TextStyle textStyle) {
+    final TextPainter textPainter = TextPainter(
+      text: TextSpan(text: text, style: textStyle),
+      textDirection: TextDirection.ltr,
+    )..layout(maxWidth: containerWidth);
+
+    return textPainter.computeLineMetrics().length;
   }
 }

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-12 16:34:46
- * @LastEditTime: 2024-11-07 11:34:11
+ * @LastEditTime: 2024-11-22 15:32:29
  */
 import 'dart:math';
 
@@ -61,113 +61,110 @@ class _SendCommentWidgetState extends State<SendCommentWidget> {
     return GetBuilder<CommentController>(
         id: "commentDialog",
         builder: (_) {
-          return Padding(
+          return Container(
+            // duration: Duration(milliseconds: 50),
             padding: EdgeInsets.only(
               bottom: MediaQuery.of(context).viewInsets.bottom, // 键盘高度
             ),
-            child: Container(
-              color: isDarkMode ? AppColors.c262626 : AppColors.cFFFFFF,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 16.w, vertical: 12.w),
-                          child: Container(
-                              alignment: Alignment.center,
-                              constraints: BoxConstraints(minHeight: 42.w),
-                              decoration: BoxDecoration(
-                                  color: isDarkMode
-                                      ? AppColors.c4D4D4D
-                                      : AppColors.cE6E6E6,
-                                  borderRadius: BorderRadius.circular(24.w)),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Expanded(
-                                    child: TextField(
-                                      controller: ctrl,
-                                      minLines: 1,
-                                      maxLines: 10,
-                                      focusNode:
-                                          widget.isReply ? focusNode : null,
-                                      // keyboardAppearance:Brightness.light,
-                                      cursorColor: isDarkMode
-                                          ? AppColors.cF2F2F2
-                                          : AppColors.c262626,
-                                      scrollPadding: const EdgeInsets.all(0),
-                                      decoration: InputDecoration(
-                                        contentPadding: EdgeInsets.all(10.w),
-                                        hintText: widget.hintText,
-                                        hintStyle:
-                                            14.w4(color: AppColors.cB3B3B3),
-                                        border: const OutlineInputBorder(
-                                            borderSide: BorderSide.none),
-                                      ),
-                                      style: 14.w4(
-                                          color: isDarkMode
-                                              ? AppColors.cF2F2F2
-                                              : AppColors.c262626),
-                                      onChanged: (v) {
-                                        hasText.value =
-                                            ObjectUtil.isNotEmpty(v);
-                                      },
+            color: isDarkMode ? AppColors.c262626 : AppColors.cFFFFFF,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 16.w, vertical: 12.w),
+                        child: Container(
+                            alignment: Alignment.center,
+                            constraints: BoxConstraints(minHeight: 42.w),
+                            decoration: BoxDecoration(
+                                color: isDarkMode
+                                    ? AppColors.c4D4D4D
+                                    : AppColors.cE6E6E6,
+                                borderRadius: BorderRadius.circular(24.w)),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Expanded(
+                                  child: TextField(
+                                    controller: ctrl,
+                                    minLines: 1,
+                                    maxLines: 10,
+                                    focusNode:
+                                        widget.isReply ? focusNode : null,
+                                    // keyboardAppearance:Brightness.light,
+                                    cursorColor: isDarkMode
+                                        ? AppColors.cF2F2F2
+                                        : AppColors.c262626,
+                                    scrollPadding: const EdgeInsets.all(0),
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.all(10.w),
+                                      hintText: widget.hintText,
+                                      hintStyle:
+                                          14.w4(color: AppColors.cB3B3B3),
+                                      border: const OutlineInputBorder(
+                                          borderSide: BorderSide.none),
                                     ),
+                                    style: 14.w4(
+                                        color: isDarkMode
+                                            ? AppColors.cF2F2F2
+                                            : AppColors.c262626),
+                                    onChanged: (v) {
+                                      hasText.value = ObjectUtil.isNotEmpty(v);
+                                    },
                                   ),
-                                  Obx(() {
-                                    return AnimatedOpacity(
-                                      opacity: hasText.value ? 1.0 : 0.0,
-                                      duration:
-                                          const Duration(milliseconds: 200),
-                                      child: IconButton(
-                                        icon: Container(
-                                          width: 30.w,
-                                          height: 30.w,
-                                          decoration: BoxDecoration(
-                                              color: isDarkMode
-                                                  ? AppColors.cF2F2F2
-                                                  : AppColors.c262626,
-                                              borderRadius:
-                                                  BorderRadius.circular(15.w)),
-                                          child: Transform.rotate(
-                                            angle: 90 * (pi / 180),
-                                            child: IconWidget(
-                                              iconWidth: 15.w,
-                                              icon: Assets.iconIconBack,
-                                              iconColor: !isDarkMode
-                                                  ? AppColors.cF2F2F2
-                                                  : AppColors.c262626,
-                                              // iconColor: AppColors.c262626,
-                                            ),
+                                ),
+                                Obx(() {
+                                  return AnimatedOpacity(
+                                    opacity: hasText.value ? 1.0 : 0.0,
+                                    duration: const Duration(milliseconds: 200),
+                                    child: IconButton(
+                                      icon: Container(
+                                        width: 30.w,
+                                        height: 30.w,
+                                        decoration: BoxDecoration(
+                                            color: isDarkMode
+                                                ? AppColors.cF2F2F2
+                                                : AppColors.c262626,
+                                            borderRadius:
+                                                BorderRadius.circular(15.w)),
+                                        child: Transform.rotate(
+                                          angle: 90 * (pi / 180),
+                                          child: IconWidget(
+                                            iconWidth: 15.w,
+                                            icon: Assets.iconIconBack,
+                                            iconColor: !isDarkMode
+                                                ? AppColors.cF2F2F2
+                                                : AppColors.c262626,
+                                            // iconColor: AppColors.c262626,
                                           ),
                                         ),
-                                        onPressed: () {
-                                          String content = ctrl.text;
-                                          ctrl.text = "";
-                                          FocusScope.of(context).unfocus();
-                                          Get.find<CommentController>()
-                                              .sendReviews(
-                                            context,
-                                            widget.newsId,
-                                            // targetId: targetId,
-                                            reviews: widget.reviewsItem,
-                                            content,
-                                          );
-                                        },
                                       ),
-                                    );
-                                  }),
-                                ],
-                              )),
-                        ),
+                                      onPressed: () {
+                                        String content = ctrl.text;
+                                        ctrl.text = "";
+                                        FocusScope.of(context).unfocus();
+                                        Get.find<CommentController>()
+                                            .sendReviews(
+                                          context,
+                                          widget.newsId,
+                                          // targetId: targetId,
+                                          reviews: widget.reviewsItem,
+                                          content,
+                                        );
+                                      },
+                                    ),
+                                  );
+                                }),
+                              ],
+                            )),
                       ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           );
         });
