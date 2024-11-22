@@ -12,13 +12,14 @@ import 'package:arm_chair_quaterback/common/widgets/physics/one_boundary_page_sc
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/league/league_detail/controller.dart';
+import 'package:arm_chair_quaterback/pages/league/league_detail/widgets/play/play_not_start/view.dart';
 import 'package:arm_chair_quaterback/pages/league/league_detail/widgets/play/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class LeagueDetailPage extends GetView<LeagueDetailController> {
-  LeagueDetailPage({super.key});
+  const LeagueDetailPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +52,8 @@ class LeagueDetailPage extends GetView<LeagueDetailController> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        const Expanded(child: SizedBox.shrink()),
+                                        const Expanded(
+                                            child: SizedBox.shrink()),
                                         Column(
                                           children: [
                                             ImageWidget(
@@ -64,8 +66,8 @@ class LeagueDetailPage extends GetView<LeagueDetailController> {
                                               style: 10.w4(
                                                   color: AppColors.c000000,
                                                   height: 1,
-                                                  fontFamily:
-                                                      FontFamily.fRobotoRegular),
+                                                  fontFamily: FontFamily
+                                                      .fRobotoRegular),
                                             )
                                           ],
                                         ),
@@ -88,8 +90,8 @@ class LeagueDetailPage extends GetView<LeagueDetailController> {
                                                   controller
                                                       .gameStartTimeStr.value,
                                                   style: 12.w4(
-                                                      color: controller
-                                                                  .item.status ==
+                                                      color: controller.item
+                                                                  .status ==
                                                               1
                                                           ? AppColors.c10A86A
                                                           : AppColors.c000000,
@@ -123,12 +125,13 @@ class LeagueDetailPage extends GetView<LeagueDetailController> {
                                               style: 10.w4(
                                                   color: AppColors.c000000,
                                                   height: 1,
-                                                  fontFamily:
-                                                      FontFamily.fRobotoRegular),
+                                                  fontFamily: FontFamily
+                                                      .fRobotoRegular),
                                             )
                                           ],
                                         ),
-                                        const Expanded(child: SizedBox.shrink()),
+                                        const Expanded(
+                                            child: SizedBox.shrink()),
                                       ],
                                     )
                                   ],
@@ -147,8 +150,8 @@ class LeagueDetailPage extends GetView<LeagueDetailController> {
                                               width: 1)),
                                       child: IconWidget(
                                         iconWidth: 15.w,
-                                        icon:
-                                            Assets.commonUiCommonIconSystemShare,
+                                        icon: Assets
+                                            .commonUiCommonIconSystemShare,
                                         iconColor: AppColors.c262626,
                                       ),
                                     ))
@@ -192,11 +195,13 @@ class LeagueDetailPage extends GetView<LeagueDetailController> {
                       tabController: controller.tabController),
                   controller: controller.tabController,
                   children: [
-                    Center(
+                    const Center(
                       child: Text("PICKS"),
                     ),
-                    LeagueDetailPlayPage(controller.item),
-                    Center(
+                    controller.isGameStart
+                        ? LeagueDetailPlayPage(controller.item)
+                        : PlayNotStartPage(controller.item),
+                    const Center(
                       child: Text("SCORES"),
                     )
                   ]),

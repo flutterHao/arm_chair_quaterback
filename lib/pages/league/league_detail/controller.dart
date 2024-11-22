@@ -67,4 +67,6 @@ class LeagueDetailController extends GetxController with GetSingleTickerProvider
       "In the game ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(item.gameStartTime))}";
     }
   }
+
+  bool get isGameStart => item.gameStartTime<DateTime.now().millisecondsSinceEpoch;
 }

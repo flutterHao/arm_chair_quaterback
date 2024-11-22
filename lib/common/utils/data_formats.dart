@@ -33,4 +33,7 @@ class DateFormats {
   static const String PARAM_M_D = 'dd/MM';
   static const String PARAM_M_D_H = 'dd/MM HH';
   static const String PARAM_M_D_H_M = 'dd/MM HH:mm';
+
+  static const String DOT_Y_M_D = 'yyyy.MM.dd';
+
 }

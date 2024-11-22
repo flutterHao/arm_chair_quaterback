@@ -91,4 +91,11 @@ extension NumExt on num {
     var stringAsFixed = toStringAsFixed(1);
     return stringAsFixed.endsWith(".0") ? toInt().toString() : stringAsFixed;
   }
+
+  num handlerNaNInfinity({num defaultValue = 0}){
+    if(isNaN || isInfinite){
+      return defaultValue;
+    }
+    return this;
+  }
 }

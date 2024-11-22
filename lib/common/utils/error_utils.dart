@@ -14,10 +14,10 @@ import 'package:get/get.dart';
 
 class ErrorUtils {
 
-  static void toast(dynamic error) {
+  static void toast(dynamic e) {
     var str = DEFAULTERRORSTRING;
-    if (error is DioException) {
-      var result = _getResult(error);
+    if (e is DioException) {
+      var result = _getResult(e);
       str = _getErrorDesc((result?.code ?? -1).toString());
     }
     EasyLoading.showToast(str);

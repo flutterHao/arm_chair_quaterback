@@ -56,7 +56,8 @@ class ScorePageController extends GetxController {
     print('scores -------->>> startTime: $startTime -> ${time.day}');
     var futures = <Future>[
       LeagueApi.getNBAGameSchedules(startTime, endTime),
-      CacheApi.getNBATeamDefine()
+      CacheApi.getNBATeamDefine(),
+      CacheApi.getNBAPlayerInfo(),
     ];
     var leagueController = Get.find<LeagueController>();
     if(leagueController.picksDefineEntity == null){
@@ -65,8 +66,8 @@ class ScorePageController extends GetxController {
 
     Future.wait(futures).then((result) {
       var list = result[0] as List<ScoresEntity>;
-      if(futures.length==3){
-        leagueController.picksDefineEntity = result[2] as PicksDefineEntity;
+      if(futures.length==4){
+        leagueController.picksDefineEntity = result[3] as PicksDefineEntity;
       }
       scoreList = list.map((e) {
         var gameGuess = GameGuess(e);

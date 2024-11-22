@@ -1,8 +1,13 @@
+import 'dart:math';
+
 import 'package:arm_chair_quaterback/common/entities/nba_game_detail_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/league.dart';
+import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
+import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -32,8 +37,12 @@ class LeagueDetailPlayController extends GetxController
 
   initData() {
     loadStatus.value = LoadDataStatus.loading;
-    LeagueApi.getNBAGameData(item.gameId).then((result) {
-      nbaGameDetailEntity = result;
+    Future.wait([
+      LeagueApi.getNBAGameData(item.gameId),
+      CacheApi.getNBAPlayerInfo(),
+      CacheApi.getNBATeamDefine()
+    ]).then((result) {
+      nbaGameDetailEntity = result[0];
       loadStatus.value = LoadDataStatus.success;
       update();
     }, onError: (e) {
@@ -80,7 +89,72 @@ class LeagueDetailPlayController extends GetxController
       ...nbaGameDetailEntity!.gameData.awayPlayerScores
     ];
     concatList.sort((a, b) => b.toJson()[tab]!.compareTo(a.toJson()[tab]));
-    list = concatList.sublist(0,2);
+    list = concatList.sublist(0, min(2, concatList.length));
     return list;
   }
+
+  List<TeamStats> getTeamStatsData() {
+    List<TeamStats> list = [];
+    if (nbaGameDetailEntity?.scoreBoardDetails.isEmpty == true) {
+      return [];
+    }
+    var homeDetail = nbaGameDetailEntity?.scoreBoardDetails.firstWhereOrNull(
+        (e) => e.teamId == item.homeTeamId);
+    var awayDetail = nbaGameDetailEntity?.scoreBoardDetails.firstWhereOrNull(
+        (e) => e.teamId == item.awayTeamId);
+
+    list.add(TeamStats("Points", homeDetail?.pts ?? 0, awayDetail?.pts ?? 0));
+    list.add(TeamStats(
+        "3 Points Make", homeDetail?.threePm ?? 0, awayDetail?.threePm ?? 0));
+    list.add(TeamStats("Rebound", homeDetail?.reb ?? 0, awayDetail?.reb ?? 0));
+    list.add(TeamStats("Assist", homeDetail?.ast ?? 0, awayDetail?.ast ?? 0));
+    list.add(TeamStats("Steals", homeDetail?.stl ?? 0, awayDetail?.stl ?? 0));
+    list.add(
+        TeamStats("Block Shot ", homeDetail?.blk ?? 0, awayDetail?.blk ?? 0));
+    list.add(TeamStats(
+        "Free Throw Make", homeDetail?.ftm ?? 0, awayDetail?.ftm ?? 0));
+    list.add(TeamStats("Turn over", homeDetail?.to ?? 0, awayDetail?.to ?? 0));
+    list.add(TeamStats("Foul", homeDetail?.pf ?? 0, awayDetail?.pf ?? 0));
+
+    list.add(TeamStats(
+        "Field Goal",
+        ((homeDetail?.fgm ?? 0) / (homeDetail?.fga ?? 0)).handlerNaNInfinity(),
+        ((awayDetail?.fgm ?? 0) / (awayDetail?.fga ?? 0)).handlerNaNInfinity(),
+        valueIsPercent: true));
+    list.add(TeamStats(
+        "Free Throw %",
+        ((homeDetail?.ftm ?? 0) / (homeDetail?.fta ?? 0)).handlerNaNInfinity(),
+        ((awayDetail?.ftm ?? 0) / (awayDetail?.fta ?? 0)).handlerNaNInfinity(),
+        valueIsPercent: true));
+    list.add(TeamStats(
+        "3 Point %",
+        ((homeDetail?.threePm ?? 0) / (homeDetail?.threePa ?? 0))
+            .handlerNaNInfinity(),
+        ((awayDetail?.threePm ?? 0) / (awayDetail?.threePa ?? 0))
+            .handlerNaNInfinity(),
+        valueIsPercent: true));
+    return list;
+  }
+}
+
+class TeamStats {
+  final String name;
+  final num leftValue;
+  final num rightValue;
+  final bool valueIsPercent;
+
+  TeamStats(this.name, this.leftValue, this.rightValue,
+      {this.valueIsPercent = false});
+
+  num get getLeftPercent =>
+      valueIsPercent ? leftValue : (leftValue / max(leftValue, rightValue));
+
+  num get getRightPercent =>
+      valueIsPercent ? rightValue : (rightValue / max(leftValue, rightValue));
+
+  Color get getLeftColor =>
+      leftValue > rightValue ? AppColors.c000000 : AppColors.cD1D1D1;
+
+  Color get getRightColor =>
+      rightValue > leftValue ? AppColors.c000000 : AppColors.cD1D1D1;
 }

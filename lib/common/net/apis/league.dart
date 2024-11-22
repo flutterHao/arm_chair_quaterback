@@ -1,5 +1,6 @@
 import 'package:arm_chair_quaterback/common/entities/nba_game_detail_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/scores_not_start_game_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis.dart';
 import 'package:arm_chair_quaterback/common/net/http.dart';
 
@@ -19,5 +20,11 @@ class LeagueApi {
     var json =
         await httpUtil.post(Api.getNBAGameData, data: {"gameId": gameId});
     return NbaGameDetailEntity.fromJson(json);
+  }
+
+  static Future<ScoresNotStartGameEntity> getNotStartGameData(int gameId) async {
+    var json =
+    await httpUtil.post(Api.getNotStartGameData, data: {"gameId": gameId});
+    return ScoresNotStartGameEntity.fromJson(json);
   }
 }
