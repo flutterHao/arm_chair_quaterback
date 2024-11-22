@@ -6,8 +6,8 @@
  */
 import 'dart:math';
 
+import 'package:arm_chair_quaterback/common/entities/review_entity.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
-import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comment_controller.dart';
@@ -28,7 +28,7 @@ class SendCommentWidget extends StatefulWidget {
       this.hintText = 'Say something...'});
   final String hintText;
   final int newsId;
-  final Reviews? reviewsItem;
+  final ReviewEntity? reviewsItem;
   // final int targetId;
   final bool isReply;
   // final Function? showKeyboard;
@@ -345,7 +345,7 @@ class _SendCommentWidgetState extends State<SendCommentWidget> {
 
 Future showCommentBottomSheet(BuildContext context,
     {required int newsId,
-    required Reviews reviewsItem,
+    required ReviewEntity reviewsItem,
     // int targetId = 0,
     String hintText = "Say something..."}) async {
   await showModalBottomSheet(

@@ -1,6 +1,6 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/entities/review_entity.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
-import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -8,7 +8,6 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comment_controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/emoji_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/send_comment_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/user_avater_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,7 +15,7 @@ import 'package:get/get.dart';
 
 class CommentItemView extends GetView<CommentController> {
   const CommentItemView({super.key, required this.item});
-  final Reviews item;
+  final ReviewEntity item;
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +69,7 @@ class CommentItemView extends GetView<CommentController> {
                 Row(
                   children: [
                     Text(
-                      item.teamName ?? "",
+                      item.teamName,
                       style: 12.w4(color: AppColors.cB3B3B3, height: 1),
                     ),
                     // 6.hGap,
@@ -101,7 +100,7 @@ class CommentItemView extends GetView<CommentController> {
                       ),
                     10.hGap,
                     Text(
-                      controller.timeAgo(item.updateTime ?? 0),
+                      controller.timeAgo(item.updateTime),
                       style: 12.w4(color: AppColors.cB3B3B3, height: 1),
                     ),
                     Expanded(child: Container()),
@@ -114,7 +113,7 @@ class CommentItemView extends GetView<CommentController> {
                           //     : item.parentReviewId!;
                           String name = "@${item.teamName}";
                           await showCommentBottomSheet(context,
-                              newsId: item.newsId ?? 0,
+                              newsId: item.newsId,
                               reviewsItem: item,
                               // targetId: item.id ?? 0,
                               hintText: name);
@@ -203,7 +202,7 @@ class CommentItemView extends GetView<CommentController> {
 
 class SubCommentItemView extends GetView<CommentController> {
   const SubCommentItemView({super.key, required this.item});
-  final Reviews item;
+  final ReviewEntity item;
 
   @override
   Widget build(BuildContext context) {
@@ -245,7 +244,7 @@ class SubCommentItemView extends GetView<CommentController> {
                   3.5.hGap,
                   item.teamId != (controller.userEntity.team?.teamId ?? 0)
                       ? Text(
-                          item.teamName ?? "",
+                          item.teamName,
                           style: 12.w4(color: AppColors.cB3B3B3, height: 1),
                         )
                       : Container(
@@ -335,42 +334,61 @@ class SubCommentItemView extends GetView<CommentController> {
 
 class HotComment extends GetView<CommentController> {
   const HotComment({super.key, required this.item});
-  final Reviews item;
+  final ReviewEntity item;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        UserAvaterWidget(
-            url: Utils.getAvaterUrl(item.teamLogo),
-            width: 26.w,
-            height: 26.w,
-            radius: 23.w),
-        6.hGap,
-        Expanded(
-          child: Text(
-            item.context ?? "",
-            style: 14.w4(
-              color: AppColors.c4D4D4D,
-              height: 1,
-              fontFamily: FontFamily.fRobotoRegular,
-            ),
-            overflow: TextOverflow.ellipsis,
+    return Container(
+      width: double.infinity,
+      // height: 110.w,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: AppColors.cFFFFFF,
+        borderRadius: BorderRadius.circular(16.w),
+      ),
+      child: Column(
+        children: [
+          Container(
+            width: double.infinity,
+            height: 1,
+            color: AppColors.cE6E6E,
+            margin: EdgeInsets.symmetric(vertical: 11.w),
           ),
-        ),
-        11.hGap,
-        IconWidget(iconWidth: 12.w, icon: Assets.newsUiIconFire),
-        4.hGap,
+          Row(
+            children: [
+              UserAvaterWidget(
+                  url: Utils.getAvaterUrl(item.teamLogo),
+                  width: 26.w,
+                  height: 26.w,
+                  radius: 23.w),
+              6.hGap,
+              Expanded(
+                child: Text(
+                  item.context ?? "",
+                  style: 14.w4(
+                    color: AppColors.c4D4D4D,
+                    height: 1,
+                    fontFamily: FontFamily.fRobotoRegular,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              11.hGap,
+              IconWidget(iconWidth: 12.w, icon: Assets.newsUiIconFire),
+              4.hGap,
 
-        ///TODO:热度
-        // Text(
-        //   "${item.likes}",
-        //   style: 12.w4(
-        //     color: AppColors.c000000,
-        //     fontFamily: FontFamily.fRobotoRegular,
-        //   ),
-        // )
-      ],
+              ///TODO:热度
+              // Text(
+              //   "${item.likes}",
+              //   style: 12.w4(
+              //     color: AppColors.c000000,
+              //     fontFamily: FontFamily.fRobotoRegular,
+              //   ),
+              // )
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

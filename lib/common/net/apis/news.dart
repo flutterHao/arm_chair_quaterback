@@ -2,13 +2,14 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 17:28:14
- * @LastEditTime: 2024-11-19 12:06:51
+ * @LastEditTime: 2024-11-22 11:19:43
  */
 import 'package:arm_chair_quaterback/common/entities/news_banner.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
 
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/receive_prop_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/review_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/stats_rank/nba_player_stat.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
@@ -46,7 +47,7 @@ class NewsApi {
     return json["isSuccess"];
   }
 
-  static Future<Reviews> sendReviews(
+  static Future<ReviewEntity> sendReviews(
     int newsId,
     String content, {
     int targetId = 0,
@@ -58,7 +59,7 @@ class NewsApi {
       "targetId": targetId,
       "parentReviewId": parentReviewId
     });
-    return Reviews.fromJson(json);
+    return ReviewEntity.fromJson(json);
   }
 
   static Future<NewsListDetail> deleteReviews(int id, int reviewsId) async {
@@ -137,14 +138,14 @@ class NewsApi {
     return Future.wait(details);
   }
 
-  static Future<List<Reviews>> getReviewsByNewsId(
+  static Future<List<ReviewEntity>> getReviewsByNewsId(
       newsId, int page, int limit) async {
     List list = await HttpUtil().post(Api.getReviewsByNewsId,
         data: {"newsId": newsId, "page": page, "limit": limit});
-    return list.map((e) => Reviews.fromJson(e)).toList();
+    return list.map((e) => ReviewEntity.fromJson(e)).toList();
   }
 
-  static Future<List<Reviews>> getSonReviews(
+  static Future<List<ReviewEntity>> getSonReviews(
       newsId, int reviewId, int page, int limit) async {
     List list = await HttpUtil().post(Api.getSonReviews, data: {
       "newsId": newsId,
@@ -152,6 +153,6 @@ class NewsApi {
       "page": page,
       "limit": limit
     });
-    return list.map((e) => Reviews.fromJson(e)).toList();
+    return list.map((e) => ReviewEntity.fromJson(e)).toList();
   }
 }

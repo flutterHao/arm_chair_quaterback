@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-14 14:41:22
- * @LastEditTime: 2024-11-21 21:08:22
+ * @LastEditTime: 2024-11-22 09:42:06
  */
 /*
  * @Description: 
@@ -24,7 +24,7 @@ import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/progress_paint.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/add_ball_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/clip_card.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/flip_card.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/player_sroller_view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/training_slot.dart';
 import 'package:flutter/material.dart';
@@ -428,24 +428,24 @@ class TrainingPage extends GetView<TrainingController> {
                   //     ),
                   //   );
                   // }),
-                  // Positioned(
-                  //     top: 140.w,
-                  //     child: FlipCard(
-                  //       front: Container(
-                  //         color: Colors.blue,
-                  //         child: Center(
-                  //             child: Text('Front',
-                  //                 style: TextStyle(
-                  //                     color: Colors.white, fontSize: 24))),
-                  //       ),
-                  //       back: Container(
-                  //         color: Colors.red,
-                  //         child: Center(
-                  //             child: Text('Back',
-                  //                 style: TextStyle(
-                  //                     color: Colors.white, fontSize: 24))),
-                  //       ),
-                  //     ))
+                  Positioned(
+                      top: 140.w,
+                      child: FlipCard(
+                        front: Container(
+                          color: Colors.blue,
+                          child: Center(
+                              child: Text('Front',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 24))),
+                        ),
+                        back: Container(
+                          color: Colors.red,
+                          child: Center(
+                              child: Text('Back',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 24))),
+                        ),
+                      ))
                 ],
               ),
             )

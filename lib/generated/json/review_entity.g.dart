@@ -1,5 +1,7 @@
 import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.dart';
 import 'package:arm_chair_quaterback/common/entities/review_entity.dart';
+import 'package:get/get.dart';
+
 
 ReviewEntity $ReviewEntityFromJson(Map<String, dynamic> json) {
   final ReviewEntity reviewEntity = ReviewEntity();
@@ -14,10 +16,6 @@ ReviewEntity $ReviewEntityFromJson(Map<String, dynamic> json) {
   final String? teamName = jsonConvert.convert<String>(json['teamName']);
   if (teamName != null) {
     reviewEntity.teamName = teamName;
-  }
-  final bool? isLike = jsonConvert.convert<bool>(json['isLike']);
-  if (isLike != null) {
-    reviewEntity.isLike = isLike;
   }
   final int? targetId = jsonConvert.convert<int>(json['targetId']);
   if (targetId != null) {
@@ -51,9 +49,10 @@ ReviewEntity $ReviewEntityFromJson(Map<String, dynamic> json) {
   if (id != null) {
     reviewEntity.id = id;
   }
-  final int? likes = jsonConvert.convert<int>(json['likes']);
-  if (likes != null) {
-    reviewEntity.likes = likes;
+  final List<ReviewEntity>? subList = (json['subList'] as List<dynamic>?)?.map(
+          (e) => jsonConvert.convert<ReviewEntity>(e) as ReviewEntity).toList();
+  if (subList != null) {
+    reviewEntity.subList = subList;
   }
   return reviewEntity;
 }
@@ -63,7 +62,6 @@ Map<String, dynamic> $ReviewEntityToJson(ReviewEntity entity) {
   data['parentReviewId'] = entity.parentReviewId;
   data['teamLogo'] = entity.teamLogo;
   data['teamName'] = entity.teamName;
-  data['isLike'] = entity.isLike;
   data['targetId'] = entity.targetId;
   data['updateTime'] = entity.updateTime;
   data['newsId'] = entity.newsId;
@@ -72,7 +70,7 @@ Map<String, dynamic> $ReviewEntityToJson(ReviewEntity entity) {
   data['context'] = entity.context;
   data['sonReviews'] = entity.sonReviews;
   data['id'] = entity.id;
-  data['likes'] = entity.likes;
+  data['subList'] = entity.subList.map((v) => v.toJson()).toList();
   return data;
 }
 
@@ -81,7 +79,6 @@ extension ReviewEntityExtension on ReviewEntity {
     int? parentReviewId,
     String? teamLogo,
     String? teamName,
-    bool? isLike,
     int? targetId,
     int? updateTime,
     int? newsId,
@@ -90,13 +87,17 @@ extension ReviewEntityExtension on ReviewEntity {
     String? context,
     int? sonReviews,
     int? id,
-    int? likes,
+    RxInt? likes,
+    RxBool? isLike,
+    List<ReviewEntity>? subList,
+    int? page,
+    int? size,
+    int? current,
   }) {
     return ReviewEntity()
       ..parentReviewId = parentReviewId ?? this.parentReviewId
       ..teamLogo = teamLogo ?? this.teamLogo
       ..teamName = teamName ?? this.teamName
-      ..isLike = isLike ?? this.isLike
       ..targetId = targetId ?? this.targetId
       ..updateTime = updateTime ?? this.updateTime
       ..newsId = newsId ?? this.newsId
@@ -105,6 +106,11 @@ extension ReviewEntityExtension on ReviewEntity {
       ..context = context ?? this.context
       ..sonReviews = sonReviews ?? this.sonReviews
       ..id = id ?? this.id
-      ..likes = likes ?? this.likes;
+      ..likes = likes ?? this.likes
+      ..isLike = isLike ?? this.isLike
+      ..subList = subList ?? this.subList
+      ..page = page ?? this.page
+      ..size = size ?? this.size
+      ..current = current ?? this.current;
   }
 }

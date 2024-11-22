@@ -1,6 +1,7 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/review_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -240,46 +241,28 @@ class NewsListItem extends StatelessWidget {
   }
 
   Widget _hotComment() {
-    return newsDetail.reviewsList.isNotEmpty
-        ? InkWell(
-            onTap: () {
-              Get.find<CommentController>()
-                  .getReviews(newsDetail.id, isRefresh: true);
-              showModalBottomSheet(
-                isScrollControlled: true,
-                context: Get.context!,
-                barrierColor: Colors.transparent,
-                backgroundColor: Colors.transparent,
-                builder: (context) {
-                  return VerticalDragBackWidget(
-                      child: CommentsDialog(detail: newsDetail));
-                },
-              );
-            },
-            child: Container(
-              width: double.infinity,
-              // height: 110.w,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: AppColors.cFFFFFF,
-                borderRadius: BorderRadius.circular(16.w),
-              ),
-              child: Column(
-                children: [
-                  Container(
-                    width: double.infinity,
-                    height: 1,
-                    color: AppColors.cE6E6E,
-                    margin: EdgeInsets.symmetric(vertical: 11.w),
-                  ),
-                  HotComment(
-                      item: Reviews.fromJson(
-                          newsDetail.reviewsList.first.toJson())),
-                ],
-              ),
-            ),
-          )
-        : const SizedBox();
+    return GetBuilder<CommentController>(builder: (ctrl) {
+      return newsDetail.reviewsList.isNotEmpty
+          ? InkWell(
+              onTap: () async {
+                ctrl.getReviews(newsDetail.id, isRefresh: true);
+                await showModalBottomSheet(
+                  isScrollControlled: true,
+                  context: Get.context!,
+                  barrierColor: Colors.transparent,
+                  backgroundColor: Colors.transparent,
+                  builder: (context) {
+                    return VerticalDragBackWidget(
+                        child: CommentsDialog(detail: newsDetail));
+                  },
+                );
+                newsDetail.reviewsList = ctrl.mainList.value;
+                ctrl.update();
+              },
+              child: HotComment(item: newsDetail.reviewsList.first),
+            )
+          : const SizedBox();
+    });
   }
 
   @override

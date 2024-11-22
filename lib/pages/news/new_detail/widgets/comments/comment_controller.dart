@@ -2,11 +2,12 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-11 16:57:58
- * @LastEditTime: 2024-11-19 20:48:46
+ * @LastEditTime: 2024-11-22 11:25:23
  */
 
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/review_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entity/team_login_info.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
@@ -21,7 +22,7 @@ class CommentController extends GetxController {
   // List<Reviews> commentList;
   CommentController();
   int mainPage = 0;
-  var mainList = <Reviews>[].obs; // 主评论列表
+  var mainList = <ReviewEntity>[].obs; // 主评论列表
   // var subList = <Reviews>[].obs;
   // RxInt count = 0.obs;
   final FocusNode focusNode = FocusNode();
@@ -79,7 +80,7 @@ class CommentController extends GetxController {
   }
 
   ///获取二级评论,将它添加到主要item下面
-  Future getSubReviews(Reviews mainItem) async {
+  Future getSubReviews(ReviewEntity mainItem) async {
     if (mainItem.sonReviews == 0) return;
     await NewsApi.getSonReviews(
             mainItem.newsId, mainItem.id!, mainItem.page, 10)
@@ -106,7 +107,7 @@ class CommentController extends GetxController {
     int newsId,
     String content, {
     // int targetId = 0,
-    Reviews? reviews,
+    ReviewEntity? reviews,
   }) async {
     if (ObjectUtil.isEmpty(content)) return;
     // if (targetId != 0) {
@@ -189,7 +190,7 @@ class CommentController extends GetxController {
   //   });
   // }
 
-  String getTeamName(Reviews item) {
+  String getTeamName(ReviewEntity item) {
     for (var e in mainList) {
       if (e.id == item.targetId) {
         if (e.parentReviewId != 0) {

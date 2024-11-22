@@ -7,6 +7,7 @@ export 'package:arm_chair_quaterback/generated/json/training_info_entity.g.dart'
 
 @JsonSerializable()
 class TrainingInfoEntity {
+  @JSONField(deserialize: false, serialize: false)
   late RxList<int> selectPlayer = <int>[].obs;
   late List<int> statusReplyPlayers = [];
   late double playerReadiness = 0.0;
