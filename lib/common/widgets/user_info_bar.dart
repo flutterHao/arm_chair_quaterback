@@ -1,10 +1,7 @@
-import 'dart:developer';
-
-import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/getx_builder_ids.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entity/team_login_info.dart';
-import 'package:arm_chair_quaterback/common/entities/user_entity/team_prop_list.dart';
 import 'package:arm_chair_quaterback/common/net/address.dart';
 import 'package:arm_chair_quaterback/common/net/http.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -12,7 +9,6 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/clipper/title_bar_clipper.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/top_dialog.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/user_avater_widget.dart';
@@ -48,9 +44,15 @@ class UserInfoBar extends StatelessWidget {
                 width: double.infinity,
                 color: AppColors.c000000,
                 child: ClipPath(
-                  clipper: TitleBarClipper(),
+                  clipper: TitleBarClipper(95.w),
                   child: Container(
-                    color: AppColors.c262626,
+                    color: AppColors.c404040,
+                    child: ClipPath(
+                      clipper: TitleBarClipper(55.w),
+                      child: Container(
+                        color: AppColors.c262626,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -127,8 +129,8 @@ class UserInfoBar extends StatelessWidget {
                                 child: UserAvaterWidget(
                                   url: Utils.getAvaterUrl(
                                       info.team?.teamLogo ?? 0),
-                                  width: 35.w,
-                                  height: 35.w,
+                                  width: 36.w,
+                                  height: 36.w,
                                 ),
                               ),
                             ),
@@ -142,6 +144,24 @@ class UserInfoBar extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
+                    width: 40.w,
+                    height: 43.w,
+                    child: Stack(
+                      children: [
+                        IconWidget(
+                            iconWidth: 20.w, icon: Assets.testTestTeamLogo),
+                        Positioned(
+                          bottom: 9.w,
+                            right: 4.w,
+                            child: IconWidget(
+                          iconWidth: 14.w,
+                          icon: Assets.iconUiIconRuidgt,
+                          iconColor: AppColors.c10A86A,
+                        ))
+                      ],
+                    ),
+                  ),
+                  SizedBox(
                     width: 55.w,
                     height: 43.w,
                     child: Stack(
@@ -149,7 +169,8 @@ class UserInfoBar extends StatelessWidget {
                         IconWidget(
                             iconWidth: 20.w,
                             icon: Assets
-                                .commonUiCommonStatusBarNoticeOn /* commonUiCommonStatusBarNoticeOff*/), //todo 根据数量显示图标
+                                .commonUiCommonStatusBarNoticeOn /* commonUiCommonStatusBarNoticeOff*/),
+                        //todo 根据数量显示图标
                         Positioned(
                             right: 10.w,
                             child: Container(
@@ -203,33 +224,19 @@ class MoneyAndCoinWidget extends StatelessWidget {
           if (home) {
             child = Row(
               children: [
-                IconWidget(iconWidth: 21.w, icon: Assets.iconUiIconJetton),
-                4.hGap,
+                IconWidget(iconWidth: 17.w, icon: Assets.iconUiIconJetton),
+                2.hGap,
                 Text(
                   Utils.formatChip(info.getCoin()),
-                  style: 16.w4(color: AppColors.cF2F2F2, height: 1),
+                  style: 12.w4(color: AppColors.cF2F2F2, height: 1,fontFamily: FontFamily.fOswaldRegular),
                 ),
-                15.hGap,
-                IconWidget(iconWidth: 24.w, icon: Assets.teamUiMoney02),
-                4.hGap,
+                10.hGap,
+                IconWidget(iconWidth: 20.w, icon: Assets.teamUiMoney02),
+                2.hGap,
                 Text(
                   Utils.formatMoney(info.getMoney()),
-                  style: 16.w4(color: AppColors.cF2F2F2, height: 1),
+                  style: 12.w4(color: AppColors.cF2F2F2, height: 1,fontFamily: FontFamily.fOswaldRegular),
                 ),
-                13.hGap,
-                Container(
-                  height: 24.w,
-                  width: 24.w,
-                  decoration: BoxDecoration(
-                    color: AppColors.c262626,
-                    borderRadius: BorderRadius.circular(4.w),
-                  ),
-                  child: IconWidget(
-                    iconWidth: 12.w,
-                    icon: Assets.iconUiIconPlus,
-                    iconColor: AppColors.cFF7954,
-                  ), //todo 功能待定
-                )
               ],
             );
           } else {
