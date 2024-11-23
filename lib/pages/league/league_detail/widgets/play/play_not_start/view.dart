@@ -459,7 +459,7 @@ class PlayNotStartPage extends GetView<PlayNotStartController> {
                         fontFamily: FontFamily.fRobotoRegular),
                   ),
                   Text(
-                    "${gameSchedule.homeTeamScore}",
+                    "${gameSchedule.awayTeamScore}",
                     style: 21.w5(
                         color: AppColors.c000000,
                         height: 1,

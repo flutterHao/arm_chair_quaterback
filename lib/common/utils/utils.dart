@@ -16,6 +16,7 @@ import 'package:arm_chair_quaterback/common/store/config.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'dart:async' show Completer;
@@ -264,5 +265,9 @@ class Utils {
     )..layout(maxWidth: containerWidth);
 
     return textPainter.computeLineMetrics().length;
+  }
+
+  static num getDialogHeight(BuildContext context){
+    return MediaQuery.of(context).size.height - 333.w;
   }
 }

@@ -5,7 +5,6 @@
  * @LastEditTime: 2024-11-04 16:14:16
  */
 
-import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
@@ -28,7 +27,6 @@ import 'package:arm_chair_quaterback/pages/mine/mine_info/bindings.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_info/view.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_setting/bindings.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_setting/view.dart';
-import 'package:arm_chair_quaterback/pages/picks/personal_center/index.dart';
 import 'package:arm_chair_quaterback/pages/picks/pick_rank/bindings.dart';
 import 'package:arm_chair_quaterback/pages/picks/pick_rank/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guess_item_v2/guess_item_v2.dart';

@@ -1,5 +1,6 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
+import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -8,6 +9,7 @@ import 'package:arm_chair_quaterback/common/widgets/delegate/fixed_height_sliver
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/physics/one_boundary_page_scroll_physics.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -196,13 +198,17 @@ class LeagueDetailPage extends GetView<LeagueDetailController> {
                   controller: controller.tabController,
                   children: [
                     const Center(
-                      child: Text("PICKS"),
+                      child: LoadStatusWidget(
+                        loadDataStatus: LoadDataStatus.noData,
+                      ),
                     ),
                     controller.isGameStart
                         ? LeagueDetailPlayPage(controller.item)
                         : PlayNotStartPage(controller.item),
                     const Center(
-                      child: Text("SCORES"),
+                      child: LoadStatusWidget(
+                        loadDataStatus: LoadDataStatus.noData,
+                      ),
                     )
                   ]),
             )),

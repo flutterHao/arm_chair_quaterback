@@ -1,9 +1,7 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
-import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
@@ -453,11 +451,6 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
     var dayStartTimeMS =
         MyDateUtils.getDayStartTimeMS(MyDateUtils.nextDay(nextDay));
 
-    ///只能猜今明两天的赛程
-    if (item.gameStartTime >= dayStartTimeMS ||
-        item.gameStartTime < MyDateUtils.getDayStartTimeMS(nowDateTime)) {
-      return const SizedBox.shrink();
-    }
     var count = item.homeTeamWins + item.awayTeamWins;
     var homePercent = 0;
     if (item.homeTeamWins == 0 && item.awayTeamWins == 0) {
@@ -474,22 +467,35 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
     var awayTeamInfo = Utils.getTeamInfo(item.awayTeamId);
     return Column(
       children: [
-        Obx(() {
-          return Row(
+        Builder(builder: (context) {
+          ///只能猜今明两天的赛程
+          if (item.gameStartTime >= dayStartTimeMS ||
+              (item.gameStartTime <
+                      MyDateUtils.getDayStartTimeMS(nowDateTime) &&
+                  item.isGuess == 0)) {
+            return const SizedBox.shrink();
+          }
+          return Column(
             children: [
-              29.hGap,
-              _buildBtn(gameGuess.choiceTeamId.value == homeTeamInfo.id,
-                  homeTeamInfo.id,
-                  isGuessed: item.isGuess == homeTeamInfo.id),
-              9.hGap,
-              _buildBtn(gameGuess.choiceTeamId.value == awayTeamInfo.id,
-                  awayTeamInfo.id,
-                  isGuessed: item.isGuess == awayTeamInfo.id),
-              29.hGap,
+              Obx(() {
+                return Row(
+                  children: [
+                    29.hGap,
+                    _buildBtn(gameGuess.choiceTeamId.value == homeTeamInfo.id,
+                        homeTeamInfo.id,
+                        isGuessIdEqualTeamId: item.isGuess == homeTeamInfo.id),
+                    9.hGap,
+                    _buildBtn(gameGuess.choiceTeamId.value == awayTeamInfo.id,
+                        awayTeamInfo.id,
+                        isGuessIdEqualTeamId: item.isGuess == awayTeamInfo.id),
+                    29.hGap,
+                  ],
+                );
+              }),
+              16.vGap,
             ],
           );
         }),
-        16.vGap,
         Row(
           children: [
             29.hGap,
@@ -553,7 +559,7 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
     );
   }
 
-  Expanded _buildBtn(bool isChoice, int teamId, {bool isGuessed = false}) {
+  Expanded _buildBtn(bool isChoice, int teamId, {bool isGuessIdEqualTeamId = false}) {
     return Expanded(
       child: MtInkwell(
         vibrate: true,
@@ -567,7 +573,7 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
           height: 41.w,
           decoration: BoxDecoration(
               color: item.isGuess != 0
-                  ? isGuessed
+                  ? isGuessIdEqualTeamId
                       ? AppColors.c000000
                       : AppColors.cEEEEEE
                   : isChoice
@@ -582,7 +588,7 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
                 "${Utils.getTeamInfo(teamId).shortEname} WIN",
                 style: 19.w5(
                     color: item.isGuess != 0
-                        ? isGuessed
+                        ? isGuessIdEqualTeamId
                             ? AppColors.cFFFFFF
                             : AppColors.ccccccc
                         : isChoice
@@ -591,17 +597,29 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
                     height: 1,
                     fontFamily: FontFamily.fOswaldMedium),
               ),
-              if (isGuessed)
+              if (isGuessIdEqualTeamId)
                 Positioned(
                     left: 11.w,
                     child: Builder(builder: (context) {
-                      // if(item.status == 2){
-                      //   return Container(
-                      //     width: 19.w,
-                      //     height: 19.w,
-                      //     child: IconWidget(iconWidth: 11.w, icon: :Assets.iconUiIconRuidgt),
-                      //   );
-                      // }
+                      if (item.guessStatus != 1) {
+                        var winId = item.homeTeamScore>item.awayTeamScore?item.homeTeamId:item.awayTeamId;
+                        bool isChoiceSuccess = winId == teamId;
+                        return Container(
+                          width: 19.w,
+                          height: 19.w,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.w),
+                            color: isChoiceSuccess
+                                ? AppColors.c10A86A
+                                : AppColors.cD60D20,
+                          ),
+                          child: IconWidget(
+                              iconWidth: 11.w,
+                              icon: isChoiceSuccess
+                                  ? Assets.iconUiIconRuidgt
+                                  : Assets.iconIconClose),
+                        );
+                      }
                       return IconWidget(
                         iconWidth: 19.w,
                         icon: Assets.commonUiCommonIconPick,

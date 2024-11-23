@@ -100,6 +100,12 @@ class ScorePageController extends GetxController {
   void sortScoreList() {
     scoreList.sort((a,b) => a.scoresEntity.gameStartTime.compareTo(b.scoresEntity.gameStartTime));
     scoreList.sort((a, b) {
+      if(time.millisecondsSinceEpoch<=DateTime.now().millisecondsSinceEpoch){
+        // 开奖之后猜过的排前面
+        if (a.scoresEntity.isGuess != 0) return -1;
+        if (b.scoresEntity.isGuess != 0) return 1;
+      }
+      //比赛开赛前，没有猜过的排前面
       if (a.scoresEntity.isGuess != 0) return 1;
       if (b.scoresEntity.isGuess != 0) return -1;
       return 0;

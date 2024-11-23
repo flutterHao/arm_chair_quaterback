@@ -13,8 +13,8 @@ class EasyAnimationController<T> {
       Duration duration = const Duration(milliseconds: 3000),
       List<T>? node, //未使用
       Curve? curve})
-      : assert(
-            curve == null || T is double, "'T' must be double when use curve") {
+      : assert((curve != null || T is double) || curve == null,
+            "'T' must be double when use curve") {
     value = Rx(begin);
 
     _animationController =

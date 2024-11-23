@@ -144,7 +144,7 @@ class _PlayNotStartPlayerDetailState extends State<PlayNotStartPlayerDetail>
                               bottom: BorderSide(
                                   color: AppColors.cD1D1D1, width: 1))),
                       child: Text(
-                        isStarter ? 'STARTERS' : 'BENCH',
+                        isStarter ? 'PLAYER' : 'BENCH',
                       ),
                     )),
                 ...keys.map((e) {

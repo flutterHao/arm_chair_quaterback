@@ -127,7 +127,7 @@ class PicksIndexController extends GetxController
     _count(true);
   }
 
-  guess(int type) {
+  guess(int type,Function onSuccess) {
     List params = [];
     //组装已下注的球员的参数列表
     var fold = guessGamePlayers.keys.fold([], (p,key){
@@ -170,7 +170,7 @@ class PicksIndexController extends GetxController
       Get.find<HomeController>().refreshMoneyCoinWidget();
       leagueController.refreshDataAfterGuessSuccess();
       ClickFeedBack.selectionClick();
-      EasyLoading.showToast("Pick successful!you can check it in History");
+      onSuccess.call();
     }, onError: (e) {
       ErrorUtils.toast(e);
     });
