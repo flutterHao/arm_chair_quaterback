@@ -137,13 +137,13 @@ class PlayNotStartPage extends GetView<PlayNotStartController> {
               ),
             ),
             Container(
-              height: getTeamPlayerMaxLength()*34.w+29.w+20.w+40.w+20.w,
-              padding: EdgeInsets.only(top: 20.w,bottom: 20.w),
+              height:
+                  getTeamPlayerMaxLength() * 34.w + 29.w + 20.w + 40.w + 20.w,
+              padding: EdgeInsets.only(top: 20.w, bottom: 20.w),
               margin: EdgeInsets.only(top: 9.w),
               decoration: BoxDecoration(
-                color:AppColors.cFFFFFF,
-                borderRadius: BorderRadius.circular(9.w)
-              ),
+                  color: AppColors.cFFFFFF,
+                  borderRadius: BorderRadius.circular(9.w)),
               child: PlayNotStartPlayerDetail(
                   controller.scoresNotStartGameEntity!.teamPlayerMap,
                   controller.item),
@@ -265,6 +265,10 @@ class PlayNotStartPage extends GetView<PlayNotStartController> {
   }
 
   Container _buildTeamStatsWidget(BuildContext context) {
+    var leftItem = controller.scoresNotStartGameEntity!.nbaTeamStatRankList
+        .firstWhereOrNull((e) => e.teamId == controller.item.homeTeamId);
+    var rightItem = controller.scoresNotStartGameEntity!.nbaTeamStatRankList
+        .firstWhereOrNull((e) => e.teamId == controller.item.awayTeamId);
     return Container(
       margin: EdgeInsets.only(top: 9.w),
       decoration: BoxDecoration(
@@ -356,7 +360,7 @@ class PlayNotStartPage extends GetView<PlayNotStartController> {
                         ),
                         3.vGap,
                         Text(
-                          "WEST 1st",
+                          "${leftItem?.conference} ${leftItem==null?"":Utils.getSortWithInt(leftItem.division)}",
                           style: 12.w4(
                               color: AppColors.c000000,
                               height: 1,
@@ -381,7 +385,7 @@ class PlayNotStartPage extends GetView<PlayNotStartController> {
                         ),
                         3.vGap,
                         Text(
-                          "WEST 1st",
+                          "${rightItem?.conference} ${rightItem==null?"":Utils.getSortWithInt(rightItem.division)}",
                           style: 12.w4(
                               color: AppColors.c000000,
                               height: 1,

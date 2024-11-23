@@ -67,6 +67,7 @@ Map<String, dynamic> $TrainingInfoEntityToJson(TrainingInfoEntity entity) {
 
 extension TrainingInfoEntityExtension on TrainingInfoEntity {
   TrainingInfoEntity copyWith({
+    RxList<int>? selectPlayer,
     List<int>? statusReplyPlayers,
     double? playerReadiness,
     List<TrainingInfoAward>? award,
@@ -77,6 +78,7 @@ extension TrainingInfoEntityExtension on TrainingInfoEntity {
     List<TrainingInfoBuff>? buff,
   }) {
     return TrainingInfoEntity()
+      ..selectPlayer = selectPlayer ?? this.selectPlayer
       ..statusReplyPlayers = statusReplyPlayers ?? this.statusReplyPlayers
       ..playerReadiness = playerReadiness ?? this.playerReadiness
       ..award = award ?? this.award

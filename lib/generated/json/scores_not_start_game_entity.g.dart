@@ -338,6 +338,14 @@ TeamPlayer $TeamPlayerFromJson(Map<String, dynamic> json) {
   if (stlRank != null) {
     teamPlayer.stlRank = stlRank;
   }
+  final String? conference = jsonConvert.convert<String>(json['CONFERENCE']);
+  if (conference != null) {
+    teamPlayer.conference = conference;
+  }
+  final int? division = jsonConvert.convert<int>(json['DIVISION_RANK']);
+  if (division != null) {
+    teamPlayer.division = division;
+  }
   return teamPlayer;
 }
 
@@ -409,6 +417,8 @@ Map<String, dynamic> $TeamPlayerToJson(TeamPlayer entity) {
   data['PF'] = entity.pf;
   data['GP_RANK'] = entity.gpRank;
   data['STL_RANK'] = entity.stlRank;
+  data['CONFERENCE'] = entity.conference;
+  data['DIVISION_RANK'] = entity.division;
   return data;
 }
 
@@ -480,6 +490,8 @@ extension TeamPlayerExtension on TeamPlayer {
     double? pf,
     int? gpRank,
     int? stlRank,
+    String? conference,
+    int? division,
   }) {
     return TeamPlayer()
       ..pfdRank = pfdRank ?? this.pfdRank
@@ -547,7 +559,9 @@ extension TeamPlayerExtension on TeamPlayer {
       ..ptsRank = ptsRank ?? this.ptsRank
       ..pf = pf ?? this.pf
       ..gpRank = gpRank ?? this.gpRank
-      ..stlRank = stlRank ?? this.stlRank;
+      ..stlRank = stlRank ?? this.stlRank
+      ..conference = conference ?? this.conference
+      ..division = division ?? this.division;
   }
 }
 

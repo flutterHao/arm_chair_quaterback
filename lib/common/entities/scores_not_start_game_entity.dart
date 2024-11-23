@@ -157,6 +157,10 @@ class TeamPlayer {
   late int gpRank;
   @JSONField(name: "STL_RANK")
   late int stlRank;
+  @JSONField(name: "CONFERENCE")
+  late String conference;
+  @JSONField(name: "DIVISION_RANK")
+  late int division;
 
   TeamPlayer();
 
