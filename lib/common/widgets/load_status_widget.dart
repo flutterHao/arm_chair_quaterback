@@ -1,11 +1,8 @@
-import 'dart:io';
-
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -40,10 +37,10 @@ class LoadStatusWidget extends StatelessWidget {
               child: SizedBox(
                 width: 25.w,
                 height: 25.w,
-                child: Platform.isAndroid?const CircularProgressIndicator(
+                child: const CircularProgressIndicator(
                   color: AppColors.cB3B3B3,
                   strokeWidth: 2,
-                ):const CupertinoActivityIndicator(),
+                ),
               ),
             )
           else

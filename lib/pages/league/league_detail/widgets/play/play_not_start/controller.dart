@@ -40,6 +40,14 @@ class PlayNotStartController extends GetxController with GetTickerProviderStateM
     teamPlayersTabController = TabController(length: 2, vsync: this);
   }
 
+  @override
+  void dispose() {
+    teamPropertyTabController.dispose();
+    teamL5GameTabController.dispose();
+    teamPlayersTabController.dispose();
+    super.dispose();
+  }
+
   initData(){
     loadStatus.value = LoadDataStatus.loading;
     Future.wait([

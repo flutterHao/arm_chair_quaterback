@@ -17,6 +17,7 @@ import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/league/league_detail/widgets/play/controller.dart';
 import 'package:arm_chair_quaterback/pages/league/league_detail/widgets/play/play_not_start/controller.dart';
 import 'package:arm_chair_quaterback/pages/league/league_detail/widgets/play/play_not_start/widget/play_not_start_player_detail.dart';
+import 'package:extended_tabs/extended_tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -24,19 +25,26 @@ import 'package:get/get.dart';
 ///
 ///@auther gejiahui
 ///created at 2024/11/22/16:21
-
-class PlayNotStartPage extends GetView<PlayNotStartController> {
-  PlayNotStartPage(this.item, {super.key});
+class PlayNotStartPage extends StatefulWidget {
+  const PlayNotStartPage(this.item, {super.key});
 
   final ScoresEntity item;
 
+  @override
+  State<PlayNotStartPage> createState() => _PlayNotStartPageState();
+}
+
+class _PlayNotStartPageState extends State<PlayNotStartPage>
+    with AutomaticKeepAliveClientMixin {
   final _isExpanded = false.obs;
 
   var scrollController = ScrollController();
 
+  late PlayNotStartController controller;
+
   @override
   Widget build(BuildContext context) {
-    Get.put(PlayNotStartController(item));
+    controller = Get.put(PlayNotStartController(widget.item));
     return GetBuilder<PlayNotStartController>(builder: (_) {
       if (controller.scoresNotStartGameEntity == null) {
         return Obx(() {
@@ -115,7 +123,7 @@ class PlayNotStartPage extends GetView<PlayNotStartController> {
                   ),
                   18.vGap,
                   Expanded(
-                    child: TabBarView(
+                    child: ExtendedTabBarView(
                         controller: controller.teamL5GameTabController,
                         children: [
                           _buildL5GamePageWidget(
@@ -360,7 +368,7 @@ class PlayNotStartPage extends GetView<PlayNotStartController> {
                         ),
                         3.vGap,
                         Text(
-                          "${leftItem?.conference} ${leftItem==null?"":Utils.getSortWithInt(leftItem.division)}",
+                          "${leftItem?.conference} ${leftItem == null ? "" : Utils.getSortWithInt(leftItem.division)}",
                           style: 12.w4(
                               color: AppColors.c000000,
                               height: 1,
@@ -385,7 +393,7 @@ class PlayNotStartPage extends GetView<PlayNotStartController> {
                         ),
                         3.vGap,
                         Text(
-                          "${rightItem?.conference} ${rightItem==null?"":Utils.getSortWithInt(rightItem.division)}",
+                          "${rightItem?.conference} ${rightItem == null ? "" : Utils.getSortWithInt(rightItem.division)}",
                           style: 12.w4(
                               color: AppColors.c000000,
                               height: 1,
@@ -410,7 +418,7 @@ class PlayNotStartPage extends GetView<PlayNotStartController> {
           ),
           SizedBox(
             height: 360.w,
-            child: TabBarView(
+            child: ExtendedTabBarView(
                 controller: controller.teamPropertyTabController,
                 children: [
                   _buildDataPageWidget(),
@@ -626,4 +634,7 @@ class PlayNotStartPage extends GetView<PlayNotStartController> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

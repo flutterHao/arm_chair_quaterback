@@ -35,6 +35,12 @@ class LeagueDetailPlayController extends GetxController
     tabController = TabController(length: tabTitles.length, vsync: this);
   }
 
+  @override
+  void dispose() {
+    tabController.dispose();
+    super.dispose();
+  }
+
   initData() {
     loadStatus.value = LoadDataStatus.loading;
     Future.wait([
@@ -98,10 +104,10 @@ class LeagueDetailPlayController extends GetxController
     if (nbaGameDetailEntity?.scoreBoardDetails.isEmpty == true) {
       return [];
     }
-    var homeDetail = nbaGameDetailEntity?.scoreBoardDetails.firstWhereOrNull(
-        (e) => e.teamId == item.homeTeamId);
-    var awayDetail = nbaGameDetailEntity?.scoreBoardDetails.firstWhereOrNull(
-        (e) => e.teamId == item.awayTeamId);
+    var homeDetail = nbaGameDetailEntity?.scoreBoardDetails
+        .firstWhereOrNull((e) => e.teamId == item.homeTeamId);
+    var awayDetail = nbaGameDetailEntity?.scoreBoardDetails
+        .firstWhereOrNull((e) => e.teamId == item.awayTeamId);
 
     list.add(TeamStats("Points", homeDetail?.pts ?? 0, awayDetail?.pts ?? 0));
     list.add(TeamStats(

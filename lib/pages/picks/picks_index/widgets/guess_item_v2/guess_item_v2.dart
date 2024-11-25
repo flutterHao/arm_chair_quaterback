@@ -67,18 +67,17 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
           key: _repaintBoundaryKey,
           child: Container(
             decoration: BoxDecoration(
-                color: AppColors.cF2F2F2,
+                color: AppColors.cFFFFFF,
                 borderRadius: BorderRadius.circular(16.w)),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 25.vGap,
                 InkWell(
-                  onTap: () => Get.toNamed(RouteNames.picksPlayerDetail,
-                      arguments: PlayerDetailPageArguments(
-                          player.guessInfo.playerId,
-                          isMyPlayer: false,
-                          tabStr: player.tabStr)),
+                  onTap: () => Get.toNamed(RouteNames.leagueLeagueDetail,
+                      arguments: {
+                        "gameId":player.guessInfo.gameId
+                      }),
                   child: Row(
                     children: [
                       29.hGap,

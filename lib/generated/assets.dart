@@ -112,6 +112,7 @@ class Assets {
   static const String iconUiIconWinning = 'assets/images/icon/ui_icon_winning.png';
   static const String iconUiWindowsAward = 'assets/images/icon/ui_windows_award.png';
   static const String iconUiWindowsLose = 'assets/images/icon/ui_windows_lose.png';
+  static const String managerUiManagerCourt = 'assets/images/manager/ui_manager_court.jpg';
   static const String managerUiManagerFreegift01 = 'assets/images/manager/ui_manager_freegift_01.png';
   static const String managerUiManagerFreegift02 = 'assets/images/manager/ui_manager_freegift_02.png';
   static const String managerUiManagerGift01 = 'assets/images/manager/ui_manager_gift_01.png';

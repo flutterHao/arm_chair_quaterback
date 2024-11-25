@@ -5,6 +5,7 @@ import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/WidgetUtils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -63,14 +64,7 @@ class _PickSuccessWidgetState extends State<PickSuccessWidget>
     var dialogHeight = Utils.getDialogHeight();
     return Column(
       children: [
-        Expanded(
-          child: InkWell(
-            onTap: () => Navigator.pop(context),
-            child: const SizedBox(
-              width: double.infinity,
-            ),
-          ),
-        ),
+        WidgetUtils.getDialogTransWidget(context),
         Container(
           width: double.infinity,
           constraints: BoxConstraints(

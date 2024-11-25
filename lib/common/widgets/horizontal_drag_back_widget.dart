@@ -8,10 +8,17 @@ import 'package:flutter/material.dart';
 
 class HorizontalDragBackWidget extends StatefulWidget {
   const HorizontalDragBackWidget(
-      {required this.child, this.onWidgetOut, this.canPop = true, super.key});
+      {required this.child,
+      this.onWidgetOut,
+      this.canPop = true,
+      this.responseDepth,
+      this.hasScrollChild = false,
+      super.key});
 
   final Widget child;
   final bool canPop;
+  final int? responseDepth;
+  final bool hasScrollChild;
 
   ///是否支持右滑返回，实体/虚拟按键返回
   final Function()? onWidgetOut;
@@ -75,6 +82,12 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
     animation = tween.animate(animationController);
   }
 
+  bool hasHorizontalScroll(BuildContext context) {
+    final scrollable = Scrollable.of(context);
+    return scrollable.axisDirection == AxisDirection.right ||
+        scrollable.axisDirection == AxisDirection.left;
+  }
+
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
@@ -118,6 +131,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
     }
 
     onHorizontalDragUpdate(DragUpdateDetails detail) {
+      // print('onHorizontalDragUpdate: ${detail.localPosition}');
       if (!widget.canPop) {
         return;
       }
@@ -127,7 +141,6 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
       if (animationController.isAnimating || isOut) {
         return;
       }
-      // print('onHorizontalDragUpdate: ${detail.localPosition}');
       // print('onHorizontalDragUpdate-offsetX:$offsetX');
       // print('detail.delta.dy:${detail.delta}');
       if (detail.delta.dy.abs() > detail.delta.dx.abs()) {
@@ -137,100 +150,115 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
         startX = detail.localPosition.dx;
       }
       // offsetX = detail.localPosition.dx - startX;
-      offsetX+=detail.delta.dx;
+      offsetX += detail.delta.dx;
       if (offsetX < 0) {
         offsetX = 0;
       }
       setState(() {});
     }
 
-    return PopScope(
-      canPop: widget.canPop,
-      child: GestureDetector(
-        onHorizontalDragDown: (detail) {
-          //处理没有滚动子组件的情况
-          if (!isOnLeftSide) {
+    Widget child = NotificationListener<ScrollNotification>(
+      onNotification: (notification) {
+        // print('notification:${notification.runtimeType}'
+        //     ',pixels:${notification.metrics.pixels}'
+        //     ',minScrollExtent:${notification.metrics.minScrollExtent}'
+        //     ',axisDirection:${notification.metrics.axisDirection}'
+        //     ',depth:${notification.depth}');
+        if (notification is OverscrollNotification) {
+          // print('notification.metrics.pixels:${notification.metrics.pixels}');
+          if (notification.metrics.pixels <=
+                  notification.metrics.minScrollExtent &&
+              !isOnLeftSide &&
+              notification.metrics.axisDirection == AxisDirection.right &&
+              startScrollFlag &&
+              checkDepth(notification)) {
+            //到达左边界
             isOnLeftSide = true;
           }
-        },
-        onHorizontalDragStart: (detail) {
-          //处理没有滚动子组件的情况
-          if (!isOnLeftSide) {
+        }
+        if (notification is ScrollUpdateNotification &&
+            !isOnLeftSide &&
+            startScrollFlag) {
+          // print(
+          //     'notification.metrics.pixels:${notification.metrics.pixels}');
+          if (notification.metrics.pixels <=
+                  notification.metrics.minScrollExtent &&
+              !isOnLeftSide &&
+              notification.metrics.axisDirection == AxisDirection.right &&
+              checkDepth(notification)) {
+            //到达左边界
             isOnLeftSide = true;
           }
-        },
-        child: NotificationListener<ScrollNotification>(
-          onNotification: (notification) {
-            // print(
-            // 'notification:${notification.runtimeType}，pixels:${notification.metrics.pixels}');
-            if (notification is OverscrollNotification) {
-              // print('notification.metrics.pixels:${notification.metrics.pixels}');
-              if (notification.metrics.pixels <=
-                      notification.metrics.minScrollExtent &&
-                  !isOnLeftSide &&
-                  notification.metrics.axisDirection == AxisDirection.right &&
-                  startScrollFlag) {
-                //到达左边界
-                isOnLeftSide = true;
-              }
-            }
-            if (notification is ScrollUpdateNotification &&
-                !isOnLeftSide &&
-                startScrollFlag) {
-              // print(
-              //     'notification.metrics.pixels:${notification.metrics.pixels}');
-              if (notification.metrics.pixels <=
-                      notification.metrics.minScrollExtent &&
-                  !isOnLeftSide &&
-                  notification.metrics.axisDirection == AxisDirection.right) {
-                //到达左边界
-                isOnLeftSide = true;
-              }
-            }
-            if (notification is ScrollStartNotification) {
-              isOnLeftSide = false;
-              //在边界
-              if (notification.metrics.pixels <=
-                  notification.metrics.minScrollExtent) {
-                startScrollFlag = true;
-              }
-            }
-            if (notification is ScrollEndNotification) {
-              startScrollFlag = false;
-            }
-            // true 阻止向上冒泡 ,false 继续向上冒泡
-            return true;
-          },
-          child: RawGestureDetector(
-            gestures: {
-              CustomDragGestureRecognizer: GestureRecognizerFactoryWithHandlers<
-                  CustomDragGestureRecognizer>(
-                () => CustomDragGestureRecognizer(),
-                (DragGestureRecognizer detector) {
-                  detector
-                    ..onDown = onHorizontalDragDown
-                    ..onStart = onHorizontalDragStart
-                    ..onUpdate = onHorizontalDragUpdate
-                    ..onEnd = onHorizontalDragEnd
-                    ..onCancel = onHorizontalDragCancel;
-                },
-              )
+        }
+        if (notification is ScrollStartNotification) {
+          isOnLeftSide = false;
+          //在边界
+          if (notification.metrics.pixels <=
+                  notification.metrics.minScrollExtent &&
+              checkDepth(notification)) {
+            startScrollFlag = true;
+          }
+        }
+        if (notification is ScrollEndNotification) {
+          startScrollFlag = false;
+        }
+        // true 阻止向上冒泡 ,false 继续向上冒泡
+        return true;
+      },
+      child: RawGestureDetector(
+        gestures: {
+          CustomDragGestureRecognizer:
+              GestureRecognizerFactoryWithHandlers<CustomDragGestureRecognizer>(
+            () => CustomDragGestureRecognizer(),
+            (DragGestureRecognizer detector) {
+              detector
+                ..onDown = onHorizontalDragDown
+                ..onStart = onHorizontalDragStart
+                ..onUpdate = onHorizontalDragUpdate
+                ..onEnd = onHorizontalDragEnd
+                ..onCancel = onHorizontalDragCancel;
             },
-            child: Stack(
-              children: [
-                Container(
-                  color: Color.lerp(Colors.black.withOpacity(.3),
-                      Colors.black.withOpacity(.0), offsetX / width),
-                ),
-                Transform.translate(
-                    offset: Offset(offsetX, 0), child: widget.child),
-              ],
+          )
+        },
+        child: Stack(
+          children: [
+            Container(
+              color: Color.lerp(Colors.black.withOpacity(.3),
+                  Colors.black.withOpacity(.0), offsetX / width),
             ),
-          ),
+            Transform.translate(
+                offset: Offset(offsetX, 0), child: widget.child),
+          ],
         ),
       ),
     );
+
+    if (!widget.hasScrollChild) {
+      child = GestureDetector(
+          onHorizontalDragDown: (detail) {
+            // print('onHorizontalDragDown');
+            //处理没有滚动子组件的情况
+            if (!isOnLeftSide) {
+              isOnLeftSide = true;
+            }
+          },
+          onHorizontalDragStart: (detail) {
+            // print('onHorizontalDragStart');
+            //处理没有滚动子组件的情况
+            if (!isOnLeftSide) {
+              isOnLeftSide = true;
+            }
+          },
+          child: child);
+    }
+    return PopScope(
+      canPop: widget.canPop,
+      child: child,
+    );
   }
+
+  bool checkDepth(ScrollNotification notification) =>
+      widget.responseDepth == null || notification.depth == widget.responseDepth;
 
   ///松手执行回收动画
   void _recycleAnimation({double velocity = 0}) {

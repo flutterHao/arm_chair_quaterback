@@ -139,7 +139,6 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                                                 .cCB1842,
                                                             fontFamily: FontFamily
                                                                 .fOswaldRegular,
-                                                            height: 1,
                                                           ),
                                                         ),
                                                       ),
@@ -161,11 +160,11 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                                                 TextDecoration
                                                                     .underline,
                                                             fontSize: 16.w,
+                                                            decorationColor: AppColors.c000000,
                                                             color: AppColors
                                                                 .c000000,
                                                             fontFamily: FontFamily
                                                                 .fOswaldRegular,
-                                                            height: 1,
                                                           ),
                                                         ),
                                                       ),
@@ -184,14 +183,14 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                                       "Edit",
                                                       style: TextStyle(
                                                         decoration:
-                                                            TextDecoration
-                                                                .underline,
+                                                            TextDecoration.underline,
                                                         fontSize: 16.w,
+                                                        decorationColor: AppColors.c000000,
                                                         color:
                                                             AppColors.c000000,
                                                         fontFamily: FontFamily
                                                             .fOswaldRegular,
-                                                        height: 1,
+                                                        // height: 1,
                                                       ),
                                                     ),
                                                   ),
@@ -1033,19 +1032,22 @@ class ConfirmChangeBtn extends StatelessWidget {
             decoration: BoxDecoration(
                 border: Border.all(color: AppColors.c666666, width: 1),
                 borderRadius: BorderRadius.circular(7.w)),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    text,
-                    style: 14.w5(
-                        color: AppColors.c000000,
-                        height: 1,
-                        fontFamily: FontFamily.fOswaldMedium),
-                  ),
-                  MtInkwell(
-                    onTap: tap,
-                    child: Container(
+            child: MtInkwell(
+              onTap: (){
+                tap.call();
+              },
+              vibrate: true,
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      text,
+                      style: 14.w5(
+                          color: AppColors.c000000,
+                          height: 1,
+                          fontFamily: FontFamily.fOswaldMedium),
+                    ),
+                    Container(
                       height: 28.w,
                       width: 28.w,
                       margin: EdgeInsets.only(right: 2.w),
@@ -1057,9 +1059,9 @@ class ConfirmChangeBtn extends StatelessWidget {
                           rotateAngle: 90,
                         ),
                       ),
-                    ),
-                  )
-                ]),
+                    )
+                  ]),
+            ),
           ),
           crossFadeState:
               value ? CrossFadeState.showFirst : CrossFadeState.showSecond);

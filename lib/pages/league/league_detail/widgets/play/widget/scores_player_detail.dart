@@ -39,63 +39,61 @@ class _ScoresPlayerDetailState extends State<ScoresPlayerDetail>
   Widget build(BuildContext context) {
     var homeTeamInfo = Utils.getTeamInfo(widget.gameData.homeTeamScore!.teamId);
     var awayTeamInfo = Utils.getTeamInfo(widget.gameData.awayTeamScore!.teamId);
-    return Expanded(
-      child: Column(
-        children: [
-          SizedBox(
-            height: 40.w,
-            child: TabBar(
-                controller: tabController,
-                indicatorColor: AppColors.cFF7954,
-                indicatorSize: TabBarIndicatorSize.tab,
-                dividerColor: AppColors.cD1D1D1,
-                overlayColor: null,
-                labelStyle: 16.w5(
-                    height: 1,
-                    fontFamily: FontFamily.fOswaldMedium),
-                labelColor: AppColors.c000000,
-                unselectedLabelStyle: 16.w5(
-                    height: 1,
-                    fontFamily: FontFamily.fOswaldMedium),
-                unselectedLabelColor: AppColors.cB2B2B2,
-                tabs: [
-              Row(
-                children: [
-                  ImageWidget(
-                    url: Utils.getTeamUrl(homeTeamInfo.id),
-                    width: 28.w,
-                  ),
-                  7.hGap,
-                  Text(
-                    homeTeamInfo.shortEname,
-                  )
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    awayTeamInfo.shortEname,
-                  ),
-                  7.hGap,
-                  ImageWidget(
-                    url: Utils.getTeamUrl(awayTeamInfo.id),
-                    width: 28.w,
-                  ),
-                ],
-              )
-            ]),
-          ),
-          Expanded(
-            child: TabBarView(
+    return Column(
+      children: [
+        SizedBox(
+          height: 40.w,
+          child: TabBar(
               controller: tabController,
-                children: [
-                  _buildTabViewItem(widget.gameData.homePlayerScores),
-                  _buildTabViewItem(widget.gameData.awayPlayerScores),
-                ]),
-          )
-        ],
-      ),
+              indicatorColor: AppColors.cFF7954,
+              indicatorSize: TabBarIndicatorSize.tab,
+              dividerColor: AppColors.cD1D1D1,
+              overlayColor: null,
+              labelStyle: 16.w5(
+                  height: 1,
+                  fontFamily: FontFamily.fOswaldMedium),
+              labelColor: AppColors.c000000,
+              unselectedLabelStyle: 16.w5(
+                  height: 1,
+                  fontFamily: FontFamily.fOswaldMedium),
+              unselectedLabelColor: AppColors.cB2B2B2,
+              tabs: [
+            Row(
+              children: [
+                ImageWidget(
+                  url: Utils.getTeamUrl(homeTeamInfo.id),
+                  width: 28.w,
+                ),
+                7.hGap,
+                Text(
+                  homeTeamInfo.shortEname,
+                )
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  awayTeamInfo.shortEname,
+                ),
+                7.hGap,
+                ImageWidget(
+                  url: Utils.getTeamUrl(awayTeamInfo.id),
+                  width: 28.w,
+                ),
+              ],
+            )
+          ]),
+        ),
+        Expanded(
+          child: TabBarView(
+            controller: tabController,
+              children: [
+                _buildTabViewItem(widget.gameData.homePlayerScores),
+                _buildTabViewItem(widget.gameData.awayPlayerScores),
+              ]),
+        )
+      ],
     );
   }
 

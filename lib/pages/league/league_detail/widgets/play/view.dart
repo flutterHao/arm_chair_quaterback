@@ -8,6 +8,7 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/TLBuilderWidget.dart';
+import 'package:arm_chair_quaterback/common/widgets/WidgetUtils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
@@ -18,6 +19,7 @@ import 'package:arm_chair_quaterback/pages/league/league_detail/widgets/play/con
 import 'package:arm_chair_quaterback/pages/league/league_detail/widgets/play/game_grid_source.dart';
 import 'package:arm_chair_quaterback/pages/league/league_detail/widgets/play/widget/scores_player_detail.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
+import 'package:extended_tabs/extended_tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -28,18 +30,24 @@ import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 ///@auther gejiahui
 ///created at 2024/11/21/11:18
 
-class LeagueDetailPlayPage extends GetView<LeagueDetailPlayController> {
-  LeagueDetailPlayPage(this.item, {super.key});
+class LeagueDetailPlayPage extends StatefulWidget {
+  const LeagueDetailPlayPage(this.item ,{super.key});
 
   final ScoresEntity item;
 
+  @override
+  State<LeagueDetailPlayPage> createState() => _LeagueDetailPlayPageState();
+}
+
+class _LeagueDetailPlayPageState extends State<LeagueDetailPlayPage>
+    with AutomaticKeepAliveClientMixin {
   final _isExpanded = false.obs;
 
-  var scrollController = ScrollController();
+  late LeagueDetailPlayController controller;
 
   @override
   Widget build(BuildContext context) {
-    Get.put(LeagueDetailPlayController(item));
+    controller = Get.put(LeagueDetailPlayController(widget.item));
     return GetBuilder<LeagueDetailPlayController>(builder: (_) {
       if (controller.nbaGameDetailEntity == null) {
         return Obx(() {
@@ -51,8 +59,7 @@ class LeagueDetailPlayPage extends GetView<LeagueDetailPlayController> {
         });
       }
       return SingleChildScrollView(
-        controller: scrollController,
-        physics: const BouncingScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         child: Column(
           children: [
             _buildQuarterTableWidget(),
@@ -175,8 +182,8 @@ class LeagueDetailPlayPage extends GetView<LeagueDetailPlayController> {
                   onTap: () {
                     _isExpanded.value = !_isExpanded.value;
                     Future.delayed(const Duration(milliseconds: 100), () {
-                      scrollController.animateTo(
-                          scrollController.position.maxScrollExtent,
+                      PrimaryScrollController.of(context).animateTo(
+                          PrimaryScrollController.of(context).position.maxScrollExtent,
                           duration: const Duration(milliseconds: 100),
                           curve: Curves.easeOut);
                     });
@@ -401,7 +408,7 @@ class LeagueDetailPlayPage extends GetView<LeagueDetailPlayController> {
           ),
           SizedBox(
             height: 314.w,
-            child: TabBarView(
+            child: ExtendedTabBarView(
                 controller: controller.tabController,
                 children: controller.tabTitles.map((e) {
                   var index = controller.tabTitles.indexOf(e);
@@ -429,7 +436,7 @@ class LeagueDetailPlayPage extends GetView<LeagueDetailPlayController> {
                               {"FG": "${item.fgm}/${item.fga}"},
                               {"FT": "${item.ftm}/${item.fta}"}
                             ]);
-                          } else if (index == 0) {
+                          } else if (index == 1) {
                             values.addAll([
                               {"REB": "${item.reb}"},
                               {"DERB": "${item.dreb}"},
@@ -563,29 +570,49 @@ class LeagueDetailPlayPage extends GetView<LeagueDetailPlayController> {
                                 return;
                               }
                               showModalBottomSheet(
-                                isScrollControlled: false,
+                                  isScrollControlled: true,
                                   context: context,
-                                  builder: (context) {
-                                    return Container(
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.vertical(
-                                              top: Radius.circular(9.w))),
+                                  backgroundColor: AppColors.cTransparent,
+                                  builder: (_) {
+                                    return SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height,
+                                      width: MediaQuery.of(context).size.width,
                                       child: Column(
                                         children: [
-                                          8.vGap,
+                                          WidgetUtils.getDialogTransWidget(
+                                              context),
                                           Container(
-                                            width: 44.w,
-                                            height: 4.w,
+                                            height: Utils.getDialogHeight(),
                                             decoration: BoxDecoration(
-                                                color: AppColors.c000000
-                                                    .withOpacity(.2),
+                                                color: AppColors.cFFFFFF,
                                                 borderRadius:
-                                                    BorderRadius.circular(2.w)),
+                                                    BorderRadius.vertical(
+                                                        top: Radius.circular(
+                                                            9.w))),
+                                            child: Column(
+                                              children: [
+                                                8.vGap,
+                                                Container(
+                                                  width: 44.w,
+                                                  height: 4.w,
+                                                  decoration: BoxDecoration(
+                                                      color: AppColors.c000000
+                                                          .withOpacity(.2),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              2.w)),
+                                                ),
+                                                24.vGap,
+                                                Expanded(
+                                                  child: ScoresPlayerDetail(
+                                                      controller
+                                                          .nbaGameDetailEntity!
+                                                          .gameData),
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                          24.vGap,
-                                          ScoresPlayerDetail(controller
-                                              .nbaGameDetailEntity!.gameData),
                                         ],
                                       ),
                                     );
@@ -698,4 +725,7 @@ class LeagueDetailPlayPage extends GetView<LeagueDetailPlayController> {
           )),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
