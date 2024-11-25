@@ -175,7 +175,7 @@ class PlayerItem extends GetView<TeamController> {
                   height: 4.w,
                   width: 52.w,
                   progress: item.power.toDouble(),
-                  progressColor: controller.getProgressColor(item.power),
+                  progressColor: Utils.getProgressColor(item.power),
                   backgroundColor: Colors.black12,
                 ),
               ),

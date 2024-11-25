@@ -317,6 +317,18 @@ TrainingInfoBuff $TrainingInfoBuffFromJson(Map<String, dynamic> json) {
   if (takeEffectGameCount != null) {
     trainingInfoBuff.takeEffectGameCount = takeEffectGameCount;
   }
+  final int? buffId = jsonConvert.convert<int>(json['buffId']);
+  if (buffId != null) {
+    trainingInfoBuff.buffId = buffId;
+  }
+  final int? face = jsonConvert.convert<int>(json['face']);
+  if (face != null) {
+    trainingInfoBuff.face = face;
+  }
+  final int? color = jsonConvert.convert<int>(json['color']);
+  if (color != null) {
+    trainingInfoBuff.color = color;
+  }
   return trainingInfoBuff;
 }
 
@@ -328,6 +340,9 @@ Map<String, dynamic> $TrainingInfoBuffToJson(TrainingInfoBuff entity) {
   data['updateTime'] = entity.updateTime;
   data['position'] = entity.position;
   data['takeEffectGameCount'] = entity.takeEffectGameCount;
+  data['buffId'] = entity.buffId;
+  data['face'] = entity.face;
+  data['color'] = entity.color;
   return data;
 }
 
@@ -339,6 +354,9 @@ extension TrainingInfoBuffExtension on TrainingInfoBuff {
     int? updateTime,
     int? position,
     int? takeEffectGameCount,
+    int? buffId,
+    int? face,
+    int? color,
   }) {
     return TrainingInfoBuff()
       ..buffValue = buffValue ?? this.buffValue
@@ -346,6 +364,9 @@ extension TrainingInfoBuffExtension on TrainingInfoBuff {
       ..teamId = teamId ?? this.teamId
       ..updateTime = updateTime ?? this.updateTime
       ..position = position ?? this.position
-      ..takeEffectGameCount = takeEffectGameCount ?? this.takeEffectGameCount;
+      ..takeEffectGameCount = takeEffectGameCount ?? this.takeEffectGameCount
+      ..buffId = buffId ?? this.buffId
+      ..face = face ?? this.face
+      ..color = color ?? this.color;
   }
 }

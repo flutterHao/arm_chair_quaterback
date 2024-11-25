@@ -258,17 +258,17 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
     });
   }
 
-  Color getProgressColor(progress) {
-    return progress > 100
-        ? AppColors.c31E99E
-        : (progress > 50
-            ? AppColors.c10A86A
-            : progress > 20
-                ? AppColors.cDFB523
-                : AppColors.cE72646);
-  }
+  // Color getProgressColor(progress) {
+  //   return progress > 100
+  //       ? AppColors.c31E99E
+  //       : (progress > 50
+  //           ? AppColors.c10A86A
+  //           : progress > 20
+  //               ? AppColors.cDFB523
+  //               : AppColors.cE72646);
+  // }
 
-  Color getBackColor(progress) {
-    return progress > 100 ? AppColors.c10A86A : AppColors.cEEEEEE;
-  }
+  // Color getBackColor(progress) {
+  //   return progress > 100 ? AppColors.c10A86A : AppColors.cEEEEEE;
+  // }
 }

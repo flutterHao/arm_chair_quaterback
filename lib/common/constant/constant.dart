@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-06 15:16:54
- * @LastEditTime: 2024-09-20 21:18:42
+ * @LastEditTime: 2024-11-25 17:06:56
  */
 class Constant {
   /// 用户 - 配置信息
@@ -30,6 +30,22 @@ class Constant {
     "TO"
   ];
 
-
   static String serviceUrl = "serviceUrl";
+
+  // 花色
+  // 黑桃
+  static const int spade = 1;
+  // 方块
+  static const int diamond = 2;
+  // 梅花
+  static const int club = 3;
+  // 红桃
+  static const int heart = 4;
+
+  // 牌面
+  static const int ten = 10;
+  static const int j = 11;
+  static const int q = 12;
+  static const int k = 13;
+  static const int ace = 14;
 }

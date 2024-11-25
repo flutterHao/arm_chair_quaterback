@@ -22,8 +22,11 @@ class TrainingInfoEntity {
 
   TrainingInfoEntity();
 
-  factory TrainingInfoEntity.fromJson(Map<String, dynamic> json) =>
-      $TrainingInfoEntityFromJson(json);
+  factory TrainingInfoEntity.fromJson(Map<String, dynamic> json) {
+    var info = $TrainingInfoEntityFromJson(json);
+    info.buff.sort((a, b) => a.face.compareTo(b.face));
+    return info;
+  }
 
   Map<String, dynamic> toJson() => $TrainingInfoEntityToJson(this);
 
@@ -113,6 +116,9 @@ class TrainingInfoBuff {
   late int updateTime = 0;
   late int position = 0;
   late int takeEffectGameCount = 0;
+  late int buffId = 0;
+  late int face = 10;
+  late int color = 1;
 
   TrainingInfoBuff();
 

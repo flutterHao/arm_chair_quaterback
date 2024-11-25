@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-21 20:20:49
- * @LastEditTime: 2024-11-22 15:00:08
+ * @LastEditTime: 2024-11-25 18:23:11
  */
 import 'dart:async';
 import 'dart:io';
@@ -14,6 +14,7 @@ import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/store/config.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -51,11 +52,22 @@ class Utils {
 
   ///道具
   static String getPropIconUrl(id) {
-    return "assets/images/icon/prop_$id.png";
+    if (id == 2) {
+      return Assets.commonUiCommonPlayerState02;
+    } else {
+      return "assets/images/Common/ui_common_prop_0$id.png";
+    }
   }
 
   static String getStatusUrl(id) {
-    return "assets/images/icon/status_$id.png";
+    if (id == 101) {
+      return Assets.commonUiCommonPlayerState01;
+    } else if (id == 102) {
+      return Assets.commonUiCommonPlayerState02;
+    } else if (id == 103) {
+      return Assets.commonUiCommonPlayerState3;
+    }
+    return Assets.commonUiCommonPlayerState04;
   }
 
   static String getPosition(int position) {
@@ -267,7 +279,15 @@ class Utils {
     return textPainter.computeLineMetrics().length;
   }
 
-  static double getDialogHeight(){
+  static double getDialogHeight() {
     return 465.w;
+  }
+
+  static Color getProgressColor(progress) {
+    return (progress > 50
+        ? AppColors.c10A86A
+        : progress > 20
+            ? AppColors.cDFB523
+            : AppColors.cE72646);
   }
 }

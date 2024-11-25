@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 21:12:10
- * @LastEditTime: 2024-11-18 12:11:20
+ * @LastEditTime: 2024-11-25 15:32:32
  */
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -122,30 +122,30 @@ class MatchCard extends GetView<TeamIndexController> {
                 Container(
                   width: 81.w,
                   alignment: Alignment.centerLeft,
-                  child: MtInkwell(
-                    minScale: 0.9,
-                    onTap: () {
-                      showDialog(
-                          context: Get.context!,
-                          builder: (context) {
-                            return const RecoverDialog();
-                          });
-                    },
-                    child: Container(
-                      width: 60.w,
-                      height: 41.w,
-                      alignment: Alignment.center,
-                      margin: EdgeInsets.only(left: 8.w),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(9.w),
-                        border: Border.all(color: AppColors.c666666),
-                      ),
-                      child: Image.asset(
-                        Assets.managerUiManagerIconRecover,
-                        width: 30.w,
-                      ),
-                    ),
-                  ),
+                  // child: MtInkwell(
+                  //   minScale: 0.9,
+                  //   onTap: () {
+                  //     showDialog(
+                  //         context: Get.context!,
+                  //         builder: (context) {
+                  //           return const RecoverDialog();
+                  //         });
+                  //   },
+                  //   child: Container(
+                  //     width: 60.w,
+                  //     height: 41.w,
+                  //     alignment: Alignment.center,
+                  //     margin: EdgeInsets.only(left: 8.w),
+                  //     decoration: BoxDecoration(
+                  //       borderRadius: BorderRadius.circular(9.w),
+                  //       border: Border.all(color: AppColors.c666666),
+                  //     ),
+                  //     child: Image.asset(
+                  //       Assets.managerUiManagerIconRecover,
+                  //       width: 30.w,
+                  //     ),
+                  //   ),
+                  // ),
                 ),
               ],
             ),
