@@ -149,15 +149,18 @@ class UserInfoBar extends StatelessWidget {
                     child: Stack(
                       children: [
                         IconWidget(
-                            iconWidth: 20.w, icon: Assets.testTestTeamLogo),
+                          iconWidth: 20.w,
+                          icon: Assets.commonUiCommonStatusBarMission01,
+                          iconColor: AppColors.c686868,
+                        ),
                         Positioned(
-                          bottom: 9.w,
+                            bottom: 9.w,
                             right: 4.w,
                             child: IconWidget(
-                          iconWidth: 14.w,
-                          icon: Assets.iconUiIconRuidgt,
-                          iconColor: AppColors.c10A86A,
-                        ))
+                              iconWidth: 14.w,
+                              icon: Assets.commonUiCommonStatusBarMission02,
+                              iconColor: AppColors.c10A86A,
+                            ))
                       ],
                     ),
                   ),
@@ -228,14 +231,20 @@ class MoneyAndCoinWidget extends StatelessWidget {
                 2.hGap,
                 Text(
                   Utils.formatChip(info.getCoin()),
-                  style: 12.w4(color: AppColors.cF2F2F2, height: 1,fontFamily: FontFamily.fOswaldRegular),
+                  style: 12.w4(
+                      color: AppColors.cF2F2F2,
+                      height: 1,
+                      fontFamily: FontFamily.fOswaldRegular),
                 ),
                 10.hGap,
                 IconWidget(iconWidth: 20.w, icon: Assets.teamUiMoney02),
                 2.hGap,
                 Text(
                   Utils.formatMoney(info.getMoney()),
-                  style: 12.w4(color: AppColors.cF2F2F2, height: 1,fontFamily: FontFamily.fOswaldRegular),
+                  style: 12.w4(
+                      color: AppColors.cF2F2F2,
+                      height: 1,
+                      fontFamily: FontFamily.fOswaldRegular),
                 ),
               ],
             );

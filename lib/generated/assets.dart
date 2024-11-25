@@ -17,6 +17,8 @@ class Assets {
   static const String commonUiCommonIconSystemLikeOn = 'assets/images/Common/ui_common_icon_system_like_on.png';
   static const String commonUiCommonIconSystemShare = 'assets/images/Common/ui_common_icon_system_share.png';
   static const String commonUiCommonStatusBarBg = 'assets/images/Common/ui_common_StatusBar_bg.png';
+  static const String commonUiCommonStatusBarMission01 = 'assets/images/Common/ui_common_StatusBar_mission_01.png';
+  static const String commonUiCommonStatusBarMission02 = 'assets/images/Common/ui_common_StatusBar_mission_02.png';
   static const String commonUiCommonStatusBarNoticeOff = 'assets/images/Common/ui_common_StatusBar_notice_off.png';
   static const String commonUiCommonStatusBarNoticeOn = 'assets/images/Common/ui_common_StatusBar_notice_on.png';
   static const String commonUiCommonTabBottom01Off = 'assets/images/Common/ui_common_tab_bottom_01_off.png';

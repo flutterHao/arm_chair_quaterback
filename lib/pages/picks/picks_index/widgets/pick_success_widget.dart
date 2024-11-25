@@ -47,7 +47,7 @@ class _PickSuccessWidgetState extends State<PickSuccessWidget>
         });
       }
     });
-    Future.delayed(const Duration(milliseconds: 400),(){
+    Future.delayed(const Duration(milliseconds: 350),(){
       animationController.forward();
     });
   }
@@ -60,143 +60,142 @@ class _PickSuccessWidgetState extends State<PickSuccessWidget>
 
   @override
   Widget build(BuildContext context) {
-    var dialogHeight = Utils.getDialogHeight(context);
+    var dialogHeight = Utils.getDialogHeight();
     return Column(
       children: [
-        InkWell(
-          onTap: () => Navigator.pop(context),
-          child: SizedBox(
-            height: MediaQuery
-                .of(context)
-                .size
-                .height - dialogHeight,
-            width: double.infinity,
+        Expanded(
+          child: InkWell(
+            onTap: () => Navigator.pop(context),
+            child: const SizedBox(
+              width: double.infinity,
+            ),
           ),
         ),
-        Expanded(
-          child: Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-                color: AppColors.cFFFFFF,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(9.w))),
-            child: Column(
-              children: [
-                12.vGap,
-                Container(
-                  decoration: BoxDecoration(
-                      color: AppColors.ccccccc,
-                      borderRadius: BorderRadius.circular(2.w)),
-                  height: 4.w,
-                  width: 44.w,
-                ),
-                37.vGap,
-                Container(
-                  height: 144.w,
-                  width: 144.w,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(72.w),
-                      color: AppColors.c53CF8A.withOpacity(0.19)),
-                  child: Center(
-                    child: Obx(() {
-                      return Transform.scale(
-                        scale: animationController.value.value,
-                        child: Container(
-                          height: 115.w,
-                          width: 115.w,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(58.w),
-                              color: AppColors.c10A86A),
-                          child: Center(
-                            child: Container(
-                              height: 45.w,
-                              width: 45.w,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(23.w),
-                                  color: AppColors.cFFFFFF),
-                              child: Center(
-                                child: IconWidget(
-                                  iconWidth: 23.w,
-                                  icon: Assets.iconUiIconRuidgt,
-                                  iconColor: AppColors.c10A86A,
-                                ),
+        Container(
+          width: double.infinity,
+          constraints: BoxConstraints(
+            maxHeight: dialogHeight
+          ),
+          decoration: BoxDecoration(
+              color: AppColors.cFFFFFF,
+              borderRadius: BorderRadius.vertical(top: Radius.circular(9.w))),
+          child: Column(
+            children: [
+              12.vGap,
+              Container(
+                decoration: BoxDecoration(
+                    color: AppColors.ccccccc,
+                    borderRadius: BorderRadius.circular(2.w)),
+                height: 4.w,
+                width: 44.w,
+              ),
+              37.vGap,
+              Container(
+                height: 144.w,
+                width: 144.w,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(72.w),
+                    color: AppColors.c53CF8A.withOpacity(0.19)),
+                child: Center(
+                  child: Obx(() {
+                    return Transform.scale(
+                      scale: animationController.value.value,
+                      child: Container(
+                        height: 115.w,
+                        width: 115.w,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(58.w),
+                            color: AppColors.c10A86A),
+                        child: Center(
+                          child: Container(
+                            height: 45.w,
+                            width: 45.w,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(23.w),
+                                color: AppColors.cFFFFFF),
+                            child: Center(
+                              child: IconWidget(
+                                iconWidth: 23.w,
+                                icon: Assets.iconUiIconRuidgt,
+                                iconColor: AppColors.c10A86A,
                               ),
                             ),
                           ),
                         ),
-                      );
-                    }),
-                  ),
+                      ),
+                    );
+                  }),
                 ),
-                17.vGap,
-                Text(
-                  "PICK SUCCESS",
-                  style: 27.w5(
-                    color: AppColors.c000000,
-                    height: 1,
-                    fontFamily: FontFamily.fOswaldMedium,
-                  ),
+              ),
+              17.vGap,
+              Text(
+                "PICK SUCCESS",
+                style: 27.w5(
+                  color: AppColors.c000000,
+                  height: 1,
+                  fontFamily: FontFamily.fOswaldMedium,
                 ),
-                12.vGap,
-                Text(
-                  "${MyDateUtils.formatDate(MyDateUtils.getNowDateTime(),
-                      format: DateFormats.PARAM_M_D)} ${MyDateUtils.formatHM_AM(
-                      MyDateUtils.getNowDateTime())}",
-                  style: 14.w4(
-                    color: AppColors.c000000,
-                    height: 1,
-                    fontFamily: FontFamily.fRobotoRegular,
-                  ),
+              ),
+              12.vGap,
+              Text(
+                "${MyDateUtils.formatDate(MyDateUtils.getNowDateTime(),
+                    format: DateFormats.PARAM_M_D)} ${MyDateUtils.formatHM_AM(
+                    MyDateUtils.getNowDateTime())}",
+                style: 14.w4(
+                  color: AppColors.c000000,
+                  height: 1,
+                  fontFamily: FontFamily.fRobotoRegular,
                 ),
-                50.vGap,
-                MtInkwell(
-                  onTap: ()=> Navigator.pop(context),
-                  child: Container(
-                    height: 51.w,
-                    width: 343.w,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        color: AppColors.c000000,
-                        borderRadius: BorderRadius.circular(9.w)),
-                    child: Text(
-                      "CONFIRM",
-                      style: 23.w5(
-                          color: AppColors.cFFFFFF,
-                          height: 1,
-                          fontFamily: FontFamily.fOswaldMedium),
-                    ),
-                  ),
-                ),
-                19.vGap,
-                MtInkwell(
-                  onTap: () async {
-                    Navigator.pop(context);
-                    await Get.toNamed(RouteNames.picksPersonalCenter,
-                        arguments: {
-                          "teamId": Get
-                              .find<HomeController>()
-                              .userEntiry
-                              .teamLoginInfo
-                              ?.team
-                              ?.teamId ??
-                              0,
-                          "initTab": 0
-                        });
-                  },
-                  child: Text(
-                    "VIEW DETAILS",
-                    style: TextStyle(
-                      decoration: TextDecoration.underline,
+              ),
+              63.vGap,
+              MtInkwell(
+                onTap: ()=> Navigator.pop(context),
+                child: Container(
+                  height: 51.w,
+                  width: 343.w,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
                       color: AppColors.c000000,
-                      height: 1,
-                      fontFamily: FontFamily.fOswaldRegular,
-                      fontSize: 16.w,
-                      decorationColor: AppColors.c000000,
-                      fontWeight: FontWeight.w400,
-                    ),
+                      borderRadius: BorderRadius.circular(9.w)),
+                  child: Text(
+                    "CONFIRM",
+                    style: 23.w5(
+                        color: AppColors.cFFFFFF,
+                        height: 1,
+                        fontFamily: FontFamily.fOswaldMedium),
                   ),
-                )
-              ],
-            ),
+                ),
+              ),
+              19.vGap,
+              MtInkwell(
+                onTap: () async {
+                  Navigator.pop(context);
+                  await Get.toNamed(RouteNames.picksPersonalCenter,
+                      arguments: {
+                        "teamId": Get
+                            .find<HomeController>()
+                            .userEntiry
+                            .teamLoginInfo
+                            ?.team
+                            ?.teamId ??
+                            0,
+                        "initTab": 0
+                      });
+                },
+                child: Text(
+                  "VIEW DETAILS",
+                  style: TextStyle(
+                    decoration: TextDecoration.underline,
+                    color: AppColors.c000000,
+                    height: 1,
+                    fontFamily: FontFamily.fOswaldRegular,
+                    fontSize: 16.w,
+                    decorationColor: AppColors.c000000,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              )
+            ],
           ),
         )
       ],

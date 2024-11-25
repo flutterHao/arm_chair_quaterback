@@ -267,7 +267,7 @@ class Utils {
     return textPainter.computeLineMetrics().length;
   }
 
-  static num getDialogHeight(BuildContext context){
-    return MediaQuery.of(context).size.height - 333.w;
+  static double getDialogHeight(){
+    return 465.w;
   }
 }

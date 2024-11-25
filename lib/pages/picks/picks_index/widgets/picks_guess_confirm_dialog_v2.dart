@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
@@ -57,201 +59,202 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                   var bottom = _buildBottom(context, list);
                   return Column(
                     children: [
-                      InkWell(
-                        onTap: () => Navigator.pop(context),
-                        child: Container(
-                          width: double.infinity,
-                          constraints: BoxConstraints(minHeight: 65.w),
-                          height: queryData.size.height -
-                              396.w -
-                              list.length * 66.w,
+                      Expanded(
+                        child: InkWell(
+                          onTap: () => Navigator.pop(context),
+                          child: Container(
+                            width: double.infinity,
+                            constraints: BoxConstraints(minHeight: 65.w),
+                          ),
                         ),
                       ),
-                      Expanded(
-                        child: Container(
-                            decoration: BoxDecoration(
-                                color: AppColors.cFFFFFF,
-                                borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(9.w))),
-                            child: Column(
-                              children: [
-                                Column(
-                                  children: [
-                                    12.vGap,
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          color: AppColors.ccccccc,
-                                          borderRadius:
-                                              BorderRadius.circular(2.w)),
-                                      height: 4.w,
-                                      width: 44.w,
-                                    ),
-                                    13.vGap,
-                                    Container(
-                                        margin: EdgeInsets.symmetric(
-                                            horizontal: 16.w),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "Picks",
-                                              style: 19.w5(
-                                                  color: AppColors.c000000,
-                                                  height: 1,
-                                                  fontFamily:
-                                                      FontFamily.fOswaldMedium),
-                                            ),
-                                            Obx(() {
-                                              return AnimatedCrossFade(
-                                                  duration: const Duration(
-                                                      milliseconds: 300),
-                                                  firstChild: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.end,
-                                                    children: [
-                                                      InkWell(
-                                                        onTap: () {
-                                                          //批量删除
-                                                          Navigator.pop(
-                                                              context);
-                                                          picksIndexController
-                                                              .cleanAll();
-                                                          leagueController
-                                                              .cleanAll();
-                                                        },
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsets.only(
-                                                                  left: 8.w),
-                                                          child: Text(
-                                                            "Clear all",
-                                                            style: TextStyle(
-                                                              decoration:
-                                                                  TextDecoration
-                                                                      .underline,
-                                                              fontSize: 16.w,
-                                                              decorationColor:
-                                                                  AppColors
-                                                                      .cCB1842,
-                                                              color: AppColors
-                                                                  .cCB1842,
-                                                              fontFamily: FontFamily
-                                                                  .fOswaldRegular,
-                                                              height: 1,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      30.hGap,
-                                                      InkWell(
-                                                        onTap: () =>
-                                                            picksIndexController
-                                                                .batchDeleteOpen
-                                                                .value = false,
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsets.only(
-                                                                  left: 8.w),
-                                                          child: Text(
-                                                            "Down",
-                                                            style: TextStyle(
-                                                              decoration:
-                                                                  TextDecoration
-                                                                      .underline,
-                                                              fontSize: 16.w,
-                                                              color: AppColors
-                                                                  .c000000,
-                                                              fontFamily: FontFamily
-                                                                  .fOswaldRegular,
-                                                              height: 1,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      )
-                                                    ],
-                                                  ),
-                                                  secondChild: InkWell(
-                                                    onTap: () =>
+                      Container(
+                        constraints: BoxConstraints(
+                          minHeight: Utils.getDialogHeight()
+                        ),
+                          decoration: BoxDecoration(
+                              color: AppColors.cFFFFFF,
+                              borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(9.w))),
+                          child: Column(
+                            children: [
+                              Column(
+                                children: [
+                                  12.vGap,
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        color: AppColors.ccccccc,
+                                        borderRadius:
+                                            BorderRadius.circular(2.w)),
+                                    height: 4.w,
+                                    width: 44.w,
+                                  ),
+                                  13.vGap,
+                                  Container(
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: 16.w),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "Picks",
+                                            style: 19.w5(
+                                                color: AppColors.c000000,
+                                                height: 1,
+                                                fontFamily:
+                                                    FontFamily.fOswaldMedium),
+                                          ),
+                                          Obx(() {
+                                            return AnimatedCrossFade(
+                                                duration: const Duration(
+                                                    milliseconds: 300),
+                                                firstChild: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
+                                                  children: [
+                                                    InkWell(
+                                                      onTap: () {
+                                                        //批量删除
+                                                        Navigator.pop(
+                                                            context);
                                                         picksIndexController
-                                                            .batchDeleteOpen
-                                                            .value = true,
-                                                    child: Padding(
-                                                      padding: EdgeInsets.only(
-                                                          left: 8.w),
-                                                      child: Text(
-                                                        "Edit",
-                                                        style: TextStyle(
-                                                          decoration:
-                                                              TextDecoration
-                                                                  .underline,
-                                                          fontSize: 16.w,
-                                                          color:
-                                                              AppColors.c000000,
-                                                          fontFamily: FontFamily
-                                                              .fOswaldRegular,
-                                                          height: 1,
+                                                            .cleanAll();
+                                                        leagueController
+                                                            .cleanAll();
+                                                      },
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                left: 8.w),
+                                                        child: Text(
+                                                          "Clear all",
+                                                          style: TextStyle(
+                                                            decoration:
+                                                                TextDecoration
+                                                                    .underline,
+                                                            fontSize: 16.w,
+                                                            decorationColor:
+                                                                AppColors
+                                                                    .cCB1842,
+                                                            color: AppColors
+                                                                .cCB1842,
+                                                            fontFamily: FontFamily
+                                                                .fOswaldRegular,
+                                                            height: 1,
+                                                          ),
                                                         ),
                                                       ),
                                                     ),
-                                                  ),
-                                                  crossFadeState:
-                                                      picksIndexController
+                                                    30.hGap,
+                                                    InkWell(
+                                                      onTap: () =>
+                                                          picksIndexController
                                                               .batchDeleteOpen
-                                                              .value
-                                                          ? CrossFadeState
-                                                              .showFirst
-                                                          : CrossFadeState
-                                                              .showSecond);
-                                            })
-                                          ],
-                                        )),
-                                    9.vGap,
-                                  ],
-                                ),
-                                const Divider(
-                                  color: AppColors.cE6E6E,
-                                  height: 1,
-                                ),
-                                Expanded(
-                                    child: ListView.separated(
-                                  itemCount: list.length,
-                                  itemBuilder: (context, index) {
-                                    var item = list[index];
-                                    bool lastItem = index == list.length - 1;
-                                    if (item is GameGuess) {
-                                      var homeTeamInfo = Utils.getTeamInfo(
-                                          item.scoresEntity.homeTeamId);
-                                      var awayTeamInfo = Utils.getTeamInfo(
-                                          item.scoresEntity.awayTeamId);
-                                      return _ScoresItemWidget(
-                                          item,
-                                          lastItem,
-                                          homeTeamInfo,
-                                          awayTeamInfo,
-                                          picksIndexController);
-                                    }
-                                    var player = list[index];
-                                    int choice = player.status;
-                                    return _PlayerItemWidget(
-                                      index: index,
-                                      choice: choice,
-                                      player: player,
-                                      picksIndexController:
-                                          picksIndexController,
-                                    );
-                                  },
-                                  separatorBuilder:
-                                      (BuildContext context, int index) {
-                                    return SizedBox(
-                                      height: 0.w,
-                                    );
-                                  },
-                                )),
-                                bottom,
-                              ],
-                            )),
-                      ),
+                                                              .value = false,
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                left: 8.w),
+                                                        child: Text(
+                                                          "Down",
+                                                          style: TextStyle(
+                                                            decoration:
+                                                                TextDecoration
+                                                                    .underline,
+                                                            fontSize: 16.w,
+                                                            color: AppColors
+                                                                .c000000,
+                                                            fontFamily: FontFamily
+                                                                .fOswaldRegular,
+                                                            height: 1,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                                secondChild: InkWell(
+                                                  onTap: () =>
+                                                      picksIndexController
+                                                          .batchDeleteOpen
+                                                          .value = true,
+                                                  child: Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: 8.w),
+                                                    child: Text(
+                                                      "Edit",
+                                                      style: TextStyle(
+                                                        decoration:
+                                                            TextDecoration
+                                                                .underline,
+                                                        fontSize: 16.w,
+                                                        color:
+                                                            AppColors.c000000,
+                                                        fontFamily: FontFamily
+                                                            .fOswaldRegular,
+                                                        height: 1,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                crossFadeState:
+                                                    picksIndexController
+                                                            .batchDeleteOpen
+                                                            .value
+                                                        ? CrossFadeState
+                                                            .showFirst
+                                                        : CrossFadeState
+                                                            .showSecond);
+                                          })
+                                        ],
+                                      )),
+                                  9.vGap,
+                                ],
+                              ),
+                              const Divider(
+                                color: AppColors.cE6E6E,
+                                height: 1,
+                              ),
+                              SizedBox(
+                                height: min(queryData.size.height - 396.w - 84.w,list.length*66.w),
+                                  child: ListView.separated(
+                                itemCount: list.length,
+                                itemBuilder: (context, index) {
+                                  var item = list[index];
+                                  bool lastItem = index == list.length - 1;
+                                  if (item is GameGuess) {
+                                    var homeTeamInfo = Utils.getTeamInfo(
+                                        item.scoresEntity.homeTeamId);
+                                    var awayTeamInfo = Utils.getTeamInfo(
+                                        item.scoresEntity.awayTeamId);
+                                    return _ScoresItemWidget(
+                                        item,
+                                        lastItem,
+                                        homeTeamInfo,
+                                        awayTeamInfo,
+                                        picksIndexController);
+                                  }
+                                  var player = list[index];
+                                  int choice = player.status;
+                                  return _PlayerItemWidget(
+                                    index: index,
+                                    choice: choice,
+                                    player: player,
+                                    picksIndexController:
+                                        picksIndexController,
+                                  );
+                                },
+                                separatorBuilder:
+                                    (BuildContext context, int index) {
+                                  return SizedBox(
+                                    height: 0.w,
+                                  );
+                                },
+                              )),
+                              bottom,
+                            ],
+                          )),
                     ],
                   );
                 });
