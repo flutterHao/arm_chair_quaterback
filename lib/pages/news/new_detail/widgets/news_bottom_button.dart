@@ -2,13 +2,11 @@
  * @Description: 新闻的底部按钮点赞分享评论
  * @Author: lihonghao
  * @Date: 2024-10-17 17:02:35
- * @LastEditTime: 2024-11-22 14:47:18
+ * @LastEditTime: 2024-11-24 14:18:55
  */
 
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
-import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
-
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
@@ -25,34 +23,20 @@ class NewsBottomButton extends GetView<NewListController> {
   final NewsListDetail detail;
   final bool showCommentBt;
 
-  Widget _container(
-      {required double width, Function? onTap, required Widget child}) {
-    return InkWell(
-      onTap: () {
-        if (onTap != null) onTap();
-      },
-      child: Container(
-        width: width,
-        height: 32.w,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-            color: AppColors.cFFFFFF,
-            borderRadius: BorderRadius.circular(7.w),
-            border: Border.all(
-              width: 1.h,
-              color: AppColors.c666666.withOpacity(0.3),
-            )),
-        child: child,
-      ),
+  Widget _container({required double width, required Widget child}) {
+    return Container(
+      width: width,
+      height: 32.w,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+          color: AppColors.cFFFFFF,
+          borderRadius: BorderRadius.circular(7.w),
+          border: Border.all(
+            width: 1.h,
+            color: AppColors.c666666.withOpacity(0.3),
+          )),
+      child: child,
     );
-  }
-
-  static String numFormat(int num) {
-    if (num >= 0 && num <= 999) {
-      return "$num";
-    } else {
-      return "${(num / 1000).toStringAsFixed(1)}k";
-    }
   }
 
   @override
@@ -73,30 +57,27 @@ class NewsBottomButton extends GetView<NewListController> {
                   child: Container(
                     width: 72.w,
                     padding: EdgeInsets.symmetric(horizontal: 7.w),
+                    alignment: Alignment.center,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         7.hGap,
-                        InkWell(
-                          child: IconWidget(
-                            iconWidth: 18.w,
-                            icon: detail.isLike.value == 1
-                                ? Assets.iconUiIconLike01
-                                : Assets.iconUiIconLike02,
-                            iconColor: detail.isLike.value == 1
+                        IconWidget(
+                          iconWidth: 18.w,
+                          icon: detail.isLike.value == 1
+                              ? Assets.iconUiIconLike01
+                              : Assets.iconUiIconLike02,
+                          iconColor: detail.isLike.value == 1
+                              ? AppColors.cFF7954
+                              : AppColors.c000000,
+                        ),
+                        7.hGap,
+                        Text(
+                          "${like > 0 ? numFormat(like) : 0}",
+                          style: 14.w4(
+                            color: detail.isLike.value == 1
                                 ? AppColors.cFF7954
                                 : AppColors.c000000,
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(left: 7.w),
-                          child: Text(
-                            "${like > 0 ? numFormat(like) : 0}",
-                            style: 14.w4(
-                              color: detail.isLike.value == 1
-                                  ? AppColors.cFF7954
-                                  : AppColors.c000000,
-                            ),
                           ),
                         ),
                       ],
@@ -105,10 +86,13 @@ class NewsBottomButton extends GetView<NewListController> {
                 ),
                 // if (detail.likes != 0)
 
-                Container(
-                  width: 1.w,
-                  height: 24.w,
-                  color: AppColors.ccccccc,
+                GestureDetector(
+                  onTap: () => controller.likeNews(detail),
+                  child: Container(
+                    width: 1.w,
+                    height: 24.w,
+                    color: AppColors.ccccccc,
+                  ),
                 ),
                 InkWell(
                   onTap: () => controller.unLikeNews(detail),
@@ -137,27 +121,27 @@ class NewsBottomButton extends GetView<NewListController> {
 
         ///评论
         if (showCommentBt)
-          _container(
-              width: 76.w,
-              child: InkWell(
-                onTap: () async {
-                  final ctrl = Get.find<CommentController>();
-                  ctrl.getReviews(detail.id, isRefresh: true);
+          GestureDetector(
+            onTap: () async {
+              final ctrl = Get.find<CommentController>();
+              ctrl.getReviews(detail.id, isRefresh: true);
 
-                  await showModalBottomSheet(
-                    isScrollControlled: true,
-                    context: Get.context!,
-                    // barrierColor: Colors.transparent,
-                    backgroundColor: Colors.transparent,
-                    builder: (context) {
-                      return VerticalDragBackWidget(
-                          child: CommentsDialog(detail: detail));
-                    },
-                  );
-
-                  detail.reviewsList = ctrl.mainList.value;
-                  ctrl.update();
+              await showModalBottomSheet(
+                isScrollControlled: true,
+                context: Get.context!,
+                // barrierColor: Colors.transparent,
+                backgroundColor: Colors.transparent,
+                builder: (context) {
+                  return VerticalDragBackWidget(
+                      child: CommentsDialog(detail: detail));
                 },
+              );
+
+              detail.reviewsList = ctrl.mainList.value;
+              ctrl.update();
+            },
+            child: _container(
+                width: 76.w,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -177,10 +161,18 @@ class NewsBottomButton extends GetView<NewListController> {
                       );
                     }),
                   ],
-                ),
-              )),
+                )),
+          ),
         // 4.hGap,
       ],
     );
+  }
+}
+
+String numFormat(int num) {
+  if (num >= 0 && num <= 999) {
+    return "$num";
+  } else {
+    return "${(num / 1000).toStringAsFixed(1)}k";
   }
 }

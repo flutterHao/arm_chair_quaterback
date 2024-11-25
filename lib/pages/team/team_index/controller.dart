@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-11-19 22:38:24
+ * @LastEditTime: 2024-11-24 19:20:15
  */
 
 import 'dart:async';
@@ -207,8 +207,7 @@ class TeamIndexController extends GetxController
 
   ///滚动到老虎机
   void scroToSlot() {
-    if (scrollController.offset < (800.w) ||
-        scrollController.offset > (890.w)) {
+    if (scrollController.offset != 890.w) {
       scrollController.animateTo(
         890.w,
         duration: const Duration(milliseconds: 300),

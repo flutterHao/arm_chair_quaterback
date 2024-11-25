@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-11-21 18:23:30
+ * @LastEditTime: 2024-11-22 16:21:14
  */
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
@@ -117,16 +117,20 @@ class _TeamView extends GetView<TeamIndexController> {
             routeId: GlobalNestedKey.TEAM,
           ),
           bodyWidget: Expanded(
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              controller: ctrl.scrollController,
-              child: const Column(
-                children: [
-                  BeautyAndBoxView(),
-                  MatchCard(),
-                  TrainingPage(),
-                  MyTeamWidget(),
-                ],
+            child: SizedBox(
+              // onRefresh: () => ctrl.onRefresh(),
+              // controller: ctrl.refreshController,
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                controller: ctrl.scrollController,
+                child: const Column(
+                  children: [
+                    BeautyAndBoxView(),
+                    MatchCard(),
+                    TrainingPage(),
+                    MyTeamWidget(),
+                  ],
+                ),
               ),
             ),
           ),

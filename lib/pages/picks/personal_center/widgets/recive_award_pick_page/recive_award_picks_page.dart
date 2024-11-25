@@ -91,7 +91,8 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
                                         opacity: .05,
                                         child: IconWidget(
                                             iconWidth: 120.w,
-                                            icon: Assets.iconProp102))),
+                                            icon:
+                                                Assets.commonUiCommonProp05))),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -111,7 +112,7 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
                                         2.hGap,
                                         IconWidget(
                                           iconWidth: 10.w,
-                                          icon: Assets.iconProp102,
+                                          icon: Assets.commonUiCommonProp05,
                                           iconColor: AppColors.cFFFFFF,
                                         )
                                       ],
@@ -175,19 +176,20 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
                                                           margin:
                                                               EdgeInsets.only(
                                                                   right: 5.w),
-                                                          decoration:
-                                                              BoxDecoration(
-                                                                  color: controller.teamSimpleEntity!.lastGuess[
-                                                                              index] ==
-                                                                          "0"
-                                                                      ? AppColors
-                                                                          .cE72646
-                                                                      : AppColors
-                                                                          .c10A86A,
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              6.w)),
+                                                          decoration: BoxDecoration(
+                                                              color: controller
+                                                                              .teamSimpleEntity!
+                                                                              .lastGuess[
+                                                                          index] ==
+                                                                      "0"
+                                                                  ? AppColors
+                                                                      .cE72646
+                                                                  : AppColors
+                                                                      .c10A86A,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          6.w)),
                                                         )),
                                               ),
                                               3.vGap,
@@ -384,7 +386,7 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
                         children: [
                           IconWidget(
                             iconWidth: 15.w,
-                            icon: Assets.iconProp102,
+                            icon: Assets.commonUiCommonProp05,
                             iconColor: AppColors.c10A86A,
                           ),
                           4.hGap,

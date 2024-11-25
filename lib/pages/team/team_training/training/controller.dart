@@ -12,6 +12,7 @@ import 'package:arm_chair_quaterback/pages/home/index.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -59,20 +60,18 @@ class TrainingController extends GetxController
   ];
 
   final List<int> propList = [1, 2, 3, 4, 5];
-
-  Map<int, int> proCountMap = {
-    102: 0,
-    301: 0,
-    302: 0,
-    303: 0,
-    304: 0,
-    305: 0,
-    306: 0,
-  };
+  final List<int> statusList = [101, 102, 103, 104];
+  final List<RxBool> isOpenList = [
+    false.obs,
+    false.obs,
+    false.obs,
+    false.obs,
+  ];
 
   //球员滚动
   late Timer _timer;
   late ScrollController playerScollCtrl;
+  List<ScrollController> statusScollerList = [];
   int playerIdx = 0;
   bool showResult = false;
 
@@ -154,6 +153,9 @@ class TrainingController extends GetxController
       recoverTimeAndCountDown();
       update(["training_page"]);
       Future.delayed(const Duration(milliseconds: 200), () {});
+    }).catchError((v) {
+      EasyLoading.showToast(v.toString());
+      isPlaying.value = false;
     });
   }
 
@@ -290,12 +292,30 @@ class TrainingController extends GetxController
           .then((v) async {
         showResult = true;
         trainingInfo.selectPlayer.value = trainingInfo.statusReplyPlayers;
+        statusScollerList = trainingInfo.statusReplyPlayers
+            .map((e) => ScrollController())
+            .toList();
+
+        update(["playerList"]);
+        for (int i = 0; i < statusScollerList.length; i++) {
+          statusScroll(i);
+        }
         await Future.delayed(const Duration(milliseconds: 1500), () {
           showPlayer.value = false;
           showResult = false;
         });
       });
     }
+  }
+
+  void statusScroll(int index) {
+    statusScollerList[index].jumpTo(0);
+    // int propIndex = propList.indexOf(trainingInfo.propArray[index]);
+    ///在获奖的结果基础上旋转三周
+    double offset = 30.w * (random.nextInt(10) + statusList.length * 1);
+    statusScollerList[index].animateTo(offset,
+        duration: const Duration(milliseconds: 600),
+        curve: const Cubic(0.27, 0.59, 0.19, 1.0));
   }
 
   void updateMoney() {

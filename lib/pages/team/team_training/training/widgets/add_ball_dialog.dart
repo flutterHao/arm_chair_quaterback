@@ -50,7 +50,7 @@ class AddBallDialog extends GetView<TrainingController> {
                 5.hGap,
                 IconWidget(
                   iconWidth: 15.w,
-                  icon: Assets.iconUiIconMoney,
+                  icon: Assets.commonUiCommonProp05,
                   iconColor: AppColors.c262626,
                 ),
                 5.hGap,

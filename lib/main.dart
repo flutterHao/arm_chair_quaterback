@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 16:17:35
- * @LastEditTime: 2024-10-26 15:32:26
+ * @LastEditTime: 2024-11-24 12:19:09
  */
 import 'package:arm_chair_quaterback/common/widgets/transitions/half_slide_right_to_left_transition.dart';
 import 'package:arm_chair_quaterback/pages/home/home_binding.dart';
@@ -66,6 +66,7 @@ class MyApp extends StatelessWidget {
                 enableLog: true,
                 // logWriterCallback: Log.write,
                 // defaultTransition: Transition.rightToLeft,
+                transitionDuration: const Duration(milliseconds: 300),
                 customTransition:
                     HalfSlideRightToLeftTransition(), //只作用在一级路由，局部路由需要单独加
                 //  defaultTransition: Transition.noTransition,

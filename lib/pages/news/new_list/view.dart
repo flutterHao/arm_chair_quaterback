@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-18 21:01:04
- * @LastEditTime: 2024-11-19 20:58:36
+ * @LastEditTime: 2024-11-24 14:11:17
  */
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
@@ -148,6 +148,7 @@ class NewsListPage extends GetView<NewListController> {
                           newsDetail: item,
                           // key: Key(item.id.toString()),
                         ),
+                        // child: Text("sdsa"),
                       );
                     })
                 : Center(child: Obx(() {

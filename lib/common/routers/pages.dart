@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:33:28
- * @LastEditTime: 2024-11-19 21:19:08
+ * @LastEditTime: 2024-11-24 12:18:45
  */
 // import 'package:arm_chair_quaterback/pages/news/new_detail/bindings.dart';
 // import 'package:arm_chair_quaterback/pages/news/new_detail/view.dart';
@@ -74,6 +74,7 @@ class AppPages {
       // customTransition: HalfSlideRightToLeftTransition(),
       page: () => NewsDetailPage(newsDetail: Get.arguments),
       name: RouteNames.newsDetail,
+      transitionDuration: const Duration(milliseconds: 300),
     ),
     GetPage(
       opaque: false,

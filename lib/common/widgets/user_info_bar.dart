@@ -227,7 +227,8 @@ class MoneyAndCoinWidget extends StatelessWidget {
           if (home) {
             child = Row(
               children: [
-                IconWidget(iconWidth: 17.w, icon: Assets.iconUiIconJetton),
+                IconWidget(
+                    iconWidth: 17.w, icon: Assets.commonUiCommonIconCurrency02),
                 2.hGap,
                 Text(
                   Utils.formatChip(info.getCoin()),
@@ -253,10 +254,11 @@ class MoneyAndCoinWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                iconText(Assets.iconProp102, Utils.formatChip(info.getCoin())),
+                iconText(Assets.commonUiCommonIconCurrency02,
+                    Utils.formatChip(info.getCoin())),
                 4.vGap,
-                iconText(
-                    Assets.iconUiIconMoney, Utils.formatMoney(info.getMoney())),
+                iconText(Assets.commonUiCommonProp05,
+                    Utils.formatMoney(info.getMoney())),
               ],
             );
           }

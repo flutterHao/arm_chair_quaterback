@@ -2,8 +2,9 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-04 16:18:54
- * @LastEditTime: 2024-11-19 17:21:24
+ * @LastEditTime: 2024-11-24 19:46:45
  */
+
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:flutter/material.dart';
@@ -90,6 +91,7 @@ class _AnimatedScaleNumberState extends State<AnimatedScaleNumber>
 class AnimatedNum extends StatefulWidget {
   final int number;
   final String? unit;
+  final int milliseconds;
 
   ///单位
   final TextStyle textStyle;
@@ -99,6 +101,7 @@ class AnimatedNum extends StatefulWidget {
     required this.number,
     required this.textStyle,
     this.unit = "",
+    this.milliseconds = 300,
   });
 
   @override
@@ -126,7 +129,10 @@ class AnimState extends State<AnimatedNum> with SingleTickerProviderStateMixin {
   void didUpdateWidget(AnimatedNum oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.number != widget.number) {
+      // int change = widget.number - oldWidget.number;
+      // int duration = max(change * 10, 2000);
       _currentNumber = oldWidget.number;
+      // controller.reset();
       controller.reset();
       animation = IntTween(begin: _currentNumber, end: widget.number).animate(
         CurvedAnimation(

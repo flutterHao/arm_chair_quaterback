@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-30 11:43:53
- * @LastEditTime: 2024-11-21 18:21:12
+ * @LastEditTime: 2024-11-24 21:11:53
  */
 
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -26,51 +26,43 @@ class TrainingAvater extends GetView<TrainingController> {
   @override
   Widget build(BuildContext context) {
     ///头像
-    double scale = 1.1;
-    return AnimatedScale(
-      duration: const Duration(milliseconds: 300),
-      scale: isCurrent ? scale : 1,
-      child: SizedBox(
-        width: 46.w,
-        height: 61.w,
-        child: Stack(
-          children: [
+    return SizedBox(
+      width: 46.w,
+      height: 61.w,
+      child: Stack(
+        children: [
+          Container(
+            width: 46.w,
+            height: 61.w,
+            // width: isCurrent ? 46.w * scale : 46.w,
+            // height: isCurrent ? 61.w * scale : 61.w,
+            alignment: Alignment.center,
+            // color: Colors.red,
+            clipBehavior: Clip.antiAlias,
+            margin: EdgeInsets.symmetric(horizontal: 2.w),
+            decoration: BoxDecoration(
+              color: AppColors.cF2F2F2,
+              borderRadius: BorderRadius.circular(9.w),
+            ),
+            child: ImageWidget(
+              url: Utils.getPlayUrl(player.playerId),
+              imageFailedPath: Assets.iconUiDefault04,
+              borderRadius: BorderRadius.circular(7.w),
+              width: 46.w,
+              height: 61.w,
+              fit: BoxFit.cover,
+            ),
+          ),
+          if (!isCurrent && controller.showResult)
             Container(
               width: 46.w,
               height: 61.w,
-              // width: isCurrent ? 46.w * scale : 46.w,
-              // height: isCurrent ? 61.w * scale : 61.w,
-              alignment: Alignment.center,
-              // color: Colors.red,
-              clipBehavior: Clip.antiAlias,
-              margin: EdgeInsets.symmetric(horizontal: 2.w),
               decoration: BoxDecoration(
-                border: isCurrent
-                    ? Border.all(color: AppColors.cFF7954, width: 2)
-                    : null,
-                color: AppColors.cF2F2F2,
+                color: Colors.black.withOpacity(0.25),
                 borderRadius: BorderRadius.circular(9.w),
               ),
-              child: ImageWidget(
-                url: Utils.getPlayUrl(player.playerId),
-                imageFailedPath: Assets.iconUiDefault04,
-                borderRadius: BorderRadius.circular(7.w),
-                width: 46.w,
-                height: 61.w,
-                fit: BoxFit.cover,
-              ),
-            ),
-            if (!isCurrent && controller.showResult)
-              Container(
-                width: 46.w,
-                height: 61.w,
-                decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.25),
-                  borderRadius: BorderRadius.circular(9.w),
-                ),
-              )
-          ],
-        ),
+            )
+        ],
       ),
     );
   }

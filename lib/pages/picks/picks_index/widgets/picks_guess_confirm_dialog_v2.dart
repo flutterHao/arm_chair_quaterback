@@ -69,9 +69,8 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                         ),
                       ),
                       Container(
-                        constraints: BoxConstraints(
-                          minHeight: Utils.getDialogHeight()
-                        ),
+                          constraints: BoxConstraints(
+                              minHeight: Utils.getDialogHeight()),
                           decoration: BoxDecoration(
                               color: AppColors.cFFFFFF,
                               borderRadius: BorderRadius.vertical(
@@ -116,8 +115,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                                     InkWell(
                                                       onTap: () {
                                                         //批量删除
-                                                        Navigator.pop(
-                                                            context);
+                                                        Navigator.pop(context);
                                                         picksIndexController
                                                             .cleanAll();
                                                         leagueController
@@ -217,41 +215,43 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                 height: 1,
                               ),
                               SizedBox(
-                                height: min(queryData.size.height - 396.w - 84.w,list.length*66.w),
+                                  height: min(
+                                      queryData.size.height - 396.w - 84.w,
+                                      list.length * 66.w),
                                   child: ListView.separated(
-                                itemCount: list.length,
-                                itemBuilder: (context, index) {
-                                  var item = list[index];
-                                  bool lastItem = index == list.length - 1;
-                                  if (item is GameGuess) {
-                                    var homeTeamInfo = Utils.getTeamInfo(
-                                        item.scoresEntity.homeTeamId);
-                                    var awayTeamInfo = Utils.getTeamInfo(
-                                        item.scoresEntity.awayTeamId);
-                                    return _ScoresItemWidget(
-                                        item,
-                                        lastItem,
-                                        homeTeamInfo,
-                                        awayTeamInfo,
-                                        picksIndexController);
-                                  }
-                                  var player = list[index];
-                                  int choice = player.status;
-                                  return _PlayerItemWidget(
-                                    index: index,
-                                    choice: choice,
-                                    player: player,
-                                    picksIndexController:
-                                        picksIndexController,
-                                  );
-                                },
-                                separatorBuilder:
-                                    (BuildContext context, int index) {
-                                  return SizedBox(
-                                    height: 0.w,
-                                  );
-                                },
-                              )),
+                                    itemCount: list.length,
+                                    itemBuilder: (context, index) {
+                                      var item = list[index];
+                                      bool lastItem = index == list.length - 1;
+                                      if (item is GameGuess) {
+                                        var homeTeamInfo = Utils.getTeamInfo(
+                                            item.scoresEntity.homeTeamId);
+                                        var awayTeamInfo = Utils.getTeamInfo(
+                                            item.scoresEntity.awayTeamId);
+                                        return _ScoresItemWidget(
+                                            item,
+                                            lastItem,
+                                            homeTeamInfo,
+                                            awayTeamInfo,
+                                            picksIndexController);
+                                      }
+                                      var player = list[index];
+                                      int choice = player.status;
+                                      return _PlayerItemWidget(
+                                        index: index,
+                                        choice: choice,
+                                        player: player,
+                                        picksIndexController:
+                                            picksIndexController,
+                                      );
+                                    },
+                                    separatorBuilder:
+                                        (BuildContext context, int index) {
+                                      return SizedBox(
+                                        height: 0.w,
+                                      );
+                                    },
+                                  )),
                               bottom,
                             ],
                           )),
@@ -559,7 +559,8 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                       Row(
                         children: [
                           IconWidget(
-                              iconWidth: 17.w, icon: Assets.iconUiIconJetton),
+                              iconWidth: 17.w,
+                              icon: Assets.commonUiCommonIconCurrency02),
                           4.hGap,
                           Text(
                             Utils.formatChip(int.parse(
@@ -597,7 +598,8 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                       Row(
                         children: [
                           IconWidget(
-                              iconWidth: 17.w, icon: Assets.iconUiIconJetton),
+                              iconWidth: 17.w,
+                              icon: Assets.commonUiCommonIconCurrency02),
                           4.hGap,
                           Text(
                             Utils.formatChip(maxWin),

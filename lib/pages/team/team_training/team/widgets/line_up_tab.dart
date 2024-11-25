@@ -141,9 +141,9 @@ class _LineUpTabState extends State<LineUpTab>
                           SizedBox(height: 6.h),
                           CustomLinearProgressBar(
                             width: 138.w,
-                            progress: controller.myTeamEntity.powerP / 100,
+                            progress: controller.myTeamEntity.powerP.toDouble(),
                             progressColor: controller.getProgressColor(
-                                controller.myTeamEntity.powerP / 100),
+                                controller.myTeamEntity.powerP),
                           ),
                           SizedBox(height: 5.h),
                           Row(

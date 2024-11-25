@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-22 15:19:24
- * @LastEditTime: 2024-11-19 21:20:37
+ * @LastEditTime: 2024-11-24 11:57:09
  */
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -32,7 +32,7 @@ class EmojiWidget extends StatelessWidget {
         ...emojiList.map((e) {
           int index = emojiList.indexOf(e);
           return Obx(() {
-            return InkWell(
+            return GestureDetector(
               onTap: () {
                 current.value = index;
                 // EasyLoading.showToast("Not Open",

@@ -261,7 +261,7 @@ class _RankPageState extends State<RankPage>
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Image.asset(
-                                                  Assets.iconUiIconMoney,
+                                                  Assets.commonUiCommonProp05,
                                                   width: 14.w,
                                                   fit: BoxFit.fitWidth,
                                                 ),
@@ -441,7 +441,7 @@ class _RankPageState extends State<RankPage>
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Image.asset(
-                                                  Assets.iconUiIconMoney,
+                                                  Assets.commonUiCommonProp05,
                                                   width: 14.w,
                                                   fit: BoxFit.fitWidth,
                                                 ),
@@ -620,7 +620,7 @@ class _RankPageState extends State<RankPage>
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Image.asset(
-                                                  Assets.iconUiIconMoney,
+                                                  Assets.commonUiCommonProp05,
                                                   width: 14.w,
                                                   fit: BoxFit.fitWidth,
                                                 ),
@@ -878,7 +878,7 @@ class _RankPageState extends State<RankPage>
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Image.asset(
-                  Assets.iconUiIconMoney,
+                  Assets.commonUiCommonProp05,
                   width: 16.w,
                   fit: BoxFit.fitWidth,
                 ),

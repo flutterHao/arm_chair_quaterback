@@ -402,7 +402,8 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
                       )),
                       9.hGap,
                       IconWidget(
-                          iconWidth: 18.w, icon: Assets.iconUiIconJetton),
+                          iconWidth: 18.w,
+                          icon: Assets.commonUiCommonIconCurrency02),
                       2.hGap,
                       Text(
                         getChip(),
@@ -559,7 +560,8 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
     );
   }
 
-  Expanded _buildBtn(bool isChoice, int teamId, {bool isGuessIdEqualTeamId = false}) {
+  Expanded _buildBtn(bool isChoice, int teamId,
+      {bool isGuessIdEqualTeamId = false}) {
     return Expanded(
       child: MtInkwell(
         vibrate: true,
@@ -602,7 +604,9 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
                     left: 11.w,
                     child: Builder(builder: (context) {
                       if (item.guessStatus != 1) {
-                        var winId = item.homeTeamScore>item.awayTeamScore?item.homeTeamId:item.awayTeamId;
+                        var winId = item.homeTeamScore > item.awayTeamScore
+                            ? item.homeTeamId
+                            : item.awayTeamId;
                         bool isChoiceSuccess = winId == teamId;
                         return Container(
                           width: 19.w,

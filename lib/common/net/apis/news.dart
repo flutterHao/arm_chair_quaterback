@@ -2,11 +2,9 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 17:28:14
- * @LastEditTime: 2024-11-22 14:36:26
+ * @LastEditTime: 2024-11-24 14:11:08
  */
 import 'package:arm_chair_quaterback/common/entities/news_banner.dart';
-import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
-
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/receive_prop_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/review_entity.dart';
@@ -14,9 +12,7 @@ import 'package:arm_chair_quaterback/common/entities/stats_rank/nba_player_stat.
 import 'package:arm_chair_quaterback/common/entities/team_rank.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/net/index.dart';
-import 'package:arm_chair_quaterback/common/utils/image_ext.dart';
 import 'package:common_utils/common_utils.dart';
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class NewsApi {

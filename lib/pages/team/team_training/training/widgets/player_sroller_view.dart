@@ -2,9 +2,14 @@
  * @Description:
  * @Author: lihonghao
  * @Date: 2024-11-06 11:51:15
- * @LastEditTime: 2024-11-21 17:19:46
+ * @LastEditTime: 2024-11-25 10:55:41
  */
+import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
+import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
+import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/training_avater.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +35,7 @@ class _PlayerSrollerViewState extends State<PlayerSrollerView> {
             },
             child: SizedBox(
               width: 500.w,
-              height: 80.w,
+              height: 91.w,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 controller: controller.playerScollCtrl,
@@ -44,11 +49,65 @@ class _PlayerSrollerViewState extends State<PlayerSrollerView> {
                   return Obx(() {
                     var select = controller.trainingInfo.selectPlayer
                         .contains(item.playerId);
+                    int statusIdx = controller.trainingInfo.selectPlayer
+                        .indexOf(item.playerId);
                     return Align(
-                      alignment: Alignment.center,
-                      child: TrainingAvater(
-                        player: item,
-                        isCurrent: select,
+                      alignment: Alignment.bottomCenter,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          if (statusIdx != -1)
+                            SizedBox(
+                              width: 55.w,
+                              height: 30.w,
+                              child: ListView.separated(
+                                  controller:
+                                      controller.statusScollerList[statusIdx],
+                                  padding: EdgeInsets.zero,
+                                  itemCount: controller.statusList.length * 10,
+                                  separatorBuilder: (context, index) => 3.vGap,
+                                  itemBuilder: (context, index) {
+                                    int current =
+                                        index % controller.statusList.length;
+                                    return GestureDetector(
+                                      onTap: () =>
+                                          controller.statusScroll(statusIdx),
+                                      child: Center(
+                                        child: Stack(
+                                          alignment: Alignment.center,
+                                          children: [
+                                            Container(
+                                              width: 27.w,
+                                              height: 27.w,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          14.w),
+                                                  color: AppColors.c262626,
+                                                  border: Border.all(
+                                                      width: 1.5.w,
+                                                      color:
+                                                          AppColors.cFFFFFF)),
+                                            ),
+                                            IconWidget(
+                                              iconWidth: 25.w,
+                                              iconHeight: 25.w,
+                                              fit: BoxFit.fill,
+                                              icon: Utils.getStatusUrl(
+                                                  controller
+                                                      .statusList[current]),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  }),
+                            ),
+                          TrainingAvater(
+                            player: item,
+                            isCurrent: select,
+                          ),
+                        ],
                       ),
                     );
                   });

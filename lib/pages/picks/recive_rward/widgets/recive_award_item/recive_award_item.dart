@@ -146,7 +146,9 @@ class _ReceiveAwardItemState extends State<ReceiveAwardItem> {
                                                         controller
                                                             .data[index]
                                                             .guessData
-                                                            ?.guessChoice),width: 40.w,)
+                                                            ?.guessChoice),
+                                                    width: 40.w,
+                                                  )
                                                 : PlayerAvatarWidget(
                                                     width: 40.w,
                                                     playerId: controller
@@ -262,7 +264,7 @@ class _ReceiveAwardItemState extends State<ReceiveAwardItem> {
         ],
         IconWidget(
           iconWidth: 17.w,
-          icon: Assets.iconProp102,
+          icon: Assets.commonUiCommonProp05,
           iconColor:
               !controller.getSuccess() ? AppColors.cB3B3B3 : AppColors.c10A86A,
         ),

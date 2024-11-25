@@ -58,7 +58,8 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
       morePercent = 100;
     } else {
       morePercent = player.guessInfo.moreCount /
-          (player.guessInfo.moreCount + player.guessInfo.lessCount) * 100;
+          (player.guessInfo.moreCount + player.guessInfo.lessCount) *
+          100;
     }
     return Stack(
       children: [
@@ -126,7 +127,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                             Row(
                               children: [
                                 Text(
-                                  "${player.guessInfo.guessReferenceValue[player.tabStr]??0}",
+                                  "${player.guessInfo.guessReferenceValue[player.tabStr] ?? 0}",
                                   style: 24.w7(
                                       color: AppColors.c262626,
                                       fontFamily: FontFamily.fOswaldMedium,
@@ -140,9 +141,9 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                                     child: Text(
                                       Utils.getLongName(player.tabStr),
                                       style: 19.w7(
-                                          color: AppColors.c262626,
-                                          fontFamily: FontFamily.fOswaldMedium,
-                                          height: 1,
+                                        color: AppColors.c262626,
+                                        fontFamily: FontFamily.fOswaldMedium,
+                                        height: 1,
                                       ),
                                     ),
                                   ),
@@ -222,7 +223,9 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                           ),
                           3.hGap,
                           Expanded(
-                            child: SupportPercentProgressWidget(leftPercent: morePercent.toInt(), rightPercent: 100-morePercent.toInt()),
+                            child: SupportPercentProgressWidget(
+                                leftPercent: morePercent.toInt(),
+                                rightPercent: 100 - morePercent.toInt()),
                           ),
                           3.hGap,
                           Text(
@@ -269,7 +272,9 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                         ),
                       )),
                       9.hGap,
-                      IconWidget(iconWidth: 18.w, icon: Assets.iconUiIconJetton),
+                      IconWidget(
+                          iconWidth: 18.w,
+                          icon: Assets.commonUiCommonIconCurrency02),
                       2.hGap,
                       Text(
                         Utils.formatChip((double.parse(
@@ -303,7 +308,10 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                     onTap: () =>
                         Utils.generateAndShareImage(_repaintBoundaryKey),
                     child: IconWidget(
-                        iconWidth: 15.w, icon: Assets.commonUiCommonIconSystemShare,iconColor: AppColors.c000000,))))
+                      iconWidth: 15.w,
+                      icon: Assets.commonUiCommonIconSystemShare,
+                      iconColor: AppColors.c000000,
+                    ))))
       ],
     );
   }
@@ -311,7 +319,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
   Widget _buildBtn(PicksIndexController picksIndexController,
       PicksPlayerV2 player, GuessItemControllerV2 controller) {
     if (player.guessInfo.guessData.isNotEmpty) {
-      getBtn(bool choice,String text) {
+      getBtn(bool choice, String text) {
         var bgColor = choice ? AppColors.c000000 : AppColors.cEEEEEE;
         var textColor = choice ? AppColors.cFFFFFF : AppColors.ccccccc;
         return Expanded(
@@ -349,9 +357,9 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            getBtn(player.guessInfo.guessData[0].guessChoice == 1,"MORE"),
+            getBtn(player.guessInfo.guessData[0].guessChoice == 1, "MORE"),
             9.hGap,
-            getBtn(player.guessInfo.guessData[0].guessChoice != 1,"LESS"),
+            getBtn(player.guessInfo.guessData[0].guessChoice != 1, "LESS"),
           ],
         ),
       );

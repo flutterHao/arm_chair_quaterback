@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2024-11-18 12:19:14
+ * @LastEditTime: 2024-11-24 17:49:20
  */
 /*
  * @Description: 
@@ -174,8 +174,8 @@ class PlayerItem extends GetView<TeamController> {
                 child: CustomLinearProgressBar(
                   height: 4.w,
                   width: 52.w,
-                  progress: item.power / 100,
-                  progressColor: controller.getProgressColor(item.power / 100),
+                  progress: item.power.toDouble(),
+                  progressColor: controller.getProgressColor(item.power),
                   backgroundColor: Colors.black12,
                 ),
               ),

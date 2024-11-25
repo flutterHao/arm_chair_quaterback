@@ -2,17 +2,24 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-21 20:47:10
- * @LastEditTime: 2024-11-22 10:07:29
+ * @LastEditTime: 2024-11-22 19:11:07
  */
 
+import 'dart:math';
+
+import 'package:arm_chair_quaterback/pages/news/new_list/widgets/news_list_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FlipCard extends StatefulWidget {
-  final Widget front;
-  final Widget back;
+  final bool isFlipped;
+  final VoidCallback onFlip;
 
-  const FlipCard({required this.front, required this.back, Key? key})
-      : super(key: key);
+  const FlipCard({
+    super.key,
+    required this.isFlipped,
+    required this.onFlip,
+  });
 
   @override
   _FlipCardState createState() => _FlipCardState();
@@ -21,15 +28,35 @@ class FlipCard extends StatefulWidget {
 class _FlipCardState extends State<FlipCard>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  bool _isFront = true;
+  late Animation<double> _animation;
 
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 800),
+      duration: const Duration(milliseconds: 500),
       vsync: this,
     );
+
+    _animation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
+    );
+
+    if (widget.isFlipped) {
+      _controller.forward();
+    }
+  }
+
+  @override
+  void didUpdateWidget(covariant FlipCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.isFlipped != widget.isFlipped) {
+      if (widget.isFlipped) {
+        _controller.forward();
+      } else {
+        _controller.reverse();
+      }
+    }
   }
 
   @override
@@ -38,52 +65,48 @@ class _FlipCardState extends State<FlipCard>
     super.dispose();
   }
 
-  void _toggleCard() {
-    setState(() {
-      _isFront = !_isFront;
-      if (_isFront) {
-        _controller.forward(from: 0.0);
-      } else {
-        _controller.reverse(from: 1.0);
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: _toggleCard,
+      onTap: widget.onFlip,
       child: AnimatedBuilder(
-        animation: _controller,
+        animation: _animation,
         builder: (context, child) {
-          final double angle = _isFront
-              ? _controller.value * 3.14
-              : 3.14 - _controller.value * 3.14;
+          double angle = _animation.value * 3.14;
           return Transform(
-            alignment: Alignment.center,
             transform: Matrix4.identity()
               ..setEntry(3, 2, 0.001)
               ..rotateY(angle),
-            child: Container(
-              width: 100,
-              height: 100,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.3),
-                    spreadRadius: 2,
-                    blurRadius: 5,
-                    offset: const Offset(0, 3),
+            alignment: Alignment.center,
+            child: angle < pi / 2
+                ? Container(
+                    width: 60.w,
+                    height: 80.w,
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Front',
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    ),
+                  )
+                : Container(
+                    width: 60.w,
+                    height: 80.w,
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Back',
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    ),
                   ),
-                ],
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: _isFront ? widget.front : widget.back,
-              ),
-            ),
           );
         },
       ),

@@ -327,7 +327,8 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                             ),
                             10.hGap,
                             Text(
-                              Utils.formatMoney(playerDetailController.baseInfo?.salary??0),
+                              Utils.formatMoney(
+                                  playerDetailController.baseInfo?.salary ?? 0),
                               style: TextStyle(
                                   color: AppColors.cF1F1F1, fontSize: 12.sp),
                             )
@@ -913,7 +914,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                                         children: [
                                           IconWidget(
                                             iconWidth: 15.w,
-                                            icon: Assets.iconUiIconMoney,
+                                            icon: Assets.commonUiCommonProp05,
                                             iconColor: AppColors.cF2F2F2,
                                           ),
                                           4.hGap,
@@ -1008,7 +1009,8 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
         xValueMapper: (ChartSampleData data, _) => data.x as String,
         yValueMapper: (ChartSampleData data, _) => data.y,
         pointColorMapper: (data, _) => AppColors.c3B93FF,
-        pointRadiusMapper: (data, _) => (data.yValue!<minRadius?minRadius:data.yValue).toString(),
+        pointRadiusMapper: (data, _) =>
+            (data.yValue! < minRadius ? minRadius : data.yValue).toString(),
         explodeAll: true,
         explodeOffset: '3%',
         explode: true,

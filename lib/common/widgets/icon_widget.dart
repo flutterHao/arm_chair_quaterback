@@ -1,3 +1,9 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-11-01 19:20:51
+ * @LastEditTime: 2024-11-24 11:14:38
+ */
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -43,33 +49,6 @@ class IconWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Image image = Image.asset(
-      icon,
-      width: iconWidth,
-      height: iconHeight,
-      fit: fit ?? BoxFit.fill,
-      // errorBuilder: (context, error, stackTrace) {
-      //   // 可能需要更换为缺省图
-      //   return Container(
-      //     width: double.infinity,
-      //     height: double.infinity,
-      //     color: Colors.white,
-      //     alignment: Alignment.center,
-      //   );
-      // },
-    );
-
-    // 过多使用 colorFilter 会对性能有影响
-    Widget iconWidget = iconColor != null
-        ? ColorFiltered(
-            colorFilter: ColorFilter.mode(
-              iconColor!,
-              BlendMode.srcIn,
-            ),
-            child: image,
-          )
-        : image;
-
     return Transform.rotate(
       angle: pi / 180 * (rotateAngle ?? 0),
       child: Container(
@@ -81,7 +60,22 @@ class IconWidget extends StatelessWidget {
           color: backgroudColor,
           borderRadius: borderRadius,
         ),
-        child: iconWidget,
+        child: Image.asset(
+          icon,
+          width: iconWidth,
+          height: iconHeight,
+          fit: fit ?? BoxFit.fill,
+          color: iconColor,
+          // errorBuilder: (context, error, stackTrace) {
+          //   // 可能需要更换为缺省图
+          //   return Container(
+          //     width: double.infinity,
+          //     height: double.infinity,
+          //     color: Colors.white,
+          //     alignment: Alignment.center,
+          //   );
+          // },
+        ),
       ),
     );
   }

@@ -74,7 +74,7 @@ class NewsListItem extends StatelessWidget {
         InkWell(
           onTap: () {
             // Utils.generateAndShareImage(_globalKey);
-            Share.share("${newsDetail.title}\n${newsDetail.content}",
+            Share.share("${newsDetail.title}\n\n${newsDetail.content}",
                 subject: newsDetail.title);
             // Share.shareXFiles([XFile(newsDetail.imgUrl)],
             //     text: newsDetail.content, subject: newsDetail.title);
@@ -176,19 +176,13 @@ class NewsListItem extends StatelessWidget {
       int col = Utils.calculateActualLines(newsDetail.title,
           343.w - (newsDetail.imamgeWidth ?? 0) - 20.w, titleStyle);
 
-      int subClo = 1;
-      if (col <= 2) {
-        subClo = 5 - col;
-      } else {
-        subClo = 4 - col;
-      }
+      int subClo = 4 - col;
       return Column(
         ///小图
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             width: 343.w,
-            // height: 97.w,
             constraints: BoxConstraints(minHeight: 97.w, maxHeight: 110.w),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -237,19 +231,22 @@ class NewsListItem extends StatelessWidget {
               ],
             ),
           ),
-          // 10.vGap,
-          // Text(
-          //   newsDetail.content,
-          //   overflow: TextOverflow.ellipsis,
-          //   maxLines: 2,
-          //   style: TextStyle(
-          //     fontSize: 16.sp,
-          //     fontFamily: FontFamily.fRobotoRegular,
-          //     color: AppColors.c000000,
-          //     height: 19 / 14,
-          //     // letterSpacing: 0.5,
-          //   ),
-          // )
+          // if (col >= 4)
+          //   Container(
+          //     margin: EdgeInsets.only(top: 10.w),
+          //     child: Text(
+          //       newsDetail.content,
+          //       overflow: TextOverflow.ellipsis,
+          //       maxLines: 4,
+          //       style: TextStyle(
+          //         fontSize: 16.sp,
+          //         fontFamily: FontFamily.fRobotoRegular,
+          //         color: AppColors.c000000,
+          //         height: 19 / 14,
+          //         // letterSpacing: 0.5,
+          //       ),
+          //     ),
+          //   )
         ],
       );
     }
