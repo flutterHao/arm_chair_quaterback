@@ -32,6 +32,7 @@ import 'package:arm_chair_quaterback/pages/picks/pick_rank/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guess_item_v2/guess_item_v2.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/recive_rward/index.dart';
+import 'package:extended_tabs/extended_tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -363,7 +364,8 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                       height: 34.w)),
             ];
           },
-          body: TabBarView(
+          body: ExtendedTabBarView(
+            cacheExtent: picksIndexController.guessGamePlayers.keys.length-1,
               controller: picksIndexController.tabController,
               children: picksIndexController.guessGamePlayers.keys.map((e) {
                 var list = picksIndexController.guessGamePlayers[e]!;

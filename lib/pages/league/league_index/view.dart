@@ -161,37 +161,35 @@ class _LeagueIndexPageState extends State<LeagueIndexPage>
                       return Obx(() {
                         var currentIndex = controller.currentPageIndex.value;
                         var select = currentIndex == index;
-                        return Container(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                (today
-                                        ? "TODAY"
-                                        : MyDateUtils.getWeekday(e,
-                                            short: true))
-                                    .toUpperCase(),
-                                style: 12.w4(
-                                    color: today
-                                        ? AppColors.cFF7954
-                                        : select
-                                            ? AppColors.cFFFFFF
-                                            : AppColors.c808080,
-                                    height: 1,
-                                    fontFamily: FontFamily.fRobotoRegular),
-                              ),
-                              2.vGap,
-                              Text(
-                                e.day.toString(),
-                                style: 16.w5(
-                                    color: select
-                                        ? AppColors.cFFFFFF
-                                        : AppColors.c808080,
-                                    fontFamily: FontFamily.fOswaldMedium,
-                                    height: 1),
-                              )
-                            ],
-                          ),
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              (today
+                                      ? "TODAY"
+                                      : MyDateUtils.getWeekday(e,
+                                          short: true))
+                                  .toUpperCase(),
+                              style: 12.w4(
+                                  color: today
+                                      ? AppColors.cFF7954
+                                      : select
+                                          ? AppColors.cFFFFFF
+                                          : AppColors.c808080,
+                                  height: 1,
+                                  fontFamily: FontFamily.fRobotoRegular),
+                            ),
+                            2.vGap,
+                            Text(
+                              e.day.toString(),
+                              style: 16.w5(
+                                  color: select
+                                      ? AppColors.cFFFFFF
+                                      : AppColors.c808080,
+                                  fontFamily: FontFamily.fOswaldMedium,
+                                  height: 1),
+                            )
+                          ],
                         );
                       });
                     }).toList(),

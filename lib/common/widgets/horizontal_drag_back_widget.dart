@@ -17,6 +17,7 @@ class HorizontalDragBackWidget extends StatefulWidget {
 
   final Widget child;
   final bool canPop;
+  ///响应第几个子滚动组件
   final int? responseDepth;
   final bool hasScrollChild;
 

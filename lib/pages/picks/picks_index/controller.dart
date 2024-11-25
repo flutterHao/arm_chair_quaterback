@@ -270,11 +270,11 @@ class PicksIndexController extends GetxController
           return b.dataAvgList!.pts.compareTo(a.dataAvgList!.pts);
         });
         //排序：选过的放后面
-        item.sort((a, b) {
-          if (a.guessInfo.guessData.isNotEmpty) return 1;
-          if (b.guessInfo.guessData.isNotEmpty) return -1;
-          return 0;
-        });
+        // item.sort((a, b) {
+        //   if (a.guessInfo.guessData.isNotEmpty) return 1;
+        //   if (b.guessInfo.guessData.isNotEmpty) return -1;
+        //   return 0;
+        // });
         temp[key] = item;
       }
       for(var item in _pickTypeEntity){

@@ -42,6 +42,7 @@ class _ScorePageState extends State<ScorePage>
 
   @override
   Widget build(BuildContext context) {
+    print('_ScorePageState----build-----$this');
     controller = Get.put(
       ScorePageController(widget.time),
       tag: widget.time.millisecondsSinceEpoch.toString(),
@@ -63,8 +64,7 @@ class _ScorePageState extends State<ScorePage>
                       }),
                     )
                   : ListView.separated(
-                      key: PageStorageKey(
-                          widget.time.millisecondsSinceEpoch.toString()),
+                controller: ScrollController(),
                       itemCount: controller.scoreList.length,
                       physics: const BouncingScrollPhysics(),
                       itemBuilder: (context, index) {
