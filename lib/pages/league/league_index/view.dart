@@ -107,7 +107,7 @@ class _LeagueIndexPageState extends State<LeagueIndexPage>
             ];
           },
           body: ExtendedTabBarView(
-              cacheExtent: 3,
+              cacheExtent: 1,
               controller: controller.tabController,
               children: controller.getDataTimes().map((e) {
                 return ScorePage(e);
