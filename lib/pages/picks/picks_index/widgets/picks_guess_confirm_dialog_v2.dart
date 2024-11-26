@@ -616,12 +616,12 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
             ),
             14.vGap,
             Builder(builder: (context) {
-              var money = Get.find<HomeController>()
+              var coin = Get.find<HomeController>()
                       .userEntiry
                       .teamLoginInfo
-                      ?.getMoney() ??
+                      ?.getCoin() ??
                   0;
-              if (money <
+              if (coin <
                   double.parse(picksIndexController.picksDefine.betCost)) {
                 return Container(
                   height: 51.w,
