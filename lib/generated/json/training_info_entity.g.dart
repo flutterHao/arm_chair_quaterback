@@ -313,6 +313,10 @@ extension TrainingInfoTrainingExtension on TrainingInfoTraining {
 
 TrainingInfoBuff $TrainingInfoBuffFromJson(Map<String, dynamic> json) {
   final TrainingInfoBuff trainingInfoBuff = TrainingInfoBuff();
+  final int? id = jsonConvert.convert<int>(json['id']);
+  if (id != null) {
+    trainingInfoBuff.id = id;
+  }
   final double? buffValue = jsonConvert.convert<double>(json['buffValue']);
   if (buffValue != null) {
     trainingInfoBuff.buffValue = buffValue;
@@ -355,6 +359,7 @@ TrainingInfoBuff $TrainingInfoBuffFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> $TrainingInfoBuffToJson(TrainingInfoBuff entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
+  data['id'] = entity.id;
   data['buffValue'] = entity.buffValue;
   data['createTime'] = entity.createTime;
   data['teamId'] = entity.teamId;
@@ -369,6 +374,7 @@ Map<String, dynamic> $TrainingInfoBuffToJson(TrainingInfoBuff entity) {
 
 extension TrainingInfoBuffExtension on TrainingInfoBuff {
   TrainingInfoBuff copyWith({
+    int? id,
     double? buffValue,
     int? createTime,
     int? teamId,
@@ -378,8 +384,10 @@ extension TrainingInfoBuffExtension on TrainingInfoBuff {
     int? buffId,
     int? face,
     int? color,
+    RxBool? isOpen,
   }) {
     return TrainingInfoBuff()
+      ..id = id ?? this.id
       ..buffValue = buffValue ?? this.buffValue
       ..createTime = createTime ?? this.createTime
       ..teamId = teamId ?? this.teamId
@@ -388,6 +396,7 @@ extension TrainingInfoBuffExtension on TrainingInfoBuff {
       ..takeEffectGameCount = takeEffectGameCount ?? this.takeEffectGameCount
       ..buffId = buffId ?? this.buffId
       ..face = face ?? this.face
-      ..color = color ?? this.color;
+      ..color = color ?? this.color
+      ..isOpen = isOpen ?? this.isOpen;
   }
 }

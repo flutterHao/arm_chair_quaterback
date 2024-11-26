@@ -114,7 +114,8 @@ class TrainingInfoTraining {
 
 @JsonSerializable()
 class TrainingInfoBuff {
-  late double buffValue;
+  late int id = 0;
+  late double buffValue = 0.1;
   late int createTime = 0;
   late int teamId = 0;
   late int updateTime = 0;

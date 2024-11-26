@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-25 15:56:43
- * @LastEditTime: 2024-11-26 15:01:21
+ * @LastEditTime: 2024-11-26 18:00:10
  */
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
@@ -15,6 +15,7 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/add_ball_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/award_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/flip_card.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/player_sroller_view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/training_slot.dart';
@@ -265,7 +266,10 @@ class TrainingWidget extends StatelessWidget {
                                           width: 1.w,
                                           color: AppColors.cD1D1D1)),
                                   child: AnimatedContainer(
-                                    width: 290.w * 0.5,
+                                    width: 290.w *
+                                        controller.trainingInfo.training
+                                            .taskItemCount /
+                                        controller.currentTask,
                                     duration: const Duration(microseconds: 300),
                                     decoration: const BoxDecoration(
                                         gradient: LinearGradient(colors: [
@@ -280,7 +284,7 @@ class TrainingWidget extends StatelessWidget {
                                 left: 21.w,
                                 child: IconWidget(
                                     iconWidth: 27.w,
-                                    icon: Assets.managerUiManagerFreegift01),
+                                    icon: Assets.commonUiCommonProp03),
                               ),
                               Positioned(
                                 bottom: 33.5.w,
@@ -295,7 +299,7 @@ class TrainingWidget extends StatelessWidget {
                                 bottom: 33.5.w,
                                 right: 55.5.w,
                                 child: Text(
-                                  "180/220K",
+                                  "${controller.trainingInfo.training.taskItemCount}/${controller.currentTask}",
                                   style: 14
                                       .w4(fontFamily: FontFamily.fOswaldMedium),
                                 ),
@@ -303,9 +307,18 @@ class TrainingWidget extends StatelessWidget {
                               Positioned(
                                 bottom: 20.5.w,
                                 right: 13.5.w,
-                                child: Image.asset(
-                                  Assets.managerUiManagerFreegift01,
-                                  width: 33.5.w,
+                                child: MtInkwell(
+                                  onTap: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return const AwardDialog();
+                                        });
+                                  },
+                                  child: Image.asset(
+                                    Assets.managerUiManagerFreegift01,
+                                    width: 33.5.w,
+                                  ),
                                 ),
                               ),
                             ],

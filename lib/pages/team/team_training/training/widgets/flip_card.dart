@@ -2,12 +2,13 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-21 20:47:10
- * @LastEditTime: 2024-11-26 14:26:29
+ * @LastEditTime: 2024-11-26 17:18:11
  */
 
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
+import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactic_card.dart';
 import 'package:flutter/material.dart';
@@ -71,7 +72,7 @@ class _FlipCardState extends State<FlipCard>
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return MtInkwell(
       onTap: widget.onFlip,
       child: AnimatedBuilder(
         animation: _animation,
@@ -90,6 +91,7 @@ class _FlipCardState extends State<FlipCard>
                       num: widget.buff.face,
                       color: widget.buff.color,
                       width: 74.w,
+                      buff: widget.buff,
                     ),
                   )
                 : Image.asset(

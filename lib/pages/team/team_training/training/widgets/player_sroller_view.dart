@@ -2,13 +2,11 @@
  * @Description:
  * @Author: lihonghao
  * @Date: 2024-11-06 11:51:15
- * @LastEditTime: 2024-11-26 11:51:56
+ * @LastEditTime: 2024-11-26 16:50:51
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
-import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/training_avater.dart';

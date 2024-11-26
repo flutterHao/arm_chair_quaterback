@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-14 17:25:31
- * @LastEditTime: 2024-11-19 15:34:39
+ * @LastEditTime: 2024-11-26 17:41:45
  */
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
@@ -111,5 +111,14 @@ class TeamApi {
     var json =
         await HttpUtil().post(Api.buyTrainingBall, data: {"buyCount": count});
     return json["num"];
+  }
+
+  static Future<List<TrainingInfoBuff>> chooseTactic(int tacticId,
+      {int replaceTacticId = 0}) async {
+    List list = await HttpUtil().post(Api.chooseTactic,
+        data: {"tacticId": tacticId, "replaceTacticId": replaceTacticId});
+    var chooseList = list.map((e) => TrainingInfoBuff.fromJson(e)).toList();
+    chooseList.sort((a, b) => a.face.compareTo(b.face));
+    return chooseList;
   }
 }

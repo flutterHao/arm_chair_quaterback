@@ -5,6 +5,7 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/vertival_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/progress_paint.dart';
@@ -171,17 +172,22 @@ class TrainingTactics extends StatelessWidget {
                                         shrinkWrap: true,
                                         scrollDirection: Axis.horizontal,
                                         itemBuilder: (context, index) {
-                                          return Align(
-                                            alignment: Alignment.bottomCenter,
-                                            child: TacticItem(
-                                                buff: ctrl
-                                                    .trainingInfo.buff[index]),
+                                          return MtInkwell(
+                                            onTap: () {
+                                              ctrl.changeTacticId =
+                                                  ctrl.tacticList[index].id;
+                                              ctrl.chooseTactic();
+                                            },
+                                            child: Align(
+                                              alignment: Alignment.bottomCenter,
+                                              child: TacticItem(
+                                                  buff: ctrl.tacticList[index]),
+                                            ),
                                           );
                                         },
                                         separatorBuilder: (context, index) =>
                                             7.hGap,
-                                        itemCount:
-                                            ctrl.trainingInfo.buff.length),
+                                        itemCount: ctrl.tacticList.length),
                                   ),
                                 ],
                               ),
@@ -200,12 +206,12 @@ class TrainingTactics extends StatelessWidget {
                                         width: 30.w,
                                         alignment: Alignment.bottomCenter,
                                         child: Text(
-                                          "x${ctrl.trainingInfo.buff[index].takeEffectGameCount}",
+                                          "x${ctrl.tacticList[index].takeEffectGameCount}",
                                           style: 10.w4(height: 0.75),
                                         ));
                                   },
                                   separatorBuilder: (context, index) => 7.hGap,
-                                  itemCount: ctrl.trainingInfo.buff.length),
+                                  itemCount: ctrl.tacticList.length),
                             ),
                             10.vGap
                           ],
@@ -220,32 +226,50 @@ class TrainingTactics extends StatelessWidget {
 }
 
 ///相同战术卡牌叠加
-class TacticItem extends StatelessWidget {
+class TacticItem extends GetView<TrainingController> {
   const TacticItem({super.key, required this.buff});
   final TrainingInfoBuff buff;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        SizedBox(
-          width: 30.w,
-          height: 50.w,
-          child: Stack(
-            alignment: Alignment.bottomCenter,
-            children: [
-              for (var i = 0; i < buff.takeEffectGameCount; i++)
-                Positioned(
-                    bottom: 2.w * i + 2,
-                    child: SmallTacticCard(
-                      num: buff.face,
-                      color: buff.color,
-                    ))
-            ],
+    return Obx(() {
+      return Stack(
+        children: [
+          SizedBox(
+            width: 30.w,
+            height: 50.w,
+            child: Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                for (var i = 0; i < buff.takeEffectGameCount; i++)
+                  Positioned(
+                      bottom: 2.w * i + 2,
+                      child: SmallTacticCard(
+                        num: buff.face,
+                        color: buff.color,
+                      ))
+              ],
+            ),
           ),
-        ),
-      ],
-    );
+          if (controller.isChange.value)
+            Positioned(
+                top: 0,
+                right: 0,
+                child: Container(
+                  width: 14.w,
+                  height: 14.w,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: AppColors.c000000,
+                    borderRadius: BorderRadius.circular(7.w),
+                  ),
+                  child: IconWidget(
+                      rotateAngle: 90,
+                      iconWidth: 8.w,
+                      icon: Assets.commonUiCommonIconSystemExchange),
+                ))
+        ],
+      );
+    });
   }
 }

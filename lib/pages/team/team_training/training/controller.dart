@@ -33,6 +33,7 @@ class TrainingController extends GetxController
   var showCash = false.obs;
   var showBuff = false.obs;
   RxInt cash = 0.obs;
+
   TrainingInfoEntity trainingInfo = TrainingInfoEntity();
   List<TeamPlayerInfoEntity> playerList = [];
   List<TrainTaskEntity> trainTaskList = [];
@@ -71,6 +72,20 @@ class TrainingController extends GetxController
   List<ScrollController> statusScollerList = [];
   int playerIdx = 0;
   bool showResult = false;
+
+  ///战术卡牌
+  RxBool isChange = false.obs;
+  int tacticId = 0;
+  int changeTacticId = 0;
+  List<TrainingInfoBuff> tacticList = [];
+  List<TrainingInfoBuff> chooseTacticList = [];
+  List<AnimationController> tacAnimlList = [];
+  List<Animation<double>> tacSizeAnimations = [];
+  List<Animation<double>> tacScaleAnimations = [];
+  List<Animation<double>> tacPosAnimations = [];
+
+  //任务
+  int currentTask = 10;
 
   /// 在 widget 内存中分配后立即调用。
   @override
@@ -145,6 +160,12 @@ class TrainingController extends GetxController
       trainTaskList = v[1] as List<TrainTaskEntity>;
       trainDefine = v[2] as TrainDefineEntity;
       ballNum.value = trainingInfo.prop.num;
+      tacticList = trainingInfo.buff;
+      for (int i = 0; i < trainTaskList.length; i++) {
+        if (trainingInfo.training.currentTaskId == trainTaskList[i].taskLevel) {
+          currentTask = trainTaskList[i].taskNeed;
+        }
+      }
       recoverTimeAndCountDown();
       update(["training_page"]);
     }).catchError((v) {
@@ -192,6 +213,24 @@ class TrainingController extends GetxController
   void buyTrainingBall(int count) {
     TeamApi.buyTrainingBall(count).then((v) {
       trainingInfo.prop.num = v;
+      update(["training_page"]);
+    });
+  }
+
+  void chooseTactic() {
+    if (tacticId == 0) return;
+    if (tacticList.length >= 5 && changeTacticId == 0) {
+      isChange.value = true;
+      return;
+    }
+    showBuff.value = false;
+    TeamApi.chooseTactic(tacticId, replaceTacticId: changeTacticId).then((v) {
+      tacticList = v;
+    }).whenComplete(() {
+      tacticId = 0;
+      changeTacticId = 0;
+      isChange.value = false;
+      showBuff.value = false;
       update(["training_page"]);
     });
   }
@@ -252,23 +291,38 @@ class TrainingController extends GetxController
       }
 
       ///奖励表达
+      ///战术 buff
       if (awads.contains(1)) {
         showBuff.value = true;
+        tacticList = trainingInfo.buff;
+        chooseTacticList = trainingInfo.chooseBuffs;
+        update(["training_page"]);
+        await Future.delayed(const Duration(milliseconds: 200));
+        for (var element in chooseTacticList) {
+          await Future.delayed(const Duration(milliseconds: 100));
+          element.isOpen.value = true;
+        }
         // await Future.delayed(const Duration(milliseconds: 300));
         //  showBuff.value = false;
       }
+
+      ///2:状态
       if (awads.contains(2)) {
         await startPlayerScroll(0);
       }
-      if (awads.contains(3)) {
-        //道具
-      }
+
+      ///3:道具
+      if (awads.contains(3)) {}
+
+      ///4:篮球
       if (awads.contains(4)) {
         showBall.value = true;
         await Future.delayed(const Duration(milliseconds: 300), () {
           showBall.value = false;
         });
       }
+
+      ///5:钞票
       if (awads.contains(5)) {
         showCash.value = true;
         await Future.delayed(const Duration(milliseconds: 600), () {
@@ -316,6 +370,7 @@ class TrainingController extends GetxController
         update(["playerList"]);
         // update(["training_page"]);
         for (int i = 0; i < statusScollerList.length; i++) {
+          await Future.delayed(Duration(milliseconds: 200 + i * 50), () {});
           statusScroll(i);
         }
         await Future.delayed(const Duration(milliseconds: 1500), () {
@@ -331,7 +386,6 @@ class TrainingController extends GetxController
     // int oldIndex =
     //     statusList.indexOf(trainingInfo.statusReplyPlayers[index].playerStatus);
     // statusScollerList[index].jumpTo(oldIndex * 30.w);
-    await Future.delayed(const Duration(milliseconds: 400), () {});
     if (statusScollerList[index].hasClients) {
       statusScollerList[index].jumpTo(0);
       int newIndex = statusList
