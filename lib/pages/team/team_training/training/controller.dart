@@ -68,6 +68,7 @@ class TrainingController extends GetxController
 
   //球员滚动
   late Timer _timer;
+  late Timer _timer1;
   late ScrollController playerScollCtrl;
   List<ScrollController> statusScollerList = [];
   int playerIdx = 0;
@@ -142,6 +143,7 @@ class TrainingController extends GetxController
   void dispose() {
     super.dispose();
     _timer.cancel();
+    _timer1.cancel();
     for (var controller in scrollerCtrlList) {
       controller.dispose();
     }
@@ -219,19 +221,21 @@ class TrainingController extends GetxController
         DateUtil.getDateTimeByMs(trainingInfo.training.taskEndTime);
 
     int taskSeconds = taskRefreshTime.difference(now).inSeconds;
-
-    ///获取回复篮球与当前时间倒计时，转换成mm:ss
-    final minutes = taskSeconds ~/ 60;
-    final remainingSeconds = taskSeconds % 60;
-    taskCountDownString.value =
-        '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
-    if (taskSeconds <= 0) {
-      _timer.cancel();
-      // 重新获取新的恢复时间进行倒计时
-      trainingInfo = await TeamApi.getTrainingInfo();
-      update(["training_page"]);
-      taskCountDownTime();
-    }
+    _timer1 = Timer.periodic(const Duration(seconds: 1), (v) async {
+      taskSeconds--;
+      final hours = taskSeconds ~/ 3600;
+      final minutes = (taskSeconds % 3600) ~/ 60;
+      final remainingSeconds = taskSeconds % 60;
+      taskCountDownString.value =
+          '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
+      if (taskSeconds <= 0) {
+        _timer1.cancel();
+        // 重新获取新的恢复时间进行倒计时
+        trainingInfo = await TeamApi.getTrainingInfo();
+        update(["training_page"]);
+        taskCountDownTime();
+      }
+    });
   }
 
   void buyTrainingBall(int count) {
