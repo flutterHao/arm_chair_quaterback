@@ -95,6 +95,12 @@ class Utils {
     return item ?? NbaPlayerInfosPlayerBaseInfoList();
   }
 
+  ///根据Id获取球员平均数据
+  static NbaPlayerInfosPlayerDataAvgList getPlayerDataAvg(int playerId) {
+    var item = CacheApi.playerInfo?.dataAvgMap[playerId];
+    return item ?? NbaPlayerInfosPlayerDataAvgList();
+  }
+
   ///根据Id获取队伍基础信息
   static NbaTeamEntity getTeamInfo(int teamId) {
     var item = CacheApi.teamDefineMap?[teamId];

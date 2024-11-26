@@ -30,7 +30,7 @@ class LeagueDetailController extends GetxController
   void onInit() {
     super.onInit();
     tabController =
-        TabController(length: tabTitles.length, vsync: this, initialIndex: 1);
+        TabController(length: tabTitles.length, vsync: this, initialIndex: 0);
     if (item != null) {
       loadStatus.value = LoadDataStatus.success;
       _buildGameStartTime();

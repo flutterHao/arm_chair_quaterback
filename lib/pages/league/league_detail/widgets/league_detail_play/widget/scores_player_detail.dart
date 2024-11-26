@@ -26,12 +26,32 @@ class ScoresPlayerDetail extends StatefulWidget {
 class _ScoresPlayerDetailState extends State<ScoresPlayerDetail>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
+  ScrollController scrollController = ScrollController();
+  ScrollController scrollController2 = ScrollController();
+
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     tabController = TabController(length: 2, vsync: this);
+    scrollController.addListener((){
+      if(scrollController.position.isScrollingNotifier.value){
+        scrollController2.jumpTo(scrollController.offset);
+      }
+    });
+    scrollController2.addListener((){
+      if(scrollController2.position.isScrollingNotifier.value){
+        scrollController.jumpTo(scrollController2.offset);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    tabController.dispose();
+    scrollController.dispose();
+    scrollController2.dispose();
+    super.dispose();
   }
 
   @override
@@ -101,7 +121,7 @@ class _ScoresPlayerDetailState extends State<ScoresPlayerDetail>
     var notStarterList = playerScores.where((e)=>!e.isStarter).toList();
 
     List<String> keys = ["MIN","PTS","3PM","REB","AST","STL","BLK","FTM","TO","FOUL","FG","FT","3P"];
-        item(List<NbaGameDetailGameDataPlayerScores> list,bool isStarter){
+        item(List<NbaGameDetailGameDataPlayerScores> list,bool isStarter,ScrollController scrollController){
       return SizedBox(
         height: 29.w+34.w*list.length,
         child: SfDataGridTheme(
@@ -115,6 +135,8 @@ class _ScoresPlayerDetailState extends State<ScoresPlayerDetail>
               rowHeight: 34.w,
               headerRowHeight: 29.w,
               verticalScrollPhysics: const NeverScrollableScrollPhysics(),
+              showHorizontalScrollbar: false,
+              horizontalScrollController: scrollController,
               gridLinesVisibility: GridLinesVisibility.horizontal,
               source: ScoresPlayerDetailDatasource(list),
               columns: [
@@ -154,9 +176,9 @@ class _ScoresPlayerDetailState extends State<ScoresPlayerDetail>
     return SingleChildScrollView(
       child: Column(
         children: [
-          item(starterList,true),
+          item(starterList,true,scrollController),
           const Divider(color: AppColors.cE6E6E6,height: 1,),
-          item(notStarterList,false),
+          item(notStarterList,false,scrollController2),
         ],
       ),
     );

@@ -14,6 +14,7 @@ import 'package:arm_chair_quaterback/common/widgets/place_holder_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/league/league_detail/controller.dart';
+import 'package:arm_chair_quaterback/pages/league/league_detail/widgets/league_detail_picks/view.dart';
 import 'package:arm_chair_quaterback/pages/league/league_detail/widgets/league_detail_play/play_not_start/view.dart';
 import 'package:arm_chair_quaterback/pages/league/league_detail/widgets/league_detail_play/view.dart';
 import 'package:extended_tabs/extended_tabs.dart';
@@ -30,7 +31,7 @@ class LeagueDetailPage extends GetView<LeagueDetailController> {
         gameId: Get.arguments["gameId"]));
     return HorizontalDragBackWidget(
       hasScrollChild: true,
-      responseDepth: 1,
+      responseDepth: const [1,3],
       child: GetBuilder<LeagueDetailController>(
         id: LeagueDetailController.idLeagueDetailTabBarViw,
         builder: (_) {
@@ -64,11 +65,14 @@ class LeagueDetailPage extends GetView<LeagueDetailController> {
                                           children: [
                                             PlaceHolderWidget(
                                               width: 34.w,
-                                              borderRadius: BorderRadius.circular(17.w),
-                                              showChild: controller.item?.homeTeamId != null,
+                                              borderRadius:
+                                                  BorderRadius.circular(17.w),
+                                              showChild:
+                                                  controller.item?.homeTeamId !=
+                                                      null,
                                               child: ImageWidget(
-                                                url: Utils.getTeamUrl(
-                                                    controller.item?.homeTeamId),
+                                                url: Utils.getTeamUrl(controller
+                                                    .item?.homeTeamId),
                                                 width: 34.w,
                                               ),
                                             ),
@@ -76,7 +80,8 @@ class LeagueDetailPage extends GetView<LeagueDetailController> {
                                             PlaceHolderWidget(
                                               width: 20,
                                               height: 10,
-                                              showChild: controller.item != null,
+                                              showChild:
+                                                  controller.item != null,
                                               child: Text(
                                                 "${controller.item?.homeTeamWL}",
                                                 style: 10.w4(
@@ -96,14 +101,15 @@ class LeagueDetailPage extends GetView<LeagueDetailController> {
                                               PlaceHolderWidget(
                                                 width: 30,
                                                 height: 24,
-                                                showChild: controller.item != null,
+                                                showChild:
+                                                    controller.item != null,
                                                 child: Text(
                                                   "${controller.item?.homeTeamScore}",
                                                   style: 24.w7(
                                                       color: AppColors.c000000,
                                                       height: 1,
-                                                      fontFamily:
-                                                          FontFamily.fOswaldBold),
+                                                      fontFamily: FontFamily
+                                                          .fOswaldBold),
                                                 ),
                                               ),
                                               14.hGap,
@@ -111,7 +117,8 @@ class LeagueDetailPage extends GetView<LeagueDetailController> {
                                                 return PlaceHolderWidget(
                                                   width: 50,
                                                   height: 12,
-                                                  showChild: controller.item != null,
+                                                  showChild:
+                                                      controller.item != null,
                                                   child: Text(
                                                     controller
                                                         .gameStartTimeStr.value,
@@ -131,14 +138,15 @@ class LeagueDetailPage extends GetView<LeagueDetailController> {
                                               PlaceHolderWidget(
                                                 width: 30,
                                                 height: 24,
-                                                showChild: controller.item != null,
+                                                showChild:
+                                                    controller.item != null,
                                                 child: Text(
                                                   "${controller.item?.awayTeamScore}",
                                                   style: 24.w7(
                                                       color: AppColors.c000000,
                                                       height: 1,
-                                                      fontFamily:
-                                                          FontFamily.fOswaldBold),
+                                                      fontFamily: FontFamily
+                                                          .fOswaldBold),
                                                 ),
                                               ),
                                               11.hGap,
@@ -149,11 +157,13 @@ class LeagueDetailPage extends GetView<LeagueDetailController> {
                                           children: [
                                             PlaceHolderWidget(
                                               width: 34.w,
-                                              showChild: controller.item != null,
-                                              borderRadius: BorderRadius.circular(17.w),
+                                              showChild:
+                                                  controller.item != null,
+                                              borderRadius:
+                                                  BorderRadius.circular(17.w),
                                               child: ImageWidget(
-                                                url: Utils.getTeamUrl(
-                                                    controller.item?.awayTeamId),
+                                                url: Utils.getTeamUrl(controller
+                                                    .item?.awayTeamId),
                                                 width: 34.w,
                                               ),
                                             ),
@@ -161,7 +171,8 @@ class LeagueDetailPage extends GetView<LeagueDetailController> {
                                             PlaceHolderWidget(
                                               width: 20,
                                               height: 10,
-                                              showChild: controller.item != null,
+                                              showChild:
+                                                  controller.item != null,
                                               child: Text(
                                                 "${controller.item?.awayTeamWL}",
                                                 style: 10.w4(
@@ -243,13 +254,10 @@ class LeagueDetailPage extends GetView<LeagueDetailController> {
                     })
                   : ExtendedTabBarView(
                       controller: controller.tabController,
+                      cacheExtent: 2,
                       shouldIgnorePointerWhenScrolling: false,
                       children: [
-                          const Center(
-                            child: LoadStatusWidget(
-                              loadDataStatus: LoadDataStatus.noData,
-                            ),
-                          ),
+                          LeagueDetailPicksPage(controller.item!),
                           controller.isGameStart
                               ? LeagueDetailPlayPage(controller.item!)
                               : PlayNotStartPage(controller.item!),

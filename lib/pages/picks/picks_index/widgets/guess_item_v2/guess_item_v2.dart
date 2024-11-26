@@ -16,7 +16,6 @@ import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/user_avater_widget.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guess_item_v2/guess_item_controller_v2.dart';
-import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -46,9 +45,11 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
     PicksIndexController picksIndexController = Get.find();
     controller = Get.put(GuessItemControllerV2(player),
         tag: "${player.guessInfo.playerId}_${widget.index}_${player.tabStr}");
-    controller.currentIndex.value = player.status;
-    controller.formatGameStartTime();
     var count = player.guessInfo.moreCount + player.guessInfo.lessCount;
+    Future.delayed(Duration.zero,(){
+      controller.currentIndex.value = widget.playerV2.status;
+      controller.formatGameStartTime();
+    });
     var morePercent = player.guessInfo.moreCount / count;
     if (player.guessInfo.moreCount == 0 && player.guessInfo.lessCount == 0) {
       morePercent = 50;
@@ -75,9 +76,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                 25.vGap,
                 InkWell(
                   onTap: () => Get.toNamed(RouteNames.leagueLeagueDetail,
-                      arguments: {
-                        "gameId":player.guessInfo.gameId
-                      }),
+                      arguments: {"gameId": player.guessInfo.gameId}),
                   child: Row(
                     children: [
                       29.hGap,
@@ -240,55 +239,57 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                   ),
                 ),
                 21.vGap,
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 16.w),
-                  height: 1,
-                  width: double.infinity,
-                  color: AppColors.cE6E6E,
-                ),
-                11.vGap,
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 15.w),
-                  child: Row(
-                    children: [
-                      UserAvaterWidget(
-                        url: Utils.getAvaterUrl(
-                            player.guessTopReviews?.teamLogo),
-                        width: 26.w,
-                        height: 26.w,
-                        radius: 13.w,
-                      ),
-                      5.hGap,
-                      Expanded(
-                          child: Text(
-                        player.guessTopReviews?.context ??
-                            "Add a comment about this stake about",
-                        style: 14.w4(
-                          color: AppColors.c4D4D4D,
-                          height: 1,
-                          fontFamily: FontFamily.fRobotoRegular,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      )),
-                      9.hGap,
-                      IconWidget(
-                          iconWidth: 18.w,
-                          icon: Assets.commonUiCommonIconCurrency02),
-                      2.hGap,
-                      Text(
-                        Utils.formatChip((double.parse(
-                                picksIndexController.picksDefine.betCost) *
-                            count)),
-                        style: 12.w5(
-                          color: AppColors.c4D4D4D,
-                          fontFamily: FontFamily.fRobotoMedium,
-                          height: 1,
-                        ),
-                      )
-                    ],
+                if (player.guessTopReviews != null) ...[
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 16.w),
+                    height: 1.w,
+                    width: double.infinity,
+                    color: AppColors.cE6E6E,
                   ),
-                ),
-                11.vGap
+                  11.vGap,
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 15.w),
+                    child: Row(
+                      children: [
+                        UserAvaterWidget(
+                          url: Utils.getAvaterUrl(
+                              player.guessTopReviews?.teamLogo),
+                          width: 26.w,
+                          height: 26.w,
+                          radius: 13.w,
+                        ),
+                        5.hGap,
+                        Expanded(
+                            child: Text(
+                          player.guessTopReviews?.context ??
+                              "Add a comment about this stake about",
+                          style: 14.w4(
+                            color: AppColors.c4D4D4D,
+                            height: 1,
+                            fontFamily: FontFamily.fRobotoRegular,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        )),
+                        9.hGap,
+                        IconWidget(
+                            iconWidth: 18.w,
+                            icon: Assets.commonUiCommonIconCurrency02),
+                        2.hGap,
+                        Text(
+                          Utils.formatChip((double.parse(
+                                  picksIndexController.picksDefine.betCost) *
+                              count)),
+                          style: 12.w5(
+                            color: AppColors.c4D4D4D,
+                            fontFamily: FontFamily.fRobotoMedium,
+                            height: 1,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  11.vGap
+                ]
               ],
             ),
           ),

@@ -46,7 +46,7 @@ class PicksPlayerV2 {
   late GuessGameInfoEntity guessInfo;
 
   //评论
-  late GuessTopReviewsEntity? guessTopReviews;
+  GuessTopReviewsEntity? guessTopReviews;
 
   /// tab的下标
   late String tabStr;

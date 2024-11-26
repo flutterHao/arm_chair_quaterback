@@ -128,6 +128,7 @@ class _PlayNotStartPlayerDetailState extends State<PlayNotStartPlayerDetail>
               headerRowHeight: 29.w,
               verticalScrollPhysics: const NeverScrollableScrollPhysics(),
               gridLinesVisibility: GridLinesVisibility.horizontal,
+              showHorizontalScrollbar: false,
               source: PlayNotStartPlayerDetailDatasource(list),
               columns: [
                 GridColumn(

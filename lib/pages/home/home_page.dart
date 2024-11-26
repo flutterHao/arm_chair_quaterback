@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:arm_chair_quaterback/common/widgets/bottom_guess_tip_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/tab_item_info.dart';
@@ -74,104 +75,7 @@ class _HomePageState extends State<HomePage>
                     ],
                   ),
                   // 竞猜选择结果底部弹框
-                  Obx(() {
-                    var tabIndex = Get.find<HomeController>().tabIndex.value;
-                    if(![0,1].contains(tabIndex)){
-                      return const SizedBox.shrink();
-                    }
-                    var picksIndexController = Get.find<PicksIndexController>();
-                    var leagueController = Get.find<LeagueController>();
-                    var value = picksIndexController.choiceSize.value;
-                    value += leagueController.choiceSize.value;
-                    return AnimatedPositioned(
-                        duration: const Duration(milliseconds: 300),
-                        left: 0,
-                        right: 0,
-                        bottom: value <= 0
-                            ? 0.w
-                            : 75.w +
-                                7.w +
-                                MediaQuery.of(context).padding.bottom,
-                        child: Center(
-                          child: MtInkwell(
-                            scaleX: true,
-                            minScale: 0.95,
-                            onTap: () async {
-                              await showModalBottomSheet(
-                                  isScrollControlled: true,
-                                  backgroundColor: AppColors.cTransparent,
-                                  context: Get.context!,
-                                  builder: (context) {
-                                    return const PicksGuessConfirmDialogV2();
-                                  });
-                              picksIndexController.batchDeleteOpen.value =
-                                  false;
-                            },
-                            child: Container(
-                                decoration: BoxDecoration(
-                                    color: AppColors.c000000,
-                                    borderRadius: BorderRadius.circular(16.w),
-                                    border: Border.all(
-                                        color: AppColors.cFF7954, width: 2.w)),
-                                width: 360.w,
-                                height: 66.w,
-                                padding:
-                                    EdgeInsets.only(left: 17.w, right: 10.w),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "CREATE A COMBO",
-                                      style: 16.w5(
-                                          color: AppColors.cFFFFFF,
-                                          height: 1,
-                                          fontFamily: FontFamily.fOswaldMedium),
-                                    ),
-                                    9.vGap,
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
-                                          children: List.generate(6, (index) {
-                                            Color color = AppColors.c4D4D4D;
-                                            if (index + 1 <= value) {
-                                              color = AppColors.cFF7954;
-                                            }
-                                            return IconWidget(
-                                              iconWidth: 19.w,
-                                              icon:
-                                                  Assets.commonUiCommonIconPick,
-                                              iconColor: color,
-                                            );
-                                          }),
-                                        ),
-                                        Container(
-                                          height: 24.w,
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 13.w),
-                                          alignment: Alignment.center,
-                                          decoration: BoxDecoration(
-                                              color: AppColors.cFF7954,
-                                              borderRadius:
-                                                  BorderRadius.circular(12.w)),
-                                          child: Text(
-                                            "${value > 0 ? picksIndexController.picksDefine.powerBetWin[value - 1] : "0"}x",
-                                            style: 16.w5(
-                                                color: AppColors.c000000,
-                                                height: 1,
-                                                fontFamily:
-                                                    FontFamily.fOswaldMedium),
-                                          ),
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                )),
-                          ),
-                        ));
-                  }),
+                  const BottomGuessTipWidget(),
                   // 底部tabBar
                   Positioned(
                     bottom: 0,

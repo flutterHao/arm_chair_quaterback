@@ -91,9 +91,13 @@ class LeagueController extends GetxController
   }
 
   void btnTap(GameGuess gameGuess, int teamId) {
+    print('gameGuess.choiceTeamId.value:${gameGuess.choiceTeamId.value},teamId:$teamId');
     gameGuess.choiceTeamId.value =
         gameGuess.choiceTeamId.value == teamId ? 0 : teamId;
+    print('gameGuess.choiceTeamId.value:${gameGuess.choiceTeamId.value}');
+    print('LeagueController---choiceSize.value000:${choiceSize.value}');
     choiceSize.value = getAllChoiceData().length;
+    print('LeagueController---choiceSize.value111:${choiceSize.value}');
   }
 
   static String get idGameGuessConfirmDialog => "id_game_guess_confirm_dialog";

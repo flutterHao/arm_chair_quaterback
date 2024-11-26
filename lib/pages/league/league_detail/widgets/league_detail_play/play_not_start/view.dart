@@ -43,6 +43,12 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
   late PlayNotStartController controller;
 
   @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     controller = Get.put(PlayNotStartController(widget.item));
     return GetBuilder<PlayNotStartController>(builder: (_) {

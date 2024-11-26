@@ -64,7 +64,7 @@ class _ScorePageState extends State<ScorePage>
                       }),
                     )
                   : ListView.separated(
-                controller: ScrollController(),
+                      controller: ScrollController(),
                       itemCount: controller.scoreList.length,
                       physics: const BouncingScrollPhysics(),
                       itemBuilder: (context, index) {
@@ -75,7 +75,7 @@ class _ScorePageState extends State<ScorePage>
                             margin: EdgeInsets.only(
                                 top: index == 0 ? 9.w : 0,
                                 bottom: lastIndex ? 20.w : 0),
-                            child: _ItemWidget(gameGuess: item));
+                            child: ScoreItemWidget(gameGuess: item));
                       },
                       separatorBuilder: (BuildContext context, int index) {
                         return 9.vGap;
@@ -88,16 +88,17 @@ class _ScorePageState extends State<ScorePage>
   bool get wantKeepAlive => true;
 }
 
-class _ItemWidget extends StatefulWidget {
-  const _ItemWidget({required this.gameGuess});
+class ScoreItemWidget extends StatefulWidget {
+  const ScoreItemWidget({super.key, required this.gameGuess});
 
   final GameGuess gameGuess;
 
   @override
-  State<_ItemWidget> createState() => _ItemWidgetState();
+  State<ScoreItemWidget> createState() => _ScoreItemWidgetState();
 }
 
-class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
+class _ScoreItemWidgetState extends State<ScoreItemWidget>
+    with WidgetsBindingObserver {
   late GameGuess gameGuess;
   late ScoresEntity item;
   var globalKey = GlobalKey();
@@ -371,52 +372,55 @@ class _ItemWidgetState extends State<_ItemWidget> with WidgetsBindingObserver {
                     ],
                   ),
                 ),
-                Container(
-                  height: 1,
-                  width: double.infinity,
-                  color: AppColors.cE6E6E,
-                  margin: EdgeInsets.symmetric(horizontal: 16.w),
-                ),
-                11.vGap,
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 15.w),
-                  child: Row(
-                    children: [
-                      UserAvaterWidget(
-                        url: Utils.getAvaterUrl(item.guessTopReviews?.teamLogo),
-                        width: 26.w,
-                        height: 26.w,
-                        radius: 13.w,
-                      ),
-                      5.hGap,
-                      Expanded(
-                          child: Text(
-                        item.guessTopReviews?.context ??
-                            "Add a comment about this stake about",
-                        style: 14.w4(
-                          color: AppColors.c4D4D4D,
-                          height: 1,
-                          fontFamily: FontFamily.fRobotoRegular,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      )),
-                      9.hGap,
-                      IconWidget(
-                          iconWidth: 18.w,
-                          icon: Assets.commonUiCommonIconCurrency02),
-                      2.hGap,
-                      Text(
-                        getChip(),
-                        style: 12.w5(
-                          color: AppColors.c4D4D4D,
-                          fontFamily: FontFamily.fRobotoMedium,
-                          height: 1,
-                        ),
-                      )
-                    ],
+                if (item.guessTopReviews != null) ...[
+                  Container(
+                    height: 1,
+                    width: double.infinity,
+                    color: AppColors.cE6E6E,
+                    margin: EdgeInsets.symmetric(horizontal: 16.w),
                   ),
-                ),
-                11.vGap,
+                  11.vGap,
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 15.w),
+                    child: Row(
+                      children: [
+                        UserAvaterWidget(
+                          url: Utils.getAvaterUrl(
+                              item.guessTopReviews?.teamLogo),
+                          width: 26.w,
+                          height: 26.w,
+                          radius: 13.w,
+                        ),
+                        5.hGap,
+                        Expanded(
+                            child: Text(
+                          item.guessTopReviews?.context ??
+                              "Add a comment about this stake about",
+                          style: 14.w4(
+                            color: AppColors.c4D4D4D,
+                            height: 1,
+                            fontFamily: FontFamily.fRobotoRegular,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        )),
+                        9.hGap,
+                        IconWidget(
+                            iconWidth: 18.w,
+                            icon: Assets.commonUiCommonIconCurrency02),
+                        2.hGap,
+                        Text(
+                          getChip(),
+                          style: 12.w5(
+                            color: AppColors.c4D4D4D,
+                            fontFamily: FontFamily.fRobotoMedium,
+                            height: 1,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  11.vGap,
+                ]
               ],
             ),
           ),

@@ -11,14 +11,15 @@ class HorizontalDragBackWidget extends StatefulWidget {
       {required this.child,
       this.onWidgetOut,
       this.canPop = true,
-      this.responseDepth,
+      this.responseDepth = const [],
       this.hasScrollChild = false,
       super.key});
 
   final Widget child;
   final bool canPop;
-  ///响应第几个子滚动组件
-  final int? responseDepth;
+
+  ///响应哪个子滚动组件
+  final List<int> responseDepth;
   final bool hasScrollChild;
 
   ///是否支持右滑返回，实体/虚拟按键返回
@@ -259,7 +260,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
   }
 
   bool checkDepth(ScrollNotification notification) =>
-      widget.responseDepth == null || notification.depth == widget.responseDepth;
+      widget.responseDepth.contains(notification.depth);
 
   ///松手执行回收动画
   void _recycleAnimation({double velocity = 0}) {

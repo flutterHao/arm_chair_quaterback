@@ -5,6 +5,7 @@ import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/base/error_entity.dart';
 import 'package:arm_chair_quaterback/common/net/base/result_entity.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
@@ -15,6 +16,9 @@ import 'package:get/get.dart';
 class ErrorUtils {
 
   static void toast(dynamic e) {
+    if(!kReleaseMode){
+      print('$e\n${e.stackTrace}');
+    }
     var str = _DEFAULTERRORSTRING;
     if (e is DioException) {
       var result = _getResult(e);
