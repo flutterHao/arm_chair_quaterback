@@ -11,6 +11,7 @@ import 'package:arm_chair_quaterback/pages/team/team_index/widgets/progress_pain
 import 'package:arm_chair_quaterback/pages/team/team_training/team/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactic_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -27,7 +28,6 @@ class TrainingTactics extends StatelessWidget {
           return Container(
               width: double.infinity,
               height: 115.w,
-              margin: EdgeInsets.only(top: 9.w),
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: AppColors.cFFFFFF,
@@ -238,7 +238,7 @@ class TacticItem extends StatelessWidget {
               for (var i = 0; i < buff.takeEffectGameCount; i++)
                 Positioned(
                     bottom: 2.w * i + 2,
-                    child: TacticCard(
+                    child: SmallTacticCard(
                       num: buff.face,
                       color: buff.color,
                     ))
@@ -246,75 +246,6 @@ class TacticItem extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-///战术卡牌
-class TacticCard extends StatelessWidget {
-  const TacticCard({super.key, required this.num, required this.color});
-  final int num; //数字
-  final int color; //花色
-
-  String _getName() {
-    if (num == 10) {
-      return "10";
-    } else if (num == 11) {
-      return "J";
-    } else if (num == 12) {
-      return "Q";
-    } else if (num == 13) {
-      return "K";
-    } else {
-      return "A";
-    }
-  }
-
-  String _getPath() {
-    if (color == Constant.spade) {
-      return Assets.managerUiManagerTactics02;
-    } else if (color == Constant.heart) {
-      return Assets.managerUiManagerTactics01;
-    } else if (color == Constant.club) {
-      return Assets.managerUiManagerTactics03;
-    } else {
-      return Assets.managerUiManagerTactics04;
-    }
-  }
-
-  Color _getColor() {
-    if (color == Constant.spade || color == Constant.spade) {
-      return AppColors.c262626;
-    } else {
-      return AppColors.cEB0000;
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 30.w,
-      height: 43.w,
-      decoration: BoxDecoration(
-          color: AppColors.cFFFFFF,
-          borderRadius: BorderRadius.circular(6.w),
-          boxShadow: [
-            BoxShadow(
-                color: AppColors.c000000.withOpacity(0.2),
-                offset: const Offset(0, 0.5),
-                blurRadius: 1.5.w)
-          ]),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            _getName(),
-            style: 16.w4(color: _getColor(), height: 0.9),
-          ),
-          3.5.vGap,
-          Image.asset(_getPath(), width: 18.w, height: 18.w),
-        ],
-      ),
     );
   }
 }

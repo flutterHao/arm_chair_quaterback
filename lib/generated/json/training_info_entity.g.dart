@@ -1,13 +1,19 @@
 import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
+
 import 'package:get/get.dart';
 
 
 TrainingInfoEntity $TrainingInfoEntityFromJson(Map<String, dynamic> json) {
   final TrainingInfoEntity trainingInfoEntity = TrainingInfoEntity();
-  final List<int>? statusReplyPlayers = (json['statusReplyPlayers'] as List<
-      dynamic>?)?.map(
-          (e) => jsonConvert.convert<int>(e) as int).toList();
+  final List<
+      TeamPlayerInfoEntity>? statusReplyPlayers = (json['statusReplyPlayers'] as List<
+      dynamic>?)
+      ?.map(
+          (e) =>
+      jsonConvert.convert<TeamPlayerInfoEntity>(e) as TeamPlayerInfoEntity)
+      .toList();
   if (statusReplyPlayers != null) {
     trainingInfoEntity.statusReplyPlayers = statusReplyPlayers;
   }
@@ -49,12 +55,21 @@ TrainingInfoEntity $TrainingInfoEntityFromJson(Map<String, dynamic> json) {
   if (buff != null) {
     trainingInfoEntity.buff = buff;
   }
+  final List<TrainingInfoBuff>? chooseBuffs = (json['chooseBuffs'] as List<
+      dynamic>?)
+      ?.map(
+          (e) => jsonConvert.convert<TrainingInfoBuff>(e) as TrainingInfoBuff)
+      .toList();
+  if (chooseBuffs != null) {
+    trainingInfoEntity.chooseBuffs = chooseBuffs;
+  }
   return trainingInfoEntity;
 }
 
 Map<String, dynamic> $TrainingInfoEntityToJson(TrainingInfoEntity entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
-  data['statusReplyPlayers'] = entity.statusReplyPlayers;
+  data['statusReplyPlayers'] =
+      entity.statusReplyPlayers.map((v) => v.toJson()).toList();
   data['playerReadiness'] = entity.playerReadiness;
   data['award'] = entity.award.map((v) => v.toJson()).toList();
   data['propArray'] = entity.propArray;
@@ -62,13 +77,15 @@ Map<String, dynamic> $TrainingInfoEntityToJson(TrainingInfoEntity entity) {
   data['training'] = entity.training.toJson();
   data['awardGroupId'] = entity.awardGroupId;
   data['buff'] = entity.buff.map((v) => v.toJson()).toList();
+  data['chooseBuffs'] = entity.chooseBuffs.map((v) => v.toJson()).toList();
   return data;
 }
 
 extension TrainingInfoEntityExtension on TrainingInfoEntity {
   TrainingInfoEntity copyWith({
     RxList<int>? selectPlayer,
-    List<int>? statusReplyPlayers,
+    List<TeamPlayerInfoEntity>? statusReplyPlayers,
+    List<TeamPlayerInfoEntity>? oldStatusReplyPlayers,
     double? playerReadiness,
     List<TrainingInfoAward>? award,
     List<int>? propArray,
@@ -76,17 +93,21 @@ extension TrainingInfoEntityExtension on TrainingInfoEntity {
     TrainingInfoTraining? training,
     int? awardGroupId,
     List<TrainingInfoBuff>? buff,
+    List<TrainingInfoBuff>? chooseBuffs,
   }) {
     return TrainingInfoEntity()
       ..selectPlayer = selectPlayer ?? this.selectPlayer
       ..statusReplyPlayers = statusReplyPlayers ?? this.statusReplyPlayers
+      ..oldStatusReplyPlayers = oldStatusReplyPlayers ??
+          this.oldStatusReplyPlayers
       ..playerReadiness = playerReadiness ?? this.playerReadiness
       ..award = award ?? this.award
       ..propArray = propArray ?? this.propArray
       ..prop = prop ?? this.prop
       ..training = training ?? this.training
       ..awardGroupId = awardGroupId ?? this.awardGroupId
-      ..buff = buff ?? this.buff;
+      ..buff = buff ?? this.buff
+      ..chooseBuffs = chooseBuffs ?? this.chooseBuffs;
   }
 }
 

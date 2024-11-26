@@ -11,6 +11,7 @@ import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/pages/home/index.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:common_utils/common_utils.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -28,7 +29,9 @@ class TrainingController extends GetxController
   // RxInt currentIndex = 0.obs;
   var showBall = false.obs;
   var showPlayer = false.obs;
+  var showStatus = false.obs;
   var showCash = false.obs;
+  var showBuff = false.obs;
   RxInt cash = 0.obs;
   TrainingInfoEntity trainingInfo = TrainingInfoEntity();
   List<TeamPlayerInfoEntity> playerList = [];
@@ -60,13 +63,7 @@ class TrainingController extends GetxController
   ];
 
   final List<int> propList = [1, 2, 3, 4, 5];
-  final List<int> statusList = [101, 102, 103, 104];
-  final List<RxBool> isOpenList = [
-    false.obs,
-    false.obs,
-    false.obs,
-    false.obs,
-  ];
+  final List<int> statusList = [104, 103, 102, 101];
 
   //球员滚动
   late Timer _timer;
@@ -135,28 +132,31 @@ class TrainingController extends GetxController
   }
 
   Future getData() async {
-    int teamId = HomeController.to.userEntiry.teamLoginInfo!.team!.teamId!;
     await Future.wait([
       // CacheApi.getRewardGroup(),
       TeamApi.getTrainingInfo(),
       // TeamApi.getMyTeamPlayer(teamId),
       TeamApi.getTrainTaskList(),
       TeamApi.getTrainDefine(),
-      TeamApi.getMyTeamPlayer(teamId)
+      getPlayerList(),
     ]).then((v) {
       // rewardList = v[0] as List<RewardGroupEntity>;
       trainingInfo = v[0] as TrainingInfoEntity;
       trainTaskList = v[1] as List<TrainTaskEntity>;
       trainDefine = v[2] as TrainDefineEntity;
-      playerList = (v[3] as MyTeamEntity).teamPlayers;
       ballNum.value = trainingInfo.prop.num;
       recoverTimeAndCountDown();
       update(["training_page"]);
-      Future.delayed(const Duration(milliseconds: 200), () {});
     }).catchError((v) {
       EasyLoading.showToast(v.toString());
       isPlaying.value = false;
     });
+  }
+
+  Future getPlayerList() async {
+    int teamId = HomeController.to.userEntiry.teamLoginInfo!.team!.teamId!;
+    MyTeamEntity teamEntity = await TeamApi.getMyTeamPlayer(teamId);
+    playerList = teamEntity.teamPlayers;
   }
 
   ///获取配置数据计算倒计时
@@ -202,18 +202,23 @@ class TrainingController extends GetxController
     final teamIndexCtrl = Get.find<TeamIndexController>();
     teamIndexCtrl.scroToSlot();
     playerIdx = random.nextInt(playerList.length);
-    trainingInfo = await TeamApi.playerTraining(playerList[playerIdx].uuid);
-    update(["training_page"]);
-    for (int i = 0; i < slotCard.length; i++) {
-      slotCard[i].value = false;
-      scrollerCtrlList[i].jumpTo(0);
-    }
+    await TeamApi.playerTraining(playerList[playerIdx].uuid).then((v) {
+      trainingInfo = v;
+      update(["training_page"]);
+      for (int i = 0; i < slotCard.length; i++) {
+        slotCard[i].value = false;
+        scrollerCtrlList[i].jumpTo(0);
+      }
 
-    for (int i = 0; i < scrollerCtrlList.length; i++) {
-      Future.delayed(Duration(milliseconds: i * 200), () {
-        _scrollColumn(i);
-      });
-    }
+      for (int i = 0; i < scrollerCtrlList.length; i++) {
+        Future.delayed(Duration(milliseconds: i * 200), () {
+          _scrollColumn(i);
+        });
+      }
+    }).catchError((v) {
+      isPlaying.value = false;
+      // EasyLoading.showToast(v.message.toString());
+    });
   }
 
   void _scrollColumn(int index) async {
@@ -247,9 +252,12 @@ class TrainingController extends GetxController
       }
 
       ///奖励表达
-      if (awads.contains(1)) {}
+      if (awads.contains(1)) {
+        showBuff.value = true;
+        // await Future.delayed(const Duration(milliseconds: 300));
+        //  showBuff.value = false;
+      }
       if (awads.contains(2)) {
-        showPlayer.value = true;
         await startPlayerScroll(0);
       }
       if (awads.contains(3)) {
@@ -264,7 +272,6 @@ class TrainingController extends GetxController
       if (awads.contains(5)) {
         showCash.value = true;
         await Future.delayed(const Duration(milliseconds: 600), () {
-          showBall.value = false;
           showCash.value = false;
         });
       }
@@ -272,16 +279,26 @@ class TrainingController extends GetxController
       for (var element in slotsAnimlList) {
         element.reset();
       }
+      // getPlayerList();
       update(["training_page"]);
     }
   }
 
   ///球员滚动
   Future startPlayerScroll(int count) async {
-    await Future.delayed(const Duration(milliseconds: 500));
-    playerScollCtrl.jumpTo(0);
-    double offset = (playerIdx + playerList.length * 3 - 4) * 50.w;
+    ///状态控制
+    await Future.delayed(const Duration(milliseconds: 300));
+    trainingInfo.selectPlayer.value =
+        trainingInfo.statusReplyPlayers.map((e) => e.playerId).toList();
+    statusScollerList.clear();
+    for (int i = 0; i < trainingInfo.statusReplyPlayers.length; i++) {
+      statusScollerList.add(ScrollController());
+    }
+    showPlayer.value = true;
+    update(["playerList"]);
     if (playerScollCtrl.hasClients) {
+      playerScollCtrl.jumpTo(0);
+      double offset = (playerIdx + playerList.length * 3 - 4) * 50.w;
       await playerScollCtrl
           .animateTo(
         playerScollCtrl.offset + offset,
@@ -291,31 +308,39 @@ class TrainingController extends GetxController
       )
           .then((v) async {
         showResult = true;
-        trainingInfo.selectPlayer.value = trainingInfo.statusReplyPlayers;
-        statusScollerList = trainingInfo.statusReplyPlayers
-            .map((e) => ScrollController())
-            .toList();
+        showStatus.value = true;
+        // for (var controller in statusScollerList) {
+        //   controller.dispose();
+        // }
 
         update(["playerList"]);
+        // update(["training_page"]);
         for (int i = 0; i < statusScollerList.length; i++) {
           statusScroll(i);
         }
         await Future.delayed(const Duration(milliseconds: 1500), () {
           showPlayer.value = false;
           showResult = false;
+          showStatus.value = false;
         });
       });
     }
   }
 
-  void statusScroll(int index) {
-    statusScollerList[index].jumpTo(0);
-    // int propIndex = propList.indexOf(trainingInfo.propArray[index]);
-    ///在获奖的结果基础上旋转三周
-    double offset = 30.w * (random.nextInt(10) + statusList.length * 1);
-    statusScollerList[index].animateTo(offset,
-        duration: const Duration(milliseconds: 600),
-        curve: const Cubic(0.27, 0.59, 0.19, 1.0));
+  void statusScroll(int index) async {
+    // int oldIndex =
+    //     statusList.indexOf(trainingInfo.statusReplyPlayers[index].playerStatus);
+    // statusScollerList[index].jumpTo(oldIndex * 30.w);
+    await Future.delayed(const Duration(milliseconds: 400), () {});
+    if (statusScollerList[index].hasClients) {
+      statusScollerList[index].jumpTo(0);
+      int newIndex = statusList
+          .indexOf(trainingInfo.statusReplyPlayers[index].playerStatus);
+      double offset = 30.w * (newIndex);
+      statusScollerList[index].animateTo(offset,
+          duration: const Duration(milliseconds: 600),
+          curve: const Cubic(0.27, 0.59, 0.19, 1.0));
+    }
   }
 
   void updateMoney() {

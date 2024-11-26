@@ -2,27 +2,31 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-21 20:47:10
- * @LastEditTime: 2024-11-22 19:11:07
+ * @LastEditTime: 2024-11-26 14:26:29
  */
 
 import 'dart:math';
 
-import 'package:arm_chair_quaterback/pages/news/new_list/widgets/news_list_item.dart';
+import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactic_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FlipCard extends StatefulWidget {
   final bool isFlipped;
   final VoidCallback onFlip;
+  final TrainingInfoBuff buff;
 
   const FlipCard({
     super.key,
     required this.isFlipped,
     required this.onFlip,
+    required this.buff,
   });
 
   @override
-  _FlipCardState createState() => _FlipCardState();
+  State<FlipCard> createState() => _FlipCardState();
 }
 
 class _FlipCardState extends State<FlipCard>
@@ -78,34 +82,20 @@ class _FlipCardState extends State<FlipCard>
               ..setEntry(3, 2, 0.001)
               ..rotateY(angle),
             alignment: Alignment.center,
-            child: angle < pi / 2
-                ? Container(
-                    width: 60.w,
-                    height: 80.w,
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Front',
-                        style: TextStyle(color: Colors.white, fontSize: 20),
-                      ),
+            child: angle >= pi / 2
+                ? Transform(
+                    alignment: Alignment.center,
+                    transform: Matrix4.identity()..scale(-1.0, 1.0),
+                    child: TacticCard(
+                      num: widget.buff.face,
+                      color: widget.buff.color,
+                      width: 74.w,
                     ),
                   )
-                : Container(
-                    width: 60.w,
-                    height: 80.w,
-                    decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Back',
-                        style: TextStyle(color: Colors.white, fontSize: 20),
-                      ),
-                    ),
+                : Image.asset(
+                    Assets.managerUiManagerTacticsCardback,
+                    width: 74.w,
+                    fit: BoxFit.fill,
                   ),
           );
         },

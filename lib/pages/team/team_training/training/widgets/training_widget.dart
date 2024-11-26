@@ -1,3 +1,9 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-11-25 15:56:43
+ * @LastEditTime: 2024-11-26 15:01:21
+ */
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -9,6 +15,7 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/add_ball_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/flip_card.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/player_sroller_view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/training_slot.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +30,7 @@ class TrainingWidget extends StatelessWidget {
     return GetBuilder<TrainingController>(
         id: "training_page",
         builder: (controller) {
+          // controller.showPlayer.value = true;
           return Column(
             children: [
               Container(
@@ -37,16 +45,22 @@ class TrainingWidget extends StatelessWidget {
                   height: 356.5.w,
                   alignment: Alignment.topCenter,
                   decoration: BoxDecoration(
-                    color: AppColors.c002B5C,
+                    color: AppColors.cFFFFFF,
                     borderRadius: BorderRadius.circular(12.w),
                   ),
                   child: Stack(
                     alignment: Alignment.topCenter,
+                    fit: StackFit.expand,
                     children: [
-                      MirrorImageWidget(
-                        imagePath: Assets.managerUiManagerTrainingBg,
-                        fullWidth: 375.w,
-                        imageHeight: 275.5.w,
+                      Positioned(
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        child: MirrorImageWidget(
+                          imagePath: Assets.managerUiManagerTrainingBg,
+                          fullWidth: 375.w,
+                          imageHeight: 275.5.w,
+                        ),
                       ),
 
                       Positioned(
@@ -219,7 +233,7 @@ class TrainingWidget extends StatelessWidget {
                         left: 0,
                         right: 0,
                         child: Container(
-                          height: 0.5.w,
+                          height: 1.w,
                           width: double.infinity,
                           color: AppColors.cE6E6E,
                           margin: EdgeInsets.symmetric(horizontal: 16.w),
@@ -228,6 +242,7 @@ class TrainingWidget extends StatelessWidget {
 
                       ///道具
                       Positioned(
+                        // top: 296.w,
                         left: 0,
                         right: 0,
                         bottom: 0,
@@ -302,8 +317,7 @@ class TrainingWidget extends StatelessWidget {
                       Obx(() {
                         return Visibility(
                           visible: controller.showCash.value ||
-                              controller.showPlayer.value ||
-                              true,
+                              controller.showPlayer.value,
                           child: Positioned(
                               top: 0,
                               left: 0,
@@ -323,6 +337,7 @@ class TrainingWidget extends StatelessWidget {
                       }),
 
                       ///球员列表
+                      // if (controller.showPlayer.value)
                       Positioned(
                         top: 26.w,
                         left: -37.w,
@@ -330,10 +345,11 @@ class TrainingWidget extends StatelessWidget {
                         child: Obx(() {
                           return AnimatedOpacity(
                             duration: const Duration(milliseconds: 300),
-                            opacity: controller.showPlayer.value ? 1 : 1,
+                            opacity: controller.showPlayer.value ? 1 : 0,
                             child: PlayerSrollerView(),
                           );
                         }),
+                        // child: PlayerSrollerView(),
                       ),
 
                       ///金钱奖励
@@ -398,22 +414,6 @@ class TrainingWidget extends StatelessWidget {
                       //     ),
                       //   );
                       // }),
-                      // Positioned(
-                      //   top: 140.w,
-                      //   left: 50.w,
-                      //   right: 50.w,
-                      //   child: Obx(() {
-                      //     return Row(
-                      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //         children: controller.isOpenList.map(
-                      //           (e) {
-                      //             return FlipCard(
-                      //                 isFlipped: e.value,
-                      //                 onFlip: () => e.value = !e.value);
-                      //           },
-                      //         ).toList());
-                      //   }),
-                      // )
                     ],
                   ),
                 ),

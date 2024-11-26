@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 17:29:19
- * @LastEditTime: 2024-11-25 10:22:20
+ * @LastEditTime: 2024-11-25 20:01:22
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
@@ -61,6 +61,9 @@ class ImageWidget extends StatelessWidget {
                 )
               : null,
         );
+    if (ObjectUtil.isEmpty(url)) {
+      return error;
+    }
     Widget loadingWidgetTemp = Center(
       child: loadingWidget ??
           Container(
@@ -73,16 +76,9 @@ class ImageWidget extends StatelessWidget {
               )),
     );
 
-    // if (borderRadius != null) {
-    //   error = ClipRRect(
-    //     borderRadius: borderRadius!,
-    //     child: error,
-    //   );
-    //   loadingWidgetTemp = ClipRRect(
-    //     borderRadius: borderRadius!,
-    //     child: loadingWidgetTemp,
-    //   );
-    // }
+    // return Image.network(url,
+    //     fit: fit, width: width, height: height, color: color);
+
     // return CachedNetworkImage(
     //   imageUrl: url,
     //   fit: fit,
@@ -98,11 +94,12 @@ class ImageWidget extends StatelessWidget {
     //     ),
     //   ),
     //   alignment: alignment ?? Alignment.center,
-    //   // placeholder: (context, url) => CircularProgressIndicator(),
-    //   // errorWidget: (context, url, error) => Icon(Icons.error),
+    //   placeholder: (context, url) => CircularProgressIndicator(),
+    //   errorWidget: (context, url, error) => Icon(Icons.error),
     // );
 
     return ExtendedImage.network(
+      // "https://seaball-1324211645.cos.ap-guangzhou.myqcloud.com/20241125_37e311267a11f9aacbcd0ea3ad63816b.png",
       url,
       fit: fit,
       cache: true,
@@ -116,7 +113,7 @@ class ImageWidget extends StatelessWidget {
       loadStateChanged: (ExtendedImageState state) {
         switch (state.extendedImageLoadState) {
           case LoadState.failed:
-            // Log.e("$url load failed");
+            Log.e("$url load failed");
             return error;
           case LoadState.loading:
             // return SizedBox(

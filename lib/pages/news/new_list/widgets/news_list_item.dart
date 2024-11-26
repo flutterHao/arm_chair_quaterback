@@ -14,6 +14,7 @@ import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comm
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comments_dialog.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/emoji_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/news_bottom_button.dart';
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -134,23 +135,23 @@ class NewsListItem extends StatelessWidget {
         ///大图
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            newsDetail.title.toUpperCase(),
-            style: 19.w4(
-              color: AppColors.c000000,
-              height: 1.25,
-              fontFamily: FontFamily.fOswaldMedium,
+          if (ObjectUtil.isNotEmpty(newsDetail.title))
+            Text(
+              newsDetail.title.toUpperCase(),
+              style: 19.w4(
+                color: AppColors.c000000,
+                height: 1.25,
+                fontFamily: FontFamily.fOswaldMedium,
+              ),
             ),
-          ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: 10.w),
             child: ImageWidget(
-              url: newsDetail.imgUrl,
-              width: 343.w,
-              height: newsDetail.imageHeight,
-              // fit: BoxFit.fitWidth,
-              borderRadius: BorderRadius.circular(12.w),
-            ),
+                url: newsDetail.imgUrl,
+                width: 343.w,
+                height: newsDetail.imageHeight,
+                // fit: BoxFit.fitWidth,
+                borderRadius: BorderRadius.circular(12.w)),
           ),
           Text(
             newsDetail.content,

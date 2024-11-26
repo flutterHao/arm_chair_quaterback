@@ -72,7 +72,6 @@ class TrainingSlot extends GetView<TrainingController> {
                                                 icon: Utils.getPropIconUrl(
                                                     controller
                                                         .propList[realIndex]),
-                                                iconColor: Colors.black,
                                               ),
                                             );
                                           }));

@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lihonghao
  * @Date: 2024-11-06 11:51:15
- * @LastEditTime: 2024-11-25 10:55:41
+ * @LastEditTime: 2024-11-26 11:51:56
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
@@ -47,67 +47,74 @@ class _PlayerSrollerViewState extends State<PlayerSrollerView> {
                   int current = index % controller.playerList.length;
                   var item = controller.playerList[current];
                   return Obx(() {
+                    //是否选中
                     var select = controller.trainingInfo.selectPlayer
                         .contains(item.playerId);
-                    int statusIdx = controller.trainingInfo.selectPlayer
+                    int scrollerIdx = controller.trainingInfo.selectPlayer
                         .indexOf(item.playerId);
                     return Align(
                       alignment: Alignment.bottomCenter,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          if (statusIdx != -1)
-                            SizedBox(
-                              width: 55.w,
-                              height: 30.w,
-                              child: ListView.separated(
-                                  controller:
-                                      controller.statusScollerList[statusIdx],
-                                  padding: EdgeInsets.zero,
-                                  itemCount: controller.statusList.length * 10,
-                                  separatorBuilder: (context, index) => 3.vGap,
-                                  itemBuilder: (context, index) {
-                                    int current =
-                                        index % controller.statusList.length;
-                                    return GestureDetector(
-                                      onTap: () =>
-                                          controller.statusScroll(statusIdx),
-                                      child: Center(
-                                        child: Stack(
-                                          alignment: Alignment.center,
-                                          children: [
-                                            Container(
-                                              width: 27.w,
-                                              height: 27.w,
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          14.w),
-                                                  color: AppColors.c262626,
-                                                  border: Border.all(
-                                                      width: 1.5.w,
-                                                      color:
-                                                          AppColors.cFFFFFF)),
-                                            ),
-                                            IconWidget(
-                                              iconWidth: 25.w,
-                                              iconHeight: 25.w,
-                                              fit: BoxFit.fill,
-                                              icon: Utils.getStatusUrl(
-                                                  controller
-                                                      .statusList[current]),
-                                            ),
-                                          ],
+                      child: SizedBox(
+                        width: 46.w,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            if (scrollerIdx != -1 &&
+                                controller.showStatus.value)
+                              SizedBox(
+                                width: 46.w,
+                                height: 30.w,
+                                child: ListView.separated(
+                                    controller: controller
+                                        .statusScollerList[scrollerIdx],
+                                    padding: EdgeInsets.zero,
+                                    itemCount:
+                                        controller.statusList.length * 10,
+                                    separatorBuilder: (context, index) =>
+                                        3.vGap,
+                                    itemBuilder: (context, index) {
+                                      int current =
+                                          index % controller.statusList.length;
+                                      return GestureDetector(
+                                        onTap: () => controller
+                                            .statusScroll(scrollerIdx),
+                                        child: Center(
+                                          child: Stack(
+                                            alignment: Alignment.center,
+                                            children: [
+                                              Container(
+                                                width: 27.w,
+                                                height: 27.w,
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            14.w),
+                                                    color: AppColors.c262626,
+                                                    border: Border.all(
+                                                        width: 1.5.w,
+                                                        color:
+                                                            AppColors.cFFFFFF)),
+                                              ),
+                                              IconWidget(
+                                                iconWidth: 25.w,
+                                                iconHeight: 25.w,
+                                                fit: BoxFit.fill,
+                                                icon: Utils.getStatusUrl(
+                                                    controller
+                                                        .statusList[current]),
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    );
-                                  }),
+                                      );
+                                    }),
+                              ),
+                            TrainingAvater(
+                              player: item,
+                              isCurrent: select,
                             ),
-                          TrainingAvater(
-                            player: item,
-                            isCurrent: select,
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     );
                   });

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-30 11:43:53
- * @LastEditTime: 2024-11-24 21:11:53
+ * @LastEditTime: 2024-11-26 11:54:01
  */
 
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -26,10 +26,13 @@ class TrainingAvater extends GetView<TrainingController> {
   @override
   Widget build(BuildContext context) {
     ///头像
-    return SizedBox(
+    return Container(
       width: 46.w,
       height: 61.w,
+      margin: EdgeInsets.symmetric(horizontal: 2.w),
+      alignment: Alignment.center,
       child: Stack(
+        fit: StackFit.expand,
         children: [
           Container(
             width: 46.w,
@@ -39,7 +42,6 @@ class TrainingAvater extends GetView<TrainingController> {
             alignment: Alignment.center,
             // color: Colors.red,
             clipBehavior: Clip.antiAlias,
-            margin: EdgeInsets.symmetric(horizontal: 2.w),
             decoration: BoxDecoration(
               color: AppColors.cF2F2F2,
               borderRadius: BorderRadius.circular(9.w),
@@ -57,6 +59,7 @@ class TrainingAvater extends GetView<TrainingController> {
             Container(
               width: 46.w,
               height: 61.w,
+              alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: Colors.black.withOpacity(0.25),
                 borderRadius: BorderRadius.circular(9.w),

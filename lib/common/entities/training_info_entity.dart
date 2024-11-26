@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/training_info_entity.g.dart';
 import 'dart:convert';
@@ -9,7 +10,9 @@ export 'package:arm_chair_quaterback/generated/json/training_info_entity.g.dart'
 class TrainingInfoEntity {
   @JSONField(deserialize: false, serialize: false)
   late RxList<int> selectPlayer = <int>[].obs;
-  late List<int> statusReplyPlayers = [];
+  late List<TeamPlayerInfoEntity> statusReplyPlayers = [];
+  @JSONField(deserialize: false, serialize: false)
+  late List<TeamPlayerInfoEntity> oldStatusReplyPlayers = [];
   late double playerReadiness = 0.0;
   late List<TrainingInfoAward> award = [];
   late List<int> propArray = [];
@@ -17,6 +20,7 @@ class TrainingInfoEntity {
   late TrainingInfoTraining training = TrainingInfoTraining();
   late int awardGroupId = 0;
   late List<TrainingInfoBuff> buff = [];
+  late List<TrainingInfoBuff> chooseBuffs = [];
   // @JSONField(deserialize: false, serialize: false)
   // RxInt cash = 0.obs;
 
@@ -119,6 +123,8 @@ class TrainingInfoBuff {
   late int buffId = 0;
   late int face = 10;
   late int color = 1;
+  @JSONField(deserialize: false, serialize: false)
+  late RxBool isOpen = false.obs;
 
   TrainingInfoBuff();
 
