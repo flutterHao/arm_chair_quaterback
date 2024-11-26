@@ -21,8 +21,7 @@ class AllControllerBindings extends Bindings {
     Get.lazyPut(() => TeamIndexController(), fenix: true);
     //数据加载太慢，启动提前加载
     Get.put(TradeIndexController());
-    Get.lazyPut(() => PicksIndexController(), fenix: true);
-    Get.lazyPut(() => LeagueController(), fenix: true);
-
+    Get.put(PicksIndexController()..preLoadData());
+    Get.put(LeagueController()..preLoadData());
   }
 }

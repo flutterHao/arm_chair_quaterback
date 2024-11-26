@@ -2,7 +2,9 @@ import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
+import 'package:arm_chair_quaterback/common/net/apis/league.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
+import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -51,6 +53,62 @@ class LeagueController extends GetxController
     );
     return dateList;
   }
+
+  /// 预加载今明两天的数据,因为只可以竞猜这两天的赛程
+  preLoadData(){
+    currentPageIndex.value = 6;
+    getDataFromNet(getDataTimes()[currentPageIndex.value]);
+    getDataFromNet(getDataTimes()[currentPageIndex.value+1]);
+
+  }
+
+  void getDataFromNet(DateTime time) {
+    loadStatus.value = LoadDataStatus.loading;
+    var startTime = time.millisecondsSinceEpoch;
+    var endTime = MyDateUtils.nextDay(time).millisecondsSinceEpoch;
+    print('scores -------->>> startTime: $startTime -> ${time.day}');
+    var futures = <Future>[
+      LeagueApi.getNBAGameSchedules(startTime, endTime),
+      CacheApi.getNBATeamDefine(),
+      CacheApi.getNBAPlayerInfo(),
+    ];
+    if(picksDefineEntity == null){
+      futures.add(CacheApi.getPickDefine());
+    }
+
+    Future.wait(futures).then((result) {
+      var list = result[0] as List<ScoresEntity>;
+      if(futures.length==4){
+        picksDefineEntity = result[3] as PicksDefineEntity;
+      }
+      scoreList = list.map((e) {
+        var gameGuess = GameGuess(e);
+        return gameGuess;
+      }).toList();
+      sortScoreList();
+      cacheGameGuessData["${startTime}_$endTime"] = scoreList;
+      if (scoreList.isEmpty) {
+        loadStatus.value = LoadDataStatus.noData;
+      } else {
+        loadStatus.value = LoadDataStatus.success;
+      }
+      refreshController.refreshCompleted();
+    }, onError: (e) {
+      ErrorUtils.toast(e);
+      loadStatus.value = LoadDataStatus.error;
+    });
+  }
+
+  void sortScoreList() {
+    scoreList.sort((a,b) => a.scoresEntity.gameStartTime.compareTo(b.scoresEntity.gameStartTime));
+    scoreList.sort((a, b) {
+      //比赛开赛前，没有猜过的排前面
+      if (a.scoresEntity.isGuess != 0) return 1;
+      if (b.scoresEntity.isGuess != 0) return -1;
+      return 0;
+    });
+  }
+
 
   /// 在 widget 内存中分配后立即调用。
   @override

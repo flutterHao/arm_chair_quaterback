@@ -28,20 +28,24 @@ class ScorePageController extends GetxController {
   void onInit() {
     print('ScorePageController----onInit-----');
     super.onInit();
-    getDataFromNet([]);
-    Get.find<LeagueController>().guessSuccessTabKeys.listen((v){
-      var startTime = time.millisecondsSinceEpoch;
-      var endTime = MyDateUtils.nextDay(time).millisecondsSinceEpoch;
-      if(v.contains("${startTime}_$endTime")){
+    var startTime = time.millisecondsSinceEpoch;
+    var endTime = MyDateUtils.nextDay(time).millisecondsSinceEpoch;
+    getDataFromNet(Get.find<LeagueController>()
+            .cacheGameGuessData["${startTime}_$endTime"] ??
+        []);
+    Get.find<LeagueController>().guessSuccessTabKeys.listen((v) {
+      if (v.contains("${startTime}_$endTime")) {
         //下注成功，刷新数据，清除所有选中状态
         getDataFromNet([]);
       }
     });
   }
 
-  loading(){
+  loading() {
     var leagueController = Get.find<LeagueController>();
-    if(leagueController.getDataTimes()[leagueController.currentPageIndex.value] != time){
+    if (leagueController
+            .getDataTimes()[leagueController.currentPageIndex.value] !=
+        time) {
       refreshController.refreshCompleted();
       return;
     }
@@ -60,13 +64,13 @@ class ScorePageController extends GetxController {
       CacheApi.getNBAPlayerInfo(),
     ];
     var leagueController = Get.find<LeagueController>();
-    if(leagueController.picksDefineEntity == null){
+    if (leagueController.picksDefineEntity == null) {
       futures.add(CacheApi.getPickDefine());
     }
 
     Future.wait(futures).then((result) {
       var list = result[0] as List<ScoresEntity>;
-      if(futures.length==4){
+      if (futures.length == 4) {
         leagueController.picksDefineEntity = result[3] as PicksDefineEntity;
       }
       scoreList = list.map((e) {
@@ -98,9 +102,11 @@ class ScorePageController extends GetxController {
   String get idScorePageMain => "id_score_page_main_${time.day}";
 
   void sortScoreList() {
-    scoreList.sort((a,b) => a.scoresEntity.gameStartTime.compareTo(b.scoresEntity.gameStartTime));
+    scoreList.sort((a, b) =>
+        a.scoresEntity.gameStartTime.compareTo(b.scoresEntity.gameStartTime));
     scoreList.sort((a, b) {
-      if(time.millisecondsSinceEpoch<=DateTime.now().millisecondsSinceEpoch){
+      if (time.millisecondsSinceEpoch <=
+          DateTime.now().millisecondsSinceEpoch) {
         // 开奖之后猜过的排前面
         if (a.scoresEntity.isGuess != 0) return -1;
         if (b.scoresEntity.isGuess != 0) return 1;

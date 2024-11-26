@@ -1,4 +1,3 @@
-
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -22,6 +21,7 @@ import 'package:arm_chair_quaterback/pages/mine/mine_setting/bindings.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_setting/view.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/bindings.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/stats_view.dart';
+import 'package:extended_tabs/extended_tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -106,7 +106,8 @@ class _LeagueIndexPageState extends State<LeagueIndexPage>
               buildHeader(),
             ];
           },
-          body: TabBarView(
+          body: ExtendedTabBarView(
+              cacheExtent: 3,
               controller: controller.tabController,
               children: controller.getDataTimes().map((e) {
                 return ScorePage(e);
@@ -166,8 +167,7 @@ class _LeagueIndexPageState extends State<LeagueIndexPage>
                             Text(
                               (today
                                       ? "TODAY"
-                                      : MyDateUtils.getWeekday(e,
-                                          short: true))
+                                      : MyDateUtils.getWeekday(e, short: true))
                                   .toUpperCase(),
                               style: 12.w4(
                                   color: today

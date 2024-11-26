@@ -19,13 +19,10 @@ import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/param_utils.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/controller.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import '';
 
 import '../../../common/entities/guess_game_info_entity.dart';
 
@@ -204,6 +201,11 @@ class PicksIndexController extends GetxController
         }
       }
     }
+  }
+
+  /// 预加载数据
+  preLoadData(){
+    _initData();
   }
 
   loading() {
