@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-12 15:43:49
- * @LastEditTime: 2024-11-12 17:41:40
+ * @LastEditTime: 2024-11-26 18:05:42
  */
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/train_task_entity.dart';
@@ -328,13 +328,13 @@ class AwardDialog extends GetView<TrainingController> {
                       ],
                     ),
                   ),
-                  // Container(
-                  //   margin: EdgeInsets.symmetric(vertical: 5.w),
-                  //   child: Obx(() {
-                  //     return Text(
-                  //         "Time Left: ${controller.taskCountDownString.value}");
-                  //   }),
-                  // )
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 5.w),
+                    child: Obx(() {
+                      return Text(
+                          "Time Left: ${controller.taskCountDownString.value}");
+                    }),
+                  )
                 ],
               ),
             ),

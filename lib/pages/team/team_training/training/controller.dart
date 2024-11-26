@@ -86,6 +86,7 @@ class TrainingController extends GetxController
 
   //任务
   int currentTask = 10;
+  RxString taskCountDownString = "".obs;
 
   /// 在 widget 内存中分配后立即调用。
   @override
@@ -167,6 +168,7 @@ class TrainingController extends GetxController
         }
       }
       recoverTimeAndCountDown();
+      taskCountDownTime();
       update(["training_page"]);
     }).catchError((v) {
       EasyLoading.showToast(v.toString());
@@ -186,21 +188,20 @@ class TrainingController extends GetxController
       return;
     }
     int recover = trainDefine.ballRecoverTime;
+    DateTime now = DateTime.now();
     DateTime recoverTime =
         DateUtil.getDateTimeByMs(trainingInfo.training.ballRefreshTime)
             .add(Duration(seconds: recover));
-    Log.d("恢复时间:$recoverTime");
-    Log.d("现在时间:${DateTime.now()}");
-    int seconds = recoverTime.difference(DateTime.now()).inSeconds;
+    int recoverSeconds = recoverTime.difference(now).inSeconds;
     _timer = Timer.periodic(const Duration(seconds: 1), (v) async {
-      seconds--;
+      recoverSeconds--;
 
       ///获取回复篮球与当前时间倒计时，转换成mm:ss
-      final minutes = seconds ~/ 60;
-      final remainingSeconds = seconds % 60;
+      final minutes = recoverSeconds ~/ 60;
+      final remainingSeconds = recoverSeconds % 60;
       recoverTimeStr.value =
           '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
-      if (seconds <= 0) {
+      if (recoverSeconds <= 0) {
         _timer.cancel();
         // 重新获取新的恢复时间进行倒计时
         trainingInfo = await TeamApi.getTrainingInfo();
@@ -208,6 +209,29 @@ class TrainingController extends GetxController
         recoverTimeAndCountDown();
       }
     });
+  }
+
+  ///任务倒计时
+  void taskCountDownTime() async {
+    DateTime now = DateTime.now();
+
+    DateTime taskRefreshTime =
+        DateUtil.getDateTimeByMs(trainingInfo.training.taskEndTime);
+
+    int taskSeconds = taskRefreshTime.difference(now).inSeconds;
+
+    ///获取回复篮球与当前时间倒计时，转换成mm:ss
+    final minutes = taskSeconds ~/ 60;
+    final remainingSeconds = taskSeconds % 60;
+    taskCountDownString.value =
+        '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
+    if (taskSeconds <= 0) {
+      _timer.cancel();
+      // 重新获取新的恢复时间进行倒计时
+      trainingInfo = await TeamApi.getTrainingInfo();
+      update(["training_page"]);
+      taskCountDownTime();
+    }
   }
 
   void buyTrainingBall(int count) {
