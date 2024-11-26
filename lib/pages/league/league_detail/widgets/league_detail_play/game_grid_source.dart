@@ -4,7 +4,7 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
-import 'package:arm_chair_quaterback/pages/league/league_detail/widgets/play/controller.dart';
+import 'package:arm_chair_quaterback/pages/league/league_detail/widgets/league_detail_play/controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

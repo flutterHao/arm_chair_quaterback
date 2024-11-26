@@ -1,17 +1,27 @@
 import 'dart:async';
 
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
+import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/net/apis/league.dart';
 import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
+import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+class LeagueDetailController extends GetxController
+    with GetSingleTickerProviderStateMixin {
+  LeagueDetailController(ScoresEntity? se, {this.gameId})
+      : assert(se != null || gameId != null,
+            "item or gameId cannot hava both null"),
+        item = se;
 
-class LeagueDetailController extends GetxController with GetSingleTickerProviderStateMixin {
-  LeagueDetailController(this.item);
-  final ScoresEntity item;
-  List<String> tabTitles = ["PICKS","PLAY","SCORES"];
+  ScoresEntity? item;
+  final int? gameId;
+  List<String> tabTitles = ["PICKS", "PLAY", "SCORES"];
   late TabController tabController;
+
+  var loadStatus = LoadDataStatus.loading.obs;
 
   Timer? timer;
   var gameStartTimeStr = "".obs;
@@ -19,8 +29,14 @@ class LeagueDetailController extends GetxController with GetSingleTickerProvider
   @override
   void onInit() {
     super.onInit();
-    tabController = TabController(length: tabTitles.length, vsync: this,initialIndex: 1);
-    _buildGameStartTimeWidget();
+    tabController =
+        TabController(length: tabTitles.length, vsync: this, initialIndex: 1);
+    if (item != null) {
+      loadStatus.value = LoadDataStatus.success;
+      _buildGameStartTime();
+    } else {
+      getHeaderData(gameId!);
+    }
   }
 
   @override
@@ -29,44 +45,63 @@ class LeagueDetailController extends GetxController with GetSingleTickerProvider
     super.dispose();
   }
 
+  getHeaderData(int gameId) {
+    loadStatus.value = LoadDataStatus.loading;
+    LeagueApi.getNBAGameHeaderData(gameId).then((result) {
+      item = result;
+      loadStatus.value = LoadDataStatus.success;
+      _buildGameStartTime();
+      update([idLeagueDetailTabBarViw]);
+    }, onError: (e) {
+      ErrorUtils.toast(e);
+      loadStatus.value = LoadDataStatus.error;
+    });
+  }
 
-  _buildGameStartTimeWidget() {
-    if (item.status != 1) {
+  static String get idLeagueDetailTabBarViw => "id_league_detail_tab_bar_view";
+
+  _buildGameStartTime() {
+    if (item == null) {
+      gameStartTimeStr.value = "";
+      return;
+    }
+    if (item!.status != 1) {
       var nowDateMs = MyDateUtils.getNowDateMs();
-      var gameStart = MyDateUtils.getDateTimeByMs(item.gameStartTime);
+      var gameStart = MyDateUtils.getDateTimeByMs(item!.gameStartTime);
       var lastTimeMs = gameStart.millisecondsSinceEpoch - nowDateMs;
       if (lastTimeMs <= 15 * 60 * 1000 && lastTimeMs > 0) {
         //距离比赛开始时间小于15分钟开始倒计时
         timer?.cancel();
         gameStartTimeStr.value =
-        "Coming ${MyDateUtils.formatDate(MyDateUtils.getDateTimeByMs(lastTimeMs), format: DateFormats.M_S)}";
+            "Coming ${MyDateUtils.formatDate(MyDateUtils.getDateTimeByMs(lastTimeMs), format: DateFormats.M_S)}";
         timer = Timer.periodic(const Duration(seconds: 1), (t) {
           var nowDateMs = MyDateUtils.getNowDateMs();
-          var gameStart = MyDateUtils.getDateTimeByMs(item.gameStartTime);
+          var gameStart = MyDateUtils.getDateTimeByMs(item!.gameStartTime);
           var lastTimeMs = gameStart.millisecondsSinceEpoch - nowDateMs;
           if (lastTimeMs == 0) {
             t.cancel();
             gameStartTimeStr.value =
-            "Today ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(item.gameStartTime))}";
+                "Today ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(item!.gameStartTime))}";
           }
           gameStartTimeStr.value =
-          "Coming ${MyDateUtils.formatDate(MyDateUtils.getDateTimeByMs(lastTimeMs), format: DateFormats.M_S)}";
+              "Coming ${MyDateUtils.formatDate(MyDateUtils.getDateTimeByMs(lastTimeMs), format: DateFormats.M_S)}";
         });
-      } else if (MyDateUtils.isToday(item.gameStartTime)) {
+      } else if (MyDateUtils.isToday(item!.gameStartTime)) {
         gameStartTimeStr.value =
-        "Today ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(item.gameStartTime))}";
-      } else if (MyDateUtils.isTomorrow(item.gameStartTime)) {
+            "Today ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(item!.gameStartTime))}";
+      } else if (MyDateUtils.isTomorrow(item!.gameStartTime)) {
         gameStartTimeStr.value =
-        "Tomorrow ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(item.gameStartTime))}";
+            "Tomorrow ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(item!.gameStartTime))}";
       } else {
         gameStartTimeStr.value =
-        "${MyDateUtils.formatDate(MyDateUtils.getDateTimeByMs(item.gameStartTime), format: DateFormats.PARAM_M_D)} ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(item.gameStartTime))}";
+            "${MyDateUtils.formatDate(MyDateUtils.getDateTimeByMs(item!.gameStartTime), format: DateFormats.PARAM_M_D)} ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(item!.gameStartTime))}";
       }
     } else {
       gameStartTimeStr.value =
-      "In the game ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(item.gameStartTime))}";
+          "In the game ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(item!.gameStartTime))}";
     }
   }
 
-  bool get isGameStart => item.gameStartTime<DateTime.now().millisecondsSinceEpoch;
+  bool get isGameStart =>
+      item!.gameStartTime < DateTime.now().millisecondsSinceEpoch;
 }

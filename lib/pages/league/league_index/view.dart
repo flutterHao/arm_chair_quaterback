@@ -96,7 +96,6 @@ class _LeagueIndexPageState extends State<LeagueIndexPage>
 
   // 主视图
   Widget _buildView() {
-    // tabview 方案
     return Expanded(
       child: PageStorage(
         bucket: PageStorageBucket(),

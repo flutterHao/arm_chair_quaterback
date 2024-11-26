@@ -1,14 +1,11 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
-import 'package:arm_chair_quaterback/common/entities/nba_game_detail_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_not_start_game_entity.dart';
-import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
-import 'package:arm_chair_quaterback/pages/league/league_detail/widgets/play/play_not_start/widget/play_not_start_player_detail_datasource.dart';
-import 'package:arm_chair_quaterback/pages/league/league_detail/widgets/play/widget/scores_player_detail_datasource.dart';
+import 'package:arm_chair_quaterback/pages/league/league_detail/widgets/league_detail_play/play_not_start/widget/play_not_start_player_detail_datasource.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:syncfusion_flutter_core/theme.dart';

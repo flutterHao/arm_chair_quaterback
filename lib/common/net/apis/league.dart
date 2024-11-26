@@ -27,4 +27,10 @@ class LeagueApi {
     await httpUtil.post(Api.getNotStartGameData, data: {"gameId": gameId});
     return ScoresNotStartGameEntity.fromJson(json);
   }
+
+  static Future<ScoresEntity> getNBAGameHeaderData(int gameId) async {
+    var json =
+    await httpUtil.post(Api.getNBAGameHeaderData, data: {"gameId": gameId});
+    return ScoresEntity.fromJson(json);
+  }
 }

@@ -5,7 +5,7 @@ import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/league.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
-import 'package:arm_chair_quaterback/pages/league/league_detail/widgets/play/controller.dart';
+import 'package:arm_chair_quaterback/pages/league/league_detail/widgets/league_detail_play/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

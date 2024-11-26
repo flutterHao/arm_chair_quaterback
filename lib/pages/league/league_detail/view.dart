@@ -10,11 +10,12 @@ import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/place_holder_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/league/league_detail/controller.dart';
-import 'package:arm_chair_quaterback/pages/league/league_detail/widgets/play/play_not_start/view.dart';
-import 'package:arm_chair_quaterback/pages/league/league_detail/widgets/play/view.dart';
+import 'package:arm_chair_quaterback/pages/league/league_detail/widgets/league_detail_play/play_not_start/view.dart';
+import 'package:arm_chair_quaterback/pages/league/league_detail/widgets/league_detail_play/view.dart';
 import 'package:extended_tabs/extended_tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -25,12 +26,13 @@ class LeagueDetailPage extends GetView<LeagueDetailController> {
 
   @override
   Widget build(BuildContext context) {
-    ScoresEntity item = Get.arguments["item"];
-    Get.put(LeagueDetailController(item));
+    Get.put(LeagueDetailController(Get.arguments["item"],
+        gameId: Get.arguments["gameId"]));
     return HorizontalDragBackWidget(
       hasScrollChild: true,
       responseDepth: 1,
       child: GetBuilder<LeagueDetailController>(
+        id: LeagueDetailController.idLeagueDetailTabBarViw,
         builder: (_) {
           return BlackAppWidget(
             const UserInfoBar(
@@ -56,61 +58,88 @@ class LeagueDetailPage extends GetView<LeagueDetailController> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        const Expanded(child: SizedBox.shrink()),
+                                        const Expanded(
+                                            child: SizedBox.shrink()),
                                         Column(
                                           children: [
-                                            ImageWidget(
-                                              url: Utils.getTeamUrl(
-                                                  controller.item.homeTeamId),
+                                            PlaceHolderWidget(
                                               width: 34.w,
+                                              borderRadius: BorderRadius.circular(17.w),
+                                              showChild: controller.item?.homeTeamId != null,
+                                              child: ImageWidget(
+                                                url: Utils.getTeamUrl(
+                                                    controller.item?.homeTeamId),
+                                                width: 34.w,
+                                              ),
                                             ),
-                                            Text(
-                                              controller.item.homeTeamWL,
-                                              style: 10.w4(
-                                                  color: AppColors.c000000,
-                                                  height: 1,
-                                                  fontFamily:
-                                                      FontFamily.fRobotoRegular),
+                                            2.vGap,
+                                            PlaceHolderWidget(
+                                              width: 20,
+                                              height: 10,
+                                              showChild: controller.item != null,
+                                              child: Text(
+                                                "${controller.item?.homeTeamWL}",
+                                                style: 10.w4(
+                                                    color: AppColors.c000000,
+                                                    height: 1,
+                                                    fontFamily: FontFamily
+                                                        .fRobotoRegular),
+                                              ),
                                             )
                                           ],
                                         ),
-                                        SizedBox(
+                                        Container(
                                           height: 34.w,
                                           child: Row(
                                             children: [
                                               11.hGap,
-                                              Text(
-                                                "${controller.item.homeTeamScore}",
-                                                style: 24.w7(
-                                                    color: AppColors.c000000,
-                                                    height: 1,
-                                                    fontFamily:
-                                                        FontFamily.fOswaldBold),
+                                              PlaceHolderWidget(
+                                                width: 30,
+                                                height: 24,
+                                                showChild: controller.item != null,
+                                                child: Text(
+                                                  "${controller.item?.homeTeamScore}",
+                                                  style: 24.w7(
+                                                      color: AppColors.c000000,
+                                                      height: 1,
+                                                      fontFamily:
+                                                          FontFamily.fOswaldBold),
+                                                ),
                                               ),
                                               14.hGap,
                                               Obx(() {
-                                                return Text(
-                                                  controller
-                                                      .gameStartTimeStr.value,
-                                                  style: 12.w4(
-                                                      color: controller
-                                                                  .item.status ==
-                                                              1
-                                                          ? AppColors.c10A86A
-                                                          : AppColors.c000000,
-                                                      height: 1,
-                                                      fontFamily: FontFamily
-                                                          .fRobotoRegular),
+                                                return PlaceHolderWidget(
+                                                  width: 50,
+                                                  height: 12,
+                                                  showChild: controller.item != null,
+                                                  child: Text(
+                                                    controller
+                                                        .gameStartTimeStr.value,
+                                                    style: 12.w4(
+                                                        color: controller.item
+                                                                    ?.status ==
+                                                                1
+                                                            ? AppColors.c10A86A
+                                                            : AppColors.c000000,
+                                                        height: 1,
+                                                        fontFamily: FontFamily
+                                                            .fRobotoRegular),
+                                                  ),
                                                 );
                                               }),
                                               14.hGap,
-                                              Text(
-                                                "${controller.item.awayTeamScore}",
-                                                style: 24.w7(
-                                                    color: AppColors.c000000,
-                                                    height: 1,
-                                                    fontFamily:
-                                                        FontFamily.fOswaldBold),
+                                              PlaceHolderWidget(
+                                                width: 30,
+                                                height: 24,
+                                                showChild: controller.item != null,
+                                                child: Text(
+                                                  "${controller.item?.awayTeamScore}",
+                                                  style: 24.w7(
+                                                      color: AppColors.c000000,
+                                                      height: 1,
+                                                      fontFamily:
+                                                          FontFamily.fOswaldBold),
+                                                ),
                                               ),
                                               11.hGap,
                                             ],
@@ -118,22 +147,34 @@ class LeagueDetailPage extends GetView<LeagueDetailController> {
                                         ),
                                         Column(
                                           children: [
-                                            ImageWidget(
-                                              url: Utils.getTeamUrl(
-                                                  controller.item.awayTeamId),
+                                            PlaceHolderWidget(
                                               width: 34.w,
+                                              showChild: controller.item != null,
+                                              borderRadius: BorderRadius.circular(17.w),
+                                              child: ImageWidget(
+                                                url: Utils.getTeamUrl(
+                                                    controller.item?.awayTeamId),
+                                                width: 34.w,
+                                              ),
                                             ),
-                                            Text(
-                                              controller.item.awayTeamWL,
-                                              style: 10.w4(
-                                                  color: AppColors.c000000,
-                                                  height: 1,
-                                                  fontFamily:
-                                                      FontFamily.fRobotoRegular),
+                                            2.vGap,
+                                            PlaceHolderWidget(
+                                              width: 20,
+                                              height: 10,
+                                              showChild: controller.item != null,
+                                              child: Text(
+                                                "${controller.item?.awayTeamWL}",
+                                                style: 10.w4(
+                                                    color: AppColors.c000000,
+                                                    height: 1,
+                                                    fontFamily: FontFamily
+                                                        .fRobotoRegular),
+                                              ),
                                             )
                                           ],
                                         ),
-                                        const Expanded(child: SizedBox.shrink()),
+                                        const Expanded(
+                                            child: SizedBox.shrink()),
                                       ],
                                     )
                                   ],
@@ -152,8 +193,8 @@ class LeagueDetailPage extends GetView<LeagueDetailController> {
                                               width: 1)),
                                       child: IconWidget(
                                         iconWidth: 15.w,
-                                        icon:
-                                            Assets.commonUiCommonIconSystemShare,
+                                        icon: Assets
+                                            .commonUiCommonIconSystemShare,
                                         iconColor: AppColors.c262626,
                                       ),
                                     ))
@@ -192,24 +233,32 @@ class LeagueDetailPage extends GetView<LeagueDetailController> {
                           height: 34.w))
                 ];
               },
-              body: ExtendedTabBarView(
-                  controller: controller.tabController,
-                  shouldIgnorePointerWhenScrolling: false,
-                  children: [
-                    const Center(
-                      child: LoadStatusWidget(
-                        loadDataStatus: LoadDataStatus.noData,
-                      ),
-                    ),
-                    controller.isGameStart
-                        ? LeagueDetailPlayPage(controller.item)
-                        : PlayNotStartPage(controller.item),
-                    const Center(
-                      child: LoadStatusWidget(
-                        loadDataStatus: LoadDataStatus.noData,
-                      ),
-                    ),
-                  ]),
+              body: controller.item == null
+                  ? Obx(() {
+                      return Center(
+                        child: LoadStatusWidget(
+                          loadDataStatus: controller.loadStatus.value,
+                        ),
+                      );
+                    })
+                  : ExtendedTabBarView(
+                      controller: controller.tabController,
+                      shouldIgnorePointerWhenScrolling: false,
+                      children: [
+                          const Center(
+                            child: LoadStatusWidget(
+                              loadDataStatus: LoadDataStatus.noData,
+                            ),
+                          ),
+                          controller.isGameStart
+                              ? LeagueDetailPlayPage(controller.item!)
+                              : PlayNotStartPage(controller.item!),
+                          const Center(
+                            child: LoadStatusWidget(
+                              loadDataStatus: LoadDataStatus.noData,
+                            ),
+                          ),
+                        ]),
             )),
           );
         },
