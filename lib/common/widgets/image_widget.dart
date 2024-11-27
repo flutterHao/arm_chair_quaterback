@@ -53,11 +53,14 @@ class ImageWidget extends StatelessWidget {
                 borderRadius ?? BorderRadius.circular((width ?? height)! / 2),
           ),
           child: imageFailedPath != null
-              ? Image.asset(
-                  imageFailedPath!,
-                  width: width,
-                  height: height,
-                  fit: BoxFit.cover,
+              ? ClipRRect(
+                  borderRadius: borderRadius ?? BorderRadius.circular(0),
+                  child: Image.asset(
+                    imageFailedPath!,
+                    width: width,
+                    height: height,
+                    fit: BoxFit.cover,
+                  ),
                 )
               : null,
         );

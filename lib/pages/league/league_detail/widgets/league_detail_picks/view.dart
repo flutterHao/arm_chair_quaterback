@@ -1,6 +1,7 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
+import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/TLBuilderWidget.dart';
@@ -66,7 +67,7 @@ class _LeagueDetailPicksViewGetX extends GetView<LeagueDetailPicksController> {
                       9.vGap,
                       ScoreItemWidget(gameGuess: controller.getGameGuess()),
                       9.vGap,
-                      if (controller.getPlayerV2().isNotEmpty) ...[
+                      if (controller.getPlayerV2().isNotEmpty && controller.getPlayerMaxLength() != 0) ...[
                         Container(
                           height: 58.w +
                               250.w * controller.getPlayerMaxLength(),
@@ -202,7 +203,6 @@ class _LeagueDetailPicksViewGetX extends GetView<LeagueDetailPicksController> {
                         ),
                         9.vGap
                       ]
-                      // GuessItemV2(playerV2: playerV2, index: 0),
                     ],
                   ),
                 ),

@@ -63,6 +63,7 @@ class UserInfoBar extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
+                        showPop ? 0.hGap : 16.hGap,
                         if (showPop)
                           InkWell(
                             onTap: () {
@@ -85,9 +86,9 @@ class UserInfoBar extends StatelessWidget {
                                   icon: Assets.iconIconBack,
                                   iconColor: AppColors.cFFFFFF,
                                 )),
-                          ),
-                        showPop ? 12.hGap : 16.hGap,
-                        InkWell(
+                          )
+                        else
+                          InkWell(
                           onLongPress: () {
                             final List<String> servers = [
                               Address.personalDevUrl,

@@ -324,7 +324,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
         var textColor = choice ? AppColors.cFFFFFF : AppColors.ccccccc;
         return Expanded(
           child: Container(
-            height: 46.w,
+            height: 41.w,
             decoration: BoxDecoration(
                 color: bgColor, borderRadius: BorderRadius.circular(9.w)),
             child: Stack(

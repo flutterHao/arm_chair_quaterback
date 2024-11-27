@@ -15,7 +15,7 @@ class AppTheme {
 
   static ThemeData light = ThemeData(
     brightness: Brightness.light,
-    scaffoldBackgroundColor: AppColors.ce5e5e5,
+    scaffoldBackgroundColor: AppColors.cF2F2F2,
     splashColor: Colors.transparent,
     highlightColor: Colors.transparent,
     fontFamily: FontFamily.fRobotoMedium,

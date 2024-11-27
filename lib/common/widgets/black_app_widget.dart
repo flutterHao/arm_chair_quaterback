@@ -42,7 +42,7 @@ class _BlackAppWidgetState extends State<BlackAppWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: widget.backgroundColor ?? AppColors.ce5e5e5,
+      color: widget.backgroundColor ?? AppColors.cF2F2F2,
       alignment: Alignment.center,
       child: Stack(
         children: [

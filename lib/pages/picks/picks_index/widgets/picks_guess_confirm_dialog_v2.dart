@@ -160,7 +160,9 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                                                 TextDecoration
                                                                     .underline,
                                                             fontSize: 16.w,
-                                                            decorationColor: AppColors.c000000,
+                                                            decorationColor:
+                                                                AppColors
+                                                                    .c000000,
                                                             color: AppColors
                                                                 .c000000,
                                                             fontFamily: FontFamily
@@ -183,9 +185,11 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                                       "Edit",
                                                       style: TextStyle(
                                                         decoration:
-                                                            TextDecoration.underline,
+                                                            TextDecoration
+                                                                .underline,
                                                         fontSize: 16.w,
-                                                        decorationColor: AppColors.c000000,
+                                                        decorationColor:
+                                                            AppColors.c000000,
                                                         color:
                                                             AppColors.c000000,
                                                         fontFamily: FontFamily
@@ -215,7 +219,10 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                               ),
                               SizedBox(
                                   height: min(
-                                      queryData.size.height - 396.w - 84.w,
+                                      queryData.size.height -
+                                          396.w -
+                                          84.w +
+                                          (list.length == 6 ? 61.w : 0),
                                       list.length * 66.w),
                                   child: ListView.separated(
                                     itemCount: list.length,
@@ -238,6 +245,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                       int choice = player.status;
                                       return _PlayerItemWidget(
                                         index: index,
+                                        lastItem: lastItem,
                                         choice: choice,
                                         player: player,
                                         picksIndexController:
@@ -258,23 +266,6 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                   );
                 });
           }),
-    );
-  }
-
-  Container buildContainer(
-      bool lastItem, NbaTeamEntity homeTeamInfo, NbaTeamEntity awayTeamInfo) {
-    return Container(
-      height: 70.w,
-      margin:
-          EdgeInsets.only(left: 16.w, right: 16.w, bottom: lastItem ? 20.w : 0),
-      decoration: BoxDecoration(
-          color: AppColors.cF2F2F2, borderRadius: BorderRadius.circular(16.w)),
-      padding: EdgeInsets.symmetric(horizontal: 11.w),
-      alignment: FractionalOffset.centerLeft,
-      child: Text(
-        "${homeTeamInfo.shortEname} VS ${awayTeamInfo.shortEname}",
-        style: 16.w5(color: AppColors.c000000),
-      ),
     );
   }
 
@@ -302,42 +293,43 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
       return Container(
         color: AppColors.cFFFFFF,
         width: double.infinity,
-        height: 336.w,
+        height: 336.w - (list.length == 6 ? 61.w : 0),
         padding: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 30.w),
         child: Column(
           children: [
-            MtInkwell(
-              onTap: () => Navigator.pop(context),
-              child: Container(
-                height: 61.w,
-                margin: EdgeInsets.only(left: 5.w),
-                child: Row(
-                  children: [
-                    Container(
-                      height: 28.w,
-                      width: 28.w,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(14.w),
-                          border:
-                              Border.all(color: AppColors.c666666, width: 1)),
-                      child: IconWidget(
-                        iconWidth: 16.w,
-                        icon: Assets.commonUiCommonIconSystemAdd,
-                        iconColor: AppColors.cFF7954,
+            if (list.length != 6)
+              MtInkwell(
+                onTap: () => Navigator.pop(context),
+                child: Container(
+                  height: 61.w,
+                  margin: EdgeInsets.only(left: 5.w),
+                  child: Row(
+                    children: [
+                      Container(
+                        height: 28.w,
+                        width: 28.w,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(14.w),
+                            border:
+                                Border.all(color: AppColors.c666666, width: 1)),
+                        child: IconWidget(
+                          iconWidth: 16.w,
+                          icon: Assets.commonUiCommonIconSystemAdd,
+                          iconColor: AppColors.cFF7954,
+                        ),
                       ),
-                    ),
-                    14.hGap,
-                    Text(
-                      "Add stake to Combo",
-                      style: 14.w5(
-                          color: AppColors.cB3B3B3,
-                          height: 1,
-                          fontFamily: FontFamily.fOswaldMedium),
-                    )
-                  ],
+                      14.hGap,
+                      Text(
+                        "Add stake to Combo",
+                        style: 14.w5(
+                            color: AppColors.cB3B3B3,
+                            height: 1,
+                            fontFamily: FontFamily.fOswaldMedium),
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
             SizedBox(
               width: MediaQuery.of(context).size.width,
               child: Row(
@@ -789,8 +781,12 @@ class _ScoresItemWidgetState extends State<_ScoresItemWidget>
         left: 16.w,
         right: 16.w,
       ),
-      decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: AppColors.cE6E6E, width: 1)),
+      decoration: BoxDecoration(
+        border: Border(
+            bottom: BorderSide(
+                color:
+                    widget.lastItem ? AppColors.cTransparent : AppColors.cE6E6E,
+                width: 1)),
       ),
       alignment: FractionalOffset.centerLeft,
       child: Row(
@@ -856,12 +852,14 @@ class _ScoresItemWidgetState extends State<_ScoresItemWidget>
 class _PlayerItemWidget extends StatefulWidget {
   const _PlayerItemWidget({
     required this.index,
+    required this.lastItem,
     required this.player,
     required this.choice,
     required this.picksIndexController,
   });
 
   final int index;
+  final bool lastItem;
   final PicksPlayerV2 player;
   final int choice;
   final PicksIndexController picksIndexController;
@@ -899,8 +897,12 @@ class _PlayerItemWidgetState extends State<_PlayerItemWidget>
         left: 16.w,
         right: 16.w,
       ),
-      decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: AppColors.cE6E6E, width: 1)),
+      decoration: BoxDecoration(
+        border: Border(
+            bottom: BorderSide(
+                color:
+                    widget.lastItem ? AppColors.cTransparent : AppColors.cE6E6E,
+                width: 1)),
       ),
       alignment: FractionalOffset.centerLeft,
       child: Row(
@@ -1033,7 +1035,7 @@ class ConfirmChangeBtn extends StatelessWidget {
                 border: Border.all(color: AppColors.c666666, width: 1),
                 borderRadius: BorderRadius.circular(7.w)),
             child: MtInkwell(
-              onTap: (){
+              onTap: () {
                 tap.call();
               },
               vibrate: true,

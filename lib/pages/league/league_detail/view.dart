@@ -222,11 +222,11 @@ class LeagueDetailPage extends GetView<LeagueDetailController> {
                                 controller: controller.tabController,
                                 labelStyle: 16.w5(
                                     height: 1,
-                                    fontFamily: Assets.fontsOswaldMedium),
+                                    fontFamily: FontFamily.fOswaldMedium),
                                 labelColor: AppColors.c000000,
                                 unselectedLabelStyle: 16.w5(
                                     height: 1,
-                                    fontFamily: Assets.fontsOswaldRegular),
+                                    fontFamily: FontFamily.fOswaldRegular),
                                 unselectedLabelColor: AppColors.cB3B3B3,
                                 dividerHeight: 1,
                                 dividerColor: AppColors.cD1D1D1,

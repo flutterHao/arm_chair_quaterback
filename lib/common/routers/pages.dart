@@ -19,6 +19,8 @@ import 'package:arm_chair_quaterback/pages/picks/personal_center/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/view.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle_v2/bindings.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle_v2/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -39,10 +41,8 @@ class AppPages {
     GetPage(
       opaque: false,
       name: RouteNames.teamTeamBattle,
-      binding: BindingsBuilder(() {
-        Get.lazyPut<TeamBattleController>(() => TeamBattleController());
-      }),
-      page: () => const TeamBattlePage(),
+      binding: TeamBattleV2Binding(),
+      page: () => const TeamBattleV2Page(),
     ),
     GetPage(
       opaque: false,
