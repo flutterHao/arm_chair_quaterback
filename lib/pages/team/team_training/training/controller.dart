@@ -222,6 +222,7 @@ class TrainingController extends GetxController
         DateUtil.getDateTimeByMs(trainingInfo.training.taskEndTime);
 
     int taskSeconds = taskRefreshTime.difference(now).inSeconds;
+    if (trainingInfo.training.todayTaskOver == 1) return;
     _timer1 = Timer.periodic(const Duration(seconds: 1), (v) async {
       taskSeconds--;
       final hours = taskSeconds ~/ 3600;
