@@ -54,9 +54,11 @@ class TrainingTactics extends StatelessWidget {
                       padding: EdgeInsets.only(left: 34.w, right: 21.w),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
                             children: [
+                              7.hGap,
                               Text(
                                 "MORALE",
                                 style: 14.w4(
@@ -187,7 +189,9 @@ class TrainingTactics extends StatelessWidget {
                                         },
                                         separatorBuilder: (context, index) =>
                                             7.hGap,
-                                        itemCount: ctrl.tacticList.length),
+                                        itemCount: ctrl.tacticList.length > 5
+                                            ? 5
+                                            : ctrl.tacticList.length),
                                   ),
                                 ],
                               ),
@@ -233,6 +237,7 @@ class TacticItem extends GetView<TrainingController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
+      int count = buff.takeEffectGameCount > 4 ? 4 : buff.takeEffectGameCount;
       return Stack(
         children: [
           SizedBox(
@@ -241,7 +246,7 @@ class TacticItem extends GetView<TrainingController> {
             child: Stack(
               alignment: Alignment.bottomCenter,
               children: [
-                for (var i = 0; i < buff.takeEffectGameCount; i++)
+                for (var i = 0; i < count; i++)
                   Positioned(
                       bottom: 2.w * i + 2,
                       child: SmallTacticCard(

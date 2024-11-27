@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-25 15:56:43
- * @LastEditTime: 2024-11-26 18:00:10
+ * @LastEditTime: 2024-11-27 11:41:04
  */
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
@@ -97,13 +97,16 @@ class TrainingWidget extends StatelessWidget {
                                 );
                               }),
                               4.hGap,
-                              AnimatedNum(
-                                number: controller.trainingInfo.prop.num,
-                                textStyle: 16.w7(
-                                    color: AppColors.cFFFFFF,
-                                    fontFamily: FontFamily.fOswaldMedium,
-                                    height: 1),
-                              ),
+                              Obx(() {
+                                int v = controller.ballNum.value;
+                                return AnimatedNum(
+                                  number: v,
+                                  textStyle: 16.w7(
+                                      color: AppColors.cFFFFFF,
+                                      fontFamily: FontFamily.fOswaldMedium,
+                                      height: 1),
+                                );
+                              }),
                               Text(
                                 "/${controller.trainDefine.ballMaxNum}",
                                 style: 16.w7(
@@ -178,25 +181,28 @@ class TrainingWidget extends StatelessWidget {
                         top: 205.w,
                         child: Column(
                           children: [
-                            Row(
-                              children: [
-                                Text(
-                                  "COST:",
-                                  style: 16.w7(
-                                      color: AppColors.c262626,
-                                      fontFamily: FontFamily.fOswaldMedium,
-                                      height: 0.7),
-                                ),
-                                7.hGap,
-                                IconWidget(
-                                    iconWidth: 21.w,
-                                    icon: Assets.commonUiCommonProp04),
-                                4.hGap,
-                                Text(
-                                  "1",
-                                  style: 16.w7(color: AppColors.c262626),
-                                )
-                              ],
+                            Opacity(
+                              opacity: controller.isPlaying.value ? 0 : 1,
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "COST:",
+                                    style: 16.w7(
+                                        color: AppColors.c262626,
+                                        fontFamily: FontFamily.fOswaldMedium,
+                                        height: 0.7),
+                                  ),
+                                  7.hGap,
+                                  IconWidget(
+                                      iconWidth: 21.w,
+                                      icon: Assets.commonUiCommonProp04),
+                                  4.hGap,
+                                  Text(
+                                    "1",
+                                    style: 16.w7(color: AppColors.c262626),
+                                  )
+                                ],
+                              ),
                             ),
                             5.vGap,
                             MtInkwell(
@@ -266,11 +272,14 @@ class TrainingWidget extends StatelessWidget {
                                           width: 1.w,
                                           color: AppColors.cD1D1D1)),
                                   child: AnimatedContainer(
-                                    width: 290.w *
+                                    duration: const Duration(milliseconds: 300),
+                                    width: 297.w *
                                         controller.trainingInfo.training
                                             .taskItemCount /
                                         controller.currentTask,
-                                    duration: const Duration(microseconds: 300),
+                                    height: 12.w,
+                                    constraints:
+                                        BoxConstraints(maxWidth: 290.w),
                                     decoration: const BoxDecoration(
                                         gradient: LinearGradient(colors: [
                                       AppColors.c3296F2,
@@ -330,7 +339,8 @@ class TrainingWidget extends StatelessWidget {
                       Obx(() {
                         return Visibility(
                           visible: controller.showCash.value ||
-                              controller.showPlayer.value,
+                              controller.showPlayer.value ||
+                              controller.showBuff.value,
                           child: Positioned(
                               top: 0,
                               left: 0,

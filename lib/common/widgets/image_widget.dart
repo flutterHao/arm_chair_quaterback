@@ -2,15 +2,13 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 17:29:19
- * @LastEditTime: 2024-11-25 20:01:22
+ * @LastEditTime: 2024-11-26 20:36:04
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 ///@author lihonghao
 ///@date 2024/9/9
@@ -49,8 +47,7 @@ class ImageWidget extends StatelessWidget {
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: AppColors.cE6E6E,
-            borderRadius:
-                borderRadius ?? BorderRadius.circular((width ?? height)! / 2),
+            borderRadius: borderRadius,
           ),
           child: imageFailedPath != null
               ? ClipRRect(

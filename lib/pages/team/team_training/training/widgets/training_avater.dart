@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-30 11:43:53
- * @LastEditTime: 2024-11-26 11:54:01
+ * @LastEditTime: 2024-11-27 09:50:18
  */
 
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -61,7 +61,7 @@ class TrainingAvater extends GetView<TrainingController> {
               height: 61.w,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.25),
+                color: Colors.black.withOpacity(0.5),
                 borderRadius: BorderRadius.circular(9.w),
               ),
             )

@@ -87,6 +87,7 @@ class TrainingController extends GetxController
 
   //任务
   int currentTask = 10;
+  RxDouble taskProgress = 0.0.obs;
   RxString taskCountDownString = "".obs;
 
   /// 在 widget 内存中分配后立即调用。
@@ -247,6 +248,17 @@ class TrainingController extends GetxController
 
   void chooseTactic() {
     if (tacticId == 0) return;
+    // if (tacticList.length >= 5) {
+    //   ///如果卡槽有这个直接替换
+    //   TrainingInfoBuff buff =
+    //       chooseTacticList.where((e) => e.buffId == tacticId).first;
+    //   if (trainingInfo.buff.where((e) => e.color == buff.color).isEmpty) {
+    //     isChange.value = true;
+    //     return;
+    //   } else {
+    //     changeTacticId = tacticId;
+    //   }
+    // }
     if (tacticList.length >= 5 && changeTacticId == 0) {
       isChange.value = true;
       return;
@@ -259,19 +271,34 @@ class TrainingController extends GetxController
       changeTacticId = 0;
       isChange.value = false;
       showBuff.value = false;
+      isPlaying.value = false;
       update(["training_page"]);
     });
   }
 
-  void startSlot() async {
-    if (isPlaying.value) return;
+  void initSlot() {
     isPlaying.value = true;
+    showBuff.value = false;
+  }
+
+  void startSlot() async {
+    if (isPlaying.value || trainingInfo.prop.num <= 0) return;
+    initSlot();
     final teamIndexCtrl = Get.find<TeamIndexController>();
     teamIndexCtrl.scroToSlot();
     playerIdx = random.nextInt(playerList.length);
+    int ballNUm = trainingInfo.prop.num;
+    ballNum.value = ballNUm - 1;
     await TeamApi.playerTraining(playerList[playerIdx].uuid).then((v) {
       trainingInfo = v;
-      update(["training_page"]);
+
+      //更新道具
+      for (int i = 0; i < trainTaskList.length; i++) {
+        if (trainingInfo.training.currentTaskId == trainTaskList[i].taskLevel) {
+          currentTask = trainTaskList[i].taskNeed;
+        }
+      }
+      // update(["training_page"]);
       for (int i = 0; i < slotCard.length; i++) {
         slotCard[i].value = false;
         scrollerCtrlList[i].jumpTo(0);
@@ -317,6 +344,7 @@ class TrainingController extends GetxController
         }
         awads.add(e.id);
       }
+      await Future.delayed(const Duration(milliseconds: 300));
 
       ///奖励表达
       ///战术 buff
@@ -325,7 +353,7 @@ class TrainingController extends GetxController
         tacticList = trainingInfo.buff;
         chooseTacticList = trainingInfo.chooseBuffs;
         update(["training_page"]);
-        await Future.delayed(const Duration(milliseconds: 200));
+        await Future.delayed(const Duration(milliseconds: 400));
         for (var element in chooseTacticList) {
           await Future.delayed(const Duration(milliseconds: 100));
           element.isOpen.value = true;
@@ -340,13 +368,19 @@ class TrainingController extends GetxController
       }
 
       ///3:道具
-      if (awads.contains(3)) {}
+      if (awads.contains(3)) {
+        trainingInfo.training.taskValue.value =
+            trainingInfo.training.taskItemCount;
+        isPlaying.value = false;
+      }
 
       ///4:篮球
       if (awads.contains(4)) {
         showBall.value = true;
+        ballNum.value = trainingInfo.prop.num;
         await Future.delayed(const Duration(milliseconds: 300), () {
           showBall.value = false;
+          isPlaying.value = false;
         });
       }
 
@@ -355,9 +389,10 @@ class TrainingController extends GetxController
         showCash.value = true;
         await Future.delayed(const Duration(milliseconds: 600), () {
           showCash.value = false;
+          isPlaying.value = false;
         });
       }
-      isPlaying.value = false;
+
       for (var element in slotsAnimlList) {
         element.reset();
       }
@@ -398,13 +433,14 @@ class TrainingController extends GetxController
         update(["playerList"]);
         // update(["training_page"]);
         for (int i = 0; i < statusScollerList.length; i++) {
-          await Future.delayed(Duration(milliseconds: 200 + i * 50), () {});
+          await Future.delayed(Duration(milliseconds: 100 + i * 25), () {});
           statusScroll(i);
         }
-        await Future.delayed(const Duration(milliseconds: 1500), () {
+        await Future.delayed(const Duration(milliseconds: 300), () {
           showPlayer.value = false;
           showResult = false;
           showStatus.value = false;
+          isPlaying.value = false;
         });
       });
     }
@@ -420,7 +456,7 @@ class TrainingController extends GetxController
           .indexOf(trainingInfo.statusReplyPlayers[index].playerStatus);
       double offset = 30.w * (newIndex);
       statusScollerList[index].animateTo(offset,
-          duration: const Duration(milliseconds: 600),
+          duration: const Duration(milliseconds: 300),
           curve: const Cubic(0.27, 0.59, 0.19, 1.0));
     }
   }

@@ -66,13 +66,14 @@ class TrainingInfoProp {
   late int propId = 0;
   late int teamId = 0;
   late int updateTime = 0;
-  late RxInt ballNum = 0.obs;
+  // @JSONField(deserialize: false, serialize: false)
+  // late RxInt ballNum = 0.obs;
 
   TrainingInfoProp();
 
   factory TrainingInfoProp.fromJson(Map<String, dynamic> json) {
     TrainingInfoProp e = $TrainingInfoPropFromJson(json);
-    e.ballNum.value = e.num;
+    // e.ballNum.value = e.num;
     return e;
   }
 
@@ -98,6 +99,10 @@ class TrainingInfoTraining {
   late int totalCount = 0;
   late int currentLineId = 0;
   late int taskEndTime = 0;
+  @JSONField(deserialize: false, serialize: false)
+  RxDouble taskProgress = 0.0.obs;
+  @JSONField(deserialize: false, serialize: false)
+  late RxInt taskValue = 0.obs;
 
   TrainingInfoTraining();
 

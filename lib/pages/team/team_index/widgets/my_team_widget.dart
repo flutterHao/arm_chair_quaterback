@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 17:22:13
- * @LastEditTime: 2024-11-20 11:53:12
+ * @LastEditTime: 2024-11-27 09:37:21
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
@@ -187,7 +187,7 @@ class MyTeamWidget extends StatelessWidget {
                         "LINE-UP",
                         style: 23.w4(
                             color: AppColors.cFFFFFF,
-                            fontFamily: FontFamily.fRobotoMedium),
+                            fontFamily: FontFamily.fOswaldMedium),
                       ),
                     ),
                     Positioned(

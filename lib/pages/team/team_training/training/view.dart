@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-11 15:57:44
- * @LastEditTime: 2024-11-26 17:04:26
+ * @LastEditTime: 2024-11-27 11:10:26
  */
 
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -44,33 +44,34 @@ class TrainingPage extends GetView<TrainingController> {
                         left: 0,
                         right: 0,
                         child: const TrainingWidget()),
-                    Positioned(
-                      top: 170.w,
-                      left: 27.w,
-                      right: 27.w,
-                      child: Obx(() {
-                        return AnimatedOpacity(
-                          duration: const Duration(milliseconds: 300),
-                          opacity: controller.showBuff.value ? 1 : 0,
-                          child: Wrap(
-                            spacing: 6.w,
-                            runSpacing: 6.w,
-                            alignment: WrapAlignment.center,
-                            children: controller.chooseTacticList.map((e) {
-                              return FlipCard(
-                                isFlipped: e.isOpen.value,
-                                onFlip: () {
-                                  controller.tacticId = e.id;
-                                  controller.changeTacticId = 0;
-                                  controller.chooseTactic();
-                                },
-                                buff: e,
-                              );
-                            }).toList(),
-                          ),
-                        );
-                      }),
-                    )
+                    if (controller.showBuff.value)
+                      Positioned(
+                        top: 170.w,
+                        left: 27.w,
+                        right: 27.w,
+                        child: Obx(() {
+                          return AnimatedOpacity(
+                            duration: const Duration(milliseconds: 300),
+                            opacity: controller.showBuff.value ? 1 : 0,
+                            child: Wrap(
+                              spacing: 6.w,
+                              runSpacing: 6.w,
+                              alignment: WrapAlignment.center,
+                              children: controller.chooseTacticList.map((e) {
+                                return FlipCard(
+                                  isFlipped: e.isOpen.value,
+                                  onFlip: () {
+                                    controller.tacticId = e.id;
+                                    controller.changeTacticId = 0;
+                                    controller.chooseTactic();
+                                  },
+                                  buff: e,
+                                );
+                              }).toList(),
+                            ),
+                          );
+                        }),
+                      )
                   ],
                 ),
               )

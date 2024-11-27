@@ -171,10 +171,6 @@ TrainingInfoProp $TrainingInfoPropFromJson(Map<String, dynamic> json) {
   if (updateTime != null) {
     trainingInfoProp.updateTime = updateTime;
   }
-  final RxInt? ballNum = jsonConvert.convert<RxInt>(json['ballNum']);
-  if (ballNum != null) {
-    trainingInfoProp.ballNum = ballNum;
-  }
   return trainingInfoProp;
 }
 
@@ -185,7 +181,6 @@ Map<String, dynamic> $TrainingInfoPropToJson(TrainingInfoProp entity) {
   data['propId'] = entity.propId;
   data['teamId'] = entity.teamId;
   data['updateTime'] = entity.updateTime;
-  data['ballNum'] = entity.ballNum.toJson();
   return data;
 }
 
@@ -196,15 +191,13 @@ extension TrainingInfoPropExtension on TrainingInfoProp {
     int? propId,
     int? teamId,
     int? updateTime,
-    RxInt? ballNum,
   }) {
     return TrainingInfoProp()
       ..createTime = createTime ?? this.createTime
       ..num = num ?? this.num
       ..propId = propId ?? this.propId
       ..teamId = teamId ?? this.teamId
-      ..updateTime = updateTime ?? this.updateTime
-      ..ballNum = ballNum ?? this.ballNum;
+      ..updateTime = updateTime ?? this.updateTime;
   }
 }
 
@@ -294,6 +287,8 @@ extension TrainingInfoTrainingExtension on TrainingInfoTraining {
     int? totalCount,
     int? currentLineId,
     int? taskEndTime,
+    RxDouble? taskProgress,
+    RxInt? taskValue,
   }) {
     return TrainingInfoTraining()
       ..ballRefreshTime = ballRefreshTime ?? this.ballRefreshTime
@@ -307,7 +302,9 @@ extension TrainingInfoTrainingExtension on TrainingInfoTraining {
       ..updateTime = updateTime ?? this.updateTime
       ..totalCount = totalCount ?? this.totalCount
       ..currentLineId = currentLineId ?? this.currentLineId
-      ..taskEndTime = taskEndTime ?? this.taskEndTime;
+      ..taskEndTime = taskEndTime ?? this.taskEndTime
+      ..taskProgress = taskProgress ?? this.taskProgress
+      ..taskValue = taskValue ?? this.taskValue;
   }
 }
 
