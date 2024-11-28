@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/getx_builder_ids.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entity/team_login_info.dart';
@@ -89,54 +90,54 @@ class UserInfoBar extends StatelessWidget {
                           )
                         else
                           InkWell(
-                          onLongPress: () {
-                            final List<String> servers = [
-                              Address.personalDevUrl,
-                              Address.privateDevUrl,
-                              Address.publicDevUrl,
-                            ];
-                            String current = HttpUtil().getUrl;
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return ServerSwitchDialog(
-                                  servers: servers,
-                                  currentServer: current,
-                                  onServerChanged: (newServer) {
-                                    HttpUtil().setUrl(newServer);
-                                    HomeController.to.login();
-                                  },
-                                );
-                              },
-                            );
-                          },
-                          onTap: () {
-                            if (!enable) {
-                              Navigator.pop(context);
-                              return;
-                            }
-                            _showDialog(context, routeId);
-                          },
-                          child: Container(
-                            width: 36.w,
-                            height: 36.w,
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                    width: 1, color: AppColors.cFFFFFF),
-                                borderRadius: BorderRadius.circular(18.w)),
-                            child: Center(
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(18.w),
-                                child: UserAvaterWidget(
-                                  url: Utils.getAvaterUrl(
-                                      info.team?.teamLogo ?? 0),
-                                  width: 36.w,
-                                  height: 36.w,
+                            onLongPress: () {
+                              final List<String> servers = [
+                                Address.personalDevUrl,
+                                Address.privateDevUrl,
+                                Address.publicDevUrl,
+                              ];
+                              String current = HttpUtil().getUrl;
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return ServerSwitchDialog(
+                                    servers: servers,
+                                    currentServer: current,
+                                    onServerChanged: (newServer) {
+                                      HttpUtil().setUrl(newServer);
+                                      HomeController.to.login();
+                                    },
+                                  );
+                                },
+                              );
+                            },
+                            onTap: () {
+                              if (!enable) {
+                                Navigator.pop(context);
+                                return;
+                              }
+                              _showDialog(context, routeId);
+                            },
+                            child: Container(
+                              width: 36.w,
+                              height: 36.w,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      width: 1, color: AppColors.cFFFFFF),
+                                  borderRadius: BorderRadius.circular(18.w)),
+                              child: Center(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(18.w),
+                                  child: UserAvaterWidget(
+                                    url: Utils.getAvaterUrl(
+                                        info.team?.teamLogo ?? 0),
+                                    width: 36.w,
+                                    height: 36.w,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
                         11.hGap,
                         MoneyAndCoinWidget(
                           home: true,
@@ -241,13 +242,22 @@ class MoneyAndCoinWidget extends StatelessWidget {
                 10.hGap,
                 IconWidget(iconWidth: 20.w, icon: Assets.teamUiMoney02),
                 2.hGap,
-                Text(
-                  Utils.formatMoney(info.getMoney()),
-                  style: 12.w4(
+                AnimatedNum(
+                  number: info.getMoney().toInt(),
+                  isMoney: true,
+                  milliseconds: 1000,
+                  textStyle: 12.w4(
                       color: AppColors.cF2F2F2,
                       height: 1,
                       fontFamily: FontFamily.fOswaldRegular),
-                ),
+                )
+                // Text(
+                //   Utils.formatMoney(info.getMoney()),
+                //   style: 12.w4(
+                //       color: AppColors.cF2F2F2,
+                //       height: 1,
+                //       fontFamily: FontFamily.fOswaldRegular),
+                // ),
               ],
             );
           } else {

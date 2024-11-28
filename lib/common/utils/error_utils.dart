@@ -1,3 +1,9 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-11-26 18:42:28
+ * @LastEditTime: 2024-11-27 15:59:01
+ */
 import 'dart:convert';
 
 import 'package:arm_chair_quaterback/common/entities/api_error_code_entity.dart';
@@ -14,9 +20,8 @@ import 'package:get/get.dart';
 ///created at 2024/11/18/11:53
 
 class ErrorUtils {
-
   static void toast(dynamic e) {
-    if(!kReleaseMode){
+    if (!kReleaseMode) {
       print('$e\n${e.stackTrace}');
     }
     var str = _DEFAULTERRORSTRING;
@@ -29,7 +34,9 @@ class ErrorUtils {
 
   static Result? _getResult(DioException e) {
     try {
-      var data = e.response?.data is String ? json.decode(e.response?.data) : e.response?.data;
+      var data = e.response?.data is String
+          ? json.decode(e.response?.data)
+          : e.response?.data;
       return Result.fromJson(data as Map<String, dynamic>);
     } catch (e) {
       return null;

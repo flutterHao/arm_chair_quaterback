@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-11 15:57:44
- * @LastEditTime: 2024-11-27 11:10:26
+ * @LastEditTime: 2024-11-27 17:47:41
  */
 
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -32,6 +32,7 @@ class TrainingPage extends GetView<TrainingController> {
                 width: 375.w,
                 height: 480.w,
                 child: Stack(
+                  alignment: Alignment.center,
                   children: [
                     const Positioned(
                       top: 0,
@@ -61,6 +62,7 @@ class TrainingPage extends GetView<TrainingController> {
                                 return FlipCard(
                                   isFlipped: e.isOpen.value,
                                   onFlip: () {
+                                    e.isSelect.value = true;
                                     controller.tacticId = e.id;
                                     controller.changeTacticId = 0;
                                     controller.chooseTactic();
@@ -71,7 +73,7 @@ class TrainingPage extends GetView<TrainingController> {
                             ),
                           );
                         }),
-                      )
+                      ),
                   ],
                 ),
               )

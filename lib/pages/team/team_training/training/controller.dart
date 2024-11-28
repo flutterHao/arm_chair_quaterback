@@ -7,15 +7,17 @@ import 'package:arm_chair_quaterback/common/entities/train_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/train_task_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
+import 'package:arm_chair_quaterback/common/services/services.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/pages/home/index.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:common_utils/common_utils.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
+import '../../../../common/constant/getx_builder_ids.dart';
 
 ///1:战术(buff)
 ///2:状态
@@ -31,6 +33,7 @@ class TrainingController extends GetxController
   var showPlayer = false.obs;
   var showStatus = false.obs;
   var showCash = false.obs;
+  var caShScale = false.obs;
   var showBuff = false.obs;
   RxInt cash = 0.obs;
 
@@ -72,7 +75,8 @@ class TrainingController extends GetxController
   late ScrollController playerScollCtrl;
   List<ScrollController> statusScollerList = [];
   int playerIdx = 0;
-  bool showResult = false;
+  var showPlayerBox = false.obs;
+  bool playerScrollerEnd = false;
 
   ///战术卡牌
   RxBool isChange = false.obs;
@@ -84,16 +88,19 @@ class TrainingController extends GetxController
   List<Animation<double>> tacSizeAnimations = [];
   List<Animation<double>> tacScaleAnimations = [];
   List<Animation<double>> tacPosAnimations = [];
+  RxBool isNotTip = false.obs;
 
   //任务
   int currentTask = 10;
   RxDouble taskProgress = 0.0.obs;
   RxString taskCountDownString = "".obs;
+  late DateTime refreshTime = DateTime.now();
 
   /// 在 widget 内存中分配后立即调用。
   @override
   void onInit() {
     super.onInit();
+    getNoTip();
     playerScollCtrl = ScrollController();
     slotsAnimlList = List.generate(6, (_) {
       return AnimationController(
@@ -217,7 +224,7 @@ class TrainingController extends GetxController
   ///任务倒计时
   void taskCountDownTime() async {
     DateTime now = DateTime.now();
-
+    refreshTime = now;
     DateTime taskRefreshTime =
         DateUtil.getDateTimeByMs(trainingInfo.training.taskEndTime);
 
@@ -231,6 +238,9 @@ class TrainingController extends GetxController
       taskCountDownString.value =
           '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
       if (taskSeconds <= 0) {
+        if (refreshTime.difference(now).inSeconds < 10) {
+          return;
+        }
         _timer1.cancel();
         // 重新获取新的恢复时间进行倒计时
         trainingInfo = await TeamApi.getTrainingInfo();
@@ -242,44 +252,95 @@ class TrainingController extends GetxController
 
   void buyTrainingBall(int count) {
     TeamApi.buyTrainingBall(count).then((v) {
-      trainingInfo.prop.num = v;
+      ballNum.value = v;
       update(["training_page"]);
     });
   }
 
   void chooseTactic() {
     if (tacticId == 0) return;
-    // if (tacticList.length >= 5) {
-    //   ///如果卡槽有这个直接替换
-    //   TrainingInfoBuff buff =
-    //       chooseTacticList.where((e) => e.buffId == tacticId).first;
-    //   if (trainingInfo.buff.where((e) => e.color == buff.color).isEmpty) {
-    //     isChange.value = true;
-    //     return;
-    //   } else {
-    //     changeTacticId = tacticId;
-    //   }
-    // }
-    if (tacticList.length >= 5 && changeTacticId == 0) {
-      isChange.value = true;
-      return;
+    if (tacticList.length >= 5) {
+      ///如果卡槽有这个直接添加
+      TrainingInfoBuff buff =
+          chooseTacticList.where((e) => e.id == tacticId).first;
+      if (trainingInfo.buff
+          .where((e) => e.color == buff.color && e.face == buff.face)
+          .isNotEmpty) {
+        changeTacticId = tacticId;
+      } else if (changeTacticId == 0) {
+        isChange.value = true;
+        return;
+      }
     }
+    // if (tacticList.length >= 5 && changeTacticId == 0) {
+    //   isChange.value = true;
+    //   return;
+    // }
     showBuff.value = false;
-    TeamApi.chooseTactic(tacticId, replaceTacticId: changeTacticId).then((v) {
-      tacticList = v;
-    }).whenComplete(() {
+    TeamApi.chooseTactic(tacticId, replaceTacticId: changeTacticId)
+        .then((v) async {
+      ///tacticList替换上面的buff
+      int type = 1;
+      if (changeTacticId != 0) {
+        for (int i = 0; i < tacticList.length; i++) {
+          if (tacticList[i].id == changeTacticId) {
+            for (int j = 0; j < trainingInfo.chooseBuffs.length; j++) {
+              if (tacticId == trainingInfo.chooseBuffs[j].id) {
+                tacticList[i] = trainingInfo.chooseBuffs[j];
+                type = 0;
+              }
+            }
+          }
+        }
+      } else {
+        ///直接添加
+        for (int i = 0; i < trainingInfo.chooseBuffs.length; i++) {
+          if (tacticId == trainingInfo.chooseBuffs[i].id) {
+            tacticList.add(trainingInfo.chooseBuffs[i]);
+          }
+        }
+      }
+
+      update(["training_page"]);
       tacticId = 0;
       changeTacticId = 0;
       isChange.value = false;
       showBuff.value = false;
       isPlaying.value = false;
+      if (type == 0) await Future.delayed(const Duration(seconds: 1));
+      tacticList = v;
       update(["training_page"]);
+    }).whenComplete(() {
+      // chooseFinish();
     });
+  }
+
+  void saveNotTip() {
+    String date =
+        DateUtil.formatDate(DateTime.now(), format: DateFormats.y_mo_d);
+    StorageService.to.setBool("noTip$date", isNotTip.value);
+  }
+
+  void getNoTip() {
+    String date =
+        DateUtil.formatDate(DateTime.now(), format: DateFormats.y_mo_d);
+    isNotTip.value = StorageService.to.getBool("noTip$date");
+    Log.d("noTip:${isNotTip.value}");
+  }
+
+  void chooseFinish() {
+    tacticId = 0;
+    changeTacticId = 0;
+    isChange.value = false;
+    showBuff.value = false;
+    isPlaying.value = false;
+    update(["training_page"]);
   }
 
   void initSlot() {
     isPlaying.value = true;
-    showBuff.value = false;
+    cash.value = 0;
+    // showBuff.value = false;
   }
 
   void startSlot() async {
@@ -328,84 +389,96 @@ class TrainingController extends GetxController
         curve: const Cubic(0.27, 0.59, 0.19, 1.1));
     if (index == 5) {
       ///最后一个旋转结束
-      List<int> awads = [];
-      for (var e in trainingInfo.award) {
-        ///槽位显示中奖放大动画
-        for (int i = 0; i < trainingInfo.propArray.length; i++) {
-          if (trainingInfo.propArray[i] == e.id) {
-            isAwards[i].value = true;
-            //槽位恢复
-            Future.delayed(const Duration(milliseconds: 200), () {
-              isAwards[i].value = false;
-            });
-          }
-        }
-        if (e.id == 5) {
-          cash.value = e.num;
-        }
-        awads.add(e.id);
-      }
-      await Future.delayed(const Duration(milliseconds: 300));
-
-      ///奖励表达
-      ///战术 buff
-      if (awads.contains(1)) {
-        showBuff.value = true;
-        tacticList = trainingInfo.buff;
-        chooseTacticList = trainingInfo.chooseBuffs;
-        update(["training_page"]);
-        await Future.delayed(const Duration(milliseconds: 400));
-        for (var element in chooseTacticList) {
-          await Future.delayed(const Duration(milliseconds: 100));
-          element.isOpen.value = true;
-        }
-        // await Future.delayed(const Duration(milliseconds: 300));
-        //  showBuff.value = false;
-      }
-
-      ///2:状态
-      if (awads.contains(2)) {
-        await startPlayerScroll(0);
-      }
-
-      ///3:道具
-      if (awads.contains(3)) {
-        trainingInfo.training.taskValue.value =
-            trainingInfo.training.taskItemCount;
-        isPlaying.value = false;
-      }
-
-      ///4:篮球
-      if (awads.contains(4)) {
-        showBall.value = true;
-        ballNum.value = trainingInfo.prop.num;
-        await Future.delayed(const Duration(milliseconds: 300), () {
-          showBall.value = false;
-          isPlaying.value = false;
-        });
-      }
-
-      ///5:钞票
-      if (awads.contains(5)) {
-        showCash.value = true;
-        await Future.delayed(const Duration(milliseconds: 600), () {
-          showCash.value = false;
-          isPlaying.value = false;
-        });
-      }
-
-      for (var element in slotsAnimlList) {
-        element.reset();
-      }
-      // getPlayerList();
-      update(["training_page"]);
+      showAward();
     }
+  }
+
+  ///奖励表达
+  Future showAward() async {
+    int cashNum = 0;
+    List<int> awads = [];
+    for (var e in trainingInfo.award) {
+      ///槽位显示中奖放大动画
+      for (int i = 0; i < trainingInfo.propArray.length; i++) {
+        if (trainingInfo.propArray[i] == e.id) {
+          isAwards[i].value = true;
+          //槽位恢复
+          Future.delayed(const Duration(milliseconds: 200), () {
+            isAwards[i].value = false;
+          });
+        }
+      }
+      if (e.id == 5) {
+        cashNum = e.num;
+      }
+      awads.add(e.id);
+    }
+    await Future.delayed(const Duration(milliseconds: 300));
+
+    ///2:状态
+    if (awads.contains(2)) {
+      await startPlayerScroll(0);
+      await Future.delayed(const Duration(milliseconds: 500));
+    }
+
+    ///3:道具
+    if (awads.contains(3)) {
+      trainingInfo.training.taskValue.value =
+          trainingInfo.training.taskItemCount;
+      isPlaying.value = false;
+    }
+
+    ///4:篮球
+    if (awads.contains(4)) {
+      showBall.value = true;
+      ballNum.value = trainingInfo.prop.num;
+      await Future.delayed(const Duration(milliseconds: 300), () {
+        showBall.value = false;
+        isPlaying.value = false;
+      });
+    }
+
+    ///5:钞票
+    if (awads.contains(5)) {
+      showCash.value = true;
+      cash.value = cashNum;
+      caShScale.value = true;
+      Future.delayed(const Duration(milliseconds: 1000), () {
+        caShScale.value = false;
+      });
+      await Future.delayed(const Duration(milliseconds: 1200), () {
+        showCash.value = false;
+        isPlaying.value = false;
+        updateMoney();
+      });
+    }
+
+    ///战术 buff
+    if (awads.contains(1)) {
+      showBuff.value = true;
+      tacticList = trainingInfo.buff;
+      chooseTacticList = trainingInfo.chooseBuffs;
+      update(["training_page"]);
+      await Future.delayed(const Duration(milliseconds: 400));
+      for (var element in chooseTacticList) {
+        await Future.delayed(const Duration(milliseconds: 100));
+        element.isOpen.value = true;
+      }
+      // await Future.delayed(const Duration(milliseconds: 300));
+      //  showBuff.value = false;
+    }
+
+    for (var element in slotsAnimlList) {
+      element.reset();
+    }
+    // getPlayerList();
+    update(["training_page"]);
   }
 
   ///球员滚动
   Future startPlayerScroll(int count) async {
     ///状态控制
-    await Future.delayed(const Duration(milliseconds: 300));
+    await Future.delayed(const Duration(milliseconds: 150));
     trainingInfo.selectPlayer.value =
         trainingInfo.statusReplyPlayers.map((e) => e.playerId).toList();
     statusScollerList.clear();
@@ -413,10 +486,13 @@ class TrainingController extends GetxController
       statusScollerList.add(ScrollController());
     }
     showPlayer.value = true;
+    await Future.delayed(const Duration(milliseconds: 200));
+    showPlayerBox.value = true;
+
     update(["playerList"]);
     if (playerScollCtrl.hasClients) {
       playerScollCtrl.jumpTo(0);
-      double offset = (playerIdx + playerList.length * 3 - 4) * 50.w;
+      double offset = (playerIdx + playerList.length * 3 - 3) * 65.w;
       await playerScollCtrl
           .animateTo(
         playerScollCtrl.offset + offset,
@@ -425,21 +501,36 @@ class TrainingController extends GetxController
         curve: const Cubic(0.27, 0.59, 0.19, 1.05),
       )
           .then((v) async {
-        showResult = true;
-        showStatus.value = true;
-        // for (var controller in statusScollerList) {
-        //   controller.dispose();
-        // }
-
+        playerScrollerEnd = true;
         update(["playerList"]);
-        // update(["training_page"]);
+
+        ///找到跳转到原来状态
+        await Future.delayed(const Duration(milliseconds: 200));
+        List<int> oldList = [];
+        for (int i = 0; i < statusScollerList.length; i++) {
+          int oldIndex = 0;
+          for (var player in playerList) {
+            if (trainingInfo.statusReplyPlayers[i].uuid == player.uuid) {
+              oldIndex = statusList.indexOf(player.playerStatus);
+            }
+          }
+          oldList.add(oldIndex);
+          if (statusScollerList[i].hasClients) {
+            statusScollerList[i].jumpTo(oldIndex * 30.w - 3.w);
+          }
+        }
+        showStatus.value = true;
+
+        // update(["playerList"]);
         for (int i = 0; i < statusScollerList.length; i++) {
           await Future.delayed(Duration(milliseconds: 100 + i * 25), () {});
-          statusScroll(i);
+          statusScroll(i, oldList[i]);
         }
-        await Future.delayed(const Duration(milliseconds: 300), () {
+
+        await Future.delayed(const Duration(milliseconds: 1000), () {
+          showPlayerBox.value = false;
           showPlayer.value = false;
-          showResult = false;
+          playerScrollerEnd = false;
           showStatus.value = false;
           isPlaying.value = false;
         });
@@ -447,18 +538,19 @@ class TrainingController extends GetxController
     }
   }
 
-  void statusScroll(int index) async {
-    // int oldIndex =
-    //     statusList.indexOf(trainingInfo.statusReplyPlayers[index].playerStatus);
-    // statusScollerList[index].jumpTo(oldIndex * 30.w);
+  void statusScroll(int index, int oldIndex) async {
     if (statusScollerList[index].hasClients) {
-      statusScollerList[index].jumpTo(0);
       int newIndex = statusList
           .indexOf(trainingInfo.statusReplyPlayers[index].playerStatus);
       double offset = 30.w * (newIndex);
-      statusScollerList[index].animateTo(offset,
-          duration: const Duration(milliseconds: 300),
-          curve: const Cubic(0.27, 0.59, 0.19, 1.0));
+      statusScollerList[index].animateTo(
+        offset,
+        duration: const Duration(milliseconds: 300),
+        curve: oldIndex == newIndex
+            ? Curves.bounceOut
+            : const Cubic(0.27, 0.59, 0.19, 1.0),
+        // curve: const Cubic(0.27, 0.59, 0.19, 1.0),
+      );
     }
   }
 
@@ -473,7 +565,7 @@ class TrainingController extends GetxController
         }
       }
     }
-    HomeController.to.update(["userInfo"]);
+    HomeController.to.update([GetXBuilderIds.idMoneyAndCoinWidget]);
   }
 
   ///计算由那些奖励

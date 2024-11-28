@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
@@ -53,11 +54,16 @@ class TrainingPeparation extends StatelessWidget {
                                 fontFamily: FontFamily.fOswaldMedium,
                               ),
                             )),
+                            AnimatedNum(
+                                number: (trainingInfo.playerReadiness * 100)
+                                    .toInt(),
+                                textStyle:
+                                    19.w4(color: AppColors.c000000, height: 1)),
                             Text(
-                              "${(trainingInfo.playerReadiness * 100).toInt()}%",
+                              "%",
                               style: 19.w4(color: AppColors.c000000, height: 1),
                             ),
-                            9.hGap,
+                            7.hGap,
                           ],
                         ),
                         8.vGap,

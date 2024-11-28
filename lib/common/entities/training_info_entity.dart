@@ -131,6 +131,8 @@ class TrainingInfoBuff {
   late int color = 1;
   @JSONField(deserialize: false, serialize: false)
   late RxBool isOpen = false.obs;
+  @JSONField(deserialize: false, serialize: false)
+  late RxBool isSelect = false.obs;
 
   TrainingInfoBuff();
 

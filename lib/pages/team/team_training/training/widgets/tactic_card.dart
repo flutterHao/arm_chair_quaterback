@@ -81,7 +81,7 @@ class TacticCard extends StatelessWidget {
           ),
           Positioned(
             top: 34.5.w,
-            child: Image.asset(_getPath(color), width: 29.w * scale),
+            child: Image.asset(_getPath(color), width: 27.w * scale),
           ),
           Positioned(
             top: 70.w,

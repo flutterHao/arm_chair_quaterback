@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-30 11:43:53
- * @LastEditTime: 2024-11-27 09:50:18
+ * @LastEditTime: 2024-11-27 20:43:42
  */
 
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -27,16 +27,16 @@ class TrainingAvater extends GetView<TrainingController> {
   Widget build(BuildContext context) {
     ///头像
     return Container(
-      width: 46.w,
-      height: 61.w,
+      width: 55.w,
+      height: 74.w,
       margin: EdgeInsets.symmetric(horizontal: 2.w),
       alignment: Alignment.center,
       child: Stack(
         fit: StackFit.expand,
         children: [
           Container(
-            width: 46.w,
-            height: 61.w,
+            width: 55.w,
+            height: 74.w,
             // width: isCurrent ? 46.w * scale : 46.w,
             // height: isCurrent ? 61.w * scale : 61.w,
             alignment: Alignment.center,
@@ -50,21 +50,21 @@ class TrainingAvater extends GetView<TrainingController> {
               url: Utils.getPlayUrl(player.playerId),
               imageFailedPath: Assets.iconUiDefault04,
               borderRadius: BorderRadius.circular(7.w),
-              width: 46.w,
-              height: 61.w,
+              width: 55.w,
+              height: 74.w,
               fit: BoxFit.cover,
             ),
           ),
-          if (!isCurrent && controller.showResult)
+          if (!isCurrent && controller.playerScrollerEnd)
             Container(
-              width: 46.w,
-              height: 61.w,
+              width: 55.w,
+              height: 74.w,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: Colors.black.withOpacity(0.5),
                 borderRadius: BorderRadius.circular(9.w),
               ),
-            )
+            ),
         ],
       ),
     );

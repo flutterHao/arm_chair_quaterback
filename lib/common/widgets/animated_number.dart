@@ -2,11 +2,12 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-04 16:18:54
- * @LastEditTime: 2024-11-27 11:38:33
+ * @LastEditTime: 2024-11-28 15:13:10
  */
 
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 class AnimatedScaleNumber extends StatefulWidget {
@@ -90,8 +91,9 @@ class _AnimatedScaleNumberState extends State<AnimatedScaleNumber>
 
 class AnimatedNum extends StatefulWidget {
   final int number;
-  final String? unit;
+  final bool isMoney;
   final int milliseconds;
+  final bool fromZero;
 
   ///单位
   final TextStyle textStyle;
@@ -100,8 +102,9 @@ class AnimatedNum extends StatefulWidget {
     super.key,
     required this.number,
     required this.textStyle,
-    this.unit = "",
+    this.isMoney = false,
     this.milliseconds = 300,
+    this.fromZero = false,
   });
 
   @override
@@ -118,7 +121,7 @@ class AnimState extends State<AnimatedNum> with SingleTickerProviderStateMixin {
     super.initState();
     _currentNumber = widget.number;
     controller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 200));
+        vsync: this, duration: Duration(milliseconds: widget.milliseconds));
     final Animation<double> curve =
         CurvedAnimation(parent: controller, curve: Curves.linear);
     animation =
@@ -131,7 +134,7 @@ class AnimState extends State<AnimatedNum> with SingleTickerProviderStateMixin {
     if (oldWidget.number != widget.number) {
       // int change = widget.number - oldWidget.number;
       // int duration = max(change * 10, 2000);
-      _currentNumber = oldWidget.number;
+      _currentNumber = widget.fromZero ? 0 : oldWidget.number;
       // controller.reset();
       controller.reset();
       animation = IntTween(begin: _currentNumber, end: widget.number).animate(
@@ -153,10 +156,24 @@ class AnimState extends State<AnimatedNum> with SingleTickerProviderStateMixin {
     return AnimatedBuilder(
       animation: controller,
       builder: (context, child) {
-        return Text(
-          '${animation.value}${widget.unit}',
-          style: widget.textStyle,
-        );
+        Widget numWidget;
+        if (widget.isMoney) {
+          numWidget = (controller.value != 0 && controller.value != 1)
+              ? Text(
+                  '${animation.value}k',
+                  style: widget.textStyle,
+                )
+              : Text(
+                  Utils.formatMoney(animation.value),
+                  style: widget.textStyle,
+                );
+        } else {
+          numWidget = Text(
+            '${animation.value}',
+            style: widget.textStyle,
+          );
+        }
+        return numWidget;
       },
     );
   }

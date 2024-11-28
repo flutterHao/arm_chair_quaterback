@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 17:29:19
- * @LastEditTime: 2024-11-26 20:36:04
+ * @LastEditTime: 2024-11-27 21:28:58
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
@@ -113,7 +113,7 @@ class ImageWidget extends StatelessWidget {
       loadStateChanged: (ExtendedImageState state) {
         switch (state.extendedImageLoadState) {
           case LoadState.failed:
-            Log.e("$url load failed");
+            // Log.e("$url load failed");
             return error;
           case LoadState.loading:
             // return SizedBox(
