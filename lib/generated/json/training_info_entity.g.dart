@@ -382,6 +382,7 @@ extension TrainingInfoBuffExtension on TrainingInfoBuff {
     int? face,
     int? color,
     RxBool? isOpen,
+    RxBool? isSelect,
   }) {
     return TrainingInfoBuff()
       ..id = id ?? this.id
@@ -394,6 +395,7 @@ extension TrainingInfoBuffExtension on TrainingInfoBuff {
       ..buffId = buffId ?? this.buffId
       ..face = face ?? this.face
       ..color = color ?? this.color
-      ..isOpen = isOpen ?? this.isOpen;
+      ..isOpen = isOpen ?? this.isOpen
+      ..isSelect = isSelect ?? this.isSelect;
   }
 }

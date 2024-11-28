@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-06 15:16:54
- * @LastEditTime: 2024-11-26 15:40:47
+ * @LastEditTime: 2024-11-28 17:42:34
  */
 class Api {
   /// base
@@ -88,6 +88,7 @@ class Api {
       "$CONFIG_BASE_PATH/PlayerStatsDefine.json";
   static const String cPickType = "$CONFIG_BASE_PATH/PickType.json";
   static const String cErrorCode = "$CONFIG_BASE_PATH/ErrorCode.json";
+  static const String cTacticsDefine = "$CONFIG_BASE_PATH/TacticsDefine.json";
 
   /// TeamPlayer
   static const String getTeamPlayerByUUID =

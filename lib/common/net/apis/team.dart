@@ -2,12 +2,13 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-14 17:25:31
- * @LastEditTime: 2024-11-26 17:41:45
+ * @LastEditTime: 2024-11-28 17:44:17
  */
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/my_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_status_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/tactics_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/train_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/train_task_entity.dart';
@@ -120,5 +121,10 @@ class TeamApi {
     var chooseList = list.map((e) => TrainingInfoBuff.fromJson(e)).toList();
     chooseList.sort((a, b) => a.face.compareTo(b.face));
     return chooseList;
+  }
+
+  static Future<List<TacticsDefineEntity>> tacticsDefine() async {
+    List list = await HttpUtil().post(Api.cTacticsDefine);
+    return list.map((e) => TacticsDefineEntity.fromJson(e)).toList();
   }
 }

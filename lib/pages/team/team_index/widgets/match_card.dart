@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 21:12:10
- * @LastEditTime: 2024-11-25 15:32:32
+ * @LastEditTime: 2024-11-28 15:47:30
  */
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -65,11 +65,13 @@ class MatchCard extends GetView<TeamIndexController> {
             bottom: 21.w,
             child: Row(
               children: [
-                SizedBox(
+                Container(
+                  // color: Colors.red,
                   width: 81.w,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
+                      20.hGap,
                       IconWidget(
                           iconWidth: 18.w,
                           icon: Assets.managerUiManagerIconCurrency04),

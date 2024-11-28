@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 17:22:13
- * @LastEditTime: 2024-11-27 09:37:21
+ * @LastEditTime: 2024-11-28 15:49:48
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
@@ -77,7 +77,7 @@ class MyTeamWidget extends StatelessWidget {
             20.vGap,
             Container(
               margin: EdgeInsets.symmetric(horizontal: 16.w),
-              color: AppColors.c666666,
+              color: AppColors.c666666.withOpacity(0.3),
               height: 1.w,
             ),
             15.vGap,

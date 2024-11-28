@@ -36,16 +36,16 @@ class BeautyAndBoxView extends StatelessWidget {
               alignment: Alignment.topCenter,
               children: [
                 Positioned(
-                  top: -10.w,
+                  top: -15.w,
                   left: 0,
                   child: ShaderMask(
                     shaderCallback: (Rect bounds) {
                       return LinearGradient(
-                        begin: Alignment.topCenter,
+                        begin: Alignment.center,
                         end: Alignment.bottomCenter,
                         colors: [
                           Colors.white.withOpacity(1),
-                          Colors.white.withOpacity(0.3),
+                          Colors.white.withOpacity(0.2),
                         ],
                       ).createShader(bounds);
                     },

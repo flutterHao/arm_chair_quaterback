@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-21 20:20:49
- * @LastEditTime: 2024-11-25 18:23:11
+ * @LastEditTime: 2024-11-28 20:21:47
  */
 import 'dart:async';
 import 'dart:io';
@@ -52,11 +52,7 @@ class Utils {
 
   ///道具
   static String getPropIconUrl(id) {
-    if (id == 2) {
-      return Assets.commonUiCommonPlayerState02;
-    } else {
-      return "assets/images/Common/ui_common_prop_0$id.png";
-    }
+    return "assets/images/Common/ui_common_prop_0$id.png";
   }
 
   static String getStatusUrl(id) {

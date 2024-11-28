@@ -43,6 +43,8 @@ import 'package:arm_chair_quaterback/common/entities/reward_group_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_not_start_game_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/star_up_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/tactic_grade_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/tactics_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_list_entity.dart';
@@ -645,6 +647,18 @@ class JsonConvert {
       return data.map<StarUpDefineEntity>((Map<String, dynamic> e) =>
           StarUpDefineEntity.fromJson(e)).toList() as M;
     }
+    if (<TacticGradeEntity>[] is M) {
+      return data.map<TacticGradeEntity>((Map<String, dynamic> e) =>
+          TacticGradeEntity.fromJson(e)).toList() as M;
+    }
+    if (<TacticGradeCards>[] is M) {
+      return data.map<TacticGradeCards>((Map<String, dynamic> e) =>
+          TacticGradeCards.fromJson(e)).toList() as M;
+    }
+    if (<TacticsDefineEntity>[] is M) {
+      return data.map<TacticsDefineEntity>((Map<String, dynamic> e) =>
+          TacticsDefineEntity.fromJson(e)).toList() as M;
+    }
     if (<TeamInfoEntity>[] is M) {
       return data.map<TeamInfoEntity>((Map<String, dynamic> e) =>
           TeamInfoEntity.fromJson(e)).toList() as M;
@@ -932,6 +946,9 @@ class JsonConvertClassCollection {
     (TeamPlayer).toString(): TeamPlayer.fromJson,
     (TeamHistory).toString(): TeamHistory.fromJson,
     (StarUpDefineEntity).toString(): StarUpDefineEntity.fromJson,
+    (TacticGradeEntity).toString(): TacticGradeEntity.fromJson,
+    (TacticGradeCards).toString(): TacticGradeCards.fromJson,
+    (TacticsDefineEntity).toString(): TacticsDefineEntity.fromJson,
     (TeamInfoEntity).toString(): TeamInfoEntity.fromJson,
     (TeamInfoTeamPreference).toString(): TeamInfoTeamPreference.fromJson,
     (TeamPlayerInfoEntity).toString(): TeamPlayerInfoEntity.fromJson,

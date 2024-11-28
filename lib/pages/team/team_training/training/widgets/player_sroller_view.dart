@@ -2,10 +2,9 @@
  * @Description:
  * @Author: lihonghao
  * @Date: 2024-11-06 11:51:15
- * @LastEditTime: 2024-11-28 11:03:48
+ * @LastEditTime: 2024-11-28 15:58:00
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';

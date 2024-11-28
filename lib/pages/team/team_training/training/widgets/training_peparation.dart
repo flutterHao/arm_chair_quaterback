@@ -67,87 +67,38 @@ class TrainingPeparation extends StatelessWidget {
                           ],
                         ),
                         8.vGap,
-                        Container(
-                          width: 297.w,
-                          height: 14.w,
-                          alignment: Alignment.centerLeft,
-                          clipBehavior: Clip.antiAliasWithSaveLayer,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(7.w),
-                            border: Border.all(
-                              width: 1.w,
-                              color: AppColors.cD1D1D1,
-                            ),
-                          ),
-                          child: AnimatedContainer(
-                            duration: const Duration(milliseconds: 300),
-                            width: 297.w * trainingInfo.playerReadiness,
-                            height: 12.w,
-                            constraints: BoxConstraints(maxWidth: 297.w),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(7.w),
-                              gradient: LinearGradient(
-                                colors: [
-                                  AppColors.c000000,
-                                  Utils.getProgressColor(
-                                      trainingInfo.playerReadiness * 100),
-                                ],
+                        Stack(
+                          children: [
+                            Container(
+                              width: 297.w,
+                              height: 14.w,
+                              alignment: Alignment.centerLeft,
+                              clipBehavior: Clip.antiAliasWithSaveLayer,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(7.w),
+                                border: Border.all(
+                                  width: 1.w,
+                                  color: AppColors.cD1D1D1,
+                                ),
                               ),
                             ),
-                          ),
-                          // child: Stack(
-                          //   children: [
-                          // AnimatedContainer(
-                          //   duration: const Duration(milliseconds: 300),
-                          //   width:
-                          //       297.w * trainingInfo.playerReadiness * 0.2,
-                          //   height: 14.w,
-                          //   constraints: BoxConstraints(maxWidth: 297.w),
-                          //   decoration: BoxDecoration(
-                          //     borderRadius: BorderRadius.horizontal(
-                          //         left: Radius.circular(9.w)),
-                          //     gradient: LinearGradient(
-                          //       colors: [
-                          //         AppColors.c333333,
-                          //         Utils.getProgressColor(
-                          //             trainingInfo.playerReadiness * 100),
-                          //       ],
-                          //     ),
-                          //   ),
-                          // ),
-                          // if (trainingInfo.playerReadiness > 1)
-                          //   Row(
-                          //     children: [
-                          //       AnimatedContainer(
-                          //         duration:
-                          //             const Duration(milliseconds: 300),
-                          //         width: 297.w *
-                          //             (trainingInfo.playerReadiness - 1),
-                          //         height: 14.w,
-                          //         constraints:
-                          //             BoxConstraints(maxWidth: 297.w),
-                          //         decoration: BoxDecoration(
-                          //           borderRadius: BorderRadius.horizontal(
-                          //               left: Radius.circular(9.w)),
-                          //           gradient: const LinearGradient(
-                          //             colors: [
-                          //               AppColors.c022A1D,
-                          //               AppColors.c23E8A9,
-                          //             ],
-                          //           ),
-                          //         ),
-                          //       ),
-                          //       if ((trainingInfo.playerReadiness - 1) <
-                          //           0.99)
-                          //         Container(
-                          //           width: 2.w,
-                          //           height: 18.w,
-                          //           color: AppColors.cFFFFFF,
-                          //         )
-                          //     ],
-                          //   ),
-                          //   ],
-                          // ),
+                            AnimatedContainer(
+                              duration: const Duration(milliseconds: 300),
+                              width: 297.w * trainingInfo.playerReadiness,
+                              height: 14.w,
+                              constraints: BoxConstraints(maxWidth: 297.w),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(7.w),
+                                gradient: LinearGradient(
+                                  colors: [
+                                    AppColors.c000000,
+                                    Utils.getProgressColor(
+                                        trainingInfo.playerReadiness * 100),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),

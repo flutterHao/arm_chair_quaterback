@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-25 15:56:43
- * @LastEditTime: 2024-11-28 15:23:45
+ * @LastEditTime: 2024-11-28 15:53:40
  */
 
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
@@ -79,7 +79,7 @@ class TrainingWidget extends GetView<TrainingController> {
                       ),
 
                       Positioned(
-                          top: 43.w,
+                          top: 50.w,
                           child: Image.asset(
                             Assets.managerUiManagerTrainingBg02,
                             width: 155.w,
@@ -184,7 +184,7 @@ class TrainingWidget extends GetView<TrainingController> {
                                 return Text(
                                   controller.recoverTimeStr.value,
                                   style: 12.w4(
-                                    color: AppColors.c10A86A,
+                                    color: AppColors.c31E99E,
                                     fontFamily: FontFamily.fRobotoRegular,
                                   ),
                                 );
@@ -201,29 +201,31 @@ class TrainingWidget extends GetView<TrainingController> {
                         top: 205.w,
                         child: Column(
                           children: [
-                            Opacity(
-                              opacity: controller.isPlaying.value ? 0 : 1,
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "COST:",
-                                    style: 16.w7(
-                                        color: AppColors.c262626,
-                                        fontFamily: FontFamily.fOswaldMedium,
-                                        height: 0.7),
-                                  ),
-                                  7.hGap,
-                                  IconWidget(
-                                      iconWidth: 21.w,
-                                      icon: Assets.commonUiCommonProp04),
-                                  4.hGap,
-                                  Text(
-                                    "1",
-                                    style: 16.w7(color: AppColors.c262626),
-                                  )
-                                ],
-                              ),
-                            ),
+                            Obx(() {
+                              return Opacity(
+                                opacity: controller.isPlaying.value ? 0 : 1,
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "COST:",
+                                      style: 16.w7(
+                                          color: AppColors.c262626,
+                                          fontFamily: FontFamily.fOswaldMedium,
+                                          height: 0.7),
+                                    ),
+                                    7.hGap,
+                                    IconWidget(
+                                        iconWidth: 21.w,
+                                        icon: Assets.commonUiCommonProp04),
+                                    4.hGap,
+                                    Text(
+                                      "1",
+                                      style: 16.w7(color: AppColors.c262626),
+                                    )
+                                  ],
+                                ),
+                              );
+                            }),
                             5.vGap,
                             MtInkwell(
                               // vibrate: true,
