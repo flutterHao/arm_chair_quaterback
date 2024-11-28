@@ -173,28 +173,32 @@ class _LeagueDetailPicksViewGetX extends GetView<LeagueDetailPicksController> {
                                     children: controller.getTabs().map((e) {
                                       List<PicksPlayerV2> list =
                                           controller.getPlayerV2()[e] ?? [];
-                                      return ListView(
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
-                                        children: list.map((e) {
-                                          var i = list.indexOf(e);
-                                          return Container(
-                                              decoration: BoxDecoration(
-                                                  border: Border(
-                                                      bottom: BorderSide(
-                                                          color: i ==
-                                                                  list.length -
-                                                                      1
-                                                              ? AppColors
-                                                                  .cFFFFFF
-                                                              : AppColors
-                                                                  .cE6E6E,
-                                                          width: 1.w))),
-                                              child: GuessItemV2(
-                                                playerV2: e,
-                                                index: i,
-                                              ));
-                                        }).toList(),
+                                      return MediaQuery.removePadding(
+                                        removeTop: true,
+                                        context: context,
+                                        child: ListView(
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          children: list.map((e) {
+                                            var i = list.indexOf(e);
+                                            return Container(
+                                                decoration: BoxDecoration(
+                                                    border: Border(
+                                                        bottom: BorderSide(
+                                                            color: i ==
+                                                                    list.length -
+                                                                        1
+                                                                ? AppColors
+                                                                    .cFFFFFF
+                                                                : AppColors
+                                                                    .cE6E6E,
+                                                            width: 1.w))),
+                                                child: GuessItemV2(
+                                                  playerV2: e,
+                                                  index: i,
+                                                ));
+                                          }).toList(),
+                                        ),
                                       );
                                     }).toList()),
                               )

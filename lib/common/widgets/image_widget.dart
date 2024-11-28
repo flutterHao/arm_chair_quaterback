@@ -46,7 +46,7 @@ class ImageWidget extends StatelessWidget {
           height: height,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: AppColors.cE6E6E,
+            color: color??AppColors.cE6E6E,
             borderRadius: borderRadius,
           ),
           child: imageFailedPath != null
@@ -70,8 +70,8 @@ class ImageWidget extends StatelessWidget {
               width: width,
               height: height,
               alignment: Alignment.center,
-              child: const CircularProgressIndicator(
-                color: AppColors.cE6E6E6,
+              child: CircularProgressIndicator(
+                color: color??AppColors.cE6E6E6,
                 strokeWidth: 2,
               )),
     );
