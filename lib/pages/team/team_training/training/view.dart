@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-11 15:57:44
- * @LastEditTime: 2024-11-29 18:38:13
+ * @LastEditTime: 2024-11-29 19:24:21
  */
 
 import 'dart:math';
@@ -86,7 +86,7 @@ class TrainingPage extends GetView<TrainingController> {
                         return AnimatedPositioned(
                           left: e.offset.value.dx,
                           top: e.offset.value.dy,
-                          duration: 200.milliseconds,
+                          duration: 300.milliseconds,
                           child: AnimatedScale(
                             duration: const Duration(milliseconds: 300),
                             scale: controller.showBuff.value ? 1 : 0,

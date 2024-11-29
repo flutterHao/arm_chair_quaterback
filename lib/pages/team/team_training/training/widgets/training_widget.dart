@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-25 15:56:43
- * @LastEditTime: 2024-11-29 18:48:08
+ * @LastEditTime: 2024-11-29 19:43:32
  */
 
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
@@ -105,7 +105,7 @@ class TrainingWidget extends GetView<TrainingController> {
                               },
                               child: Container(
                                 // height: 72.5.w,
-                                // width: 95.w,
+                                width: 110.w,
                                 // height: 24.w,
                                 padding: EdgeInsets.all(2.w),
                                 decoration: BoxDecoration(
@@ -126,7 +126,9 @@ class TrainingWidget extends GetView<TrainingController> {
                                             icon: Assets.commonUiCommonProp04),
                                       );
                                     }),
-                                    4.hGap,
+                                    Expanded(
+                                      child: Container(),
+                                    ),
                                     Obx(() {
                                       int v = controller.ballNum.value;
                                       return AnimatedNum(

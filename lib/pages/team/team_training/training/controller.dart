@@ -303,10 +303,11 @@ class TrainingController extends GetxController
         var myBuff = trainingInfo.buff
             .where((e) => e.color == buff.color && e.face == buff.face)
             .first;
-        if (myBuff.takeEffectGameCount >= 6) {
+        if (myBuff.takeEffectGameCount >= 5) {
           shakeController.forward();
           ClickFeedBack.selectionClick();
           EasyLoading.showToast("Tactics Slot is fulled");
+          chooseEnd(0);
           return;
         }
         changeTacticId = tacticId;
@@ -315,52 +316,51 @@ class TrainingController extends GetxController
         return;
       }
     }
-    // if (tacticList.length >= 5 && changeTacticId == 0) {
-    //   isChange.value = true;
-    //   return;
-    // }
-    showBuff.value = false;
-    TeamApi.chooseTactic(tacticId, replaceTacticId: changeTacticId)
-        .then((v) async {
-      ///tacticList替换上面的buff
-      int type = 1;
-      if (changeTacticId != 0) {
-        for (int i = 0; i < tacticList.length; i++) {
-          if (tacticList[i].id == changeTacticId) {
-            for (int j = 0; j < chooseTacticList.length; j++) {
-              if (tacticId == chooseTacticList[j].id) {
-                tacticList[i] = chooseTacticList[j];
-                double x = 162.5.w + i * 37.w;
-                chooseTacticList[j].offset.value = Offset(x, 45.w);
-                type = 0;
-              }
+    int type = 1; //1替换0直接添加
+    if (changeTacticId != 0) {
+      for (int i = 0; i < tacticList.length; i++) {
+        if (tacticList[i].id == changeTacticId) {
+          for (int j = 0; j < chooseTacticList.length; j++) {
+            if (tacticId == chooseTacticList[j].id) {
+              tacticList[i] = chooseTacticList[j];
+              double x = 162.5.w + i * 37.w;
+              chooseTacticList[j].offset.value = Offset(x, 45.w);
+              type = 0;
             }
           }
         }
-      } else {
-        ///直接添加
-        for (int i = 0; i < chooseTacticList.length; i++) {
-          if (tacticId == chooseTacticList[i].id) {
-            tacticList.add(chooseTacticList[i]);
-            double x = 162.5.w + i * 37.w;
-            chooseTacticList[i].offset.value = Offset(x, 45.w);
-          }
+      }
+    } else {
+      ///直接添加
+      for (int i = 0; i < chooseTacticList.length; i++) {
+        if (tacticId == chooseTacticList[i].id) {
+          tacticList.add(chooseTacticList[i]);
+          double x = 162.5.w + i * 37.w;
+          chooseTacticList[i].offset.value = Offset(x, 45.w);
         }
       }
+    }
+    TeamApi.chooseTactic(tacticId, replaceTacticId: changeTacticId)
+        .then((v) async {
+      ///tacticList替换上面的buff
 
-      update(["training_page"]);
-      tacticId = 0;
-      changeTacticId = 0;
-      isChange.value = false;
-      showBuff.value = false;
-      isPlaying.value = false;
-      if (type == 0) await Future.delayed(const Duration(seconds: 1));
-      for (var element in chooseTacticList) {
-        element.isOpen.value = false;
-      }
+      chooseEnd(type);
       tacticList = v;
       update(["training_page"]);
     }).whenComplete(() {});
+  }
+
+  void chooseEnd(int type) async {
+    update(["training_page"]);
+    tacticId = 0;
+    changeTacticId = 0;
+    isChange.value = false;
+    showBuff.value = false;
+    isPlaying.value = false;
+    if (type == 0) await Future.delayed(const Duration(seconds: 1));
+    for (var element in chooseTacticList) {
+      element.isOpen.value = false;
+    }
   }
 
   void saveNotTip() {
@@ -498,7 +498,7 @@ class TrainingController extends GetxController
       Future.delayed(const Duration(milliseconds: 1000), () {
         caShScale.value = false;
       });
-      await Future.delayed(const Duration(milliseconds: 1200), () {
+      await Future.delayed(const Duration(milliseconds: 1500), () {
         showCash.value = false;
         isPlaying.value = false;
         updateMoney();
@@ -511,8 +511,8 @@ class TrainingController extends GetxController
       tacticList = trainingInfo.buff;
       chooseTacticList = List.from(trainingInfo.chooseBuffs);
       //初始化卡牌的位置和朝向
-      for (int i = 0; i < trainingInfo.chooseBuffs.length; i++) {
-        var item = trainingInfo.chooseBuffs[i];
+      for (int i = 0; i < chooseTacticList.length; i++) {
+        var item = chooseTacticList[i];
         double x = (375.w -
                     (chooseTacticList.length * 74.w +
                         (chooseTacticList.length - 1) * 6.w)) /

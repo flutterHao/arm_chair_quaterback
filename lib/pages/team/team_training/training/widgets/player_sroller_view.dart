@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lihonghao
  * @Date: 2024-11-06 11:51:15
- * @LastEditTime: 2024-11-29 18:48:46
+ * @LastEditTime: 2024-11-29 20:20:55
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -29,12 +29,7 @@ class _PlayerSrollerViewState extends State<PlayerSrollerView> {
         id: "playerList",
         builder: (controller) {
           var selectPlayers = controller.trainingInfo.selectPlayer;
-          int count = 0;
-          if (selectPlayers.length == 3) {
-            count = 1;
-          } else if (selectPlayers.length == 5) {
-            count = 2;
-          }
+          int count = selectPlayers.length ~/ 2 + 1;
           return InkWell(
             onTap: () {
               // controller.startPlayerScroll(0);
