@@ -26,10 +26,15 @@ import 'package:get/get.dart';
 ///created at 2024/10/19/16:43
 
 class GuessItemV2 extends StatefulWidget {
-  const GuessItemV2({super.key, required this.playerV2, required this.index});
+  const GuessItemV2(
+      {super.key,
+      required this.playerV2,
+      required this.index,
+      this.mainRoute = false});
 
   final PicksPlayerV2 playerV2;
   final int index;
+  final bool mainRoute;
 
   @override
   State<GuessItemV2> createState() => _GuessItemV2State();
@@ -46,7 +51,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
     controller = Get.put(GuessItemControllerV2(player),
         tag: "${player.guessInfo.playerId}_${widget.index}_${player.tabStr}");
     var count = player.guessInfo.moreCount + player.guessInfo.lessCount;
-    Future.delayed(Duration.zero,(){
+    Future.delayed(Duration.zero, () {
       controller.currentIndex.value = widget.playerV2.status;
       controller.formatGameStartTime();
     });
@@ -87,7 +92,8 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                             height: 93.w,
                             radius: 9.w,
                             playerId: player.guessInfo.playerId,
-                            getXRouteId: GlobalNestedKey.PICKS,
+                            getXRouteId:
+                                widget.mainRoute ? null : GlobalNestedKey.PICKS,
                             backgroundColor: AppColors.cD9D9D9,
                             tabStr: player.tabStr,
                           ),

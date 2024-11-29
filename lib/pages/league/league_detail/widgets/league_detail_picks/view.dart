@@ -62,6 +62,7 @@ class _LeagueDetailPicksViewGetX extends GetView<LeagueDetailPicksController> {
             : Stack(
               children: [
                 SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
                   child: Column(
                     children: [
                       9.vGap,
@@ -196,6 +197,7 @@ class _LeagueDetailPicksViewGetX extends GetView<LeagueDetailPicksController> {
                                                 child: GuessItemV2(
                                                   playerV2: e,
                                                   index: i,
+                                                  mainRoute: true,
                                                 ));
                                           }).toList(),
                                         ),
@@ -207,6 +209,8 @@ class _LeagueDetailPicksViewGetX extends GetView<LeagueDetailPicksController> {
                         ),
                         9.vGap
                       ]
+                      else
+                        SizedBox(height: 500.h,)
                     ],
                   ),
                 ),

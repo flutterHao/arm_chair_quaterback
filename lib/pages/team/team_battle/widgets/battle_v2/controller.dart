@@ -7,11 +7,13 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/thrid_lib/flutter_barrage.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/tactical_contrast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class ShootHistory {
+  // 左边 false 右边 true
   final bool isBlue;
   final Offset shootLocation;
   final bool isSuccess;
@@ -43,6 +45,14 @@ class TeamBattleV2Controller extends GetxController
   var isSecondAnimationRunning = false;
 
   List<ShootHistory> shootHistory = [];
+
+  //左边
+  var redScore = 0.obs;
+
+  //右边
+  var blueScore = 0.obs;
+
+  var isGameOver = false.obs;
 
   /// 在 widget 内存中分配后立即调用。
   @override
@@ -83,16 +93,17 @@ class TeamBattleV2Controller extends GetxController
   }
 
   shoot() {
-    ///todo 测试代码
-
     // 球场宽高比例：716/184
     // width 的最大值 375.w
     //start x 取值范围 right：9.w ~ width-9.w ; left : 9.w ~ width-9.w
     //start y 取值范围 right：9.w ~ width-9.w ; left : 9.w ~ width-9.w
     start = Offset(getRandom(375.w - 18.w, 18.w),
         getRandom((375.w - 18.w) / 716 / 184, 38.w));
+
+    ///todo 测试代码
     isSuccess = Random().nextBool();
     var isBlue = Random().nextBool();
+
     addToShootHistory(ShootHistory(isBlue, start, isSuccess));
     update([idPlayersLocation]);
     end = isBlue ? Offset(22.w, 49.w) : Offset(375.w - 22.w - 18.w - 6.w, 49.w);
@@ -117,7 +128,8 @@ class TeamBattleV2Controller extends GetxController
     shootHistory.add(item);
     var list = shootHistory.where((e) => e.isBlue == item.isBlue).toList();
     if (list.length > 5) {
-      var lastWhere = shootHistory.firstWhereOrNull((e) => e.isBlue == item.isBlue);
+      var lastWhere =
+          shootHistory.firstWhereOrNull((e) => e.isBlue == item.isBlue);
       shootHistory.remove(lastWhere);
     }
     // print('shootHistory.length--111--:${shootHistory.length}');
@@ -178,6 +190,14 @@ class TeamBattleV2Controller extends GetxController
     if (t > 1) {
       shootAnimationController.stop();
       isSecondAnimationRunning = true;
+      var last = shootHistory.last;
+      if (last.isBlue) {
+        ///todo
+        blueScore += last.isSuccess ? 3 : 0;
+      } else {
+        ///todo
+        redScore += last.isSuccess ? 3 : 0;
+      }
       if (isSuccess) {
         shootSuccessAnimation();
       } else {
@@ -360,10 +380,29 @@ class TeamBattleV2Controller extends GetxController
 
   @override
   void onClose() {
+    release();
+    super.onClose();
+  }
+
+  release() {
     normalBarrageWallController.dispose();
     highLightBarrageWallController.dispose();
     shootAnimationController.dispose();
     _timer?.cancel();
-    super.onClose();
+  }
+
+  gameOver() {
+    _timer?.cancel();
+    isGameOver.value = !isGameOver.value;
+  }
+
+  showTactical(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        backgroundColor: AppColors.cTransparent,
+        isScrollControlled: true,
+        builder: (context) {
+          return const TacticalContrast();
+        });
   }
 }

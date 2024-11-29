@@ -260,7 +260,8 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
   }
 
   bool checkDepth(ScrollNotification notification) =>
-      widget.responseDepth.contains(notification.depth);
+      widget.responseDepth.contains(notification.depth) ||
+      widget.responseDepth.isEmpty;
 
   ///松手执行回收动画
   void _recycleAnimation({double velocity = 0}) {

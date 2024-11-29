@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/battle_main.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/match_success.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/matching.dart';
 import 'package:flutter/material.dart';
@@ -13,12 +14,6 @@ import 'index.dart';
 class TeamBattlePage extends GetView<TeamBattleController> {
   const TeamBattlePage({super.key});
 
-  // 主视图
-  Widget _buildView() {
-    return const Center(
-      child: Text("TeamBattlePage"),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +21,7 @@ class TeamBattlePage extends GetView<TeamBattleController> {
       id: "team_battle",
       builder: (_) {
         return HorizontalDragBackWidget(
-          canPop: TeamBattleController.canPop,
+          // canPop: TeamBattleController.canPop,
           child: Obx(() {
             return AnimatedContainer(
               color: AppColors.c000000
@@ -42,7 +37,9 @@ class TeamBattlePage extends GetView<TeamBattleController> {
                       controller.nextStep();
                     })
                   else
-                    const BattleMain()
+                    // const BattleMain()
+                    const TeamBattleV2Page()
+
                 ],
               ),
             );

@@ -18,7 +18,7 @@ class LeagueDetailController extends GetxController
 
   ScoresEntity? item;
   final int? gameId;
-  List<String> tabTitles = ["PICKS", "PLAY", "SCORES"];
+  List<String> tabTitles = ["PICKS", "PREVIEW", "SCORES"];
   late TabController tabController;
 
   var loadStatus = LoadDataStatus.loading.obs;

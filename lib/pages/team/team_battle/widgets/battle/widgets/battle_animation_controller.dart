@@ -39,6 +39,8 @@ class EasyAnimationController<T> {
 
   AnimationController get controller => _animationController;
 
+  Animation get animation => _animation;
+
   dispose() {
     controller.dispose();
   }

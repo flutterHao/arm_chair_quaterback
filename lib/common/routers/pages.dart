@@ -17,7 +17,8 @@ import 'package:arm_chair_quaterback/pages/mine/mine_info/view.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/personal_center/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
-import 'package:arm_chair_quaterback/pages/team/team_battle_v2/view.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -38,7 +39,10 @@ class AppPages {
     GetPage(
       opaque: false,
       name: RouteNames.teamTeamBattle,
-      page: () => const TeamBattleV2Page(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<TeamBattleController>(() => TeamBattleController());
+      }),
+      page: () => const TeamBattlePage(),
     ),
     GetPage(
       opaque: false,
@@ -75,7 +79,7 @@ class AppPages {
     GetPage(
       opaque: false,
       name: RouteNames.leagueLeagueDetail,
-      page: () => LeagueDetailPage(),
+      page: () => const LeagueDetailPage(),
     ),
     // GetPage(
     //   opaque: false,

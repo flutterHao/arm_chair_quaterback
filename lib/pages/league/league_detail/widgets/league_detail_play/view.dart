@@ -59,7 +59,7 @@ class _LeagueDetailPlayPageState extends State<LeagueDetailPlayPage>
         });
       }
       return SingleChildScrollView(
-        physics: const ClampingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
             _buildQuarterTableWidget(),
