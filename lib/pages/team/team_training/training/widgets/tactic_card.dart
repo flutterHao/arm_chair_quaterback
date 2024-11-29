@@ -30,11 +30,11 @@ class SmallTacticCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            _getName(num),
-            style: 16.w4(color: _getColor(color), height: 0.9),
+            geCardtName(num),
+            style: 16.w4(color: getCardColor(color), height: 0.9),
           ),
           3.5.vGap,
-          Image.asset(_getPath(color), width: 18.w, height: 18.w),
+          Image.asset(getCardImage(color), width: 18.w, height: 18.w),
         ],
       ),
     );
@@ -70,31 +70,31 @@ class TacticCard extends StatelessWidget {
             top: 5.5.w * scale,
             left: 5.w * scale,
             child: Text(
-              _getName(num),
-              style: 16.w4(color: _getColor(color), height: 0.9),
+              geCardtName(num),
+              style: 16.w4(color: getCardColor(color), height: 0.9),
             ),
           ),
           Positioned(
             top: 23.w,
             left: 4.5.w,
-            child: Image.asset(_getPath(color), width: 9.w * scale),
+            child: Image.asset(getCardImage(color), width: 9.w * scale),
           ),
           Positioned(
             top: 34.5.w,
-            child: Image.asset(_getPath(color), width: 27.w * scale),
+            child: Image.asset(getCardImage(color), width: 27.w * scale),
           ),
           Positioned(
             top: 70.w,
             child: Text(
               "Perimeter",
-              style: 10.w4(color: _getColor(color), height: 0.9),
+              style: 10.w4(color: getCardColor(color), height: 0.9),
             ),
           ),
           Positioned(
             top: 83.w,
             child: Text(
               "${(buff.buffValue * 100).toStringAsFixed(0)}%",
-              style: 12.w4(color: _getColor(color), height: 0.9),
+              style: 12.w4(color: getCardColor(color), height: 0.9),
             ),
           ),
         ],
@@ -103,7 +103,7 @@ class TacticCard extends StatelessWidget {
   }
 }
 
-String _getName(int num) {
+String geCardtName(int num) {
   if (num == 10) {
     return "10";
   } else if (num == 11) {
@@ -117,7 +117,7 @@ String _getName(int num) {
   }
 }
 
-String _getPath(int color) {
+String getCardImage(int color) {
   if (color == Constant.spade) {
     return Assets.managerUiManagerTactics02;
   } else if (color == Constant.heart) {
@@ -129,7 +129,7 @@ String _getPath(int color) {
   }
 }
 
-Color _getColor(int color) {
+Color getCardColor(int color) {
   if (color == Constant.spade || color == Constant.club) {
     return AppColors.c262626;
   } else {

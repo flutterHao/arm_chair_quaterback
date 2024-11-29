@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -209,9 +211,12 @@ class TrainingTactics extends StatelessWidget {
                                               child: Align(
                                                 alignment:
                                                     Alignment.bottomCenter,
-                                                child: TacticItem(
-                                                    buff:
-                                                        ctrl.tacticList[index]),
+                                                child: SlideTransition(
+                                                  position: ctrl.shakeAnimation,
+                                                  child: TacticItem(
+                                                      buff: ctrl
+                                                          .tacticList[index]),
+                                                ),
                                               ),
                                             );
                                           },

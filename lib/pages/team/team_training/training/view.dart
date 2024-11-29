@@ -2,8 +2,10 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-11 15:57:44
- * @LastEditTime: 2024-11-27 17:47:41
+ * @LastEditTime: 2024-11-29 18:38:13
  */
+
+import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
@@ -45,35 +47,63 @@ class TrainingPage extends GetView<TrainingController> {
                         left: 0,
                         right: 0,
                         child: const TrainingWidget()),
-                    if (controller.showBuff.value)
-                      Positioned(
-                        top: 170.w,
-                        left: 27.w,
-                        right: 27.w,
-                        child: Obx(() {
-                          return AnimatedOpacity(
+                    // if (controller.showBuff.value)
+                    // Positioned(
+                    //   top: 170.w,
+                    //   left: 27.w,
+                    //   right: 27.w,
+                    //   child: Obx(() {
+                    //     return AnimatedOpacity(
+                    //       duration: const Duration(milliseconds: 300),
+                    //       opacity: controller.showBuff.value ? 1 : 1,
+                    //       child: Wrap(
+                    //         spacing: 6.w,
+                    //         runSpacing: 6.w,
+                    //         alignment: WrapAlignment.center,
+                    //         children: controller.chooseTacticList.map((e) {
+                    //           return AnimatedScale(
+                    //             duration: const Duration(milliseconds: 300),
+                    //             scale: controller.showBuff.value ? 1 : 0,
+                    //             child: FlipCard(
+                    //               isFlipped: e.isOpen.value,
+                    //               onFlip: () {
+                    //                 e.isSelect.value = true;
+                    //                 controller.tacticId = e.id;
+                    //                 controller.changeTacticId = 0;
+                    //                 controller.chooseTactic();
+                    //               },
+                    //               buff: e,
+                    //             ),
+                    //           );
+                    //         }).toList(),
+                    //       ),
+                    //     );
+                    //   }),
+                    // ),
+                    ...controller.chooseTacticList.asMap().entries.map((entry) {
+                      var e = entry.value;
+                      return Obx(() {
+                        return AnimatedPositioned(
+                          left: e.offset.value.dx,
+                          top: e.offset.value.dy,
+                          duration: 200.milliseconds,
+                          child: AnimatedScale(
                             duration: const Duration(milliseconds: 300),
-                            opacity: controller.showBuff.value ? 1 : 0,
-                            child: Wrap(
-                              spacing: 6.w,
-                              runSpacing: 6.w,
-                              alignment: WrapAlignment.center,
-                              children: controller.chooseTacticList.map((e) {
-                                return FlipCard(
-                                  isFlipped: e.isOpen.value,
-                                  onFlip: () {
-                                    e.isSelect.value = true;
-                                    controller.tacticId = e.id;
-                                    controller.changeTacticId = 0;
-                                    controller.chooseTactic();
-                                  },
-                                  buff: e,
-                                );
-                              }).toList(),
+                            scale: controller.showBuff.value ? 1 : 0,
+                            child: FlipCard(
+                              isFlipped: e.isOpen.value,
+                              onFlip: () {
+                                e.isSelect.value = true;
+                                controller.tacticId = e.id;
+                                controller.changeTacticId = 0;
+                                controller.chooseTactic();
+                              },
+                              buff: e,
                             ),
-                          );
-                        }),
-                      ),
+                          ),
+                        );
+                      });
+                    }).toList(),
                   ],
                 ),
               )

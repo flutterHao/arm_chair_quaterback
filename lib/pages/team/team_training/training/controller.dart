@@ -8,6 +8,7 @@ import 'package:arm_chair_quaterback/common/entities/train_task_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/services/services.dart';
+import 'package:arm_chair_quaterback/common/utils/click_feed_back.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/pages/home/index.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
@@ -76,7 +77,10 @@ class TrainingController extends GetxController
   List<ScrollController> statusScollerList = [];
   int playerIdx = 0;
   var showPlayerBox = false.obs;
+  // AnimationController showBoxAnimationCtrl;
+  // Animation<double>
   bool playerScrollerEnd = false;
+  RxInt currentPlayerIndex = 3.obs;
 
   ///战术卡牌
   RxBool isChange = false.obs;
@@ -84,17 +88,23 @@ class TrainingController extends GetxController
   int changeTacticId = 0;
   List<TrainingInfoBuff> tacticList = [];
   List<TrainingInfoBuff> chooseTacticList = [];
+  RxBool isNotTip = false.obs;
+  late AnimationController shakeController;
+  late Animation<Offset> shakeAnimation;
+  //卡牌动画
   List<AnimationController> tacAnimlList = [];
   List<Animation<double>> tacSizeAnimations = [];
   List<Animation<double>> tacScaleAnimations = [];
   List<Animation<double>> tacPosAnimations = [];
-  RxBool isNotTip = false.obs;
 
   //任务
   int currentTask = 10;
   RxDouble taskProgress = 0.0.obs;
   RxString taskCountDownString = "".obs;
   late DateTime refreshTime = DateTime.now();
+  //奖励飞行动画
+  late AnimationController flyAnimationCtrl;
+  late Animation<double> flyAnimation;
 
   /// 在 widget 内存中分配后立即调用。
   @override
@@ -130,6 +140,30 @@ class TrainingController extends GetxController
         TweenSequenceItem<double>(tween: Tween(begin: 1.2, end: 1), weight: 10),
       ]).animate(
           CurvedAnimation(parent: slotsAnimlList[index], curve: Curves.linear));
+    });
+
+    //飞行
+    flyAnimationCtrl = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 500));
+    flyAnimation = Tween<double>(begin: 0, end: 1).animate(flyAnimationCtrl);
+
+    shakeController = AnimationController(
+      duration: Duration(milliseconds: 100),
+      vsync: this,
+    );
+
+    shakeAnimation = Tween<Offset>(
+      begin: Offset.zero,
+      end: Offset(0.02, 0),
+    ).animate(CurvedAnimation(
+      parent: shakeController,
+      curve: Curves.bounceInOut,
+    ));
+
+    shakeController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        shakeController.reverse();
+      }
     });
   }
 
@@ -266,6 +300,15 @@ class TrainingController extends GetxController
       if (trainingInfo.buff
           .where((e) => e.color == buff.color && e.face == buff.face)
           .isNotEmpty) {
+        var myBuff = trainingInfo.buff
+            .where((e) => e.color == buff.color && e.face == buff.face)
+            .first;
+        if (myBuff.takeEffectGameCount >= 6) {
+          shakeController.forward();
+          ClickFeedBack.selectionClick();
+          EasyLoading.showToast("Tactics Slot is fulled");
+          return;
+        }
         changeTacticId = tacticId;
       } else if (changeTacticId == 0) {
         isChange.value = true;
@@ -284,9 +327,11 @@ class TrainingController extends GetxController
       if (changeTacticId != 0) {
         for (int i = 0; i < tacticList.length; i++) {
           if (tacticList[i].id == changeTacticId) {
-            for (int j = 0; j < trainingInfo.chooseBuffs.length; j++) {
-              if (tacticId == trainingInfo.chooseBuffs[j].id) {
-                tacticList[i] = trainingInfo.chooseBuffs[j];
+            for (int j = 0; j < chooseTacticList.length; j++) {
+              if (tacticId == chooseTacticList[j].id) {
+                tacticList[i] = chooseTacticList[j];
+                double x = 162.5.w + i * 37.w;
+                chooseTacticList[j].offset.value = Offset(x, 45.w);
                 type = 0;
               }
             }
@@ -294,9 +339,11 @@ class TrainingController extends GetxController
         }
       } else {
         ///直接添加
-        for (int i = 0; i < trainingInfo.chooseBuffs.length; i++) {
-          if (tacticId == trainingInfo.chooseBuffs[i].id) {
-            tacticList.add(trainingInfo.chooseBuffs[i]);
+        for (int i = 0; i < chooseTacticList.length; i++) {
+          if (tacticId == chooseTacticList[i].id) {
+            tacticList.add(chooseTacticList[i]);
+            double x = 162.5.w + i * 37.w;
+            chooseTacticList[i].offset.value = Offset(x, 45.w);
           }
         }
       }
@@ -308,11 +355,12 @@ class TrainingController extends GetxController
       showBuff.value = false;
       isPlaying.value = false;
       if (type == 0) await Future.delayed(const Duration(seconds: 1));
+      for (var element in chooseTacticList) {
+        element.isOpen.value = false;
+      }
       tacticList = v;
       update(["training_page"]);
-    }).whenComplete(() {
-      // chooseFinish();
-    });
+    }).whenComplete(() {});
   }
 
   void saveNotTip() {
@@ -334,6 +382,9 @@ class TrainingController extends GetxController
     isChange.value = false;
     showBuff.value = false;
     isPlaying.value = false;
+    for (var element in chooseTacticList) {
+      element.isOpen.value = false;
+    }
     update(["training_page"]);
   }
 
@@ -426,6 +477,7 @@ class TrainingController extends GetxController
       trainingInfo.training.taskValue.value =
           trainingInfo.training.taskItemCount;
       isPlaying.value = false;
+      update(["training_page"]);
     }
 
     ///4:篮球
@@ -455,11 +507,24 @@ class TrainingController extends GetxController
 
     ///战术 buff
     if (awads.contains(1)) {
-      showBuff.value = true;
+      chooseTacticList.clear();
       tacticList = trainingInfo.buff;
-      chooseTacticList = trainingInfo.chooseBuffs;
+      chooseTacticList = List.from(trainingInfo.chooseBuffs);
+      //初始化卡牌的位置和朝向
+      for (int i = 0; i < trainingInfo.chooseBuffs.length; i++) {
+        var item = trainingInfo.chooseBuffs[i];
+        double x = (375.w -
+                    (chooseTacticList.length * 74.w +
+                        (chooseTacticList.length - 1) * 6.w)) /
+                2 +
+            i * (74.w + 6.w);
+        item.offset.value = Offset(x, 170.w);
+        // item.isOpen.value = false;
+      }
+
       update(["training_page"]);
-      await Future.delayed(const Duration(milliseconds: 400));
+      showBuff.value = true;
+      await Future.delayed(const Duration(milliseconds: 300));
       for (var element in chooseTacticList) {
         await Future.delayed(const Duration(milliseconds: 100));
         element.isOpen.value = true;
@@ -485,14 +550,17 @@ class TrainingController extends GetxController
     for (int i = 0; i < trainingInfo.statusReplyPlayers.length; i++) {
       statusScollerList.add(ScrollController());
     }
-    showPlayer.value = true;
-    await Future.delayed(const Duration(milliseconds: 200));
     showPlayerBox.value = true;
-
+    await Future.delayed(const Duration(milliseconds: 500));
+    showPlayer.value = true;
     update(["playerList"]);
     if (playerScollCtrl.hasClients) {
       playerScollCtrl.jumpTo(0);
-      double offset = (playerIdx + playerList.length * 3 - 3) * 65.w;
+      double isTwo = trainingInfo.statusReplyPlayers.length == 2 ? -32.w : 0;
+      double offset = (playerIdx + playerList.length * 3 - 3) * 65.w + isTwo;
+      playerScollCtrl.addListener(() {
+        currentPlayerIndex.value = (playerScollCtrl.offset / 65.w).round() + 3;
+      });
       await playerScollCtrl
           .animateTo(
         playerScollCtrl.offset + offset,
@@ -527,7 +595,8 @@ class TrainingController extends GetxController
           statusScroll(i, oldList[i]);
         }
 
-        await Future.delayed(const Duration(milliseconds: 1000), () {
+        await Future.delayed(
+            Duration(milliseconds: 500 + statusScollerList.length * 250), () {
           showPlayerBox.value = false;
           showPlayer.value = false;
           playerScrollerEnd = false;
@@ -536,6 +605,15 @@ class TrainingController extends GetxController
         });
       });
     }
+  }
+
+  void colosePlayerAwards() {
+    if (!playerScrollerEnd) return;
+    showPlayerBox.value = false;
+    showPlayer.value = false;
+    playerScrollerEnd = false;
+    showStatus.value = false;
+    isPlaying.value = false;
   }
 
   void statusScroll(int index, int oldIndex) async {
@@ -604,32 +682,4 @@ class TrainingController extends GetxController
 
     return map;
   }
-
-//   ///返回大于3的元素
-//   List<int> findConsecutiveElements(List<int> slots) {
-//     List<int> result = [];
-//     if (slots.isEmpty) return result;
-
-//     int currentElement = slots[0];
-//     int count = 1;
-
-//     for (int i = 1; i < slots.length; i++) {
-//       if (slots[i] == currentElement) {
-//         count++;
-//       } else {
-//         if (count >= 3) {
-//           result.add(currentElement);
-//         }
-//         currentElement = slots[i];
-//         count = 1;
-//       }
-//     }
-
-//     // 检查最后一个元素的连续出现次数
-//     if (count >= 3) {
-//       result.add(currentElement);
-//     }
-
-//     return result;
-//   }
 }

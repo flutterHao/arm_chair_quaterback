@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/training_info_entity.g.dart';
@@ -133,11 +135,16 @@ class TrainingInfoBuff {
   late RxBool isOpen = false.obs;
   @JSONField(deserialize: false, serialize: false)
   late RxBool isSelect = false.obs;
+  @JSONField(deserialize: false, serialize: false)
+  late Rx<Offset> offset = Offset(0, 0).obs;
+  late bool showBuff = false;
 
   TrainingInfoBuff();
 
-  factory TrainingInfoBuff.fromJson(Map<String, dynamic> json) =>
-      $TrainingInfoBuffFromJson(json);
+  factory TrainingInfoBuff.fromJson(Map<String, dynamic> json) {
+    var item = $TrainingInfoBuffFromJson(json);
+    return item;
+  }
 
   Map<String, dynamic> toJson() => $TrainingInfoBuffToJson(this);
 

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-24 18:53:16
- * @LastEditTime: 2024-11-28 19:21:04
+ * @LastEditTime: 2024-11-29 09:51:34
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/tactic_grade_entity.dart';
@@ -21,13 +21,12 @@ class CardRuleDialog extends StatefulWidget {
 }
 
 class _CardRuleDialogState extends State<CardRuleDialog> {
-  List<TacticGradeEntity> list = [];
-
   @override
   void initState() {
     super.initState();
+    if (_list.isNotEmpty) return;
     TeamApi.tacticsDefine().then((v) {
-      list = _ruleMap.map((e) {
+      _list = _ruleMap.map((e) {
         TacticGradeEntity item = TacticGradeEntity.fromJson(e);
         for (var tactics in v) {
           if (item.id == tactics.tacticTypeId) {
@@ -36,142 +35,176 @@ class _CardRuleDialogState extends State<CardRuleDialog> {
         }
         return item;
       }).toList();
-      list.sort((a, b) => b.id.compareTo(a.id));
+      _list.sort((a, b) => b.id.compareTo(a.id));
       setState(() {});
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: 469.w,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(9.w)),
-      ),
-      child: Column(
-        children: [
-          Container(
-            width: 44.w,
-            height: 4.w,
-            margin: EdgeInsets.symmetric(vertical: 8.w),
-            decoration: BoxDecoration(
-              color: AppColors.c000000.withOpacity(0.2),
-              borderRadius: BorderRadius.circular(2.w),
+    return Builder(builder: (context) {
+      return Container(
+        width: double.infinity,
+        height: 469.w,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(9.w)),
+        ),
+        child: Column(
+          children: [
+            Container(
+              width: 44.w,
+              height: 4.w,
+              margin: EdgeInsets.symmetric(vertical: 8.w),
+              decoration: BoxDecoration(
+                color: AppColors.c000000.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(2.w),
+              ),
             ),
-          ),
-          10.vGap,
-          Container(
-            width: double.infinity,
-            margin: EdgeInsets.only(left: 15.w),
-            child: Text(
-              "Tactics Grade",
-              style: 19.w4(
-                  color: Colors.black, fontFamily: FontFamily.fOswaldMedium),
+            10.vGap,
+            Container(
+              width: double.infinity,
+              margin: EdgeInsets.only(left: 15.w),
+              child: Text(
+                "Tactics Grade",
+                style: 19.w4(
+                    color: Colors.black, fontFamily: FontFamily.fOswaldMedium),
+              ),
             ),
-          ),
-          25.vGap,
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 16.w),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: _colomns
-                  .map((e) => Text(
-                        e,
-                        style: 12.w4(
-                          height: 0.8,
-                          fontFamily: FontFamily.fRobotoMedium,
-                        ),
-                      ))
-                  .toList(),
+            25.vGap,
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 16.w),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: _colomns
+                    .map((e) => Text(
+                          e,
+                          style: 12.w4(
+                            height: 0.8,
+                            fontFamily: FontFamily.fRobotoMedium,
+                          ),
+                        ))
+                    .toList(),
+              ),
             ),
-          ),
-          10.vGap,
-          Container(
-            width: double.infinity,
-            height: 1,
-            color: AppColors.cD1D1D1,
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-                // physics: const BouncingScrollPhysics(),
-                child: Table(
-                    columnWidths: {
-                  for (var k in _colomnsWidth.asMap().keys)
-                    k: FixedColumnWidth(_colomnsWidth[k])
-                },
-                    textBaseline: TextBaseline.alphabetic,
-                    border: const TableBorder.symmetric(
-                      inside: BorderSide(color: AppColors.cE6E6E),
-                    ),
-                    children: list.map((e) {
-                      return TableRow(children: [
-                        Container(
-                            height: 60.w,
-                            alignment: Alignment.centerLeft,
-                            margin: EdgeInsets.only(left: 4.w),
-                            child: Text(
-                              e.name,
-                              style:
-                                  14.w4(fontFamily: FontFamily.fOswaldMedium),
-                            )),
-                        Container(
-                            height: 60.w,
-                            alignment: Alignment.centerLeft,
-                            padding: EdgeInsets.only(left: 10.w),
-                            child: SizedBox(
-                              height: 36.w,
-                              child: ListView.separated(
-                                  scrollDirection: Axis.horizontal,
-                                  itemBuilder: (context, index) {
-                                    return Transform.scale(
-                                      scale: 36 / 43,
-                                      child: SmallTacticCard(
-                                        num: e.cards[index].value,
-                                        color: e.cards[index].color,
-                                      ),
-                                    );
-                                  },
-                                  separatorBuilder: (context, index) => 6.hGap,
-                                  itemCount: e.cards.length),
-                            )),
-                        Container(
-                            height: 60.w,
-                            alignment: Alignment.center,
-                            child: Text(
-                              "+${e.percent}%",
-                              style: 12.w4(),
-                            )),
-                      ]);
-                    }).toList())
+            10.vGap,
+            Container(
+              width: double.infinity,
+              height: 1,
+              color: AppColors.cD1D1D1,
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                  // physics: const BouncingScrollPhysics(),
+                  child: Table(
+                      columnWidths: {
+                    for (var k in _colomnsWidth.asMap().keys)
+                      k: FixedColumnWidth(_colomnsWidth[k])
+                  },
+                      textBaseline: TextBaseline.alphabetic,
+                      border: const TableBorder.symmetric(
+                        inside: BorderSide(color: AppColors.cE6E6E),
+                      ),
+                      children: _list.map((e) {
+                        return TableRow(children: [
+                          Container(
+                              height: 60.w,
+                              alignment: Alignment.centerLeft,
+                              margin: EdgeInsets.only(left: 4.w),
+                              child: Text(
+                                e.name,
+                                style:
+                                    14.w4(fontFamily: FontFamily.fOswaldMedium),
+                              )),
+                          Container(
+                              height: 60.w,
+                              alignment: Alignment.centerLeft,
+                              padding: EdgeInsets.only(left: 10.w),
+                              child: SizedBox(
+                                // height: 36.w,
+                                child: ListView.separated(
+                                    scrollDirection: Axis.horizontal,
+                                    itemBuilder: (context, index) {
+                                      var item = e.cards[index];
+                                      return Center(
+                                        child: Container(
+                                          width: 25.w,
+                                          height: 36.w,
+                                          decoration: BoxDecoration(
+                                              color: AppColors.cFFFFFF,
+                                              borderRadius:
+                                                  BorderRadius.circular(6.w),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                    color: AppColors.c000000
+                                                        .withOpacity(0.2),
+                                                    offset:
+                                                        const Offset(0, 0.5),
+                                                    blurRadius: 1.5.w)
+                                              ]),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                geCardtName(item.value),
+                                                style: 12.w4(
+                                                    color: getCardColor(
+                                                        item.color),
+                                                    height: 0.9),
+                                              ),
+                                              3.vGap,
+                                              Image.asset(
+                                                  getCardImage(item.color),
+                                                  width: 14.w,
+                                                  height: 14.w),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    separatorBuilder: (context, index) =>
+                                        5.hGap,
+                                    itemCount: e.cards.length),
+                              )),
+                          Container(
+                              height: 60.w,
+                              alignment: Alignment.center,
+                              child: Text(
+                                "+${e.percent}%",
+                                style: 12.w4(),
+                              )),
+                        ]);
+                      }).toList())
 
-                // child: Padding(
-                //   padding: EdgeInsets.symmetric(horizontal: 16.w),
-                //   child: DataTable(
-                //     border: TableBorder.symmetric(
-                //         inside: BorderSide(color: AppColors.cE6E6E)),
-                //     columns: _colomns.map((e) {
-                //       return DataColumn(label: Text(e));
-                //     }).toList(),
-                //     rows: list.map((e) {
-                //       return DataRow(cells: [
-                //         DataCell(Text(e.name)),
-                //         DataCell(Text(e.name)),
-                //         DataCell(Text("+${e.percent}%")),
-                //       ]);
-                //     }).toList(),
-                //   ),
-                // ),
-                ),
-          ),
-        ],
-      ),
-    );
+                  // child: Padding(
+                  //   padding: EdgeInsets.symmetric(horizontal: 16.w),
+                  //   child: DataTable(
+                  //     border: TableBorder.symmetric(
+                  //         inside: BorderSide(color: AppColors.cE6E6E)),
+                  //     columns: _colomns.map((e) {
+                  //       return DataColumn(label: Text(e));
+                  //     }).toList(),
+                  //     rows: list.map((e) {
+                  //       return DataRow(cells: [
+                  //         DataCell(Text(e.name)),
+                  //         DataCell(Text(e.name)),
+                  //         DataCell(Text("+${e.percent}%")),
+                  //       ]);
+                  //     }).toList(),
+                  //   ),
+                  // ),
+                  ),
+            ),
+          ],
+        ),
+      );
+    });
   }
 }
 
+List<TacticGradeEntity> _list = [];
 final _colomns = ["Pattern", "Example", "Preparation"];
 final _colomnsWidth = [96.0, 177.0, 65.0];
 final _ruleMap = [

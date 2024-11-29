@@ -2,14 +2,15 @@
  * @Description:
  * @Author: lihonghao
  * @Date: 2024-11-06 11:51:15
- * @LastEditTime: 2024-11-28 15:58:00
+ * @LastEditTime: 2024-11-29 18:48:46
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/training_avater.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -27,6 +28,13 @@ class _PlayerSrollerViewState extends State<PlayerSrollerView> {
     return GetBuilder<TrainingController>(
         id: "playerList",
         builder: (controller) {
+          var selectPlayers = controller.trainingInfo.selectPlayer;
+          int count = 0;
+          if (selectPlayers.length == 3) {
+            count = 1;
+          } else if (selectPlayers.length == 5) {
+            count = 2;
+          }
           return InkWell(
             onTap: () {
               // controller.startPlayerScroll(0);
@@ -48,10 +56,12 @@ class _PlayerSrollerViewState extends State<PlayerSrollerView> {
                   var item = controller.playerList[current];
                   return Obx(() {
                     //是否选中
-                    var select = controller.trainingInfo.selectPlayer
-                        .contains(item.playerId);
-                    int scrollerIdx = controller.trainingInfo.selectPlayer
-                        .indexOf(item.playerId);
+                    // var select = controller.trainingInfo.selectPlayer
+                    //     .contains(item.playerId);
+                    int scrollerIdx = selectPlayers.indexOf(item.playerId);
+                    bool isSelect = controller.currentPlayerIndex.value <=
+                            (index + count) &&
+                        controller.currentPlayerIndex.value >= (index - count);
 
                     return Container(
                       // color: Colors.red,
@@ -108,9 +118,69 @@ class _PlayerSrollerViewState extends State<PlayerSrollerView> {
                               ),
                             ),
                           3.vGap,
-                          TrainingAvater(
-                            player: item,
-                            isCurrent: select,
+
+                          ///头像
+                          AnimatedOpacity(
+                            opacity: !isSelect && controller.playerScrollerEnd
+                                ? 0
+                                : 1,
+                            duration: 300.milliseconds,
+                            child: AnimatedScale(
+                                scale: isSelect ? 1.1 : 0.85,
+                                duration: 50.milliseconds,
+                                child: Container(
+                                  width: 55.w,
+                                  height: 74.w,
+                                  margin: EdgeInsets.symmetric(horizontal: 2.w),
+                                  alignment: Alignment.center,
+                                  child: Stack(
+                                    fit: StackFit.expand,
+                                    children: [
+                                      Container(
+                                        width: 55.w,
+                                        height: 74.w,
+                                        // width: isCurrent ? 46.w * scale : 46.w,
+                                        // height: isCurrent ? 61.w * scale : 61.w,
+                                        alignment: Alignment.center,
+                                        // color: Colors.red,
+                                        clipBehavior: Clip.antiAlias,
+                                        decoration: BoxDecoration(
+                                          color: AppColors.cF2F2F2,
+                                          borderRadius:
+                                              BorderRadius.circular(9.w),
+                                        ),
+                                        child: ImageWidget(
+                                          url: Utils.getPlayUrl(item.playerId),
+                                          imageFailedPath:
+                                              Assets.iconUiDefault04,
+                                          borderRadius:
+                                              BorderRadius.circular(7.w),
+                                          width: 55.w,
+                                          height: 74.w,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      // if (!isSelect &&
+                                      //     controller.playerScrollerEnd)
+                                      AnimatedOpacity(
+                                        opacity: (!isSelect) ? 1 : 0,
+                                        duration:
+                                            const Duration(milliseconds: 30),
+                                        child: Container(
+                                          width: 55.w,
+                                          height: 74.w,
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                            color:
+                                                Colors.black.withOpacity(0.5),
+                                            borderRadius:
+                                                BorderRadius.circular(9.w),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )),
                           ),
                         ],
                       ),
