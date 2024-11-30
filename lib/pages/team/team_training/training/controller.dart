@@ -58,6 +58,7 @@ class TrainingController extends GetxController
   List<AnimationController> slotsAnimlList = [];
   List<Animation<double>> sizeAnimations = [];
   List<Animation<double>> scaleAnimations = [];
+  int awardLength = 3;
   List<RxBool> isAwards = [
     false.obs,
     false.obs,
@@ -66,6 +67,26 @@ class TrainingController extends GetxController
     false.obs,
     false.obs
   ];
+
+  List<RxBool> showBoxList = [
+    false.obs,
+    false.obs,
+    false.obs,
+    false.obs,
+    false.obs,
+    false.obs
+  ];
+
+  List<RxBool> isShowColor = [
+    false.obs,
+    false.obs,
+    false.obs,
+    false.obs,
+    false.obs,
+    false.obs
+  ];
+  late AnimationController colorAnimatedCtrl;
+  late Animation<double> colorAnimation;
 
   final List<int> propList = [1, 2, 3, 4, 5];
   final List<int> statusList = [104, 103, 102, 101];
@@ -98,13 +119,18 @@ class TrainingController extends GetxController
   List<Animation<double>> tacPosAnimations = [];
 
   //任务
-  int currentTask = 10;
+  RxInt taskValue = 0.obs;
+  int currentTaskNeed = 10;
   RxDouble taskProgress = 0.0.obs;
   RxString taskCountDownString = "".obs;
   late DateTime refreshTime = DateTime.now();
   //奖励飞行动画
   late AnimationController flyAnimationCtrl;
   late Animation<double> flyAnimation;
+
+  //箭头动画
+  late AnimationController arrowAnimCtrl;
+  late Animation<double> arrowAnimated;
 
   /// 在 widget 内存中分配后立即调用。
   @override
@@ -148,7 +174,7 @@ class TrainingController extends GetxController
     flyAnimation = Tween<double>(begin: 0, end: 1).animate(flyAnimationCtrl);
 
     shakeController = AnimationController(
-      duration: Duration(milliseconds: 100),
+      duration: 100.milliseconds,
       vsync: this,
     );
 
@@ -165,6 +191,50 @@ class TrainingController extends GetxController
         shakeController.reverse();
       }
     });
+
+    colorAnimatedCtrl = AnimationController(
+      duration: const Duration(milliseconds: 150),
+      vsync: this,
+    );
+    colorAnimation = Tween<double>(begin: 0, end: 1).animate(colorAnimatedCtrl);
+
+    arrowAnimCtrl = AnimationController(
+      duration: 100.milliseconds,
+      vsync: this,
+    );
+
+    arrowAnimated = Tween<double>(begin: 0.0, end: 10).animate(arrowAnimCtrl)
+      ..addListener(() {
+        if (arrowAnimated.value >= 10) {
+          arrowAnimCtrl.reverse();
+        } else if (arrowAnimated.value <= 0.0) {
+          arrowAnimCtrl.forward();
+        }
+      });
+  }
+
+  void changeDuration(Duration newDuration) {
+    // 停止当前的动画控制器
+    arrowAnimCtrl.stop();
+
+    // 重新初始化动画控制器
+    arrowAnimCtrl = AnimationController(
+      duration: newDuration,
+      vsync: this,
+    );
+
+    // 重新创建动画
+    arrowAnimated = Tween<double>(begin: 0.0, end: 10).animate(arrowAnimCtrl)
+      ..addListener(() {
+        if (arrowAnimated.value >= 10) {
+          arrowAnimCtrl.reverse();
+        } else if (arrowAnimated.value <= 0.0) {
+          arrowAnimCtrl.forward();
+        }
+      });
+
+    // 重新启动动画
+    arrowAnimCtrl.forward();
   }
 
   /// 在 onInit() 之后调用 1 帧。这是进入的理想场所
@@ -208,7 +278,7 @@ class TrainingController extends GetxController
       tacticList = trainingInfo.buff;
       for (int i = 0; i < trainTaskList.length; i++) {
         if (trainingInfo.training.currentTaskId == trainTaskList[i].taskLevel) {
-          currentTask = trainTaskList[i].taskNeed;
+          currentTaskNeed = trainTaskList[i].taskNeed;
         }
       }
       recoverTimeAndCountDown();
@@ -287,7 +357,7 @@ class TrainingController extends GetxController
   void buyTrainingBall(int count) {
     TeamApi.buyTrainingBall(count).then((v) {
       ballNum.value = v;
-      update(["training_page"]);
+      // update(["training_page"]);
     });
   }
 
@@ -297,13 +367,13 @@ class TrainingController extends GetxController
       ///如果卡槽有这个直接添加
       TrainingInfoBuff buff =
           chooseTacticList.where((e) => e.id == tacticId).first;
-      if (trainingInfo.buff
+      if (tacticList
           .where((e) => e.color == buff.color && e.face == buff.face)
           .isNotEmpty) {
-        var myBuff = trainingInfo.buff
+        var myBuff = tacticList
             .where((e) => e.color == buff.color && e.face == buff.face)
             .first;
-        if (myBuff.takeEffectGameCount >= 5) {
+        if (myBuff.takeEffectGameCount >= 6) {
           shakeController.forward();
           ClickFeedBack.selectionClick();
           EasyLoading.showToast("Tactics Slot is fulled");
@@ -323,8 +393,8 @@ class TrainingController extends GetxController
           for (int j = 0; j < chooseTacticList.length; j++) {
             if (tacticId == chooseTacticList[j].id) {
               tacticList[i] = chooseTacticList[j];
-              double x = 162.5.w + i * 37.w;
-              chooseTacticList[j].offset.value = Offset(x, 45.w);
+              // double x = 162.5.w + i * 37.w;
+              // chooseTacticList[j].offset.value = Offset(x, 45.w);
               type = 0;
             }
           }
@@ -335,8 +405,8 @@ class TrainingController extends GetxController
       for (int i = 0; i < chooseTacticList.length; i++) {
         if (tacticId == chooseTacticList[i].id) {
           tacticList.add(chooseTacticList[i]);
-          double x = 162.5.w + i * 37.w;
-          chooseTacticList[i].offset.value = Offset(x, 45.w);
+          // double x = 162.5.w + i * 37.w;
+          // chooseTacticList[i].offset.value = Offset(x, 45.w);
         }
       }
     }
@@ -391,24 +461,26 @@ class TrainingController extends GetxController
   void initSlot() {
     isPlaying.value = true;
     cash.value = 0;
+    for (var e in showBoxList) {
+      e.value = false;
+    }
     // showBuff.value = false;
   }
 
   void startSlot() async {
-    if (isPlaying.value || trainingInfo.prop.num <= 0) return;
+    if (isPlaying.value) return;
     initSlot();
     final teamIndexCtrl = Get.find<TeamIndexController>();
     teamIndexCtrl.scroToSlot();
     playerIdx = random.nextInt(playerList.length);
-    int ballNUm = trainingInfo.prop.num;
-    ballNum.value = ballNUm - 1;
+    ballNum.value = ballNum.value - 1;
     await TeamApi.playerTraining(playerList[playerIdx].uuid).then((v) {
       trainingInfo = v;
 
       //更新道具
       for (int i = 0; i < trainTaskList.length; i++) {
         if (trainingInfo.training.currentTaskId == trainTaskList[i].taskLevel) {
-          currentTask = trainTaskList[i].taskNeed;
+          currentTaskNeed = trainTaskList[i].taskNeed;
         }
       }
       // update(["training_page"]);
@@ -446,16 +518,25 @@ class TrainingController extends GetxController
 
   ///奖励表达
   Future showAward() async {
+    isPlaying.value = true;
     int cashNum = 0;
     List<int> awads = [];
+    awardLength = 0;
     for (var e in trainingInfo.award) {
       ///槽位显示中奖放大动画
       for (int i = 0; i < trainingInfo.propArray.length; i++) {
         if (trainingInfo.propArray[i] == e.id) {
+          awardLength++;
           isAwards[i].value = true;
+          showBoxList[i].value = true;
           //槽位恢复
-          Future.delayed(const Duration(milliseconds: 200), () {
+          Future.delayed(const Duration(milliseconds: 200), () async {
             isAwards[i].value = false;
+            isShowColor[i].value = true;
+            colorAnimatedCtrl.forward();
+            await Future.delayed(const Duration(milliseconds: 150));
+            isShowColor[i].value = false;
+            colorAnimatedCtrl.reset();
           });
         }
       }
@@ -474,10 +555,9 @@ class TrainingController extends GetxController
 
     ///3:道具
     if (awads.contains(3)) {
-      trainingInfo.training.taskValue.value =
-          trainingInfo.training.taskItemCount;
-      isPlaying.value = false;
+      taskValue.value = trainingInfo.training.taskItemCount;
       update(["training_page"]);
+      await Future.delayed(const Duration(milliseconds: 600));
     }
 
     ///4:篮球
@@ -486,7 +566,6 @@ class TrainingController extends GetxController
       ballNum.value = trainingInfo.prop.num;
       await Future.delayed(const Duration(milliseconds: 300), () {
         showBall.value = false;
-        isPlaying.value = false;
       });
     }
 
@@ -495,13 +574,13 @@ class TrainingController extends GetxController
       showCash.value = true;
       cash.value = cashNum;
       caShScale.value = true;
-      Future.delayed(const Duration(milliseconds: 1000), () {
+      Future.delayed(const Duration(milliseconds: 1000), () async {
         caShScale.value = false;
       });
-      await Future.delayed(const Duration(milliseconds: 1500), () {
+      await Future.delayed(const Duration(milliseconds: 1500), () async {
         showCash.value = false;
-        isPlaying.value = false;
         updateMoney();
+        await Future.delayed(const Duration(milliseconds: 300));
       });
     }
 
@@ -533,6 +612,9 @@ class TrainingController extends GetxController
       //  showBuff.value = false;
     }
 
+    if (!awads.contains(1)) {
+      isPlaying.value = false;
+    }
     for (var element in slotsAnimlList) {
       element.reset();
     }
@@ -551,8 +633,9 @@ class TrainingController extends GetxController
       statusScollerList.add(ScrollController());
     }
     showPlayerBox.value = true;
-    await Future.delayed(const Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 300));
     showPlayer.value = true;
+    arrowAnimCtrl.forward();
     update(["playerList"]);
     if (playerScollCtrl.hasClients) {
       playerScollCtrl.jumpTo(0);
@@ -564,9 +647,9 @@ class TrainingController extends GetxController
       await playerScollCtrl
           .animateTo(
         playerScollCtrl.offset + offset,
-        duration: const Duration(milliseconds: 1500),
+        duration: const Duration(milliseconds: 2000),
         // curve: Curves.easeInOut,
-        curve: const Cubic(0.27, 0.59, 0.19, 1.05),
+        curve: const Cubic(0.27, 0.59, 0.19, 1.07),
       )
           .then((v) async {
         playerScrollerEnd = true;
@@ -602,6 +685,8 @@ class TrainingController extends GetxController
           playerScrollerEnd = false;
           showStatus.value = false;
           isPlaying.value = false;
+          arrowAnimCtrl.reset();
+          arrowAnimCtrl.stop();
         });
       });
     }
@@ -644,25 +729,6 @@ class TrainingController extends GetxController
       }
     }
     HomeController.to.update([GetXBuilderIds.idMoneyAndCoinWidget]);
-  }
-
-  ///计算由那些奖励
-  Map<int, int> countAward() {
-    Map<int, int> map = {
-      102: 0,
-      301: 0,
-      302: 0,
-      303: 0,
-      304: 0,
-      305: 0,
-      306: 0,
-    };
-    for (TrainingInfoAward award in trainingInfo.award) {
-      if (award.num > 0) {
-        map[award.id] = (map[award.id] ?? 0) + 1;
-      }
-    }
-    return map;
   }
 
   ///计算每个的数量

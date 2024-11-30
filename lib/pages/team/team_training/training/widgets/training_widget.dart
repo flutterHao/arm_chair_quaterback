@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-25 15:56:43
- * @LastEditTime: 2024-11-29 19:43:32
+ * @LastEditTime: 2024-11-30 19:02:59
  */
 
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
@@ -14,11 +14,10 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/recover_dialog.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/add_ball_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/award_dialog.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/money_animation.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/player_sroller_view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/training_slot.dart';
 import 'package:flutter/material.dart';
@@ -81,7 +80,8 @@ class TrainingWidget extends GetView<TrainingController> {
                             child: MirrorImageWidget(
                               imagePath: Assets.managerUiManagerTrainingBg,
                               fullWidth: 375.w,
-                              imageHeight: 275.5.w,
+                              imageHeight: 245.5.w,
+                              fit: BoxFit.fitWidth,
                             ),
                           ),
 
@@ -105,7 +105,7 @@ class TrainingWidget extends GetView<TrainingController> {
                               },
                               child: Container(
                                 // height: 72.5.w,
-                                width: 110.w,
+                                // width: 95.w,
                                 // height: 24.w,
                                 padding: EdgeInsets.all(2.w),
                                 decoration: BoxDecoration(
@@ -126,9 +126,7 @@ class TrainingWidget extends GetView<TrainingController> {
                                             icon: Assets.commonUiCommonProp04),
                                       );
                                     }),
-                                    Expanded(
-                                      child: Container(),
-                                    ),
+                                    4.hGap,
                                     Obx(() {
                                       int v = controller.ballNum.value;
                                       return AnimatedNum(
@@ -241,11 +239,22 @@ class TrainingWidget extends GetView<TrainingController> {
                                   );
                                 }),
                                 5.vGap,
-                                MtInkwell(
-                                  // vibrate: true,
-                                  onTap: () => controller.startSlot(),
-                                  child: Obx(() {
-                                    return Container(
+                                Obx(() {
+                                  return MtInkwell(
+                                    // vibrate: true,
+                                    onTap: controller.isPlaying.value
+                                        ? null
+                                        : () {
+                                            if (controller.ballNum.value <= 0) {
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return AddBallDialog();
+                                                  });
+                                            }
+                                            controller.startSlot();
+                                          },
+                                    child: Container(
                                       width: 188.w,
                                       height: 41.w,
                                       alignment: Alignment.center,
@@ -266,9 +275,9 @@ class TrainingWidget extends GetView<TrainingController> {
                                           fontFamily: FontFamily.fOswaldMedium,
                                         ),
                                       ),
-                                    );
-                                  }),
-                                )
+                                    ),
+                                  );
+                                })
                               ],
                             ),
                           ),
@@ -290,102 +299,106 @@ class TrainingWidget extends GetView<TrainingController> {
                             left: 0,
                             right: 0,
                             bottom: 0,
-                            child: SizedBox(
-                              height: 60.w,
-                              width: double.infinity,
-                              child: Stack(
-                                children: [
-                                  Positioned(
-                                    bottom: 21.w,
-                                    left: 34.w,
-                                    child: Container(
-                                      width: 290.w,
-                                      height: 9.w,
-                                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                                      alignment: Alignment.centerLeft,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(5.w),
-                                          border: Border.all(
-                                              width: 1.w,
-                                              color: AppColors.cD1D1D1)),
-                                      child: AnimatedContainer(
-                                        duration:
-                                            const Duration(milliseconds: 300),
-                                        width: 297.w *
-                                            controller.trainingInfo.training
-                                                .taskItemCount /
-                                            controller.currentTask,
-                                        height: 12.w,
-                                        constraints:
-                                            BoxConstraints(maxWidth: 290.w),
-                                        decoration: const BoxDecoration(
-                                            gradient: LinearGradient(colors: [
-                                          AppColors.c3296F2,
-                                          AppColors.c3BE1FF
-                                        ])),
+                            child: Obx(() {
+                              return SizedBox(
+                                height: 60.w,
+                                width: double.infinity,
+                                child: Stack(
+                                  children: [
+                                    Positioned(
+                                      bottom: 21.w,
+                                      left: 34.w,
+                                      child: Container(
+                                        width: 290.w,
+                                        height: 9.w,
+                                        clipBehavior:
+                                            Clip.antiAliasWithSaveLayer,
+                                        alignment: Alignment.centerLeft,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(5.w),
+                                            border: Border.all(
+                                                width: 1.w,
+                                                color: AppColors.cD1D1D1)),
+                                        child: AnimatedContainer(
+                                          duration:
+                                              const Duration(milliseconds: 300),
+                                          width: 297.w *
+                                              controller.taskValue.value /
+                                              controller.currentTaskNeed,
+                                          height: 12.w,
+                                          constraints:
+                                              BoxConstraints(maxWidth: 290.w),
+                                          decoration: const BoxDecoration(
+                                              gradient: LinearGradient(colors: [
+                                            AppColors.c3296F2,
+                                            AppColors.c3BE1FF
+                                          ])),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Positioned(
-                                    bottom: 18.5.w,
-                                    left: 21.w,
-                                    child: IconWidget(
-                                        iconWidth: 27.w,
-                                        icon: Assets.commonUiCommonProp03),
-                                  ),
-                                  Positioned(
-                                    bottom: 33.5.w,
-                                    left: 52.w,
-                                    child: Text(
-                                      "TRAINING TASK",
-                                      style: 14.w4(
-                                          fontFamily: FontFamily.fOswaldMedium),
+                                    Positioned(
+                                      bottom: 18.5.w,
+                                      left: 21.w,
+                                      child: IconWidget(
+                                          iconWidth: 27.w,
+                                          icon: Assets.commonUiCommonProp03),
                                     ),
-                                  ),
-                                  Positioned(
-                                    bottom: 33.5.w,
-                                    right: 55.5.w,
-                                    child: Row(
-                                      children: [
-                                        AnimatedNum(
-                                            number: controller.trainingInfo
-                                                .training.taskItemCount,
-                                            textStyle: 14.w4(
-                                                fontFamily:
-                                                    FontFamily.fOswaldMedium)),
-                                        Text("/",
-                                            style: 14.w4(
-                                                fontFamily:
-                                                    FontFamily.fOswaldMedium)),
-                                        AnimatedNum(
-                                            number: controller.currentTask,
-                                            textStyle: 14.w4(
-                                                fontFamily:
-                                                    FontFamily.fOswaldMedium))
-                                      ],
-                                    ),
-                                  ),
-                                  Positioned(
-                                    bottom: 20.5.w,
-                                    right: 13.5.w,
-                                    child: MtInkwell(
-                                      onTap: () {
-                                        showDialog(
-                                            context: context,
-                                            builder: (context) {
-                                              return const AwardDialog();
-                                            });
-                                      },
-                                      child: Image.asset(
-                                        Assets.managerUiManagerFreegift01,
-                                        width: 33.5.w,
+                                    Positioned(
+                                      bottom: 33.5.w,
+                                      left: 52.w,
+                                      child: Text(
+                                        "TRAINING TASK",
+                                        style: 14.w4(
+                                            fontFamily:
+                                                FontFamily.fOswaldMedium),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                                    Positioned(
+                                      bottom: 33.5.w,
+                                      right: 55.5.w,
+                                      child: Row(
+                                        children: [
+                                          AnimatedNum(
+                                              number:
+                                                  controller.taskValue.value,
+                                              textStyle: 14.w4(
+                                                  fontFamily: FontFamily
+                                                      .fOswaldMedium)),
+                                          Text("/",
+                                              style: 14.w4(
+                                                  fontFamily: FontFamily
+                                                      .fOswaldMedium)),
+                                          AnimatedNum(
+                                              number:
+                                                  controller.currentTaskNeed,
+                                              textStyle: 14.w4(
+                                                  fontFamily:
+                                                      FontFamily.fOswaldMedium))
+                                        ],
+                                      ),
+                                    ),
+                                    Positioned(
+                                      bottom: 20.5.w,
+                                      right: 13.5.w,
+                                      child: MtInkwell(
+                                        onTap: () {
+                                          showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return const AwardDialog();
+                                              });
+                                        },
+                                        child: Image.asset(
+                                          Assets.managerUiManagerFreegift01,
+                                          width: 33.5.w,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }),
                           ),
 
                           ///开奖阴影背景
@@ -527,10 +540,26 @@ class TrainingWidget extends GetView<TrainingController> {
                             );
                           }),
 
+                          Positioned(
+                            top: 80.w,
+                            left: 0,
+                            right: 0,
+                            child: Obx(() {
+                              return Visibility(
+                                visible: controller.showPlayer.value,
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 94.w,
+                                  color: AppColors.c000000,
+                                ),
+                              );
+                            }),
+                          ),
+
                           ///球员列表
                           // if (controller.showPlayer.value)
                           Positioned(
-                            top: 26.w,
+                            top: 49.w,
                             left: -40.w,
                             right: -40.w,
                             child: Obx(() {
@@ -549,50 +578,12 @@ class TrainingWidget extends GetView<TrainingController> {
                           ),
 
                           Positioned(
-                            top: 60.w,
-                            left: -40.w,
-                            right: -40.w,
-                            child: Obx(() {
-                              return AnimatedOpacity(
-                                duration: const Duration(milliseconds: 200),
-                                opacity: controller.showPlayerBox.value ? 1 : 0,
-                                child: AnimatedScale(
-                                  duration: const Duration(milliseconds: 200),
-                                  scale:
-                                      controller.showPlayerBox.value ? 1 : 0.5,
-                                  child: Container(
-                                    height: 78.w,
-                                    alignment: Alignment.center,
-                                    child: ListView.separated(
-                                        padding: EdgeInsets.zero,
-                                        scrollDirection: Axis.horizontal,
-                                        shrinkWrap: true,
-                                        itemCount: controller.trainingInfo
-                                            .statusReplyPlayers.length,
-                                        separatorBuilder: (context, index) =>
-                                            6.hGap,
-                                        itemBuilder: (context, index) {
-                                          return Transform.scale(
-                                            scale: 1.1,
-                                            child: Container(
-                                              width: 59.w,
-                                              height: 78.w,
-                                              alignment: Alignment.center,
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          12.w),
-                                                  border: Border.all(
-                                                      color: AppColors.cFF7954,
-                                                      width: 2.w)),
-                                            ),
-                                          );
-                                        }),
-                                  ),
-                                ),
-                              );
-                            }),
-                          ),
+                              top: 74.w,
+                              left: -40.w,
+                              right: -40.w,
+                              child: PlayerSelectBox()),
+
+                          Positioned(top: 65.w, child: PlayerArrow()),
 
                           ///金钱奖励
                           Positioned(

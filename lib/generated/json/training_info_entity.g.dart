@@ -290,7 +290,6 @@ extension TrainingInfoTrainingExtension on TrainingInfoTraining {
     int? currentLineId,
     int? taskEndTime,
     RxDouble? taskProgress,
-    RxInt? taskValue,
   }) {
     return TrainingInfoTraining()
       ..ballRefreshTime = ballRefreshTime ?? this.ballRefreshTime
@@ -305,8 +304,7 @@ extension TrainingInfoTrainingExtension on TrainingInfoTraining {
       ..totalCount = totalCount ?? this.totalCount
       ..currentLineId = currentLineId ?? this.currentLineId
       ..taskEndTime = taskEndTime ?? this.taskEndTime
-      ..taskProgress = taskProgress ?? this.taskProgress
-      ..taskValue = taskValue ?? this.taskValue;
+      ..taskProgress = taskProgress ?? this.taskProgress;
   }
 }
 

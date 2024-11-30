@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -53,31 +54,84 @@ class TrainingSlot extends GetView<TrainingController> {
                                       int realIndex = itemIndex % length;
                                       double scale = controller
                                           .scaleAnimations[index].value;
-                                      return SizedBox(
-                                          width: 50.w,
-                                          height: 68.w,
-                                          child: Obx(() {
-                                            var show = controller
-                                                .isAwards[index].value;
-                                            return AnimatedScale(
-                                              curve: show
-                                                  ? Curves.linear
-                                                  : Curves.linear,
-                                              duration: Duration(
-                                                  milliseconds:
-                                                      show ? 150 : 300),
-                                              scale: show ? 1.8 : 1,
-                                              child: IconWidget(
-                                                iconWidth: 30.w * scale,
-                                                icon: Utils.getPropIconUrl(
-                                                    controller
-                                                        .propList[realIndex]),
-                                              ),
-                                            );
-                                          }));
+                                      return Obx(() {
+                                        var show =
+                                            controller.isAwards[index].value;
+
+                                        return AnimatedScale(
+                                          curve: show
+                                              ? Curves.linear
+                                              : Curves.linear,
+                                          duration: Duration(
+                                              milliseconds: show ? 150 : 300),
+                                          scale: show ? 1.8 : 1,
+                                          child: SizedBox(
+                                            width: 50.w,
+                                            height: 68.w,
+                                            child: IconWidget(
+                                              iconWidth: 30.w * scale,
+                                              icon: Utils.getPropIconUrl(
+                                                  controller
+                                                      .propList[realIndex]),
+                                            ),
+                                          ),
+                                        );
+                                      });
                                     },
                                   ),
                                 ),
+                                Obx(() {
+                                  var show =
+                                      controller.isShowColor[index].value;
+                                  return Visibility(
+                                    visible: show,
+                                    child: AnimatedBuilder(
+                                        animation: controller.colorAnimation,
+                                        builder: (context, child) {
+                                          return Transform.scale(
+                                            scale: controller
+                                                    .colorAnimation.value +
+                                                1,
+                                            child: Opacity(
+                                              opacity: 1 -
+                                                  controller
+                                                      .colorAnimation.value,
+                                              child: Container(
+                                                width: 50.w,
+                                                height: 68.w,
+                                                decoration: BoxDecoration(
+                                                  color: _getSlotColor(
+                                                          controller
+                                                              .awardLength)
+                                                      .withOpacity(0.5),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          9.w),
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        }),
+                                  );
+                                }),
+                                Obx(() {
+                                  return Visibility(
+                                    visible:
+                                        controller.showBoxList[index].value,
+                                    child: Container(
+                                      width: 50.w + 3.w,
+                                      height: 68.w + 3.w,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                            width: 2.w,
+                                            color: _getSlotColor(
+                                                controller.awardLength)),
+                                        borderRadius:
+                                            BorderRadius.circular(9.w),
+                                      ),
+                                    ),
+                                  );
+                                }),
                                 Obx(() {
                                   return Visibility(
                                     visible: !controller.slotCard[index].value,
@@ -108,5 +162,20 @@ class TrainingSlot extends GetView<TrainingController> {
         ),
       );
     });
+  }
+}
+
+Color _getSlotColor(int length) {
+  switch (length) {
+    case 3:
+      return AppColors.c8cc142;
+    case 4:
+      return AppColors.c36a7e2;
+    case 5:
+      return AppColors.c9465D4;
+    case 6:
+      return AppColors.cF48F19;
+    default:
+      return Colors.transparent;
   }
 }

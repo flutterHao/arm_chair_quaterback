@@ -307,7 +307,15 @@ class TacticItem extends GetView<TrainingController> {
                       rotateAngle: 90,
                       iconWidth: 8.w,
                       icon: Assets.commonUiCommonIconSystemExchange),
-                ))
+                )),
+          //                 AnimatedPositioned(
+          //   top: isSelect ? 0 : 3.w,
+          //   duration: 100.milliseconds,
+          //   child: Image.asset(
+          //     Assets.commonUiCommonArrow,
+          //     width: 14.w,
+          //   ),
+          // )
         ],
       );
     });

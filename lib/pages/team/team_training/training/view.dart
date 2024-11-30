@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-11 15:57:44
- * @LastEditTime: 2024-11-29 19:24:21
+ * @LastEditTime: 2024-11-30 14:46:51
  */
 
 import 'dart:math';
@@ -42,6 +42,7 @@ class TrainingPage extends GetView<TrainingController> {
                       right: 0,
                       child: TrainingTactics(),
                     ),
+
                     Positioned(
                         top: 124.w,
                         left: 0,

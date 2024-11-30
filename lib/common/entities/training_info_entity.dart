@@ -104,7 +104,7 @@ class TrainingInfoTraining {
   @JSONField(deserialize: false, serialize: false)
   RxDouble taskProgress = 0.0.obs;
   @JSONField(deserialize: false, serialize: false)
-  late RxInt taskValue = 0.obs;
+  // late RxInt taskValue = 0.obs;
 
   TrainingInfoTraining();
 
