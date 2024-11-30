@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -61,6 +62,12 @@ class RequestMessage {
     String si = path;
     List rps = [json];
     String ri = msgCounter;
+    String ss = jsonEncode(rps);
+    var body = Uint8List.fromList(utf8.encode(ss));
+    var serviceId = Uint8List.fromList(utf8.encode(si));
+    var capacity = 12 + serviceId.length+body.length;
+    var buf = Uint8List(capacity);
+    // byteData.setInt32(byteOffset, value)
     return byteData;
   }
 }
