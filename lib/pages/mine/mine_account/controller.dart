@@ -22,7 +22,7 @@ class MineAccountController extends GetxController {
   testWebSocket() async {
     if(channel != null){
       print('testWebSocket---already start--');
-      channel?.sink.add('ping'); // 发送心跳包
+      channel?.sink.add('AAAAJQAFAAAAAQAXUEtTZXJ2aWNlLnRlc3RUQ1BTb2NrZXRbXQ=='); // 发送心跳包
       print('testWebSocket---Sent: ping');
       return;
     }
@@ -34,15 +34,17 @@ class MineAccountController extends GetxController {
     await channel?.ready;
     print('testWebSocket---ready--');
 
-    channel?.sink.add('ping'); // 发送心跳包
+    channel?.sink.add('AAAAJQAFAAAAAQAXUEtTZXJ2aWNlLnRlc3RUQ1BTb2NrZXRbXQ=='); // 发送心跳包
     print('testWebSocket---Sent: ping');
 
     channel?.stream.listen((message) {
+      print('testWebSocket---received--');
       channel?.sink.add('received!');
       channel?.sink.close(WebSocketStatus.goingAway);
     },onError: (e){
       print('testWebSocket---onError--:$e');
     },onDone: (){
+      channel = null;
       print('testWebSocket---onDone--:');
     });
   }
