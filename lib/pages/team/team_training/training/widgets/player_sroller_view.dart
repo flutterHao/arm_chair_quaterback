@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lihonghao
  * @Date: 2024-11-06 11:51:15
- * @LastEditTime: 2024-11-30 19:25:29
+ * @LastEditTime: 2024-11-30 19:38:45
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -65,7 +65,7 @@ class _PlayerSrollerViewState extends State<PlayerSrollerView> {
                       children: [
                         scrollerIdx != -1
                             ? Opacity(
-                                opacity: controller.showStatus.value ? 1 : 1,
+                                opacity: controller.showStatus.value ? 1 : 0,
                                 child: SizedBox(
                                   width: 55.w,
                                   height: 30.w,
