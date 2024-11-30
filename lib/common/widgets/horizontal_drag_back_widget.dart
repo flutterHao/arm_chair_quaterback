@@ -161,6 +161,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
 
     Widget child = NotificationListener<ScrollNotification>(
       onNotification: (notification) {
+        /// 查看滚动容器的depth
         // print('notification:${notification.runtimeType}'
         //     ',pixels:${notification.metrics.pixels}'
         //     ',minScrollExtent:${notification.metrics.minScrollExtent}'

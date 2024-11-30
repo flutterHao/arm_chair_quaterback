@@ -71,16 +71,6 @@ class PicksIndex extends StatelessWidget {
                 customTransition: HalfSlideRightToLeftTransition(),
                 page: () => const PickRankPage(),
                 binding: PickRankBinding());
-          case RouteNames.picksPlayerDetail:
-            return GetPageRoute(
-                opaque: false,
-                settings: setting,
-                customTransition: HalfSlideRightToLeftTransition(),
-                barrierColor: Colors.transparent,
-                page: () =>
-                    PlayerDetailPage(
-                      arguments: setting.arguments as PlayerDetailPageArguments,
-                    ));
           case RouteNames.mineMineInfo:
             return GetPageRoute(
                 opaque: false,

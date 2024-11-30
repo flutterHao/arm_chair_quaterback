@@ -26,10 +26,8 @@ import 'package:intl/intl.dart';
 class PlayerDetailGame extends StatefulWidget {
   const PlayerDetailGame(
       {super.key,
-      required this.headHeight,
       required this.upStarSuccessCallBack});
 
-  final double headHeight;
   final Function? upStarSuccessCallBack;
 
   @override
@@ -577,7 +575,6 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
             }
             return Container(
               height: MediaQuery.of(context).size.height -
-                  widget.headHeight -
                   levelWidgetHeight,
               width: double.infinity,
               decoration: BoxDecoration(

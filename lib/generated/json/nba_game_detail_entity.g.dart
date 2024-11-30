@@ -1,5 +1,8 @@
+import 'package:arm_chair_quaterback/common/entities/game_schedules_info.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_game_detail_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/scores_not_start_game_entity.dart';
+
 
 NbaGameDetailEntity $NbaGameDetailEntityFromJson(Map<String, dynamic> json) {
   final NbaGameDetailEntity nbaGameDetailEntity = NbaGameDetailEntity();
@@ -215,8 +218,8 @@ extension NbaGameDetailScoreBoardDetailsExtension on NbaGameDetailScoreBoardDeta
 NbaGameDetailGameData $NbaGameDetailGameDataFromJson(
     Map<String, dynamic> json) {
   final NbaGameDetailGameData nbaGameDetailGameData = NbaGameDetailGameData();
-  final NbaGameDetailGameDataSchedule? schedule = jsonConvert.convert<
-      NbaGameDetailGameDataSchedule>(json['schedule']);
+  final GameSchedulesInfo? schedule = jsonConvert.convert<GameSchedulesInfo>(
+      json['schedule']);
   if (schedule != null) {
     nbaGameDetailGameData.schedule = schedule;
   }
@@ -266,7 +269,7 @@ Map<String, dynamic> $NbaGameDetailGameDataToJson(
 
 extension NbaGameDetailGameDataExtension on NbaGameDetailGameData {
   NbaGameDetailGameData copyWith({
-    NbaGameDetailGameDataSchedule? schedule,
+    GameSchedulesInfo? schedule,
     NbaGameDetailGameDataTeamScore? homeTeamScore,
     List<NbaGameDetailGameDataPlayerScores>? homePlayerScores,
     NbaGameDetailGameDataTeamScore? awayTeamScore,
@@ -278,122 +281,6 @@ extension NbaGameDetailGameDataExtension on NbaGameDetailGameData {
       ..homePlayerScores = homePlayerScores ?? this.homePlayerScores
       ..awayTeamScore = awayTeamScore ?? this.awayTeamScore
       ..awayPlayerScores = awayPlayerScores ?? this.awayPlayerScores;
-  }
-}
-
-NbaGameDetailGameDataSchedule $NbaGameDetailGameDataScheduleFromJson(
-    Map<String, dynamic> json) {
-  final NbaGameDetailGameDataSchedule nbaGameDetailGameDataSchedule = NbaGameDetailGameDataSchedule();
-  final int? gameId = jsonConvert.convert<int>(json['gameId']);
-  if (gameId != null) {
-    nbaGameDetailGameDataSchedule.gameId = gameId;
-  }
-  final int? gameType = jsonConvert.convert<int>(json['gameType']);
-  if (gameType != null) {
-    nbaGameDetailGameDataSchedule.gameType = gameType;
-  }
-  final List<
-      dynamic>? homePlayerScoreList = (json['homePlayerScoreList'] as List<
-      dynamic>?)?.map(
-          (e) => e).toList();
-  if (homePlayerScoreList != null) {
-    nbaGameDetailGameDataSchedule.homePlayerScoreList = homePlayerScoreList;
-  }
-  final List<
-      dynamic>? awayPlayerScoreList = (json['awayPlayerScoreList'] as List<
-      dynamic>?)?.map(
-          (e) => e).toList();
-  if (awayPlayerScoreList != null) {
-    nbaGameDetailGameDataSchedule.awayPlayerScoreList = awayPlayerScoreList;
-  }
-  final int? gameTime = jsonConvert.convert<int>(json['gameTime']);
-  if (gameTime != null) {
-    nbaGameDetailGameDataSchedule.gameTime = gameTime;
-  }
-  final int? createTime = jsonConvert.convert<int>(json['createTime']);
-  if (createTime != null) {
-    nbaGameDetailGameDataSchedule.createTime = createTime;
-  }
-  final int? gameStartTime = jsonConvert.convert<int>(json['gameStartTime']);
-  if (gameStartTime != null) {
-    nbaGameDetailGameDataSchedule.gameStartTime = gameStartTime;
-  }
-  final int? homeTeamScore = jsonConvert.convert<int>(json['homeTeamScore']);
-  if (homeTeamScore != null) {
-    nbaGameDetailGameDataSchedule.homeTeamScore = homeTeamScore;
-  }
-  final int? seasonId = jsonConvert.convert<int>(json['seasonId']);
-  if (seasonId != null) {
-    nbaGameDetailGameDataSchedule.seasonId = seasonId;
-  }
-  final int? awayTeamScore = jsonConvert.convert<int>(json['awayTeamScore']);
-  if (awayTeamScore != null) {
-    nbaGameDetailGameDataSchedule.awayTeamScore = awayTeamScore;
-  }
-  final int? homeTeamId = jsonConvert.convert<int>(json['homeTeamId']);
-  if (homeTeamId != null) {
-    nbaGameDetailGameDataSchedule.homeTeamId = homeTeamId;
-  }
-  final int? awayTeamId = jsonConvert.convert<int>(json['awayTeamId']);
-  if (awayTeamId != null) {
-    nbaGameDetailGameDataSchedule.awayTeamId = awayTeamId;
-  }
-  final int? status = jsonConvert.convert<int>(json['status']);
-  if (status != null) {
-    nbaGameDetailGameDataSchedule.status = status;
-  }
-  return nbaGameDetailGameDataSchedule;
-}
-
-Map<String, dynamic> $NbaGameDetailGameDataScheduleToJson(
-    NbaGameDetailGameDataSchedule entity) {
-  final Map<String, dynamic> data = <String, dynamic>{};
-  data['gameId'] = entity.gameId;
-  data['gameType'] = entity.gameType;
-  data['homePlayerScoreList'] = entity.homePlayerScoreList;
-  data['awayPlayerScoreList'] = entity.awayPlayerScoreList;
-  data['gameTime'] = entity.gameTime;
-  data['createTime'] = entity.createTime;
-  data['gameStartTime'] = entity.gameStartTime;
-  data['homeTeamScore'] = entity.homeTeamScore;
-  data['seasonId'] = entity.seasonId;
-  data['awayTeamScore'] = entity.awayTeamScore;
-  data['homeTeamId'] = entity.homeTeamId;
-  data['awayTeamId'] = entity.awayTeamId;
-  data['status'] = entity.status;
-  return data;
-}
-
-extension NbaGameDetailGameDataScheduleExtension on NbaGameDetailGameDataSchedule {
-  NbaGameDetailGameDataSchedule copyWith({
-    int? gameId,
-    int? gameType,
-    List<dynamic>? homePlayerScoreList,
-    List<dynamic>? awayPlayerScoreList,
-    int? gameTime,
-    int? createTime,
-    int? gameStartTime,
-    int? homeTeamScore,
-    int? seasonId,
-    int? awayTeamScore,
-    int? homeTeamId,
-    int? awayTeamId,
-    int? status,
-  }) {
-    return NbaGameDetailGameDataSchedule()
-      ..gameId = gameId ?? this.gameId
-      ..gameType = gameType ?? this.gameType
-      ..homePlayerScoreList = homePlayerScoreList ?? this.homePlayerScoreList
-      ..awayPlayerScoreList = awayPlayerScoreList ?? this.awayPlayerScoreList
-      ..gameTime = gameTime ?? this.gameTime
-      ..createTime = createTime ?? this.createTime
-      ..gameStartTime = gameStartTime ?? this.gameStartTime
-      ..homeTeamScore = homeTeamScore ?? this.homeTeamScore
-      ..seasonId = seasonId ?? this.seasonId
-      ..awayTeamScore = awayTeamScore ?? this.awayTeamScore
-      ..homeTeamId = homeTeamId ?? this.homeTeamId
-      ..awayTeamId = awayTeamId ?? this.awayTeamId
-      ..status = status ?? this.status;
   }
 }
 

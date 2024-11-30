@@ -7,6 +7,7 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/thrid_lib/flutter_barrage.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/widgets/battle_animation_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/tactical_contrast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,8 +24,9 @@ class ShootHistory {
 
 class TeamBattleV2Controller extends GetxController
     with GetTickerProviderStateMixin {
-  TeamBattleV2Controller();
+  TeamBattleV2Controller(this.context);
 
+  final BuildContext context;
   late BarrageWallController normalBarrageWallController =
       BarrageWallController();
   late BarrageWallController highLightBarrageWallController =
@@ -53,6 +55,7 @@ class TeamBattleV2Controller extends GetxController
   var blueScore = 0.obs;
 
   var isGameOver = false.obs;
+  Timer? _timer;
 
   /// 在 widget 内存中分配后立即调用。
   @override
@@ -80,15 +83,22 @@ class TeamBattleV2Controller extends GetxController
     });
     shootAnimationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 1200));
+
   }
 
-  Timer? _timer;
 
   @override
   void onReady() {
     super.onReady();
-    _timer = Timer.periodic(const Duration(seconds: 3), (t) {
-      shoot();
+    showTactical(context);
+  }
+
+  startGame() {
+    Future.delayed(Duration.zero, () {
+      _timer?.cancel();
+      _timer = Timer.periodic(const Duration(seconds: 3), (t) {
+        shoot();
+      });
     });
   }
 

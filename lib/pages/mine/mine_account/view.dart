@@ -66,6 +66,7 @@ class MineAccountPage extends GetView<MineAccountController> {
                     InkWell(
                       onTap: () {
                         print('logout --- ');
+                        controller.testWebSocket();
                       },
                       child: Container(
                         decoration: BoxDecoration(

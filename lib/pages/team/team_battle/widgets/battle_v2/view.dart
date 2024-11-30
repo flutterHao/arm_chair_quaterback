@@ -15,6 +15,7 @@ import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/shoot_mark_animation_widget.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/start_game_count_down_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -26,7 +27,7 @@ class TeamBattleV2Page extends GetView<TeamBattleV2Controller> {
   Widget build(BuildContext context) {
     return HorizontalDragBackWidget(
       child: GetBuilder<TeamBattleV2Controller>(
-        init: TeamBattleV2Controller(),
+        init: TeamBattleV2Controller(context),
         builder: (_) {
           return BlackAppWidget(
             const UserInfoBar(
@@ -57,11 +58,9 @@ class TeamBattleV2Page extends GetView<TeamBattleV2Controller> {
   Column buildGameWidget(BuildContext context) {
     return Column(
       children: [
-        InkWell(
-            onTap: () => controller.gameOver(),
-            child: ClipRRect(
-                borderRadius: BorderRadius.zero,
-                child: buildBasketballCourt(context))),
+        ClipRRect(
+            borderRadius: BorderRadius.zero,
+            child: buildBasketballCourt(context)),
         buildPlayersWidget(),
         10.vGap,
       ],
@@ -69,156 +68,153 @@ class TeamBattleV2Page extends GetView<TeamBattleV2Controller> {
   }
 
   Widget buildGameOverWidget(BuildContext context) {
-    return InkWell(
-      onTap: ()=> controller.showTactical(context),
-      child: Column(
-        children: [
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.symmetric(horizontal: 18.w),
-            decoration: BoxDecoration(
-                color: AppColors.cFFFFFF,
-                borderRadius: BorderRadius.circular(9.w)),
-            height: 280.w,
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Positioned(
-                  top: 52.w,
-                  child: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text(
-                      "FINAL STATEMENT",
-                      style: TextStyle(
-                          fontSize: 48.sp,
-                          fontWeight: FontWeight.bold,
-                          height: 1,
-                          fontFamily: FontFamily.fOswaldBold,
-                          foreground: Paint()
-                            ..style = PaintingStyle.stroke
-                            ..strokeWidth = 1.w
-                            ..color = AppColors.ccccccc),
-                    ),
+    return Column(
+      children: [
+        Container(
+          width: double.infinity,
+          padding: EdgeInsets.symmetric(horizontal: 18.w),
+          decoration: BoxDecoration(
+              color: AppColors.cFFFFFF,
+              borderRadius: BorderRadius.circular(9.w)),
+          height: 280.w,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Positioned(
+                top: 52.w,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    "FINAL STATEMENT",
+                    style: TextStyle(
+                        fontSize: 48.sp,
+                        fontWeight: FontWeight.bold,
+                        height: 1,
+                        fontFamily: FontFamily.fOswaldBold,
+                        foreground: Paint()
+                          ..style = PaintingStyle.stroke
+                          ..strokeWidth = 1.w
+                          ..color = AppColors.ccccccc),
                   ),
                 ),
-                Positioned(
-                    top: 78.w,
-                    left: 0,
-                    right: 0,
-                    child: Row(
-                      children: [
-                        Expanded(
-                            child: Image.asset(
+              ),
+              Positioned(
+                  top: 78.w,
+                  left: 0,
+                  right: 0,
+                  child: Row(
+                    children: [
+                      Expanded(
+                          child: Image.asset(
+                        Assets.managerUiManagerGameoverBg2,
+                        fit: BoxFit.fitWidth,
+                      )),
+                      Expanded(
+                          child: Transform(
+                        alignment: Alignment.center,
+                        transform: Matrix4.identity()..scale(-1.0, 1.0),
+                        child: Image.asset(
                           Assets.managerUiManagerGameoverBg2,
                           fit: BoxFit.fitWidth,
-                        )),
-                        Expanded(
-                            child: Transform(
-                          alignment: Alignment.center,
-                          transform: Matrix4.identity()..scale(-1.0, 1.0),
-                          child: Image.asset(
-                            Assets.managerUiManagerGameoverBg2,
-                            fit: BoxFit.fitWidth,
-                          ),
-                        ))
-                      ],
-                    )),
-                Positioned(
-                    top: 31.w,
-                    child: Text(
-                      "VICTORY",
-                      style: 42.w7(
-                          color: AppColors.c000000,
-                          height: 1,
-                          fontFamily: FontFamily.fOswaldBold),
-                    )),
-                Positioned(
-                    top: 100.w,
-                    child: Column(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
+                        ),
+                      ))
+                    ],
+                  )),
+              Positioned(
+                  top: 31.w,
+                  child: Text(
+                    "VICTORY",
+                    style: 42.w7(
+                        color: AppColors.c000000,
+                        height: 1,
+                        fontFamily: FontFamily.fOswaldBold),
+                  )),
+              Positioned(
+                  top: 100.w,
+                  child: Column(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                            color: AppColors.c000000,
+                            border: Border.all(
+                              color: AppColors.cB3B3B3,
+                              width: 1.w,
+                            ),
+                            borderRadius: BorderRadius.circular(15.w)),
+                        height: 31.w,
+                        width: 243.w,
+                        padding: EdgeInsets.only(left: 18.w, right: 37.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            IconWidget(
+                                iconWidth: 21.w,
+                                icon: Assets.teamUiIconTrophy01),
+                            Text(
+                              "15300",
+                              style: 16.w5(
+                                  color: AppColors.cFFFFFF,
+                                  height: 1,
+                                  fontFamily: FontFamily.fOswaldMedium),
+                            ),
+                            Stack(
+                              children: [
+                                IconWidget(
+                                  iconWidth: 7.w,
+                                  icon: Assets.commonUiCommonIconSystemJumpto,
+                                  iconColor: AppColors.cB3B3B3,
+                                ),
+                                Container(
+                                    margin: EdgeInsets.only(left: 7.w),
+                                    child: IconWidget(
+                                        iconWidth: 7.w,
+                                        icon: Assets
+                                            .commonUiCommonIconSystemJumpto,
+                                        iconColor: AppColors.cB3B3B3)),
+                              ],
+                            ),
+                            Text(
+                              "15300",
+                              style: 16.w5(
+                                  color: AppColors.c2DE298,
+                                  height: 1,
+                                  fontFamily: FontFamily.fOswaldMedium),
+                            ),
+                            IconWidget(
+                              iconWidth: 8.w,
+                              icon: Assets.commonUiCommonIconSystemArrow,
+                              rotateAngle: -90,
+                              iconColor: AppColors.c2DE298,
+                            ),
+                          ],
+                        ),
+                      ),
+                      14.vGap,
+                      Container(
+                        constraints: BoxConstraints(minHeight: 23.w),
+                        child: IconWidget(
+                            iconWidth: 60.w,
+                            icon: Assets.managerUiManagerGift03),
+                      ),
+                      6.vGap,
+                      Container(
+                        constraints: BoxConstraints(maxWidth: 180.w),
+                        child: Text(
+                          "You've got a treasure chest",
+                          textAlign: TextAlign.center,
+                          style: 14.w4(
                               color: AppColors.c000000,
-                              border: Border.all(
-                                color: AppColors.cB3B3B3,
-                                width: 1.w,
-                              ),
-                              borderRadius: BorderRadius.circular(15.w)),
-                          height: 31.w,
-                          width: 243.w,
-                          padding: EdgeInsets.only(left: 18.w, right: 37.w),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              IconWidget(
-                                  iconWidth: 21.w,
-                                  icon: Assets.teamUiIconTrophy01),
-                              Text(
-                                "15300",
-                                style: 16.w5(
-                                    color: AppColors.cFFFFFF,
-                                    height: 1,
-                                    fontFamily: FontFamily.fOswaldMedium),
-                              ),
-                              Stack(
-                                children: [
-                                  IconWidget(
-                                    iconWidth: 7.w,
-                                    icon: Assets.commonUiCommonIconSystemJumpto,
-                                    iconColor: AppColors.cB3B3B3,
-                                  ),
-                                  Container(
-                                      margin: EdgeInsets.only(left: 7.w),
-                                      child: IconWidget(
-                                          iconWidth: 7.w,
-                                          icon: Assets
-                                              .commonUiCommonIconSystemJumpto,
-                                          iconColor: AppColors.cB3B3B3)),
-                                ],
-                              ),
-                              Text(
-                                "15300",
-                                style: 16.w5(
-                                    color: AppColors.c2DE298,
-                                    height: 1,
-                                    fontFamily: FontFamily.fOswaldMedium),
-                              ),
-                              IconWidget(
-                                iconWidth: 8.w,
-                                icon: Assets.commonUiCommonIconSystemArrow,
-                                rotateAngle: -90,
-                                iconColor: AppColors.c2DE298,
-                              ),
-                            ],
-                          ),
+                              fontFamily: FontFamily.fRobotoRegular,
+                              height: 1.2),
                         ),
-                        14.vGap,
-                        Container(
-                          constraints: BoxConstraints(minHeight: 23.w),
-                          child: IconWidget(
-                              iconWidth: 60.w,
-                              icon: Assets.managerUiManagerGift03),
-                        ),
-                        6.vGap,
-                        Container(
-                          constraints: BoxConstraints(maxWidth: 180.w),
-                          child: Text(
-                            "You've got a treasure chest",
-                            textAlign: TextAlign.center,
-                            style: 14.w4(
-                                color: AppColors.c000000,
-                                fontFamily: FontFamily.fRobotoRegular,
-                                height: 1.2),
-                          ),
-                        )
-                      ],
-                    )),
-              ],
-            ),
+                      )
+                    ],
+                  )),
+            ],
           ),
-          9.vGap,
-        ],
-      ),
+        ),
+        9.vGap,
+      ],
     );
   }
 
@@ -427,6 +423,7 @@ class TeamBattleV2Page extends GetView<TeamBattleV2Controller> {
                       return Container(
                         margin: EdgeInsets.only(top: 38.w),
                         child: Stack(
+                          alignment: Alignment.center,
                           children: [
                             ///球场
                             Row(
@@ -477,6 +474,10 @@ class TeamBattleV2Page extends GetView<TeamBattleV2Controller> {
                                     ),
                                   ));
                             }),
+                            //比赛开始倒计时
+                            StartGameCountDownWidget(onDown: (){
+                              controller.startGame();
+                            },),
                           ],
                         ),
                       );

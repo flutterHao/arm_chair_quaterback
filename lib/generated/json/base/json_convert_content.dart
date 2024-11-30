@@ -9,6 +9,7 @@ import 'package:arm_chair_quaterback/common/entities/api_error_code_entity.dart'
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/config/prop_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/game_schedules_info.dart';
 import 'package:arm_chair_quaterback/common/entities/grade_in_star_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_data.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_game_info_entity.dart';
@@ -280,6 +281,10 @@ class JsonConvert {
       return data.map<PropDefineEntity>((Map<String, dynamic> e) =>
           PropDefineEntity.fromJson(e)).toList() as M;
     }
+    if (<GameSchedulesInfo>[] is M) {
+      return data.map<GameSchedulesInfo>((Map<String, dynamic> e) =>
+          GameSchedulesInfo.fromJson(e)).toList() as M;
+    }
     if (<GradeInStarDefineEntity>[] is M) {
       return data.map<GradeInStarDefineEntity>((Map<String, dynamic> e) =>
           GradeInStarDefineEntity.fromJson(e)).toList() as M;
@@ -352,10 +357,6 @@ class JsonConvert {
     if (<NbaGameDetailGameData>[] is M) {
       return data.map<NbaGameDetailGameData>((Map<String, dynamic> e) =>
           NbaGameDetailGameData.fromJson(e)).toList() as M;
-    }
-    if (<NbaGameDetailGameDataSchedule>[] is M) {
-      return data.map<NbaGameDetailGameDataSchedule>((Map<String, dynamic> e) =>
-          NbaGameDetailGameDataSchedule.fromJson(e)).toList() as M;
     }
     if (<NbaGameDetailGameDataTeamScore>[] is M) {
       return data.map<NbaGameDetailGameDataTeamScore>((
@@ -823,6 +824,7 @@ class JsonConvertClassCollection {
     (CardPackInfoEntity).toString(): CardPackInfoEntity.fromJson,
     (CardPackInfoCard).toString(): CardPackInfoCard.fromJson,
     (PropDefineEntity).toString(): PropDefineEntity.fromJson,
+    (GameSchedulesInfo).toString(): GameSchedulesInfo.fromJson,
     (GradeInStarDefineEntity).toString(): GradeInStarDefineEntity.fromJson,
     (GuessData).toString(): GuessData.fromJson,
     (Awards).toString(): Awards.fromJson,
@@ -844,8 +846,6 @@ class JsonConvertClassCollection {
     (NbaGameDetailScoreBoardDetails).toString(): NbaGameDetailScoreBoardDetails
         .fromJson,
     (NbaGameDetailGameData).toString(): NbaGameDetailGameData.fromJson,
-    (NbaGameDetailGameDataSchedule).toString(): NbaGameDetailGameDataSchedule
-        .fromJson,
     (NbaGameDetailGameDataTeamScore).toString(): NbaGameDetailGameDataTeamScore
         .fromJson,
     (NbaGameDetailGameDataPlayerScores)

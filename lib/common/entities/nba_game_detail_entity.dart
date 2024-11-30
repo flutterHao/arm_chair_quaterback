@@ -1,3 +1,5 @@
+import 'package:arm_chair_quaterback/common/entities/game_schedules_info.dart';
+import 'package:arm_chair_quaterback/common/entities/scores_not_start_game_entity.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/nba_game_detail_entity.g.dart';
 import 'dart:convert';
@@ -59,7 +61,7 @@ class NbaGameDetailScoreBoardDetails {
 
 @JsonSerializable()
 class NbaGameDetailGameData {
-	late NbaGameDetailGameDataSchedule schedule;
+	late GameSchedulesInfo schedule;
 	NbaGameDetailGameDataTeamScore? homeTeamScore;
 	late List<NbaGameDetailGameDataPlayerScores> homePlayerScores;
 	NbaGameDetailGameDataTeamScore? awayTeamScore;
@@ -70,34 +72,6 @@ class NbaGameDetailGameData {
 	factory NbaGameDetailGameData.fromJson(Map<String, dynamic> json) => $NbaGameDetailGameDataFromJson(json);
 
 	Map<String, dynamic> toJson() => $NbaGameDetailGameDataToJson(this);
-
-	@override
-	String toString() {
-		return jsonEncode(this);
-	}
-}
-
-@JsonSerializable()
-class NbaGameDetailGameDataSchedule {
-	late int gameId;
-	late int gameType;
-	late List<dynamic> homePlayerScoreList;
-	late List<dynamic> awayPlayerScoreList;
-	late int gameTime;
-	late int createTime;
-	late int gameStartTime;
-	late int homeTeamScore;
-	late int seasonId;
-	late int awayTeamScore;
-	late int homeTeamId;
-	late int awayTeamId;
-	late int status;
-
-	NbaGameDetailGameDataSchedule();
-
-	factory NbaGameDetailGameDataSchedule.fromJson(Map<String, dynamic> json) => $NbaGameDetailGameDataScheduleFromJson(json);
-
-	Map<String, dynamic> toJson() => $NbaGameDetailGameDataScheduleToJson(this);
 
 	@override
 	String toString() {

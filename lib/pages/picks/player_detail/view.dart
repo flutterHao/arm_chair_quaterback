@@ -1,4 +1,6 @@
-
+import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/widgets/delegate/fixed_height_sliver_header_delegate.dart';
+import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -21,10 +23,11 @@ import 'index.dart';
 
 class PlayerDetailPageArguments {
   final int playerId;
-  final String? tabStr;//选中的初始tab属性
-  final bool isMyPlayer;//是不是我的球员
+  final String? tabStr; //选中的初始tab属性
+  final bool isMyPlayer; //是不是我的球员
 
-  PlayerDetailPageArguments(this.playerId, {this.tabStr,this.isMyPlayer = false});
+  PlayerDetailPageArguments(this.playerId,
+      {this.tabStr, this.isMyPlayer = false});
 }
 
 class PlayerDetailPage extends GetView<PlayerDetailController> {
@@ -36,206 +39,156 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
   Widget build(BuildContext context) {
     PlayerDetailPageArguments args = arguments ?? Get.arguments;
     return HorizontalDragBackWidget(
+      responseDepth: const [0,1,3],
       child: GetBuilder<PlayerDetailController>(
         init: PlayerDetailController(args),
         id: PlayerDetailController.idMain,
         builder: (_) {
           return BlackAppWidget(
-            AppBarWidget(
-              title: "PLAYER",
-              borderRadius: 32.w,
-              bottomChild: Stack(
-                children: [
-                  Positioned(
-                      left: 0,
-                      bottom: 0,
-                      child: Container(
-                        width: 95.w,
-                        height: 77.w,
-                        alignment: Alignment.bottomLeft,
-                        child: Opacity(
-                          opacity: .3,
-                          child: ClipRRect(
-                              borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(32.w)),
-                              child: ImageWidget(
-                                url: Utils.getTeamUrl(controller.teamInfo?.id),
-                                width: 84.w,
-                              )),
-                        ),
-                      )),
-                  Row(
-                    children: [
-                      Container(
-                          margin: EdgeInsets.only(right: 13.w),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(32.w)),
-                            child: ImageWidget(
-                              imageFailedPath: Assets.iconUiDefault04,
-                              url: Utils.getPlayUrl(
-                                  controller.baseInfo?.playerId),
-                              width: 100.w,
-                              height: 100.w,
-                            ),
-                          )),
-                      2.vGap,
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "${controller.baseInfo?.elname}",
-                                  style: 16
-                                      .w4(color: AppColors.cF2F2F2, height: 1),
-                                ),
-                                IconWidget(
-                                    iconWidth: 17.w,
-                                    icon: Assets.playerUiIconFollow),
-                              ],
-                            ),
-                            Text.rich(
-                                style:
-                                    10.w4(color: AppColors.cB3B3B3, height: 1),
-                                TextSpan(children: [
-                                  TextSpan(
-                                      text: "${controller.baseInfo?.position}",
-                                      style: 10.w4(
-                                          color: AppColors.cF2F2F2, height: 1)),
-                                  TextSpan(
-                                      text:
-                                          "·${controller.teamInfo?.shortEname}")
-                                ])),
-                            13.vGap,
-                            if (false) //todo 接口未提供数据,隐藏
-                              Row(
-                                children: [
-                                  _buildPlayerInfoItem("AGE", "23"),
-                                  24.hGap,
-                                  _buildPlayerInfoItem("HEIGHT", '''5'11"'''),
-                                  24.hGap,
-                                  _buildPlayerInfoItem("WEIGHT", "217 lbs"),
-                                  24.hGap,
-                                  _buildPlayerInfoItem("EXP", "5"),
-                                ],
-                              )
-                          ],
-                        ),
-                      ),
-                      23.hGap
-                    ],
-                  ),
-                ],
-              ),
+            const UserInfoBar(
+              showPop: true,
             ),
-            totalScreenBuilder: (context, appBarHeight) {
-              return Column(
-                children: [
-                  Container(
-                    height: appBarHeight + 66.w,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        color: AppColors.cD9D9D9,
-                        borderRadius: BorderRadius.vertical(
-                            bottom: Radius.circular(16.w))),
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      constraints: BoxConstraints(maxWidth: 400.w),
-                      height: 34.w,
-                      margin: EdgeInsets.only(
-                          left: 13.w, right: 13.w, bottom: 16.w),
-                      decoration: BoxDecoration(
-                          color: AppColors.cF2F2F2,
-                          borderRadius: BorderRadius.circular(17.w)),
-                      child: LayoutBuilder(builder: (context, constraints) {
-                        var itemWidth = (constraints.maxWidth - 8.w) /
-                            controller.tabController.length;
-                        return TLBuildWidget(
-                            controller: controller.tabController,
-                            builder: (current, next, progress, totalProgress) {
-                              return Stack(
-                                alignment: Alignment.centerLeft,
-                                children: [
-                                  Positioned(
-                                    left: totalProgress * itemWidth,
-                                    child: Container(
-                                      margin: EdgeInsets.only(left: 4.w),
-                                      height: 26.w,
-                                      width: itemWidth,
-                                      decoration: BoxDecoration(
-                                          color: AppColors.c262626,
-                                          borderRadius:
-                                              BorderRadius.circular(26.w)),
-                                    ),
-                                  ),
-                                  Row(
-                                    children: List.generate(
-                                        controller.tabs.length,
-                                        (index) => Expanded(
-                                              child: InkWell(
-                                                  onTap: () => controller
-                                                      .tabController
-                                                      .animateTo(index),
-                                                  child: Center(
-                                                      child: Text(
-                                                          controller
-                                                              .tabs[index],
-                                                          style: 13.w4(
-                                                            color: current ==
-                                                                    index
-                                                                ? Color.lerp(
-                                                                    AppColors
-                                                                        .cF2F2F2,
-                                                                    AppColors
-                                                                        .c666666,
-                                                                    progress)!
-                                                                : next == index
-                                                                    ? Color.lerp(
-                                                                        AppColors
-                                                                            .c666666,
-                                                                        AppColors
-                                                                            .cF2F2F2,
-                                                                        progress)!
-                                                                    : AppColors
-                                                                        .c666666,
-                                                          )))),
-                                            )),
-                                  )
-                                ],
-                              );
-                            });
-                      }),
+            bodyWidget: Expanded(
+                child: DefaultTabController(
+              length: controller.tabs.length,
+              child: NestedScrollView(
+                  floatHeaderSlivers: true,
+                  headerSliverBuilder:
+                      (BuildContext context, bool innerBoxIsScrolled) {
+                    return <Widget>[
+                      SliverPersistentHeader(
+                          floating: true,
+                          delegate: FixedHeightSliverHeaderDelegate(
+                              child: buildHeaderWidget(), height: 138.w)),
+                      SliverPersistentHeader(
+                          pinned: true,
+                          delegate: FixedHeightSliverHeaderDelegate(
+                              child: Container(
+                                width: double.infinity,
+                                color: AppColors.cFFFFFF,
+                                height: 43.w,
+                                child: TabBar(
+                                  labelColor: AppColors.c000000,
+                                  labelStyle: 16.w5(
+                                      height: 1,
+                                      fontFamily: FontFamily.fOswaldMedium),
+                                  unselectedLabelColor: AppColors.cB3B3B3,
+                                  indicatorSize: TabBarIndicatorSize.tab,
+                                  indicatorColor: AppColors.cFF7954,
+                                  tabs: controller.tabs.map((e) {
+                                    return Text(e);
+                                  }).toList(),
+                                ),
+                              ),
+                              height: 43.w))
+                    ];
+                  },
+                  body: TabBarView(children: [
+                    SummaryPage(
+                      playerId: args.playerId,
+                      tabStr: args.tabStr,
                     ),
-                  ),
-                  Expanded(
-                    child: TabBarView(
-                        controller: controller.tabController,
-                        physics: OneBoundaryPageScrollPhysics(
-                            tabController: controller.tabController),
-                        children: [
-                          SummaryPage(
-                            playerId: args.playerId,
-                            tabStr: args.tabStr,
-                          ),
-                          HistoryPage(
-                            headHeight: appBarHeight + 66.w,
-                            playerId: args.playerId,
-                          ),
-                          PlayerDetailGame(
-                            headHeight: appBarHeight + 66.w,
-                            upStarSuccessCallBack: controller.reloadData,
-                          )
-                        ]),
-                  )
-                ],
-              );
-            },
+                    HistoryPage(
+                      playerId: args.playerId,
+                    ),
+                    PlayerDetailGame(
+                      upStarSuccessCallBack: controller.reloadData,
+                    )
+                  ])),
+            )),
           );
         },
+      ),
+    );
+  }
+
+  Widget buildHeaderWidget() {
+    return Container(
+      height: 138.w,
+      color: Utils.getTeamColor(controller.teamInfo?.id ?? 0),
+      child: Stack(
+        alignment: Alignment.bottomLeft,
+        children: [
+          Positioned(
+              left: -60,
+              bottom: 12.w,
+              child: Opacity(
+                opacity: .2,
+                child: ImageWidget(
+                  url: Utils.getTeamUrl(controller.teamInfo?.id),
+                  width: 148.w,
+                  fit: BoxFit.fitHeight,
+                ),
+              )),
+          Positioned(
+            top: 23.w,
+            right: 15.w,
+            child: IconWidget(iconWidth: 18.w, icon: Assets.playerUiIconFollow),
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              4.hGap,
+              ImageWidget(
+                imageFailedPath: Assets.iconUiDefault04,
+                url: Utils.getPlayUrl(controller.baseInfo?.playerId),
+                width: 134.w,
+                fit: BoxFit.fitWidth,
+              ),
+              11.vGap,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          constraints: BoxConstraints(maxWidth: 169.w),
+                          child: Text(
+                            "${controller.baseInfo?.elname}",
+                            maxLines: 3,
+                            style: 21.w5(
+                                color: AppColors.cFFFFFF,
+                                height: 1,
+                                overflow: TextOverflow.ellipsis,
+                                fontFamily: Assets.fontsOswaldMedium),
+                          ),
+                        ),
+                        11.hGap,
+
+                        ///todo
+                        IconWidget(
+                            iconWidth: 20.w,
+                            icon: Assets.commonUiCommonIconInjury),
+                      ],
+                    ),
+                    5.vGap,
+                    Text(
+                      "${controller.baseInfo?.position} - ${controller.teamInfo?.longEname}",
+                      style: 10.w4(
+                          color: AppColors.cFFFFFF,
+                          height: 1,
+                          fontFamily: Assets.fontsRobotoRegular),
+                    ),
+                    15.vGap,
+                    Row(
+                      children: [
+                        ///todo
+                        _buildPlayerInfoItem("PPG", "2.0"),
+                        33.hGap,
+                        _buildPlayerInfoItem("RPG", '0.8'),
+                        33.hGap,
+                        _buildPlayerInfoItem("APG", "0.6"),
+                      ],
+                    ),
+                    9.vGap,
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -244,14 +197,20 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
     return Column(
       children: [
         Text(
-          key,
-          style: 10.w4(color: AppColors.c666666, height: 1),
+          value,
+          style: 12.w5(
+              color: AppColors.cFFFFFF,
+              height: 1,
+              fontFamily: FontFamily.fOswaldMedium),
         ),
         5.vGap,
         Text(
-          value,
-          style: 14.w4(color: AppColors.cF2F2F2, height: 1),
-        )
+          key,
+          style: 10.w4(
+              color: AppColors.cFFFFFF,
+              height: 1,
+              fontFamily: FontFamily.fRobotoRegular),
+        ),
       ],
     );
   }

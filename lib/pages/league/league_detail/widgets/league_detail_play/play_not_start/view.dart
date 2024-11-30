@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/entities/game_schedules_info.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_not_start_game_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -182,7 +183,7 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
   }
 
   MediaQuery _buildL5GamePageWidget(
-      BuildContext context, List<TeamHistory>? historyMap, int homeId) {
+      BuildContext context, List<GameSchedulesInfo>? historyMap, int homeId) {
     return MediaQuery.removePadding(
         removeTop: true,
         context: context,

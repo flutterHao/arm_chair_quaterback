@@ -20,15 +20,12 @@ class PlayerDetailController extends GetxController
 
   NbaTeamEntity? teamInfo;
   NbaPlayerInfosPlayerBaseInfoList? baseInfo;
-  late TabController tabController;
-  List<String> tabs = ["Summary", "History", "Game"];
+  List<String> tabs = ["SUMMARY", "STATS", "LOG"];
 
   /// 在 widget 内存中分配后立即调用。
   @override
   void onInit() {
     super.onInit();
-    tabController = TabController(length: tabs.length, vsync: this);
-
     _initData();
   }
 
@@ -66,7 +63,6 @@ class PlayerDetailController extends GetxController
 
   @override
   void dispose() {
-    tabController.dispose();
     super.dispose();
   }
 }

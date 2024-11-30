@@ -14,9 +14,8 @@ import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage(
-      {super.key, required this.headHeight, required this.playerId});
+      {super.key, required this.playerId});
 
-  final double headHeight;
   final int playerId;
 
   @override
@@ -189,7 +188,7 @@ class _HistoryPageState extends State<HistoryPage>
       headerRowHeight: 20.w,
       rowHeight: 20.w,
       verticalScrollPhysics: const NeverScrollableScrollPhysics(),
-      horizontalScrollPhysics: OneBoundaryPageScrollPhysics(tabController: Get.find<PlayerDetailController>().tabController),
+      horizontalScrollPhysics: const BouncingScrollPhysics(),
       frozenColumnsCount: 2,
       headerGridLinesVisibility: GridLinesVisibility.none,
       columns: _obtainColumns(itemData),
@@ -215,7 +214,7 @@ class _HistoryPageState extends State<HistoryPage>
         double scrollOffset = controller.scrollController.offset +
             (expansionTileYPosition +
                 renderBox.size.height -
-                (screenHeight - widget.headHeight));
+                (screenHeight - 200.w));
 
         // 自动滚动
         controller.scrollController.animateTo(

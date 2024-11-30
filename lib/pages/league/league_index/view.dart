@@ -1,4 +1,6 @@
+import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
@@ -25,6 +27,7 @@ import 'package:extended_tabs/extended_tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class LeaguePage extends StatelessWidget {
   const LeaguePage({super.key});
@@ -97,23 +100,37 @@ class _LeagueIndexPageState extends State<LeagueIndexPage>
   // 主视图
   Widget _buildView() {
     return Expanded(
-      child: PageStorage(
-        bucket: PageStorageBucket(),
-        child: NestedScrollView(
-          floatHeaderSlivers: true,
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return <Widget>[
-              buildHeader(),
-            ];
-          },
-          body: ExtendedTabBarView(
-              cacheExtent: 1,
-              controller: controller.tabController,
-              children: controller.getDataTimes().map((e) {
-                return ScorePage(e);
-              }).toList()),
-        ),
-      ),
+      child: Obx(() {
+        if (controller.loadStatus.value != LoadDataStatus.success) {
+          return Expanded(
+              child: SmartRefresher(
+            controller: controller.refreshController,
+            child: Center(
+              child: LoadStatusWidget(
+                loadDataStatus: controller.loadStatus.value,
+              ),
+            ),
+          ));
+        }
+        return PageStorage(
+          bucket: PageStorageBucket(),
+          child: NestedScrollView(
+            floatHeaderSlivers: true,
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) {
+              return <Widget>[
+                buildHeader(),
+              ];
+            },
+            body: ExtendedTabBarView(
+                cacheExtent: 1,
+                controller: controller.tabController,
+                children: controller.getDataTimes().map((e) {
+                  return ScorePage(e);
+                }).toList()),
+          ),
+        );
+      }),
     );
   }
 

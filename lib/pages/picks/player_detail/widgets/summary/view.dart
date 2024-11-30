@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity.dart';
@@ -41,13 +42,12 @@ class _SummaryPageState extends State<SummaryPage>
   @override
   Widget build(BuildContext context) {
     playerDetailController = Get.find();
-    controller = Get.put(SummaryController(widget.playerId, initTabStr: widget.tabStr));
+    controller =
+        Get.put(SummaryController(widget.playerId, initTabStr: widget.tabStr));
     return GetBuilder<SummaryController>(
-      init: controller ,
+      init: controller,
       id: SummaryController.idSummaryMain,
       builder: (_) {
-        var scrollController1 = ScrollController();
-        var scrollController = ScrollController();
         if (controller.nbaPlayerBaseInfoEntity == null) {
           return Obx(() {
             return Center(
@@ -57,272 +57,359 @@ class _SummaryPageState extends State<SummaryPage>
             );
           });
         } else {
+          var scrollController = ScrollController();
+
           return SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                18.vGap,
+                9.vGap,
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 16.w),
-                  child: Text(
-                    "Season Average",
-                    style: 16.w7(color: AppColors.c262626, height: 1),
-                  ),
-                ),
-                Builder(builder: (context) {
-                  var seasonAverageData = controller.getSeasonAverageData();
-                  return SizedBox(
-                    height: 90.w,
-                    child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        controller: scrollController1,
-                        physics: OneBoundaryScrollPhysics(
-                            scrollController: scrollController1),
-                        itemCount: seasonAverageData.length,
-                        itemBuilder: (context, index) {
-                          PlayerRegular item = seasonAverageData[index];
-                          return Container(
-                            height: 62.w,
-                            width: 62.w,
-                            margin: EdgeInsets.only(
-                                right: 4.w,
-                                top: 14.w,
-                                bottom: 14.w,
-                                left: index == 0 ? 16.w : 0),
-                            decoration: BoxDecoration(
-                                color: AppColors.cF2F2F2,
-                                borderRadius: BorderRadius.circular(16.w)),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  item.value.toStringAsFixed(1),
-                                  style: 19
-                                      .w7(color: AppColors.c262626, height: 1),
-                                ),
-                                6.vGap,
-                                Text(
-                                  item.key,
-                                  style: 10
-                                      .w4(color: AppColors.c666666, height: 1),
-                                ),
-                                2.vGap,
-                                Opacity(
-                                    opacity: item.rank <= 100 ? 1 : 0,
-                                    child: Text(
-                                      Utils.getSortWithInt(item.rank),
-                                      style: 12.w7(
-                                          color: AppColors.cFF7954, height: 1),
-                                    )),
-                                2.vGap
-                              ],
-                            ),
-                          );
-                        }),
-                  );
-                }),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 16.w),
-                  child: Text(
-                    "Recent Performance",
-                    style: 16.w7(color: AppColors.c262626, height: 1),
-                  ),
-                ),
-                GetBuilder<SummaryController>(
-                    id: SummaryController.idTabContent,
-                    builder: (c) {
-                      return Column(
-                        children: [
-                          SizedBox(
-                            height: 48.w,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12.w),
+                      color: AppColors.cFFFFFF),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: 75.w,
+                        margin: EdgeInsets.only(left: 16.w),
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "24-25 STATS",
+                          style: 30.w7(
+                              color: AppColors.c262626,
+                              height: 1,
+                              fontFamily: FontFamily.fOswaldBold),
+                        ),
+                      ),
+                      Divider(
+                        color: AppColors.cE6E6E,
+                        height: 1.w,
+                      ),
+                      Builder(builder: (context) {
+                        var seasonAverageData =
+                            controller.getSeasonAverageData();
+                        return SizedBox(
+                          width: double.infinity,
+                          height: 101.w,
+                          child: MediaQuery.removePadding(
+                            removeTop: true,
+                            context: context,
                             child: ListView.builder(
-                                itemCount: controller.getTitles().length,
+                                scrollDirection: Axis.horizontal,
+                                itemCount: seasonAverageData.length,
                                 controller: scrollController,
                                 physics: OneBoundaryScrollPhysics(
                                     scrollController: scrollController),
-                                scrollDirection: Axis.horizontal,
                                 itemBuilder: (context, index) {
-                                  var key = controller.getTitles().toList()[index];
-                                  return Obx(() {
-                                    bool isSelected =
-                                        controller.currentIndex.value == index;
-                                    return InkWell(
-                                      onTap: () => controller.onTabTap(index),
-                                      child: Container(
-                                        margin: EdgeInsets.only(
-                                            right: 4.w,
-                                            top: 14.w,
-                                            bottom: 14.w,
-                                            left: index == 0 ? 16.w : 0),
-                                        height: 20.w,
-                                        width: 61.w,
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                            color: isSelected
-                                                ? AppColors.c262626
-                                                : AppColors.cD9D9D9,
-                                            borderRadius:
-                                                BorderRadius.circular(10.w)),
-                                        child: Text(
-                                          key.replaceAll(",", "+"),
-                                          style: 13.w4(
-                                              color: isSelected
-                                                  ? AppColors.cF2F2F2
-                                                  : AppColors.c262626,
-                                              height: 1),
+                                  PlayerRegular item = seasonAverageData[index];
+                                  bool lastIndex =
+                                      seasonAverageData.length - 1 == index;
+                                  return SizedBox(
+                                    height: 101.w,
+                                    width: 93.w,
+                                    child: Stack(
+                                      alignment: Alignment.center,
+                                      children: [
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              item.value.toStringAsFixed(1),
+                                              style: 21.w5(
+                                                  color: AppColors.c262626,
+                                                  height: 1,
+                                                  fontFamily:
+                                                      FontFamily.fOswaldMedium),
+                                            ),
+                                            6.vGap,
+                                            Text(
+                                              item.key,
+                                              style: 10.w4(
+                                                  color: AppColors.c666666,
+                                                  height: 1,
+                                                  fontFamily: FontFamily
+                                                      .fRobotoRegular),
+                                            ),
+                                            9.vGap,
+                                            Opacity(
+                                                opacity:
+                                                    item.rank <= 100 ? 1 : 0,
+                                                child: Text(
+                                                  Utils.getSortWithInt(
+                                                      item.rank),
+                                                  style: 12.w5(
+                                                      color: AppColors.cFF7954,
+                                                      height: 1,
+                                                      fontFamily: FontFamily
+                                                          .fRobotoMedium),
+                                                )),
+                                            2.vGap
+                                          ],
                                         ),
-                                      ),
-                                    );
-                                  });
+                                        if (!lastIndex)
+                                          Positioned(
+                                            right: 0,
+                                            child: Container(
+                                              color: AppColors.cE6E6E,
+                                              width: 1.w,
+                                              height: 54.w,
+                                            ),
+                                          )
+                                      ],
+                                    ),
+                                  );
                                 }),
                           ),
-                          Container(
-                            margin: EdgeInsets.symmetric(horizontal: 16.w),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                    child: Container(
-                                  height: 70.w,
-                                  padding: EdgeInsets.only(left: 14.w),
-                                  decoration: BoxDecoration(
-                                      color: AppColors.cF2F2F2,
-                                      borderRadius:
-                                          BorderRadius.circular(16.w)),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Season Avg",
-                                        style: 14.w4(
-                                            color: AppColors.c666666,
-                                            height: 1),
-                                      ),
-                                      10.vGap,
-                                      Text(
-                                        controller.getSeasonAvgWithTab(),
-                                        style: 27.w7(
-                                            color: AppColors.c262626,
-                                            height: 1),
-                                      )
-                                    ],
-                                  ),
-                                )),
-                                9.hGap,
-                                Expanded(
-                                    child: Container(
-                                  height: 70.w,
-                                  padding: EdgeInsets.only(left: 14.w),
-                                  decoration: BoxDecoration(
-                                      color: AppColors.cF2F2F2,
-                                      borderRadius:
-                                          BorderRadius.circular(16.w)),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Last 5 Avg",
-                                        style: 14.w4(
-                                            color: AppColors.c666666,
-                                            height: 1),
-                                      ),
-                                      10.vGap,
-                                      Text(
-                                        controller.getLast5AvgWithTab(),
-                                        style: 27.w7(
-                                            color: AppColors.c262626,
-                                            height: 1),
-                                      )
-                                    ],
-                                  ),
-                                )),
-                              ],
-                            ),
-                          ),
-                          Builder(builder: (context) {
-                            if (controller
-                                .nbaPlayerBaseInfoEntity!.l5GameData.isEmpty) {
-                              return const SizedBox.shrink();
-                            }
+                        );
+                      }),
+                    ],
+                  ),
+                ),
+                9.vGap,
+                Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12.w),
+                      color: AppColors.cFFFFFF),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      25.vGap,
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 16.w),
+                        child: Text(
+                          "RECENT",
+                          style: 30.w7(
+                              color: AppColors.c262626,
+                              height: 1,
+                              fontFamily: FontFamily.fOswaldBold),
+                        ),
+                      ),
+                      25.vGap,
+                      GetBuilder<SummaryController>(
+                          id: SummaryController.idTabContent,
+                          builder: (c) {
                             return Column(
                               children: [
-                                9.vGap,
+                                SizedBox(
+                                  height: 28.w,
+                                  child: MediaQuery.removePadding(
+                                    context: context,
+                                    removeTop: true,
+                                    child: ListView.builder(
+                                        itemCount:
+                                            controller.getTitles().length,
+                                        scrollDirection: Axis.horizontal,
+                                        itemBuilder: (context, index) {
+                                          var key = controller
+                                              .getTitles()
+                                              .toList()[index];
+                                          return Obx(() {
+                                            bool isSelected =
+                                                controller.currentIndex.value ==
+                                                    index;
+                                            return InkWell(
+                                              onTap: () =>
+                                                  controller.onTabTap(index),
+                                              child: Container(
+                                                margin: EdgeInsets.only(
+                                                    right: 4.w,
+                                                    left:
+                                                        index == 0 ? 16.w : 0),
+                                                height: 28.w,
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 21.w),
+                                                alignment: Alignment.center,
+                                                decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                        color:
+                                                            AppColors.c666666,
+                                                        width: 1.w),
+                                                    color: isSelected
+                                                        ? AppColors.c262626
+                                                        : AppColors.cFFFFFF,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            14.w)),
+                                                child: Text(
+                                                  key.replaceAll(",", "+"),
+                                                  style: 13.w5(
+                                                      color: isSelected
+                                                          ? AppColors.cF2F2F2
+                                                          : AppColors.c262626,
+                                                      height: 1,
+                                                      fontFamily: FontFamily
+                                                          .fOswaldMedium),
+                                                ),
+                                              ),
+                                            );
+                                          });
+                                        }),
+                                  ),
+                                ),
+                                16.vGap,
+                                Divider(
+                                  color: AppColors.cE6E6E,
+                                  height: 1.w,
+                                ),
                                 Container(
-                                  height: 162.w,
                                   margin:
                                       EdgeInsets.symmetric(horizontal: 16.w),
-                                  padding: EdgeInsets.all(10.w),
-                                  decoration: BoxDecoration(
-                                      color: AppColors.cF2F2F2,
-                                      borderRadius:
-                                          BorderRadius.circular(16.w)),
-                                  child: Stack(
+                                  child: Row(
                                     children: [
-                                      _buildDefaultColumnChart(context),
+                                      Expanded(
+                                          child: Container(
+                                        height: 94.w,
+                                        padding: EdgeInsets.only(left: 14.w),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              "Season Avg",
+                                              style: 12.w4(
+                                                  color: AppColors.c666666,
+                                                  height: 1,
+                                                  fontFamily: FontFamily
+                                                      .fRobotoRegular),
+                                            ),
+                                            15.vGap,
+                                            Text(
+                                              controller.getSeasonAvgWithTab(),
+                                              style: 27.w7(
+                                                  color: AppColors.c262626,
+                                                  height: 1,
+                                                  fontFamily:
+                                                      FontFamily.fOswaldBold),
+                                            )
+                                          ],
+                                        ),
+                                      )),
+                                      Container(
+                                        width: 1.w,
+                                        color: AppColors.cE6E6E,
+                                        height: 67.w,
+                                      ),
+                                      Expanded(
+                                          child: Container(
+                                        height: 94.w,
+                                        padding: EdgeInsets.only(left: 14.w),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              "Last 5 Avg",
+                                              style: 14.w4(
+                                                  color: AppColors.c666666,
+                                                  height: 1,
+                                                  fontFamily: FontFamily
+                                                      .fRobotoRegular),
+                                            ),
+                                            15.vGap,
+                                            Text(
+                                              controller.getLast5AvgWithTab(),
+                                              style: 27.w7(
+                                                  color: AppColors.c262626,
+                                                  height: 1,
+                                                  fontFamily:
+                                                      FontFamily.fOswaldBold),
+                                            )
+                                          ],
+                                        ),
+                                      )),
                                     ],
                                   ),
                                 ),
-                              ],
-                            );
-                          }),
-                          _buildPick(),
-                          _buildCommunityPick(),
-                          Builder(builder: (context) {
-                            if (controller.getVsTeams().isEmpty ||
-                                controller.getPickInfo() == null) {
-                              return const SizedBox.shrink();
-                            }
-                            return Column(
-                              children: [
-                                9.vGap,
-                                Container(
-                                  height: 87.w,
-                                  width: double.infinity,
-                                  margin:
-                                      EdgeInsets.symmetric(horizontal: 16.w),
-                                  decoration: BoxDecoration(
-                                      color: AppColors.cF2F2F2,
-                                      image: const DecorationImage(
-                                          image: AssetImage(
-                                            Assets.testTestTeamLogo,
-                                          ),
-                                          alignment: Alignment.topRight,
-                                          opacity: 0.1),
-                                      borderRadius:
-                                          BorderRadius.circular(16.w)),
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 14.w),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.end,
+                                Builder(builder: (context) {
+                                  if (controller.nbaPlayerBaseInfoEntity!
+                                      .l5GameData.isEmpty) {
+                                    return const SizedBox.shrink();
+                                  }
+                                  return Column(
                                     children: [
-                                      Text(
-                                        "vs ${controller.getPickInfo()?.teamInfo.shortEname}",
-                                        style: 14.w7(
-                                            color: AppColors.c262626,
-                                            height: 1),
+                                      9.vGap,
+                                      Container(
+                                        height: 162.w,
+                                        margin: EdgeInsets.symmetric(
+                                            horizontal: 16.w),
+                                        padding: EdgeInsets.all(10.w),
+                                        child: Stack(
+                                          children: [
+                                            _buildDefaultColumnChart(context),
+                                          ],
+                                        ),
                                       ),
-                                      10.vGap,
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: getVsWidget(),
-                                      ),
-                                      9.vGap
                                     ],
-                                  ),
-                                ),
+                                  );
+                                }),
+                                _buildPick(),
+                                _buildCommunityPick(),
+                                Builder(builder: (context) {
+                                  if (controller.getVsTeams().isEmpty ||
+                                      controller.getPickInfo() == null) {
+                                    return const SizedBox.shrink();
+                                  }
+                                  return Column(
+                                    children: [
+                                      9.vGap,
+                                      Container(
+                                        height: 87.w,
+                                        width: double.infinity,
+                                        margin: EdgeInsets.symmetric(
+                                            horizontal: 16.w),
+                                        decoration: BoxDecoration(
+                                            color: AppColors.cF2F2F2,
+                                            image: const DecorationImage(
+                                                image: AssetImage(
+                                                  Assets.testTestTeamLogo,
+                                                ),
+                                                alignment: Alignment.topRight,
+                                                opacity: 0.1),
+                                            borderRadius:
+                                                BorderRadius.circular(16.w)),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 14.w),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Text(
+                                              "vs ${controller.getPickInfo()?.teamInfo.shortEname}",
+                                              style: 14.w7(
+                                                  color: AppColors.c262626,
+                                                  height: 1),
+                                            ),
+                                            10.vGap,
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: getVsWidget(),
+                                            ),
+                                            9.vGap
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                }),
+                                22.vGap,
                               ],
                             );
                           }),
-                        ],
-                      );
-                    }),
+                    ],
+                  ),
+                ),
                 18.vGap,
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 16.w),
@@ -1249,10 +1336,10 @@ class _SummaryPageState extends State<SummaryPage>
           end: pickInfo.value,
           // 虚线的终止位置（y 值），相同值表示一条线
           borderWidth: 1,
-          text: 'Pick.\n${pickInfo.value}',
+          text: 'AVG \n${pickInfo.value}',
           verticalTextPadding: verticalTextPadding,
           horizontalTextAlignment: TextAnchor.end,
-          verticalTextAlignment: TextAnchor.end,
+          verticalTextAlignment: TextAnchor.middle,
           textStyle: 9.w4(color: AppColors.c262626, height: 1),
           // 虚线的宽度
           borderColor: AppColors.cFF7954.withOpacity(0.5),
@@ -1270,11 +1357,11 @@ class _SummaryPageState extends State<SummaryPage>
         axisLine: const AxisLine(color: AppColors.cD9D9D9, width: 1),
         majorTickLines: const MajorTickLines(size: 0),
         labelIntersectAction: AxisLabelIntersectAction.wrap,
-        labelStyle: 9.w4(color: AppColors.cB3B3B3),
+        labelStyle: 10.w4(color: AppColors.cB3B3B3),
       ),
       // 添加标注
       primaryYAxis: NumericAxis(
-        labelStyle: 9.w4(color: AppColors.cB3B3B3),
+        labelStyle: 10.w4(color: AppColors.cB3B3B3),
         plotBands: plotBands,
         axisLine: const AxisLine(width: 0),
         // maximum: controller.getColumnMaxYValue().toDouble(),

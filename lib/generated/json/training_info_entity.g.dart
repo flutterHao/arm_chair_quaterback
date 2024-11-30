@@ -1,5 +1,7 @@
 import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
+import 'dart:ui';
+
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 
 import 'package:get/get.dart';
@@ -351,6 +353,10 @@ TrainingInfoBuff $TrainingInfoBuffFromJson(Map<String, dynamic> json) {
   if (color != null) {
     trainingInfoBuff.color = color;
   }
+  final bool? showBuff = jsonConvert.convert<bool>(json['showBuff']);
+  if (showBuff != null) {
+    trainingInfoBuff.showBuff = showBuff;
+  }
   return trainingInfoBuff;
 }
 
@@ -366,6 +372,7 @@ Map<String, dynamic> $TrainingInfoBuffToJson(TrainingInfoBuff entity) {
   data['buffId'] = entity.buffId;
   data['face'] = entity.face;
   data['color'] = entity.color;
+  data['showBuff'] = entity.showBuff;
   return data;
 }
 
@@ -383,6 +390,8 @@ extension TrainingInfoBuffExtension on TrainingInfoBuff {
     int? color,
     RxBool? isOpen,
     RxBool? isSelect,
+    Rx<Offset>? offset,
+    bool? showBuff,
   }) {
     return TrainingInfoBuff()
       ..id = id ?? this.id
@@ -396,6 +405,8 @@ extension TrainingInfoBuffExtension on TrainingInfoBuff {
       ..face = face ?? this.face
       ..color = color ?? this.color
       ..isOpen = isOpen ?? this.isOpen
-      ..isSelect = isSelect ?? this.isSelect;
+      ..isSelect = isSelect ?? this.isSelect
+      ..offset = offset ?? this.offset
+      ..showBuff = showBuff ?? this.showBuff;
   }
 }

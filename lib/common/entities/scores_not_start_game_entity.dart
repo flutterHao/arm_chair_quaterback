@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/entities/game_schedules_info.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/scores_not_start_game_entity.g.dart';
 import 'dart:convert';
@@ -6,9 +7,9 @@ export 'package:arm_chair_quaterback/generated/json/scores_not_start_game_entity
 @JsonSerializable()
 class ScoresNotStartGameEntity {
   late Map<String, List<TeamPlayer>> teamPlayerMap;
-  late Map<String, List<TeamHistory>> teamHistoryMap;
+  late Map<String, List<GameSchedulesInfo>> teamHistoryMap;
   late List<TeamPlayer> nbaTeamStatRankList;
-  late List<TeamHistory> nbaGameSchedules;
+  late List<GameSchedulesInfo> nbaGameSchedules;
 
   ScoresNotStartGameEntity();
 

@@ -1,5 +1,7 @@
 import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_not_start_game_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/game_schedules_info.dart';
+
 
 ScoresNotStartGameEntity $ScoresNotStartGameEntityFromJson(
     Map<String, dynamic> json) {
@@ -14,12 +16,13 @@ ScoresNotStartGameEntity $ScoresNotStartGameEntityFromJson(
   if (teamPlayerMap != null) {
     scoresNotStartGameEntity.teamPlayerMap = teamPlayerMap;
   }
-  final Map<String, List<TeamHistory>>? teamHistoryMap =
+  final Map<String, List<GameSchedulesInfo>>? teamHistoryMap =
   (json['teamHistoryMap'] as Map<String, dynamic>).map(
           (k, e) =>
           MapEntry(k, (e as List<dynamic>)
               .map(
-                  (e) => jsonConvert.convert<TeamHistory>(e) as TeamHistory)
+                  (e) =>
+              jsonConvert.convert<GameSchedulesInfo>(e) as GameSchedulesInfo)
               .toList()));
   if (teamHistoryMap != null) {
     scoresNotStartGameEntity.teamHistoryMap = teamHistoryMap;
@@ -31,9 +34,12 @@ ScoresNotStartGameEntity $ScoresNotStartGameEntityFromJson(
   if (nbaTeamStatRankList != null) {
     scoresNotStartGameEntity.nbaTeamStatRankList = nbaTeamStatRankList;
   }
-  final List<TeamHistory>? nbaGameSchedules = (json['nbaGameSchedules'] as List<
-      dynamic>?)?.map(
-          (e) => jsonConvert.convert<TeamHistory>(e) as TeamHistory).toList();
+  final List<
+      GameSchedulesInfo>? nbaGameSchedules = (json['nbaGameSchedules'] as List<
+      dynamic>?)
+      ?.map(
+          (e) => jsonConvert.convert<GameSchedulesInfo>(e) as GameSchedulesInfo)
+      .toList();
   if (nbaGameSchedules != null) {
     scoresNotStartGameEntity.nbaGameSchedules = nbaGameSchedules;
   }
@@ -55,9 +61,9 @@ Map<String, dynamic> $ScoresNotStartGameEntityToJson(
 extension ScoresNotStartGameEntityExtension on ScoresNotStartGameEntity {
   ScoresNotStartGameEntity copyWith({
     Map<String, List<TeamPlayer>>? teamPlayerMap,
-    Map<String, List<TeamHistory>>? teamHistoryMap,
+    Map<String, List<GameSchedulesInfo>>? teamHistoryMap,
     List<TeamPlayer>? nbaTeamStatRankList,
-    List<TeamHistory>? nbaGameSchedules,
+    List<GameSchedulesInfo>? nbaGameSchedules,
   }) {
     return ScoresNotStartGameEntity()
       ..teamPlayerMap = teamPlayerMap ?? this.teamPlayerMap

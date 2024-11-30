@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/entities/game_schedules_info.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
@@ -37,7 +38,10 @@ class LeagueController extends GetxController
 
   var guessSuccessTabKeys = [].obs;
 
-  late TabController tabController;
+  TabController? tabController;
+
+  // 存储的没有数据的日期
+  List<DateTime> noDataDayList = [];
 
   List<DateTime> getDataTimes() {
     // 获取今天的日期
@@ -51,19 +55,18 @@ class LeagueController extends GetxController
         return DateTime(date.year, date.month, date.day); // 设置时间为零点
       },
     );
+    dateList.removeWhere((e) => noDataDayList.contains(e));
     return dateList;
   }
 
   /// 预加载今明两天的数据,因为只可以竞猜这两天的赛程
-  preLoadData(){
+  preLoadData() {
     currentPageIndex.value = 6;
     getDataFromNet(getDataTimes()[currentPageIndex.value]);
-    getDataFromNet(getDataTimes()[currentPageIndex.value+1]);
-
+    getDataFromNet(getDataTimes()[currentPageIndex.value + 1]);
   }
 
   void getDataFromNet(DateTime time) {
-    loadStatus.value = LoadDataStatus.loading;
     var startTime = time.millisecondsSinceEpoch;
     var endTime = MyDateUtils.nextDay(time).millisecondsSinceEpoch;
     print('scores -------->>> startTime: $startTime -> ${time.day}');
@@ -72,13 +75,13 @@ class LeagueController extends GetxController
       CacheApi.getNBATeamDefine(),
       CacheApi.getNBAPlayerInfo(),
     ];
-    if(picksDefineEntity == null){
+    if (picksDefineEntity == null) {
       futures.add(CacheApi.getPickDefine());
     }
 
     Future.wait(futures).then((result) {
       var list = result[0] as List<ScoresEntity>;
-      if(futures.length==4){
+      if (futures.length == 4) {
         picksDefineEntity = result[3] as PicksDefineEntity;
       }
       scoreList = list.map((e) {
@@ -87,20 +90,12 @@ class LeagueController extends GetxController
       }).toList();
       sortScoreList();
       cacheGameGuessData["${startTime}_$endTime"] = scoreList;
-      if (scoreList.isEmpty) {
-        loadStatus.value = LoadDataStatus.noData;
-      } else {
-        loadStatus.value = LoadDataStatus.success;
-      }
-      refreshController.refreshCompleted();
-    }, onError: (e) {
-      ErrorUtils.toast(e);
-      loadStatus.value = LoadDataStatus.error;
-    });
+    }, onError: (e) {});
   }
 
   void sortScoreList() {
-    scoreList.sort((a,b) => a.scoresEntity.gameStartTime.compareTo(b.scoresEntity.gameStartTime));
+    scoreList.sort((a, b) =>
+        a.scoresEntity.gameStartTime.compareTo(b.scoresEntity.gameStartTime));
     scoreList.sort((a, b) {
       //比赛开赛前，没有猜过的排前面
       if (a.scoresEntity.isGuess != 0) return 1;
@@ -109,21 +104,59 @@ class LeagueController extends GetxController
     });
   }
 
-
   /// 在 widget 内存中分配后立即调用。
   @override
   void onInit() {
     super.onInit();
-    currentPageIndex.value = 6;
-    tabController = TabController(
-      initialIndex: currentPageIndex.value,
-        length:
-            getDataTimes().map((e) => e.millisecondsSinceEpoch).toList().length,
-        vsync: this)..addListener((){
-          onPageChanged(tabController.index);
-    });
-    CacheApi.getPickDefine().then((result){
-      picksDefineEntity = result;
+    initData();
+  }
+
+  initData() {
+    loadStatus.value = LoadDataStatus.loading;
+    Future.wait([
+      CacheApi.getPickDefine(),
+      LeagueApi.queryNBAGameSchedulesInfo(
+          getDataTimes().first.millisecondsSinceEpoch,
+          getDataTimes().last.millisecondsSinceEpoch)
+    ]).then((result) {
+      picksDefineEntity = result[0] as PicksDefineEntity;
+      List<GameSchedulesInfo> list = result[1] as List<GameSchedulesInfo>;
+
+      noDataDayList = getDataTimes()
+          .where((e) => list
+              .where((l) => MyDateUtils.isSameDay(
+                  MyDateUtils.getDateTimeByMs(l.gameStartTime), e))
+              .isEmpty)
+          .toList();
+      var dateTime = DateTime.now();
+      var nowStartTime = DateTime(dateTime.year, dateTime.month, dateTime.day);
+      if (getDataTimes().contains(nowStartTime)) {
+        currentPageIndex.value = getDataTimes().indexOf(nowStartTime);
+      } else if (getDataTimes().length > 6) {
+        currentPageIndex.value = 6;
+      } else {
+        currentPageIndex.value = getDataTimes().length - 1;
+      }
+      if (getDataTimes().isEmpty) {
+        loadStatus.value = LoadDataStatus.noData;
+      } else {
+        loadStatus.value = LoadDataStatus.success;
+        tabController ??= TabController(
+            initialIndex: currentPageIndex.value,
+            length: getDataTimes()
+                .map((e) => e.millisecondsSinceEpoch)
+                .toList()
+                .length,
+            vsync: this)
+          ..addListener(() {
+            onPageChanged(tabController!.index);
+          });
+      }
+      refreshController.refreshCompleted();
+    }, onError: (e) {
+      ErrorUtils.toast(e);
+      loadStatus.value = LoadDataStatus.error;
+      refreshController.refreshCompleted();
     });
   }
 
@@ -143,13 +176,13 @@ class LeagueController extends GetxController
     return MyDateUtils.nextDay(dataTime).millisecondsSinceEpoch;
   }
 
-
   onPageChanged(int index) {
     currentPageIndex.value = index;
   }
 
   void btnTap(GameGuess gameGuess, int teamId) {
-    print('gameGuess.choiceTeamId.value:${gameGuess.choiceTeamId.value},teamId:$teamId');
+    print(
+        'gameGuess.choiceTeamId.value:${gameGuess.choiceTeamId.value},teamId:$teamId');
     gameGuess.choiceTeamId.value =
         gameGuess.choiceTeamId.value == teamId ? 0 : teamId;
     print('gameGuess.choiceTeamId.value:${gameGuess.choiceTeamId.value}');
@@ -160,8 +193,7 @@ class LeagueController extends GetxController
 
   static String get idGameGuessConfirmDialog => "id_game_guess_confirm_dialog";
 
-
-  deleteOne(){
+  deleteOne() {
     choiceSize.value = getAllChoiceData().length;
     update([idGameGuessConfirmDialog]);
   }
@@ -181,7 +213,7 @@ class LeagueController extends GetxController
       var list = cacheGameGuessData[e]!
           .where((e) => e.choiceTeamId.value != 0)
           .toList();
-      if(list.isNotEmpty){
+      if (list.isNotEmpty) {
         p.add(e);
       }
       return p;

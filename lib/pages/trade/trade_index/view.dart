@@ -54,15 +54,6 @@ class TradeIndex extends StatelessWidget {
               page: () => const TradeIndexPage(),
               // binding: TradeIndexBinding(),
             );
-          case RouteNames.picksPlayerDetail:
-            return GetPageRoute(
-                opaque: false,
-                settings: setting,
-                customTransition: HalfSlideRightToLeftTransition(),
-                barrierColor: Colors.transparent,
-                page: () => PlayerDetailPage(
-                      arguments: setting.arguments as PlayerDetailPageArguments,
-                    ));
           case RouteNames.mineMineInfo:
             return GetPageRoute(
                 opaque: false,

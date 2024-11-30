@@ -9,6 +9,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 
+import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
@@ -291,5 +292,10 @@ class Utils {
         : progress > 20
             ? AppColors.cDFB523
             : AppColors.cE72646);
+  }
+
+  /// 使用队伍id 获取队伍的颜色
+  static Color getTeamColor(int teamId) {
+    return Constant.teamColorMap[teamId]?['light'] ?? AppColors.c404040;
   }
 }

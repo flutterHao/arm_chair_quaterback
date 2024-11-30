@@ -58,8 +58,7 @@ class PlayerAvatarWidget extends StatelessWidget {
     return InkWell(
       onTap: () => canTap
           ? Get.toNamed(RouteNames.picksPlayerDetail,
-              arguments: PlayerDetailPageArguments(playerId,isMyPlayer: isMyPlayer, tabStr: tabStr),
-              id: getXRouteId)
+              arguments: PlayerDetailPageArguments(playerId,isMyPlayer: isMyPlayer, tabStr: tabStr))
           : null,
       child: Stack(
         children: [

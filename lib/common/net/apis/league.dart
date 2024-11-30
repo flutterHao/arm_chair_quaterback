@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/entities/game_schedules_info.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_game_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/league_detail_picks_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_game_detail_entity.dart';
@@ -49,5 +50,12 @@ class LeagueApi {
         .map((e) => ScoresEntity.fromJson(e))
         .toList();
     return LeagueDetailPicksEntity(g, s);
+  }
+
+  static Future<List<GameSchedulesInfo>> queryNBAGameSchedulesInfo(
+      int startTime, int endTime) async {
+    List json = await httpUtil.post(Api.queryNBAGameSchedulesInfo,
+        data: {"startTime": startTime, "endTime": endTime});
+    return json.map((e) => GameSchedulesInfo.fromJson(e)).toList();
   }
 }

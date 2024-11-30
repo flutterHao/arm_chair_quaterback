@@ -346,7 +346,7 @@ class SummaryController extends GetxController {
           ? AppColors.cFF7954
           : AppColors.cD9D9D9;
       return ChartSampleData(
-          x: '$monthEnName ${timeByMs.day}\nvs ${Utils.getTeamInfo(e.awayTeamId).shortEname}',
+          x: '$monthEnName ${timeByMs.day}\nVS ${Utils.getTeamInfo(e.awayTeamId).shortEname}',
           y: value,
           pointColor: color);
     }).toList();

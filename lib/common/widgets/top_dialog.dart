@@ -445,6 +445,9 @@ class _TopDialogState extends State<TopDialog>
             ),
             Expanded(child: InkWell(
               onTap: () {
+                if(animationController.isAnimating){
+                  return;
+                }
                 ///点击空白处
                 offsetDy.value = 0;
                 _releaseAnimation(isBack: true);
