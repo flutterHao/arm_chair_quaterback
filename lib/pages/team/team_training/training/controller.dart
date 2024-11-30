@@ -281,6 +281,7 @@ class TrainingController extends GetxController
           currentTaskNeed = trainTaskList[i].taskNeed;
         }
       }
+      taskValue.value = trainingInfo.training.taskItemCount;
       recoverTimeAndCountDown();
       taskCountDownTime();
       update(["training_page"]);
