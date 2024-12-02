@@ -3,11 +3,11 @@ import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/entities/web_socket/web_socket_entity.dart';
 import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
+import 'package:arm_chair_quaterback/common/net/apis.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:get/get.dart';
 import 'dart:developer' as developer;
-
 
 class TeamBattleController extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -67,8 +67,23 @@ class TeamBattleController extends GetxController
   }
 
   teamMatch() {
-    subscription = WSInstance.teamMatch().listen((result){
-      developer.log('result.serviceId--${result.serviceId}--:${result.payload}');
+    var startMatchTimeMs = DateTime.now().millisecondsSinceEpoch;
+    var minMatchTimeMs = 2000;
+    subscription = WSInstance.teamMatch().listen((result) {
+      developer
+          .log('result.serviceId--${result.serviceId}--:${result.payload}');
+      if (result.serviceId == Api.wsTeamMatch) {
+        battleEntity = BattleEntity.fromJson(result.payload);
+        var currentMs = DateTime.now().millisecondsSinceEpoch;
+        var diff = currentMs - startMatchTimeMs;
+        if (diff >= minMatchTimeMs) {
+          nextStep();
+        } else {
+          Future.delayed(Duration(milliseconds: minMatchTimeMs - diff), () {
+            nextStep();
+          });
+        }
+      }
     });
     // var startMatchTimeMs = DateTime.now().millisecondsSinceEpoch;
     // var minMatchTimeMs = 3000;

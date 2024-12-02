@@ -129,7 +129,7 @@ class ResponseMessage {
   late int statusCode;
   late String statusMsg;
   /// 参数
-  late String payload;
+  late Map<String, dynamic> payload;
 
 
 
@@ -186,7 +186,7 @@ class WebSocketDataHandler {
     respons.timestamp = timeStamp;
     respons.statusCode = statusCode;
     respons.statusMsg = socketBuf.readString(statusBytes);
-    respons.payload = utf8.decode(payload);
+    respons.payload = jsonDecode(utf8.decode(payload));
 
     return respons;
   }

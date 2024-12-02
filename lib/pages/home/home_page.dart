@@ -188,7 +188,7 @@ class _HomePageState extends State<HomePage>
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              if (isCenter && select && false)//二期功能
+              if (isCenter && select && false) //二期功能
                 Expanded(
                     child: SizedBox(
                   width: 4.w,
@@ -196,8 +196,9 @@ class _HomePageState extends State<HomePage>
               IconWidget(
                 iconWidth: 24.w,
                 icon: select ? e.tabIconSelected : e.tabIconNormal,
+                iconColor: select ? null : AppColors.c000000.withOpacity(0.3),
               ),
-              if (isCenter && select&& false)//二期功能
+              if (isCenter && select && false) //二期功能
                 Expanded(
                   child: Column(
                     children: [
