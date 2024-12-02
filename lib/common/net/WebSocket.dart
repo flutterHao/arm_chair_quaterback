@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:arm_chair_quaterback/common/entities/web_socket/web_socket_entity.dart';
@@ -90,8 +91,8 @@ class WSInstance {
       // print('WebSocket--result--TeamService.heartBeat');
       _lastPongTime = DateTime.now();
     } else {
-      print('WebSocket--result--:$result');
-      print('WebSocket--result--payload--:${utf8.decode(result.payload)}');
+      // print('WebSocket--result--:$result');
+      // log('result.serviceId--:${result.payload}');
       _streamController.sink.add(result);
     }
   }
@@ -126,7 +127,7 @@ class WSInstance {
   static void _sendMessage(dynamic message, {String path = ""}) {
     if (path != Api.wsHeartBeat) {
       print('WebSocket--message:$message');
-      print('WebSocket--path:$path');
+      log('WebSocket--path:$path');
     }
     // print('WebSocket--_msgCounter:$_msgCounter');
     var byteData = WebSocketDataHandler.encoder(

@@ -112,6 +112,20 @@ class _LeagueIndexPageState extends State<LeagueIndexPage>
             ),
           ));
         }
+        return Column(
+          children: [
+            buildContainer(),
+            Expanded(
+              child: ExtendedTabBarView(
+                  cacheExtent: 1,
+                  controller: controller.tabController,
+                  children: controller.getDataTimes().map((e) {
+                    return ScorePage(e);
+                  }).toList()),
+            )
+          ],
+        );
+        /// 顶部悬浮方案
         return PageStorage(
           bucket: PageStorageBucket(),
           child: NestedScrollView(
@@ -136,103 +150,107 @@ class _LeagueIndexPageState extends State<LeagueIndexPage>
 
   SliverPersistentHeader buildHeader() {
     return SliverPersistentHeader(
-      pinned: true,
+      floating: true,
       delegate: FixedHeightSliverHeaderDelegate(
-          child: Container(
-            height: 58.w,
-            width: double.infinity,
-            color: AppColors.c262626,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                16.hGap,
-                Expanded(
-                    child: Container(
-                  height: 44.w,
-                  decoration: BoxDecoration(
-                    color: AppColors.c000000,
-                    borderRadius: BorderRadius.circular(9.w),
-                  ),
-                  child: TabBar(
-                    isScrollable: true,
-                    dividerHeight: 0,
-                    tabAlignment: TabAlignment.start,
-                    labelStyle: 12.w4(
-                        color: AppColors.cFFFFFF,
-                        height: 1,
-                        fontFamily: FontFamily.fRobotoRegular),
-                    unselectedLabelStyle: 12.w4(
-                        color: AppColors.c808080,
-                        height: 1,
-                        fontFamily: FontFamily.fRobotoRegular),
-                    controller: controller.tabController,
-                    indicator: BoxDecoration(
-                        color: AppColors.c262626,
-                        borderRadius: BorderRadius.circular(7.w)),
-                    indicatorPadding: EdgeInsets.symmetric(vertical: 3.w),
-                    indicatorSize: TabBarIndicatorSize.tab,
-                    onTap: controller.onPageChanged,
-                    tabs: controller.getDataTimes().map((e) {
-                      var today = MyDateUtils.isToday(e.millisecondsSinceEpoch);
-                      int index = controller.getDataTimes().indexOf(e);
-                      return Obx(() {
-                        var currentIndex = controller.currentPageIndex.value;
-                        var select = currentIndex == index;
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              (today
-                                      ? "TODAY"
-                                      : MyDateUtils.getWeekday(e, short: true))
-                                  .toUpperCase(),
-                              style: 12.w4(
-                                  color: today
-                                      ? AppColors.cFF7954
-                                      : select
-                                          ? AppColors.cFFFFFF
-                                          : AppColors.c808080,
-                                  height: 1,
-                                  fontFamily: FontFamily.fRobotoRegular),
-                            ),
-                            2.vGap,
-                            Text(
-                              e.day.toString(),
-                              style: 16.w5(
-                                  color: select
-                                      ? AppColors.cFFFFFF
-                                      : AppColors.c808080,
-                                  fontFamily: FontFamily.fOswaldMedium,
-                                  height: 1),
-                            )
-                          ],
-                        );
-                      });
-                    }).toList(),
-                  ),
-                )),
-                21.hGap,
-                Container(
-                  width: 40.w,
-                  height: 40.w,
-                  decoration: BoxDecoration(
-                      border: Border.all(color: AppColors.c666666, width: 1),
-                      borderRadius: BorderRadius.circular(9.w)),
-                  child: MtInkwell(
-                      onTap: () => Get.toNamed(
-                            RouteNames.statsRank,
-                            id: GlobalNestedKey.LEAGUES,
-                          ),
-                      child: IconWidget(
-                          iconWidth: 21.w,
-                          icon: Assets.scoresUiScoresIconSystemRank)),
-                ),
-                10.hGap,
-              ],
-            ),
-          ),
+          child: buildContainer(),
           height: 58.w),
     );
+  }
+
+  Container buildContainer() {
+    return Container(
+          height: 58.w,
+          width: double.infinity,
+          color: AppColors.c262626,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              16.hGap,
+              Expanded(
+                  child: Container(
+                height: 44.w,
+                decoration: BoxDecoration(
+                  color: AppColors.c000000,
+                  borderRadius: BorderRadius.circular(9.w),
+                ),
+                child: TabBar(
+                  isScrollable: true,
+                  dividerHeight: 0,
+                  tabAlignment: TabAlignment.start,
+                  labelStyle: 12.w4(
+                      color: AppColors.cFFFFFF,
+                      height: 1,
+                      fontFamily: FontFamily.fRobotoRegular),
+                  unselectedLabelStyle: 12.w4(
+                      color: AppColors.c808080,
+                      height: 1,
+                      fontFamily: FontFamily.fRobotoRegular),
+                  controller: controller.tabController,
+                  indicator: BoxDecoration(
+                      color: AppColors.c262626,
+                      borderRadius: BorderRadius.circular(7.w)),
+                  indicatorPadding: EdgeInsets.symmetric(vertical: 3.w),
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  onTap: controller.onPageChanged,
+                  tabs: controller.getDataTimes().map((e) {
+                    var today = MyDateUtils.isToday(e.millisecondsSinceEpoch);
+                    int index = controller.getDataTimes().indexOf(e);
+                    return Obx(() {
+                      var currentIndex = controller.currentPageIndex.value;
+                      var select = currentIndex == index;
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            (today
+                                    ? "TODAY"
+                                    : MyDateUtils.getWeekday(e, short: true))
+                                .toUpperCase(),
+                            style: 12.w4(
+                                color: today
+                                    ? AppColors.cFF7954
+                                    : select
+                                        ? AppColors.cFFFFFF
+                                        : AppColors.c808080,
+                                height: 1,
+                                fontFamily: FontFamily.fRobotoRegular),
+                          ),
+                          2.vGap,
+                          Text(
+                            e.day.toString(),
+                            style: 16.w5(
+                                color: select
+                                    ? AppColors.cFFFFFF
+                                    : AppColors.c808080,
+                                fontFamily: FontFamily.fOswaldMedium,
+                                height: 1),
+                          )
+                        ],
+                      );
+                    });
+                  }).toList(),
+                ),
+              )),
+              21.hGap,
+              Container(
+                width: 40.w,
+                height: 40.w,
+                decoration: BoxDecoration(
+                    border: Border.all(color: AppColors.c666666, width: 1),
+                    borderRadius: BorderRadius.circular(9.w)),
+                child: MtInkwell(
+                    onTap: () => Get.toNamed(
+                          RouteNames.statsRank,
+                          id: GlobalNestedKey.LEAGUES,
+                        ),
+                    child: IconWidget(
+                        iconWidth: 21.w,
+                        icon: Assets.scoresUiScoresIconSystemRank)),
+              ),
+              10.hGap,
+            ],
+          ),
+        );
   }
 
   @override

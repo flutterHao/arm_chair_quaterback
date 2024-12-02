@@ -6,6 +6,8 @@ import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:get/get.dart';
+import 'dart:developer' as developer;
+
 
 class TeamBattleController extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -66,7 +68,7 @@ class TeamBattleController extends GetxController
 
   teamMatch() {
     subscription = WSInstance.teamMatch().listen((result){
-      print('result.serviceId--:${result.serviceId}');
+      developer.log('result.serviceId--${result.serviceId}--:${result.payload}');
     });
     // var startMatchTimeMs = DateTime.now().millisecondsSinceEpoch;
     // var minMatchTimeMs = 3000;
