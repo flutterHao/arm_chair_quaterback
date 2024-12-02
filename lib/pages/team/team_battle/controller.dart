@@ -1,10 +1,10 @@
+import 'dart:async';
 import 'dart:math';
 
+import 'package:arm_chair_quaterback/common/entities/web_socket/web_socket_entity.dart';
+import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
-import 'package:arm_chair_quaterback/common/net/apis/team.dart';
-import 'package:extended_image/extended_image.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
 class TeamBattleController extends GetxController
@@ -44,6 +44,8 @@ class TeamBattleController extends GetxController
 
   late BattleEntity battleEntity;
 
+  StreamSubscription<ResponseMessage>? subscription;
+
   ///测试数据，需删除
 
   @override
@@ -63,23 +65,26 @@ class TeamBattleController extends GetxController
   }
 
   teamMatch() {
-    var startMatchTimeMs = DateTime.now().millisecondsSinceEpoch;
-    var minMatchTimeMs = 3000;
-    TeamApi.teamMatch().then((result) {
-      battleEntity = result;
-      var currentMs = DateTime.now().millisecondsSinceEpoch;
-      var diff = currentMs - startMatchTimeMs;
-      if (diff >= minMatchTimeMs) {
-        nextStep();
-      } else {
-        Future.delayed(Duration(milliseconds: minMatchTimeMs - diff), () {
-          nextStep();
-        });
-      }
-    }, onError: (e) {
-      EasyLoading.showToast("MATCH FAILED");
-      Get.back();
+    subscription = WSInstance.teamMatch().listen((result){
+      print('result.serviceId--:${result.serviceId}');
     });
+    // var startMatchTimeMs = DateTime.now().millisecondsSinceEpoch;
+    // var minMatchTimeMs = 3000;
+    // TeamApi.teamMatch().then((result) {
+    //   battleEntity = result;
+    //   var currentMs = DateTime.now().millisecondsSinceEpoch;
+    //   var diff = currentMs - startMatchTimeMs;
+    //   if (diff >= minMatchTimeMs) {
+    //     nextStep();
+    //   } else {
+    //     Future.delayed(Duration(milliseconds: minMatchTimeMs - diff), () {
+    //       nextStep();
+    //     });
+    //   }
+    // }, onError: (e) {
+    //   EasyLoading.showToast("MATCH FAILED");
+    //   Get.back();
+    // });
   }
 
   /// 是否有突发新闻
@@ -105,4 +110,10 @@ class TeamBattleController extends GetxController
   }
 
   static get canPop => _canPop;
+
+  @override
+  void onClose() {
+    subscription?.cancel();
+    super.onClose();
+  }
 }

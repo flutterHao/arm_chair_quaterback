@@ -261,11 +261,6 @@ class LeagueDetailPage extends GetView<LeagueDetailController> {
                           controller.isGameStart
                               ? LeagueDetailPlayPage(controller.item!)
                               : PlayNotStartPage(controller.item!),
-                          const Center(
-                            child: LoadStatusWidget(
-                              loadDataStatus: LoadDataStatus.noData,
-                            ),
-                          ),
                         ]),
             )),
           );

@@ -10,6 +10,7 @@
  * @Date: 2024-09-12 16:53:47
  * @LastEditTime: 2024-09-24 10:57:13
  */
+import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/getx_builder_ids.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
@@ -144,6 +145,7 @@ class HomeController extends GetxController {
     await UserStore.to.setToken(v);
     Log.d("用户=$accountName ，鉴权获取到token=$v，开始游客登陆");
     userEntiry = await UserApi.visitorLogin();
+    await WSInstance.init();
     update([GetXBuilderIds.idGlobalUserEntityRefresh]);
   }
 

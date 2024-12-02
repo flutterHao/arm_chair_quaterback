@@ -16,6 +16,7 @@ import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/user_avater_widget.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guess_item_v2/guess_item_controller_v2.dart';
+import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -80,8 +81,8 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
               children: [
                 25.vGap,
                 InkWell(
-                  onTap: () => Get.toNamed(RouteNames.leagueLeagueDetail,
-                      arguments: {"gameId": player.guessInfo.gameId}),
+                  onTap: () => Get.toNamed(RouteNames.picksPlayerDetail,
+                      arguments: PlayerDetailPageArguments(player.guessInfo.playerId,tabStr: player.tabStr)),
                   child: Row(
                     children: [
                       29.hGap,
@@ -92,8 +93,6 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                             height: 93.w,
                             radius: 9.w,
                             playerId: player.guessInfo.playerId,
-                            getXRouteId:
-                                widget.mainRoute ? null : GlobalNestedKey.PICKS,
                             backgroundColor: AppColors.cD9D9D9,
                             tabStr: player.tabStr,
                           ),
@@ -118,6 +117,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
                               player.baseInfoList.ename,
@@ -161,17 +161,25 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                                 18.hGap,
                               ],
                             ),
-                            16.vGap,
+                            6.vGap,
                             Obx(() {
-                              return FittedBox(
-                                fit: BoxFit.scaleDown,
-                                child: Text(
-                                  "${Utils.getTeamInfo(player.baseInfoList.teamId).shortEname}@${player.awayTeamInfo?.shortEname ?? ""}   ${controller.gameStartTimeStr.value}",
-                                  style: 12.w4(
-                                      color: AppColors.c000000,
-                                      fontFamily: FontFamily.fRobotoRegular,
-                                      height: 1),
-                                  overflow: TextOverflow.ellipsis,
+                              return MtInkwell(
+                                splashColor: AppColors.ce5e5e5,
+                                onTap: () => Get.toNamed(RouteNames.leagueLeagueDetail,
+                                    arguments: {"gameId": player.guessInfo.gameId}),
+                                child: SizedBox(
+                                  height: 30.w,
+                                  child: FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    child: Text(
+                                      "${Utils.getTeamInfo(player.baseInfoList.teamId).shortEname}@${player.awayTeamInfo?.shortEname ?? ""}   ${controller.gameStartTimeStr.value}",
+                                      style: 12.w4(
+                                          color: AppColors.c000000,
+                                          fontFamily: FontFamily.fRobotoRegular,
+                                          height: 1),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
                                 ),
                               );
                             })
@@ -245,7 +253,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                   ),
                 ),
                 21.vGap,
-                if (player.guessTopReviews != null) ...[
+                ...[
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: 16.w),
                     height: 1.w,

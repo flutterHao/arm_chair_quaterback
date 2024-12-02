@@ -1,73 +1,158 @@
-import 'dart:convert';
-import 'dart:io';
+import 'dart:async';
 import 'dart:typed_data';
 
+import 'package:arm_chair_quaterback/common/entities/web_socket/web_socket_entity.dart';
+import 'package:arm_chair_quaterback/common/net/index.dart';
+import 'package:arm_chair_quaterback/common/store/config.dart';
+import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
+import 'package:get/get.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 ///
 ///@auther gejiahui
 ///created at 2024/11/30/18:57
 
-class WebSocket {
+class WSInstance {
   static WebSocketChannel? _channel;
-  static int msgCounter = 1;
+  static int _msgCounter = 1;
+  static bool _isClosed = false; // 标记手动关闭
+  static Timer? _reconnectTimer; // 重连定时器
 
-  WebSocket._();
+  static Timer? _pingTimer; // 心跳定时器
+  static DateTime? _lastPongTime; // 记录最后一次收到 pong 的时间
+  static final _streamController =
+      StreamController<ResponseMessage>.broadcast();
 
-  init() async {
+  WSInstance._();
+
+  static init() async {
     if (_channel != null) {
-      print('testWebSocket---already start--');
-      _channel?.sink.add('ping'); // 发送心跳包
-      print('testWebSocket---Sent: ping');
+      print('WebSocket--already start--');
       return;
     }
-    print('testWebSocket---start--');
-
-    final wsUrl = Uri.parse('ws://192.168.12.46:9003');
+    print('WebSocket--start--');
+    final wsUrl = Uri.parse(_getUrl);
     _channel = WebSocketChannel.connect(wsUrl);
 
+    _startPingTimer();
+
     await _channel?.ready;
-    print('testWebSocket---ready--');
+    print('WebSocket--ready--');
+    _auth();
+    _reconnectTimer?.cancel();
+    _lastPongTime = DateTime.now();
 
-    _channel?.sink.add('ping'); // 发送心跳包
-    print('testWebSocket---Sent: ping');
+    _channel?.stream
+        .listen(_onMessageReceive, onError: _onError, onDone: _onDone);
 
-    _channel?.stream.listen((message) {
-      _channel?.sink.add('received!');
-      _channel?.sink.close(WebSocketStatus.goingAway);
-    }, onError: (e) {
-      print('testWebSocket---onError--:$e');
-    }, onDone: () {
-      print('testWebSocket---onDone--:');
+  }
+
+  static void _auth() {
+    auth(
+        Get.find<HomeController>().userEntiry.teamLoginInfo?.team?.teamId ?? 0);
+  }
+
+  // 启动心跳定时器
+  static void _startPingTimer() {
+    _pingTimer?.cancel();
+    _pingTimer = Timer.periodic(const Duration(seconds: 10), (timer) {
+      // 每 10 秒发送一个 ping 消息
+      // print('发送 ping');
+      ping();
+
+      // 检查是否超时
+      if (_lastPongTime != null &&
+          DateTime.now().difference(_lastPongTime!).inSeconds > 15) {
+        print('没有收到 pong 响应，尝试重连');
+        close(); // 如果 15 秒内没有收到 pong，则认为连接断开，进行重连
+        _reconnect();
+      }
     });
   }
 
-  static void sendMessage(String json,{String path=""}) {
-    var byteData = RequestMessage(path: path,json: json,msgCounter: "${msgCounter++}").encoder();
-    _channel?.sink.add(byteData.buffer);
+  static void _onDone() {
+    if (!_isClosed) {
+      print('WebSocket 连接意外关闭');
+      close();
+      _reconnect();
+    }
   }
 
+  static _onError(e) {
+    print('WebSocket--onError--:$e');
+    _streamController.sink.addError(e);
+  }
 
-  decoder() {}
-}
+  static void _onMessageReceive(message) {
+    // print('message--:$message');
+    var result = _decoder(message);
+    if (result.serviceId == Api.wsHeartBeat) {
+      // print('WebSocket--result--TeamService.heartBeat');
+      _lastPongTime = DateTime.now();
+    } else {
+      print('WebSocket--result--:$result');
+      print('WebSocket--result--payload--:${utf8.decode(result.payload)}');
+      _streamController.sink.add(result);
+    }
+  }
 
-class RequestMessage {
-  final String json;final String path;final String msgCounter;
+  // 手动关闭连接
+  static close() {
+    _isClosed = true;
+    _pingTimer?.cancel();
+    _reconnectTimer?.cancel(); // 停止重连
+    _channel?.sink.close();
+    _channel = null;
+  }
 
-  RequestMessage({required this.path, required this.json,required this.msgCounter});
+  // 重连逻辑
+  static void _reconnect() {
+    print('尝试重新连接...');
+    _reconnectTimer?.cancel();
+    _reconnectTimer = Timer(const Duration(seconds: 5), init); // 每 5 秒尝试重连
+  }
 
+  void setUrl(String url) {
+    ConfigStore.to.setWsServiceUrl(url);
+  }
 
-  ByteData encoder(){
-    var byteData = ByteData(8);
-    String si = path;
-    List rps = [json];
-    String ri = msgCounter;
-    String ss = jsonEncode(rps);
-    var body = Uint8List.fromList(utf8.encode(ss));
-    var serviceId = Uint8List.fromList(utf8.encode(si));
-    var capacity = 12 + serviceId.length+body.length;
-    var buf = Uint8List(capacity);
-    // byteData.setInt32(byteOffset, value)
-    return byteData;
+  static String get _getUrl {
+    String url = ConfigStore.to.getWsServiceUrl();
+    return url;
+  }
+
+  static Stream<ResponseMessage> get _stream => _streamController.stream;
+
+  static void _sendMessage(dynamic message, {String path = ""}) {
+    if (path != Api.wsHeartBeat) {
+      print('WebSocket--message:$message');
+      print('WebSocket--path:$path');
+    }
+    // print('WebSocket--_msgCounter:$_msgCounter');
+    var byteData = WebSocketDataHandler.encoder(
+        RequestMessage(path: path, json: message, msgCounter: _msgCounter++));
+    // print('byteData:$byteData');
+    _channel?.sink.add(byteData);
+  }
+
+  static ResponseMessage _decoder(Uint8List message) {
+    ByteBuf buf = ByteBuf(16);
+    buf.writeArrayBuffer(message, 4, message.length - 4);
+    var responseMessage = WebSocketDataHandler.decode(
+        ByteBuf.fromList(buf.getBytes()), buf.length);
+    return responseMessage;
+  }
+
+  static void auth(int teamId) {
+    WSInstance._sendMessage(teamId, path: Api.wsAuthAccount);
+  }
+
+  static void ping() {
+    WSInstance._sendMessage("ping", path: Api.wsHeartBeat);
+  }
+
+  static Stream<ResponseMessage> teamMatch() {
+    WSInstance._sendMessage("", path: Api.wsTeamMatch);
+    return _stream;
   }
 }

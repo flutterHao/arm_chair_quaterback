@@ -18,7 +18,7 @@ class LeagueDetailController extends GetxController
 
   ScoresEntity? item;
   final int? gameId;
-  List<String> tabTitles = ["PICKS", "PREVIEW", "SCORES"];
+  List<String> tabTitles = ["PICKS", "PREVIEW"];
   late TabController tabController;
 
   var loadStatus = LoadDataStatus.loading.obs;
@@ -30,7 +30,7 @@ class LeagueDetailController extends GetxController
   void onInit() {
     super.onInit();
     tabController =
-        TabController(length: tabTitles.length, vsync: this, initialIndex: 0);
+        TabController(length: tabTitles.length, vsync: this, initialIndex: 1);
     if (item != null) {
       loadStatus.value = LoadDataStatus.success;
       _buildGameStartTime();

@@ -35,6 +35,8 @@ class Constant {
 
   static String serviceUrl = "serviceUrl";
 
+  static String wsServiceUrl = "web_socket_serviceUrl";
+
   // 花色
   /// 黑桃
   static const int spade = 1;

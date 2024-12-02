@@ -25,33 +25,31 @@ class TeamBattleV2Page extends GetView<TeamBattleV2Controller> {
 
   @override
   Widget build(BuildContext context) {
-    return HorizontalDragBackWidget(
-      child: GetBuilder<TeamBattleV2Controller>(
-        init: TeamBattleV2Controller(context),
-        builder: (_) {
-          return BlackAppWidget(
-            const UserInfoBar(
-              showPop: true,
+    return GetBuilder<TeamBattleV2Controller>(
+      init: TeamBattleV2Controller(context),
+      builder: (_) {
+        return BlackAppWidget(
+          const UserInfoBar(
+            showPop: true,
+          ),
+          bodyWidget: Expanded(
+              child: SingleChildScrollView(
+            child: Column(
+              children: [
+                buildHeader(),
+                Obx(() {
+                  var isGameOver = controller.isGameOver.value;
+                  if (isGameOver) {
+                    return buildGameOverWidget(context);
+                  }
+                  return buildGameWidget(context);
+                }),
+                buildLiveText(context)
+              ],
             ),
-            bodyWidget: Expanded(
-                child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  buildHeader(),
-                  Obx(() {
-                    var isGameOver = controller.isGameOver.value;
-                    if (isGameOver) {
-                      return buildGameOverWidget(context);
-                    }
-                    return buildGameWidget(context);
-                  }),
-                  buildLiveText(context)
-                ],
-              ),
-            )),
-          );
-        },
-      ),
+          )),
+        );
+      },
     );
   }
 

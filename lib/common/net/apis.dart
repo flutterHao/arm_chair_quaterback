@@ -135,4 +135,12 @@ class Api {
   ///league
   static const String getNBAGameSchedules =
       "$API_BASE_PATH/NBAData/getNBAGameSchedules";
+
+  ///WebSocket
+  static const String wsHeartBeat = "TeamService.heartBeat";
+  static const String wsAuthAccount = "TeamService.authAccount";
+
+  static const String wsPkEventUpdated = "PushService.pkEventUpdated";
+
+  static const String wsTeamMatch = "PKService.teamMatch";
 }

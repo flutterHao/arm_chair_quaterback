@@ -66,4 +66,16 @@ class ConfigStore extends GetxController {
     }
     return url;
   }
+
+  void setWsServiceUrl(String url) {
+    StorageService.to.setString(Constant.wsServiceUrl, url);
+  }
+
+  String getWsServiceUrl() {
+    String url = StorageService.to.getString(Constant.wsServiceUrl);
+    if (url.isEmpty) {
+      url = Address.wsBaseUrl;
+    }
+    return url;
+  }
 }

@@ -8,6 +8,7 @@ export 'package:arm_chair_quaterback/generated/json/scores_entity.g.dart';
 class ScoresEntity {
   late int gameId;
   late int gameType;
+  /// 竞猜赛程获胜一方的id，未选择则为0
   late int isGuess;
   GuessTopReviewsEntity? guessTopReviews;
   late int awayTeamWins;

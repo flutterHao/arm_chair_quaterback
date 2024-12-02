@@ -368,11 +368,11 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
                         );
                       }),
                       12.vGap,
-                      if (item.status == 0 || item.isGuess != 0) _buildGuess(),
+                      _buildGuess(),
                     ],
                   ),
                 ),
-                if (item.guessTopReviews != null) ...[
+                if (item.status != 0) ...[
                   Container(
                     height: 1,
                     width: double.infinity,
@@ -473,11 +473,11 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
     return Column(
       children: [
         Builder(builder: (context) {
-          ///只能猜今明两天的赛程
+          ///只能猜今明两天未开始的赛程
           if (item.gameStartTime >= dayStartTimeMS ||
               (item.gameStartTime <
-                      MyDateUtils.getDayStartTimeMS(nowDateTime) &&
-                  item.isGuess == 0)) {
+                      MyDateUtils.getNowDateMs() &&
+                  item.isGuess == 0 && item.status != 0)) {
             return const SizedBox.shrink();
           }
           return Column(
@@ -501,65 +501,70 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
             ],
           );
         }),
-        Row(
+        if(item.status != 0)
+        Column(
           children: [
-            29.hGap,
-            Text(
-              homeTeamInfo.shortEname,
-              style: 10.w4(
-                  color: AppColors.c000000,
-                  height: 1,
-                  fontFamily: FontFamily.fRobotoRegular),
-            ),
-            Expanded(
-              child: Center(
-                child: Text(
-                  "WHO WILL WIN",
+            Row(
+              children: [
+                29.hGap,
+                Text(
+                  homeTeamInfo.shortEname,
                   style: 10.w4(
                       color: AppColors.c000000,
                       height: 1,
                       fontFamily: FontFamily.fRobotoRegular),
                 ),
-              ),
+                Expanded(
+                  child: Center(
+                    child: Text(
+                      "WHO WILL WIN",
+                      style: 10.w4(
+                          color: AppColors.c000000,
+                          height: 1,
+                          fontFamily: FontFamily.fRobotoRegular),
+                    ),
+                  ),
+                ),
+                Text(
+                  awayTeamInfo.shortEname,
+                  style: 10.w4(
+                      color: AppColors.c000000,
+                      height: 1,
+                      fontFamily: FontFamily.fRobotoRegular),
+                ),
+                29.hGap,
+              ],
             ),
-            Text(
-              awayTeamInfo.shortEname,
-              style: 10.w4(
-                  color: AppColors.c000000,
-                  height: 1,
-                  fontFamily: FontFamily.fRobotoRegular),
+            3.vGap,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                29.hGap,
+                Text(
+                  "$homePercent%",
+                  style: 14.w5(
+                      color: AppColors.c000000,
+                      height: 1,
+                      fontFamily: FontFamily.fOswaldMedium),
+                ),
+                3.hGap,
+                Expanded(
+                    child: SupportPercentProgressWidget(
+                        leftPercent: homePercent, rightPercent: 100 - homePercent)),
+                3.hGap,
+                Text(
+                  "${100 - homePercent}%",
+                  style: 14.w5(
+                      color: AppColors.c000000,
+                      height: 1,
+                      fontFamily: FontFamily.fOswaldMedium),
+                ),
+                29.hGap,
+              ],
             ),
-            29.hGap,
+            21.vGap,
           ],
-        ),
-        3.vGap,
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            29.hGap,
-            Text(
-              "$homePercent%",
-              style: 14.w5(
-                  color: AppColors.c000000,
-                  height: 1,
-                  fontFamily: FontFamily.fOswaldMedium),
-            ),
-            3.hGap,
-            Expanded(
-                child: SupportPercentProgressWidget(
-                    leftPercent: homePercent, rightPercent: 100 - homePercent)),
-            3.hGap,
-            Text(
-              "${100 - homePercent}%",
-              style: 14.w5(
-                  color: AppColors.c000000,
-                  height: 1,
-                  fontFamily: FontFamily.fOswaldMedium),
-            ),
-            29.hGap,
-          ],
-        ),
-        21.vGap,
+        )
       ],
     );
   }

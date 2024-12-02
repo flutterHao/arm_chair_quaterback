@@ -71,7 +71,7 @@ class _LeagueDetailPicksViewGetX extends GetView<LeagueDetailPicksController> {
                       if (controller.getPlayerV2().isNotEmpty && controller.getPlayerMaxLength() != 0) ...[
                         Container(
                           height: 58.w +
-                              250.w * controller.getPlayerMaxLength(),
+                              300.w * controller.getPlayerMaxLength(),
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
                               color: AppColors.cFFFFFF,
