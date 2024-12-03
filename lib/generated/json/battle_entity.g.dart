@@ -276,9 +276,9 @@ TeamBuffer $TeamBufferFromJson(Map<String, dynamic> json) {
   if (buffValue != null) {
     teamBuffer.buffValue = buffValue;
   }
-  final int? buffId = jsonConvert.convert<int>(json['buffId']);
-  if (buffId != null) {
-    teamBuffer.buffId = buffId;
+  final int? face = jsonConvert.convert<int>(json['face']);
+  if (face != null) {
+    teamBuffer.face = face;
   }
   final int? createTime = jsonConvert.convert<int>(json['createTime']);
   if (createTime != null) {
@@ -296,9 +296,9 @@ TeamBuffer $TeamBufferFromJson(Map<String, dynamic> json) {
   if (id != null) {
     teamBuffer.id = id;
   }
-  final int? position = jsonConvert.convert<int>(json['position']);
-  if (position != null) {
-    teamBuffer.position = position;
+  final int? color = jsonConvert.convert<int>(json['color']);
+  if (color != null) {
+    teamBuffer.color = color;
   }
   final int? takeEffectGameCount = jsonConvert.convert<int>(
       json['takeEffectGameCount']);
@@ -311,12 +311,12 @@ TeamBuffer $TeamBufferFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> $TeamBufferToJson(TeamBuffer entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['buffValue'] = entity.buffValue;
-  data['buffId'] = entity.buffId;
+  data['face'] = entity.face;
   data['createTime'] = entity.createTime;
   data['teamId'] = entity.teamId;
   data['updateTime'] = entity.updateTime;
   data['id'] = entity.id;
-  data['position'] = entity.position;
+  data['color'] = entity.color;
   data['takeEffectGameCount'] = entity.takeEffectGameCount;
   return data;
 }
@@ -324,22 +324,22 @@ Map<String, dynamic> $TeamBufferToJson(TeamBuffer entity) {
 extension TeamBufferExtension on TeamBuffer {
   TeamBuffer copyWith({
     double? buffValue,
-    int? buffId,
+    int? face,
     int? createTime,
     int? teamId,
     int? updateTime,
     int? id,
-    int? position,
+    int? color,
     int? takeEffectGameCount,
   }) {
     return TeamBuffer()
       ..buffValue = buffValue ?? this.buffValue
-      ..buffId = buffId ?? this.buffId
+      ..face = face ?? this.face
       ..createTime = createTime ?? this.createTime
       ..teamId = teamId ?? this.teamId
       ..updateTime = updateTime ?? this.updateTime
       ..id = id ?? this.id
-      ..position = position ?? this.position
+      ..color = color ?? this.color
       ..takeEffectGameCount = takeEffectGameCount ?? this.takeEffectGameCount;
   }
 }

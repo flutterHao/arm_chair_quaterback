@@ -355,6 +355,10 @@ TrainingInfoBuff $TrainingInfoBuffFromJson(Map<String, dynamic> json) {
   if (showBuff != null) {
     trainingInfoBuff.showBuff = showBuff;
   }
+  final bool? isMatch = jsonConvert.convert<bool>(json['isMatch']);
+  if (isMatch != null) {
+    trainingInfoBuff.isMatch = isMatch;
+  }
   return trainingInfoBuff;
 }
 
@@ -371,6 +375,7 @@ Map<String, dynamic> $TrainingInfoBuffToJson(TrainingInfoBuff entity) {
   data['face'] = entity.face;
   data['color'] = entity.color;
   data['showBuff'] = entity.showBuff;
+  data['isMatch'] = entity.isMatch;
   return data;
 }
 
@@ -390,6 +395,7 @@ extension TrainingInfoBuffExtension on TrainingInfoBuff {
     RxBool? isSelect,
     Rx<Offset>? offset,
     bool? showBuff,
+    bool? isMatch,
   }) {
     return TrainingInfoBuff()
       ..id = id ?? this.id
@@ -405,6 +411,7 @@ extension TrainingInfoBuffExtension on TrainingInfoBuff {
       ..isOpen = isOpen ?? this.isOpen
       ..isSelect = isSelect ?? this.isSelect
       ..offset = offset ?? this.offset
-      ..showBuff = showBuff ?? this.showBuff;
+      ..showBuff = showBuff ?? this.showBuff
+      ..isMatch = isMatch ?? this.isMatch;
   }
 }

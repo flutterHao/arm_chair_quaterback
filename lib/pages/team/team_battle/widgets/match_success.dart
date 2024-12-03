@@ -156,7 +156,7 @@ class _MatchSuccessState extends State<MatchSuccess>
                             child: ClipRRect(
                                 borderRadius: BorderRadius.circular(14.w),
                                 child: ImageWidget(
-                                  url: Utils.getAvaterUrl(
+                                  url: Utils.getTeamUrl(
                                       controller.battleEntity.homeTeam.teamLogo),
                                   imageFailedPath: Assets.teamUiHead01,
                                   width: 64.w,
@@ -255,8 +255,9 @@ class _MatchSuccessState extends State<MatchSuccess>
                       child: ClipRRect(
                           borderRadius: BorderRadius.circular(14.w),
                           child: ImageWidget(
-                            url: Utils.getAvaterUrl(
+                            url: Utils.getTeamUrl(
                                 controller.battleEntity.awayTeam.teamLogo),
+                            imageFailedPath: Assets.teamUiHead03,
                             width: 64.w,
                             height: 64.w,
                           ))),

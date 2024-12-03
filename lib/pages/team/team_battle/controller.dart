@@ -1,11 +1,16 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:arm_chair_quaterback/common/entities/competition_venue_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/game_event_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/web_socket/web_socket_entity.dart';
 import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/apis.dart';
+import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'dart:developer' as developer;
 
@@ -66,12 +71,21 @@ class TeamBattleController extends GetxController
     teamMatch();
   }
 
-  teamMatch() {
+  teamMatch() async {
     var startMatchTimeMs = DateTime.now().millisecondsSinceEpoch;
     var minMatchTimeMs = 2000;
+    await Future.wait([
+      CacheApi.getGameEvent(),
+      CacheApi.getCompetitionVenue(),
+    ]);
     subscription = WSInstance.teamMatch().listen((result) {
       developer
           .log('result.serviceId--${result.serviceId}--:${result.payload}');
+      if (result.serviceId == Api.wsJazminError && step.value == 1) {
+        EasyLoading.showToast("MATCH FAILED");
+        Get.back();
+        return;
+      }
       if (result.serviceId == Api.wsTeamMatch) {
         battleEntity = BattleEntity.fromJson(result.payload);
         var currentMs = DateTime.now().millisecondsSinceEpoch;

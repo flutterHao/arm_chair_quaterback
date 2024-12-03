@@ -91,6 +91,8 @@ class Api {
   static const String cPickType = "$CONFIG_BASE_PATH/PickType.json";
   static const String cErrorCode = "$CONFIG_BASE_PATH/ErrorCode.json";
   static const String cTacticsDefine = "$CONFIG_BASE_PATH/TacticsDefine.json";
+  static const String cGameEvent = "$CONFIG_BASE_PATH/GameEvent.json";
+  static const String cCompetitionVenue = "$CONFIG_BASE_PATH/CompetitionVenue.json";
 
   /// TeamPlayer
   static const String getTeamPlayerByUUID =
@@ -137,10 +139,14 @@ class Api {
       "$API_BASE_PATH/NBAData/getNBAGameSchedules";
 
   ///WebSocket
+  static const String wsJazminError = "jazmin.error";//接口错误
   static const String wsHeartBeat = "TeamService.heartBeat";
   static const String wsAuthAccount = "TeamService.authAccount";
 
+  static const String wsPkStartUpdated = "PushService.pkStartUpdated";
   static const String wsPkEventUpdated = "PushService.pkEventUpdated";
+  static const String wsPkResultUpdated = "PushService.pkResultUpdated";
+  static const String wsPkStopUpdated = "PushService.pkStopUpdated";
 
   static const String wsTeamMatch = "PKService.teamMatch";
 }

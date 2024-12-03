@@ -38,7 +38,7 @@ class TeamBattlePage extends GetView<TeamBattleController> {
                     })
                   else
                     // const BattleMain()
-                    const TeamBattleV2Page()
+                    TeamBattleV2Page()
 
                 ],
               ),

@@ -8,7 +8,9 @@ import 'package:arm_chair_quaterback/common/entities/all_team_players_by_up_star
 import 'package:arm_chair_quaterback/common/entities/api_error_code_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/competition_venue_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/config/prop_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/game_event_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/game_schedules_info.dart';
 import 'package:arm_chair_quaterback/common/entities/grade_in_star_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_data.dart';
@@ -31,6 +33,7 @@ import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pick_type_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/pk_event_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_day_data_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_status_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_award_entity.dart';
@@ -277,9 +280,17 @@ class JsonConvert {
       return data.map<CardPackInfoCard>((Map<String, dynamic> e) =>
           CardPackInfoCard.fromJson(e)).toList() as M;
     }
+    if (<CompetitionVenueEntity>[] is M) {
+      return data.map<CompetitionVenueEntity>((Map<String, dynamic> e) =>
+          CompetitionVenueEntity.fromJson(e)).toList() as M;
+    }
     if (<PropDefineEntity>[] is M) {
       return data.map<PropDefineEntity>((Map<String, dynamic> e) =>
           PropDefineEntity.fromJson(e)).toList() as M;
+    }
+    if (<GameEventEntity>[] is M) {
+      return data.map<GameEventEntity>((Map<String, dynamic> e) =>
+          GameEventEntity.fromJson(e)).toList() as M;
     }
     if (<GameSchedulesInfo>[] is M) {
       return data.map<GameSchedulesInfo>((Map<String, dynamic> e) =>
@@ -571,6 +582,26 @@ class JsonConvert {
       return data.map<PickTypeEntity>((Map<String, dynamic> e) =>
           PickTypeEntity.fromJson(e)).toList() as M;
     }
+    if (<PkEventUpdatedEntity>[] is M) {
+      return data.map<PkEventUpdatedEntity>((Map<String, dynamic> e) =>
+          PkEventUpdatedEntity.fromJson(e)).toList() as M;
+    }
+    if (<PkEventUpdatedAwayInfo>[] is M) {
+      return data.map<PkEventUpdatedAwayInfo>((Map<String, dynamic> e) =>
+          PkEventUpdatedAwayInfo.fromJson(e)).toList() as M;
+    }
+    if (<PkEventUpdatedAwayPlayerInfos>[] is M) {
+      return data.map<PkEventUpdatedAwayPlayerInfos>((Map<String, dynamic> e) =>
+          PkEventUpdatedAwayPlayerInfos.fromJson(e)).toList() as M;
+    }
+    if (<PkEventUpdatedHomeInfo>[] is M) {
+      return data.map<PkEventUpdatedHomeInfo>((Map<String, dynamic> e) =>
+          PkEventUpdatedHomeInfo.fromJson(e)).toList() as M;
+    }
+    if (<PkEventUpdatedHomePlayerInfos>[] is M) {
+      return data.map<PkEventUpdatedHomePlayerInfos>((Map<String, dynamic> e) =>
+          PkEventUpdatedHomePlayerInfos.fromJson(e)).toList() as M;
+    }
     if (<PlayerDayDataEntity>[] is M) {
       return data.map<PlayerDayDataEntity>((Map<String, dynamic> e) =>
           PlayerDayDataEntity.fromJson(e)).toList() as M;
@@ -823,7 +854,9 @@ class JsonConvertClassCollection {
     (TestDataMap).toString(): TestDataMap.fromJson,
     (CardPackInfoEntity).toString(): CardPackInfoEntity.fromJson,
     (CardPackInfoCard).toString(): CardPackInfoCard.fromJson,
+    (CompetitionVenueEntity).toString(): CompetitionVenueEntity.fromJson,
     (PropDefineEntity).toString(): PropDefineEntity.fromJson,
+    (GameEventEntity).toString(): GameEventEntity.fromJson,
     (GameSchedulesInfo).toString(): GameSchedulesInfo.fromJson,
     (GradeInStarDefineEntity).toString(): GradeInStarDefineEntity.fromJson,
     (GuessData).toString(): GuessData.fromJson,
@@ -926,6 +959,13 @@ class JsonConvertClassCollection {
     (NewsListEntity).toString(): NewsListEntity.fromJson,
     (NewsListDetail).toString(): NewsListDetail.fromJson,
     (PickTypeEntity).toString(): PickTypeEntity.fromJson,
+    (PkEventUpdatedEntity).toString(): PkEventUpdatedEntity.fromJson,
+    (PkEventUpdatedAwayInfo).toString(): PkEventUpdatedAwayInfo.fromJson,
+    (PkEventUpdatedAwayPlayerInfos).toString(): PkEventUpdatedAwayPlayerInfos
+        .fromJson,
+    (PkEventUpdatedHomeInfo).toString(): PkEventUpdatedHomeInfo.fromJson,
+    (PkEventUpdatedHomePlayerInfos).toString(): PkEventUpdatedHomePlayerInfos
+        .fromJson,
     (PlayerDayDataEntity).toString(): PlayerDayDataEntity.fromJson,
     (PlayerStatusEntity).toString(): PlayerStatusEntity.fromJson,
     (RankAwardEntity).toString(): RankAwardEntity.fromJson,

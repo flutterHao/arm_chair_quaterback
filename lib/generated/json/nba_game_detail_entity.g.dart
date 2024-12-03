@@ -1,6 +1,7 @@
-import 'package:arm_chair_quaterback/common/entities/game_schedules_info.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_game_detail_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/game_schedules_info.dart';
+
 import 'package:arm_chair_quaterback/common/entities/scores_not_start_game_entity.dart';
 
 

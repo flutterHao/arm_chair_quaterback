@@ -57,6 +57,10 @@ class WSInstance {
     return;
     _pingTimer?.cancel();
     _pingTimer = Timer.periodic(const Duration(seconds: 10), (timer) {
+      if(_reconnectTimer?.isActive == false){
+        //正在重连
+        return;
+      }
       // 每 10 秒发送一个 ping 消息
       // print('发送 ping');
       ping();
@@ -85,13 +89,13 @@ class WSInstance {
   }
 
   static void _onMessageReceive(message) {
-    // print('message--:$message');
+    // print('WebSocket--message--:$message');
     var result = _decoder(message);
     if (result.serviceId == Api.wsHeartBeat) {
       // print('WebSocket--result--TeamService.heartBeat');
       _lastPongTime = DateTime.now();
     } else {
-      // print('WebSocket--result--:$result');
+      print('WebSocket--result--:$result');
       // log('result.serviceId--:${result.payload}');
       _streamController.sink.add(result);
     }
@@ -122,7 +126,7 @@ class WSInstance {
     return url;
   }
 
-  static Stream<ResponseMessage> get _stream => _streamController.stream;
+  static Stream<ResponseMessage> get stream => _streamController.stream;
 
   static void _sendMessage(dynamic message, {String path = ""}) {
     if (path != Api.wsHeartBeat) {
@@ -154,6 +158,6 @@ class WSInstance {
 
   static Stream<ResponseMessage> teamMatch() {
     WSInstance._sendMessage("", path: Api.wsTeamMatch);
-    return _stream;
+    return stream;
   }
 }

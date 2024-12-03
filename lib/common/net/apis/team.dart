@@ -127,4 +127,5 @@ class TeamApi {
     List list = await HttpUtil().post(Api.cTacticsDefine);
     return list.map((e) => TacticsDefineEntity.fromJson(e)).toList();
   }
+
 }

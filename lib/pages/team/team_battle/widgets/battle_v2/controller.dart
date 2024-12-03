@@ -2,14 +2,23 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/competition_venue_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/game_event_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/pk_event_updated_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/web_socket/web_socket_entity.dart';
 import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
+import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
+import 'package:arm_chair_quaterback/common/net/index.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/thrid_lib/flutter_barrage.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
-import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/widgets/battle_animation_controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/tactical_contrast.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/tactical_contrast/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/tactical_contrast/tactical_contrast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -58,35 +67,36 @@ class TeamBattleV2Controller extends GetxController
   var isGameOver = false.obs;
   Timer? _timer;
 
+  late StreamSubscription<ResponseMessage> subscription;
+
   /// 在 widget 内存中分配后立即调用。
   @override
   void onInit() {
     super.onInit();
-    normalBarrageWallController.addListener(() {
-      if (normalBarrageWallController.value.processedSize ==
-          normalBarrageWallController.value.size) {
-        Future.delayed(const Duration(seconds: 6), () {
-          normalBarrageWallController.clear();
-          normalBarrageWallController.add(getNormalBullets());
-          normalBarrageWallController.reStart();
-        });
-      }
-    });
-    highLightBarrageWallController.addListener(() {
-      if (highLightBarrageWallController.value.processedSize ==
-          highLightBarrageWallController.value.size) {
-        Future.delayed(const Duration(seconds: 20), () {
-          highLightBarrageWallController.clear();
-          highLightBarrageWallController.add(getHighLightBullets());
-          highLightBarrageWallController.reStart();
-        });
-      }
-    });
     shootAnimationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 1200));
 
+    subscription = WSInstance.stream.listen((result) {
+      if (result.serviceId == Api.wsPkEventUpdated) {
+        PkEventUpdatedEntity pkEventUpdatedEntity =
+            PkEventUpdatedEntity.fromJson(result.payload);
+        var gameEvent = getGameEvent(pkEventUpdatedEntity.eventId);
+        if (gameEvent?.headLine == "1") {
+          /// 高光时刻
+          highLightBarrageWallController.send([
+            generateHightButlle(insertPlayerName(
+                gameEvent?.eventDescripition ?? "", pkEventUpdatedEntity))
+          ]);
+        } else {
+          /// 普通弹幕
+          // normalBarrageWallController.send([
+          //   generateHightButlle(insertPlayerName(
+          //       gameEvent?.eventDescripition ?? "", pkEventUpdatedEntity))
+          // ]);
+        }
+      }
+    });
   }
-
 
   @override
   void onReady() {
@@ -98,7 +108,7 @@ class TeamBattleV2Controller extends GetxController
     Future.delayed(Duration.zero, () {
       _timer?.cancel();
       _timer = Timer.periodic(const Duration(seconds: 3), (t) {
-        shoot();
+        // shoot();
       });
     });
   }
@@ -263,47 +273,51 @@ class TeamBattleV2Controller extends GetxController
     List<Bullet> bullets = List<Bullet>.generate(1, (i) {
       final showTime = random.nextInt(6000);
       var text = "Kyrie Irving makes free throw 1of 2";
-      var size = calculateTextSize(text, 12.sp, 0, FontWeight.w500);
-      return Bullet(
-          child: Container(
-            width: size.width + 12.w + 4.w + 20.w + 7.w,
-            decoration: BoxDecoration(
-                color: AppColors.cFFFFFF,
-                borderRadius: BorderRadius.circular(14.w),
-                boxShadow: [
-                  BoxShadow(
-                      color: AppColors.cDEDEDE,
-                      offset: Offset(3.w, 3.w),
-                      blurRadius: 3.w)
-                ]),
-            padding: EdgeInsets.only(left: 4.w, right: 12.w),
-            height: 28.w,
-            child: Row(
-              children: [
-                ImageWidget(
-                  url: "",
-                  imageFailedPath: Assets.testTestTeamLogo,
-                  borderRadius: BorderRadius.circular(10.w),
-                  width: 20.w,
-                  height: 20.w,
-                ),
-                7.hGap,
-                Text(
-                  text,
-                  maxLines: 1,
-                  softWrap: false,
-                  overflow: TextOverflow.visible,
-                  style: 12.w5(
-                      color: AppColors.c000000,
-                      height: 1,
-                      fontFamily: FontFamily.fRobotoMedium),
-                ),
-              ],
-            ),
-          ),
-          showTime: showTime);
+      return generateHightButlle(text, showTime: showTime);
     });
     return bullets;
+  }
+
+  Bullet generateHightButlle(String text, {int showTime = 0}) {
+    var size = calculateTextSize(text, 12.sp, 0, FontWeight.w500);
+    return Bullet(
+        child: Container(
+          width: size.width + 12.w + 4.w + 20.w + 7.w,
+          decoration: BoxDecoration(
+              color: AppColors.cFFFFFF,
+              borderRadius: BorderRadius.circular(14.w),
+              boxShadow: [
+                BoxShadow(
+                    color: AppColors.cDEDEDE,
+                    offset: Offset(3.w, 3.w),
+                    blurRadius: 3.w)
+              ]),
+          padding: EdgeInsets.only(left: 4.w, right: 12.w),
+          height: 28.w,
+          child: Row(
+            children: [
+              ImageWidget(
+                url: "",
+                imageFailedPath: Assets.testTestTeamLogo,
+                borderRadius: BorderRadius.circular(10.w),
+                width: 20.w,
+                height: 20.w,
+              ),
+              7.hGap,
+              Text(
+                text,
+                maxLines: 1,
+                softWrap: false,
+                overflow: TextOverflow.visible,
+                style: 12.w5(
+                    color: AppColors.c000000,
+                    height: 1,
+                    fontFamily: FontFamily.fRobotoMedium),
+              ),
+            ],
+          ),
+        ),
+        showTime: showTime);
   }
 
   /// 计算文本尺寸
@@ -395,6 +409,12 @@ class TeamBattleV2Controller extends GetxController
     super.onClose();
   }
 
+  @override
+  void dispose() {
+    subscription.cancel();
+    super.dispose();
+  }
+
   release() {
     normalBarrageWallController.dispose();
     highLightBarrageWallController.dispose();
@@ -407,13 +427,54 @@ class TeamBattleV2Controller extends GetxController
     isGameOver.value = !isGameOver.value;
   }
 
-  showTactical(BuildContext context) {
-    showModalBottomSheet(
+  showTactical(BuildContext context) async {
+    await showModalBottomSheet(
         context: context,
         backgroundColor: AppColors.cTransparent,
         isScrollControlled: true,
         builder: (context) {
-          return const TacticalContrast();
+          return TacticalContrast();
         });
+    Get.delete<TacticalContrastController>();
+  }
+
+  List<TeamPlayerList> getHomeTeamPlayerList() {
+    var homeTeamPlayerList =
+        Get.find<TeamBattleController>().battleEntity.homeTeamPlayerList;
+    var list = homeTeamPlayerList.where((e) => e.position != 0).toList();
+    return list;
+  }
+
+  List<TeamPlayerList> getAwayTeamPlayerList() {
+    var homeTeamPlayerList =
+        Get.find<TeamBattleController>().battleEntity.awayTeamPlayerList;
+    var list = homeTeamPlayerList.where((e) => e.position != 0).toList();
+    return list;
+  }
+
+  GameEventEntity? getGameEvent(int eventId) {
+    return CacheApi.gameEvents
+        .firstWhereOrNull((e) => e.constantId == eventId.toString());
+  }
+
+  CompetitionVenueEntity getCompetitionVenue(
+      String gameEventType, int senderPlayerId) {
+    var baseInfo = Utils.getPlayBaseInfo(senderPlayerId);
+    var list = CacheApi.competitionVenues
+        .where((e) =>
+            e.gameEventType.contains(gameEventType) &&
+            e.actor.toLowerCase() == baseInfo.position.toLowerCase())
+        .toList();
+    var nextInt = Random().nextInt(list.length);
+    return list[nextInt];
+  }
+
+  String insertPlayerName(String text, PkEventUpdatedEntity event) {
+    String result = text
+        .replaceAll("[0]", Utils.getPlayBaseInfo(event.senderPlayerId).elname)
+        .replaceAll(
+            "[1]", Utils.getPlayBaseInfo(event.senderOtherPlayerId).elname)
+        .replaceAll("[2]", Utils.getPlayBaseInfo(event.receivePlayerId).elname);
+    return result;
   }
 }

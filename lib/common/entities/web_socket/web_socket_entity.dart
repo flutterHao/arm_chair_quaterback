@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:typed_data';
 
 ///
@@ -123,15 +124,15 @@ class ByteBuf {
 class ResponseMessage {
   late int requestId;
   late int payloadType;
+
   /// 接口名
   late String serviceId;
   late int timestamp;
   late int statusCode;
   late String statusMsg;
+
   /// 参数
   late Map<String, dynamic> payload;
-
-
 
   @override
   String toString() {
@@ -186,7 +187,14 @@ class WebSocketDataHandler {
     respons.timestamp = timeStamp;
     respons.statusCode = statusCode;
     respons.statusMsg = socketBuf.readString(statusBytes);
-    respons.payload = jsonDecode(utf8.decode(payload));
+
+    var decode = utf8.decode(payload);
+    if (decode.isEmpty) {
+      respons.payload = {};
+    } else {
+      log('${respons.serviceId}---decode:$decode');
+      respons.payload = jsonDecode(decode);
+    }
 
     return respons;
   }

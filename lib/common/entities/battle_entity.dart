@@ -68,12 +68,12 @@ class BattleNew {
 @JsonSerializable()
 class TeamBuffer {
   late double buffValue;
-  late int buffId;
+  late int face;
   late int createTime;
   late int teamId;
   late int updateTime;
   late int id;
-  late int position;
+  late int color;
   late int takeEffectGameCount;
 
   TeamBuffer();
