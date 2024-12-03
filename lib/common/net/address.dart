@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lihonghao
  * @Date: 2024-09-12 21:40:32
- * @LastEditTime: 2024-10-09 14:05:56
+ * @LastEditTime: 2024-12-03 20:54:15
  */
 import 'package:flutter/foundation.dart';
 
@@ -12,7 +12,7 @@ class Address {
 
   ///外网测试地址
   // static const String publicDevUrl = 'http://172.18.3.137:7007';
-  static const String publicDevUrl = 'https://seanba-te.ftxgame.com';
+  static const String publicDevUrl = 'http://seanba-te.ftxgame.com';
 
   ///内网测试地址
   static const String privateDevUrl = 'http://10.0.3.38:7007';
@@ -22,10 +22,8 @@ class Address {
   // static const String httpBaseUrl = kReleaseMode ? privateDevUrl : personalDevUrl;
 
   static const String wsPersonalDevUrl = "ws://192.168.12.46:9003";
-  static const String wsPublicDevUrl = 'wss://seanba-te.ftxgame.com:9003';
+  static const String wsPublicDevUrl = 'ws://seanba-te.ftxgame.com:9003';
   static const String wsPrivateDevUrl = 'ws://10.0.3.38:9003';
 
   static const String wsBaseUrl = wsPersonalDevUrl;
-
-
 }
