@@ -27,9 +27,10 @@ class TrainingPeparation extends StatelessWidget {
               teamIndexCtrl.scroToSlot();
             },
             child: Container(
+              height: 75.w,
               width: double.infinity,
               alignment: Alignment.center,
-              padding: EdgeInsets.symmetric(vertical: 20.w),
+              // padding: EdgeInsets.symmetric(vertical: 20.w),
               margin: EdgeInsets.only(top: 9.w),
               decoration: BoxDecoration(
                 color: AppColors.cFFFFFF,

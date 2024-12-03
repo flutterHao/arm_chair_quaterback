@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-11 15:57:44
- * @LastEditTime: 2024-11-30 14:46:51
+ * @LastEditTime: 2024-12-02 10:25:41
  */
 
 import 'dart:math';
@@ -81,30 +81,6 @@ class TrainingPage extends GetView<TrainingController> {
                     //     );
                     //   }),
                     // ),
-                    ...controller.chooseTacticList.asMap().entries.map((entry) {
-                      var e = entry.value;
-                      return Obx(() {
-                        return AnimatedPositioned(
-                          left: e.offset.value.dx,
-                          top: e.offset.value.dy,
-                          duration: 300.milliseconds,
-                          child: AnimatedScale(
-                            duration: const Duration(milliseconds: 300),
-                            scale: controller.showBuff.value ? 1 : 0,
-                            child: FlipCard(
-                              isFlipped: e.isOpen.value,
-                              onFlip: () {
-                                e.isSelect.value = true;
-                                controller.tacticId = e.id;
-                                controller.changeTacticId = 0;
-                                controller.chooseTactic();
-                              },
-                              buff: e,
-                            ),
-                          ),
-                        );
-                      });
-                    }).toList(),
                   ],
                 ),
               )

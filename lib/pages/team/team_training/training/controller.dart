@@ -12,6 +12,7 @@ import 'package:arm_chair_quaterback/common/utils/click_feed_back.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/pages/home/index.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/training_award_dialog.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -104,6 +105,7 @@ class TrainingController extends GetxController
   RxInt currentPlayerIndex = 3.obs;
 
   ///战术卡牌
+  RxBool showChooseDialog = false.obs;
   RxBool isChange = false.obs;
   int tacticId = 0;
   int changeTacticId = 0;
@@ -111,7 +113,7 @@ class TrainingController extends GetxController
   List<TrainingInfoBuff> chooseTacticList = [];
   RxBool isNotTip = false.obs;
   late AnimationController shakeController;
-  late Animation<Offset> shakeAnimation;
+  late Animation<double> shakeAnimation;
   //卡牌动画
   List<AnimationController> tacAnimlList = [];
   List<Animation<double>> tacSizeAnimations = [];
@@ -174,23 +176,21 @@ class TrainingController extends GetxController
     flyAnimation = Tween<double>(begin: 0, end: 1).animate(flyAnimationCtrl);
 
     shakeController = AnimationController(
-      duration: 100.milliseconds,
+      duration: const Duration(milliseconds: 100),
       vsync: this,
     );
-
-    shakeAnimation = Tween<Offset>(
-      begin: Offset.zero,
-      end: Offset(0.02, 0),
-    ).animate(CurvedAnimation(
-      parent: shakeController,
-      curve: Curves.bounceInOut,
-    ));
-
-    shakeController.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        shakeController.reverse();
-      }
-    });
+    shakeAnimation = Tween<double>(begin: -0.01, end: 0.01).animate(
+      CurvedAnimation(
+        parent: shakeController,
+        curve: Curves.easeInOut,
+      ),
+    )..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          shakeController.reverse();
+        } else if (status == AnimationStatus.dismissed) {
+          shakeController.forward();
+        }
+      });
 
     colorAnimatedCtrl = AnimationController(
       duration: const Duration(milliseconds: 150),
@@ -199,7 +199,7 @@ class TrainingController extends GetxController
     colorAnimation = Tween<double>(begin: 0, end: 1).animate(colorAnimatedCtrl);
 
     arrowAnimCtrl = AnimationController(
-      duration: 100.milliseconds,
+      duration: 150.milliseconds,
       vsync: this,
     );
 
@@ -292,7 +292,10 @@ class TrainingController extends GetxController
   }
 
   Future getPlayerList() async {
-    int teamId = HomeController.to.userEntiry.teamLoginInfo!.team!.teamId!;
+    if (HomeController.to.userEntiry.teamLoginInfo == null) {
+      await HomeController.to.refreshUserEntity();
+    }
+    int teamId = HomeController.to.userEntiry.teamLoginInfo!.team!.teamId ?? 0;
     MyTeamEntity teamEntity = await TeamApi.getMyTeamPlayer(teamId);
     playerList = teamEntity.teamPlayers;
   }
@@ -362,7 +365,7 @@ class TrainingController extends GetxController
     });
   }
 
-  void chooseTactic() {
+  void chooseTactic(BuildContext context) async {
     if (tacticId == 0) return;
     if (tacticList.length >= 5) {
       ///如果卡槽有这个直接添加
@@ -378,16 +381,26 @@ class TrainingController extends GetxController
           shakeController.forward();
           ClickFeedBack.selectionClick();
           EasyLoading.showToast("Tactics Slot is fulled");
-          chooseEnd(0);
+          await chooseEnd(context, 0);
           return;
         }
         changeTacticId = tacticId;
       } else if (changeTacticId == 0) {
-        isChange.value = true;
+        if (!isChange.value) {
+          shakeController.forward();
+          isChange.value = true;
+          showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (context) {
+                return TrainingAwardDialog(buff);
+              });
+        }
+
         return;
       }
     }
-    int type = 1; //1替换0直接添加
+    int type = 1; //1替换,0直接添加
     if (changeTacticId != 0) {
       for (int i = 0; i < tacticList.length; i++) {
         if (tacticList[i].id == changeTacticId) {
@@ -413,22 +426,30 @@ class TrainingController extends GetxController
     }
     TeamApi.chooseTactic(tacticId, replaceTacticId: changeTacticId)
         .then((v) async {
-      ///tacticList替换上面的buff
+      shakeController.value = 0;
+      shakeController.stop();
 
-      chooseEnd(type);
+      ///tacticList替换上面的buff
+      await chooseEnd(context, type);
+
       tacticList = v;
       update(["training_page"]);
     }).whenComplete(() {});
   }
 
-  void chooseEnd(int type) async {
+  Future chooseEnd(BuildContext context, int type) async {
     update(["training_page"]);
+
     tacticId = 0;
     changeTacticId = 0;
-    isChange.value = false;
     showBuff.value = false;
     isPlaying.value = false;
     if (type == 0) await Future.delayed(const Duration(seconds: 1));
+    if (isChange.value) {
+      await Future.delayed(const Duration(milliseconds: 500));
+      Navigator.of(context).pop();
+    }
+    isChange.value = false;
     for (var element in chooseTacticList) {
       element.isOpen.value = false;
     }
@@ -565,7 +586,7 @@ class TrainingController extends GetxController
     if (awads.contains(4)) {
       showBall.value = true;
       ballNum.value = trainingInfo.prop.num;
-      await Future.delayed(const Duration(milliseconds: 300), () {
+      await Future.delayed(const Duration(milliseconds: 800), () {
         showBall.value = false;
       });
     }
@@ -591,14 +612,15 @@ class TrainingController extends GetxController
       tacticList = trainingInfo.buff;
       chooseTacticList = List.from(trainingInfo.chooseBuffs);
       //初始化卡牌的位置和朝向
+      double spacing = 10.w * chooseTacticList.length;
       for (int i = 0; i < chooseTacticList.length; i++) {
         var item = chooseTacticList[i];
         double x = (375.w -
                     (chooseTacticList.length * 74.w +
-                        (chooseTacticList.length - 1) * 6.w)) /
+                        (chooseTacticList.length - 1) * spacing)) /
                 2 +
-            i * (74.w + 6.w);
-        item.offset.value = Offset(x, 170.w);
+            i * (74.w + spacing);
+        item.offset.value = Offset(x, 78.5.w);
         // item.isOpen.value = false;
       }
 
@@ -685,7 +707,6 @@ class TrainingController extends GetxController
           showPlayer.value = false;
           playerScrollerEnd = false;
           showStatus.value = false;
-          isPlaying.value = false;
           arrowAnimCtrl.reset();
           arrowAnimCtrl.stop();
         });
@@ -694,12 +715,12 @@ class TrainingController extends GetxController
   }
 
   void colosePlayerAwards() {
-    if (!playerScrollerEnd) return;
-    showPlayerBox.value = false;
-    showPlayer.value = false;
-    playerScrollerEnd = false;
-    showStatus.value = false;
-    isPlaying.value = false;
+    // if (!playerScrollerEnd) return;
+    // showPlayerBox.value = false;
+    // showPlayer.value = false;
+    // playerScrollerEnd = false;
+    // showStatus.value = false;
+    // isPlaying.value = false;
   }
 
   void statusScroll(int index, int oldIndex) async {

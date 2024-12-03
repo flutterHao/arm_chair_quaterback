@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-12 15:43:49
- * @LastEditTime: 2024-11-29 12:07:52
+ * @LastEditTime: 2024-12-02 14:44:42
  */
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/train_task_entity.dart';
@@ -159,7 +159,7 @@ class AwardDialog extends GetView<TrainingController> {
       alignment: Alignment.center,
       padding: EdgeInsets.only(left: 61.w),
       width: 271.w,
-      height: 62.w,
+      // height: 62.w,
       decoration: BoxDecoration(
         color: AppColors.c262626,
         borderRadius: BorderRadius.circular(16.w),
@@ -312,30 +312,19 @@ class AwardDialog extends GetView<TrainingController> {
               decoration: BoxDecoration(
                   color: AppColors.cF2F2F2,
                   borderRadius: BorderRadius.circular(16.w)),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: Stack(
-                      alignment: Alignment.bottomCenter,
-                      children: [
-                        _rightList(),
-                        Positioned(
-                          left: 12.w,
-                          bottom: 17.5.w,
-                          child: _leftList(),
-                        ),
-                      ],
+              child: SingleChildScrollView(
+                padding: EdgeInsets.symmetric(vertical: 10.w),
+                child: Stack(
+                  alignment: Alignment.bottomCenter,
+                  children: [
+                    _rightList(),
+                    Positioned(
+                      left: 12.w,
+                      bottom: 17.5.w,
+                      child: _leftList(),
                     ),
-                  ),
-                  // Container(
-                  //   margin: EdgeInsets.symmetric(vertical: 5.w),
-                  //   child: Obx(() {
-                  //     return Text(
-                  //         "Time Left: ${controller.taskCountDownString.value}");
-                  //   }),
-                  // )
-                ],
+                  ],
+                ),
               ),
             ),
             Positioned(

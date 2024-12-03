@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lihonghao
  * @Date: 2024-11-06 11:51:15
- * @LastEditTime: 2024-11-30 19:38:45
+ * @LastEditTime: 2024-12-02 17:23:42
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -104,7 +104,7 @@ class _PlayerSrollerViewState extends State<PlayerSrollerView> {
                               !isSelect && controller.playerScrollerEnd ? 0 : 1,
                           duration: 300.milliseconds,
                           child: AnimatedScale(
-                              scale: isSelect ? 1.05 : 1,
+                              scale: isSelect ? 1.05 : 0.95,
                               duration: duration,
                               child: Container(
                                 width: 55.w,

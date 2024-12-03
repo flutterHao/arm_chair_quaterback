@@ -15,8 +15,8 @@ class SmallTacticCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 30.w,
-      height: 43.w,
+      width: 35.w,
+      height: 52.w,
       decoration: BoxDecoration(
           color: AppColors.cFFFFFF,
           borderRadius: BorderRadius.circular(6.w),

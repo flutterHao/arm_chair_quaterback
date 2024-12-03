@@ -21,7 +21,6 @@ class Assets {
   static const String commonUiCommonPlayerState04 = 'assets/images/Common/ui_common_player_state_04.png';
   static const String commonUiCommonPlayerState3 = 'assets/images/Common/ui_common_player_state_3.png';
   static const String commonUiCommonProp01 = 'assets/images/Common/ui_common_prop_01.png';
-  static const String commonUiCommonProp02 = 'assets/images/Common/ui_common_prop_02.png';
   static const String commonUiCommonProp03 = 'assets/images/Common/ui_common_prop_03.png';
   static const String commonUiCommonProp04 = 'assets/images/Common/ui_common_prop_04.png';
   static const String commonUiCommonProp05 = 'assets/images/Common/ui_common_prop_05.png';
@@ -39,6 +38,7 @@ class Assets {
   static const String commonUiCommonTabBottom04On = 'assets/images/Common/ui_common_tab_bottom_04_on.png';
   static const String commonUiCommonTabBottom05Off = 'assets/images/Common/ui_common_tab_bottom_05_off.png';
   static const String commonUiCommonTabBottom05On = 'assets/images/Common/ui_common_tab_bottom_05_on.png';
+  static const String commonUiIconState = 'assets/images/Common/ui_common_prop_02.png';
   static const String fontsOswaldBold = 'assets/fonts/Oswald-Bold.ttf';
   static const String fontsOswaldMedium = 'assets/fonts/Oswald-Medium.ttf';
   static const String fontsOswaldRegular = 'assets/fonts/Oswald-Regular.ttf';

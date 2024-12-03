@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-25 15:56:43
- * @LastEditTime: 2024-11-30 19:02:59
+ * @LastEditTime: 2024-12-02 22:35:40
  */
 
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
@@ -18,6 +18,7 @@ import 'package:arm_chair_quaterback/pages/team/team_training/team/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/add_ball_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/award_dialog.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/flip_card.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/player_sroller_view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/training_slot.dart';
 import 'package:flutter/material.dart';
@@ -105,72 +106,104 @@ class TrainingWidget extends GetView<TrainingController> {
                               },
                               child: Container(
                                 // height: 72.5.w,
-                                // width: 95.w,
-                                // height: 24.w,
+                                width: 95.w,
+                                height: 24.w,
                                 padding: EdgeInsets.all(2.w),
                                 decoration: BoxDecoration(
                                   color: AppColors.c000000.withOpacity(0.5),
                                   borderRadius: BorderRadius.circular(12.w),
                                 ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Obx(() {
-                                      return AnimatedScale(
-                                        scale:
-                                            controller.showBall.value ? 1.2 : 1,
-                                        duration:
-                                            const Duration(milliseconds: 300),
-                                        child: IconWidget(
-                                            iconWidth: 18.w,
-                                            icon: Assets.commonUiCommonProp04),
-                                      );
-                                    }),
-                                    4.hGap,
-                                    Obx(() {
-                                      int v = controller.ballNum.value;
-                                      return AnimatedNum(
-                                        number: v,
-                                        textStyle: 16.w7(
-                                            color: AppColors.cFFFFFF,
-                                            fontFamily:
-                                                FontFamily.fOswaldMedium,
-                                            height: 1),
-                                      );
-                                    }),
-                                    Text(
-                                      "/${controller.trainDefine.ballMaxNum}",
-                                      style: 16.w7(
-                                          color: AppColors.cFFFFFF,
-                                          fontFamily: FontFamily.fOswaldMedium,
-                                          height: 1),
-                                    ),
-                                    7.hGap,
-                                    MtInkwell(
-                                      onTap: () {
-                                        showDialog(
-                                            context: Get.context!,
-                                            builder: (context) {
-                                              return const AddBallDialog();
-                                            });
-                                      },
-                                      child: Container(
-                                        width: 20.w,
-                                        height: 20.w,
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10.w),
-                                            color: AppColors.c000000),
-                                        child: IconWidget(
-                                          icon: Assets.iconUiIconPlus,
-                                          iconWidth: 12.w,
-                                          iconHeight: 12.w,
-                                          iconColor: AppColors.cFF7954,
+                                child: Container(
+                                  width: 50.w,
+                                  height: 20.w,
+                                  child: Obx(() {
+                                    return Stack(
+                                      alignment: Alignment.centerLeft,
+                                      children: [
+                                        Positioned(
+                                            left: 0,
+                                            child: AnimatedScale(
+                                              duration: 100.milliseconds,
+                                              scale: controller.showBall.value
+                                                  ? 1.5
+                                                  : 1,
+                                              child: Row(
+                                                children: [
+                                                  IconWidget(
+                                                      iconWidth: 18.w,
+                                                      icon: Assets
+                                                          .commonUiCommonProp04),
+                                                  3.hGap,
+                                                  Obx(() {
+                                                    int v = controller
+                                                        .ballNum.value;
+                                                    return AnimatedNum(
+                                                      number: v,
+                                                      textStyle: 12.w7(
+                                                          color:
+                                                              AppColors.cFFFFFF,
+                                                          fontFamily: FontFamily
+                                                              .fOswaldMedium,
+                                                          height: 1),
+                                                    );
+                                                  }),
+                                                ],
+                                              ),
+                                            )),
+                                        Positioned(
+                                          right: 0,
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              AnimatedScale(
+                                                duration: 300.milliseconds,
+                                                scale: controller.showBall.value
+                                                    ? 0
+                                                    : 1,
+                                                child: Text(
+                                                  "/${controller.trainDefine.ballMaxNum}",
+                                                  style: 12.w7(
+                                                      color: AppColors.cFFFFFF,
+                                                      fontFamily: FontFamily
+                                                          .fOswaldMedium,
+                                                      height: 1),
+                                                ),
+                                              ),
+                                              7.hGap,
+                                              MtInkwell(
+                                                onTap: () {
+                                                  showDialog(
+                                                      context: Get.context!,
+                                                      builder: (context) {
+                                                        return const AddBallDialog();
+                                                      });
+                                                },
+                                                child: Container(
+                                                  width: 20.w,
+                                                  height: 20.w,
+                                                  alignment: Alignment.center,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.w),
+                                                      color: AppColors.c000000),
+                                                  child: IconWidget(
+                                                    icon: Assets.iconUiIconPlus,
+                                                    iconWidth: 12.w,
+                                                    iconHeight: 12.w,
+                                                    iconColor:
+                                                        AppColors.cFF7954,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    ),
-                                  ],
+                                      ],
+                                    );
+                                  }),
                                 ),
                               ),
                             ),
@@ -412,13 +445,13 @@ class TrainingWidget extends GetView<TrainingController> {
                                   left: 0,
                                   right: 0,
                                   child: Container(
-                                    height: 245.5,
+                                    height: 245.5.w,
                                     decoration: BoxDecoration(
                                         gradient: LinearGradient(
                                             begin: Alignment.topCenter,
                                             end: Alignment.bottomCenter,
                                             colors: [
-                                          Colors.black.withOpacity(0.6),
+                                          Colors.black.withOpacity(0.9),
                                           Colors.black.withOpacity(0)
                                         ])),
                                   )),
@@ -427,11 +460,12 @@ class TrainingWidget extends GetView<TrainingController> {
 
                           Obx(() {
                             return Visibility(
-                              visible: controller.showBuff.value,
+                              visible: controller.showBuff.value &&
+                                  !controller.isChange.value,
                               child: Positioned(
-                                top: 170.w,
+                                top: 15.w,
                                 child: Container(
-                                  width: 249.w,
+                                  width: 335.w,
                                   height: 23.w,
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
@@ -450,7 +484,8 @@ class TrainingWidget extends GetView<TrainingController> {
 
                           Obx(() {
                             return Visibility(
-                              visible: controller.showBuff.value,
+                              visible: controller.showBuff.value &&
+                                  !controller.isChange.value,
                               child: Positioned(
                                 top: 205.w,
                                 child: MtInkwell(
@@ -463,76 +498,20 @@ class TrainingWidget extends GetView<TrainingController> {
                                         context: Get.context!,
                                         builder: (context) {
                                           // return RecoverDialog();
-                                          return CustomDialog(
-                                              content: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  Container(
-                                                    // height: 30.w,
-                                                    alignment: Alignment.center,
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal: 30.w),
-                                                    child: Text(
-                                                      "Are yout confirm to qiut the 'Tactics Pick'",
-                                                      style: 16.w4(),
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                    ),
-                                                  ),
-                                                  Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    children: [
-                                                      Obx(() {
-                                                        return SizedBox(
-                                                          width: 40.w,
-                                                          child: Checkbox(
-                                                              value: controller
-                                                                  .isNotTip
-                                                                  .value,
-                                                              activeColor:
-                                                                  AppColors
-                                                                      .cFF7954,
-                                                              onChanged: (v) {
-                                                                controller
-                                                                        .isNotTip
-                                                                        .value =
-                                                                    !controller
-                                                                        .isNotTip
-                                                                        .value;
-                                                              }),
-                                                        );
-                                                      }),
-                                                      Text(
-                                                        "No more tips today",
-                                                        style: 12.w4(),
-                                                      )
-                                                    ],
-                                                  )
-                                                ],
-                                              ),
-                                              onTap: () {
-                                                controller.saveNotTip();
-                                                controller.chooseFinish();
-                                              });
+                                          return const _TipDialog();
                                         });
                                   },
                                   child: Container(
-                                    width: 23.w,
-                                    height: 23.w,
+                                    width: 30.w,
+                                    height: 30.w,
                                     alignment: Alignment.center,
                                     decoration: BoxDecoration(
                                         color: AppColors.cEB0000,
                                         borderRadius:
-                                            BorderRadius.circular(4.w)),
+                                            BorderRadius.circular(6.w)),
                                     child: Image.asset(
                                       Assets.iconUiIconDelete02,
                                       width: 16.w,
-                                      height: 16.w,
-                                      color: AppColors.cFFFFFF,
                                     ),
                                   ),
                                 ),
@@ -646,6 +625,37 @@ class TrainingWidget extends GetView<TrainingController> {
                             }),
                           ),
 
+                          ...controller.chooseTacticList
+                              .asMap()
+                              .entries
+                              .map((entry) {
+                            var e = entry.value;
+                            return Obx(() {
+                              return AnimatedPositioned(
+                                left: e.offset.value.dx,
+                                top: e.offset.value.dy,
+                                duration: 300.milliseconds,
+                                child: AnimatedScale(
+                                  duration: const Duration(milliseconds: 300),
+                                  scale: controller.showBuff.value &&
+                                          !controller.isChange.value
+                                      ? 1
+                                      : 0,
+                                  child: FlipCard(
+                                    isFlipped: e.isOpen.value,
+                                    onFlip: () {
+                                      e.isSelect.value = true;
+                                      controller.tacticId = e.id;
+                                      controller.changeTacticId = 0;
+                                      controller.chooseTactic(context);
+                                    },
+                                    buff: e,
+                                  ),
+                                ),
+                              );
+                            });
+                          }).toList(),
+
                           // Obx(() {
                           //   return Visibility(
                           //     visible: controller.showBall.value,
@@ -685,6 +695,56 @@ class TrainingWidget extends GetView<TrainingController> {
               ),
             ),
           );
+        });
+  }
+}
+
+class _TipDialog extends GetView<TrainingController> {
+  const _TipDialog({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomDialog(
+        content: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              // height: 30.w,
+              alignment: Alignment.center,
+              padding: EdgeInsets.symmetric(horizontal: 30.w),
+              child: Text(
+                "Are yout confirm to qiut the 'Tactics Pick'",
+                style: 16.w4(),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Obx(() {
+                  return SizedBox(
+                    width: 40.w,
+                    child: Checkbox(
+                        value: controller.isNotTip.value,
+                        activeColor: AppColors.cFF7954,
+                        onChanged: (v) {
+                          controller.isNotTip.value =
+                              !controller.isNotTip.value;
+                        }),
+                  );
+                }),
+                Text(
+                  "No more tips today",
+                  style: 12.w4(),
+                )
+              ],
+            )
+          ],
+        ),
+        onTap: () {
+          controller.saveNotTip();
+          controller.chooseFinish();
         });
   }
 }
