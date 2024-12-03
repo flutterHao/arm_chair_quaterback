@@ -6,7 +6,7 @@ import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactic_card.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactics/tactic_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

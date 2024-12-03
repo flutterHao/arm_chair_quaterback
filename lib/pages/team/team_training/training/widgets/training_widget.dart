@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-25 15:56:43
- * @LastEditTime: 2024-12-02 22:35:40
+ * @LastEditTime: 2024-12-03 17:14:41
  */
 
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
@@ -117,88 +117,74 @@ class TrainingWidget extends GetView<TrainingController> {
                                   width: 50.w,
                                   height: 20.w,
                                   child: Obx(() {
-                                    return Stack(
-                                      alignment: Alignment.centerLeft,
+                                    return Row(
                                       children: [
-                                        Positioned(
-                                            left: 0,
-                                            child: AnimatedScale(
-                                              duration: 100.milliseconds,
-                                              scale: controller.showBall.value
-                                                  ? 1.5
-                                                  : 1,
-                                              child: Row(
-                                                children: [
-                                                  IconWidget(
-                                                      iconWidth: 18.w,
-                                                      icon: Assets
-                                                          .commonUiCommonProp04),
-                                                  3.hGap,
-                                                  Obx(() {
-                                                    int v = controller
-                                                        .ballNum.value;
-                                                    return AnimatedNum(
-                                                      number: v,
-                                                      textStyle: 12.w7(
-                                                          color:
-                                                              AppColors.cFFFFFF,
-                                                          fontFamily: FontFamily
-                                                              .fOswaldMedium,
-                                                          height: 1),
-                                                    );
-                                                  }),
-                                                ],
-                                              ),
-                                            )),
-                                        Positioned(
-                                          right: 0,
+                                        AnimatedScale(
+                                          duration: 100.milliseconds,
+                                          scale: controller.showBall.value
+                                              ? 1.5
+                                              : 1,
                                           child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
                                             children: [
-                                              AnimatedScale(
-                                                duration: 300.milliseconds,
-                                                scale: controller.showBall.value
-                                                    ? 0
-                                                    : 1,
-                                                child: Text(
-                                                  "/${controller.trainDefine.ballMaxNum}",
-                                                  style: 12.w7(
+                                              IconWidget(
+                                                  iconWidth: 18.w,
+                                                  icon: Assets
+                                                      .commonUiCommonProp04),
+                                              3.hGap,
+                                              Obx(() {
+                                                int v =
+                                                    controller.ballNum.value;
+                                                return AnimatedNum(
+                                                  milliseconds: 500,
+                                                  number: v,
+                                                  textStyle: 12.w7(
                                                       color: AppColors.cFFFFFF,
                                                       fontFamily: FontFamily
                                                           .fOswaldMedium,
                                                       height: 1),
-                                                ),
-                                              ),
-                                              7.hGap,
-                                              MtInkwell(
-                                                onTap: () {
-                                                  showDialog(
-                                                      context: Get.context!,
-                                                      builder: (context) {
-                                                        return const AddBallDialog();
-                                                      });
-                                                },
-                                                child: Container(
-                                                  width: 20.w,
-                                                  height: 20.w,
-                                                  alignment: Alignment.center,
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10.w),
-                                                      color: AppColors.c000000),
-                                                  child: IconWidget(
-                                                    icon: Assets.iconUiIconPlus,
-                                                    iconWidth: 12.w,
-                                                    iconHeight: 12.w,
-                                                    iconColor:
-                                                        AppColors.cFF7954,
-                                                  ),
-                                                ),
-                                              ),
+                                                );
+                                              }),
                                             ],
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: AnimatedScale(
+                                            duration: 300.milliseconds,
+                                            scale: controller.showBall.value
+                                                ? 0
+                                                : 1,
+                                            child: Text(
+                                              "/${controller.trainDefine.ballMaxNum}",
+                                              style: 12.w7(
+                                                  color: AppColors.cFFFFFF,
+                                                  fontFamily:
+                                                      FontFamily.fOswaldMedium,
+                                                  height: 1),
+                                            ),
+                                          ),
+                                        ),
+                                        MtInkwell(
+                                          onTap: () {
+                                            showDialog(
+                                                context: Get.context!,
+                                                builder: (context) {
+                                                  return const AddBallDialog();
+                                                });
+                                          },
+                                          child: Container(
+                                            width: 20.w,
+                                            height: 20.w,
+                                            alignment: Alignment.center,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10.w),
+                                                color: AppColors.c000000),
+                                            child: IconWidget(
+                                              icon: Assets.iconUiIconPlus,
+                                              iconWidth: 12.w,
+                                              iconHeight: 12.w,
+                                              iconColor: AppColors.cFF7954,
+                                            ),
                                           ),
                                         ),
                                       ],

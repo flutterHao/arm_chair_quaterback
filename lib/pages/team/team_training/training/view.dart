@@ -2,16 +2,13 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-11 15:57:44
- * @LastEditTime: 2024-12-02 10:25:41
+ * @LastEditTime: 2024-12-03 11:54:27
  */
-
-import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/flip_card.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/training_peparation.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/training_tactics.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactics/training_tactics.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/training_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

@@ -12,6 +12,7 @@ import 'package:arm_chair_quaterback/common/utils/click_feed_back.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/pages/home/index.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactics/tactic_utils.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/training_award_dialog.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
@@ -115,10 +116,19 @@ class TrainingController extends GetxController
   late AnimationController shakeController;
   late Animation<double> shakeAnimation;
   //卡牌动画
-  List<AnimationController> tacAnimlList = [];
-  List<Animation<double>> tacSizeAnimations = [];
-  List<Animation<double>> tacScaleAnimations = [];
-  List<Animation<double>> tacPosAnimations = [];
+  // List<AnimationController> tacAnimlList = [];
+  // List<Animation<double>> tacSizeAnimations = [];
+  // List<Animation<double>> tacScaleAnimations = [];
+  // List<Animation<double>> tacPosAnimations = [];
+
+  ///战术牌型动画
+  late AnimationController tacticAnimCtrl;
+  late Animation<double> tacticExpAnimated;
+  late Animation<double> tacticScaleAnimated;
+  late Animation<Offset> tacticPosAnimated;
+  late Animation<double> widthAniamtion;
+  String tacticType = "High Card";
+  RxBool showTacticColor = false.obs;
 
   //任务
   RxInt taskValue = 0.obs;
@@ -211,6 +221,43 @@ class TrainingController extends GetxController
           arrowAnimCtrl.forward();
         }
       });
+
+    //战术牌型
+    tacticAnimCtrl = AnimationController(
+      duration: const Duration(milliseconds: 2000),
+      vsync: this,
+    );
+    tacticExpAnimated = TweenSequence<double>([
+      TweenSequenceItem<double>(tween: Tween(begin: 0, end: 0), weight: 3),
+      TweenSequenceItem<double>(tween: Tween(begin: 0, end: 1), weight: 3),
+      TweenSequenceItem<double>(tween: Tween(begin: 1, end: 1), weight: 12),
+    ]).animate(tacticAnimCtrl);
+    tacticScaleAnimated = TweenSequence([
+      TweenSequenceItem<double>(tween: Tween(begin: 1, end: 1.5), weight: 3),
+      TweenSequenceItem<double>(tween: Tween(begin: 1.5, end: 1), weight: 3),
+      TweenSequenceItem<double>(tween: Tween(begin: 1, end: 1), weight: 12),
+    ]).animate(CurvedAnimation(parent: tacticAnimCtrl, curve: Curves.linear));
+    //战术类型文字
+    tacticPosAnimated = TweenSequence<Offset>([
+      TweenSequenceItem<Offset>(
+          tween: Tween(begin: const Offset(0, 0), end: const Offset(0, 0)),
+          weight: 3),
+      TweenSequenceItem<Offset>(
+          tween: Tween(begin: const Offset(0, 60), end: const Offset(0, 15)),
+          weight: 3),
+      TweenSequenceItem<Offset>(
+          tween: Tween(begin: const Offset(0, 15), end: const Offset(0, 15)),
+          weight: 10),
+      TweenSequenceItem<Offset>(
+          tween: Tween(begin: const Offset(0, 15), end: const Offset(0, 15)),
+          weight: 1),
+    ]).animate(tacticAnimCtrl);
+    widthAniamtion = TweenSequence<double>([
+      TweenSequenceItem<double>(tween: Tween(begin: 0, end: 0), weight: 3),
+      TweenSequenceItem<double>(tween: Tween(begin: 0, end: 1), weight: 3),
+      TweenSequenceItem<double>(tween: Tween(begin: 1, end: 1), weight: 10),
+      TweenSequenceItem<double>(tween: Tween(begin: 1, end: 0), weight: 1),
+    ]).animate(tacticAnimCtrl);
   }
 
   void changeDuration(Duration newDuration) {
@@ -419,37 +466,48 @@ class TrainingController extends GetxController
       for (int i = 0; i < chooseTacticList.length; i++) {
         if (tacticId == chooseTacticList[i].id) {
           tacticList.add(chooseTacticList[i]);
+          //  type = 0;
           // double x = 162.5.w + i * 37.w;
           // chooseTacticList[i].offset.value = Offset(x, 45.w);
         }
       }
     }
+    update(["training_page"]);
     TeamApi.chooseTactic(tacticId, replaceTacticId: changeTacticId)
         .then((v) async {
-      shakeController.value = 0;
-      shakeController.stop();
-
       ///tacticList替换上面的buff
       await chooseEnd(context, type);
 
       tacticList = v;
       update(["training_page"]);
+      if (isChange.value) {
+        shakeController.stop();
+        shakeController.value = 0;
+        isChange.value = false;
+        await Future.delayed(const Duration(milliseconds: 500));
+        Navigator.of(context).pop();
+      }
+
+      await Future.delayed(const Duration(milliseconds: 500));
+      tacticType = TacticUtils.checkTacticMatch(tacticList);
+      // var list = TacticUtils.matchedIndices;
+      tacticAnimCtrl.forward();
+      Future.delayed(const Duration(milliseconds: 300), () async {
+        showTacticColor.value = true;
+        await Future.delayed(const Duration(milliseconds: 1500));
+        showTacticColor.value = false;
+      });
     }).whenComplete(() {});
   }
 
   Future chooseEnd(BuildContext context, int type) async {
-    update(["training_page"]);
-
     tacticId = 0;
     changeTacticId = 0;
     showBuff.value = false;
     isPlaying.value = false;
-    if (type == 0) await Future.delayed(const Duration(seconds: 1));
-    if (isChange.value) {
-      await Future.delayed(const Duration(milliseconds: 500));
-      Navigator.of(context).pop();
-    }
-    isChange.value = false;
+
+    // if (type == 0) await Future.delayed(const Duration(seconds: 1));
+
     for (var element in chooseTacticList) {
       element.isOpen.value = false;
     }
@@ -540,6 +598,9 @@ class TrainingController extends GetxController
 
   ///奖励表达
   Future showAward() async {
+    tacticAnimCtrl.reset();
+    tacticAnimCtrl.stop();
+
     isPlaying.value = true;
     int cashNum = 0;
     List<int> awads = [];
@@ -575,7 +636,8 @@ class TrainingController extends GetxController
       await Future.delayed(const Duration(milliseconds: 500));
     }
 
-    ///3:道具
+    ///3:道具自动加
+    // taskValue.value = trainingInfo.training.taskItemCount;
     if (awads.contains(3)) {
       taskValue.value = trainingInfo.training.taskItemCount;
       update(["training_page"]);
@@ -586,7 +648,7 @@ class TrainingController extends GetxController
     if (awads.contains(4)) {
       showBall.value = true;
       ballNum.value = trainingInfo.prop.num;
-      await Future.delayed(const Duration(milliseconds: 800), () {
+      await Future.delayed(const Duration(milliseconds: 600), () {
         showBall.value = false;
       });
     }

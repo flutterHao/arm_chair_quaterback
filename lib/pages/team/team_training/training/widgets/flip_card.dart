@@ -10,7 +10,7 @@ import 'dart:math';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactic_card.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactics/tactic_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

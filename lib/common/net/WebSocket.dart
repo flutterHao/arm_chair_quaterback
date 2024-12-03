@@ -45,7 +45,6 @@ class WSInstance {
 
     _channel?.stream
         .listen(_onMessageReceive, onError: _onError, onDone: _onDone);
-
   }
 
   static void _auth() {
@@ -55,6 +54,7 @@ class WSInstance {
 
   // 启动心跳定时器
   static void _startPingTimer() {
+    return;
     _pingTimer?.cancel();
     _pingTimer = Timer.periodic(const Duration(seconds: 10), (timer) {
       // 每 10 秒发送一个 ping 消息

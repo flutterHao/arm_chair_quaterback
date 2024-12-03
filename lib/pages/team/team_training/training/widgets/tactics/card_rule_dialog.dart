@@ -2,14 +2,14 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-24 18:53:16
- * @LastEditTime: 2024-11-29 09:51:34
+ * @LastEditTime: 2024-12-03 16:00:12
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/tactic_grade_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactic_card.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactics/tactic_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -209,6 +209,12 @@ final _colomns = ["Pattern", "Example", "Preparation"];
 final _colomnsWidth = [96.0, 177.0, 65.0];
 final _ruleMap = [
   {
+    "id": 1001,
+    "name": "High Card",
+    "cards": [],
+    "percent": 0,
+  },
+  {
     "id": 1002,
     "name": "One Pair",
     "cards": [
@@ -240,6 +246,18 @@ final _ruleMap = [
   },
   {
     "id": 1005,
+    "name": "Flush",
+    "cards": [
+      {"color": 1, "value": 9},
+      {"color": 1, "value": 11},
+      {"color": 1, "value": 12},
+      {"color": 1, "value": 13},
+      {"color": 1, "value": 14},
+    ],
+    "percent": 9,
+  },
+  {
+    "id": 1006,
     "name": "Straight",
     "cards": [
       {"color": 1, "value": 10},
@@ -251,7 +269,7 @@ final _ruleMap = [
     "percent": 9,
   },
   {
-    "id": 1006,
+    "id": 1007,
     "name": "Full House",
     "cards": [
       {"color": 1, "value": 10},
@@ -263,7 +281,7 @@ final _ruleMap = [
     "percent": 13,
   },
   {
-    "id": 1007,
+    "id": 1008,
     "name": "Four of a Kind",
     "cards": [
       {"color": 1, "value": 10},
@@ -274,7 +292,19 @@ final _ruleMap = [
     "percent": 15,
   },
   {
-    "id": 1008,
+    "id": 1009,
+    "name": "Straight Flushh",
+    "cards": [
+      {"color": 1, "value": 9},
+      {"color": 1, "value": 10},
+      {"color": 1, "value": 11},
+      {"color": 1, "value": 12},
+      {"color": 1, "value": 13},
+    ],
+    "percent": 18
+  },
+  {
+    "id": 1010,
     "name": "Royal Flush",
     "cards": [
       {"color": 1, "value": 10},

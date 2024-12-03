@@ -104,7 +104,9 @@ class TacticCard extends StatelessWidget {
 }
 
 String geCardtName(int num) {
-  if (num == 10) {
+  if (num == 9) {
+    return "9";
+  } else if (num == 10) {
     return "10";
   } else if (num == 11) {
     return "J";
