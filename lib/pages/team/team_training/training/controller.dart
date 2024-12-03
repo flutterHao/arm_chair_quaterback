@@ -228,13 +228,13 @@ class TrainingController extends GetxController
       vsync: this,
     );
     tacticExpAnimated = TweenSequence<double>([
-      TweenSequenceItem<double>(tween: Tween(begin: 0, end: 0), weight: 3),
-      TweenSequenceItem<double>(tween: Tween(begin: 0, end: 1), weight: 3),
+      TweenSequenceItem<double>(tween: Tween(begin: 0, end: 0), weight: 2),
+      TweenSequenceItem<double>(tween: Tween(begin: 0, end: 0.3), weight: 2),
       TweenSequenceItem<double>(tween: Tween(begin: 1, end: 1), weight: 12),
     ]).animate(tacticAnimCtrl);
     tacticScaleAnimated = TweenSequence([
-      TweenSequenceItem<double>(tween: Tween(begin: 1, end: 1.5), weight: 3),
-      TweenSequenceItem<double>(tween: Tween(begin: 1.5, end: 1), weight: 3),
+      TweenSequenceItem<double>(tween: Tween(begin: 1, end: 1.5), weight: 2),
+      TweenSequenceItem<double>(tween: Tween(begin: 1.5, end: 1), weight: 2),
       TweenSequenceItem<double>(tween: Tween(begin: 1, end: 1), weight: 12),
     ]).animate(CurvedAnimation(parent: tacticAnimCtrl, curve: Curves.linear));
     //战术类型文字

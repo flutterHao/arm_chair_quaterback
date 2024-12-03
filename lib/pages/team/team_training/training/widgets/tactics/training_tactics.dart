@@ -232,14 +232,7 @@ class TrainingTactics extends StatelessWidget {
                                                               (context, child) {
                                                             return Transform
                                                                 .scale(
-                                                              scale: TacticUtils
-                                                                      .matchedIndices
-                                                                      .contains(
-                                                                          index)
-                                                                  ? ctrl
-                                                                      .tacticScaleAnimated
-                                                                      .value
-                                                                  : 1,
+                                                              scale: 1,
                                                               child: TacticItem(
                                                                 buff:
                                                                     ctrl.tacticList[
@@ -252,21 +245,91 @@ class TrainingTactics extends StatelessWidget {
                                                         ),
 
                                                         ///颜色动画
+                                                        // AnimatedBuilder(
+                                                        //     animation: ctrl
+                                                        //         .tacticExpAnimated,
+                                                        //     builder: (context,
+                                                        //         child) {
+                                                        //       return Transform
+                                                        //           .scale(
+                                                        //         scale: 2 -
+                                                        //             ctrl.tacticExpAnimated
+                                                        //                 .value,
+                                                        //         child: Opacity(
+                                                        //           opacity: ctrl
+                                                        //               .tacticExpAnimated
+                                                        //               .value,
+                                                        //           child:
+                                                        //               Visibility(
+                                                        //             visible: TacticUtils
+                                                        //                     .matchedIndices
+                                                        //                     .contains(
+                                                        //                         index) &&
+                                                        //                 ctrl.showTacticColor
+                                                        //                     .value,
+                                                        //             child:
+                                                        //                 Container(
+                                                        //               width:
+                                                        //                   36.w,
+                                                        //               height:
+                                                        //                   62.w,
+                                                        //               decoration: BoxDecoration(
+                                                        //                   color: AppColors.cFF7954.withOpacity(
+                                                        //                       0.5),
+                                                        //                   borderRadius:
+                                                        //                       BorderRadius.circular(6.w)),
+                                                        //             ),
+                                                        //             // child:
+                                                        //             //     Container(
+                                                        //             //   width:
+                                                        //             //       36.w,
+                                                        //             //   height:
+                                                        //             //       62.w,
+                                                        //             //   decoration:
+                                                        //             //       BoxDecoration(
+                                                        //             //     border:
+                                                        //             //         Border.all(
+                                                        //             //       width:
+                                                        //             //           2.w,
+                                                        //             //       color: AppColors
+                                                        //             //           .cFF7954
+                                                        //             //           .withOpacity(0.6),
+                                                        //             //     ),
+                                                        //             //     borderRadius:
+                                                        //             //         BorderRadius.circular(6.w),
+                                                        //             //   ),
+                                                        //             // ),
+                                                        //           ),
+                                                        //         ),
+                                                        //       );
+                                                        //     }),
+
                                                         AnimatedBuilder(
                                                             animation: ctrl
                                                                 .tacticExpAnimated,
                                                             builder: (context,
                                                                 child) {
+                                                              double opacity = 0.5 +
+                                                                          ctrl.tacticExpAnimated
+                                                                              .value >
+                                                                      1
+                                                                  ? 1
+                                                                  : (0.4 +
+                                                                      ctrl.tacticExpAnimated
+                                                                          .value);
                                                               return Transform
                                                                   .scale(
-                                                                scale: ctrl
-                                                                        .tacticExpAnimated
-                                                                        .value +
-                                                                    1,
+                                                                scale: (1.3 -
+                                                                            ctrl
+                                                                                .tacticExpAnimated.value) <
+                                                                        1
+                                                                    ? 1
+                                                                    : 1.3 -
+                                                                        ctrl.tacticExpAnimated
+                                                                            .value,
                                                                 child: Opacity(
-                                                                  opacity: 1 -
-                                                                      ctrl.tacticExpAnimated
-                                                                          .value,
+                                                                  opacity:
+                                                                      opacity,
                                                                   child:
                                                                       Visibility(
                                                                     visible: TacticUtils
@@ -275,64 +338,76 @@ class TrainingTactics extends StatelessWidget {
                                                                                 index) &&
                                                                         ctrl.showTacticColor
                                                                             .value,
+                                                                    // child:
+                                                                    //     Container(
+                                                                    //   width:
+                                                                    //       36.w,
+                                                                    //   height:
+                                                                    //       62.w,
+                                                                    //   decoration: BoxDecoration(
+                                                                    //       color: AppColors.cFF7954.withOpacity(
+                                                                    //           0.5),
+                                                                    //       borderRadius:
+                                                                    //           BorderRadius.circular(6.w)),
+                                                                    // ),
                                                                     child:
                                                                         Container(
                                                                       width:
                                                                           36.w,
                                                                       height:
                                                                           62.w,
-                                                                      decoration: BoxDecoration(
-                                                                          color: AppColors.cFF7954.withOpacity(
-                                                                              0.5),
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(6.w)),
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        border:
+                                                                            Border.all(
+                                                                          width:
+                                                                              2.w,
+                                                                          color: AppColors
+                                                                              .cFF7954
+                                                                              .withOpacity(0.6),
+                                                                        ),
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(6.w),
+                                                                      ),
                                                                     ),
-                                                                    // child:
-                                                                    //     TacticItem(
-                                                                    //   buff: ctrl
-                                                                    //           .tacticList[
-                                                                    //       index],
-                                                                    //   widthAnimition:
-                                                                    //       false,
-                                                                    // ),
                                                                   ),
                                                                 ),
                                                               );
                                                             }),
 
-                                                        AnimatedBuilder(
-                                                            animation: ctrl
-                                                                .tacticExpAnimated,
-                                                            builder: (context,
-                                                                child) {
-                                                              return Visibility(
-                                                                visible: TacticUtils
-                                                                        .matchedIndices
-                                                                        .contains(
-                                                                            index) &&
-                                                                    ctrl.showTacticColor
-                                                                        .value,
-                                                                child:
-                                                                    Container(
-                                                                  width: 36.w,
-                                                                  height: 62.w,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    border:
-                                                                        Border
-                                                                            .all(
-                                                                      width:
-                                                                          2.w,
-                                                                      color: AppColors
-                                                                          .cFF7954,
-                                                                    ),
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            6.w),
-                                                                  ),
-                                                                ),
-                                                              );
-                                                            })
+                                                        // AnimatedBuilder(
+                                                        //     animation: ctrl
+                                                        //         .tacticExpAnimated,
+                                                        //     builder: (context,
+                                                        //         child) {
+                                                        //       return Visibility(
+                                                        //         visible: TacticUtils
+                                                        //                 .matchedIndices
+                                                        //                 .contains(
+                                                        //                     index) &&
+                                                        //             ctrl.showTacticColor
+                                                        //                 .value,
+                                                        //         child:
+                                                        //             Container(
+                                                        //           width: 36.w,
+                                                        //           height: 62.w,
+                                                        //           decoration:
+                                                        //               BoxDecoration(
+                                                        //             border:
+                                                        //                 Border
+                                                        //                     .all(
+                                                        //               width:
+                                                        //                   2.w,
+                                                        //               color: AppColors
+                                                        //                   .cFF7954,
+                                                        //             ),
+                                                        //             borderRadius:
+                                                        //                 BorderRadius.circular(
+                                                        //                     6.w),
+                                                        //           ),
+                                                        //         ),
+                                                        //       );
+                                                        //     })
                                                       ],
                                                     );
                                                   },
