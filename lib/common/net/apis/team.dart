@@ -2,13 +2,14 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-14 17:25:31
- * @LastEditTime: 2024-11-28 17:44:17
+ * @LastEditTime: 2024-12-04 15:59:45
  */
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/my_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_status_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/tactics_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/tatics_combine_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/train_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/train_task_entity.dart';
@@ -128,4 +129,8 @@ class TeamApi {
     return list.map((e) => TacticsDefineEntity.fromJson(e)).toList();
   }
 
+  static Future<List<TaticsCombineEntity>> getTacticCombine() async {
+    List list = await HttpUtil().post(Api.cTaticsCombine);
+    return list.map((e) => TaticsCombineEntity.fromJson(e)).toList();
+  }
 }

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-06 15:16:54
- * @LastEditTime: 2024-11-28 17:42:34
+ * @LastEditTime: 2024-12-04 15:53:54
  */
 class Api {
   /// base
@@ -92,7 +92,9 @@ class Api {
   static const String cErrorCode = "$CONFIG_BASE_PATH/ErrorCode.json";
   static const String cTacticsDefine = "$CONFIG_BASE_PATH/TacticsDefine.json";
   static const String cGameEvent = "$CONFIG_BASE_PATH/GameEvent.json";
-  static const String cCompetitionVenue = "$CONFIG_BASE_PATH/CompetitionVenue.json";
+  static const String cCompetitionVenue =
+      "$CONFIG_BASE_PATH/CompetitionVenue.json";
+  static const String cTaticsCombine = "$CONFIG_BASE_PATH/TaticsCombine.json";
 
   /// TeamPlayer
   static const String getTeamPlayerByUUID =
@@ -139,7 +141,7 @@ class Api {
       "$API_BASE_PATH/NBAData/getNBAGameSchedules";
 
   ///WebSocket
-  static const String wsJazminError = "jazmin.error";//接口错误
+  static const String wsJazminError = "jazmin.error"; //接口错误
   static const String wsHeartBeat = "TeamService.heartBeat";
   static const String wsAuthAccount = "TeamService.authAccount";
 

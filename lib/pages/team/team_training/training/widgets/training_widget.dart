@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-25 15:56:43
- * @LastEditTime: 2024-12-03 17:14:41
+ * @LastEditTime: 2024-12-04 15:08:00
  */
 
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
@@ -223,7 +223,7 @@ class TrainingWidget extends GetView<TrainingController> {
                             ),
 
                           ///Slot
-                          Positioned(top: 94.w, child: TrainingSlot()),
+                          Positioned(top: 94.w, child: const TrainingSlot()),
 
                           ///start
                           Positioned(
@@ -484,7 +484,7 @@ class TrainingWidget extends GetView<TrainingController> {
                                         context: Get.context!,
                                         builder: (context) {
                                           // return RecoverDialog();
-                                          return const _TipDialog();
+                                          return const TacticTipDialog();
                                         });
                                   },
                                   child: Container(
@@ -685,8 +685,8 @@ class TrainingWidget extends GetView<TrainingController> {
   }
 }
 
-class _TipDialog extends GetView<TrainingController> {
-  const _TipDialog({super.key});
+class TacticTipDialog extends GetView<TrainingController> {
+  const TacticTipDialog({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -700,7 +700,7 @@ class _TipDialog extends GetView<TrainingController> {
               alignment: Alignment.center,
               padding: EdgeInsets.symmetric(horizontal: 30.w),
               child: Text(
-                "Are yout confirm to qiut the 'Tactics Pick'",
+                "Are you confirm to qiut the 'Tactics Pick",
                 style: 16.w4(),
                 textAlign: TextAlign.center,
               ),

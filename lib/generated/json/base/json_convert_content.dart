@@ -49,6 +49,7 @@ import 'package:arm_chair_quaterback/common/entities/scores_not_start_game_entit
 import 'package:arm_chair_quaterback/common/entities/star_up_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/tactic_grade_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/tactics_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/tatics_combine_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_list_entity.dart';
@@ -691,6 +692,10 @@ class JsonConvert {
       return data.map<TacticsDefineEntity>((Map<String, dynamic> e) =>
           TacticsDefineEntity.fromJson(e)).toList() as M;
     }
+    if (<TaticsCombineEntity>[] is M) {
+      return data.map<TaticsCombineEntity>((Map<String, dynamic> e) =>
+          TaticsCombineEntity.fromJson(e)).toList() as M;
+    }
     if (<TeamInfoEntity>[] is M) {
       return data.map<TeamInfoEntity>((Map<String, dynamic> e) =>
           TeamInfoEntity.fromJson(e)).toList() as M;
@@ -989,6 +994,7 @@ class JsonConvertClassCollection {
     (TacticGradeEntity).toString(): TacticGradeEntity.fromJson,
     (TacticGradeCards).toString(): TacticGradeCards.fromJson,
     (TacticsDefineEntity).toString(): TacticsDefineEntity.fromJson,
+    (TaticsCombineEntity).toString(): TaticsCombineEntity.fromJson,
     (TeamInfoEntity).toString(): TeamInfoEntity.fromJson,
     (TeamInfoTeamPreference).toString(): TeamInfoTeamPreference.fromJson,
     (TeamPlayerInfoEntity).toString(): TeamPlayerInfoEntity.fromJson,

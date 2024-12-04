@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-24 18:53:16
- * @LastEditTime: 2024-12-03 16:00:12
+ * @LastEditTime: 2024-12-03 21:05:17
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/tactic_grade_entity.dart';
@@ -293,7 +293,7 @@ final _ruleMap = [
   },
   {
     "id": 1009,
-    "name": "Straight Flushh",
+    "name": "Straight Flush",
     "cards": [
       {"color": 1, "value": 9},
       {"color": 1, "value": 10},

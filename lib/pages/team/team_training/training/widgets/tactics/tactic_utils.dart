@@ -71,7 +71,7 @@ class TacticUtils {
 
     // 如果没有匹配任何牌型
     setMatchForIndices(tacticList, []);
-    return "No Match";
+    return "";
   }
 
   static void setMatchForIndices(

@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/entities/my_team_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/tactics_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/tatics_combine_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/train_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/train_task_entity.dart';
@@ -94,7 +96,7 @@ class TrainingController extends GetxController
   final List<int> statusList = [104, 103, 102, 101];
 
   //球员滚动
-  late Timer _timer;
+  Timer? _timer;
   late Timer _timer1;
   late ScrollController playerScollCtrl;
   List<ScrollController> statusScollerList = [];
@@ -127,8 +129,9 @@ class TrainingController extends GetxController
   late Animation<double> tacticScaleAnimated;
   late Animation<Offset> tacticPosAnimated;
   late Animation<double> widthAniamtion;
-  String tacticType = "High Card";
+  String tacticType = "";
   RxBool showTacticColor = false.obs;
+  List<TaticsCombineEntity> buffValueConfigList = [];
 
   //任务
   RxInt taskValue = 0.obs;
@@ -186,13 +189,17 @@ class TrainingController extends GetxController
     flyAnimation = Tween<double>(begin: 0, end: 1).animate(flyAnimationCtrl);
 
     shakeController = AnimationController(
-      duration: const Duration(milliseconds: 100),
+      duration: const Duration(milliseconds: 200),
       vsync: this,
     );
-    shakeAnimation = Tween<double>(begin: -0.01, end: 0.01).animate(
+    shakeAnimation = TweenSequence([
+      TweenSequenceItem<double>(tween: Tween(begin: 0, end: -0.01), weight: 1),
+      TweenSequenceItem<double>(tween: Tween(begin: -0.01, end: 0), weight: 1),
+      TweenSequenceItem<double>(tween: Tween(begin: 0, end: 0.01), weight: 1),
+    ]).animate(
       CurvedAnimation(
         parent: shakeController,
-        curve: Curves.easeInOut,
+        curve: Curves.linear,
       ),
     )..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
@@ -301,7 +308,7 @@ class TrainingController extends GetxController
   @override
   void dispose() {
     super.dispose();
-    _timer.cancel();
+    _timer?.cancel();
     _timer1.cancel();
     for (var controller in scrollerCtrlList) {
       controller.dispose();
@@ -315,12 +322,14 @@ class TrainingController extends GetxController
       // TeamApi.getMyTeamPlayer(teamId),
       TeamApi.getTrainTaskList(),
       TeamApi.getTrainDefine(),
+      TeamApi.getTacticCombine(),
       getPlayerList(),
     ]).then((v) {
       // rewardList = v[0] as List<RewardGroupEntity>;
       trainingInfo = v[0] as TrainingInfoEntity;
       trainTaskList = v[1] as List<TrainTaskEntity>;
       trainDefine = v[2] as TrainDefineEntity;
+      buffValueConfigList = v[3] as List<TaticsCombineEntity>;
       ballNum.value = trainingInfo.prop.num;
       tacticList = trainingInfo.buff;
       for (int i = 0; i < trainTaskList.length; i++) {
@@ -329,7 +338,9 @@ class TrainingController extends GetxController
         }
       }
       taskValue.value = trainingInfo.training.taskItemCount;
-      recoverTimeAndCountDown();
+      if (_timer == null) {
+        recoverTimeAndCountDown();
+      }
       taskCountDownTime();
       update(["training_page"]);
     }).catchError((v) {
@@ -367,7 +378,7 @@ class TrainingController extends GetxController
       recoverTimeStr.value =
           '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
       if (recoverSeconds <= 0) {
-        _timer.cancel();
+        _timer?.cancel();
         // 重新获取新的恢复时间进行倒计时
         trainingInfo = await TeamApi.getTrainingInfo();
         update(["training_page"]);
@@ -480,17 +491,11 @@ class TrainingController extends GetxController
 
       tacticList = v;
       update(["training_page"]);
-      if (isChange.value) {
-        shakeController.stop();
-        shakeController.value = 0;
-        isChange.value = false;
-        await Future.delayed(const Duration(milliseconds: 500));
-        Navigator.of(context).pop();
-      }
 
       await Future.delayed(const Duration(milliseconds: 500));
       tacticType = TacticUtils.checkTacticMatch(tacticList);
       // var list = TacticUtils.matchedIndices;
+      tacticAnimCtrl.reset();
       tacticAnimCtrl.forward();
       Future.delayed(const Duration(milliseconds: 300), () async {
         showTacticColor.value = true;
@@ -506,10 +511,19 @@ class TrainingController extends GetxController
     showBuff.value = false;
     isPlaying.value = false;
 
-    // if (type == 0) await Future.delayed(const Duration(seconds: 1));
+    // await Future.delayed(const Duration(milliseconds: 500));
 
     for (var element in chooseTacticList) {
       element.isOpen.value = false;
+    }
+
+    if (isChange.value) {
+      shakeController.reset();
+      shakeController.stop();
+      isChange.value = false;
+      await Future.delayed(const Duration(milliseconds: 1000), () {
+        Navigator.of(context).pop();
+      });
     }
   }
 
@@ -556,6 +570,7 @@ class TrainingController extends GetxController
     ballNum.value = ballNum.value - 1;
     await TeamApi.playerTraining(playerList[playerIdx].uuid).then((v) {
       trainingInfo = v;
+      recoverTimeAndCountDown();
 
       //更新道具
       for (int i = 0; i < trainTaskList.length; i++) {
@@ -598,9 +613,7 @@ class TrainingController extends GetxController
 
   ///奖励表达
   Future showAward() async {
-    tacticAnimCtrl.reset();
-    tacticAnimCtrl.stop();
-
+    // tacticType = TacticUtils.checkTacticMatch(tacticList);
     isPlaying.value = true;
     int cashNum = 0;
     List<int> awads = [];
@@ -816,20 +829,13 @@ class TrainingController extends GetxController
   }
 
   ///计算每个的数量
-  Map<int, int> countProp() {
-    Map<int, int> map = {
-      102: 0,
-      301: 0,
-      302: 0,
-      303: 0,
-      304: 0,
-      305: 0,
-      306: 0,
-    };
-    for (int i in trainingInfo.propArray) {
-      map[i] = (map[i] ?? 0) + 1;
+  void getBuffValue(TrainingInfoBuff buff) {
+    for (var config in buffValueConfigList) {
+      if (config.suit == buff.color) {
+        int length = config.taticsuit.length;
+        int m = min(length, buff.takeEffectGameCount);
+        buff.buffValue = config.suitAdd[m - 1];
+      }
     }
-
-    return map;
   }
 }

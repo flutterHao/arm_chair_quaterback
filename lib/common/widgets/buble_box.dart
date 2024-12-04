@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 
 enum ArrowDirection { up, down, left, right }
 
-///气泡框
+/// 气泡框
 class BubbleBox extends StatelessWidget {
   final Widget child;
   final Color color;
   final ArrowDirection arrowDirection;
-  final double arrowSize; // 箭头的大小
+  final double arrowSize; // 箭头的高度
   final double arrowWidth; // 箭头的宽度
+  final double arrowOffset; // 箭头距离边角的偏移量
 
   const BubbleBox({
     super.key,
@@ -17,7 +18,8 @@ class BubbleBox extends StatelessWidget {
     this.color = Colors.black,
     this.arrowDirection = ArrowDirection.down, // 默认箭头向下
     this.arrowSize = 6.0, // 控制箭头的高度（降低箭头高度）
-    this.arrowWidth = 14.0, // 控制箭头的宽度
+    this.arrowWidth = 8.0,
+    this.arrowOffset = 20, // 控制箭头的宽度
   });
 
   @override
@@ -44,11 +46,11 @@ class BubbleBox extends StatelessWidget {
       padding: padding,
       child: CustomPaint(
         painter: BubblePainter(
-          color: color,
-          arrowDirection: arrowDirection,
-          arrowSize: arrowSize,
-          arrowWidth: arrowWidth,
-        ),
+            color: color,
+            arrowDirection: arrowDirection,
+            arrowSize: arrowSize,
+            arrowWidth: arrowWidth,
+            arrowOffset: arrowOffset),
         child: child,
       ),
     );
@@ -60,12 +62,14 @@ class BubblePainter extends CustomPainter {
   final ArrowDirection arrowDirection;
   final double arrowSize; // 箭头高度
   final double arrowWidth; // 箭头宽度
+  final double arrowOffset; // 箭头距离边角的偏移量
 
   BubblePainter({
     required this.color,
     required this.arrowDirection,
     required this.arrowSize,
     required this.arrowWidth,
+    this.arrowOffset = 20.0,
   });
 
   @override
@@ -77,15 +81,15 @@ class BubblePainter extends CustomPainter {
     var path = Path();
 
     double radius = 10.0; // 气泡框的圆角半径
-    double arrowOffset = 20.0; // 箭头距离边角的偏移量
 
     // 调整箭头绘制的形状和位置
     switch (arrowDirection) {
       case ArrowDirection.up:
         // 绘制朝上的箭头
-        path.moveTo(arrowOffset + arrowWidth, 0);
-        path.lineTo(arrowOffset + arrowWidth / 2, -arrowSize); // 箭头顶点更圆滑
-        path.lineTo(arrowOffset, 0);
+        path.moveTo(size.width - (arrowOffset + arrowWidth), 0);
+        path.lineTo(
+            size.width - (arrowOffset + arrowWidth / 2), -arrowSize); // 箭头顶点更圆滑
+        path.lineTo(size.width - arrowOffset, 0);
         path.lineTo(radius, 0); // 开始绘制气泡框
         path.quadraticBezierTo(0, 0, 0, radius);
         path.lineTo(0, size.height - radius);
@@ -106,10 +110,10 @@ class BubblePainter extends CustomPainter {
         path.lineTo(size.width, size.height - radius - arrowSize);
         path.quadraticBezierTo(
             size.width, size.height, size.width - radius, size.height);
-        path.lineTo(arrowOffset + arrowWidth, size.height);
-        path.lineTo(
-            arrowOffset + arrowWidth / 2, size.height + arrowSize); // 箭头顶点
-        path.lineTo(arrowOffset, size.height);
+        path.lineTo(size.width - (arrowOffset + arrowWidth), size.height);
+        path.lineTo(size.width - (arrowOffset + arrowWidth / 2),
+            size.height + arrowSize); // 箭头顶点
+        path.lineTo(size.width - arrowOffset, size.height);
         path.lineTo(radius, size.height);
         path.quadraticBezierTo(0, size.height, 0, size.height - radius);
         path.lineTo(0, radius);

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-02 10:15:35
- * @LastEditTime: 2024-12-02 22:46:51
+ * @LastEditTime: 2024-12-04 16:18:15
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
@@ -14,6 +14,7 @@ import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactics/tactic_card.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactics/training_tactics.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/training_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -74,12 +75,19 @@ class TrainingAwardDialog extends GetView<TrainingController> {
                       child: Positioned(
                         top: top + 205.w,
                         child: MtInkwell(
-                          onTap: () {
+                          onTap: () async {
                             if (controller.isNotTip.value) {
                               controller.chooseFinish();
-                              Navigator.pop(context);
-                              return;
+                              // return;
+                            } else {
+                              await showDialog(
+                                  context: Get.context!,
+                                  builder: (context) {
+                                    // return RecoverDialog();
+                                    return const TacticTipDialog();
+                                  });
                             }
+                            Navigator.pop(context);
                           },
                           child: Container(
                             width: 30.w,
@@ -136,56 +144,6 @@ class TrainingAwardDialog extends GetView<TrainingController> {
               ),
             ),
           );
-        });
-  }
-}
-
-class _TipDialog extends GetView<TrainingController> {
-  const _TipDialog({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return CustomDialog(
-        content: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              // height: 30.w,
-              alignment: Alignment.center,
-              padding: EdgeInsets.symmetric(horizontal: 30.w),
-              child: Text(
-                "Are yout confirm to qiut the 'Tactics Pick'",
-                style: 16.w4(),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Obx(() {
-                  return SizedBox(
-                    width: 40.w,
-                    child: Checkbox(
-                        value: controller.isNotTip.value,
-                        activeColor: AppColors.cFF7954,
-                        onChanged: (v) {
-                          controller.isNotTip.value =
-                              !controller.isNotTip.value;
-                        }),
-                  );
-                }),
-                Text(
-                  "No more tips today",
-                  style: 12.w4(),
-                )
-              ],
-            )
-          ],
-        ),
-        onTap: () {
-          controller.saveNotTip();
-          controller.chooseFinish();
         });
   }
 }

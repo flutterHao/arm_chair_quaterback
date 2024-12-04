@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-21 20:20:49
- * @LastEditTime: 2024-11-28 20:21:47
+ * @LastEditTime: 2024-12-04 10:27:29
  */
 import 'dart:async';
 import 'dart:io';
@@ -15,6 +15,7 @@ import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/store/config.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -53,6 +54,7 @@ class Utils {
 
   ///道具
   static String getPropIconUrl(id) {
+    // Log.d("assets/images/Common/ui_common_prop_0$id.png");
     return "assets/images/Common/ui_common_prop_0$id.png";
   }
 

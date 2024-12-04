@@ -81,19 +81,19 @@ class TacticCard extends StatelessWidget {
           ),
           Positioned(
             top: 34.5.w,
-            child: Image.asset(getCardImage(color), width: 27.w * scale),
+            child: Image.asset(getCardImage(color), width: 28.w * scale),
           ),
           Positioned(
             top: 70.w,
             child: Text(
-              "Perimeter",
+              getCardTacticNmae(color),
               style: 10.w4(color: getCardColor(color), height: 0.9),
             ),
           ),
           Positioned(
             top: 83.w,
             child: Text(
-              "${(buff.buffValue * 100).toStringAsFixed(0)}%",
+              "+${(buff.buffValue * 100).toStringAsFixed(0)}%",
               style: 12.w4(color: getCardColor(color), height: 0.9),
             ),
           ),
@@ -128,6 +128,18 @@ String getCardImage(int color) {
     return Assets.managerUiManagerTactics03;
   } else {
     return Assets.managerUiManagerTactics04;
+  }
+}
+
+String getCardTacticNmae(int color) {
+  if (color == Constant.spade) {
+    return "3 Points";
+  } else if (color == Constant.heart) {
+    return "Lay up";
+  } else if (color == Constant.club) {
+    return "Mid-range";
+  } else {
+    return "Draw a foul";
   }
 }
 
