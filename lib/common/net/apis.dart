@@ -149,6 +149,7 @@ class Api {
   static const String wsPkEventUpdated = "PushService.pkEventUpdated";
   static const String wsPkResultUpdated = "PushService.pkResultUpdated";
   static const String wsPkStopUpdated = "PushService.pkStopUpdated";
+  static const String wsPkPlayerUpdated = "PushService.pkPlayerUpdated";//换人
 
   static const String wsTeamMatch = "PKService.teamMatch";
 }

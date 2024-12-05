@@ -8,17 +8,24 @@ import 'package:get/get.dart';
 ///@auther gejiahui
 ///created at 2024/11/29/10:32
 
-class ShootMarkAnimationWidget extends StatefulWidget {
-  const ShootMarkAnimationWidget({super.key, required this.child});
+class MarkAnimationWidget extends StatefulWidget {
+  const MarkAnimationWidget(
+      {super.key,
+      required this.child,
+      this.height = 30,
+      this.end = 5,
+      this.duration = const Duration(milliseconds: 500)});
 
   final Widget child;
+  final double height;
+  final double end;
+  final Duration duration;
 
   @override
-  State<ShootMarkAnimationWidget> createState() =>
-      _ShootMarkAnimationWidgetState();
+  State<MarkAnimationWidget> createState() => _MarkAnimationWidgetState();
 }
 
-class _ShootMarkAnimationWidgetState extends State<ShootMarkAnimationWidget>
+class _MarkAnimationWidgetState extends State<MarkAnimationWidget>
     with TickerProviderStateMixin {
   late EasyAnimationController jumpAnimationController;
   late EasyAnimationController rotateAnimationController;
@@ -27,10 +34,7 @@ class _ShootMarkAnimationWidgetState extends State<ShootMarkAnimationWidget>
   void initState() {
     super.initState();
     jumpAnimationController = EasyAnimationController(
-        vsync: this,
-        begin: 0.0,
-        end: 5.0,
-        duration: const Duration(milliseconds: 500));
+        vsync: this, begin: 0.0, end: widget.end, duration: widget.duration,curve: Curves.easeInOut);
     jumpAnimationController.controller.repeat(reverse: true);
     rotateAnimationController = EasyAnimationController(
         vsync: this,
@@ -45,7 +49,7 @@ class _ShootMarkAnimationWidgetState extends State<ShootMarkAnimationWidget>
     return Obx(() {
       double bottom = jumpAnimationController.value.value;
       return Container(
-          height: 30,
+          height: widget.height,
           padding: EdgeInsets.only(bottom: bottom),
           child: widget.child);
       // 跳跃+旋转

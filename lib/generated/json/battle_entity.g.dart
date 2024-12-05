@@ -79,6 +79,16 @@ BattleEntity $BattleEntityFromJson(Map<String, dynamic> json) {
   if (newsBuffPlayerId != null) {
     battleEntity.newsBuffPlayerId = newsBuffPlayerId;
   }
+  final double? homeTeamReadiness = jsonConvert.convert<double>(
+      json['homeTeamReadiness']);
+  if (homeTeamReadiness != null) {
+    battleEntity.homeTeamReadiness = homeTeamReadiness;
+  }
+  final double? awayTeamReadiness = jsonConvert.convert<double>(
+      json['awayTeamReadiness']);
+  if (awayTeamReadiness != null) {
+    battleEntity.awayTeamReadiness = awayTeamReadiness;
+  }
   return battleEntity;
 }
 
@@ -100,6 +110,8 @@ Map<String, dynamic> $BattleEntityToJson(BattleEntity entity) {
   data['homeAbilityValue'] = entity.homeAbilityValue.toJson();
   data['newsBuffAdd'] = entity.newsBuffAdd;
   data['newsBuffPlayerId'] = entity.newsBuffPlayerId;
+  data['homeTeamReadiness'] = entity.homeTeamReadiness;
+  data['awayTeamReadiness'] = entity.awayTeamReadiness;
   return data;
 }
 
@@ -119,6 +131,8 @@ extension BattleEntityExtension on BattleEntity {
     AbilityValue? homeAbilityValue,
     double? newsBuffAdd,
     int? newsBuffPlayerId,
+    double? homeTeamReadiness,
+    double? awayTeamReadiness,
   }) {
     return BattleEntity()
       ..awayTeamPower = awayTeamPower ?? this.awayTeamPower
@@ -134,7 +148,9 @@ extension BattleEntityExtension on BattleEntity {
       ..gameData = gameData ?? this.gameData
       ..homeAbilityValue = homeAbilityValue ?? this.homeAbilityValue
       ..newsBuffAdd = newsBuffAdd ?? this.newsBuffAdd
-      ..newsBuffPlayerId = newsBuffPlayerId ?? this.newsBuffPlayerId;
+      ..newsBuffPlayerId = newsBuffPlayerId ?? this.newsBuffPlayerId
+      ..homeTeamReadiness = homeTeamReadiness ?? this.homeTeamReadiness
+      ..awayTeamReadiness = awayTeamReadiness ?? this.awayTeamReadiness;
   }
 }
 

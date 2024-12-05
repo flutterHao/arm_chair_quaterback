@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/entities/competition_venue_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/game_event_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/pk_start_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/web_socket/web_socket_entity.dart';
 import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/apis.dart';
@@ -52,6 +53,7 @@ class TeamBattleController extends GetxController
   late BattleEntity battleEntity;
 
   StreamSubscription<ResponseMessage>? subscription;
+  PkStartUpdatedEntity? pkStartUpdatedEntity;
 
   ///测试数据，需删除
 
@@ -77,28 +79,36 @@ class TeamBattleController extends GetxController
     await Future.wait([
       CacheApi.getGameEvent(),
       CacheApi.getCompetitionVenue(),
-    ]);
-    subscription = WSInstance.teamMatch().listen((result) {
-      developer
-          .log('result.serviceId--${result.serviceId}--:${result.payload}');
-      if (result.serviceId == Api.wsJazminError && step.value == 1) {
-        EasyLoading.showToast("MATCH FAILED");
-        Get.back();
-        return;
-      }
-      if (result.serviceId == Api.wsTeamMatch) {
-        battleEntity = BattleEntity.fromJson(result.payload);
-        var currentMs = DateTime.now().millisecondsSinceEpoch;
-        var diff = currentMs - startMatchTimeMs;
-        if (diff >= minMatchTimeMs) {
-          nextStep();
-        } else {
-          Future.delayed(Duration(milliseconds: minMatchTimeMs - diff), () {
-            nextStep();
-          });
+    ]).then((result) {
+      subscription = WSInstance.teamMatch().listen((result) {
+        developer.log('result.serviceId--${result.serviceId}--:${result.payload}');
+        // print('result.serviceId--${result.serviceId}--:${result.payload}');
+        if (result.serviceId == Api.wsJazminError && step.value == 1) {
+          EasyLoading.showToast("MATCH FAILED");
+          Get.back();
+          return;
         }
-      }
+
+        if (result.serviceId == Api.wsPkStartUpdated) {
+          pkStartUpdatedEntity = PkStartUpdatedEntity.fromJson(result.payload);
+        }
+        if (result.serviceId == Api.wsTeamMatch) {
+          battleEntity = BattleEntity.fromJson(result.payload);
+          var currentMs = DateTime.now().millisecondsSinceEpoch;
+          var diff = currentMs - startMatchTimeMs;
+          if (diff >= minMatchTimeMs) {
+            nextStep();
+          } else {
+            Future.delayed(Duration(milliseconds: minMatchTimeMs - diff), () {
+              nextStep();
+            });
+          }
+        }
+      });
+    }, onError: (e) {
+      Get.back();
     });
+
     // var startMatchTimeMs = DateTime.now().millisecondsSinceEpoch;
     // var minMatchTimeMs = 3000;
     // TeamApi.teamMatch().then((result) {

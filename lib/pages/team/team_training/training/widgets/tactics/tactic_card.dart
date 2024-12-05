@@ -9,6 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 ///战术卡牌
 class SmallTacticCard extends StatelessWidget {
   const SmallTacticCard({super.key, required this.num, required this.color});
+
   final int num; //数字
   final int color; //花色
 
@@ -47,11 +48,14 @@ class TacticCard extends StatelessWidget {
       required this.num,
       required this.color,
       required this.width,
-      required this.buff});
+      required this.buff,
+      this.borderRadius});
+
   final int num; //数字
   final int color; //花色
   final double width;
   final TrainingInfoBuff buff;
+  final BorderRadius? borderRadius;
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +65,7 @@ class TacticCard extends StatelessWidget {
       height: 97.w * scale,
       decoration: BoxDecoration(
         color: AppColors.cFFFFFF,
-        borderRadius: BorderRadius.circular(6.w),
+        borderRadius: borderRadius??BorderRadius.circular(6.w),
       ),
       child: Stack(
         alignment: Alignment.center,

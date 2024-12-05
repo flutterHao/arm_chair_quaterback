@@ -19,6 +19,8 @@ class BattleEntity {
   late AbilityValue homeAbilityValue;
   late double newsBuffAdd;
   late int newsBuffPlayerId;
+  late double homeTeamReadiness;
+  late double awayTeamReadiness;
 
   BattleEntity();
 

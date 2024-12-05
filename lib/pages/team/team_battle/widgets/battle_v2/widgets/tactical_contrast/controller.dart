@@ -2,9 +2,12 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
+import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/widgets/battle_animation_controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -24,6 +27,8 @@ class TacticalContrastController extends GetxController
 
   late BattleEntity battleEntity;
 
+  var showBorder = false.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -36,11 +41,23 @@ class TacticalContrastController extends GetxController
     for (int index = 0; index < homeTeamBuff.length; index++) {
       var item = homeTeamBuff[index];
       var startY = item.takeEffectGameCount == 1 ? (269.w + 3.w) : 269.w;
-      animationList.add(EasyAnimationController(
+      var easyAnimationController = EasyAnimationController(
           vsync: this,
           begin: Offset(left + (43.w + 12.w) * index, startY),
           end: Offset(60.w + 16.w + 50.w * index, 95.w),
-          duration: const Duration(milliseconds: 300)));
+          duration: const Duration(milliseconds: 300));
+      if (index == homeTeamBuff.length - 1) {
+        easyAnimationController.controller
+            .addStatusListener(lastAnimationStatusListener);
+      }
+      animationList.add(easyAnimationController);
+    }
+  }
+
+  lastAnimationStatusListener(status) {
+    if (status == AnimationStatus.completed) {
+      showBorder.value = true;
+      Get.find<TeamBattleV2Controller>().changeBuff();
     }
   }
 
@@ -53,7 +70,7 @@ class TacticalContrastController extends GetxController
   }
 
   forward() {
-    if(animationList.isEmpty){
+    if (animationList.isEmpty) {
       return;
     }
     int count = 0;

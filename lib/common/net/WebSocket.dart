@@ -16,6 +16,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 class WSInstance {
   static WebSocketChannel? _channel;
   static int _msgCounter = 1;
+  static bool _init = false;
   static bool _isClosed = false; // 标记手动关闭
   static Timer? _reconnectTimer; // 重连定时器
 
@@ -32,6 +33,7 @@ class WSInstance {
       return;
     }
     print('WebSocket--start--');
+    _init = true;
     final wsUrl = Uri.parse(_getUrl);
     _channel = WebSocketChannel.connect(wsUrl);
 
@@ -54,7 +56,6 @@ class WSInstance {
 
   // 启动心跳定时器
   static void _startPingTimer() {
-    return;
     _pingTimer?.cancel();
     _pingTimer = Timer.periodic(const Duration(seconds: 10), (timer) {
       if(_reconnectTimer?.isActive == false){
@@ -62,7 +63,7 @@ class WSInstance {
         return;
       }
       // 每 10 秒发送一个 ping 消息
-      // print('发送 ping');
+      print('发送 ping:${DateTime.now().millisecondsSinceEpoch}');
       ping();
 
       // 检查是否超时
@@ -95,7 +96,7 @@ class WSInstance {
       // print('WebSocket--result--TeamService.heartBeat');
       _lastPongTime = DateTime.now();
     } else {
-      print('WebSocket--result--:$result');
+      // print('WebSocket--result--:$result');
       // log('result.serviceId--:${result.payload}');
       _streamController.sink.add(result);
     }
@@ -129,9 +130,18 @@ class WSInstance {
   static Stream<ResponseMessage> get stream => _streamController.stream;
 
   static void _sendMessage(dynamic message, {String path = ""}) {
+    if(!_init){
+      throw('WSInstance not init');
+    }
+    if(_reconnectTimer?.isActive == true){
+      print('reconnecting...');
+    }
+    if(_channel == null){
+      print('channel null...');
+    }
     if (path != Api.wsHeartBeat) {
-      print('WebSocket--message:$message');
-      log('WebSocket--path:$path');
+      print('WebSocket--sendMessage--message:$message');
+      log('WebSocket--sendMessage--path:$path');
     }
     // print('WebSocket--_msgCounter:$_msgCounter');
     var byteData = WebSocketDataHandler.encoder(
@@ -157,7 +167,7 @@ class WSInstance {
   }
 
   static Stream<ResponseMessage> teamMatch() {
-    WSInstance._sendMessage("", path: Api.wsTeamMatch);
+    WSInstance._sendMessage("teamMatch", path: Api.wsTeamMatch);
     return stream;
   }
 }

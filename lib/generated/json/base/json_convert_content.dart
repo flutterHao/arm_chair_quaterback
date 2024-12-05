@@ -34,6 +34,8 @@ import 'package:arm_chair_quaterback/common/entities/news_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pick_type_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_event_updated_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/pk_player_updated_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/pk_start_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_day_data_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_status_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_award_entity.dart';
@@ -603,6 +605,14 @@ class JsonConvert {
       return data.map<PkEventUpdatedHomePlayerInfos>((Map<String, dynamic> e) =>
           PkEventUpdatedHomePlayerInfos.fromJson(e)).toList() as M;
     }
+    if (<PkPlayerUpdatedEntity>[] is M) {
+      return data.map<PkPlayerUpdatedEntity>((Map<String, dynamic> e) =>
+          PkPlayerUpdatedEntity.fromJson(e)).toList() as M;
+    }
+    if (<PkStartUpdatedEntity>[] is M) {
+      return data.map<PkStartUpdatedEntity>((Map<String, dynamic> e) =>
+          PkStartUpdatedEntity.fromJson(e)).toList() as M;
+    }
     if (<PlayerDayDataEntity>[] is M) {
       return data.map<PlayerDayDataEntity>((Map<String, dynamic> e) =>
           PlayerDayDataEntity.fromJson(e)).toList() as M;
@@ -971,6 +981,8 @@ class JsonConvertClassCollection {
     (PkEventUpdatedHomeInfo).toString(): PkEventUpdatedHomeInfo.fromJson,
     (PkEventUpdatedHomePlayerInfos).toString(): PkEventUpdatedHomePlayerInfos
         .fromJson,
+    (PkPlayerUpdatedEntity).toString(): PkPlayerUpdatedEntity.fromJson,
+    (PkStartUpdatedEntity).toString(): PkStartUpdatedEntity.fromJson,
     (PlayerDayDataEntity).toString(): PlayerDayDataEntity.fromJson,
     (PlayerStatusEntity).toString(): PlayerStatusEntity.fromJson,
     (RankAwardEntity).toString(): RankAwardEntity.fromJson,
