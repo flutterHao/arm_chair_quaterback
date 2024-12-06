@@ -86,7 +86,7 @@ class MatchCard extends GetView<TeamIndexController> {
                   vibrate: true,
                   minScale: 0.9,
                   onTap: () {
-                    controller.matchBattle();
+                    // controller.matchBattle();
                   },
                   child: Stack(
                     alignment: Alignment.center,
