@@ -9,14 +9,14 @@ class PkEventUpdatedEntity {
 	late int allGameRound = 0;
 	late int awayFuryValue = 0;
 	late PkEventUpdatedAwayInfo awayInfo;
-	late List<PkEventUpdatedAwayPlayerInfos> awayPlayerInfos = [];
+	late List<PkEventUpdatedPlayerInfos> awayPlayerInfos = [];
 	late int awayScore = 0;
 	late int awayStrength = 0;
 	late int currRound = 0;
 	late int eventId = 0;
 	late int homeFuryValue = 0;
 	late PkEventUpdatedHomeInfo homeInfo;
-	late List<PkEventUpdatedHomePlayerInfos> homePlayerInfos = [];
+	late List<PkEventUpdatedPlayerInfos> homePlayerInfos = [];
 	late int homeScore = 0;
 	late int homeStrength = 0;
 	late String parameter = '';
@@ -88,7 +88,7 @@ class PkEventUpdatedAwayInfo {
 }
 
 @JsonSerializable()
-class PkEventUpdatedAwayPlayerInfos {
+class PkEventUpdatedPlayerInfos {
 	late int ast = 0;
 	late int blk = 0;
 	late int dreb = 0;
@@ -114,13 +114,14 @@ class PkEventUpdatedAwayPlayerInfos {
 	late int threePm = 0;
 	late int to = 0;
 
-	PkEventUpdatedAwayPlayerInfos();
+	PkEventUpdatedPlayerInfos();
 
-	factory PkEventUpdatedAwayPlayerInfos.fromJson(Map<String, dynamic> json) => $PkEventUpdatedAwayPlayerInfosFromJson(json);
+  factory PkEventUpdatedPlayerInfos.fromJson(Map<String, dynamic> json) =>
+      $PkEventUpdatedPlayerInfosFromJson(json);
 
-	Map<String, dynamic> toJson() => $PkEventUpdatedAwayPlayerInfosToJson(this);
+  Map<String, dynamic> toJson() => $PkEventUpdatedPlayerInfosToJson(this);
 
-	@override
+  @override
 	String toString() {
 		return jsonEncode(this);
 	}
@@ -163,45 +164,6 @@ class PkEventUpdatedHomeInfo {
 	factory PkEventUpdatedHomeInfo.fromJson(Map<String, dynamic> json) => $PkEventUpdatedHomeInfoFromJson(json);
 
 	Map<String, dynamic> toJson() => $PkEventUpdatedHomeInfoToJson(this);
-
-	@override
-	String toString() {
-		return jsonEncode(this);
-	}
-}
-
-@JsonSerializable()
-class PkEventUpdatedHomePlayerInfos {
-	late int ast = 0;
-	late int blk = 0;
-	late int dreb = 0;
-	late int fga = 0;
-	late int fgm = 0;
-	late int fta = 0;
-	late int ftm = 0;
-	late int furyValue = 0;
-	late int maxPower = 0;
-	late int min = 0;
-	late int oreb = 0;
-	late int pass = 0;
-	late int pf = 0;
-	late int pkPlayerStrength = 0;
-	late int playerId = 0;
-	late int power = 0;
-	late int pts = 0;
-	late int reb = 0;
-	late int skillEffectRound = 0;
-	late int stl = 0;
-	late int tech = 0;
-	late int threePa = 0;
-	late int threePm = 0;
-	late int to = 0;
-
-	PkEventUpdatedHomePlayerInfos();
-
-	factory PkEventUpdatedHomePlayerInfos.fromJson(Map<String, dynamic> json) => $PkEventUpdatedHomePlayerInfosFromJson(json);
-
-	Map<String, dynamic> toJson() => $PkEventUpdatedHomePlayerInfosToJson(this);
 
 	@override
 	String toString() {

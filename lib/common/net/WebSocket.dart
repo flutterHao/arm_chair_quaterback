@@ -58,12 +58,12 @@ class WSInstance {
   static void _startPingTimer() {
     _pingTimer?.cancel();
     _pingTimer = Timer.periodic(const Duration(seconds: 10), (timer) {
-      if(_reconnectTimer?.isActive == false){
-        //正在重连
-        return;
-      }
+      // if(_reconnectTimer?.isActive == true){
+      //   //正在重连
+      //   return;
+      // }
       // 每 10 秒发送一个 ping 消息
-      print('发送 ping:${DateTime.now().millisecondsSinceEpoch}');
+      // print('发送 ping:${DateTime.now().millisecondsSinceEpoch}');
       ping();
 
       // 检查是否超时

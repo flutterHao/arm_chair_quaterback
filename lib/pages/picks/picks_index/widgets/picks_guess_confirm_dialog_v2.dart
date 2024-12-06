@@ -154,7 +154,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                                                             EdgeInsets.only(
                                                                 left: 8.w),
                                                         child: Text(
-                                                          "Down",
+                                                          "Done",
                                                           style: TextStyle(
                                                             decoration:
                                                                 TextDecoration

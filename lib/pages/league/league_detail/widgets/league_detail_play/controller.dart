@@ -59,7 +59,7 @@ class LeagueDetailPlayController extends GetxController
 
   List<String> getQuarterColumnNames() {
     List<String> list = [];
-    list.addAll(['1st', '2nd', '3rd', '4th']);
+    list.addAll(['1st', '2nd', '3rd', '4th',"ot1"]);
     var homeOts = nbaGameDetailEntity?.gameData.homeTeamScore
         ?.toJson()
         .keys
@@ -80,6 +80,9 @@ class LeagueDetailPlayController extends GetxController
         .toList();
     var list2 =
         (awayOts ?? []).length > ((homeOts ?? []).length) ? awayOts : homeOts;
+    if(list2?.contains("ot1") == true){
+      list.remove("ot1");
+    }
     list.addAll(list2 ?? []);
     return list;
   }
@@ -119,8 +122,8 @@ class LeagueDetailPlayController extends GetxController
         TeamStats("Block Shot ", homeDetail?.blk ?? 0, awayDetail?.blk ?? 0));
     list.add(TeamStats(
         "Free Throw Make", homeDetail?.ftm ?? 0, awayDetail?.ftm ?? 0));
-    list.add(TeamStats("Turn over", homeDetail?.to ?? 0, awayDetail?.to ?? 0));
-    list.add(TeamStats("Foul", homeDetail?.pf ?? 0, awayDetail?.pf ?? 0));
+    list.add(TeamStats("Turn over", homeDetail?.to.handlerNaNInfinity() ?? 0, awayDetail?.to.handlerNaNInfinity() ?? 0));
+    list.add(TeamStats("Foul", homeDetail?.pf.handlerNaNInfinity() ?? 0, awayDetail?.pf.handlerNaNInfinity() ?? 0));
 
     list.add(TeamStats(
         "Field Goal",
@@ -153,10 +156,10 @@ class TeamStats {
       {this.valueIsPercent = false});
 
   num get getLeftPercent =>
-      valueIsPercent ? leftValue : (leftValue / max(leftValue, rightValue));
+      valueIsPercent ? leftValue : (leftValue / max(leftValue, rightValue)).handlerNaNInfinity();
 
   num get getRightPercent =>
-      valueIsPercent ? rightValue : (rightValue / max(leftValue, rightValue));
+      valueIsPercent ? rightValue : (rightValue / max(leftValue, rightValue)).handlerNaNInfinity();
 
   Color get getLeftColor =>
       leftValue > rightValue ? AppColors.c000000 : AppColors.cD1D1D1;

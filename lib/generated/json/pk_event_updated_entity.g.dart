@@ -22,11 +22,11 @@ PkEventUpdatedEntity $PkEventUpdatedEntityFromJson(Map<String, dynamic> json) {
     pkEventUpdatedEntity.awayInfo = awayInfo;
   }
   final List<
-      PkEventUpdatedAwayPlayerInfos>? awayPlayerInfos = (json['awayPlayerInfos'] as List<
+      PkEventUpdatedPlayerInfos>? awayPlayerInfos = (json['awayPlayerInfos'] as List<
       dynamic>?)?.map(
           (e) =>
-      jsonConvert.convert<PkEventUpdatedAwayPlayerInfos>(
-          e) as PkEventUpdatedAwayPlayerInfos).toList();
+      jsonConvert.convert<PkEventUpdatedPlayerInfos>(
+          e) as PkEventUpdatedPlayerInfos).toList();
   if (awayPlayerInfos != null) {
     pkEventUpdatedEntity.awayPlayerInfos = awayPlayerInfos;
   }
@@ -56,11 +56,11 @@ PkEventUpdatedEntity $PkEventUpdatedEntityFromJson(Map<String, dynamic> json) {
     pkEventUpdatedEntity.homeInfo = homeInfo;
   }
   final List<
-      PkEventUpdatedHomePlayerInfos>? homePlayerInfos = (json['homePlayerInfos'] as List<
+      PkEventUpdatedPlayerInfos>? homePlayerInfos = (json['homePlayerInfos'] as List<
       dynamic>?)?.map(
           (e) =>
-      jsonConvert.convert<PkEventUpdatedHomePlayerInfos>(
-          e) as PkEventUpdatedHomePlayerInfos).toList();
+      jsonConvert.convert<PkEventUpdatedPlayerInfos>(
+          e) as PkEventUpdatedPlayerInfos).toList();
   if (homePlayerInfos != null) {
     pkEventUpdatedEntity.homePlayerInfos = homePlayerInfos;
   }
@@ -160,14 +160,14 @@ extension PkEventUpdatedEntityExtension on PkEventUpdatedEntity {
     int? allGameRound,
     int? awayFuryValue,
     PkEventUpdatedAwayInfo? awayInfo,
-    List<PkEventUpdatedAwayPlayerInfos>? awayPlayerInfos,
+    List<PkEventUpdatedPlayerInfos>? awayPlayerInfos,
     int? awayScore,
     int? awayStrength,
     int? currRound,
     int? eventId,
     int? homeFuryValue,
     PkEventUpdatedHomeInfo? homeInfo,
-    List<PkEventUpdatedHomePlayerInfos>? homePlayerInfos,
+    List<PkEventUpdatedPlayerInfos>? homePlayerInfos,
     int? homeScore,
     int? homeStrength,
     String? parameter,
@@ -433,112 +433,112 @@ extension PkEventUpdatedAwayInfoExtension on PkEventUpdatedAwayInfo {
   }
 }
 
-PkEventUpdatedAwayPlayerInfos $PkEventUpdatedAwayPlayerInfosFromJson(
+PkEventUpdatedPlayerInfos $PkEventUpdatedPlayerInfosFromJson(
     Map<String, dynamic> json) {
-  final PkEventUpdatedAwayPlayerInfos pkEventUpdatedAwayPlayerInfos = PkEventUpdatedAwayPlayerInfos();
+  final PkEventUpdatedPlayerInfos pkEventUpdatedPlayerInfos = PkEventUpdatedPlayerInfos();
   final int? ast = jsonConvert.convert<int>(json['ast']);
   if (ast != null) {
-    pkEventUpdatedAwayPlayerInfos.ast = ast;
+    pkEventUpdatedPlayerInfos.ast = ast;
   }
   final int? blk = jsonConvert.convert<int>(json['blk']);
   if (blk != null) {
-    pkEventUpdatedAwayPlayerInfos.blk = blk;
+    pkEventUpdatedPlayerInfos.blk = blk;
   }
   final int? dreb = jsonConvert.convert<int>(json['dreb']);
   if (dreb != null) {
-    pkEventUpdatedAwayPlayerInfos.dreb = dreb;
+    pkEventUpdatedPlayerInfos.dreb = dreb;
   }
   final int? fga = jsonConvert.convert<int>(json['fga']);
   if (fga != null) {
-    pkEventUpdatedAwayPlayerInfos.fga = fga;
+    pkEventUpdatedPlayerInfos.fga = fga;
   }
   final int? fgm = jsonConvert.convert<int>(json['fgm']);
   if (fgm != null) {
-    pkEventUpdatedAwayPlayerInfos.fgm = fgm;
+    pkEventUpdatedPlayerInfos.fgm = fgm;
   }
   final int? fta = jsonConvert.convert<int>(json['fta']);
   if (fta != null) {
-    pkEventUpdatedAwayPlayerInfos.fta = fta;
+    pkEventUpdatedPlayerInfos.fta = fta;
   }
   final int? ftm = jsonConvert.convert<int>(json['ftm']);
   if (ftm != null) {
-    pkEventUpdatedAwayPlayerInfos.ftm = ftm;
+    pkEventUpdatedPlayerInfos.ftm = ftm;
   }
   final int? furyValue = jsonConvert.convert<int>(json['furyValue']);
   if (furyValue != null) {
-    pkEventUpdatedAwayPlayerInfos.furyValue = furyValue;
+    pkEventUpdatedPlayerInfos.furyValue = furyValue;
   }
   final int? maxPower = jsonConvert.convert<int>(json['maxPower']);
   if (maxPower != null) {
-    pkEventUpdatedAwayPlayerInfos.maxPower = maxPower;
+    pkEventUpdatedPlayerInfos.maxPower = maxPower;
   }
   final int? min = jsonConvert.convert<int>(json['min']);
   if (min != null) {
-    pkEventUpdatedAwayPlayerInfos.min = min;
+    pkEventUpdatedPlayerInfos.min = min;
   }
   final int? oreb = jsonConvert.convert<int>(json['oreb']);
   if (oreb != null) {
-    pkEventUpdatedAwayPlayerInfos.oreb = oreb;
+    pkEventUpdatedPlayerInfos.oreb = oreb;
   }
   final int? pass = jsonConvert.convert<int>(json['pass']);
   if (pass != null) {
-    pkEventUpdatedAwayPlayerInfos.pass = pass;
+    pkEventUpdatedPlayerInfos.pass = pass;
   }
   final int? pf = jsonConvert.convert<int>(json['pf']);
   if (pf != null) {
-    pkEventUpdatedAwayPlayerInfos.pf = pf;
+    pkEventUpdatedPlayerInfos.pf = pf;
   }
   final int? pkPlayerStrength = jsonConvert.convert<int>(
       json['pkPlayerStrength']);
   if (pkPlayerStrength != null) {
-    pkEventUpdatedAwayPlayerInfos.pkPlayerStrength = pkPlayerStrength;
+    pkEventUpdatedPlayerInfos.pkPlayerStrength = pkPlayerStrength;
   }
   final int? playerId = jsonConvert.convert<int>(json['playerId']);
   if (playerId != null) {
-    pkEventUpdatedAwayPlayerInfos.playerId = playerId;
+    pkEventUpdatedPlayerInfos.playerId = playerId;
   }
   final int? power = jsonConvert.convert<int>(json['power']);
   if (power != null) {
-    pkEventUpdatedAwayPlayerInfos.power = power;
+    pkEventUpdatedPlayerInfos.power = power;
   }
   final int? pts = jsonConvert.convert<int>(json['pts']);
   if (pts != null) {
-    pkEventUpdatedAwayPlayerInfos.pts = pts;
+    pkEventUpdatedPlayerInfos.pts = pts;
   }
   final int? reb = jsonConvert.convert<int>(json['reb']);
   if (reb != null) {
-    pkEventUpdatedAwayPlayerInfos.reb = reb;
+    pkEventUpdatedPlayerInfos.reb = reb;
   }
   final int? skillEffectRound = jsonConvert.convert<int>(
       json['skillEffectRound']);
   if (skillEffectRound != null) {
-    pkEventUpdatedAwayPlayerInfos.skillEffectRound = skillEffectRound;
+    pkEventUpdatedPlayerInfos.skillEffectRound = skillEffectRound;
   }
   final int? stl = jsonConvert.convert<int>(json['stl']);
   if (stl != null) {
-    pkEventUpdatedAwayPlayerInfos.stl = stl;
+    pkEventUpdatedPlayerInfos.stl = stl;
   }
   final int? tech = jsonConvert.convert<int>(json['tech']);
   if (tech != null) {
-    pkEventUpdatedAwayPlayerInfos.tech = tech;
+    pkEventUpdatedPlayerInfos.tech = tech;
   }
   final int? threePa = jsonConvert.convert<int>(json['threePa']);
   if (threePa != null) {
-    pkEventUpdatedAwayPlayerInfos.threePa = threePa;
+    pkEventUpdatedPlayerInfos.threePa = threePa;
   }
   final int? threePm = jsonConvert.convert<int>(json['threePm']);
   if (threePm != null) {
-    pkEventUpdatedAwayPlayerInfos.threePm = threePm;
+    pkEventUpdatedPlayerInfos.threePm = threePm;
   }
   final int? to = jsonConvert.convert<int>(json['to']);
   if (to != null) {
-    pkEventUpdatedAwayPlayerInfos.to = to;
+    pkEventUpdatedPlayerInfos.to = to;
   }
-  return pkEventUpdatedAwayPlayerInfos;
+  return pkEventUpdatedPlayerInfos;
 }
 
-Map<String, dynamic> $PkEventUpdatedAwayPlayerInfosToJson(
-    PkEventUpdatedAwayPlayerInfos entity) {
+Map<String, dynamic> $PkEventUpdatedPlayerInfosToJson(
+    PkEventUpdatedPlayerInfos entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['ast'] = entity.ast;
   data['blk'] = entity.blk;
@@ -567,8 +567,8 @@ Map<String, dynamic> $PkEventUpdatedAwayPlayerInfosToJson(
   return data;
 }
 
-extension PkEventUpdatedAwayPlayerInfosExtension on PkEventUpdatedAwayPlayerInfos {
-  PkEventUpdatedAwayPlayerInfos copyWith({
+extension PkEventUpdatedPlayerInfosExtension on PkEventUpdatedPlayerInfos {
+  PkEventUpdatedPlayerInfos copyWith({
     int? ast,
     int? blk,
     int? dreb,
@@ -594,7 +594,7 @@ extension PkEventUpdatedAwayPlayerInfosExtension on PkEventUpdatedAwayPlayerInfo
     int? threePm,
     int? to,
   }) {
-    return PkEventUpdatedAwayPlayerInfos()
+    return PkEventUpdatedPlayerInfos()
       ..ast = ast ?? this.ast
       ..blk = blk ?? this.blk
       ..dreb = dreb ?? this.dreb
@@ -837,195 +837,6 @@ extension PkEventUpdatedHomeInfoExtension on PkEventUpdatedHomeInfo {
       ..starterPos = starterPos ?? this.starterPos
       ..stl = stl ?? this.stl
       ..teamId = teamId ?? this.teamId
-      ..tech = tech ?? this.tech
-      ..threePa = threePa ?? this.threePa
-      ..threePm = threePm ?? this.threePm
-      ..to = to ?? this.to;
-  }
-}
-
-PkEventUpdatedHomePlayerInfos $PkEventUpdatedHomePlayerInfosFromJson(
-    Map<String, dynamic> json) {
-  final PkEventUpdatedHomePlayerInfos pkEventUpdatedHomePlayerInfos = PkEventUpdatedHomePlayerInfos();
-  final int? ast = jsonConvert.convert<int>(json['ast']);
-  if (ast != null) {
-    pkEventUpdatedHomePlayerInfos.ast = ast;
-  }
-  final int? blk = jsonConvert.convert<int>(json['blk']);
-  if (blk != null) {
-    pkEventUpdatedHomePlayerInfos.blk = blk;
-  }
-  final int? dreb = jsonConvert.convert<int>(json['dreb']);
-  if (dreb != null) {
-    pkEventUpdatedHomePlayerInfos.dreb = dreb;
-  }
-  final int? fga = jsonConvert.convert<int>(json['fga']);
-  if (fga != null) {
-    pkEventUpdatedHomePlayerInfos.fga = fga;
-  }
-  final int? fgm = jsonConvert.convert<int>(json['fgm']);
-  if (fgm != null) {
-    pkEventUpdatedHomePlayerInfos.fgm = fgm;
-  }
-  final int? fta = jsonConvert.convert<int>(json['fta']);
-  if (fta != null) {
-    pkEventUpdatedHomePlayerInfos.fta = fta;
-  }
-  final int? ftm = jsonConvert.convert<int>(json['ftm']);
-  if (ftm != null) {
-    pkEventUpdatedHomePlayerInfos.ftm = ftm;
-  }
-  final int? furyValue = jsonConvert.convert<int>(json['furyValue']);
-  if (furyValue != null) {
-    pkEventUpdatedHomePlayerInfos.furyValue = furyValue;
-  }
-  final int? maxPower = jsonConvert.convert<int>(json['maxPower']);
-  if (maxPower != null) {
-    pkEventUpdatedHomePlayerInfos.maxPower = maxPower;
-  }
-  final int? min = jsonConvert.convert<int>(json['min']);
-  if (min != null) {
-    pkEventUpdatedHomePlayerInfos.min = min;
-  }
-  final int? oreb = jsonConvert.convert<int>(json['oreb']);
-  if (oreb != null) {
-    pkEventUpdatedHomePlayerInfos.oreb = oreb;
-  }
-  final int? pass = jsonConvert.convert<int>(json['pass']);
-  if (pass != null) {
-    pkEventUpdatedHomePlayerInfos.pass = pass;
-  }
-  final int? pf = jsonConvert.convert<int>(json['pf']);
-  if (pf != null) {
-    pkEventUpdatedHomePlayerInfos.pf = pf;
-  }
-  final int? pkPlayerStrength = jsonConvert.convert<int>(
-      json['pkPlayerStrength']);
-  if (pkPlayerStrength != null) {
-    pkEventUpdatedHomePlayerInfos.pkPlayerStrength = pkPlayerStrength;
-  }
-  final int? playerId = jsonConvert.convert<int>(json['playerId']);
-  if (playerId != null) {
-    pkEventUpdatedHomePlayerInfos.playerId = playerId;
-  }
-  final int? power = jsonConvert.convert<int>(json['power']);
-  if (power != null) {
-    pkEventUpdatedHomePlayerInfos.power = power;
-  }
-  final int? pts = jsonConvert.convert<int>(json['pts']);
-  if (pts != null) {
-    pkEventUpdatedHomePlayerInfos.pts = pts;
-  }
-  final int? reb = jsonConvert.convert<int>(json['reb']);
-  if (reb != null) {
-    pkEventUpdatedHomePlayerInfos.reb = reb;
-  }
-  final int? skillEffectRound = jsonConvert.convert<int>(
-      json['skillEffectRound']);
-  if (skillEffectRound != null) {
-    pkEventUpdatedHomePlayerInfos.skillEffectRound = skillEffectRound;
-  }
-  final int? stl = jsonConvert.convert<int>(json['stl']);
-  if (stl != null) {
-    pkEventUpdatedHomePlayerInfos.stl = stl;
-  }
-  final int? tech = jsonConvert.convert<int>(json['tech']);
-  if (tech != null) {
-    pkEventUpdatedHomePlayerInfos.tech = tech;
-  }
-  final int? threePa = jsonConvert.convert<int>(json['threePa']);
-  if (threePa != null) {
-    pkEventUpdatedHomePlayerInfos.threePa = threePa;
-  }
-  final int? threePm = jsonConvert.convert<int>(json['threePm']);
-  if (threePm != null) {
-    pkEventUpdatedHomePlayerInfos.threePm = threePm;
-  }
-  final int? to = jsonConvert.convert<int>(json['to']);
-  if (to != null) {
-    pkEventUpdatedHomePlayerInfos.to = to;
-  }
-  return pkEventUpdatedHomePlayerInfos;
-}
-
-Map<String, dynamic> $PkEventUpdatedHomePlayerInfosToJson(
-    PkEventUpdatedHomePlayerInfos entity) {
-  final Map<String, dynamic> data = <String, dynamic>{};
-  data['ast'] = entity.ast;
-  data['blk'] = entity.blk;
-  data['dreb'] = entity.dreb;
-  data['fga'] = entity.fga;
-  data['fgm'] = entity.fgm;
-  data['fta'] = entity.fta;
-  data['ftm'] = entity.ftm;
-  data['furyValue'] = entity.furyValue;
-  data['maxPower'] = entity.maxPower;
-  data['min'] = entity.min;
-  data['oreb'] = entity.oreb;
-  data['pass'] = entity.pass;
-  data['pf'] = entity.pf;
-  data['pkPlayerStrength'] = entity.pkPlayerStrength;
-  data['playerId'] = entity.playerId;
-  data['power'] = entity.power;
-  data['pts'] = entity.pts;
-  data['reb'] = entity.reb;
-  data['skillEffectRound'] = entity.skillEffectRound;
-  data['stl'] = entity.stl;
-  data['tech'] = entity.tech;
-  data['threePa'] = entity.threePa;
-  data['threePm'] = entity.threePm;
-  data['to'] = entity.to;
-  return data;
-}
-
-extension PkEventUpdatedHomePlayerInfosExtension on PkEventUpdatedHomePlayerInfos {
-  PkEventUpdatedHomePlayerInfos copyWith({
-    int? ast,
-    int? blk,
-    int? dreb,
-    int? fga,
-    int? fgm,
-    int? fta,
-    int? ftm,
-    int? furyValue,
-    int? maxPower,
-    int? min,
-    int? oreb,
-    int? pass,
-    int? pf,
-    int? pkPlayerStrength,
-    int? playerId,
-    int? power,
-    int? pts,
-    int? reb,
-    int? skillEffectRound,
-    int? stl,
-    int? tech,
-    int? threePa,
-    int? threePm,
-    int? to,
-  }) {
-    return PkEventUpdatedHomePlayerInfos()
-      ..ast = ast ?? this.ast
-      ..blk = blk ?? this.blk
-      ..dreb = dreb ?? this.dreb
-      ..fga = fga ?? this.fga
-      ..fgm = fgm ?? this.fgm
-      ..fta = fta ?? this.fta
-      ..ftm = ftm ?? this.ftm
-      ..furyValue = furyValue ?? this.furyValue
-      ..maxPower = maxPower ?? this.maxPower
-      ..min = min ?? this.min
-      ..oreb = oreb ?? this.oreb
-      ..pass = pass ?? this.pass
-      ..pf = pf ?? this.pf
-      ..pkPlayerStrength = pkPlayerStrength ?? this.pkPlayerStrength
-      ..playerId = playerId ?? this.playerId
-      ..power = power ?? this.power
-      ..pts = pts ?? this.pts
-      ..reb = reb ?? this.reb
-      ..skillEffectRound = skillEffectRound ?? this.skillEffectRound
-      ..stl = stl ?? this.stl
       ..tech = tech ?? this.tech
       ..threePa = threePa ?? this.threePa
       ..threePm = threePm ?? this.threePm

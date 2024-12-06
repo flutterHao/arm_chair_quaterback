@@ -15,8 +15,12 @@ import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_leader/game_leader_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/mark_animation_widget.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/quarter_score/quarter_score_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/start_game_count_down_widget.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/team_stat/team_stats_widget.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/win_rate/win_rate_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -53,16 +57,30 @@ class TeamBattleV2Page extends GetView<TeamBattleV2Controller> {
                     child: buildHeader()),
                 Obx(() {
                   var isGameOver = controller.isGameOver.value;
-                  if (isGameOver) {
-                    return InkWell(
-                        onTap: () {
-                          controller.reStart();
-                        },
-                        child: buildGameOverWidget(context));
-                  }
-                  return buildGameWidget(context);
+                  return AnimatedContainer(
+                    duration: const Duration(milliseconds: 500),
+                    child: isGameOver
+                        ? InkWell(
+                            onTap: () {
+                              controller.reStart();
+                            },
+                            child: buildGameOverWidget(context))
+                        : buildGameWidget(context),
+                  );
                 }),
-                buildLiveText(context)
+                buildLiveText(context),
+                GetBuilder<TeamBattleV2Controller>(
+                    id: TeamBattleV2Controller.idQuarterScore,
+                    builder: (_) {
+                      return QuarterScoreWidget();
+                    }),
+                GameLeaderWidget(
+                  controller: controller.gameLeaderController,
+                ),
+                TeamStatsWidget(
+                  controller: controller.teamStatsController,
+                ),
+                20.vGap,
               ],
             ),
           )),
@@ -694,7 +712,7 @@ class TeamBattleV2Page extends GetView<TeamBattleV2Controller> {
                   width: 45.w,
                   alignment: Alignment.centerLeft,
                   child: GetBuilder<TeamBattleV2Controller>(
-                      id: TeamBattleV2Controller.idScore,
+                      id: TeamBattleV2Controller.idGameScore,
                       builder: (_) {
                         int score = 0;
                         if (controller.getQuarterEvents().isNotEmpty) {
@@ -725,7 +743,7 @@ class TeamBattleV2Page extends GetView<TeamBattleV2Controller> {
                   width: 45.w,
                   alignment: Alignment.centerRight,
                   child: GetBuilder<TeamBattleV2Controller>(
-                      id: TeamBattleV2Controller.idScore,
+                      id: TeamBattleV2Controller.idGameScore,
                       builder: (_) {
                         int score = 0;
                         if (controller.getQuarterEvents().isNotEmpty) {

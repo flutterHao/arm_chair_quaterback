@@ -662,8 +662,8 @@ class _LeagueDetailPlayPageState extends State<LeagueDetailPlayPage>
       child: SfDataGridTheme(
           data: const SfDataGridThemeData(
               gridLineColor: AppColors.cTransparent,
-              frozenPaneLineColor: Colors.transparent,
-              rowHoverColor: Colors.blue,
+              frozenPaneLineColor: AppColors.cTransparent,
+              rowHoverColor: AppColors.c10A86A,
               gridLineStrokeWidth: 0),
           child: SfDataGrid(
             frozenColumnsCount: 1,

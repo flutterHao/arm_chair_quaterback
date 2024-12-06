@@ -56,7 +56,6 @@ class GameGridSource extends DataGridSource {
   }
 
   @override
-  // TODO: implement rows
   List<DataGridRow> get rows => _buildDataGridRows();
 
   @override

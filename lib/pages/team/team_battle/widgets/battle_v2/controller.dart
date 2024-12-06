@@ -20,9 +20,12 @@ import 'package:arm_chair_quaterback/common/widgets/thrid_lib/flutter_barrage.da
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/widgets/battle_animation_controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_leader/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/live_text_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/tactical_contrast/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/tactical_contrast/tactical_contrast.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/team_stat/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/win_rate/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -94,11 +97,15 @@ class TeamBattleV2Controller extends GetxController
 
   var showBuff = false.obs;
 
+  late GameLeaderController gameLeaderController;
+  late TeamStatsController teamStatsController;
+
   /// 在 widget 内存中分配后立即调用。
   @override
   void onInit() {
     super.onInit();
-
+    gameLeaderController = Get.put(GameLeaderController());
+    teamStatsController = Get.put(TeamStatsController());
     battleEntity = Get.find<TeamBattleController>().battleEntity;
     homeTeamPlayerList = battleEntity.homeTeamPlayerList;
     awayTeamPlayerList = battleEntity.awayTeamPlayerList;
@@ -117,6 +124,12 @@ class TeamBattleV2Controller extends GetxController
         ///换人
         substitutionPlayer(result);
       }
+      if (result.serviceId == Api.wsPkStopUpdated) {
+        ///比赛结束
+      }
+      if (result.serviceId == Api.wsPkResultUpdated) {
+        ///比赛结果
+      }
       if (result.serviceId == Api.wsPkEventUpdated) {
         PkEventUpdatedEntity pkEventUpdatedEntity =
             PkEventUpdatedEntity.fromJson(result.payload);
@@ -131,7 +144,7 @@ class TeamBattleV2Controller extends GetxController
         }
         var competitionVenue = getCompetitionVenue(gameEvent!.gameEventType,
             pkEventUpdatedEntity.senderPlayerId, isHomePlayer);
-        if(competitionVenue == null){
+        if (competitionVenue == null) {
           return;
         }
         var positions = getPositions(competitionVenue);
@@ -148,6 +161,9 @@ class TeamBattleV2Controller extends GetxController
           isScoreType(gameEvent.gameEventType),
           positions,
           mainPos,
+          pkEventUpdatedEntity.stepHomeScore,
+          pkEventUpdatedEntity.stepAwayScore,
+          pkEventUpdatedEntity,
         );
         addEvent(event);
         if (gameEvent.headLine == "1") {
@@ -260,6 +276,8 @@ class TeamBattleV2Controller extends GetxController
         eventEngine?.cancel();
         isGameOver.value = true;
         gameSpeed = 1;
+        print(
+            'cache length: ${eventCacheMap.values.fold(0, (p, e) => p + e.length)}');
         return;
       }
       EasyLoading.showToast("Next Quarter",
@@ -326,7 +344,9 @@ class TeamBattleV2Controller extends GetxController
           ShootHistory(!event.isHomePlayer, transitionPos(event), event.score));
       update([idPlayersLocation]);
     }
-    update([idLiveText, idScore, idPlayers]);
+    gameLeaderController.setEvent(event);
+    teamStatsController.setEvent(event);
+    update([idLiveText, idGameScore, idPlayers, idQuarterScore]);
     Future.delayed(Duration.zero, () {
       liveTextScrollController.animateTo(
           ((eventOnScreenMap[key] ?? []).length * 44.w),
@@ -641,6 +661,15 @@ class TeamBattleV2Controller extends GetxController
     subscription.cancel();
     eventEngine?.cancel();
     quarterTimeCountDownAnimationController.dispose();
+    Get.delete<GameLeaderController>();
+    Get.delete<TeamStatsController>();
+
+  }
+
+  @override
+  void dispose() {
+    release();
+    super.dispose();
   }
 
   gameOver() {
@@ -677,14 +706,17 @@ class TeamBattleV2Controller extends GetxController
   CompetitionVenueEntity? getCompetitionVenue(
       String gameEventType, int senderPlayerId, bool isHomePlayer) {
     var data = isHomePlayer ? homeTeamPlayerList : awayTeamPlayerList;
-    var info = data.firstWhere((e) => e.playerId == senderPlayerId);
+    var info = data.firstWhereOrNull((e) => e.playerId == senderPlayerId);
+    if (info == null) {
+      return null;
+    }
     var list = CacheApi.competitionVenues
         .where((e) =>
             e.gameEventType.contains(gameEventType) &&
             e.actor.toLowerCase() ==
                 Utils.getPosition(info.position).toLowerCase())
         .toList();
-    if(list.isEmpty){
+    if (list.isEmpty) {
       return null;
     }
     var nextInt = Random().nextInt(list.length);
@@ -711,9 +743,11 @@ class TeamBattleV2Controller extends GetxController
 
   static String get idLiveText => "id_live_text";
 
-  static String get idScore => "id_score";
+  static String get idGameScore => "id_game_score";
 
   static String get idPlayers => "id_players";
+
+  static String get idQuarterScore => "id_quarter_score";
 
   List<GameEvent> getQuarterEvents() {
     return eventOnScreenMap[Utils.getSortWithInt(quarter.value)] ?? [];
@@ -815,6 +849,9 @@ class GameEvent {
 
   // 主角的位置
   final Offset mainOffset;
+  final int quarterHomeScore;
+  final int quarterAwayScore;
+  final PkEventUpdatedEntity pkEventUpdatedEntity;
 
   GameEvent(
     this.quarter,
@@ -827,6 +864,9 @@ class GameEvent {
     this.score,
     this.playerOffsets,
     this.mainOffset,
+    this.quarterHomeScore,
+    this.quarterAwayScore,
+    this.pkEventUpdatedEntity,
   );
 
   @override
