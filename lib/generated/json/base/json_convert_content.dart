@@ -605,6 +605,10 @@ class JsonConvert {
       return data.map<PkPlayerUpdatedEntity>((Map<String, dynamic> e) =>
           PkPlayerUpdatedEntity.fromJson(e)).toList() as M;
     }
+    if (<PkPlayerUpdatedPlayers>[] is M) {
+      return data.map<PkPlayerUpdatedPlayers>((Map<String, dynamic> e) =>
+          PkPlayerUpdatedPlayers.fromJson(e)).toList() as M;
+    }
     if (<PkStartUpdatedEntity>[] is M) {
       return data.map<PkStartUpdatedEntity>((Map<String, dynamic> e) =>
           PkStartUpdatedEntity.fromJson(e)).toList() as M;
@@ -975,6 +979,7 @@ class JsonConvertClassCollection {
     (PkEventUpdatedPlayerInfos).toString(): PkEventUpdatedPlayerInfos.fromJson,
     (PkEventUpdatedHomeInfo).toString(): PkEventUpdatedHomeInfo.fromJson,
     (PkPlayerUpdatedEntity).toString(): PkPlayerUpdatedEntity.fromJson,
+    (PkPlayerUpdatedPlayers).toString(): PkPlayerUpdatedPlayers.fromJson,
     (PkStartUpdatedEntity).toString(): PkStartUpdatedEntity.fromJson,
     (PlayerDayDataEntity).toString(): PlayerDayDataEntity.fromJson,
     (PlayerStatusEntity).toString(): PlayerStatusEntity.fromJson,

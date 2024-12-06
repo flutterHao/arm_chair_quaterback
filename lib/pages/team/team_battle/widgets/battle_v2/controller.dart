@@ -89,8 +89,9 @@ class TeamBattleV2Controller extends GetxController
   //游戏速度 默认 1
   double gameSpeed = 1;
 
-  List<TeamPlayerList> homeTeamPlayerList = [];
-  List<TeamPlayerList> awayTeamPlayerList = [];
+  List<PkPlayerUpdatedPlayers> homeTeamPlayerList = [];
+  List<PkPlayerUpdatedPlayers> awayTeamPlayerList = [];
+
   late BattleEntity battleEntity;
 
   ScrollController liveTextScrollController = ScrollController();
@@ -107,8 +108,12 @@ class TeamBattleV2Controller extends GetxController
     gameLeaderController = Get.put(GameLeaderController());
     teamStatsController = Get.put(TeamStatsController());
     battleEntity = Get.find<TeamBattleController>().battleEntity;
-    homeTeamPlayerList = battleEntity.homeTeamPlayerList;
-    awayTeamPlayerList = battleEntity.awayTeamPlayerList;
+    homeTeamPlayerList = battleEntity.homeTeamPlayerList
+        .map((e) => PkPlayerUpdatedPlayers.fromJson(e.toJson()))
+        .toList();
+    awayTeamPlayerList = battleEntity.awayTeamPlayerList
+        .map((e) => PkPlayerUpdatedPlayers.fromJson(e.toJson()))
+        .toList();
     shootAnimationController = AnimationController(
         vsync: this,
         duration: Duration(milliseconds: (1200 / gameSpeed).toInt()));
@@ -136,12 +141,8 @@ class TeamBattleV2Controller extends GetxController
         var gameEvent = getGameEvent(pkEventUpdatedEntity.eventId);
         var text = insertPlayerName(
             gameEvent?.eventDescripition ?? "", pkEventUpdatedEntity);
-        var firstWhereOrNull = homeTeamPlayerList.firstWhereOrNull(
-            (e) => e.teamId == pkEventUpdatedEntity.senderTeamId);
-        bool isHomePlayer = false;
-        if (firstWhereOrNull != null) {
-          isHomePlayer = true;
-        }
+        bool isHomePlayer =
+            battleEntity.homeTeam.teamId == pkEventUpdatedEntity.senderTeamId;
         var competitionVenue = getCompetitionVenue(gameEvent!.gameEventType,
             pkEventUpdatedEntity.senderPlayerId, isHomePlayer);
         if (competitionVenue == null) {
@@ -195,7 +196,7 @@ class TeamBattleV2Controller extends GetxController
 
   Offset getMainPos(CompetitionVenueEntity competitionVenue, int playerId,
       bool isHomeTeamPlayer, Map<String, Offset> map) {
-    List<TeamPlayerList> list =
+    List<PkPlayerUpdatedPlayers> list =
         List.from(isHomeTeamPlayer ? homeTeamPlayerList : awayTeamPlayerList);
     var firstWhere = list.firstWhere((e) => e.playerId == playerId);
     var position = Utils.getPosition(firstWhere.position);
@@ -209,19 +210,12 @@ class TeamBattleV2Controller extends GetxController
     if (pkPlayerUpdatedEntity.playerId1 == pkPlayerUpdatedEntity.playerId2) {
       return;
     }
-    var isHome =
-        homeTeamPlayerList.first.teamId == pkPlayerUpdatedEntity.teamId;
-    var list = isHome ? homeTeamPlayerList : awayTeamPlayerList;
-    var indexWhere =
-        list.indexWhere((e) => e.playerId == pkPlayerUpdatedEntity.playerId1);
-    var indexWhere2 =
-        list.indexWhere((e) => e.playerId == pkPlayerUpdatedEntity.playerId2);
-    list[indexWhere2].position = list[indexWhere].position;
-    list[indexWhere].position = 0;
+    var isHome = battleEntity.homeTeam.teamId == pkPlayerUpdatedEntity.teamId;
+
     if (isHome) {
-      homeTeamPlayerList = list;
+      homeTeamPlayerList = pkPlayerUpdatedEntity.players;
     } else {
-      awayTeamPlayerList = list;
+      awayTeamPlayerList = pkPlayerUpdatedEntity.players;
     }
     update([idPlayers]);
   }
@@ -663,7 +657,6 @@ class TeamBattleV2Controller extends GetxController
     quarterTimeCountDownAnimationController.dispose();
     Get.delete<GameLeaderController>();
     Get.delete<TeamStatsController>();
-
   }
 
   @override
@@ -688,12 +681,12 @@ class TeamBattleV2Controller extends GetxController
     Get.delete<TacticalContrastController>();
   }
 
-  List<TeamPlayerList> getHomeTeamPlayerList() {
+  List<PkPlayerUpdatedPlayers> getHomeTeamPlayerList() {
     var list = homeTeamPlayerList.where((e) => e.position != 0).toList();
     return list;
   }
 
-  List<TeamPlayerList> getAwayTeamPlayerList() {
+  List<PkPlayerUpdatedPlayers> getAwayTeamPlayerList() {
     var list = awayTeamPlayerList.where((e) => e.position != 0).toList();
     return list;
   }
@@ -708,6 +701,7 @@ class TeamBattleV2Controller extends GetxController
     var data = isHomePlayer ? homeTeamPlayerList : awayTeamPlayerList;
     var info = data.firstWhereOrNull((e) => e.playerId == senderPlayerId);
     if (info == null) {
+      print('firstWhereOrNull--------------');
       return null;
     }
     var list = CacheApi.competitionVenues
@@ -717,6 +711,8 @@ class TeamBattleV2Controller extends GetxController
                 Utils.getPosition(info.position).toLowerCase())
         .toList();
     if (list.isEmpty) {
+      print(
+          'competitionVenue---null--------------------:${gameEventType},${info.position}');
       return null;
     }
     var nextInt = Random().nextInt(list.length);

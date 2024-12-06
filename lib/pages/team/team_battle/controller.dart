@@ -81,7 +81,7 @@ class TeamBattleController extends GetxController
       CacheApi.getCompetitionVenue(),
     ]).then((result) {
       subscription = WSInstance.teamMatch().listen((result) {
-        developer.log('result.serviceId--${result.serviceId}--:${result.payload}');
+        // developer.log('result.serviceId--${result.serviceId}--:${result.payload}');
         // print('result.serviceId--${result.serviceId}--:${result.payload}');
         if (result.serviceId == Api.wsJazminError && step.value == 1) {
           EasyLoading.showToast("MATCH FAILED");

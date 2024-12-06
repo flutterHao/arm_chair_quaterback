@@ -129,7 +129,7 @@ class TeamPlayerList {
 @JsonSerializable()
 class Potential {
   late int blk;
-  late int threePt;
+  int? threePt;
   late int ast;
   late int stl;
   late int pts;
@@ -151,7 +151,7 @@ class Potential {
 @JsonSerializable()
 class UpStarBase {
   late int blk;
-  late int threePt;
+  int? threePt;
   late int ast;
   late int stl;
   late int pts;

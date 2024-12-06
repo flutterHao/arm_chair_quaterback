@@ -29,6 +29,15 @@ PkPlayerUpdatedEntity $PkPlayerUpdatedEntityFromJson(
   if (type != null) {
     pkPlayerUpdatedEntity.type = type;
   }
+  final List<PkPlayerUpdatedPlayers>? players = (json['players'] as List<
+      dynamic>?)
+      ?.map(
+          (e) =>
+      jsonConvert.convert<PkPlayerUpdatedPlayers>(e) as PkPlayerUpdatedPlayers)
+      .toList();
+  if (players != null) {
+    pkPlayerUpdatedEntity.players = players;
+  }
   return pkPlayerUpdatedEntity;
 }
 
@@ -41,6 +50,7 @@ Map<String, dynamic> $PkPlayerUpdatedEntityToJson(
   data['serverId'] = entity.serverId;
   data['teamId'] = entity.teamId;
   data['type'] = entity.type;
+  data['players'] = entity.players.map((v) => v.toJson()).toList();
   return data;
 }
 
@@ -52,6 +62,7 @@ extension PkPlayerUpdatedEntityExtension on PkPlayerUpdatedEntity {
     String? serverId,
     int? teamId,
     int? type,
+    List<PkPlayerUpdatedPlayers>? players,
   }) {
     return PkPlayerUpdatedEntity()
       ..changePlayerCoolTime = changePlayerCoolTime ?? this.changePlayerCoolTime
@@ -59,6 +70,40 @@ extension PkPlayerUpdatedEntityExtension on PkPlayerUpdatedEntity {
       ..playerId2 = playerId2 ?? this.playerId2
       ..serverId = serverId ?? this.serverId
       ..teamId = teamId ?? this.teamId
-      ..type = type ?? this.type;
+      ..type = type ?? this.type
+      ..players = players ?? this.players;
+  }
+}
+
+PkPlayerUpdatedPlayers $PkPlayerUpdatedPlayersFromJson(
+    Map<String, dynamic> json) {
+  final PkPlayerUpdatedPlayers pkPlayerUpdatedPlayers = PkPlayerUpdatedPlayers();
+  final int? position = jsonConvert.convert<int>(json['position']);
+  if (position != null) {
+    pkPlayerUpdatedPlayers.position = position;
+  }
+  final int? playerId = jsonConvert.convert<int>(json['playerId']);
+  if (playerId != null) {
+    pkPlayerUpdatedPlayers.playerId = playerId;
+  }
+  return pkPlayerUpdatedPlayers;
+}
+
+Map<String, dynamic> $PkPlayerUpdatedPlayersToJson(
+    PkPlayerUpdatedPlayers entity) {
+  final Map<String, dynamic> data = <String, dynamic>{};
+  data['position'] = entity.position;
+  data['playerId'] = entity.playerId;
+  return data;
+}
+
+extension PkPlayerUpdatedPlayersExtension on PkPlayerUpdatedPlayers {
+  PkPlayerUpdatedPlayers copyWith({
+    int? position,
+    int? playerId,
+  }) {
+    return PkPlayerUpdatedPlayers()
+      ..position = position ?? this.position
+      ..playerId = playerId ?? this.playerId;
   }
 }
