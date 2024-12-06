@@ -8,18 +8,21 @@ import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/line_up_tab.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/player_bag_tab.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/widgets/line_up_tab.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/widgets/player_bag_tab.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/widgets/player_changer_dialog.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class TeamController extends GetxController with GetTickerProviderStateMixin {
   final random = Random();
+
   late TabController tabController;
   RxInt current = 0.obs;
   // double turns = 0;
-  final List<String> tabs = ["LINE-UP", "Player bag"];
+  final List<String> tabs = ["LINE-UP", "STASH"];
   final List<Widget> pages = [
     const LineUpTab(),
     const PlayerBagTab(),
@@ -37,11 +40,38 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   TeamPlayerInfoEntity item2 = TeamPlayerInfoEntity();
   bool isAdd = false;
 
+  int sortType = 0;
+  bool isFire = false;
+  ScrollController scrollController = ScrollController();
+  double offset = 0;
+  RxBool hideSort = false.obs;
+  var isShowDialog = false.obs;
+
+  double cardY = -121.w;
+  double listY = -566.h;
+  RxDouble scale = 1.2.obs;
+
   /// 在 widget 内存中分配后立即调用。
   @override
   void onInit() {
     super.onInit();
     tabController = TabController(length: 2, vsync: this);
+    tabController.addListener(() {
+      current.value = tabController.index;
+      if (isFire) {
+        isFire = false;
+        update();
+      }
+    });
+
+    scrollController.addListener(() {
+      if (scrollController.offset - offset >= 0) {
+        hideSort.value = true;
+      } else {
+        hideSort.value = false;
+      }
+      offset = scrollController.offset;
+    });
   }
 
   /// 在 onInit() 之后调用 1 帧。这是进入的理想场所
@@ -95,8 +125,9 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   //   return list;
   // }
 
-  void recoverPower({int type = 1, String? uuid}) {
-    TeamApi.recoverPower(type: type, uuid: uuid).then((v) {
+  Future<void> recoverPower({int type = 1, String? uuid}) async {
+    await TeamApi.recoverPower(type: type, uuid: uuid).then((v) async {
+      myTeamEntity.powerP = v.powerP;
       myTeamEntity.powerReplyTime = v.powerReplyTime;
       if (type == 1) {
         if (v.teamPlayers.isEmpty) return;
@@ -110,36 +141,64 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
         }
         myTeamEntity.powerP = (totalPw ~/ myTeamEntity.teamPlayers.length);
       } else {
-        myTeamEntity = v;
+        if (v.teamPlayers.isNotEmpty) {
+          for (var e in v.teamPlayers) {
+            int index =
+                myTeamEntity.teamPlayers.indexWhere((e1) => e1.uuid == e.uuid);
+            myTeamEntity.teamPlayers[index].power = e.power;
+          }
+        }
+
+        //  myTeamEntity=await TeamApi.getMyTeamPlayer(teamId)
       }
       update();
     });
   }
 
   ///添加球员
-  void addPlay() {
+  void addPlay(BuildContext context) {
     if (item2.isChange.value) {
       ///选了获取背包已经选择的直接添加
       item1 = item2;
-      changeTeamPlayer();
+      changeTeamPlayer(context);
     } else {
       ///如果之前没选跳转到背包选择
       isAdd = true;
-      onTabChange(1);
+      showChangeDialog(null);
+    }
+  }
+
+  void showChangeDialog(TeamPlayerInfoEntity? item) {
+    if (!isShowDialog.value) {
+      isShowDialog.value = true;
+      showDialog(
+          context: Get.context!,
+          builder: (context) {
+            return PlayerChangerDialog(
+              item: item,
+            );
+          }).then((v) {
+        item1.isChange.value = false;
+        item2.isChange.value = false;
+        isShowDialog.value = false;
+        isAdd = false;
+        update();
+      });
     }
   }
 
   ///点击更换球员
-  void playerItemOnTap(bool isBag, TeamPlayerInfoEntity item) {
+  void playerChangeTap(
+      BuildContext context, bool isBag, TeamPlayerInfoEntity item) {
     /// 如果是上阵
-    if (!isBag) {
+    if (!isBag && !isShowDialog.value) {
       item1 = TeamPlayerInfoEntity.fromJson(item.toJson());
       item1.isChange.value = true;
       if (item2.isChange.value == true) {
         ///已经选择了背包直接替换
-        changeTeamPlayer();
+        changeTeamPlayer(context);
       } else {
-        onTabChange(1);
+        showChangeDialog(item);
       }
     }
 
@@ -149,12 +208,13 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
       item2.isChange.value = true;
       if (isAdd) {
         ///如果选择了添加直接添加
-        addPlay();
+        addPlay(context);
       } else if (item1.isChange.value == true) {
         ///已经选择了上阵直接替换
-        changeTeamPlayer();
+        changeTeamPlayer(context);
+      } else {
+        showChangeDialog(item);
       }
-      onTabChange(0);
     }
   }
 
@@ -181,55 +241,59 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   // }
 
   //是否能够切换
-  bool canChange(bool isBag, TeamPlayerInfoEntity item) {
-    bool canSelect = true;
+  // bool canChange(bool isBag, TeamPlayerInfoEntity item) {
+  //   bool canSelect = true;
 
-    if (!item1.isChange.value && !item2.isChange.value && !isAdd) {
-      return canSelect;
-    }
-    if (isBag) {
-      canSelect = isAdd
-          ? item.position <= 0
-          : item.position <= 0 && item.playerId != item1.playerId;
-      canSelect = canSelect &&
-          !myTeamEntity.teamPlayers
-              .map((e) => e.playerId)
-              .contains(item.playerId);
-    } else {
-      canSelect = item.playerId != item2.playerId;
-    }
-    return canSelect;
-  }
+  //   if (!item1.isChange.value && !item2.isChange.value && !isAdd) {
+  //     return canSelect;
+  //   }
+  //   if (isBag) {
+  //     canSelect = isAdd
+  //         ? item.position <= 0
+  //         : item.position <= 0 && item.playerId != item1.playerId;
+  //     canSelect = canSelect &&
+  //         !myTeamEntity.teamPlayers
+  //             .map((e) => e.playerId)
+  //             .contains(item.playerId);
+  //   } else {
+  //     canSelect = item.playerId != item2.playerId;
+  //   }
+  //   return canSelect;
+  // }
 
-  bool isSame(TeamPlayerInfoEntity item) {
-    // String thisPos = Utils.getPlayBaseInfo(item.playerId).position;
-    if (!item1.isChange.value && !item2.isChange.value && !isAdd) {
-      return true;
-    }
-    NbaPlayerInfosPlayerBaseInfoList player =
-        Utils.getPlayBaseInfo(item.playerId);
-    var isSame = isAdd
-        ? item.position == -1
-        : item.position == -1 &&
-            player.position.contains(Utils.getPosition(item1.position)) &&
-            item.playerId != item1.playerId;
-    return isSame;
-  }
+  // bool isSame(TeamPlayerInfoEntity item) {
+  //   // String thisPos = Utils.getPlayBaseInfo(item.playerId).position;
+  //   if (!item1.isChange.value && !item2.isChange.value && !isAdd) {
+  //     return true;
+  //   }
+  //   NbaPlayerInfosPlayerBaseInfoList player =
+  //       Utils.getPlayBaseInfo(item.playerId);
+  //   var isSame = isAdd
+  //       ? item.position == -1
+  //       : item.position == -1 &&
+  //           player.position.contains(Utils.getPosition(item1.position)) &&
+  //           item.playerId != item1.playerId;
+  //   return isSame;
+  // }
 
-  void changeTeamPlayer() async {
-    myTeamEntity =
-        await TeamApi.changeTeamPlayer(item1.uuid, isAdd ? null : item2.uuid);
+  Future changeTeamPlayer(BuildContext context, {bool isDown = false}) async {
+    myTeamEntity = await TeamApi.changeTeamPlayer(
+        isAdd ? null : item1.uuid, isDown ? null : item2.uuid);
     myBagList = await TeamApi.getMyBagPlayers();
     item1.isChange.value = false;
     item2.isChange.value = false;
     isAdd = false;
     update();
+    if (!isDown) {
+      isShowDialog.value = false;
+      Navigator.pop(context);
+    }
   }
 
   void onTabChange(v) {
-    current.value = v;
-    tabController.animateTo(v);
-    update();
+    // current.value = v;
+    // tabController.animateTo(v);
+    // update();
   }
 
   ///计算体力回复时间
@@ -257,17 +321,53 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
     });
   }
 
-  // Color getProgressColor(progress) {
-  //   return progress > 100
-  //       ? AppColors.c31E99E
-  //       : (progress > 50
-  //           ? AppColors.c10A86A
-  //           : progress > 20
-  //               ? AppColors.cDFB523
-  //               : AppColors.cE72646);
-  // }
+  String formatNumber(int number) {
+    String numberStr = number.toString();
+    int length = numberStr.length;
 
-  // Color getBackColor(progress) {
-  //   return progress > 100 ? AppColors.c10A86A : AppColors.cEEEEEE;
-  // }
+    if (length <= 3) return numberStr;
+
+    // 每次递归处理最后的三位
+    return '${formatNumber(int.parse(numberStr.substring(0, length - 3)))},${numberStr.substring(length - 3)}';
+  }
+
+  List<TeamPlayerInfoEntity> playerSort() {
+    List<TeamPlayerInfoEntity> list = List.from(myBagList);
+    if (sortType == 2) {
+      list.sort((a, b) => b.breakThroughGrade.compareTo(a.breakThroughGrade));
+    } else if (sortType == -2) {
+      list.sort((a, b) => a.breakThroughGrade.compareTo(b.breakThroughGrade));
+    } else if (sortType == 1) {
+      list.sort((a, b) => getGrade(b.playerId).compareTo(getGrade(a.playerId)));
+    } else if (sortType == -1) {
+      list.sort((a, b) => getGrade(a.playerId).compareTo(getGrade(b.playerId)));
+    }
+    return list;
+  }
+
+  int getGrade(int playerId) {
+    String grade = Utils.getPlayBaseInfo(playerId).grade;
+    grade = grade.replaceAll("-", "").replaceAll("+", "");
+    switch (grade) {
+      case 'S':
+        return 5;
+      case 'A':
+        return 4;
+      case 'B':
+        return 3;
+      case 'C':
+        return 2;
+      case 'D':
+        return 1;
+      default:
+        return 0;
+    }
+  }
+
+  void dismissPlayer(String uuid) async {
+    await TeamApi.dismissPlayer(uuid).then((v) {
+      myBagList.removeWhere((element) => element.uuid == uuid);
+      update();
+    });
+  }
 }

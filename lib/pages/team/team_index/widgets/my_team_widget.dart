@@ -17,9 +17,9 @@ import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/player_card.dart';
 import 'package:arm_chair_quaterback/common/widgets/vertival_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team/view.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team/widgets/linear_progress_widget.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/view.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/widgets/linear_progress_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -162,14 +162,15 @@ class MyTeamWidget extends StatelessWidget {
               onTap: () {
                 // Get.toNamed(RouteNames.teamMemberPage,
                 //     id: GlobalNestedKey.TEAM);
-                showModalBottomSheet(
-                    barrierColor: Colors.transparent,
-                    backgroundColor: Colors.transparent,
-                    isScrollControlled: true,
-                    context: context,
-                    builder: (context) {
-                      return VerticalDragBackWidget(child: TeamMenberView());
-                    });
+                // showModalBottomSheet(
+                //     barrierColor: Colors.transparent,
+                //     backgroundColor: Colors.transparent,
+                //     isScrollControlled: true,
+                //     context: context,
+                //     builder: (context) {
+                //       return VerticalDragBackWidget(child: TeamMenberView());
+                //     });
+                Get.toNamed(RouteNames.teamMemberPage);
               },
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 16.w),

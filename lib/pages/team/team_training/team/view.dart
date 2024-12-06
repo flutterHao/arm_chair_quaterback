@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 16:18:58
- * @LastEditTime: 2024-11-20 11:49:36
+ * @LastEditTime: 2024-12-05 16:38:09
  */
 /*
  * @Description: 
@@ -24,7 +24,7 @@ import 'package:get/get.dart';
 
 import 'index.dart';
 
-class TeamMenberView extends StatelessWidget {
+class TeamMenberView extends GetView<TeamController> {
   const TeamMenberView({super.key});
 
   Widget _head() {
@@ -65,8 +65,7 @@ class TeamMenberView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(TeamController());
-    final TeamIndexController indexCtrl = Get.find();
+    controller.initData();
     return GetBuilder<TeamController>(
       builder: (_) {
         return BorderWidget(

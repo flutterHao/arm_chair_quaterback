@@ -361,6 +361,7 @@ class TrainingController extends GetxController
   ///获取配置数据计算倒计时
   void recoverTimeAndCountDown() {
     if (trainingInfo.prop.num >= trainDefine.ballMaxNum) {
+      _timer?.cancel();
       return;
     }
     int recover = trainDefine.ballRecoverTime;
@@ -511,7 +512,7 @@ class TrainingController extends GetxController
     showBuff.value = false;
     isPlaying.value = false;
 
-    // await Future.delayed(const Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 500));
 
     for (var element in chooseTacticList) {
       element.isOpen.value = false;

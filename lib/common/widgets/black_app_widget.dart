@@ -83,7 +83,7 @@ class _BlackAppWidgetState extends State<BlackAppWidget> {
               widget.bodyWidget ?? const SizedBox.shrink(),
             ],
           ),
-          ...?widget.floatWidgets
+          ...?widget.floatWidgets,
         ],
       ),
     );

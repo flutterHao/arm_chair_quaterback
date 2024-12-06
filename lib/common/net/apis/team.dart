@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-14 17:25:31
- * @LastEditTime: 2024-12-04 15:59:45
+ * @LastEditTime: 2024-12-06 21:44:18
  */
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
@@ -62,9 +62,9 @@ class TeamApi {
   }
 
   static Future<MyTeamEntity> changeTeamPlayer(
-      String uuid1, String? uuid2) async {
-    var json = await HttpUtil()
-        .post(Api.changeTeamPlayer, data: {"uuId1": uuid1, "uuId2": uuid2});
+      String? uuid1, String? uuid2) async {
+    var json = await HttpUtil().post(Api.changeTeamPlayer,
+        data: {"uuId1": uuid1 ?? "", "uuId2": uuid2 ?? ""});
     return MyTeamEntity.fromJson(json);
   }
 
@@ -132,5 +132,11 @@ class TeamApi {
   static Future<List<TaticsCombineEntity>> getTacticCombine() async {
     List list = await HttpUtil().post(Api.cTaticsCombine);
     return list.map((e) => TaticsCombineEntity.fromJson(e)).toList();
+  }
+
+  static Future dismissPlayer(String uuid, {int dismissType = 1}) async {
+    var isDismiss = await HttpUtil().post(Api.dismissPlayer,
+        data: {"uuids": uuid, "dismissType": dismissType});
+    return isDismiss;
   }
 }

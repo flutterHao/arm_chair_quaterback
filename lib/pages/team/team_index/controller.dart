@@ -15,7 +15,7 @@ import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/box_dialog.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';

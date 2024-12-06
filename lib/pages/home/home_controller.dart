@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-25 11:48:38
- * @LastEditTime: 2024-11-07 18:17:34
+ * @LastEditTime: 2024-12-06 14:12:38
  */
 /*
  * @Description: 
@@ -151,10 +151,10 @@ class HomeController extends GetxController {
 
   Future<String> getUid() async {
     String accountName = StorageService.to.getString(Constant.deviceId);
-    accountName = await DeviceUtils.getDeviceId();
-    // if (ObjectUtil.isEmpty(accountName)) {
-    //   accountName = await DeviceUtils.getDeviceId();
-    // }
+    // accountName = await DeviceUtils.getDeviceId();
+    if (ObjectUtil.isEmpty(accountName)) {
+      accountName = await DeviceUtils.getDeviceId();
+    }
 
     Log.d("deviceId=$accountName");
     return accountName;
@@ -167,5 +167,15 @@ class HomeController extends GetxController {
     PropDefineEntity? item =
         CacheApi.propDefineList?.where((e) => e.propId == id).first;
     return item;
+  }
+
+  void updateMoney(int change) {
+    for (var element
+        in HomeController.to.userEntiry.teamLoginInfo!.teamPropList!) {
+      if (element.propId == 102) {
+        element.num = element.num! + change;
+      }
+    }
+    HomeController.to.update([GetXBuilderIds.idMoneyAndCoinWidget]);
   }
 }

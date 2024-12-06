@@ -8,6 +8,7 @@ class Assets {
   static const String commonUiCommonIconPick = 'assets/images/Common/ui_common_icon_pick.png';
   static const String commonUiCommonIconSystemAdd = 'assets/images/Common/ui_common_icon_system_add.png';
   static const String commonUiCommonIconSystemArrow = 'assets/images/Common/ui_common_icon_system_arrow.png';
+  static const String commonUiCommonIconSystemDanger = 'assets/images/Common/ui_common_icon_system_danger.png';
   static const String commonUiCommonIconSystemExchange = 'assets/images/Common/ui_common_icon_system_exchange.png';
   static const String commonUiCommonIconSystemExpression = 'assets/images/Common/ui_common_icon_system_expression.png';
   static const String commonUiCommonIconSystemInfo = 'assets/images/Common/ui_common_icon_system_info.png';
@@ -21,6 +22,7 @@ class Assets {
   static const String commonUiCommonPlayerState04 = 'assets/images/Common/ui_common_player_state_04.png';
   static const String commonUiCommonPlayerState3 = 'assets/images/Common/ui_common_player_state_3.png';
   static const String commonUiCommonProp01 = 'assets/images/Common/ui_common_prop_01.png';
+  static const String commonUiCommonProp02 = 'assets/images/Common/ui_common_prop_02.png';
   static const String commonUiCommonProp03 = 'assets/images/Common/ui_common_prop_03.png';
   static const String commonUiCommonProp04 = 'assets/images/Common/ui_common_prop_04.png';
   static const String commonUiCommonProp05 = 'assets/images/Common/ui_common_prop_05.png';
@@ -38,7 +40,6 @@ class Assets {
   static const String commonUiCommonTabBottom04On = 'assets/images/Common/ui_common_tab_bottom_04_on.png';
   static const String commonUiCommonTabBottom05Off = 'assets/images/Common/ui_common_tab_bottom_05_off.png';
   static const String commonUiCommonTabBottom05On = 'assets/images/Common/ui_common_tab_bottom_05_on.png';
-  static const String commonUiIconState = 'assets/images/Common/ui_common_prop_02.png';
   static const String fontsOswaldBold = 'assets/fonts/Oswald-Bold.ttf';
   static const String fontsOswaldMedium = 'assets/fonts/Oswald-Medium.ttf';
   static const String fontsOswaldRegular = 'assets/fonts/Oswald-Regular.ttf';
@@ -125,13 +126,22 @@ class Assets {
   static const String managerUiManagerGift03 = 'assets/images/manager/ui_manager_gift_03.png';
   static const String managerUiManagerIconCurrency04 = 'assets/images/manager/ui_manager_icon_currency_04.png';
   static const String managerUiManagerIconRecover = 'assets/images/manager/ui_manager_icon_recover.png';
+  static const String managerUiManagerImageMatchgame = 'assets/images/manager/ui_manager_image_matchgame.png';
+  static const String managerUiManagerImageMorale = 'assets/images/manager/ui_manager_image_morale.png';
+  static const String managerUiManagerLineupBg = 'assets/images/manager/ui_manager_lineup_bg.png';
+  static const String managerUiManagerLineupUnload = 'assets/images/manager/ui_manager_lineup_unload.png';
   static const String managerUiManagerMatchgameBg = 'assets/images/manager/ui_manager_matchgame_bg.jpg';
   static const String managerUiManagerMatchgameImage = 'assets/images/manager/ui_manager_matchgame_image.png';
   static const String managerUiManagerMyteamBg = 'assets/images/manager/ui_manager_myteam_bg.jpg';
+  static const String managerUiManagerPlayerstar = 'assets/images/manager/ui_manager_playerstar.png';
   static const String managerUiManagerTactics01 = 'assets/images/manager/ui_manager_tactics_01.png';
   static const String managerUiManagerTactics02 = 'assets/images/manager/ui_manager_tactics_02.png';
   static const String managerUiManagerTactics03 = 'assets/images/manager/ui_manager_tactics_03.png';
   static const String managerUiManagerTactics04 = 'assets/images/manager/ui_manager_tactics_04.png';
+  static const String managerUiManagerTactics05 = 'assets/images/manager/ui_manager_tactics_05.png';
+  static const String managerUiManagerTactics06 = 'assets/images/manager/ui_manager_tactics_06.png';
+  static const String managerUiManagerTactics07 = 'assets/images/manager/ui_manager_tactics_07.png';
+  static const String managerUiManagerTactics08 = 'assets/images/manager/ui_manager_tactics_08.png';
   static const String managerUiManagerTacticsBg = 'assets/images/manager/ui_manager_tactics_bg.jpg';
   static const String managerUiManagerTacticsCardback = 'assets/images/manager/ui_manager_tactics_cardback.png';
   static const String managerUiManagerTacticsIconEmpty = 'assets/images/manager/ui_manager_tactics_icon_empty.png';

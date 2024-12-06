@@ -1,5 +1,6 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
+import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -10,8 +11,9 @@ import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/vertival_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/progress_paint.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team/view.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/view.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/widgets/recover_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactics/card_rule_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactics/tactic_card.dart';
@@ -89,14 +91,21 @@ class TrainingTactics extends StatelessWidget {
                   children: [
                     InkWell(
                       onTap: () {
+                        // showModalBottomSheet(
+                        //     barrierColor: Colors.transparent,
+                        //     backgroundColor: Colors.transparent,
+                        //     isScrollControlled: true,
+                        //     context: Get.context!,
+                        //     builder: (context) {
+                        //       return const VerticalDragBackWidget(
+                        //           child: TeamMenberView());
+                        //     });
+                        // Get.toNamed(RouteNames.teamMemberPage);
                         showModalBottomSheet(
-                            barrierColor: Colors.transparent,
-                            backgroundColor: Colors.transparent,
                             isScrollControlled: true,
                             context: Get.context!,
                             builder: (context) {
-                              return const VerticalDragBackWidget(
-                                  child: TeamMenberView());
+                              return const RecoverDialog();
                             });
                       },
                       child: Container(

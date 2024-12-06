@@ -232,9 +232,9 @@ class MoneyAndCoinWidget extends StatelessWidget {
                 IconWidget(
                     iconWidth: 17.w, icon: Assets.commonUiCommonIconCurrency02),
                 2.hGap,
-                Text(
-                  Utils.formatChip(info.getCoin()),
-                  style: 12.w4(
+                AnimatedNum(
+                  number: info.getCoin().toInt(),
+                  textStyle: 12.w4(
                       color: AppColors.cF2F2F2,
                       height: 1,
                       fontFamily: FontFamily.fOswaldRegular),

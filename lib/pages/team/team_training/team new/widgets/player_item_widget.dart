@@ -1,0 +1,556 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-09-28 20:22:47
+ * @LastEditTime: 2024-12-06 21:08:28
+ */
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-09-28 20:22:47
+ * @LastEditTime: 2024-09-29 18:59:56
+ */
+
+import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
+import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
+import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
+import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
+import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/widgets/fire_dialog.dart';
+import 'package:flutter/material.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:arm_chair_quaterback/common/routers/routes.dart';
+import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
+import 'package:arm_chair_quaterback/pages/picks/player_detail/index.dart';
+import 'package:common_utils/common_utils.dart';
+
+class PlayerItem extends GetView<TeamController> {
+  const PlayerItem({
+    super.key,
+    required this.item,
+    this.isBag = false,
+    this.isSelect = false,
+    this.onDownCallBack,
+  });
+
+  // final bool isMain;
+  final TeamPlayerInfoEntity item;
+  final bool isBag;
+  final bool isSelect;
+  final Function? onDownCallBack;
+
+  ///下阵容回调
+
+  // String get position => Utils.getPosition(item.position);
+
+  ///球员位置
+  Widget _playerPosition() {
+    if (isBag) {
+      return SizedBox(
+        height: 93.w,
+        width: 16.w,
+      );
+    }
+    return Container(
+      height: 93.w,
+      width: 16.w,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+          color: item.position > 0 ? AppColors.c000000 : AppColors.ccccccc,
+          borderRadius: BorderRadius.horizontal(right: Radius.circular(9.w))),
+      child: RotatedBox(
+        quarterTurns: -1,
+        child: Text(
+          Utils.getPosition(item.position),
+          style: 14.w4(
+              color: item.position > 0 ? AppColors.cFFFFFF : AppColors.c000000,
+              height: 1,
+              fontFamily: FontFamily.fRobotoMedium),
+        ),
+      ),
+    );
+  }
+
+  ///球员操作
+  Widget _playerInfo() {
+    NbaPlayerInfosPlayerBaseInfoList palyer =
+        Utils.getPlayBaseInfo(item.playerId);
+    return Expanded(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 150.w,
+            child: Text(
+              palyer.ename,
+              style: 21.w7(
+                  height: 1,
+                  color: AppColors.c262626,
+                  overflow: TextOverflow.ellipsis),
+            ),
+          ),
+          7.vGap,
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                "${Utils.getTeamInfo(palyer.teamId).shortEname} · ${palyer.position}",
+                style: 12.w4(
+                  height: 1,
+                  fontFamily: FontFamily.fRobotoRegular,
+                ),
+              ),
+              9.hGap,
+              if (CacheApi.playerStatusMap[item.playerStatus]?.statsId != null)
+                IconWidget(
+                  iconWidth: 16.w,
+                  iconHeight: 16.w,
+                  icon: Utils.getStatusUrl(
+                      CacheApi.playerStatusMap[item.playerStatus]?.statsId),
+                ),
+              4.hGap,
+              IconWidget(
+                iconWidth: 16.w,
+                iconHeight: 16.w,
+                icon: Assets.commonUiCommonIconInjury,
+              )
+            ],
+          ),
+          14.5.vGap,
+          Row(
+            children: [
+              Container(
+                width: 45.w,
+                height: 29.w,
+                padding: EdgeInsets.only(left: 5.w),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4.w),
+                  border: Border.all(width: 1.w, color: AppColors.cE6E6E),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "POW",
+                      style: 8.w4(
+                          height: 0.8, fontFamily: FontFamily.fRobotoRegular),
+                    ),
+                    3.5.vGap,
+                    Text(
+                      "${palyer.playerStrength}",
+                      style: 12.w4(
+                          height: 0.8, fontFamily: FontFamily.fOswaldMedium),
+                    ),
+                  ],
+                ),
+              ),
+              4.hGap,
+              Container(
+                width: 45.w,
+                height: 29.w,
+                padding: EdgeInsets.only(left: 5.w),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4.w),
+                  border: Border.all(width: 1.w, color: AppColors.cE6E6E),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "SAL",
+                      style: 8.w4(
+                          height: 0.8, fontFamily: FontFamily.fRobotoRegular),
+                    ),
+                    3.5.vGap,
+                    Text(
+                      Utils.formatMoney(item.buyPrice),
+                      style: 12.w4(
+                          height: 0.8, fontFamily: FontFamily.fOswaldMedium),
+                    ),
+                  ],
+                ),
+              ),
+              4.hGap,
+              MtInkwell(
+                onTap: () {
+                  controller.recoverPower(type: 1, uuid: item.uuid);
+                },
+                child: Container(
+                  // width: 73.w,
+                  height: 29.w,
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.only(left: 5.5.w, right: 8.5.w),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4.w),
+                    border: Border.all(width: 1.w, color: AppColors.cE6E6E),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconWidget(
+                        icon: Assets.managerUiManagerIconRecover,
+                        iconWidth: 12.5.w,
+                      ),
+                      5.5.hGap,
+                      AnimatedNum(
+                        number: item.power * 100 ~/ 100,
+                        textStyle: 16.w7(
+                            color: AppColors.c000000,
+                            height: 1,
+                            fontFamily: FontFamily.fOswaldMedium),
+                      ),
+                      Text(
+                        "%",
+                        style: 16.w7(
+                            color: AppColors.c000000,
+                            height: 1,
+                            fontFamily: FontFamily.fOswaldMedium),
+                      ),
+                      7.hGap,
+                      IconWidget(
+                        icon: Assets.commonUiCommonIconSystemJumpto,
+                        iconWidth: 5.w,
+                        iconColor: AppColors.c000000,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      height: 121.w,
+      width: double.infinity,
+      child: Row(
+        children: [
+          _playerPosition(),
+          13.hGap,
+          PlayerCard(
+            backgroundColor: AppColors.cE1E1E1,
+            playerId: item.playerId,
+            width: 73.w,
+            height: 93.w,
+            isMyPlayer: true,
+            grade:
+                Utils.formatGrade(Utils.getPlayBaseInfo(item.playerId).grade),
+            level: item.breakThroughGrade,
+          ),
+          11.hGap,
+          _playerInfo(),
+          9.hGap,
+          if (!isSelect)
+            controller.isFire && isBag
+                ? MtInkwell(
+                    onTap: () {
+                      //解雇
+                      showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (context) {
+                            return FireDialog(item: item);
+                          });
+                    },
+                    child: IconWidget(
+                      iconWidth: 12.w,
+                      backgroudWitdh: 28.w,
+                      backgroudheight: 28.w,
+                      borderRadius: BorderRadius.circular(9.w),
+                      backgroudColor: AppColors.cD60D20,
+                      icon: Assets.iconUiIconDelete02,
+                      iconColor: AppColors.cFFFFFF,
+                    ),
+                  )
+                : MtInkwell(
+                    onTap: () {
+                      //换人
+                      if (item.position > 0) {
+                        String p = item.position > 0
+                            ? Utils.getPosition(item.position)
+                            : Utils.getPlayBaseInfo(item.playerId).position;
+                        int bagCount = controller.myBagList
+                            .where((e) =>
+                                Utils.getPlayBaseInfo(e.playerId)
+                                    .position
+                                    .contains(p) &&
+                                e.position < 0)
+                            .length;
+                        int count = 0;
+                        if (item.position < 0) {
+                          count = controller.myTeamEntity.teamPlayers
+                              .where((e) => Utils.getPlayBaseInfo(e.playerId)
+                                  .position
+                                  .contains(p))
+                              .length;
+                        } else if (item.position > 0) {
+                          int teamCount = controller.myTeamEntity.teamPlayers
+                              .where((e) =>
+                                  Utils.getPlayBaseInfo(e.playerId)
+                                      .position
+                                      .contains(p) &&
+                                  e.position == 0)
+                              .length;
+                          count = teamCount + bagCount;
+                        } else if (item.position == 0) {
+                          int teamCount = controller.myTeamEntity.teamPlayers
+                              .where((e) =>
+                                  Utils.getPlayBaseInfo(e.playerId)
+                                      .position
+                                      .contains(p) &&
+                                  e.position > 0)
+                              .length;
+                          count = teamCount + bagCount;
+                        }
+
+                        if (count == 0) {
+                          EasyLoading.showToast(
+                              "No players in the same position");
+                          return;
+                        }
+                      }
+                      if (controller.isShowDialog.value) {
+                        controller.item2 = item;
+                        controller.item2.isChange.value = true;
+                      }
+                      controller.playerChangeTap(context, isBag, item);
+                    },
+                    child: IconWidget(
+                      iconWidth: 17.w,
+                      backgroudWitdh: 36.w,
+                      backgroudheight: 36.w,
+                      borderRadius: BorderRadius.circular(9.w),
+                      backgroudColor: AppColors.c000000,
+                      icon: Assets.iconUiIconSwitch02,
+                      iconColor: AppColors.cFFFFFF,
+                    ),
+                  ),
+          if (item.position == 0 && controller.isShowDialog.value && isSelect)
+            MtInkwell(
+              onTap: () async {
+                //下阵容
+                controller.item1.isChange.value = false;
+                controller.item2.isChange.value = false;
+                controller.isAdd = false;
+                await controller.changeTeamPlayer(context, isDown: true);
+                if (onDownCallBack != null) {
+                  onDownCallBack!();
+                }
+              },
+              child: Container(
+                width: 36.w,
+                height: 36.w,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(9.w),
+                    border: Border.all(color: AppColors.c666666, width: 1)),
+                child: IconWidget(
+                    iconWidth: 18.w, icon: Assets.managerUiManagerLineupUnload),
+              ),
+            ),
+          16.hGap,
+        ],
+      ),
+    );
+  }
+}
+
+class PlayerCard extends StatelessWidget {
+  const PlayerCard({
+    super.key,
+    this.grade,
+    required this.width,
+    required this.height,
+    this.backgroundColor = AppColors.cD9D9D9,
+    this.radius,
+    this.fontSize = 14,
+    this.fontColor = AppColors.c000000,
+    // this.showGrade = true,
+    this.playerId = 0,
+    this.getXRouteId,
+    this.tabStr,
+    this.level,
+    this.canTap = true,
+    this.isMyPlayer = false,
+  });
+
+  final double width;
+  final double height;
+  final int playerId;
+  final String? grade;
+  final int? level;
+  final Color? backgroundColor;
+  final double? radius;
+  final double fontSize;
+  final Color fontColor;
+  // final bool showGrade;
+
+  final int? getXRouteId;
+  final String? tabStr;
+  final bool canTap;
+  final bool isMyPlayer;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () => canTap
+          ? Get.toNamed(RouteNames.picksPlayerDetail,
+              arguments: PlayerDetailPageArguments(playerId,
+                  isMyPlayer: isMyPlayer, tabStr: tabStr))
+          : null,
+      child: Stack(
+        children: [
+          Container(
+            height: height,
+            width: width,
+            decoration: BoxDecoration(
+              color: backgroundColor,
+              borderRadius: BorderRadius.circular(9.w),
+            ),
+            child: ImageWidget(
+              url: Utils.getPlayUrl(playerId),
+              imageFailedPath: Assets.iconUiDefault04,
+              borderRadius: BorderRadius.circular(9.w),
+              width: width,
+              height: height,
+            ),
+          ),
+          //球员等级
+          if (ObjectUtil.isNotEmpty(grade))
+            Positioned(
+              top: 5.5.w,
+              left: 5.w,
+              child: OutlinedText(
+                text: Utils.formatGrade(grade ?? 'S'),
+                textStyle:
+                    26.w4(height: 0.75, fontFamily: FontFamily.fRobotoMedium),
+              ),
+            ),
+
+          ///升星等级
+          if (ObjectUtil.isNotEmpty(level))
+            Positioned(
+              bottom: -2.w,
+              left: 0.w,
+              child: Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  IconWidget(
+                    iconWidth: 22.w,
+                    icon: Assets.managerUiManagerPlayerstar,
+                  ),
+                  Positioned(
+                    top: 7.w,
+                    child: Text(
+                      "$level",
+                      style: 13.w7(color: AppColors.cFFFFFF, height: 0.75),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+          Positioned(
+              right: 4.w,
+              top: 4.w,
+              child: Container(
+                width: 16.w,
+                height: 16.w,
+                decoration: BoxDecoration(
+                  color: AppColors.cFFFFFF,
+                  borderRadius: BorderRadius.circular(4.w),
+                ),
+                alignment: Alignment.center,
+                child: Image.asset(
+                  Assets.iconUiIconRead,
+                  width: 9.w,
+                  color: AppColors.c000000,
+                ),
+              )),
+          Positioned(
+              bottom: 0,
+              right: 0,
+              child: Container(
+                width: 41.w,
+                height: 18.w,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: AppColors.c000000,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(9.w),
+                      bottomRight: Radius.circular(9.w)),
+                ),
+                child: RichText(
+                    text: TextSpan(children: [
+                  TextSpan(
+                    text: "OVR",
+                    style: 9.w4(
+                        color: AppColors.cFFFFFF,
+                        height: 1,
+                        fontFamily: FontFamily.fRobotoRegular),
+                  ),
+                  TextSpan(
+                    text: " ${Utils.getPlayBaseInfo(playerId).playerScore}",
+                    style: 12.w4(
+                        color: AppColors.cFFFFFF,
+                        height: 1,
+                        fontFamily: FontFamily.fOswaldBold),
+                  )
+                ])),
+
+                // child: Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   crossAxisAlignment: CrossAxisAlignment.center,
+                //   children: [
+                //     Container(
+                //       color: Colors.red,
+                //       alignment: Alignment.center,
+                //       // height: 7.w,
+                //       child: Text(
+                //         "OVR",
+                //         style: 9.w4(
+                //             color: AppColors.cFFFFFF,
+                //             // height: 0.75,
+                //             fontFamily: FontFamily.fRobotoRegular),
+                //       ),
+                //     ),
+                //     2.hGap,
+                //     Container(
+                //       alignment: Alignment.center,
+                //       color: Colors.red,
+                //       // height: 10.5.w,
+                //       child: Text(
+                //         "${Utils.getPlayBaseInfo(playerId).playerScore}",
+                //         style: 12.w4(
+                //             color: AppColors.cFFFFFF,
+                //             // height: 0.75,
+                //             fontFamily: FontFamily.fOswaldBold),
+                //       ),
+                //     )
+                //   ],
+                // ),
+              ))
+        ],
+      ),
+    );
+  }
+}

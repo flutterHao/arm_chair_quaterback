@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-25 15:56:43
- * @LastEditTime: 2024-12-04 15:08:00
+ * @LastEditTime: 2024-12-06 12:15:14
  */
 
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
@@ -14,7 +14,7 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team/view.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/add_ball_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/award_dialog.dart';
@@ -41,7 +41,7 @@ class TrainingWidget extends GetView<TrainingController> {
 
   @override
   Widget build(BuildContext context) {
-    controller.showAward();
+    // controller.showAward();
     return GetBuilder<TrainingController>(
         id: "training_page",
         builder: (controller) {

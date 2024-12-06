@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
+import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -32,10 +33,10 @@ class SmallTacticCard extends StatelessWidget {
         children: [
           Text(
             geCardtName(num),
-            style: 16.w4(color: getCardColor(color), height: 0.9),
+            style: 19.w4(color: getCardColor(color), height: 0.9),
           ),
-          3.5.vGap,
-          Image.asset(getCardImage(color), width: 18.w, height: 18.w),
+          4.vGap,
+          Image.asset(getCardNewImage(color), width: 18.w * 1.2),
         ],
       ),
     );
@@ -79,26 +80,30 @@ class TacticCard extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 23.w,
-            left: 4.5.w,
+            top: 23.w * scale,
+            left: 5.w * scale,
             child: Image.asset(getCardImage(color), width: 9.w * scale),
           ),
           Positioned(
-            top: 34.5.w,
-            child: Image.asset(getCardImage(color), width: 28.w * scale),
+            top: 32.5.w * scale,
+            child: Image.asset(getCardNewImage(color), width: 52.w * scale),
           ),
           Positioned(
-            top: 70.w,
+            bottom: 6.5.w * scale,
             child: Text(
               getCardTacticNmae(color),
-              style: 10.w4(color: getCardColor(color), height: 0.9),
+              style: (10 * scale).w4(color: getCardColor(color), height: 0.9),
             ),
           ),
           Positioned(
-            top: 83.w,
+            top: 6.w * scale,
+            right: 5.5.w * scale,
             child: Text(
               "+${(buff.buffValue * 100).toStringAsFixed(0)}%",
-              style: 12.w4(color: getCardColor(color), height: 0.9),
+              style: (scale * 12).w4(
+                  color: getCardColor(color),
+                  height: 0.9,
+                  fontFamily: FontFamily.fOswaldRegular),
             ),
           ),
         ],
@@ -132,6 +137,18 @@ String getCardImage(int color) {
     return Assets.managerUiManagerTactics03;
   } else {
     return Assets.managerUiManagerTactics04;
+  }
+}
+
+String getCardNewImage(int color) {
+  if (color == Constant.spade) {
+    return Assets.managerUiManagerTactics06;
+  } else if (color == Constant.heart) {
+    return Assets.managerUiManagerTactics05;
+  } else if (color == Constant.club) {
+    return Assets.managerUiManagerTactics07;
+  } else {
+    return Assets.managerUiManagerTactics08;
   }
 }
 

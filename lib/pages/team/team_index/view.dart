@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-11-22 16:21:14
+ * @LastEditTime: 2024-12-04 19:30:25
  */
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
@@ -21,8 +21,9 @@ import 'package:arm_chair_quaterback/pages/team/team_index/widgets/beauty_and_bo
 import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_page.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/match_card.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/my_team_widget.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team/view.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/view.dart';
 import 'package:flutter/material.dart';

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-20 20:31:52
- * @LastEditTime: 2024-11-30 14:18:37
+ * @LastEditTime: 2024-12-05 20:50:43
  */
 import 'package:flutter/material.dart';
 
@@ -187,4 +187,5 @@ class AppColors {
   static const Color c36a7e2 = Color(0xFF36a7e2);
   static const Color c9465D4 = Color(0xFF9465d4);
   static const Color cF48F19 = Color(0xFFf48f19);
+  static const Color c3e3e3e = Color(0xFF3e3e3e);
 }
