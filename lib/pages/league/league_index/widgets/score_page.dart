@@ -193,37 +193,90 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
                   },
                   child: Column(
                     children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              Utils.getTeamInfo(item.homeTeamId).shortEname,
-                              textAlign: TextAlign.right,
-                              style: 24.w5(
-                                  color: AppColors.c000000,
-                                  height: 1,
-                                  fontFamily: FontFamily.fOswaldMedium),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 52.w),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Container(
+                              width: 52.w,
+                              alignment: Alignment.center,
+                              child: Text(
+                                Utils.getTeamInfo(item.homeTeamId).shortEname,
+                                style: 24.w5(
+                                    color: AppColors.c000000,
+                                    height: 1,
+                                    fontFamily: FontFamily.fOswaldMedium),
+                              ),
                             ),
-                          ),
-                          Text(
-                            " @ ",
-                            style: 24.w5(
-                                color: AppColors.c000000,
-                                height: 1,
-                                fontFamily: FontFamily.fOswaldMedium),
-                          ),
-                          Expanded(
-                            child: Text(
-                              Utils.getTeamInfo(item.awayTeamId).shortEname,
-                              style: 24.w5(
-                                  color: AppColors.c000000,
-                                  height: 1,
-                                  fontFamily: FontFamily.fOswaldMedium),
+                            Expanded(
+                              child: Obx(() {
+                                gameStartTimeStr.value;
+                                return Container(
+                                  margin: EdgeInsets.only(bottom: 3.w),
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        gameStartTimeStr.value,
+                                        style: TextStyle(
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w400,
+                                            color: AppColors.c000000,
+                                            decoration: TextDecoration.underline,
+                                            height: 1,
+                                            fontFamily:
+                                                FontFamily.fRobotoRegular),
+                                        // style: 12.w4(
+                                        //     color: AppColors.c000000,
+                                        //     height: 1,
+                                        //     fontFamily:
+                                        //         FontFamily.fRobotoRegular),
+                                      ),
+                                      Container(
+                                        margin: EdgeInsets.only(left: 6.w),
+                                        child: IconWidget(
+                                          iconWidth: 5.w,
+                                          icon: Assets.playerUiIconArrows01,
+                                          iconColor: AppColors.c000000,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                );
+                              }),
                             ),
-                          ),
-                        ],
+                            Container(
+                              width: 52.w,
+                              alignment: Alignment.center,
+                              child: Text(
+                                Utils.getTeamInfo(item.awayTeamId).shortEname,
+                                style: 24.w5(
+                                    color: AppColors.c000000,
+                                    height: 1,
+                                    fontFamily: FontFamily.fOswaldMedium),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      7.vGap,
+                      Obx(() {
+                        gameStartTimeStr.value;
+                        return Text(
+                          item.status == 0
+                              ? ""
+                              : item.status == 1
+                                  ? "In the game"
+                                  : "FINAL",
+                          style: 12.w4(
+                              color: item.status == 2
+                                  ? AppColors.c000000
+                                  : AppColors.c10A86A,
+                              height: 1,
+                              fontFamily: FontFamily.fRobotoRegular),
+                        );
+                      }),
                       Container(
                         margin: EdgeInsets.symmetric(horizontal: 52.w),
                         child: Row(
@@ -297,31 +350,6 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
                                 ),
                               ),
                             ),
-                            Obx(() {
-                              gameStartTimeStr.value;
-                              return Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    gameStartTimeStr.value,
-                                    style: 12.w4(
-                                        color: AppColors.c000000,
-                                        height: 1,
-                                        fontFamily: FontFamily.fRobotoRegular),
-                                  ),
-                                  if (item.status != 2)
-                                    Container(
-                                      margin: EdgeInsets.only(left: 6.w),
-                                      child: IconWidget(
-                                        iconWidth: 5.w,
-                                        icon: Assets.playerUiIconArrows01,
-                                        iconColor: AppColors.c000000,
-                                      ),
-                                    )
-                                ],
-                              );
-                            }),
                             SizedBox(
                               width: 52.w,
                               child: Center(
@@ -337,36 +365,6 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
                           ],
                         ),
                       ),
-                      Obx(() {
-                        gameStartTimeStr.value;
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              item.status == 0
-                                  ? ""
-                                  : item.status == 1
-                                      ? "In the game"
-                                      : "FINAL",
-                              style: 12.w4(
-                                  color: item.status == 2
-                                      ? AppColors.c000000
-                                      : AppColors.c10A86A,
-                                  fontFamily: FontFamily.fRobotoRegular),
-                            ),
-                            if (item.status == 2)
-                              Container(
-                                margin: EdgeInsets.only(left: 6.w),
-                                child: IconWidget(
-                                  iconWidth: 5.w,
-                                  icon: Assets.playerUiIconArrows01,
-                                  iconColor: AppColors.c000000,
-                                ),
-                              )
-                          ],
-                        );
-                      }),
                       12.vGap,
                       _buildGuess(),
                     ],
@@ -475,9 +473,9 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
         Builder(builder: (context) {
           ///只能猜今明两天未开始的赛程
           if (item.gameStartTime >= dayStartTimeMS ||
-              (item.gameStartTime <
-                      MyDateUtils.getNowDateMs() &&
-                  item.isGuess == 0 && item.status != 0)) {
+              (item.gameStartTime < MyDateUtils.getNowDateMs() &&
+                  item.isGuess == 0 &&
+                  item.status != 0)) {
             return const SizedBox.shrink();
           }
           return Column(
@@ -501,70 +499,71 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
             ],
           );
         }),
-        if(item.status != 0)
-        Column(
-          children: [
-            Row(
-              children: [
-                29.hGap,
-                Text(
-                  homeTeamInfo.shortEname,
-                  style: 10.w4(
-                      color: AppColors.c000000,
-                      height: 1,
-                      fontFamily: FontFamily.fRobotoRegular),
-                ),
-                Expanded(
-                  child: Center(
-                    child: Text(
-                      "WHO WILL WIN",
-                      style: 10.w4(
-                          color: AppColors.c000000,
-                          height: 1,
-                          fontFamily: FontFamily.fRobotoRegular),
+        if (item.status != 0)
+          Column(
+            children: [
+              Row(
+                children: [
+                  29.hGap,
+                  Text(
+                    homeTeamInfo.shortEname,
+                    style: 10.w4(
+                        color: AppColors.c000000,
+                        height: 1,
+                        fontFamily: FontFamily.fRobotoRegular),
+                  ),
+                  Expanded(
+                    child: Center(
+                      child: Text(
+                        "WHO WILL WIN",
+                        style: 10.w4(
+                            color: AppColors.c000000,
+                            height: 1,
+                            fontFamily: FontFamily.fRobotoRegular),
+                      ),
                     ),
                   ),
-                ),
-                Text(
-                  awayTeamInfo.shortEname,
-                  style: 10.w4(
-                      color: AppColors.c000000,
-                      height: 1,
-                      fontFamily: FontFamily.fRobotoRegular),
-                ),
-                29.hGap,
-              ],
-            ),
-            3.vGap,
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                29.hGap,
-                Text(
-                  "$homePercent%",
-                  style: 14.w5(
-                      color: AppColors.c000000,
-                      height: 1,
-                      fontFamily: FontFamily.fOswaldMedium),
-                ),
-                3.hGap,
-                Expanded(
-                    child: SupportPercentProgressWidget(
-                        leftPercent: homePercent, rightPercent: 100 - homePercent)),
-                3.hGap,
-                Text(
-                  "${100 - homePercent}%",
-                  style: 14.w5(
-                      color: AppColors.c000000,
-                      height: 1,
-                      fontFamily: FontFamily.fOswaldMedium),
-                ),
-                29.hGap,
-              ],
-            ),
-            21.vGap,
-          ],
-        )
+                  Text(
+                    awayTeamInfo.shortEname,
+                    style: 10.w4(
+                        color: AppColors.c000000,
+                        height: 1,
+                        fontFamily: FontFamily.fRobotoRegular),
+                  ),
+                  29.hGap,
+                ],
+              ),
+              3.vGap,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  29.hGap,
+                  Text(
+                    "$homePercent%",
+                    style: 14.w5(
+                        color: AppColors.c000000,
+                        height: 1,
+                        fontFamily: FontFamily.fOswaldMedium),
+                  ),
+                  3.hGap,
+                  Expanded(
+                      child: SupportPercentProgressWidget(
+                          leftPercent: homePercent,
+                          rightPercent: 100 - homePercent)),
+                  3.hGap,
+                  Text(
+                    "${100 - homePercent}%",
+                    style: 14.w5(
+                        color: AppColors.c000000,
+                        height: 1,
+                        fontFamily: FontFamily.fOswaldMedium),
+                  ),
+                  29.hGap,
+                ],
+              ),
+              21.vGap,
+            ],
+          )
       ],
     );
   }
