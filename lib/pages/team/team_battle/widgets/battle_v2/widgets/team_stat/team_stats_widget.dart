@@ -25,7 +25,9 @@ class TeamStatsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _buildTeamStatsWidget(context);
+    return GetBuilder<TeamStatsController>(builder: (logic) {
+      return _buildTeamStatsWidget(context);
+    });
   }
 
   Container _buildTeamStatsWidget(BuildContext context) {
@@ -34,7 +36,6 @@ class TeamStatsWidget extends StatelessWidget {
     var teamStatsData = controller.getTeamStatsData();
     var expansionList =
         teamStatsData.length > 4 ? teamStatsData.sublist(4) : [];
-    print('tttt:${teamStatsData}');
     return Container(
       margin: EdgeInsets.only(top: 9.w),
       decoration: BoxDecoration(
@@ -78,9 +79,9 @@ class TeamStatsWidget extends StatelessWidget {
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                          border: Border.all(color: AppColors.c1F8FE5,width: 1.w),
-                          borderRadius: BorderRadius.circular(15.w)
-                      ),
+                          border:
+                              Border.all(color: AppColors.cD60D20, width: 1.w),
+                          borderRadius: BorderRadius.circular(15.w)),
                       child: ImageWidget(
                         url: Utils.getAvaterUrl(homeInfo.teamLogo),
                         width: 23.w,
@@ -109,9 +110,9 @@ class TeamStatsWidget extends StatelessWidget {
                     7.hGap,
                     Container(
                       decoration: BoxDecoration(
-                          border: Border.all(color: AppColors.cD60D20,width: 1.w),
-                          borderRadius: BorderRadius.circular(15.w)
-                      ),
+                          border:
+                              Border.all(color: AppColors.c1F8FE5, width: 1.w),
+                          borderRadius: BorderRadius.circular(15.w)),
                       child: ImageWidget(
                         url: Utils.getAvaterUrl(awayInfo.teamLogo),
                         width: 23.w,

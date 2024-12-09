@@ -11,13 +11,17 @@ import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'dart:developer' as developer;
 
 class TeamBattleController extends GetxController
     with GetSingleTickerProviderStateMixin {
-  TeamBattleController();
+  TeamBattleController(this.context);
+
+  BuildContext context;
 
   /// step :
   ///   0 初始状态
@@ -94,6 +98,7 @@ class TeamBattleController extends GetxController
         }
         if (result.serviceId == Api.wsTeamMatch) {
           battleEntity = BattleEntity.fromJson(result.payload);
+          _initBattleController();
           var currentMs = DateTime.now().millisecondsSinceEpoch;
           var diff = currentMs - startMatchTimeMs;
           if (diff >= minMatchTimeMs) {
@@ -128,6 +133,10 @@ class TeamBattleController extends GetxController
     // });
   }
 
+  _initBattleController() {
+    Get.put(TeamBattleV2Controller(context));
+  }
+
   /// 是否有突发新闻
   bool havaBreakingNews() {
     return battleEntity.news != null;
@@ -156,5 +165,11 @@ class TeamBattleController extends GetxController
   void onClose() {
     subscription?.cancel();
     super.onClose();
+  }
+
+  @override
+  void dispose() {
+    Get.delete<TeamBattleV2Controller>();
+    super.dispose();
   }
 }

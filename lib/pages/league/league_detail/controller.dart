@@ -29,6 +29,7 @@ class LeagueDetailController extends GetxController
   @override
   void onInit() {
     super.onInit();
+    tabTitles[1] = isGameStart ? "PLAY" : "PREVIEW";
     tabController =
         TabController(length: tabTitles.length, vsync: this, initialIndex: 1);
     if (item != null) {

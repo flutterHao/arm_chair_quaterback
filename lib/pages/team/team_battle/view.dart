@@ -18,6 +18,7 @@ class TeamBattlePage extends GetView<TeamBattleController> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<TeamBattleController>(
+      init: TeamBattleController(context),
       id: "team_battle",
       builder: (_) {
         return HorizontalDragBackWidget(

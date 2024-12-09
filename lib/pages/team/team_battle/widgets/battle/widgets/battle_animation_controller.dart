@@ -56,4 +56,8 @@ class EasyAnimationController<T> {
   reverse({double? from}) {
     controller.reverse(from: from);
   }
+
+  void stop({bool canceled = true}) {
+    controller.stop(canceled: canceled);
+  }
 }

@@ -40,9 +40,6 @@ class AppPages {
     GetPage(
       opaque: false,
       name: RouteNames.teamTeamBattle,
-      binding: BindingsBuilder(() {
-        Get.lazyPut<TeamBattleController>(() => TeamBattleController());
-      }),
       page: () => const TeamBattlePage(),
     ),
     GetPage(

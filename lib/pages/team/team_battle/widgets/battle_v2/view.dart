@@ -34,7 +34,6 @@ class TeamBattleV2Page extends GetView<TeamBattleV2Controller> {
   Widget build(BuildContext context) {
     teamBattleController = Get.find();
     return GetBuilder<TeamBattleV2Controller>(
-      init: TeamBattleV2Controller(context),
       builder: (_) {
         return BlackAppWidget(
           const UserInfoBar(
@@ -45,14 +44,13 @@ class TeamBattleV2Page extends GetView<TeamBattleV2Controller> {
             child: Column(
               children: [
                 GestureDetector(
-                    onLongPressDown: (_) {
-                      controller.changeGameSpeed(10);
-                    },
                     onLongPressUp: () {
+                      print('onLongPressUp---------------');
                       controller.changeGameSpeed(1);
                     },
-                    onLongPressCancel: () {
-                      controller.changeGameSpeed(1);
+                    onLongPress: (){
+                      print('onLongPress---------------');
+                      controller.changeGameSpeed(10);
                     },
                     child: buildHeader()),
                 Obx(() {
@@ -603,6 +601,9 @@ class TeamBattleV2Page extends GetView<TeamBattleV2Controller> {
                             }),
                             //比赛开始倒计时
                             StartGameCountDownWidget(
+                              onStart: () {
+                                controller.checkShowDialog();
+                              },
                               onDown: () {
                                 controller.startGame();
                               },
@@ -653,17 +654,17 @@ class TeamBattleV2Page extends GetView<TeamBattleV2Controller> {
             ),
           ),
           //普通弹幕
-          Positioned(
-            top: 0,
-            width: MediaQuery.of(context).size.width,
-            height: 45.w,
-            child: BarrageWall(
-              width: MediaQuery.of(context).size.width,
-              height: 45.w,
-              controller: controller.normalBarrageWallController,
-              child: Container(),
-            ),
-          ),
+          // Positioned(
+          //   top: 0,
+          //   width: MediaQuery.of(context).size.width,
+          //   height: 45.w,
+          //   child: BarrageWall(
+          //     width: MediaQuery.of(context).size.width,
+          //     height: 45.w,
+          //     controller: controller.normalBarrageWallController,
+          //     child: Container(),
+          //   ),
+          // ),
           //高光时刻弹幕
           Positioned(
             bottom: 5.w,
@@ -731,7 +732,7 @@ class TeamBattleV2Page extends GetView<TeamBattleV2Controller> {
                 Expanded(child: Center(
                   child: Obx(() {
                     return Text(
-                      "${Utils.getSortWithInt(controller.quarter.value)} ${MyDateUtils.formatMS((controller.quarterTimeCountDownAnimationController.value.value / 40 * 12 * 60).toInt())}",
+                      "${Utils.getSortWithInt(controller.quarter.value)} ${MyDateUtils.formatMS((controller.quarterGameCountDown.value / 40 * 12 * 60).toInt())}",
                       style: 12.w4(
                           color: AppColors.c10A86A,
                           height: 1,

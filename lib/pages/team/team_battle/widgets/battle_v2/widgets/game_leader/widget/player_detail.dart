@@ -71,7 +71,7 @@ class _PlayerDetailState extends State<PlayerDetail>
               children: [
                 Container(
                   decoration: BoxDecoration(
-                      border: Border.all(color: AppColors.c1F8FE5,width: 1.w),
+                      border: Border.all(color: AppColors.cD60D20,width: 1.w),
                       borderRadius: BorderRadius.circular(15.w)
                   ),
                   child: ImageWidget(
@@ -95,7 +95,7 @@ class _PlayerDetailState extends State<PlayerDetail>
                 7.hGap,
                 Container(
                   decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.cD60D20,width: 1.w),
+                    border: Border.all(color: AppColors.c1F8FE5,width: 1.w),
                     borderRadius: BorderRadius.circular(15.w)
                   ),
                   child: ImageWidget(

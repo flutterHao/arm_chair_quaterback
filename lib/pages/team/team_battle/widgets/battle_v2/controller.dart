@@ -80,6 +80,7 @@ class TeamBattleV2Controller extends GetxController
   late StreamSubscription<ResponseMessage> subscription;
 
   late EasyAnimationController<double> quarterTimeCountDownAnimationController;
+  var quarterGameCountDown = 40.0.obs;
   var quarter = 0.obs;
   Map<String, List<GameEvent>> eventCacheMap = {}; //缓存所有的事件，等待事件引擎调用
   Timer? eventEngine; //事件引擎,1s产生一个事件
@@ -122,7 +123,8 @@ class TeamBattleV2Controller extends GetxController
         begin: 40,
         end: 0,
         duration: Duration(milliseconds: (40 * 1000 / gameSpeed).toInt()))
-      ..controller.addStatusListener(quarterStatusListener);
+      ..controller.addStatusListener(quarterStatusListener)
+      ..controller.addListener(quarterListener);
 
     subscription = WSInstance.stream.listen((result) {
       if (result.serviceId == Api.wsPkPlayerUpdated) {
@@ -159,7 +161,7 @@ class TeamBattleV2Controller extends GetxController
           pkEventUpdatedEntity.awayScore,
           isHomePlayer,
           isShootType(gameEvent.gameEventType),
-          isScoreType(gameEvent.gameEventType),
+          isScoreType(gameEvent.gameEventType, pkEventUpdatedEntity),
           positions,
           mainPos,
           pkEventUpdatedEntity.stepHomeScore,
@@ -220,25 +222,25 @@ class TeamBattleV2Controller extends GetxController
     update([idPlayers]);
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-
-    checkShowDialog();
-  }
-
   void checkShowDialog() {
     /// 双方都没有buffer时不显示buffer弹框
     if (battleEntity.homeTeamBuff.isNotEmpty ||
         battleEntity.awayTeamBuff.isNotEmpty) {
       Future.delayed(Duration.zero, () {
-        showTactical();
+        _showTactical();
       });
     }
   }
 
   changeGameSpeed(double speed) {
     if (isGameOver.value) return;
+
+    /// 停止所有的动画
+    shootAnimationController.stop(canceled: false);
+    quarterTimeCountDownAnimationController.stop(canceled: false);
+    eventEngine?.cancel();
+
+    /// 修改动画执行速度
     gameSpeed = speed;
 
     /// 接着之前的进度继续动画
@@ -248,19 +250,26 @@ class TeamBattleV2Controller extends GetxController
         duration: Duration(milliseconds: (1200 / gameSpeed).toInt()));
     quarterTimeCountDownAnimationController.controller
         .removeStatusListener(quarterStatusListener);
+    quarterTimeCountDownAnimationController.controller
+        .removeListener(quarterListener);
     quarterTimeCountDownAnimationController = EasyAnimationController(
         vsync: this,
         begin: lastValue,
         end: 0,
         duration:
             Duration(milliseconds: (lastValue * 1000 / gameSpeed).toInt()))
-      ..controller.addStatusListener(quarterStatusListener);
+      ..controller.addStatusListener(quarterStatusListener)
+      ..controller.addListener(quarterListener);
     quarterTimeCountDownAnimationController.forward(from: 0);
-    eventEngine?.cancel();
     eventEngine =
         Timer.periodic(Duration(milliseconds: (1000 / gameSpeed).toInt()), (t) {
       sendToScreen();
     });
+  }
+
+  void quarterListener() {
+    quarterGameCountDown.value =
+        quarterTimeCountDownAnimationController.animation.value;
   }
 
   void quarterStatusListener(status) {
@@ -293,17 +302,23 @@ class TeamBattleV2Controller extends GetxController
   }
 
   startGame() {
+    if (quarter.value >= 4) {
+      return;
+    }
     quarter.value = quarter.value + 1;
     update([idLiveText]);
     liveTextScrollController.jumpTo(0);
     quarterTimeCountDownAnimationController.controller
         .removeStatusListener(quarterStatusListener);
+    quarterTimeCountDownAnimationController.controller
+        .removeListener(quarterListener);
     quarterTimeCountDownAnimationController = EasyAnimationController(
         vsync: this,
         begin: 40,
         end: 0,
         duration: Duration(milliseconds: (40 * 1000 / gameSpeed).toInt()))
-      ..controller.addStatusListener(quarterStatusListener);
+      ..controller.addStatusListener(quarterStatusListener)
+      ..controller.addListener(quarterListener);
     quarterTimeCountDownAnimationController.forward(from: 0);
     eventEngine?.cancel();
     eventCount = 0;
@@ -331,6 +346,16 @@ class TeamBattleV2Controller extends GetxController
       eventOnScreenMap[key] = [event];
     }
 
+    var winRate =
+        (battleEntity.homeTeamReadiness - battleEntity.awayTeamReadiness)
+                .abs() +
+            (((40 - quarterTimeCountDownAnimationController.value.value) +
+                        (quarter.value - 1) * 40) /
+                    (4 * 40)) *
+                ((event.homeScore - event.awayScore).abs() /
+                    max((event.homeScore - event.awayScore).abs(), 1));
+    print(
+        'winRate : ${MyDateUtils.formatMS((12 * 60 - event.time + (quarter.value - 1) * 12 * 60).toInt())},$winRate');
     if (event.shooting) {
       shoot(event);
     } else {
@@ -670,7 +695,7 @@ class TeamBattleV2Controller extends GetxController
     isGameOver.value = !isGameOver.value;
   }
 
-  showTactical() async {
+  _showTactical() async {
     await showModalBottomSheet(
         context: context,
         backgroundColor: AppColors.cTransparent,
@@ -701,7 +726,7 @@ class TeamBattleV2Controller extends GetxController
     var data = isHomePlayer ? homeTeamPlayerList : awayTeamPlayerList;
     var info = data.firstWhereOrNull((e) => e.playerId == senderPlayerId);
     if (info == null) {
-      print('firstWhereOrNull--------------');
+      print('firstWhereOrNull--------------:$gameEventType,$senderPlayerId');
       return null;
     }
     var list = CacheApi.competitionVenues
@@ -788,7 +813,10 @@ class TeamBattleV2Controller extends GetxController
     return shootTypes.contains(int.parse(type));
   }
 
-  bool isScoreType(String type) {
+  bool isScoreType(String type, PkEventUpdatedEntity pkEventUpdatedEntity) {
+    if (type == "200" && pkEventUpdatedEntity.getFreeThrowSuccessCount() > 0) {
+      return true;
+    }
     //得分事件类型
     List<int> scoreTypes = [1, 2, 3, 4, 5, 6, 7, 8, 11, 12, 13, 14];
     return scoreTypes.contains(int.parse(type));

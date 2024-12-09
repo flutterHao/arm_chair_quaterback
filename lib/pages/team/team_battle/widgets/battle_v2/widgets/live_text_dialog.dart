@@ -152,11 +152,11 @@ class _LiveTextDialogState extends State<LiveTextDialogWidget>
                                 GameEvent item = list[index];
                                 bool lastIndex = index == list.length-1;
                                 return Container(
-                                  height: 44.w,
+                                  // height: 44.w,
                                   margin:
                                       EdgeInsets.only(left: 16.w,right: 16.w,bottom: lastIndex?20.w:0),
                                   padding:
-                                      EdgeInsets.only(left: 1.w, right: 24.w),
+                                      EdgeInsets.only(left: 1.w, right: 24.w,top: 5.w,bottom: 5.w),
                                   decoration: BoxDecoration(
                                       border: Border(
                                           bottom: BorderSide(
@@ -195,15 +195,13 @@ class _LiveTextDialogState extends State<LiveTextDialogWidget>
                                       Expanded(
                                           child: Text(
                                         item.text,
-                                        maxLines: 3,
-                                        softWrap: true,
                                         style: 12.w4(
-                                            overflow: TextOverflow.ellipsis,
                                             color: AppColors.c4D4D4D,
                                             height: 1,
                                             fontFamily:
                                                 FontFamily.fRobotoRegular),
                                       )),
+                                      9.hGap,
                                       Text.rich(
                                         TextSpan(children: [
                                           TextSpan(

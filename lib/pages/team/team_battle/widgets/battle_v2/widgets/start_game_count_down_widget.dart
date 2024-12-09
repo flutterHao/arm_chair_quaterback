@@ -15,9 +15,10 @@ import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 ///created at 2024/11/30/11:17
 
 class StartGameCountDownWidget extends StatefulWidget {
-  const StartGameCountDownWidget({super.key, required this.onDown});
+  const StartGameCountDownWidget({super.key ,required this.onStart,required this.onDown});
 
   final Function onDown;
+  final Function onStart;
 
   @override
   State<StartGameCountDownWidget> createState() =>
@@ -57,6 +58,9 @@ class _StartGameCountDownWidgetState extends State<StartGameCountDownWidget>
         duration: const Duration(milliseconds: 300));
 
     start();
+    Future.delayed(Duration.zero,(){
+      widget.onStart.call();
+    });
   }
 
   start() {
