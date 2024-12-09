@@ -67,6 +67,7 @@ class TeamBattleV2Page extends GetView<TeamBattleV2Controller> {
                   );
                 }),
                 buildLiveText(context),
+
                 GetBuilder<TeamBattleV2Controller>(
                     id: TeamBattleV2Controller.idQuarterScore,
                     builder: (_) {
@@ -701,12 +702,18 @@ class TeamBattleV2Page extends GetView<TeamBattleV2Controller> {
             child: Row(
               children: [
                 16.hGap,
-                ImageWidget(
-                  url: Utils.getTeamUrl(
-                      teamBattleController.battleEntity.homeTeam.teamLogo),
-                  imageFailedPath: Assets.teamUiHead01,
-                  width: 36.w,
-                  borderRadius: BorderRadius.circular(18.w),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(19.w),
+                    border: Border.all(color: AppColors.cD60D20,width: 1.w)
+                  ),
+                  child: ImageWidget(
+                    url: Utils.getTeamUrl(
+                        teamBattleController.battleEntity.homeTeam.teamLogo),
+                    imageFailedPath: Assets.teamUiHead01,
+                    width: 36.w,
+                    borderRadius: BorderRadius.circular(18.w),
+                  ),
                 ),
                 10.hGap,
                 Container(
@@ -761,12 +768,18 @@ class TeamBattleV2Page extends GetView<TeamBattleV2Controller> {
                       }),
                 ),
                 10.hGap,
-                ImageWidget(
-                  url: Utils.getTeamUrl(
-                      teamBattleController.battleEntity.awayTeam.teamLogo),
-                  imageFailedPath: Assets.teamUiHead03,
-                  width: 36.w,
-                  borderRadius: BorderRadius.circular(18.w),
+                Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(19.w),
+                      border: Border.all(color: AppColors.c1F8FE5,width: 1.w)
+                  ),
+                  child: ImageWidget(
+                    url: Utils.getTeamUrl(
+                        teamBattleController.battleEntity.awayTeam.teamLogo),
+                    imageFailedPath: Assets.teamUiHead03,
+                    width: 36.w,
+                    borderRadius: BorderRadius.circular(18.w),
+                  ),
                 ),
                 16.hGap,
               ],
