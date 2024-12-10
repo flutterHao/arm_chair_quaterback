@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2024-12-09 21:50:34
+ * @LastEditTime: 2024-12-10 12:11:02
  */
 /*
  * @Description: 
@@ -331,10 +331,10 @@ class PlayerItem extends GetView<TeamController> {
                           return;
                         }
                       }
-                      if (controller.isShowDialog.value) {
-                        controller.item2 = item;
-                        controller.item2.isChange.value = true;
-                      }
+                      // if (controller.isShowDialog.value) {
+                      //   controller.item2 = item;
+                      //   controller.item2.isChange.value = true;
+                      // }
                       controller.playerChangeTap(context, isBag, item);
                     },
                     child: IconWidget(

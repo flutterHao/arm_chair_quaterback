@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 20:08:22
- * @LastEditTime: 2024-12-09 21:43:29
+ * @LastEditTime: 2024-12-10 14:56:41
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
@@ -102,6 +102,7 @@ class _PlayerBagTabState extends State<PlayerBagTab>
                           MtInkwell(
                             onTap: () {
                               controller.isFire = !controller.isFire;
+                              controller.sortType = controller.isFire ? -1 : 1;
                               controller.update();
                             },
                             child: Container(

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 21:19:02
- * @LastEditTime: 2024-12-09 21:57:53
+ * @LastEditTime: 2024-12-10 15:04:05
  */
 /*
  * @Description: 
@@ -58,71 +58,71 @@ class MainPlayerList extends GetView<TeamController> {
 class SubPlayerList extends GetView<TeamController> {
   const SubPlayerList({super.key});
 
-  Widget _emptyPlayer(context) {
-    return InkWell(
-        onTap: () {
-          if (controller.myBagList.where((e) => e.position == -1).isEmpty) {
-            EasyLoading.showToast("No players in the stash");
-            return;
-          }
-          controller.addPlay(context);
-        },
-        child: SizedBox(
-          width: double.infinity,
-          height: 121.w,
-          child: Row(
-            children: [
-              _subPosition(),
-              13.hGap,
-              Container(
-                width: 73.w,
-                height: 93.w,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    color: AppColors.cF1F1F1,
-                    borderRadius: BorderRadius.circular(9.w)),
-                child: Image.asset(
-                  Assets.managerUiManagerTacticsIconEmpty,
-                  width: 35.w,
-                  height: 35.w,
-                ),
-              ),
-              11.hGap,
-              Expanded(
-                child: Text(
-                  "EMPTY",
-                  style: 21.w4(fontFamily: FontFamily.fOswaldMedium),
-                ),
-              ),
-              MtInkwell(
-                onTap: () async {
-                  if (controller.myBagList
-                      .where((e) => e.position == -1)
-                      .isEmpty) {
-                    EasyLoading.showToast("No players in the stash");
-                    return;
-                  }
-                  controller.addPlay(context);
-                },
-                child: Container(
-                  width: 36.w,
-                  height: 36.w,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(9.w),
-                      border: Border.all(color: AppColors.c666666, width: 1)),
-                  child: IconWidget(
-                    iconWidth: 18.w,
-                    icon: Assets.commonUiCommonIconSystemExchange,
-                    iconColor: AppColors.c000000,
-                  ),
-                ),
-              ),
-              16.hGap,
-            ],
-          ),
-        ));
-  }
+  // Widget _emptyPlayer(context) {
+  //   return InkWell(
+  //       onTap: () {
+  //         if (controller.myBagList.where((e) => e.position == -1).isEmpty) {
+  //           EasyLoading.showToast("No players in the stash");
+  //           return;
+  //         }
+  //         controller.addPlay(context);
+  //       },
+  //       child: SizedBox(
+  //         width: double.infinity,
+  //         height: 121.w,
+  //         child: Row(
+  //           children: [
+  //             _subPosition(),
+  //             13.hGap,
+  //             Container(
+  //               width: 73.w,
+  //               height: 93.w,
+  //               alignment: Alignment.center,
+  //               decoration: BoxDecoration(
+  //                   color: AppColors.cF1F1F1,
+  //                   borderRadius: BorderRadius.circular(9.w)),
+  //               child: Image.asset(
+  //                 Assets.managerUiManagerTacticsIconEmpty,
+  //                 width: 35.w,
+  //                 height: 35.w,
+  //               ),
+  //             ),
+  //             11.hGap,
+  //             Expanded(
+  //               child: Text(
+  //                 "EMPTY",
+  //                 style: 21.w4(fontFamily: FontFamily.fOswaldMedium),
+  //               ),
+  //             ),
+  //             MtInkwell(
+  //               onTap: () async {
+  //                 if (controller.myBagList
+  //                     .where((e) => e.position == -1)
+  //                     .isEmpty) {
+  //                   EasyLoading.showToast("No players in the stash");
+  //                   return;
+  //                 }
+  //                 controller.addPlay(context);
+  //               },
+  //               child: Container(
+  //                 width: 36.w,
+  //                 height: 36.w,
+  //                 alignment: Alignment.center,
+  //                 decoration: BoxDecoration(
+  //                     borderRadius: BorderRadius.circular(9.w),
+  //                     border: Border.all(color: AppColors.c666666, width: 1)),
+  //                 child: IconWidget(
+  //                   iconWidth: 18.w,
+  //                   icon: Assets.commonUiCommonIconSystemExchange,
+  //                   iconColor: AppColors.c000000,
+  //                 ),
+  //               ),
+  //             ),
+  //             16.hGap,
+  //           ],
+  //         ),
+  //       ));
+  // }
 
   Widget _lock() {
     return InkWell(
@@ -174,7 +174,7 @@ class SubPlayerList extends GetView<TeamController> {
               return index < list.length
                   ? PlayerItem(item: list[index])
                   : (index < controller.myTeamEntity.benchCount
-                      ? _emptyPlayer(context)
+                      ? EmptyPlayer()
                       : _lock());
             },
             separatorBuilder: (context, index) => Container(
@@ -183,7 +183,9 @@ class SubPlayerList extends GetView<TeamController> {
               color: AppColors.cE6E6E,
               margin: EdgeInsets.symmetric(horizontal: 16.w),
             ),
-            itemCount: controller.myTeamEntity.benchCount + 1,
+            itemCount: controller.myTeamEntity.benchCount < 7
+                ? controller.myTeamEntity.benchCount + 1
+                : 7,
           ),
         ],
       ),
@@ -218,33 +220,70 @@ class EmptyPlayer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: 121.w,
-      color: Colors.white,
-      child: Row(
-        children: [
-          _subPosition(),
-          13.hGap,
-          Container(
-            width: 73.w,
-            height: 93.w,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-                color: AppColors.cF1F1F1,
-                borderRadius: BorderRadius.circular(9.w)),
-            child: Image.asset(
-              Assets.managerUiManagerTacticsIconEmpty,
-              width: 35.w,
-              height: 35.w,
+    final controller = Get.find<TeamController>();
+    return InkWell(
+      onTap: () {
+        if (controller.myBagList.where((e) => e.position == -1).isEmpty) {
+          EasyLoading.showToast("No players in the stash");
+          return;
+        }
+        controller.addPlay(context);
+      },
+      child: Container(
+        width: double.infinity,
+        height: 121.w,
+        color: Colors.white,
+        child: Row(
+          children: [
+            _subPosition(),
+            13.hGap,
+            Container(
+              width: 73.w,
+              height: 93.w,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  color: AppColors.cF1F1F1,
+                  borderRadius: BorderRadius.circular(9.w)),
+              child: Image.asset(
+                Assets.managerUiManagerTacticsIconEmpty,
+                width: 35.w,
+                height: 35.w,
+              ),
             ),
-          ),
-          11.hGap,
-          Text(
-            "EMPTY",
-            style: 21.w4(fontFamily: FontFamily.fOswaldMedium),
-          )
-        ],
+            11.hGap,
+            Expanded(
+              child: Text(
+                "EMPTY",
+                style: 21.w4(fontFamily: FontFamily.fOswaldMedium),
+              ),
+            ),
+            MtInkwell(
+              onTap: () async {
+                if (controller.myBagList
+                    .where((e) => e.position == -1)
+                    .isEmpty) {
+                  EasyLoading.showToast("No players in the stash");
+                  return;
+                }
+                controller.addPlay(context);
+              },
+              child: Container(
+                width: 36.w,
+                height: 36.w,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(9.w),
+                    border: Border.all(color: AppColors.c666666, width: 1)),
+                child: IconWidget(
+                  iconWidth: 18.w,
+                  icon: Assets.commonUiCommonIconSystemExchange,
+                  iconColor: AppColors.c000000,
+                ),
+              ),
+            ),
+            16.hGap,
+          ],
+        ),
       ),
     );
   }

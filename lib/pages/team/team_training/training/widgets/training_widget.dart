@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-25 15:56:43
- * @LastEditTime: 2024-12-09 15:42:41
+ * @LastEditTime: 2024-12-10 11:05:08
  */
 
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
@@ -41,7 +41,7 @@ class TrainingWidget extends GetView<TrainingController> {
 
   @override
   Widget build(BuildContext context) {
-    // controller.showAward();
+    controller.showAward();
     return GetBuilder<TrainingController>(
         id: "training_page",
         builder: (controller) {

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-06 10:37:49
- * @LastEditTime: 2024-12-10 10:10:34
+ * @LastEditTime: 2024-12-10 12:44:22
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
@@ -35,8 +35,8 @@ class _PlayerChangerDialogState extends State<PlayerChangerDialog>
 
   @override
   Widget build(BuildContext context) {
-    ctrl.animationCtrl.reset();
-    ctrl.animationCtrl.forward();
+    // ctrl.animationCtrl.reset();
+    // ctrl.animationCtrl.forward();
     return SizedBox(
       width: 375.w,
       height: 812.h,
@@ -230,7 +230,7 @@ class _Substitute extends GetView<TeamController> {
           .where((e) => Utils.getPlayBaseInfo(e.playerId).position.contains(p))
           .toList();
     }
-    if (list.isEmpty) {
+    if (list.isEmpty && item.position > 0) {
       return Container();
     }
     return Column(

@@ -6,6 +6,7 @@ import 'package:arm_chair_quaterback/common/entities/star_up_define_entity.dart'
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
+import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/widgets/line_up_tab.dart';
@@ -40,7 +41,8 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   TeamPlayerInfoEntity item2 = TeamPlayerInfoEntity();
   bool isAdd = false;
 
-  int sortType = 0;
+  int sortType = 1;
+  // int sortType2 = 0;
   bool isFire = false;
   ScrollController scrollController = ScrollController();
   double offset = 0;
@@ -124,6 +126,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
       myBagList = v[1] as List<TeamPlayerInfoEntity>;
       starUpDefineList = v[3] as List<StarUpDefineEntity>;
       recoverTimeAndCountDown();
+      myBagList.sort(comparePlayers);
       update();
     });
   }
@@ -162,7 +165,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   void addPlay(BuildContext context) {
     if (item2.isChange.value) {
       ///选了获取背包已经选择的直接添加
-      item1 = item2;
+      item1.uuid = "";
       changeTeamPlayer(context);
     } else {
       ///如果之前没选跳转到背包选择
@@ -188,8 +191,8 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
         isAdd = false;
         update();
       });
-      // animationCtrl.reset();
-      // animationCtrl.forward();
+      animationCtrl.reset();
+      animationCtrl.forward();
     }
   }
 
@@ -197,10 +200,16 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   void playerChangeTap(
       BuildContext context, bool isBag, TeamPlayerInfoEntity item) async {
     /// 如果是上阵
-    if (!isBag && !isShowDialog.value) {
-      item1 = TeamPlayerInfoEntity.fromJson(item.toJson());
-      item1.isChange.value = true;
-      if (item2.isChange.value == true) {
+    if (!isBag) {
+      if (isShowDialog.value) {
+        item2 = item;
+        item2.isChange.value = true;
+      } else {
+        item1 = TeamPlayerInfoEntity.fromJson(item.toJson());
+        item1.isChange.value = true;
+      }
+
+      if (item2.isChange.value == true && isShowDialog.value) {
         ///已经选择了背包直接替换
         await changeTeamPlayer(context);
       } else {
@@ -222,22 +231,28 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
         showChangeDialog(item);
       }
     }
+    Log.d("球员${item.uuid}\n ${item1.uuid} \n ${item2.uuid}");
   }
 
   Future changeTeamPlayer(BuildContext context, {bool isDown = false}) async {
     myTeamEntity = await TeamApi.changeTeamPlayer(
         isAdd ? null : item1.uuid, isDown ? null : item2.uuid);
     myBagList = await TeamApi.getMyBagPlayers();
+    myBagList.sort(comparePlayers);
     item1.isChange.value = false;
     item2.isChange.value = false;
     isAdd = false;
 
-    animationCtrl.reverse();
     isShowDialog.value = false;
-    Future.delayed(const Duration(milliseconds: 300), () {
-      Navigator.pop(context);
-      update();
-    });
+    animationCtrl.reverse().then(
+      (value) {
+        try {
+          Navigator.pop(context);
+        } catch (e) {
+          Navigator.pop(context);
+        }
+      },
+    );
   }
 
   ///计算体力回复时间
@@ -275,17 +290,58 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
     return '${formatNumber(int.parse(numberStr.substring(0, length - 3)))},${numberStr.substring(length - 3)}';
   }
 
+  int comparePlayers(TeamPlayerInfoEntity a, TeamPlayerInfoEntity b) {
+    if (sortType == 1 || sortType == -1) {
+      // 先按星级排序
+      int gradeComparison = sortType == 1
+          ? b.breakThroughGrade.compareTo(a.breakThroughGrade)
+          : a.breakThroughGrade.compareTo(b.breakThroughGrade);
+      if (gradeComparison != 0) {
+        return gradeComparison;
+      }
+
+      // 如果星级相同，按品质排序
+      int qualityComparison = sortType == 1
+          ? getGrade(b.playerId).compareTo(getGrade(a.playerId))
+          : getGrade(a.playerId).compareTo(getGrade(b.playerId));
+      if (qualityComparison != 0) {
+        return qualityComparison;
+      }
+
+      // 如果星级和品质都相同，按战力排序
+      return sortType == 1
+          ? b.power.compareTo(a.power)
+          : a.power.compareTo(b.power);
+    } else if (sortType == 2 || sortType == -2) {
+      // 先按品质排序
+      int qualityComparison = sortType == 2
+          ? getGrade(b.playerId).compareTo(getGrade(a.playerId))
+          : getGrade(a.playerId).compareTo(getGrade(b.playerId));
+      if (qualityComparison != 0) {
+        return qualityComparison;
+      }
+
+      // 如果品质相同，按星级排序
+      int gradeComparison = sortType == 2
+          ? b.breakThroughGrade.compareTo(a.breakThroughGrade)
+          : a.breakThroughGrade.compareTo(b.breakThroughGrade);
+      if (gradeComparison != 0) {
+        return gradeComparison;
+      }
+
+      // 如果品质和星级都相同，按战力排序
+      return sortType == 2
+          ? b.power.compareTo(a.power)
+          : a.power.compareTo(b.power);
+    }
+
+    // 默认情况下不排序
+    return 0;
+  }
+
   List<TeamPlayerInfoEntity> playerSort() {
     List<TeamPlayerInfoEntity> list = List.from(myBagList);
-    if (sortType == 1) {
-      list.sort((a, b) => b.breakThroughGrade.compareTo(a.breakThroughGrade));
-    } else if (sortType == -1) {
-      list.sort((a, b) => a.breakThroughGrade.compareTo(b.breakThroughGrade));
-    } else if (sortType == 2) {
-      list.sort((a, b) => getGrade(b.playerId).compareTo(getGrade(a.playerId)));
-    } else if (sortType == -2) {
-      list.sort((a, b) => getGrade(a.playerId).compareTo(getGrade(b.playerId)));
-    }
+    list.sort(comparePlayers);
     return list;
   }
 
