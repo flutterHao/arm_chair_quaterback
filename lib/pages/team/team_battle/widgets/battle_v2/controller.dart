@@ -42,7 +42,9 @@ class ShootHistory {
 
 class TeamBattleV2Controller extends GetxController
     with GetTickerProviderStateMixin {
-  TeamBattleV2Controller(this.context);
+  TeamBattleV2Controller(this.context) {
+    size = MediaQuery.of(context).size;
+  }
 
   final BuildContext context;
   late BarrageWallController normalBarrageWallController =
@@ -99,16 +101,20 @@ class TeamBattleV2Controller extends GetxController
 
   var showBuff = false.obs;
 
+  late WinRateController winRateController;
   late GameLeaderController gameLeaderController;
   late TeamStatsController teamStatsController;
+
+  late Size size;
 
   /// 在 widget 内存中分配后立即调用。
   @override
   void onInit() {
     super.onInit();
+    battleEntity = Get.find<TeamBattleController>().battleEntity;
+    winRateController = Get.put(WinRateController());
     gameLeaderController = Get.put(GameLeaderController());
     teamStatsController = Get.put(TeamStatsController());
-    battleEntity = Get.find<TeamBattleController>().battleEntity;
     homeTeamPlayerList = battleEntity.homeTeamPlayerList
         .map((e) => PkPlayerUpdatedPlayers.fromJson(e.toJson()))
         .toList();
@@ -243,6 +249,8 @@ class TeamBattleV2Controller extends GetxController
     /// 修改动画执行速度
     gameSpeed = speed;
 
+    winRateController.setGameSpeed(speed);
+
     /// 接着之前的进度继续动画
     double lastValue = quarterTimeCountDownAnimationController.value.value;
     shootAnimationController = AnimationController(
@@ -354,8 +362,8 @@ class TeamBattleV2Controller extends GetxController
                     (4 * 40)) *
                 ((event.homeScore - event.awayScore).abs() /
                     max((event.homeScore - event.awayScore).abs(), 1));
-    print(
-        'winRate : ${MyDateUtils.formatMS((12 * 60 - event.time + (quarter.value - 1) * 12 * 60).toInt())},$winRate');
+    winRateController.addPoint(
+        Offset(eventCount.toDouble() + ((quarter.value - 1) * 40), winRate));
     if (event.shooting) {
       shoot(event);
     } else {
@@ -367,10 +375,12 @@ class TeamBattleV2Controller extends GetxController
     teamStatsController.setEvent(event);
     update([idLiveText, idGameScore, idPlayers, idQuarterScore]);
     Future.delayed(Duration.zero, () {
-      liveTextScrollController.animateTo(
+      if(context.mounted) {
+        liveTextScrollController.animateTo(
           ((eventOnScreenMap[key] ?? []).length * 44.w),
           duration: Duration(milliseconds: (800 / gameSpeed).toInt()),
           curve: Curves.easeInOut);
+      }
     });
     eventCount++;
   }
@@ -680,6 +690,7 @@ class TeamBattleV2Controller extends GetxController
     subscription.cancel();
     eventEngine?.cancel();
     quarterTimeCountDownAnimationController.dispose();
+    Get.delete<WinRateController>();
     Get.delete<GameLeaderController>();
     Get.delete<TeamStatsController>();
   }
@@ -788,7 +799,6 @@ class TeamBattleV2Controller extends GetxController
     Offset o = event.mainOffset;
     double x = o.dx;
     double y = o.dy;
-    var size = MediaQuery.of(context).size;
     double regionWidth = size.width - 18.w;
     double regionHeight = regionWidth / 716 * 184;
     var offset = Offset(
@@ -799,7 +809,6 @@ class TeamBattleV2Controller extends GetxController
 
   // 十字坐标系 -> 右上顶点坐标系
   Offset toTopRight(Offset crossCoordinate) {
-    var size = MediaQuery.of(context).size;
     double screenWidth = size.width - 18.w;
     double regionHeight = screenWidth / 716 / 184;
     double x = screenWidth / 2 - crossCoordinate.dx;

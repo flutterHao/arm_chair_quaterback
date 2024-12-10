@@ -1,9 +1,14 @@
+import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/DashedLine.dart';
 import 'package:arm_chair_quaterback/common/widgets/chart_painter.dart';
 import 'package:arm_chair_quaterback/common/widgets/clipper/line_chart_clipper.dart';
+import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/win_rate/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,228 +19,385 @@ import 'package:get/get.dart';
 ///created at 2024/12/6/12:38
 
 class WinRateWidget extends StatelessWidget {
-  const WinRateWidget(this.controller,{super.key});
+  WinRateWidget(this.controller, {super.key});
 
   final WinRateController controller;
+
+  late TeamBattleV2Controller teamBattleV2Controller;
+
   @override
   Widget build(BuildContext context) {
+    teamBattleV2Controller = Get.find();
     return Container(
-      height: 315.h,
+      height: 335.h,
       margin: EdgeInsets.only(top: 9.w),
-      color: AppColors.c262626,
+      decoration: BoxDecoration(
+          color: AppColors.cFFFFFF, borderRadius: BorderRadius.circular(9.w)),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          50.vGap,
-          Stack(
-            alignment: Alignment.bottomCenter,
-            children: [
-              //背景
-              Text(
-                "WIN RATE",
-                style: 40.w7(
-                    color: AppColors.cB3B3B3.withOpacity(.1),
-                    height: 1),
-              ),
-              //前景
-              Container(
-                margin: EdgeInsets.only(bottom: 5.h),
-                alignment: Alignment.bottomCenter,
-                child: Text(
-                  "WIN RATE",
-                  style: 16.w7(color: AppColors.cD3D3D3, height: 1),
-                ),
-              ),
-            ],
+          25.vGap,
+          Container(
+            margin: EdgeInsets.only(left: 16.w),
+            child: Text(
+              "WIN POSSIBILITY",
+              style: 30.w7(
+                  height: 1,
+                  fontFamily: FontFamily.fOswaldBold,
+                  color: AppColors.c000000),
+            ),
           ),
-          // 9.vGap,
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Container(
-                    width: 325.w,
-                    height: 181.h,
-                    color: AppColors.c0D0D0D.withOpacity(.3),
-                    child: Stack(
-                      alignment: Alignment.centerLeft,
-                      children: [
-                        // 表格的纵向参照线
-                        ...List.generate(3, (index) {
-                          return Container(
-                            margin: EdgeInsets.only(
-                                left:
-                                (325.w / 4) * (index + 1) - 3.w),
-                            height: 181.h,
-                            width: 3.w,
-                            color: AppColors.c262626,
-                          );
-                        }),
-                        //横向50参照线
-                        const DashedLine(
-                          axis: Axis.horizontal,
-                          dashedWidth: 4,
-                          dashedColor: AppColors.c666666,
-                          count: 40,
-                        ),
-                        Obx(() {
-                          return Stack(
-                            children: [
-                              //倾斜渐变线
-                              SizedBox(
-                                width: 325.w,
-                                height: 181.h,
-                                child: ClipPath(
-                                  clipper: LineChartClipper(
-                                      controller.chartPoints.value),
-                                  child: ShaderMask(
-                                    shaderCallback: (Rect bounds) {
-                                      return const LinearGradient(
-                                          begin: Alignment.topCenter,
-                                          end: Alignment.bottomCenter,
-                                          colors: [
-                                            AppColors.c3B93FF,
-                                            AppColors.c3B93FF,
-                                            AppColors.c3B93FF,
-                                            Colors.black,
-                                            AppColors.cFF7954,
-                                            AppColors.cFF7954,
-                                            AppColors.cFF7954
-                                          ]).createShader(bounds);
-                                    },
-                                    child: Container(
-                                      decoration: const BoxDecoration(
-                                          image: DecorationImage(
-                                              image: AssetImage(Assets
-                                                  .teamUiBgDiagonal),
-                                              repeat: ImageRepeat
-                                                  .repeat)),
-                                    ),
+          Expanded(
+            child: Stack(
+              children: [
+                Obx(() {
+                  var offset = controller.pointOffset.value;
+                  return Positioned(
+                      top: 6.w,
+                      left: offset.dx - 83.w / 2 + 30.w,
+                      // -83.w/2 ~
+                      width: 83.w,
+                      height: 39.w,
+                      child: Stack(
+                        children: [
+                          Container(
+                            height: 33.w,
+                            decoration: BoxDecoration(
+                                color: AppColors.cF2F2F2,
+                                border: Border.all(
+                                    color: AppColors.cE6E6E, width: 1.w),
+                                borderRadius: BorderRadius.circular(4.w)),
+                            child: Row(
+                              children: [
+                                6.hGap,
+                                Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12.w),
+                                      border: Border.all(
+                                          color: AppColors.cD60D20,
+                                          width: 1.w)),
+                                  child: ImageWidget(
+                                    url: Utils.getAvaterUrl(
+                                        teamBattleV2Controller
+                                            .battleEntity.homeTeam.teamLogo),
+                                    width: 21.w,
+                                    borderRadius: BorderRadius.circular(11.w),
                                   ),
                                 ),
-                              ),
-                              //折线图实线
-                              CustomPaint(
-                                size: Size(325.w, 181.h),
-                                painter: ChartPainter(
-                                    controller.chartPoints.value, 181.h),
-                              )
-                            ],
-                          );
-                        }),
-                        //实时指标虚线
-                        Obx(() {
-                          return Positioned(
-                            left: controller.pointOffset.value != Offset.zero
-                                ? controller.pointOffset.value.dx - 2
-                                : 0,
-                            child: SizedBox(
-                              width: 325.w,
-                              height: 181.h,
-                              child: Stack(
-                                children: [
-                                  Container(
-                                    width: double.infinity,
-                                    color: AppColors.c3B3B3B
-                                        .withOpacity(.3),
-                                  ),
-                                  const Stack(
-                                    alignment: Alignment.center,
-                                    children: [
-                                      SizedBox(
-                                        height: double.infinity,
-                                        child: DashedLine(
-                                          axis: Axis.vertical,
-                                          dashedHeight: 2,
-                                          dashedWidth: 2,
-                                          count: 30,
-                                          dashedColor:
-                                          AppColors.cF2F2F2,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                                10.hGap,
+                                Text(
+                                  controller.getWinRate(),
+                                  style: 16.w5(
+                                      color: AppColors.c000000,
+                                      height: 1,
+                                      fontFamily: FontFamily.fOswaldMedium),
+                                )
+                              ],
                             ),
-                          );
-                        })
-                      ],
-                    ),
-                  ),
-                  2.hGap,
-                  SizedBox(
-                    height: 181.h,
-                    child: Column(
-                      mainAxisAlignment:
-                      MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "100",
-                          style: 10.w4(
-                              color:
-                              AppColors.cB3B3B3.withOpacity(.7),
-                              height: 1),
-                        ),
-                        Text(
-                          "50",
-                          style: 10.w4(
-                              color:
-                              AppColors.cB3B3B3.withOpacity(.7),
-                              height: 1),
-                        ),
-                        Text(
-                          "100",
-                          style: 10.w4(
-                              color:
-                              AppColors.cB3B3B3.withOpacity(.7),
-                              height: 1),
-                        )
-                      ],
-                    ),
-                  ),
-                  8.hGap
-                ],
-              ),
-              //实时数据指示点
-              SizedBox(
-                width: 332.w,
-                height: 188.h,
-                child: Stack(
-                  children: [
-                    Obx(() {
-                      return Positioned(
-                        left: controller.pointOffset.value != Offset.zero
-                            ? controller.pointOffset.value.dx - 7.h / 2
-                            : 0,
-                        top: controller.pointOffset.value != Offset.zero
-                            ? controller.pointOffset.value.dy
-                            : (181.h - 7.h) / 2, //修改位置
-                        child: Container(
-                          width: 7.h,
-                          height: 7.h,
-                          decoration: BoxDecoration(
-                              color: AppColors.cFFFFFF,
-                              borderRadius:
-                              BorderRadius.circular(4.h)),
-                          child: Center(
-                            child: Container(
-                                width: 4.h,
-                                height: 4.h,
-                                decoration: BoxDecoration(
-                                    color: AppColors.cFF7954,
-                                    borderRadius:
-                                    BorderRadius.circular(2.h))),
                           ),
+                          Stack(
+                            children: [
+                              Positioned(
+                                  bottom: 0,
+                                  left: 0,
+                                  right: 0,
+                                  child: IconWidget(
+                                    iconWidth: 10.w,
+                                    iconHeight: 10.w,
+                                    fit: BoxFit.fitHeight,
+                                    icon: Assets.commonUiCommonIconSystemArrow,
+                                    iconColor: AppColors.cF2F2F2,
+                                    rotateAngle: 90,
+                                  )),
+                              Positioned(
+                                  bottom: 2.w,
+                                  left: 0,
+                                  right: 0,
+                                  child: IconWidget(
+                                    iconWidth: 6.w,
+                                    iconHeight: 4.w,
+                                    fit: BoxFit.fitHeight,
+                                    icon: Assets.commonUiCommonIconSystemArrow,
+                                    iconColor: AppColors.cFF7954,
+                                    rotateAngle: 90,
+                                  ))
+                            ],
+                          )
+                        ],
+                      ));
+                }),
+                Positioned(
+                  top: 57.h,
+                  left: 30.w,
+                  child: Stack(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Container(
+                                width: 313.w,
+                                height: 164.h,
+                                decoration: BoxDecoration(
+                                    color: AppColors.cF2F2F2,
+                                    border: Border.all(
+                                        color: AppColors.cD1D1D1, width: 1.w)),
+                                child: Stack(
+                                  alignment: Alignment.centerLeft,
+                                  children: [
+                                    // 表格的纵向参照线
+                                    ...List.generate(3, (index) {
+                                      return Container(
+                                        margin: EdgeInsets.only(
+                                            left: (313.w / 4) * (index + 1) -
+                                                3.w),
+                                        height: 164.h,
+                                        width: 3.w,
+                                        color: AppColors.cFFFFFF,
+                                      );
+                                    }),
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        //横向上方25参照线
+                                        DashedLine(
+                                          axis: Axis.horizontal,
+                                          dashedWidth: 8.w,
+                                          dashedColor: AppColors.cE6E6E6,
+                                          count: 25,
+                                        ),
+                                        //横向50参照线
+                                        DashedLine(
+                                          axis: Axis.horizontal,
+                                          dashedWidth: 8.w,
+                                          dashedColor: AppColors.cB2B2B2,
+                                          count: 25,
+                                        ),
+                                        //横向下方25参照线
+                                        DashedLine(
+                                          axis: Axis.horizontal,
+                                          dashedWidth: 8.w,
+                                          dashedColor: AppColors.cE6E6E6,
+                                          count: 25,
+                                        ),
+                                      ],
+                                    ),
+                                    Obx(() {
+                                      return Stack(
+                                        children: [
+                                          //倾斜渐变线
+                                          SizedBox(
+                                            width: 313.w,
+                                            height: 164.h,
+                                            child: ClipPath(
+                                              clipper: LineChartClipper(
+                                                  controller.chartPoints.value),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                    gradient: LinearGradient(
+                                                        begin:
+                                                            Alignment.topCenter,
+                                                        end: Alignment
+                                                            .bottomCenter,
+                                                        colors: [
+                                                      AppColors.c1F8FE5
+                                                          .withOpacity(0.7),
+                                                      AppColors.cF2F2F2
+                                                          .withOpacity(0.5),
+                                                      AppColors.cD60D20
+                                                          .withOpacity(0.7)
+                                                    ])),
+                                              ),
+                                            ),
+                                          ),
+                                          //折线图实线
+                                          CustomPaint(
+                                            size: Size(313.w, 164.h),
+                                            painter: ChartPainter(
+                                                controller.chartPoints.value,
+                                                164.h),
+                                          )
+                                        ],
+                                      );
+                                    }),
+                                    //实时指标虚线
+                                    Obx(() {
+                                      return Positioned(
+                                        left: controller.pointOffset.value !=
+                                                Offset.zero
+                                            ? controller.pointOffset.value.dx -
+                                                2
+                                            : 0,
+                                        child: SizedBox(
+                                          width: 313.w,
+                                          height: 164.h,
+                                          child: Stack(
+                                            children: [
+                                              Container(
+                                                width: double.infinity,
+                                                color: AppColors.cFFFFFF
+                                                    .withOpacity(0.9),
+                                              ),
+                                              const Stack(
+                                                alignment: Alignment.center,
+                                                children: [
+                                                  SizedBox(
+                                                    height: double.infinity,
+                                                    child: DashedLine(
+                                                      axis: Axis.vertical,
+                                                      dashedHeight: 2,
+                                                      dashedWidth: 2,
+                                                      count: 25,
+                                                      dashedColor:
+                                                          AppColors.c000000,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    })
+                                  ],
+                                ),
+                              ),
+                              2.hGap,
+                              SizedBox(
+                                height: 164.h,
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "100",
+                                      style: 9.w4(
+                                          color: AppColors.c4D4D4D, height: 1),
+                                    ),
+                                    Text(
+                                      "50",
+                                      style: 9.w4(
+                                          color: AppColors.c4D4D4D, height: 1),
+                                    ),
+                                    Text(
+                                      "100",
+                                      style: 9.w4(
+                                          color: AppColors.c4D4D4D, height: 1),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              8.hGap
+                            ],
+                          ),
+                          5.vGap,
+                          SizedBox(
+                            width: 313.w,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: List.generate(4, (index) {
+                                return Text(
+                                  Utils.getSortWithInt(index + 1),
+                                  style: 10.w4(
+                                      color: AppColors.c4D4D4D,
+                                      fontFamily: FontFamily.fRobotoRegular,
+                                      height: 1),
+                                );
+                              }),
+                            ),
+                          ),
+                          10.vGap,
+                          SizedBox(
+                            width: 313.w,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Row(
+                                  children: [
+                                    IconWidget(
+                                      iconWidth: 16.w,
+                                      icon: Assets.managerUiManagerIconLine,
+                                      iconColor: AppColors.cD60D20,
+                                    ),
+                                    6.hGap,
+                                    Text(
+                                      teamBattleV2Controller
+                                          .battleEntity.homeTeam.teamName,
+                                      style: 14.w5(
+                                          color: AppColors.c000000,
+                                          height: 1,
+                                          fontFamily: FontFamily.fOswaldMedium),
+                                    )
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    IconWidget(
+                                      iconWidth: 16.w,
+                                      icon: Assets.managerUiManagerIconLine,
+                                      iconColor: AppColors.c1F8FE5,
+                                    ),
+                                    6.hGap,
+                                    Text(
+                                      teamBattleV2Controller
+                                          .battleEntity.awayTeam.teamName,
+                                      style: 14.w5(
+                                          color: AppColors.c000000,
+                                          height: 1,
+                                          fontFamily: FontFamily.fOswaldMedium),
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                      //实时数据指示点
+                      SizedBox(
+                        width: 320.w,
+                        height: 164.h,
+                        child: Stack(
+                          children: [
+                            Obx(() {
+                              return Positioned(
+                                left: controller.pointOffset.value !=
+                                        Offset.zero
+                                    ? controller.pointOffset.value.dx - 7.h / 2
+                                    : 0,
+                                top: controller.pointOffset.value != Offset.zero
+                                    ? controller.pointOffset.value.dy - 7.h / 2
+                                    : (164.h - 7.h) / 2, //修改位置
+                                child: Container(
+                                  width: 7.h,
+                                  height: 7.h,
+                                  decoration: BoxDecoration(
+                                      color: AppColors.cFFFFFF,
+                                      borderRadius: BorderRadius.circular(4.h)),
+                                  child: Center(
+                                    child: Container(
+                                        width: 4.h,
+                                        height: 4.h,
+                                        decoration: BoxDecoration(
+                                            color: AppColors.cFF7954,
+                                            borderRadius:
+                                                BorderRadius.circular(2.h))),
+                                  ),
+                                ),
+                              );
+                            })
+                          ],
                         ),
-                      );
-                    })
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           )
         ],
       ),

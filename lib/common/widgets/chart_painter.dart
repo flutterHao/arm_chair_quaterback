@@ -32,7 +32,7 @@ class ChartPainter extends CustomPainter {
   }
 
   var linePaint = Paint()
-    ..color = AppColors.cFF7954
+    ..color = AppColors.cD60D20
     ..strokeWidth = 2
     ..strokeCap = StrokeCap.round;
 
@@ -44,9 +44,9 @@ class ChartPainter extends CustomPainter {
       var next = _list2[i + 1 >= _list2.length ? i : i + 1];
       var current = _list2[i];
       if (_list2[i].dy > size.height / 2) {
-        linePaint.color = AppColors.cFF7954;
+        linePaint.color = AppColors.cD60D20;
       } else {
-        linePaint.color = AppColors.c3B93FF;
+        linePaint.color = AppColors.c1F8FE5;
       }
       canvas.drawLine(current, next, linePaint);
     }

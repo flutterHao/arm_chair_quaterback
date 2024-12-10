@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/widgets/battle_animation_controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -16,9 +18,9 @@ class WinRateController extends GetxController
 
   /// y：取值范围（-50，50）
   List<Offset> pointData = [
-    const Offset(0, 20), //0 90
-    const Offset(1, -20),
-    const Offset(2, 30),
+    // const Offset(0, 20), //0 90
+    // const Offset(1, -20),
+    // const Offset(2, 30),
     // const Offset(3, 10),
     // const Offset(4, 40),
     // const Offset(5, -30),
@@ -29,41 +31,73 @@ class WinRateController extends GetxController
     // const Offset(10, 50),
   ];
 
-  late EasyAnimationController easyAnimationController;
+  EasyAnimationController? easyAnimationController;
   int pointIndex = 0;
 
   List<Offset> stepNewList = [];
+  Size size = Size(313.w, 164.h);
+
+  //游戏速度 默认 1
+  double gameSpeed = 1;
 
   @override
-  void onInit() {
-    super.onInit();
-    easyAnimationController = EasyAnimationController(
-        vsync: this,
-        begin: 0.0,
-        end: 1.0,
-        duration: const Duration(milliseconds: 500))
-      ..controller.addListener(() {
-        calculate(easyAnimationController.value.value);
-      });
+  void onReady() {
+    super.onReady();
+    var battleEntity = Get.find<TeamBattleV2Controller>().battleEntity;
+    // 初始化 训练程度差值
+    var abs = (battleEntity.homeTeamReadiness-battleEntity.awayTeamReadiness).abs();
+    abs = abs == 0? size.height/2: abs;
+    pointData.add(Offset(0, abs));
   }
 
+
   @override
-  void dispose() {
-    easyAnimationController.dispose();
-    super.dispose();
+  void onClose() {
+    easyAnimationController?.dispose();
+    super.onClose();
+  }
+
+  setGameSpeed(double speed){
+    gameSpeed = speed;
   }
 
   addPoint(Offset point) {
-    print('addPoint------');
-    pointData.add(point);
-    if (pointData.length <= 3) {
+    ///计算每个点的位置
+    var stepY = size.height / 100;
+    var stepX = size.width / 160;
+    var dy = (size.height-point.dy * size.height);
+    // print('dy:$dy');
+    var offset = Offset((point.dx+1)*stepX, max(0,dy));
+    Offset preview = Offset.zero;
+    if (pointData.isNotEmpty) {
+      preview = pointData.last;
+    }
+    pointData.add(offset);
+    if (pointData.length <= 1) {
       return;
     }
-    var result = _buildPath();
-    stepNewList = result.sublist(chartPoints.length);
-    list = result;
-    print('list:$list');
-    easyAnimationController.forward(from: 0);
+    var current = pointData.last;
+    easyAnimationController?.controller.removeListener(animationListener);
+    easyAnimationController = EasyAnimationController(
+        vsync: this,
+        begin: preview,
+        end: current,
+        duration:  Duration(milliseconds: (1000/gameSpeed).toInt()))
+      ..controller.addListener(animationListener);
+    easyAnimationController?.forward(from: 0);
+  }
+
+  void animationListener() {
+    pointOffset.value = easyAnimationController?.animation.value;
+    chartPoints.add(pointOffset.value);
+    chartPoints.refresh();
+  }
+
+  String getWinRate(){
+    var dy = pointOffset.value.dy;
+    var value = (((size.height-dy)/size.height)*100);
+    value = value>100?100:value;
+    return "${value.toStringAsFixed(0)}%";
   }
 
   reStart() {
@@ -75,11 +109,11 @@ class WinRateController extends GetxController
   List<Offset> list = [];
 
   List<Offset> _buildPath() {
-    Size size = Size(325.w, 181.h);
 
     // var temp = Offset.zero;
+    ///计算每个点的位置
     var stepY = size.height / 100;
-    var stepX = size.width / (pointData.length - 1);
+    var stepX = size.width / 160;
     var points = List.generate(pointData.length, (index) {
       double dy = 0;
       if (pointData[index].dy < 0) {
@@ -89,18 +123,20 @@ class WinRateController extends GetxController
       }
       return Offset(pointData[index].dx * stepX, dy);
     });
-    final spline = CatmullRomSpline(points);
+    final spline = CatmullRomSpline(points, tension: 1.0);
     return spline.generateSamples().map((e) => e.value).toList();
   }
 
   void calculate(double value) {
+    print('value:$value');
     var index = (value * (stepNewList.length - 1)).toInt();
     var item = stepNewList[index];
     if (pointOffset.value.dx != item.dx) {
       pointOffset.value = item;
-      // print('chartPoints.length:${chartPoints.length},$index,${list.length}');
-      chartPoints.addAll(
-          stepNewList.getRange(list.length - chartPoints.length, index));
+      print(
+          'chartPoints.length:${stepNewList.length},${list.length},${chartPoints.length},$index');
+      chartPoints.addAll(stepNewList.getRange(
+          stepNewList.length - (list.length - chartPoints.length), index));
       chartPoints.refresh();
     }
   }

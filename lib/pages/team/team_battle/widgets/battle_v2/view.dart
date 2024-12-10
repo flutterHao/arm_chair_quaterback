@@ -67,7 +67,7 @@ class TeamBattleV2Page extends GetView<TeamBattleV2Controller> {
                   );
                 }),
                 buildLiveText(context),
-
+                WinRateWidget(controller.winRateController),
                 GetBuilder<TeamBattleV2Controller>(
                     id: TeamBattleV2Controller.idQuarterScore,
                     builder: (_) {

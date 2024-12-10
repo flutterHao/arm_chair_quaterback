@@ -29,369 +29,347 @@ class TacticalContrast extends StatelessWidget {
 
   late TacticalContrastController controller;
 
-
   @override
   Widget build(BuildContext context) {
     teamBattleController = Get.find();
     controller = Get.put(TacticalContrastController(context));
-    return GetBuilder<TacticalContrastController>(
-        init: controller,
-        builder: (logic) {
-          return Column(
-            children: [
-              Expanded(
-                  child: InkWell(
-                    onTap: () => Navigator.pop(context),
-                  )),
-              Container(
-                width: double.infinity,
-                height: Utils.getDialogHeight(),
-                decoration: BoxDecoration(
-                    color: AppColors.cFFFFFF,
-                    borderRadius:
-                    BorderRadius.vertical(top: Radius.circular(9.w))),
-                padding: EdgeInsets.symmetric(horizontal: 16.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    8.vGap,
-                    Center(
-                      child: Container(
-                        width: 44.w,
-                        height: 4.w,
-                        decoration: BoxDecoration(
-                            color: AppColors.c000000.withOpacity(0.2),
-                            borderRadius: BorderRadius.circular(2.w)),
+    return GetBuilder<TacticalContrastController>(builder: (logic) {
+      return Column(
+        children: [
+          Expanded(
+              child: InkWell(
+            onTap: () => Navigator.pop(context),
+          )),
+          Container(
+            width: double.infinity,
+            height: Utils.getDialogHeight(),
+            decoration: BoxDecoration(
+                color: AppColors.cFFFFFF,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(9.w))),
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                8.vGap,
+                Center(
+                  child: Container(
+                    width: 44.w,
+                    height: 4.w,
+                    decoration: BoxDecoration(
+                        color: AppColors.c000000.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(2.w)),
+                  ),
+                ),
+                25.vGap,
+                Text(
+                  "TACTICAL CONTRAST",
+                  style: 30.w7(
+                      color: AppColors.c262626,
+                      height: 1,
+                      fontFamily: FontFamily.fOswaldBold),
+                ),
+                22.vGap,
+                Expanded(
+                    child: Container(
+                  width: double.infinity,
+                  child: Stack(
+                    children: [
+                      //背景
+                      Image.asset(
+                        Assets.managerUiManagerTacticsBg,
+                        fit: BoxFit.fitWidth,
                       ),
-                    ),
-                    25.vGap,
-                    Text(
-                      "TACTICAL CONTRAST",
-                      style: 30.w7(
-                          color: AppColors.c262626,
-                          height: 1,
-                          fontFamily: FontFamily.fOswaldBold),
-                    ),
-                    22.vGap,
-                    Expanded(
+                      // 对手信息
+                      Positioned(
+                          top: 16.w, left: 0, right: 0, child: buildInfo()),
+                      // 自己的头像
+                      Positioned(
+                        top: 95.w,
+                        left: 0,
                         child: Container(
-                          width: double.infinity,
-                          child: Stack(
+                          margin: EdgeInsets.symmetric(horizontal: 8.w),
+                          width: 60.w,
+                          height: 58.w,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              //背景
-                              Image.asset(
-                                Assets.managerUiManagerTacticsBg,
-                                fit: BoxFit.fitWidth,
-                              ),
-                              // 对手信息
-                              Positioned(
-                                  top: 16.w,
-                                  left: 0,
-                                  right: 0,
-                                  child: buildInfo()),
-                              // 自己的头像
-                              Positioned(
-                                top: 95.w,
-                                left: 0,
-                                child: Container(
-                                  margin: EdgeInsets.symmetric(horizontal: 8.w),
-                                  width: 60.w,
-                                  height: 58.w,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment
-                                        .center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        width: 36.w,
-                                        height: 36.w,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                            BorderRadius.circular(18.w),
-                                            border: Border.all(
-                                                color: AppColors.cD60D20,
-                                                width: 1.w)),
-                                        child: ImageWidget(
-                                          url: Utils.getTeamUrl(
-                                              teamBattleController
-                                                  .battleEntity.homeTeam
-                                                  .teamLogo),
-                                          width: 35.w,
-                                          height: 35.w,
-                                          imageFailedPath: Assets.teamUiHead03,
-                                          borderRadius:
-                                          BorderRadius.circular(17.5.w),
-                                        ),
-                                      ),
-                                      4.vGap,
-                                      Text(
-                                        teamBattleController
-                                            .battleEntity.homeTeam.teamName,
-                                        style: 12.w4(
-                                            color: AppColors.cFFFFFF,
-                                            height: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            fontFamily: FontFamily
-                                                .fOswaldRegular),
-                                      )
-                                    ],
-                                  ),
+                              Container(
+                                width: 36.w,
+                                height: 36.w,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(18.w),
+                                    border: Border.all(
+                                        color: AppColors.cD60D20, width: 1.w)),
+                                child: ImageWidget(
+                                  url: Utils.getTeamUrl(teamBattleController
+                                      .battleEntity.homeTeam.teamLogo),
+                                  width: 35.w,
+                                  height: 35.w,
+                                  imageFailedPath: Assets.teamUiHead03,
+                                  borderRadius: BorderRadius.circular(17.5.w),
                                 ),
                               ),
-                              //自己的卡牌
-                              ...List.generate(5, (index) {
-                                var list = controller.getHomeTeamBuff();
-                                TeamBuffer? item =
-                                list.length - 1 >= index ? list[index] : null;
-                                Widget child;
-                                if (item == null) {
-                                  child = buildEmpty(AppColors.c333333,
-                                      AppColors.cFFFFFF.withOpacity(0.15));
-                                } else {
-                                  child = buildEmpty(
-                                      AppColors.c333333,
-                                      AppColors.cTransparent);
-                                }
-                                return Positioned(
-                                    top: 95.w,
-                                    left: 60.w + 16.w + 50.w * index,
-                                    child: child);
-                              }),
-                              // MY TACTICS
-                              Positioned(
-                                  top: 232.w,
-                                  left: 0,
-                                  right: 0,
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        "MY TACTICS",
-                                        style: 16.w5(
-                                            color: AppColors.c262626,
-                                            height: 1,
-                                            fontFamily: FontFamily
-                                                .fOswaldMedium),
-                                      ),
-                                      8.vGap,
-                                      Divider(
-                                        color: AppColors.cE6E6E,
-                                        height: 1.w,
-                                      ),
-                                    ],
-                                  )),
-
-                              //背景
-                              ...List.generate(5, (index) {
-                                var d = MediaQuery
-                                    .of(context)
-                                    .size
-                                    .width -
-                                    (16.w * 2) -
-                                    (43.w * 5 + 12.w * 4);
-                                var left = d / 2;
-                                var list = controller.getHomeTeamBuff();
-                                TeamBuffer? item =
-                                list.length - 1 >= index ? list[index] : null;
-                                List<Widget> sC = [];
-                                sC.add(Positioned(
-                                  top: 6.w,
-                                  child: buildEmpty(
-                                      AppColors.cF2F2F2, AppColors.ccccccc),
-                                ));
-                                if (item != null) {
-                                  List<Widget> abc = [];
-                                  for (int i = 0;
-                                  i < item.takeEffectGameCount - 1;
-                                  i++) {
-                                    double top = 3.w - i * 3.w;
-                                    abc.add(Positioned(
-                                      top: max(0, top),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: AppColors.c000000
-                                                  .withOpacity(0.2),
-                                              offset: const Offset(1, 1),
-                                              blurRadius: 5,
-                                            )
-                                          ],
-                                        ),
-                                        child: TacticCard(
-                                          num: item.face,
-                                          color: item.color,
-                                          width: 43.w,
-                                          buff: TrainingInfoBuff(),
-                                        ),
-                                      ),
-                                    ));
-                                  }
-                                  sC.addAll(abc);
-                                }
-                                return Positioned(
-                                    top: 269.w,
-                                    left: left + (43.w + 12.w) * index,
-                                    child: SizedBox(
-                                        height: 64.w,
-                                        width: 55.w,
-                                        child: Stack(
-                                          children: sC,
-                                        )));
-                              }),
-
-                              // 我的卡牌
-                              ...List.generate(5, (index) {
-                                var list = controller.getHomeTeamBuff();
-                                TeamBuffer? item =
-                                list.length - 1 >= index ? list[index] : null;
-                                Widget child;
-                                if (item == null) {
-                                  child = const SizedBox.shrink();
-                                } else {
-                                  child = Obx(() {
-                                    Offset offset =
-                                        controller.animationList[index].value
-                                            .value;
-                                    print('offset:$offset');
-                                    controller.showBorder;
-                                    var where = teamBattleController
-                                        .pkStartUpdatedEntity?.homeTeamWinPokers
-                                        .where((e) => e.id == item.id);
-                                    bool contain = where?.isNotEmpty == true;
-                                    return Positioned(
-                                        top: offset.dy,
-                                        left: offset.dx,
-                                        child: InkWell(
-                                          onTap: () => controller.forward(),
-                                          child: Container(
-                                              decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color: contain
-                                                        ? AppColors.cE72646
-                                                        : AppColors.cTransparent,
-                                                    width: 1.w),
-                                                borderRadius:
-                                                BorderRadius.circular(4.w),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: AppColors.c000000
-                                                        .withOpacity(0.2),
-                                                    offset: const Offset(1, 1),
-                                                    blurRadius: 5,
-                                                  )
-                                                ],
-                                              ),
-                                              child: TacticCard(
-                                                num: item.face,
-                                                color: item.color,
-                                                width: 43.w,
-                                                borderRadius:
-                                                BorderRadius.circular(4.w),
-                                                buff: TrainingInfoBuff(),
-                                              )),
-                                        ));
-                                  });
-                                }
-                                return child;
-                              }),
-                              // 卡牌数量
-                              ...List.generate(5, (index) {
-                                var d = MediaQuery
-                                    .of(context)
-                                    .size
-                                    .width -
-                                    (16.w * 2) -
-                                    (43.w * 5 + 12.w * 4);
-                                var left = d / 2;
-                                var list = controller.getHomeTeamBuff();
-                                TeamBuffer? item =
-                                list.length - 1 >= index ? list[index] : null;
-                                Widget child;
-                                if (item == null) {
-                                  child = const SizedBox.shrink();
-                                } else {
-                                  child = Obx(() {
-                                    Offset offset =
-                                        controller.animationList[index].value
-                                            .value;
-                                    // dy:269.w -95.w
-                                    double progress =
-                                        (offset.dy - 95.w) / (269.w - 95.w);
-                                    var count = item.takeEffectGameCount - 1;
-                                    return Stack(
-                                      alignment: Alignment.bottomCenter,
-                                      children: [
-                                        Text(
-                                          "x$count",
-                                          style: 10.w5(
-                                              color: AppColors.c000000,
-                                              height: 1,
-                                              fontFamily: FontFamily
-                                                  .fRobotoMedium),
-                                        ),
-                                        Positioned(
-                                          top: 7.w * progress,
-                                          right: 0,
-                                          child: Text(
-                                            "-1",
-                                            style: 10.w5(
-                                                color: AppColors.cD60D20
-                                                    .withOpacity(
-                                                    min(1, progress)),
-                                                height: 1,
-                                                fontFamily:
-                                                FontFamily.fRobotoMedium),
-                                          ),
-                                        )
-                                      ],
-                                    );
-                                  });
-                                }
-                                return Positioned(
-                                    top: 332.w,
-                                    left: left + (43.w + 12.w) * index,
-                                    child: SizedBox(
-                                      height: 17.w,
-                                      width: 43.w,
-                                      child: child,
-                                    ));
-                              }),
-                              Obx(() {
-                                if(!controller.showBorder.value){
-                                  return const SizedBox.shrink();
-                                }
-                                var isMe =
-                                    Get.find<TeamBattleController>().pkStartUpdatedEntity?.pokerWinner ==
-                                        Get.find<HomeController>().userEntiry.teamLoginInfo?.team?.teamId;
-                                return Positioned(
-                                    top: 64.w,
-                                    right: 0,
-                                    left: 0,
-                                    child: Center(child: Container(
-                                      width: 142.w,
-                                      height: 43.w,
-                                      alignment: Alignment.center,
-                                      decoration: BoxDecoration(
-                                          color: AppColors.c000000,
-                                          borderRadius: BorderRadius.circular(
-                                              9.w)
-                                      ),
-                                      child: Text(isMe ? "YOU WIN" : "YOU LOSE",style: 21.w5(
-                                        color: AppColors.cFFFFFF,
-                                        fontFamily: FontFamily.fOswaldMedium,
-                                        height: 1
-                                      ),),
-                                    )));
-                              })
+                              4.vGap,
+                              Text(
+                                teamBattleController
+                                    .battleEntity.homeTeam.teamName,
+                                style: 12.w4(
+                                    color: AppColors.cFFFFFF,
+                                    height: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    fontFamily: FontFamily.fOswaldRegular),
+                              )
                             ],
                           ),
-                        ))
-                  ],
-                ),
-              ),
-            ],
-          );
-        });
+                        ),
+                      ),
+                      //自己的卡牌
+                      ...List.generate(5, (index) {
+                        var list = controller.getHomeTeamBuff();
+                        TeamBuffer? item =
+                            list.length - 1 >= index ? list[index] : null;
+                        Widget child;
+                        if (item == null) {
+                          child = buildEmpty(AppColors.c333333,
+                              AppColors.cFFFFFF.withOpacity(0.15));
+                        } else {
+                          child = buildEmpty(
+                              AppColors.c333333, AppColors.cTransparent);
+                        }
+                        return Positioned(
+                            top: 95.w,
+                            left: 60.w + 16.w + 50.w * index,
+                            child: child);
+                      }),
+                      // MY TACTICS
+                      Positioned(
+                          top: 232.w,
+                          left: 0,
+                          right: 0,
+                          child: Column(
+                            children: [
+                              Text(
+                                "MY TACTICS",
+                                style: 16.w5(
+                                    color: AppColors.c262626,
+                                    height: 1,
+                                    fontFamily: FontFamily.fOswaldMedium),
+                              ),
+                              8.vGap,
+                              Divider(
+                                color: AppColors.cE6E6E,
+                                height: 1.w,
+                              ),
+                            ],
+                          )),
+
+                      //背景
+                      ...List.generate(5, (index) {
+                        var d = MediaQuery.of(context).size.width -
+                            (16.w * 2) -
+                            (43.w * 5 + 12.w * 4);
+                        var left = d / 2;
+                        var list = controller.getHomeTeamBuff();
+                        TeamBuffer? item =
+                            list.length - 1 >= index ? list[index] : null;
+                        List<Widget> sC = [];
+                        sC.add(Positioned(
+                          top: 6.w,
+                          child:
+                              buildEmpty(AppColors.cF2F2F2, AppColors.ccccccc),
+                        ));
+                        if (item != null) {
+                          List<Widget> abc = [];
+                          for (int i = 0;
+                              i < item.takeEffectGameCount - 1;
+                              i++) {
+                            double top = 3.w - i * 3.w;
+                            abc.add(Positioned(
+                              top: max(0, top),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: AppColors.c000000.withOpacity(0.2),
+                                      offset: const Offset(1, 1),
+                                      blurRadius: 5,
+                                    )
+                                  ],
+                                ),
+                                child: TacticCard(
+                                  num: item.face,
+                                  color: item.color,
+                                  width: 43.w,
+                                  buff: TrainingInfoBuff(),
+                                ),
+                              ),
+                            ));
+                          }
+                          sC.addAll(abc);
+                        }
+                        return Positioned(
+                            top: 269.w,
+                            left: left + (43.w + 12.w) * index,
+                            child: SizedBox(
+                                height: 64.w,
+                                width: 55.w,
+                                child: Stack(
+                                  children: sC,
+                                )));
+                      }),
+
+                      // 我的卡牌
+                      ...List.generate(5, (index) {
+                        var list = controller.getHomeTeamBuff();
+                        TeamBuffer? item =
+                            list.length - 1 >= index ? list[index] : null;
+                        Widget child;
+                        if (item == null) {
+                          child = const SizedBox.shrink();
+                        } else {
+                          child = Obx(() {
+                            Offset offset =
+                                controller.animationList[index].value.value;
+                            print('offset:$offset');
+                            controller.showBorder;
+                            var where = teamBattleController
+                                .pkStartUpdatedEntity?.homeTeamWinPokers
+                                .where((e) => e.id == item.id);
+                            bool contain = where?.isNotEmpty == true;
+                            return Positioned(
+                                top: offset.dy,
+                                left: offset.dx,
+                                child: InkWell(
+                                  onTap: () => controller.forward(),
+                                  child: Container(
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: contain
+                                                ? AppColors.cE72646
+                                                : AppColors.cTransparent,
+                                            width: 1.w),
+                                        borderRadius:
+                                            BorderRadius.circular(4.w),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: AppColors.c000000
+                                                .withOpacity(0.2),
+                                            offset: const Offset(1, 1),
+                                            blurRadius: 5,
+                                          )
+                                        ],
+                                      ),
+                                      child: TacticCard(
+                                        num: item.face,
+                                        color: item.color,
+                                        width: 43.w,
+                                        borderRadius:
+                                            BorderRadius.circular(4.w),
+                                        buff: TrainingInfoBuff(),
+                                      )),
+                                ));
+                          });
+                        }
+                        return child;
+                      }),
+                      // 卡牌数量
+                      ...List.generate(5, (index) {
+                        var d = MediaQuery.of(context).size.width -
+                            (16.w * 2) -
+                            (43.w * 5 + 12.w * 4);
+                        var left = d / 2;
+                        var list = controller.getHomeTeamBuff();
+                        TeamBuffer? item =
+                            list.length - 1 >= index ? list[index] : null;
+                        Widget child;
+                        if (item == null) {
+                          child = const SizedBox.shrink();
+                        } else {
+                          child = Obx(() {
+                            Offset offset =
+                                controller.animationList[index].value.value;
+                            // dy:269.w -95.w
+                            double progress =
+                                (offset.dy - 95.w) / (269.w - 95.w);
+                            var count = item.takeEffectGameCount - 1;
+                            return Stack(
+                              alignment: Alignment.bottomCenter,
+                              children: [
+                                Text(
+                                  "x$count",
+                                  style: 10.w5(
+                                      color: AppColors.c000000,
+                                      height: 1,
+                                      fontFamily: FontFamily.fRobotoMedium),
+                                ),
+                                Positioned(
+                                  top: 7.w * progress,
+                                  right: 0,
+                                  child: Text(
+                                    "-1",
+                                    style: 10.w5(
+                                        color: AppColors.cD60D20
+                                            .withOpacity(min(1, progress)),
+                                        height: 1,
+                                        fontFamily: FontFamily.fRobotoMedium),
+                                  ),
+                                )
+                              ],
+                            );
+                          });
+                        }
+                        return Positioned(
+                            top: 332.w,
+                            left: left + (43.w + 12.w) * index,
+                            child: SizedBox(
+                              height: 17.w,
+                              width: 43.w,
+                              child: child,
+                            ));
+                      }),
+                      Obx(() {
+                        if (!controller.showBorder.value) {
+                          return const SizedBox.shrink();
+                        }
+                        var isMe = Get.find<TeamBattleController>()
+                                .pkStartUpdatedEntity
+                                ?.pokerWinner ==
+                            Get.find<HomeController>()
+                                .userEntiry
+                                .teamLoginInfo
+                                ?.team
+                                ?.teamId;
+                        return Positioned(
+                            top: 64.w,
+                            right: 0,
+                            left: 0,
+                            child: Center(
+                                child: Container(
+                              width: 142.w,
+                              height: 43.w,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  color: AppColors.c000000,
+                                  borderRadius: BorderRadius.circular(9.w)),
+                              child: Text(
+                                isMe ? "YOU WIN" : "YOU LOSE",
+                                style: 21.w5(
+                                    color: AppColors.cFFFFFF,
+                                    fontFamily: FontFamily.fOswaldMedium,
+                                    height: 1),
+                              ),
+                            )));
+                      })
+                    ],
+                  ),
+                ))
+              ],
+            ),
+          ),
+        ],
+      );
+    });
   }
 
   Row buildInfo() {
@@ -433,41 +411,43 @@ class TacticalContrast extends StatelessWidget {
           ),
         ),
         Expanded(
-            child: Row(
-              children: List.generate(5, (index) {
-                var list = controller.getAwayTeamBuff();
-                TeamBuffer? item = list.length - 1 >= index
-                    ? list[index]
-                    : null;
-                if (item == null) {
-                  return buildEmpty(
-                      AppColors.c333333, AppColors.cFFFFFF.withOpacity(0.15));
-                }
-                return Obx(() {
-                  controller.showBorder;
-                  var where = teamBattleController
-                      .pkStartUpdatedEntity?.awayTeamWinPokers
-                      .where((e) => e.id == item.id);
-                  bool contain = where?.isNotEmpty == true;
-                  return Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4.w),
-                        border: Border.all(
-                            color: contain
-                                ? AppColors.c2DE298
-                                : AppColors.cTransparent,
-                            width: 2.w)),
-                    child: TacticCard(
-                      num: item.face,
-                      color: item.color,
-                      width: 43.w,
-                      borderRadius: BorderRadius.circular(4.w),
-                      buff: TrainingInfoBuff(),
-                    ),
+            child: GetBuilder<TacticalContrastController>(
+                id: TacticalContrastController.idAwayCards,
+                builder: (_) {
+                  return Row(
+                    children: List.generate(5, (index) {
+                      var list = controller.getAwayTeamBuff();
+                      TeamBuffer? item =
+                          list.length - 1 >= index ? list[index] : null;
+                      if (item == null) {
+                        return buildEmpty(AppColors.c333333,
+                            AppColors.cFFFFFF.withOpacity(0.15));
+                      }
+                      return Builder(builder: (c) {
+                        var where = teamBattleController
+                            .pkStartUpdatedEntity?.awayTeamWinPokers
+                            .where((e) => e.id == item.id);
+                        bool contain = where?.isNotEmpty == true;
+                        return Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(4.w),
+                              border: Border.all(
+                                  color: contain
+                                      ? AppColors.c2DE298
+                                      : AppColors.cTransparent,
+                                  width: 2.w)),
+                          child: TacticCard(
+                            num: item.face,
+                            color: item.color,
+                            width: 43.w,
+                            borderRadius: BorderRadius.circular(4.w),
+                            buff: TrainingInfoBuff(),
+                          ),
+                        );
+                      });
+                    }),
                   );
-                });
-              }),
-            )),
+                })),
         16.hGap,
       ],
     );

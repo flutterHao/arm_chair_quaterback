@@ -29,6 +29,7 @@ class TacticalContrastController extends GetxController
 
   var showBorder = false.obs;
 
+
   @override
   void onInit() {
     super.onInit();
@@ -56,10 +57,14 @@ class TacticalContrastController extends GetxController
 
   lastAnimationStatusListener(status) {
     if (status == AnimationStatus.completed) {
+      print('completed--------');
       showBorder.value = true;
+      update([idAwayCards]);
       Get.find<TeamBattleV2Controller>().changeBuff();
     }
   }
+
+  static String get idAwayCards=>"id_away_cards";
 
   @override
   void onReady() {
@@ -71,6 +76,9 @@ class TacticalContrastController extends GetxController
 
   forward() {
     if (animationList.isEmpty) {
+      showBorder.value = true;
+      update([idAwayCards]);
+      Get.find<TeamBattleV2Controller>().changeBuff();
       return;
     }
     int count = 0;

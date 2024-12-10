@@ -12,6 +12,7 @@ import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -59,6 +60,8 @@ class TeamBattleController extends GetxController
   StreamSubscription<ResponseMessage>? subscription;
   PkStartUpdatedEntity? pkStartUpdatedEntity;
 
+  Timer? _timer;
+
   ///测试数据，需删除
 
   @override
@@ -84,10 +87,14 @@ class TeamBattleController extends GetxController
       CacheApi.getGameEvent(),
       CacheApi.getCompetitionVenue(),
     ]).then((result) {
+      _timer?.cancel();
+      _timer = Timer(const Duration(seconds: 5),timeout);
       subscription = WSInstance.teamMatch().listen((result) {
         // developer.log('result.serviceId--${result.serviceId}--:${result.payload}');
         // print('result.serviceId--${result.serviceId}--:${result.payload}');
+        _timer?.cancel();
         if (result.serviceId == Api.wsJazminError && step.value == 1) {
+          print('result.serviceId--${result.serviceId}--:${result.payload}');
           EasyLoading.showToast("MATCH FAILED");
           Get.back();
           return;
@@ -133,6 +140,13 @@ class TeamBattleController extends GetxController
     // });
   }
 
+  void timeout(){
+    print('timeout------');
+    EasyLoading.showToast("MATCH FAILED");
+    _timer?.cancel();
+    Navigator.pop(context);
+  }
+
   _initBattleController() {
     Get.put(TeamBattleV2Controller(context));
   }
@@ -170,6 +184,7 @@ class TeamBattleController extends GetxController
   @override
   void dispose() {
     Get.delete<TeamBattleV2Controller>();
+    _timer?.cancel();
     super.dispose();
   }
 }
