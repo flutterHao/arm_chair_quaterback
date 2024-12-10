@@ -56,6 +56,7 @@ class WSInstance {
 
   // 启动心跳定时器
   static void _startPingTimer() {
+    print('WebSocket--ping--pong--start----');
     _pingTimer?.cancel();
     _pingTimer = Timer.periodic(const Duration(seconds: 10), (timer) {
       // if(_reconnectTimer?.isActive == true){
@@ -63,7 +64,7 @@ class WSInstance {
       //   return;
       // }
       // 每 10 秒发送一个 ping 消息
-      // print('发送 ping:${DateTime.now().millisecondsSinceEpoch}');
+      // print('WebSocket--发送 ping:${DateTime.now().millisecondsSinceEpoch}');
       ping();
 
       // 检查是否超时
@@ -103,7 +104,7 @@ class WSInstance {
   }
 
   // 手动关闭连接
-  static close() {
+  static void close() {
     _isClosed = true;
     _pingTimer?.cancel();
     _reconnectTimer?.cancel(); // 停止重连
@@ -118,12 +119,13 @@ class WSInstance {
     _reconnectTimer = Timer(const Duration(seconds: 5), init); // 每 5 秒尝试重连
   }
 
-  void setUrl(String url) {
+  static void setUrl(String url) {
     ConfigStore.to.setWsServiceUrl(url);
   }
 
   static String get _getUrl {
     String url = ConfigStore.to.getWsServiceUrl();
+    print('ws url ------ : $url');
     return url;
   }
 

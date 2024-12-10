@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/getx_builder_ids.dart';
@@ -96,6 +97,11 @@ class UserInfoBar extends StatelessWidget {
                                 Address.privateDevUrl,
                                 Address.publicDevUrl,
                               ];
+                              final List<String> wsServers = [
+                                Address.wsPersonalDevUrl,
+                                Address.wsPrivateDevUrl,
+                                Address.wsPublicDevUrl,
+                              ];
                               String current = HttpUtil().getUrl;
                               showDialog(
                                 context: context,
@@ -104,7 +110,10 @@ class UserInfoBar extends StatelessWidget {
                                     servers: servers,
                                     currentServer: current,
                                     onServerChanged: (newServer) {
+                                      var indexOf = servers.indexOf(newServer);
                                       HttpUtil().setUrl(newServer);
+                                      WSInstance.setUrl(wsServers[indexOf]);
+                                      WSInstance.close();
                                       HomeController.to.login();
                                     },
                                   );

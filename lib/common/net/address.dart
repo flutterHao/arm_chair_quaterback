@@ -25,5 +25,5 @@ class Address {
   static const String wsPublicDevUrl = 'ws://seanba-te.ftxgame.com:9003';
   static const String wsPrivateDevUrl = 'ws://10.0.3.38:9005';
 
-  static const String wsBaseUrl = wsPersonalDevUrl;
+  static const String wsBaseUrl = wsPublicDevUrl;
 }
