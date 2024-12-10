@@ -37,7 +37,7 @@ class BeautyAndBoxView extends StatelessWidget {
               children: [
                 Positioned(
                   top: -15.w,
-                  left: 0,
+                  left: -25.w,
                   child: ShaderMask(
                     shaderCallback: (Rect bounds) {
                       return LinearGradient(
@@ -45,13 +45,15 @@ class BeautyAndBoxView extends StatelessWidget {
                         end: Alignment.bottomCenter,
                         colors: [
                           Colors.white.withOpacity(1),
-                          Colors.white.withOpacity(0.2),
+                          Colors.white.withOpacity(0.1),
                         ],
                       ).createShader(bounds);
                     },
                     child: Text(
                       "ARMCHAIR",
-                      style: 121.w7(
+                      style: TextStyle(
+                          fontSize: 121.sp,
+                          letterSpacing: 0,
                           color: AppColors.c262626,
                           height: 0.95,
                           fontFamily: FontFamily.fOswaldBold),

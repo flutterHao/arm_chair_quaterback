@@ -4,11 +4,15 @@ class Assets {
 
   static const String commonUiCommonArrow = 'assets/images/Common/ui_common_arrow.png';
   static const String commonUiCommonIconCurrency02 = 'assets/images/Common/ui_common_icon_currency_02.png';
+  static const String commonUiCommonIconElevate = 'assets/images/Common/ui_common_icon_elevate.png';
   static const String commonUiCommonIconInjury = 'assets/images/Common/ui_common_icon_injury.png';
+  static const String commonUiCommonIconLayoff = 'assets/images/Common/ui_common_icon_layoff.png';
   static const String commonUiCommonIconPick = 'assets/images/Common/ui_common_icon_pick.png';
   static const String commonUiCommonIconSystemAdd = 'assets/images/Common/ui_common_icon_system_add.png';
   static const String commonUiCommonIconSystemArrow = 'assets/images/Common/ui_common_icon_system_arrow.png';
   static const String commonUiCommonIconSystemDanger = 'assets/images/Common/ui_common_icon_system_danger.png';
+  static const String commonUiCommonIconSystemDelete = 'assets/images/Common/ui_common_icon_system_delete.png';
+  static const String commonUiCommonIconSystemEmpty = 'assets/images/Common/ui_common_icon_system_empty.png';
   static const String commonUiCommonIconSystemExchange = 'assets/images/Common/ui_common_icon_system_exchange.png';
   static const String commonUiCommonIconSystemExpression = 'assets/images/Common/ui_common_icon_system_expression.png';
   static const String commonUiCommonIconSystemInfo = 'assets/images/Common/ui_common_icon_system_info.png';
@@ -16,6 +20,7 @@ class Assets {
   static const String commonUiCommonIconSystemLikeComment = 'assets/images/Common/ui_common_icon_system_like_comment.png';
   static const String commonUiCommonIconSystemLikeOff = 'assets/images/Common/ui_common_icon_system_like_off.png';
   static const String commonUiCommonIconSystemLikeOn = 'assets/images/Common/ui_common_icon_system_like_on.png';
+  static const String commonUiCommonIconSystemLock = 'assets/images/Common/ui_common_icon_system_lock.png';
   static const String commonUiCommonIconSystemShare = 'assets/images/Common/ui_common_icon_system_share.png';
   static const String commonUiCommonPlayerState01 = 'assets/images/Common/ui_common_player_state_01.png';
   static const String commonUiCommonPlayerState02 = 'assets/images/Common/ui_common_player_state_02.png';

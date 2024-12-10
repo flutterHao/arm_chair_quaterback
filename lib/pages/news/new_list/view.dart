@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-18 21:01:04
- * @LastEditTime: 2024-11-24 14:11:17
+ * @LastEditTime: 2024-12-09 10:05:16
  */
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
@@ -153,7 +153,6 @@ class NewsListPage extends GetView<NewListController> {
                     })
                 : Center(child: Obx(() {
                     return LoadStatusWidget(
-                      text: "loading...",
                       loadDataStatus: controller.loadingStatus.value,
                     );
                   })),

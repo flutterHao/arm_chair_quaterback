@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2024-12-06 21:08:28
+ * @LastEditTime: 2024-12-09 21:50:34
  */
 /*
  * @Description: 
@@ -120,10 +120,13 @@ class PlayerItem extends GetView<TeamController> {
                       CacheApi.playerStatusMap[item.playerStatus]?.statsId),
                 ),
               4.hGap,
-              IconWidget(
-                iconWidth: 16.w,
-                iconHeight: 16.w,
-                icon: Assets.commonUiCommonIconInjury,
+              Visibility(
+                visible: Utils.getPlayBaseInfo(item.playerId).injuries,
+                child: IconWidget(
+                  iconWidth: 16.w,
+                  iconHeight: 16.w,
+                  icon: Assets.commonUiCommonIconInjury,
+                ),
               )
             ],
           ),
@@ -452,17 +455,20 @@ class PlayerCard extends StatelessWidget {
               bottom: -2.w,
               left: 0.w,
               child: Stack(
-                alignment: Alignment.topCenter,
+                alignment: Alignment.center,
                 children: [
                   IconWidget(
-                    iconWidth: 22.w,
+                    iconWidth: 22.5.w,
                     icon: Assets.managerUiManagerPlayerstar,
                   ),
                   Positioned(
-                    top: 7.w,
+                    // top: 7.w,
                     child: Text(
                       "$level",
-                      style: 13.w7(color: AppColors.cFFFFFF, height: 0.75),
+                      style: 12.w4(
+                          color: AppColors.cFFFFFF,
+                          height: 0.75,
+                          fontFamily: FontFamily.fRobotoMedium),
                     ),
                   ),
                 ],

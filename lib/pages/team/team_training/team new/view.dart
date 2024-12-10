@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 16:18:58
- * @LastEditTime: 2024-12-05 16:41:00
+ * @LastEditTime: 2024-12-09 09:55:25
  */
 /*
  * @Description: 
@@ -15,8 +15,6 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
-import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_index/widgets/border_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/widgets/team_tab_bar.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/controller.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +28,7 @@ class TeamMenberView extends GetView<TeamController> {
     controller.initData();
     return HorizontalDragBackWidget(
       child: BlackAppWidget(
-        backgroundColor: AppColors.cDEDEDE,
+        backgroundColor: AppColors.cF2F2F2,
         const UserInfoBar(showPop: true),
         bodyWidget: Expanded(
           child: GetBuilder<TeamController>(

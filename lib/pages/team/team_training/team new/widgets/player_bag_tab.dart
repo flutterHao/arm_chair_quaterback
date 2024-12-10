@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 20:08:22
- * @LastEditTime: 2024-12-06 17:20:36
+ * @LastEditTime: 2024-12-09 21:43:29
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
@@ -36,7 +36,7 @@ class _PlayerBagTabState extends State<PlayerBagTab>
       var list = controller.playerSort();
       list = list.where((e) => e.position == -1).toList();
       return Container(
-        color: AppColors.cDEDEDE,
+        color: AppColors.cF2F2F2,
         child: Stack(
           children: [
             // Positioned(
@@ -111,9 +111,13 @@ class _PlayerBagTabState extends State<PlayerBagTab>
                                 controller.isFire ? "Done" : "Fire",
                                 style: TextStyle(
                                     fontSize: 16.h,
-                                    decorationColor: AppColors.cD60D20,
+                                    decorationColor: controller.isFire
+                                        ? AppColors.c000000
+                                        : AppColors.cD60D20,
                                     decoration: TextDecoration.underline,
-                                    color: AppColors.cD60D20,
+                                    color: controller.isFire
+                                        ? AppColors.c000000
+                                        : AppColors.cD60D20,
                                     fontFamily: FontFamily.fOswaldMedium),
                               ),
                             ),
@@ -129,15 +133,14 @@ class _PlayerBagTabState extends State<PlayerBagTab>
                               ),
                             )
                           : ListView.separated(
+                              physics: const BouncingScrollPhysics(),
                               controller: controller.scrollController,
                               padding: EdgeInsets.symmetric(vertical: 0.w),
                               itemBuilder: (context, index) {
-                                return index < list.length
-                                    ? PlayerItem(
-                                        item: list[index],
-                                        isBag: true,
-                                      )
-                                    : _backLock();
+                                return PlayerItem(
+                                  item: list[index],
+                                  isBag: true,
+                                );
                               },
                               separatorBuilder: (context, index) => Container(
                                 width: double.infinity,
@@ -145,7 +148,7 @@ class _PlayerBagTabState extends State<PlayerBagTab>
                                 margin: EdgeInsets.symmetric(horizontal: 16.w),
                                 color: AppColors.cE6E6E,
                               ),
-                              itemCount: list.length + 1,
+                              itemCount: list.length,
                             ),
                     ),
                   ],

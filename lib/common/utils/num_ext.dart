@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 11:33:27
- * @LastEditTime: 2024-10-10 16:59:42
+ * @LastEditTime: 2024-12-09 20:33:02
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -39,10 +39,10 @@ extension NumExt on num {
           height: height,
           overflow: overflow,
           // overflow: overflow??TextOverflow.ellipsis,
-          fontSize: toDouble().h,
+          // fontSize: toDouble().h,
 
           ///TODO
-          // fontSize: kIsWeb ? toDouble() : toDouble().sp,
+          fontSize: kIsWeb ? toDouble() : toDouble().sp,
           color: color,
           fontFamily: fontFamily);
 
@@ -56,10 +56,10 @@ extension NumExt on num {
           height: height,
           overflow: overflow,
           // overflow: overflow??TextOverflow.ellipsis,
-          fontSize: toDouble().h,
+          // fontSize: toDouble().h,
 
           ///TODO
-          // fontSize: kIsWeb ? toDouble() : toDouble().sp,
+          fontSize: kIsWeb ? toDouble() : toDouble().sp,
           color: color,
           fontFamily: fontFamily);
 
@@ -71,8 +71,8 @@ extension NumExt on num {
       TextStyle(
           height: height,
           fontWeight: FontWeight.w700,
-          // fontSize: kIsWeb ? toDouble() : toDouble().sp,
-          fontSize: toDouble().h,
+          fontSize: kIsWeb ? toDouble() : toDouble().sp,
+          // fontSize: toDouble().h,
           overflow: overflow,
           color: color,
           fontFamily: fontFamily ?? FontFamily.fOswaldBold);
@@ -92,8 +92,8 @@ extension NumExt on num {
     return stringAsFixed.endsWith(".0") ? toInt().toString() : stringAsFixed;
   }
 
-  num handlerNaNInfinity({num defaultValue = 0}){
-    if(isNaN || isInfinite){
+  num handlerNaNInfinity({num defaultValue = 0}) {
+    if (isNaN || isInfinite) {
       return defaultValue;
     }
     return this;

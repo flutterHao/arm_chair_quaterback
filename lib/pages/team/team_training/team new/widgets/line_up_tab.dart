@@ -1,17 +1,8 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
-import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
-import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
-import 'package:arm_chair_quaterback/common/utils/utils.dart';
-import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/physics/one_boundary_scroll_physics.dart';
-import 'package:arm_chair_quaterback/pages/news/rank/widgets/border_container.dart';
-import 'package:arm_chair_quaterback/pages/team/team_index/widgets/progress_paint.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/widgets/linear_progress_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/widgets/my_team_list.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/widgets/recover_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -35,9 +26,9 @@ class _LineUpTabState extends State<LineUpTab>
           .where((e) => e.position == 0)
           .toList();
       return Container(
-        color: AppColors.cDEDEDE,
+        color: AppColors.cF2F2F2,
         child: SingleChildScrollView(
-          // physics: const BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
               Container(

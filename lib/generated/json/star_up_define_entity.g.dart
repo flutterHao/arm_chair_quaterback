@@ -24,6 +24,11 @@ StarUpDefineEntity $StarUpDefineEntityFromJson(Map<String, dynamic> json) {
   if (starUpline != null) {
     starUpDefineEntity.starUpline = starUpline;
   }
+  final double? starRatingCoefficient = jsonConvert.convert<double>(
+      json['starRatingCoefficient']);
+  if (starRatingCoefficient != null) {
+    starUpDefineEntity.starRatingCoefficient = starRatingCoefficient;
+  }
   return starUpDefineEntity;
 }
 
@@ -34,6 +39,7 @@ Map<String, dynamic> $StarUpDefineEntityToJson(StarUpDefineEntity entity) {
   data['starUp'] = entity.starUp;
   data['starUpSell'] = entity.starUpSell;
   data['starUpline'] = entity.starUpline;
+  data['starRatingCoefficient'] = entity.starRatingCoefficient;
   return data;
 }
 
@@ -44,12 +50,15 @@ extension StarUpDefineEntityExtension on StarUpDefineEntity {
     double? starUp,
     double? starUpSell,
     double? starUpline,
+    double? starRatingCoefficient,
   }) {
     return StarUpDefineEntity()
       ..starUpRange = starUpRange ?? this.starUpRange
       ..potantialRang = potantialRang ?? this.potantialRang
       ..starUp = starUp ?? this.starUp
       ..starUpSell = starUpSell ?? this.starUpSell
-      ..starUpline = starUpline ?? this.starUpline;
+      ..starUpline = starUpline ?? this.starUpline
+      ..starRatingCoefficient = starRatingCoefficient ??
+          this.starRatingCoefficient;
   }
 }

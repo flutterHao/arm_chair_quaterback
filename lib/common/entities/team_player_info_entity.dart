@@ -30,7 +30,7 @@ class TeamPlayerInfoEntity {
   late int playerStatus = 1;
   late TeamPlayerInfoPotential potential;
   late bool bindStatus = false;
-  late int breakThroughGrade = 0;
+  late int breakThroughGrade = 0; //星级
   late int playerId = 0;
   TeamPlayerInfoPotential? upStarBase;
   @JSONField(deserialize: false, serialize: false)

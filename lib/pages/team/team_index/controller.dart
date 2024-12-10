@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-11-24 19:20:15
+ * @LastEditTime: 2024-12-09 15:03:24
  */
 
 import 'dart:async';
@@ -137,6 +137,8 @@ class TeamIndexController extends GetxController
     /// 免费宝箱
     recieved = cardPackInfo.freeGiftCount == 0 &&
         cardPackInfo.freeGiftTime > DateTime.now().millisecondsSinceEpoch;
+    Log.d(
+        "__freeGiftCount:${DateUtil.getDateTimeByMs(cardPackInfo.freeGiftTime)}---now ${DateTime.now()}");
     if (recieved) {
       _startTimer(
         time: cardPackInfo.freeGiftTime,
@@ -197,7 +199,7 @@ class TeamIndexController extends GetxController
       // Log.e("倒计时$diff");
       if (diff < 0) {
         Log.i("倒计时完成");
-        t.cancel();
+        timer?.cancel();
         onComplete();
       } else {
         onTick(diff);

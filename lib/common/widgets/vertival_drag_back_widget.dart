@@ -2,17 +2,22 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 17:09:20
- * @LastEditTime: 2024-10-23 18:01:36
+ * @LastEditTime: 2024-12-06 22:00:47
  */
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class VerticalDragBackWidget extends StatefulWidget {
   const VerticalDragBackWidget(
-      {required this.child, this.onWidgetOut, this.canPop = true, super.key});
+      {required this.child,
+      this.onWidgetOut,
+      this.canPop = true,
+      super.key,
+      this.onChange});
 
   final Widget child;
   final bool canPop;
+  final Function? onChange;
 
   ///是否支持右滑返回，实体/虚拟按键返回
   final Function()? onWidgetOut;

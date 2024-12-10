@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-06 10:37:49
- * @LastEditTime: 2024-12-06 21:30:39
+ * @LastEditTime: 2024-12-10 10:10:34
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
@@ -20,6 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+// ignore: must_be_immutable
 class PlayerChangerDialog extends StatefulWidget {
   PlayerChangerDialog({super.key, required this.item});
   TeamPlayerInfoEntity? item;
@@ -28,126 +29,128 @@ class PlayerChangerDialog extends StatefulWidget {
   State<PlayerChangerDialog> createState() => _PlayerChangerDialogState();
 }
 
-class _PlayerChangerDialogState extends State<PlayerChangerDialog> {
-  TeamController teamController = Get.find();
-  // double cardY = -121.w;
-  // double listY = -566.h;
-  // RxDouble scale = 1.2.obs;
-  // TeamPlayerInfoEntity?  widget.item;
-  @override
-  void initState() {
-    super.initState();
-    //  widget.item = widget.item;
-    teamController.cardY = -121;
-    teamController.listY = -566.h;
-    teamController.scale = 1.0.obs;
-
-    Future.delayed(const Duration(milliseconds: 300), () {
-      setState(() {
-        teamController.scale = 1.0.obs;
-        teamController.cardY = 0;
-        teamController.listY = 0;
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
+class _PlayerChangerDialogState extends State<PlayerChangerDialog>
+    with SingleTickerProviderStateMixin {
+  TeamController ctrl = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.topCenter,
-      children: [
-        AnimatedPositioned(
-          duration: const Duration(milliseconds: 300),
-          top: teamController.cardY,
-          left: 0,
-          right: 0,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(9.w),
-            child: widget.item != null
-                ? PlayerItem(
-                    item: widget.item!,
-                    isSelect: true,
-                    onDownCallBack: () {
-                      widget.item = null;
-                      setState(() {});
-                    },
-                  )
-                : EmptyPlayer(),
-          ),
-        ),
-        Positioned(
-            bottom: 566.h + 30.h,
-            child: Obx(() {
-              return AnimatedScale(
-                scale: teamController.scale.value,
-                duration: Duration(
-                    milliseconds:
-                        teamController.scale.value == 1.2 ? 150 : 300),
-                child: IconWidget(
-                  iconWidth: 20.w,
-                  icon: Assets.commonUiCommonIconSystemExchange,
-                  rotateAngle: 90,
-                  iconColor: AppColors.cFF7954,
-                ),
-              );
-            })),
-        AnimatedPositioned(
-          duration: const Duration(milliseconds: 300),
-          bottom: teamController.listY,
-          left: 0,
-          right: 0,
-          child: VerticalDragBackWidget(
-            child: Container(
-              width: double.infinity,
-              height: 566.h,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(9.w)),
-              ),
+    ctrl.animationCtrl.reset();
+    ctrl.animationCtrl.forward();
+    return SizedBox(
+      width: 375.w,
+      height: 812.h,
+      child: AnimatedBuilder(
+          animation: ctrl.pageAnimation,
+          builder: (context, child) {
+            return SizedBox(
               child: Column(
                 children: [
-                  Container(
-                    width: 44.w,
-                    height: 4.w,
-                    margin: EdgeInsets.only(top: 8.w, bottom: 18.w),
-                    decoration: BoxDecoration(
-                        color: AppColors.c000000.withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(2.w)),
-                  ),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      // physics: const BouncingScrollPhysics(),
-                      child: widget.item != null
-                          ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                if (widget.item!.position <= 0)
-                                  _LineUp(widget.item!),
-                                if (widget.item!.position != 0)
-                                  _Substitute(widget.item!),
-                                if (widget.item!.position >= 0)
-                                  _Stash(widget.item!),
-                              ],
-                            )
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                _Stash(widget.item),
-                              ],
-                            ),
+                  SizedBox(
+                    height: 121.w,
+                    width: double.infinity,
+                    child: Stack(
+                      alignment: Alignment.topCenter,
+                      children: [
+                        Positioned(
+                          top: -121.w * (1 - ctrl.pageAnimation.value),
+                          left: 0,
+                          right: 0,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(9.w),
+                            child: widget.item != null
+                                ? PlayerItem(
+                                    isBag: widget.item!.position < 0,
+                                    item: widget.item!,
+                                    isSelect: true,
+                                  )
+                                : EmptyPlayer(),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
+                  Center(
+                    child: Container(
+                      width: double.infinity,
+                      height: 80.h,
+                      alignment: Alignment.center,
+                      child: Transform.scale(
+                        scale: 1.2 - ctrl.pageAnimation.value * 0.2,
+                        child: IconWidget(
+                          iconWidth: 20.w,
+                          icon: Assets.commonUiCommonIconSystemExchange,
+                          rotateAngle: 90,
+                          iconColor: AppColors.cFF7954,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                      child: VerticalDragBackWidget(
+                    child: Stack(
+                      alignment: Alignment.bottomCenter,
+                      children: [
+                        Positioned(
+                          top: 700.h * (1 - ctrl.pageAnimation.value),
+                          left: 0,
+                          right: 0,
+                          bottom: 0,
+                          child: Container(
+                            width: double.infinity,
+                            // height: 566.h,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(9.w)),
+                            ),
+                            child: Column(
+                              children: [
+                                Container(
+                                  width: 44.w,
+                                  height: 4.w,
+                                  margin:
+                                      EdgeInsets.only(top: 8.w, bottom: 18.w),
+                                  decoration: BoxDecoration(
+                                      color: AppColors.c000000.withOpacity(0.2),
+                                      borderRadius: BorderRadius.circular(2.w)),
+                                ),
+                                Expanded(
+                                  child: SingleChildScrollView(
+                                    // physics: const BouncingScrollPhysics(),
+                                    child: widget.item != null
+                                        ? Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              if (widget.item!.position <= 0)
+                                                _LineUp(widget.item!),
+                                              if (widget.item!.position != 0)
+                                                _Substitute(widget.item!),
+                                              if (widget.item!.position >= 0)
+                                                _Stash(widget.item!),
+                                            ],
+                                          )
+                                        : Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              _Stash(widget.item),
+                                            ],
+                                          ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ))
                 ],
               ),
-            ),
-          ),
-        )
-      ],
+            );
+          }),
     );
   }
 }
@@ -177,7 +180,7 @@ class _LineUp extends GetView<TeamController> {
         Container(
           margin: EdgeInsets.only(left: 16.w),
           child: Text(
-            "Line-up",
+            "Main",
             style: 19.w4(
                 color: AppColors.c000000,
                 fontFamily: FontFamily.fOswaldMedium,
@@ -249,21 +252,44 @@ class _Substitute extends GetView<TeamController> {
           height: 1,
           color: AppColors.cD1D1D1,
         ),
-        ListView.separated(
-          padding: EdgeInsets.symmetric(vertical: 10.w),
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return PlayerItem(item: list[index]);
-          },
-          separatorBuilder: (context, index) => Container(
-            width: double.infinity,
-            height: 1.w,
-            color: AppColors.cE6E6E,
-            margin: EdgeInsets.symmetric(horizontal: 16.w),
-          ),
-          itemCount: list.length,
-        ),
+        item.position < 0
+            ? ListView.separated(
+                padding: EdgeInsets.symmetric(vertical: 10.w),
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return index < list.length
+                      ? PlayerItem(item: list[index])
+                      : InkWell(
+                          onTap: () {
+                            controller.isAdd = true;
+                            controller.changeTeamPlayer(context);
+                          },
+                          child: EmptyPlayer());
+                },
+                separatorBuilder: (context, index) => Container(
+                  width: double.infinity,
+                  height: 1.w,
+                  color: AppColors.cE6E6E,
+                  margin: EdgeInsets.symmetric(horizontal: 16.w),
+                ),
+                itemCount: list.length + 1,
+              )
+            : ListView.separated(
+                padding: EdgeInsets.symmetric(vertical: 10.w),
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return PlayerItem(item: list[index]);
+                },
+                separatorBuilder: (context, index) => Container(
+                  width: double.infinity,
+                  height: 1.w,
+                  color: AppColors.cE6E6E,
+                  margin: EdgeInsets.symmetric(horizontal: 16.w),
+                ),
+                itemCount: list.length,
+              ),
       ],
     );
   }
@@ -297,7 +323,7 @@ class _Stash extends GetView<TeamController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: EdgeInsets.only(left: 16.w),
+            margin: EdgeInsets.symmetric(horizontal: 16.w),
             child: Row(
               children: [
                 Expanded(

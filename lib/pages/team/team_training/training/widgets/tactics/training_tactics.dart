@@ -147,7 +147,7 @@ class TrainingTactics extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     IconWidget(
-                                      iconWidth: 18.w,
+                                      iconWidth: 13.w,
                                       icon: Assets.managerUiManagerIconRecover,
                                     ),
                                     3.vGap,

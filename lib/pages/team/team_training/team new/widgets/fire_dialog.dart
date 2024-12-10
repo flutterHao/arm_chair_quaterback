@@ -2,17 +2,27 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-05 17:46:56
- * @LastEditTime: 2024-12-05 20:31:10
+ * @LastEditTime: 2024-12-10 09:46:57
+ */
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-12-05 17:46:56
+ * @LastEditTime: 2024-12-09 19:11:08
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/top_toast_dialog.dart';
 
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -31,6 +41,7 @@ class _FireDialogState extends State<FireDialog>
   TeamController ctrl = Get.find();
   @override
   Widget build(BuildContext context) {
+    var cost = Utils.formatMoney(ctrl.getFireMoney(widget.item));
     return Container(
       width: double.infinity,
       height: 419.w,
@@ -80,15 +91,26 @@ class _FireDialogState extends State<FireDialog>
               ),
               3.hGap,
               Text(
-                "10K",
+                cost,
                 style: 16.w4(fontFamily: FontFamily.fOswaldBold),
               ),
             ],
           ),
           7.5.vGap,
           MtInkwell(
-            onTap: () {
-              ctrl.dismissPlayer(widget.item.uuid);
+            onTap: () async {
+              Navigator.pop(context);
+              await ctrl.dismissPlayer(context, widget.item.uuid);
+              await Future.delayed(const Duration(milliseconds: 500));
+              await showDialog(
+                  barrierColor: Colors.transparent,
+                  context: Get.context!,
+                  builder: (context) {
+                    return TopToastDialog(
+                        child: FireSuccessDialog(item: widget.item));
+                  });
+              HomeController.to.updateMoney(-ctrl.getFireMoney(widget.item));
+              // await Future.delayed(Duration(milliseconds: 2000));
             },
             child: Container(
               height: 51.w,
@@ -128,6 +150,131 @@ class _FireDialogState extends State<FireDialog>
           41.vGap,
         ],
       ),
+    );
+  }
+}
+
+class FireSuccessDialog extends GetView<TeamController> {
+  const FireSuccessDialog({super.key, required this.item});
+  final TeamPlayerInfoEntity item;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+          width: double.infinity,
+          height: 130.w,
+          // color: AppColors.cFF7954,
+          // color: AppColors.cFFFFFF,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              // color: AppColors.cEE6C4D,
+              gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              AppColors.cFF7954,
+              AppColors.cEE6C4D,
+            ],
+          )),
+          child: Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                // child: ShaderMask(
+                //   shaderCallback: (Rect bounds) {
+                //     return LinearGradient(
+                //       begin: Alignment.center,
+                //       end: Alignment.bottomCenter,
+                //       colors: [
+                //         //    AppColors.cFF7A58,
+                //         // AppColors.cF87451,
+                //         AppColors.cFF7A58.withOpacity(0.67),
+                //         AppColors.cFF7A58.withOpacity(0.67),
+                //       ],
+                //     ).createShader(bounds);
+                //   },
+                //   child: Text(
+                //     "congratulation".toUpperCase(),
+                //     style: TextStyle(
+                //       fontSize: 53.sp,
+                //       height: 0.9,
+                //       color: AppColors.cFF7A58.withOpacity(0.67),
+                //       fontFamily: FontFamily.fOswaldMedium,
+                //     ),
+                //   ),
+                // ),
+                child: Text(
+                  "congratulation".toUpperCase(),
+                  style: TextStyle(
+                    fontSize: 53.sp,
+                    height: 0.9,
+                    color: AppColors.cff7c5a.withOpacity(0.67),
+                    fontFamily: FontFamily.fOswaldMedium,
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(left: 16.w, right: 16.w, top: 50.w),
+                width: double.infinity,
+                height: 130.w,
+                child: Row(
+                  children: [
+                    Stack(
+                      children: [
+                        Container(
+                          width: 57.w,
+                          height: 64.w,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(6.w),
+                              color: AppColors.c262626),
+                          child: ImageWidget(
+                              width: 57.w,
+                              height: 64.w,
+                              borderRadius: BorderRadius.circular(6.w),
+                              url: Utils.getPlayUrl(item.playerId)),
+                        ),
+                        Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: IconWidget(
+                                iconWidth: 20.w,
+                                icon: Assets.commonUiCommonIconLayoff))
+                      ],
+                    ),
+                    SizedBox(width: 14.5.w),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Succeed in firing".toUpperCase(),
+                          style: 19.w4(
+                              color: AppColors.c000000,
+                              height: 1,
+                              fontFamily: FontFamily.fOswaldRegular),
+                        ),
+                        10.vGap,
+                        Text(
+                          "You've burned through ${Utils.formatMoney(controller.getFireMoney(item))} of money",
+                          style: 12.w4(
+                              color: AppColors.c000000,
+                              height: 1,
+                              fontFamily: FontFamily.fRobotoRegular),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

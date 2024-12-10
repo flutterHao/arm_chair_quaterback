@@ -1,14 +1,21 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-11-11 20:50:24
+ * @LastEditTime: 2024-12-09 17:09:50
+ */
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/star_up_define_entity.g.dart';
 import 'dart:convert';
 
 @JsonSerializable()
 class StarUpDefineEntity {
-  late double starUpRange;
-  late String potantialRang;
-  late double starUp;
-  late double starUpSell;
-  late double starUpline;
+  late double starUpRange = 0;
+  late String potantialRang = "";
+  late double starUp = 0;
+  late double starUpSell = 0;
+  late double starUpline = 0;
+  late double starRatingCoefficient = 0.0;
 
   StarUpDefineEntity();
 

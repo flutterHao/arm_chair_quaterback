@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/entities/my_team_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/star_up_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
@@ -13,7 +13,7 @@ import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/widgets
 import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/widgets/player_changer_dialog.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 
 class TeamController extends GetxController with GetTickerProviderStateMixin {
@@ -46,15 +46,17 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   double offset = 0;
   RxBool hideSort = false.obs;
   var isShowDialog = false.obs;
+  List<StarUpDefineEntity> starUpDefineList = [];
 
-  double cardY = -121.w;
-  double listY = -566.h;
-  RxDouble scale = 1.2.obs;
+  ///换人页面打开关闭动画
+  late AnimationController animationCtrl;
+  late Animation<double> pageAnimation;
 
   /// 在 widget 内存中分配后立即调用。
   @override
   void onInit() {
     super.onInit();
+
     tabController = TabController(length: 2, vsync: this);
     tabController.addListener(() {
       current.value = tabController.index;
@@ -65,12 +67,23 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
     });
 
     scrollController.addListener(() {
-      if (scrollController.offset - offset >= 0) {
-        hideSort.value = true;
-      } else {
+      //判断滚动方向，向下展开，向上隐藏
+      if (scrollController.position.userScrollDirection ==
+          ScrollDirection.forward) {
         hideSort.value = false;
+      } else if (scrollController.position.userScrollDirection ==
+          ScrollDirection.reverse) {
+        hideSort.value = true;
       }
-      offset = scrollController.offset;
+    });
+
+    animationCtrl = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 300));
+    pageAnimation =
+        CurvedAnimation(parent: animationCtrl, curve: Curves.easeInOut);
+
+    Future.delayed(const Duration(milliseconds: 300), () {
+      animationCtrl.forward();
     });
   }
 
@@ -92,6 +105,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   void dispose() {
     super.dispose();
     _timer?.cancel();
+    animationCtrl.dispose();
   }
 
   Future initData() async {
@@ -104,26 +118,15 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
       TeamApi.getMyTeamPlayer(teamId),
       TeamApi.getMyBagPlayers(),
       CacheApi.getPlayerStatusConfig(),
+      CacheApi.getStarUpDefine(),
     ]).then((v) {
       myTeamEntity = v[0] as MyTeamEntity;
       myBagList = v[1] as List<TeamPlayerInfoEntity>;
+      starUpDefineList = v[3] as List<StarUpDefineEntity>;
       recoverTimeAndCountDown();
       update();
     });
   }
-
-  // List<TeamPlayerInfoEntity> get getBagPlayers {
-  //   var canSelect = myBagList.where((e) => canChange(true, e)).toList();
-  //   var cantSelect = myBagList.where((e) => !canChange(true, e)).toList();
-  //   canSelect.sort((a, b) => a.position.compareTo(b.position));
-  //   cantSelect.sort((a, b) => a.position.compareTo(b.position));
-  //   List<TeamPlayerInfoEntity> list = List.from(canSelect)..addAll(cantSelect);
-  //   // var canSelect = myBagList.where((e) => e.position == -1).toList();
-  //   // var cantSelect = myBagList.where((e) => e.position != -1).toList();
-  //   // List<TeamPlayerInfoEntity> list = List.from(canSelect)..addAll(cantSelect);
-
-  //   return list;
-  // }
 
   Future<void> recoverPower({int type = 1, String? uuid}) async {
     await TeamApi.recoverPower(type: type, uuid: uuid).then((v) async {
@@ -168,10 +171,11 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
     }
   }
 
-  void showChangeDialog(TeamPlayerInfoEntity? item) {
+  Future showChangeDialog(TeamPlayerInfoEntity? item) async {
     if (!isShowDialog.value) {
       isShowDialog.value = true;
       showDialog(
+          barrierDismissible: false,
           context: Get.context!,
           builder: (context) {
             return PlayerChangerDialog(
@@ -184,19 +188,21 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
         isAdd = false;
         update();
       });
+      // animationCtrl.reset();
+      // animationCtrl.forward();
     }
   }
 
   ///点击更换球员
   void playerChangeTap(
-      BuildContext context, bool isBag, TeamPlayerInfoEntity item) {
+      BuildContext context, bool isBag, TeamPlayerInfoEntity item) async {
     /// 如果是上阵
     if (!isBag && !isShowDialog.value) {
       item1 = TeamPlayerInfoEntity.fromJson(item.toJson());
       item1.isChange.value = true;
       if (item2.isChange.value == true) {
         ///已经选择了背包直接替换
-        changeTeamPlayer(context);
+        await changeTeamPlayer(context);
       } else {
         showChangeDialog(item);
       }
@@ -211,70 +217,12 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
         addPlay(context);
       } else if (item1.isChange.value == true) {
         ///已经选择了上阵直接替换
-        changeTeamPlayer(context);
+        await changeTeamPlayer(context);
       } else {
         showChangeDialog(item);
       }
     }
   }
-
-//是否能够切换
-  // bool canChange0(bool isBag, TeamPlayerInfoEntity item) {
-  //   bool canSelect = true;
-  //   if (!item1.isChange.value && !item2.isChange.value && !isAdd) {
-  //     return canSelect;
-  //   }
-  //   String thisPos = Utils.getPlayBaseInfo(item.playerId).position;
-
-  //   if (isBag) {
-  //     String pos = Utils.getPlayBaseInfo(item1.playerId).position;
-  //     canSelect = isAdd
-  //         ? item.position == -1
-  //         : item.position == -1 &&
-  //             thisPos == pos &&
-  //             item.playerId != item1.playerId;
-  //   } else {
-  //     String pos = Utils.getPlayBaseInfo(item2.playerId).position;
-  //     canSelect = thisPos == pos && item.playerId != item2.playerId;
-  //   }
-  //   return canSelect;
-  // }
-
-  //是否能够切换
-  // bool canChange(bool isBag, TeamPlayerInfoEntity item) {
-  //   bool canSelect = true;
-
-  //   if (!item1.isChange.value && !item2.isChange.value && !isAdd) {
-  //     return canSelect;
-  //   }
-  //   if (isBag) {
-  //     canSelect = isAdd
-  //         ? item.position <= 0
-  //         : item.position <= 0 && item.playerId != item1.playerId;
-  //     canSelect = canSelect &&
-  //         !myTeamEntity.teamPlayers
-  //             .map((e) => e.playerId)
-  //             .contains(item.playerId);
-  //   } else {
-  //     canSelect = item.playerId != item2.playerId;
-  //   }
-  //   return canSelect;
-  // }
-
-  // bool isSame(TeamPlayerInfoEntity item) {
-  //   // String thisPos = Utils.getPlayBaseInfo(item.playerId).position;
-  //   if (!item1.isChange.value && !item2.isChange.value && !isAdd) {
-  //     return true;
-  //   }
-  //   NbaPlayerInfosPlayerBaseInfoList player =
-  //       Utils.getPlayBaseInfo(item.playerId);
-  //   var isSame = isAdd
-  //       ? item.position == -1
-  //       : item.position == -1 &&
-  //           player.position.contains(Utils.getPosition(item1.position)) &&
-  //           item.playerId != item1.playerId;
-  //   return isSame;
-  // }
 
   Future changeTeamPlayer(BuildContext context, {bool isDown = false}) async {
     myTeamEntity = await TeamApi.changeTeamPlayer(
@@ -283,17 +231,13 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
     item1.isChange.value = false;
     item2.isChange.value = false;
     isAdd = false;
-    update();
-    if (!isDown) {
-      isShowDialog.value = false;
-      Navigator.pop(context);
-    }
-  }
 
-  void onTabChange(v) {
-    // current.value = v;
-    // tabController.animateTo(v);
-    // update();
+    animationCtrl.reverse();
+    isShowDialog.value = false;
+    Future.delayed(const Duration(milliseconds: 300), () {
+      Navigator.pop(context);
+      update();
+    });
   }
 
   ///计算体力回复时间
@@ -333,13 +277,13 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
 
   List<TeamPlayerInfoEntity> playerSort() {
     List<TeamPlayerInfoEntity> list = List.from(myBagList);
-    if (sortType == 2) {
+    if (sortType == 1) {
       list.sort((a, b) => b.breakThroughGrade.compareTo(a.breakThroughGrade));
-    } else if (sortType == -2) {
-      list.sort((a, b) => a.breakThroughGrade.compareTo(b.breakThroughGrade));
-    } else if (sortType == 1) {
-      list.sort((a, b) => getGrade(b.playerId).compareTo(getGrade(a.playerId)));
     } else if (sortType == -1) {
+      list.sort((a, b) => a.breakThroughGrade.compareTo(b.breakThroughGrade));
+    } else if (sortType == 2) {
+      list.sort((a, b) => getGrade(b.playerId).compareTo(getGrade(a.playerId)));
+    } else if (sortType == -2) {
       list.sort((a, b) => getGrade(a.playerId).compareTo(getGrade(b.playerId)));
     }
     return list;
@@ -364,10 +308,21 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
     }
   }
 
-  void dismissPlayer(String uuid) async {
+  Future dismissPlayer(BuildContext context, String uuid) async {
     await TeamApi.dismissPlayer(uuid).then((v) {
       myBagList.removeWhere((element) => element.uuid == uuid);
       update();
     });
+  }
+
+  int getFireMoney(TeamPlayerInfoEntity player) {
+    int salary = 0;
+    for (var e in starUpDefineList) {
+      if (e.starUp == player.breakThroughGrade) {
+        return Utils.getPlayBaseInfo(player.playerId).salary *
+            (1 + e.starRatingCoefficient).round();
+      }
+    }
+    return salary;
   }
 }

@@ -2,12 +2,13 @@
  * @Description: 我的球队的训练和比赛
  * @Author: lihonghao
  * @Date: 2024-09-27 19:21:36
- * @LastEditTime: 2024-12-06 09:39:49
+ * @LastEditTime: 2024-12-09 09:48:39
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/controller.dart';
@@ -67,8 +68,10 @@ class TeamTabbar extends GetView<TeamController> {
                         height: 0.75),
                   ),
                   7.vGap,
-                  Text(controller.formatNumber(controller.myTeamEntity.oVR),
-                      style: 21.w4(
+                  AnimatedNum(
+                      number: controller.myTeamEntity.oVR,
+                      withConma: true,
+                      textStyle: 21.w4(
                           color: AppColors.cFFFFFF,
                           fontFamily: FontFamily.fOswaldMedium,
                           height: 0.75))
@@ -117,10 +120,10 @@ class TeamTabbar extends GetView<TeamController> {
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  Text(
-                                    Utils.formatMoney(
-                                        controller.myTeamEntity.salary),
-                                    style: 21.w4(
+                                  AnimatedNum(
+                                    number: controller.myTeamEntity.salary,
+                                    isMoney: true,
+                                    textStyle: 21.w4(
                                         color: AppColors.cFFFFFF,
                                         height: 1,
                                         fontFamily: FontFamily.fOswaldMedium),

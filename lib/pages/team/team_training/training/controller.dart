@@ -370,6 +370,7 @@ class TrainingController extends GetxController
         DateUtil.getDateTimeByMs(trainingInfo.training.ballRefreshTime)
             .add(Duration(seconds: recover));
     int recoverSeconds = recoverTime.difference(now).inSeconds;
+    _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (v) async {
       recoverSeconds--;
 
@@ -490,8 +491,20 @@ class TrainingController extends GetxController
       ///tacticList替换上面的buff
       await chooseEnd(context, type);
 
-      tacticList = v;
-      update(["training_page"]);
+      if (isChange.value) {
+        shakeController.reset();
+        shakeController.stop();
+        isChange.value = false;
+
+        tacticList = v;
+        update(["training_page"]);
+        await Future.delayed(const Duration(milliseconds: 600), () {
+          Navigator.of(context).pop();
+        });
+      } else {
+        tacticList = v;
+        update(["training_page"]);
+      }
 
       await Future.delayed(const Duration(milliseconds: 500));
       tacticType = TacticUtils.checkTacticMatch(tacticList);
@@ -516,15 +529,6 @@ class TrainingController extends GetxController
 
     for (var element in chooseTacticList) {
       element.isOpen.value = false;
-    }
-
-    if (isChange.value) {
-      shakeController.reset();
-      shakeController.stop();
-      isChange.value = false;
-      await Future.delayed(const Duration(milliseconds: 1000), () {
-        Navigator.of(context).pop();
-      });
     }
   }
 

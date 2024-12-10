@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-04 16:18:54
- * @LastEditTime: 2024-11-28 15:13:10
+ * @LastEditTime: 2024-12-09 09:43:08
  */
 
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -94,18 +94,19 @@ class AnimatedNum extends StatefulWidget {
   final bool isMoney;
   final int milliseconds;
   final bool fromZero;
+  final bool withConma; //是否显示千分符
 
   ///单位
   final TextStyle textStyle;
 
-  const AnimatedNum({
-    super.key,
-    required this.number,
-    required this.textStyle,
-    this.isMoney = false,
-    this.milliseconds = 300,
-    this.fromZero = false,
-  });
+  const AnimatedNum(
+      {super.key,
+      required this.number,
+      required this.textStyle,
+      this.isMoney = false,
+      this.milliseconds = 300,
+      this.fromZero = false,
+      this.withConma = false});
 
   @override
   State<StatefulWidget> createState() => AnimState();
@@ -168,10 +169,15 @@ class AnimState extends State<AnimatedNum> with SingleTickerProviderStateMixin {
                   style: widget.textStyle,
                 );
         } else {
-          numWidget = Text(
-            '${animation.value}',
-            style: widget.textStyle,
-          );
+          numWidget = widget.withConma
+              ? Text(
+                  _formatNumber(animation.value),
+                  style: widget.textStyle,
+                )
+              : Text(
+                  '${animation.value}',
+                  style: widget.textStyle,
+                );
         }
         return numWidget;
       },
@@ -185,98 +191,12 @@ class AnimState extends State<AnimatedNum> with SingleTickerProviderStateMixin {
   }
 }
 
+String _formatNumber(int number) {
+  String numberStr = number.toString();
+  int length = numberStr.length;
 
-// class AnimatedNum<T extends num> extends StatefulWidget {
-//   final T number;
-//   final TextStyle textStyle;
+  if (length <= 3) return numberStr;
 
-//   const AnimatedNum({
-//     super.key,
-//     required this.number,
-//     required this.textStyle,
-//   });
-
-//   @override
-//   State<StatefulWidget> createState() => AnimState<T>();
-// }
-
-// class AnimState<T extends num> extends State<AnimatedNum<T>>
-//     with SingleTickerProviderStateMixin {
-//   late AnimationController controller;
-//   late Animation animation;
-//   late T _currentNumber;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _currentNumber = widget.number;
-//     _setupAnimation();
-//   }
-
-//   void _setupAnimation() {
-//     final int duration = _calculateDuration(_currentNumber, widget.number);
-//     controller = AnimationController(
-//         vsync: this, duration: Duration(milliseconds: duration));
-//     final Animation<double> curve =
-//         CurvedAnimation(parent: controller, curve: Curves.linear);
-
-//     if (T == int) {
-//       animation =
-//           IntTween(begin: _currentNumber as int, end: widget.number as int)
-//               .animate(curve)
-//             ..addStatusListener((status) {
-//               if (status == AnimationStatus.completed) {
-//                 // 动画完成时，可以执行一些操作
-//               }
-//             });
-//     } else if (T == double) {
-//       animation = Tween<double>(
-//               begin: _currentNumber as double, end: widget.number as double)
-//           .animate(curve)
-//         ..addStatusListener((status) {
-//           if (status == AnimationStatus.completed) {
-//             // 动画完成时，可以执行一些操作
-//           }
-//         });
-//     }
-//   }
-
-//   int _calculateDuration(T start, T end) {
-//     final double change = (end - start).abs().toDouble();
-//     int baseDuration = 200;
-//     // 根据变化量调整时长，这里简单地按比例计算
-//     return (baseDuration * (change / 100)).clamp(baseDuration, 1000).toInt();
-//   }
-
-//   @override
-//   void didUpdateWidget(AnimatedNum<T> oldWidget) {
-//     super.didUpdateWidget(oldWidget);
-//     if (oldWidget.number != widget.number) {
-//       _currentNumber = oldWidget.number;
-//       controller.reset();
-//       _setupAnimation();
-//       controller.forward();
-//     }
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return AnimatedBuilder(
-//       animation: controller,
-//       builder: (context, child) {
-//         return Text(
-//           T == int
-//               ? '${animation.value}'
-//               : '${animation.value.toStringAsFixed(2)}',
-//           style: widget.textStyle,
-//         );
-//       },
-//     );
-//   }
-
-//   @override
-//   void dispose() {
-//     controller.dispose();
-//     super.dispose();
-//   }
-// }
+  // 每次递归处理最后的三位
+  return '${_formatNumber(int.parse(numberStr.substring(0, length - 3)))},${numberStr.substring(length - 3)}';
+}

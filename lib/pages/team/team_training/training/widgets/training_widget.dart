@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-25 15:56:43
- * @LastEditTime: 2024-12-06 12:15:14
+ * @LastEditTime: 2024-12-09 15:42:41
  */
 
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
@@ -195,7 +195,7 @@ class TrainingWidget extends GetView<TrainingController> {
                             ),
                           ),
 
-                          if (controller.trainingInfo.prop.num <=
+                          if (controller.trainingInfo.prop.num <
                               controller.trainDefine.ballMaxNum)
                             Positioned(
                               top: 45.w,
