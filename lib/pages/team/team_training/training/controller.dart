@@ -382,9 +382,12 @@ class TrainingController extends GetxController
       if (recoverSeconds <= 0) {
         _timer?.cancel();
         // 重新获取新的恢复时间进行倒计时
-        trainingInfo = await TeamApi.getTrainingInfo();
-        update(["training_page"]);
-        recoverTimeAndCountDown();
+        TeamApi.getTrainingInfo().then((v) {
+          v.propArray = trainingInfo.propArray;
+          trainingInfo = v;
+          update(["training_page"]);
+          recoverTimeAndCountDown();
+        });
       }
     });
   }
@@ -411,9 +414,12 @@ class TrainingController extends GetxController
         }
         _timer1.cancel();
         // 重新获取新的恢复时间进行倒计时
-        trainingInfo = await TeamApi.getTrainingInfo();
-        update(["training_page"]);
-        taskCountDownTime();
+        TeamApi.getTrainingInfo().then((v) {
+          v.propArray = trainingInfo.propArray;
+          trainingInfo = v;
+          update(["training_page"]);
+          recoverTimeAndCountDown();
+        });
       }
     });
   }
@@ -718,9 +724,9 @@ class TrainingController extends GetxController
     if (!awads.contains(1)) {
       isPlaying.value = false;
     }
-    for (var element in slotsAnimlList) {
-      element.reset();
-    }
+    // for (var element in slotsAnimlList) {
+    //   element.reset();
+    // }
     // getPlayerList();
     update(["training_page"]);
   }

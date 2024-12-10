@@ -105,6 +105,7 @@ class _FireDialogState extends State<FireDialog>
               await showDialog(
                   barrierColor: Colors.transparent,
                   context: Get.context!,
+                  useSafeArea: false,
                   builder: (context) {
                     // return Stack(
                     //   children: [
