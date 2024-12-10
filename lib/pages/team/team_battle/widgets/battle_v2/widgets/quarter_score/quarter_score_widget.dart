@@ -15,7 +15,11 @@ import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 ///created at 2024/12/6/11:28
 
 class QuarterScoreWidget extends StatelessWidget {
+
+  final bool hasTopMargin ;
   late TeamBattleV2Controller teamBattleV2Controller;
+
+  QuarterScoreWidget({super.key, this.hasTopMargin = true});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +35,7 @@ class QuarterScoreWidget extends StatelessWidget {
     }
     return Container(
       height: 122.w,
-      margin: EdgeInsets.only(top: 9.w),
+      margin: EdgeInsets.only(top: hasTopMargin?9.w:0),
       alignment: Alignment.center,
       decoration: BoxDecoration(
           color: AppColors.cFFFFFF, borderRadius: BorderRadius.circular(9.w)),

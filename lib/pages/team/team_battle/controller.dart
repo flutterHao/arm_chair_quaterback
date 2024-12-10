@@ -91,7 +91,7 @@ class TeamBattleController extends GetxController
       _timer = Timer(const Duration(seconds: 5),timeout);
       subscription = WSInstance.teamMatch().listen((result) {
         // developer.log('result.serviceId--${result.serviceId}--:${result.payload}');
-        // print('result.serviceId--${result.serviceId}--:${result.payload}');
+        print('result.serviceId--${result.serviceId}--:${result.payload}');
         _timer?.cancel();
         if (result.serviceId == Api.wsJazminError && step.value == 1) {
           print('result.serviceId--${result.serviceId}--:${result.payload}');

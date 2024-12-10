@@ -179,6 +179,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
       isShowDialog.value = true;
       showDialog(
           barrierDismissible: false,
+          useSafeArea: false,
           context: Get.context!,
           builder: (context) {
             return PlayerChangerDialog(

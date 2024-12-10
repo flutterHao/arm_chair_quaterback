@@ -77,10 +77,12 @@ class WinRateWidget extends StatelessWidget {
                                           color: AppColors.cD60D20,
                                           width: 1.w)),
                                   child: ImageWidget(
-                                    url: Utils.getAvaterUrl(
+                                    url: Utils.getTeamUrl(
                                         teamBattleV2Controller
                                             .battleEntity.homeTeam.teamLogo),
+                                    imageFailedPath: Assets.teamUiHead01,
                                     width: 21.w,
+                                    height: 21.w,
                                     borderRadius: BorderRadius.circular(11.w),
                                   ),
                                 ),

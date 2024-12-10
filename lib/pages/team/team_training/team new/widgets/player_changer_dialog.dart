@@ -46,8 +46,9 @@ class _PlayerChangerDialogState extends State<PlayerChangerDialog>
             return SizedBox(
               child: Column(
                 children: [
-                  SizedBox(
+                  Container(
                     height: 121.w,
+                    margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
                     width: double.infinity,
                     child: Stack(
                       alignment: Alignment.topCenter,
@@ -64,7 +65,7 @@ class _PlayerChangerDialogState extends State<PlayerChangerDialog>
                                     item: widget.item!,
                                     isSelect: true,
                                   )
-                                : EmptyPlayer(),
+                                : const EmptyPlayer(),
                           ),
                         ),
                       ],

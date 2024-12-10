@@ -16,6 +16,7 @@ import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_leader/game_leader_widget.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_over/game_over_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/mark_animation_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/quarter_score/quarter_score_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/start_game_count_down_widget.dart';
@@ -40,48 +41,55 @@ class TeamBattleV2Page extends GetView<TeamBattleV2Controller> {
             showPop: true,
           ),
           bodyWidget: Expanded(
-              child: SingleChildScrollView(
-            child: Column(
-              children: [
-                GestureDetector(
-                    onLongPressUp: () {
-                      print('onLongPressUp---------------');
-                      controller.changeGameSpeed(1);
-                    },
-                    onLongPress: (){
-                      print('onLongPress---------------');
-                      controller.changeGameSpeed(10);
-                    },
-                    child: buildHeader()),
-                Obx(() {
+              child: Column(
+            children: [
+              GestureDetector(
+                  onLongPressUp: () {
+                    print('onLongPressUp---------------');
+                    controller.changeGameSpeed(1);
+                  },
+                  onLongPress: () {
+                    print('onLongPress---------------');
+                    controller.changeGameSpeed(10);
+                  },
+                  child: buildHeader()),
+              Expanded(
+                child: Obx(() {
                   var isGameOver = controller.isGameOver.value;
-                  return AnimatedContainer(
-                    duration: const Duration(milliseconds: 500),
-                    child: isGameOver
-                        ? InkWell(
-                            onTap: () {
-                              controller.reStart();
-                            },
-                            child: buildGameOverWidget(context))
-                        : buildGameWidget(context),
+                  return Stack(
+                    children: [
+                      SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            buildGameWidget(context),
+                            buildLiveText(context),
+                            // WinRateWidget(controller.winRateController),
+                            GetBuilder<TeamBattleV2Controller>(
+                                id: TeamBattleV2Controller.idQuarterScore,
+                                builder: (_) {
+                                  return QuarterScoreWidget();
+                                }),
+                            GameLeaderWidget(
+                              controller: controller.gameLeaderController,
+                            ),
+                            TeamStatsWidget(
+                              controller: controller.teamStatsController,
+                            ),
+                            20.vGap,
+                          ],
+                        ),
+                      ),
+                      if (isGameOver) const Positioned(
+                        top: 0,
+                          bottom: 0,
+                          left: 0,
+                          right: 0,
+                          child: GameOverWidget())
+                    ],
                   );
                 }),
-                buildLiveText(context),
-                WinRateWidget(controller.winRateController),
-                GetBuilder<TeamBattleV2Controller>(
-                    id: TeamBattleV2Controller.idQuarterScore,
-                    builder: (_) {
-                      return QuarterScoreWidget();
-                    }),
-                GameLeaderWidget(
-                  controller: controller.gameLeaderController,
-                ),
-                TeamStatsWidget(
-                  controller: controller.teamStatsController,
-                ),
-                20.vGap,
-              ],
-            ),
+              )
+            ],
           )),
         );
       },
@@ -96,157 +104,6 @@ class TeamBattleV2Page extends GetView<TeamBattleV2Controller> {
             child: buildBasketballCourt(context)),
         buildPlayersWidget(),
         10.vGap,
-      ],
-    );
-  }
-
-  Widget buildGameOverWidget(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: double.infinity,
-          padding: EdgeInsets.symmetric(horizontal: 18.w),
-          decoration: BoxDecoration(
-              color: AppColors.cFFFFFF,
-              borderRadius: BorderRadius.circular(9.w)),
-          height: 280.w,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Positioned(
-                top: 52.w,
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Text(
-                    "FINAL STATEMENT",
-                    style: TextStyle(
-                        fontSize: 48.sp,
-                        fontWeight: FontWeight.bold,
-                        height: 1,
-                        fontFamily: FontFamily.fOswaldBold,
-                        foreground: Paint()
-                          ..style = PaintingStyle.stroke
-                          ..strokeWidth = 1.w
-                          ..color = AppColors.ccccccc),
-                  ),
-                ),
-              ),
-              Positioned(
-                  top: 78.w,
-                  left: 0,
-                  right: 0,
-                  child: Row(
-                    children: [
-                      Expanded(
-                          child: Image.asset(
-                        Assets.managerUiManagerGameoverBg2,
-                        fit: BoxFit.fitWidth,
-                      )),
-                      Expanded(
-                          child: Transform(
-                        alignment: Alignment.center,
-                        transform: Matrix4.identity()..scale(-1.0, 1.0),
-                        child: Image.asset(
-                          Assets.managerUiManagerGameoverBg2,
-                          fit: BoxFit.fitWidth,
-                        ),
-                      ))
-                    ],
-                  )),
-              Positioned(
-                  top: 31.w,
-                  child: Text(
-                    "VICTORY",
-                    style: 42.w7(
-                        color: AppColors.c000000,
-                        height: 1,
-                        fontFamily: FontFamily.fOswaldBold),
-                  )),
-              Positioned(
-                  top: 100.w,
-                  child: Column(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            color: AppColors.c000000,
-                            border: Border.all(
-                              color: AppColors.cB3B3B3,
-                              width: 1.w,
-                            ),
-                            borderRadius: BorderRadius.circular(15.w)),
-                        height: 31.w,
-                        width: 243.w,
-                        padding: EdgeInsets.only(left: 18.w, right: 37.w),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            IconWidget(
-                                iconWidth: 21.w,
-                                icon: Assets.teamUiIconTrophy01),
-                            Text(
-                              "15300",
-                              style: 16.w5(
-                                  color: AppColors.cFFFFFF,
-                                  height: 1,
-                                  fontFamily: FontFamily.fOswaldMedium),
-                            ),
-                            Stack(
-                              children: [
-                                IconWidget(
-                                  iconWidth: 7.w,
-                                  icon: Assets.commonUiCommonIconSystemJumpto,
-                                  iconColor: AppColors.cB3B3B3,
-                                ),
-                                Container(
-                                    margin: EdgeInsets.only(left: 7.w),
-                                    child: IconWidget(
-                                        iconWidth: 7.w,
-                                        icon: Assets
-                                            .commonUiCommonIconSystemJumpto,
-                                        iconColor: AppColors.cB3B3B3)),
-                              ],
-                            ),
-                            Text(
-                              "15300",
-                              style: 16.w5(
-                                  color: AppColors.c2DE298,
-                                  height: 1,
-                                  fontFamily: FontFamily.fOswaldMedium),
-                            ),
-                            IconWidget(
-                              iconWidth: 8.w,
-                              icon: Assets.commonUiCommonIconSystemArrow,
-                              rotateAngle: -90,
-                              iconColor: AppColors.c2DE298,
-                            ),
-                          ],
-                        ),
-                      ),
-                      14.vGap,
-                      Container(
-                        constraints: BoxConstraints(minHeight: 23.w),
-                        child: IconWidget(
-                            iconWidth: 60.w,
-                            icon: Assets.managerUiManagerGift03),
-                      ),
-                      6.vGap,
-                      Container(
-                        constraints: BoxConstraints(maxWidth: 180.w),
-                        child: Text(
-                          "You've got a treasure chest",
-                          textAlign: TextAlign.center,
-                          style: 14.w4(
-                              color: AppColors.c000000,
-                              fontFamily: FontFamily.fRobotoRegular,
-                              height: 1.2),
-                        ),
-                      )
-                    ],
-                  )),
-            ],
-          ),
-        ),
-        9.vGap,
       ],
     );
   }
@@ -686,7 +543,7 @@ class TeamBattleV2Page extends GetView<TeamBattleV2Controller> {
   Widget buildHeader() {
     return Container(
       height: 101.w,
-      margin: EdgeInsets.only(bottom: 9.w),
+      margin: EdgeInsets.only(bottom: 1.w),
       decoration: BoxDecoration(color: AppColors.cFFFFFF, boxShadow: [
         BoxShadow(
             color: AppColors.cDEDEDE,
@@ -704,9 +561,8 @@ class TeamBattleV2Page extends GetView<TeamBattleV2Controller> {
                 16.hGap,
                 Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(19.w),
-                    border: Border.all(color: AppColors.cD60D20,width: 1.w)
-                  ),
+                      borderRadius: BorderRadius.circular(19.w),
+                      border: Border.all(color: AppColors.cD60D20, width: 1.w)),
                   child: ImageWidget(
                     url: Utils.getTeamUrl(
                         teamBattleController.battleEntity.homeTeam.teamLogo),
@@ -771,8 +627,7 @@ class TeamBattleV2Page extends GetView<TeamBattleV2Controller> {
                 Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(19.w),
-                      border: Border.all(color: AppColors.c1F8FE5,width: 1.w)
-                  ),
+                      border: Border.all(color: AppColors.c1F8FE5, width: 1.w)),
                   child: ImageWidget(
                     url: Utils.getTeamUrl(
                         teamBattleController.battleEntity.awayTeam.teamLogo),

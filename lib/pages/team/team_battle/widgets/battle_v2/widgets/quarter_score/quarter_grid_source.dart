@@ -76,9 +76,10 @@ class QuarterGridSource extends DataGridSource {
               border: Border(
                   bottom: BorderSide(color: AppColors.cE6E6E6, width: 1))),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              16.hGap,
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(11.w),
@@ -88,6 +89,7 @@ class QuarterGridSource extends DataGridSource {
                   url: Utils.getAvaterUrl(teamInfo.team.teamLogo),
                   borderRadius: BorderRadius.circular(10.w),
                   width: 20.w,
+                  height: 20.w,
                 ),
               ),
               5.hGap,
@@ -96,6 +98,7 @@ class QuarterGridSource extends DataGridSource {
                 style: 12.w4(
                     color: AppColors.c000000,
                     height: 1,
+                    overflow: TextOverflow.ellipsis,
                     fontFamily: FontFamily.fOswaldRegular),
               )
             ],
