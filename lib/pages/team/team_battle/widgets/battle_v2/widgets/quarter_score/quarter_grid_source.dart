@@ -30,9 +30,9 @@ class QuarterGridSource extends DataGridSource {
   List<DataGridRow> _buildDataGridRows() {
     List<DataGridRow> result = [];
     List<DataGridCell<dynamic>> list = getQuarters(controller.eventOnScreenMap,
-        true, LineOne(controller.battleEntity.homeTeam, AppColors.cD60D20));
+        true, LineOne(controller.battleEntity.homeTeam, AppColors.c1F8FE5));
     List<DataGridCell<dynamic>> list2 = getQuarters(controller.eventOnScreenMap,
-        false, LineOne(controller.battleEntity.awayTeam, AppColors.c1F8FE5));
+        false, LineOne(controller.battleEntity.awayTeam, AppColors.cD60D20));
     result.add(DataGridRow(cells: list));
     result.add(DataGridRow(cells: list2));
     return result;

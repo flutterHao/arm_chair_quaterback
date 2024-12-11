@@ -80,7 +80,7 @@ class TeamStatsWidget extends StatelessWidget {
                     Container(
                       decoration: BoxDecoration(
                           border:
-                              Border.all(color: AppColors.cD60D20, width: 1.w),
+                              Border.all(color: AppColors.c1F8FE5, width: 1.w),
                           borderRadius: BorderRadius.circular(15.w)),
                       child: ImageWidget(
                         url: Utils.getAvaterUrl(homeInfo.teamLogo),
@@ -111,7 +111,7 @@ class TeamStatsWidget extends StatelessWidget {
                     Container(
                       decoration: BoxDecoration(
                           border:
-                              Border.all(color: AppColors.c1F8FE5, width: 1.w),
+                              Border.all(color: AppColors.cD60D20, width: 1.w),
                           borderRadius: BorderRadius.circular(15.w)),
                       child: ImageWidget(
                         url: Utils.getAvaterUrl(awayInfo.teamLogo),

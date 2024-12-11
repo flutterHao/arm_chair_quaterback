@@ -119,6 +119,16 @@ PkEventUpdatedEntity $PkEventUpdatedEntityFromJson(Map<String, dynamic> json) {
   if (useSkillSuccess != null) {
     pkEventUpdatedEntity.useSkillSuccess = useSkillSuccess;
   }
+  final double? awayPreparationLevel = jsonConvert.convert<double>(
+      json['awayPreparationLevel']);
+  if (awayPreparationLevel != null) {
+    pkEventUpdatedEntity.awayPreparationLevel = awayPreparationLevel;
+  }
+  final double? homePreparationLevel = jsonConvert.convert<double>(
+      json['homePreparationLevel']);
+  if (homePreparationLevel != null) {
+    pkEventUpdatedEntity.homePreparationLevel = homePreparationLevel;
+  }
   return pkEventUpdatedEntity;
 }
 
@@ -151,6 +161,8 @@ Map<String, dynamic> $PkEventUpdatedEntityToJson(PkEventUpdatedEntity entity) {
   data['stepHomeScore'] = entity.stepHomeScore;
   data['stepId'] = entity.stepId;
   data['useSkillSuccess'] = entity.useSkillSuccess;
+  data['awayPreparationLevel'] = entity.awayPreparationLevel;
+  data['homePreparationLevel'] = entity.homePreparationLevel;
   return data;
 }
 
@@ -181,6 +193,8 @@ extension PkEventUpdatedEntityExtension on PkEventUpdatedEntity {
     int? stepHomeScore,
     int? stepId,
     bool? useSkillSuccess,
+    double? awayPreparationLevel,
+    double? homePreparationLevel,
   }) {
     return PkEventUpdatedEntity()
       ..alertList = alertList ?? this.alertList
@@ -207,7 +221,10 @@ extension PkEventUpdatedEntityExtension on PkEventUpdatedEntity {
       ..stepAwayScore = stepAwayScore ?? this.stepAwayScore
       ..stepHomeScore = stepHomeScore ?? this.stepHomeScore
       ..stepId = stepId ?? this.stepId
-      ..useSkillSuccess = useSkillSuccess ?? this.useSkillSuccess;
+      ..useSkillSuccess = useSkillSuccess ?? this.useSkillSuccess
+      ..awayPreparationLevel = awayPreparationLevel ?? this.awayPreparationLevel
+      ..homePreparationLevel = homePreparationLevel ??
+          this.homePreparationLevel;
   }
 }
 

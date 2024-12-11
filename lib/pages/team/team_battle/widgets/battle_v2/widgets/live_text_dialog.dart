@@ -201,30 +201,33 @@ class _LiveTextDialogState extends State<LiveTextDialogWidget>
                                             fontFamily:
                                                 FontFamily.fRobotoRegular),
                                       )),
-                                      9.hGap,
-                                      Text.rich(
-                                        TextSpan(children: [
-                                          TextSpan(
-                                              text: "${item.homeScore}",
-                                              style: TextStyle(
-                                                color: item.score && item.isHomePlayer
-                                                    ? AppColors.cD60D20
-                                                    : AppColors.c4D4D4D,
-                                              )),
-                                          const TextSpan(text: "-"),
-                                          TextSpan(
-                                              text: "${item.awayScore}",
-                                              style: TextStyle(
-                                                color:
-                                                item.score && !item.isHomePlayer
-                                                    ? AppColors.c1F8FE5
-                                                    : AppColors.c4D4D4D,
-                                              )),
-                                        ]),
-                                        style: 12.w4(
-                                            color: AppColors.c4D4D4D,
-                                            height: 1,
-                                            fontFamily: FontFamily.fRobotoRegular),
+                                      Container(
+                                        width: 50.w,
+                                        alignment: Alignment.center,
+                                        child: !item.score?const SizedBox.shrink():Text.rich(
+                                          TextSpan(children: [
+                                            TextSpan(
+                                                text: "${item.homeScore}",
+                                                style: TextStyle(
+                                                  color: item.score && item.isHomePlayer
+                                                      ? AppColors.cD60D20
+                                                      : AppColors.c4D4D4D,
+                                                )),
+                                            const TextSpan(text: "-"),
+                                            TextSpan(
+                                                text: "${item.awayScore}",
+                                                style: TextStyle(
+                                                  color:
+                                                  item.score && !item.isHomePlayer
+                                                      ? AppColors.c1F8FE5
+                                                      : AppColors.c4D4D4D,
+                                                )),
+                                          ]),
+                                          style: 12.w4(
+                                              color: AppColors.c4D4D4D,
+                                              height: 1,
+                                              fontFamily: FontFamily.fRobotoRegular),
+                                        ),
                                       ),
                                     ],
                                   ),

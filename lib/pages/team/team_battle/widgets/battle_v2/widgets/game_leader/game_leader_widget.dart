@@ -23,7 +23,9 @@ import 'package:get/get.dart';
 ///created at 2024/12/6/15:54
 
 class GameLeaderWidget extends StatelessWidget {
-  const GameLeaderWidget({super.key, required this.controller});
+  const GameLeaderWidget({super.key, required this.controller,this.title});
+
+  final String? title;
 
   final GameLeaderController controller;
 
@@ -43,7 +45,7 @@ class GameLeaderWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "GAME LEADERS",
+                    title??"GAME LEADERS",
                     style: 30.w7(
                         color: AppColors.c000000,
                         fontFamily: FontFamily.fOswaldBold),

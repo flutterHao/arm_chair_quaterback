@@ -35,6 +35,7 @@ import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pick_type_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_event_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_player_updated_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_start_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_day_data_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_status_entity.dart';
@@ -609,6 +610,30 @@ class JsonConvert {
       return data.map<PkPlayerUpdatedPlayers>((Map<String, dynamic> e) =>
           PkPlayerUpdatedPlayers.fromJson(e)).toList() as M;
     }
+    if (<PkResultUpdatedEntity>[] is M) {
+      return data.map<PkResultUpdatedEntity>((Map<String, dynamic> e) =>
+          PkResultUpdatedEntity.fromJson(e)).toList() as M;
+    }
+    if (<PkResultUpdatedTeamResult>[] is M) {
+      return data.map<PkResultUpdatedTeamResult>((Map<String, dynamic> e) =>
+          PkResultUpdatedTeamResult.fromJson(e)).toList() as M;
+    }
+    if (<PkResultUpdatedAwayTeamResultScoreBoardDetailList>[] is M) {
+      return data.map<PkResultUpdatedAwayTeamResultScoreBoardDetailList>((
+          Map<String, dynamic> e) =>
+          PkResultUpdatedAwayTeamResultScoreBoardDetailList.fromJson(e))
+          .toList() as M;
+    }
+    if (<PkResultUpdatedHomeTeamResultScoreBoardDetailList>[] is M) {
+      return data.map<PkResultUpdatedHomeTeamResultScoreBoardDetailList>((
+          Map<String, dynamic> e) =>
+          PkResultUpdatedHomeTeamResultScoreBoardDetailList.fromJson(e))
+          .toList() as M;
+    }
+    if (<PkResultUpdatedPlayerResults>[] is M) {
+      return data.map<PkResultUpdatedPlayerResults>((Map<String, dynamic> e) =>
+          PkResultUpdatedPlayerResults.fromJson(e)).toList() as M;
+    }
     if (<PkStartUpdatedEntity>[] is M) {
       return data.map<PkStartUpdatedEntity>((Map<String, dynamic> e) =>
           PkStartUpdatedEntity.fromJson(e)).toList() as M;
@@ -980,6 +1005,14 @@ class JsonConvertClassCollection {
     (PkEventUpdatedHomeInfo).toString(): PkEventUpdatedHomeInfo.fromJson,
     (PkPlayerUpdatedEntity).toString(): PkPlayerUpdatedEntity.fromJson,
     (PkPlayerUpdatedPlayers).toString(): PkPlayerUpdatedPlayers.fromJson,
+    (PkResultUpdatedEntity).toString(): PkResultUpdatedEntity.fromJson,
+    (PkResultUpdatedTeamResult).toString(): PkResultUpdatedTeamResult.fromJson,
+    (PkResultUpdatedAwayTeamResultScoreBoardDetailList)
+        .toString(): PkResultUpdatedAwayTeamResultScoreBoardDetailList.fromJson,
+    (PkResultUpdatedHomeTeamResultScoreBoardDetailList)
+        .toString(): PkResultUpdatedHomeTeamResultScoreBoardDetailList.fromJson,
+    (PkResultUpdatedPlayerResults).toString(): PkResultUpdatedPlayerResults
+        .fromJson,
     (PkStartUpdatedEntity).toString(): PkStartUpdatedEntity.fromJson,
     (PlayerDayDataEntity).toString(): PlayerDayDataEntity.fromJson,
     (PlayerStatusEntity).toString(): PlayerStatusEntity.fromJson,

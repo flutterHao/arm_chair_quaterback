@@ -250,7 +250,7 @@ class TacticalContrast extends StatelessWidget {
                                                 : AppColors.cTransparent,
                                             width: 1.w),
                                         borderRadius:
-                                            BorderRadius.circular(4.w),
+                                            BorderRadius.circular(5.w),
                                         boxShadow: [
                                           BoxShadow(
                                             color: AppColors.c000000
@@ -429,13 +429,16 @@ class TacticalContrast extends StatelessWidget {
                             .where((e) => e.id == item.id);
                         bool contain = where?.isNotEmpty == true;
                         return Container(
+                          height: 58.w,
+                          width: 43.w,
+                          margin: EdgeInsets.only(right: 7.w),
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(4.w),
+                              borderRadius: BorderRadius.circular(5.w),
                               border: Border.all(
                                   color: contain
                                       ? AppColors.c2DE298
                                       : AppColors.cTransparent,
-                                  width: 2.w)),
+                                  width: 1.w)),
                           child: TacticCard(
                             num: item.face,
                             color: item.color,

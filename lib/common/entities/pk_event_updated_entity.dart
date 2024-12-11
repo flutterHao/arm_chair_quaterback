@@ -31,6 +31,8 @@ class PkEventUpdatedEntity {
   late int stepHomeScore = 0;
   late int stepId = 0;
   late bool useSkillSuccess = false;
+  late double awayPreparationLevel;
+  late double homePreparationLevel;
 
   PkEventUpdatedEntity();
 

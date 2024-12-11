@@ -24,12 +24,14 @@ class UserInfoBar extends StatelessWidget {
       this.title = "Title",
       this.enable = true,
       this.routeId,
-      this.showPop = false});
+      this.showPop = false,
+      this.onClickPop,});
 
   final String title;
   final bool enable; //头像是否可点击显示弹框
   final int? routeId;
   final bool showPop;
+  final GestureTapCallback? onClickPop;
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +70,7 @@ class UserInfoBar extends StatelessWidget {
                         showPop ? 0.hGap : 16.hGap,
                         if (showPop)
                           InkWell(
-                            onTap: () {
+                            onTap: onClickPop??() {
                               Navigator.pop(context);
                             },
                             child: Container(

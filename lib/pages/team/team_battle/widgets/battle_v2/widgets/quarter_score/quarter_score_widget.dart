@@ -24,7 +24,7 @@ class QuarterScoreWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     teamBattleV2Controller = Get.find();
-    var list = ['1st', '2nd', '3rd', '4th', "ot1"];
+    var list = ['1st', '2nd', '3rd', '4th'];
     if (teamBattleV2Controller.quarter.value > list.length) {
       var i = teamBattleV2Controller.quarter.value - list.length;
       var list2 = List.generate(i, (index) {
@@ -50,6 +50,7 @@ class QuarterScoreWidget extends StatelessWidget {
             footerFrozenColumnsCount: 1,
             rowHeight: 34.w,
             headerRowHeight: 30.w,
+            gridLinesVisibility: GridLinesVisibility.none,
             verticalScrollPhysics: const NeverScrollableScrollPhysics(),
             source: QuarterGridSource(teamBattleV2Controller, list),
             columns: [

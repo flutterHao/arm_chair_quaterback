@@ -7,6 +7,7 @@ import 'package:arm_chair_quaterback/common/entities/competition_venue_entity.da
 import 'package:arm_chair_quaterback/common/entities/game_event_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_event_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_player_updated_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/web_socket/web_socket_entity.dart';
 import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
@@ -107,6 +108,10 @@ class TeamBattleV2Controller extends GetxController
 
   late Size size;
 
+  ///是否收到结算事件，代表比赛是否结束
+  bool isPkResultUpdated = false;
+  PkResultUpdatedEntity? pkResultUpdatedEntity;
+
   /// 在 widget 内存中分配后立即调用。
   @override
   void onInit() {
@@ -142,6 +147,8 @@ class TeamBattleV2Controller extends GetxController
       }
       if (result.serviceId == Api.wsPkResultUpdated) {
         ///比赛结果
+        isPkResultUpdated = true;
+        pkResultUpdatedEntity = PkResultUpdatedEntity.fromJson(result.payload);
       }
       if (result.serviceId == Api.wsPkEventUpdated) {
         PkEventUpdatedEntity pkEventUpdatedEntity =
@@ -373,13 +380,13 @@ class TeamBattleV2Controller extends GetxController
     }
     gameLeaderController.setEvent(event);
     teamStatsController.setEvent(event);
-    update([idLiveText, idGameScore, idPlayers, idQuarterScore]);
+    update([idLiveText, idGameScore, idPlayers, idQuarterScore, idReadiness]);
     Future.delayed(Duration.zero, () {
-      if(context.mounted) {
+      if (context.mounted) {
         liveTextScrollController.animateTo(
-          ((eventOnScreenMap[key] ?? []).length * 44.w),
-          duration: Duration(milliseconds: (800 / gameSpeed).toInt()),
-          curve: Curves.easeInOut);
+            ((eventOnScreenMap[key] ?? []).length * 44.w),
+            duration: Duration(milliseconds: (800 / gameSpeed).toInt()),
+            curve: Curves.easeInOut);
       }
     });
     eventCount++;
@@ -781,6 +788,8 @@ class TeamBattleV2Controller extends GetxController
 
   static String get idQuarterScore => "id_quarter_score";
 
+  static String get idReadiness => "id_readiness";
+
   List<GameEvent> getQuarterEvents() {
     return eventOnScreenMap[Utils.getSortWithInt(quarter.value)] ?? [];
   }
@@ -859,6 +868,28 @@ class TeamBattleV2Controller extends GetxController
         Get.find<TeamBattleController>().pkStartUpdatedEntity;
     var bool = startUpdatedEntity?.pokerWinner == playerId;
     return bool ? -90 : 90;
+  }
+
+  void jumpGame() {
+    if (isGameOver.value) {
+      Get.back();
+      return;
+    }
+    if (!isPkResultUpdated) {
+      EasyLoading.showToast("Wait a moment");
+      return;
+    }
+    quarterTimeCountDownAnimationController.stop();
+    eventOnScreenMap = eventCacheMap;
+    update([idLiveText, idGameScore, idPlayers, idQuarterScore, idReadiness]);
+    quarter.value = 4;
+    var event = eventOnScreenMap[Utils.getSortWithInt(quarter.value)]!.last;
+    gameLeaderController.setEvent(event);
+    teamStatsController.setEvent(event);
+    quarterGameCountDown.value = 0;
+    eventEngine?.cancel();
+    isGameOver.value = true;
+    gameSpeed = 1;
   }
 }
 

@@ -86,12 +86,14 @@ class TeamBattleController extends GetxController
     await Future.wait([
       CacheApi.getGameEvent(),
       CacheApi.getCompetitionVenue(),
+      CacheApi.getNBAPlayerInfo(),
+      CacheApi.getNBATeamDefine()
     ]).then((result) {
       _timer?.cancel();
       _timer = Timer(const Duration(seconds: 5),timeout);
       subscription = WSInstance.teamMatch().listen((result) {
         // developer.log('result.serviceId--${result.serviceId}--:${result.payload}');
-        print('result.serviceId--${result.serviceId}--:${result.payload}');
+        // print('result.serviceId--${result.serviceId}--:${result.payload}');
         _timer?.cancel();
         if (result.serviceId == Api.wsJazminError && step.value == 1) {
           print('result.serviceId--${result.serviceId}--:${result.payload}');
