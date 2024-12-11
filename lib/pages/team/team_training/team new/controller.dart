@@ -178,7 +178,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
     if (!isShowDialog.value) {
       isShowDialog.value = true;
       showDialog(
-          barrierDismissible: false,
+          // barrierDismissible: false,
           useSafeArea: false,
           context: Get.context!,
           builder: (context) {
@@ -202,7 +202,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
       BuildContext context, bool isBag, TeamPlayerInfoEntity item) async {
     /// 如果是上阵
     if (!isBag) {
-      if (isShowDialog.value) {
+      if (isShowDialog.value && !item2.isChange.value) {
         item2 = item;
         item2.isChange.value = true;
       } else {
@@ -232,7 +232,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
         showChangeDialog(item);
       }
     }
-    Log.d("球员${item.uuid}\n ${item1.uuid} \n ${item2.uuid}");
+    // Log.d("球员${item.uuid}\n ${item1.uuid} \n ${item2.uuid}");
   }
 
   Future changeTeamPlayer(BuildContext context, {bool isDown = false}) async {
@@ -240,6 +240,8 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
         isAdd ? null : item1.uuid, isDown ? null : item2.uuid);
     myBagList = await TeamApi.getMyBagPlayers();
     myBagList.sort(comparePlayers);
+    item1.uuid = "";
+    item2.uuid = "";
     item1.isChange.value = false;
     item2.isChange.value = false;
     isAdd = false;
@@ -247,11 +249,8 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
     isShowDialog.value = false;
     animationCtrl.reverse().then(
       (value) {
-        try {
-          Navigator.pop(context);
-        } catch (e) {
-          Navigator.pop(context);
-        }
+        // Navigator.pop(context);
+        Get.back();
       },
     );
   }

@@ -565,6 +565,7 @@ class TacticItem extends GetView<TrainingController> {
                         child: SmallTacticCard(
                           num: buff.face,
                           color: buff.color,
+                          width: 35.w,
                         ))
                 ],
               ),

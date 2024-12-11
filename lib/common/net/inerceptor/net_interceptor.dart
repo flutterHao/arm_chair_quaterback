@@ -88,9 +88,9 @@ class NetInterceptor extends InterceptorsWrapper {
         'url -> ${eInfo.url} \n error.code -> ${eInfo.code} \n error.message -> ${eInfo.message}');
 
     ///服务器错误提示
-    if (eInfo.code >= 100000) {
-      ErrorUtils.toast(err);
-    }
+    // if (eInfo.code >= 100000) {
+    //   ErrorUtils.toast(err);
+    // }
     handler.next(err);
   }
 
@@ -157,9 +157,10 @@ class NetInterceptor extends InterceptorsWrapper {
         'url -> ${eInfo.url} \n error.code -> ${eInfo.code} \n error.message -> ${eInfo.message}');
 
     ///服务器返回错误
-    if (eInfo.code >= 100000) {
-      // EasyLoading.showError(eInfo.message);
-    }
+    // if (eInfo.code >= 100000) {
+    //   EasyLoading.showError(eInfo.message);
+    // }
+    EasyLoading.showError(eInfo.message);
   }
 
   /// 错误信息

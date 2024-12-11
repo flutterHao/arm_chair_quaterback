@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2024-12-10 12:11:02
+ * @LastEditTime: 2024-12-11 21:04:27
  */
 /*
  * @Description: 
@@ -20,6 +20,7 @@ import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
+import 'package:arm_chair_quaterback/common/widgets/transitions/slide_transition_x.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/widgets/fire_dialog.dart';
 import 'package:flutter/material.dart';
@@ -245,132 +246,168 @@ class PlayerItem extends GetView<TeamController> {
       color: Colors.white,
       height: 121.w,
       width: double.infinity,
-      child: Row(
+      child: Stack(
         children: [
           _playerPosition(),
-          13.hGap,
-          PlayerCard(
-            backgroundColor: AppColors.cE1E1E1,
-            playerId: item.playerId,
-            width: 73.w,
-            height: 93.w,
-            isMyPlayer: true,
-            grade:
-                Utils.formatGrade(Utils.getPlayBaseInfo(item.playerId).grade),
-            level: item.breakThroughGrade,
-          ),
-          11.hGap,
-          _playerInfo(),
-          9.hGap,
-          if (!isSelect)
-            controller.isFire && isBag
-                ? MtInkwell(
-                    onTap: () {
-                      //解雇
-                      showModalBottomSheet(
-                          context: context,
-                          isScrollControlled: true,
-                          builder: (context) {
-                            return FireDialog(item: item);
-                          });
-                    },
-                    child: IconWidget(
-                      iconWidth: 12.w,
-                      backgroudWitdh: 28.w,
-                      backgroudheight: 28.w,
-                      borderRadius: BorderRadius.circular(9.w),
-                      backgroudColor: AppColors.cD60D20,
-                      icon: Assets.iconUiIconDelete02,
-                      iconColor: AppColors.cFFFFFF,
-                    ),
-                  )
-                : MtInkwell(
-                    onTap: () {
-                      //换人
-                      if (item.position > 0) {
-                        String p = item.position > 0
-                            ? Utils.getPosition(item.position)
-                            : Utils.getPlayBaseInfo(item.playerId).position;
-                        int bagCount = controller.myBagList
-                            .where((e) =>
-                                Utils.getPlayBaseInfo(e.playerId)
-                                    .position
-                                    .contains(p) &&
-                                e.position < 0)
-                            .length;
-                        int count = 0;
-                        if (item.position < 0) {
-                          count = controller.myTeamEntity.teamPlayers
-                              .where((e) => Utils.getPlayBaseInfo(e.playerId)
-                                  .position
-                                  .contains(p))
-                              .length;
-                        } else if (item.position > 0) {
-                          int teamCount = controller.myTeamEntity.teamPlayers
-                              .where((e) =>
-                                  Utils.getPlayBaseInfo(e.playerId)
-                                      .position
-                                      .contains(p) &&
-                                  e.position == 0)
-                              .length;
-                          count = teamCount + bagCount;
-                        } else if (item.position == 0) {
-                          int teamCount = controller.myTeamEntity.teamPlayers
-                              .where((e) =>
-                                  Utils.getPlayBaseInfo(e.playerId)
-                                      .position
-                                      .contains(p) &&
-                                  e.position > 0)
-                              .length;
-                          count = teamCount + bagCount;
-                        }
-
-                        if (count == 0) {
-                          EasyLoading.showToast(
-                              "No players in the same position");
-                          return;
-                        }
-                      }
-                      // if (controller.isShowDialog.value) {
-                      //   controller.item2 = item;
-                      //   controller.item2.isChange.value = true;
-                      // }
-                      controller.playerChangeTap(context, isBag, item);
-                    },
-                    child: IconWidget(
-                      iconWidth: 17.w,
-                      backgroudWitdh: 36.w,
-                      backgroudheight: 36.w,
-                      borderRadius: BorderRadius.circular(9.w),
-                      backgroudColor: AppColors.c000000,
-                      icon: Assets.iconUiIconSwitch02,
-                      iconColor: AppColors.cFFFFFF,
-                    ),
-                  ),
-          if (item.position == 0 && controller.isShowDialog.value && isSelect)
-            MtInkwell(
-              onTap: () async {
-                //下阵容
-                controller.item1.isChange.value = false;
-                controller.item2.isChange.value = false;
-                controller.isAdd = false;
-                await controller.changeTeamPlayer(context, isDown: true);
-                if (onDownCallBack != null) {
-                  onDownCallBack!();
-                }
-              },
-              child: Container(
-                width: 36.w,
-                height: 36.w,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(9.w),
-                    border: Border.all(color: AppColors.c666666, width: 1)),
-                child: IconWidget(
-                    iconWidth: 18.w, icon: Assets.managerUiManagerLineupUnload),
+          Row(
+            children: [
+              // _playerPosition(),
+              SizedBox(
+                width: 16.w,
               ),
-            ),
-          16.hGap,
+              Expanded(
+                child: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 300),
+                  transitionBuilder:
+                      (Widget child, Animation<double> animation) {
+                    //  var tween = Tween(begin: const Offset(1, 0), end: const Offset(0, 0));
+                    return SlideTransitionX(
+                      direction: AxisDirection.left,
+                      position: animation,
+                      child: child,
+                    );
+                  },
+                  child: Row(
+                    key: ValueKey(item.uuid),
+                    children: [
+                      13.hGap,
+                      PlayerCard(
+                        backgroundColor: AppColors.cE1E1E1,
+                        playerId: item.playerId,
+                        width: 73.w,
+                        height: 93.w,
+                        isMyPlayer: true,
+                        grade: Utils.formatGrade(
+                            Utils.getPlayBaseInfo(item.playerId).grade),
+                        level: item.breakThroughGrade,
+                      ),
+                      11.hGap,
+                      _playerInfo(),
+                      9.hGap,
+                      if (!isSelect)
+                        controller.isFire && isBag
+                            ? MtInkwell(
+                                onTap: () {
+                                  //解雇
+                                  showModalBottomSheet(
+                                      context: context,
+                                      isScrollControlled: true,
+                                      builder: (context) {
+                                        return FireDialog(item: item);
+                                      });
+                                },
+                                child: IconWidget(
+                                  iconWidth: 12.w,
+                                  backgroudWitdh: 28.w,
+                                  backgroudheight: 28.w,
+                                  borderRadius: BorderRadius.circular(9.w),
+                                  backgroudColor: AppColors.cD60D20,
+                                  icon: Assets.iconUiIconDelete02,
+                                  iconColor: AppColors.cFFFFFF,
+                                ),
+                              )
+                            : MtInkwell(
+                                onTap: () {
+                                  //换人
+                                  if (item.position > 0) {
+                                    String p = item.position > 0
+                                        ? Utils.getPosition(item.position)
+                                        : Utils.getPlayBaseInfo(item.playerId)
+                                            .position;
+                                    int bagCount = controller.myBagList
+                                        .where((e) =>
+                                            Utils.getPlayBaseInfo(e.playerId)
+                                                .position
+                                                .contains(p) &&
+                                            e.position < 0)
+                                        .length;
+                                    int count = 0;
+                                    if (item.position < 0) {
+                                      count = controller
+                                          .myTeamEntity.teamPlayers
+                                          .where((e) =>
+                                              Utils.getPlayBaseInfo(e.playerId)
+                                                  .position
+                                                  .contains(p))
+                                          .length;
+                                    } else if (item.position > 0) {
+                                      int teamCount = controller
+                                          .myTeamEntity.teamPlayers
+                                          .where((e) =>
+                                              Utils.getPlayBaseInfo(e.playerId)
+                                                  .position
+                                                  .contains(p) &&
+                                              e.position == 0)
+                                          .length;
+                                      count = teamCount + bagCount;
+                                    } else if (item.position == 0) {
+                                      int teamCount = controller
+                                          .myTeamEntity.teamPlayers
+                                          .where((e) =>
+                                              Utils.getPlayBaseInfo(e.playerId)
+                                                  .position
+                                                  .contains(p) &&
+                                              e.position > 0)
+                                          .length;
+                                      count = teamCount + bagCount;
+                                    }
+
+                                    if (count == 0) {
+                                      EasyLoading.showToast(
+                                          "No players in the same position");
+                                      return;
+                                    }
+                                  }
+                                  // if (controller.isShowDialog.value) {
+                                  //   controller.item2 = item;
+                                  //   controller.item2.isChange.value = true;
+                                  // }
+                                  controller.playerChangeTap(
+                                      context, isBag, item);
+                                },
+                                child: IconWidget(
+                                  iconWidth: 17.w,
+                                  backgroudWitdh: 36.w,
+                                  backgroudheight: 36.w,
+                                  borderRadius: BorderRadius.circular(9.w),
+                                  backgroudColor: AppColors.c000000,
+                                  icon: Assets.iconUiIconSwitch02,
+                                  iconColor: AppColors.cFFFFFF,
+                                ),
+                              ),
+                    ],
+                  ),
+                ),
+              ),
+              if (item.position == 0 &&
+                  controller.isShowDialog.value &&
+                  isSelect)
+                MtInkwell(
+                  onTap: () async {
+                    //下阵容
+                    controller.item1.isChange.value = false;
+                    controller.item2.isChange.value = false;
+                    controller.isAdd = false;
+                    await controller.changeTeamPlayer(context, isDown: true);
+                    if (onDownCallBack != null) {
+                      onDownCallBack!();
+                    }
+                  },
+                  child: Container(
+                    width: 36.w,
+                    height: 36.w,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(9.w),
+                        border: Border.all(color: AppColors.c666666, width: 1)),
+                    child: IconWidget(
+                        iconWidth: 18.w,
+                        icon: Assets.managerUiManagerLineupUnload),
+                  ),
+                ),
+              16.hGap,
+            ],
+          ),
         ],
       ),
     );

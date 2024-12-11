@@ -2,8 +2,10 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-09 19:12:03
- * @LastEditTime: 2024-12-10 16:12:12
+ * @LastEditTime: 2024-12-11 21:03:26
  */
+import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/style/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -50,12 +52,52 @@ class _TopDialogState extends State<TopToastDialog>
         animation: _animation,
         builder: (context, child) {
           return Stack(
+            alignment: Alignment.bottomCenter,
             children: [
               Positioned(
                 left: 0,
                 right: 0,
                 top: hight * (1 - _animation.value),
-                child: widget.child,
+                child: Container(
+                  width: double.infinity,
+                  height: 130.w,
+                  alignment: Alignment.center,
+                  decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      AppColors.cFF7954,
+                      AppColors.cEE6C4D,
+                    ],
+                  )),
+                  child: Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: [
+                      Positioned(
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        child: Text(
+                          "congratulation".toUpperCase(),
+                          style: TextStyle(
+                            fontSize: 53.sp,
+                            height: 0.2,
+                            color: AppColors.cff7c5a.withOpacity(0.67),
+                            fontFamily: FontFamily.fOswaldMedium,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(left: 16.w, top: 47.w),
+                        width: double.infinity,
+                        height: 130.w,
+                        alignment: Alignment.centerLeft,
+                        child: widget.child,
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ],
           );
