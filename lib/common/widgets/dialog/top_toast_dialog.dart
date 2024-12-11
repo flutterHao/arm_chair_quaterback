@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-09 19:12:03
- * @LastEditTime: 2024-12-11 21:03:26
+ * @LastEditTime: 2024-12-11 21:50:09
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/style.dart';
@@ -37,9 +37,9 @@ class _TopDialogState extends State<TopToastDialog>
 
     _controller.forward().then((v) {
       Future.delayed(const Duration(milliseconds: 1000)).then((_) {
-        _controller.reverse().then((v) {
-          Navigator.of(context).pop();
-        });
+        // _controller.reverse().then((v) {
+        //   Navigator.of(context).pop();
+        // });
       });
     });
   }
@@ -82,7 +82,7 @@ class _TopDialogState extends State<TopToastDialog>
                           "congratulation".toUpperCase(),
                           style: TextStyle(
                             fontSize: 53.sp,
-                            height: 0.2,
+                            height: 0.9,
                             color: AppColors.cff7c5a.withOpacity(0.67),
                             fontFamily: FontFamily.fOswaldMedium,
                           ),

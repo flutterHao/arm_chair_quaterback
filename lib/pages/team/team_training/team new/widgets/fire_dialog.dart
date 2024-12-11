@@ -161,120 +161,51 @@ class FireSuccessDialog extends GetView<TeamController> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Row(
       children: [
-        Container(
-          width: double.infinity,
-          height: 130.w,
-          // color: AppColors.cFF7954,
-          // color: AppColors.cFFFFFF,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-              // color: AppColors.cEE6C4D,
-              gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              AppColors.cFF7954,
-              AppColors.cEE6C4D,
-            ],
-          )),
-          child: Stack(
-            alignment: Alignment.bottomCenter,
-            children: [
-              Positioned(
+        Stack(
+          children: [
+            Container(
+              width: 57.w,
+              height: 64.w,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6.w),
+                  color: AppColors.c262626),
+              child: ImageWidget(
+                  width: 57.w,
+                  height: 64.w,
+                  borderRadius: BorderRadius.circular(6.w),
+                  url: Utils.getPlayUrl(item.playerId)),
+            ),
+            Positioned(
                 bottom: 0,
-                left: 0,
                 right: 0,
-                // child: ShaderMask(
-                //   shaderCallback: (Rect bounds) {
-                //     return LinearGradient(
-                //       begin: Alignment.center,
-                //       end: Alignment.bottomCenter,
-                //       colors: [
-                //         //    AppColors.cFF7A58,
-                //         // AppColors.cF87451,
-                //         AppColors.cFF7A58.withOpacity(0.67),
-                //         AppColors.cFF7A58.withOpacity(0.67),
-                //       ],
-                //     ).createShader(bounds);
-                //   },
-                //   child: Text(
-                //     "congratulation".toUpperCase(),
-                //     style: TextStyle(
-                //       fontSize: 53.sp,
-                //       height: 0.9,
-                //       color: AppColors.cFF7A58.withOpacity(0.67),
-                //       fontFamily: FontFamily.fOswaldMedium,
-                //     ),
-                //   ),
-                // ),
-                child: Text(
-                  "congratulation".toUpperCase(),
-                  style: TextStyle(
-                    fontSize: 53.sp,
-                    height: 0.9,
-                    color: AppColors.cff7c5a.withOpacity(0.67),
-                    fontFamily: FontFamily.fOswaldMedium,
-                  ),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.only(left: 16.w, right: 16.w, top: 50.w),
-                width: double.infinity,
-                height: 130.w,
-                child: Row(
-                  children: [
-                    Stack(
-                      children: [
-                        Container(
-                          width: 57.w,
-                          height: 64.w,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(6.w),
-                              color: AppColors.c262626),
-                          child: ImageWidget(
-                              width: 57.w,
-                              height: 64.w,
-                              borderRadius: BorderRadius.circular(6.w),
-                              url: Utils.getPlayUrl(item.playerId)),
-                        ),
-                        Positioned(
-                            bottom: 0,
-                            right: 0,
-                            child: IconWidget(
-                                iconWidth: 20.w,
-                                icon: Assets.commonUiCommonIconLayoff))
-                      ],
-                    ),
-                    SizedBox(width: 14.5.w),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Succeed in firing".toUpperCase(),
-                          style: 19.w4(
-                              color: AppColors.c000000,
-                              height: 1,
-                              fontFamily: FontFamily.fOswaldRegular),
-                        ),
-                        10.vGap,
-                        Text(
-                          "You've burned through ${Utils.formatMoney(controller.getFireMoney(item))} of money",
-                          style: 12.w4(
-                              color: AppColors.c000000,
-                              height: 1,
-                              fontFamily: FontFamily.fRobotoRegular),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ],
-          ),
+                child: IconWidget(
+                    iconWidth: 20.w, icon: Assets.commonUiCommonIconLayoff))
+          ],
         ),
+        SizedBox(width: 14.5.w),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Succeed in firing".toUpperCase(),
+              style: 19.w4(
+                  color: AppColors.c000000,
+                  height: 1,
+                  fontFamily: FontFamily.fOswaldRegular),
+            ),
+            10.vGap,
+            Text(
+              "You've burned through ${Utils.formatMoney(controller.getFireMoney(item))} of money",
+              style: 12.w4(
+                  color: AppColors.c000000,
+                  height: 1,
+                  fontFamily: FontFamily.fRobotoRegular),
+            )
+          ],
+        )
       ],
     );
   }
