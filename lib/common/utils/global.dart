@@ -7,12 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:arm_chair_quaterback/common/services/services.dart';
 import 'package:arm_chair_quaterback/common/store/store.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
 /// 全局静态数据
 class Global {
   /// 初始化
   static Future init() async {
+    EasyLoading.init();
     WidgetsFlutterBinding.ensureInitialized();
     await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
@@ -28,7 +30,7 @@ class Global {
   }
 
   static Future<void> initFirebaseCrashlytics() async {
-    if(!kReleaseMode) return;
+    if (!kReleaseMode) return;
     await Firebase.initializeApp();
     FlutterError.onError = (errorDetails) {
       FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);

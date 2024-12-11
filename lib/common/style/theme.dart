@@ -6,6 +6,7 @@
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'color.dart';
 
@@ -26,7 +27,7 @@ class AppTheme {
     progressIndicatorTheme: const ProgressIndicatorThemeData(
       color: Colors.grey, // 设置全局的 CircularProgressIndicator 颜色
     ),
-    textTheme: TextTheme(),
+    textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
     appBarTheme: const AppBarTheme(
       elevation: 0,
       centerTitle: true,
