@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-11 16:57:58
- * @LastEditTime: 2024-11-22 11:25:23
+ * @LastEditTime: 2024-12-11 15:49:27
  */
 
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
@@ -63,7 +63,7 @@ class CommentController extends GetxController {
   void getReviews(id, {bool isRefresh = false}) {
     userEntity =
         Get.find<HomeController>().userEntiry.teamLoginInfo ?? TeamLoginInfo();
-    const pageSize = 10;
+    const pageSize = 5;
     if (isRefresh) {
       mainList.clear();
       mainPage = 0;

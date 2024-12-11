@@ -84,6 +84,7 @@ class NewsListDetail {
   late List<int> teams = [];
   late List<int> players = [];
   late String imgUrl = "";
+  late List<String> imgList = [];
   @JSONField(deserialize: false)
   late int type = 0;
   @JSONField(deserialize: false)

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-25 15:56:43
- * @LastEditTime: 2024-12-10 11:05:08
+ * @LastEditTime: 2024-12-10 20:43:55
  */
 
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
@@ -41,6 +41,7 @@ class TrainingWidget extends GetView<TrainingController> {
 
   @override
   Widget build(BuildContext context) {
+    // controller.startScroller();
     controller.showAward();
     return GetBuilder<TrainingController>(
         id: "training_page",
@@ -120,7 +121,7 @@ class TrainingWidget extends GetView<TrainingController> {
                                     return Row(
                                       children: [
                                         AnimatedScale(
-                                          duration: 100.milliseconds,
+                                          duration: 150.milliseconds,
                                           scale: controller.showBall.value
                                               ? 1.5
                                               : 1,
@@ -135,7 +136,7 @@ class TrainingWidget extends GetView<TrainingController> {
                                                 int v =
                                                     controller.ballNum.value;
                                                 return AnimatedNum(
-                                                  milliseconds: 500,
+                                                  milliseconds: 150,
                                                   number: v,
                                                   textStyle: 12.w7(
                                                       color: AppColors.cFFFFFF,
@@ -548,7 +549,7 @@ class TrainingWidget extends GetView<TrainingController> {
                               right: -40.w,
                               child: PlayerSelectBox()),
 
-                          Positioned(top: 65.w, child: PlayerArrow()),
+                          Positioned(top: 60.w, child: PlayerArrow()),
 
                           ///金钱奖励
                           Positioned(

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 17:28:14
- * @LastEditTime: 2024-11-24 14:11:08
+ * @LastEditTime: 2024-12-10 21:35:47
  */
 import 'package:arm_chair_quaterback/common/entities/news_banner.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
@@ -133,6 +133,12 @@ class NewsApi {
       return item;
     }).toList();
     return Future.wait(details);
+  }
+
+  static Future<List<NewsListDetail>> getRelevantNews(int newsId) async {
+    List list =
+        await HttpUtil().post(Api.getRelevantNews, data: {"newsId": newsId});
+    return list.map((e) => NewsListDetail.fromJson(e)).toList();
   }
 
   static Future<List<ReviewEntity>> getReviewsByNewsId(

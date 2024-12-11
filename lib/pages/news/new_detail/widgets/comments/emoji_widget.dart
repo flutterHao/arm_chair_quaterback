@@ -2,8 +2,9 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-22 15:19:24
- * @LastEditTime: 2024-11-24 11:57:09
+ * @LastEditTime: 2024-12-11 11:52:07
  */
+import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -56,6 +57,7 @@ class EmojiWidget extends StatelessWidget {
                     Text(
                       "99",
                       style: 12.w4(
+                        fontFamily: FontFamily.fRobotoRegular,
                         color: current.value == index
                             ? AppColors.cEFEFEF
                             : AppColors.c262626,

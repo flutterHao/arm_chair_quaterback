@@ -47,6 +47,8 @@ class Api {
   static const String getAward = "$API_BASE_PATH/NBANews/getTodayAward";
   static const String getGuessTopReviews =
       "$API_BASE_PATH/NBANews/getGuessTopReviews";
+  static const String getRelevantNews =
+      "$API_BASE_PATH/NBANews/getRelevantNews";
 
   ///NBAData
   static const String teamStatRank =
@@ -151,7 +153,7 @@ class Api {
   static const String wsPkEventUpdated = "PushService.pkEventUpdated";
   static const String wsPkResultUpdated = "PushService.pkResultUpdated";
   static const String wsPkStopUpdated = "PushService.pkStopUpdated";
-  static const String wsPkPlayerUpdated = "PushService.pkPlayerUpdated";//换人
+  static const String wsPkPlayerUpdated = "PushService.pkPlayerUpdated"; //换人
 
   static const String wsTeamMatch = "PKService.teamMatch";
 }

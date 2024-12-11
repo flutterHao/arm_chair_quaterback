@@ -13,18 +13,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class CommentItemView extends GetView<CommentController> {
+class CommentItemView extends StatelessWidget {
   const CommentItemView({super.key, required this.item});
   final ReviewEntity item;
 
   @override
   Widget build(BuildContext context) {
+    CommentController controller = Get.find(tag: item.newsId.toString());
     return InkWell(
       onTap: () async {
         if (item.teamId != (controller.userEntity.team?.teamId ?? 0)) {
           String name = "@${item.teamName}";
           await showCommentBottomSheet(context,
-              newsId: item.newsId ?? 0,
+              newsId: item.newsId,
               reviewsItem: item,
               // targetId: item.id ?? 0,
               hintText: name);
@@ -40,6 +41,7 @@ class CommentItemView extends GetView<CommentController> {
             url: Utils.getAvaterUrl(item.teamLogo),
             width: 36.w,
             height: 36.w,
+            radius: 18.w,
           ),
           // ImageWidget(
           //   url: Utils.getAvaterUrl(item.teamLogo),
@@ -70,7 +72,10 @@ class CommentItemView extends GetView<CommentController> {
                   children: [
                     Text(
                       item.teamName,
-                      style: 12.w4(color: AppColors.cB3B3B3, height: 1),
+                      style: 12.w4(
+                          color: AppColors.c4D4D4D,
+                          height: 1,
+                          fontFamily: FontFamily.fRobotoRegular),
                     ),
                     // 6.hGap,
                     // Container(
@@ -94,14 +99,21 @@ class CommentItemView extends GetView<CommentController> {
                         margin: EdgeInsets.only(left: 6.w),
                         child: Text(
                           " ${controller.getTeamName(item)}",
-                          style: 12.w4(color: AppColors.cB3B3B3, height: 1),
+                          style: 12.w4(
+                              color: AppColors.c4D4D4D,
+                              height: 1,
+                              fontFamily: FontFamily.fRobotoRegular),
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     10.hGap,
                     Text(
                       controller.timeAgo(item.updateTime),
-                      style: 12.w4(color: AppColors.cB3B3B3, height: 1),
+                      style: 12.w4(
+                        color: AppColors.cB3B3B3,
+                        height: 1,
+                        fontFamily: FontFamily.fRobotoRegular,
+                      ),
                     ),
                     Expanded(child: Container()),
                     if (item.teamId !=
@@ -139,7 +151,7 @@ class CommentItemView extends GetView<CommentController> {
                       ),
                   ],
                 ),
-                9.vGap,
+                8.5.vGap,
 
                 /// 评论内容
                 Row(
@@ -147,8 +159,10 @@ class CommentItemView extends GetView<CommentController> {
                   children: [
                     Expanded(
                         child: Text(
-                      item.context ?? "",
-                      style: 14.w4(color: AppColors.c666666),
+                      item.context,
+                      style: 12.w4(
+                          color: AppColors.c000000,
+                          fontFamily: FontFamily.fRobotoRegular),
                     )),
                     30.hGap,
                   ],
@@ -200,12 +214,13 @@ class CommentItemView extends GetView<CommentController> {
   }
 }
 
-class SubCommentItemView extends GetView<CommentController> {
+class SubCommentItemView extends StatelessWidget {
   const SubCommentItemView({super.key, required this.item});
   final ReviewEntity item;
 
   @override
   Widget build(BuildContext context) {
+    CommentController controller = Get.find(tag: item.newsId.toString());
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -221,6 +236,7 @@ class SubCommentItemView extends GetView<CommentController> {
                     url: Utils.getAvaterUrl(item.teamLogo),
                     width: 18.w,
                     height: 18.w,
+                    radius: 9.w,
                   ),
                   // ImageWidget
                   //   url: Utils.getAvaterUrl(item.teamLogo),
@@ -255,7 +271,7 @@ class SubCommentItemView extends GetView<CommentController> {
                               color: AppColors.cFF7954,
                               borderRadius: BorderRadius.circular(4.w)),
                           child: Text(
-                            "Me",
+                            "ME",
                             style: 12.w4(color: AppColors.cFFFFFF, height: 1),
                           ),
                         ),
@@ -315,8 +331,10 @@ class SubCommentItemView extends GetView<CommentController> {
                 children: [
                   Expanded(
                       child: Text(
-                    item.context ?? "",
-                    style: 14.w4(color: AppColors.c666666),
+                    item.context,
+                    style: 12.w4(
+                        color: AppColors.c000000,
+                        fontFamily: FontFamily.fRobotoRegular),
                   )),
                   30.hGap,
                 ],
@@ -332,7 +350,7 @@ class SubCommentItemView extends GetView<CommentController> {
   }
 }
 
-class HotComment extends GetView<CommentController> {
+class HotComment extends StatelessWidget {
   const HotComment({super.key, required this.item});
   final ReviewEntity item;
 
@@ -364,7 +382,7 @@ class HotComment extends GetView<CommentController> {
               6.hGap,
               Expanded(
                 child: Text(
-                  item.context ?? "",
+                  item.context,
                   style: 14.w4(
                     color: AppColors.c4D4D4D,
                     height: 1,

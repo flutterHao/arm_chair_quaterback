@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-18 21:01:04
- * @LastEditTime: 2024-12-09 10:05:16
+ * @LastEditTime: 2024-12-11 16:24:22
  */
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
@@ -112,7 +112,7 @@ class NewsListPage extends GetView<NewListController> {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(CommentController());
+    // Get.put(CommentController());
     return GetBuilder<NewListController>(
       id: "newsList",
       builder: (_) {

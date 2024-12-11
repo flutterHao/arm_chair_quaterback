@@ -100,26 +100,17 @@ class _FireDialogState extends State<FireDialog>
           MtInkwell(
             onTap: () async {
               Navigator.pop(context);
-              // await ctrl.dismissPlayer(context, widget.item.uuid);
+              await ctrl.dismissPlayer(context, widget.item.uuid);
               await Future.delayed(const Duration(milliseconds: 500));
               await showDialog(
                   barrierColor: Colors.transparent,
                   context: Get.context!,
                   useSafeArea: false,
                   builder: (context) {
-                    // return Stack(
-                    //   children: [
-                    //     Positioned(
-                    //         top: 0,
-                    //         left: 0,
-                    //         right: 0,
-                    //         child: FireSuccessDialog(item: widget.item))
-                    //   ],
-                    // );
                     return TopToastDialog(
                         child: FireSuccessDialog(item: widget.item));
                   });
-              // HomeController.to.updateMoney(-ctrl.getFireMoney(widget.item));
+              HomeController.to.updateMoney(-ctrl.getFireMoney(widget.item));
               // await Future.delayed(Duration(milliseconds: 2000));
             },
             child: Container(

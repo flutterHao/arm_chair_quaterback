@@ -146,6 +146,7 @@ class TrainingController extends GetxController
   //箭头动画
   late AnimationController arrowAnimCtrl;
   late Animation<double> arrowAnimated;
+  Duration currentDuration = 100.milliseconds;
 
   /// 在 widget 内存中分配后立即调用。
   @override
@@ -216,7 +217,7 @@ class TrainingController extends GetxController
     colorAnimation = Tween<double>(begin: 0, end: 1).animate(colorAnimatedCtrl);
 
     arrowAnimCtrl = AnimationController(
-      duration: 150.milliseconds,
+      duration: currentDuration,
       vsync: this,
     );
 
@@ -226,6 +227,15 @@ class TrainingController extends GetxController
           arrowAnimCtrl.reverse();
         } else if (arrowAnimated.value <= 0.0) {
           arrowAnimCtrl.forward();
+        }
+      })
+      ..addStatusListener((status) {
+        Log.d("status:$status");
+        if (status == AnimationStatus.forward ||
+            status == AnimationStatus.reverse) {
+          // 每次动画完成或结束时，增加持续时间
+          currentDuration += 25.milliseconds; // 可以根据需要调整增加的毫秒数
+          arrowAnimCtrl.duration = currentDuration;
         }
       });
 
@@ -265,30 +275,6 @@ class TrainingController extends GetxController
       TweenSequenceItem<double>(tween: Tween(begin: 1, end: 1), weight: 10),
       TweenSequenceItem<double>(tween: Tween(begin: 1, end: 0), weight: 1),
     ]).animate(tacticAnimCtrl);
-  }
-
-  void changeDuration(Duration newDuration) {
-    // 停止当前的动画控制器
-    arrowAnimCtrl.stop();
-
-    // 重新初始化动画控制器
-    arrowAnimCtrl = AnimationController(
-      duration: newDuration,
-      vsync: this,
-    );
-
-    // 重新创建动画
-    arrowAnimated = Tween<double>(begin: 0.0, end: 10).animate(arrowAnimCtrl)
-      ..addListener(() {
-        if (arrowAnimated.value >= 10) {
-          arrowAnimCtrl.reverse();
-        } else if (arrowAnimated.value <= 0.0) {
-          arrowAnimCtrl.forward();
-        }
-      });
-
-    // 重新启动动画
-    arrowAnimCtrl.forward();
   }
 
   /// 在 onInit() 之后调用 1 帧。这是进入的理想场所
@@ -339,9 +325,9 @@ class TrainingController extends GetxController
       }
       taskValue.value = trainingInfo.training.taskItemCount;
       if (_timer == null) {
-        recoverTimeAndCountDown();
+        recoverBallCountDown();
       }
-      taskCountDownTime();
+      // taskCountDownTime();
       update(["training_page"]);
     }).catchError((v) {
       EasyLoading.showToast(v.toString());
@@ -359,7 +345,7 @@ class TrainingController extends GetxController
   }
 
   ///获取配置数据计算倒计时
-  void recoverTimeAndCountDown() {
+  void recoverBallCountDown() {
     if (trainingInfo.prop.num >= trainDefine.ballMaxNum) {
       _timer?.cancel();
       return;
@@ -383,46 +369,46 @@ class TrainingController extends GetxController
         _timer?.cancel();
         // 重新获取新的恢复时间进行倒计时
         TeamApi.getTrainingInfo().then((v) {
-          v.propArray = trainingInfo.propArray;
-          trainingInfo = v;
+          trainingInfo.prop = v.prop;
+          trainingInfo.training = v.training;
           update(["training_page"]);
-          recoverTimeAndCountDown();
+          recoverBallCountDown();
         });
       }
     });
   }
 
   ///任务倒计时
-  void taskCountDownTime() async {
-    DateTime now = DateTime.now();
-    refreshTime = now;
-    DateTime taskRefreshTime =
-        DateUtil.getDateTimeByMs(trainingInfo.training.taskEndTime);
+  // void taskCountDownTime() async {
+  //   DateTime now = DateTime.now();
+  //   refreshTime = now;
+  //   DateTime taskRefreshTime =
+  //       DateUtil.getDateTimeByMs(trainingInfo.training.taskEndTime);
 
-    int taskSeconds = taskRefreshTime.difference(now).inSeconds;
-    if (trainingInfo.training.todayTaskOver == 1) return;
-    _timer1 = Timer.periodic(const Duration(seconds: 1), (v) async {
-      taskSeconds--;
-      final hours = taskSeconds ~/ 3600;
-      final minutes = (taskSeconds % 3600) ~/ 60;
-      final remainingSeconds = taskSeconds % 60;
-      taskCountDownString.value =
-          '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
-      if (taskSeconds <= 0) {
-        if (refreshTime.difference(now).inSeconds < 10) {
-          return;
-        }
-        _timer1.cancel();
-        // 重新获取新的恢复时间进行倒计时
-        TeamApi.getTrainingInfo().then((v) {
-          v.propArray = trainingInfo.propArray;
-          trainingInfo = v;
-          update(["training_page"]);
-          recoverTimeAndCountDown();
-        });
-      }
-    });
-  }
+  //   int taskSeconds = taskRefreshTime.difference(now).inSeconds;
+  //   if (trainingInfo.training.todayTaskOver == 1) return;
+  //   _timer1 = Timer.periodic(const Duration(seconds: 1), (v) async {
+  //     taskSeconds--;
+  //     final hours = taskSeconds ~/ 3600;
+  //     final minutes = (taskSeconds % 3600) ~/ 60;
+  //     final remainingSeconds = taskSeconds % 60;
+  //     taskCountDownString.value =
+  //         '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
+  //     if (taskSeconds <= 0) {
+  //       if (refreshTime.difference(now).inSeconds < 10) {
+  //         return;
+  //       }
+  //       _timer1.cancel();
+  //       // 重新获取新的恢复时间进行倒计时
+  //       TeamApi.getTrainingInfo().then((v) {
+  //         v.propArray = trainingInfo.propArray;
+  //         trainingInfo = v;
+  //         update(["training_page"]);
+  //         recoverBallCountDown();
+  //       });
+  //     }
+  //   });
+  // }
 
   void buyTrainingBall(int count) {
     TeamApi.buyTrainingBall(count).then((v) {
@@ -581,29 +567,32 @@ class TrainingController extends GetxController
     ballNum.value = ballNum.value - 1;
     await TeamApi.playerTraining(playerList[playerIdx].uuid).then((v) {
       trainingInfo = v;
-      recoverTimeAndCountDown();
-
-      //更新道具
-      for (int i = 0; i < trainTaskList.length; i++) {
-        if (trainingInfo.training.currentTaskId == trainTaskList[i].taskLevel) {
-          currentTaskNeed = trainTaskList[i].taskNeed;
-        }
-      }
-      // update(["training_page"]);
-      for (int i = 0; i < slotCard.length; i++) {
-        slotCard[i].value = false;
-        scrollerCtrlList[i].jumpTo(0);
-      }
-
-      for (int i = 0; i < scrollerCtrlList.length; i++) {
-        Future.delayed(Duration(milliseconds: i * 200), () {
-          _scrollColumn(i);
-        });
-      }
+      recoverBallCountDown();
+      startScroller();
     }).catchError((v) {
       isPlaying.value = false;
       // EasyLoading.showToast(v.message.toString());
     });
+  }
+
+  void startScroller() {
+    //更新道具
+    for (int i = 0; i < trainTaskList.length; i++) {
+      if (trainingInfo.training.currentTaskId == trainTaskList[i].taskLevel) {
+        currentTaskNeed = trainTaskList[i].taskNeed;
+      }
+    }
+    // update(["training_page"]);
+    for (int i = 0; i < slotCard.length; i++) {
+      slotCard[i].value = false;
+      scrollerCtrlList[i].jumpTo(0);
+    }
+
+    for (int i = 0; i < scrollerCtrlList.length; i++) {
+      Future.delayed(Duration(milliseconds: i * 200), () {
+        _scrollColumn(i);
+      });
+    }
   }
 
   void _scrollColumn(int index) async {
@@ -628,9 +617,9 @@ class TrainingController extends GetxController
     isPlaying.value = true;
     int cashNum = 0;
     List<int> awads = [];
-    awardLength = 0;
     for (var e in trainingInfo.award) {
       ///槽位显示中奖放大动画
+      awardLength = 0;
       for (int i = 0; i < trainingInfo.propArray.length; i++) {
         if (trainingInfo.propArray[i] == e.id) {
           awardLength++;
@@ -671,8 +660,9 @@ class TrainingController extends GetxController
     ///4:篮球
     if (awads.contains(4)) {
       showBall.value = true;
-      ballNum.value = trainingInfo.prop.num;
-      await Future.delayed(const Duration(milliseconds: 600), () {
+      // ballNum.value = trainingInfo.prop.num;
+      ballNum.value += 3;
+      await Future.delayed(const Duration(milliseconds: 500), () {
         showBall.value = false;
       });
     }
@@ -724,9 +714,9 @@ class TrainingController extends GetxController
     if (!awads.contains(1)) {
       isPlaying.value = false;
     }
-    // for (var element in slotsAnimlList) {
-    //   element.reset();
-    // }
+    for (var element in slotsAnimlList) {
+      element.reset();
+    }
     // getPlayerList();
     update(["training_page"]);
   }
@@ -744,6 +734,9 @@ class TrainingController extends GetxController
     showPlayerBox.value = true;
     await Future.delayed(const Duration(milliseconds: 300));
     showPlayer.value = true;
+    currentDuration = 150.milliseconds;
+    arrowAnimCtrl.duration = currentDuration;
+    // arrowAnimCtrl.reset();
     arrowAnimCtrl.forward();
     update(["playerList"]);
     if (playerScollCtrl.hasClients) {
@@ -761,7 +754,11 @@ class TrainingController extends GetxController
         curve: const Cubic(0.27, 0.59, 0.19, 1.07),
       )
           .then((v) async {
+        await Future.delayed(const Duration(milliseconds: 100));
+
         playerScrollerEnd = true;
+        update(["playerSelectBox"]);
+        await Future.delayed(const Duration(milliseconds: 300));
         update(["playerList"]);
 
         ///找到跳转到原来状态
@@ -783,7 +780,7 @@ class TrainingController extends GetxController
 
         // update(["playerList"]);
         for (int i = 0; i < statusScollerList.length; i++) {
-          await Future.delayed(Duration(milliseconds: 100 + i * 25), () {});
+          await Future.delayed(const Duration(milliseconds: 500), () {});
           statusScroll(i, oldList[i]);
         }
 
@@ -843,7 +840,7 @@ class TrainingController extends GetxController
   void getBuffValue(TrainingInfoBuff buff) {
     for (var config in buffValueConfigList) {
       if (config.suit == buff.color) {
-        int length = config.taticsuit.length;
+        int length = config.suitAdd.length;
         int m = min(length, buff.takeEffectGameCount);
         buff.buffValue = config.suitAdd[m - 1];
       }

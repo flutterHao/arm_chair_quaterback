@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -57,6 +58,8 @@ class TrainingSlot extends GetView<TrainingController> {
                                           int realIndex = itemIndex % length;
                                           double scale = controller
                                               .scaleAnimations[index].value;
+                                          int propId =
+                                              controller.propList[realIndex];
                                           return Obx(() {
                                             var show = controller
                                                 .isAwards[index].value;
@@ -75,8 +78,7 @@ class TrainingSlot extends GetView<TrainingController> {
                                                 child: IconWidget(
                                                   iconWidth: 30.w * scale,
                                                   icon: Utils.getPropIconUrl(
-                                                      controller
-                                                          .propList[realIndex]),
+                                                      propId),
                                                 ),
                                               ),
                                             );

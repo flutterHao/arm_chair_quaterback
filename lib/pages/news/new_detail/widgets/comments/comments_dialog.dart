@@ -2,9 +2,10 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-18 15:38:51
- * @LastEditTime: 2024-11-22 11:57:47
+ * @LastEditTime: 2024-12-11 15:13:37
  */
 
+import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/review_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -20,7 +21,7 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comment_item.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class CommentsDialog extends GetView<CommentController> {
+class CommentsDialog extends StatelessWidget {
   const CommentsDialog({super.key, required this.detail});
   final NewsListDetail detail;
 
@@ -89,77 +90,80 @@ class CommentsDialog extends GetView<CommentController> {
   }
 }
 
-class CommentsList extends GetView<CommentController> {
+class CommentsList extends StatelessWidget {
   const CommentsList({super.key, required this.detail});
   final NewsListDetail detail;
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<CommentController>(builder: (_) {
-      var list =
-          controller.mainList.where((e) => e.parentReviewId == 0).toList();
-      return Container(
-        padding: EdgeInsets.symmetric(horizontal: 16.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 12.w),
-              child: Obx(() {
-                return Text(
-                  "Comments (${detail.reviewsCount.value})",
-                  style: 16.w7(height: 1),
-                );
-              }),
+    CommentController controller = Get.find(tag: detail.id.toString());
+    return GetBuilder<CommentController>(
+        tag: detail.id.toString(),
+        builder: (_) {
+          var list =
+              controller.mainList.where((e) => e.parentReviewId == 0).toList();
+          return Container(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 12.w),
+                  child: Obx(() {
+                    return Text(
+                      "Comments (${detail.reviewsCount.value})",
+                      style: 16.w7(height: 1),
+                    );
+                  }),
+                ),
+                Expanded(
+                    child: SmartRefresher(
+                  // physics: isTop.value
+                  //     ? const NeverScrollableScrollPhysics()
+                  //     : const ClampingScrollPhysics(),
+                  controller: controller.refhreshCtrl,
+                  enablePullUp: true,
+                  enablePullDown: false,
+                  onLoading: () =>
+                      controller.getReviews(detail.id, isRefresh: false),
+                  child: list.isNotEmpty
+                      ? ListView.separated(
+                          controller: ScrollController(),
+                          shrinkWrap: false,
+                          physics: const ClampingScrollPhysics(),
+                          padding: EdgeInsets.symmetric(vertical: 12.w),
+                          itemCount: list.length,
+                          separatorBuilder: (context, index) {
+                            return 24.vGap;
+                          },
+                          itemBuilder: (context, index) {
+                            // var subList = controller.subList
+                            //     .where((e) =>
+                            //         e.parentReviewId ==
+                            //         list[index].id)
+                            //     .toList();
+                            return Column(
+                              children: [
+                                CommentItemView(item: list[index]),
+                                if (list[index].sonReviews > 0 ||
+                                    list[index].subList.isNotEmpty)
+                                  Container(
+                                    // width: 295.w,
+                                    margin: EdgeInsets.only(left: 48.w),
+                                    child: SubComentsListView(list[index]),
+                                  )
+                              ],
+                            );
+                          })
+                      : const Center(
+                          child: LoadStatusWidget(
+                          text: "No Comment",
+                        )),
+                )),
+              ],
             ),
-            Expanded(
-                child: SmartRefresher(
-              // physics: isTop.value
-              //     ? const NeverScrollableScrollPhysics()
-              //     : const ClampingScrollPhysics(),
-              controller: controller.refhreshCtrl,
-              enablePullUp: true,
-              enablePullDown: false,
-              onLoading: () =>
-                  controller.getReviews(detail.id, isRefresh: false),
-              child: list.isNotEmpty
-                  ? ListView.separated(
-                      controller: ScrollController(),
-                      shrinkWrap: false,
-                      physics: const ClampingScrollPhysics(),
-                      padding: EdgeInsets.symmetric(vertical: 12.w),
-                      itemCount: list.length,
-                      separatorBuilder: (context, index) {
-                        return 30.vGap;
-                      },
-                      itemBuilder: (context, index) {
-                        // var subList = controller.subList
-                        //     .where((e) =>
-                        //         e.parentReviewId ==
-                        //         list[index].id)
-                        //     .toList();
-                        return Column(
-                          children: [
-                            CommentItemView(item: list[index]),
-                            if (list[index].sonReviews > 0 ||
-                                list[index].subList.isNotEmpty)
-                              Container(
-                                // width: 295.w,
-                                margin: EdgeInsets.only(left: 48.w),
-                                child: SubComentsListView(list[index]),
-                              )
-                          ],
-                        );
-                      })
-                  : const Center(
-                      child: LoadStatusWidget(
-                      text: "No Comment",
-                    )),
-            )),
-          ],
-        ),
-      );
-    });
+          );
+        });
   }
 }
 
@@ -181,6 +185,7 @@ class SubComentsListView extends GetView<CommentController> {
 
   @override
   Widget build(BuildContext context) {
+    CommentController controller = Get.find(tag: mainReviews.newsId.toString());
     // RxInt current = 0.obs;
     // int has = mainReviews.sonReviews - length;
     int has = mainReviews.sonReviews - mainReviews.current;
@@ -189,7 +194,7 @@ class SubComentsListView extends GetView<CommentController> {
       duration: const Duration(milliseconds: 200),
       curve: Curves.linear,
       child: ListView.separated(
-          padding: EdgeInsets.only(top: 10.w),
+          padding: EdgeInsets.only(top: 23.w),
           physics: const NeverScrollableScrollPhysics(),
           itemCount: mainReviews.current + 1,
           shrinkWrap: true,
@@ -221,7 +226,10 @@ class SubComentsListView extends GetView<CommentController> {
                                     4.hGap,
                                     Text(
                                       "more replies (${has > 0 ? has : 0})",
-                                      style: 12.w4(height: 1),
+                                      style: 12.w4(
+                                          height: 1,
+                                          fontFamily:
+                                              FontFamily.fRobotoRegular),
                                     )
                                   ],
                                 ))
@@ -249,7 +257,9 @@ class SubComentsListView extends GetView<CommentController> {
                                   4.hGap,
                                   Text(
                                     "fold (${mainReviews.current})",
-                                    style: 12.w4(height: 1),
+                                    style: 12.w4(
+                                        height: 1,
+                                        fontFamily: FontFamily.fRobotoRegular),
                                   )
                                 ],
                               ),

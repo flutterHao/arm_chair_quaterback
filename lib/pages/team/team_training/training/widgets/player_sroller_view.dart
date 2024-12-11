@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lihonghao
  * @Date: 2024-11-06 11:51:15
- * @LastEditTime: 2024-12-02 17:23:42
+ * @LastEditTime: 2024-12-10 21:10:24
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -192,19 +192,26 @@ class PlayerSelectBox extends StatelessWidget {
                     separatorBuilder: (context, index) => 6.hGap,
                     itemBuilder: (context, index) {
                       return Center(
-                        child: AnimatedContainer(
-                          duration: 200.milliseconds,
-                          width: 59.w,
-                          height: controller.playerScrollerEnd ? 86.w : 106.w,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(6.w),
-                              border: Border.symmetric(
-                                  vertical: BorderSide(
-                                      width: 2.w, color: AppColors.cFF7954),
-                                  horizontal: BorderSide(
-                                      width: 6.w, color: AppColors.cFF7954))),
-                        ),
+                        child: GetBuilder<TrainingController>(
+                            id: "playerSelectBox",
+                            builder: (context) {
+                              return AnimatedContainer(
+                                duration: 200.milliseconds,
+                                width: 59.w,
+                                height:
+                                    controller.playerScrollerEnd ? 86.w : 106.w,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(6.w),
+                                    border: Border.symmetric(
+                                        vertical: BorderSide(
+                                            width: 2.w,
+                                            color: AppColors.cFF7954),
+                                        horizontal: BorderSide(
+                                            width: 6.w,
+                                            color: AppColors.cFF7954))),
+                              );
+                            }),
                       );
                     }),
               ),
@@ -228,7 +235,7 @@ class PlayerArrow extends StatelessWidget {
               duration: const Duration(milliseconds: 200),
               opacity: controller.showPlayerBox.value ? 1 : 0,
               child: Container(
-                height: 30.w,
+                height: 35.w,
                 alignment: Alignment.center,
                 child: ListView.separated(
                     padding: EdgeInsets.zero,
@@ -248,7 +255,7 @@ class PlayerArrow extends StatelessWidget {
                                 animation: controller.arrowAnimated,
                                 builder: (context, child) {
                                   return Positioned(
-                                    top: controller.arrowAnimated.value,
+                                    top: controller.arrowAnimated.value * 1.5,
                                     child: Image.asset(
                                       Assets.commonUiCommonArrow,
                                       width: 14.w,

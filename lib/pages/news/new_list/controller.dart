@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2024-11-24 14:10:54
+ * @LastEditTime: 2024-12-11 16:23:20
  */
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
@@ -11,7 +11,6 @@ import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comment_controller.dart';
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -25,11 +24,14 @@ class NewListController extends GetxController {
   final state = NewListState();
   late RefreshController flowRefreshCtrl = RefreshController();
   ScrollController scrollController = ScrollController();
+
   bool isLoading = false;
 
   String pointType = "";
   int errCount = 0;
   Rx<LoadDataStatus> loadingStatus = LoadDataStatus.loading.obs;
+
+  RxBool showCommentDialog = true.obs;
 
   @override
   void onInit() {
@@ -74,11 +76,25 @@ class NewListController extends GetxController {
   }
 
   void pageToDetail(NewsListDetail item, {Function? callBack}) async {
+    state.detailList.clear();
+    state.detailList.add(item);
+
+    ///获取评论
+    final comCtrl = Get.put(CommentController(), tag: item.id.toString());
+    comCtrl.getReviews(item.id, isRefresh: true);
+
+    ///获取相关新闻
+    if (item.reviewsCount <= 2) {
+      NewsApi.getRelevantNews(item.id).then((value) {
+        state.detailList.addAll(value);
+        update(["newsDetail"]);
+      });
+    }
     await Get.toNamed(RouteNames.newsDetail, arguments: item);
     if (callBack != null) {
       callBack();
     }
-    CommentController commentController = Get.find();
+    CommentController commentController = Get.find(tag: item.id.toString());
     item.reviewsList = commentController.mainList.value;
     update(["newsList"]);
   }

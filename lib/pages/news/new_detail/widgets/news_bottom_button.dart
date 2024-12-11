@@ -2,9 +2,10 @@
  * @Description: 新闻的底部按钮点赞分享评论
  * @Author: lihonghao
  * @Date: 2024-10-17 17:02:35
- * @LastEditTime: 2024-11-24 14:18:55
+ * @LastEditTime: 2024-12-11 15:13:51
  */
 
+import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -75,6 +76,7 @@ class NewsBottomButton extends GetView<NewListController> {
                         Text(
                           "${like > 0 ? numFormat(like) : 0}",
                           style: 14.w4(
+                            fontFamily: FontFamily.fRobotoRegular,
                             color: detail.isLike.value == 1
                                 ? AppColors.cFF7954
                                 : AppColors.c000000,
@@ -123,7 +125,8 @@ class NewsBottomButton extends GetView<NewListController> {
         if (showCommentBt)
           GestureDetector(
             onTap: () async {
-              final ctrl = Get.find<CommentController>();
+              final ctrl =
+                  Get.put(CommentController(), tag: detail.id.toString());
               ctrl.getReviews(detail.id, isRefresh: true);
 
               await showModalBottomSheet(
@@ -139,6 +142,7 @@ class NewsBottomButton extends GetView<NewListController> {
 
               detail.reviewsList = ctrl.mainList.value;
               ctrl.update();
+              controller.update(["newsList"]);
             },
             child: _container(
                 width: 76.w,
@@ -156,7 +160,10 @@ class NewsBottomButton extends GetView<NewListController> {
                         margin: EdgeInsets.only(left: 7.w),
                         child: Text(
                           numFormat(detail.reviewsCount.value),
-                          style: 14.w4(color: AppColors.c000000),
+                          style: 14.w4(
+                            color: AppColors.c000000,
+                            fontFamily: FontFamily.fRobotoRegular,
+                          ),
                         ),
                       );
                     }),

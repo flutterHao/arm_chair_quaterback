@@ -198,6 +198,11 @@ NewsListDetail $NewsListDetailFromJson(Map<String, dynamic> json) {
   if (imgUrl != null) {
     newsListDetail.imgUrl = imgUrl;
   }
+  final List<String>? imgList = (json['imgList'] as List<dynamic>?)?.map(
+          (e) => jsonConvert.convert<String>(e) as String).toList();
+  if (imgList != null) {
+    newsListDetail.imgList = imgList;
+  }
   return newsListDetail;
 }
 
@@ -222,6 +227,7 @@ Map<String, dynamic> $NewsListDetailToJson(NewsListDetail entity) {
   data['teams'] = entity.teams;
   data['players'] = entity.players;
   data['imgUrl'] = entity.imgUrl;
+  data['imgList'] = entity.imgList;
   data['type'] = entity.type;
   data['imageHeight'] = entity.imageHeight;
   data['imamgeWidth'] = entity.imamgeWidth;
@@ -251,6 +257,7 @@ extension NewsListDetailExtension on NewsListDetail {
     List<int>? teams,
     List<int>? players,
     String? imgUrl,
+    List<String>? imgList,
     int? type,
     double? imageHeight,
     double? imamgeWidth,
@@ -277,6 +284,7 @@ extension NewsListDetailExtension on NewsListDetail {
       ..teams = teams ?? this.teams
       ..players = players ?? this.players
       ..imgUrl = imgUrl ?? this.imgUrl
+      ..imgList = imgList ?? this.imgList
       ..type = type ?? this.type
       ..imageHeight = imageHeight ?? this.imageHeight
       ..imamgeWidth = imamgeWidth ?? this.imamgeWidth;

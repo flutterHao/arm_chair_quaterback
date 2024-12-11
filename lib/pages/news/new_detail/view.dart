@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-14 11:11:48
- * @LastEditTime: 2024-11-22 14:48:50
+ * @LastEditTime: 2024-12-11 15:54:35
  */
 /*
  * @Description: 
@@ -18,10 +18,8 @@
  */
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/widgets/app_bar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/send_comment_widget.dart';
@@ -30,12 +28,10 @@ import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
-import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/vertival_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comment_controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comment_item.dart';
@@ -43,11 +39,94 @@ import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comm
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/emoji_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/news_bottom_button.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class NewsDetailPage extends GetView<NewListController> {
-  NewsDetailPage({super.key, required this.newsDetail});
+class NewsDetailPage extends StatefulWidget {
+  const NewsDetailPage({super.key, required this.newsDetail});
   final NewsListDetail newsDetail;
+
+  @override
+  State<NewsDetailPage> createState() => _NewsDetailPageState();
+}
+
+class _NewsDetailPageState extends State<NewsDetailPage> {
+  ScrollController detailScrollController = ScrollController();
+  NewListController controller = Get.find();
+  var showCommentDialog = true.obs;
+  final _firstItemKey = GlobalKey();
+
+  @override
+  void initState() {
+    super.initState();
+    detailScrollController.addListener(() {
+      _onScroll();
+    });
+  }
+
+  void _onScroll() {
+    final RenderBox? firstItemRenderBox =
+        _firstItemKey.currentContext?.findRenderObject() as RenderBox?;
+    if (firstItemRenderBox != null) {
+      final offset = detailScrollController.position.pixels;
+      final itemSize = firstItemRenderBox.size;
+      if (offset > itemSize.height - 200.h) {
+        showCommentDialog.value = false;
+      } else {
+        showCommentDialog.value = true;
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return HorizontalDragBackWidget(
+      child: GetBuilder<NewListController>(
+          id: "newsDetail",
+          builder: (_) {
+            return BlackAppWidget(
+                // backgroundColor: AppColors.c002B5C,
+                backgroundColor: AppColors.cFFFFFF,
+                const UserInfoBar(showPop: true),
+                bodyWidget: Expanded(
+                  child: GestureDetector(
+                    onTap: () => FocusScope.of(context).unfocus(),
+                    child: ListView.separated(
+                        controller: detailScrollController,
+                        padding: EdgeInsets.zero,
+                        physics: const BouncingScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return KeyedSubtree(
+                            key: index == 0 ? _firstItemKey : null,
+                            child: NewsDetailItem(
+                                item: controller.state.detailList[index]),
+                          );
+                        },
+                        separatorBuilder: (context, index) => Container(
+                              margin: EdgeInsets.symmetric(vertical: 10.w),
+                              width: double.infinity,
+                              height: 1,
+                              color: AppColors.cD4D4D4,
+                            ),
+                        itemCount: controller.state.detailList.length),
+                  ),
+                ),
+                floatWidgets: [
+                  Obx(() {
+                    return AnimatedPositioned(
+                        duration: const Duration(milliseconds: 300),
+                        bottom: showCommentDialog.value ? 0 : -80.w,
+                        left: 0,
+                        right: 0,
+                        child: SendCommentWidget(newsId: widget.newsDetail.id));
+                  })
+                ]);
+          }),
+    );
+  }
+}
+
+class NewsDetailItem extends GetView<NewListController> {
+  NewsDetailItem({super.key, required this.item});
+  final NewsListDetail item;
 
   final GlobalKey globalKey = GlobalKey();
 
@@ -55,7 +134,7 @@ class NewsDetailPage extends GetView<NewListController> {
     return Row(
       children: [
         ImageWidget(
-          url: newsDetail.imgUrl,
+          url: item.imgUrl,
           width: 32.w,
           height: 32.w,
           fit: BoxFit.cover,
@@ -65,7 +144,7 @@ class NewsDetailPage extends GetView<NewListController> {
         Container(
           constraints: BoxConstraints(maxWidth: 120.w),
           child: Text(
-            newsDetail.source,
+            item.source,
             overflow: TextOverflow.ellipsis,
             style: 14.w4(
               color: AppColors.c000000,
@@ -90,7 +169,7 @@ class NewsDetailPage extends GetView<NewListController> {
         ),
         const Expanded(child: SizedBox.shrink()),
         Text(
-          Utils.timeAgo(newsDetail.postTime),
+          Utils.timeAgo(item.postTime),
           style: 12.w4(
             color: AppColors.cB3B3B3,
             fontFamily: FontFamily.fRobotoRegular,
@@ -120,27 +199,27 @@ class NewsDetailPage extends GetView<NewListController> {
   }
 
   // 新闻内容部分
-  Widget _buildNewsContent(BuildContext context) {
+  Widget _buildNewsContent() {
     // newsDetail.type = 2;
     return Column(
       ///大图
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          newsDetail.title.toUpperCase(),
+          item.title.toUpperCase(),
           style: 19.w4(
             color: AppColors.c000000,
             height: 1.25,
             fontFamily: FontFamily.fOswaldMedium,
           ),
         ),
-        ObjectUtil.isNotEmpty(newsDetail.imgUrl)
+        ObjectUtil.isNotEmpty(item.imgUrl)
             ? Padding(
                 padding: EdgeInsets.symmetric(vertical: 15.w),
                 child: ImageWidget(
-                  url: newsDetail.imgUrl,
-                  width: newsDetail.type == 1 ? 343.w : newsDetail.imamgeWidth,
-                  height: newsDetail.imageHeight,
+                  url: item.imgUrl,
+                  width: item.type == 1 ? 343.w : item.imamgeWidth,
+                  height: item.imageHeight,
                   // fit: BoxFit.fitWidth,
                   borderRadius: BorderRadius.circular(9.w),
                 ),
@@ -148,7 +227,7 @@ class NewsDetailPage extends GetView<NewListController> {
             : 10.vGap,
         10.vGap,
         Text(
-          newsDetail.content,
+          item.content,
           style: TextStyle(
             fontSize: 16.h,
             fontFamily: FontFamily.fRobotoRegular,
@@ -162,134 +241,101 @@ class NewsDetailPage extends GetView<NewListController> {
     );
   }
 
-  Widget _line() {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 25.w),
-      height: 1.w,
-      width: double.infinity,
-      color: AppColors.cE6E6E,
-    );
-  }
-
   Widget _comments() {
-    return GetBuilder<CommentController>(builder: (comCtrl) {
-      var list = comCtrl.mainList.where((e) => e.parentReviewId == 0).toList();
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Obx(() {
-            return Text(
-              "Comments (${newsDetail.reviewsCount.value})",
-              style: 19.w7(height: 1),
-            );
-          }),
-          12.vGap,
-          list.isNotEmpty
-              ? ListView.separated(
-                  controller: ScrollController(),
-                  shrinkWrap: true,
-                  physics: const ClampingScrollPhysics(),
-                  padding: EdgeInsets.symmetric(vertical: 12.w),
-                  itemCount: list.length,
-                  separatorBuilder: (context, index) {
-                    return 30.vGap;
-                  },
-                  itemBuilder: (context, index) {
-                    // var subList = controller.subList
-                    //     .where((e) =>
-                    //         e.parentReviewId ==
-                    //         list[index].id)
-                    //     .toList();
-                    return Column(
-                      children: [
-                        CommentItemView(item: list[index]),
-                        if (list[index].sonReviews > 0 ||
-                            list[index].subList.isNotEmpty)
-                          Container(
-                            // width: 295.w,
-                            margin: EdgeInsets.only(left: 48.w),
-                            child: SubComentsListView(list[index]),
-                          )
-                      ],
-                    );
-                  })
-              : Container(
-                  height: 250.w,
-                  alignment: Alignment.center,
-                  child: const LoadStatusWidget(
-                    text: "No comment yet",
-                  )),
-          if (newsDetail.reviewsCount.value < list.length)
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                MtInkwell(
-                  onTap: () => comCtrl.getReviews(newsDetail.id),
-                  child: Container(
-                    padding: EdgeInsets.all(10.w),
-                    child: Text(
-                      "Show more comments",
-                      textAlign: TextAlign.center,
-                      style: 12.w4(color: AppColors.cB3B3B3),
-                    ),
+    return GetBuilder<CommentController>(
+        tag: item.id.toString(),
+        builder: (comCtrl) {
+          var list =
+              comCtrl.mainList.where((e) => e.parentReviewId == 0).toList();
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: 1.w,
+                margin: EdgeInsets.symmetric(vertical: 25.w),
+                width: double.infinity,
+                color: AppColors.cE6E6E,
+              ),
+              Text(
+                "Comments",
+                style: 19.w7(height: 1),
+              ),
+              12.vGap,
+              list.isNotEmpty
+                  ? ListView.separated(
+                      controller: ScrollController(),
+                      shrinkWrap: true,
+                      physics: const ClampingScrollPhysics(),
+                      padding: EdgeInsets.symmetric(vertical: 12.w),
+                      itemCount: list.length,
+                      separatorBuilder: (context, index) {
+                        return 30.vGap;
+                      },
+                      itemBuilder: (context, index) {
+                        return Column(
+                          children: [
+                            CommentItemView(item: list[index]),
+                            if (list[index].sonReviews > 0 ||
+                                list[index].subList.isNotEmpty)
+                              Container(
+                                // width: 295.w,
+                                margin: EdgeInsets.only(left: 48.w),
+                                child: SubComentsListView(list[index]),
+                              )
+                          ],
+                        );
+                      })
+                  : SizedBox.shrink(),
+              if (item.reviewsCount.value > list.length)
+                Container(
+                  margin: EdgeInsets.only(bottom: 100),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      MtInkwell(
+                        onTap: () => comCtrl.getReviews(item.id),
+                        child: Container(
+                          padding: EdgeInsets.all(10.w),
+                          child: Text(
+                            "Show more comments",
+                            textAlign: TextAlign.center,
+                            style: 12.w4(color: AppColors.cB3B3B3),
+                          ),
+                        ),
+                      )
+                    ],
                   ),
                 )
-              ],
-            )
-        ],
-      );
-    });
-    ;
+            ],
+          );
+        });
   }
 
   @override
   Widget build(BuildContext context) {
-    final commentsCtrl = Get.find<CommentController>();
-    commentsCtrl.getReviews(newsDetail.id, isRefresh: true);
-    return HorizontalDragBackWidget(
-      child: BlackAppWidget(
-          // backgroundColor: AppColors.c002B5C,
-          backgroundColor: AppColors.cFFFFFF,
-          const UserInfoBar(showPop: true), bodyWidget: Expanded(
-        child: GetBuilder<NewListController>(builder: (_) {
-          return RepaintBoundary(
-            key: globalKey,
-            child: InkWell(
-              onTap: () => FocusScope.of(context).unfocus(),
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.w),
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _head(),
-                      14.vGap,
-                      _buildNewsContent(context),
-                      20.vGap,
-                      NewsBottomButton(
-                        newsDetail,
-                        showCommentBt: false,
-                      ),
-                      16.vGap,
-                      const EmojiWidget(),
-                      _line(),
-                      _comments(),
-                      100.vGap,
-                    ],
-                  ),
-                ),
-              ),
+    int index = controller.state.detailList.indexOf(item);
+    return RepaintBoundary(
+      key: globalKey,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 11.5.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _head(),
+            14.vGap,
+            _buildNewsContent(),
+            20.vGap,
+            NewsBottomButton(
+              item,
             ),
-          );
-        }),
-      ), floatWidgets: [
-        Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: SendCommentWidget(newsId: newsDetail.id))
-      ]),
+            16.vGap,
+            const EmojiWidget(),
+            if (index == 0 && item.reviewsCount > 0) _comments(),
+            if (controller.state.detailList.length == 1) 80.vGap,
+          ],
+        ),
+      ),
     );
   }
 }

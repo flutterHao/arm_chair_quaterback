@@ -254,28 +254,34 @@ class NewsListItem extends StatelessWidget {
   }
 
   Widget _hotComment() {
-    return GetBuilder<CommentController>(builder: (ctrl) {
-      return newsDetail.reviewsList.isNotEmpty
-          ? InkWell(
-              onTap: () async {
-                ctrl.getReviews(newsDetail.id, isRefresh: true);
-                await showModalBottomSheet(
-                  isScrollControlled: true,
-                  context: Get.context!,
-                  barrierColor: Colors.transparent,
-                  backgroundColor: Colors.transparent,
-                  builder: (context) {
-                    return VerticalDragBackWidget(
-                        child: CommentsDialog(detail: newsDetail));
-                  },
-                );
-                newsDetail.reviewsList = ctrl.mainList.value;
-                ctrl.update();
-              },
-              child: HotComment(item: newsDetail.reviewsList.first),
-            )
-          : const SizedBox();
-    });
+    return GetBuilder<CommentController>(
+        id: newsDetail.id.toString(),
+        builder: (ctrl) {
+          return AnimatedSize(
+            duration: const Duration(milliseconds: 200),
+            curve: Curves.linear,
+            child: newsDetail.reviewsList.isNotEmpty
+                ? InkWell(
+                    onTap: () async {
+                      ctrl.getReviews(newsDetail.id, isRefresh: true);
+                      await showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: Get.context!,
+                        barrierColor: Colors.transparent,
+                        backgroundColor: Colors.transparent,
+                        builder: (context) {
+                          return VerticalDragBackWidget(
+                              child: CommentsDialog(detail: newsDetail));
+                        },
+                      );
+                      newsDetail.reviewsList = ctrl.mainList.value;
+                      ctrl.update();
+                    },
+                    child: HotComment(item: newsDetail.reviewsList.first),
+                  )
+                : const SizedBox(),
+          );
+        });
   }
 
   @override
