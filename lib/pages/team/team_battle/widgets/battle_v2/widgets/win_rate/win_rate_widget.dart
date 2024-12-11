@@ -74,7 +74,7 @@ class WinRateWidget extends StatelessWidget {
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(12.w),
                                       border: Border.all(
-                                          color: AppColors.cD60D20,
+                                          color: AppColors.c1F8FE5,
                                           width: 1.w)),
                                   child: ImageWidget(
                                     url: Utils.getTeamUrl(
@@ -323,7 +323,7 @@ class WinRateWidget extends StatelessWidget {
                                     IconWidget(
                                       iconWidth: 16.w,
                                       icon: Assets.managerUiManagerIconLine,
-                                      iconColor: AppColors.cD60D20,
+                                      iconColor: AppColors.c1F8FE5,
                                     ),
                                     6.hGap,
                                     Text(
@@ -341,7 +341,7 @@ class WinRateWidget extends StatelessWidget {
                                     IconWidget(
                                       iconWidth: 16.w,
                                       icon: Assets.managerUiManagerIconLine,
-                                      iconColor: AppColors.c1F8FE5,
+                                      iconColor: AppColors.cD60D20,
                                     ),
                                     6.hGap,
                                     Text(

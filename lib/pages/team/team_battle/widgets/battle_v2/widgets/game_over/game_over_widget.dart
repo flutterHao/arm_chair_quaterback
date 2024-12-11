@@ -12,6 +12,7 @@ import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/wi
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/live_text_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/quarter_score/quarter_score_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/team_stat/team_stats_widget.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/win_rate/win_rate_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -83,6 +84,7 @@ class GameOverWidget extends GetView<GameOverController> {
                                     teamBattleV2Controller.gameLeaderController,
                                 title: "KEY PLAYERS",
                               ),
+                              // WinRateWidget(teamBattleV2Controller.winRateController),
                               TeamStatsWidget(
                                 controller: teamBattleV2Controller.teamStatsController,
                               ),

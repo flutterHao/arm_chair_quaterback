@@ -45,11 +45,11 @@ class WinRateController extends GetxController
     super.onReady();
     var battleEntity = Get.find<TeamBattleV2Controller>().battleEntity;
     // 初始化 训练程度差值
-    var abs = (battleEntity.homeTeamReadiness-battleEntity.awayTeamReadiness).abs();
-    abs = abs == 0? size.height/2: abs;
+    var abs =
+        (battleEntity.homeTeamReadiness - battleEntity.awayTeamReadiness).abs();
+    abs = abs == 0 ? size.height / 2 : abs;
     pointData.add(Offset(0, abs));
   }
-
 
   @override
   void onClose() {
@@ -57,17 +57,27 @@ class WinRateController extends GetxController
     super.onClose();
   }
 
-  setGameSpeed(double speed){
+  setGameSpeed(double speed) {
     gameSpeed = speed;
+  }
+
+  jumpGame(List<Offset> offsets) {
+    easyAnimationController?.stop();
+    chartPoints.clear();
+    chartPoints.add(pointData[0]);
+    chartPoints.addAll(offsets.map((e) => handlerOffset(e)));
+    if(chartPoints.length>160){
+      var list = chartPoints.sublist(0,160);
+      chartPoints.clear();
+      chartPoints.addAll(list);
+    }
+    pointOffset.value = handlerOffset(chartPoints.last);
+    chartPoints.refresh();
   }
 
   addPoint(Offset point) {
     ///计算每个点的位置
-    var stepY = size.height / 100;
-    var stepX = size.width / 160;
-    var dy = (size.height-point.dy * size.height);
-    // print('dy:$dy');
-    var offset = Offset((point.dx+1)*stepX, max(0,dy));
+    Offset offset = handlerOffset(point);
     Offset preview = Offset.zero;
     if (pointData.isNotEmpty) {
       preview = pointData.last;
@@ -82,9 +92,19 @@ class WinRateController extends GetxController
         vsync: this,
         begin: preview,
         end: current,
-        duration:  Duration(milliseconds: (1000/gameSpeed).toInt()))
+        duration: Duration(milliseconds: (1000 / gameSpeed).toInt()))
       ..controller.addListener(animationListener);
     easyAnimationController?.forward(from: 0);
+  }
+
+  Offset handlerOffset(Offset point) {
+    ///计算每个点的位置
+    var stepY = size.height / 100;
+    var stepX = size.width / 160;
+    var dy = (size.height - point.dy * size.height);
+    // print('dy:$dy');
+    var offset = Offset((point.dx + 1) * stepX, max(0, dy));
+    return offset;
   }
 
   void animationListener() {
@@ -93,10 +113,10 @@ class WinRateController extends GetxController
     chartPoints.refresh();
   }
 
-  String getWinRate(){
+  String getWinRate() {
     var dy = pointOffset.value.dy;
-    var value = (((size.height-dy)/size.height)*100);
-    value = value>100?100:value;
+    var value = (((size.height - dy) / size.height) * 100);
+    value = value > 100 ? 100 : value;
     return "${value.toStringAsFixed(0)}%";
   }
 
@@ -109,7 +129,6 @@ class WinRateController extends GetxController
   List<Offset> list = [];
 
   List<Offset> _buildPath() {
-
     // var temp = Offset.zero;
     ///计算每个点的位置
     var stepY = size.height / 100;

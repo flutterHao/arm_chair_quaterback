@@ -112,6 +112,8 @@ class TeamBattleV2Controller extends GetxController
   bool isPkResultUpdated = false;
   PkResultUpdatedEntity? pkResultUpdatedEntity;
 
+  bool isGameStart = false;
+
   /// 在 widget 内存中分配后立即调用。
   @override
   void onInit() {
@@ -246,6 +248,7 @@ class TeamBattleV2Controller extends GetxController
   }
 
   changeGameSpeed(double speed) {
+    if (!isGameStart) return;
     if (isGameOver.value) return;
 
     /// 停止所有的动画
@@ -301,9 +304,7 @@ class TeamBattleV2Controller extends GetxController
       EasyLoading.showToast("Next Quarter",
           toastPosition: EasyLoadingToastPosition.center,
           maskType: EasyLoadingMaskType.clear);
-      Future.delayed(const Duration(seconds: 1), () {
-        startGame();
-      });
+      startGame();
     }
   }
 
@@ -355,22 +356,18 @@ class TeamBattleV2Controller extends GetxController
     event.time =
         (quarterTimeCountDownAnimationController.value.value / 40 * 12 * 60)
             .toInt();
+
+    double winRate = getWinRate(event);
+    print('winRate: $winRate');
+    winRateController.addPoint(
+        Offset(eventCount.toDouble() + ((quarter.value - 1) * 40), winRate));
+
     if (eventOnScreenMap.containsKey(key)) {
       eventOnScreenMap[key]!.add(event);
     } else {
       eventOnScreenMap[key] = [event];
     }
 
-    var winRate =
-        (battleEntity.homeTeamReadiness - battleEntity.awayTeamReadiness)
-                .abs() +
-            (((40 - quarterTimeCountDownAnimationController.value.value) +
-                        (quarter.value - 1) * 40) /
-                    (4 * 40)) *
-                ((event.homeScore - event.awayScore).abs() /
-                    max((event.homeScore - event.awayScore).abs(), 1));
-    winRateController.addPoint(
-        Offset(eventCount.toDouble() + ((quarter.value - 1) * 40), winRate));
     if (event.shooting) {
       shoot(event);
     } else {
@@ -390,6 +387,38 @@ class TeamBattleV2Controller extends GetxController
       }
     });
     eventCount++;
+  }
+
+  double getWinRate(GameEvent event, {double? time}) {
+    var t = time ??
+        ((40 - quarterTimeCountDownAnimationController.value.value) +
+            (quarter.value - 1) * 40);
+    var scoreDiff = (event.homeScore - event.awayScore);
+    var prepareDiff = (event.pkEventUpdatedEntity.homePreparationLevel -
+            event.pkEventUpdatedEntity.awayPreparationLevel)
+        .abs();
+    double winRate = 0.5 +
+        prepareDiff +
+        t * 0.7 / (4 * 40) * (scoreDiff / max(scoreDiff, 1)) -
+        (t < 15 ? 0 : generateRandomValue(t > 20 ? 20 : t));
+    if (t == 0) {
+      winRate = prepareDiff;
+    }
+    winRate = min(1, max(0, winRate));
+    return winRate;
+  }
+
+  double generateRandomValue(double t) {
+    // 定义常量
+    const double base = 1;
+    const double decayRate = -0.1;
+
+    // 计算范围的绝对值
+    double range = base * exp(decayRate * t);
+
+    // 随机生成 [-range, range] 的值
+    Random random = Random();
+    return random.nextDouble() * 2 * range - range;
   }
 
   shoot(GameEvent event) {
@@ -871,6 +900,7 @@ class TeamBattleV2Controller extends GetxController
   }
 
   void jumpGame() {
+    if (!isGameStart) return;
     if (isGameOver.value) {
       Get.back();
       return;
@@ -886,6 +916,19 @@ class TeamBattleV2Controller extends GetxController
     var event = eventOnScreenMap[Utils.getSortWithInt(quarter.value)]!.last;
     gameLeaderController.setEvent(event);
     teamStatsController.setEvent(event);
+
+    List<GameEvent> fold = eventOnScreenMap.keys.fold([], (p, e) {
+      p.addAll(eventOnScreenMap[e]!);
+      return p;
+    });
+    List<Offset> offsets = [];
+    for (int i = 0; i < fold.length; i++) {
+      var gameEvent = fold[i];
+      offsets
+          .add(Offset(i.toDouble(), getWinRate(gameEvent, time: i.toDouble())));
+    }
+    winRateController.jumpGame(offsets);
+
     quarterGameCountDown.value = 0;
     eventEngine?.cancel();
     isGameOver.value = true;

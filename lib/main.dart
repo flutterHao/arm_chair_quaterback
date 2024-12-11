@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 16:17:35
- * @LastEditTime: 2024-12-11 17:42:57
+ * @LastEditTime: 2024-11-24 12:19:09
  */
 import 'package:arm_chair_quaterback/common/widgets/transitions/half_slide_right_to_left_transition.dart';
 import 'package:arm_chair_quaterback/pages/home/home_binding.dart';
@@ -36,51 +36,50 @@ class MyApp extends StatelessWidget {
       defaultPopGesture: false,
       defaultDurationTransition: const Duration(milliseconds: 100),
     );
-    return Builder(builder: (context) {
-      return MediaQuery(
-        data:
-            MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1.0)),
-        child: Center(
-          child: Container(
-            constraints: const BoxConstraints(maxWidth: MAXWEBWIDTH),
-            child: LayoutBuilder(builder: (context, constraints) {
-              return ScreenUtilInit(
-                minTextAdapt: true,
-                enableScaleWH: (() => isMax ? false : true),
-                enableScaleText: (() => false),
-                designSize:
-                    isMax ? const Size(MAXWEBWIDTH, 812) : const Size(375, 812),
-                // designSize: const Size(375, 812),
-                builder: (context, widget) => RefreshConfiguration(
-                  headerBuilder: () => const WaterDropHeader(),
-                  footerBuilder: () => const ClassicFooter(),
-                  child: GetMaterialApp(
-                    title: 'arm chair quaterback',
-                    theme: AppTheme.light,
-                    debugShowCheckedModeBanner: false,
-                    initialRoute: AppPages.main,
-                    getPages: AppPages.routes,
-                    builder: EasyLoading.init(),
-                    translations: TranslationService(),
-                    initialBinding: AllControllerBindings(),
-                    navigatorObservers: [AppPages.observer],
-                    supportedLocales: ConfigStore.to.languages,
-                    locale: ConfigStore.to.locale,
-                    fallbackLocale: const Locale('en', 'US'),
-                    enableLog: true,
-                    // logWriterCallback: Log.write,
-                    // defaultTransition: Transition.rightToLeft,
-                    transitionDuration: const Duration(milliseconds: 300),
-                    customTransition:
-                        HalfSlideRightToLeftTransition(), //只作用在一级路由，局部路由需要单独加
-                    //  defaultTransition: Transition.noTransition,
-                  ),
+    return Center(
+      child: Container(
+        constraints: const BoxConstraints(maxWidth: MAXWEBWIDTH),
+        child: LayoutBuilder(builder: (context, constraints) {
+          return ScreenUtilInit(
+            minTextAdapt: true,
+            enableScaleWH: (() => isMax ? false : true),
+            enableScaleText: (() => isMax ? false : true),
+            designSize:
+                isMax ? const Size(MAXWEBWIDTH, 812) : const Size(375, 812),
+            // designSize: const Size(375, 812),
+            builder: (context, widget) => RefreshConfiguration(
+              headerBuilder: () => const WaterDropHeader(),
+              footerBuilder: () => const ClassicFooter(),
+              child: MediaQuery(
+                data: MediaQueryData.fromView(View.of(context)).copyWith(
+                  textScaler:  TextScaler.noScaling /// 禁用系统字体缩放
                 ),
-              );
-            }),
-          ),
-        ),
-      );
-    });
+                child: GetMaterialApp(
+                  title: 'arm chair quaterback',
+                  theme: AppTheme.light,
+                  debugShowCheckedModeBanner: false,
+                  initialRoute: AppPages.main,
+                  getPages: AppPages.routes,
+                  builder: EasyLoading.init(),
+                  translations: TranslationService(),
+                  initialBinding: AllControllerBindings(),
+                  navigatorObservers: [AppPages.observer],
+                  supportedLocales: ConfigStore.to.languages,
+                  locale: ConfigStore.to.locale,
+                  fallbackLocale: const Locale('en', 'US'),
+                  enableLog: true,
+                  // logWriterCallback: Log.write,
+                  // defaultTransition: Transition.rightToLeft,
+                  transitionDuration: const Duration(milliseconds: 300),
+                  customTransition:
+                      HalfSlideRightToLeftTransition(), //只作用在一级路由，局部路由需要单独加
+                  //  defaultTransition: Transition.noTransition,
+                ),
+              ),
+            ),
+          );
+        }),
+      ),
+    );
   }
 }
