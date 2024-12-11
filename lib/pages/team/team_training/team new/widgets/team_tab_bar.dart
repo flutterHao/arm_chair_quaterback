@@ -117,26 +117,35 @@ class TeamTabbar extends GetView<TeamController> {
                           6.5.vGap,
                           Row(
                             children: [
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  AnimatedNum(
-                                    number: controller.myTeamEntity.salary,
-                                    isMoney: true,
-                                    textStyle: 21.w4(
-                                        color: AppColors.cFFFFFF,
-                                        height: 1,
-                                        fontFamily: FontFamily.fOswaldMedium),
+                              SizedBox(
+                                width: 100.w,
+                                child: FittedBox(
+                                  alignment: Alignment.centerLeft,
+                                  fit: BoxFit.none,
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      AnimatedNum(
+                                        number: controller.myTeamEntity.salary,
+                                        isMoney: true,
+                                        textStyle: 21.w4(
+                                            color: AppColors.cFFFFFF,
+                                            height: 1,
+                                            fontFamily:
+                                                FontFamily.fOswaldMedium),
+                                      ),
+                                      SizedBox(height: 4.h),
+                                      Text(
+                                        "/${Utils.formatMoney(controller.myTeamEntity.salaryCap)}",
+                                        style: 16.w4(
+                                            color: AppColors.cFFFFFF,
+                                            height: 1,
+                                            fontFamily:
+                                                FontFamily.fOswaldMedium),
+                                      ),
+                                    ],
                                   ),
-                                  SizedBox(height: 4.h),
-                                  Text(
-                                    "/${Utils.formatMoney(controller.myTeamEntity.salaryCap)}",
-                                    style: 16.w4(
-                                        color: AppColors.cFFFFFF,
-                                        height: 1,
-                                        fontFamily: FontFamily.fOswaldMedium),
-                                  ),
-                                ],
+                                ),
                               ),
                               Expanded(child: Container()),
                               SizedBox(

@@ -51,9 +51,11 @@ class MyApp extends StatelessWidget {
               headerBuilder: () => const WaterDropHeader(),
               footerBuilder: () => const ClassicFooter(),
               child: MediaQuery(
-                data: MediaQueryData.fromView(View.of(context)).copyWith(
-                  textScaler:  TextScaler.noScaling /// 禁用系统字体缩放
-                ),
+                data: MediaQueryData.fromView(View.of(context))
+                    .copyWith(textScaler: TextScaler.noScaling
+
+                        /// 禁用系统字体缩放
+                        ),
                 child: GetMaterialApp(
                   title: 'arm chair quaterback',
                   theme: AppTheme.light,

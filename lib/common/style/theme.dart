@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-18 11:23:47
- * @LastEditTime: 2024-09-23 09:29:37
+ * @LastEditTime: 2024-12-11 21:26:43
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +27,7 @@ class AppTheme {
     progressIndicatorTheme: const ProgressIndicatorThemeData(
       color: Colors.grey, // 设置全局的 CircularProgressIndicator 颜色
     ),
-    textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
+    // textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
     appBarTheme: const AppBarTheme(
       elevation: 0,
       centerTitle: true,

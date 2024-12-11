@@ -247,8 +247,8 @@ class PlayerItem extends GetView<TeamController> {
       height: 121.w,
       width: double.infinity,
       child: Stack(
+        alignment: Alignment.centerLeft,
         children: [
-          _playerPosition(),
           Row(
             children: [
               // _playerPosition(),
@@ -408,6 +408,10 @@ class PlayerItem extends GetView<TeamController> {
               16.hGap,
             ],
           ),
+          Positioned(
+            left: 0,
+            child: _playerPosition(),
+          )
         ],
       ),
     );
