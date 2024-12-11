@@ -397,10 +397,14 @@ class TeamBattleV2Controller extends GetxController
     var prepareDiff = (event.pkEventUpdatedEntity.homePreparationLevel -
             event.pkEventUpdatedEntity.awayPreparationLevel)
         .abs();
-    double winRate = 0.5 +
-        prepareDiff +
-        t * 0.7 / (4 * 40) * (scoreDiff / max(scoreDiff, 1)) -
-        (t < 15 ? 0 : generateRandomValue(t > 20 ? 20 : t));
+    var random = (t < 15 ? 0 : generateRandomValue(t > 20 ? 20 : t));
+    print('prepareDiff--------:$prepareDiff');
+    print('random--------:$random');
+    var other = t * 0.7 / (4 * 40) * (scoreDiff / max(scoreDiff.abs(), 1));
+    print('other--------:$other');
+
+    double winRate = 0.5 + prepareDiff + other - random;
+    print('winRate-------:$winRate');
     if (t == 0) {
       winRate = prepareDiff;
     }

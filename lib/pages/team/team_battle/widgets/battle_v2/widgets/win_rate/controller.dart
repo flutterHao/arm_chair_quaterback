@@ -63,15 +63,14 @@ class WinRateController extends GetxController
 
   jumpGame(List<Offset> offsets) {
     easyAnimationController?.stop();
-    chartPoints.clear();
-    chartPoints.add(pointData[0]);
-    chartPoints.addAll(offsets.map((e) => handlerOffset(e)));
-    if(chartPoints.length>160){
-      var list = chartPoints.sublist(0,160);
-      chartPoints.clear();
-      chartPoints.addAll(list);
-    }
-    pointOffset.value = handlerOffset(chartPoints.last);
+    List<Offset> oldList = List.from(pointData);
+    var newList = offsets.map((e) => handlerOffset(e)).toList();
+    var sublist = newList.sublist(oldList.length);
+    List<Offset> allList = [];
+    allList.addAll(oldList);
+    allList.addAll(sublist);
+    chartPoints.addAll(allList);
+    pointOffset.value = chartPoints.last;
     chartPoints.refresh();
   }
 

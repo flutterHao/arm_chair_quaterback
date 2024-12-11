@@ -20,14 +20,14 @@ class ChartPainter extends CustomPainter {
     for (int i = 0; i < list.length; i++) {
       var next = list[i + 1 >= list.length ? i : i + 1];
       var current = list[i];
+      _list2.add(current);
       if ((current.dy > height / 2 && next.dy < height / 2) ||
           (current.dy < height / 2 && next.dy > height / 2)) {
         // print('current:$current,$next');
-        var addItem = Offset(((current + next) / 2).dx, height / 2.00);
+        var addItem = Offset(((current + next) / 2).dx, height / 2.0);
         // print('addItem:$addItem');
         _list2.add(addItem);
       }
-      _list2.add(list[i]);
     }
   }
 

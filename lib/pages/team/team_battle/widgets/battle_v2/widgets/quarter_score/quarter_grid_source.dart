@@ -14,7 +14,7 @@ import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 ///created at 2024/12/6/11:35
 ///
 
-class LineOne{
+class LineOne {
   final BattleTeam team;
   final Color color;
 
@@ -82,9 +82,8 @@ class QuarterGridSource extends DataGridSource {
               16.hGap,
               Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(11.w),
-                  border: Border.all(color: teamInfo.color,width: 1.w)
-                ),
+                    borderRadius: BorderRadius.circular(11.w),
+                    border: Border.all(color: teamInfo.color, width: 1.w)),
                 child: ImageWidget(
                   url: Utils.getAvaterUrl(teamInfo.team.teamLogo),
                   borderRadius: BorderRadius.circular(10.w),
@@ -93,13 +92,21 @@ class QuarterGridSource extends DataGridSource {
                 ),
               ),
               5.hGap,
-              Text(
-                teamInfo.team.teamName,
-                style: 12.w4(
-                    color: AppColors.c000000,
-                    height: 1,
-                    overflow: TextOverflow.ellipsis,
-                    fontFamily: FontFamily.fOswaldRegular),
+              Expanded(
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      teamInfo.team.teamName,
+                      style: 12.w4(
+                          color: AppColors.c000000,
+                          height: 1,
+                          overflow: TextOverflow.ellipsis,
+                          fontFamily: FontFamily.fOswaldRegular),
+                    ),
+                  ),
+                ),
               )
             ],
           ),
