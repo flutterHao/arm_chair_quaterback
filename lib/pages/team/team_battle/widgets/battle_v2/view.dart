@@ -7,6 +7,7 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
@@ -36,68 +37,78 @@ class TeamBattleV2Page extends GetView<TeamBattleV2Controller> {
   Widget build(BuildContext context) {
     teamBattleController = Get.find();
     return GetBuilder<TeamBattleV2Controller>(
+      id: TeamBattleV2Controller.idBattleMain,
       builder: (_) {
-        return BlackAppWidget(
-          UserInfoBar(
-            showPop: true,
-            onClickPop: () {
+        return PopScope(
+          canPop: controller.isGameOver.value,
+          child: HorizontalDragBackWidget(
+            onWidgetOut: () {
               controller.jumpGame();
             },
-          ),
-          bodyWidget: Expanded(
-              child: GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onLongPressUp: () {
-              print('onLongPressUp---------------');
-              controller.changeGameSpeed(1);
-            },
-            onLongPress: () {
-              print('onLongPress---------------');
-              controller.changeGameSpeed(10);
-            },
-            child: Column(
-              children: [
-                buildHeader(),
-                Expanded(
-                  child: Obx(() {
-                    var isGameOver = controller.isGameOver.value;
-                    return Stack(
-                      children: [
-                        SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              buildGameWidget(context),
-                              const LiveTextWidget(),
-                              // WinRateWidget(controller.winRateController),
-                              GetBuilder<TeamBattleV2Controller>(
-                                  id: TeamBattleV2Controller.idQuarterScore,
-                                  builder: (_) {
-                                    return QuarterScoreWidget();
-                                  }),
-                              GameLeaderWidget(
-                                controller: controller.gameLeaderController,
+            noBackAnimation: !controller.isGameOver.value,
+            child: BlackAppWidget(
+              UserInfoBar(
+                showPop: true,
+                onClickPop: () {
+                  controller.jumpGame();
+                },
+              ),
+              bodyWidget: Expanded(
+                  child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onLongPressUp: () {
+                  print('onLongPressUp---------------');
+                  controller.changeGameSpeed(1);
+                },
+                onLongPress: () {
+                  print('onLongPress---------------');
+                  controller.changeGameSpeed(10);
+                },
+                child: Column(
+                  children: [
+                    buildHeader(),
+                    Expanded(
+                      child: Builder(builder: (c) {
+                        var isGameOver = controller.isGameOver.value;
+                        return Stack(
+                          children: [
+                            SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  buildGameWidget(context),
+                                  const LiveTextWidget(),
+                                  // WinRateWidget(controller.winRateController),
+                                  GetBuilder<TeamBattleV2Controller>(
+                                      id: TeamBattleV2Controller.idQuarterScore,
+                                      builder: (_) {
+                                        return QuarterScoreWidget();
+                                      }),
+                                  GameLeaderWidget(
+                                    controller: controller.gameLeaderController,
+                                  ),
+                                  TeamStatsWidget(
+                                    controller: controller.teamStatsController,
+                                  ),
+                                  20.vGap,
+                                ],
                               ),
-                              TeamStatsWidget(
-                                controller: controller.teamStatsController,
-                              ),
-                              20.vGap,
-                            ],
-                          ),
-                        ),
-                        if (isGameOver)
-                          Positioned(
-                              top: 0,
-                              bottom: 0,
-                              left: 0,
-                              right: 0,
-                              child: GameOverWidget())
-                      ],
-                    );
-                  }),
-                )
-              ],
+                            ),
+                            if (isGameOver)
+                              Positioned(
+                                  top: 0,
+                                  bottom: 0,
+                                  left: 0,
+                                  right: 0,
+                                  child: GameOverWidget())
+                          ],
+                        );
+                      }),
+                    )
+                  ],
+                ),
+              )),
             ),
-          )),
+          ),
         );
       },
     );
@@ -282,8 +293,9 @@ class TeamBattleV2Page extends GetView<TeamBattleV2Controller> {
                                 controller.checkShowDialog();
                               },
                               onDown: () {
+                                /// 倒计时结束，开始比赛
                                 controller.isGameStart = true;
-                                controller.startGame();
+                                // controller.startGame();
                               },
                             ),
                           ],
@@ -414,8 +426,19 @@ class TeamBattleV2Page extends GetView<TeamBattleV2Controller> {
                 ),
                 Expanded(child: Center(
                   child: Obx(() {
+                    var text =
+                        "${Utils.getSortWithInt(controller.quarter.value)} ${MyDateUtils.formatMS((controller.quarterGameCountDown.value / 40 * 12 * 60).toInt())}";
+                    if (!controller.isGameStart) {
+                      return Text(
+                        "VS",
+                        style: 21.w5(
+                            color: AppColors.cB3B3B3,
+                            height: 1,
+                            fontFamily: FontFamily.fOswaldMedium),
+                      );
+                    }
                     return Text(
-                      "${Utils.getSortWithInt(controller.quarter.value)} ${MyDateUtils.formatMS((controller.quarterGameCountDown.value / 40 * 12 * 60).toInt())}",
+                      text,
                       style: 12.w4(
                           color: AppColors.c10A86A,
                           height: 1,

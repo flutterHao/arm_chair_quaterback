@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/scale_animation_widget.dart';
@@ -146,12 +147,16 @@ class _MatchingState extends State<Matching>
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
-    return SizedBox(
-      width: width,
-      height: height,
-      child: Stack(
-        alignment: Alignment.center,
-        children: _buildScan(width, height),
+    return PopScope(
+      canPop: false,
+      child: Container(
+        color: AppColors.c000000.withOpacity(.6),
+        width: width,
+        height: height,
+        child: Stack(
+          alignment: Alignment.center,
+          children: _buildScan(width, height),
+        ),
       ),
     );
   }

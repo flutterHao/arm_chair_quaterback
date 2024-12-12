@@ -5,6 +5,7 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/league/league_detail/widgets/league_detail_play/widget/scores_player_detail_datasource.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_leader/widget/player_detail_datasource.dart';
@@ -76,7 +77,9 @@ class _PlayerDetailState extends State<PlayerDetail>
                   ),
                   child: ImageWidget(
                     url: Utils.getAvaterUrl(homeInfo.teamLogo),
+                    imageFailedPath: Assets.teamUiHead01,
                     width: 28.w,
+                    height: 28.w,
                     borderRadius: BorderRadius.circular(14.w),
                   ),
                 ),
@@ -100,7 +103,9 @@ class _PlayerDetailState extends State<PlayerDetail>
                   ),
                   child: ImageWidget(
                     url: Utils.getAvaterUrl(awayInfo.teamLogo),
+                    imageFailedPath: Assets.teamUiHead03,
                     width: 28.w,
+                    height: 28.w,
                     borderRadius: BorderRadius.circular(14.w),
                   ),
                 ),

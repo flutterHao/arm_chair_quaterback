@@ -4,6 +4,7 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -87,6 +88,7 @@ class QuarterGridSource extends DataGridSource {
                 child: ImageWidget(
                   url: Utils.getAvaterUrl(teamInfo.team.teamLogo),
                   borderRadius: BorderRadius.circular(10.w),
+                  imageFailedPath: Assets.teamUiHead03,
                   width: 20.w,
                   height: 20.w,
                 ),

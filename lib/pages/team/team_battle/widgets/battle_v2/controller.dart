@@ -23,6 +23,7 @@ import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/widgets/battle_animation_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_leader/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/live_text_dialog.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/tactical_contrast/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/tactical_contrast/tactical_contrast.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/team_stat/controller.dart';
@@ -297,6 +298,7 @@ class TeamBattleV2Controller extends GetxController
         eventEngine?.cancel();
         isGameOver.value = true;
         gameSpeed = 1;
+        update([idBattleMain]);
         print(
             'cache length: ${eventCacheMap.values.fold(0, (p, e) => p + e.length)}');
         return;
@@ -823,6 +825,8 @@ class TeamBattleV2Controller extends GetxController
 
   static String get idReadiness => "id_readiness";
 
+  static String get idBattleMain => "id_battle_main";
+
   List<GameEvent> getQuarterEvents() {
     return eventOnScreenMap[Utils.getSortWithInt(quarter.value)] ?? [];
   }
@@ -913,9 +917,15 @@ class TeamBattleV2Controller extends GetxController
       EasyLoading.showToast("Wait a moment");
       return;
     }
+    TipDialog.show(context: context, onTap: confirmJumpGame);
+  }
+
+  confirmJumpGame() {
+    Navigator.pop(context);
+
     quarterTimeCountDownAnimationController.stop();
     eventOnScreenMap = eventCacheMap;
-    update([idLiveText, idGameScore, idPlayers, idQuarterScore, idReadiness]);
+
     quarter.value = 4;
     var event = eventOnScreenMap[Utils.getSortWithInt(quarter.value)]!.last;
     gameLeaderController.setEvent(event);
@@ -937,6 +947,14 @@ class TeamBattleV2Controller extends GetxController
     eventEngine?.cancel();
     isGameOver.value = true;
     gameSpeed = 1;
+    update([
+      // idLiveText,
+      // idGameScore,
+      // idPlayers,
+      // idQuarterScore,
+      // idReadiness,
+      idBattleMain
+    ]);
   }
 }
 

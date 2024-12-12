@@ -65,11 +65,19 @@ class _MatchSuccessState extends State<MatchSuccess>
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    return Obx(() {
-      return Stack(
-        children: _buildStartWidget(width, height),
-      );
-    });
+    return PopScope(
+      canPop: false,
+      child: Container(
+        color: AppColors.c000000.withOpacity(.6),
+        width: width,
+        height: height,
+        child: Obx(() {
+          return Stack(
+            children: _buildStartWidget(width, height),
+          );
+        }),
+      ),
+    );
   }
 
   List<Widget> _buildStartWidget(double width, double height) {

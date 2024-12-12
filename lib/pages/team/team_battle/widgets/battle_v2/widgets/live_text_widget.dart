@@ -1,12 +1,14 @@
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
@@ -127,6 +129,17 @@ class _LiveTextWidgetState extends State<LiveTextWidget> {
                             : controller.liveTextScrollController,
                         itemBuilder: (context, i) {
                           if (i == 0) {
+                            if(itemCount == 0){
+                              return SizedBox(
+                                height: 44.w * 5,
+                                child: const Center(
+                                  child: LoadStatusWidget(
+                                    loadDataStatus: LoadDataStatus.noData,
+                                    text: "DATA COMING ...",
+                                  ),
+                                ),
+                              );
+                            }
                             return SizedBox(height: 44.w * 5);
                           }
                           int index = i - 1;

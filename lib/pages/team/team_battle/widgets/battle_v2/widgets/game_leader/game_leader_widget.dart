@@ -1,5 +1,6 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_event_updated_entity.dart';
+import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -7,6 +8,7 @@ import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/TLBuilderWidget.dart';
 import 'package:arm_chair_quaterback/common/widgets/WidgetUtils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/player_avatar_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -23,7 +25,7 @@ import 'package:get/get.dart';
 ///created at 2024/12/6/15:54
 
 class GameLeaderWidget extends StatelessWidget {
-  const GameLeaderWidget({super.key, required this.controller,this.title});
+  const GameLeaderWidget({super.key, required this.controller, this.title});
 
   final String? title;
 
@@ -45,7 +47,7 @@ class GameLeaderWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    title??"GAME LEADERS",
+                    title ?? "GAME LEADERS",
                     style: 30.w7(
                         color: AppColors.c000000,
                         fontFamily: FontFamily.fOswaldBold),
@@ -154,150 +156,162 @@ class GameLeaderWidget extends StatelessWidget {
                       padding: EdgeInsets.symmetric(horizontal: 16.w),
                       child: Column(
                         children: [
-                          ...List.generate(list.length, (i) {
-                            var item = list[i];
-                            var playBaseInfo =
-                                Utils.getPlayBaseInfo(item.playerId);
-                            var teamInfo =
-                                Utils.getTeamInfo(playBaseInfo.teamId);
-                            List<Widget> child;
-                            List<Map<String, String>> values = [];
-                            if (index == 0) {
-                              values.addAll([
-                                {"PTS": "${item.pts}"},
-                                {"FG": "${item.fgm}/${item.fga}"},
-                                {"FT": "${item.ftm}/${item.fta}"}
-                              ]);
-                            } else if (index == 1) {
-                              values.addAll([
-                                {"REB": "${item.reb}"},
-                                {"DERB": "${item.dreb}"},
-                                {"OREB": "${item.oreb}"}
-                              ]);
-                            } else {
-                              values.addAll([
-                                {"AST": "${item.ast}"},
-                                {"TO": "${item.to}"},
-                                {"MIN": "${item.min}"}
-                              ]);
-                            }
-                            return MtInkwell(
-                              minScale: 1,
-                              onTap: () {
-                                Get.toNamed(
-                                  RouteNames.picksPlayerDetail,
-                                  arguments:
-                                      PlayerDetailPageArguments(item.playerId),
-                                );
-                              },
-                              child: Container(
-                                height: 132.w,
-                                decoration: const BoxDecoration(
-                                    border: Border(
-                                        bottom: BorderSide(
-                                            color: AppColors.cE6E6E,
-                                            width: 1))),
-                                child: Row(
-                                  children: [
-                                    13.hGap,
-                                    Stack(
-                                      children: [
-                                        PlayerAvatarWidget(
-                                          width: 73.w,
-                                          height: 93.w,
-                                          radius: 9.w,
-                                          playerId: item.playerId,
-                                          backgroundColor: AppColors.cD9D9D9,
-                                        ),
-                                        Positioned(
-                                            top: 4.w,
-                                            right: 4.w,
-                                            child: Container(
-                                              height: 16.w,
-                                              width: 16.w,
-                                              decoration: BoxDecoration(
-                                                  color: AppColors.cFFFFFF,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          4.w)),
-                                              child: IconWidget(
-                                                iconWidth: 9.w,
-                                                icon: Assets.iconUiIconRead,
-                                                iconColor: AppColors.c000000,
-                                              ),
-                                            ))
-                                      ],
-                                    ),
-                                    13.hGap,
-                                    Expanded(
-                                        child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          playBaseInfo.ename,
-                                          style: 21.w5(
-                                              color: AppColors.c262626,
-                                              height: 1,
-                                              fontFamily:
-                                                  FontFamily.fOswaldMedium),
-                                        ),
-                                        7.vGap,
-                                        Text(
-                                          "${playBaseInfo.position} · ${teamInfo.shortEname}",
-                                          style: 12.w4(
-                                              color: AppColors.c000000,
-                                              height: 1,
-                                              fontFamily:
-                                                  FontFamily.fRobotoRegular),
-                                        ),
-                                        16.vGap,
-                                        Row(
-                                          children: values
-                                              .map((e) => Container(
-                                                    margin: EdgeInsets.only(
-                                                        right: 25.w),
-                                                    child: Column(
-                                                      children: [
-                                                        Text(
-                                                          e.values.first,
-                                                          style: 14.w5(
-                                                              color: AppColors
-                                                                  .c000000,
-                                                              height: 1,
-                                                              fontFamily: FontFamily
-                                                                  .fRobotoMedium),
-                                                        ),
-                                                        5.vGap,
-                                                        Text(
-                                                          e.keys.first,
-                                                          style: 10.w4(
-                                                              color: AppColors
-                                                                  .c4D4D4D,
-                                                              height: 1,
-                                                              fontFamily: FontFamily
-                                                                  .fRobotoRegular),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ))
-                                              .toList(),
-                                        )
-                                      ],
-                                    )),
-                                    IconWidget(
-                                      iconWidth: 8.w,
-                                      icon:
-                                          Assets.commonUiCommonIconSystemJumpto,
-                                      iconColor: AppColors.c000000,
-                                    )
-                                  ],
+                          if (list.isEmpty)
+                            SizedBox(
+                              height: 132.w * 2,
+                              child: const Center(
+                                child: LoadStatusWidget(
+                                  loadDataStatus: LoadDataStatus.noData,
                                 ),
                               ),
-                            );
-                          }),
+                            )
+                          else
+                            ...List.generate(list.length, (i) {
+                              var item = list[i];
+                              var playBaseInfo =
+                                  Utils.getPlayBaseInfo(item.playerId);
+                              var teamInfo =
+                                  Utils.getTeamInfo(playBaseInfo.teamId);
+                              List<Widget> child;
+                              List<Map<String, String>> values = [];
+                              if (index == 0) {
+                                values.addAll([
+                                  {"PTS": "${item.pts}"},
+                                  {"FG": "${item.fgm}/${item.fga}"},
+                                  {"FT": "${item.ftm}/${item.fta}"}
+                                ]);
+                              } else if (index == 1) {
+                                values.addAll([
+                                  {"REB": "${item.reb}"},
+                                  {"DERB": "${item.dreb}"},
+                                  {"OREB": "${item.oreb}"}
+                                ]);
+                              } else {
+                                values.addAll([
+                                  {"AST": "${item.ast}"},
+                                  {"TO": "${item.to}"},
+                                  {"MIN": "${item.min}"}
+                                ]);
+                              }
+                              return MtInkwell(
+                                minScale: 1,
+                                onTap: () {
+                                  Get.toNamed(
+                                    RouteNames.picksPlayerDetail,
+                                    arguments: PlayerDetailPageArguments(
+                                        item.playerId),
+                                  );
+                                },
+                                child: Container(
+                                  height: 132.w,
+                                  decoration: const BoxDecoration(
+                                      border: Border(
+                                          bottom: BorderSide(
+                                              color: AppColors.cE6E6E,
+                                              width: 1))),
+                                  child: Row(
+                                    children: [
+                                      13.hGap,
+                                      Stack(
+                                        children: [
+                                          PlayerAvatarWidget(
+                                            width: 73.w,
+                                            height: 93.w,
+                                            radius: 9.w,
+                                            playerId: item.playerId,
+                                            backgroundColor: AppColors.cD9D9D9,
+                                          ),
+                                          Positioned(
+                                              top: 4.w,
+                                              right: 4.w,
+                                              child: Container(
+                                                height: 16.w,
+                                                width: 16.w,
+                                                decoration: BoxDecoration(
+                                                    color: AppColors.cFFFFFF,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            4.w)),
+                                                child: IconWidget(
+                                                  iconWidth: 9.w,
+                                                  icon: Assets.iconUiIconRead,
+                                                  iconColor: AppColors.c000000,
+                                                ),
+                                              ))
+                                        ],
+                                      ),
+                                      13.hGap,
+                                      Expanded(
+                                          child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            playBaseInfo.ename,
+                                            style: 21.w5(
+                                                color: AppColors.c262626,
+                                                height: 1,
+                                                fontFamily:
+                                                    FontFamily.fOswaldMedium),
+                                          ),
+                                          7.vGap,
+                                          Text(
+                                            "${playBaseInfo.position} · ${teamInfo.shortEname}",
+                                            style: 12.w4(
+                                                color: AppColors.c000000,
+                                                height: 1,
+                                                fontFamily:
+                                                    FontFamily.fRobotoRegular),
+                                          ),
+                                          16.vGap,
+                                          Row(
+                                            children: values
+                                                .map((e) => Container(
+                                                      margin: EdgeInsets.only(
+                                                          right: 25.w),
+                                                      child: Column(
+                                                        children: [
+                                                          Text(
+                                                            e.values.first,
+                                                            style: 14.w5(
+                                                                color: AppColors
+                                                                    .c000000,
+                                                                height: 1,
+                                                                fontFamily:
+                                                                    FontFamily
+                                                                        .fRobotoMedium),
+                                                          ),
+                                                          5.vGap,
+                                                          Text(
+                                                            e.keys.first,
+                                                            style: 10.w4(
+                                                                color: AppColors
+                                                                    .c4D4D4D,
+                                                                height: 1,
+                                                                fontFamily:
+                                                                    FontFamily
+                                                                        .fRobotoRegular),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ))
+                                                .toList(),
+                                          )
+                                        ],
+                                      )),
+                                      IconWidget(
+                                        iconWidth: 8.w,
+                                        icon: Assets
+                                            .commonUiCommonIconSystemJumpto,
+                                        iconColor: AppColors.c000000,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              );
+                            }),
                           Expanded(
                             child: MtInkwell(
                               onTap: () {

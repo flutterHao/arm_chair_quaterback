@@ -1,11 +1,13 @@
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/league/league_detail/widgets/league_detail_play/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
@@ -84,7 +86,9 @@ class TeamStatsWidget extends StatelessWidget {
                           borderRadius: BorderRadius.circular(15.w)),
                       child: ImageWidget(
                         url: Utils.getAvaterUrl(homeInfo.teamLogo),
+                        imageFailedPath: Assets.teamUiHead01,
                         width: 23.w,
+                        height: 23.w,
                         borderRadius: BorderRadius.circular(14.w),
                       ),
                     ),
@@ -115,7 +119,9 @@ class TeamStatsWidget extends StatelessWidget {
                           borderRadius: BorderRadius.circular(15.w)),
                       child: ImageWidget(
                         url: Utils.getAvaterUrl(awayInfo.teamLogo),
+                        imageFailedPath: Assets.teamUiHead03,
                         width: 23.w,
+                        height: 23.w,
                         borderRadius: BorderRadius.circular(14.w),
                       ),
                     ),
@@ -129,10 +135,20 @@ class TeamStatsWidget extends StatelessWidget {
             color: AppColors.cD1D1D1,
             height: 1,
           ),
-          ...List.generate(min(4, teamStatsData.length), (index) {
-            var item = teamStatsData[index];
-            return _teamStatsItemWidget(item);
-          }),
+          if (teamStatsData.isEmpty)
+            SizedBox(
+              height: 300.w,
+              child: const Center(
+                child: LoadStatusWidget(
+                  loadDataStatus: LoadDataStatus.noData,
+                ),
+              ),
+            )
+          else
+            ...List.generate(min(4, teamStatsData.length), (index) {
+              var item = teamStatsData[index];
+              return _teamStatsItemWidget(item);
+            }),
           if (teamStatsData.length > 4)
             Column(
               children: [

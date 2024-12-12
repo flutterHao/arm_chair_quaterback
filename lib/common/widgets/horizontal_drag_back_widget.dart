@@ -7,23 +7,30 @@ import 'package:flutter/material.dart';
 ///created at 2024/9/26/09:35
 
 class HorizontalDragBackWidget extends StatefulWidget {
-  const HorizontalDragBackWidget(
-      {required this.child,
-      this.onWidgetOut,
-      this.canPop = true,
-      this.responseDepth = const [],
-      this.hasScrollChild = false,
-      super.key});
+  const HorizontalDragBackWidget({
+    required this.child,
+    this.onWidgetOut,
+    this.canPop = true,
+    this.responseDepth = const [],
+    this.hasScrollChild = false,
+    this.noBackAnimation = false,
+    super.key,
+  });
 
   final Widget child;
+
+  ///是否支持右滑返回，实体/虚拟按键返回
   final bool canPop;
 
   ///响应哪个子滚动组件
   final List<int> responseDepth;
   final bool hasScrollChild;
 
-  ///是否支持右滑返回，实体/虚拟按键返回
+  /// 自定义返回响应
   final Function()? onWidgetOut;
+
+  /// 只响应事件，不执行动画
+  final bool noBackAnimation;
 
   @override
   State<HorizontalDragBackWidget> createState() =>
@@ -70,14 +77,18 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
         if (mounted && !isReset) {
           offsetX = animation.value;
           // print('addListener---offsetX: $offsetX');
-          setState(() {});
+          if(!widget.noBackAnimation) {
+            setState(() {});
+          }
         }
         if (animationController.status == AnimationStatus.completed) {
           if (offsetX > width && !isOut) {
-            isOut = true;
-            widget.onWidgetOut != null
-                ? widget.onWidgetOut!()
-                : Navigator.of(context).pop();
+            if(widget.onWidgetOut != null){
+              widget.onWidgetOut!.call();
+            }else{
+              isOut = true;
+              Navigator.of(context).pop();
+            }
           }
         }
       });
@@ -92,12 +103,14 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
 
   @override
   Widget build(BuildContext context) {
+    print('widget.noBackAnimation----------:${widget.noBackAnimation}');
     width = MediaQuery.of(context).size.width;
     onHorizontalDragStart(DragStartDetails detail) {
       if (!isOnLeftSide) {
         return;
       }
       // print('onHorizontalDragStart: ${detail.localPosition}');
+      offsetX = 0;
       startX = detail.localPosition.dx;
     }
 
@@ -129,14 +142,12 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
         return;
       }
       // print('onHorizontalDragDown: ${detail.localPosition}');
+      offsetX = 0;
       startX = detail.localPosition.dx;
     }
 
     onHorizontalDragUpdate(DragUpdateDetails detail) {
       // print('onHorizontalDragUpdate: ${detail.localPosition}');
-      if (!widget.canPop) {
-        return;
-      }
       if (!isOnLeftSide) {
         return;
       }
@@ -149,6 +160,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
         return;
       }
       if (startX <= 0) {
+        offsetX = 0;
         startX = detail.localPosition.dx;
       }
       // offsetX = detail.localPosition.dx - startX;
@@ -156,7 +168,9 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
       if (offsetX < 0) {
         offsetX = 0;
       }
-      setState(() {});
+      if(!widget.noBackAnimation) {
+        setState(() {});
+      }
     }
 
     Widget child = NotificationListener<ScrollNotification>(
@@ -230,7 +244,8 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
                   Colors.black.withOpacity(.0), offsetX / width),
             ),
             Transform.translate(
-                offset: Offset(offsetX, 0), child: widget.child),
+                offset: Offset(offsetX, 0),
+                child: widget.child),
           ],
         ),
       ),
