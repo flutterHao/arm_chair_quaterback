@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-06 10:37:49
- * @LastEditTime: 2024-12-10 12:44:22
+ * @LastEditTime: 2024-12-12 18:50:58
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
@@ -32,6 +32,7 @@ class PlayerChangerDialog extends StatefulWidget {
 class _PlayerChangerDialogState extends State<PlayerChangerDialog>
     with SingleTickerProviderStateMixin {
   TeamController ctrl = Get.find();
+  RxDouble offsetY = 0.0.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -46,31 +47,35 @@ class _PlayerChangerDialogState extends State<PlayerChangerDialog>
             return SizedBox(
               child: Column(
                 children: [
-                  Container(
-                    height: 121.w,
-                    margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-                    width: double.infinity,
-                    child: Stack(
-                      alignment: Alignment.topCenter,
-                      children: [
-                        Positioned(
-                          top: -121.w * (1 - ctrl.pageAnimation.value),
-                          left: 0,
-                          right: 0,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(9.w),
-                            child: widget.item != null
-                                ? PlayerItem(
-                                    isBag: widget.item!.position < 0,
-                                    item: widget.item!,
-                                    isSelect: true,
-                                  )
-                                : const EmptyPlayer(),
+                  Obx(() {
+                    return Container(
+                      height: 121.w,
+                      margin: EdgeInsets.only(
+                          top: MediaQuery.of(context).padding.top),
+                      width: double.infinity,
+                      child: Stack(
+                        alignment: Alignment.topCenter,
+                        children: [
+                          Positioned(
+                            top: -121.w * (1 - ctrl.pageAnimation.value) -
+                                offsetY.value * 0.5,
+                            left: 0,
+                            right: 0,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(9.w),
+                              child: widget.item != null
+                                  ? PlayerItem(
+                                      isBag: widget.item!.position < 0,
+                                      item: widget.item!,
+                                      isSelect: true,
+                                    )
+                                  : const EmptyPlayer(),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
+                        ],
+                      ),
+                    );
+                  }),
                   Center(
                     child: Container(
                       width: double.infinity,
@@ -89,6 +94,9 @@ class _PlayerChangerDialogState extends State<PlayerChangerDialog>
                   ),
                   Expanded(
                       child: VerticalDragBackWidget(
+                    onChange: (v) {
+                      offsetY.value = v;
+                    },
                     child: Stack(
                       alignment: Alignment.bottomCenter,
                       children: [

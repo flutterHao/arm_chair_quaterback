@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-09 19:12:03
- * @LastEditTime: 2024-12-11 21:50:09
+ * @LastEditTime: 2024-12-11 21:53:46
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/style.dart';
@@ -37,9 +37,9 @@ class _TopDialogState extends State<TopToastDialog>
 
     _controller.forward().then((v) {
       Future.delayed(const Duration(milliseconds: 1000)).then((_) {
-        // _controller.reverse().then((v) {
-        //   Navigator.of(context).pop();
-        // });
+        _controller.reverse().then((v) {
+          Navigator.of(context).pop();
+        });
       });
     });
   }

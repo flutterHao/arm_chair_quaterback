@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lihonghao
  * @Date: 2024-09-12 21:40:32
- * @LastEditTime: 2024-12-03 20:54:15
+ * @LastEditTime: 2024-12-12 10:15:26
  */
 import 'package:flutter/foundation.dart';
 
@@ -26,4 +26,8 @@ class Address {
   static const String wsPrivateDevUrl = 'ws://10.0.3.38:9005';
 
   static const String wsBaseUrl = wsPublicDevUrl;
+
+  static const String imgBaseUrl =
+      "https://seaball-1324211645.cos.ap-guangzhou.myqcloud.com/";
+  static const String compressImgBaseUrl = "${imgBaseUrl}compressed/";
 }

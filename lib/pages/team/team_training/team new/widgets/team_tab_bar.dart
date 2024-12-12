@@ -2,7 +2,7 @@
  * @Description: 我的球队的训练和比赛
  * @Author: lihonghao
  * @Date: 2024-09-27 19:21:36
- * @LastEditTime: 2024-12-09 09:48:39
+ * @LastEditTime: 2024-12-12 17:47:33
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -99,14 +99,34 @@ class TeamTabbar extends GetView<TeamController> {
                         children: [
                           Row(
                             children: [
-                              Expanded(
-                                child: Text(
-                                  "SALARY CAP",
-                                  style: 12.w4(
-                                      color: AppColors.cFFFFFF,
-                                      fontFamily: FontFamily.fRobotoRegular,
-                                      height: 0.75),
+                              Text(
+                                "SALARY CAP",
+                                style: 12.w4(
+                                    color: AppColors.cFFFFFF,
+                                    fontFamily: FontFamily.fRobotoRegular,
+                                    height: 0.75),
+                              ),
+                              6.hGap,
+                              if (controller.myTeamEntity.salary >=
+                                  controller.myTeamEntity.salaryCap)
+                                Container(
+                                  width: 32.w,
+                                  // height: 16.5.w,
+                                  padding: EdgeInsets.symmetric(vertical: 2.w),
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                      color: AppColors.cD60D20,
+                                      borderRadius: BorderRadius.circular(4.w)),
+                                  child: Text(
+                                    "MAX",
+                                    style: 12.w4(
+                                        color: AppColors.cFFFFFF,
+                                        fontFamily: FontFamily.fOswaldMedium,
+                                        height: 1),
+                                  ),
                                 ),
+                              Expanded(
+                                child: Container(),
                               ),
                               Image.asset(
                                 Assets.iconUiIconRead,
@@ -114,7 +134,7 @@ class TeamTabbar extends GetView<TeamController> {
                               )
                             ],
                           ),
-                          6.5.vGap,
+                          3.5.vGap,
                           Row(
                             children: [
                               SizedBox(
@@ -130,7 +150,7 @@ class TeamTabbar extends GetView<TeamController> {
                                         isMoney: true,
                                         textStyle: 21.w4(
                                             color: AppColors.cFFFFFF,
-                                            height: 1,
+                                            height: 0.75,
                                             fontFamily:
                                                 FontFamily.fOswaldMedium),
                                       ),
@@ -139,9 +159,9 @@ class TeamTabbar extends GetView<TeamController> {
                                         "/${Utils.formatMoney(controller.myTeamEntity.salaryCap)}",
                                         style: 16.w4(
                                             color: AppColors.cFFFFFF,
-                                            height: 1,
+                                            height: 0.75,
                                             fontFamily:
-                                                FontFamily.fOswaldMedium),
+                                                FontFamily.fOswaldRegular),
                                       ),
                                     ],
                                   ),
@@ -153,7 +173,11 @@ class TeamTabbar extends GetView<TeamController> {
                                 child: CustomLinearProgressBar(
                                     width: 71.w,
                                     height: 6.w,
-                                    progressColor: AppColors.c10A86A,
+                                    progressColor: controller
+                                                .myTeamEntity.salary >=
+                                            controller.myTeamEntity.salaryCap
+                                        ? AppColors.cD60D20
+                                        : AppColors.cFFFFFF,
                                     backgroundColor: AppColors.c4D4D4D,
                                     progress: controller.myTeamEntity.salary /
                                         controller.myTeamEntity.salaryCap),

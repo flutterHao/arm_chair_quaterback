@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2024-12-11 16:23:20
+ * @LastEditTime: 2024-12-12 10:45:09
  */
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';

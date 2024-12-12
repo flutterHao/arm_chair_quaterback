@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2024-12-11 21:04:27
+ * @LastEditTime: 2024-12-12 17:22:05
  */
 /*
  * @Description: 
@@ -223,12 +223,6 @@ class PlayerItem extends GetView<TeamController> {
                             height: 1,
                             fontFamily: FontFamily.fOswaldMedium),
                       ),
-                      7.hGap,
-                      IconWidget(
-                        icon: Assets.commonUiCommonIconSystemJumpto,
-                        iconWidth: 5.w,
-                        iconColor: AppColors.c000000,
-                      ),
                     ],
                   ),
                 ),
@@ -257,7 +251,7 @@ class PlayerItem extends GetView<TeamController> {
               ),
               Expanded(
                 child: AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 300),
+                  duration: const Duration(milliseconds: 3000),
                   transitionBuilder:
                       (Widget child, Animation<double> animation) {
                     //  var tween = Tween(begin: const Offset(1, 0), end: const Offset(0, 0));
@@ -268,7 +262,7 @@ class PlayerItem extends GetView<TeamController> {
                     );
                   },
                   child: Row(
-                    key: ValueKey(item.uuid),
+                    // key: item.position <= 1 ? null : ValueKey(item.uuid),
                     children: [
                       13.hGap,
                       PlayerCard(

@@ -2,9 +2,10 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-26 18:53:41
- * @LastEditTime: 2024-11-22 14:35:39
+ * @LastEditTime: 2024-12-12 10:57:43
  */
 import 'package:arm_chair_quaterback/common/entities/review_entity.dart';
+import 'package:arm_chair_quaterback/common/net/address.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/news_list_entity.g.dart';
 import 'dart:convert';
@@ -96,6 +97,13 @@ class NewsListDetail {
 
   factory NewsListDetail.fromJson(Map<String, dynamic> json) {
     NewsListDetail newsDetail = $NewsListDetailFromJson(json);
+    newsDetail.imgList = newsDetail.imgList.map((element) {
+      if (!element.contains(Address.imgBaseUrl)) {
+        return element = Address.compressImgBaseUrl + element;
+      }
+      return element;
+    }).toList();
+
     newsDetail.reviewsCount.value = newsDetail.reviewsCountInt;
     newsDetail.isLike.value = newsDetail.isLikeInt;
     return newsDetail;

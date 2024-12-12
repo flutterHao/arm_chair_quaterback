@@ -33,8 +33,8 @@ class _PlayerBagTabState extends State<PlayerBagTab>
   Widget build(BuildContext context) {
     super.build(context);
     return GetBuilder<TeamController>(builder: (_) {
-      var list = controller.playerSort();
-      list = list.where((e) => e.position == -1).toList();
+      // var list = controller.playerSort();
+      var list = controller.myBagList.where((e) => e.position == -1).toList();
       return Container(
         color: AppColors.cF2F2F2,
         child: Stack(

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-14 11:11:48
- * @LastEditTime: 2024-12-11 15:54:35
+ * @LastEditTime: 2024-12-12 11:06:27
  */
 /*
  * @Description: 
@@ -91,7 +91,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                     onTap: () => FocusScope.of(context).unfocus(),
                     child: ListView.separated(
                         controller: detailScrollController,
-                        padding: EdgeInsets.zero,
+                        padding: EdgeInsets.only(bottom: 80.w),
                         physics: const BouncingScrollPhysics(),
                         itemBuilder: (context, index) {
                           return KeyedSubtree(
@@ -215,7 +215,7 @@ class NewsDetailItem extends GetView<NewListController> {
         ),
         ObjectUtil.isNotEmpty(item.imgUrl)
             ? Padding(
-                padding: EdgeInsets.symmetric(vertical: 15.w),
+                padding: EdgeInsets.symmetric(vertical: 10.w),
                 child: ImageWidget(
                   url: item.imgUrl,
                   width: item.type == 1 ? 343.w : item.imamgeWidth,
@@ -225,6 +225,20 @@ class NewsDetailItem extends GetView<NewListController> {
                 ),
               )
             : 10.vGap,
+        ListView.separated(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            padding: EdgeInsets.zero,
+            separatorBuilder: (context, index) => 10.vGap,
+            itemCount: item.imgList.length,
+            itemBuilder: (contex, index) {
+              return ImageWidget(
+                url: item.imgList[index],
+                width: 343.w,
+                // fit: BoxFit.fitWidth,
+                borderRadius: BorderRadius.circular(9.w),
+              );
+            }),
         10.vGap,
         Text(
           item.content,

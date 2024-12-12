@@ -137,6 +137,7 @@ class TrainingController extends GetxController
   //任务
   RxInt taskValue = 0.obs;
   int currentTaskNeed = 10;
+  int currentLevel = 1;
   RxDouble taskProgress = 0.0.obs;
   RxString taskCountDownString = "".obs;
   late DateTime refreshTime = DateTime.now();
@@ -325,6 +326,7 @@ class TrainingController extends GetxController
         }
       }
       taskValue.value = trainingInfo.training.taskItemCount;
+      currentLevel = trainingInfo.training.currentTaskId;
       if (_timer == null) {
         recoverBallCountDown();
       }
@@ -503,18 +505,20 @@ class TrainingController extends GetxController
       tacticType = TacticUtils.checkTacticMatch(tacticList);
       // var list = TacticUtils.matchedIndices;
       tacticAnimCtrl.reset();
-      tacticAnimCtrl.forward();
+      tacticAnimCtrl.forward().then((v) {
+        showDialog(
+            context: Get.context!,
+            useSafeArea: false,
+            barrierColor: Colors.transparent,
+            builder: (context) {
+              return const TopToastDialog(child: TacticMatch());
+            });
+      });
       Future.delayed(const Duration(milliseconds: 300), () async {
         showTacticColor.value = true;
         await Future.delayed(const Duration(milliseconds: 1500));
         showTacticColor.value = false;
       });
-      showDialog(
-          context: Get.context!,
-          useSafeArea: false,
-          builder: (context) {
-            return const TopToastDialog(child: TacticMatch());
-          });
     }).whenComplete(() {});
   }
 
@@ -583,16 +587,11 @@ class TrainingController extends GetxController
   }
 
   void startScroller() {
-    //更新道具
-    for (int i = 0; i < trainTaskList.length; i++) {
-      if (trainingInfo.training.currentTaskId == trainTaskList[i].taskLevel) {
-        currentTaskNeed = trainTaskList[i].taskNeed;
-      }
-    }
     // update(["training_page"]);
     for (int i = 0; i < slotCard.length; i++) {
       slotCard[i].value = false;
       scrollerCtrlList[i].jumpTo(0);
+      slotsAnimlList[i].reset();
     }
 
     for (int i = 0; i < scrollerCtrlList.length; i++) {
@@ -604,6 +603,7 @@ class TrainingController extends GetxController
 
   void _scrollColumn(int index) async {
     slotCard[index].value = true;
+    if (trainingInfo.propArray.isEmpty) return;
     int propIndex = propList.indexOf(trainingInfo.propArray[index]);
 
     ///在获奖的结果基础上旋转三周
@@ -648,7 +648,11 @@ class TrainingController extends GetxController
       }
       awads.add(e.id);
     }
+
     await Future.delayed(const Duration(milliseconds: 300));
+    for (var element in scrollerCtrlList) {
+      Log.d("slot 当前位置 ${element.offset}");
+    }
 
     ///2:状态
     if (awads.contains(2)) {
@@ -659,9 +663,21 @@ class TrainingController extends GetxController
     ///3:道具自动加
     // taskValue.value = trainingInfo.training.taskItemCount;
     if (awads.contains(3)) {
+      //如果升级，先满填满
+      if (trainingInfo.training.currentTaskId > currentLevel) {
+        currentLevel = trainingInfo.training.currentTaskId;
+        taskValue.value = currentTaskNeed;
+      }
+      await Future.delayed(const Duration(milliseconds: 400));
+      //更新道具
+      for (int i = 0; i < trainTaskList.length; i++) {
+        if (trainingInfo.training.currentTaskId == trainTaskList[i].taskLevel) {
+          currentTaskNeed = trainTaskList[i].taskNeed;
+        }
+      }
       taskValue.value = trainingInfo.training.taskItemCount;
+
       update(["training_page"]);
-      await Future.delayed(const Duration(milliseconds: 600));
     }
 
     ///4:篮球
@@ -721,11 +737,14 @@ class TrainingController extends GetxController
     if (!awads.contains(1)) {
       isPlaying.value = false;
     }
-    for (var element in slotsAnimlList) {
-      element.reset();
+    for (var element in scrollerCtrlList) {
+      Log.d("slot 当前位置 ${element.offset}");
     }
+    // for (var element in slotsAnimlList) {
+    //   element.reset();
+    // }
     // getPlayerList();
-    update(["training_page"]);
+    // update(["training_page"]);
   }
 
   ///球员滚动

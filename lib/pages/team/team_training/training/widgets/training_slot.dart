@@ -55,11 +55,6 @@ class TrainingSlot extends GetView<TrainingController> {
                                             controller.scrollerCtrlList[index],
                                         itemCount: length * 10,
                                         itemBuilder: (context, itemIndex) {
-                                          int realIndex = itemIndex % length;
-                                          double scale = controller
-                                              .scaleAnimations[index].value;
-                                          int propId =
-                                              controller.propList[realIndex];
                                           return Obx(() {
                                             var show = controller
                                                 .isAwards[index].value;
@@ -76,9 +71,14 @@ class TrainingSlot extends GetView<TrainingController> {
                                                 width: 50.w,
                                                 height: 68.w,
                                                 child: IconWidget(
-                                                  iconWidth: 30.w * scale,
+                                                  iconWidth: 30.w *
+                                                      controller
+                                                          .scaleAnimations[
+                                                              index]
+                                                          .value,
                                                   icon: Utils.getPropIconUrl(
-                                                      propId),
+                                                      controller.propList[
+                                                          itemIndex % length]),
                                                 ),
                                               ),
                                             );

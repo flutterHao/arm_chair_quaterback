@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-29 16:06:50
- * @LastEditTime: 2024-11-20 10:47:07
+ * @LastEditTime: 2024-12-12 14:44:02
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -34,7 +34,7 @@ class AddBallDialog extends GetView<TrainingController> {
                 IconWidget(iconWidth: 30.w, icon: Assets.newsUiIconBall),
                 5.hGap,
                 Text(
-                  "x10",
+                  "x1",
                   style: 20.w7(color: AppColors.c262626),
                 ),
               ],
@@ -48,14 +48,9 @@ class AddBallDialog extends GetView<TrainingController> {
                   style: 14.w7(color: AppColors.c262626),
                 ),
                 5.hGap,
-                IconWidget(
-                  iconWidth: 15.w,
-                  icon: Assets.commonUiCommonProp05,
-                  iconColor: AppColors.c262626,
-                ),
                 5.hGap,
                 Text(
-                  "x100 K",
+                  "1",
                   style: 14.w7(color: AppColors.c262626),
                 ),
               ],
@@ -64,7 +59,8 @@ class AddBallDialog extends GetView<TrainingController> {
           ],
         ),
         onTap: () {
-          controller.buyTrainingBall(10);
+          // controller.buyTrainingBall(10);
+          Navigator.pop(context, true);
         });
   }
 }

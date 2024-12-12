@@ -2,7 +2,7 @@
  * @Description: 确定按钮
  * @Author: lihonghao
  * @Date: 2024-09-28 15:59:52
- * @LastEditTime: 2024-09-28 16:04:36
+ * @LastEditTime: 2024-12-12 12:09:59
  */
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -25,7 +25,7 @@ class ConfirmButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pop(context);
+        // Navigator.pop(context);
         onTap();
       },
       child: Container(

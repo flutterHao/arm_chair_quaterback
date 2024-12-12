@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 21:19:02
- * @LastEditTime: 2024-12-10 15:04:05
+ * @LastEditTime: 2024-12-12 16:39:44
  */
 /*
  * @Description: 
@@ -12,7 +12,6 @@
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
-import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -159,9 +158,7 @@ class SubPlayerList extends GetView<TeamController> {
 
   @override
   Widget build(BuildContext context) {
-    var list = controller.myTeamEntity.teamPlayers
-        .where((e) => e.position == 0)
-        .toList();
+    var list = controller.myBagList.where((e) => e.position == 0).toList();
     return SizedBox(
       // width: 360.w,
       child: Column(
@@ -257,30 +254,31 @@ class EmptyPlayer extends StatelessWidget {
                 style: 21.w4(fontFamily: FontFamily.fOswaldMedium),
               ),
             ),
-            MtInkwell(
-              onTap: () async {
-                if (controller.myBagList
-                    .where((e) => e.position == -1)
-                    .isEmpty) {
-                  EasyLoading.showToast("No players in the stash");
-                  return;
-                }
-                controller.addPlay(context);
-              },
-              child: Container(
-                width: 36.w,
-                height: 36.w,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(9.w),
-                    border: Border.all(color: AppColors.c666666, width: 1)),
-                child: IconWidget(
-                  iconWidth: 18.w,
-                  icon: Assets.commonUiCommonIconSystemExchange,
-                  iconColor: AppColors.c000000,
+            if (!controller.isShowDialog.value)
+              MtInkwell(
+                onTap: () async {
+                  if (controller.myBagList
+                      .where((e) => e.position == -1)
+                      .isEmpty) {
+                    EasyLoading.showToast("No players in the stash");
+                    return;
+                  }
+                  controller.addPlay(context);
+                },
+                child: Container(
+                  width: 36.w,
+                  height: 36.w,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(9.w),
+                      border: Border.all(color: AppColors.c666666, width: 1)),
+                  child: IconWidget(
+                    iconWidth: 18.w,
+                    icon: Assets.commonUiCommonIconSystemExchange,
+                    iconColor: AppColors.c000000,
+                  ),
                 ),
               ),
-            ),
             16.hGap,
           ],
         ),

@@ -65,6 +65,7 @@ class _VerticalDragBackWidgetState extends State<VerticalDragBackWidget>
       ..addListener(() {
         if (mounted && !isReset) {
           offsetY = animation.value;
+          widget.onChange?.call(offsetY);
           // print('addListener---offsetX: $offsetX');
           setState(() {});
         }
@@ -141,8 +142,10 @@ class _VerticalDragBackWidgetState extends State<VerticalDragBackWidget>
         startY = detail.localPosition.dy;
       }
       offsetY = detail.localPosition.dy - startY;
+        widget.onChange?.call(offsetY);
       if (offsetY < 0) {
         offsetY = 0;
+          widget.onChange?.call(offsetY);
       }
       setState(() {});
     }
