@@ -14,6 +14,7 @@ import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/dialog/
 import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/widgets/line_up_tab.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/widgets/player_bag_tab.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/widgets/player_changer_dialog.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -125,6 +126,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
       TeamApi.getMyBagPlayers(),
       CacheApi.getPlayerStatusConfig(),
       CacheApi.getStarUpDefine(),
+      CacheApi.getGradeInStamina(),
     ]).then((v) {
       myTeamEntity = v[0] as MyTeamEntity;
       myBagList = v[1] as List<TeamPlayerInfoEntity>;
@@ -158,6 +160,10 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
                 myTeamEntity.teamPlayers.indexWhere((e1) => e1.uuid == e.uuid);
             myTeamEntity.teamPlayers[index].power = e.power;
           }
+          //更新训练信息
+          TrainingController ctrl = Get.find();
+          ctrl.trainingInfo = await TeamApi.getTrainingInfo();
+          ctrl.update(["training_page"]);
         }
 
         //  myTeamEntity=await TeamApi.getMyTeamPlayer(teamId)
@@ -280,12 +286,16 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
         _timer?.cancel();
 
         /// 恢复体力刷新数据
-        int teamId =
-            HomeController.to.userEntiry.teamLoginInfo!.team!.teamId ?? 0;
-        myTeamEntity = await TeamApi.getMyTeamPlayer(teamId);
+        updateTeamInfo();
         // initData();
       }
     });
+  }
+
+  Future updateTeamInfo() async {
+    int teamId = HomeController.to.userEntiry.teamLoginInfo!.team!.teamId ?? 0;
+    myTeamEntity = await TeamApi.getMyTeamPlayer(teamId);
+    update();
   }
 
   String formatNumber(int number) {
@@ -388,5 +398,20 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
       }
     }
     return salary;
+  }
+
+  int getRecoverCost() {
+    double total = 0;
+    for (var e in myTeamEntity.teamPlayers) {
+      var player = Utils.getPlayBaseInfo(e.playerId);
+      for (var element in CacheApi.gradeInStaminaList) {
+        if (element.gradeDes == player.grade) {
+          double cost = player.salary * element.recoverStaminaValue;
+          total += cost;
+        }
+      }
+    }
+
+    return total.ceil();
   }
 }

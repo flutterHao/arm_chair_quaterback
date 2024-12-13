@@ -12,6 +12,7 @@ import 'package:arm_chair_quaterback/common/entities/competition_venue_entity.da
 import 'package:arm_chair_quaterback/common/entities/config/prop_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/game_event_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/game_schedules_info.dart';
+import 'package:arm_chair_quaterback/common/entities/grade_in_stamina_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/grade_in_star_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_data.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_game_info_entity.dart';
@@ -299,6 +300,10 @@ class JsonConvert {
     if (<GameSchedulesInfo>[] is M) {
       return data.map<GameSchedulesInfo>((Map<String, dynamic> e) =>
           GameSchedulesInfo.fromJson(e)).toList() as M;
+    }
+    if (<GradeInStaminaEntity>[] is M) {
+      return data.map<GradeInStaminaEntity>((Map<String, dynamic> e) =>
+          GradeInStaminaEntity.fromJson(e)).toList() as M;
     }
     if (<GradeInStarDefineEntity>[] is M) {
       return data.map<GradeInStarDefineEntity>((Map<String, dynamic> e) =>
@@ -898,6 +903,7 @@ class JsonConvertClassCollection {
     (PropDefineEntity).toString(): PropDefineEntity.fromJson,
     (GameEventEntity).toString(): GameEventEntity.fromJson,
     (GameSchedulesInfo).toString(): GameSchedulesInfo.fromJson,
+    (GradeInStaminaEntity).toString(): GradeInStaminaEntity.fromJson,
     (GradeInStarDefineEntity).toString(): GradeInStarDefineEntity.fromJson,
     (GuessData).toString(): GuessData.fromJson,
     (Awards).toString(): Awards.fromJson,

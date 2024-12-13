@@ -2,6 +2,7 @@ import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/utils/loading.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
@@ -20,6 +21,7 @@ import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/t
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactics/tactic_utils.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -74,116 +76,116 @@ class TrainingTactics extends StatelessWidget {
     }
 
     return Material(
-      child: GetBuilder<TrainingController>(
-          id: "training_page",
-          builder: (ctrl) {
-            final myTeamCtrl = Get.find<TeamController>();
-            return Container(
-                key: key,
-                width: double.infinity,
-                height: 115.w,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: AppColors.cFFFFFF,
-                  borderRadius: BorderRadius.circular(12.w),
-                ),
-                child: Row(
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        // showModalBottomSheet(
-                        //     barrierColor: Colors.transparent,
-                        //     backgroundColor: Colors.transparent,
-                        //     isScrollControlled: true,
-                        //     context: Get.context!,
-                        //     builder: (context) {
-                        //       return const VerticalDragBackWidget(
-                        //           child: TeamMenberView());
-                        //     });
-                        // Get.toNamed(RouteNames.teamMemberPage);
-                        showModalBottomSheet(
-                            isScrollControlled: true,
-                            context: Get.context!,
-                            builder: (context) {
-                              return const RecoverDialog();
-                            });
-                      },
-                      child: Container(
-                        width: 140.w,
-                        height: 115.w,
-                        padding: EdgeInsets.only(left: 34.w, right: 21.w),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+      child: GetBuilder<TeamController>(builder: (myTeamCtrl) {
+        return Container(
+            key: key,
+            width: double.infinity,
+            height: 115.w,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: AppColors.cFFFFFF,
+              borderRadius: BorderRadius.circular(12.w),
+            ),
+            child: Row(
+              children: [
+                InkWell(
+                  onTap: () {
+                    // showModalBottomSheet(
+                    //     barrierColor: Colors.transparent,
+                    //     backgroundColor: Colors.transparent,
+                    //     isScrollControlled: true,
+                    //     context: Get.context!,
+                    //     builder: (context) {
+                    //       return const VerticalDragBackWidget(
+                    //           child: TeamMenberView());
+                    //     });
+                    // Get.toNamed(RouteNames.teamMemberPage);
+                    if (myTeamCtrl.myTeamEntity.powerP >= 100) {
+                      EasyLoading.showToast("Your team's morale is full.");
+                      // Loading.toast("Your team's morale is full.");
+                      return;
+                    }
+                    showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: Get.context!,
+                        builder: (context) {
+                          return const RecoverDialog();
+                        });
+                  },
+                  child: Container(
+                    width: 140.w,
+                    height: 115.w,
+                    padding: EdgeInsets.only(left: 34.w, right: 21.w),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
                           children: [
-                            Row(
-                              children: [
-                                7.hGap,
-                                Text(
-                                  "MORALE",
-                                  style: 14.w4(
-                                      color: AppColors.c000000,
-                                      fontFamily: FontFamily.fOswaldRegular,
-                                      height: 1),
-                                ),
-                                18.hGap,
-                                IconWidget(
-                                  iconWidth: 14.w,
-                                  iconHeight: 12.w,
-                                  icon: Assets.iconUiIconRead,
-                                  iconColor: AppColors.c000000,
-                                )
-                              ],
+                            7.hGap,
+                            Text(
+                              "MORALE",
+                              style: 14.w4(
+                                  color: AppColors.c000000,
+                                  fontFamily: FontFamily.fOswaldRegular,
+                                  height: 1),
                             ),
-                            13.vGap,
-                            CircleProgressView(
-                                progress: myTeamCtrl.myTeamEntity.powerP * 1.0,
-                                width: 55.w,
-                                height: 55.w,
-                                progressWidth: 5.w,
-                                progressColor: Utils.getProgressColor(
-                                    myTeamCtrl.myTeamEntity.powerP),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    IconWidget(
-                                      iconWidth: 13.w,
-                                      icon: Assets.managerUiManagerIconRecover,
-                                    ),
-                                    3.vGap,
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        AnimatedNum(
-                                          number:
-                                              myTeamCtrl.myTeamEntity.powerP,
-                                          textStyle: 10.w4(),
-                                        ),
-                                        Text(
-                                          "%",
-                                          style: 10.w4(),
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                )),
+                            18.hGap,
+                            IconWidget(
+                              iconWidth: 14.w,
+                              iconHeight: 12.w,
+                              icon: Assets.iconUiIconRead,
+                              iconColor: AppColors.c000000,
+                            )
                           ],
                         ),
-                      ),
+                        13.vGap,
+                        CircleProgressView(
+                            progress: myTeamCtrl.myTeamEntity.powerP * 1.0,
+                            width: 55.w,
+                            height: 55.w,
+                            progressWidth: 5.w,
+                            progressColor: Utils.getProgressColor(
+                                myTeamCtrl.myTeamEntity.powerP),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                IconWidget(
+                                  iconWidth: 13.w,
+                                  icon: Assets.managerUiManagerIconRecover,
+                                ),
+                                3.vGap,
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    AnimatedNum(
+                                      number: myTeamCtrl.myTeamEntity.powerP,
+                                      textStyle: 10.w4(),
+                                    ),
+                                    Text(
+                                      "%",
+                                      style: 10.w4(),
+                                    )
+                                  ],
+                                )
+                              ],
+                            )),
+                      ],
                     ),
-                    Container(
-                      width: 1.w,
-                      height: 91.w,
-                      color: AppColors.cE6E6E,
-                    ),
-                    Expanded(
-                        child: TacticList(
-                      onItemTap: (context, index) => onItemTap(context, index),
-                    ))
-                  ],
-                ));
-          }),
+                  ),
+                ),
+                Container(
+                  width: 1.w,
+                  height: 91.w,
+                  color: AppColors.cE6E6E,
+                ),
+                Expanded(
+                    child: TacticList(
+                  onItemTap: (context, index) => onItemTap(context, index),
+                ))
+              ],
+            ));
+      }),
     );
   }
 }

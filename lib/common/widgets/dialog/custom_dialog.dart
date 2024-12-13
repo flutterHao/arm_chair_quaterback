@@ -1,6 +1,7 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/comfirm_button.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -11,7 +12,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
  * @Description: 自定义弹窗
  * @Author: lihonghao
  * @Date: 2024-09-28 15:59:52
- * @LastEditTime: 2024-12-13 11:31:27
+ * @LastEditTime: 2024-12-13 14:53:07
  */
 
 class CustomBottomDialog extends StatelessWidget {
@@ -19,13 +20,13 @@ class CustomBottomDialog extends StatelessWidget {
       {super.key,
       this.height,
       required this.title,
-      required this.desc,
-      required this.content,
+      this.desc,
+      this.content,
       required this.onComfirm});
   final double? height;
   final String title;
-  final String desc;
-  final Widget content;
+  final String? desc;
+  final Widget? content;
   final Function onComfirm;
 
   @override
@@ -54,25 +55,33 @@ class CustomBottomDialog extends StatelessWidget {
             title,
             style: 27.w4(fontFamily: FontFamily.fOswaldMedium, height: 0.75),
           ),
-          14.5.vGap,
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 38.w),
-            child: Text(
-              desc,
-              textAlign: TextAlign.center,
-              style: 14.w4(
-                  fontFamily: FontFamily.fRobotoRegular,
-                  color: AppColors.c000000),
+          if (ObjectUtil.isNotEmpty(desc))
+            Column(
+              children: [
+                14.5.vGap,
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 38.w),
+                  child: Text(
+                    desc!,
+                    textAlign: TextAlign.center,
+                    style: 14.w4(
+                        fontFamily: FontFamily.fRobotoRegular,
+                        color: AppColors.c000000),
+                  ),
+                ),
+                21.vGap,
+              ],
             ),
-          ),
-          21.vGap,
           Expanded(
-            child: content,
+            child: Container(
+              child: content,
+            ),
           ),
           7.5.vGap,
           MtInkwell(
             onTap: () {
               onComfirm();
+              Navigator.pop(context);
             },
             child: Container(
               height: 51.w,
@@ -116,95 +125,95 @@ class CustomBottomDialog extends StatelessWidget {
   }
 }
 
-class CustomDialog extends StatelessWidget {
-  const CustomDialog(
-      {super.key,
-      this.title = "REWARDS",
-      this.image,
-      this.backgroudColor,
-      required this.content,
-      required this.onTap,
-      this.showComfirmButton = true});
-  final String title;
-  final String? image;
-  final Color? backgroudColor;
-  final Widget content;
-  final Function onTap;
-  final bool showComfirmButton;
+// class CustomDialog extends StatelessWidget {
+//   const CustomDialog(
+//       {super.key,
+//       this.title = "REWARDS",
+//       this.image,
+//       this.backgroudColor,
+//       required this.content,
+//       required this.onTap,
+//       this.showComfirmButton = true});
+//   final String title;
+//   final String? image;
+//   final Color? backgroudColor;
+//   final Widget content;
+//   final Function onTap;
+//   final bool showComfirmButton;
 
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      backgroundColor: Colors.transparent,
-      contentPadding: const EdgeInsets.all(0),
-      content: Container(
-        // margin: EdgeInsets.symmetric(horizontal: 36.w),
-        constraints: const BoxConstraints(maxWidth: 350),
-        child: Stack(
-          alignment: Alignment.topCenter,
-          children: [
-            SizedBox(
-                height: 38.w,
-                child: Text(
-                  title,
-                  style: 52.w7(
-                      color: backgroudColor ?? AppColors.cFF7954,
-                      height: 1,
-                      fontFamily: FontFamily.fRobotoMedium),
-                )),
-            Container(
-              height: 93.w,
-              margin: EdgeInsets.only(top: 37.5.w),
-              decoration: BoxDecoration(
-                  color: backgroudColor ?? AppColors.cFF7954,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(16.w),
-                      topRight: Radius.circular(16.w))),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 10.w),
-              child: Image.asset(
-                image ?? Assets.iconUiWindowsAward,
-                height: 96.w,
-                fit: BoxFit.cover,
-              ),
-            ),
-            Container(
-              height: 30.w,
-              margin: EdgeInsets.only(top: 105.5.w),
-              decoration: BoxDecoration(
-                  color: AppColors.c262626,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(16.w),
-                      topRight: Radius.circular(16.w))),
-            ),
-            Container(
-              width: double.infinity,
-              margin: EdgeInsets.only(top: 108.w),
-              constraints: BoxConstraints(minHeight: 244.w),
-              decoration: BoxDecoration(
-                  color: AppColors.cF2F2F2,
-                  borderRadius: BorderRadius.circular(16.w)),
-              child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    ConstrainedBox(
-                      constraints: BoxConstraints(minHeight: 173.w),
-                      child: content,
-                    ),
-                    if (showComfirmButton)
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: ConfirmButton(
-                            margin: EdgeInsets.only(bottom: 27.w),
-                            onTap: () => onTap()),
-                      )
-                  ]),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return AlertDialog(
+//       backgroundColor: Colors.transparent,
+//       contentPadding: const EdgeInsets.all(0),
+//       content: Container(
+//         // margin: EdgeInsets.symmetric(horizontal: 36.w),
+//         constraints: const BoxConstraints(maxWidth: 350),
+//         child: Stack(
+//           alignment: Alignment.topCenter,
+//           children: [
+//             SizedBox(
+//                 height: 38.w,
+//                 child: Text(
+//                   title,
+//                   style: 52.w7(
+//                       color: backgroudColor ?? AppColors.cFF7954,
+//                       height: 1,
+//                       fontFamily: FontFamily.fRobotoMedium),
+//                 )),
+//             Container(
+//               height: 93.w,
+//               margin: EdgeInsets.only(top: 37.5.w),
+//               decoration: BoxDecoration(
+//                   color: backgroudColor ?? AppColors.cFF7954,
+//                   borderRadius: BorderRadius.only(
+//                       topLeft: Radius.circular(16.w),
+//                       topRight: Radius.circular(16.w))),
+//             ),
+//             Container(
+//               margin: EdgeInsets.only(top: 10.w),
+//               child: Image.asset(
+//                 image ?? Assets.iconUiWindowsAward,
+//                 height: 96.w,
+//                 fit: BoxFit.cover,
+//               ),
+//             ),
+//             Container(
+//               height: 30.w,
+//               margin: EdgeInsets.only(top: 105.5.w),
+//               decoration: BoxDecoration(
+//                   color: AppColors.c262626,
+//                   borderRadius: BorderRadius.only(
+//                       topLeft: Radius.circular(16.w),
+//                       topRight: Radius.circular(16.w))),
+//             ),
+//             Container(
+//               width: double.infinity,
+//               margin: EdgeInsets.only(top: 108.w),
+//               constraints: BoxConstraints(minHeight: 244.w),
+//               decoration: BoxDecoration(
+//                   color: AppColors.cF2F2F2,
+//                   borderRadius: BorderRadius.circular(16.w)),
+//               child: Column(
+//                   mainAxisSize: MainAxisSize.min,
+//                   crossAxisAlignment: CrossAxisAlignment.center,
+//                   children: [
+//                     ConstrainedBox(
+//                       constraints: BoxConstraints(minHeight: 173.w),
+//                       child: content,
+//                     ),
+//                     if (showComfirmButton)
+//                       Align(
+//                         alignment: Alignment.bottomCenter,
+//                         child: ConfirmButton(
+//                             margin: EdgeInsets.only(bottom: 27.w),
+//                             onTap: () => onTap()),
+//                       )
+//                   ]),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }

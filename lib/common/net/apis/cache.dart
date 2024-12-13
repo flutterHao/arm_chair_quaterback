@@ -2,6 +2,7 @@ import 'package:arm_chair_quaterback/common/entities/api_error_code_entity.dart'
 import 'package:arm_chair_quaterback/common/entities/competition_venue_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/config/prop_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/game_event_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/grade_in_stamina_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/grade_in_star_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
@@ -46,6 +47,7 @@ class CacheApi {
   static List<GameEventEntity> gameEvents = [];
 
   static List<CompetitionVenueEntity> competitionVenues = [];
+  static List<GradeInStaminaEntity> gradeInStaminaList = [];
 
   static Future<void> init() async {
     await Future.wait([
@@ -196,5 +198,16 @@ class CacheApi {
     competitionVenues =
         json.map((e) => CompetitionVenueEntity.fromJson(e)).toList();
     return competitionVenues;
+  }
+
+  ///球员耐力等级
+  static Future<List<GradeInStaminaEntity>> getGradeInStamina() async {
+    if (gradeInStaminaList.isNotEmpty) {
+      return gradeInStaminaList;
+    }
+    List list = await HttpUtil().post(Api.cGradeInStamina);
+    gradeInStaminaList =
+        list.map((e) => GradeInStaminaEntity.fromJson(e)).toList();
+    return gradeInStaminaList;
   }
 }

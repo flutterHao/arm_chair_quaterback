@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-12-09 15:03:24
+ * @LastEditTime: 2024-12-13 14:39:23
  */
 
 import 'dart:async';
@@ -125,7 +125,8 @@ class TeamIndexController extends GetxController
   ///宝箱奖励弹窗
   void showBoxDialog() async {
     update(["boxDialog"]);
-    await showDialog(
+    await showModalBottomSheet(
+        isScrollControlled: true,
         context: Get.context!,
         builder: (context) {
           return const BoxDialog();

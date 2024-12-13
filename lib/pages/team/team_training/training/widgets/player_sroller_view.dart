@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lihonghao
  * @Date: 2024-11-06 11:51:15
- * @LastEditTime: 2024-12-10 21:10:24
+ * @LastEditTime: 2024-12-13 17:38:01
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -10,7 +10,7 @@ import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/view.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -30,6 +30,7 @@ class _PlayerSrollerViewState extends State<PlayerSrollerView> {
     return GetBuilder<TrainingController>(
         id: "playerList",
         builder: (controller) {
+          var playerList = Get.find<TeamController>().myTeamEntity.teamPlayers;
           var selectPlayers = controller.trainingInfo.selectPlayer;
           int count = selectPlayers.length ~/ 2;
           return InkWell(
@@ -47,10 +48,10 @@ class _PlayerSrollerViewState extends State<PlayerSrollerView> {
                 itemExtent: 65.w,
                 clipBehavior: Clip.none, // 防止子项超出父容器的边界
                 physics: const NeverScrollableScrollPhysics(), // 禁止手动滚动
-                itemCount: controller.playerList.length * 10,
+                itemCount: playerList.length * 10,
                 itemBuilder: (context, index) {
-                  int current = index % controller.playerList.length;
-                  var item = controller.playerList[current];
+                  int current = index % playerList.length;
+                  var item = playerList[current];
                   return Obx(() {
                     //是否选中
                     // var select = controller.trainingInfo.selectPlayer

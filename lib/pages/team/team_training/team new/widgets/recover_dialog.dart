@@ -2,9 +2,10 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-29 16:06:50
- * @LastEditTime: 2024-12-13 11:32:06
+ * @LastEditTime: 2024-12-13 18:14:41
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/custom_dialog.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -44,16 +45,15 @@ class RecoverDialog extends GetView<TeamController> {
                 ),
                 3.hGap,
                 Text(
-                  "10K",
+                  Utils.formatMoney(controller.getRecoverCost()),
                   style: 16.w4(fontFamily: FontFamily.fOswaldBold),
                 ),
               ],
             ),
           ],
         ),
-        onComfirm: () {
-          controller.recoverPower(type: 2);
-          Navigator.pop(context);
+        onComfirm: () async {
+          await controller.recoverPower(type: 2);
         });
   }
 }

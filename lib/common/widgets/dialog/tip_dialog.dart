@@ -26,6 +26,7 @@ class BottomTipDialog {
     Widget? centerWidget,
   }) {
     return showModalBottomSheet(
+        isScrollControlled: true,
         context: context,
         builder: (context) {
           return _BottomTipDialog(
@@ -64,6 +65,7 @@ class _BottomTipDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
+      height: 419.w,
       decoration: BoxDecoration(
           color: AppColors.cFFFFFF, borderRadius: BorderRadius.circular(9.w)),
       child: Column(
@@ -85,14 +87,20 @@ class _BottomTipDialog extends StatelessWidget {
                 fontFamily: FontFamily.fOswaldMedium),
           ),
           10.vGap,
-          Text(
-            desc ?? "Do you want to skip the game?",
-            style: 14.w4(
-                color: AppColors.c000000,
-                height: 1,
-                fontFamily: FontFamily.fRobotoRegular),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 40.w),
+            child: Text(
+              desc ?? "Do you want to skip the game?",
+              textAlign: TextAlign.center,
+              style: 14.w4(
+                  color: AppColors.c000000,
+                  // height: 1,
+                  fontFamily: FontFamily.fRobotoRegular),
+            ),
           ),
-          Expanded(child: centerWidget ?? const SizedBox.shrink()),
+          const Expanded(child: SizedBox.shrink()),
+          centerWidget ?? const SizedBox.shrink(),
+          7.5.vGap,
           Container(
             height: 51.w,
             margin: EdgeInsets.symmetric(horizontal: 16.w),

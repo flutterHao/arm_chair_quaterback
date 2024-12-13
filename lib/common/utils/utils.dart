@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-21 20:20:49
- * @LastEditTime: 2024-12-04 10:27:29
+ * @LastEditTime: 2024-12-13 15:08:22
  */
 import 'dart:async';
 import 'dart:io';
@@ -13,10 +13,12 @@ import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
+import 'package:arm_chair_quaterback/common/services/storage.dart';
 import 'package:arm_chair_quaterback/common/store/config.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -299,5 +301,17 @@ class Utils {
   /// 使用队伍id 获取队伍的颜色
   static Color getTeamColor(int teamId) {
     return Constant.teamColorMap[teamId]?['light'] ?? AppColors.c404040;
+  }
+
+  static void saveNotTip(String type, {bool noTip = true}) {
+    String date =
+        DateUtil.formatDate(DateTime.now(), format: DateFormats.y_mo_d);
+    StorageService.to.setBool("${type}noTip$date", noTip);
+  }
+
+  static bool getNoTip(String type) {
+    String date =
+        DateUtil.formatDate(DateTime.now(), format: DateFormats.y_mo_d);
+    return StorageService.to.getBool("${type}noTip$date");
   }
 }

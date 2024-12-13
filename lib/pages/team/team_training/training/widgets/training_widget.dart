@@ -2,9 +2,10 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-25 15:56:43
- * @LastEditTime: 2024-12-13 11:38:27
+ * @LastEditTime: 2024-12-13 15:17:03
  */
 
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/custom_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
@@ -43,7 +44,7 @@ class TrainingWidget extends GetView<TrainingController> {
   @override
   Widget build(BuildContext context) {
     // controller.startScroller();
-    // controller.showAward();
+    controller.showAward();
     return GetBuilder<TrainingController>(
         id: "training_page",
         builder: (controller) {
@@ -250,21 +251,43 @@ class TrainingWidget extends GetView<TrainingController> {
                                     onTap: controller.isPlaying.value
                                         ? null
                                         : () async {
-                                            if (controller.ballNum.value <= 0) {
-                                              await showModalBottomSheet(
+                                            if (controller.ballNum.value >= 0 &&
+                                                !Utils.getNoTip("ball")) {
+                                              BottomTipDialog.show(
                                                   context: Get.context!,
-                                                  isScrollControlled: true,
-                                                  builder: (context) {
-                                                    return AddBallDialog();
+                                                  desc:
+                                                      "Automatically use Coins for training when there's a shortage of balls ",
+                                                  centerWidget: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text(
+                                                        "COST:",
+                                                        style: 16.w4(
+                                                            fontFamily: FontFamily
+                                                                .fOswaldBold),
+                                                      ),
+                                                      10.hGap,
+                                                      Image.asset(
+                                                        Assets
+                                                            .commonUiCommonIconCurrency02,
+                                                        width: 20.w,
+                                                      ),
+                                                      5.hGap,
+                                                      Text(
+                                                        "1",
+                                                        style: 16.w4(
+                                                            fontFamily: FontFamily
+                                                                .fOswaldBold),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  onTap: () {
+                                                    Get.back();
+                                                    controller.startSlot();
+                                                    Utils.saveNotTip("ball");
                                                   });
-                                              // BottomTipDialog.show(
-                                              //     context: Get.context!,
-                                              //     title: "Tips",
-                                              //     desc:
-                                              //         "Automatically use Coins for training when there's a shortage of balls ",
-                                              //     onTap: () {
-                                              //       controller.startSlot();
-                                              //     });
                                             } else {
                                               controller.startSlot();
                                             }
@@ -474,16 +497,27 @@ class TrainingWidget extends GetView<TrainingController> {
                                 top: 205.w,
                                 child: MtInkwell(
                                   onTap: () {
-                                    if (controller.isNotTip.value) {
+                                    if (Utils.getNoTip("tactics")) {
                                       controller.chooseFinish();
                                       return;
                                     }
-                                    showDialog(
+                                    BottomTipDialog.show(
                                         context: Get.context!,
-                                        builder: (context) {
-                                          // return RecoverDialog();
-                                          return const TacticTipDialog();
+                                        title: "Tip",
+                                        desc:
+                                            "Are you confirm to qiut the tactics pick?",
+                                        onTap: () {
+                                          Utils.saveNotTip("tactics");
+                                          controller.chooseFinish();
+                                          Get.back();
                                         });
+                                    // showModalBottomSheet(
+                                    //     isScrollControlled: true,
+                                    //     context: Get.context!,
+                                    //     builder: (context) {
+                                    //       // return RecoverDialog();
+                                    //       return const TacticTipDialog();
+                                    //     });
                                   },
                                   child: Container(
                                     width: 30.w,
@@ -683,52 +717,18 @@ class TrainingWidget extends GetView<TrainingController> {
   }
 }
 
-class TacticTipDialog extends GetView<TrainingController> {
-  const TacticTipDialog({super.key});
+// class TacticTipDialog extends GetView<TrainingController> {
+//   const TacticTipDialog({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return CustomDialog(
-        content: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              // height: 30.w,
-              alignment: Alignment.center,
-              padding: EdgeInsets.symmetric(horizontal: 30.w),
-              child: Text(
-                "Are you confirm to qiut the 'Tactics Pick",
-                style: 16.w4(),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Obx(() {
-                  return SizedBox(
-                    width: 40.w,
-                    child: Checkbox(
-                        value: controller.isNotTip.value,
-                        activeColor: AppColors.cFF7954,
-                        onChanged: (v) {
-                          controller.isNotTip.value =
-                              !controller.isNotTip.value;
-                        }),
-                  );
-                }),
-                Text(
-                  "No more tips today",
-                  style: 12.w4(),
-                )
-              ],
-            )
-          ],
-        ),
-        onTap: () {
-          controller.saveNotTip();
-          controller.chooseFinish();
-        });
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return CustomBottomDialog(
+//         title: "Tip",
+//         desc: "Are you confirm to qiut the tactics pick?",
+//         // content: content,
+//         onComfirm: () {
+//           controller.saveNotTip();
+//           controller.chooseFinish();
+//         });
+//   }
+// }

@@ -17,10 +17,10 @@ class Loading {
       ..lineWidth = 2
       ..radius = 10.0
       ..progressColor = Colors.white
-      ..backgroundColor = Colors.black.withOpacity(0.7)
+      ..backgroundColor = Colors.black.withOpacity(0.5)
       ..indicatorColor = Colors.white
       ..textColor = Colors.white
-      ..maskColor = Colors.black.withOpacity(0.6)
+      ..maskColor = Colors.black.withOpacity(0.1)
       ..userInteractions = true
       ..dismissOnTap = false
       ..maskType = EasyLoadingMaskType.custom;

@@ -2,13 +2,15 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-02 10:15:35
- * @LastEditTime: 2024-12-04 16:18:15
+ * @LastEditTime: 2024-12-13 14:35:08
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/custom_dialog.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
@@ -76,16 +78,28 @@ class TrainingAwardDialog extends GetView<TrainingController> {
                         top: top + 205.w,
                         child: MtInkwell(
                           onTap: () async {
-                            if (controller.isNotTip.value) {
+                            if (Utils.getNoTip("tactics")) {
                               controller.chooseFinish();
                               // return;
                             } else {
-                              await showDialog(
-                                  context: Get.context!,
-                                  builder: (context) {
-                                    // return RecoverDialog();
-                                    return const TacticTipDialog();
+                              await BottomTipDialog.show(
+                                  context: context,
+                                  title: "Tip",
+                                  desc:
+                                      "Are you confirm to qiut the tactics pick?",
+                                  onTap: () {
+                                    Utils.saveNotTip("tactics");
+                                    controller.chooseFinish();
+                                    // Navigator.pop(context);
+                                    Get.back();
                                   });
+                              // await showModalBottomSheet(
+                              //     isScrollControlled: true,
+                              //     context: Get.context!,
+                              //     builder: (context) {
+                              //       // return RecoverDialog();
+                              //       return const TacticTipDialog();
+                              //     });
                             }
                             Navigator.pop(context);
                           },

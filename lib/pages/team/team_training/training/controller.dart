@@ -1,19 +1,17 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:arm_chair_quaterback/common/entities/my_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/tatics_combine_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/train_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/train_task_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
-import 'package:arm_chair_quaterback/common/services/services.dart';
 import 'package:arm_chair_quaterback/common/utils/click_feed_back.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/top_toast_dialog.dart';
 import 'package:arm_chair_quaterback/pages/home/index.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactics/tactic_utils.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactics/tatic_match.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/training_award_dialog.dart';
@@ -44,7 +42,7 @@ class TrainingController extends GetxController
   RxInt cash = 0.obs;
 
   TrainingInfoEntity trainingInfo = TrainingInfoEntity();
-  List<TeamPlayerInfoEntity> playerList = [];
+  // List<TeamPlayerInfoEntity> playerList = [];
   List<TrainTaskEntity> trainTaskList = [];
   TrainDefineEntity trainDefine = TrainDefineEntity();
   RxInt ballNum = 0.obs;
@@ -57,6 +55,7 @@ class TrainingController extends GetxController
     false.obs,
     false.obs
   ];
+  List<double> offsetList = [];
   final List<ScrollController> scrollerCtrlList =
       List.generate(6, (_) => ScrollController());
 
@@ -115,7 +114,6 @@ class TrainingController extends GetxController
   int changeTacticId = 0;
   List<TrainingInfoBuff> tacticList = [];
   List<TrainingInfoBuff> chooseTacticList = [];
-  RxBool isNotTip = false.obs;
   late AnimationController shakeController;
   late Animation<double> shakeAnimation;
   //卡牌动画
@@ -154,7 +152,6 @@ class TrainingController extends GetxController
   @override
   void onInit() {
     super.onInit();
-    getNoTip();
     playerScollCtrl = ScrollController();
     slotsAnimlList = List.generate(6, (_) {
       return AnimationController(
@@ -311,7 +308,7 @@ class TrainingController extends GetxController
       TeamApi.getTrainTaskList(),
       TeamApi.getTrainDefine(),
       TeamApi.getTacticCombine(),
-      getPlayerList(),
+      // getPlayerList(),
     ]).then((v) {
       // rewardList = v[0] as List<RewardGroupEntity>;
       trainingInfo = v[0] as TrainingInfoEntity;
@@ -338,14 +335,14 @@ class TrainingController extends GetxController
     });
   }
 
-  Future getPlayerList() async {
-    if (HomeController.to.userEntiry.teamLoginInfo == null) {
-      await HomeController.to.refreshUserEntity();
-    }
-    int teamId = HomeController.to.userEntiry.teamLoginInfo!.team!.teamId ?? 0;
-    MyTeamEntity teamEntity = await TeamApi.getMyTeamPlayer(teamId);
-    playerList = teamEntity.teamPlayers;
-  }
+  // Future getPlayerList() async {
+  //   if (HomeController.to.userEntiry.teamLoginInfo == null) {
+  //     await HomeController.to.refreshUserEntity();
+  //   }
+  //   int teamId = HomeController.to.userEntiry.teamLoginInfo!.team!.teamId ?? 0;
+  //   MyTeamEntity teamEntity = await TeamApi.getMyTeamPlayer(teamId);
+  //   playerList = teamEntity.teamPlayers;
+  // }
 
   ///获取配置数据计算倒计时
   void recoverBallCountDown() {
@@ -373,6 +370,7 @@ class TrainingController extends GetxController
         // 重新获取新的恢复时间进行倒计时
         TeamApi.getTrainingInfo().then((v) {
           trainingInfo.prop = v.prop;
+          ballNum.value = trainingInfo.prop.num;
           trainingInfo.training = v.training;
           update(["training_page"]);
           recoverBallCountDown();
@@ -502,17 +500,21 @@ class TrainingController extends GetxController
       }
 
       await Future.delayed(const Duration(milliseconds: 500));
-      tacticType = TacticUtils.checkTacticMatch(tacticList);
+      String newTacticType = TacticUtils.checkTacticMatch(tacticList);
       // var list = TacticUtils.matchedIndices;
       tacticAnimCtrl.reset();
       tacticAnimCtrl.forward().then((v) {
-        showDialog(
-            context: Get.context!,
-            useSafeArea: false,
-            barrierColor: Colors.transparent,
-            builder: (context) {
-              return const TopToastDialog(child: TacticMatch());
-            });
+        if (ObjectUtil.isNotEmpty(newTacticType) &&
+            tacticType != newTacticType) {
+          showDialog(
+              context: Get.context!,
+              useSafeArea: false,
+              barrierColor: Colors.transparent,
+              builder: (context) {
+                return const TopToastDialog(child: TacticMatch());
+              });
+        }
+        tacticType = newTacticType;
       });
       Future.delayed(const Duration(milliseconds: 300), () async {
         showTacticColor.value = true;
@@ -533,19 +535,6 @@ class TrainingController extends GetxController
     for (var element in chooseTacticList) {
       element.isOpen.value = false;
     }
-  }
-
-  void saveNotTip() {
-    String date =
-        DateUtil.formatDate(DateTime.now(), format: DateFormats.y_mo_d);
-    StorageService.to.setBool("noTip$date", isNotTip.value);
-  }
-
-  void getNoTip() {
-    String date =
-        DateUtil.formatDate(DateTime.now(), format: DateFormats.y_mo_d);
-    isNotTip.value = StorageService.to.getBool("noTip$date");
-    Log.d("noTip:${isNotTip.value}");
   }
 
   void chooseFinish() {
@@ -574,6 +563,7 @@ class TrainingController extends GetxController
     initSlot();
     final teamIndexCtrl = Get.find<TeamIndexController>();
     teamIndexCtrl.scroToSlot();
+    var playerList = Get.find<TeamController>().myTeamEntity.teamPlayers;
     playerIdx = random.nextInt(playerList.length);
     ballNum.value = ballNum.value - 1;
     await TeamApi.playerTraining(playerList[playerIdx].uuid).then((v) {
@@ -593,7 +583,7 @@ class TrainingController extends GetxController
       scrollerCtrlList[i].jumpTo(0);
       slotsAnimlList[i].reset();
     }
-
+    offsetList.clear();
     for (int i = 0; i < scrollerCtrlList.length; i++) {
       Future.delayed(Duration(milliseconds: i * 200), () {
         _scrollColumn(i);
@@ -608,6 +598,7 @@ class TrainingController extends GetxController
 
     ///在获奖的结果基础上旋转三周
     double offset = 68.w * (propIndex + propList.length * 3);
+    offsetList.add(offset);
     slotsAnimlList[index].forward();
     await scrollerCtrlList[index].animateTo(offset,
         duration: const Duration(milliseconds: 600),
@@ -657,6 +648,8 @@ class TrainingController extends GetxController
     ///2:状态
     if (awads.contains(2)) {
       await startPlayerScroll(0);
+      //更新球员状态
+      Get.find<TeamController>().updateTeamInfo();
       await Future.delayed(const Duration(milliseconds: 500));
     }
 
@@ -740,6 +733,11 @@ class TrainingController extends GetxController
     for (var element in scrollerCtrlList) {
       Log.d("slot 当前位置 ${element.offset}");
     }
+    if (scrollerCtrlList.where((e) => e.offset == 0.0).length == 6) {
+      for (int i = 0; i < scrollerCtrlList.length; i++) {
+        scrollerCtrlList[i].jumpTo(offsetList[i]);
+      }
+    }
     // for (var element in slotsAnimlList) {
     //   element.reset();
     // }
@@ -750,6 +748,7 @@ class TrainingController extends GetxController
   ///球员滚动
   Future startPlayerScroll(int count) async {
     ///状态控制
+    var playerList = Get.find<TeamController>().myTeamEntity.teamPlayers;
     await Future.delayed(const Duration(milliseconds: 150));
     trainingInfo.selectPlayer.value =
         trainingInfo.statusReplyPlayers.map((e) => e.playerId).toList();
