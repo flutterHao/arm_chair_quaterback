@@ -179,8 +179,8 @@ class _LiveTextDialogState extends State<LiveTextDialogWidget>
                                                 BorderRadius.circular(15.5.w),
                                             border: Border.all(
                                                 color: item.isHomePlayer
-                                                    ? AppColors.cD60D20
-                                                    : AppColors.c1F8FE5,
+                                                    ? AppColors.c1F8FE5
+                                                    : AppColors.cD60D20,
                                                 width: 1.5.w)),
                                         child: ImageWidget(
                                           url: Utils.getPlayUrl(item.playerId),
@@ -192,15 +192,36 @@ class _LiveTextDialogState extends State<LiveTextDialogWidget>
                                         ),
                                       ),
                                       13.hGap,
-                                      Expanded(
-                                          child: Text(
-                                        item.text,
-                                        style: 12.w4(
-                                            color: AppColors.c4D4D4D,
-                                            height: 1,
-                                            fontFamily:
-                                                FontFamily.fRobotoRegular),
-                                      )),
+                                      Expanded(child: Builder(builder: (context) {
+                                        var list = Utils.subColorString(item.text);
+                                        return Text.rich(
+                                          TextSpan(
+                                              children:
+                                              List.generate(list.length, (index) {
+                                                var colorString = list[index];
+                                                return TextSpan(
+                                                    text: "${colorString.text} ",
+                                                    style: colorString.isMatch
+                                                        ? TextStyle(
+                                                        color: item.isHomePlayer
+                                                            ? AppColors.c1F8FE5
+                                                            : AppColors.cD60D20)
+                                                        : null);
+                                              })),
+                                          style: TextStyle(
+                                              fontSize: 12.sp,
+                                              fontWeight: item.score
+                                                  ? FontWeight.w500
+                                                  : FontWeight.w400,
+                                              color: item.score
+                                                  ? AppColors.c000000
+                                                  : AppColors.c4D4D4D,
+                                              height: 1,
+                                              fontFamily: item.score
+                                                  ? FontFamily.fRobotoMedium
+                                                  : FontFamily.fRobotoRegular),
+                                        );
+                                      })),
                                       Container(
                                         width: 50.w,
                                         alignment: Alignment.center,
@@ -210,7 +231,7 @@ class _LiveTextDialogState extends State<LiveTextDialogWidget>
                                                 text: "${item.homeScore}",
                                                 style: TextStyle(
                                                   color: item.score && item.isHomePlayer
-                                                      ? AppColors.cD60D20
+                                                      ? AppColors.c1F8FE5
                                                       : AppColors.c4D4D4D,
                                                 )),
                                             const TextSpan(text: "-"),
@@ -219,7 +240,7 @@ class _LiveTextDialogState extends State<LiveTextDialogWidget>
                                                 style: TextStyle(
                                                   color:
                                                   item.score && !item.isHomePlayer
-                                                      ? AppColors.c1F8FE5
+                                                      ? AppColors.cD60D20
                                                       : AppColors.c4D4D4D,
                                                 )),
                                           ]),

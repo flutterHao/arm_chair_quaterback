@@ -11,7 +11,6 @@ import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/tactical_contrast/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactics/tactic_card.dart';
 import 'package:flutter/material.dart';
@@ -127,7 +126,7 @@ class TacticalContrast extends StatelessWidget {
                       //自己的卡牌
                       ...List.generate(5, (index) {
                         var list = controller.getHomeTeamBuff();
-                        TeamBuffer? item =
+                        TrainingInfoBuff? item =
                             list.length - 1 >= index ? list[index] : null;
                         Widget child;
                         if (item == null) {
@@ -171,7 +170,7 @@ class TacticalContrast extends StatelessWidget {
                             (43.w * 5 + 12.w * 4);
                         var left = d / 2;
                         var list = controller.getHomeTeamBuff();
-                        TeamBuffer? item =
+                        TrainingInfoBuff? item =
                             list.length - 1 >= index ? list[index] : null;
                         List<Widget> sC = [];
                         sC.add(Positioned(
@@ -222,7 +221,7 @@ class TacticalContrast extends StatelessWidget {
                       // 我的卡牌
                       ...List.generate(5, (index) {
                         var list = controller.getHomeTeamBuff();
-                        TeamBuffer? item =
+                        TrainingInfoBuff? item =
                             list.length - 1 >= index ? list[index] : null;
                         Widget child;
                         if (item == null) {
@@ -280,7 +279,7 @@ class TacticalContrast extends StatelessWidget {
                             (43.w * 5 + 12.w * 4);
                         var left = d / 2;
                         var list = controller.getHomeTeamBuff();
-                        TeamBuffer? item =
+                        TrainingInfoBuff? item =
                             list.length - 1 >= index ? list[index] : null;
                         Widget child;
                         if (item == null) {
@@ -417,7 +416,7 @@ class TacticalContrast extends StatelessWidget {
                   return Row(
                     children: List.generate(5, (index) {
                       var list = controller.getAwayTeamBuff();
-                      TeamBuffer? item =
+                      TrainingInfoBuff? item =
                           list.length - 1 >= index ? list[index] : null;
                       if (item == null) {
                         return buildEmpty(AppColors.c333333,

@@ -244,7 +244,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
                   Colors.black.withOpacity(.0), offsetX / width),
             ),
             Transform.translate(
-                offset: Offset(offsetX, 0),
+                offset: Offset((widget.noBackAnimation?0:offsetX), 0),
                 child: widget.child),
           ],
         ),

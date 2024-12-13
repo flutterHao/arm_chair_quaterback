@@ -113,7 +113,7 @@ class TeamBattleV2Controller extends GetxController
   bool isPkResultUpdated = false;
   PkResultUpdatedEntity? pkResultUpdatedEntity;
 
-  bool isGameStart = false;
+  var isGameStart = false.obs;
 
   /// 在 widget 内存中分配后立即调用。
   @override
@@ -185,16 +185,6 @@ class TeamBattleV2Controller extends GetxController
           pkEventUpdatedEntity,
         );
         addEvent(event);
-        if (gameEvent.headLine == "1") {
-          /// 高光时刻
-          highLightBarrageWallController.send([generateHightButlle(text)]);
-        } else {
-          /// 普通弹幕
-          // normalBarrageWallController.send([
-          //   generateHightButlle(insertPlayerName(
-          //       gameEvent?.eventDescripition ?? "", pkEventUpdatedEntity))
-          // ]);
-        }
       }
     });
   }
@@ -249,7 +239,7 @@ class TeamBattleV2Controller extends GetxController
   }
 
   changeGameSpeed(double speed) {
-    if (!isGameStart) return;
+    if (!isGameStart.value) return;
     if (isGameOver.value) return;
 
     /// 停止所有的动画
@@ -280,8 +270,9 @@ class TeamBattleV2Controller extends GetxController
       ..controller.addStatusListener(quarterStatusListener)
       ..controller.addListener(quarterListener);
     quarterTimeCountDownAnimationController.forward(from: 0);
+    var time = (((40 * 1000)/(eventCacheMap[Utils.getSortWithInt(quarter.value)]?.length??40)) / gameSpeed);
     eventEngine =
-        Timer.periodic(Duration(milliseconds: (1000 / gameSpeed).toInt()), (t) {
+        Timer.periodic(Duration(milliseconds: time.toInt()), (t) {
       sendToScreen();
     });
   }
@@ -314,9 +305,10 @@ class TeamBattleV2Controller extends GetxController
     if (isGameOver.value) {
       isGameOver.value = false;
     }
+    isGameStart.value = false;
     quarter.value = 0;
     eventOnScreenMap.clear();
-    checkShowDialog();
+    // checkShowDialog();
   }
 
   startGame() {
@@ -340,8 +332,9 @@ class TeamBattleV2Controller extends GetxController
     quarterTimeCountDownAnimationController.forward(from: 0);
     eventEngine?.cancel();
     eventCount = 0;
+    var time = (((40 * 1000)/(eventCacheMap[Utils.getSortWithInt(quarter.value)]?.length??40)) / gameSpeed);
     eventEngine =
-        Timer.periodic(Duration(milliseconds: (1000 / gameSpeed).toInt()), (t) {
+        Timer.periodic(Duration(milliseconds: time.toInt()), (t) {
       sendToScreen();
     });
   }
@@ -368,6 +361,19 @@ class TeamBattleV2Controller extends GetxController
       eventOnScreenMap[key]!.add(event);
     } else {
       eventOnScreenMap[key] = [event];
+    }
+
+    var gameEvent = getGameEvent(event.pkEventUpdatedEntity.eventId);
+    if (gameEvent?.headLine == "1") {
+      /// 高光时刻
+      highLightBarrageWallController
+          .send([generateHighBullet(event.text, playerId: event.playerId)]);
+    } else {
+      /// 普通弹幕
+      // normalBarrageWallController.send([
+      //   generateHightButlle(insertPlayerName(
+      //       gameEvent?.eventDescripition ?? "", pkEventUpdatedEntity))
+      // ]);
     }
 
     if (event.shooting) {
@@ -554,7 +560,12 @@ class TeamBattleV2Controller extends GetxController
         "holly shit !!!",
         "what the fuck !!!"
       ][random.nextInt(3)];
-      var size = calculateTextSize(text, 12.sp, 0, FontWeight.w400);
+      var size = calculateTextSize(
+          text,
+          12.w4(
+              color: AppColors.c000000,
+              height: 1,
+              fontFamily: FontFamily.fRobotoRegular));
       return Bullet(
           child: Container(
             width: size.width + 12.w * 2,
@@ -588,13 +599,18 @@ class TeamBattleV2Controller extends GetxController
     List<Bullet> bullets = List<Bullet>.generate(1, (i) {
       final showTime = random.nextInt(6000);
       var text = "Kyrie Irving makes free throw 1of 2";
-      return generateHightButlle(text, showTime: showTime);
+      return generateHighBullet(text, showTime: showTime);
     });
     return bullets;
   }
 
-  Bullet generateHightButlle(String text, {int showTime = 0}) {
-    var size = calculateTextSize(text, 12.sp, 0, FontWeight.w500);
+  Bullet generateHighBullet(String text, {int showTime = 0, int playerId = 0}) {
+    var size = calculateTextSize(
+        text,
+        12.w5(
+            color: AppColors.c000000,
+            height: 1,
+            fontFamily: FontFamily.fRobotoMedium));
     return Bullet(
         child: Container(
           width: size.width + 12.w + 4.w + 20.w + 7.w,
@@ -611,23 +627,31 @@ class TeamBattleV2Controller extends GetxController
           height: 28.w,
           child: Row(
             children: [
-              ImageWidget(
-                url: "",
-                imageFailedPath: Assets.testTestTeamLogo,
-                borderRadius: BorderRadius.circular(10.w),
+              SizedBox(
                 width: 20.w,
                 height: 20.w,
+                child: Center(
+                  child: ImageWidget(
+                    url: Utils.getPlayUrl(playerId),
+                    imageFailedPath: Assets.iconUiDefault05,
+                    borderRadius: BorderRadius.circular(10.w),
+                    width: 20.w,
+                    height: 20.w,
+                  ),
+                ),
               ),
               7.hGap,
-              Text(
-                text,
-                maxLines: 1,
-                softWrap: false,
-                overflow: TextOverflow.visible,
-                style: 12.w5(
-                    color: AppColors.c000000,
-                    height: 1,
-                    fontFamily: FontFamily.fRobotoMedium),
+              Expanded(
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    text,
+                    style: 12.w5(
+                        color: AppColors.c000000,
+                        height: 1,
+                        fontFamily: FontFamily.fRobotoMedium),
+                  ),
+                ),
               ),
             ],
           ),
@@ -636,34 +660,12 @@ class TeamBattleV2Controller extends GetxController
   }
 
   /// 计算文本尺寸
-  Size calculateTextSize(
-    String value,
-    double fontSize,
-    double strokeWidth,
-    FontWeight fontWeight,
-  ) {
-    TextPainter painter = TextPainter(
-      // locale: Localizations.localeOf(context),
+  Size calculateTextSize(String value, TextStyle style) {
+    final TextPainter painter = TextPainter(
+      text: TextSpan(text: value, style: style),
       maxLines: 1,
       textDirection: TextDirection.ltr,
-      text: TextSpan(
-        text: value,
-        style: TextStyle(
-          fontSize: fontSize,
-          fontWeight: fontWeight,
-          // letterSpacing: letterSpacing,
-          overflow: TextOverflow.visible,
-          foreground: Paint()
-            ..style = PaintingStyle.stroke
-            ..strokeWidth = strokeWidth
-            ..strokeCap = StrokeCap.round
-            ..strokeJoin = StrokeJoin.round
-            ..color = Colors.black,
-        ),
-      ),
-    );
-    painter.layout();
-
+    )..layout(); // 调用 layout() 进行布局计算
     return Size(painter.width, painter.height);
   }
 
@@ -908,7 +910,7 @@ class TeamBattleV2Controller extends GetxController
   }
 
   void jumpGame() {
-    if (!isGameStart) return;
+    if (!isGameStart.value) return;
     if (isGameOver.value) {
       Get.back();
       return;

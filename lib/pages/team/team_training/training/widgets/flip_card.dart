@@ -18,12 +18,16 @@ class FlipCard extends StatefulWidget {
   final bool isFlipped;
   final VoidCallback onFlip;
   final TrainingInfoBuff buff;
+  final double? width;
+  final bool useSmallTacticCard;
 
   const FlipCard({
     super.key,
     required this.isFlipped,
     required this.onFlip,
     required this.buff,
+    this.width,
+    this.useSmallTacticCard = false,
   });
 
   @override
@@ -87,12 +91,18 @@ class _FlipCardState extends State<FlipCard>
                 ? Transform(
                     alignment: Alignment.center,
                     transform: Matrix4.identity()..scale(-1.0, 1.0),
-                    child: TacticCard(
-                      num: widget.buff.face,
-                      color: widget.buff.color,
-                      width: 74.w,
-                      buff: widget.buff,
-                    ),
+                    child: widget.useSmallTacticCard
+                        ? SmallTacticCard(
+                            num: widget.buff.face,
+                            color: widget.buff.color,
+                            width: widget.width ?? 74.w,
+                          )
+                        : TacticCard(
+                            num: widget.buff.face,
+                            color: widget.buff.color,
+                            width: widget.width ?? 74.w,
+                            buff: widget.buff,
+                          ),
                   )
                 : Image.asset(
                     Assets.managerUiManagerTacticsCardback,

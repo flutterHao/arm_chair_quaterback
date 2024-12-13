@@ -33,28 +33,32 @@ class _LiveTextWidgetState extends State<LiveTextWidget> {
   late bool isGameOverStatus;
 
   late TeamBattleV2Controller controller;
-  late ScrollController scrollController;
+  ScrollController? scrollController;
 
   @override
   void initState() {
     super.initState();
     isGameOverStatus = widget.isGameOverStatus;
     controller = Get.find();
-    scrollController = ScrollController();
-    Future.delayed(Duration.zero, () {
-      scrollController.jumpTo(scrollController.position.maxScrollExtent);
-    });
+    if (isGameOverStatus) {
+      scrollController = ScrollController();
+      Future.delayed(Duration.zero, () {
+        scrollController?.jumpTo(scrollController!.position.maxScrollExtent);
+      });
+    }
   }
 
   @override
   void dispose() {
-    scrollController.dispose();
+    scrollController?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 329.w,
+      margin: EdgeInsets.only(top: 9.w),
       padding: EdgeInsets.only(bottom: 5.w),
       decoration: BoxDecoration(
           color: AppColors.cFFFFFF, borderRadius: BorderRadius.circular(9.w)),
@@ -129,7 +133,7 @@ class _LiveTextWidgetState extends State<LiveTextWidget> {
                             : controller.liveTextScrollController,
                         itemBuilder: (context, i) {
                           if (i == 0) {
-                            if(itemCount == 0){
+                            if (itemCount == 0) {
                               return SizedBox(
                                 height: 44.w * 5,
                                 child: const Center(
@@ -180,25 +184,39 @@ class _LiveTextWidgetState extends State<LiveTextWidget> {
                                   ),
                                 ),
                                 13.hGap,
-                                Expanded(
-                                    child: Text(
-                                  item.text,
-                                  maxLines: 3,
-                                  softWrap: true,
-                                  style: TextStyle(
-                                      fontSize: 12.sp,
-                                      fontWeight: item.score
-                                          ? FontWeight.w500
-                                          : FontWeight.w400,
-                                      overflow: TextOverflow.ellipsis,
-                                      color: item.score
-                                          ? AppColors.c000000
-                                          : AppColors.c4D4D4D,
-                                      height: 1,
-                                      fontFamily: item.score
-                                          ? FontFamily.fRobotoMedium
-                                          : FontFamily.fRobotoRegular),
-                                )),
+                                Expanded(child: Builder(builder: (context) {
+                                  var list = Utils.subColorString(item.text);
+                                  return Text.rich(
+                                    TextSpan(
+                                        children:
+                                            List.generate(list.length, (index) {
+                                      var colorString = list[index];
+                                      return TextSpan(
+                                          text: "${colorString.text} ",
+                                          style: colorString.isMatch
+                                              ? TextStyle(
+                                                  color: item.isHomePlayer
+                                                      ? AppColors.c1F8FE5
+                                                      : AppColors.cD60D20)
+                                              : null);
+                                    })),
+                                    maxLines: 3,
+                                    softWrap: true,
+                                    style: TextStyle(
+                                        fontSize: 12.sp,
+                                        fontWeight: item.score
+                                            ? FontWeight.w500
+                                            : FontWeight.w400,
+                                        overflow: TextOverflow.ellipsis,
+                                        color: item.score
+                                            ? AppColors.c000000
+                                            : AppColors.c4D4D4D,
+                                        height: 1,
+                                        fontFamily: item.score
+                                            ? FontFamily.fRobotoMedium
+                                            : FontFamily.fRobotoRegular),
+                                  );
+                                })),
                                 Container(
                                   width: 50.w,
                                   alignment: Alignment.center,

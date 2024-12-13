@@ -81,6 +81,7 @@ class TacticUtils {
     }
   }
 
+  /// 皇家同花顺
   static bool isRoyalFlush(
       List<TrainingInfoBuff> tacticList, List<int> matchedIndices) {
     if (!isFlush(tacticList, matchedIndices)) return false;
@@ -97,6 +98,7 @@ class TacticUtils {
     return false;
   }
 
+  /// 同花顺
   static bool isStraightFlush(
       List<TrainingInfoBuff> tacticList, List<int> matchedIndices) {
     if (!isFlush(tacticList, matchedIndices)) return false;
@@ -109,6 +111,7 @@ class TacticUtils {
     return false;
   }
 
+  /// 四条
   static bool isFourOfAKind(
       List<TrainingInfoBuff> tacticList, List<int> matchedIndices) {
     for (int i = 0; i <= tacticList.length - 4; i++) {
@@ -122,6 +125,7 @@ class TacticUtils {
     return false;
   }
 
+  /// 3带2
   static bool isFullHouse(
       List<TrainingInfoBuff> tacticList, List<int> matchedIndices) {
     for (int i = 0; i <= tacticList.length - 5; i++) {
@@ -141,6 +145,7 @@ class TacticUtils {
     return false;
   }
 
+  /// 同花
   static bool isFlush(
       List<TrainingInfoBuff> tacticList, List<int> matchedIndices) {
     for (int i = 0; i <= tacticList.length - 5; i++) {
@@ -155,6 +160,7 @@ class TacticUtils {
     return false;
   }
 
+  /// 顺子
   static bool isStraight(
       List<TrainingInfoBuff> tacticList, List<int> matchedIndices) {
     if (tacticList.length < 5) {
@@ -178,7 +184,7 @@ class TacticUtils {
 
     return false;
   }
-
+  /// 三条
   static bool isThreeOfAKind(
       List<TrainingInfoBuff> tacticList, List<int> matchedIndices) {
     for (int i = 0; i <= tacticList.length - 3; i++) {
@@ -191,6 +197,7 @@ class TacticUtils {
     return false;
   }
 
+  /// 两对
   static bool isTwoPair(
       List<TrainingInfoBuff> tacticList, List<int> matchedIndices) {
     for (int i = 0; i <= tacticList.length - 2; i++) {
@@ -216,6 +223,7 @@ class TacticUtils {
     return false;
   }
 
+  /// 一对
   static bool isOnePair(
       List<TrainingInfoBuff> tacticList, List<int> matchedIndices) {
     for (int i = 0; i <= tacticList.length - 2; i++) {
@@ -225,5 +233,37 @@ class TacticUtils {
       }
     }
     return false;
+  }
+
+  /// 获取牌型等级
+  static int getTacticTypeGrade(List<TrainingInfoBuff> tacticList){
+    if (isRoyalFlush(tacticList, [])) {
+      return 10;
+    }
+    if (isStraightFlush(tacticList, [])) {
+      return 9;
+    }
+    if (isFourOfAKind(tacticList, [])) {
+      return 8;
+    }
+    if (isFullHouse(tacticList, [])) {
+      return 7;
+    }
+    if (isStraight(tacticList, [])) {
+      return 6;
+    }
+    if (isFlush(tacticList, [])) {
+      return 5;
+    }
+    if (isThreeOfAKind(tacticList, [])) {
+      return 4;
+    }
+    if (isTwoPair(tacticList, [])) {
+      return 3;
+    }
+    if (isOnePair(tacticList, [])) {
+      return 2;
+    }
+    return 1;
   }
 }

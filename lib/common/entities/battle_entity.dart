@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/battle_entity.g.dart';
 import 'dart:convert';
@@ -11,9 +12,9 @@ class BattleEntity {
   late BattleTeam awayTeam;
   late AbilityValue awayAbilityValue;
   late List<TeamPlayerList> awayTeamPlayerList;
-  late List<TeamBuffer> awayTeamBuff;
+  late List<TrainingInfoBuff> awayTeamBuff;
   late int homeTeamPower;
-  late List<TeamBuffer> homeTeamBuff;
+  late List<TrainingInfoBuff> homeTeamBuff;
   late BattleTeam homeTeam;
   late BattleGameData gameData;
   late AbilityValue homeAbilityValue;
@@ -67,29 +68,6 @@ class BattleNew {
   }
 }
 
-@JsonSerializable()
-class TeamBuffer {
-  late double buffValue;
-  late int face;
-  late int createTime;
-  late int teamId;
-  late int updateTime;
-  late int id;
-  late int color;
-  late int takeEffectGameCount;
-
-  TeamBuffer();
-
-  factory TeamBuffer.fromJson(Map<String, dynamic> json) =>
-      $TeamBufferFromJson(json);
-
-  Map<String, dynamic> toJson() => $TeamBufferToJson(this);
-
-  @override
-  String toString() {
-    return jsonEncode(this);
-  }
-}
 
 @JsonSerializable()
 class TeamPlayerList {

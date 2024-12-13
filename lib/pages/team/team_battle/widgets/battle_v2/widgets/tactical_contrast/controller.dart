@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/widgets/battle_animation_controller.dart';
@@ -92,14 +93,14 @@ class TacticalContrastController extends GetxController
     });
   }
 
-  List<TeamBuffer> getHomeTeamBuff() {
-    List<TeamBuffer> list = List.from(battleEntity.homeTeamBuff);
+  List<TrainingInfoBuff> getHomeTeamBuff() {
+    List<TrainingInfoBuff> list = List.from(battleEntity.homeTeamBuff);
     list.sort((a, b) => a.face.compareTo(b.face));
     return list;
   }
 
-  List<TeamBuffer> getAwayTeamBuff() {
-    List<TeamBuffer> list = List.from(battleEntity.awayTeamBuff);
+  List<TrainingInfoBuff> getAwayTeamBuff() {
+    List<TrainingInfoBuff> list = List.from(battleEntity.awayTeamBuff);
     list.sort((a, b) => a.face.compareTo(b.face));
     return list;
   }

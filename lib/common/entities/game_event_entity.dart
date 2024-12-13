@@ -5,21 +5,22 @@ export 'package:arm_chair_quaterback/generated/json/game_event_entity.g.dart';
 
 @JsonSerializable()
 class GameEventEntity {
-	late String constantId;
-	late String desc;
-	late String eventDescripition;
-	late String eventWeight;
-	late String gameEventType;
-	late String headLine;
+  late String constantId;
+  late String desc;
+  late String eventDescripition;
+  late String eventWeight;
+  late String gameEventType;
+  String headLine = "0";
 
-	GameEventEntity();
+  GameEventEntity();
 
-	factory GameEventEntity.fromJson(Map<String, dynamic> json) => $GameEventEntityFromJson(json);
+  factory GameEventEntity.fromJson(Map<String, dynamic> json) =>
+      $GameEventEntityFromJson(json);
 
-	Map<String, dynamic> toJson() => $GameEventEntityToJson(this);
+  Map<String, dynamic> toJson() => $GameEventEntityToJson(this);
 
-	@override
-	String toString() {
-		return jsonEncode(this);
-	}
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
 }

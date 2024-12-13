@@ -12,7 +12,6 @@ import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/wi
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/live_text_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/quarter_score/quarter_score_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/team_stat/team_stats_widget.dart';
-import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/win_rate/win_rate_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -22,6 +21,8 @@ import 'package:get/get.dart';
 ///created at 2024/12/10/14:18
 
 class GameOverWidget extends GetView<GameOverController> {
+  GameOverWidget({super.key});
+
   late TeamBattleV2Controller teamBattleV2Controller;
 
   @override
@@ -30,8 +31,7 @@ class GameOverWidget extends GetView<GameOverController> {
     return GetBuilder<GameOverController>(
         init: GameOverController(),
         builder: (logic) {
-          return Container(
-            color: AppColors.c000000.withOpacity(0.6),
+          return SingleChildScrollView(
             child: Column(
               children: [
                 // 中间
@@ -55,57 +55,60 @@ class GameOverWidget extends GetView<GameOverController> {
                             BorderRadius.vertical(top: Radius.circular(9.w))),
                     child: Stack(
                       children: [
-                        SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              Obx(() {
-                                if(controller.onMvpAnimationEndObs.value){
-                                  /// 动画结束后真实显示的视图
-                                  return _buildMvpWidget();
-                                }
-                                ///动画占位视图
-                                return AnimatedContainer(
-                                    height: controller.mvpObs.value ? 165.w : 0,
-                                    margin: EdgeInsets.only(
-                                        bottom:
-                                            controller.mvpObs.value ? 9.w : 0),
-                                    duration:
-                                        const Duration(milliseconds: 300));
-                              }),
-                              GetBuilder<TeamBattleV2Controller>(
-                                  id: TeamBattleV2Controller.idQuarterScore,
-                                  builder: (_) {
-                                    return QuarterScoreWidget(
-                                      hasTopMargin: false,
-                                    );
-                                  }),
-                              GameLeaderWidget(
-                                controller:
-                                    teamBattleV2Controller.gameLeaderController,
-                                title: "KEY PLAYERS",
-                              ),
-                              // WinRateWidget(teamBattleV2Controller.winRateController),
-                              TeamStatsWidget(
-                                controller: teamBattleV2Controller.teamStatsController,
-                              ),
-                              9.vGap,
-                              const LiveTextWidget(isGameOverStatus: true,),
-                              9.vGap
-                            ],
-                          ),
+                        Column(
+                          children: [
+                            Obx(() {
+                              if (controller.onMvpAnimationEndObs.value) {
+                                /// 动画结束后真实显示的视图
+                                return _buildMvpWidget();
+                              }
+                        
+                              ///动画占位视图
+                              return AnimatedContainer(
+                                  height: controller.mvpObs.value ? 165.w : 0,
+                                  margin: EdgeInsets.only(
+                                      bottom:
+                                          controller.mvpObs.value ? 9.w : 0),
+                                  duration:
+                                      const Duration(milliseconds: 300));
+                            }),
+                            GetBuilder<TeamBattleV2Controller>(
+                                id: TeamBattleV2Controller.idQuarterScore,
+                                builder: (_) {
+                                  return QuarterScoreWidget(
+                                    hasTopMargin: false,
+                                  );
+                                }),
+                            GameLeaderWidget(
+                              controller:
+                                  teamBattleV2Controller.gameLeaderController,
+                              title: "KEY PLAYERS",
+                            ),
+                            // WinRateWidget(teamBattleV2Controller.winRateController),
+                            TeamStatsWidget(
+                              controller:
+                                  teamBattleV2Controller.teamStatsController,
+                            ),
+                            9.vGap,
+                            const LiveTextWidget(
+                              isGameOverStatus: true,
+                            ),
+                            9.vGap
+                          ],
                         ),
                         Obx(() {
-                          if(controller.onMvpAnimationEndObs.value){
+                          if (controller.onMvpAnimationEndObs.value) {
                             ///动画结束后视图
                             return const SizedBox.shrink();
                           }
+            
                           /// 位移动画视图
                           return AnimatedPositioned(
                               top: controller.mvpObs.value ? 0 : 812.h,
                               left: 0,
                               right: 0,
                               duration: const Duration(milliseconds: 300),
-                              onEnd: (){
+                              onEnd: () {
                                 controller.onMvpAnimationEndObs.value = true;
                               },
                               child: _buildMvpWidget());

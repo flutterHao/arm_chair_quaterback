@@ -1,5 +1,7 @@
 import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.dart';
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
+
 
 BattleEntity $BattleEntityFromJson(Map<String, dynamic> json) {
   final BattleEntity battleEntity = BattleEntity();
@@ -39,9 +41,11 @@ BattleEntity $BattleEntityFromJson(Map<String, dynamic> json) {
   if (awayTeamPlayerList != null) {
     battleEntity.awayTeamPlayerList = awayTeamPlayerList;
   }
-  final List<TeamBuffer>? awayTeamBuff = (json['awayTeamBuff'] as List<
-      dynamic>?)?.map(
-          (e) => jsonConvert.convert<TeamBuffer>(e) as TeamBuffer).toList();
+  final List<TrainingInfoBuff>? awayTeamBuff = (json['awayTeamBuff'] as List<
+      dynamic>?)
+      ?.map(
+          (e) => jsonConvert.convert<TrainingInfoBuff>(e) as TrainingInfoBuff)
+      .toList();
   if (awayTeamBuff != null) {
     battleEntity.awayTeamBuff = awayTeamBuff;
   }
@@ -49,9 +53,11 @@ BattleEntity $BattleEntityFromJson(Map<String, dynamic> json) {
   if (homeTeamPower != null) {
     battleEntity.homeTeamPower = homeTeamPower;
   }
-  final List<TeamBuffer>? homeTeamBuff = (json['homeTeamBuff'] as List<
-      dynamic>?)?.map(
-          (e) => jsonConvert.convert<TeamBuffer>(e) as TeamBuffer).toList();
+  final List<TrainingInfoBuff>? homeTeamBuff = (json['homeTeamBuff'] as List<
+      dynamic>?)
+      ?.map(
+          (e) => jsonConvert.convert<TrainingInfoBuff>(e) as TrainingInfoBuff)
+      .toList();
   if (homeTeamBuff != null) {
     battleEntity.homeTeamBuff = homeTeamBuff;
   }
@@ -123,9 +129,9 @@ extension BattleEntityExtension on BattleEntity {
     BattleTeam? awayTeam,
     AbilityValue? awayAbilityValue,
     List<TeamPlayerList>? awayTeamPlayerList,
-    List<TeamBuffer>? awayTeamBuff,
+    List<TrainingInfoBuff>? awayTeamBuff,
     int? homeTeamPower,
-    List<TeamBuffer>? homeTeamBuff,
+    List<TrainingInfoBuff>? homeTeamBuff,
     BattleTeam? homeTeam,
     BattleGameData? gameData,
     AbilityValue? homeAbilityValue,
@@ -283,80 +289,6 @@ extension BattleNewExtension on BattleNew {
       ..id = id ?? this.id
       ..views = views ?? this.views
       ..likes = likes ?? this.likes;
-  }
-}
-
-TeamBuffer $TeamBufferFromJson(Map<String, dynamic> json) {
-  final TeamBuffer teamBuffer = TeamBuffer();
-  final double? buffValue = jsonConvert.convert<double>(json['buffValue']);
-  if (buffValue != null) {
-    teamBuffer.buffValue = buffValue;
-  }
-  final int? face = jsonConvert.convert<int>(json['face']);
-  if (face != null) {
-    teamBuffer.face = face;
-  }
-  final int? createTime = jsonConvert.convert<int>(json['createTime']);
-  if (createTime != null) {
-    teamBuffer.createTime = createTime;
-  }
-  final int? teamId = jsonConvert.convert<int>(json['teamId']);
-  if (teamId != null) {
-    teamBuffer.teamId = teamId;
-  }
-  final int? updateTime = jsonConvert.convert<int>(json['updateTime']);
-  if (updateTime != null) {
-    teamBuffer.updateTime = updateTime;
-  }
-  final int? id = jsonConvert.convert<int>(json['id']);
-  if (id != null) {
-    teamBuffer.id = id;
-  }
-  final int? color = jsonConvert.convert<int>(json['color']);
-  if (color != null) {
-    teamBuffer.color = color;
-  }
-  final int? takeEffectGameCount = jsonConvert.convert<int>(
-      json['takeEffectGameCount']);
-  if (takeEffectGameCount != null) {
-    teamBuffer.takeEffectGameCount = takeEffectGameCount;
-  }
-  return teamBuffer;
-}
-
-Map<String, dynamic> $TeamBufferToJson(TeamBuffer entity) {
-  final Map<String, dynamic> data = <String, dynamic>{};
-  data['buffValue'] = entity.buffValue;
-  data['face'] = entity.face;
-  data['createTime'] = entity.createTime;
-  data['teamId'] = entity.teamId;
-  data['updateTime'] = entity.updateTime;
-  data['id'] = entity.id;
-  data['color'] = entity.color;
-  data['takeEffectGameCount'] = entity.takeEffectGameCount;
-  return data;
-}
-
-extension TeamBufferExtension on TeamBuffer {
-  TeamBuffer copyWith({
-    double? buffValue,
-    int? face,
-    int? createTime,
-    int? teamId,
-    int? updateTime,
-    int? id,
-    int? color,
-    int? takeEffectGameCount,
-  }) {
-    return TeamBuffer()
-      ..buffValue = buffValue ?? this.buffValue
-      ..face = face ?? this.face
-      ..createTime = createTime ?? this.createTime
-      ..teamId = teamId ?? this.teamId
-      ..updateTime = updateTime ?? this.updateTime
-      ..id = id ?? this.id
-      ..color = color ?? this.color
-      ..takeEffectGameCount = takeEffectGameCount ?? this.takeEffectGameCount;
   }
 }
 

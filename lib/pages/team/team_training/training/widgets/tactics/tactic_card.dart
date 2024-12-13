@@ -82,7 +82,7 @@ class TacticCard extends StatelessWidget {
             left: 5.w * scale,
             child: Text(
               geCardtName(num),
-              style: 16.w4(color: getCardColor(color), height: 0.9),
+              style: (16 * scale).w4(color: getCardColor(color), height: 0.9),
             ),
           ),
           Positioned(

@@ -2,6 +2,8 @@ import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.da
 import 'package:arm_chair_quaterback/common/entities/pk_start_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 
+import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
+
 
 PkStartUpdatedEntity $PkStartUpdatedEntityFromJson(Map<String, dynamic> json) {
   final PkStartUpdatedEntity pkStartUpdatedEntity = PkStartUpdatedEntity();
@@ -10,16 +12,20 @@ PkStartUpdatedEntity $PkStartUpdatedEntityFromJson(Map<String, dynamic> json) {
     pkStartUpdatedEntity.pokerWinner = pokerWinner;
   }
   final List<
-      TeamBuffer>? homeTeamWinPokers = (json['homeTeamWinPokers'] as List<
-      dynamic>?)?.map(
-          (e) => jsonConvert.convert<TeamBuffer>(e) as TeamBuffer).toList();
+      TrainingInfoBuff>? homeTeamWinPokers = (json['homeTeamWinPokers'] as List<
+      dynamic>?)
+      ?.map(
+          (e) => jsonConvert.convert<TrainingInfoBuff>(e) as TrainingInfoBuff)
+      .toList();
   if (homeTeamWinPokers != null) {
     pkStartUpdatedEntity.homeTeamWinPokers = homeTeamWinPokers;
   }
   final List<
-      TeamBuffer>? awayTeamWinPokers = (json['awayTeamWinPokers'] as List<
-      dynamic>?)?.map(
-          (e) => jsonConvert.convert<TeamBuffer>(e) as TeamBuffer).toList();
+      TrainingInfoBuff>? awayTeamWinPokers = (json['awayTeamWinPokers'] as List<
+      dynamic>?)
+      ?.map(
+          (e) => jsonConvert.convert<TrainingInfoBuff>(e) as TrainingInfoBuff)
+      .toList();
   if (awayTeamWinPokers != null) {
     pkStartUpdatedEntity.awayTeamWinPokers = awayTeamWinPokers;
   }
@@ -44,8 +50,8 @@ Map<String, dynamic> $PkStartUpdatedEntityToJson(PkStartUpdatedEntity entity) {
 extension PkStartUpdatedEntityExtension on PkStartUpdatedEntity {
   PkStartUpdatedEntity copyWith({
     int? pokerWinner,
-    List<TeamBuffer>? homeTeamWinPokers,
-    List<TeamBuffer>? awayTeamWinPokers,
+    List<TrainingInfoBuff>? homeTeamWinPokers,
+    List<TrainingInfoBuff>? awayTeamWinPokers,
     double? pokerRate,
   }) {
     return PkStartUpdatedEntity()

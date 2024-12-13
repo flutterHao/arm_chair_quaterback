@@ -10,6 +10,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
+import 'package:arm_chair_quaterback/common/entities/ColorString.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
@@ -301,6 +302,41 @@ class Utils {
   /// 使用队伍id 获取队伍的颜色
   static Color getTeamColor(int teamId) {
     return Constant.teamColorMap[teamId]?['light'] ?? AppColors.c404040;
+  }
+
+  /// 正则获取需要改变颜色的字符串
+  static List<ColorString> subColorString(String input) {
+    RegExp regExp = RegExp(r'/c\s(.*?)\s/c');
+
+    List<ColorString> results = [];
+    int currentIndex = 0;
+
+    for (var match in regExp.allMatches(input)) {
+      // 添加非匹配部分
+      if (match.start > currentIndex) {
+        results.add(ColorString.fromJson({
+          'text': input.substring(currentIndex, match.start).trim(),
+          'isMatch': false,
+        }));
+      }
+
+      // 添加匹配部分
+      results.add(ColorString.fromJson({
+        'text': match.group(1)!.trim(),
+        'isMatch': true,
+      }));
+
+      currentIndex = match.end;
+    }
+
+    // 添加最后的非匹配部分
+    if (currentIndex < input.length) {
+      results.add(ColorString.fromJson({
+        'text': input.substring(currentIndex).trim(),
+        'isMatch': false,
+      }));
+    }
+    return results;
   }
 
   static void saveNotTip(String type, {bool noTip = true}) {
