@@ -8,7 +8,9 @@ import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/top_toast_dialog.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/dialog/power_change_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/widgets/line_up_tab.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/widgets/player_bag_tab.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/widgets/player_changer_dialog.dart';
@@ -53,6 +55,8 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   ///换人页面打开关闭动画
   late AnimationController animationCtrl;
   late Animation<double> pageAnimation;
+  //换人战力
+  late int oVROld = 0;
 
   /// 在 widget 内存中分配后立即调用。
   @override
@@ -127,6 +131,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
       starUpDefineList = v[3] as List<StarUpDefineEntity>;
       recoverTimeAndCountDown();
       myBagList.sort(comparePlayers);
+      oVROld = myTeamEntity.oVR;
       update();
     });
   }
@@ -177,21 +182,24 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   Future showChangeDialog(TeamPlayerInfoEntity? item) async {
     if (!isShowDialog.value) {
       isShowDialog.value = true;
-      showDialog(
-          // barrierDismissible: false,
+      await showDialog(
+          barrierDismissible: false,
           useSafeArea: false,
           context: Get.context!,
           builder: (context) {
             return PlayerChangerDialog(
               item: item,
             );
-          }).then((v) {
-        item1.isChange.value = false;
-        item2.isChange.value = false;
-        isShowDialog.value = false;
-        isAdd = false;
-        update();
-      });
+          });
+      item1.isChange.value = false;
+      item2.isChange.value = false;
+      isShowDialog.value = false;
+      isAdd = false;
+      if (oVROld != myTeamEntity.oVR) {
+        await showTopToastDialog(child: PowerChangeDialog());
+        oVROld = myTeamEntity.oVR;
+      }
+      update();
       animationCtrl.reset();
       animationCtrl.forward();
     }

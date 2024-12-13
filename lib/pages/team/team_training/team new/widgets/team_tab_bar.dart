@@ -2,7 +2,7 @@
  * @Description: 我的球队的训练和比赛
  * @Author: lihonghao
  * @Date: 2024-09-27 19:21:36
- * @LastEditTime: 2024-12-12 17:47:33
+ * @LastEditTime: 2024-12-12 19:14:09
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -71,6 +71,7 @@ class TeamTabbar extends GetView<TeamController> {
                   AnimatedNum(
                       number: controller.myTeamEntity.oVR,
                       withConma: true,
+                      milliseconds: 1000,
                       textStyle: 21.w4(
                           color: AppColors.cFFFFFF,
                           fontFamily: FontFamily.fOswaldMedium,
@@ -148,6 +149,7 @@ class TeamTabbar extends GetView<TeamController> {
                                       AnimatedNum(
                                         number: controller.myTeamEntity.salary,
                                         isMoney: true,
+                                        milliseconds: 1000,
                                         textStyle: 21.w4(
                                             color: AppColors.cFFFFFF,
                                             height: 0.75,
@@ -177,7 +179,7 @@ class TeamTabbar extends GetView<TeamController> {
                                                 .myTeamEntity.salary >=
                                             controller.myTeamEntity.salaryCap
                                         ? AppColors.cD60D20
-                                        : AppColors.cFFFFFF,
+                                        : AppColors.c10A86A,
                                     backgroundColor: AppColors.c4D4D4D,
                                     progress: controller.myTeamEntity.salary /
                                         controller.myTeamEntity.salaryCap),

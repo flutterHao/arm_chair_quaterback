@@ -2,12 +2,25 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-09 19:12:03
- * @LastEditTime: 2024-12-11 21:53:46
+ * @LastEditTime: 2024-12-13 10:05:54
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+
+Future showTopToastDialog({required Widget child}) async {
+  await showDialog(
+    barrierColor: Colors.transparent,
+    context: Get.context!,
+    useSafeArea: false,
+    barrierDismissible: false,
+    builder: (context) {
+      return TopToastDialog(child: child);
+    },
+  );
+}
 
 ///顶部弹窗
 class TopToastDialog extends StatefulWidget {
@@ -94,6 +107,16 @@ class _TopDialogState extends State<TopToastDialog>
                         height: 130.w,
                         alignment: Alignment.centerLeft,
                         child: widget.child,
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        child: Container(
+                          width: double.infinity,
+                          height: 2.w,
+                          color: AppColors.cFFFFFF,
+                        ),
                       ),
                     ],
                   ),

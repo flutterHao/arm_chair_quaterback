@@ -36,7 +36,8 @@ class TeamApi {
       Api.getTeamPlayerList,
       data: {"teamId": teamId},
     );
-    return MyTeamEntity.fromJson(json);
+    MyTeamEntity teamEntity = MyTeamEntity.fromJson(json);
+    return teamEntity;
   }
 
   ///获取任务列表
@@ -58,7 +59,8 @@ class TeamApi {
   static Future<MyTeamEntity> recoverPower({int type = 1, String? uuid}) async {
     var json = await HttpUtil()
         .post(Api.replyPower, data: {"type": type, "uuid": uuid});
-    return MyTeamEntity.fromJson(json);
+    MyTeamEntity teamEntity = MyTeamEntity.fromJson(json);
+    return teamEntity;
   }
 
   static Future<MyTeamEntity> changeTeamPlayer(

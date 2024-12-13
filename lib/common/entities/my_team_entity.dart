@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-22 15:54:59
- * @LastEditTime: 2024-10-24 12:02:02
+ * @LastEditTime: 2024-12-13 09:41:39
  */
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';

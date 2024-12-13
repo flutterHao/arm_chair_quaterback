@@ -2,8 +2,10 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-06 10:37:49
- * @LastEditTime: 2024-12-12 18:50:58
+ * @LastEditTime: 2024-12-12 21:07:12
  */
+import 'dart:math';
+
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -77,18 +79,30 @@ class _PlayerChangerDialogState extends State<PlayerChangerDialog>
                     );
                   }),
                   Center(
-                    child: Container(
-                      width: double.infinity,
-                      height: 80.h,
-                      alignment: Alignment.center,
-                      child: Transform.scale(
-                        scale: 1.2 - ctrl.pageAnimation.value * 0.2,
-                        child: IconWidget(
-                          iconWidth: 20.w,
-                          icon: Assets.commonUiCommonIconSystemExchange,
-                          rotateAngle: 90,
-                          iconColor: AppColors.cFF7954,
-                        ),
+                    child: InkWell(
+                      onTap: () {
+                        ctrl.animationCtrl.reverse().then(
+                          (value) {
+                            // Navigator.pop(context);
+                            Get.back();
+                          },
+                        );
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        height: 80.h,
+                        alignment: Alignment.center,
+                        child: Obx(() {
+                          return Transform.rotate(
+                            angle: pi / 2 * (offsetY / 650.h),
+                            child: IconWidget(
+                              iconWidth: 20.w,
+                              icon: Assets.commonUiCommonIconSystemExchange,
+                              rotateAngle: 90,
+                              iconColor: AppColors.cFF7954,
+                            ),
+                          );
+                        }),
                       ),
                     ),
                   ),
@@ -101,7 +115,7 @@ class _PlayerChangerDialogState extends State<PlayerChangerDialog>
                       alignment: Alignment.bottomCenter,
                       children: [
                         Positioned(
-                          top: 700.h * (1 - ctrl.pageAnimation.value),
+                          top: 650.h * (1 - ctrl.pageAnimation.value),
                           left: 0,
                           right: 0,
                           bottom: 0,

@@ -2,18 +2,16 @@ import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.da
 import 'package:arm_chair_quaterback/common/entities/my_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 
-
 MyTeamEntity $MyTeamEntityFromJson(Map<String, dynamic> json) {
   final MyTeamEntity myTeamEntity = MyTeamEntity();
   final int? powerReplyTime = jsonConvert.convert<int>(json['powerReplyTime']);
   if (powerReplyTime != null) {
     myTeamEntity.powerReplyTime = powerReplyTime;
   }
-  final List<TeamPlayerInfoEntity>? teamPlayers = (json['teamPlayers'] as List<
-      dynamic>?)
-      ?.map(
-          (e) =>
-      jsonConvert.convert<TeamPlayerInfoEntity>(e) as TeamPlayerInfoEntity)
+  final List<TeamPlayerInfoEntity>? teamPlayers = (json['teamPlayers']
+          as List<dynamic>?)
+      ?.map((e) =>
+          jsonConvert.convert<TeamPlayerInfoEntity>(e) as TeamPlayerInfoEntity)
       .toList();
   if (teamPlayers != null) {
     myTeamEntity.teamPlayers = teamPlayers;

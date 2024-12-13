@@ -2,9 +2,9 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-29 16:06:50
- * @LastEditTime: 2024-12-12 14:44:02
+ * @LastEditTime: 2024-12-13 11:38:08
  */
-import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/custom_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
@@ -19,48 +19,45 @@ class AddBallDialog extends GetView<TrainingController> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomDialog(
-        title: "ADD BALL",
-        backgroudColor: AppColors.c262626,
-        // image: Assets.uiWindowsStaminaPng,
-        content: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            50.vGap,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                IconWidget(iconWidth: 30.w, icon: Assets.newsUiIconBall),
-                5.hGap,
-                Text(
-                  "x1",
-                  style: 20.w7(color: AppColors.c262626),
-                ),
-              ],
-            ),
-            46.vGap,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Cost:",
-                  style: 14.w7(color: AppColors.c262626),
-                ),
-                5.hGap,
-                5.hGap,
-                Text(
-                  "1",
-                  style: 14.w7(color: AppColors.c262626),
-                ),
-              ],
-            ),
-            9.vGap,
-          ],
-        ),
-        onTap: () {
-          // controller.buyTrainingBall(10);
-          Navigator.pop(context, true);
-        });
+    return CustomBottomDialog(
+      title: "Tip",
+      desc:
+          "Automatically use Coins for training when there's a shortage of balls ",
+      content: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          IconWidget(
+            iconWidth: 129.w,
+            icon: Assets.newsUiIconBall,
+          ),
+          Expanded(child: Container()),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "COST:",
+                style: 16.w4(fontFamily: FontFamily.fOswaldBold),
+              ),
+              10.hGap,
+              Image.asset(
+                Assets.commonUiCommonIconCurrency02,
+                width: 20.w,
+              ),
+              5.hGap,
+              Text(
+                "1",
+                style: 16.w4(fontFamily: FontFamily.fOswaldBold),
+              ),
+            ],
+          ),
+        ],
+      ),
+      onComfirm: () {
+        // controller.buyTrainingBall(10);
+        Navigator.pop(context, true);
+        controller.startSlot();
+      },
+    );
   }
 }

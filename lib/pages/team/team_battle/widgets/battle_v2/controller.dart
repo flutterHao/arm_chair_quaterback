@@ -917,7 +917,7 @@ class TeamBattleV2Controller extends GetxController
       EasyLoading.showToast("Wait a moment");
       return;
     }
-    TipDialog.show(context: context, onTap: confirmJumpGame);
+    BottomTipDialog.show(context: context, onTap: confirmJumpGame);
   }
 
   confirmJumpGame() {

@@ -10,11 +10,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-///
+///底部弹窗
 ///@auther gejiahui
 ///created at 2024/12/12/10:49
 
-class TipDialog {
+class BottomTipDialog {
   static Future show({
     required BuildContext context,
     required Function onTap,
@@ -28,7 +28,7 @@ class TipDialog {
     return showModalBottomSheet(
         context: context,
         builder: (context) {
-          return _TipDialogWidget(
+          return _BottomTipDialog(
             onTap: onTap,
             icon: icon,
             title: title,
@@ -41,8 +41,8 @@ class TipDialog {
   }
 }
 
-class _TipDialogWidget extends StatelessWidget {
-  const _TipDialogWidget({
+class _BottomTipDialog extends StatelessWidget {
+  const _BottomTipDialog({
     required this.onTap,
     this.icon,
     this.title,
@@ -65,9 +65,7 @@ class _TipDialogWidget extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: AppColors.cFFFFFF,
-        borderRadius: BorderRadius.circular(9.w)
-      ),
+          color: AppColors.cFFFFFF, borderRadius: BorderRadius.circular(9.w)),
       child: Column(
         children: [
           const DialogTopBtn(),

@@ -2,11 +2,12 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-25 15:56:43
- * @LastEditTime: 2024-12-12 15:24:24
+ * @LastEditTime: 2024-12-13 11:38:27
  */
 
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/custom_dialog.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -250,14 +251,20 @@ class TrainingWidget extends GetView<TrainingController> {
                                         ? null
                                         : () async {
                                             if (controller.ballNum.value <= 0) {
-                                              bool? result = await showDialog(
-                                                  context: context,
+                                              await showModalBottomSheet(
+                                                  context: Get.context!,
+                                                  isScrollControlled: true,
                                                   builder: (context) {
                                                     return AddBallDialog();
                                                   });
-                                              if (result == true) {
-                                                controller.startSlot();
-                                              }
+                                              // BottomTipDialog.show(
+                                              //     context: Get.context!,
+                                              //     title: "Tips",
+                                              //     desc:
+                                              //         "Automatically use Coins for training when there's a shortage of balls ",
+                                              //     onTap: () {
+                                              //       controller.startSlot();
+                                              //     });
                                             } else {
                                               controller.startSlot();
                                             }

@@ -22,7 +22,7 @@ import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
 import 'package:arm_chair_quaterback/common/widgets/transitions/slide_transition_x.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/widgets/fire_dialog.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/dialog/fire_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
