@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-02 10:15:35
- * @LastEditTime: 2024-12-13 14:35:08
+ * @LastEditTime: 2024-12-14 17:44:10
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
@@ -28,6 +28,9 @@ class TrainingAwardDialog extends GetView<TrainingController> {
   @override
   Widget build(BuildContext context) {
     double top = (75 + 9 + 115 + 47 + 10).w;
+    Rx<Offset> offset = Offset((375 - 74).w / 2, top + 78.5.w + 69.w).obs;
+    RxBool isFly = false.obs;
+    Duration duration = 400.milliseconds;
     return GetBuilder<TrainingController>(
         id: "training_page",
         builder: (_) {
@@ -41,45 +44,78 @@ class TrainingAwardDialog extends GetView<TrainingController> {
                 fit: StackFit.expand,
                 alignment: Alignment.topCenter,
                 children: [
-                  AnimatedPositioned(
-                    // top: 415.h,
-                    top: top + 78.5.w,
-                    duration: 300.milliseconds,
-                    child: AnimatedScale(
-                      duration: const Duration(milliseconds: 300),
-                      scale: controller.showBuff.value ? 1 : 0,
-                      child: MtInkwell(
-                          onTap: () {
-                            buff.isSelect.value = true;
-                            controller.tacticId = buff.id;
-                            controller.changeTacticId = 0;
+                  for (int index = 0;
+                      index < controller.trainingInfo.buff.length;
+                      index++)
+                    Positioned(
+                        top: 168.w,
+                        left: 10.w + 143.5.w + index * 43.w,
+                        // right: 195.5.w - index * 43.w,
+                        child: MtInkwell(
+                          onTap: () async {
+                            isFly.value = true;
+                            offset.value =
+                                Offset(10.w + 143.5.w + index * 43.w, 175.w);
+                            Future.delayed(500.milliseconds, () {
+                              controller.showBuff.value = false;
+                            });
+                            controller.changeTacticId =
+                                controller.trainingInfo.buff[index].id;
                             controller.chooseTactic(context);
                           },
-                          child: Container(
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                    width: 2.w, color: AppColors.cFF7954),
-                                borderRadius: BorderRadius.circular(8.w)),
-                            child: TacticCard(
-                              num: buff.face,
-                              color: buff.color,
-                              width: 74.w,
-                              buff: buff,
-                            ),
-                          )),
-                    ),
-                  ),
+                          child: TacticItem(
+                            buff: controller.trainingInfo.buff[index],
+                          ),
+                        )),
+                  Obx(() {
+                    return Visibility(
+                      visible: controller.showBuff.value,
+                      child: AnimatedPositioned(
+                        left: offset.value.dx,
+                        top: offset.value.dy,
+                        // offset: offset.value,
+                        duration: duration,
+                        curve: BezierCurve(0.25, 0.1, 0.25, 1.0),
+                        child: AnimatedScale(
+                          curve: Curves.easeInOut,
+                          alignment: Alignment.topLeft,
+                          duration: duration,
+                          scale: !isFly.value ? 1 : 0.5,
+                          child: MtInkwell(
+                              onTap: () {
+                                buff.isSelect.value = true;
+                                controller.tacticId = buff.id;
+                                controller.changeTacticId = 0;
+                                controller.chooseTactic(context);
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        width: 2.w, color: AppColors.cFF7954),
+                                    borderRadius: BorderRadius.circular(8.w)),
+                                child: TacticCard(
+                                  num: buff.face,
+                                  color: buff.color,
+                                  width: 74.w,
+                                  buff: buff,
+                                ),
+                              )),
+                        ),
+                      ),
+                    );
+                  }),
                   Obx(() {
                     return Visibility(
                       visible: controller.showBuff.value &&
                               !controller.isChange.value ||
                           true,
                       child: Positioned(
-                        top: top + 205.w,
+                        top: top + 205.w + 69.w,
                         child: MtInkwell(
                           onTap: () async {
                             if (Utils.getNoTip("tactics")) {
                               controller.chooseFinish();
+                              Get.back();
                               // return;
                             } else {
                               await BottomTipDialog.show(
@@ -90,18 +126,10 @@ class TrainingAwardDialog extends GetView<TrainingController> {
                                   onTap: () {
                                     Utils.saveNotTip("tactics");
                                     controller.chooseFinish();
-                                    // Navigator.pop(context);
+                                    Navigator.pop(context);
                                     Get.back();
                                   });
-                              // await showModalBottomSheet(
-                              //     isScrollControlled: true,
-                              //     context: Get.context!,
-                              //     builder: (context) {
-                              //       // return RecoverDialog();
-                              //       return const TacticTipDialog();
-                              //     });
                             }
-                            Navigator.pop(context);
                           },
                           child: Container(
                             width: 30.w,
@@ -119,45 +147,31 @@ class TrainingAwardDialog extends GetView<TrainingController> {
                       ),
                     );
                   }),
-                  Positioned(
-                    // left: 143.w,
-                    right: 15.5.w,
-                    top: 168.w,
-                    // bottom: 812.h - (141 + 47).w,
-                    // bottom: 500.h,
-                    child: Stack(
-                      alignment: Alignment.bottomLeft,
-                      children: [
-                        SizedBox(
-                          height: 62.w,
-                          child: ListView.separated(
-                              padding: EdgeInsets.zero,
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) {
-                                return MtInkwell(
-                                  onTap: () {
-                                    controller.changeTacticId =
-                                        controller.tacticList[index].id;
-                                    controller.chooseTactic(context);
-                                  },
-                                  child: TacticItem(
-                                    buff: controller.tacticList[index],
-                                  ),
-                                );
-                              },
-                              separatorBuilder: (context, index) => 7.hGap,
-                              itemCount: controller.tacticList.length > 5
-                                  ? 5
-                                  : controller.tacticList.length),
-                        ),
-                      ],
-                    ),
-                  )
                 ],
               ),
             ),
           );
         });
+  }
+}
+
+class BezierCurve extends Curve {
+  final double cx1;
+  final double cy1;
+  final double cx2;
+  final double cy2;
+
+  const BezierCurve(this.cx1, this.cy1, this.cx2, this.cy2);
+
+  @override
+  double transform(double t) {
+    return _bezier(t, 0, cx1, cx2, 1);
+  }
+
+  double _bezier(double t, double start, double c1, double c2, double end) {
+    return ((1 - t) * (1 - t) * (1 - t) * start +
+        3 * (1 - t) * (1 - t) * t * c1 +
+        3 * (1 - t) * t * t * c2 +
+        t * t * t * end);
   }
 }

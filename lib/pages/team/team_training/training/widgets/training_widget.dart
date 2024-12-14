@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-25 15:56:43
- * @LastEditTime: 2024-12-13 15:17:03
+ * @LastEditTime: 2024-12-14 15:42:40
  */
 
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -251,7 +251,7 @@ class TrainingWidget extends GetView<TrainingController> {
                                     onTap: controller.isPlaying.value
                                         ? null
                                         : () async {
-                                            if (controller.ballNum.value >= 0 &&
+                                            if (controller.ballNum.value <= 0 &&
                                                 !Utils.getNoTip("ball")) {
                                               BottomTipDialog.show(
                                                   context: Get.context!,
@@ -431,10 +431,20 @@ class TrainingWidget extends GetView<TrainingController> {
                                                 return const AwardDialog();
                                               });
                                         },
-                                        child: Image.asset(
-                                          Assets.managerUiManagerFreegift01,
-                                          width: 33.5.w,
-                                        ),
+                                        child: Obx(() {
+                                          return AnimatedScale(
+                                            duration: const Duration(
+                                                milliseconds: 300),
+                                            scale: controller.taskValue.value ==
+                                                    controller.currentTaskNeed
+                                                ? 1.5
+                                                : 1,
+                                            child: Image.asset(
+                                              Assets.managerUiManagerFreegift01,
+                                              width: 33.5.w,
+                                            ),
+                                          );
+                                        }),
                                       ),
                                     ),
                                   ],

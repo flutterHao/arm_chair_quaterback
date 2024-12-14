@@ -39,7 +39,7 @@ class TrainingTactics extends StatelessWidget {
       final Offset position = renderBox.localToGlobal(Offset.zero);
 
       final OverlayState overlayState = Overlay.of(context);
-      ctrl.getBuffValue(ctrl.tacticList[index]);
+      ctrl.getBuffValue(ctrl.trainingInfo.buff[index]);
       final OverlayEntry overlayEntry = OverlayEntry(
         builder: (BuildContext context) {
           return Positioned(
@@ -52,7 +52,7 @@ class TrainingTactics extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 13.w, vertical: 9.w),
                 child: Row(mainAxisSize: MainAxisSize.min, children: [
                   Text(
-                    getCardTacticNmae(ctrl.tacticList[index].color),
+                    getCardTacticNmae(ctrl.trainingInfo.buff[index].color),
                     style: 16.w4(
                         fontFamily: FontFamily.fOswaldMedium,
                         color: AppColors.cFFFFFF,
@@ -60,7 +60,7 @@ class TrainingTactics extends StatelessWidget {
                   ),
                   7.hGap,
                   Text(
-                    "+${(ctrl.tacticList[index].buffValue * 100).toInt()}%",
+                    "+${(ctrl.trainingInfo.buff[index].buffValue * 100).toInt()}%",
                     style: 16.w4(color: AppColors.cFFFFFF, height: 1),
                   ),
                 ]),
@@ -73,6 +73,20 @@ class TrainingTactics extends StatelessWidget {
       Future.delayed(const Duration(seconds: 1), () {
         overlayEntry.remove();
       });
+    }
+
+    void recove(myTeamCtrl) {
+      if (myTeamCtrl.myTeamEntity.powerP >= 100) {
+        EasyLoading.showToast("Your team's morale is full.");
+        // Loading.toast("Your team's morale is full.");
+        return;
+      }
+      showModalBottomSheet(
+          isScrollControlled: true,
+          context: Get.context!,
+          builder: (context) {
+            return const RecoverDialog();
+          });
     }
 
     return Material(
@@ -90,27 +104,7 @@ class TrainingTactics extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
-                    // showModalBottomSheet(
-                    //     barrierColor: Colors.transparent,
-                    //     backgroundColor: Colors.transparent,
-                    //     isScrollControlled: true,
-                    //     context: Get.context!,
-                    //     builder: (context) {
-                    //       return const VerticalDragBackWidget(
-                    //           child: TeamMenberView());
-                    //     });
-                    // Get.toNamed(RouteNames.teamMemberPage);
-                    if (myTeamCtrl.myTeamEntity.powerP >= 100) {
-                      EasyLoading.showToast("Your team's morale is full.");
-                      // Loading.toast("Your team's morale is full.");
-                      return;
-                    }
-                    showModalBottomSheet(
-                        isScrollControlled: true,
-                        context: Get.context!,
-                        builder: (context) {
-                          return const RecoverDialog();
-                        });
+                    recove(myTeamCtrl);
                   },
                   child: Container(
                     width: 140.w,
@@ -140,36 +134,41 @@ class TrainingTactics extends StatelessWidget {
                           ],
                         ),
                         13.vGap,
-                        CircleProgressView(
-                            progress: myTeamCtrl.myTeamEntity.powerP * 1.0,
-                            width: 55.w,
-                            height: 55.w,
-                            progressWidth: 5.w,
-                            progressColor: Utils.getProgressColor(
-                                myTeamCtrl.myTeamEntity.powerP),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                IconWidget(
-                                  iconWidth: 13.w,
-                                  icon: Assets.managerUiManagerIconRecover,
-                                ),
-                                3.vGap,
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    AnimatedNum(
-                                      number: myTeamCtrl.myTeamEntity.powerP,
-                                      textStyle: 10.w4(),
-                                    ),
-                                    Text(
-                                      "%",
-                                      style: 10.w4(),
-                                    )
-                                  ],
-                                )
-                              ],
-                            )),
+                        MtInkwell(
+                          onTap: () {
+                            recove(myTeamCtrl);
+                          },
+                          child: CircleProgressView(
+                              progress: myTeamCtrl.myTeamEntity.powerP * 1.0,
+                              width: 55.w,
+                              height: 55.w,
+                              progressWidth: 5.w,
+                              progressColor: Utils.getProgressColor(
+                                  myTeamCtrl.myTeamEntity.powerP),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  IconWidget(
+                                    iconWidth: 13.w,
+                                    icon: Assets.managerUiManagerIconRecover,
+                                  ),
+                                  3.vGap,
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      AnimatedNum(
+                                        number: myTeamCtrl.myTeamEntity.powerP,
+                                        textStyle: 10.w4(),
+                                      ),
+                                      Text(
+                                        "%",
+                                        style: 10.w4(),
+                                      )
+                                    ],
+                                  )
+                                ],
+                              )),
+                        ),
                       ],
                     ),
                   ),
@@ -300,8 +299,8 @@ class TacticList extends StatelessWidget {
                                                       onItemTap(context, index);
                                                     },
                                                     child: TacticItem(
-                                                      buff: ctrl
-                                                          .tacticList[index],
+                                                      buff: ctrl.trainingInfo
+                                                          .buff[index],
                                                       widthAnimition: false,
                                                     ),
                                                   ),
@@ -471,9 +470,10 @@ class TacticList extends StatelessWidget {
                                       },
                                       separatorBuilder: (context, index) =>
                                           7.hGap,
-                                      itemCount: ctrl.tacticList.length > 5
-                                          ? 5
-                                          : ctrl.tacticList.length),
+                                      itemCount:
+                                          ctrl.trainingInfo.buff.length > 5
+                                              ? 5
+                                              : ctrl.trainingInfo.buff.length),
                                 ),
                               ],
                             ),
@@ -494,12 +494,12 @@ class TacticList extends StatelessWidget {
                                   width: 36.w,
                                   alignment: Alignment.bottomCenter,
                                   child: Text(
-                                    "x${ctrl.tacticList[index].takeEffectGameCount}",
+                                    "x${ctrl.trainingInfo.buff[index].takeEffectGameCount}",
                                     style: 10.w4(height: 0.75),
                                   ));
                             },
                             separatorBuilder: (context, index) => 7.hGap,
-                            itemCount: ctrl.tacticList.length),
+                            itemCount: ctrl.trainingInfo.buff.length),
                       ),
                       7.5.vGap
                     ],

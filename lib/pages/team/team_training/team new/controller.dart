@@ -58,6 +58,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   late Animation<double> pageAnimation;
   //换人战力
   late int oVROld = 0;
+  int changeDuration = 300;
 
   /// 在 widget 内存中分配后立即调用。
   @override
@@ -188,7 +189,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   Future showChangeDialog(TeamPlayerInfoEntity? item) async {
     if (!isShowDialog.value) {
       isShowDialog.value = true;
-      await showDialog(
+      MyTeamEntity? result = await showDialog(
           barrierDismissible: false,
           useSafeArea: false,
           context: Get.context!,
@@ -197,15 +198,21 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
               item: item,
             );
           });
+
+      item1.uuid = "";
+      item2.uuid = "";
+      isShowDialog.value = false;
       item1.isChange.value = false;
       item2.isChange.value = false;
       isShowDialog.value = false;
       isAdd = false;
+      //战力变化弹窗
       if (oVROld != myTeamEntity.oVR) {
+        await Future.delayed(const Duration(milliseconds: 1500));
         await showTopToastDialog(child: PowerChangeDialog());
         oVROld = myTeamEntity.oVR;
       }
-      update();
+
       animationCtrl.reset();
       animationCtrl.forward();
     }
@@ -214,12 +221,13 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   ///点击更换球员
   void playerChangeTap(
       BuildContext context, bool isBag, TeamPlayerInfoEntity item) async {
-    /// 如果是上阵
     if (!isBag) {
       if (isShowDialog.value && !item2.isChange.value) {
+        //如果是从阵容中选择的，并且打开了弹窗
         item2 = item;
         item2.isChange.value = true;
       } else {
+        //从阵容中选择
         item1 = TeamPlayerInfoEntity.fromJson(item.toJson());
         item1.isChange.value = true;
       }
@@ -250,23 +258,39 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   }
 
   Future changeTeamPlayer(BuildContext context, {bool isDown = false}) async {
-    myTeamEntity = await TeamApi.changeTeamPlayer(
+    MyTeamEntity result = await TeamApi.changeTeamPlayer(
         isAdd ? null : item1.uuid, isDown ? null : item2.uuid);
     myBagList = await TeamApi.getMyBagPlayers();
     myBagList.sort(comparePlayers);
-    item1.uuid = "";
-    item2.uuid = "";
-    item1.isChange.value = false;
-    item2.isChange.value = false;
-    isAdd = false;
 
-    isShowDialog.value = false;
-    animationCtrl.reverse().then(
-      (value) {
-        // Navigator.pop(context);
-        Get.back();
-      },
-    );
+    await animationCtrl.reverse();
+    // for (var e in myBagList) {
+    //   if (isDown && e.uuid == item1.uuid) {
+    //     changeDuration = 0;
+    //     e.position = -1;
+    //     break;
+    //   } else if (isAdd && e.uuid == item2.uuid) {
+    //     changeDuration = 0;
+    //     e.position = 0;
+    //     break;
+    //   } else {
+    //     changeDuration = 300;
+
+    //     int index1 = myBagList.indexWhere((e) => e.uuid == item1.uuid);
+    //     int index2 = myBagList.indexWhere((e) => e.uuid == item2.uuid);
+
+    //     if (index1 != -1 && index2 != -1) {
+    //       int tempPosition = myBagList[index1].position;
+    //       myBagList[index1].position = myBagList[index2].position;
+    //       myBagList[index2].position = tempPosition;
+    //     }
+    //     break;
+    //   }
+    // }
+
+    // myTeamEntity = result;
+    update();
+    Get.back(result: result);
   }
 
   ///计算体力回复时间

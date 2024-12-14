@@ -20,6 +20,7 @@ class MyTeamEntity {
   late int salary = 0;
   late int salaryCap = 1;
   late int benchCount = 0;
+  late int playerBackpackNum = 20;
 
   MyTeamEntity();
 

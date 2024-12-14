@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-26 18:53:41
- * @LastEditTime: 2024-12-12 10:57:43
+ * @LastEditTime: 2024-12-14 10:58:58
  */
 import 'package:arm_chair_quaterback/common/entities/review_entity.dart';
 import 'package:arm_chair_quaterback/common/net/address.dart';
@@ -99,7 +99,9 @@ class NewsListDetail {
     NewsListDetail newsDetail = $NewsListDetailFromJson(json);
     newsDetail.imgList = newsDetail.imgList.map((element) {
       if (!element.contains(Address.imgBaseUrl)) {
-        return element = Address.compressImgBaseUrl + element;
+        return element = element.contains(".gif")
+            ? Address.imgBaseUrl
+            : Address.compressImgBaseUrl + element;
       }
       return element;
     }).toList();

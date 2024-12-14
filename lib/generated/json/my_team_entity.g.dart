@@ -38,6 +38,11 @@ MyTeamEntity $MyTeamEntityFromJson(Map<String, dynamic> json) {
   if (benchCount != null) {
     myTeamEntity.benchCount = benchCount;
   }
+  final int? playerBackpackNum = jsonConvert.convert<int>(
+      json['playerBackpackNum']);
+  if (playerBackpackNum != null) {
+    myTeamEntity.playerBackpackNum = playerBackpackNum;
+  }
   return myTeamEntity;
 }
 
@@ -50,6 +55,7 @@ Map<String, dynamic> $MyTeamEntityToJson(MyTeamEntity entity) {
   data['salary'] = entity.salary;
   data['salaryCap'] = entity.salaryCap;
   data['benchCount'] = entity.benchCount;
+  data['playerBackpackNum'] = entity.playerBackpackNum;
   return data;
 }
 
@@ -62,6 +68,7 @@ extension MyTeamEntityExtension on MyTeamEntity {
     int? salary,
     int? salaryCap,
     int? benchCount,
+    int? playerBackpackNum,
   }) {
     return MyTeamEntity()
       ..powerReplyTime = powerReplyTime ?? this.powerReplyTime
@@ -70,6 +77,7 @@ extension MyTeamEntityExtension on MyTeamEntity {
       ..oVR = oVR ?? this.oVR
       ..salary = salary ?? this.salary
       ..salaryCap = salaryCap ?? this.salaryCap
-      ..benchCount = benchCount ?? this.benchCount;
+      ..benchCount = benchCount ?? this.benchCount
+      ..playerBackpackNum = playerBackpackNum ?? this.playerBackpackNum;
   }
 }

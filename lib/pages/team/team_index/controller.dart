@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-12-13 14:39:23
+ * @LastEditTime: 2024-12-13 19:00:36
  */
 
 import 'dart:async';
@@ -83,7 +83,9 @@ class TeamIndexController extends GetxController
     getTeamInfoCup();
     final ctrl = Get.find<TrainingController>();
     ctrl.trainingInfo = await TeamApi.getTrainingInfo();
-    update(["training_page"]);
+    ctrl.update(["training_page"]);
+    TeamController teamCtrl = Get.find();
+    teamCtrl.updateTeamInfo();
   }
 
   ///获取战斗宝箱信息

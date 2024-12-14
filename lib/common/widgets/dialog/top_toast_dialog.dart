@@ -1,32 +1,36 @@
-/*
- * @Description: 
- * @Author: lihonghao
- * @Date: 2024-12-09 19:12:03
- * @LastEditTime: 2024-12-13 10:05:54
- */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-Future showTopToastDialog({required Widget child}) async {
-  await showDialog(
-    barrierColor: Colors.transparent,
-    context: Get.context!,
-    useSafeArea: false,
-    barrierDismissible: false,
+Future showTopToastDialog({
+  required Widget child,
+  Duration duration = const Duration(seconds: 2),
+}) async {
+  final overlayEntry = OverlayEntry(
     builder: (context) {
-      return TopToastDialog(child: child);
+      return TopToastDialog(
+        duration: duration,
+        child: child,
+      );
     },
   );
+
+  Overlay.of(Get.context!).insert(overlayEntry);
+
+  // 自动关闭弹窗
+  await Future.delayed(duration);
+  overlayEntry.remove();
 }
 
 ///顶部弹窗
 class TopToastDialog extends StatefulWidget {
-  const TopToastDialog({super.key, required this.child, this.height});
+  const TopToastDialog(
+      {super.key, required this.child, this.height, required this.duration});
   final Widget child;
   final double? height;
+  final Duration duration;
 
   @override
   State<TopToastDialog> createState() => _TopDialogState();
@@ -45,21 +49,21 @@ class _TopDialogState extends State<TopToastDialog>
       vsync: this,
     );
     _animation = CurvedAnimation(
-        parent: Tween<double>(begin: 00, end: 1).animate(_controller),
+        parent: Tween<double>(begin: 0, end: 1).animate(_controller),
         curve: Curves.easeOutSine);
 
-    _controller.forward().then((v) {
-      Future.delayed(const Duration(milliseconds: 1000)).then((_) {
-        _controller.reverse().then((v) {
-          Navigator.of(context).pop();
-        });
-      });
-    });
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    double hight = widget.height ?? -130.w;
+    double height = widget.height ?? -130.w;
 
     return AnimatedBuilder(
         animation: _animation,
@@ -70,7 +74,7 @@ class _TopDialogState extends State<TopToastDialog>
               Positioned(
                 left: 0,
                 right: 0,
-                top: hight * (1 - _animation.value),
+                top: height * (1 - _animation.value),
                 child: Container(
                   width: double.infinity,
                   height: 130.w,

@@ -10,6 +10,7 @@ import 'package:arm_chair_quaterback/common/widgets/dialog/custom_dialog.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,6 +21,7 @@ class RecoverDialog extends GetView<TeamController> {
 
   @override
   Widget build(BuildContext context) {
+    int cost = controller.getRecoverCost();
     return CustomBottomDialog(
         title: "RECOVER",
         desc:
@@ -45,7 +47,7 @@ class RecoverDialog extends GetView<TeamController> {
                 ),
                 3.hGap,
                 Text(
-                  Utils.formatMoney(controller.getRecoverCost()),
+                  Utils.formatMoney(cost),
                   style: 16.w4(fontFamily: FontFamily.fOswaldBold),
                 ),
               ],
@@ -54,6 +56,7 @@ class RecoverDialog extends GetView<TeamController> {
         ),
         onComfirm: () async {
           await controller.recoverPower(type: 2);
+          HomeController.to.updateMoney(-cost);
         });
   }
 }

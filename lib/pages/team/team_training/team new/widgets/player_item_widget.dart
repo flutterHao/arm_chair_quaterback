@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2024-12-12 17:22:05
+ * @LastEditTime: 2024-12-14 18:18:04
  */
 /*
  * @Description: 
@@ -251,7 +251,7 @@ class PlayerItem extends GetView<TeamController> {
               ),
               Expanded(
                 child: AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 3000),
+                  duration: controller.changeDuration.milliseconds,
                   transitionBuilder:
                       (Widget child, Animation<double> animation) {
                     //  var tween = Tween(begin: const Offset(1, 0), end: const Offset(0, 0));
@@ -262,7 +262,7 @@ class PlayerItem extends GetView<TeamController> {
                     );
                   },
                   child: Row(
-                    // key: item.position <= 1 ? null : ValueKey(item.uuid),
+                    key: ValueKey(item.uuid),
                     children: [
                       13.hGap,
                       PlayerCard(

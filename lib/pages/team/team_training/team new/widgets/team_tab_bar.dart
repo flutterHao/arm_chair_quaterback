@@ -2,7 +2,7 @@
  * @Description: 我的球队的训练和比赛
  * @Author: lihonghao
  * @Date: 2024-09-27 19:21:36
- * @LastEditTime: 2024-12-13 12:31:34
+ * @LastEditTime: 2024-12-14 11:51:50
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -135,14 +135,15 @@ class TeamTabbar extends GetView<TeamController> {
                               )
                             ],
                           ),
-                          3.5.vGap,
+                          6.5.vGap,
                           Row(
                             children: [
                               SizedBox(
                                 width: 100.w,
+                                height: 18.w,
                                 child: FittedBox(
-                                  alignment: Alignment.centerLeft,
                                   fit: BoxFit.none,
+                                  alignment: Alignment.centerLeft,
                                   child: Row(
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
@@ -219,15 +220,15 @@ class TeamTabbar extends GetView<TeamController> {
                                     "$length",
                                     style: 21.w4(
                                         color: AppColors.cFFFFFF,
-                                        height: 1,
+                                        height: 0.75,
                                         fontFamily: FontFamily.fOswaldMedium),
                                   ),
                                   SizedBox(height: 4.h),
                                   Text(
-                                    "/50",
+                                    "/${controller.myTeamEntity.playerBackpackNum}",
                                     style: 16.w4(
                                         color: AppColors.cFFFFFF,
-                                        height: 1,
+                                        height: 0.75,
                                         fontFamily: FontFamily.fOswaldMedium),
                                   ),
                                 ],

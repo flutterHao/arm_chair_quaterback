@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 20:08:22
- * @LastEditTime: 2024-12-10 14:56:41
+ * @LastEditTime: 2024-12-14 11:09:35
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
@@ -33,43 +33,12 @@ class _PlayerBagTabState extends State<PlayerBagTab>
   Widget build(BuildContext context) {
     super.build(context);
     return GetBuilder<TeamController>(builder: (_) {
-      // var list = controller.playerSort();
+      controller.myBagList.sort(controller.comparePlayers);
       var list = controller.myBagList.where((e) => e.position == -1).toList();
       return Container(
         color: AppColors.cF2F2F2,
         child: Stack(
           children: [
-            // Positioned(
-            //   top: 63.w,
-            //   bottom: 0,
-            //   left: 0,
-            //   right: 0,
-            //   child: list.isEmpty
-            //       ? const Center(
-            //           child: LoadStatusWidget(
-            //             text: "No players",
-            //           ),
-            //         )
-            //       : ListView.separated(
-            //           controller: controller.scrollController,
-            //           padding: EdgeInsets.symmetric(vertical: 0.w),
-            //           itemBuilder: (context, index) {
-            //             return index < list.length
-            //                 ? PlayerItem(
-            //                     item: list[index],
-            //                     isBag: true,
-            //                   )
-            //                 : _backLock();
-            //           },
-            //           separatorBuilder: (context, index) => Container(
-            //             width: double.infinity,
-            //             height: 1,
-            //             margin: EdgeInsets.symmetric(horizontal: 16.w),
-            //             color: AppColors.cE6E6E,
-            //           ),
-            //           itemCount: list.length + 1,
-            //         ),
-            // ),
             Obx(() {
               return AnimatedPositioned(
                 duration: 300.milliseconds,
@@ -206,13 +175,14 @@ class StarSort extends GetView<TeamController> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        if (controller.sortType != 1 && controller.sortType != -1) {
-          controller.sortType = 1;
-        } else if (controller.sortType == 1) {
-          controller.sortType = -1;
-        } else if (controller.sortType == -1) {
-          controller.sortType = 0;
-        }
+        // if (controller.sortType != 1 && controller.sortType != -1) {
+        //   controller.sortType = 1;
+        // } else if (controller.sortType == 1) {
+        //   controller.sortType = -1;
+        // } else if (controller.sortType == -1) {
+        //   controller.sortType = 0;
+        // }
+        controller.sortType = controller.sortType == 1 ? -1 : 1;
         controller.update();
       },
       child: Container(
@@ -264,13 +234,14 @@ class GradeSort extends GetView<TeamController> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        if (controller.sortType != 2 && controller.sortType != -2) {
-          controller.sortType = 2;
-        } else if (controller.sortType == 2) {
-          controller.sortType = -2;
-        } else if (controller.sortType == -2) {
-          controller.sortType = 0;
-        }
+        // if (controller.sortType != 2 && controller.sortType != -2) {
+        //   controller.sortType = 2;
+        // } else if (controller.sortType == 2) {
+        //   controller.sortType = -2;
+        // } else if (controller.sortType == -2) {
+        //   controller.sortType = 0;
+        // }
+        controller.sortType = controller.sortType == 2 ? -2 : 2;
         controller.update();
       },
       child: Container(

@@ -112,7 +112,6 @@ class TrainingController extends GetxController
   RxBool isChange = false.obs;
   int tacticId = 0;
   int changeTacticId = 0;
-  List<TrainingInfoBuff> tacticList = [];
   List<TrainingInfoBuff> chooseTacticList = [];
   late AnimationController shakeController;
   late Animation<double> shakeAnimation;
@@ -316,7 +315,7 @@ class TrainingController extends GetxController
       trainDefine = v[2] as TrainDefineEntity;
       buffValueConfigList = v[3] as List<TaticsCombineEntity>;
       ballNum.value = trainingInfo.prop.num;
-      tacticList = trainingInfo.buff;
+      // tacticList = trainingInfo.buff;
       for (int i = 0; i < trainTaskList.length; i++) {
         if (trainingInfo.training.currentTaskId == trainTaskList[i].taskLevel) {
           currentTaskNeed = trainTaskList[i].taskNeed;
@@ -420,14 +419,14 @@ class TrainingController extends GetxController
 
   void chooseTactic(BuildContext context) async {
     if (tacticId == 0) return;
-    if (tacticList.length >= 5) {
+    if (trainingInfo.buff.length >= 5) {
       ///如果卡槽有这个直接添加
       TrainingInfoBuff buff =
           chooseTacticList.where((e) => e.id == tacticId).first;
-      if (tacticList
+      if (trainingInfo.buff
           .where((e) => e.color == buff.color && e.face == buff.face)
           .isNotEmpty) {
-        var myBuff = tacticList
+        var myBuff = trainingInfo.buff
             .where((e) => e.color == buff.color && e.face == buff.face)
             .first;
         if (myBuff.takeEffectGameCount >= 6) {
@@ -455,11 +454,11 @@ class TrainingController extends GetxController
     }
     int type = 1; //1替换,0直接添加
     if (changeTacticId != 0) {
-      for (int i = 0; i < tacticList.length; i++) {
-        if (tacticList[i].id == changeTacticId) {
+      for (int i = 0; i < trainingInfo.buff.length; i++) {
+        if (trainingInfo.buff[i].id == changeTacticId) {
           for (int j = 0; j < chooseTacticList.length; j++) {
             if (tacticId == chooseTacticList[j].id) {
-              tacticList[i] = chooseTacticList[j];
+              trainingInfo.buff[i] = chooseTacticList[j];
               // double x = 162.5.w + i * 37.w;
               // chooseTacticList[j].offset.value = Offset(x, 45.w);
               type = 0;
@@ -471,7 +470,7 @@ class TrainingController extends GetxController
       ///直接添加
       for (int i = 0; i < chooseTacticList.length; i++) {
         if (tacticId == chooseTacticList[i].id) {
-          tacticList.add(chooseTacticList[i]);
+          trainingInfo.buff.add(chooseTacticList[i]);
           //  type = 0;
           // double x = 162.5.w + i * 37.w;
           // chooseTacticList[i].offset.value = Offset(x, 45.w);
@@ -489,48 +488,47 @@ class TrainingController extends GetxController
         shakeController.stop();
         isChange.value = false;
 
-        tacticList = v;
+        trainingInfo.buff = v;
         update(["training_page"]);
         await Future.delayed(const Duration(milliseconds: 600), () {
           Navigator.of(context).pop();
         });
       } else {
-        tacticList = v;
+        trainingInfo.buff = v;
         update(["training_page"]);
       }
 
-      await Future.delayed(const Duration(milliseconds: 500));
-      String newTacticType = TacticUtils.checkTacticMatch(tacticList);
+      await Future.delayed(const Duration(milliseconds: 200));
+      String newTacticType = TacticUtils.checkTacticMatch(trainingInfo.buff);
       // var list = TacticUtils.matchedIndices;
-      tacticAnimCtrl.reset();
-      tacticAnimCtrl.forward().then((v) {
-        if (ObjectUtil.isNotEmpty(newTacticType) &&
-            tacticType != newTacticType) {
-          showDialog(
-              context: Get.context!,
-              useSafeArea: false,
-              barrierColor: Colors.transparent,
-              builder: (context) {
-                return const TopToastDialog(child: TacticMatch());
-              });
-        }
+      if (ObjectUtil.isNotEmpty(newTacticType) && tacticType != newTacticType) {
         tacticType = newTacticType;
-      });
+        tacticAnimCtrl.reset();
+        tacticAnimCtrl.forward().then((v) async {
+          await Future.delayed(const Duration(milliseconds: 200));
+          showTopToastDialog(child: TacticMatch());
+        });
+      }
+      tacticType = newTacticType;
+
       Future.delayed(const Duration(milliseconds: 300), () async {
         showTacticColor.value = true;
         await Future.delayed(const Duration(milliseconds: 1500));
         showTacticColor.value = false;
       });
-    }).whenComplete(() {});
+    }).catchError((e) {
+      Log.e("网络错误");
+      chooseEnd(context, type);
+    });
   }
 
   Future chooseEnd(BuildContext context, int type) async {
     tacticId = 0;
     changeTacticId = 0;
-    showBuff.value = false;
-    isPlaying.value = false;
 
     await Future.delayed(const Duration(milliseconds: 500));
+    showBuff.value = false;
+    isPlaying.value = false;
 
     for (var element in chooseTacticList) {
       element.isOpen.value = false;
@@ -701,7 +699,6 @@ class TrainingController extends GetxController
     ///战术 buff
     if (awads.contains(1)) {
       chooseTacticList.clear();
-      tacticList = trainingInfo.buff;
       chooseTacticList = List.from(trainingInfo.chooseBuffs);
       //初始化卡牌的位置和朝向
       double spacing = 10.w * chooseTacticList.length;
@@ -733,11 +730,14 @@ class TrainingController extends GetxController
     for (var element in scrollerCtrlList) {
       Log.d("slot 当前位置 ${element.offset}");
     }
-    if (scrollerCtrlList.where((e) => e.offset == 0.0).length == 6) {
-      for (int i = 0; i < scrollerCtrlList.length; i++) {
-        scrollerCtrlList[i].jumpTo(offsetList[i]);
+    //暂时不知道重置到开始位置的原因，强行重新变更成中将位置
+    Future.delayed(const Duration(milliseconds: 20), () {
+      if (scrollerCtrlList.where((e) => e.offset == 0.0).length == 6) {
+        for (int i = 0; i < scrollerCtrlList.length; i++) {
+          scrollerCtrlList[i].jumpTo(offsetList[i]);
+        }
       }
-    }
+    });
     // for (var element in slotsAnimlList) {
     //   element.reset();
     // }
