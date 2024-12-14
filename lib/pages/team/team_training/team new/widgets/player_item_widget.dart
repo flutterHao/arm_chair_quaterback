@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2024-12-14 18:18:04
+ * @LastEditTime: 2024-12-14 20:48:30
  */
 /*
  * @Description: 
@@ -115,8 +115,8 @@ class PlayerItem extends GetView<TeamController> {
               9.hGap,
               if (CacheApi.playerStatusMap[item.playerStatus]?.statsId != null)
                 IconWidget(
-                  iconWidth: 16.w,
-                  iconHeight: 16.w,
+                  iconWidth: 20.w,
+                  iconHeight: 20.w,
                   icon: Utils.getStatusUrl(
                       CacheApi.playerStatusMap[item.playerStatus]?.statsId),
                 ),

@@ -459,8 +459,8 @@ class TrainingController extends GetxController
           for (int j = 0; j < chooseTacticList.length; j++) {
             if (tacticId == chooseTacticList[j].id) {
               trainingInfo.buff[i] = chooseTacticList[j];
-              // double x = 162.5.w + i * 37.w;
-              // chooseTacticList[j].offset.value = Offset(x, 45.w);
+              // double x = 10.w + 143.5.w + i * 43.w;
+              // chooseTacticList[j].offset.value = Offset(x, 45.w + 84.w);
               type = 0;
             }
           }
@@ -472,8 +472,8 @@ class TrainingController extends GetxController
         if (tacticId == chooseTacticList[i].id) {
           trainingInfo.buff.add(chooseTacticList[i]);
           //  type = 0;
-          // double x = 162.5.w + i * 37.w;
-          // chooseTacticList[i].offset.value = Offset(x, 45.w);
+          // double x = 10.w + 143.5.w + i * 43.w;
+          // chooseTacticList[i].offset.value = Offset(x, 45.w + 84.w);
         }
       }
     }
@@ -709,7 +709,7 @@ class TrainingController extends GetxController
                         (chooseTacticList.length - 1) * spacing)) /
                 2 +
             i * (74.w + spacing);
-        item.offset.value = Offset(x, 78.5.w);
+        item.offset.value = Offset(x, 78.5.w + 281.5.w);
         // item.isOpen.value = false;
       }
 

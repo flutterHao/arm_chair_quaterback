@@ -28,6 +28,8 @@ class Assets {
   static const String commonUiCommonPlayerState01 = 'assets/images/Common/ui_common_player_state_01.png';
   static const String commonUiCommonPlayerState02 = 'assets/images/Common/ui_common_player_state_02.png';
   static const String commonUiCommonPlayerState04 = 'assets/images/Common/ui_common_player_state_04.png';
+  static const String commonUiCommonPlayerState05 = 'assets/images/Common/ui_common_player_state_05.png';
+  static const String commonUiCommonPlayerState06 = 'assets/images/Common/ui_common_player_state_06.png';
   static const String commonUiCommonPlayerState3 = 'assets/images/Common/ui_common_player_state_3.png';
   static const String commonUiCommonProp01 = 'assets/images/Common/ui_common_prop_01.png';
   static const String commonUiCommonProp02 = 'assets/images/Common/ui_common_prop_02.png';

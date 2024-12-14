@@ -13,6 +13,7 @@ import 'package:arm_chair_quaterback/common/utils/loading.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/pages/home/index.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 // import 'package:flutter_easyloading/flutter_easyloading.dart';
 // import 'package:get/get.dart' as getx;
@@ -158,9 +159,23 @@ class NetInterceptor extends InterceptorsWrapper {
 
     ///服务器返回错误
     // if (eInfo.code >= 100000) {
+    //   // EasyLoading.showError(eInfo.message);
+
+    // }
+    // if(kReleaseMode){
+    //   // DioException e=DioException(
+    //   //   requestOptions: error.requestOptions,
+    //   //   response: error.response,
+    //   //   type: error.type,
+    //   //   error: eInfo.message,
+    //   // );
+    //    ErrorUtils.toast(e);
+    // }else{
     //   EasyLoading.showError(eInfo.message);
     // }
-    EasyLoading.showError(eInfo.message);
+    if (!kReleaseMode) {
+      EasyLoading.showError(eInfo.message);
+    }
   }
 
   /// 错误信息

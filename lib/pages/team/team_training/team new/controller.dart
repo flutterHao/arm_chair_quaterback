@@ -260,33 +260,33 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   Future changeTeamPlayer(BuildContext context, {bool isDown = false}) async {
     MyTeamEntity result = await TeamApi.changeTeamPlayer(
         isAdd ? null : item1.uuid, isDown ? null : item2.uuid);
-    myBagList = await TeamApi.getMyBagPlayers();
-    myBagList.sort(comparePlayers);
+    // myBagList = await TeamApi.getMyBagPlayers();
+    // myBagList.sort(comparePlayers);
 
     await animationCtrl.reverse();
-    // for (var e in myBagList) {
-    //   if (isDown && e.uuid == item1.uuid) {
-    //     changeDuration = 0;
-    //     e.position = -1;
-    //     break;
-    //   } else if (isAdd && e.uuid == item2.uuid) {
-    //     changeDuration = 0;
-    //     e.position = 0;
-    //     break;
-    //   } else {
-    //     changeDuration = 300;
+    for (var e in myBagList) {
+      if (isDown && e.uuid == item1.uuid) {
+        changeDuration = 0;
+        e.position = -1;
+        break;
+      } else if (isAdd && e.uuid == item2.uuid) {
+        changeDuration = 0;
+        e.position = 0;
+        break;
+      } else {
+        changeDuration = 300;
 
-    //     int index1 = myBagList.indexWhere((e) => e.uuid == item1.uuid);
-    //     int index2 = myBagList.indexWhere((e) => e.uuid == item2.uuid);
+        int index1 = myBagList.indexWhere((e) => e.uuid == item1.uuid);
+        int index2 = myBagList.indexWhere((e) => e.uuid == item2.uuid);
 
-    //     if (index1 != -1 && index2 != -1) {
-    //       int tempPosition = myBagList[index1].position;
-    //       myBagList[index1].position = myBagList[index2].position;
-    //       myBagList[index2].position = tempPosition;
-    //     }
-    //     break;
-    //   }
-    // }
+        if (index1 != -1 && index2 != -1) {
+          int tempPosition = myBagList[index1].position;
+          myBagList[index1].position = myBagList[index2].position;
+          myBagList[index2].position = tempPosition;
+        }
+        break;
+      }
+    }
 
     // myTeamEntity = result;
     update();

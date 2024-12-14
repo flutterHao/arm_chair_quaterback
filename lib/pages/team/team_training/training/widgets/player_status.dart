@@ -2,7 +2,7 @@
  * @Description: 球员状态
  * @Author: lihonghao
  * @Date: 2024-12-12 17:53:08
- * @LastEditTime: 2024-12-13 17:17:15
+ * @LastEditTime: 2024-12-14 20:32:44
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/style.dart';
@@ -19,7 +19,7 @@ class PlayerStatus extends GetView<TeamController> {
 
   @override
   Widget build(BuildContext context) {
-    final List<int> statusList = [101, 102, 103, 104];
+    final List<int> statusList = [101, 102, 103, 104, 105, 106];
     return GetBuilder<TeamController>(builder: (_) {
       return Container(
         width: double.infinity,
@@ -62,7 +62,7 @@ class PlayerStatus extends GetView<TeamController> {
                     ],
                   );
                 },
-                separatorBuilder: (context, index) => 20.hGap,
+                separatorBuilder: (context, index) => 12.hGap,
                 itemCount: statusList.length)
           ],
         ),

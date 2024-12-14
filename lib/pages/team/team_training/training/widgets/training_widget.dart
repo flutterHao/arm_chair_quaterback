@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-25 15:56:43
- * @LastEditTime: 2024-12-14 15:42:40
+ * @LastEditTime: 2024-12-14 20:52:37
  */
 
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -652,37 +652,6 @@ class TrainingWidget extends GetView<TrainingController> {
                               );
                             }),
                           ),
-
-                          ...controller.chooseTacticList
-                              .asMap()
-                              .entries
-                              .map((entry) {
-                            var e = entry.value;
-                            return Obx(() {
-                              return AnimatedPositioned(
-                                left: e.offset.value.dx,
-                                top: e.offset.value.dy,
-                                duration: 300.milliseconds,
-                                child: AnimatedScale(
-                                  duration: const Duration(milliseconds: 300),
-                                  scale: controller.showBuff.value &&
-                                          !controller.isChange.value
-                                      ? 1
-                                      : 0,
-                                  child: FlipCard(
-                                    isFlipped: e.isOpen.value,
-                                    onFlip: () {
-                                      e.isSelect.value = true;
-                                      controller.tacticId = e.id;
-                                      controller.changeTacticId = 0;
-                                      controller.chooseTactic(context);
-                                    },
-                                    buff: e,
-                                  ),
-                                ),
-                              );
-                            });
-                          }).toList(),
 
                           // Obx(() {
                           //   return Visibility(
