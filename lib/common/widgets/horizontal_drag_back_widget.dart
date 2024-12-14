@@ -89,6 +89,9 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
               isOut = true;
               Navigator.of(context).pop();
             }
+            if(widget.noBackAnimation) {
+              offsetX = 0;
+            }
           }
         }
       });

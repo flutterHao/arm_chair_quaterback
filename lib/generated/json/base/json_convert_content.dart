@@ -630,15 +630,35 @@ class JsonConvert {
           PkResultUpdatedAwayTeamResultScoreBoardDetailList.fromJson(e))
           .toList() as M;
     }
-    if (<PkResultUpdatedHomeTeamResultScoreBoardDetailList>[] is M) {
-      return data.map<PkResultUpdatedHomeTeamResultScoreBoardDetailList>((
+    if (<PkResultUpdatedAwayTeamResultScoreBoards>[] is M) {
+      return data.map<PkResultUpdatedAwayTeamResultScoreBoards>((
           Map<String, dynamic> e) =>
-          PkResultUpdatedHomeTeamResultScoreBoardDetailList.fromJson(e))
+          PkResultUpdatedAwayTeamResultScoreBoards.fromJson(e)).toList() as M;
+    }
+    if (<PkResultUpdatedAwayTeamResultTeamPlayers>[] is M) {
+      return data.map<PkResultUpdatedAwayTeamResultTeamPlayers>((
+          Map<String, dynamic> e) =>
+          PkResultUpdatedAwayTeamResultTeamPlayers.fromJson(e)).toList() as M;
+    }
+    if (<PkResultUpdatedAwayTeamResultTeamPlayersPotential>[] is M) {
+      return data.map<PkResultUpdatedAwayTeamResultTeamPlayersPotential>((
+          Map<String, dynamic> e) =>
+          PkResultUpdatedAwayTeamResultTeamPlayersPotential.fromJson(e))
+          .toList() as M;
+    }
+    if (<PkResultUpdatedAwayTeamResultTeamPlayersUpStarBase>[] is M) {
+      return data.map<PkResultUpdatedAwayTeamResultTeamPlayersUpStarBase>((
+          Map<String, dynamic> e) =>
+          PkResultUpdatedAwayTeamResultTeamPlayersUpStarBase.fromJson(e))
           .toList() as M;
     }
     if (<PkResultUpdatedPlayerResults>[] is M) {
       return data.map<PkResultUpdatedPlayerResults>((Map<String, dynamic> e) =>
           PkResultUpdatedPlayerResults.fromJson(e)).toList() as M;
+    }
+    if (<DropAwardData>[] is M) {
+      return data.map<DropAwardData>((Map<String, dynamic> e) =>
+          DropAwardData.fromJson(e)).toList() as M;
     }
     if (<PkStartUpdatedEntity>[] is M) {
       return data.map<PkStartUpdatedEntity>((Map<String, dynamic> e) =>
@@ -1016,10 +1036,18 @@ class JsonConvertClassCollection {
     (PkResultUpdatedTeamResult).toString(): PkResultUpdatedTeamResult.fromJson,
     (PkResultUpdatedAwayTeamResultScoreBoardDetailList)
         .toString(): PkResultUpdatedAwayTeamResultScoreBoardDetailList.fromJson,
-    (PkResultUpdatedHomeTeamResultScoreBoardDetailList)
-        .toString(): PkResultUpdatedHomeTeamResultScoreBoardDetailList.fromJson,
+    (PkResultUpdatedAwayTeamResultScoreBoards)
+        .toString(): PkResultUpdatedAwayTeamResultScoreBoards.fromJson,
+    (PkResultUpdatedAwayTeamResultTeamPlayers)
+        .toString(): PkResultUpdatedAwayTeamResultTeamPlayers.fromJson,
+    (PkResultUpdatedAwayTeamResultTeamPlayersPotential)
+        .toString(): PkResultUpdatedAwayTeamResultTeamPlayersPotential.fromJson,
+    (PkResultUpdatedAwayTeamResultTeamPlayersUpStarBase)
+        .toString(): PkResultUpdatedAwayTeamResultTeamPlayersUpStarBase
+        .fromJson,
     (PkResultUpdatedPlayerResults).toString(): PkResultUpdatedPlayerResults
         .fromJson,
+    (DropAwardData).toString(): DropAwardData.fromJson,
     (PkStartUpdatedEntity).toString(): PkStartUpdatedEntity.fromJson,
     (PlayerDayDataEntity).toString(): PlayerDayDataEntity.fromJson,
     (PlayerStatusEntity).toString(): PlayerStatusEntity.fromJson,

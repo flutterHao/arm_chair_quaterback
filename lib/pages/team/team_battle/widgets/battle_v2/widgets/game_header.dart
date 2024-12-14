@@ -75,7 +75,8 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
           width: 68.w,
           child: Center(
             child: Text(
-              "POW:${teamBattleController.battleEntity.homeTeam.currTeamStrength}",
+              "POW:${teamBattleController.battleEntity.homeTeam
+                  .currTeamStrength}",
               style: 10.w4(
                   color: AppColors.c000000,
                   height: 1,
@@ -124,13 +125,21 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                       id: TeamBattleV2Controller.idGameScore,
                       builder: (_) {
                         int score = 0;
-                        if (controller.getQuarterEvents().isNotEmpty) {
-                          score = controller.getQuarterEvents().last.homeScore;
+                        if (controller
+                            .getQuarterEvents()
+                            .isNotEmpty) {
+                          score = controller
+                              .getQuarterEvents()
+                              .last
+                              .homeScore;
                         }
                         if (controller.isGameOver.value) {
                           score = controller.pkResultUpdatedEntity
-                                  ?.homeTeamResult.score ??
-                              controller.getQuarterEvents().last.homeScore;
+                              ?.homeTeamResult.score ??
+                              controller
+                                  .getQuarterEvents()
+                                  .last
+                                  .homeScore;
                         }
                         return AnimatedNum(
                           number: score,
@@ -145,7 +154,9 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                 Expanded(child: Center(
                   child: Obx(() {
                     var text =
-                        "${Utils.getSortWithInt(controller.quarter.value)} ${MyDateUtils.formatMS((controller.quarterGameCountDown.value / 40 * 12 * 60).toInt())}";
+                        "${Utils.getSortWithInt(controller.quarter
+                        .value)} ${MyDateUtils.formatMS((controller
+                        .quarterGameCountDown.value / 40 * 12 * 60).toInt())}";
                     if (!controller.isGameStart.value) {
                       return Text(
                         "VS",
@@ -171,13 +182,21 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                       id: TeamBattleV2Controller.idGameScore,
                       builder: (_) {
                         int score = 0;
-                        if (controller.getQuarterEvents().isNotEmpty) {
-                          score = controller.getQuarterEvents().last.awayScore;
+                        if (controller
+                            .getQuarterEvents()
+                            .isNotEmpty) {
+                          score = controller
+                              .getQuarterEvents()
+                              .last
+                              .awayScore;
                         }
                         if (controller.isGameOver.value) {
                           score = controller.pkResultUpdatedEntity
-                                  ?.awayTeamResult.score ??
-                              controller.getQuarterEvents().last.awayScore;
+                              ?.awayTeamResult.score ??
+                              controller
+                                  .getQuarterEvents()
+                                  .last
+                                  .awayScore;
                         }
                         return AnimatedNum(
                           number: score,
@@ -221,32 +240,37 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                     Opacity(opacity: 0, child: homeInfo),
                     Positioned(
                         top: 0,
-                        child: MtInkwell(
-                          onTap: () {
-                            controller.jumpGame();
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                "SKIP",
-                                style: TextStyle(
-                                    decoration: TextDecoration.underline,
-                                    color: AppColors.c000000,
-                                    fontSize: 12.sp,
-                                    height: 1,
-                                    fontFamily: FontFamily.fRobotoRegular),
-                              ),
-                              5.hGap,
-                              IconWidget(
-                                iconWidth: 5.w,
-                                icon: Assets.commonUiCommonIconSystemJumpto,
-                                iconColor: AppColors.c000000,
-                              )
-                            ],
-                          ),
-                        )),
+                        child: Obx(() {
+                          if(controller.isGameOver.value){
+                            return const SizedBox.shrink();
+                          }
+                          return MtInkwell(
+                            onTap: () {
+                              controller.jumpGame();
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "SKIP",
+                                  style: TextStyle(
+                                      decoration: TextDecoration.underline,
+                                      color: AppColors.c000000,
+                                      fontSize: 12.sp,
+                                      height: 1,
+                                      fontFamily: FontFamily.fRobotoRegular),
+                                ),
+                                5.hGap,
+                                IconWidget(
+                                  iconWidth: 5.w,
+                                  icon: Assets.commonUiCommonIconSystemJumpto,
+                                  iconColor: AppColors.c000000,
+                                )
+                              ],
+                            ),
+                          );
+                        })),
                     Obx(() {
                       return AnimatedOpacity(
                         opacity: controller.showBuff.value ? 1 : 0,
@@ -310,7 +334,7 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                     decoration: BoxDecoration(
                         color: AppColors.c000000,
                         border:
-                            Border.all(color: AppColors.c666666, width: 1.w),
+                        Border.all(color: AppColors.c666666, width: 1.w),
                         borderRadius: BorderRadius.circular(3.w)),
                     child: Align(
                       alignment: Alignment.centerLeft,
@@ -319,13 +343,13 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                           builder: (logic) {
                             var events = controller.getQuarterEvents();
                             GameEvent? event =
-                                events.isEmpty ? null : events.last;
+                            events.isEmpty ? null : events.last;
 
                             double value = event == null
                                 ? teamBattleController
-                                    .battleEntity.awayTeamReadiness
+                                .battleEntity.awayTeamReadiness
                                 : event
-                                    .pkEventUpdatedEntity.awayPreparationLevel;
+                                .pkEventUpdatedEntity.awayPreparationLevel;
                             return Container(
                               width: 68.w * value,
                               height: 6.w,
@@ -346,7 +370,8 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                     width: 68.w,
                     child: Center(
                       child: Text(
-                        "POW:${teamBattleController.battleEntity.awayTeam.currTeamStrength}",
+                        "POW:${teamBattleController.battleEntity.awayTeam
+                            .currTeamStrength}",
                         style: 10.w4(
                             color: AppColors.c000000,
                             height: 1,

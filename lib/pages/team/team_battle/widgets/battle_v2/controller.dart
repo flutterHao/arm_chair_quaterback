@@ -19,6 +19,7 @@ import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/thrid_lib/flutter_barrage.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/picks/personal_center/widgets/game/game.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/widgets/battle_animation_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_leader/controller.dart';
@@ -114,6 +115,8 @@ class TeamBattleV2Controller extends GetxController
   PkResultUpdatedEntity? pkResultUpdatedEntity;
 
   var isGameStart = false.obs;
+
+  var maybeException = false.obs;
 
   /// 在 widget 内存中分配后立即调用。
   @override
@@ -270,9 +273,11 @@ class TeamBattleV2Controller extends GetxController
       ..controller.addStatusListener(quarterStatusListener)
       ..controller.addListener(quarterListener);
     quarterTimeCountDownAnimationController.forward(from: 0);
-    var time = (((40 * 1000)/(eventCacheMap[Utils.getSortWithInt(quarter.value)]?.length??40)) / gameSpeed);
-    eventEngine =
-        Timer.periodic(Duration(milliseconds: time.toInt()), (t) {
+    var time = (((40 * 1000) /
+            (eventCacheMap[Utils.getSortWithInt(quarter.value)]?.length ??
+                40)) /
+        gameSpeed);
+    eventEngine = Timer.periodic(Duration(milliseconds: time.toInt()), (t) {
       sendToScreen();
     });
   }
@@ -312,6 +317,18 @@ class TeamBattleV2Controller extends GetxController
   }
 
   startGame() {
+    if (eventCacheMap.keys.isEmpty) {
+      /// 直到开始比赛都没有收到一条数据,则可能出现异常，让用户可以退出
+      maybeException.value = true;
+      update([idBattleMain]);
+      return;
+    }
+    if (quarter.value == 3 && pkResultUpdatedEntity == null) {
+      ///第三节结束还没收到结束事件，直接退出比赛
+      EasyLoading.showToast("SERVER ERROR");
+      Get.back();
+      return;
+    }
     if (quarter.value >= 4) {
       return;
     }
@@ -332,9 +349,11 @@ class TeamBattleV2Controller extends GetxController
     quarterTimeCountDownAnimationController.forward(from: 0);
     eventEngine?.cancel();
     eventCount = 0;
-    var time = (((40 * 1000)/(eventCacheMap[Utils.getSortWithInt(quarter.value)]?.length??40)) / gameSpeed);
-    eventEngine =
-        Timer.periodic(Duration(milliseconds: time.toInt()), (t) {
+    var time = (((40 * 1000) /
+            (eventCacheMap[Utils.getSortWithInt(quarter.value)]?.length ??
+                40)) /
+        gameSpeed);
+    eventEngine = Timer.periodic(Duration(milliseconds: time.toInt()), (t) {
       sendToScreen();
     });
   }
@@ -366,8 +385,7 @@ class TeamBattleV2Controller extends GetxController
     var gameEvent = getGameEvent(event.pkEventUpdatedEntity.eventId);
     if (gameEvent?.headLine == "1") {
       /// 高光时刻
-      highLightBarrageWallController
-          .send([generateHighBullet(event.text, playerId: event.playerId)]);
+      highLightBarrageWallController.send([generateHighBullet(event)]);
     } else {
       /// 普通弹幕
       // normalBarrageWallController.send([
@@ -594,69 +612,75 @@ class TeamBattleV2Controller extends GetxController
     return bullets;
   }
 
-  List<Bullet> getHighLightBullets() {
-    var random = Random();
-    List<Bullet> bullets = List<Bullet>.generate(1, (i) {
-      final showTime = random.nextInt(6000);
-      var text = "Kyrie Irving makes free throw 1of 2";
-      return generateHighBullet(text, showTime: showTime);
-    });
-    return bullets;
-  }
-
-  Bullet generateHighBullet(String text, {int showTime = 0, int playerId = 0}) {
+  Bullet generateHighBullet(GameEvent event) {
     var size = calculateTextSize(
-        text,
+        event.text,
         12.w5(
             color: AppColors.c000000,
             height: 1,
             fontFamily: FontFamily.fRobotoMedium));
     return Bullet(
-        child: Container(
-          width: size.width + 12.w + 4.w + 20.w + 7.w,
-          decoration: BoxDecoration(
-              color: AppColors.cFFFFFF,
-              borderRadius: BorderRadius.circular(14.w),
-              boxShadow: [
-                BoxShadow(
-                    color: AppColors.cDEDEDE,
-                    offset: Offset(3.w, 3.w),
-                    blurRadius: 3.w)
-              ]),
-          padding: EdgeInsets.only(left: 4.w, right: 12.w),
-          height: 28.w,
-          child: Row(
-            children: [
-              SizedBox(
-                width: 20.w,
-                height: 20.w,
-                child: Center(
-                  child: ImageWidget(
-                    url: Utils.getPlayUrl(playerId),
-                    imageFailedPath: Assets.iconUiDefault05,
-                    borderRadius: BorderRadius.circular(10.w),
-                    width: 20.w,
-                    height: 20.w,
-                  ),
+      child: Container(
+        width: size.width + 12.w + 4.w + 20.w + 7.w,
+        decoration: BoxDecoration(
+            color: AppColors.cFFFFFF,
+            borderRadius: BorderRadius.circular(14.w),
+            boxShadow: [
+              BoxShadow(
+                  color: AppColors.cDEDEDE,
+                  offset: Offset(3.w, 3.w),
+                  blurRadius: 3.w)
+            ]),
+        padding: EdgeInsets.only(left: 4.w, right: 12.w),
+        height: 28.w,
+        child: Row(
+          children: [
+            SizedBox(
+              width: 20.w,
+              height: 20.w,
+              child: Center(
+                child: ImageWidget(
+                  url: Utils.getPlayUrl(event.playerId),
+                  imageFailedPath: Assets.iconUiDefault05,
+                  borderRadius: BorderRadius.circular(10.w),
+                  width: 20.w,
+                  height: 20.w,
                 ),
               ),
-              7.hGap,
-              Expanded(
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Text(
-                    text,
-                    style: 12.w5(
+            ),
+            7.hGap,
+            Expanded(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Builder(builder: (context) {
+                  var list = Utils.subColorString(event.text);
+                  return Text.rich(
+                      TextSpan(
+                          children: List.generate(list.length, (index) {
+                        var colorString = list[index];
+                        return TextSpan(
+                            text: "${colorString.text} ",
+                            style: colorString.isMatch
+                                ? TextStyle(
+                                    color: event.isHomePlayer
+                                        ? AppColors.c1F8FE5
+                                        : AppColors.cD60D20)
+                                : null);
+                      })),
+                      maxLines: 3,
+                      softWrap: true,
+                      style: 12.w5(
                         color: AppColors.c000000,
                         height: 1,
-                        fontFamily: FontFamily.fRobotoMedium),
-                  ),
-                ),
+                        fontFamily: FontFamily.fRobotoMedium,
+                      ));
+                }),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-        showTime: showTime);
+      ),
+    );
   }
 
   /// 计算文本尺寸

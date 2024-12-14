@@ -4,10 +4,13 @@ import 'dart:math';
 import 'package:arm_chair_quaterback/common/entities/competition_venue_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/game_event_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_start_updated_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/web_socket/web_socket_entity.dart';
 import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/apis.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
+import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
+import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
@@ -62,8 +65,7 @@ class TeamBattleController extends GetxController
 
   Timer? _timer;
 
-  ///测试数据，需删除
-
+  late TeamInfoEntity teamInfoEntity;
   @override
   void onInit() {
     super.onInit();
@@ -87,8 +89,10 @@ class TeamBattleController extends GetxController
       CacheApi.getGameEvent(),
       CacheApi.getCompetitionVenue(),
       CacheApi.getNBAPlayerInfo(),
-      CacheApi.getNBATeamDefine()
+      CacheApi.getNBATeamDefine(),
+      PicksApi.getTeamInfo()
     ]).then((result) {
+      teamInfoEntity = result[4];
       _timer?.cancel();
       _timer = Timer(const Duration(seconds: 5),timeout);
       subscription = WSInstance.teamMatch().listen((result) {

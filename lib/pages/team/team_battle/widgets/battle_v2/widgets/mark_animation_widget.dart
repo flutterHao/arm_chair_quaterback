@@ -28,7 +28,7 @@ class MarkAnimationWidget extends StatefulWidget {
 class _MarkAnimationWidgetState extends State<MarkAnimationWidget>
     with TickerProviderStateMixin {
   late EasyAnimationController jumpAnimationController;
-  late EasyAnimationController rotateAnimationController;
+  // late EasyAnimationController rotateAnimationController;
 
   @override
   void initState() {
@@ -36,12 +36,12 @@ class _MarkAnimationWidgetState extends State<MarkAnimationWidget>
     jumpAnimationController = EasyAnimationController(
         vsync: this, begin: 0.0, end: widget.end, duration: widget.duration,curve: Curves.easeInOut);
     jumpAnimationController.controller.repeat(reverse: true);
-    rotateAnimationController = EasyAnimationController(
-        vsync: this,
-        begin: 0.0,
-        end: -2 * pi,
-        duration: const Duration(milliseconds: 1000));
-    rotateAnimationController.controller.repeat(reverse: false);
+    // rotateAnimationController = EasyAnimationController(
+    //     vsync: this,
+    //     begin: 0.0,
+    //     end: -2 * pi,
+    //     duration: const Duration(milliseconds: 1000));
+    // rotateAnimationController.controller.repeat(reverse: false);
   }
 
   @override
@@ -53,22 +53,22 @@ class _MarkAnimationWidgetState extends State<MarkAnimationWidget>
           padding: EdgeInsets.only(bottom: bottom),
           child: widget.child);
       // 跳跃+旋转
-      return Transform(
-        alignment: Alignment.center,
-        transform: Matrix4.identity()
-          ..rotateY(rotateAnimationController.value.value),
-        child: Container(
-            height: 30,
-            padding: EdgeInsets.only(bottom: bottom),
-            child: widget.child),
-      );
+      // return Transform(
+      //   alignment: Alignment.center,
+      //   transform: Matrix4.identity()
+      //     ..rotateY(rotateAnimationController.value.value),
+      //   child: Container(
+      //       height: 30,
+      //       padding: EdgeInsets.only(bottom: bottom),
+      //       child: widget.child),
+      // );
     });
   }
 
   @override
   void dispose() {
     jumpAnimationController.dispose();
-    rotateAnimationController.dispose();
+    // rotateAnimationController.dispose();
     super.dispose();
   }
 }

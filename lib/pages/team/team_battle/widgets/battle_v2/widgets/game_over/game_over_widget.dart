@@ -5,8 +5,11 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/money_income_animation.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/common/widgets/heartbeat.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_court.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_leader/game_leader_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_over/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/live_text_widget.dart';
@@ -31,46 +34,51 @@ class GameOverWidget extends GetView<GameOverController> {
     return GetBuilder<GameOverController>(
         init: GameOverController(),
         builder: (logic) {
-          return SingleChildScrollView(
-            child: Column(
-              children: [
-                // 中间
-                SizedBox(
-                  height: 219.w,
-                  width: double.infinity,
-                  child: controller.isLeftWin()
-                      ? _buildLeftWinWidget()
-                      : _buildRightWinWidget(),
-                ),
-                //底部
-                Expanded(
-                    child: ClipRRect(
-                  borderRadius:
-                      BorderRadius.vertical(top: Radius.circular(9.w)),
-                  child: Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        color: AppColors.cF2F2F2,
-                        borderRadius:
-                            BorderRadius.vertical(top: Radius.circular(9.w))),
-                    child: Stack(
-                      children: [
-                        Column(
+          return Container(
+            color: AppColors.cF2F2F2,
+            child: SingleChildScrollView(
+              child: Stack(
+                children: [
+                  Column(
+                    children: [
+                      // 中间
+                      Stack(
+                        children: [
+                          /// 背景球场
+                          const GameCourtWidget(
+                            needCountDown: false,
+                          ),
+                          SizedBox(
+                            height: 219.w,
+                            width: double.infinity,
+                            child: controller.isLeftWin()
+                                ? _buildLeftWinWidget(context)
+                                : _buildRightWinWidget(context),
+                          ),
+                        ],
+                      ),
+                      //底部
+                      Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            color: AppColors.cF2F2F2,
+                            borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(9.w))),
+                        child: Column(
                           children: [
                             Obx(() {
                               if (controller.onMvpAnimationEndObs.value) {
                                 /// 动画结束后真实显示的视图
                                 return _buildMvpWidget();
                               }
-                        
+
                               ///动画占位视图
                               return AnimatedContainer(
                                   height: controller.mvpObs.value ? 165.w : 0,
                                   margin: EdgeInsets.only(
                                       bottom:
                                           controller.mvpObs.value ? 9.w : 0),
-                                  duration:
-                                      const Duration(milliseconds: 300));
+                                  duration: const Duration(milliseconds: 300));
                             }),
                             GetBuilder<TeamBattleV2Controller>(
                                 id: TeamBattleV2Controller.idQuarterScore,
@@ -96,28 +104,28 @@ class GameOverWidget extends GetView<GameOverController> {
                             9.vGap
                           ],
                         ),
-                        Obx(() {
-                          if (controller.onMvpAnimationEndObs.value) {
-                            ///动画结束后视图
-                            return const SizedBox.shrink();
-                          }
-            
-                          /// 位移动画视图
-                          return AnimatedPositioned(
-                              top: controller.mvpObs.value ? 0 : 812.h,
-                              left: 0,
-                              right: 0,
-                              duration: const Duration(milliseconds: 300),
-                              onEnd: () {
-                                controller.onMvpAnimationEndObs.value = true;
-                              },
-                              child: _buildMvpWidget());
-                        }),
-                      ],
-                    ),
+                      )
+                    ],
                   ),
-                ))
-              ],
+                  Obx(() {
+                    if (controller.onMvpAnimationEndObs.value) {
+                      ///动画结束后视图
+                      return const SizedBox.shrink();
+                    }
+
+                    /// 位移动画视图
+                    return AnimatedPositioned(
+                        top: controller.mvpObs.value ? 219.w : 812.h,
+                        left: 0,
+                        right: 0,
+                        duration: const Duration(milliseconds: 300),
+                        onEnd: () {
+                          controller.onMvpAnimationEndObs.value = true;
+                        },
+                        child: _buildMvpWidget());
+                  }),
+                ],
+              ),
             ),
           );
         });
@@ -145,6 +153,14 @@ class GameOverWidget extends GetView<GameOverController> {
         return parent(
           child: Stack(
             children: [
+              Positioned(
+                  top: 24.w,
+                  right: 21.w,
+                  child: IconWidget(
+                    iconWidth: 14.w,
+                    icon: Assets.commonUiCommonIconSystemInfo,
+                    iconColor: AppColors.c000000,
+                  )),
               Positioned(
                 bottom: -12.w,
                 right: -8.w,
@@ -296,6 +312,14 @@ class GameOverWidget extends GetView<GameOverController> {
         child: Stack(
           children: [
             Positioned(
+                top: 24.w,
+                left: 21.w,
+                child: IconWidget(
+                  iconWidth: 14.w,
+                  icon: Assets.commonUiCommonIconSystemInfo,
+                  iconColor: AppColors.c000000,
+                )),
+            Positioned(
               bottom: -12.w,
               left: -20.w,
               child: Text(
@@ -444,66 +468,171 @@ class GameOverWidget extends GetView<GameOverController> {
     });
   }
 
-  Stack _buildLeftWinWidget() {
+  Stack _buildLeftWinWidget(BuildContext context) {
     return Stack(
       alignment: Alignment.center,
       children: [
-        ///旗帜
-        Obx(() {
-          return AnimatedPositioned(
-              top: controller.startObs.value ? -10.w : -208.w,
-              left: 19.w,
-              duration: const Duration(milliseconds: 300),
-              onEnd: () {
-                print('AnimatedPositioned---onEnd----');
-                controller.giftObs.value = !controller.giftObs.value;
-              },
-              child: IconWidget(
-                iconHeight: 208.w,
-                fit: BoxFit.fitHeight,
-                icon: Assets.managerUiManagerFlag,
-                iconWidth: 131.w,
-              ));
-        }),
+        ///winner旗帜
+        winnerBg(true),
 
         ///WINNER：文字
-        Positioned(
-          top: 15.w,
-          left: 19.w,
-          child: Container(
-            width: 131.w,
-            alignment: Alignment.topCenter,
-            child: Column(
-              children: [
-                Text(
-                  "WINNER",
-                  style: 30.w7(
-                      color: AppColors.cFFFFFF,
-                      height: 1,
-                      fontFamily: FontFamily.fOswaldBold),
-                ),
-                10.vGap,
-                Container(
-                  width: 15.w,
-                  height: 2.w,
-                  color: AppColors.cFF7954,
-                )
-              ],
-            ),
-          ),
-        ),
+        winnerText(true),
+
+        /// winner奖杯
+        winnerCups(true),
 
         /// chest
-        Positioned(
-            left: 36.w,
-            child: Obx(() {
-              return AnimatedOpacity(
-                duration: const Duration(milliseconds: 300),
-                opacity: controller.opacityObs.value ? 1 : 0,
-                onEnd: _onHeaderAnimationEnd,
-                child: Container(
+        giftBox(true),
+
+        /// 奖励箱子
+        gift(true),
+
+        ///loser旗帜
+        loserBg(true),
+
+        /// LOSER
+        loserText(true),
+
+        /// loser 奖杯
+        loserCups(true),
+
+        /// 钞票数量
+        moneyCount(true),
+
+        /// 钞票
+        moneyAnimation(context, true),
+      ],
+    );
+  }
+
+  Positioned moneyCount(bool isLeft) {
+    return Positioned(
+        top: 133.w,
+        left: isLeft ? 36.w : null,
+        right: !isLeft ? 36.w : null,
+        child: Obx(() {
+          return AnimatedOpacity(
+            duration: const Duration(milliseconds: 300),
+            opacity: controller.moneyOpacityObs.value ? 1 : 0,
+            onEnd: () {
+              controller.moneyIncomeObs.value = true;
+            },
+            child: Container(
+              width: 96.w,
+              height: 31.w,
+              alignment: Alignment.centerRight,
+              padding: EdgeInsets.only(right: 17.w),
+              decoration: BoxDecoration(
+                  color: AppColors.c000000,
+                  border: Border.all(color: AppColors.c333333, width: 1.w),
+                  borderRadius: BorderRadius.circular(6.w)),
+              child: Text(
+                Utils.formatMoney(controller.getMoneyCount()),
+                style: 14.w5(
+                    color: AppColors.cFFFFFF,
+                    height: 1,
+                    fontFamily: FontFamily.fOswaldMedium),
+              ),
+            ),
+          );
+        }));
+  }
+
+  Positioned loserText(bool isLeft) {
+    return Positioned(
+        top: 22.w,
+        right: isLeft ? 19.w : null,
+        left: !isLeft ? 19.w : null,
+        child: Container(
+          width: 131.w,
+          alignment: Alignment.topCenter,
+          child: Text(
+            "LOSER",
+            style: 26.w7(
+                color: AppColors.c666666,
+                height: 1,
+                fontFamily: FontFamily.fOswaldBold),
+          ),
+        ));
+  }
+
+  Obx gift(bool isLeft) {
+    return Obx(() {
+      return AnimatedPositioned(
+          top: controller.giftObs.value ? 100.w : null,
+          left: isLeft
+              ? controller.giftObs.value
+                  ? 44.w
+                  : 155.w
+              : null,
+          right: !isLeft
+              ? controller.giftObs.value
+                  ? 102.w
+                  : 155.w
+              : null,
+          duration: const Duration(milliseconds: 500),
+          onEnd: () {
+            print('giftObs===onEnd---');
+            controller.opacityObs.value = !controller.opacityObs.value;
+          },
+          child: InkWell(
+            onTap: () {
+              // controller.startObs.value = false;
+              // controller.giftObs.value = false;
+              // controller.opacityObs.value = false;
+              // controller.mvpObs.value = false;
+              // controller.onMvpAnimationEndObs.value = false;
+              // Future.delayed(const Duration(milliseconds: 500), () {
+              //   controller.startObs.value = true;
+              // });
+            },
+            child: AnimatedScale(
+              scale: controller.giftObs.value
+                  ? 1
+                  : controller.giftScaleObs.value
+                      ? 1.5
+                      : 1,
+              duration: const Duration(milliseconds: 500),
+              onEnd: () {
+                controller.giftObs.value = true;
+              },
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 500),
+                width: controller.giftObs.value ? 24.w : 63.w,
+                child: Center(
+                  child: Opacity(
+                    opacity: controller.isFull() ? 0.5 : 1,
+                    child: IconWidget(
+                      iconWidth: 63.w,
+                      icon: Assets.managerUiManagerGift03,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ));
+    });
+  }
+
+  Positioned giftBox(bool isLeft) {
+    return Positioned(
+        top: 96.w,
+        right: !isLeft ? 28.w : null,
+        left: isLeft ? 36.w : null,
+        child: Obx(() {
+          return AnimatedOpacity(
+            duration: const Duration(milliseconds: 300),
+            opacity: controller.opacityObs.value ? 1 : 0,
+            onEnd: () {
+              controller.moneyOpacityObs.value = true;
+            },
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Container(
                   width: 96.w,
                   height: 31.w,
+                  margin: EdgeInsets.only(right: 8.w),
                   alignment: Alignment.centerRight,
                   padding: EdgeInsets.only(right: 17.w),
                   decoration: BoxDecoration(
@@ -511,180 +640,257 @@ class GameOverWidget extends GetView<GameOverController> {
                       border: Border.all(color: AppColors.c333333, width: 1.w),
                       borderRadius: BorderRadius.circular(6.w)),
                   child: Text(
-                    "CHEST",
+                    controller.isFull() ? "FULL" : "CHEST",
                     style: 14.w5(
-                        color: AppColors.cFFFFFF,
+                        color: controller.isFull()
+                            ? AppColors.c666666
+                            : AppColors.cFFFFFF,
                         height: 1,
                         fontFamily: FontFamily.fOswaldMedium),
                   ),
                 ),
-              );
-            })),
-
-        /// 奖励箱子
-        Obx(() {
-          return AnimatedPositioned(
-              left: controller.giftObs.value ? 43.w : 155.w,
-              duration: const Duration(milliseconds: 300),
-              onEnd: () {
-                print('giftObs===onEnd---');
-                controller.opacityObs.value = !controller.opacityObs.value;
-              },
-              child: InkWell(
-                onTap: () {
-                  // controller.startObs.value = !controller.startObs.value;
-                },
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  width: controller.giftObs.value ? 24.w : 63.w,
-                  child: Center(
+                if (controller.isFull())
+                  Positioned(
+                    right: 0,
                     child: IconWidget(
-                        iconWidth: 63.w, icon: Assets.managerUiManagerGift03),
-                  ),
-                ),
-              ));
-        }),
+                        iconWidth: 16.w,
+                        icon: Assets.commonUiCommonIconSystemDanger01),
+                  )
+              ],
+            ),
+          );
+        }));
+  }
 
-        /// LOSER
-        Positioned(
-            top: 19.w,
-            right: 19.w,
+  Positioned winnerCups(bool isLeft) {
+    return Positioned(
+        top: 63.w,
+        left: isLeft ? 19.w : null,
+        right: !isLeft ? 19.w : null,
+        child: Obx(() {
+          if (controller.cup.value <= -1) {
+            return const SizedBox.shrink();
+          }
+          return HeartbeatWidget(
             child: Container(
               width: 131.w,
               alignment: Alignment.topCenter,
-              child: Text(
-                "LOSER",
-                style: 26.w7(
-                    color: AppColors.cB3B3B3,
-                    height: 1,
-                    fontFamily: FontFamily.fOswaldBold),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Stack(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(right: 2.w),
+                        child: IconWidget(
+                            iconWidth: 23.w,
+                            icon: Assets.managerUiManagerIconCurrency04),
+                      ),
+                      Positioned(
+                        right: 0,
+                        bottom: 1.w,
+                        child: IconWidget(
+                          iconWidth: 8.w,
+                          icon: Assets.managerUiManagerTacticsArrow,
+                          iconColor: AppColors.c40F093,
+                        ),
+                      ),
+                    ],
+                  ),
+                  3.hGap,
+                  Text(
+                    "+${controller.cup.value}",
+                    style: 16.w5(
+                        color: AppColors.cF2F2F2,
+                        height: 1,
+                        fontFamily: FontFamily.fOswaldMedium),
+                  )
+                ],
               ),
-            ))
-      ],
-    );
+            ),
+          );
+        }));
+  }
+
+  Obx winnerBg(bool isLeft) {
+    return Obx(() {
+      return AnimatedPositioned(
+          top: controller.startObs.value ? -10.w : -208.w,
+          left: isLeft ? 19.w : null,
+          right: !isLeft ? 19.w : null,
+          duration: const Duration(milliseconds: 300),
+          onEnd: () {
+            print('AnimatedPositioned---onEnd----');
+            Future.delayed(const Duration(milliseconds: 500), () {
+              controller.initCup();
+            });
+          },
+          child: IconWidget(
+            iconHeight: 208.w,
+            fit: BoxFit.fitHeight,
+            icon: Assets.managerUiManagerEndingWin02,
+            iconWidth: 131.w,
+          ));
+    });
   }
 
   void _onHeaderAnimationEnd() {
     controller.mvpObs.value = true;
   }
 
-  Stack _buildRightWinWidget() {
+  Stack _buildRightWinWidget(BuildContext context) {
     return Stack(
       alignment: Alignment.center,
       children: [
-        ///旗帜
-        Obx(() {
-          return AnimatedPositioned(
-              top: controller.startObs.value ? -10.w : -208.w,
-              right: 19.w,
-              duration: const Duration(milliseconds: 300),
-              onEnd: () {
-                print('AnimatedPosi         tioned---onEnd----');
-                controller.giftObs.value = !controller.giftObs.value;
-              },
-              child: IconWidget(
-                iconHeight: 208.w,
-                fit: BoxFit.fitHeight,
-                icon: Assets.managerUiManagerFlag,
-                iconWidth: 131.w,
-              ));
-        }),
+        ///winner旗帜
+        winnerBg(false),
 
         ///WINNER：文字
-        Positioned(
-          top: 15.w,
-          right: 19.w,
-          child: Container(
-            width: 131.w,
-            alignment: Alignment.topCenter,
-            child: Column(
-              children: [
-                Text(
-                  "WINNER",
-                  style: 30.w7(
-                      color: AppColors.cFFFFFF,
-                      height: 1,
-                      fontFamily: FontFamily.fOswaldBold),
-                ),
-                10.vGap,
-                Container(
-                  width: 15.w,
-                  height: 2.w,
-                  color: AppColors.cFF7954,
-                )
-              ],
-            ),
-          ),
-        ),
+        winnerText(false),
+
+        /// winner奖杯
+        winnerCups(false),
 
         /// chest
-        Positioned(
-            right: 36.w,
-            child: Obx(() {
-              return AnimatedOpacity(
-                duration: const Duration(milliseconds: 300),
-                opacity: controller.opacityObs.value ? 1 : 0,
-                onEnd: _onHeaderAnimationEnd,
-                child: Container(
-                  width: 96.w,
-                  height: 31.w,
-                  alignment: Alignment.centerRight,
-                  padding: EdgeInsets.only(right: 17.w),
-                  decoration: BoxDecoration(
-                      color: AppColors.c000000,
-                      border: Border.all(color: AppColors.c333333, width: 1.w),
-                      borderRadius: BorderRadius.circular(6.w)),
-                  child: Text(
-                    "CHEST",
-                    style: 14.w5(
-                        color: AppColors.cFFFFFF,
-                        height: 1,
-                        fontFamily: FontFamily.fOswaldMedium),
-                  ),
-                ),
-              );
-            })),
+        giftBox(false),
 
         /// 奖励箱子
-        Obx(() {
-          return AnimatedPositioned(
-              right: controller.giftObs.value ? 102.w : 155.w,
-              duration: const Duration(milliseconds: 300),
-              onEnd: () {
-                print('giftObs===onEnd---');
-                controller.opacityObs.value = !controller.opacityObs.value;
-              },
-              child: InkWell(
-                onTap: () {
-                  // controller.startObs.value = !controller.startObs.value;
-                },
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  width: controller.giftObs.value ? 24.w : 63.w,
-                  child: Center(
-                    child: IconWidget(
-                        iconWidth: 63.w, icon: Assets.managerUiManagerGift03),
-                  ),
-                ),
-              ));
-        }),
+        gift(false),
+
+        ///loser旗帜
+        loserBg(false),
 
         /// LOSER
-        Positioned(
-            top: 19.w,
-            left: 19.w,
+        loserText(false),
+
+        /// loser 奖杯
+        loserCups(false),
+
+        /// 钞票数量
+        moneyCount(false),
+
+        /// 钞票
+        moneyAnimation(context, false),
+      ],
+    );
+  }
+
+  Positioned moneyAnimation(BuildContext context, bool isLeft) {
+    return Positioned(child: Obx(() {
+      if (!controller.moneyIncomeObs.value) {
+        return const SizedBox.shrink();
+      }
+      return MoneyIncomeAnimation(
+        randRect: Rect.fromLTWH((MediaQuery.of(context).size.width - 100) / 2,
+            (219.w - 100) / 2, 100, 100),
+        childSize: Size(28.w, 22.w),
+        targetPosition: Offset(!isLeft ? 250.w : 43.w, 137.w),
+        childWidget: IconWidget(
+            iconWidth: 28.w,
+            fit: BoxFit.fitWidth,
+            iconHeight: 22.w,
+            icon: Assets.commonUiCommonProp05),
+        onEnd: _onHeaderAnimationEnd,
+      );
+    }));
+  }
+
+  Positioned loserCups(bool isLeft) {
+    return Positioned(
+        top: 63.w,
+        right: isLeft ? 19.w : null,
+        left: !isLeft ? 19.w : null,
+        child: Obx(() {
+          if (controller.cup.value <= -1) {
+            return const SizedBox.shrink();
+          }
+          return HeartbeatWidget(
+            onEnd: () {
+              if (controller.cup.value == controller.cupNum) {
+                Future.delayed(const Duration(milliseconds: 500), () {
+                  controller.giftScaleObs.value = true;
+                });
+                return;
+              }
+              controller.cup.value = controller.cup.value + 1;
+            },
             child: Container(
               width: 131.w,
               alignment: Alignment.topCenter,
-              child: Text(
-                "LOSER",
-                style: 26.w7(
-                    color: AppColors.cB3B3B3,
-                    height: 1,
-                    fontFamily: FontFamily.fOswaldBold),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Stack(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(right: 2.w),
+                        child: IconWidget(
+                            iconWidth: 23.w,
+                            icon: Assets.managerUiManagerIconCurrency04),
+                      ),
+                      Positioned(
+                        right: 0,
+                        bottom: 1.w,
+                        child: IconWidget(
+                          iconWidth: 8.w,
+                          icon: Assets.managerUiManagerTacticsArrow,
+                          iconColor: AppColors.cC01223,
+                          rotateAngle: 180,
+                        ),
+                      ),
+                    ],
+                  ),
+                  3.hGap,
+                  Text(
+                    "-${controller.cup.value}",
+                    style: 16.w5(
+                        color: AppColors.cF2F2F2,
+                        height: 1,
+                        fontFamily: FontFamily.fOswaldMedium),
+                  )
+                ],
               ),
-            ))
-      ],
+            ),
+          );
+        }));
+  }
+
+  Positioned winnerText(bool isLeft) {
+    return Positioned(
+      top: 22.w,
+      right: !isLeft ? 19.w : null,
+      left: isLeft ? 19.w : null,
+      child: Container(
+        width: 131.w,
+        alignment: Alignment.topCenter,
+        child: Column(
+          children: [
+            Text(
+              "WINNER",
+              style: 30.w7(
+                  color: AppColors.cC01223,
+                  height: 1,
+                  fontFamily: FontFamily.fOswaldBold),
+            ),
+          ],
+        ),
+      ),
     );
+  }
+
+  Obx loserBg(bool isLeft) {
+    return Obx(() {
+      return AnimatedPositioned(
+          top: controller.startObs.value ? -10.w : -208.w,
+          right: isLeft ? 19.w : null,
+          left: !isLeft ? 19.w : null,
+          duration: const Duration(milliseconds: 300),
+          child: IconWidget(
+            iconHeight: 193.w,
+            fit: BoxFit.fitHeight,
+            icon: Assets.managerUiManagerEndingLose01,
+            iconWidth: 131.w,
+          ));
+    });
   }
 }

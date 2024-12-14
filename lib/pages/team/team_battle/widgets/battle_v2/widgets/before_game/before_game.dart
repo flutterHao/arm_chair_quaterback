@@ -9,7 +9,7 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/support_percent_progress_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/widgets/heartbeat_number.dart';
+import 'package:arm_chair_quaterback/common/widgets/heartbeat.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/before_game/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_court.dart';
@@ -31,9 +31,10 @@ import 'package:get/get.dart';
 ///created at 2024/12/12/17:21
 
 class BeforeGameWidget extends GetView<BeforeGameController> {
-  const BeforeGameWidget(this.teamBattleController, this.teamBattleV2Controller,
+  const BeforeGameWidget(this.header,this.teamBattleController, this.teamBattleV2Controller,
       {super.key});
 
+  final Widget header;
   final TeamBattleController teamBattleController;
 
   final TeamBattleV2Controller teamBattleV2Controller;
@@ -47,7 +48,7 @@ class BeforeGameWidget extends GetView<BeforeGameController> {
             width: double.infinity,
             child: Stack(
               children: [
-                GameHeaderWidget(teamBattleController),
+                header,
                 Obx(() {
                   return Positioned(
                       top: 101.w,
