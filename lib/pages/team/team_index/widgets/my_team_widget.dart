@@ -214,6 +214,7 @@ class MyTeamWidget extends StatelessWidget {
 class PlayerCardWidget extends GetView<TeamController> {
   // ignore: prefer_const_constructors_in_immutables
   PlayerCardWidget({super.key, required this.position});
+
   final int position;
 
   @override
@@ -228,6 +229,7 @@ class PlayerCardWidget extends GetView<TeamController> {
           playerId: player.playerId,
           score: Utils.getPlayBaseInfo(player.playerId).playerScore,
           isMyPlayer: true,
+          onTap: () => Get.toNamed(RouteNames.teamTeamUpgrade),
         ),
         5.vGap,
         Text(

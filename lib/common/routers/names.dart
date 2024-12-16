@@ -35,6 +35,8 @@ class RouteNames {
   static const teamMemberPage = "/team_detail";
   static const teamBeautyDetail = "/beauty_detail";
   static const teamMenber = "/teamMenberView";
+  static const teamTeamUpgrade = '/team_team_upgrade';
+
   //mine
   static const mineMineAccount = '/mine_mine_account';
   static const mineMineInfo = '/mine_mine_info';

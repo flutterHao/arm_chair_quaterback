@@ -21,6 +21,7 @@ import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_detail_page.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/view.dart';
+import 'package:arm_chair_quaterback/pages/team/team_upgrade/view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -84,6 +85,11 @@ class AppPages {
       opaque: false,
       name: RouteNames.teamMemberPage,
       page: () => const TeamMenberView(),
+    ),
+    GetPage(
+      opaque: false,
+      name: RouteNames.teamTeamUpgrade,
+      page: () => const TeamUpgradePage(),
     ),
     // GetPage(
     //   opaque: false,

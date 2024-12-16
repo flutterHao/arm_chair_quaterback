@@ -21,25 +21,31 @@ import 'package:get/get.dart';
 import '../routers/names.dart';
 
 class PlayerCard extends StatelessWidget {
-  const PlayerCard(
-      {super.key,
-      required this.playerId,
-      this.score,
-      this.bgColor,
-      this.iconBgColor,
-      required this.isMyPlayer});
+  const PlayerCard({
+    super.key,
+    required this.playerId,
+    this.score,
+    this.bgColor,
+    this.iconBgColor,
+    required this.isMyPlayer,
+    this.onTap,
+  });
+
   final int playerId;
   final int? score;
   final Color? bgColor;
   final Color? iconBgColor;
   final bool isMyPlayer;
+  final Function? onTap;
 
   @override
   Widget build(BuildContext context) {
     return MtInkwell(
-      onTap: () => Get.toNamed(RouteNames.picksPlayerDetail,
-          arguments:
-              PlayerDetailPageArguments(playerId, isMyPlayer: isMyPlayer)),
+      onTap: () =>
+          onTap?.call() ??
+          Get.toNamed(RouteNames.picksPlayerDetail,
+              arguments:
+                  PlayerDetailPageArguments(playerId, isMyPlayer: isMyPlayer)),
       child: Container(
         width: 74.w,
         height: 93.w,
