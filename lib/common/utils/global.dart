@@ -9,6 +9,7 @@ import 'package:arm_chair_quaterback/common/services/services.dart';
 import 'package:arm_chair_quaterback/common/store/store.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:spine_flutter/spine_flutter.dart';
 
 /// 全局静态数据
 class Global {
@@ -35,6 +36,8 @@ class Global {
 
     setSystemUi();
     Loading();
+
+    await initSpineFlutter(enableMemoryDebugging: kDebugMode);
 
     await initFirebaseCrashlytics();
 

@@ -2,6 +2,7 @@
 class Assets {
   Assets._();
 
+  static const String assetsSpineNv1 = 'assets/spine/nv_1.atlas';
   static const String commonUiCommonArrow = 'assets/images/Common/ui_common_arrow.png';
   static const String commonUiCommonIconCombat = 'assets/images/Common/ui_common_icon_combat.png';
   static const String commonUiCommonIconCurrency02 = 'assets/images/Common/ui_common_icon_currency_02.png';
@@ -236,6 +237,7 @@ class Assets {
   static const String playerUiLight01 = 'assets/images/player/ui_light_01.png';
   static const String playerUiStateBest = 'assets/images/player/ui_state_best.png';
   static const String scoresUiScoresIconSystemRank = 'assets/images/scores/ui_scores_icon_system_rank.png';
+  static const String spineNv1 = 'assets/spine/nv_1.png';
   static const String teamUICommonGrain = 'assets/images/team/UI_common_grain.png';
   static const String teamUICommonTCBg3 = 'assets/images/team/UI_common_TC_bg3.png';
   static const String teamUiBattleNews = 'assets/images/team/ui_battle_news.png';

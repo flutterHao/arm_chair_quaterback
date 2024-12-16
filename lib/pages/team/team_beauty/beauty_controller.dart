@@ -8,6 +8,8 @@ import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:get/get.dart';
 import 'dart:async';
 
+import 'package:spine_flutter/spine_widget.dart';
+
 class BeautyController extends GetxController {
   RxInt beautyIndex = 0.obs;
   List beautyList = [
@@ -33,6 +35,23 @@ class BeautyController extends GetxController {
   var box2Timer = 0.obs;
   var isCountdownActive = false.obs; // 倒计时是否激活
   Timer? boxTimer;
+
+  late SpineWidgetController spineWidgetController;
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    spineWidgetController = SpineWidgetController(onInitialized: (controller) {
+      // Set the default mixing time between animations
+      controller.animationState.getData().setDefaultMix(0.2);
+      // Set the portal animation on track 0
+      controller.animationState
+          .setAnimationByName(0, "animation", true);
+      // Queue the run animation after the portal animation
+      // controller.animationState.addAnimationByName(0, "run", true, 0);
+    });
+  }
 
   void onClothingTap(int index) {
     clothingIndex = index;

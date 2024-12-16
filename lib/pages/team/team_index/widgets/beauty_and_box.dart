@@ -13,6 +13,7 @@ import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/widgets
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:spine_flutter/spine_widget.dart';
 
 /*
  * @Description: 换人+宝箱
@@ -83,14 +84,29 @@ class BeautyAndBoxView extends StatelessWidget {
                   right: 0,
                   child: Obx(() {
                     final beautyCtrl = Get.find<BeautyController>();
+                    beautyCtrl.beautyList[beautyCtrl.beautyIndex.value];
                     return InkWell(
                       onTap: () => Get.toNamed(RouteNames.teamBeautyPage,
                           id: GlobalNestedKey.TEAM),
-                      child: Image.asset(
-                          beautyCtrl.beautyList[beautyCtrl.beautyIndex.value],
-                          fit: BoxFit.fitHeight,
-                          height: 546.w,
-                          alignment: Alignment.topCenter),
+                      child: beautyCtrl.beautyIndex.value != 0
+                          ? Image.asset(
+                              beautyCtrl
+                                  .beautyList[beautyCtrl.beautyIndex.value],
+                              fit: BoxFit.fitHeight,
+                              height: 546.w,
+                              alignment: Alignment.topCenter)
+                          : SizedBox(
+                              height: 400.w,
+                              child: Center(
+                                child: SpineWidget.fromAsset(
+                                  Assets.assetsSpineNv1,
+                                  "assets/spine/nv_1.json",
+                                  beautyCtrl.spineWidgetController,
+                                  fit: BoxFit.fitHeight,
+                                  alignment: Alignment.topCenter,
+                                ),
+                              ),
+                            ),
                     );
                   }),
                 ),

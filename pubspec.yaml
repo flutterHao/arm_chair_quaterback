@@ -72,6 +72,7 @@ dependencies:
   extended_tabs: ^4.1.0
   quiver: ^3.2.1
   web_socket_channel: ^3.0.1
+  spine_flutter: ^4.2.11
 
 dev_dependencies:
   flutter_test:
@@ -107,6 +108,7 @@ flutter:
     - assets/images/manager/
     - assets/images/Common/
     - assets/images/scores/
+    - assets/spine/
 
 
   # To add assets to your application, add an assets section, like this:
