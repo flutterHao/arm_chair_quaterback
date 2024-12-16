@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lihonghao
  * @Date: 2024-11-06 11:51:15
- * @LastEditTime: 2024-12-13 17:38:01
+ * @LastEditTime: 2024-12-16 19:17:44
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -30,8 +30,8 @@ class _PlayerSrollerViewState extends State<PlayerSrollerView> {
     return GetBuilder<TrainingController>(
         id: "playerList",
         builder: (controller) {
-          var playerList = Get.find<TeamController>().myTeamEntity.teamPlayers;
           var selectPlayers = controller.trainingInfo.selectPlayer;
+
           int count = selectPlayers.length ~/ 2;
           return InkWell(
             onTap: () {
@@ -48,18 +48,26 @@ class _PlayerSrollerViewState extends State<PlayerSrollerView> {
                 itemExtent: 65.w,
                 clipBehavior: Clip.none, // 防止子项超出父容器的边界
                 physics: const NeverScrollableScrollPhysics(), // 禁止手动滚动
-                itemCount: playerList.length * 10,
+                itemCount: controller.playerList.length * 10,
                 itemBuilder: (context, index) {
-                  int current = index % playerList.length;
-                  var item = playerList[current];
+                  int current = index % controller.playerList.length;
+                  var item = controller.playerList[current];
                   return Obx(() {
                     //是否选中
                     // var select = controller.trainingInfo.selectPlayer
                     //     .contains(item.playerId);
                     int scrollerIdx = selectPlayers.indexOf(item.playerId);
-                    bool isSelect = controller.currentPlayerIndex.value <=
-                            (index + count) &&
-                        controller.currentPlayerIndex.value >= (index - count);
+                    bool isSelect;
+                    if (selectPlayers.length % 2 == 0) {
+                      isSelect = controller.currentPlayerIndex.value >
+                              (index - selectPlayers.length) &&
+                          controller.currentPlayerIndex.value <= index;
+                    } else {
+                      isSelect = controller.currentPlayerIndex.value <=
+                              (index + count) &&
+                          controller.currentPlayerIndex.value >=
+                              (index - count);
+                    }
 
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -141,7 +149,7 @@ class _PlayerSrollerViewState extends State<PlayerSrollerView> {
                                     // if (!isSelect &&
                                     //     controller.playerScrollerEnd)
                                     AnimatedOpacity(
-                                      opacity: (!isSelect) ? 1 : 0,
+                                      opacity: isSelect ? 0 : 1,
                                       duration: duration,
                                       child: Container(
                                         width: 55.w,

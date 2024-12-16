@@ -2,21 +2,10 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-14 11:11:48
- * @LastEditTime: 2024-12-12 11:06:27
- */
-/*
- * @Description: 
- * @Author: lihonghao
- * @Date: 2024-11-14 11:11:48
- * @LastEditTime: 2024-11-19 10:05:16
- */
-/*
- * @Description: 
- * @Author: lihonghao
- * @Date: 2024-11-14 11:11:48
- * @LastEditTime: 2024-11-18 18:03:35
+ * @LastEditTime: 2024-12-16 20:57:10
  */
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
+import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
@@ -24,6 +13,7 @@ import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/send_comment_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/index.dart';
+import 'package:arm_chair_quaterback/pages/news/new_list/widgets/news_list_item.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -94,10 +84,34 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                         padding: EdgeInsets.only(bottom: 80.w),
                         physics: const BouncingScrollPhysics(),
                         itemBuilder: (context, index) {
+                          var item = controller.state.detailList[index];
                           return KeyedSubtree(
                             key: index == 0 ? _firstItemKey : null,
-                            child: NewsDetailItem(
-                                item: controller.state.detailList[index]),
+                            child: index == 0
+                                ? NewsDetailItem(
+                                    item: controller.state.detailList[index])
+                                : InkWell(
+                                    onTap: () {
+                                      ///获取评论
+                                      final comCtrl = Get.put(
+                                          CommentController(),
+                                          tag: item.id.toString());
+                                      comCtrl.getReviews(item.id,
+                                          isRefresh: true);
+                                      Get.toNamed(RouteNames.newsDetail2,
+                                          arguments: item);
+                                      CommentController commentController =
+                                          Get.find(tag: item.id.toString());
+                                      item.reviewsList =
+                                          commentController.mainList.value;
+                                      controller.update(["newsDetail"]);
+                                    },
+                                    child: NewsListItem(
+                                      newsDetail:
+                                          controller.state.detailList[index],
+                                      // key: Key(item.id.toString()),
+                                    ),
+                                  ),
                           );
                         },
                         separatorBuilder: (context, index) => Container(

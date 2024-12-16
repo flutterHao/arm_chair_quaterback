@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-06 10:37:49
- * @LastEditTime: 2024-12-12 21:07:12
+ * @LastEditTime: 2024-12-16 11:36:10
  */
 import 'dart:math';
 
@@ -71,7 +71,7 @@ class _PlayerChangerDialogState extends State<PlayerChangerDialog>
                                       item: widget.item!,
                                       isSelect: true,
                                     )
-                                  : const EmptyPlayer(),
+                                  : const EmptyPlayer(showChangeButton: false),
                             ),
                           ),
                         ],
@@ -184,14 +184,14 @@ class _LineUp extends GetView<TeamController> {
 
   @override
   Widget build(BuildContext context) {
-    String p = item.position > 0
-        ? Utils.getPosition(item.position)
-        : Utils.getPlayBaseInfo(item.playerId).position;
+    // String p = Utils.getPosition(item.position);
     var list = controller.myTeamEntity.teamPlayers
         .where((e) => e.position > 0)
         .toList();
     list = list
-        .where((e) => Utils.getPlayBaseInfo(e.playerId).position.contains(p))
+        .where((e) => Utils.getPlayBaseInfo(item.playerId)
+            .position
+            .contains(Utils.getPosition(e.position)))
         .toList();
     list.sort((a, b) => a.position.compareTo(b.position));
     if (list.isEmpty) {

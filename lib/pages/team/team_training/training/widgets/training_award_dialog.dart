@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-02 10:15:35
- * @LastEditTime: 2024-12-14 17:44:10
+ * @LastEditTime: 2024-12-16 18:28:25
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
@@ -29,8 +29,8 @@ class TrainingAwardDialog extends GetView<TrainingController> {
   Widget build(BuildContext context) {
     double top = (75 + 9 + 115 + 47 + 10).w;
     Rx<Offset> offset = Offset((375 - 74).w / 2, top + 78.5.w + 69.w).obs;
-    RxBool isFly = false.obs;
-    Duration duration = 400.milliseconds;
+    // RxBool isFly = false.obs;
+    Duration duration = 300.milliseconds;
     return GetBuilder<TrainingController>(
         id: "training_page",
         builder: (_) {
@@ -53,19 +53,22 @@ class TrainingAwardDialog extends GetView<TrainingController> {
                         // right: 195.5.w - index * 43.w,
                         child: MtInkwell(
                           onTap: () async {
-                            isFly.value = true;
                             offset.value =
                                 Offset(10.w + 143.5.w + index * 43.w, 175.w);
-                            Future.delayed(500.milliseconds, () {
-                              controller.showBuff.value = false;
-                            });
                             controller.changeTacticId =
                                 controller.trainingInfo.buff[index].id;
                             controller.chooseTactic(context);
                           },
-                          child: TacticItem(
-                            buff: controller.trainingInfo.buff[index],
-                          ),
+                          child: Obx(() {
+                            var buff = controller.trainingInfo.buff[index];
+                            return AnimatedScale(
+                              duration: 150.milliseconds,
+                              scale: buff.show.value ? 1.5 : 1,
+                              child: TacticItem(
+                                buff: controller.trainingInfo.buff[index],
+                              ),
+                            );
+                          }),
                         )),
                   Obx(() {
                     return Visibility(
@@ -73,32 +76,40 @@ class TrainingAwardDialog extends GetView<TrainingController> {
                       child: AnimatedPositioned(
                         left: offset.value.dx,
                         top: offset.value.dy,
-                        // offset: offset.value,
                         duration: duration,
                         curve: BezierCurve(0.25, 0.1, 0.25, 1.0),
                         child: AnimatedScale(
                           curve: Curves.easeInOut,
                           alignment: Alignment.topLeft,
                           duration: duration,
-                          scale: !isFly.value ? 1 : 0.5,
+                          scale: !controller.tacticFly.value ? 1 : 0.5,
                           child: MtInkwell(
                               onTap: () {
                                 buff.isSelect.value = true;
-                                controller.tacticId = buff.id;
+                                controller.selectTacticId = buff.id;
                                 controller.changeTacticId = 0;
                                 controller.chooseTactic(context);
                               },
                               child: Container(
                                 decoration: BoxDecoration(
-                                    border: Border.all(
-                                        width: 2.w, color: AppColors.cFF7954),
+                                    border: !controller.tacticFly.value
+                                        ? Border.all(
+                                            width: 2.w,
+                                            color: AppColors.cFF7954)
+                                        : null,
                                     borderRadius: BorderRadius.circular(8.w)),
-                                child: TacticCard(
-                                  num: buff.face,
-                                  color: buff.color,
-                                  width: 74.w,
-                                  buff: buff,
-                                ),
+                                child: !controller.tacticFly.value
+                                    ? TacticCard(
+                                        num: buff.face,
+                                        color: buff.color,
+                                        width: 74.w,
+                                        buff: buff,
+                                      )
+                                    : SmallTacticCard(
+                                        num: buff.face,
+                                        color: buff.color,
+                                        width: 74.w,
+                                      ),
                               )),
                         ),
                       ),

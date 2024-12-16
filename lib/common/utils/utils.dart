@@ -62,15 +62,15 @@ class Utils {
   }
 
   static String getStatusUrl(id) {
-    if (id == 101) {
+    if (id == 106) {
       return Assets.commonUiCommonPlayerState06;
-    } else if (id == 102) {
-      return Assets.commonUiCommonPlayerState01;
-    } else if (id == 103) {
-      return Assets.commonUiCommonPlayerState02;
-    } else if (id == 104) {
-      return Assets.commonUiCommonPlayerState3;
     } else if (id == 105) {
+      return Assets.commonUiCommonPlayerState01;
+    } else if (id == 104) {
+      return Assets.commonUiCommonPlayerState02;
+    } else if (id == 103) {
+      return Assets.commonUiCommonPlayerState3;
+    } else if (id == 102) {
       return Assets.commonUiCommonPlayerState04;
     }
     return Assets.commonUiCommonPlayerState05;

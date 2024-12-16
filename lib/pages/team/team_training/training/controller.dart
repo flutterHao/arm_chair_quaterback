@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/entities/tatics_combine_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/train_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/train_task_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
@@ -93,7 +94,9 @@ class TrainingController extends GetxController
   late Animation<double> colorAnimation;
 
   final List<int> propList = [1, 2, 3, 4, 5];
-  final List<int> statusList = [104, 103, 102, 101];
+
+  // final List<int> statusList = [106, 105, 104, 103, 102, 101];
+  final List<int> statusList = [101, 102, 103, 104, 105, 106];
 
   //球员滚动
   Timer? _timer;
@@ -106,11 +109,12 @@ class TrainingController extends GetxController
   // Animation<double>
   bool playerScrollerEnd = false;
   RxInt currentPlayerIndex = 3.obs;
+  List<TeamPlayerInfoEntity> playerList = [];
 
   ///战术卡牌
   RxBool showChooseDialog = false.obs;
   RxBool isChange = false.obs;
-  int tacticId = 0;
+  int selectTacticId = 0;
   int changeTacticId = 0;
   List<TrainingInfoBuff> chooseTacticList = [];
   late AnimationController shakeController;
@@ -130,6 +134,7 @@ class TrainingController extends GetxController
   String tacticType = "";
   RxBool showTacticColor = false.obs;
   List<TaticsCombineEntity> buffValueConfigList = [];
+  RxBool tacticFly = false.obs;
 
   //任务
   RxInt taskValue = 0.obs;
@@ -418,11 +423,11 @@ class TrainingController extends GetxController
   }
 
   void chooseTactic(BuildContext context) async {
-    if (tacticId == 0) return;
-    if (trainingInfo.buff.length >= 5) {
+    if (selectTacticId == 0) return;
+    if (trainingInfo.buff.length == 5) {
       ///如果卡槽有这个直接添加
       TrainingInfoBuff buff =
-          chooseTacticList.where((e) => e.id == tacticId).first;
+          chooseTacticList.where((e) => e.id == selectTacticId).first;
       if (trainingInfo.buff
           .where((e) => e.color == buff.color && e.face == buff.face)
           .isNotEmpty) {
@@ -436,7 +441,7 @@ class TrainingController extends GetxController
           await chooseEnd(context, 0);
           return;
         }
-        changeTacticId = tacticId;
+        changeTacticId = myBuff.id;
       } else if (changeTacticId == 0) {
         if (!isChange.value) {
           shakeController.forward();
@@ -454,14 +459,21 @@ class TrainingController extends GetxController
     }
     int type = 1; //1替换,0直接添加
     if (changeTacticId != 0) {
+      //替换
       for (int i = 0; i < trainingInfo.buff.length; i++) {
         if (trainingInfo.buff[i].id == changeTacticId) {
           for (int j = 0; j < chooseTacticList.length; j++) {
-            if (tacticId == chooseTacticList[j].id) {
+            if (selectTacticId == chooseTacticList[j].id) {
               trainingInfo.buff[i] = chooseTacticList[j];
-              // double x = 10.w + 143.5.w + i * 43.w;
-              // chooseTacticList[j].offset.value = Offset(x, 45.w + 84.w);
+              double x = 10.w + 143.5.w + i * 43.w;
+              double y = 45.w + 84.w + 4.w;
+              chooseTacticList[j].offset.value = Offset(x, y);
               type = 0;
+              Future.delayed(const Duration(milliseconds: 300), () async {
+                trainingInfo.buff[i].show.value = true;
+                await Future.delayed(const Duration(milliseconds: 300));
+                trainingInfo.buff[i].show.value = false;
+              });
             }
           }
         }
@@ -469,25 +481,26 @@ class TrainingController extends GetxController
     } else {
       ///直接添加
       for (int i = 0; i < chooseTacticList.length; i++) {
-        if (tacticId == chooseTacticList[i].id) {
-          trainingInfo.buff.add(chooseTacticList[i]);
+        if (selectTacticId == chooseTacticList[i].id) {
+          // trainingInfo.buff.add(chooseTacticList[i]);
           //  type = 0;
-          // double x = 10.w + 143.5.w + i * 43.w;
-          // chooseTacticList[i].offset.value = Offset(x, 45.w + 84.w);
+          double x = 10.w + 143.5.w + (trainingInfo.buff.length) * 43.w;
+          chooseTacticList[i].offset.value = Offset(x, 45.w + 84.w + 68.w);
         }
       }
     }
-    update(["training_page"]);
-    TeamApi.chooseTactic(tacticId, replaceTacticId: changeTacticId)
+    tacticFly.value = true;
+    showBuff.value = true;
+    // update(["training_page"]);
+    TeamApi.chooseTactic(selectTacticId, replaceTacticId: changeTacticId)
         .then((v) async {
       ///tacticList替换上面的buff
       await chooseEnd(context, type);
-
+      // await Future.delayed(const Duration(milliseconds: 600));
       if (isChange.value) {
         shakeController.reset();
         shakeController.stop();
         isChange.value = false;
-
         trainingInfo.buff = v;
         update(["training_page"]);
         await Future.delayed(const Duration(milliseconds: 600), () {
@@ -523,11 +536,12 @@ class TrainingController extends GetxController
   }
 
   Future chooseEnd(BuildContext context, int type) async {
-    tacticId = 0;
+    selectTacticId = 0;
     changeTacticId = 0;
 
-    await Future.delayed(const Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 250));
     showBuff.value = false;
+    tacticFly.value = false;
     isPlaying.value = false;
 
     for (var element in chooseTacticList) {
@@ -536,7 +550,7 @@ class TrainingController extends GetxController
   }
 
   void chooseFinish() {
-    tacticId = 0;
+    selectTacticId = 0;
     changeTacticId = 0;
     isChange.value = false;
     showBuff.value = false;
@@ -561,9 +575,11 @@ class TrainingController extends GetxController
     initSlot();
     final teamIndexCtrl = Get.find<TeamIndexController>();
     teamIndexCtrl.scroToSlot();
-    var playerList = Get.find<TeamController>().myTeamEntity.teamPlayers;
+    playerList = Get.find<TeamController>().myTeamEntity.teamPlayers;
     playerIdx = random.nextInt(playerList.length);
-    ballNum.value = ballNum.value - 1;
+    if (ballNum.value > 0) {
+      ballNum.value = ballNum.value - 1;
+    }
     await TeamApi.playerTraining(playerList[playerIdx].uuid).then((v) {
       trainingInfo = v;
       recoverBallCountDown();
@@ -675,7 +691,7 @@ class TrainingController extends GetxController
     if (awads.contains(4)) {
       showBall.value = true;
       // ballNum.value = trainingInfo.prop.num;
-      ballNum.value += 3;
+      ballNum.value += trainDefine.ballRecoverNum;
       await Future.delayed(const Duration(milliseconds: 500), () {
         showBall.value = false;
       });
@@ -748,10 +764,24 @@ class TrainingController extends GetxController
   ///球员滚动
   Future startPlayerScroll(int count) async {
     ///状态控制
-    var playerList = Get.find<TeamController>().myTeamEntity.teamPlayers;
+
     await Future.delayed(const Duration(milliseconds: 150));
     trainingInfo.selectPlayer.value =
         trainingInfo.statusReplyPlayers.map((e) => e.playerId).toList();
+    playerList = Get.find<TeamController>().myTeamEntity.teamPlayers.toList()
+      ..sort((a, b) {
+        bool aInStatus = trainingInfo.selectPlayer.contains(a.playerId);
+        bool bInStatus = trainingInfo.selectPlayer.contains(b.playerId);
+        if (aInStatus && !bInStatus) {
+          return -1;
+        } else if (!aInStatus && bInStatus) {
+          return 1;
+        } else {
+          return 0; // 或者根据其他属性排序
+        }
+      });
+    Log.d("前球员状态${playerList.first.playerStatus}");
+    Log.d("后球员状态${trainingInfo.statusReplyPlayers.first.playerStatus}");
     statusScollerList.clear();
     for (int i = 0; i < trainingInfo.statusReplyPlayers.length; i++) {
       statusScollerList.add(ScrollController());
@@ -766,8 +796,9 @@ class TrainingController extends GetxController
     update(["playerList"]);
     if (playerScollCtrl.hasClients) {
       playerScollCtrl.jumpTo(0);
-      double isTwo = trainingInfo.statusReplyPlayers.length == 2 ? -32.w : 0;
-      double offset = (playerIdx + playerList.length * 3 - 3) * 65.w + isTwo;
+
+      double isTwo = trainingInfo.statusReplyPlayers.length == 2 ? 32.w : 0;
+      double offset = (playerList.length * 3 - 3) * 65.w + isTwo;
       playerScollCtrl.addListener(() {
         currentPlayerIndex.value = (playerScollCtrl.offset / 65.w).round() + 3;
       });

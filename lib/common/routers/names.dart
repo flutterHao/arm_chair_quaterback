@@ -15,6 +15,7 @@ class RouteNames {
   static const team = '/team';
   static const league = '/league';
 
+  static const newsDetail2 = '/news_new_detail2';
   static const newsDetail = '/news_new_detail';
   static const newList = '/news_new_list';
   static const statsRank = '/stats_rank';
@@ -47,5 +48,4 @@ class RouteNames {
 
   //league
   static const leagueLeagueDetail = '/league_league_detail';
-
 }

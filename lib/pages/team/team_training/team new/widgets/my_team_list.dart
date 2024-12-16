@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 21:19:02
- * @LastEditTime: 2024-12-14 19:56:55
+ * @LastEditTime: 2024-12-16 11:19:06
  */
 /*
  * @Description: 
@@ -29,7 +29,9 @@ class MainPlayerList extends GetView<TeamController> {
 
   @override
   Widget build(BuildContext context) {
-    var list = controller.myBagList.where((e) => e.position > 0).toList();
+    var list = controller.myTeamEntity.teamPlayers
+        .where((e) => e.position > 0)
+        .toList();
     list.sort((a, b) => a.position.compareTo(b.position));
     return SizedBox(
       // width: 360.w,
@@ -156,7 +158,9 @@ class SubPlayerList extends GetView<TeamController> {
 
   @override
   Widget build(BuildContext context) {
-    var list = controller.myBagList.where((e) => e.position == 0).toList();
+    var list = controller.myTeamEntity.teamPlayers
+        .where((e) => e.position == 0)
+        .toList();
     list.sort(controller.comparePlayers);
     return SizedBox(
       // width: 360.w,
@@ -212,7 +216,8 @@ Widget _subPosition() {
 }
 
 class EmptyPlayer extends StatelessWidget {
-  const EmptyPlayer({super.key});
+  const EmptyPlayer({super.key, this.showChangeButton = true});
+  final bool showChangeButton;
 
   @override
   Widget build(BuildContext context) {
@@ -253,7 +258,7 @@ class EmptyPlayer extends StatelessWidget {
                 style: 21.w4(fontFamily: FontFamily.fOswaldMedium),
               ),
             ),
-            if (!controller.isShowDialog.value)
+            if (showChangeButton)
               MtInkwell(
                 onTap: () async {
                   if (controller.myBagList

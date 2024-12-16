@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 20:08:22
- * @LastEditTime: 2024-12-14 11:09:35
+ * @LastEditTime: 2024-12-16 11:37:37
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
@@ -51,13 +51,16 @@ class _PlayerBagTabState extends State<PlayerBagTab>
                     Container(
                       width: double.infinity,
                       height: 63.w,
-                      decoration:
-                          BoxDecoration(color: Colors.white, boxShadow: [
-                        BoxShadow(
-                            offset: Offset(0, 9.w),
-                            blurRadius: 9,
-                            color: AppColors.c000000.withOpacity(0.05))
-                      ]),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border(
+                              bottom: BorderSide(color: AppColors.cD1D1D1)),
+                          boxShadow: [
+                            BoxShadow(
+                                offset: Offset(0, 9.w),
+                                blurRadius: 9,
+                                color: AppColors.c000000.withOpacity(0.05))
+                          ]),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -105,7 +108,7 @@ class _PlayerBagTabState extends State<PlayerBagTab>
                           : ListView.separated(
                               physics: const BouncingScrollPhysics(),
                               controller: controller.scrollController,
-                              padding: EdgeInsets.symmetric(vertical: 0.w),
+                              padding: EdgeInsets.only(bottom: 9.w),
                               itemBuilder: (context, index) {
                                 return PlayerItem(
                                   item: list[index],

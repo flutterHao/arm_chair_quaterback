@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2024-12-14 20:48:30
+ * @LastEditTime: 2024-12-16 11:24:33
  */
 /*
  * @Description: 
@@ -222,6 +222,12 @@ class PlayerItem extends GetView<TeamController> {
                             color: AppColors.c000000,
                             height: 1,
                             fontFamily: FontFamily.fOswaldMedium),
+                      ),
+                      7.hGap,
+                      IconWidget(
+                        icon: Assets.commonUiCommonIconSystemJumpto,
+                        iconWidth: 5.w,
+                        iconColor: AppColors.c000000,
                       ),
                     ],
                   ),

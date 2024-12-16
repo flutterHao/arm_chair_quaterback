@@ -2,9 +2,10 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-11 15:57:44
- * @LastEditTime: 2024-12-14 21:16:55
+ * @LastEditTime: 2024-12-16 16:05:39
  */
 
+import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/flip_card.dart';
@@ -68,18 +69,25 @@ class TrainingPage extends GetView<TrainingController> {
                     child: AnimatedPositioned(
                       left: e.offset.value.dx,
                       top: e.offset.value.dy,
+                      // left: 153.w,
+
                       duration: 300.milliseconds,
                       child: AnimatedScale(
+                        alignment: Alignment.topLeft,
                         duration: const Duration(milliseconds: 300),
-                        scale: controller.showBuff.value &&
-                                !controller.isChange.value
-                            ? 1
-                            : 0.5,
+                        scale: !controller.tacticFly.value ? 1 : 0.5,
+                        // scale: controller.showBuff.value &&
+                        //         !controller.isChange.value
+                        //     ? 1
+                        //     : 0.5,
                         child: FlipCard(
+                          useSmallTacticCard: controller.tacticFly.value,
                           isFlipped: e.isOpen.value,
-                          onFlip: () {
+                          onFlip: () async {
+                            //卡牌飞行动画
+                            // controller.tacticFly.value = true;
                             e.isSelect.value = true;
-                            controller.tacticId = e.id;
+                            controller.selectTacticId = e.id;
                             controller.changeTacticId = 0;
                             controller.chooseTactic(context);
                           },
@@ -89,37 +97,6 @@ class TrainingPage extends GetView<TrainingController> {
                     ),
                   );
                 })
-              // ...controller.chooseTacticList.asMap().entries.map((entry) {
-              //   var e = entry.value;
-              //   return Obx(() {
-              //     return Visibility(
-              //       visible:
-              //           controller.showBuff.value && !controller.isChange.value,
-              //       child: AnimatedPositioned(
-              //         left: e.offset.value.dx,
-              //         top: e.offset.value.dy,
-              //         duration: 300.milliseconds,
-              //         child: AnimatedScale(
-              //           duration: const Duration(milliseconds: 300),
-              //           scale: controller.showBuff.value &&
-              //                   !controller.isChange.value
-              //               ? 1
-              //               : 0.5,
-              //           child: FlipCard(
-              //             isFlipped: e.isOpen.value,
-              //             onFlip: () {
-              //               e.isSelect.value = true;
-              //               controller.tacticId = e.id;
-              //               controller.changeTacticId = 0;
-              //               controller.chooseTactic(context);
-              //             },
-              //             buff: e,
-              //           ),
-              //         ),
-              //       ),
-              //     );
-              //   });
-              // }).toList(),
             ],
           );
         });

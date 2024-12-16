@@ -180,7 +180,7 @@ class TeamTabbar extends GetView<TeamController> {
                                                 .myTeamEntity.salary >=
                                             controller.myTeamEntity.salaryCap
                                         ? AppColors.cD60D20
-                                        : AppColors.c10A86A,
+                                        : AppColors.cFFFFFF,
                                     backgroundColor: AppColors.c4D4D4D,
                                     progress: controller.myTeamEntity.salary /
                                         controller.myTeamEntity.salaryCap),

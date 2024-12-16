@@ -1,8 +1,6 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
-import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/utils/loading.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
@@ -13,7 +11,6 @@ import 'package:arm_chair_quaterback/common/widgets/vertival_drag_back_widget.da
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/progress_paint.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/widgets/recover_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactics/card_rule_dialog.dart';
@@ -564,11 +561,17 @@ class TacticItem extends GetView<TrainingController> {
                   for (var i = 0; i < count; i++)
                     Positioned(
                         bottom: 2.w * i + 2,
-                        child: SmallTacticCard(
-                          num: buff.face,
-                          color: buff.color,
-                          width: 35.w,
-                        ))
+                        child: Obx(() {
+                          return AnimatedScale(
+                            duration: 150.milliseconds,
+                            scale: buff.show.value ? 1.5 : 1,
+                            child: SmallTacticCard(
+                              num: buff.face,
+                              color: buff.color,
+                              width: 35.w,
+                            ),
+                          );
+                        }))
                 ],
               ),
             ),

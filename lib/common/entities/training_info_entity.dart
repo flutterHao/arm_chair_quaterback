@@ -139,6 +139,7 @@ class TrainingInfoBuff {
   late Rx<Offset> offset = Offset(0, 0).obs;
   late bool showBuff = false;
   late bool isMatch = false;
+  late RxBool show = false.obs;
 
   TrainingInfoBuff();
 

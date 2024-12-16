@@ -109,6 +109,7 @@ class MyTeamWidget extends StatelessWidget {
                             ctrl.myTeamEntity.salaryCap,
                         width: 113.w,
                         height: 6.w,
+                        // progressColor: AppColors.cFFFFFF,
                       )
                     ],
                   ),

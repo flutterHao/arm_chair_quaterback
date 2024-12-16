@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 17:28:14
- * @LastEditTime: 2024-12-10 21:35:47
+ * @LastEditTime: 2024-12-16 21:05:22
  */
 import 'package:arm_chair_quaterback/common/entities/news_banner.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
@@ -110,35 +110,44 @@ class NewsApi {
         .post(Api.newsFlow, data: {"page": page, "limit": limit});
     var details = list.map((e) async {
       var item = NewsListDetail.fromJson(e);
-      if (ObjectUtil.isNotEmpty(item.imgUrl)) {
-        final uri = Uri.parse(item.imgUrl);
-        double? h = double.tryParse(uri.queryParameters["height"] ?? '');
-        double? w = double.tryParse(uri.queryParameters["width"] ?? '');
-        if (ObjectUtil.isNotEmpty(h) && ObjectUtil.isNotEmpty(w)) {
-          if (w! > 250.w) {
-            item.type = 1;
-            item.imageHeight = h! / w * 343.w;
-          } else {
-            if (item.imgUrl.contains(".gif")) {
-              item.type = 1;
-            } else {
-              item.type = w > h! ? 2 : 3;
-              item.imamgeWidth = w / h * 97.w;
-            }
-          }
-        }
-      } else {
-        item.type = 0;
-      }
+      getImageWith(item);
       return item;
     }).toList();
     return Future.wait(details);
   }
 
+  static void getImageWith(NewsListDetail item) {
+    if (ObjectUtil.isNotEmpty(item.imgUrl)) {
+      final uri = Uri.parse(item.imgUrl);
+      double? h = double.tryParse(uri.queryParameters["height"] ?? '');
+      double? w = double.tryParse(uri.queryParameters["width"] ?? '');
+      if (ObjectUtil.isNotEmpty(h) && ObjectUtil.isNotEmpty(w)) {
+        if (w! > 250.w) {
+          item.type = 1;
+          item.imageHeight = h! / w * 343.w;
+        } else {
+          if (item.imgUrl.contains(".gif")) {
+            item.type = 1;
+          } else {
+            item.type = w > h! ? 2 : 3;
+            item.imamgeWidth = w / h * 97.w;
+          }
+        }
+      }
+    } else {
+      item.type = 0;
+    }
+  }
+
   static Future<List<NewsListDetail>> getRelevantNews(int newsId) async {
     List list =
         await HttpUtil().post(Api.getRelevantNews, data: {"newsId": newsId});
-    return list.map((e) => NewsListDetail.fromJson(e)).toList();
+    var details = list.map((e) {
+      var item = NewsListDetail.fromJson(e);
+      getImageWith(item);
+      return item;
+    }).toList();
+    return details;
   }
 
   static Future<List<ReviewEntity>> getReviewsByNewsId(

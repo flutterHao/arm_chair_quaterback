@@ -19,7 +19,8 @@ class PlayerStatus extends GetView<TeamController> {
 
   @override
   Widget build(BuildContext context) {
-    final List<int> statusList = [101, 102, 103, 104, 105, 106];
+    // final List<int> statusList = [101, 102, 103, 104, 105, 106];
+    final List<int> statusList = [106, 105, 104, 103, 102, 101];
     return GetBuilder<TeamController>(builder: (_) {
       return Container(
         width: double.infinity,
