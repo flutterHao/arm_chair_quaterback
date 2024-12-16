@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-14 11:11:48
- * @LastEditTime: 2024-12-16 20:57:10
+ * @LastEditTime: 2024-12-16 21:44:07
  */
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
@@ -130,7 +130,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                         bottom: showCommentDialog.value ? 0 : -80.w,
                         left: 0,
                         right: 0,
-                        child: SendCommentWidget(newsId: widget.newsDetail.id));
+                        child: SendCommentWidget(detail: widget.newsDetail));
                   })
                 ]);
           }),
@@ -303,21 +303,24 @@ class NewsDetailItem extends GetView<NewListController> {
                       itemBuilder: (context, index) {
                         return Column(
                           children: [
-                            CommentItemView(item: list[index]),
+                            CommentItemView(
+                              item: list[index],
+                              detail: item,
+                            ),
                             if (list[index].sonReviews > 0 ||
                                 list[index].subList.isNotEmpty)
                               Container(
                                 // width: 295.w,
                                 margin: EdgeInsets.only(left: 48.w),
-                                child: SubComentsListView(list[index]),
+                                child: SubComentsListView(list[index], item),
                               )
                           ],
                         );
                       })
-                  : SizedBox.shrink(),
+                  : const SizedBox.shrink(),
               if (item.reviewsCount.value > list.length)
                 Container(
-                  margin: EdgeInsets.only(bottom: 100),
+                  margin: const EdgeInsets.only(bottom: 100),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

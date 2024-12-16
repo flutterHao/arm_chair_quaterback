@@ -2,10 +2,11 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-12 16:34:46
- * @LastEditTime: 2024-12-11 15:44:22
+ * @LastEditTime: 2024-12-16 21:50:20
  */
 import 'dart:math';
 
+import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/review_entity.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -20,14 +21,14 @@ import 'package:get/get.dart';
 class SendCommentWidget extends StatefulWidget {
   const SendCommentWidget(
       {super.key,
-      required this.newsId,
+      required this.detail,
       this.reviewsItem,
       // this.targetId = 0,
       this.isReply = false,
       // this.showKeyboard,
       this.hintText = 'Say something...'});
   final String hintText;
-  final int newsId;
+  final NewsListDetail detail;
   final ReviewEntity? reviewsItem;
   // final int targetId;
   final bool isReply;
@@ -142,10 +143,10 @@ class _SendCommentWidgetState extends State<SendCommentWidget> {
                                   ctrl.text = "";
                                   FocusScope.of(context).unfocus();
                                   Get.find<CommentController>(
-                                          tag: widget.newsId.toString())
+                                          tag: widget.detail.id.toString())
                                       .sendReviews(
                                     context,
-                                    widget.newsId,
+                                    widget.detail,
                                     // targetId: targetId,
                                     reviews: widget.reviewsItem,
                                     content,
@@ -167,7 +168,7 @@ class _SendCommentWidgetState extends State<SendCommentWidget> {
 }
 
 Future showCommentBottomSheet(BuildContext context,
-    {required int newsId,
+    {required NewsListDetail detail,
     required ReviewEntity reviewsItem,
     // int targetId = 0,
     String hintText = "Say something..."}) async {
@@ -177,7 +178,7 @@ Future showCommentBottomSheet(BuildContext context,
     backgroundColor: Colors.transparent,
     builder: (context) {
       return SendCommentWidget(
-        newsId: newsId,
+        detail: detail,
         reviewsItem: reviewsItem,
         // targetId: targetId,
         isReply: true,

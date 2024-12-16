@@ -44,13 +44,13 @@ class NewsApi {
   }
 
   static Future<ReviewEntity> sendReviews(
-    int newsId,
+    NewsListDetail item,
     String content, {
     int targetId = 0,
     int parentReviewId = 0,
   }) async {
     var json = await HttpUtil().post(Api.sendReviews, data: {
-      "newsId": newsId,
+      "newsId": item.id,
       "context": content,
       "targetId": targetId,
       "parentReviewId": parentReviewId

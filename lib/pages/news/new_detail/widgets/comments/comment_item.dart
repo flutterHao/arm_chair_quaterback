@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/review_entity.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -14,8 +15,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class CommentItemView extends StatelessWidget {
-  const CommentItemView({super.key, required this.item});
+  const CommentItemView({super.key, required this.item, required this.detail});
   final ReviewEntity item;
+  final NewsListDetail detail;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class CommentItemView extends StatelessWidget {
         if (item.teamId != (controller.userEntity.team?.teamId ?? 0)) {
           String name = "@${item.teamName}";
           await showCommentBottomSheet(context,
-              newsId: item.newsId,
+              detail: detail,
               reviewsItem: item,
               // targetId: item.id ?? 0,
               hintText: name);
@@ -125,7 +127,7 @@ class CommentItemView extends StatelessWidget {
                           //     : item.parentReviewId!;
                           String name = "@${item.teamName}";
                           await showCommentBottomSheet(context,
-                              newsId: item.newsId,
+                              detail: detail,
                               reviewsItem: item,
                               // targetId: item.id ?? 0,
                               hintText: name);
@@ -215,8 +217,10 @@ class CommentItemView extends StatelessWidget {
 }
 
 class SubCommentItemView extends StatelessWidget {
-  const SubCommentItemView({super.key, required this.item});
+  const SubCommentItemView(
+      {super.key, required this.item, required this.detail});
   final ReviewEntity item;
+  final NewsListDetail detail;
 
   @override
   Widget build(BuildContext context) {
@@ -300,7 +304,7 @@ class SubCommentItemView extends StatelessWidget {
                         //     : item.parentReviewId!;
                         String name = "@${item.teamName}";
                         showCommentBottomSheet(context,
-                            newsId: item.newsId ?? 0,
+                            detail: detail,
                             reviewsItem: item,
                             // targetId: item.id ?? 0,
                             hintText: name);

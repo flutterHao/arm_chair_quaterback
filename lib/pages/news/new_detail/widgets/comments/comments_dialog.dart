@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-18 15:38:51
- * @LastEditTime: 2024-12-11 15:13:37
+ * @LastEditTime: 2024-12-16 21:43:10
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -79,7 +79,7 @@ class CommentsDialog extends StatelessWidget {
               right: 0,
               left: 0,
               child: SendCommentWidget(
-                newsId: detail.id,
+                detail: detail,
                 // key: UniqueKey(),
                 // isReply: true,
                 // key: Key("bottom"),
@@ -144,13 +144,15 @@ class CommentsList extends StatelessWidget {
                             //     .toList();
                             return Column(
                               children: [
-                                CommentItemView(item: list[index]),
+                                CommentItemView(
+                                    detail: detail, item: list[index]),
                                 if (list[index].sonReviews > 0 ||
                                     list[index].subList.isNotEmpty)
                                   Container(
                                     // width: 295.w,
                                     margin: EdgeInsets.only(left: 48.w),
-                                    child: SubComentsListView(list[index]),
+                                    child:
+                                        SubComentsListView(list[index], detail),
                                   )
                               ],
                             );
@@ -169,9 +171,10 @@ class CommentsList extends StatelessWidget {
 
 ///附属评论列表
 class SubComentsListView extends GetView<CommentController> {
-  const SubComentsListView(this.mainReviews, {super.key});
+  const SubComentsListView(this.mainReviews, this.detail, {super.key});
   // final List<Reviews> subList;
   final ReviewEntity mainReviews;
+  final NewsListDetail detail;
 
   Widget _greyContainer({required Widget child}) {
     return Container(
@@ -201,7 +204,10 @@ class SubComentsListView extends GetView<CommentController> {
           separatorBuilder: (context, index) => 23.vGap,
           itemBuilder: (context, index) {
             return index < mainReviews.current
-                ? SubCommentItemView(item: mainReviews.subList[index])
+                ? SubCommentItemView(
+                    item: mainReviews.subList[index],
+                    detail: detail,
+                  )
                 : Container(
                     // color: Colors.red,
                     // padding: EdgeInsets.symmetric(vertical: 6.w),

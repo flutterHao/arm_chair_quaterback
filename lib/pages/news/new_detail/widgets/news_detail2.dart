@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-14 11:11:48
- * @LastEditTime: 2024-12-16 20:51:16
+ * @LastEditTime: 2024-12-16 21:38:30
  */
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -64,7 +64,7 @@ class _NewsDetailPage2State extends State<NewsDetailPage2> {
                         bottom: showCommentDialog.value ? 0 : -80.w,
                         left: 0,
                         right: 0,
-                        child: SendCommentWidget(detail: widget.newsDetail.id));
+                        child: SendCommentWidget(detail: widget.newsDetail));
                   })
                 ]);
           }),

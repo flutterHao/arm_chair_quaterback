@@ -104,7 +104,7 @@ class CommentController extends GetxController {
   //直接发送、回复mianList，回复subLIst
   void sendReviews(
     BuildContext context,
-    int newsId,
+    NewsListDetail detail,
     String content, {
     // int targetId = 0,
     ReviewEntity? reviews,
@@ -122,7 +122,7 @@ class CommentController extends GetxController {
       targetId = reviews.id!;
     }
     await NewsApi.sendReviews(
-      newsId,
+      detail,
       targetId: targetId,
       parentReviewId: parentId,
       content,
@@ -148,10 +148,10 @@ class CommentController extends GetxController {
           }
         }
       }
-      NewListController controller = Get.find();
-      NewsListDetail newsDetail =
-          controller.state.newsFlowList.where((e) => e.id == newsId).first;
-      newsDetail.reviewsCount!.value++;
+      // NewListController controller = Get.find();
+      // NewsListDetail newsDetail =
+      //     controller.state.newsFlowList.where((e) => e.id == detail).first;
+      detail.reviewsCount.value++;
       update();
     }).catchError((v) {
       EasyLoading.showToast(v.error.toString());
