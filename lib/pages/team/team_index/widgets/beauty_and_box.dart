@@ -84,19 +84,18 @@ class BeautyAndBoxView extends StatelessWidget {
                   right: 0,
                   child: Obx(() {
                     final beautyCtrl = Get.find<BeautyController>();
-                    beautyCtrl.beautyList[beautyCtrl.beautyIndex.value];
+                    beautyCtrl.beautyIndex.value;
                     return InkWell(
                       onTap: () => Get.toNamed(RouteNames.teamBeautyPage,
                           id: GlobalNestedKey.TEAM),
-                      child: beautyCtrl.beautyIndex.value != 0
-                          ? Image.asset(
-                              beautyCtrl
-                                  .beautyList[beautyCtrl.beautyIndex.value],
-                              fit: BoxFit.fitHeight,
+                      // child: Image.asset(
+                      //         beautyCtrl
+                      //             .beautyList[beautyCtrl.beautyIndex.value],
+                      //         fit: BoxFit.fitHeight,
+                      //         height: 546.w,
+                      //         alignment: Alignment.topCenter)
+                          child: SizedBox(
                               height: 546.w,
-                              alignment: Alignment.topCenter)
-                          : SizedBox(
-                              height: 400.w,
                               child: Center(
                                 child: SpineWidget.fromAsset(
                                   Assets.assetsSpineNv1,
