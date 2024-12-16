@@ -149,7 +149,6 @@ class TeamBattleV2Controller extends GetxController
       }
       if (result.serviceId == Api.wsPkStopUpdated) {
         ///比赛结束
-
       }
       if (result.serviceId == Api.wsPkResultUpdated) {
         ///比赛结果
@@ -230,7 +229,6 @@ class TeamBattleV2Controller extends GetxController
     }
     update([idPlayers]);
   }
-
 
   changeGameSpeed(double speed) {
     if (!isGameStart.value) return;
@@ -765,7 +763,6 @@ class TeamBattleV2Controller extends GetxController
     isGameOver.value = !isGameOver.value;
   }
 
-
   List<PkPlayerUpdatedPlayers> getHomeTeamPlayerList() {
     var list = homeTeamPlayerList.where((e) => e.position != 0).toList();
     return list;
@@ -896,8 +893,8 @@ class TeamBattleV2Controller extends GetxController
         Get.find<TeamBattleController>().pkStartUpdatedEntity;
     var bool = startUpdatedEntity?.pokerWinner == playerId;
     return bool
-        ? "+${startUpdatedEntity?.pokerRate}%"
-        : "-${startUpdatedEntity?.pokerRate}%";
+        ? "+${(startUpdatedEntity?.pokerRate ?? 0) * 100}%"
+        : "-${(startUpdatedEntity?.pokerRate ?? 0) * 100}%";
   }
 
   Color getBuffColor(int playerId) {
@@ -964,11 +961,11 @@ class TeamBattleV2Controller extends GetxController
     ]);
   }
 
-  int getBeforeQuarterEventCount(){
+  int getBeforeQuarterEventCount() {
     int count = 0;
     for (int i = 1; i < quarter.value; i++) {
       var list = eventCacheMap[Utils.getSortWithInt(i)];
-      if(list != null && list.isNotEmpty){
+      if (list != null && list.isNotEmpty) {
         count += list.length;
       }
     }
