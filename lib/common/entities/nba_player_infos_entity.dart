@@ -216,6 +216,7 @@ class NbaPlayerInfosPlayerBaseInfoList {
   late int basicMarketPrice = 0;
   late int beforeMarketPriceUpdateTime = 0;
   late String elname = "";
+  late int number;
 
   NbaPlayerInfosPlayerBaseInfoList();
 

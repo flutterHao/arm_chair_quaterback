@@ -1,6 +1,7 @@
 import 'package:arm_chair_quaterback/common/entities/api_error_code_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/competition_venue_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/config/prop_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/cup_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/game_event_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/grade_in_stamina_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/grade_in_star_define_entity.dart';
@@ -48,6 +49,7 @@ class CacheApi {
 
   static List<CompetitionVenueEntity> competitionVenues = [];
   static List<GradeInStaminaEntity> gradeInStaminaList = [];
+  static List<CupDefineEntity> cupDefineList = [];
 
   static Future<void> init() async {
     await Future.wait([
@@ -209,5 +211,15 @@ class CacheApi {
     gradeInStaminaList =
         list.map((e) => GradeInStaminaEntity.fromJson(e)).toList();
     return gradeInStaminaList;
+  }
+
+  ///球员耐力等级
+  static Future<List<CupDefineEntity>> getCupDefine() async {
+    if (cupDefineList.isNotEmpty) {
+      return cupDefineList;
+    }
+    List list = await HttpUtil().post(Api.cCupDefine);
+    cupDefineList = list.map((e) => CupDefineEntity.fromJson(e)).toList();
+    return cupDefineList;
   }
 }

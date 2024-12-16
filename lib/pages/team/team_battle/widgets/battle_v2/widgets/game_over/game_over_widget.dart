@@ -3,18 +3,22 @@ import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.da
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/top_toast_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/money_income_animation.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/widgets/heartbeat.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_court.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_leader/game_leader_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_over/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/live_text_widget.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/player_status/player_status_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/quarter_score/quarter_score_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/team_stat/team_stats_widget.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/win_rate/win_rate_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -26,11 +30,14 @@ import 'package:get/get.dart';
 class GameOverWidget extends GetView<GameOverController> {
   GameOverWidget({super.key});
 
+  late TeamBattleController teamBattleController;
+
   late TeamBattleV2Controller teamBattleV2Controller;
 
   @override
   Widget build(BuildContext context) {
     teamBattleV2Controller = Get.find();
+    teamBattleController = Get.find();
     return GetBuilder<GameOverController>(
         init: GameOverController(),
         builder: (logic) {
@@ -87,6 +94,7 @@ class GameOverWidget extends GetView<GameOverController> {
                                     hasTopMargin: false,
                                   );
                                 }),
+                            PlayerStatusWidget(teamBattleV2Controller),
                             GameLeaderWidget(
                               controller:
                                   teamBattleV2Controller.gameLeaderController,
@@ -101,7 +109,7 @@ class GameOverWidget extends GetView<GameOverController> {
                             const LiveTextWidget(
                               isGameOverStatus: true,
                             ),
-                            9.vGap
+                            9.vGap,
                           ],
                         ),
                       )
@@ -668,9 +676,6 @@ class GameOverWidget extends GetView<GameOverController> {
         left: isLeft ? 19.w : null,
         right: !isLeft ? 19.w : null,
         child: Obx(() {
-          if (controller.cup.value <= -1) {
-            return const SizedBox.shrink();
-          }
           return HeartbeatWidget(
             child: Container(
               width: 131.w,
@@ -699,7 +704,7 @@ class GameOverWidget extends GetView<GameOverController> {
                   ),
                   3.hGap,
                   Text(
-                    "+${controller.cup.value}",
+                    "+${controller.cup.value.abs()}",
                     style: 16.w5(
                         color: AppColors.cF2F2F2,
                         height: 1,
@@ -801,9 +806,6 @@ class GameOverWidget extends GetView<GameOverController> {
         right: isLeft ? 19.w : null,
         left: !isLeft ? 19.w : null,
         child: Obx(() {
-          if (controller.cup.value <= -1) {
-            return const SizedBox.shrink();
-          }
           return HeartbeatWidget(
             onEnd: () {
               if (controller.cup.value == controller.cupNum) {
@@ -842,7 +844,7 @@ class GameOverWidget extends GetView<GameOverController> {
                   ),
                   3.hGap,
                   Text(
-                    "-${controller.cup.value}",
+                    "-${controller.cup.value.abs()}",
                     style: 16.w5(
                         color: AppColors.cF2F2F2,
                         height: 1,

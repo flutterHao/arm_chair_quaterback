@@ -25,8 +25,6 @@ import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/widge
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_leader/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/live_text_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
-import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/tactical_contrast/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/tactical_contrast/tactical_contrast.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/team_stat/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/win_rate/controller.dart';
 import 'package:flutter/material.dart';
@@ -146,10 +144,12 @@ class TeamBattleV2Controller extends GetxController
     subscription = WSInstance.stream.listen((result) {
       if (result.serviceId == Api.wsPkPlayerUpdated) {
         ///换人
-        substitutionPlayer(result);
+        ///todo 时间要同步wsPkEventUpdated
+        // substitutionPlayer(result);
       }
       if (result.serviceId == Api.wsPkStopUpdated) {
         ///比赛结束
+
       }
       if (result.serviceId == Api.wsPkResultUpdated) {
         ///比赛结果
@@ -231,15 +231,6 @@ class TeamBattleV2Controller extends GetxController
     update([idPlayers]);
   }
 
-  void checkShowDialog() {
-    /// 双方都没有buffer时不显示buffer弹框
-    if (battleEntity.homeTeamBuff.isNotEmpty ||
-        battleEntity.awayTeamBuff.isNotEmpty) {
-      Future.delayed(Duration.zero, () {
-        _showTactical();
-      });
-    }
-  }
 
   changeGameSpeed(double speed) {
     if (!isGameStart.value) return;
@@ -374,7 +365,7 @@ class TeamBattleV2Controller extends GetxController
     double winRate = getWinRate(event);
     print('winRate: $winRate');
     winRateController.addPoint(
-        Offset(eventCount.toDouble() + ((quarter.value - 1) * 40), winRate));
+        Offset(eventCount.toDouble() + getBeforeQuarterEventCount(), winRate));
 
     if (eventOnScreenMap.containsKey(key)) {
       eventOnScreenMap[key]!.add(event);
@@ -774,16 +765,6 @@ class TeamBattleV2Controller extends GetxController
     isGameOver.value = !isGameOver.value;
   }
 
-  _showTactical() async {
-    await showModalBottomSheet(
-        context: context,
-        backgroundColor: AppColors.cTransparent,
-        isScrollControlled: true,
-        builder: (context) {
-          return TacticalContrast();
-        });
-    Get.delete<TacticalContrastController>();
-  }
 
   List<PkPlayerUpdatedPlayers> getHomeTeamPlayerList() {
     var list = homeTeamPlayerList.where((e) => e.position != 0).toList();
@@ -981,6 +962,17 @@ class TeamBattleV2Controller extends GetxController
       // idReadiness,
       idBattleMain
     ]);
+  }
+
+  int getBeforeQuarterEventCount(){
+    int count = 0;
+    for (int i = 1; i < quarter.value; i++) {
+      var list = eventCacheMap[Utils.getSortWithInt(i)];
+      if(list != null && list.isNotEmpty){
+        count += list.length;
+      }
+    }
+    return count;
   }
 }
 

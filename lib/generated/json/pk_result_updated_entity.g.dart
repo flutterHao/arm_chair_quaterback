@@ -335,7 +335,7 @@ PkResultUpdatedAwayTeamResultScoreBoardDetailList $PkResultUpdatedAwayTeamResult
   if (rebPoint != null) {
     pkResultUpdatedAwayTeamResultScoreBoardDetailList.rebPoint = rebPoint;
   }
-  final int? score = jsonConvert.convert<int>(json['score']);
+  final double? score = jsonConvert.convert<double>(json['score']);
   if (score != null) {
     pkResultUpdatedAwayTeamResultScoreBoardDetailList.score = score;
   }
@@ -440,7 +440,7 @@ extension PkResultUpdatedAwayTeamResultScoreBoardDetailListExtension on PkResult
     int? ptsPoint,
     int? reb,
     int? rebPoint,
-    int? score,
+    double? score,
     bool? starter,
     int? starterPos,
     int? stl,
@@ -695,7 +695,7 @@ PkResultUpdatedAwayTeamResultTeamPlayers $PkResultUpdatedAwayTeamResultTeamPlaye
   if (potential != null) {
     pkResultUpdatedAwayTeamResultTeamPlayers.potential = potential;
   }
-  final int? power = jsonConvert.convert<int>(json['power']);
+  final double? power = jsonConvert.convert<double>(json['power']);
   if (power != null) {
     pkResultUpdatedAwayTeamResultTeamPlayers.power = power;
   }
@@ -763,7 +763,7 @@ extension PkResultUpdatedAwayTeamResultTeamPlayersExtension on PkResultUpdatedAw
     int? playerStatusValue,
     int? position,
     PkResultUpdatedAwayTeamResultTeamPlayersPotential? potential,
-    int? power,
+    double? power,
     int? teamId,
     PkResultUpdatedAwayTeamResultTeamPlayersUpStarBase? upStarBase,
     int? updateTime,

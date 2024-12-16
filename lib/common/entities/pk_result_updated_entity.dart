@@ -83,7 +83,7 @@ class PkResultUpdatedAwayTeamResultScoreBoardDetailList {
 	late int ptsPoint = 0;
 	late int reb = 0;
 	late int rebPoint = 0;
-	late int score = 0;
+	late double score = 0;
 	late bool starter = false;
 	late int starterPos = 0;
 	late int stl = 0;
@@ -155,7 +155,7 @@ class PkResultUpdatedAwayTeamResultTeamPlayers {
 	late int playerStatusValue = 0;
 	late int position = 0;
 	late PkResultUpdatedAwayTeamResultTeamPlayersPotential potential;
-	late int power = 0;
+	late double power = 0;
 	late int teamId = 0;
 	late PkResultUpdatedAwayTeamResultTeamPlayersUpStarBase upStarBase;
 	late int updateTime = 0;
@@ -229,6 +229,7 @@ class PkResultUpdatedPlayerResults {
 	late int reb = 0;
 	late int stl = 0;
 	late int teamId = 0;
+	/// 1 mvp 2 reb 3 pts 4 ast
 	late int type = 0;
 
 	PkResultUpdatedPlayerResults();

@@ -170,6 +170,11 @@ class TeamStatsWidget extends StatelessWidget {
                 InkWell(
                   onTap: () {
                     controller.isExpanded.value = !controller.isExpanded.value;
+                    if (controller.isExpanded.value) {
+                      controller.expandedTurns.value += 0.5;
+                    } else {
+                      controller.expandedTurns.value -= 0.5;
+                    }
                   },
                   child: Container(
                     height: 60.w,
@@ -186,11 +191,15 @@ class TeamStatsWidget extends StatelessWidget {
                         ),
                         4.vGap,
                         Obx(() {
-                          return IconWidget(
-                            iconWidth: 9.w,
-                            icon: Assets.commonUiCommonIconSystemJumpto,
-                            iconColor: AppColors.c000000,
-                            rotateAngle: controller.isExpanded.value ? -90 : 90,
+                          return  AnimatedRotation(
+                            turns: controller.expandedTurns.value,
+                            duration: const Duration(milliseconds: 300),
+                            child: IconWidget(
+                              iconWidth: 5.w,
+                              icon: Assets.commonUiCommonIconSystemJumpto,
+                              iconColor: AppColors.c000000,
+                              rotateAngle: 90,
+                            ),
                           );
                         })
                       ],

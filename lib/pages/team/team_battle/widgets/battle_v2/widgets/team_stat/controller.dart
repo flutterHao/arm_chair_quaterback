@@ -11,6 +11,7 @@ class TeamStatsController extends GetxController {
   GameEvent? event;
 
   final isExpanded = false.obs;
+  var expandedTurns = 0.0.obs;
 
 
   setEvent(GameEvent e){

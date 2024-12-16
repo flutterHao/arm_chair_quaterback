@@ -98,6 +98,7 @@ class Api {
       "$CONFIG_BASE_PATH/CompetitionVenue.json";
   static const String cTaticsCombine = "$CONFIG_BASE_PATH/TaticsCombine.json";
   static const String cGradeInStamina = "$CONFIG_BASE_PATH/GradeInStamina.json";
+  static const String cCupDefine = "$CONFIG_BASE_PATH/CupDefine.json";
 
   /// TeamPlayer
   static const String getTeamPlayerByUUID =
