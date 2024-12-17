@@ -71,42 +71,56 @@ class _LiveTextWidgetState extends State<LiveTextWidget> {
               return Row(
                 children:
                     List.generate(max(1, controller.quarter.value), (index) {
-                  bool active = index == controller.quarter.value - 1;
-                  return TweenAnimationBuilder(
-                      // 定义动画起始值和结束值
-                      tween: Tween<double>(begin: 0.0, end: 1.0),
-                      duration: const Duration(seconds: 2), // 动画时长
-                      builder:
-                          (BuildContext context, double value, Widget? child) {
-                        return Opacity(
-                          opacity: value,
-                          child: Container(
-                            width: 82.w,
-                            height: 28.w,
-                            margin: EdgeInsets.only(right: 5.w),
-                            decoration: BoxDecoration(
-                                color: active
-                                    ? AppColors.c000000
-                                    : AppColors.cFFFFFF,
-                                borderRadius: BorderRadius.circular(14.w),
-                                border: Border.all(
-                                    color: AppColors.c666666, width: 1.w)),
-                            alignment: Alignment.center,
-                            child: Text(
-                              Utils.getSortWithInt(index + 1),
-                              style: active
-                                  ? 16.w5(
-                                      color: AppColors.cFFFFFF,
-                                      height: 1,
-                                      fontFamily: FontFamily.fOswaldMedium)
-                                  : 16.w4(
-                                      color: AppColors.c000000,
-                                      height: 1,
-                                      fontFamily: FontFamily.fOswaldRegular),
+                  return Obx(() {
+                    bool active = index == controller.liveTextTabIndex.value;
+                    return TweenAnimationBuilder(
+                        // 定义动画起始值和结束值
+                        tween: Tween<double>(begin: 0.0, end: 1.0),
+                        duration: const Duration(seconds: 2), // 动画时长
+                        builder: (BuildContext context, double value,
+                            Widget? child) {
+                          return Opacity(
+                            opacity: value,
+                            child: Container(
+                              width: 82.w,
+                              height: 28.w,
+                              margin: EdgeInsets.only(right: 5.w),
+                              decoration: BoxDecoration(
+                                  color: active
+                                      ? AppColors.c000000
+                                      : AppColors.cFFFFFF,
+                                  borderRadius: BorderRadius.circular(14.w),
+                                  border: Border.all(
+                                      color: AppColors.c666666, width: 1.w)),
+                              alignment: Alignment.center,
+                              child: MtInkwell(
+                                onTap: () {
+                                  if (controller.liveTextTabIndex.value !=
+                                      index) {
+                                    controller.liveTextTabIndex.value = index;
+                                  }
+                                },
+                                child: Center(
+                                  child: Text(
+                                    Utils.getSortWithInt(index + 1),
+                                    style: active
+                                        ? 16.w5(
+                                            color: AppColors.cFFFFFF,
+                                            height: 1,
+                                            fontFamily:
+                                                FontFamily.fOswaldMedium)
+                                        : 16.w4(
+                                            color: AppColors.c000000,
+                                            height: 1,
+                                            fontFamily:
+                                                FontFamily.fOswaldRegular),
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
-                        );
-                      });
+                          );
+                        });
+                  });
                 }),
               );
             }),
@@ -120,140 +134,151 @@ class _LiveTextWidgetState extends State<LiveTextWidget> {
             child: GetBuilder<TeamBattleV2Controller>(
                 id: TeamBattleV2Controller.idLiveText,
                 builder: (_) {
-                  var itemCount = controller.getQuarterEvents().length;
-                  return MediaQuery.removePadding(
-                    removeTop: true,
-                    context: context,
-                    child: ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: itemCount + 1,
-                        reverse: true,
-                        controller: isGameOverStatus
-                            ? scrollController
-                            : controller.liveTextScrollController,
-                        itemBuilder: (context, i) {
-                          if (i == 0) {
-                            if (itemCount == 0) {
-                              return SizedBox(
-                                height: 44.w * 5,
-                                child: const Center(
-                                  child: LoadStatusWidget(
-                                    loadDataStatus: LoadDataStatus.noData,
-                                    text: "DATA COMING ...",
+                  return Obx(() {
+                    var value = controller.liveTextTabIndex.value;
+                    var list =
+                        controller.getQuarterEvents(quarterValue: value + 1);
+                    var itemCount = list.length;
+                    var currentTabIsLast =
+                        (value + 1) == controller.quarter.value;
+                    var addSize = (currentTabIsLast ? 1 : 0);
+                    return MediaQuery.removePadding(
+                      removeTop: true,
+                      context: context,
+                      child: ListView.builder(
+                          physics: const BouncingScrollPhysics(),
+                          itemCount: itemCount + addSize,
+                          reverse: true,
+                          controller: isGameOverStatus
+                              ? scrollController
+                              : currentTabIsLast
+                                  ? controller.liveTextScrollController
+                                  : ScrollController(),
+                          itemBuilder: (context, i) {
+                            if (i == 0 && currentTabIsLast) {
+                              if (itemCount == 0) {
+                                return SizedBox(
+                                  height: 44.w * 5,
+                                  child: const Center(
+                                    child: LoadStatusWidget(
+                                      loadDataStatus: LoadDataStatus.noData,
+                                      text: "DATA COMING ...",
+                                    ),
                                   ),
-                                ),
-                              );
+                                );
+                              }
+                              return SizedBox(height: 44.w * 5);
                             }
-                            return SizedBox(height: 44.w * 5);
-                          }
-                          int index = i - 1;
-                          GameEvent item = controller.getQuarterEvents()[index];
-                          return Container(
-                            height: 44.w,
-                            margin: EdgeInsets.symmetric(horizontal: 16.w),
-                            padding: EdgeInsets.only(left: 1.w, right: 5.w),
-                            decoration: BoxDecoration(
-                                border: Border(
-                                    bottom: BorderSide(
-                                        color: AppColors.cE6E6E6, width: 1.w))),
-                            child: Row(
-                              children: [
-                                Text(
-                                  MyDateUtils.formatMS(item.time),
-                                  style: 10.w4(
-                                      color: AppColors.c000000,
-                                      height: 1,
-                                      fontFamily: FontFamily.fRobotoRegular),
-                                ),
-                                10.hGap,
-                                Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.circular(15.5.w),
-                                      border: Border.all(
-                                          color: item.isHomePlayer
-                                              ? AppColors.c1F8FE5
-                                              : AppColors.cD60D20,
-                                          width: 1.5.w)),
-                                  child: ImageWidget(
-                                    url: Utils.getPlayUrl(item.playerId),
-                                    width: 28.w,
-                                    height: 28.w,
-                                    borderRadius: BorderRadius.circular(14.w),
-                                    imageFailedPath: Assets.teamUiHead03,
-                                  ),
-                                ),
-                                13.hGap,
-                                Expanded(child: Builder(builder: (context) {
-                                  var list = Utils.subColorString(item.text);
-                                  return Text.rich(
-                                    TextSpan(
-                                        children:
-                                            List.generate(list.length, (index) {
-                                      var colorString = list[index];
-                                      return TextSpan(
-                                          text: "${colorString.text} ",
-                                          style: colorString.isMatch
-                                              ? TextStyle(
-                                                  color: item.isHomePlayer
-                                                      ? AppColors.c1F8FE5
-                                                      : AppColors.cD60D20)
-                                              : null);
-                                    })),
-                                    maxLines: 3,
-                                    softWrap: true,
-                                    style: TextStyle(
-                                        fontSize: 12.sp,
-                                        fontWeight: item.score
-                                            ? FontWeight.w500
-                                            : FontWeight.w400,
-                                        overflow: TextOverflow.ellipsis,
-                                        color: item.score
-                                            ? AppColors.c000000
-                                            : AppColors.c4D4D4D,
+                            int index = i - addSize;
+                            GameEvent item = list[index];
+                            return Container(
+                              height: 44.w,
+                              margin: EdgeInsets.symmetric(horizontal: 16.w),
+                              padding: EdgeInsets.only(left: 1.w, right: 5.w),
+                              decoration: BoxDecoration(
+                                  border: Border(
+                                      bottom: BorderSide(
+                                          color: AppColors.cE6E6E6,
+                                          width: 1.w))),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    MyDateUtils.formatMS(item.time),
+                                    style: 10.w4(
+                                        color: AppColors.c000000,
                                         height: 1,
-                                        fontFamily: item.score
-                                            ? FontFamily.fRobotoMedium
-                                            : FontFamily.fRobotoRegular),
-                                  );
-                                })),
-                                Container(
-                                  width: 50.w,
-                                  alignment: Alignment.center,
-                                  child: !item.score
-                                      ? const SizedBox.shrink()
-                                      : Text.rich(
-                                          TextSpan(children: [
-                                            TextSpan(
-                                                text: "${item.homeScore}",
-                                                style: TextStyle(
-                                                  color: item.score &&
-                                                          item.isHomePlayer
-                                                      ? AppColors.c1F8FE5
-                                                      : AppColors.c4D4D4D,
-                                                )),
-                                            const TextSpan(text: "-"),
-                                            TextSpan(
-                                                text: "${item.awayScore}",
-                                                style: TextStyle(
-                                                  color: item.score &&
-                                                          !item.isHomePlayer
-                                                      ? AppColors.cD60D20
-                                                      : AppColors.c4D4D4D,
-                                                )),
-                                          ]),
-                                          style: 12.w4(
-                                              color: AppColors.c4D4D4D,
-                                              height: 1,
-                                              fontFamily:
-                                                  FontFamily.fRobotoRegular),
-                                        ),
-                                ),
-                              ],
-                            ),
-                          );
-                        }),
-                  );
+                                        fontFamily: FontFamily.fRobotoRegular),
+                                  ),
+                                  10.hGap,
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(15.5.w),
+                                        border: Border.all(
+                                            color: item.isHomePlayer
+                                                ? AppColors.c1F8FE5
+                                                : AppColors.cD60D20,
+                                            width: 1.5.w)),
+                                    child: ImageWidget(
+                                      url: Utils.getPlayUrl(item.playerId),
+                                      width: 28.w,
+                                      height: 28.w,
+                                      borderRadius: BorderRadius.circular(14.w),
+                                      imageFailedPath: Assets.teamUiHead03,
+                                    ),
+                                  ),
+                                  13.hGap,
+                                  Expanded(child: Builder(builder: (context) {
+                                    var list = Utils.subColorString(item.text);
+                                    return Text.rich(
+                                      TextSpan(
+                                          children: List.generate(list.length,
+                                              (index) {
+                                        var colorString = list[index];
+                                        return TextSpan(
+                                            text: "${colorString.text} ",
+                                            style: colorString.isMatch
+                                                ? TextStyle(
+                                                    color: item.isHomePlayer
+                                                        ? AppColors.c1F8FE5
+                                                        : AppColors.cD60D20)
+                                                : null);
+                                      })),
+                                      maxLines: 3,
+                                      softWrap: true,
+                                      style: TextStyle(
+                                          fontSize: 12.sp,
+                                          fontWeight: item.score
+                                              ? FontWeight.w500
+                                              : FontWeight.w400,
+                                          overflow: TextOverflow.ellipsis,
+                                          color: item.score
+                                              ? AppColors.c000000
+                                              : AppColors.c4D4D4D,
+                                          height: 1,
+                                          fontFamily: item.score
+                                              ? FontFamily.fRobotoMedium
+                                              : FontFamily.fRobotoRegular),
+                                    );
+                                  })),
+                                  Container(
+                                    width: 50.w,
+                                    alignment: Alignment.center,
+                                    child: !item.score
+                                        ? const SizedBox.shrink()
+                                        : Text.rich(
+                                            TextSpan(children: [
+                                              TextSpan(
+                                                  text: "${item.homeScore}",
+                                                  style: TextStyle(
+                                                    color: item.score &&
+                                                            item.isHomePlayer
+                                                        ? AppColors.c1F8FE5
+                                                        : AppColors.c4D4D4D,
+                                                  )),
+                                              const TextSpan(text: "-"),
+                                              TextSpan(
+                                                  text: "${item.awayScore}",
+                                                  style: TextStyle(
+                                                    color: item.score &&
+                                                            !item.isHomePlayer
+                                                        ? AppColors.cD60D20
+                                                        : AppColors.c4D4D4D,
+                                                  )),
+                                            ]),
+                                            style: 12.w4(
+                                                color: AppColors.c4D4D4D,
+                                                height: 1,
+                                                fontFamily:
+                                                    FontFamily.fRobotoRegular),
+                                          ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }),
+                    );
+                  });
                 }),
           ),
           MtInkwell(

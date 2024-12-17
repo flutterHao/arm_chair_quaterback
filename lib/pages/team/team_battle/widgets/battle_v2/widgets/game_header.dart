@@ -241,7 +241,7 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                     Positioned(
                         top: 0,
                         child: Obx(() {
-                          if(controller.isGameOver.value){
+                          if(!controller.isGameStart.value || controller.isGameOver.value){
                             return const SizedBox.shrink();
                           }
                           return MtInkwell(

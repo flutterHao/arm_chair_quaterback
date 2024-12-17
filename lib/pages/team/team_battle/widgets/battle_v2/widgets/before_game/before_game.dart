@@ -21,6 +21,7 @@ import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/wi
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/flip_card.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactics/tactic_card.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -221,6 +222,9 @@ class BeforeGameWidget extends GetView<BeforeGameController> {
                                       width: 28.w,
                                       useSmallTacticCard: true,
                                       onFlip: () {
+                                        if(kReleaseMode){
+                                          return;
+                                        }
                                         item.isOpen.value = !item.isOpen.value;
                                       },
                                       buff: item);
@@ -258,7 +262,7 @@ class BeforeGameWidget extends GetView<BeforeGameController> {
                         duration: const Duration(milliseconds: 300),
                         child: SingleChildScrollView(
                           controller: controller.scrollController,
-                          // physics: const NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           child: Column(
                             children: [
                               Container(

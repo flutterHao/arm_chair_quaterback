@@ -169,19 +169,15 @@ class _MatchingState extends State<Matching>
       Obx(() {
         var p = progress.value;
         double rWidth = maxWidthHeight * p;
-        double xP = (width - max(maxWidthHeight * p, minSize)) / 2;
-        double yP = (height - max(maxWidthHeight * p, minSize)) / 2;
         return Positioned(
-          left: xP,
-          right: xP,
-          bottom: yP,
-          top: yP,
+          width: rWidth,
+          height: rWidth,
           child: rWidth <= minSize
               ? const SizedBox.shrink()
               : Container(
                   decoration: BoxDecoration(
                       color: Colors.blue.withOpacity(.2 * (1 - p)),
-                      borderRadius: BorderRadius.circular(maxWidthHeight / 2),
+                      borderRadius: BorderRadius.circular(rWidth / 2),
                       border: Border.all(
                           color: Colors.blue.withOpacity(.4 * (1 - p)),
                           width: 1)),
@@ -192,19 +188,15 @@ class _MatchingState extends State<Matching>
       Obx(() {
         var p = progress.value - 0.2;
         double rWidth = maxWidthHeight * p;
-        double xP = (width - max(maxWidthHeight * p, minSize)) / 2;
-        double yP = (height - max(maxWidthHeight * p, minSize)) / 2;
         return Positioned(
-          left: xP,
-          right: xP,
-          bottom: yP,
-          top: yP,
+          width: rWidth,
+          height: rWidth,
           child: rWidth <= minSize
               ? const SizedBox.shrink()
               : Container(
                   decoration: BoxDecoration(
                       color: Colors.blue.withOpacity(.2 * (1 - p)),
-                      borderRadius: BorderRadius.circular(maxWidthHeight / 2),
+                      borderRadius: BorderRadius.circular(rWidth / 2),
                       border: Border.all(
                           color: Colors.blue.withOpacity(.4 * (1 - p)),
                           width: 1)),

@@ -42,7 +42,7 @@ class ShootHistory {
 }
 
 class TeamBattleV2Controller extends GetxController
-    with GetTickerProviderStateMixin {
+    with GetTickerProviderStateMixin, WidgetsBindingObserver {
   TeamBattleV2Controller(this.context) {
     size = MediaQuery.of(context).size;
   }
@@ -116,10 +116,13 @@ class TeamBattleV2Controller extends GetxController
 
   var maybeException = false.obs;
 
+  var liveTextTabIndex = RxInt(-1);
+
   /// 在 widget 内存中分配后立即调用。
   @override
   void onInit() {
     super.onInit();
+    WidgetsBinding.instance.addObserver(this);
     battleEntity = Get.find<TeamBattleController>().battleEntity;
     winRateController = Get.put(WinRateController());
     gameLeaderController = Get.put(GameLeaderController());
@@ -322,6 +325,7 @@ class TeamBattleV2Controller extends GetxController
       return;
     }
     quarter.value = quarter.value + 1;
+    liveTextTabIndex.value = quarter.value -1;
     update([idLiveText]);
     liveTextScrollController.jumpTo(0);
     quarterTimeCountDownAnimationController.controller
@@ -394,7 +398,7 @@ class TeamBattleV2Controller extends GetxController
     teamStatsController.setEvent(event);
     update([idLiveText, idGameScore, idPlayers, idQuarterScore, idReadiness]);
     Future.delayed(Duration.zero, () {
-      if (context.mounted) {
+      if (context.mounted && (liveTextTabIndex.value+1) == quarter.value) {
         liveTextScrollController.animateTo(
             ((eventOnScreenMap[key] ?? []).length * 44.w),
             duration: Duration(milliseconds: (800 / gameSpeed).toInt()),
@@ -753,8 +757,17 @@ class TeamBattleV2Controller extends GetxController
   }
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    /// app退到后台则直接返回
+    isGameOver.value = true;
+    Get.back();
+    super.didChangeAppLifecycleState(state);
+  }
+
+  @override
   void dispose() {
     release();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
@@ -831,8 +844,8 @@ class TeamBattleV2Controller extends GetxController
 
   static String get idBattleMain => "id_battle_main";
 
-  List<GameEvent> getQuarterEvents() {
-    return eventOnScreenMap[Utils.getSortWithInt(quarter.value)] ?? [];
+  List<GameEvent> getQuarterEvents({int? quarterValue}) {
+    return eventOnScreenMap[Utils.getSortWithInt(quarterValue??quarter.value)] ?? [];
   }
 
   seeAll() {
