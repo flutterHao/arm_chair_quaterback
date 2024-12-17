@@ -39,7 +39,7 @@ class GameOverWidget extends GetView<GameOverController> {
     teamBattleV2Controller = Get.find();
     teamBattleController = Get.find();
     return GetBuilder<GameOverController>(
-        init: GameOverController(),
+        init: GameOverController(context),
         builder: (logic) {
           return Container(
             color: AppColors.cF2F2F2,
@@ -481,7 +481,7 @@ class GameOverWidget extends GetView<GameOverController> {
       alignment: Alignment.center,
       children: [
         ///winner旗帜
-        winnerBg(true),
+        winnerBg(true,context),
 
         ///WINNER：文字
         winnerText(true),
@@ -717,7 +717,7 @@ class GameOverWidget extends GetView<GameOverController> {
         }));
   }
 
-  Obx winnerBg(bool isLeft) {
+  Obx winnerBg(bool isLeft,BuildContext context) {
     return Obx(() {
       return AnimatedPositioned(
           top: controller.startObs.value ? -10.w : -208.w,
@@ -727,7 +727,9 @@ class GameOverWidget extends GetView<GameOverController> {
           onEnd: () {
             print('AnimatedPositioned---onEnd----');
             Future.delayed(const Duration(milliseconds: 500), () {
-              controller.initCup();
+              if(context.mounted) {
+                controller.initCup();
+              }
             });
           },
           child: IconWidget(
@@ -748,7 +750,7 @@ class GameOverWidget extends GetView<GameOverController> {
       alignment: Alignment.center,
       children: [
         ///winner旗帜
-        winnerBg(false),
+        winnerBg(false,context),
 
         ///WINNER：文字
         winnerText(false),

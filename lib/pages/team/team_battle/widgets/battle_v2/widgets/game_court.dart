@@ -49,6 +49,8 @@ class GameCourtWidget extends GetView<TeamBattleV2Controller> {
                     builder: (_) {
                       return Container(
                         margin: EdgeInsets.only(top: 38.w),
+                        width: 357.w,
+                        height: 89.w,
                         child: Stack(
                           alignment: Alignment.center,
                           children: [
@@ -143,6 +145,39 @@ class GameCourtWidget extends GetView<TeamBattleV2Controller> {
                 //
                 //  右边篮筐位置 top: 49.w,right: 22.w,
                 //  左边Y轴中点三分位置：top: 73.w,right: 125.w,
+                ///篮球架
+                GetBuilder<TeamBattleV2Controller>(
+                    id: TeamBattleV2Controller.idPlayersLocation,
+                    builder: (_) {
+                      return Container(
+                        margin: EdgeInsets.only(top: 38.w),
+                        width: 357.w,
+                        height: 89.w,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            /// 左边篮球架
+                            Positioned(
+                              left: 3.w,
+                                top: 5.w,
+                                width: 26.w,
+                                height: 38.w,
+                                child: Center(child: IconWidget(iconWidth: 26.w, icon: Assets.managerUiManagerCourt01))),
+                            /// 右边篮球架
+                            Positioned(
+                                right: 3.w,
+                                top: 5.w,
+                                width: 26.w,
+                                height: 38.w,
+                                child: Transform(
+                                    alignment: Alignment.center,
+                                    transform: Matrix4.identity()
+                                      ..scale(-1.0, 1.0),
+                                    child: Center(child: IconWidget(iconWidth: 26.w, icon: Assets.managerUiManagerCourt01)))),
+                          ],
+                        ),
+                      );
+                    }),
                 Obx(() {
                   return Positioned(
                       top: controller.shootOffset.value.dy,

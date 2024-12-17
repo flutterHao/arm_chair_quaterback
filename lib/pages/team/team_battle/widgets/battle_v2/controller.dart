@@ -168,12 +168,6 @@ class TeamBattleV2Controller extends GetxController
             battleEntity.homeTeam.teamId == pkEventUpdatedEntity.senderTeamId;
         var competitionVenue = getCompetitionVenue(gameEvent!.gameEventType,
             pkEventUpdatedEntity.senderPlayerId, isHomePlayer);
-        if (competitionVenue == null) {
-          return;
-        }
-        var positions = getPositions(competitionVenue);
-        var mainPos = getMainPos(competitionVenue,
-            pkEventUpdatedEntity.senderPlayerId, isHomePlayer, positions);
         var event = GameEvent(
           pkEventUpdatedEntity.stepId,
           pkEventUpdatedEntity.senderPlayerId,
@@ -183,8 +177,14 @@ class TeamBattleV2Controller extends GetxController
           isHomePlayer,
           isShootType(gameEvent.gameEventType),
           isScoreType(gameEvent.gameEventType, pkEventUpdatedEntity),
-          positions,
-          mainPos,
+          competitionVenue == null ? null : getPositions(competitionVenue),
+          competitionVenue == null
+              ? null
+              : getMainPos(
+                  competitionVenue,
+                  pkEventUpdatedEntity.senderPlayerId,
+                  isHomePlayer,
+                  getPositions(competitionVenue)),
           pkEventUpdatedEntity.stepHomeScore,
           pkEventUpdatedEntity.stepAwayScore,
           pkEventUpdatedEntity,
@@ -325,7 +325,7 @@ class TeamBattleV2Controller extends GetxController
       return;
     }
     quarter.value = quarter.value + 1;
-    liveTextTabIndex.value = quarter.value -1;
+    liveTextTabIndex.value = quarter.value - 1;
     update([idLiveText]);
     liveTextScrollController.jumpTo(0);
     quarterTimeCountDownAnimationController.controller
@@ -387,18 +387,21 @@ class TeamBattleV2Controller extends GetxController
       // ]);
     }
 
-    if (event.shooting) {
-      shoot(event);
-    } else {
-      addToShootHistory(mainOffset =
-          ShootHistory(!event.isHomePlayer, transitionPos(event), event.score));
-      update([idPlayersLocation]);
+    if(event.mainOffset != null) {
+      if (event.shooting) {
+        shoot(event);
+      } else {
+        addToShootHistory(mainOffset =
+            ShootHistory(
+                !event.isHomePlayer, transitionPos(event), event.score));
+        update([idPlayersLocation]);
+      }
     }
     gameLeaderController.setEvent(event);
     teamStatsController.setEvent(event);
     update([idLiveText, idGameScore, idPlayers, idQuarterScore, idReadiness]);
     Future.delayed(Duration.zero, () {
-      if (context.mounted && (liveTextTabIndex.value+1) == quarter.value) {
+      if (context.mounted && (liveTextTabIndex.value + 1) == quarter.value) {
         liveTextScrollController.animateTo(
             ((eventOnScreenMap[key] ?? []).length * 44.w),
             duration: Duration(milliseconds: (800 / gameSpeed).toInt()),
@@ -479,13 +482,16 @@ class TeamBattleV2Controller extends GetxController
   addToShootHistory(ShootHistory item) {
     // print('shootHistory.length--00--:${shootHistory.length}');
     shootHistory.add(item);
-    var list = shootHistory.where((e) => e.isAway == item.isAway).toList();
-    if (list.length > 5) {
-      var lastWhere =
-          shootHistory.firstWhereOrNull((e) => e.isAway == item.isAway);
-      shootHistory.remove(lastWhere);
+    var list = shootHistory;
+    if (list.length > 2) {
+      shootHistory.removeAt(0);
     }
-    // print('shootHistory.length--111--:${shootHistory.length}');
+    // var list = shootHistory.where((e) => e.isAway == item.isAway).toList();
+    // if (list.length > 5) {
+    //   var lastWhere =
+    //       shootHistory.firstWhereOrNull((e) => e.isAway == item.isAway);
+    //   shootHistory.remove(lastWhere);
+    // }
   }
 
   double getRandom(num max, [num minValue = 0]) {
@@ -845,7 +851,9 @@ class TeamBattleV2Controller extends GetxController
   static String get idBattleMain => "id_battle_main";
 
   List<GameEvent> getQuarterEvents({int? quarterValue}) {
-    return eventOnScreenMap[Utils.getSortWithInt(quarterValue??quarter.value)] ?? [];
+    return eventOnScreenMap[
+            Utils.getSortWithInt(quarterValue ?? quarter.value)] ??
+        [];
   }
 
   seeAll() {
@@ -859,7 +867,7 @@ class TeamBattleV2Controller extends GetxController
   }
 
   Offset transitionPos(GameEvent event) {
-    Offset o = event.mainOffset;
+    Offset o = event.mainOffset!;
     double x = o.dx;
     double y = o.dy;
     double regionWidth = size.width - 18.w;
@@ -881,7 +889,7 @@ class TeamBattleV2Controller extends GetxController
 
   bool isShootType(String type) {
     // 投篮事件类型
-    List<int> shootTypes = [1, 3, 5, 6, 7, 9, 11, 12, 13, 14, 15, 16, 20];
+    List<int> shootTypes = [1,2, 3,4, 5, 6, 7,8, 9,10, 11, 12, 13, 14, 15, 16,17, 18,19,20,21,24,25,26,27,28,29,30,31,32];
     return shootTypes.contains(int.parse(type));
   }
 
@@ -890,7 +898,7 @@ class TeamBattleV2Controller extends GetxController
       return true;
     }
     //得分事件类型
-    List<int> scoreTypes = [1, 2, 3, 4, 5, 6, 7, 8, 11, 12, 13, 14];
+    List<int> scoreTypes = [1, 2, 3, 4, 5, 6, 7, 8, 11, 12, 13, 14,24,26,27,30,31,32];
     return scoreTypes.contains(int.parse(type));
   }
 
@@ -984,6 +992,8 @@ class TeamBattleV2Controller extends GetxController
     }
     return count;
   }
+
+
 }
 
 class GameEvent {
@@ -993,7 +1003,7 @@ class GameEvent {
   final int homeScore;
   final int awayScore;
   final bool isHomePlayer;
-  int time = 0;
+  int time = -1;
 
   // 是否执行投篮动画
   final bool shooting;
@@ -1002,10 +1012,10 @@ class GameEvent {
   final bool score;
 
   //此事件所有球员的位置
-  final Map<String, Offset> playerOffsets;
+  final Map<String, Offset>? playerOffsets;
 
   // 主角的位置
-  final Offset mainOffset;
+  final Offset? mainOffset;
   final int quarterHomeScore;
   final int quarterAwayScore;
   final PkEventUpdatedEntity pkEventUpdatedEntity;

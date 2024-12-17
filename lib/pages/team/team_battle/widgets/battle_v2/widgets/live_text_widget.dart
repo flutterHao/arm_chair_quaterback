@@ -141,7 +141,10 @@ class _LiveTextWidgetState extends State<LiveTextWidget> {
                     var itemCount = list.length;
                     var currentTabIsLast =
                         (value + 1) == controller.quarter.value;
-                    var addSize = (currentTabIsLast ? 1 : 0);
+                    var addSize =
+                        (currentTabIsLast && !controller.isGameOver.value
+                            ? 1
+                            : 0);
                     return MediaQuery.removePadding(
                       removeTop: true,
                       context: context,
@@ -155,7 +158,9 @@ class _LiveTextWidgetState extends State<LiveTextWidget> {
                                   ? controller.liveTextScrollController
                                   : ScrollController(),
                           itemBuilder: (context, i) {
-                            if (i == 0 && currentTabIsLast) {
+                            if (i == 0 &&
+                                currentTabIsLast &&
+                                !controller.isGameOver.value) {
                               if (itemCount == 0) {
                                 return SizedBox(
                                   height: 44.w * 5,
@@ -171,6 +176,13 @@ class _LiveTextWidgetState extends State<LiveTextWidget> {
                             }
                             int index = i - addSize;
                             GameEvent item = list[index];
+                            int time = item.time;
+                            if (item.time == -1) {
+                              double step = 40 / list.length;
+                              var generateTime =
+                                  (((list.length-index) * step)/40 * 12 * 60).toInt();
+                              time = generateTime;
+                            }
                             return Container(
                               height: 44.w,
                               margin: EdgeInsets.symmetric(horizontal: 16.w),
@@ -183,7 +195,7 @@ class _LiveTextWidgetState extends State<LiveTextWidget> {
                               child: Row(
                                 children: [
                                   Text(
-                                    MyDateUtils.formatMS(item.time),
+                                    MyDateUtils.formatMS(time),
                                     style: 10.w4(
                                         color: AppColors.c000000,
                                         height: 1,
@@ -191,6 +203,8 @@ class _LiveTextWidgetState extends State<LiveTextWidget> {
                                   ),
                                   10.hGap,
                                   Container(
+                                    width: 28.w,
+                                    height: 28.w,
                                     decoration: BoxDecoration(
                                         borderRadius:
                                             BorderRadius.circular(15.5.w),

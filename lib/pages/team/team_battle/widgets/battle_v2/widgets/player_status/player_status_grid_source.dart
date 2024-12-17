@@ -139,7 +139,7 @@ class PlayerStatusGridSource extends DataGridSource {
         )),
         child: Center(
           child: Text(
-            "${playerStatus.score}",
+            playerStatus.score.format(),
             style: 12.w5(
                 color:
                     playerStatus.isMvp ? AppColors.c000000 : AppColors.c4D4D4D,

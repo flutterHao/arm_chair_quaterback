@@ -1,16 +1,13 @@
 import 'dart:async';
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
-import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/widgets/battle_animation_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactics/tactic_utils.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -104,6 +101,8 @@ class BeforeGameController extends GetxController
     scrollController.animateTo(163.w,
         duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
     onTheEnd.value = true;
+    showTacticResult.value = false;
+    startCountDown.value = true;
   }
 
   lastAnimationStatusListener(status) {
@@ -142,14 +141,13 @@ class BeforeGameController extends GetxController
         /// 比完牌之后显示边框
         showBorder.value = true;
 
-        /// 显示卡牌对比结果
-        showTacticResult.value = true;
-
+        Future.delayed(const Duration(milliseconds: 500),(){
+          /// 显示卡牌对比结果
+          showTacticResult.value = true;
+        });
         /// 延迟开始比赛，同时移动卡牌位置到头像
         Future.delayed(const Duration(seconds: 2), () {
           print('---------dddd--------');
-          showTacticResult.value = false;
-          startCountDown.value = true;
           var homeTeamBuff = battleEntity.homeTeamBuff;
           for (int index = 0; index < homeTeamBuff.length; index++) {
             var easyAnimationController = EasyAnimationController(

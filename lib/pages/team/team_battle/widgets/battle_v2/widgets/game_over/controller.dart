@@ -17,6 +17,9 @@ import 'package:get/get.dart';
 ///created at 2024/12/10/15:14
 
 class GameOverController extends GetxController {
+  GameOverController(this.context);
+
+  final BuildContext context;
   var startObs = false.obs;
   var cup = RxInt(0);
   var giftScaleObs = false.obs;
@@ -55,8 +58,8 @@ class GameOverController extends GetxController {
   }
 
   void initCup() {
-    int beforeCup = getBeforeCup();
-    int currentCup = getCurrentCup();
+    var beforeCup = getBeforeCup();
+    var currentCup = getCurrentCup();
     var result = (currentCup - beforeCup).abs();
     if (result > 0) {
       cupNum = result;
@@ -64,6 +67,7 @@ class GameOverController extends GetxController {
     } else {
       giftScaleObs.value = true;
     }
+    var cupPercent = getCupPercent();
     showTopToastDialog(
         child: Row(
       children: [
@@ -109,7 +113,7 @@ class GameOverController extends GetxController {
                       borderRadius: BorderRadius.circular(6.w),
                       border: Border.all(color: AppColors.c000000, width: 1.w)),
                   child: LinearProgressIndicator(
-                    value: getCupPercent() * value,
+                    value: cupPercent * value,
                     backgroundColor: AppColors.cTransparent,
                     color: AppColors.c000000,
                     borderRadius: BorderRadius.circular(6.w),
@@ -123,7 +127,7 @@ class GameOverController extends GetxController {
             Row(
               children: [
                 Text(
-                  "${getBeforeCup()}",
+                  "$beforeCup",
                   style: 16.w4(
                       color: AppColors.c000000,
                       height: 1,
@@ -152,14 +156,14 @@ class GameOverController extends GetxController {
                 ),
                 7.hGap,
                 Text(
-                  "${getCurrentCup()}",
+                  "$currentCup",
                   style: 16.w5(
                       color: AppColors.c000000,
                       height: 1,
                       fontFamily: FontFamily.fRobotoMedium),
                 ),
                 5.hGap,
-                if (getCurrentCup() != getBeforeCup())
+                if (currentCup != beforeCup)
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -167,8 +171,7 @@ class GameOverController extends GetxController {
                         iconWidth: 8.w,
                         icon: Assets.commonUiCommonIconSystemArrow,
                         iconColor: AppColors.c000000,
-                        rotateAngle:
-                            getCurrentCup() > getBeforeCup() ? -90 : 90,
+                        rotateAngle: currentCup > beforeCup ? -90 : 90,
                       )
                     ],
                   )
