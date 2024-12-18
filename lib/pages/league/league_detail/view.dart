@@ -40,7 +40,15 @@ class LeagueDetailPage extends GetView<LeagueDetailController> {
               showPop: true,
             ),
             bodyWidget: Expanded(
-                child: NestedScrollView(
+                child: controller.item == null
+                    ? Obx(() {
+                  return Center(
+                    child: LoadStatusWidget(
+                      loadDataStatus: controller.loadStatus.value,
+                    ),
+                  );
+                })
+                    :NestedScrollView(
               floatHeaderSlivers: true,
               headerSliverBuilder:
                   (BuildContext context, bool innerBoxIsScrolled) {
@@ -244,15 +252,7 @@ class LeagueDetailPage extends GetView<LeagueDetailController> {
                           height: 34.w))
                 ];
               },
-              body: controller.item == null
-                  ? Obx(() {
-                      return Center(
-                        child: LoadStatusWidget(
-                          loadDataStatus: controller.loadStatus.value,
-                        ),
-                      );
-                    })
-                  : ExtendedTabBarView(
+              body:  ExtendedTabBarView(
                       controller: controller.tabController,
                       cacheExtent: 2,
                       shouldIgnorePointerWhenScrolling: false,
