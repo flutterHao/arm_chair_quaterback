@@ -2,12 +2,18 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-12 17:54:17
- * @LastEditTime: 2024-11-14 14:41:00
+ * @LastEditTime: 2024-12-18 10:06:14
  */
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-11-12 17:54:17
+ * @LastEditTime: 2024-12-17 21:57:10
+ */
+import 'package:arm_chair_quaterback/common/entities/player_card_entity.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/card_pack_info_entity.g.dart';
 import 'dart:convert';
-
 import 'package:get/get.dart';
 export 'package:arm_chair_quaterback/generated/json/card_pack_info_entity.g.dart';
 
@@ -21,7 +27,7 @@ class CardPackInfoEntity {
   late int updateTime = 0;
   late List<CardPackInfoCard> card = [];
   late int freeGiftCount = 0;
-  @JSONField(deserialize: false)
+  @JSONField(deserialize: false, serialize: false)
   RxString freeTimeString = "00:00:00".obs;
 
   CardPackInfoEntity();
@@ -41,16 +47,29 @@ class CardPackInfoEntity {
 class CardPackInfoCard {
   late int cardId = 0;
   late int openTime = 0;
+
+  /// 0:等待 1:倒计时 2:可打开
   late int status = 0;
   @JSONField(deserialize: false)
+  late String totalTime = "";
   late RxString remainTime = "00:00".obs;
   @JSONField(deserialize: false)
   double progress = 0;
+  @JSONField(deserialize: false, serialize: false)
+  RxBool isOpen = false.obs;
+  List<int> players = [];
+  @JSONField(deserialize: false, serialize: false)
+  List<PlayerCardEntity> playerCards = [];
 
   CardPackInfoCard({this.status = 0});
 
-  factory CardPackInfoCard.fromJson(Map<String, dynamic> json) =>
-      $CardPackInfoCardFromJson(json);
+  factory CardPackInfoCard.fromJson(Map<String, dynamic> json) {
+    var entity = $CardPackInfoCardFromJson(json);
+    entity.playerCards = entity.players
+        .map((e) => PlayerCardEntity.fromJson({"playerId": e}))
+        .toList();
+    return entity;
+  }
 
   Map<String, dynamic> toJson() => $CardPackInfoCardToJson(this);
 

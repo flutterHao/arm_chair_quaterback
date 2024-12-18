@@ -73,7 +73,7 @@ class TrainingTactics extends StatelessWidget {
     }
 
     void recove(myTeamCtrl) {
-      if (myTeamCtrl.myTeamEntity.powerP >= 100) {
+      if (myTeamCtrl.myTeamEntity.powerP >= 1000) {
         EasyLoading.showToast("Your team's morale is full.");
         // Loading.toast("Your team's morale is full.");
         return;

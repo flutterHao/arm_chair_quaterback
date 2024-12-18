@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-18 15:38:51
- * @LastEditTime: 2024-12-16 21:43:10
+ * @LastEditTime: 2024-12-17 11:05:59
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -10,6 +10,7 @@ import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/review_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comment_controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/send_comment_widget.dart';
 import 'package:flutter/material.dart';
@@ -276,5 +277,85 @@ class SubComentsListView extends GetView<CommentController> {
                   );
           }),
     );
+  }
+}
+
+class DetailCommentWidget extends StatelessWidget {
+  const DetailCommentWidget({super.key, required this.item});
+  final NewsListDetail item;
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<CommentController>(
+        tag: item.id.toString(),
+        builder: (comCtrl) {
+          var list =
+              comCtrl.mainList.where((e) => e.parentReviewId == 0).toList();
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: 1.w,
+                margin: EdgeInsets.symmetric(vertical: 25.w),
+                width: double.infinity,
+                color: AppColors.cE6E6E,
+              ),
+              Text(
+                "Comments",
+                style: 19.w7(height: 1),
+              ),
+              12.vGap,
+              list.isNotEmpty
+                  ? ListView.separated(
+                      controller: ScrollController(),
+                      shrinkWrap: true,
+                      physics: const ClampingScrollPhysics(),
+                      padding: EdgeInsets.symmetric(vertical: 12.w),
+                      itemCount: list.length,
+                      separatorBuilder: (context, index) {
+                        return 30.vGap;
+                      },
+                      itemBuilder: (context, index) {
+                        return Column(
+                          children: [
+                            CommentItemView(
+                              item: list[index],
+                              detail: item,
+                            ),
+                            if (list[index].sonReviews > 0 ||
+                                list[index].subList.isNotEmpty)
+                              Container(
+                                // width: 295.w,
+                                margin: EdgeInsets.only(left: 48.w),
+                                child: SubComentsListView(list[index], item),
+                              )
+                          ],
+                        );
+                      })
+                  : const SizedBox.shrink(),
+              if (item.reviewsCount.value > list.length)
+                Container(
+                  margin: const EdgeInsets.only(bottom: 100),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      MtInkwell(
+                        onTap: () => comCtrl.getReviews(item.id),
+                        child: Container(
+                          padding: EdgeInsets.all(10.w),
+                          child: Text(
+                            "Show more comments",
+                            textAlign: TextAlign.center,
+                            style: 12.w4(color: AppColors.cB3B3B3),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                )
+            ],
+          );
+        });
   }
 }

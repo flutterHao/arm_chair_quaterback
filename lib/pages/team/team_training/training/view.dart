@@ -5,7 +5,6 @@
  * @LastEditTime: 2024-12-16 16:05:39
  */
 
-import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/flip_card.dart';
@@ -14,7 +13,6 @@ import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/t
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactics/training_tactics.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/training_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class TrainingPage extends GetView<TrainingController> {
@@ -59,10 +57,10 @@ class TrainingPage extends GetView<TrainingController> {
                 ],
               ),
               for (int index = 0;
-                  index < controller.chooseTacticList.length;
+                  index < controller.tacticChooseList.length;
                   index++)
                 Obx(() {
-                  var e = controller.chooseTacticList[index];
+                  var e = controller.tacticChooseList[index];
                   return Visibility(
                     visible:
                         controller.showBuff.value && !controller.isChange.value,

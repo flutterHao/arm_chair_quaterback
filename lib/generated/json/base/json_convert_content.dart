@@ -12,7 +12,6 @@ import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart'
 import 'package:arm_chair_quaterback/common/entities/competition_venue_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/config/prop_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/cup_define_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/dan_ma_ku_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/game_event_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/game_schedules_info.dart';
 import 'package:arm_chair_quaterback/common/entities/grade_in_stamina_entity.dart';
@@ -41,6 +40,7 @@ import 'package:arm_chair_quaterback/common/entities/pk_event_updated_entity.dar
 import 'package:arm_chair_quaterback/common/entities/pk_player_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_start_updated_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/player_card_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_day_data_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_status_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_award_entity.dart';
@@ -299,10 +299,6 @@ class JsonConvert {
     if (<CupDefineEntity>[] is M) {
       return data.map<CupDefineEntity>((Map<String, dynamic> e) =>
           CupDefineEntity.fromJson(e)).toList() as M;
-    }
-    if (<DanMaKuEntity>[] is M) {
-      return data.map<DanMaKuEntity>((Map<String, dynamic> e) =>
-          DanMaKuEntity.fromJson(e)).toList() as M;
     }
     if (<GameEventEntity>[] is M) {
       return data.map<GameEventEntity>((Map<String, dynamic> e) =>
@@ -674,6 +670,10 @@ class JsonConvert {
       return data.map<PkStartUpdatedEntity>((Map<String, dynamic> e) =>
           PkStartUpdatedEntity.fromJson(e)).toList() as M;
     }
+    if (<PlayerCardEntity>[] is M) {
+      return data.map<PlayerCardEntity>((Map<String, dynamic> e) =>
+          PlayerCardEntity.fromJson(e)).toList() as M;
+    }
     if (<PlayerDayDataEntity>[] is M) {
       return data.map<PlayerDayDataEntity>((Map<String, dynamic> e) =>
           PlayerDayDataEntity.fromJson(e)).toList() as M;
@@ -933,7 +933,6 @@ class JsonConvertClassCollection {
     (CompetitionVenueEntity).toString(): CompetitionVenueEntity.fromJson,
     (PropDefineEntity).toString(): PropDefineEntity.fromJson,
     (CupDefineEntity).toString(): CupDefineEntity.fromJson,
-    (DanMaKuEntity).toString(): DanMaKuEntity.fromJson,
     (GameEventEntity).toString(): GameEventEntity.fromJson,
     (GameSchedulesInfo).toString(): GameSchedulesInfo.fromJson,
     (GradeInStaminaEntity).toString(): GradeInStaminaEntity.fromJson,
@@ -1061,6 +1060,7 @@ class JsonConvertClassCollection {
         .fromJson,
     (DropAwardData).toString(): DropAwardData.fromJson,
     (PkStartUpdatedEntity).toString(): PkStartUpdatedEntity.fromJson,
+    (PlayerCardEntity).toString(): PlayerCardEntity.fromJson,
     (PlayerDayDataEntity).toString(): PlayerDayDataEntity.fromJson,
     (PlayerStatusEntity).toString(): PlayerStatusEntity.fromJson,
     (RankAwardEntity).toString(): RankAwardEntity.fromJson,

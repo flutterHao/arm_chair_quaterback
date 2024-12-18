@@ -21,10 +21,24 @@ import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 
 class NewsListItem extends StatelessWidget {
-  const NewsListItem({super.key, required this.newsDetail});
+  const NewsListItem(
+      {super.key, required this.newsDetail, this.showMoreNew = false});
   final NewsListDetail newsDetail;
+  final bool showMoreNew;
 
   // GlobalKey get _globalKey => GlobalKey();
+
+  Widget _moreNews() {
+    return Container(
+        margin: EdgeInsets.only(bottom: 36.w),
+        child: Text(
+          "MORE NEWS",
+          style: 30.w4(
+              color: AppColors.c000000,
+              height: 0.8,
+              fontFamily: FontFamily.fOswaldBold),
+        ));
+  }
 
   Widget _head() {
     return Row(
@@ -291,6 +305,7 @@ class NewsListItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          if (showMoreNew) _moreNews(),
           _head(),
           14.vGap,
           _buildNewsContent(context),

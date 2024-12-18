@@ -49,7 +49,10 @@ class _NewsDetailPage2State extends State<NewsDetailPage2> {
                         physics: const BouncingScrollPhysics(),
                         child: Column(
                           children: [
-                            NewsDetailItem(item: widget.newsDetail),
+                            NewsDetailItem(
+                              item: widget.newsDetail,
+                              showComments: true,
+                            ),
                             100.vGap,
                           ],
                         ),

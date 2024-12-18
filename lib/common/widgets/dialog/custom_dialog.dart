@@ -12,7 +12,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
  * @Description: 自定义弹窗
  * @Author: lihonghao
  * @Date: 2024-09-28 15:59:52
- * @LastEditTime: 2024-12-13 14:53:07
+ * @LastEditTime: 2024-12-17 12:09:21
  */
 
 class CustomBottomDialog extends StatelessWidget {
@@ -22,12 +22,16 @@ class CustomBottomDialog extends StatelessWidget {
       required this.title,
       this.desc,
       this.content,
-      required this.onComfirm});
+      required this.onComfirm,
+      this.comfirmText = "CONFIRM",
+      this.isShowCancelButton = true});
   final double? height;
   final String title;
   final String? desc;
   final Widget? content;
   final Function onComfirm;
+  final String comfirmText;
+  final bool isShowCancelButton;
 
   @override
   Widget build(BuildContext context) {
@@ -99,29 +103,31 @@ class CustomBottomDialog extends StatelessWidget {
               ),
             ),
           ),
-          9.vGap,
-          MtInkwell(
-            onTap: () => Navigator.pop(context),
-            child: Container(
-              height: 51.w,
-              width: 343.w,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  border: Border.all(width: 1.w, color: AppColors.c666666),
-                  borderRadius: BorderRadius.circular(9.w)),
-              child: Text(
-                "CANCEL",
-                style: 23.w5(
-                    color: AppColors.c000000,
-                    height: 1,
-                    fontFamily: FontFamily.fOswaldMedium),
+          if (isShowCancelButton) 9.vGap,
+          if (isShowCancelButton)
+            MtInkwell(
+              onTap: () => Navigator.pop(context),
+              child: Container(
+                height: 51.w,
+                width: 343.w,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    border: Border.all(width: 1.w, color: AppColors.c666666),
+                    borderRadius: BorderRadius.circular(9.w)),
+                child: Text(
+                  "CANCEL",
+                  style: 23.w5(
+                      color: AppColors.c000000,
+                      height: 1,
+                      fontFamily: FontFamily.fOswaldMedium),
+                ),
               ),
             ),
-          ),
           41.vGap,
         ],
       ),
     );
+ 
   }
 }
 

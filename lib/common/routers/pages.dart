@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:33:28
- * @LastEditTime: 2024-12-16 20:57:43
+ * @LastEditTime: 2024-12-18 18:52:19
  */
 // import 'package:arm_chair_quaterback/pages/news/new_detail/bindings.dart';
 // import 'package:arm_chair_quaterback/pages/news/new_detail/view.dart';
@@ -10,6 +10,7 @@
 // import 'package:arm_chair_quaterback/pages/news/rank/bindings.dart';
 // import 'package:arm_chair_quaterback/pages/news/rank/stats_view.dart';
 // import 'package:arm_chair_quaterback/pages/news/rank/team_view.dart';
+import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
 import 'package:arm_chair_quaterback/pages/league/league_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/view.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_info/bindings.dart';
@@ -21,6 +22,7 @@ import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_detail_page.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/open_box/open_box_page.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_upgrade/view.dart';
 import 'package:flutter/material.dart';
@@ -98,6 +100,12 @@ class AppPages {
       opaque: false,
       name: RouteNames.teamTeamUpgrade,
       page: () => const TeamUpgradePage(),
+    ),
+    GetPage(
+      opaque: false,
+      name: RouteNames.openBoxPage,
+      page: () => OpenBoxPage(item: Get.arguments),
+      transition: Transition.fadeIn,
     ),
     // GetPage(
     //   opaque: false,

@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/widgets/dialog/custom_dialog.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/routers/routes.dart';
@@ -6,6 +7,8 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/open_box/open_box_page.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/widgets/box_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/widgets/linear_progress_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,13 +27,15 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
           if (controller.cardPackInfo.card.isEmpty) {
             return const SizedBox.shrink();
           }
+          bool noWait =
+              controller.cardPackInfo.card.where((e) => e.status == 1).isEmpty;
           return Container(
             margin: EdgeInsets.only(top: 12.w),
             height: 112.w,
             child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
-                  CardPackInfoCard item = controller.cardPackInfo.card[index];
+                  var item = controller.cardPackInfo.card[index];
                   Widget child = const SizedBox.shrink();
                   if (item.status == 2) {
                     child = Column(
@@ -38,7 +43,7 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
                       children: [
                         Image.asset(
                           Assets.managerUiManagerGift03,
-                          width: 73.w,
+                          width: 61.w,
                           fit: BoxFit.fitWidth,
                         ),
                         3.vGap,
@@ -64,7 +69,7 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
                       children: [
                         Image.asset(
                           Assets.managerUiManagerGift01,
-                          width: 73.w,
+                          width: 61.w,
                           fit: BoxFit.fitWidth,
                         ),
                         // 9.vGap,
@@ -94,25 +99,51 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
                       ],
                     );
                   } else if (item.status == 0) {
-                    child = Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          Assets.managerUiManagerGift02,
-                          width: 73.w,
-                          fit: BoxFit.fitWidth,
-                        ),
-                        // 15.vGap,
-                        Text(
-                          "WAITING",
-                          style: 12.w4(
-                            color: AppColors.c262626,
-                            height: 1,
-                            fontFamily: FontFamily.fRobotoRegular,
-                          ),
-                        )
-                      ],
-                    );
+                    child = noWait
+                        ? Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                Assets.managerUiManagerGift03,
+                                width: 61.w,
+                                fit: BoxFit.fitWidth,
+                              ),
+                              3.vGap,
+                              IconWidget(
+                                iconWidth: 5.w,
+                                icon: Assets.iconUiIconShrink,
+                                iconColor: AppColors.c000000,
+                              ),
+                              3.vGap,
+                              Text(
+                                "UNLOCK",
+                                style: 16.w4(
+                                  color: AppColors.c000000,
+                                  height: 1,
+                                  fontFamily: FontFamily.fOswaldMedium,
+                                ),
+                              )
+                            ],
+                          )
+                        : Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                Assets.managerUiManagerGift02,
+                                width: 61.w,
+                                fit: BoxFit.fitWidth,
+                              ),
+                              // 15.vGap,
+                              Text(
+                                "WAITING",
+                                style: 12.w4(
+                                  color: AppColors.c262626,
+                                  height: 1,
+                                  fontFamily: FontFamily.fRobotoRegular,
+                                ),
+                              )
+                            ],
+                          );
                   } else if (item.status == -1) {
                     child = Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -130,30 +161,42 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
                       ],
                     );
                   }
+                  bool canOpen =
+                      item.status == 2 || (item.status == 0 && noWait);
 
                   return MtInkwell(
                     minScale: 0.9,
                     onTap: () async {
                       if (item.status == -1) {
-                        // await Get.toNamed(RouteNames.teamTeamBattle);
-                        // controller.getBattleBox();
-                        final teamIndexCtrl = Get.find<TeamIndexController>();
-                        teamIndexCtrl.scroToMatch();
-                      } else if (item.status == 0) {
-                        controller.activeBattleBox(index);
-                      } else if (item.status == 1) {
-                        controller.speedOpneBattleBox(index);
+                        controller.scroToMatch();
                       } else if (item.status == 2) {
-                        controller.openBattleBox(index);
+                        controller.step = 0;
+                        for (var e in item.playerCards) {
+                          e.isOpen.value = false;
+                          e.isSelect.value = false;
+                        }
+                        Get.to(
+                            opaque: false,
+                            () => OpenBoxPage(item: item),
+                            duration: 300.milliseconds,
+                            transition: Transition.fadeIn);
+                        // Get.toNamed(RouteNames.openBoxPage, arguments: item);
+                      } else {
+                        showModalBottomSheet(
+                            isScrollControlled: true,
+                            context: Get.context!,
+                            builder: (context) {
+                              return BattleBoxDialog(item: item, index: index);
+                            });
                       }
                     },
                     child: Container(
                         width: 79.w,
                         height: 112.w,
                         decoration: BoxDecoration(
-                          color: item.status != 2 ? AppColors.cF2F2F2 : null,
+                          color: canOpen ? null : AppColors.cF2F2F2,
                           borderRadius: BorderRadius.circular(9.w),
-                          border: item.status == 2
+                          border: canOpen
                               ? Border.all(
                                   width: 1,
                                   color: AppColors.c666666,

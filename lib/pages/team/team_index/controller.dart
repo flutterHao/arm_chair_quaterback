@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-12-13 19:00:36
+ * @LastEditTime: 2024-12-18 21:16:52
  */
 
 import 'dart:async';
@@ -10,6 +10,7 @@ import 'dart:async';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
+import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
@@ -49,12 +50,35 @@ class TeamIndexController extends GetxController
 
   get isShow => null;
 
+  int step = 0;
+  int selectIndex = -1;
+  //摇动动画
+  late AnimationController shakeController;
+  late Animation<double> shakeAnimation;
+
   @override
   void onInit() {
     super.onInit();
-    // scrollController.addListener(() {
-    //   Log.d("监听滚动${scrollController.offset}");
-    // });
+    shakeController = AnimationController(
+      duration: const Duration(milliseconds: 200),
+      vsync: this,
+    );
+    shakeAnimation = TweenSequence([
+      TweenSequenceItem<double>(tween: Tween(begin: 0, end: -0.01), weight: 1),
+      TweenSequenceItem<double>(tween: Tween(begin: -0.01, end: 0), weight: 1),
+      TweenSequenceItem<double>(tween: Tween(begin: 0, end: 0.01), weight: 1),
+    ]).animate(
+      CurvedAnimation(
+        parent: shakeController,
+        curve: Curves.linear,
+      ),
+    )..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          shakeController.reverse();
+        } else if (status == AnimationStatus.dismissed) {
+          shakeController.forward();
+        }
+      });
   }
 
   @override
@@ -62,6 +86,13 @@ class TeamIndexController extends GetxController
     super.onReady();
     getBattleBox();
     getTeamInfoCup();
+    CacheApi.getPropDefine();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    shakeController.dispose();
   }
 
   void onRefresh() async {
@@ -101,9 +132,10 @@ class TeamIndexController extends GetxController
   }
 
   ///开启战斗宝箱
-  void openBattleBox(int index) async {
-    awardList = await TeamApi.opneBattleBox(index);
-    showBoxDialog();
+  void openBattleBox(int index, int playerId) async {
+    awardList = await TeamApi.opneBattleBox(index, playerId);
+    getBattleBox();
+    // showBoxDialog();
   }
 
   ///快速开启
@@ -131,7 +163,7 @@ class TeamIndexController extends GetxController
         isScrollControlled: true,
         context: Get.context!,
         builder: (context) {
-          return const BoxDialog();
+          return const FreeBoxDialog();
         });
     getBattleBox();
   }
@@ -163,12 +195,14 @@ class TeamIndexController extends GetxController
     }
 
     for (var item in cardPackInfo.card) {
+      final now = DateTime.now();
+      final endTime = DateUtil.getDateTimeByMs(item.openTime);
+      final diff = endTime.difference(now).inSeconds;
+      item.totalTime = ((diff % 3600) ~/ 60).toString();
       if (item.status == 1) {
-        final now = DateTime.now();
-        final endTime = DateUtil.getDateTimeByMs(item.openTime);
-        final diff = endTime.difference(now).inSeconds;
         final minutes = ((diff % 3600) ~/ 60).toString().padLeft(2, '0');
         final secs = (diff % 60).toString().padLeft(2, '0');
+
         item.remainTime.value = "$minutes:$secs";
         _startTimer(
           time: item.openTime,
@@ -232,50 +266,14 @@ class TeamIndexController extends GetxController
     }
   }
 
-  // void handlerBatterBoxData() {
-  //   ///免费宝箱
-  //   if (cardPackInfo.freeGiftCount == 2) {
-  //     freeBoxTimer?.cancel();
-  //     freeBoxTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
-  //       DateTime now = DateTime.now();
-  //       DateTime endTime = DateUtil.getDateTimeByMs(cardPackInfo.freeGiftTime);
-  //       int diff = endTime.difference(now).inSeconds;
-  //       if (diff <= 0) {
-  //         battleBoxTimer?.cancel();
-  //         getBattleBox();
-  //       } else {
-  //         final hours = (diff ~/ 3600).toString().padLeft(2, '0');
-  //         final minutes = ((diff % 3600) ~/ 60).toString().padLeft(2, '0');
-  //         final secs = (diff % 60).toString().padLeft(2, '0');
-  //         cardPackInfo.freeTimeString.value = "$hours:$minutes:$secs";
-  //       }
-  //     });
-  //   }
-
-  //   ///战斗宝箱
-  //   if (cardPackInfo.card.length < 4) {
-  //     cardPackInfo.card.add(CardPackInfoCard(status: -1));
-  //   }
-  //   for (var item in cardPackInfo.card) {
-  //     if (item.status == 1) {
-  //       battleBoxTimer?.cancel();
-  //       battleBoxTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
-  //         DateTime now = DateTime.now();
-  //         DateTime endTime = DateUtil.getDateTimeByMs(item.openTime);
-  //         int diff = endTime.difference(now).inSeconds;
-  //         if (diff <= 0) {
-  //           battleBoxTimer?.cancel();
-  //           getBattleBox();
-  //         } else {
-  //           final minutes = ((diff % 3600) ~/ 60).toString().padLeft(2, '0');
-  //           final secs = (diff % 60).toString().padLeft(2, '0');
-  //           item.remainTime.value = "$minutes:$secs";
-  //         }
-  //       });
-  //     }
-  //   }
-  //   update(["battleBox"]);
-  // }
+  void nextStep() {
+    if (step < 3) {
+      step++;
+      update(["open_box_page"]);
+    } else {
+      Get.back();
+    }
+  }
 
   @override
   void onClose() {

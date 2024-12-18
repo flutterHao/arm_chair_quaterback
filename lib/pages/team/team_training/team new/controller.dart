@@ -263,11 +263,11 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
         isAdd ? null : item1.uuid, isDown ? null : item2.uuid);
     myBagList = await TeamApi.getMyBagPlayers();
     myBagList.sort(comparePlayers);
-    if (isDown || isAdd) {
-      changeDuration = 0;
-    } else {
-      changeDuration = 300;
-    }
+    // if (isDown || isAdd) {
+    //   changeDuration = 0;
+    // } else {
+    //   changeDuration = 300;
+    // }
     await animationCtrl.reverse();
     // for (var e in myBagList) {
     //   if (isDown && e.uuid == item1.uuid) {

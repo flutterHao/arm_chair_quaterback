@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-21 20:20:49
- * @LastEditTime: 2024-12-13 15:08:22
+ * @LastEditTime: 2024-12-18 12:21:37
  */
 import 'dart:async';
 import 'dart:io';
@@ -56,9 +56,17 @@ class Utils {
   }
 
   ///道具
-  static String getPropIconUrl(id) {
-    // Log.d("assets/images/Common/ui_common_prop_0$id.png");
+  static String getSlotIconUrl(id) {
     return "assets/images/Common/ui_common_prop_0$id.png";
+  }
+
+  static String getPropIconUrl(id) {
+    if (id == 102) {
+      return Assets.commonUiCommonProp05;
+    } else if (id == 103) {
+      return Assets.commonUiCommonIconCurrency02;
+    }
+    return Assets.managerUiManagerGift03;
   }
 
   static String getStatusUrl(id) {

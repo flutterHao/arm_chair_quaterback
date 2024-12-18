@@ -76,7 +76,7 @@ class TrainingSlot extends GetView<TrainingController> {
                                                           .scaleAnimations[
                                                               index]
                                                           .value,
-                                                  icon: Utils.getPropIconUrl(
+                                                  icon: Utils.getSlotIconUrl(
                                                       controller.propList[
                                                           itemIndex % length]),
                                                 ),

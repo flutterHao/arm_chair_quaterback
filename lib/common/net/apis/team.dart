@@ -93,8 +93,12 @@ class TeamApi {
   }
 
   ///开启宝箱
-  static Future<List<TrainingInfoAward>> opneBattleBox(int index) async {
-    List list = await HttpUtil().post(Api.openCardPack, data: {"index": index});
+  static Future<List<TrainingInfoAward>> opneBattleBox(
+      int index, int playerId) async {
+    List list = await HttpUtil().post(Api.openCardPack, data: {
+      "index": index,
+      "playerIds": [playerId]
+    });
     return list.map((e) => TrainingInfoAward.fromJson(e)).toList();
   }
 

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-25 15:56:43
- * @LastEditTime: 2024-12-16 19:34:19
+ * @LastEditTime: 2024-12-17 17:43:39
  */
 
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -44,7 +44,7 @@ class TrainingWidget extends GetView<TrainingController> {
   @override
   Widget build(BuildContext context) {
     // controller.startScroller();
-    controller.showAward();
+    // controller.showAward();
     return GetBuilder<TrainingController>(
         id: "training_page",
         builder: (controller) {

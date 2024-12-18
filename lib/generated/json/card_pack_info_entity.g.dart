@@ -1,5 +1,7 @@
 import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.dart';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/player_card_entity.dart';
+
 import 'package:get/get.dart';
 
 
@@ -53,7 +55,6 @@ Map<String, dynamic> $CardPackInfoEntityToJson(CardPackInfoEntity entity) {
   data['updateTime'] = entity.updateTime;
   data['card'] = entity.card.map((v) => v.toJson()).toList();
   data['freeGiftCount'] = entity.freeGiftCount;
-  data['freeTimeString'] = entity.freeTimeString.toJson();
   return data;
 }
 
@@ -96,6 +97,16 @@ CardPackInfoCard $CardPackInfoCardFromJson(Map<String, dynamic> json) {
   if (status != null) {
     cardPackInfoCard.status = status;
   }
+  final RxString? remainTime = jsonConvert.convert<RxString>(
+      json['remainTime']);
+  if (remainTime != null) {
+    cardPackInfoCard.remainTime = remainTime;
+  }
+  final List<int>? players = (json['players'] as List<dynamic>?)?.map(
+          (e) => jsonConvert.convert<int>(e) as int).toList();
+  if (players != null) {
+    cardPackInfoCard.players = players;
+  }
   return cardPackInfoCard;
 }
 
@@ -104,8 +115,10 @@ Map<String, dynamic> $CardPackInfoCardToJson(CardPackInfoCard entity) {
   data['cardId'] = entity.cardId;
   data['openTime'] = entity.openTime;
   data['status'] = entity.status;
+  data['totalTime'] = entity.totalTime;
   data['remainTime'] = entity.remainTime.toJson();
   data['progress'] = entity.progress;
+  data['players'] = entity.players;
   return data;
 }
 
@@ -114,14 +127,22 @@ extension CardPackInfoCardExtension on CardPackInfoCard {
     int? cardId,
     int? openTime,
     int? status,
+    String? totalTime,
     RxString? remainTime,
     double? progress,
+    RxBool? isOpen,
+    List<int>? players,
+    List<PlayerCardEntity>? playerCards,
   }) {
     return CardPackInfoCard()
       ..cardId = cardId ?? this.cardId
       ..openTime = openTime ?? this.openTime
       ..status = status ?? this.status
+      ..totalTime = totalTime ?? this.totalTime
       ..remainTime = remainTime ?? this.remainTime
-      ..progress = progress ?? this.progress;
+      ..progress = progress ?? this.progress
+      ..isOpen = isOpen ?? this.isOpen
+      ..players = players ?? this.players
+      ..playerCards = playerCards ?? this.playerCards;
   }
 }

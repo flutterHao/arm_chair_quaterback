@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-14 11:11:48
- * @LastEditTime: 2024-12-16 21:44:07
+ * @LastEditTime: 2024-12-17 11:05:10
  */
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
@@ -89,7 +89,10 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                             key: index == 0 ? _firstItemKey : null,
                             child: index == 0
                                 ? NewsDetailItem(
-                                    item: controller.state.detailList[index])
+                                    item: controller.state.detailList[index],
+                                    showComments:
+                                        index == 0 && item.reviewsCount > 0,
+                                  )
                                 : InkWell(
                                     onTap: () {
                                       ///获取评论
@@ -107,10 +110,11 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                                       controller.update(["newsDetail"]);
                                     },
                                     child: NewsListItem(
-                                      newsDetail:
-                                          controller.state.detailList[index],
-                                      // key: Key(item.id.toString()),
-                                    ),
+                                        newsDetail:
+                                            controller.state.detailList[index],
+                                        showMoreNew: index == 1
+                                        // key: Key(item.id.toString()),
+                                        ),
                                   ),
                           );
                         },
@@ -139,8 +143,9 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
 }
 
 class NewsDetailItem extends GetView<NewListController> {
-  NewsDetailItem({super.key, required this.item});
+  NewsDetailItem({super.key, required this.item, this.showComments = false});
   final NewsListDetail item;
+  final bool showComments;
 
   final GlobalKey globalKey = GlobalKey();
 
@@ -269,80 +274,6 @@ class NewsDetailItem extends GetView<NewListController> {
     );
   }
 
-  Widget _comments() {
-    return GetBuilder<CommentController>(
-        tag: item.id.toString(),
-        builder: (comCtrl) {
-          var list =
-              comCtrl.mainList.where((e) => e.parentReviewId == 0).toList();
-
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                height: 1.w,
-                margin: EdgeInsets.symmetric(vertical: 25.w),
-                width: double.infinity,
-                color: AppColors.cE6E6E,
-              ),
-              Text(
-                "Comments",
-                style: 19.w7(height: 1),
-              ),
-              12.vGap,
-              list.isNotEmpty
-                  ? ListView.separated(
-                      controller: ScrollController(),
-                      shrinkWrap: true,
-                      physics: const ClampingScrollPhysics(),
-                      padding: EdgeInsets.symmetric(vertical: 12.w),
-                      itemCount: list.length,
-                      separatorBuilder: (context, index) {
-                        return 30.vGap;
-                      },
-                      itemBuilder: (context, index) {
-                        return Column(
-                          children: [
-                            CommentItemView(
-                              item: list[index],
-                              detail: item,
-                            ),
-                            if (list[index].sonReviews > 0 ||
-                                list[index].subList.isNotEmpty)
-                              Container(
-                                // width: 295.w,
-                                margin: EdgeInsets.only(left: 48.w),
-                                child: SubComentsListView(list[index], item),
-                              )
-                          ],
-                        );
-                      })
-                  : const SizedBox.shrink(),
-              if (item.reviewsCount.value > list.length)
-                Container(
-                  margin: const EdgeInsets.only(bottom: 100),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      MtInkwell(
-                        onTap: () => comCtrl.getReviews(item.id),
-                        child: Container(
-                          padding: EdgeInsets.all(10.w),
-                          child: Text(
-                            "Show more comments",
-                            textAlign: TextAlign.center,
-                            style: 12.w4(color: AppColors.cB3B3B3),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                )
-            ],
-          );
-        });
-  }
-
   @override
   Widget build(BuildContext context) {
     int index = controller.state.detailList.indexOf(item);
@@ -362,7 +293,7 @@ class NewsDetailItem extends GetView<NewListController> {
             ),
             16.vGap,
             const EmojiWidget(),
-            if (index == 0 && item.reviewsCount > 0) _comments(),
+            if (showComments) DetailCommentWidget(item: item),
             if (controller.state.detailList.length == 1) 80.vGap,
           ],
         ),

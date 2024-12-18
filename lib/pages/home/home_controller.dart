@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-25 11:48:38
- * @LastEditTime: 2024-12-06 14:12:38
+ * @LastEditTime: 2024-12-17 10:14:43
  */
 /*
  * @Description: 
@@ -173,6 +173,16 @@ class HomeController extends GetxController {
     for (var element
         in HomeController.to.userEntiry.teamLoginInfo!.teamPropList!) {
       if (element.propId == 102) {
+        element.num = element.num! + change;
+      }
+    }
+    HomeController.to.update([GetXBuilderIds.idMoneyAndCoinWidget]);
+  }
+
+  void updateChips(int change) {
+    for (var element
+        in HomeController.to.userEntiry.teamLoginInfo!.teamPropList!) {
+      if (element.propId == 103) {
         element.num = element.num! + change;
       }
     }
