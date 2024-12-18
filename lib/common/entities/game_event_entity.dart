@@ -10,6 +10,7 @@ class GameEventEntity {
   late String eventDescripition;
   late String eventWeight;
   late String gameEventType;
+  late double eventShowTime;
   String headLine = "0";
 
   GameEventEntity();

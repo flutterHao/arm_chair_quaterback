@@ -3,6 +3,7 @@ import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.da
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/top_toast_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
@@ -197,20 +198,160 @@ class GameOverWidget extends GetView<GameOverController> {
                     ),
                   ),
                   15.hGap,
-                  Column(
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              "MVP",
+                              style: 40.w7(
+                                  color: AppColors.cFF7954,
+                                  height: 1,
+                                  fontFamily: FontFamily.fOswaldBold),
+                            ),
+                            10.hGap,
+                            Container(
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: controller.isLeftWin()
+                                        ? AppColors.c1F8FE5
+                                        : AppColors.cD60D20,
+                                    width: 1.w,
+                                  ),
+                                  borderRadius: BorderRadius.circular(12.w)),
+                              child: ImageWidget(
+                                url: Utils.getAvaterUrl(
+                                    controller.getWinnerInfo()?.teamLogo),
+                                width: 21.w,
+                                height: 21.w,
+                                imageFailedPath: Assets.teamUiHead01,
+                                borderRadius: BorderRadius.circular(11.w),
+                              ),
+                            )
+                          ],
+                        ),
+                        6.vGap,
+                        Text(
+                          Utils.getPlayBaseInfo(pkResultUpdatedPlayer.playerId)
+                              .ename,
+                          style: 14.w4(
+                              color: AppColors.c262626,
+                              height: 1,
+                              overflow: TextOverflow.ellipsis,
+                              fontFamily: FontFamily.fRobotoRegular),
+                        ),
+                        2.vGap,
+                        Text(
+                          Utils.getPlayBaseInfo(pkResultUpdatedPlayer.playerId)
+                              .elname,
+                          style: 27.w7(
+                              color: AppColors.c262626,
+                              fontFamily: FontFamily.fOswaldBold,
+                              height: 1),
+                        ),
+                        9.vGap,
+                        Row(
+                          children: [
+                            Column(
+                              children: [
+                                Text("${pkResultUpdatedPlayer.pts}",
+                                    style: 14.w5(
+                                        color: AppColors.c000000,
+                                        height: 1,
+                                        fontFamily: FontFamily.fRobotoMedium)),
+                                4.vGap,
+                                Text(
+                                  "PTS",
+                                  style: 10.w4(
+                                      color: AppColors.c4D4D4D,
+                                      height: 1,
+                                      fontFamily: FontFamily.fRobotoRegular),
+                                )
+                              ],
+                            ),
+                            22.hGap,
+                            Column(
+                              children: [
+                                Text("${pkResultUpdatedPlayer.reb}",
+                                    style: 14.w5(
+                                        color: AppColors.c000000,
+                                        height: 1,
+                                        fontFamily: FontFamily.fRobotoMedium)),
+                                4.vGap,
+                                Text(
+                                  "REB",
+                                  style: 10.w4(
+                                      color: AppColors.c4D4D4D,
+                                      height: 1,
+                                      fontFamily: FontFamily.fRobotoRegular),
+                                )
+                              ],
+                            ),
+                            22.hGap,
+                            Column(
+                              children: [
+                                Text("${pkResultUpdatedPlayer.ast}",
+                                    style: 14.w5(
+                                        color: AppColors.c000000,
+                                        height: 1,
+                                        fontFamily: FontFamily.fRobotoMedium)),
+                                4.vGap,
+                                Text(
+                                  "AST",
+                                  style: 10.w4(
+                                      color: AppColors.c4D4D4D,
+                                      height: 1,
+                                      fontFamily: FontFamily.fRobotoRegular),
+                                )
+                              ],
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ],
+          ),
+        );
+      }
+      return parent(
+        child: Stack(
+          children: [
+            Positioned(
+                top: 24.w,
+                left: 21.w,
+                child: IconWidget(
+                  iconWidth: 14.w,
+                  icon: Assets.commonUiCommonIconSystemInfo,
+                  iconColor: AppColors.c000000,
+                )),
+            Positioned(
+              bottom: -12.w,
+              left: -20.w,
+              child: Text(
+                "MVP",
+                style: 100.w7(
+                    color: AppColors.cF2F2F2,
+                    height: 1,
+                    fontFamily: FontFamily.fOswaldBold),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Expanded(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Text(
-                            "MVP",
-                            style: 40.w7(
-                                color: AppColors.cFF7954,
-                                height: 1,
-                                fontFamily: FontFamily.fOswaldBold),
-                          ),
-                          10.hGap,
                           Container(
                             decoration: BoxDecoration(
                                 border: Border.all(
@@ -228,7 +369,15 @@ class GameOverWidget extends GetView<GameOverController> {
                               imageFailedPath: Assets.teamUiHead01,
                               borderRadius: BorderRadius.circular(11.w),
                             ),
-                          )
+                          ),
+                          10.hGap,
+                          Text(
+                            "MVP",
+                            style: 40.w7(
+                                color: AppColors.cFF7954,
+                                height: 1,
+                                fontFamily: FontFamily.fOswaldBold),
+                          ),
                         ],
                       ),
                       6.vGap,
@@ -245,6 +394,7 @@ class GameOverWidget extends GetView<GameOverController> {
                       Text(
                         Utils.getPlayBaseInfo(pkResultUpdatedPlayer.playerId)
                             .elname,
+                        textAlign: TextAlign.end,
                         style: 27.w7(
                             color: AppColors.c262626,
                             fontFamily: FontFamily.fOswaldBold,
@@ -252,6 +402,7 @@ class GameOverWidget extends GetView<GameOverController> {
                       ),
                       9.vGap,
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Column(
                             children: [
@@ -309,150 +460,7 @@ class GameOverWidget extends GetView<GameOverController> {
                         ],
                       )
                     ],
-                  )
-                ],
-              ),
-            ],
-          ),
-        );
-      }
-      return parent(
-        child: Stack(
-          children: [
-            Positioned(
-                top: 24.w,
-                left: 21.w,
-                child: IconWidget(
-                  iconWidth: 14.w,
-                  icon: Assets.commonUiCommonIconSystemInfo,
-                  iconColor: AppColors.c000000,
-                )),
-            Positioned(
-              bottom: -12.w,
-              left: -20.w,
-              child: Text(
-                "MVP",
-                style: 100.w7(
-                    color: AppColors.cF2F2F2,
-                    height: 1,
-                    fontFamily: FontFamily.fOswaldBold),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                color: controller.isLeftWin()
-                                    ? AppColors.c1F8FE5
-                                    : AppColors.cD60D20,
-                                width: 1.w,
-                              ),
-                              borderRadius: BorderRadius.circular(12.w)),
-                          child: ImageWidget(
-                            url: Utils.getAvaterUrl(
-                                controller.getWinnerInfo()?.teamLogo),
-                            width: 21.w,
-                            height: 21.w,
-                            imageFailedPath: Assets.teamUiHead01,
-                            borderRadius: BorderRadius.circular(11.w),
-                          ),
-                        ),
-                        10.hGap,
-                        Text(
-                          "MVP",
-                          style: 40.w7(
-                              color: AppColors.cFF7954,
-                              height: 1,
-                              fontFamily: FontFamily.fOswaldBold),
-                        ),
-                      ],
-                    ),
-                    6.vGap,
-                    Text(
-                      Utils.getPlayBaseInfo(pkResultUpdatedPlayer.playerId)
-                          .ename,
-                      style: 14.w4(
-                          color: AppColors.c262626,
-                          height: 1,
-                          overflow: TextOverflow.ellipsis,
-                          fontFamily: FontFamily.fRobotoRegular),
-                    ),
-                    2.vGap,
-                    Text(
-                      Utils.getPlayBaseInfo(pkResultUpdatedPlayer.playerId)
-                          .elname,
-                      style: 27.w7(
-                          color: AppColors.c262626,
-                          fontFamily: FontFamily.fOswaldBold,
-                          height: 1),
-                    ),
-                    9.vGap,
-                    Row(
-                      children: [
-                        Column(
-                          children: [
-                            Text("${pkResultUpdatedPlayer.pts}",
-                                style: 14.w5(
-                                    color: AppColors.c000000,
-                                    height: 1,
-                                    fontFamily: FontFamily.fRobotoMedium)),
-                            4.vGap,
-                            Text(
-                              "PTS",
-                              style: 10.w4(
-                                  color: AppColors.c4D4D4D,
-                                  height: 1,
-                                  fontFamily: FontFamily.fRobotoRegular),
-                            )
-                          ],
-                        ),
-                        22.hGap,
-                        Column(
-                          children: [
-                            Text("${pkResultUpdatedPlayer.reb}",
-                                style: 14.w5(
-                                    color: AppColors.c000000,
-                                    height: 1,
-                                    fontFamily: FontFamily.fRobotoMedium)),
-                            4.vGap,
-                            Text(
-                              "REB",
-                              style: 10.w4(
-                                  color: AppColors.c4D4D4D,
-                                  height: 1,
-                                  fontFamily: FontFamily.fRobotoRegular),
-                            )
-                          ],
-                        ),
-                        22.hGap,
-                        Column(
-                          children: [
-                            Text("${pkResultUpdatedPlayer.ast}",
-                                style: 14.w5(
-                                    color: AppColors.c000000,
-                                    height: 1,
-                                    fontFamily: FontFamily.fRobotoMedium)),
-                            4.vGap,
-                            Text(
-                              "AST",
-                              style: 10.w4(
-                                  color: AppColors.c4D4D4D,
-                                  height: 1,
-                                  fontFamily: FontFamily.fRobotoRegular),
-                            )
-                          ],
-                        ),
-                      ],
-                    )
-                  ],
+                  ),
                 ),
                 15.hGap,
                 Container(
@@ -534,9 +542,11 @@ class GameOverWidget extends GetView<GameOverController> {
                   color: AppColors.c000000,
                   border: Border.all(color: AppColors.c333333, width: 1.w),
                   borderRadius: BorderRadius.circular(6.w)),
-              child: Text(
-                Utils.formatMoney(controller.getMoneyCount()),
-                style: 14.w5(
+              child: AnimatedNum(
+                number: controller.moneyOpacityObs.value?controller.getMoneyCount():0,
+                isMoney: true,
+                milliseconds: 1000,
+                textStyle: 14.w5(
                     color: AppColors.cFFFFFF,
                     height: 1,
                     fontFamily: FontFamily.fOswaldMedium),

@@ -5,6 +5,7 @@ import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/TLBuilderWidget.dart';
+import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
@@ -127,10 +128,11 @@ class _LiveTextDialogState extends State<LiveTextDialogWidget>
                       controller: tabController,
                       children: List.generate(4, (index) {
                         var key = Utils.getSortWithInt(index + 1);
-                        var list = Get.find<TeamBattleV2Controller>()
-                                .eventOnScreenMap[key] ??
-                            [];
-                        if(list.isEmpty){
+                        var teamBattleV2Controller =
+                            Get.find<TeamBattleV2Controller>();
+                        var list =
+                            teamBattleV2Controller.eventOnScreenMap[key] ?? [];
+                        if (list.isEmpty) {
                           return const Center(
                             child: LoadStatusWidget(
                               loadDataStatus: LoadDataStatus.noData,
@@ -150,13 +152,18 @@ class _LiveTextDialogState extends State<LiveTextDialogWidget>
                               // reverse: true,
                               itemBuilder: (context, index) {
                                 GameEvent item = list[index];
-                                bool lastIndex = index == list.length-1;
+                                bool lastIndex = index == list.length - 1;
                                 return Container(
                                   // height: 44.w,
-                                  margin:
-                                      EdgeInsets.only(left: 16.w,right: 16.w,bottom: lastIndex?20.w:0),
-                                  padding:
-                                      EdgeInsets.only(left: 1.w, right: 24.w,top: 5.w,bottom: 5.w),
+                                  margin: EdgeInsets.only(
+                                      left: 16.w,
+                                      right: 16.w,
+                                      bottom: lastIndex ? 20.w : 0),
+                                  padding: EdgeInsets.only(
+                                      left: 1.w,
+                                      right: 24.w,
+                                      top: 5.w,
+                                      bottom: 5.w),
                                   decoration: BoxDecoration(
                                       border: Border(
                                           bottom: BorderSide(
@@ -178,36 +185,49 @@ class _LiveTextDialogState extends State<LiveTextDialogWidget>
                                             borderRadius:
                                                 BorderRadius.circular(15.5.w),
                                             border: Border.all(
-                                                color: item.isHomePlayer
-                                                    ? AppColors.c1F8FE5
-                                                    : AppColors.cD60D20,
+                                                color: teamBattleV2Controller
+                                                        .isSystemEvent(item)
+                                                    ? AppColors.cTransparent
+                                                    : item.isHomePlayer
+                                                        ? AppColors.c1F8FE5
+                                                        : AppColors.cD60D20,
                                                 width: 1.5.w)),
-                                        child: ImageWidget(
-                                          url: Utils.getPlayUrl(item.playerId),
-                                          width: 28.w,
-                                          height: 28.w,
-                                          borderRadius:
-                                              BorderRadius.circular(14.w),
-                                          imageFailedPath: Assets.teamUiHead03,
-                                        ),
+                                        child: teamBattleV2Controller
+                                                .isSystemEvent(item)
+                                            ? IconWidget(
+                                                iconWidth: 20.w,
+                                                icon:
+                                                    Assets.commonUiCommonProp03)
+                                            : ImageWidget(
+                                                url: Utils.getPlayUrl(
+                                                    item.playerId),
+                                                width: 28.w,
+                                                height: 28.w,
+                                                borderRadius:
+                                                    BorderRadius.circular(14.w),
+                                                imageFailedPath:
+                                                    Assets.teamUiHead03,
+                                              ),
                                       ),
                                       13.hGap,
-                                      Expanded(child: Builder(builder: (context) {
-                                        var list = Utils.subColorString(item.text);
+                                      Expanded(
+                                          child: Builder(builder: (context) {
+                                        var list =
+                                            Utils.subColorString(item.text);
                                         return Text.rich(
                                           TextSpan(
-                                              children:
-                                              List.generate(list.length, (index) {
-                                                var colorString = list[index];
-                                                return TextSpan(
-                                                    text: "${colorString.text} ",
-                                                    style: colorString.isMatch
-                                                        ? TextStyle(
+                                              children: List.generate(
+                                                  list.length, (index) {
+                                            var colorString = list[index];
+                                            return TextSpan(
+                                                text: "${colorString.text} ",
+                                                style: colorString.isMatch
+                                                    ? TextStyle(
                                                         color: item.isHomePlayer
                                                             ? AppColors.c1F8FE5
                                                             : AppColors.cD60D20)
-                                                        : null);
-                                              })),
+                                                    : null);
+                                          })),
                                           style: TextStyle(
                                               fontSize: 12.sp,
                                               fontWeight: item.score
@@ -225,30 +245,35 @@ class _LiveTextDialogState extends State<LiveTextDialogWidget>
                                       Container(
                                         width: 50.w,
                                         alignment: Alignment.center,
-                                        child: !item.score?const SizedBox.shrink():Text.rich(
-                                          TextSpan(children: [
-                                            TextSpan(
-                                                text: "${item.homeScore}",
-                                                style: TextStyle(
-                                                  color: item.score && item.isHomePlayer
-                                                      ? AppColors.c1F8FE5
-                                                      : AppColors.c4D4D4D,
-                                                )),
-                                            const TextSpan(text: "-"),
-                                            TextSpan(
-                                                text: "${item.awayScore}",
-                                                style: TextStyle(
-                                                  color:
-                                                  item.score && !item.isHomePlayer
-                                                      ? AppColors.cD60D20
-                                                      : AppColors.c4D4D4D,
-                                                )),
-                                          ]),
-                                          style: 12.w4(
-                                              color: AppColors.c4D4D4D,
-                                              height: 1,
-                                              fontFamily: FontFamily.fRobotoRegular),
-                                        ),
+                                        child: !item.score
+                                            ? const SizedBox.shrink()
+                                            : Text.rich(
+                                                TextSpan(children: [
+                                                  TextSpan(
+                                                      text: "${item.homeScore}",
+                                                      style: TextStyle(
+                                                        color: item.score &&
+                                                                item.isHomePlayer
+                                                            ? AppColors.c1F8FE5
+                                                            : AppColors.c4D4D4D,
+                                                      )),
+                                                  const TextSpan(text: "-"),
+                                                  TextSpan(
+                                                      text: "${item.awayScore}",
+                                                      style: TextStyle(
+                                                        color: item.score &&
+                                                                !item
+                                                                    .isHomePlayer
+                                                            ? AppColors.cD60D20
+                                                            : AppColors.c4D4D4D,
+                                                      )),
+                                                ]),
+                                                style: 12.w4(
+                                                    color: AppColors.c4D4D4D,
+                                                    height: 1,
+                                                    fontFamily: FontFamily
+                                                        .fRobotoRegular),
+                                              ),
                                       ),
                                     ],
                                   ),

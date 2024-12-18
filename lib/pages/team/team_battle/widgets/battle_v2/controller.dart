@@ -56,6 +56,8 @@ class TeamBattleV2Controller extends GetxController
   late AnimationController shootAnimationController;
   Animation? shootAnimation;
   var shootOffset = Offset.infinite.obs;
+  var shootPathOffsets = <Offset>[].obs;
+  var shootPathColor = AppColors.cTransparent;
 
   // 投篮轨迹点
   Offset start = Offset.zero; // 起点
@@ -70,12 +72,6 @@ class TeamBattleV2Controller extends GetxController
   // 主角投篮位置
   ShootHistory? mainOffset;
   List<ShootHistory> shootHistory = [];
-
-  //左边
-  var redScore = 0.obs;
-
-  //右边
-  var blueScore = 0.obs;
 
   var isGameOver = false.obs;
   Timer? _timer;
@@ -118,6 +114,12 @@ class TeamBattleV2Controller extends GetxController
 
   var liveTextTabIndex = RxInt(-1);
 
+  var shootAnimationDuration = 1200;
+
+  bool? leftRound;
+
+  GameEvent? highLightEvent;
+
   /// 在 widget 内存中分配后立即调用。
   @override
   void onInit() {
@@ -135,7 +137,8 @@ class TeamBattleV2Controller extends GetxController
         .toList();
     shootAnimationController = AnimationController(
         vsync: this,
-        duration: Duration(milliseconds: (1200 / gameSpeed).toInt()));
+        duration: Duration(
+            milliseconds: (shootAnimationDuration / gameSpeed).toInt()));
     quarterTimeCountDownAnimationController = EasyAnimationController(
         vsync: this,
         begin: 40,
@@ -249,9 +252,11 @@ class TeamBattleV2Controller extends GetxController
 
     /// 接着之前的进度继续动画
     double lastValue = quarterTimeCountDownAnimationController.value.value;
+    var time = getQuarterTotalTime(quarter.value);
     shootAnimationController = AnimationController(
         vsync: this,
-        duration: Duration(milliseconds: (1200 / gameSpeed).toInt()));
+        duration: Duration(
+            milliseconds: (shootAnimationDuration / gameSpeed).toInt()));
     quarterTimeCountDownAnimationController.controller
         .removeStatusListener(quarterStatusListener);
     quarterTimeCountDownAnimationController.controller
@@ -261,17 +266,17 @@ class TeamBattleV2Controller extends GetxController
         begin: lastValue,
         end: 0,
         duration:
-            Duration(milliseconds: (lastValue * 1000 / gameSpeed).toInt()))
+            Duration(milliseconds: (lastValue / 40 * time / gameSpeed).toInt()))
       ..controller.addStatusListener(quarterStatusListener)
       ..controller.addListener(quarterListener);
     quarterTimeCountDownAnimationController.forward(from: 0);
-    var time = (((40 * 1000) /
-            (eventCacheMap[Utils.getSortWithInt(quarter.value)]?.length ??
-                40)) /
-        gameSpeed);
-    eventEngine = Timer.periodic(Duration(milliseconds: time.toInt()), (t) {
-      sendToScreen();
-    });
+    // var time = (((40 * 1000) /
+    //         (eventCacheMap[Utils.getSortWithInt(quarter.value)]?.length ??
+    //             40)) /
+    //     gameSpeed);
+    // eventEngine = Timer.periodic(Duration(milliseconds: time.toInt()), (t) {
+    //   sendToScreen();
+    // });
   }
 
   void quarterListener() {
@@ -294,7 +299,10 @@ class TeamBattleV2Controller extends GetxController
       EasyLoading.showToast("Next Quarter",
           toastPosition: EasyLoadingToastPosition.center,
           maskType: EasyLoadingMaskType.clear);
-      startGame();
+      Future.delayed(Duration(milliseconds: (3 * 1000 / gameSpeed).toInt()),
+          () {
+        startGame();
+      });
     }
   }
 
@@ -306,6 +314,19 @@ class TeamBattleV2Controller extends GetxController
     quarter.value = 0;
     eventOnScreenMap.clear();
     // checkShowDialog();
+  }
+
+  /// 获取单节总时长:ms
+  double getQuarterTotalTime(int quarter) {
+    var key = Utils.getSortWithInt(quarter);
+    var events = eventCacheMap[key] ?? [];
+    double count = 0;
+    for (int i = 0; i < events.length; i++) {
+      var event = events[i];
+      var gameEvent = getGameEvent(event.pkEventUpdatedEntity.eventId);
+      count += (gameEvent?.eventShowTime ?? 0) * 1000;
+    }
+    return count;
   }
 
   startGame() {
@@ -332,26 +353,30 @@ class TeamBattleV2Controller extends GetxController
         .removeStatusListener(quarterStatusListener);
     quarterTimeCountDownAnimationController.controller
         .removeListener(quarterListener);
+    var time = getQuarterTotalTime(quarter.value);
+    print('${quarter.value} quarter time : $time');
     quarterTimeCountDownAnimationController = EasyAnimationController(
         vsync: this,
         begin: 40,
         end: 0,
-        duration: Duration(milliseconds: (40 * 1000 / gameSpeed).toInt()))
+        duration: Duration(milliseconds: (time / gameSpeed).toInt()))
       ..controller.addStatusListener(quarterStatusListener)
       ..controller.addListener(quarterListener);
     quarterTimeCountDownAnimationController.forward(from: 0);
     eventEngine?.cancel();
     eventCount = 0;
-    var time = (((40 * 1000) /
-            (eventCacheMap[Utils.getSortWithInt(quarter.value)]?.length ??
-                40)) /
-        gameSpeed);
-    eventEngine = Timer.periodic(Duration(milliseconds: time.toInt()), (t) {
-      sendToScreen();
-    });
+    // var time = (((40 * 1000) /
+    //         (eventCacheMap[Utils.getSortWithInt(quarter.value)]?.length ??
+    //             40)) /
+    //     gameSpeed);
+    // eventEngine = Timer.periodic(Duration(milliseconds: time.toInt()), (t) {
+    //   sendToScreen();
+    // });
+    sendToScreen();
   }
 
   void sendToScreen() {
+    if(isGameOver.value) return;
     var key = Utils.getSortWithInt(quarter.value);
     var events = eventCacheMap[key] ?? [];
     var hasData = events.length > eventCount;
@@ -360,12 +385,28 @@ class TeamBattleV2Controller extends GetxController
       return;
     }
     var event = events[eventCount];
+    var gameEvent = getGameEvent(event.pkEventUpdatedEntity.eventId);
+    if (gameEvent == null) {
+      print('gameEvent----null-----');
+
+      /// 找不到事件则跳过，继续下一个事件
+      eventCount++;
+      sendToScreen();
+      return;
+    }
+    Future.delayed(
+        Duration(
+            milliseconds: (gameEvent.eventShowTime * 1000 / gameSpeed).toInt()),
+        () {
+      sendToScreen();
+    });
+    checkRoundTransformEvent(event);
     event.time =
         (quarterTimeCountDownAnimationController.value.value / 40 * 12 * 60)
             .toInt();
 
     double winRate = getWinRate(event);
-    print('winRate: $winRate');
+    // print('winRate: $winRate');
     winRateController.addPoint(
         Offset(eventCount.toDouble() + getBeforeQuarterEventCount(), winRate));
 
@@ -375,10 +416,11 @@ class TeamBattleV2Controller extends GetxController
       eventOnScreenMap[key] = [event];
     }
 
-    var gameEvent = getGameEvent(event.pkEventUpdatedEntity.eventId);
-    if (gameEvent?.headLine == "1") {
+    if (gameEvent.headLine != "0") {
       /// 高光时刻
-      highLightBarrageWallController.send([generateHighBullet(event)]);
+      // highLightBarrageWallController.send([generateHighBullet(event)]);
+      highLightEvent = event;
+      update([idHighLightEvent]);
     } else {
       /// 普通弹幕
       // normalBarrageWallController.send([
@@ -387,13 +429,15 @@ class TeamBattleV2Controller extends GetxController
       // ]);
     }
 
-    if(event.mainOffset != null) {
+    if (event.mainOffset != null) {
       if (event.shooting) {
-        shoot(event);
+        if(gameSpeed == 1) {
+          /// 加速时不显示投篮动画
+          shoot(event);
+        }
       } else {
-        addToShootHistory(mainOffset =
-            ShootHistory(
-                !event.isHomePlayer, transitionPos(event), event.score));
+        addToShootHistory(mainOffset = ShootHistory(
+            !event.isHomePlayer, transitionPos(event), event.score));
         update([idPlayersLocation]);
       }
     }
@@ -411,6 +455,32 @@ class TeamBattleV2Controller extends GetxController
     eventCount++;
   }
 
+  void checkRoundTransformEvent(GameEvent event) {
+    if(gameSpeed != 1){
+      /// 加速时不显示回合切换动画
+      return;
+    }
+    var roundEventIds = [502, 202, 22, 23];
+    var gameEvent = getGameEvent(event.pkEventUpdatedEntity.eventId);
+    if (gameEvent != null &&
+        (roundEventIds.contains(int.parse(gameEvent.gameEventType)) ||
+            isScoreType(gameEvent.gameEventType, event.pkEventUpdatedEntity))) {
+      var key = Utils.getSortWithInt(quarter.value);
+      var events = eventCacheMap[key] ?? [];
+      var next = eventCount + 1;
+      var hasData = events.length > next;
+      if (hasData) {
+        var nextEvent = events[next];
+        leftRound = nextEvent.isHomePlayer;
+
+        /// 只播放我方的回合动画
+        if (leftRound == true) {
+          update([idRoundTransform]);
+        }
+      }
+    }
+  }
+
   double getWinRate(GameEvent event, {double? time}) {
     var t = time ??
         ((40 - quarterTimeCountDownAnimationController.value.value) +
@@ -420,13 +490,13 @@ class TeamBattleV2Controller extends GetxController
             event.pkEventUpdatedEntity.awayPreparationLevel)
         .abs();
     var random = (t < 15 ? 0 : generateRandomValue(t > 20 ? 20 : t));
-    print('prepareDiff--------:$prepareDiff');
-    print('random--------:$random');
+    // print('prepareDiff--------:$prepareDiff');
+    // print('random--------:$random');
     var other = t * 0.7 / (4 * 40) * (scoreDiff / max(scoreDiff.abs(), 1));
-    print('other--------:$other');
+    // print('other--------:$other');
 
     double winRate = 0.5 + prepareDiff + other - random;
-    print('winRate-------:$winRate');
+    // print('winRate-------:$winRate');
     if (t == 0) {
       winRate = prepareDiff;
     }
@@ -447,10 +517,13 @@ class TeamBattleV2Controller extends GetxController
     return random.nextDouble() * 2 * range - range;
   }
 
+  /// 投篮动画
   shoot(GameEvent event) {
     if (shootAnimationController.isAnimating) {
       return;
     }
+    shootPathOffsets.clear();
+    shootPathOffsets.refresh();
     // 球场宽高比例：716/184
     // width 的最大值 375.w
     //start x 取值范围 right：9.w ~ width-9.w ; left : 9.w ~ width-9.w
@@ -460,12 +533,15 @@ class TeamBattleV2Controller extends GetxController
     isSuccess = event.score;
     var isAway = !event.isHomePlayer;
 
+    shootPathColor = isAway ? AppColors.cD60D20 : AppColors.c1F8FE5;
     addToShootHistory(mainOffset = ShootHistory(isAway, start, isSuccess));
     update([idPlayersLocation]);
     end = isAway ? Offset(22.w, 49.w) : Offset(375.w - 22.w - 18.w - 6.w, 49.w);
     // 随机生成最高点
     peak = Offset(
         (start.dx + end.dx) / 2, Random().nextDouble() * min(start.dy, end.dy));
+    // var d = (sqrt(pow((end.dx - start.dx), 2) + pow((end.dy - start.dy), 2)));
+    // peak = Offset(start.dx + end.dx / 2, max(start.dy, end.dy) + d.abs());
 
     // 计算抛物线参数
     calculateParabola();
@@ -476,6 +552,9 @@ class TeamBattleV2Controller extends GetxController
     shootAnimation = CurvedAnimation(
         parent: shootAnimationController, curve: const Cubic(0.1, 0.5, 0.7, 2))
       ..addListener(shootAnimationListener);
+    shootAnimationDuration = 1200;
+    shootAnimationController.duration =
+        Duration(milliseconds: (shootAnimationDuration / gameSpeed).toInt());
     shootAnimationController.forward(from: 0);
   }
 
@@ -499,8 +578,6 @@ class TeamBattleV2Controller extends GetxController
         Random().nextDouble() * (max - minValue + (minValue == 0 ? 0 : 1));
   }
 
-  static String get idPlayersLocation => "id_players_location";
-
   shootSuccessAnimation() {
     shootAnimation?.removeListener(shootAnimationListener);
     shootAnimation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
@@ -513,12 +590,16 @@ class TeamBattleV2Controller extends GetxController
     start = Offset(end.dx, end.dy);
     if (end.dx == 22.w) {
       //右边投篮
-      end =
-          Offset(Random().nextDouble() * 50 + end.dx + 10, end.dy + end.dy / 2);
+      // end =
+      //     Offset(Random().nextDouble() * 50 + end.dx + 10, end.dy + end.dy / 2);
+      // end = isAway ? Offset(22.w, 49.w) : Offset(375.w - 22.w - 18.w - 6.w, 49.w);
+
+      end = Offset(10.w, 35.w);
     } else {
       //左边投篮
-      end =
-          Offset(end.dx - Random().nextDouble() * 50 - 10, end.dy + end.dy / 2);
+      // end =
+      //     Offset(end.dx - Random().nextDouble() * 50 - 10, end.dy + end.dy / 2);
+      end = Offset(375.w - 22.w - 18.w - 6.w + 12.w, 35.w);
     }
     // 随机生成最高点
     peak = Offset((start.dx + end.dx) / 2, peak.dy - 5);
@@ -526,8 +607,8 @@ class TeamBattleV2Controller extends GetxController
     // 计算抛物线参数
     calculateParabola();
     shootAnimation?.removeListener(shootAnimationListener);
-    shootAnimation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-        parent: shootAnimationController, curve: Curves.bounceOut));
+    shootAnimation = Tween(begin: start, end: end).animate(CurvedAnimation(
+        parent: shootAnimationController, curve: Curves.easeOut));
     shootAnimation?.addListener(shootIIAnimationListener);
     shootAnimationController.forward(from: 0);
   }
@@ -535,12 +616,16 @@ class TeamBattleV2Controller extends GetxController
   shootIIAnimationListener() {
     if (isSuccess) {
       var t = shootAnimation!.value;
-      shootOffset.value = Offset(end.dx, end.dy + (end.dy / 2 * t));
+      var offset = Offset(end.dx, end.dy + (end.dy / 2 * t));
+      shootOffset.value = offset;
+      shootPathOffsets.add(offset);
     } else {
-      double t = shootAnimation!.value; // 当前动画进度
-      final x = start.dx + (end.dx - start.dx) * t;
-      final y = calculateY(x);
-      shootOffset.value = Offset(x, y);
+      // double t = shootAnimation!.value; // 当前动画进度
+      // final x = start.dx + (end.dx - start.dx) * t;
+      // final y = calculateY(x);
+      var offset = shootAnimation!.value;
+      shootOffset.value = offset;
+      shootPathOffsets.add(offset);
     }
   }
 
@@ -549,23 +634,22 @@ class TeamBattleV2Controller extends GetxController
     if (t > 1) {
       shootAnimationController.stop();
       isSecondAnimationRunning = true;
-      var last = shootHistory.last;
-      if (last.isAway) {
-        ///todo
-        blueScore += last.isSuccess ? 3 : 0;
-      } else {
-        ///todo
-        redScore += last.isSuccess ? 3 : 0;
-      }
+      shootAnimationDuration = 200;
+      shootAnimationController.duration =
+          Duration(milliseconds: (shootAnimationDuration / gameSpeed).toInt());
       if (isSuccess) {
-        shootSuccessAnimation();
+        // shootSuccessAnimation();
       } else {
         shootFailedAnimation();
       }
     }
     final x = start.dx + (end.dx - start.dx) * t;
     final y = calculateY(x);
-    shootOffset.value = Offset(x, y);
+    var offset = Offset(x, y);
+    shootOffset.value = offset;
+    if (t <= 1) {
+      shootPathOffsets.add(offset);
+    }
   }
 
   List<Bullet> getNormalBullets() {
@@ -838,6 +922,8 @@ class TeamBattleV2Controller extends GetxController
     }
   }
 
+  static String get idPlayersLocation => "id_players_location";
+
   static String get idLiveText => "id_live_text";
 
   static String get idGameScore => "id_game_score";
@@ -849,6 +935,10 @@ class TeamBattleV2Controller extends GetxController
   static String get idReadiness => "id_readiness";
 
   static String get idBattleMain => "id_battle_main";
+
+  static String get idRoundTransform => "id_round_transform";
+
+  static String get idHighLightEvent => "id_high_light_event";
 
   List<GameEvent> getQuarterEvents({int? quarterValue}) {
     return eventOnScreenMap[
@@ -873,8 +963,10 @@ class TeamBattleV2Controller extends GetxController
     double regionWidth = size.width - 18.w;
     double regionHeight = regionWidth / 716 * 184;
     var offset = Offset(
-        (regionWidth / 600) * x + (event.isHomePlayer ? 0 : regionWidth / 2),
-        y * (regionHeight / 320) - regionHeight / 2);
+        (regionWidth / 600) * x +
+            (event.isHomePlayer ? 0 : regionWidth / 2) +
+            20.w,
+        y * (regionHeight / 320) - regionHeight / 2 - 38.w);
     return toTopRight(offset);
   }
 
@@ -889,7 +981,38 @@ class TeamBattleV2Controller extends GetxController
 
   bool isShootType(String type) {
     // 投篮事件类型
-    List<int> shootTypes = [1,2, 3,4, 5, 6, 7,8, 9,10, 11, 12, 13, 14, 15, 16,17, 18,19,20,21,24,25,26,27,28,29,30,31,32];
+    List<int> shootTypes = [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32
+    ];
     return shootTypes.contains(int.parse(type));
   }
 
@@ -898,7 +1021,26 @@ class TeamBattleV2Controller extends GetxController
       return true;
     }
     //得分事件类型
-    List<int> scoreTypes = [1, 2, 3, 4, 5, 6, 7, 8, 11, 12, 13, 14,24,26,27,30,31,32];
+    List<int> scoreTypes = [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      11,
+      12,
+      13,
+      14,
+      24,
+      26,
+      27,
+      30,
+      31,
+      32
+    ];
     return scoreTypes.contains(int.parse(type));
   }
 
@@ -982,6 +1124,7 @@ class TeamBattleV2Controller extends GetxController
     ]);
   }
 
+  /// 获取之前小结事件总数
   int getBeforeQuarterEventCount() {
     int count = 0;
     for (int i = 1; i < quarter.value; i++) {
@@ -993,7 +1136,12 @@ class TeamBattleV2Controller extends GetxController
     return count;
   }
 
-
+  bool isSystemEvent(GameEvent event) {
+    var systemEventIds = [501, 502, 503, 504, 505, 506];
+    return systemEventIds.contains(int.parse(
+        getGameEvent(event.pkEventUpdatedEntity.eventId)?.gameEventType ??
+            '0'));
+  }
 }
 
 class GameEvent {

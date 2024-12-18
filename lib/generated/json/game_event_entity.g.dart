@@ -25,6 +25,11 @@ GameEventEntity $GameEventEntityFromJson(Map<String, dynamic> json) {
   if (gameEventType != null) {
     gameEventEntity.gameEventType = gameEventType;
   }
+  final double? eventShowTime = jsonConvert.convert<double>(
+      json['eventShowTime']);
+  if (eventShowTime != null) {
+    gameEventEntity.eventShowTime = eventShowTime;
+  }
   final String? headLine = jsonConvert.convert<String>(json['headLine']);
   if (headLine != null) {
     gameEventEntity.headLine = headLine;
@@ -39,6 +44,7 @@ Map<String, dynamic> $GameEventEntityToJson(GameEventEntity entity) {
   data['eventDescripition'] = entity.eventDescripition;
   data['eventWeight'] = entity.eventWeight;
   data['gameEventType'] = entity.gameEventType;
+  data['eventShowTime'] = entity.eventShowTime;
   data['headLine'] = entity.headLine;
   return data;
 }
@@ -50,6 +56,7 @@ extension GameEventEntityExtension on GameEventEntity {
     String? eventDescripition,
     String? eventWeight,
     String? gameEventType,
+    double? eventShowTime,
     String? headLine,
   }) {
     return GameEventEntity()
@@ -58,6 +65,7 @@ extension GameEventEntityExtension on GameEventEntity {
       ..eventDescripition = eventDescripition ?? this.eventDescripition
       ..eventWeight = eventWeight ?? this.eventWeight
       ..gameEventType = gameEventType ?? this.gameEventType
+      ..eventShowTime = eventShowTime ?? this.eventShowTime
       ..headLine = headLine ?? this.headLine;
   }
 }

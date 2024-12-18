@@ -180,7 +180,11 @@ class _LiveTextWidgetState extends State<LiveTextWidget> {
                             if (item.time == -1) {
                               double step = 40 / list.length;
                               var generateTime =
-                                  (((list.length-index) * step)/40 * 12 * 60).toInt();
+                                  (((list.length - index) * step) /
+                                          40 *
+                                          12 *
+                                          60)
+                                      .toInt();
                               time = generateTime;
                             }
                             return Container(
@@ -209,17 +213,26 @@ class _LiveTextWidgetState extends State<LiveTextWidget> {
                                         borderRadius:
                                             BorderRadius.circular(15.5.w),
                                         border: Border.all(
-                                            color: item.isHomePlayer
-                                                ? AppColors.c1F8FE5
-                                                : AppColors.cD60D20,
+                                            color: controller.isSystemEvent(item)
+                                                ? AppColors.cTransparent
+                                                : item.isHomePlayer
+                                                    ? AppColors.c1F8FE5
+                                                    : AppColors.cD60D20,
                                             width: 1.5.w)),
-                                    child: ImageWidget(
-                                      url: Utils.getPlayUrl(item.playerId),
-                                      width: 28.w,
-                                      height: 28.w,
-                                      borderRadius: BorderRadius.circular(14.w),
-                                      imageFailedPath: Assets.teamUiHead03,
-                                    ),
+                                    child: controller.isSystemEvent(item)
+                                        ? IconWidget(
+                                            iconWidth: 20.w,
+                                            icon: Assets.commonUiCommonProp03)
+                                        : ImageWidget(
+                                            url:
+                                                Utils.getPlayUrl(item.playerId),
+                                            width: 28.w,
+                                            height: 28.w,
+                                            borderRadius:
+                                                BorderRadius.circular(14.w),
+                                            imageFailedPath:
+                                                Assets.teamUiHead03,
+                                          ),
                                   ),
                                   13.hGap,
                                   Expanded(child: Builder(builder: (context) {
