@@ -163,7 +163,7 @@ class GameOverWidget extends GetView<GameOverController> {
           child: Stack(
             children: [
               Positioned(
-                  top: 24.w,
+                  top: 23.w,
                   right: 21.w,
                   child: IconWidget(
                     iconWidth: 14.w,
@@ -192,9 +192,9 @@ class GameOverWidget extends GetView<GameOverController> {
                     child: ImageWidget(
                       url: Utils.getPlayUrl(pkResultUpdatedPlayer.playerId),
                       imageFailedPath: Assets.iconUiDefault06,
-                      width: 85.w,
+                      width: 88.w,
                       borderRadius: BorderRadius.circular(9.w),
-                      height: 123.w,
+                      height: 126.w,
                     ),
                   ),
                   15.hGap,
@@ -233,20 +233,10 @@ class GameOverWidget extends GetView<GameOverController> {
                             )
                           ],
                         ),
-                        6.vGap,
+                        20.vGap,
                         Text(
                           Utils.getPlayBaseInfo(pkResultUpdatedPlayer.playerId)
                               .ename,
-                          style: 14.w4(
-                              color: AppColors.c262626,
-                              height: 1,
-                              overflow: TextOverflow.ellipsis,
-                              fontFamily: FontFamily.fRobotoRegular),
-                        ),
-                        2.vGap,
-                        Text(
-                          Utils.getPlayBaseInfo(pkResultUpdatedPlayer.playerId)
-                              .elname,
                           style: 27.w7(
                               color: AppColors.c262626,
                               fontFamily: FontFamily.fOswaldBold,
@@ -323,7 +313,7 @@ class GameOverWidget extends GetView<GameOverController> {
         child: Stack(
           children: [
             Positioned(
-                top: 24.w,
+                top: 23.w,
                 left: 21.w,
                 child: IconWidget(
                   iconWidth: 14.w,
@@ -380,27 +370,17 @@ class GameOverWidget extends GetView<GameOverController> {
                           ),
                         ],
                       ),
-                      6.vGap,
+                      15.vGap,
                       Text(
                         Utils.getPlayBaseInfo(pkResultUpdatedPlayer.playerId)
                             .ename,
-                        style: 14.w4(
-                            color: AppColors.c262626,
-                            height: 1,
-                            overflow: TextOverflow.ellipsis,
-                            fontFamily: FontFamily.fRobotoRegular),
-                      ),
-                      2.vGap,
-                      Text(
-                        Utils.getPlayBaseInfo(pkResultUpdatedPlayer.playerId)
-                            .elname,
                         textAlign: TextAlign.end,
                         style: 27.w7(
                             color: AppColors.c262626,
                             fontFamily: FontFamily.fOswaldBold,
                             height: 1),
                       ),
-                      9.vGap,
+                      13.vGap,
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -470,9 +450,9 @@ class GameOverWidget extends GetView<GameOverController> {
                   child: ImageWidget(
                     url: Utils.getPlayUrl(pkResultUpdatedPlayer.playerId),
                     imageFailedPath: Assets.iconUiDefault06,
-                    width: 85.w,
+                    width: 88.w,
                     borderRadius: BorderRadius.circular(9.w),
-                    height: 123.w,
+                    height: 126.w,
                   ),
                 ),
                 17.hGap,
@@ -542,14 +522,28 @@ class GameOverWidget extends GetView<GameOverController> {
                   color: AppColors.c000000,
                   border: Border.all(color: AppColors.c333333, width: 1.w),
                   borderRadius: BorderRadius.circular(6.w)),
-              child: AnimatedNum(
-                number: controller.moneyOpacityObs.value?controller.getMoneyCount():0,
-                isMoney: true,
-                milliseconds: 1000,
-                textStyle: 14.w5(
-                    color: AppColors.cFFFFFF,
-                    height: 1,
-                    fontFamily: FontFamily.fOswaldMedium),
+              child: Row(
+                children: [
+                  7.hGap,
+                  IconWidget(
+                      iconWidth: 28.w,
+                      fit: BoxFit.fitWidth,
+                      iconHeight: 22.w,
+                      icon: Assets.commonUiCommonProp05),
+                  Expanded(
+                    child: Center(
+                      child: AnimatedNum(
+                        number: controller.moneyAnimationEnd.value?controller.getMoneyCount():0,
+                        isMoney: true,
+                        milliseconds: 500,
+                        textStyle: 14.w5(
+                            color: AppColors.cFFFFFF,
+                            height: 1,
+                            fontFamily: FontFamily.fOswaldMedium),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           );
@@ -753,6 +747,7 @@ class GameOverWidget extends GetView<GameOverController> {
 
   void _onHeaderAnimationEnd() {
     controller.mvpObs.value = true;
+    controller.moneyAnimationEnd.value = true;
   }
 
   Stack _buildRightWinWidget(BuildContext context) {

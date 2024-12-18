@@ -2,6 +2,7 @@ import 'package:arm_chair_quaterback/common/entities/api_error_code_entity.dart'
 import 'package:arm_chair_quaterback/common/entities/competition_venue_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/config/prop_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/cup_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/dan_ma_ku_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/game_event_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/grade_in_stamina_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/grade_in_star_define_entity.dart';
@@ -50,6 +51,7 @@ class CacheApi {
   static List<CompetitionVenueEntity> competitionVenues = [];
   static List<GradeInStaminaEntity> gradeInStaminaList = [];
   static List<CupDefineEntity> cupDefineList = [];
+  static List<DanMaKuEntity> danMaKuList = [];
 
   static Future<void> init() async {
     await Future.wait([
@@ -221,5 +223,15 @@ class CacheApi {
     List list = await HttpUtil().post(Api.cCupDefine);
     cupDefineList = list.map((e) => CupDefineEntity.fromJson(e)).toList();
     return cupDefineList;
+  }
+
+  ///战斗普通弹幕
+  static Future<List<DanMaKuEntity>> getDanMaKu() async {
+    if (danMaKuList.isNotEmpty) {
+      return danMaKuList;
+    }
+    List list = await HttpUtil().post(Api.cDanMaKu);
+    danMaKuList = list.map((e) => DanMaKuEntity.fromJson(e)).toList();
+    return danMaKuList;
   }
 }

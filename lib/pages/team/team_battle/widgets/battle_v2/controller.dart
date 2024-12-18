@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/competition_venue_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/dan_ma_ku_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/game_event_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_event_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_player_updated_entity.dart';
@@ -82,7 +83,7 @@ class TeamBattleV2Controller extends GetxController
   var quarterGameCountDown = 40.0.obs;
   var quarter = 0.obs;
   Map<String, List<GameEvent>> eventCacheMap = {}; //缓存所有的事件，等待事件引擎调用
-  Timer? eventEngine; //事件引擎,1s产生一个事件
+  Timer? eventEngine; //事件引擎,根据showTime设置显示时间
   int eventCount = 0;
   Map<String, List<GameEvent>> eventOnScreenMap = {}; //正在播放的事件
 
@@ -119,6 +120,8 @@ class TeamBattleV2Controller extends GetxController
   bool? leftRound;
 
   GameEvent? highLightEvent;
+
+  Timer? normalDanMaKuTimer;
 
   /// 在 widget 内存中分配后立即调用。
   @override
@@ -345,6 +348,9 @@ class TeamBattleV2Controller extends GetxController
     if (quarter.value >= 4) {
       return;
     }
+
+    /// 开启常驻弹幕计时器
+    startForeverNormalDanMaKu();
     quarter.value = quarter.value + 1;
     liveTextTabIndex.value = quarter.value - 1;
     update([idLiveText]);
@@ -375,8 +381,24 @@ class TeamBattleV2Controller extends GetxController
     sendToScreen();
   }
 
+  void startForeverNormalDanMaKu() {
+    normalDanMaKuTimer?.cancel();
+    normalDanMaKuTimer ??= Timer.periodic(const Duration(seconds: 2), (t) {
+      var where = CacheApi.danMaKuList.where((e) => e.hudTrigger.contains(0));
+      if (where.isNotEmpty) {
+        var random = Random();
+        for (int i = 0; i < where.length; i++) {
+          var item = where.toList()[i];
+          var num = random.nextInt(item.hudNum[1]) + 1;
+          normalBarrageWallController.send(
+              List.generate(num, (_) => generateNormalBullet(item.hudDes)));
+        }
+      }
+    });
+  }
+
   void sendToScreen() {
-    if(isGameOver.value) return;
+    if (isGameOver.value) return;
     var key = Utils.getSortWithInt(quarter.value);
     var events = eventCacheMap[key] ?? [];
     var hasData = events.length > eventCount;
@@ -394,7 +416,8 @@ class TeamBattleV2Controller extends GetxController
       sendToScreen();
       return;
     }
-    Future.delayed(
+    eventEngine?.cancel();
+    eventEngine = Timer(
         Duration(
             milliseconds: (gameEvent.eventShowTime * 1000 / gameSpeed).toInt()),
         () {
@@ -431,7 +454,7 @@ class TeamBattleV2Controller extends GetxController
 
     if (event.mainOffset != null) {
       if (event.shooting) {
-        if(gameSpeed == 1) {
+        if (gameSpeed == 1) {
           /// 加速时不显示投篮动画
           shoot(event);
         }
@@ -443,6 +466,8 @@ class TeamBattleV2Controller extends GetxController
     }
     gameLeaderController.setEvent(event);
     teamStatsController.setEvent(event);
+
+    handlerDanMaKu(event);
     update([idLiveText, idGameScore, idPlayers, idQuarterScore, idReadiness]);
     Future.delayed(Duration.zero, () {
       if (context.mounted && (liveTextTabIndex.value + 1) == quarter.value) {
@@ -456,7 +481,7 @@ class TeamBattleV2Controller extends GetxController
   }
 
   void checkRoundTransformEvent(GameEvent event) {
-    if(gameSpeed != 1){
+    if (gameSpeed != 1) {
       /// 加速时不显示回合切换动画
       return;
     }
@@ -695,6 +720,42 @@ class TeamBattleV2Controller extends GetxController
     return bullets;
   }
 
+  Bullet generateNormalBullet(String text) {
+    var size = calculateTextSize(
+        text,
+        12.w4(
+            color: AppColors.c000000,
+            height: 1,
+            fontFamily: FontFamily.fRobotoRegular));
+    return Bullet(
+      child: Container(
+        width: size.width + 12.w * 2,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            color: AppColors.cFFFFFF,
+            borderRadius: BorderRadius.circular(14.w),
+            boxShadow: [
+              BoxShadow(
+                  color: AppColors.cDEDEDE,
+                  offset: Offset(3.w, 3.w),
+                  blurRadius: 3.w)
+            ]),
+        padding: EdgeInsets.symmetric(horizontal: 12.w),
+        height: 21.w,
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            text,
+            style: 12.w4(
+                color: AppColors.c000000,
+                height: 1,
+                fontFamily: FontFamily.fRobotoRegular),
+          ),
+        ),
+      ),
+    );
+  }
+
   Bullet generateHighBullet(GameEvent event) {
     var size = calculateTextSize(
         event.text,
@@ -838,6 +899,7 @@ class TeamBattleV2Controller extends GetxController
     highLightBarrageWallController.dispose();
     shootAnimationController.dispose();
     _timer?.cancel();
+    normalDanMaKuTimer?.cancel();
     subscription.cancel();
     eventEngine?.cancel();
     quarterTimeCountDownAnimationController.dispose();
@@ -1141,6 +1203,24 @@ class TeamBattleV2Controller extends GetxController
     return systemEventIds.contains(int.parse(
         getGameEvent(event.pkEventUpdatedEntity.eventId)?.gameEventType ??
             '0'));
+  }
+
+  void handlerDanMaKu(GameEvent event) {
+    var where = CacheApi.danMaKuList.where((e) => e.hudTrigger.contains(
+        int.parse(
+            getGameEvent(event.pkEventUpdatedEntity.eventId)?.gameEventType ??
+                '0')));
+    if (where.isNotEmpty) {
+      var random = Random();
+      for (int i = 0; i < where.length; i++) {
+        var item = where.toList()[i];
+        var num = random.nextInt(item.hudNum[1]) + 1;
+        normalBarrageWallController.send(List.generate(
+            num,
+            (_) => generateNormalBullet(
+                insertPlayerName(item.hudDes, event.pkEventUpdatedEntity))));
+      }
+    }
   }
 }
 

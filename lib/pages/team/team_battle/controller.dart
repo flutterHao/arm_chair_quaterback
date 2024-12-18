@@ -92,6 +92,7 @@ class TeamBattleController extends GetxController
       CacheApi.getNBATeamDefine(),
       PicksApi.getTeamInfo(),
       CacheApi.getCupDefine(),
+      CacheApi.getDanMaKu(),
     ]).then((result) {
       teamInfoEntity = result[4];
       _timer?.cancel();

@@ -252,6 +252,32 @@ class GameCourtWidget extends GetView<TeamBattleV2Controller> {
                         color: controller.shootPathColor)));
           }),
 
+          //普通弹幕
+          Positioned(
+            top: 0,
+            width: MediaQuery.of(context).size.width,
+            height: 40.w,
+            child: BarrageWall(
+              width: MediaQuery.of(context).size.width,
+              height: 40.w,
+              massiveMode: false,
+              controller: controller.normalBarrageWallController,
+              child: Container(),
+            ),
+          ),
+          //高光时刻弹幕
+          // Positioned(
+          //   bottom: 5.w,
+          //   width: MediaQuery.of(context).size.width,
+          //   height: 30.w,
+          //   child: BarrageWall(
+          //     width: MediaQuery.of(context).size.width,
+          //     height: 30.w,
+          //     controller: controller.highLightBarrageWallController,
+          //     child: Container(),
+          //   ),
+          // ),
+
           /// 高光时刻气泡
           Positioned(
             top: 0.w,
@@ -276,31 +302,6 @@ class GameCourtWidget extends GetView<TeamBattleV2Controller> {
               ),
             ),
           ),
-
-          //普通弹幕
-          Positioned(
-            top: 0,
-            width: MediaQuery.of(context).size.width,
-            height: 45.w,
-            child: BarrageWall(
-              width: MediaQuery.of(context).size.width,
-              height: 45.w,
-              controller: controller.normalBarrageWallController,
-              child: Container(),
-            ),
-          ),
-          //高光时刻弹幕
-          // Positioned(
-          //   bottom: 5.w,
-          //   width: MediaQuery.of(context).size.width,
-          //   height: 30.w,
-          //   child: BarrageWall(
-          //     width: MediaQuery.of(context).size.width,
-          //     height: 30.w,
-          //     controller: controller.highLightBarrageWallController,
-          //     child: Container(),
-          //   ),
-          // )
         ],
       ),
     );

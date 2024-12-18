@@ -28,6 +28,7 @@ class GameOverController extends GetxController {
   var moneyOpacityObs = false.obs;
   var moneyIncomeObs = false.obs;
   var mvpObs = false.obs;
+  var moneyAnimationEnd = false.obs;
   var onMvpAnimationEndObs = false.obs;
 
   var cupNum = 0;

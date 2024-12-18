@@ -86,7 +86,12 @@ class _MoneyIncomeAnimationState extends State<MoneyIncomeAnimation> {
                 duration: Duration(milliseconds: random.nextInt(500) + 100),
                 onEnd: () {
                   if (animationStatus.value == 2) {
-                    widget.onEnd?.call();
+                    Future.delayed(const Duration(milliseconds: 300),(){
+                      if(mounted){
+                        widget.onEnd?.call();
+
+                      }
+                    });
                   } else if (animationStatus.value == 1) {
                     Future.delayed(const Duration(milliseconds: 300), () {
                       animationStatus.value = 2;
