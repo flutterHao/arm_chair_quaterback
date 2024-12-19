@@ -62,7 +62,6 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                   double value = event == null
                       ? teamBattleController.battleEntity.homeTeamReadiness
                       : event.pkEventUpdatedEntity.homePreparationLevel;
-                  print('home pre value:$value');
                   return _buildPrePercentWidget(value);
                 }),
           ),
@@ -328,7 +327,6 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                                     .battleEntity.awayTeamReadiness
                                 : event
                                     .pkEventUpdatedEntity.awayPreparationLevel;
-                            print('away pre value:$value');
                             return _buildPrePercentWidget(value);
                           }),
                     ),

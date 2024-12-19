@@ -50,7 +50,20 @@ class BeforeGameWidget extends GetView<BeforeGameController> {
             width: double.infinity,
             child: Stack(
               children: [
-                Opacity(opacity: 0, child: header),
+                Positioned(
+                    top: 0,
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: Column(
+                      children: [
+                        Opacity(opacity: 0, child: header),
+                        Expanded(
+                            child: Container(
+                          color: AppColors.cF2F2F2,
+                        ))
+                      ],
+                    )),
                 Obx(() {
                   return Positioned(
                       top: 101.w,
@@ -253,7 +266,7 @@ class BeforeGameWidget extends GetView<BeforeGameController> {
 
                 /// MY TACTICS 和整块白色背景
                 Positioned(
-                    top: 101.w + 156.w + 44.w,
+                    top: 101.w + 156.w + 44.w + 10.w,
                     left: 0,
                     right: 0,
                     child: Obx(() {

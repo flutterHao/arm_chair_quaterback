@@ -46,8 +46,6 @@ class _RoundTransformWidgetState extends State<RoundTransformWidget>
         animationController.forward(from: 0);
       }
     });
-    times = 1;
-    animationController.forward();
   }
 
   @override

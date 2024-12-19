@@ -31,11 +31,11 @@ class PlayerStatusController extends GetxController {
         resultUpdatedEntity.playerResults.firstWhere((e) => e.type == 1);
     var list = [
       ...resultUpdatedEntity.homeTeamResult.teamPlayers,
-      ...resultUpdatedEntity.awayTeamResult.teamPlayers
+      // ...resultUpdatedEntity.awayTeamResult.teamPlayers
     ];
     var scoreList = [
       ...resultUpdatedEntity.homeTeamResult.scoreBoardDetailList,
-      ...resultUpdatedEntity.awayTeamResult.scoreBoardDetailList
+      // ...resultUpdatedEntity.awayTeamResult.scoreBoardDetailList
     ];
     var playerStatusList = list.map((e) {
       var score = scoreList

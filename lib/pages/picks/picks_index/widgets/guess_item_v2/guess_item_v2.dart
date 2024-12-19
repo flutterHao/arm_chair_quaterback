@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:arm_chair_quaterback/common/widgets/share_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/support_percent_progress_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -311,21 +312,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
         Positioned(
             top: 11.w,
             right: 10.w,
-            child: Container(
-                width: 24.w,
-                height: 24.w,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(4.w),
-                    border: Border.all(color: AppColors.c666666, width: 1)),
-                child: MtInkwell(
-                    vibrate: true,
-                    onTap: () =>
-                        Utils.generateAndShareImage(_repaintBoundaryKey),
-                    child: IconWidget(
-                      iconWidth: 15.w,
-                      icon: Assets.commonUiCommonIconSystemShare,
-                      iconColor: AppColors.c000000,
-                    ))))
+            child: ShareWidget(globalKey: _repaintBoundaryKey))
       ],
     );
   }
