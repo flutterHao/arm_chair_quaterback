@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2024-12-19 21:23:24
+ * @LastEditTime: 2024-12-19 18:24:20
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -182,49 +182,44 @@ class PlayerItem extends GetView<TeamController> {
                 ),
               ),
               4.hGap,
-              MtInkwell(
-                onTap: () {
-                  // controller.recoverPower(type: 1, uuid: item.uuid);
-                },
-                child: Container(
-                  // width: 73.w,
-                  height: 29.w,
-                  alignment: Alignment.center,
-                  padding: EdgeInsets.only(left: 5.5.w, right: 8.5.w),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(4.w),
-                    border: Border.all(width: 1.w, color: AppColors.cE6E6E),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      IconWidget(
-                        icon: Assets.managerUiManagerIconRecover,
-                        iconWidth: 12.5.w,
-                      ),
-                      5.5.hGap,
-                      AnimatedNum(
-                        number: item.power * 100 ~/ 100,
-                        textStyle: 16.w7(
-                            color: AppColors.c000000,
-                            height: 1,
-                            fontFamily: FontFamily.fOswaldMedium),
-                      ),
-                      Text(
-                        "%",
-                        style: 16.w7(
-                            color: AppColors.c000000,
-                            height: 1,
-                            fontFamily: FontFamily.fOswaldMedium),
-                      ),
-                      7.hGap,
-                      IconWidget(
-                        icon: Assets.commonUiCommonIconSystemJumpto,
-                        iconWidth: 5.w,
-                        iconColor: AppColors.c000000,
-                      ),
-                    ],
-                  ),
+              Container(
+                // width: 73.w,
+                height: 29.w,
+                alignment: Alignment.center,
+                padding: EdgeInsets.only(left: 5.5.w, right: 8.5.w),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4.w),
+                  border: Border.all(width: 1.w, color: AppColors.cE6E6E),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconWidget(
+                      icon: Assets.managerUiManagerIconRecover,
+                      iconWidth: 12.5.w,
+                    ),
+                    5.5.hGap,
+                    AnimatedNum(
+                      number: item.power * 100 ~/ 100,
+                      textStyle: 16.w7(
+                          color: AppColors.c000000,
+                          height: 1,
+                          fontFamily: FontFamily.fOswaldMedium),
+                    ),
+                    Text(
+                      "%",
+                      style: 16.w7(
+                          color: AppColors.c000000,
+                          height: 1,
+                          fontFamily: FontFamily.fOswaldMedium),
+                    ),
+                    7.hGap,
+                    IconWidget(
+                      icon: Assets.commonUiCommonIconSystemJumpto,
+                      iconWidth: 5.w,
+                      iconColor: AppColors.c000000,
+                    ),
+                  ],
                 ),
               ),
             ],

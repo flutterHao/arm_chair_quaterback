@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 14:09:29
- * @LastEditTime: 2024-12-18 20:51:41
+ * @LastEditTime: 2024-12-19 21:02:40
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
@@ -15,6 +15,7 @@ import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/custom_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/widgets/linear_progress_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -189,35 +190,44 @@ class BattleBoxDialog extends StatelessWidget {
                         ),
                       ),
                       7.vGap,
-                      Stack(
-                        alignment: Alignment.centerLeft,
-                        children: [
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            margin: EdgeInsets.symmetric(horizontal: 39.w),
-                            width: 297.w,
-                            height: 14.w,
-                            decoration: BoxDecoration(
-                              border: Border.all(color: AppColors.cD1D1D1),
-                              borderRadius: BorderRadius.circular(7.w),
-                            ),
-                          ),
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            margin: EdgeInsets.symmetric(horizontal: 39.w),
-                            width: 297.w * item.progress,
-                            height: 14.w,
-                            clipBehavior: Clip.antiAlias,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.horizontal(
-                                    left: Radius.circular(7.w)),
-                                gradient: const LinearGradient(colors: [
-                                  AppColors.c000000,
-                                  AppColors.cFF7954
-                                ])),
-                          ),
-                        ],
+                      OutLineProgressWidget(
+                        // width: 68.w,
+                        // height: 6.w,
+                        width: 297.w,
+                        height: 14.w,
+                        progress: item.progress,
+                        progressColor: AppColors.cFF7954,
                       ),
+                      // Stack(
+                      //   alignment: Alignment.centerLeft,
+                      //   children: [
+                      //     Container(
+                      //       alignment: Alignment.centerLeft,
+                      //       margin: EdgeInsets.symmetric(horizontal: 39.w),
+                      //       width: 297.w,
+                      //       height: 14.w,
+                      //       decoration: BoxDecoration(
+                      //         border: Border.all(color: AppColors.cD1D1D1),
+                      //         borderRadius: BorderRadius.circular(7.w),
+                      //       ),
+                      //     ),
+                      //     AnimatedContainer(
+                      //       duration: 300.milliseconds,
+                      //       alignment: Alignment.centerLeft,
+                      //       margin: EdgeInsets.symmetric(horizontal: 39.w),
+                      //       width: 7.w + 290 * item.progress,
+                      //       height: 14.w,
+                      //       clipBehavior: Clip.antiAlias,
+                      //       decoration: BoxDecoration(
+                      //           borderRadius: BorderRadius.horizontal(
+                      //               left: Radius.circular(7.w)),
+                      //           gradient: const LinearGradient(colors: [
+                      //             AppColors.c000000,
+                      //             AppColors.cFF7954
+                      //           ])),
+                      //     ),
+                      //   ],
+                      // ),
                       18.vGap
                     ],
                   );

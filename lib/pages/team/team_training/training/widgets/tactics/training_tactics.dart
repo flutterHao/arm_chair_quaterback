@@ -11,7 +11,7 @@ import 'package:arm_chair_quaterback/common/widgets/vertival_drag_back_widget.da
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/progress_paint.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/widgets/recover_dialog.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/dialog/recover_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactics/card_rule_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactics/tactic_card.dart';
@@ -72,20 +72,6 @@ class TrainingTactics extends StatelessWidget {
       });
     }
 
-    void recove(myTeamCtrl) {
-      if (myTeamCtrl.myTeamEntity.powerP >= 1000) {
-        EasyLoading.showToast("Your team's morale is full.");
-        // Loading.toast("Your team's morale is full.");
-        return;
-      }
-      showModalBottomSheet(
-          isScrollControlled: true,
-          context: Get.context!,
-          builder: (context) {
-            return const RecoverDialog();
-          });
-    }
-
     return Material(
       child: GetBuilder<TeamController>(builder: (myTeamCtrl) {
         return Container(
@@ -101,7 +87,7 @@ class TrainingTactics extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
-                    recove(myTeamCtrl);
+                    myTeamCtrl.recove(myTeamCtrl);
                   },
                   child: Container(
                     width: 140.w,
@@ -133,13 +119,13 @@ class TrainingTactics extends StatelessWidget {
                         13.vGap,
                         MtInkwell(
                           onTap: () {
-                            recove(myTeamCtrl);
+                            myTeamCtrl.recove(myTeamCtrl);
                           },
                           child: CircleProgressView(
                               progress: myTeamCtrl.myTeamEntity.powerP * 1.0,
                               width: 55.w,
                               height: 55.w,
-                              progressWidth: 5.w,
+                              progressWidth: 4.5.w,
                               progressColor: Utils.getProgressColor(
                                   myTeamCtrl.myTeamEntity.powerP),
                               child: Column(

@@ -11,6 +11,7 @@ import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/top_toast_dialog.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/dialog/power_change_dialog.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/dialog/recover_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/widgets/line_up_tab.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/widgets/player_bag_tab.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/widgets/player_changer_dialog.dart';
@@ -18,6 +19,7 @@ import 'package:arm_chair_quaterback/pages/team/team_training/training/controlle
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
 class TeamController extends GetxController with GetTickerProviderStateMixin {
@@ -139,7 +141,9 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
     });
   }
 
-  Future<void> recoverPower({int type = 1, String? uuid}) async {
+  ///单个：type=1，2全员
+  Future<void> recoverPower(
+      {required int cost, int type = 1, String? uuid}) async {
     await TeamApi.recoverPower(type: type, uuid: uuid).then((v) async {
       myTeamEntity.powerP = v.powerP;
       myTeamEntity.powerReplyTime = v.powerReplyTime;
@@ -154,13 +158,21 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
           totalPw += e.power;
         }
         myTeamEntity.powerP = (totalPw ~/ myTeamEntity.teamPlayers.length);
+        HomeController.to.updateMoney(-cost);
       } else {
+        if (myTeamEntity.powerP >= 100) {
+          EasyLoading.showToast("Your team's morale is full.");
+          // Loading.toast("Your team's morale is full.");
+          return;
+        }
         if (v.teamPlayers.isNotEmpty) {
           for (var e in v.teamPlayers) {
             int index =
                 myTeamEntity.teamPlayers.indexWhere((e1) => e1.uuid == e.uuid);
             myTeamEntity.teamPlayers[index].power = e.power;
           }
+          HomeController.to.updateMoney(-cost);
+
           //更新训练信息
           TrainingController ctrl = Get.find();
           ctrl.trainingInfo = await TeamApi.getTrainingInfo();
@@ -435,12 +447,28 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
       var player = Utils.getPlayBaseInfo(e.playerId);
       for (var element in CacheApi.gradeInStaminaList) {
         if (element.gradeDes == player.grade) {
-          double cost = player.salary * element.recoverStaminaValue;
-          total += cost;
+          e.recoverCost = (player.salary * element.recoverStaminaValue).ceil();
+          total += e.recoverCost;
         }
       }
     }
 
     return total.ceil();
+  }
+
+  void recove(myTeamCtrl) {
+    if (myTeamEntity.powerP >= 1000) {
+      EasyLoading.showToast("Your team's morale is full.");
+      // Loading.toast("Your team's morale is full.");
+      return;
+    }
+    showModalBottomSheet(
+        isScrollControlled: true,
+        context: Get.context!,
+        // barrierColor: Colors.transparent,
+        backgroundColor: Colors.transparent,
+        builder: (context) {
+          return const RecoverDialog();
+        });
   }
 }

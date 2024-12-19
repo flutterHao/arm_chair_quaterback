@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-06 10:37:49
- * @LastEditTime: 2024-12-16 11:36:10
+ * @LastEditTime: 2024-12-19 12:05:48
  */
 import 'dart:math';
 
@@ -245,9 +245,10 @@ class _Substitute extends GetView<TeamController> {
     String p = item.position > 0
         ? Utils.getPosition(item.position)
         : Utils.getPlayBaseInfo(item.playerId).position;
-    var list = controller.myTeamEntity.teamPlayers
+    var subList = controller.myTeamEntity.teamPlayers
         .where((e) => e.position == 0)
         .toList();
+    var list = subList;
     if (item.position > 0) {
       list = list
           .where((e) => Utils.getPlayBaseInfo(e.playerId).position.contains(p))
@@ -281,6 +282,9 @@ class _Substitute extends GetView<TeamController> {
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
+                  if (subList.length >= controller.myTeamEntity.benchCount) {
+                    return PlayerItem(item: list[index]);
+                  }
                   return index < list.length
                       ? PlayerItem(item: list[index])
                       : InkWell(
@@ -296,7 +300,9 @@ class _Substitute extends GetView<TeamController> {
                   color: AppColors.cE6E6E,
                   margin: EdgeInsets.symmetric(horizontal: 16.w),
                 ),
-                itemCount: list.length + 1,
+                itemCount: subList.length < controller.myTeamEntity.benchCount
+                    ? list.length + 1
+                    : list.length,
               )
             : ListView.separated(
                 padding: EdgeInsets.symmetric(vertical: 10.w),

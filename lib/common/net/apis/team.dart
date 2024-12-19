@@ -103,10 +103,9 @@ class TeamApi {
   }
 
   ///加速开启宝箱
-  static Future<List<TrainingInfoAward>> speedOpneBattleBox(int index) async {
-    List list =
-        await HttpUtil().post(Api.speedOpenCardPack, data: {"index": index});
-    return list.map((e) => TrainingInfoAward.fromJson(e)).toList();
+  static Future speedOpneBattleBox(int index) async {
+    await HttpUtil().post(Api.speedOpenCardPack, data: {"index": index});
+    // return list.map((e) => TrainingInfoAward.fromJson(e)).toList();
   }
 
   ///开启免费宝箱

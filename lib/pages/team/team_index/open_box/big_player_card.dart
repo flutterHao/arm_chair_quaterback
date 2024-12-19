@@ -68,15 +68,15 @@ class BigPlayerCard extends StatelessWidget {
                 OutlinedText(
                   text: player.playerScore.toString(),
                   strokeWidth: 1.5.w,
-                  textStyle: 16
-                      .w4(height: 0.8, fontFamily: FontFamily.fOswaldRegular),
+                  textStyle:
+                      16.w4(height: 0.8, fontFamily: FontFamily.fOswaldRegular),
                 ),
                 3.vGap,
                 OutlinedText(
                   text: "OVR",
                   strokeWidth: 1.5.w,
-                  textStyle: 9
-                      .w4(height: 0.8, fontFamily: FontFamily.fOswaldRegular),
+                  textStyle:
+                      9.w4(height: 0.8, fontFamily: FontFamily.fOswaldRegular),
                 ),
               ],
             ),
@@ -109,7 +109,7 @@ class BigPlayerCard extends StatelessWidget {
                 ),
               )),
           Positioned(
-            bottom: 35.w,
+            bottom: 34.w,
             right: 99.w,
             child: Row(
               mainAxisSize: MainAxisSize.min,

@@ -2,11 +2,12 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 20:30:20
- * @LastEditTime: 2024-11-18 14:47:03
+ * @LastEditTime: 2024-12-19 21:18:14
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class CustomLinearProgressBar extends StatefulWidget {
   final double progress; // 进度值，0.0到1.0
@@ -93,6 +94,57 @@ class _CustomLinearProgressBarState extends State<CustomLinearProgressBar>
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+class OutLineProgressWidget extends StatelessWidget {
+  const OutLineProgressWidget({
+    super.key,
+    required this.width,
+    required this.height,
+    required this.progress,
+    required this.progressColor,
+  });
+  final double width;
+  final double height;
+  final double progress;
+  final Color progressColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(7.w),
+      child: SizedBox(
+        width: width,
+        height: height,
+        child: Stack(
+          alignment: Alignment.centerLeft,
+          children: [
+            Container(
+              alignment: Alignment.centerLeft,
+              width: width,
+              height: height,
+              decoration: BoxDecoration(
+                border: Border.all(color: AppColors.cD1D1D1),
+                borderRadius: BorderRadius.circular(7.w),
+              ),
+            ),
+            AnimatedContainer(
+              duration: 300.milliseconds,
+              alignment: Alignment.centerLeft,
+              width: width * progress,
+              height: height,
+              clipBehavior: Clip.antiAlias,
+              decoration: BoxDecoration(
+                  borderRadius:
+                      BorderRadius.horizontal(left: Radius.circular(7.w)),
+                  gradient: LinearGradient(
+                      colors: [AppColors.c000000, progressColor])),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -2,12 +2,13 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-12-18 21:16:52
+ * @LastEditTime: 2024-12-19 18:13:30
  */
 
 import 'dart:async';
 
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/player_card_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
@@ -44,18 +45,16 @@ class TeamIndexController extends GetxController
   bool recieved = false;
   RxInt cup = 0.obs;
 
-  bool isOnTopSide = true;
-
-  get myTeamBottom => null;
-
-  get isShow => null;
-
   int step = 0;
   int selectIndex = -1;
   //摇动动画
   late AnimationController shakeController;
   late Animation<double> shakeAnimation;
-
+  //背景入场动画
+  RxBool showBackground1 = false.obs;
+  RxBool showBackground2 = false.obs;
+  RxBool showBackground3 = false.obs;
+  Duration showBgDuration = const Duration(milliseconds: 200);
   @override
   void onInit() {
     super.onInit();
@@ -133,6 +132,7 @@ class TeamIndexController extends GetxController
 
   ///开启战斗宝箱
   void openBattleBox(int index, int playerId) async {
+    // return;
     awardList = await TeamApi.opneBattleBox(index, playerId);
     getBattleBox();
     // showBoxDialog();
@@ -140,8 +140,9 @@ class TeamIndexController extends GetxController
 
   ///快速开启
   void speedOpneBattleBox(int index) async {
-    awardList = await TeamApi.speedOpneBattleBox(index);
-    showBoxDialog();
+    await TeamApi.speedOpneBattleBox(index);
+    // showBoxDialog();
+    getBattleBox();
   }
 
   ///开启免费宝箱
@@ -266,13 +267,30 @@ class TeamIndexController extends GetxController
     }
   }
 
-  void nextStep() {
-    if (step < 3) {
-      step++;
-      update(["open_box_page"]);
-    } else {
-      Get.back();
-    }
+  Future showBigCard(PlayerCardEntity card) async {
+    shakeController.reset();
+    shakeController.stop();
+
+    step = 2;
+    update(["open_box_page"]);
+    showBackground1.value = true;
+    await Future.delayed(showBgDuration);
+    showBackground2.value = true;
+    await Future.delayed(showBgDuration);
+    showBackground3.value = true;
+    await Future.delayed(showBgDuration);
+    await Future.delayed(showBgDuration);
+    card.isOpen.value = true;
+    update(["open_box_page"]);
+  }
+
+  Future closeBigBox() async {
+    showBackground1.value = false;
+    await Future.delayed(showBgDuration);
+    showBackground2.value = false;
+    await Future.delayed(100.milliseconds);
+    showBackground3.value = false;
+    await Future.delayed(showBgDuration);
   }
 
   @override

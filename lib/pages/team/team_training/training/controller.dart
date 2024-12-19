@@ -541,7 +541,7 @@ class TrainingController extends GetxController
     selectTacticId = 0;
     changeTacticId = 0;
 
-    await Future.delayed(const Duration(milliseconds: 400));
+    await Future.delayed(const Duration(milliseconds: 300));
     showBuff.value = false;
     tacticFly.value = false;
     isPlaying.value = false;
@@ -669,6 +669,7 @@ class TrainingController extends GetxController
       await startPlayerScroll(0);
       //更新球员状态
       Get.find<TeamController>().updateTeamInfo();
+      update(["training_page"]);
       await Future.delayed(const Duration(milliseconds: 500));
     }
 
@@ -749,22 +750,24 @@ class TrainingController extends GetxController
       isPlaying.value = false;
     }
 
-    //暂时不知道重置到开始位置的原因，强行重新变更成中将位置
+    //暂时不知道重置到开始位置的原因，先重新变更成中奖位置
     if (scrollerCtrlList.where((e) => e.offset == 0.0).length == 6) {
       for (int i = 0; i < scrollerCtrlList.length; i++) {
         scrollerCtrlList[i].jumpTo(offsetList[i]);
       }
     }
-    Future.delayed(const Duration(milliseconds: 20), () {
+    for (var element in scrollerCtrlList) {
+      Log.d("slot 当前位置 ${element.offset}");
+    }
+
+    Future.delayed(const Duration(milliseconds: 10), () {
       if (scrollerCtrlList.where((e) => e.offset == 0.0).length == 6) {
         for (int i = 0; i < scrollerCtrlList.length; i++) {
           scrollerCtrlList[i].jumpTo(offsetList[i]);
         }
       }
     });
-    for (var element in scrollerCtrlList) {
-      Log.d("slot 当前位置 ${element.offset}");
-    }
+
     // for (var element in slotsAnimlList) {
     //   element.reset();
     // }

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-15 20:19:57
- * @LastEditTime: 2024-11-21 14:29:45
+ * @LastEditTime: 2024-12-19 19:49:57
  */
 import 'dart:math';
 
@@ -35,6 +35,8 @@ class TeamPlayerInfoEntity {
   TeamPlayerInfoPotential? upStarBase;
   @JSONField(deserialize: false, serialize: false)
   RxBool isChange = false.obs; //是否换人
+  @JSONField(deserialize: false, serialize: false)
+  int recoverCost = 0;
   // @JSONField(deserialize: false, serialize: false)
   // RxBool isSelect = false.obs;
 
