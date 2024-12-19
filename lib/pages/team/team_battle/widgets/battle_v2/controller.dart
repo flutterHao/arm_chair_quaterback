@@ -280,6 +280,7 @@ class TeamBattleV2Controller extends GetxController
     // eventEngine = Timer.periodic(Duration(milliseconds: time.toInt()), (t) {
     //   sendToScreen();
     // });
+    sendToScreen();
   }
 
   void quarterListener() {
@@ -454,10 +455,7 @@ class TeamBattleV2Controller extends GetxController
 
     if (event.mainOffset != null) {
       if (event.shooting) {
-        if (gameSpeed == 1) {
-          /// 加速时不显示投篮动画
           shoot(event);
-        }
       } else {
         addToShootHistory(mainOffset = ShootHistory(
             !event.isHomePlayer, transitionPos(event), event.score));
@@ -481,10 +479,6 @@ class TeamBattleV2Controller extends GetxController
   }
 
   void checkRoundTransformEvent(GameEvent event) {
-    if (gameSpeed != 1) {
-      /// 加速时不显示回合切换动画
-      return;
-    }
     var roundEventIds = [502, 202, 22, 23];
     var gameEvent = getGameEvent(event.pkEventUpdatedEntity.eventId);
     if (gameEvent != null &&
@@ -643,6 +637,10 @@ class TeamBattleV2Controller extends GetxController
       var t = shootAnimation!.value;
       var offset = Offset(end.dx, end.dy + (end.dy / 2 * t));
       shootOffset.value = offset;
+      if(gameSpeed != 1){
+        /// 加速不显示投篮轨迹
+        return;
+      }
       shootPathOffsets.add(offset);
     } else {
       // double t = shootAnimation!.value; // 当前动画进度
@@ -650,6 +648,10 @@ class TeamBattleV2Controller extends GetxController
       // final y = calculateY(x);
       var offset = shootAnimation!.value;
       shootOffset.value = offset;
+      if(gameSpeed != 1){
+        /// 加速不显示投篮轨迹
+        return;
+      }
       shootPathOffsets.add(offset);
     }
   }
@@ -673,6 +675,10 @@ class TeamBattleV2Controller extends GetxController
     var offset = Offset(x, y);
     shootOffset.value = offset;
     if (t <= 1) {
+      if(gameSpeed != 1){
+        /// 加速不显示投篮轨迹
+        return;
+      }
       shootPathOffsets.add(offset);
     }
   }

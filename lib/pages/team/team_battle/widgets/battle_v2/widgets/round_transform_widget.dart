@@ -2,8 +2,10 @@ import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 ///
 ///@auther gejiahui
@@ -51,7 +53,10 @@ class _RoundTransformWidgetState extends State<RoundTransformWidget>
   @override
   void didUpdateWidget(covariant RoundTransformWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if(!animationController.isAnimating) {
+    if (!animationController.isAnimating) {
+      TeamBattleV2Controller teamBattleV2Controller = Get.find();
+      animationController.duration = Duration(
+          milliseconds: (800 / teamBattleV2Controller.gameSpeed).toInt());
       animationController.reset();
       times = 1;
       animationController.forward(from: 0);

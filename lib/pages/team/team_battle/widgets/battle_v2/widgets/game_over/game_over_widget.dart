@@ -535,7 +535,7 @@ class GameOverWidget extends GetView<GameOverController> {
                       child: AnimatedNum(
                         number: controller.moneyAnimationEnd.value?controller.getMoneyCount():0,
                         isMoney: true,
-                        milliseconds: 500,
+                        milliseconds: 300,
                         textStyle: 14.w5(
                             color: AppColors.cFFFFFF,
                             height: 1,
