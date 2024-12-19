@@ -426,9 +426,13 @@ class TeamBattleV2Controller extends GetxController
       sendToScreen();
     });
     checkRoundTransformEvent(event);
-    event.time =
-        (quarterTimeCountDownAnimationController.value.value / 40 * 12 * 60)
-            .toInt();
+    if(gameEvent.gameEventType == "501"){
+      event.time = 0;
+    }else {
+      event.time =
+          (quarterTimeCountDownAnimationController.value.value / 40 * 12 * 60)
+              .toInt();
+    }
 
     double winRate = getWinRate(event);
     // print('winRate: $winRate');
