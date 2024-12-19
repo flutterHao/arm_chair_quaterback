@@ -192,7 +192,26 @@ class TrainingController extends GetxController
         vsync: this, duration: const Duration(milliseconds: 500));
     flyAnimation = Tween<double>(begin: 0, end: 1).animate(flyAnimationCtrl);
 
-
+    shakeController = AnimationController(
+      duration: const Duration(milliseconds: 200),
+      vsync: this,
+    );
+    shakeAnimation = TweenSequence([
+      TweenSequenceItem<double>(tween: Tween(begin: 0, end: -0.01), weight: 1),
+      TweenSequenceItem<double>(tween: Tween(begin: -0.01, end: 0), weight: 1),
+      TweenSequenceItem<double>(tween: Tween(begin: 0, end: 0.01), weight: 1),
+    ]).animate(
+      CurvedAnimation(
+        parent: shakeController,
+        curve: Curves.linear,
+      ),
+    )..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          shakeController.reverse();
+        } else if (status == AnimationStatus.dismissed) {
+          shakeController.forward();
+        }
+      });
 
     colorAnimatedCtrl = AnimationController(
       duration: const Duration(milliseconds: 150),
