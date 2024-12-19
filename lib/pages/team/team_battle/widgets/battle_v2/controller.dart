@@ -426,6 +426,7 @@ class TeamBattleV2Controller extends GetxController
       sendToScreen();
     });
     checkRoundTransformEvent(event);
+
     /// 这几个事件的时间设置为0
     if (["501", "502", "505", "506"].contains(gameEvent.gameEventType)) {
       event.time = 0;
@@ -437,8 +438,10 @@ class TeamBattleV2Controller extends GetxController
 
     double winRate = getWinRate(event);
     // print('winRate: $winRate');
-    winRateController.addPoint(
-        Offset(eventCount.toDouble() + getBeforeQuarterEventCount(), winRate));
+    var offset =
+        Offset(eventCount.toDouble() + getBeforeQuarterEventCount(), winRate);
+    var offsetEvent = OffsetEvent(event, offset);
+    winRateController.addPoint(offsetEvent);
 
     if (eventOnScreenMap.containsKey(key)) {
       eventOnScreenMap[key]!.add(event);
@@ -1169,13 +1172,14 @@ class TeamBattleV2Controller extends GetxController
       p.addAll(eventOnScreenMap[e]!);
       return p;
     });
-    List<Offset> offsets = [];
+    List<OffsetEvent> oes = [];
     for (int i = 0; i < fold.length; i++) {
       var gameEvent = fold[i];
-      offsets
-          .add(Offset(i.toDouble(), getWinRate(gameEvent, time: i.toDouble())));
+      var offset =
+          Offset(i.toDouble(), getWinRate(gameEvent, time: i.toDouble()));
+      oes.add(OffsetEvent(gameEvent, offset));
     }
-    winRateController.jumpGame(offsets);
+    winRateController.jumpGame(oes);
 
     quarterGameCountDown.value = 0;
     eventEngine?.cancel();
@@ -1228,6 +1232,18 @@ class TeamBattleV2Controller extends GetxController
       }
     }
   }
+
+  /// 获取单节的有效事件总数
+  int getQuarterAvailableEventTotalCount(int quarter) {
+    var key = Utils.getSortWithInt(quarter);
+    if (!eventCacheMap.containsKey(key)) {
+      return 0;
+    }
+    var list = eventCacheMap[key]!;
+    var where =
+        list.where((e) => getGameEvent(e.pkEventUpdatedEntity.eventId) != null);
+    return where.length;
+  }
 }
 
 class GameEvent {
@@ -1274,4 +1290,11 @@ class GameEvent {
   String toString() {
     return 'GameEvent{quarter: $quarter, playerId: $playerId, text: $text, homeScore: $homeScore, awayScore: $awayScore, isHomePlayer: $isHomePlayer, time: $time}';
   }
+}
+
+class OffsetEvent {
+  final GameEvent event;
+  final Offset offset;
+
+  OffsetEvent(this.event, this.offset);
 }

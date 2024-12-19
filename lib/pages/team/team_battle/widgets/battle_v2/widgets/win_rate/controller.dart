@@ -61,22 +61,21 @@ class WinRateController extends GetxController
     gameSpeed = speed;
   }
 
-  jumpGame(List<Offset> offsets) {
+  jumpGame(List<OffsetEvent> oe) {
     easyAnimationController?.stop();
     List<Offset> oldList = List.from(pointData);
-    var newList = offsets.map((e) => handlerOffset(e)).toList();
+    var newList = oe.map((e) => handlerOffset(e)).toList();
     var sublist = newList.sublist(oldList.length);
     List<Offset> allList = [];
-    allList.addAll(oldList);
+    // allList.addAll(oldList);
     allList.addAll(sublist);
     chartPoints.addAll(allList);
     pointOffset.value = chartPoints.last;
-    chartPoints.refresh();
   }
 
-  addPoint(Offset point) {
+  addPoint(OffsetEvent oe) {
     ///计算每个点的位置
-    Offset offset = handlerOffset(point);
+    Offset offset = handlerOffset(oe);
     Offset preview = Offset.zero;
     if (pointData.isNotEmpty) {
       preview = pointData.last;
@@ -96,13 +95,16 @@ class WinRateController extends GetxController
     easyAnimationController?.forward(from: 0);
   }
 
-  Offset handlerOffset(Offset point) {
+  Offset handlerOffset(OffsetEvent oe) {
+    TeamBattleV2Controller teamBattleV2Controller = Get.find();
+    var totalCount = teamBattleV2Controller
+        .getQuarterAvailableEventTotalCount(oe.event.quarter);
+
     ///计算每个点的位置
-    var stepY = size.height / 100;
-    var stepX = size.width / 160;
-    var dy = (size.height - point.dy * size.height);
+    var stepX = size.width / 4 / totalCount;
+    var dy = (size.height - oe.offset.dy * size.height);
     // print('dy:$dy');
-    var offset = Offset((point.dx + 1) * stepX, max(0, dy));
+    var offset = Offset((oe.offset.dx + 1) * stepX, max(0, dy));
     return offset;
   }
 

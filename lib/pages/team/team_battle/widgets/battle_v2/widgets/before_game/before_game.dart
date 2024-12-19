@@ -434,7 +434,7 @@ class BeforeGameWidget extends GetView<BeforeGameController> {
                                                       Alignment.bottomCenter,
                                                   children: [
                                                     Text(
-                                                      "x$count",
+                                                      count>0?"x$count":"",
                                                       style: 10.w5(
                                                           color:
                                                               AppColors.c000000,

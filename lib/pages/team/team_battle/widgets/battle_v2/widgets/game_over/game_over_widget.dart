@@ -45,6 +45,7 @@ class GameOverWidget extends GetView<GameOverController> {
           return Container(
             color: AppColors.cF2F2F2,
             child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
               child: Stack(
                 children: [
                   Column(
@@ -101,7 +102,7 @@ class GameOverWidget extends GetView<GameOverController> {
                                   teamBattleV2Controller.gameLeaderController,
                               title: "KEY PLAYERS",
                             ),
-                            // WinRateWidget(teamBattleV2Controller.winRateController),
+                            WinRateWidget(teamBattleV2Controller.winRateController),
                             TeamStatsWidget(
                               controller:
                                   teamBattleV2Controller.teamStatsController,

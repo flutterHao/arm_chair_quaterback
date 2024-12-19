@@ -57,10 +57,6 @@ class PicksIndexController extends GetxController
 
   var batchDeleteOpen = false.obs;
 
-  String getCurrentTabStr() {
-    return ParamUtils.getProKey(
-        guessGamePlayers.keys.toList()[currentIndex.value]);
-  }
 
   List<PicksPlayerV2> getChoiceGuessPlayers() {
     List<PicksPlayerV2> list = [];
@@ -138,7 +134,7 @@ class PicksIndexController extends GetxController
         guessParamEntity.guessAttr = playerV2.tabStr;
         guessParamEntity.guessChoice = playerV2.status == 0 ? 1 : 2;
         guessParamEntity.guessReferenceValue = playerV2.guessInfo
-            .guessReferenceValue[ParamUtils.getProKey(playerV2.tabStr)] ??
+            .guessReferenceValue[playerV2.tabStr] ??
             0;
         return guessParamEntity;
       }).toList();

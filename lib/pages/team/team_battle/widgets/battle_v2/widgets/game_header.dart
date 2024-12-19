@@ -32,7 +32,7 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          width: 68.w,
+          width: 118.w,
           child: Center(
             child: Text(
               teamBattleController.battleEntity.homeTeam.teamName,
@@ -45,41 +45,67 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
           ),
         ),
         5.vGap,
-        Container(
-          width: 68.w,
-          height: 6.w,
-          decoration: BoxDecoration(
-              border: Border.all(color: AppColors.c666666, width: 1.w),
-              borderRadius: BorderRadius.circular(3.w)),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: GetBuilder<TeamBattleV2Controller>(
-                id: TeamBattleV2Controller.idReadiness,
-                builder: (logic) {
-                  var events = controller.getQuarterEvents();
-                  GameEvent? event = events.isEmpty ? null : events.last;
+        ClipRRect(
+          borderRadius: BorderRadius.circular(4.5.w),
+          child: SizedBox(
+            width: 118.w,
+            height: 9.w,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: GetBuilder<TeamBattleV2Controller>(
+                  id: TeamBattleV2Controller.idReadiness,
+                  builder: (logic) {
+                    var events = controller.getQuarterEvents();
+                    GameEvent? event = events.isEmpty ? null : events.last;
 
-                  double value = event == null
-                      ? teamBattleController.battleEntity.homeTeamReadiness
-                      : event.pkEventUpdatedEntity.homePreparationLevel;
-                  return _buildPrePercentWidget(value);
-                }),
-          ),
-        ),
-        4.vGap,
-        SizedBox(
-          width: 68.w,
-          child: Center(
-            child: Text(
-              "POW:${teamBattleController.battleEntity.homeTeam.currTeamStrength}",
-              style: 10.w4(
-                  color: AppColors.c000000,
-                  height: 1,
-                  overflow: TextOverflow.ellipsis,
-                  fontFamily: FontFamily.fRobotoRegular),
+                    double value = event == null
+                        ? teamBattleController.battleEntity.homeTeamReadiness
+                        : event.pkEventUpdatedEntity.homePreparationLevel;
+                    return _buildPrePercentWidget(value);
+                  }),
             ),
           ),
-        )
+        ),
+        5.vGap,
+        SizedBox(
+          width: 118.w,
+          child: Obx(() {
+            return AnimatedOpacity(
+              opacity: controller.showBuff.value ? 1 : 0,
+              duration: const Duration(milliseconds: 1000),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  6.hGap,
+                  IconWidget(
+                    iconWidth: 6.w,
+                    icon: Assets.commonUiCommonIconSystemArrow,
+                    rotateAngle: controller.getBuffAngle(
+                        teamBattleController.battleEntity.homeTeam.teamId),
+                    iconColor: controller.getBuffColor(
+                        teamBattleController.battleEntity.homeTeam.teamId),
+                  ),
+                  1.hGap,
+                  SizedBox(
+                    width: 35.w,
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                          controller.getBuff(teamBattleController
+                              .battleEntity.homeTeam.teamId),
+                          style: 12.w4(
+                              color: controller.getBuffColor(
+                                  teamBattleController
+                                      .battleEntity.homeTeam.teamId),
+                              height: 1,
+                              fontFamily: FontFamily.fRobotoRegular)),
+                    ),
+                  )
+                ],
+              ),
+            );
+          }),
+        ),
       ],
     );
     return Container(
@@ -151,6 +177,15 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                             fontFamily: FontFamily.fOswaldMedium),
                       );
                     }
+                    if (controller.isGameOver.value) {
+                      return Text(
+                        "FINAL",
+                        style: 12.w4(
+                            color: AppColors.c000000,
+                            height: 1,
+                            fontFamily: FontFamily.fRobotoRegular),
+                      );
+                    }
                     return Text(
                       text,
                       style: 12.w4(
@@ -206,9 +241,7 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                width: 50.w,
-              ),
+              24.hGap,
               homeInfo,
               Expanded(
                 child: Stack(
@@ -249,43 +282,6 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                             ),
                           );
                         })),
-                    Obx(() {
-                      return AnimatedOpacity(
-                        opacity: controller.showBuff.value ? 1 : 0,
-                        duration: const Duration(milliseconds: 1000),
-                        child: Row(
-                          children: [
-                            6.hGap,
-                            IconWidget(
-                              iconWidth: 6.w,
-                              icon: Assets.commonUiCommonIconSystemArrow,
-                              rotateAngle: controller.getBuffAngle(
-                                  teamBattleController
-                                      .battleEntity.homeTeam.teamId),
-                              iconColor: controller.getBuffColor(
-                                  teamBattleController
-                                      .battleEntity.homeTeam.teamId),
-                            ),
-                            3.hGap,
-                            SizedBox(
-                              width: 35.w,
-                              child: FittedBox(
-                                fit: BoxFit.scaleDown,
-                                child: Text(
-                                    controller.getBuff(teamBattleController
-                                        .battleEntity.homeTeam.teamId),
-                                    style: 12.w4(
-                                        color: controller.getBuffColor(
-                                            teamBattleController
-                                                .battleEntity.homeTeam.teamId),
-                                        height: 1,
-                                        fontFamily: FontFamily.fRobotoRegular)),
-                              ),
-                            )
-                          ],
-                        ),
-                      );
-                    }),
                   ],
                 ),
               ),
@@ -293,7 +289,7 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   SizedBox(
-                    width: 68.w,
+                    width: 118.w,
                     child: Center(
                       child: Text(
                         teamBattleController.battleEntity.awayTeam.teamName,
@@ -306,15 +302,11 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                     ),
                   ),
                   5.vGap,
-                  Container(
-                    width: 68.w,
-                    height: 6.w,
-                    decoration: BoxDecoration(
-                        border:
-                            Border.all(color: AppColors.c666666, width: 1.w),
-                        borderRadius: BorderRadius.circular(3.w)),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(4.5.w),
+                    child: SizedBox(
+                      width: 118.w,
+                      height: 9.w,
                       child: GetBuilder<TeamBattleV2Controller>(
                           id: TeamBattleV2Controller.idReadiness,
                           builder: (logic) {
@@ -331,34 +323,15 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                           }),
                     ),
                   ),
-                  4.vGap,
+                  5.vGap,
                   SizedBox(
-                    width: 68.w,
-                    child: Center(
-                      child: Text(
-                        "POW:${teamBattleController.battleEntity.awayTeam.currTeamStrength}",
-                        style: 10.w4(
-                            color: AppColors.c000000,
-                            height: 1,
-                            overflow: TextOverflow.ellipsis,
-                            fontFamily: FontFamily.fRobotoRegular),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(
-                width: 50.w,
-                child: Obx(() {
-                  return AnimatedOpacity(
-                    opacity: controller.showBuff.value ? 1 : 0,
-                    duration: const Duration(milliseconds: 1000),
-                    child: Stack(
-                      alignment: Alignment.centerLeft,
-                      children: [
-                        Opacity(opacity: 0, child: homeInfo),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                    width: 118.w,
+                    child: Obx(() {
+                      return AnimatedOpacity(
+                        opacity: controller.showBuff.value ? 1 : 0,
+                        duration: const Duration(milliseconds: 1000),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             6.hGap,
                             IconWidget(
@@ -371,7 +344,7 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                                   teamBattleController
                                       .battleEntity.awayTeam.teamId),
                             ),
-                            3.hGap,
+                            1.hGap,
                             SizedBox(
                               width: 35.w,
                               child: FittedBox(
@@ -389,11 +362,12 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                             )
                           ],
                         ),
-                      ],
-                    ),
-                  );
-                }),
+                      );
+                    }),
+                  ),
+                ],
               ),
+              24.hGap,
             ],
           )
         ],
@@ -405,13 +379,25 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
     var firstMaxValue = 1.44;
     return Stack(
       children: [
-        AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
-          width: 68.w * (min(firstMaxValue, value) / firstMaxValue),
-          height: 6.w,
-          decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [AppColors.cB3B3B3, AppColors.c000000])),
+        Container(
+          width: 118.w,
+          height: 9.w,
+          decoration: BoxDecoration(
+            border: Border.all(color: AppColors.c666666, width: 1.w),
+            borderRadius: BorderRadius.circular(4.5.w),
+          ),
+          child: Row(
+            children: [
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
+                width: 118.w * (min(firstMaxValue, value) / firstMaxValue),
+                height: 7.w,
+                decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                        colors: [AppColors.cB3B3B3, AppColors.c000000])),
+              ),
+            ],
+          ),
         ),
         if (value > firstMaxValue)
           Row(
@@ -422,8 +408,8 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                 alignment: Alignment.center,
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
-                  width: 68.w * ((value - firstMaxValue) / 0.06),
-                  height: 6.w,
+                  width: 118.w * ((value - firstMaxValue) / 0.06),
+                  height: 9.w,
                   decoration: const BoxDecoration(
                     border: Border(
                         right: BorderSide(color: AppColors.cFFFFFF, width: 1)),

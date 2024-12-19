@@ -74,8 +74,8 @@ class TeamBattleV2Page extends GetView<TeamBattleV2Controller> {
                                                   child: GameCourtWidget()),
                                               const GamePlayersWidget(),
                                               const LiveTextWidget(),
-                                              // WinRateWidget(
-                                              //     controller.winRateController),
+                                              WinRateWidget(
+                                                  controller.winRateController),
                                               GetBuilder<TeamBattleV2Controller>(
                                                   id: TeamBattleV2Controller
                                                       .idQuarterScore,
