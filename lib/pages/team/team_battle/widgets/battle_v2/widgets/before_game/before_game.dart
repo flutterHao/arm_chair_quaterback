@@ -32,7 +32,8 @@ import 'package:get/get.dart';
 ///created at 2024/12/12/17:21
 
 class BeforeGameWidget extends GetView<BeforeGameController> {
-  const BeforeGameWidget(this.header,this.teamBattleController, this.teamBattleV2Controller,
+  const BeforeGameWidget(
+      this.header, this.teamBattleController, this.teamBattleV2Controller,
       {super.key});
 
   final Widget header;
@@ -49,7 +50,7 @@ class BeforeGameWidget extends GetView<BeforeGameController> {
             width: double.infinity,
             child: Stack(
               children: [
-                header,
+                Opacity(opacity: 0, child: header),
                 Obx(() {
                   return Positioned(
                       top: 101.w,
@@ -222,7 +223,7 @@ class BeforeGameWidget extends GetView<BeforeGameController> {
                                       width: 28.w,
                                       useSmallTacticCard: true,
                                       onFlip: () {
-                                        if(kReleaseMode){
+                                        if (kReleaseMode) {
                                           return;
                                         }
                                         item.isOpen.value = !item.isOpen.value;

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
@@ -60,13 +62,8 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                   double value = event == null
                       ? teamBattleController.battleEntity.homeTeamReadiness
                       : event.pkEventUpdatedEntity.homePreparationLevel;
-                  return Container(
-                    width: 68.w * value,
-                    height: 6.w,
-                    decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                            colors: [AppColors.cB3B3B3, AppColors.c000000])),
-                  );
+                  print('home pre value:$value');
+                  return _buildPrePercentWidget(value);
                 }),
           ),
         ),
@@ -75,8 +72,7 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
           width: 68.w,
           child: Center(
             child: Text(
-              "POW:${teamBattleController.battleEntity.homeTeam
-                  .currTeamStrength}",
+              "POW:${teamBattleController.battleEntity.homeTeam.currTeamStrength}",
               style: 10.w4(
                   color: AppColors.c000000,
                   height: 1,
@@ -125,21 +121,13 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                       id: TeamBattleV2Controller.idGameScore,
                       builder: (_) {
                         int score = 0;
-                        if (controller
-                            .getQuarterEvents()
-                            .isNotEmpty) {
-                          score = controller
-                              .getQuarterEvents()
-                              .last
-                              .homeScore;
+                        if (controller.getQuarterEvents().isNotEmpty) {
+                          score = controller.getQuarterEvents().last.homeScore;
                         }
                         if (controller.isGameOver.value) {
                           score = controller.pkResultUpdatedEntity
-                              ?.homeTeamResult.score ??
-                              controller
-                                  .getQuarterEvents()
-                                  .last
-                                  .homeScore;
+                                  ?.homeTeamResult.score ??
+                              controller.getQuarterEvents().last.homeScore;
                         }
                         return AnimatedNum(
                           number: score,
@@ -154,9 +142,7 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                 Expanded(child: Center(
                   child: Obx(() {
                     var text =
-                        "${Utils.getSortWithInt(controller.quarter
-                        .value)} ${MyDateUtils.formatMS((controller
-                        .quarterGameCountDown.value / 40 * 12 * 60).toInt())}";
+                        "${Utils.getSortWithInt(controller.quarter.value)} ${MyDateUtils.formatMS((controller.quarterGameCountDown.value / 40 * 12 * 60).toInt())}";
                     if (!controller.isGameStart.value) {
                       return Text(
                         "VS",
@@ -182,21 +168,13 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                       id: TeamBattleV2Controller.idGameScore,
                       builder: (_) {
                         int score = 0;
-                        if (controller
-                            .getQuarterEvents()
-                            .isNotEmpty) {
-                          score = controller
-                              .getQuarterEvents()
-                              .last
-                              .awayScore;
+                        if (controller.getQuarterEvents().isNotEmpty) {
+                          score = controller.getQuarterEvents().last.awayScore;
                         }
                         if (controller.isGameOver.value) {
                           score = controller.pkResultUpdatedEntity
-                              ?.awayTeamResult.score ??
-                              controller
-                                  .getQuarterEvents()
-                                  .last
-                                  .awayScore;
+                                  ?.awayTeamResult.score ??
+                              controller.getQuarterEvents().last.awayScore;
                         }
                         return AnimatedNum(
                           number: score,
@@ -241,7 +219,8 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                     Positioned(
                         top: 0,
                         child: Obx(() {
-                          if(!controller.isGameStart.value || controller.isGameOver.value){
+                          if (!controller.isGameStart.value ||
+                              controller.isGameOver.value) {
                             return const SizedBox.shrink();
                           }
                           return MtInkwell(
@@ -332,9 +311,8 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                     width: 68.w,
                     height: 6.w,
                     decoration: BoxDecoration(
-                        color: AppColors.c000000,
                         border:
-                        Border.all(color: AppColors.c666666, width: 1.w),
+                            Border.all(color: AppColors.c666666, width: 1.w),
                         borderRadius: BorderRadius.circular(3.w)),
                     child: Align(
                       alignment: Alignment.centerLeft,
@@ -343,25 +321,15 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                           builder: (logic) {
                             var events = controller.getQuarterEvents();
                             GameEvent? event =
-                            events.isEmpty ? null : events.last;
+                                events.isEmpty ? null : events.last;
 
                             double value = event == null
                                 ? teamBattleController
-                                .battleEntity.awayTeamReadiness
+                                    .battleEntity.awayTeamReadiness
                                 : event
-                                .pkEventUpdatedEntity.awayPreparationLevel;
-                            return Container(
-                              width: 68.w * value,
-                              height: 6.w,
-                              decoration: const BoxDecoration(
-                                  border: Border(
-                                      right: BorderSide(
-                                          color: AppColors.cFFFFFF, width: 1)),
-                                  gradient: LinearGradient(colors: [
-                                    AppColors.c022A1D,
-                                    AppColors.c23E8A9
-                                  ])),
-                            );
+                                    .pkEventUpdatedEntity.awayPreparationLevel;
+                            print('away pre value:$value');
+                            return _buildPrePercentWidget(value);
                           }),
                     ),
                   ),
@@ -370,8 +338,7 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                     width: 68.w,
                     child: Center(
                       child: Text(
-                        "POW:${teamBattleController.battleEntity.awayTeam
-                            .currTeamStrength}",
+                        "POW:${teamBattleController.battleEntity.awayTeam.currTeamStrength}",
                         style: 10.w4(
                             color: AppColors.c000000,
                             height: 1,
@@ -433,6 +400,42 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
           )
         ],
       ),
+    );
+  }
+
+  Stack _buildPrePercentWidget(double value) {
+    var firstMaxValue = 1.44;
+    return Stack(
+      children: [
+        AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
+          width: 68.w * (min(firstMaxValue, value) / firstMaxValue),
+          height: 6.w,
+          decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                  colors: [AppColors.cB3B3B3, AppColors.c000000])),
+        ),
+        if (value > firstMaxValue)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Transform.rotate(
+                angle: pi / 180 * 180,
+                alignment: Alignment.center,
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  width: 68.w * ((value - firstMaxValue) / 0.06),
+                  height: 6.w,
+                  decoration: const BoxDecoration(
+                    border: Border(
+                        right: BorderSide(color: AppColors.cFFFFFF, width: 1)),
+                    color: AppColors.c10A86A,
+                  ),
+                ),
+              ),
+            ],
+          ),
+      ],
     );
   }
 }

@@ -294,6 +294,7 @@ class TeamBattleV2Controller extends GetxController
         //比赛结束
         eventEngine?.cancel();
         isGameOver.value = true;
+        normalDanMaKuTimer?.cancel();
         gameSpeed = 1;
         update([idBattleMain]);
         print(
@@ -557,10 +558,10 @@ class TeamBattleV2Controller extends GetxController
     update([idPlayersLocation]);
     end = isAway ? Offset(22.w, 49.w) : Offset(375.w - 22.w - 18.w - 6.w, 49.w);
     // 随机生成最高点
-    peak = Offset(
-        (start.dx + end.dx) / 2, Random().nextDouble() * min(start.dy, end.dy));
-    // var d = (sqrt(pow((end.dx - start.dx), 2) + pow((end.dy - start.dy), 2)));
-    // peak = Offset(start.dx + end.dx / 2, max(start.dy, end.dy) + d.abs());
+    // peak = Offset(
+    //     (start.dx + end.dx) / 2, Random().nextDouble() * min(start.dy, end.dy));
+    var d = (sqrt(pow((end.dx - start.dx), 2) + pow((end.dy - start.dy), 2)));
+    peak = Offset((start.dx + end.dx) / 2, max(15.w,max(start.dy, end.dy) - d.abs()));
 
     // 计算抛物线参数
     calculateParabola();
@@ -1173,6 +1174,7 @@ class TeamBattleV2Controller extends GetxController
     quarterGameCountDown.value = 0;
     eventEngine?.cancel();
     isGameOver.value = true;
+    normalDanMaKuTimer?.cancel();
     gameSpeed = 1;
     update([
       // idLiveText,
