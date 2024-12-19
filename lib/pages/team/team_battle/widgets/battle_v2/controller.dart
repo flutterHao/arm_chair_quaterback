@@ -455,7 +455,7 @@ class TeamBattleV2Controller extends GetxController
 
     if (event.mainOffset != null) {
       if (event.shooting) {
-          shoot(event);
+        shoot(event);
       } else {
         addToShootHistory(mainOffset = ShootHistory(
             !event.isHomePlayer, transitionPos(event), event.score));
@@ -637,10 +637,7 @@ class TeamBattleV2Controller extends GetxController
       var t = shootAnimation!.value;
       var offset = Offset(end.dx, end.dy + (end.dy / 2 * t));
       shootOffset.value = offset;
-      if(gameSpeed != 1){
-        /// 加速不显示投篮轨迹
-        return;
-      }
+
       shootPathOffsets.add(offset);
     } else {
       // double t = shootAnimation!.value; // 当前动画进度
@@ -648,10 +645,6 @@ class TeamBattleV2Controller extends GetxController
       // final y = calculateY(x);
       var offset = shootAnimation!.value;
       shootOffset.value = offset;
-      if(gameSpeed != 1){
-        /// 加速不显示投篮轨迹
-        return;
-      }
       shootPathOffsets.add(offset);
     }
   }
@@ -664,21 +657,20 @@ class TeamBattleV2Controller extends GetxController
       shootAnimationDuration = 200;
       shootAnimationController.duration =
           Duration(milliseconds: (shootAnimationDuration / gameSpeed).toInt());
-      if (isSuccess) {
-        // shootSuccessAnimation();
-      } else {
-        shootFailedAnimation();
-      }
+      // if (gameSpeed == 1) {
+        if (isSuccess) {
+          // shootSuccessAnimation();
+        } else {
+          shootFailedAnimation();
+        }
+      // }
+      return;
     }
     final x = start.dx + (end.dx - start.dx) * t;
     final y = calculateY(x);
     var offset = Offset(x, y);
     shootOffset.value = offset;
     if (t <= 1) {
-      if(gameSpeed != 1){
-        /// 加速不显示投篮轨迹
-        return;
-      }
       shootPathOffsets.add(offset);
     }
   }
