@@ -426,9 +426,10 @@ class TeamBattleV2Controller extends GetxController
       sendToScreen();
     });
     checkRoundTransformEvent(event);
-    if(gameEvent.gameEventType == "501"){
+    /// 这几个事件的时间设置为0
+    if (["501", "502", "505", "506"].contains(gameEvent.gameEventType)) {
       event.time = 0;
-    }else {
+    } else {
       event.time =
           (quarterTimeCountDownAnimationController.value.value / 40 * 12 * 60)
               .toInt();
@@ -565,7 +566,8 @@ class TeamBattleV2Controller extends GetxController
     // peak = Offset(
     //     (start.dx + end.dx) / 2, Random().nextDouble() * min(start.dy, end.dy));
     var d = (sqrt(pow((end.dx - start.dx), 2) + pow((end.dy - start.dy), 2)));
-    peak = Offset((start.dx + end.dx) / 2, max(15.w,max(start.dy, end.dy) - d.abs()));
+    peak = Offset(
+        (start.dx + end.dx) / 2, max(15.w, max(start.dy, end.dy) - d.abs()));
 
     // 计算抛物线参数
     calculateParabola();
@@ -663,11 +665,11 @@ class TeamBattleV2Controller extends GetxController
       shootAnimationController.duration =
           Duration(milliseconds: (shootAnimationDuration / gameSpeed).toInt());
       // if (gameSpeed == 1) {
-        if (isSuccess) {
-          // shootSuccessAnimation();
-        } else {
-          shootFailedAnimation();
-        }
+      if (isSuccess) {
+        // shootSuccessAnimation();
+      } else {
+        shootFailedAnimation();
+      }
       // }
       return;
     }
