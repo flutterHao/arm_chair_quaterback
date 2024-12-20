@@ -16,12 +16,13 @@ import 'package:arm_chair_quaterback/pages/team/team_index/open_box/box_card_wid
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BigPlayerCard extends StatelessWidget {
-  const BigPlayerCard({super.key, required this.item});
-  final PlayerCardEntity item;
+  const BigPlayerCard({super.key, required this.playerId});
+  // final PlayerCardEntity item;
+  final int playerId;
 
   @override
   Widget build(BuildContext context) {
-    var player = Utils.getPlayBaseInfo(item.playerId);
+    var player = Utils.getPlayBaseInfo(playerId);
     // item.isSelect.value = true;
     // List<String> nameList = player.elname.split(" ");
     return SizedBox(

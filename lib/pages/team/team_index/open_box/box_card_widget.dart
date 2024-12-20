@@ -106,7 +106,7 @@ class _BoxCardWidgetState extends State<BoxCardWidget>
                               alignment: Alignment.center,
                               transform: Matrix4.identity()..scale(-1.0, 1.0),
                               child: SmallPlayerCard(
-                                item: widget.player,
+                                playerId: widget.player.playerId,
                               ),
                             )
                           : Image.asset(
@@ -123,7 +123,7 @@ class _BoxCardWidgetState extends State<BoxCardWidget>
                               alignment: Alignment.center,
                               transform: Matrix4.identity()..scale(-1.0, 1.0),
                               child: BigPlayerCard(
-                                item: widget.player,
+                                playerId: widget.player.playerId,
                               ),
                             )
                           : Image.asset(

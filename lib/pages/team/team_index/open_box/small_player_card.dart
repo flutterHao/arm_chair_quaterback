@@ -10,11 +10,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SmallPlayerCard extends StatelessWidget {
-  const SmallPlayerCard({super.key, required this.item});
-  final PlayerCardEntity item;
+  const SmallPlayerCard({super.key, required this.playerId});
+  final int playerId;
   @override
   Widget build(BuildContext context) {
-    var player = Utils.getPlayBaseInfo(item.playerId);
+    var player = Utils.getPlayBaseInfo(playerId);
     // item.isSelect.value = true;
     return Stack(
       alignment: Alignment.topCenter,
