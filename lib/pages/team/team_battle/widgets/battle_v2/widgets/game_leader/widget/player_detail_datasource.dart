@@ -1,5 +1,6 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_event_updated_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -14,7 +15,7 @@ import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 class PlayerDetailDatasource extends DataGridSource {
   PlayerDetailDatasource(this.playerScores);
 
-  final List<PkEventUpdatedPlayerInfos> playerScores;
+  final List<ScoreBoardDetailList> playerScores;
 
   List<DataGridRow> _buildRows() {
     List<List<DataGridCell>> map = playerScores.map((e) {

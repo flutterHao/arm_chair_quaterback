@@ -11,6 +11,8 @@ class PkStartUpdatedEntity {
   late List<TrainingInfoBuff> homeTeamWinPokers = [];
   late List<TrainingInfoBuff> awayTeamWinPokers = [];
   late double pokerRate;
+  late double homeTeamStrength;
+  late double awayTeamStrength;
 
   PkStartUpdatedEntity();
 

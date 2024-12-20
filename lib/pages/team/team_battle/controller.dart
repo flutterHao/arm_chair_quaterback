@@ -97,9 +97,9 @@ class TeamBattleController extends GetxController
       subscription = WSInstance.teamMatch().listen((result) {
         // developer.log('result.serviceId--${result.serviceId}--:${result.payload}');
         // print('result.serviceId--${result.serviceId}--:${result.payload}');
-        _timer?.cancel();
         if (result.serviceId == Api.wsJazminError && step.value == 1) {
           print('result.serviceId--${result.serviceId}--:${result.payload}');
+          _timer?.cancel();
           ErrorUtils.toast(result.payload);
           Get.back();
           return;
@@ -109,6 +109,7 @@ class TeamBattleController extends GetxController
           pkStartUpdatedEntity = PkStartUpdatedEntity.fromJson(result.payload);
         }
         if (result.serviceId == Api.wsTeamMatch) {
+          _timer?.cancel();
           battleEntity = BattleEntity.fromJson(result.payload);
           _initBattleController();
           var currentMs = DateTime.now().millisecondsSinceEpoch;

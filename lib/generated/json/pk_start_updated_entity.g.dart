@@ -33,6 +33,16 @@ PkStartUpdatedEntity $PkStartUpdatedEntityFromJson(Map<String, dynamic> json) {
   if (pokerRate != null) {
     pkStartUpdatedEntity.pokerRate = pokerRate;
   }
+  final double? homeTeamStrength = jsonConvert.convert<double>(
+      json['homeTeamStrength']);
+  if (homeTeamStrength != null) {
+    pkStartUpdatedEntity.homeTeamStrength = homeTeamStrength;
+  }
+  final double? awayTeamStrength = jsonConvert.convert<double>(
+      json['awayTeamStrength']);
+  if (awayTeamStrength != null) {
+    pkStartUpdatedEntity.awayTeamStrength = awayTeamStrength;
+  }
   return pkStartUpdatedEntity;
 }
 
@@ -44,6 +54,8 @@ Map<String, dynamic> $PkStartUpdatedEntityToJson(PkStartUpdatedEntity entity) {
   data['awayTeamWinPokers'] =
       entity.awayTeamWinPokers.map((v) => v.toJson()).toList();
   data['pokerRate'] = entity.pokerRate;
+  data['homeTeamStrength'] = entity.homeTeamStrength;
+  data['awayTeamStrength'] = entity.awayTeamStrength;
   return data;
 }
 
@@ -53,11 +65,15 @@ extension PkStartUpdatedEntityExtension on PkStartUpdatedEntity {
     List<TrainingInfoBuff>? homeTeamWinPokers,
     List<TrainingInfoBuff>? awayTeamWinPokers,
     double? pokerRate,
+    double? homeTeamStrength,
+    double? awayTeamStrength,
   }) {
     return PkStartUpdatedEntity()
       ..pokerWinner = pokerWinner ?? this.pokerWinner
       ..homeTeamWinPokers = homeTeamWinPokers ?? this.homeTeamWinPokers
       ..awayTeamWinPokers = awayTeamWinPokers ?? this.awayTeamWinPokers
-      ..pokerRate = pokerRate ?? this.pokerRate;
+      ..pokerRate = pokerRate ?? this.pokerRate
+      ..homeTeamStrength = homeTeamStrength ?? this.homeTeamStrength
+      ..awayTeamStrength = awayTeamStrength ?? this.awayTeamStrength;
   }
 }

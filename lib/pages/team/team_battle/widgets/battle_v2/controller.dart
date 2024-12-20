@@ -168,7 +168,7 @@ class TeamBattleV2Controller extends GetxController
         PkEventUpdatedEntity pkEventUpdatedEntity =
             PkEventUpdatedEntity.fromJson(result.payload);
         var gameEvent = getGameEvent(pkEventUpdatedEntity.eventId);
-        var text = insertPlayerName(
+        var text = insertParamValue(
             gameEvent?.eventDescripition ?? "", pkEventUpdatedEntity);
         bool isHomePlayer =
             battleEntity.homeTeam.teamId == pkEventUpdatedEntity.senderTeamId;
@@ -427,9 +427,14 @@ class TeamBattleV2Controller extends GetxController
     });
     checkRoundTransformEvent(event);
 
-    /// 这几个事件的时间设置为0
+    /// 这几个事件的时间设置为
     if (["501", "502", "505", "506"].contains(gameEvent.gameEventType)) {
-      event.time = 0;
+      if (gameEvent.gameEventType == '502') {
+        /// 比赛开始跳球事件
+        event.time = (40 / 40 * 12 * 60).toInt();
+      } else {
+        event.time = 0;
+      }
     } else {
       event.time =
           (quarterTimeCountDownAnimationController.value.value / 40 * 12 * 60)
@@ -974,12 +979,18 @@ class TeamBattleV2Controller extends GetxController
     return list[nextInt];
   }
 
-  String insertPlayerName(String text, PkEventUpdatedEntity event) {
+  String insertParamValue(String text, PkEventUpdatedEntity event) {
     String result = text
         .replaceAll("[0]", Utils.getPlayBaseInfo(event.senderPlayerId).elname)
         .replaceAll(
             "[1]", Utils.getPlayBaseInfo(event.senderOtherPlayerId).elname)
         .replaceAll("[2]", Utils.getPlayBaseInfo(event.receivePlayerId).elname);
+    var matchAsPrefix = result.indexOf('{0}');
+    if (matchAsPrefix != -1) {
+      result = result.replaceFirst(
+          "{0}", event.getFreeThrowSuccessCount().toString());
+      result = result.replaceFirst("{0}", event.getFreeThrowCount().toString());
+    }
     return result;
   }
 
@@ -1228,7 +1239,7 @@ class TeamBattleV2Controller extends GetxController
         normalBarrageWallController.send(List.generate(
             num,
             (_) => generateNormalBullet(
-                insertPlayerName(item.hudDes, event.pkEventUpdatedEntity))));
+                insertParamValue(item.hudDes, event.pkEventUpdatedEntity))));
       }
     }
   }

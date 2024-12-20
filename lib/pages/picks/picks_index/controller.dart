@@ -57,7 +57,6 @@ class PicksIndexController extends GetxController
 
   var batchDeleteOpen = false.obs;
 
-
   List<PicksPlayerV2> getChoiceGuessPlayers() {
     List<PicksPlayerV2> list = [];
     for (int i = 0; i < guessGamePlayers.keys.length; i++) {
@@ -120,12 +119,12 @@ class PicksIndexController extends GetxController
     _count(true);
   }
 
-  guess(int type,Function onSuccess) {
+  guess(int type, Function onSuccess) {
     List params = [];
     //组装已下注的球员的参数列表
-    var fold = guessGamePlayers.keys.fold([], (p,key){
+    var fold = guessGamePlayers.keys.fold([], (p, key) {
       var list = guessGamePlayers[key]!;
-      var list2 = list.where((e)=> e.status != -1).map((playerV2){
+      var list2 = list.where((e) => e.status != -1).map((playerV2) {
         GuessPlayerParamEntity guessParamEntity = GuessPlayerParamEntity();
         guessParamEntity.awayTeamId = playerV2.awayTeamInfo!.id;
         guessParamEntity.gameId = playerV2.guessInfo.gameId;
@@ -133,9 +132,8 @@ class PicksIndexController extends GetxController
         guessParamEntity.gameStartTime = playerV2.guessInfo.gameStartTime;
         guessParamEntity.guessAttr = playerV2.tabStr;
         guessParamEntity.guessChoice = playerV2.status == 0 ? 1 : 2;
-        guessParamEntity.guessReferenceValue = playerV2.guessInfo
-            .guessReferenceValue[playerV2.tabStr] ??
-            0;
+        guessParamEntity.guessReferenceValue =
+            playerV2.guessInfo.guessReferenceValue[playerV2.tabStr] ?? 0;
         return guessParamEntity;
       }).toList();
       p.addAll(list2);
@@ -144,8 +142,7 @@ class PicksIndexController extends GetxController
     params.addAll(fold);
     //组装已下注的赛程参数列表
     var leagueController = Get.find<LeagueController>();
-    List<GameGuess> guessGameList =
-        leagueController.getAllChoiceData();
+    List<GameGuess> guessGameList = leagueController.getAllChoiceData();
     var list = guessGameList.map((e) {
       var guessGameParamEntity = GuessGameParamEntity();
       guessGameParamEntity.awayTeamId = e.scoresEntity.awayTeamId;
@@ -200,7 +197,7 @@ class PicksIndexController extends GetxController
   }
 
   /// 预加载数据
-  preLoadData(){
+  preLoadData() {
     _initData();
   }
 
@@ -263,9 +260,16 @@ class PicksIndexController extends GetxController
           item.add(playerV2);
         }
 
-        //排序：赛季平均得分
+        //排序
         item.sort((a, b) {
-          return b.dataAvgList!.pts.compareTo(a.dataAvgList!.pts);
+          // 比赛时间
+          var compareTo = a.guessInfo.gameStartTime.compareTo(b.guessInfo.gameStartTime);
+          if(compareTo != 0){
+            return compareTo;
+          }
+          //竞猜分
+          return (b.guessInfo.guessReferenceValue[key] ?? 0)
+              .compareTo(a.guessInfo.guessReferenceValue[key] ?? 0);
         });
         //排序：选过的放后面
         // item.sort((a, b) {
@@ -275,9 +279,9 @@ class PicksIndexController extends GetxController
         // });
         temp[key] = item;
       }
-      for(var item in _pickTypeEntity){
+      for (var item in _pickTypeEntity) {
         var key = item.pickTypeName;
-        if(temp.containsKey(key)){
+        if (temp.containsKey(key)) {
           guessGamePlayers[key] = temp[key]!;
         }
       }

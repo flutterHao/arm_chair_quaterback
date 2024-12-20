@@ -30,7 +30,8 @@ class TeamBattleV2Page extends GetView<TeamBattleV2Controller> {
       id: TeamBattleV2Controller.idBattleMain,
       builder: (_) {
         return PopScope(
-          canPop: controller.isGameOver.value || controller.maybeException.value,
+          canPop:
+              controller.isGameOver.value || controller.maybeException.value,
           child: HorizontalDragBackWidget(
             onWidgetOut: () {
               controller.jumpGame();
@@ -46,71 +47,77 @@ class TeamBattleV2Page extends GetView<TeamBattleV2Controller> {
               bodyWidget: Expanded(child: Obx(() {
                 var value = !controller.isGameStart.value;
                 var gameHeaderWidget = GameHeaderWidget(teamBattleController);
-                return  Stack(
+                return Stack(
                   children: [
                     GestureDetector(
-                            behavior: HitTestBehavior.opaque,
-                            onLongPressUp: () {
-                              print('onLongPressUp---------------');
-                              controller.changeGameSpeed(1);
-                            },
-                            onLongPress: () {
-                              print('onLongPress---------------');
-                              controller.changeGameSpeed(10);
-                            },
-                            child: Column(
-                              children: [
-                                gameHeaderWidget,
-                                Expanded(
-                                  child: Builder(builder: (c) {
-                                    var isGameOver = controller.isGameOver.value;
-                                    return Stack(
+                      behavior: HitTestBehavior.opaque,
+                      onLongPressUp: () {
+                        print('onLongPressUp---------------');
+                        controller.changeGameSpeed(1);
+                      },
+                      onLongPress: () {
+                        print('onLongPress---------------');
+                        controller.changeGameSpeed(10);
+                      },
+                      child: Column(
+                        children: [
+                          gameHeaderWidget,
+                          Expanded(
+                            child: Builder(builder: (c) {
+                              var isGameOver = controller.isGameOver.value;
+                              return Stack(
+                                children: [
+                                  SingleChildScrollView(
+                                    child: Column(
                                       children: [
-                                        SingleChildScrollView(
-                                          child: Column(
-                                            children: [
-                                              const ClipRRect(
-                                                  borderRadius: BorderRadius.zero,
-                                                  child: GameCourtWidget()),
-                                              const GamePlayersWidget(),
-                                              const LiveTextWidget(),
-                                              WinRateWidget(
-                                                  controller.winRateController),
-                                              GetBuilder<TeamBattleV2Controller>(
-                                                  id: TeamBattleV2Controller
-                                                      .idQuarterScore,
-                                                  builder: (_) {
-                                                    return QuarterScoreWidget();
-                                                  }),
-                                              GameLeaderWidget(
-                                                controller:
-                                                    controller.gameLeaderController,
-                                              ),
-                                              TeamStatsWidget(
-                                                controller:
-                                                    controller.teamStatsController,
-                                              ),
-                                              20.vGap,
-                                            ],
-                                          ),
+                                        const ClipRRect(
+                                            borderRadius: BorderRadius.zero,
+                                            child: GameCourtWidget()),
+                                        const GamePlayersWidget(),
+                                        const LiveTextWidget(),
+                                        WinRateWidget(
+                                            controller.winRateController),
+                                        GetBuilder<TeamBattleV2Controller>(
+                                            id: TeamBattleV2Controller
+                                                .idQuarterScore,
+                                            builder: (_) {
+                                              return QuarterScoreWidget();
+                                            }),
+                                        GameLeaderWidget(
+                                          controller:
+                                              controller.gameLeaderController,
                                         ),
-                                        if (isGameOver)
-                                          Positioned(
-                                              top: 0,
-                                              bottom: 0,
-                                              left: 0,
-                                              right: 0,
-                                              child: GameOverWidget()),
+                                        TeamStatsWidget(
+                                          controller:
+                                              controller.teamStatsController,
+                                        ),
+                                        20.vGap,
                                       ],
-                                    );
-                                  }),
-                                )
-                              ],
-                            ),
-                          ),
-                    if(value)
-                      BeforeGameWidget(
-                          gameHeaderWidget, teamBattleController, controller)
+                                    ),
+                                  ),
+                                  if (isGameOver)
+                                    Positioned(
+                                        top: 0,
+                                        bottom: 0,
+                                        left: 0,
+                                        right: 0,
+                                        child: GameOverWidget()),
+                                ],
+                              );
+                            }),
+                          )
+                        ],
+                      ),
+                    ),
+                    if (value)
+                      Positioned(
+                        top: 0,
+                        bottom: 0,
+                        right: 0,
+                        left: 0,
+                        child: BeforeGameWidget(
+                            gameHeaderWidget, teamBattleController, controller),
+                      )
                   ],
                 );
               })),

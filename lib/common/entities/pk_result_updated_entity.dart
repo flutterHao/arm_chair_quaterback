@@ -35,7 +35,7 @@ class PkResultUpdatedTeamResult {
 	late bool pts = false;
 	late bool reb = false;
 	late int score = 0;
-	late List<PkResultUpdatedAwayTeamResultScoreBoardDetailList> scoreBoardDetailList = [];
+	late List<ScoreBoardDetailList> scoreBoardDetailList = [];
 	late PkResultUpdatedAwayTeamResultScoreBoards scoreBoards;
 	late String serverId = '';
 	late int starNum = 0;
@@ -60,7 +60,7 @@ class PkResultUpdatedTeamResult {
 }
 
 @JsonSerializable()
-class PkResultUpdatedAwayTeamResultScoreBoardDetailList {
+class ScoreBoardDetailList {
 	late int ast = 0;
 	late int astPoint = 0;
 	late int blk = 0;
@@ -94,9 +94,9 @@ class PkResultUpdatedAwayTeamResultScoreBoardDetailList {
 	late int to = 0;
 	late int updateTime = 0;
 
-	PkResultUpdatedAwayTeamResultScoreBoardDetailList();
+	ScoreBoardDetailList();
 
-	factory PkResultUpdatedAwayTeamResultScoreBoardDetailList.fromJson(Map<String, dynamic> json) => $PkResultUpdatedAwayTeamResultScoreBoardDetailListFromJson(json);
+	factory ScoreBoardDetailList.fromJson(Map<String, dynamic> json) => $PkResultUpdatedAwayTeamResultScoreBoardDetailListFromJson(json);
 
 	Map<String, dynamic> toJson() => $PkResultUpdatedAwayTeamResultScoreBoardDetailListToJson(this);
 

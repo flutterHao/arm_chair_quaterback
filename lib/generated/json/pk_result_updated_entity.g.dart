@@ -109,12 +109,12 @@ PkResultUpdatedTeamResult $PkResultUpdatedTeamResultFromJson(
     pkResultUpdatedTeamResult.score = score;
   }
   final List<
-      PkResultUpdatedAwayTeamResultScoreBoardDetailList>? scoreBoardDetailList = (json['scoreBoardDetailList'] as List<
+      ScoreBoardDetailList>? scoreBoardDetailList = (json['scoreBoardDetailList'] as List<
       dynamic>?)?.map(
           (e) =>
       jsonConvert.convert<
-          PkResultUpdatedAwayTeamResultScoreBoardDetailList>(
-          e) as PkResultUpdatedAwayTeamResultScoreBoardDetailList).toList();
+          ScoreBoardDetailList>(
+          e) as ScoreBoardDetailList).toList();
   if (scoreBoardDetailList != null) {
     pkResultUpdatedTeamResult.scoreBoardDetailList = scoreBoardDetailList;
   }
@@ -208,7 +208,7 @@ extension PkResultUpdatedTeamResultExtension on PkResultUpdatedTeamResult {
     bool? reb,
     int? score,
     List<
-        PkResultUpdatedAwayTeamResultScoreBoardDetailList>? scoreBoardDetailList,
+        ScoreBoardDetailList>? scoreBoardDetailList,
     PkResultUpdatedAwayTeamResultScoreBoards? scoreBoards,
     String? serverId,
     int? starNum,
@@ -244,9 +244,9 @@ extension PkResultUpdatedTeamResultExtension on PkResultUpdatedTeamResult {
   }
 }
 
-PkResultUpdatedAwayTeamResultScoreBoardDetailList $PkResultUpdatedAwayTeamResultScoreBoardDetailListFromJson(
+ScoreBoardDetailList $PkResultUpdatedAwayTeamResultScoreBoardDetailListFromJson(
     Map<String, dynamic> json) {
-  final PkResultUpdatedAwayTeamResultScoreBoardDetailList pkResultUpdatedAwayTeamResultScoreBoardDetailList = PkResultUpdatedAwayTeamResultScoreBoardDetailList();
+  final ScoreBoardDetailList pkResultUpdatedAwayTeamResultScoreBoardDetailList = ScoreBoardDetailList();
   final int? ast = jsonConvert.convert<int>(json['ast']);
   if (ast != null) {
     pkResultUpdatedAwayTeamResultScoreBoardDetailList.ast = ast;
@@ -379,7 +379,7 @@ PkResultUpdatedAwayTeamResultScoreBoardDetailList $PkResultUpdatedAwayTeamResult
 }
 
 Map<String, dynamic> $PkResultUpdatedAwayTeamResultScoreBoardDetailListToJson(
-    PkResultUpdatedAwayTeamResultScoreBoardDetailList entity) {
+    ScoreBoardDetailList entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['ast'] = entity.ast;
   data['astPoint'] = entity.astPoint;
@@ -416,8 +416,8 @@ Map<String, dynamic> $PkResultUpdatedAwayTeamResultScoreBoardDetailListToJson(
   return data;
 }
 
-extension PkResultUpdatedAwayTeamResultScoreBoardDetailListExtension on PkResultUpdatedAwayTeamResultScoreBoardDetailList {
-  PkResultUpdatedAwayTeamResultScoreBoardDetailList copyWith({
+extension PkResultUpdatedAwayTeamResultScoreBoardDetailListExtension on ScoreBoardDetailList {
+  ScoreBoardDetailList copyWith({
     int? ast,
     int? astPoint,
     int? blk,
@@ -451,7 +451,7 @@ extension PkResultUpdatedAwayTeamResultScoreBoardDetailListExtension on PkResult
     int? to,
     int? updateTime,
   }) {
-    return PkResultUpdatedAwayTeamResultScoreBoardDetailList()
+    return ScoreBoardDetailList()
       ..ast = ast ?? this.ast
       ..astPoint = astPoint ?? this.astPoint
       ..blk = blk ?? this.blk

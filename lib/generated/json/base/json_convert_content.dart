@@ -631,10 +631,10 @@ class JsonConvert {
       return data.map<PkResultUpdatedTeamResult>((Map<String, dynamic> e) =>
           PkResultUpdatedTeamResult.fromJson(e)).toList() as M;
     }
-    if (<PkResultUpdatedAwayTeamResultScoreBoardDetailList>[] is M) {
-      return data.map<PkResultUpdatedAwayTeamResultScoreBoardDetailList>((
+    if (<ScoreBoardDetailList>[] is M) {
+      return data.map<ScoreBoardDetailList>((
           Map<String, dynamic> e) =>
-          PkResultUpdatedAwayTeamResultScoreBoardDetailList.fromJson(e))
+          ScoreBoardDetailList.fromJson(e))
           .toList() as M;
     }
     if (<PkResultUpdatedAwayTeamResultScoreBoards>[] is M) {
@@ -1046,8 +1046,8 @@ class JsonConvertClassCollection {
     (PkPlayerUpdatedPlayers).toString(): PkPlayerUpdatedPlayers.fromJson,
     (PkResultUpdatedEntity).toString(): PkResultUpdatedEntity.fromJson,
     (PkResultUpdatedTeamResult).toString(): PkResultUpdatedTeamResult.fromJson,
-    (PkResultUpdatedAwayTeamResultScoreBoardDetailList)
-        .toString(): PkResultUpdatedAwayTeamResultScoreBoardDetailList.fromJson,
+    (ScoreBoardDetailList)
+        .toString(): ScoreBoardDetailList.fromJson,
     (PkResultUpdatedAwayTeamResultScoreBoards)
         .toString(): PkResultUpdatedAwayTeamResultScoreBoards.fromJson,
     (PkResultUpdatedAwayTeamResultTeamPlayers)

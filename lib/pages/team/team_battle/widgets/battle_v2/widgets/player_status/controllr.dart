@@ -17,57 +17,40 @@ class PlayerStatusController extends GetxController {
   var isExpanded = false.obs;
   var expandedTurns = 0.0.obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
   List<PlayerStatus> getData() {
     var resultUpdatedEntity = teamBattleV2Controller.pkResultUpdatedEntity;
     if (resultUpdatedEntity == null) {
       return [];
     }
-    var mvpPlayer =
-        resultUpdatedEntity.playerResults.firstWhere((e) => e.type == 1);
-    var list = [
-      ...resultUpdatedEntity.homeTeamResult.teamPlayers,
-      // ...resultUpdatedEntity.awayTeamResult.teamPlayers
-    ];
-    var scoreList = [
-      ...resultUpdatedEntity.homeTeamResult.scoreBoardDetailList,
-      // ...resultUpdatedEntity.awayTeamResult.scoreBoardDetailList
-    ];
+    var list = resultUpdatedEntity.homeTeamResult.teamPlayers;
+    var scoreList = resultUpdatedEntity.homeTeamResult.scoreBoardDetailList;
     var playerStatusList = list.map((e) {
       var score = scoreList
               .firstWhereOrNull(
                   (f) => f.playerId == e.playerId && f.teamId == e.teamId)
               ?.score ??
           0;
-      return PlayerStatus(
-          e.playerId,
-          e.playerId == mvpPlayer.playerId && e.teamId == mvpPlayer.teamId,
-          e.power / 120 * 100,
-          e.playerStatus,
-          score,
-          e.teamId,
-          Utils.getPlayBaseInfo(e.playerId));
+      return PlayerStatus(e.playerId, e.power / 120 * 100, e.playerStatus,
+          score, e.teamId, Utils.getPlayBaseInfo(e.playerId));
     }).toList();
     playerStatusList.sort((a, b) {
       return b.score.compareTo(a.score);
     });
+    playerStatusList[0].isMvp = resultUpdatedEntity.homeTeamResult.win;
     return playerStatusList;
   }
 }
 
 class PlayerStatus {
   final int playerId;
-  final bool isMvp;
   final double morale;
   final int status;
   final double score;
   final int teamId;
   final NbaPlayerInfosPlayerBaseInfoList playerInfo;
+  bool isMvp;
 
-  PlayerStatus(this.playerId, this.isMvp, this.morale, this.status, this.score,
-      this.teamId, this.playerInfo);
+  PlayerStatus(this.playerId, this.morale, this.status, this.score, this.teamId,
+      this.playerInfo,
+      {this.isMvp = false});
 }

@@ -38,7 +38,7 @@ class _HighLightWidgetState extends State<HighLightWidget>
       if (status == AnimationStatus.completed) {
         /// 延迟3s后消失
         Future.delayed(const Duration(seconds: 3), () {
-          if(mounted) {
+          if (mounted) {
             animationController2.forward();
           }
         });
@@ -83,7 +83,7 @@ class _HighLightWidgetState extends State<HighLightWidget>
     GameEvent item = widget.event;
     TeamBattleV2Controller controller = Get.find();
     return Positioned(
-      bottom: 15.w+animationController2.value * -150.w,
+      bottom: 15.w + animationController2.value * -150.w,
       child: Opacity(
         opacity: 1.0 - animationController2.value,
         child: Opacity(
@@ -127,7 +127,11 @@ class _HighLightWidgetState extends State<HighLightWidget>
                   9.hGap,
                   Expanded(
                     child: Builder(builder: (context) {
-                      var list = Utils.subColorString(item.text);
+                      var gameEvent = controller
+                          .getGameEvent(item.pkEventUpdatedEntity.eventId);
+                      var list = Utils.subColorString(
+                          controller.insertParamValue(gameEvent?.headLine ?? "",
+                              item.pkEventUpdatedEntity));
                       return Text.rich(
                         TextSpan(
                             children: List.generate(list.length, (index) {

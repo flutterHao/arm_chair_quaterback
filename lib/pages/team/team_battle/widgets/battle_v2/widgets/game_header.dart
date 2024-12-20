@@ -59,7 +59,7 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                     GameEvent? event = events.isEmpty ? null : events.last;
 
                     double value = event == null
-                        ? teamBattleController.battleEntity.homeTeamReadiness
+                        ? teamBattleController.pkStartUpdatedEntity!.homeTeamStrength
                         : event.pkEventUpdatedEntity.homeCurrentStrength;
                     return _buildPrePercentWidget(value);
                   }),
@@ -316,7 +316,7 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
 
                             double value = event == null
                                 ? teamBattleController
-                                    .battleEntity.awayTeamReadiness
+                                    .pkStartUpdatedEntity!.awayTeamStrength
                                 : event
                                     .pkEventUpdatedEntity.awayCurrentStrength;
                             return _buildPrePercentWidget(value);
@@ -375,28 +375,31 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
     );
   }
 
-  Stack _buildPrePercentWidget(double value) {
+  Stack _buildPrePercentWidget(double v) {
+    print('value:$v');
+    double value = max(0,v);
     var firstMaxValue = 1.44;
+    var secondMaxValue = 0.06;
     return Stack(
       children: [
         Container(
           width: 118.w,
-          height: 9.w,
+          height: 7.w,
           decoration: BoxDecoration(
             border: Border.all(color: AppColors.c666666, width: 1.w),
             borderRadius: BorderRadius.circular(4.5.w),
           ),
-          child: Row(
-            children: [
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 300),
-                width: 118.w * (min(firstMaxValue, value) / firstMaxValue),
-                height: 7.w,
-                decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                        colors: [AppColors.cB3B3B3, AppColors.c000000])),
-              ),
-            ],
+          child:  Align(
+            alignment: Alignment.centerLeft,
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              width: 118.w * min(1,(value / firstMaxValue)),
+              height: 7.w,
+              decoration:  BoxDecoration(
+                  borderRadius: BorderRadius.horizontal(left: Radius.circular(3.5.w)),
+                  gradient: const LinearGradient(
+                      colors: [AppColors.cB3B3B3, AppColors.c000000])),
+            ),
           ),
         ),
         if (value > firstMaxValue)
@@ -408,11 +411,12 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                 alignment: Alignment.center,
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
-                  width: 118.w * ((value - firstMaxValue) / 0.06),
+                  width: 118.w *
+                      (min(secondMaxValue, (value - firstMaxValue)) /
+                          secondMaxValue),
                   height: 9.w,
-                  decoration: const BoxDecoration(
-                    border: Border(
-                        right: BorderSide(color: AppColors.cFFFFFF, width: 1)),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.horizontal(left: Radius.circular(3.5.w)),
                     color: AppColors.c10A86A,
                   ),
                 ),

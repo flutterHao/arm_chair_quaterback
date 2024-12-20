@@ -801,15 +801,16 @@ class GameOverWidget extends GetView<GameOverController> {
         right: isLeftWin ? 19.w : null,
         left: !isLeftWin ? 19.w : null,
         child: Obx(() {
+          var value2 = controller.cup.value;
           return HeartbeatWidget(
             onEnd: () {
-              if (controller.cup.value == controller.cupNum) {
+              if (value2 == controller.cupNum) {
                 Future.delayed(const Duration(milliseconds: 500), () {
                   controller.giftScaleObs.value = true;
                 });
                 return;
               }
-              controller.cup.value = controller.cup.value + 1;
+              value2 = value2 + 1;
             },
             child: Container(
               width: 131.w,
@@ -839,7 +840,7 @@ class GameOverWidget extends GetView<GameOverController> {
                   ),
                   3.hGap,
                   Text(
-                    "-${!isLeftWin && controller.leftZero ? 0 : controller.cup.value.abs()}",
+                    "-${!isLeftWin && controller.leftZero ? 0 : value2.abs()}",
                     style: 16.w5(
                         color: AppColors.cF2F2F2,
                         height: 1,

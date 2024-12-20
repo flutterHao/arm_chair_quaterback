@@ -75,7 +75,7 @@ class _ScorePageState extends State<ScorePage>
                         return Container(
                             margin: EdgeInsets.only(
                                 top: index == 0 ? 9.w : 0,
-                                bottom: lastIndex ? 20.w : 0),
+                                bottom: lastIndex ? 94.w : 0),
                             child: ScoreItemWidget(gameGuess: item));
                       },
                       separatorBuilder: (BuildContext context, int index) {

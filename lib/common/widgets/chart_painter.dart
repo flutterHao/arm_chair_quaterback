@@ -20,6 +20,13 @@ class ChartPainter extends CustomPainter {
     for (int i = 0; i < list.length; i++) {
       var next = list[i + 1 >= list.length ? i : i + 1];
       var current = list[i];
+      if(_list2.length > 1){
+        var preview = _list2.last;
+        if(current.dx<preview.dx){
+          // 处理往回跳的问题
+          continue;
+        }
+      }
       _list2.add(current);
       if ((current.dy > height / 2 && next.dy < height / 2) ||
           (current.dy < height / 2 && next.dy > height / 2)) {

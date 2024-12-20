@@ -411,7 +411,7 @@ class _TabViewItemPageState extends State<_TabViewItemPage>
           bool lastIndex = list.length - 1 == index;
           return Container(
             margin: EdgeInsets.only(
-                top: index == 0 ? 9.w : 0, bottom: lastIndex ? 20.w : 0),
+                top: index == 0 ? 9.w : 0, bottom: lastIndex ? 94.w : 0),
             child: GuessItemV2(
               index: index,
               playerV2: item,

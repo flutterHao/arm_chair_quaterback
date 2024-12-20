@@ -1,6 +1,7 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_game_detail_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_event_updated_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -32,7 +33,6 @@ class _PlayerDetailState extends State<PlayerDetail>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
 
-
   @override
   void initState() {
     super.initState();
@@ -59,78 +59,94 @@ class _PlayerDetailState extends State<PlayerDetail>
               indicatorSize: TabBarIndicatorSize.tab,
               dividerColor: AppColors.cD1D1D1,
               overlayColor: null,
-              labelStyle: 16.w5(
-                  height: 1,
-                  fontFamily: FontFamily.fOswaldMedium),
+              labelStyle:
+                  16.w5(height: 1, fontFamily: FontFamily.fOswaldMedium),
               labelColor: AppColors.c000000,
-              unselectedLabelStyle: 16.w5(
-                  height: 1,
-                  fontFamily: FontFamily.fOswaldMedium),
+              unselectedLabelStyle:
+                  16.w5(height: 1, fontFamily: FontFamily.fOswaldMedium),
               unselectedLabelColor: AppColors.c000000.withOpacity(0.5),
               tabs: [
-            Row(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(color: AppColors.c1F8FE5,width: 1.w),
-                      borderRadius: BorderRadius.circular(15.w)
-                  ),
-                  child: ImageWidget(
-                    url: Utils.getAvaterUrl(homeInfo.teamLogo),
-                    imageFailedPath: Assets.teamUiHead01,
-                    width: 28.w,
-                    height: 28.w,
-                    borderRadius: BorderRadius.circular(14.w),
-                  ),
+                Row(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          border:
+                              Border.all(color: AppColors.c1F8FE5, width: 1.w),
+                          borderRadius: BorderRadius.circular(15.w)),
+                      child: ImageWidget(
+                        url: Utils.getAvaterUrl(homeInfo.teamLogo),
+                        imageFailedPath: Assets.teamUiHead01,
+                        width: 28.w,
+                        height: 28.w,
+                        borderRadius: BorderRadius.circular(14.w),
+                      ),
+                    ),
+                    7.hGap,
+                    Text(
+                      homeInfo.teamName,
+                    )
+                  ],
                 ),
-                7.hGap,
-                Text(
-                  homeInfo.teamName,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      awayInfo.teamName,
+                    ),
+                    7.hGap,
+                    Container(
+                      decoration: BoxDecoration(
+                          border:
+                              Border.all(color: AppColors.cD60D20, width: 1.w),
+                          borderRadius: BorderRadius.circular(15.w)),
+                      child: ImageWidget(
+                        url: Utils.getAvaterUrl(awayInfo.teamLogo),
+                        imageFailedPath: Assets.teamUiHead03,
+                        width: 28.w,
+                        height: 28.w,
+                        borderRadius: BorderRadius.circular(14.w),
+                      ),
+                    ),
+                  ],
                 )
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  awayInfo.teamName,
-                ),
-                7.hGap,
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.cD60D20,width: 1.w),
-                    borderRadius: BorderRadius.circular(15.w)
-                  ),
-                  child: ImageWidget(
-                    url: Utils.getAvaterUrl(awayInfo.teamLogo),
-                    imageFailedPath: Assets.teamUiHead03,
-                    width: 28.w,
-                    height: 28.w,
-                    borderRadius: BorderRadius.circular(14.w),
-                  ),
-                ),
-              ],
-            )
-          ]),
+              ]),
         ),
         Expanded(
-          child: TabBarView(
-            controller: tabController,
-              children: [
-                _buildTabViewItem(widget.event.pkEventUpdatedEntity.homePlayerInfos),
-                _buildTabViewItem(widget.event.pkEventUpdatedEntity.awayPlayerInfos),
-              ]),
+          child: TabBarView(controller: tabController, children: [
+            _buildTabViewItem(Get.find<TeamBattleV2Controller>()
+                .pkResultUpdatedEntity!
+                .homeTeamResult
+                .scoreBoardDetailList),
+            _buildTabViewItem(Get.find<TeamBattleV2Controller>()
+                .pkResultUpdatedEntity!
+                .awayTeamResult
+                .scoreBoardDetailList),
+          ]),
         )
       ],
     );
   }
 
-  Widget _buildTabViewItem(List<PkEventUpdatedPlayerInfos> playerScores) {
-
-    List<String> keys = ["MIN","PTS","3PM","REB","AST","STL","BLK","FTM","TO","FOUL","FG","FT","3P"];
-        item(List<PkEventUpdatedPlayerInfos> list){
+  Widget _buildTabViewItem(
+      List<ScoreBoardDetailList> playerScores) {
+    List<String> keys = [
+      "MIN",
+      "PTS",
+      "3PM",
+      "REB",
+      "AST",
+      "STL",
+      "BLK",
+      "FTM",
+      "TO",
+      "FOUL",
+      "FG",
+      "FT",
+      "3P"
+    ];
+    item(List<ScoreBoardDetailList> list) {
       return SizedBox(
-        height: 29.w+34.w*list.length,
+        height: 29.w + 34.w * list.length,
         child: SfDataGridTheme(
             data: const SfDataGridThemeData(
                 gridLineColor: AppColors.cE6E6E6,
@@ -156,7 +172,8 @@ class _PlayerDetailState extends State<PlayerDetail>
                           border: Border(
                               bottom: BorderSide(
                                   color: AppColors.cD1D1D1, width: 1))),
-                      child: Text('Player',
+                      child: Text(
+                        'Player',
                       ),
                     )),
                 ...keys.map((e) {
@@ -178,6 +195,7 @@ class _PlayerDetailState extends State<PlayerDetail>
             )),
       );
     }
+
     return SingleChildScrollView(
       child: Column(
         children: [

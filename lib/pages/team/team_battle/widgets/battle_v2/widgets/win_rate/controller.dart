@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/widgets/battle_animation_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
 import 'package:flutter/material.dart';
@@ -43,10 +44,12 @@ class WinRateController extends GetxController
   @override
   void onReady() {
     super.onReady();
-    var battleEntity = Get.find<TeamBattleV2Controller>().battleEntity;
+    var pkStartUpdatedEntity =
+        Get.find<TeamBattleController>().pkStartUpdatedEntity;
     // 初始化 训练程度差值
-    var abs =
-        (battleEntity.homeTeamReadiness - battleEntity.awayTeamReadiness).abs();
+    var abs = (pkStartUpdatedEntity?.homeTeamStrength ??
+            0 - (pkStartUpdatedEntity?.awayTeamStrength ?? 0))
+        .abs();
     abs = abs == 0 ? size.height / 2 : abs;
     pointData.add(Offset(0, abs));
   }
