@@ -21,11 +21,11 @@ import 'package:get/get.dart';
 
 class ErrorUtils {
   static void toast(dynamic e) {
-    if (!kReleaseMode) {
-      print('$e\n${e.stackTrace}');
-    }
     var str = _DEFAULTERRORSTRING;
     if (e is DioException) {
+      if (!kReleaseMode) {
+        print('$e\n${e.stackTrace}');
+      }
       var result = _getResultByDioException(e);
       str = _getErrorDesc((result?.code ?? -1).toString());
     }else if(e is Map){
