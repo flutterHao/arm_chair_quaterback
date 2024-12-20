@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/entities/my_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/star_up_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
-import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/top_toast_dialog.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
@@ -153,6 +153,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
         for (var e in myTeamEntity.teamPlayers) {
           if (e.uuid == uuid) {
             int pw = v.teamPlayers.firstWhere((e) => e.uuid == uuid).power;
+
             e.power = pw;
           }
           totalPw += e.power;
@@ -162,7 +163,6 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
       } else {
         if (myTeamEntity.powerP >= 100) {
           EasyLoading.showToast("Your team's morale is full.");
-          // Loading.toast("Your team's morale is full.");
           return;
         }
         if (v.teamPlayers.isNotEmpty) {
@@ -406,21 +406,24 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
 
   int getGrade(int playerId) {
     String grade = Utils.getPlayBaseInfo(playerId).grade;
-    grade = grade.replaceAll("-", "").replaceAll("+", "");
-    switch (grade) {
-      case 'S':
-        return 5;
-      case 'A':
-        return 4;
-      case 'B':
-        return 3;
-      case 'C':
-        return 2;
-      case 'D':
-        return 1;
-      default:
-        return 0;
-    }
+
+    return Constant.grades.indexOf(grade);
+
+    // grade = grade.replaceAll("-", "").replaceAll("+", "");
+    // switch (grade) {
+    //   case 'S':
+    //     return 5;
+    //   case 'A':
+    //     return 4;
+    //   case 'B':
+    //     return 3;
+    //   case 'C':
+    //     return 2;
+    //   case 'D':
+    //     return 1;
+    //   default:
+    //     return 0;
+    // }
   }
 
   Future dismissPlayer(BuildContext context, String uuid) async {
@@ -456,12 +459,12 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
     return total.ceil();
   }
 
-  void recove(myTeamCtrl) {
-    if (myTeamEntity.powerP >= 1000) {
-      EasyLoading.showToast("Your team's morale is full.");
-      // Loading.toast("Your team's morale is full.");
-      return;
-    }
+  void recove() {
+    // if (myTeamEntity.powerP >= 100) {
+    //   EasyLoading.showToast("Your team's morale is full.");
+    //   // Loading.toast("Your team's morale is full.");
+    //   return;
+    // }
     showModalBottomSheet(
         isScrollControlled: true,
         context: Get.context!,

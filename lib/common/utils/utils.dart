@@ -207,7 +207,8 @@ class Utils {
   }
 
   static String formatGrade(String grade) {
-    return grade.replaceAll("-", "").replaceAll("+", "");
+    return grade;
+    // return grade.replaceAll("-", "").replaceAll("+", "");
   }
 
   static String getSortWithInt(int value) {

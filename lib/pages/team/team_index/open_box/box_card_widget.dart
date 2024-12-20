@@ -2,14 +2,13 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-21 20:47:10
- * @LastEditTime: 2024-12-19 17:08:56
+ * @LastEditTime: 2024-12-20 15:57:40
  */
 
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/entities/player_card_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/open_box/big_player_card.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/open_box/small_player_card.dart';
@@ -141,7 +140,8 @@ class _BoxCardWidgetState extends State<BoxCardWidget>
 }
 
 String getBigCardImage(String grade) {
-  switch (Utils.formatGrade(grade)) {
+  grade = grade.replaceAll("-", "").replaceAll("+", "");
+  switch (grade) {
     case "S":
       return Assets.managerUiManagerPlayercardBig03;
     case "A":
@@ -152,7 +152,8 @@ String getBigCardImage(String grade) {
 }
 
 String getSmallCardImage(String grade) {
-  switch (Utils.formatGrade(grade)) {
+  grade = grade.replaceAll("-", "").replaceAll("+", "");
+  switch (grade) {
     case "S":
       return Assets.managerUiManagerPlayercardSmall03;
     case "A":
@@ -163,7 +164,8 @@ String getSmallCardImage(String grade) {
 }
 
 Color getCardColor(String grade) {
-  switch (Utils.formatGrade(grade)) {
+  grade = grade.replaceAll("-", "").replaceAll("+", "");
+  switch (grade) {
     case "S":
       return AppColors.cFAC837;
     case "A":

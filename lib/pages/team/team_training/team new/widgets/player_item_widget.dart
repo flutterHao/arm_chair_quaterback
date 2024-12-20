@@ -174,7 +174,7 @@ class PlayerItem extends GetView<TeamController> {
                     ),
                     3.5.vGap,
                     Text(
-                      Utils.formatMoney(item.buyPrice),
+                      Utils.formatMoney(palyer.salary),
                       style: 12.w4(
                           height: 0.8, fontFamily: FontFamily.fOswaldMedium),
                     ),
@@ -185,6 +185,7 @@ class PlayerItem extends GetView<TeamController> {
               MtInkwell(
                 onTap: () {
                   // controller.recoverPower(type: 1, uuid: item.uuid);
+                  controller.recove();
                 },
                 child: Container(
                   // width: 73.w,

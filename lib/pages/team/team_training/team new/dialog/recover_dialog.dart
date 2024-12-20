@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-29 16:06:50
- * @LastEditTime: 2024-12-19 21:14:39
+ * @LastEditTime: 2024-12-20 14:16:12
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -50,64 +50,65 @@ class RecoverDialog extends GetView<TeamController> {
                     color: AppColors.c000000.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(2.w)),
               ),
-              Container(
-                width: double.infinity,
-                height: 105.w,
-                color: AppColors.cF2F2F2,
-                child: Row(
-                  children: [
-                    29.5.hGap,
-                    CircularPowerWidet(),
-                    12.hGap,
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "TEAM Morale".toUpperCase(),
-                          style: 21.w4(
-                              fontFamily: FontFamily.fOswaldMedium,
-                              height: 0.8),
-                        ),
-                        11.5.vGap,
-                        Row(
-                          children: [
-                            Text(
-                              "auto recover".toUpperCase(),
-                              style: 12.w4(
-                                  fontFamily: FontFamily.fRobotoRegular,
-                                  height: 0.8),
-                            ),
-                            7.hGap,
-                            Obx(() {
-                              return Text(
-                                controller.remainString.value,
-                                style: 12.w4(
-                                    fontFamily: FontFamily.fRobotoMedium,
-                                    height: 0.8,
-                                    color: AppColors.c10A86A),
-                              );
-                            })
-                          ],
-                        ),
-                      ],
-                    ),
-                    const Expanded(child: SizedBox.shrink()),
-                    RecoverButtom(
-                      money: cost,
-                      onTap: () {
-                        controller.recoverPower(cost: cost, type: 2);
-                      },
-                    ),
-                    16.hGap,
-                  ],
-                ),
-              ),
-              25.vGap,
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
+                      Container(
+                        width: double.infinity,
+                        height: 105.w,
+                        color: AppColors.cF2F2F2,
+                        child: Row(
+                          children: [
+                            29.5.hGap,
+                            CircularPowerWidet(),
+                            12.hGap,
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "TEAM Morale".toUpperCase(),
+                                  style: 21.w4(
+                                      fontFamily: FontFamily.fOswaldMedium,
+                                      height: 0.8),
+                                ),
+                                11.5.vGap,
+                                Row(
+                                  children: [
+                                    Text(
+                                      "auto recover".toUpperCase(),
+                                      style: 12.w4(
+                                          fontFamily: FontFamily.fRobotoRegular,
+                                          height: 0.8),
+                                    ),
+                                    7.hGap,
+                                    Obx(() {
+                                      return Text(
+                                        controller.remainString.value,
+                                        style: 12.w4(
+                                            fontFamily:
+                                                FontFamily.fRobotoMedium,
+                                            height: 0.8,
+                                            color: AppColors.c10A86A),
+                                      );
+                                    })
+                                  ],
+                                ),
+                              ],
+                            ),
+                            const Expanded(child: SizedBox.shrink()),
+                            RecoverButtom(
+                              money: cost,
+                              onTap: () {
+                                controller.recoverPower(cost: cost, type: 2);
+                              },
+                            ),
+                            16.hGap,
+                          ],
+                        ),
+                      ),
+                      25.vGap,
                       Container(
                         margin: EdgeInsets.only(left: 29.5.w),
                         alignment: Alignment.centerLeft,
@@ -171,9 +172,7 @@ class RecoverDialog extends GetView<TeamController> {
                           color: AppColors.cE6E6E,
                           margin: EdgeInsets.symmetric(horizontal: 16.w),
                         ),
-                        itemCount: controller.myTeamEntity.benchCount < 7
-                            ? controller.myTeamEntity.benchCount + 1
-                            : 7,
+                        itemCount: sublist.length,
                       ),
                     ],
                   ),
@@ -215,12 +214,13 @@ class RecoverButtom extends StatelessWidget {
             child: Container(
               width: 59.w,
               height: 40.w,
+              alignment: Alignment.center,
               decoration: BoxDecoration(
                 border: Border.all(color: AppColors.c666666),
                 borderRadius: BorderRadius.circular(9.w),
               ),
               child: IconWidget(
-                  iconWidth: 13.w, icon: Assets.managerUiManagerIconRecover),
+                  iconWidth: 22.w, icon: Assets.managerUiManagerIconRecover01),
             ),
           ),
         ],

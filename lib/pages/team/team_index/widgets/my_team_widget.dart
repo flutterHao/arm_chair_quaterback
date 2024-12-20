@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 17:22:13
- * @LastEditTime: 2024-11-28 15:49:48
+ * @LastEditTime: 2024-12-20 12:07:01
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
@@ -109,7 +109,10 @@ class MyTeamWidget extends StatelessWidget {
                             ctrl.myTeamEntity.salaryCap,
                         width: 113.w,
                         height: 6.w,
-                        // progressColor: AppColors.cFFFFFF,
+                        progressColor: ctrl.myTeamEntity.salary >
+                                ctrl.myTeamEntity.salaryCap
+                            ? AppColors.cD60D20
+                            : null,
                       )
                     ],
                   ),

@@ -1,3 +1,9 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-12-16 21:17:39
+ * @LastEditTime: 2024-12-20 15:49:07
+ */
 import 'package:arm_chair_quaterback/common/constant/firebase_options.dart';
 import 'package:arm_chair_quaterback/common/utils/loading.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -17,7 +23,7 @@ class Global {
   static Future init() async {
     EasyLoading.init();
     EasyLoading.instance
-      ..displayDuration = const Duration(milliseconds: 1000)
+      ..displayDuration = const Duration(milliseconds: 2000)
       ..indicatorType = EasyLoadingIndicatorType.ring
       ..loadingStyle = EasyLoadingStyle.custom
       ..indicatorSize = 35.0

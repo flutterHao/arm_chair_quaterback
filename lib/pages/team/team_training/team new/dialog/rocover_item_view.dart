@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2024-12-19 21:08:50
+ * @LastEditTime: 2024-12-20 14:15:28
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -216,6 +216,10 @@ class RecoverItem extends GetView<TeamController> {
               RecoverButtom(
                   money: item.recoverCost,
                   onTap: () {
+                    if (item.power >= 100) {
+                      EasyLoading.showToast("the player morale is full.");
+                      return;
+                    }
                     controller.recoverPower(
                         cost: item.recoverCost, type: 1, uuid: item.uuid);
                   }),

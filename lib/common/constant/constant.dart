@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-06 15:16:54
- * @LastEditTime: 2024-11-26 12:33:52
+ * @LastEditTime: 2024-12-20 15:50:21
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:flutter/material.dart';
@@ -90,4 +90,25 @@ class Constant {
     102: {"light": AppColors.c4D4D4D, "dart": AppColors.c000000},
     115: {"light": AppColors.c002B5C, "dart": AppColors.c000000},
   };
+
+  static List<String> grades = [
+    "D-",
+    "D",
+    "D+",
+    "C-",
+    "C",
+    "C+",
+    "B-",
+    "B",
+    "B+",
+    "A-",
+    "A",
+    "A+",
+    "S-",
+    "S",
+    "S+",
+    "SS-",
+    "SS",
+    "SS+"
+  ];
 }

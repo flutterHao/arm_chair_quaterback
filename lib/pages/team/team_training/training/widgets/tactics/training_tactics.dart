@@ -87,7 +87,7 @@ class TrainingTactics extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
-                    myTeamCtrl.recove(myTeamCtrl);
+                    myTeamCtrl.recove();
                   },
                   child: Container(
                     width: 140.w,
@@ -119,7 +119,7 @@ class TrainingTactics extends StatelessWidget {
                         13.vGap,
                         MtInkwell(
                           onTap: () {
-                            myTeamCtrl.recove(myTeamCtrl);
+                            myTeamCtrl.recove();
                           },
                           child: CircleProgressView(
                               progress: myTeamCtrl.myTeamEntity.powerP * 1.0,

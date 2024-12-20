@@ -53,15 +53,24 @@ class NetInterceptor extends InterceptorsWrapper {
           // 捕获业务逻辑返回的 401 错误
           await _handle401Error(response.requestOptions, handler);
         } else {
+          //处理服务器错误
+          DioException e = DioException(
+            requestOptions: response.requestOptions,
+            response: response,
+            type: DioExceptionType.unknown,
+            error: result,
+          );
+
+          ErrorUtils.toast(e);
           // await _retryOnError(response.requestOptions, handler);
-          handlerError(ErrorEntity(
-              url: response.requestOptions.uri.toString(),
-              code: result.code!,
-              message: result.message ?? ""));
+          // handlerError(ErrorEntity(
+          //     url: response.requestOptions.uri.toString(),
+          //     code: result.code!,
+          //     message: result.message ?? ""));
           return handler.reject(DioException(
             requestOptions: response.requestOptions,
             response: response,
-            type: DioExceptionType.badResponse, // 标记为服务器返回错误
+            type: DioExceptionType.unknown, // 标记为服务器返回错误
             error: result.message, // 返回错误信息
           ));
         }
@@ -162,20 +171,10 @@ class NetInterceptor extends InterceptorsWrapper {
     //   // EasyLoading.showError(eInfo.message);
 
     // }
-    // if(kReleaseMode){
-    //   // DioException e=DioException(
-    //   //   requestOptions: error.requestOptions,
-    //   //   response: error.response,
-    //   //   type: error.type,
-    //   //   error: eInfo.message,
-    //   // );
-    //    ErrorUtils.toast(e);
-    // }else{
+
+    // if (!kReleaseMode) {
     //   EasyLoading.showError(eInfo.message);
     // }
-    if (!kReleaseMode) {
-      EasyLoading.showError(eInfo.message);
-    }
   }
 
   /// 错误信息

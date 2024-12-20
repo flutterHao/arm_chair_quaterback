@@ -108,7 +108,7 @@ class TeamTabbar extends GetView<TeamController> {
                                     height: 0.75),
                               ),
                               6.hGap,
-                              if (controller.myTeamEntity.salary >=
+                              if (controller.myTeamEntity.salary >
                                   controller.myTeamEntity.salaryCap)
                                 Container(
                                   width: 32.w,
@@ -177,7 +177,7 @@ class TeamTabbar extends GetView<TeamController> {
                                     width: 71.w,
                                     height: 6.w,
                                     progressColor: controller
-                                                .myTeamEntity.salary >=
+                                                .myTeamEntity.salary >
                                             controller.myTeamEntity.salaryCap
                                         ? AppColors.cD60D20
                                         : AppColors.cFFFFFF,

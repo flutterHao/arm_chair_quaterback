@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-17 18:13:43
- * @LastEditTime: 2024-12-19 18:07:32
+ * @LastEditTime: 2024-12-20 18:41:54
  */
 import 'dart:math';
 
@@ -17,6 +17,8 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/open_box/animated_arrow.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/open_box/animted_box.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/open_box/box_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -53,17 +55,20 @@ class OpenBoxPage extends GetView<TeamIndexController> {
     );
   }
 
-  Widget _leftTopWidget() {
-    return Positioned(
+  Widget _openTitle() {
+    var duration = 300.milliseconds;
+    return AnimatedPositioned(
+      duration: duration,
       top: 44.h,
-      left: 29.w,
-      child: Visibility(
-        visible: controller.step == 0 || controller.step == 1,
+      left: controller.step == 0 ? 29.w : 15.w,
+      child: AnimatedOpacity(
+        duration: duration,
+        opacity: controller.step == 0 ? 1 : 0,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              controller.step == 0 ? "OPEN" : "CHOOSE",
+              "OPEN",
               style: 44.w4(
                   color: AppColors.cFFFFFF,
                   fontFamily: FontFamily.fOswaldMedium,
@@ -71,8 +76,7 @@ class OpenBoxPage extends GetView<TeamIndexController> {
             ),
             10.vGap,
             Text(
-              (controller.step == 0 ? "the package" : "the one you want")
-                  .toUpperCase(),
+              "the package".toUpperCase(),
               style: 25.w4(
                   color: AppColors.cFFFFFF,
                   fontFamily: FontFamily.fOswaldMedium,
@@ -84,6 +88,42 @@ class OpenBoxPage extends GetView<TeamIndexController> {
     );
   }
 
+  Widget _changeTitle() {
+    var duration = 300.milliseconds;
+    return Obx(() {
+      var visible = controller.showChangeText.value && controller.step == 1;
+      return AnimatedPositioned(
+        duration: duration,
+        top: 44.h,
+        left: visible ? 29.w : 35.w,
+        child: AnimatedOpacity(
+          duration: duration,
+          opacity: visible ? 1 : 0,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "CHOOSE",
+                style: 44.w4(
+                    color: AppColors.cFFFFFF,
+                    fontFamily: FontFamily.fOswaldMedium,
+                    height: 0.8),
+              ),
+              10.vGap,
+              Text(
+                "the one you want".toUpperCase(),
+                style: 25.w4(
+                    color: AppColors.cFFFFFF,
+                    fontFamily: FontFamily.fOswaldMedium,
+                    height: 0.8),
+              ),
+            ],
+          ),
+        ),
+      );
+    });
+  }
+
   Widget _boxWidget() {
     return Positioned(
       top: 314.h,
@@ -93,7 +133,7 @@ class OpenBoxPage extends GetView<TeamIndexController> {
         visible: controller.step == 0,
         child: Column(
           children: [
-            MtInkwell(
+            AnimatedBox(
               onTap: () async {
                 //如果只有一张牌跳过第一步选牌
                 if (item.playerCards.length == 1) {
@@ -111,9 +151,12 @@ class OpenBoxPage extends GetView<TeamIndexController> {
                 } else {
                   controller.step = 1;
                 }
+                controller.showChangeText.value = false;
                 controller.update(["open_box_page"]);
+                Future.delayed(1000.milliseconds).then((v) {
+                  controller.showChangeText.value = true;
+                });
               },
-              splashColor: Colors.transparent,
               child: Image.asset(
                 Assets.managerUiManagerGift03,
                 width: 199.h,
@@ -121,10 +164,13 @@ class OpenBoxPage extends GetView<TeamIndexController> {
               ),
             ),
             25.vGap,
-            IconWidget(
-              iconWidth: 20.h,
-              icon: Assets.iconUiIconShrink,
-              iconColor: AppColors.cFF7954,
+            AnimatedArrow(
+              end: -5.w,
+              child: IconWidget(
+                iconWidth: 20.h,
+                icon: Assets.iconUiIconShrink,
+                iconColor: AppColors.cFF7954,
+              ),
             ),
             16.vGap,
             Text(
@@ -204,7 +250,13 @@ class OpenBoxPage extends GetView<TeamIndexController> {
                 );
               });
               if (!e.isSelect.value) {
-                return card;
+                return AnimatedBuilder(
+                    animation: controller.breathController,
+                    builder: (context, child) {
+                      // return card;
+                      return Transform.scale(
+                          scale: controller.breathAnimation.value, child: card);
+                    });
               }
               return AnimatedBuilder(
                   animation: controller.shakeAnimation,
@@ -501,7 +553,8 @@ class OpenBoxPage extends GetView<TeamIndexController> {
 
                     /// 开宝箱
                     _boxWidget(),
-                    _leftTopWidget(),
+                    _openTitle(),
+                    _changeTitle(),
                     _rightBottom(),
                   ],
                 ),

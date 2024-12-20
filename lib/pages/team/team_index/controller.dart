@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-12-19 18:13:30
+ * @LastEditTime: 2024-12-20 17:58:24
  */
 
 import 'dart:async';
@@ -26,7 +26,7 @@ import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class TeamIndexController extends GetxController
-    with GetSingleTickerProviderStateMixin {
+    with GetTickerProviderStateMixin {
   TeamIndexController();
 
   ///宝箱
@@ -47,14 +47,18 @@ class TeamIndexController extends GetxController
 
   int step = 0;
   int selectIndex = -1;
-  //摇动动画
+  //摇动卡牌动画
   late AnimationController shakeController;
   late Animation<double> shakeAnimation;
+  //卡牌呼吸动画
+  late AnimationController breathController;
+  late Animation<double> breathAnimation;
   //背景入场动画
   RxBool showBackground1 = false.obs;
   RxBool showBackground2 = false.obs;
   RxBool showBackground3 = false.obs;
   Duration showBgDuration = const Duration(milliseconds: 200);
+  RxBool showChangeText = false.obs;
   @override
   void onInit() {
     super.onInit();
@@ -78,6 +82,21 @@ class TeamIndexController extends GetxController
           shakeController.forward();
         }
       });
+
+    breathController = AnimationController(
+      duration: const Duration(milliseconds: 1000),
+      vsync: this,
+    )..repeat(reverse: true);
+
+    breathAnimation =
+        Tween<double>(begin: 0.93, end: 0.9).animate(breathController)
+          ..addStatusListener((status) {
+            if (status == AnimationStatus.completed) {
+              shakeController.reverse();
+            } else if (status == AnimationStatus.dismissed) {
+              shakeController.forward();
+            }
+          });
   }
 
   @override
@@ -132,7 +151,7 @@ class TeamIndexController extends GetxController
 
   ///开启战斗宝箱
   void openBattleBox(int index, int playerId) async {
-    // return;
+    return;
     awardList = await TeamApi.opneBattleBox(index, playerId);
     getBattleBox();
     // showBoxDialog();

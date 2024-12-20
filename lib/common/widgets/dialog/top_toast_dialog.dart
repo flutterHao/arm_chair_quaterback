@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 
 Future showTopToastDialog({
   required Widget child,
-  Duration duration = const Duration(seconds: 2),
+  Duration duration = const Duration(milliseconds: 800), //停留时间
 }) async {
   final overlayEntry = OverlayEntry(
     builder: (context) {
@@ -20,7 +20,7 @@ Future showTopToastDialog({
   Overlay.of(Get.context!).insert(overlayEntry);
 
   // 自动关闭弹窗
-  await Future.delayed(duration);
+  await Future.delayed(duration + 600.milliseconds);
   overlayEntry.remove();
 }
 
@@ -52,7 +52,10 @@ class _TopDialogState extends State<TopToastDialog>
         parent: Tween<double>(begin: 0, end: 1).animate(_controller),
         curve: Curves.easeOutSine);
 
-    _controller.forward();
+    _controller.forward().then((v) async {
+      await Future.delayed(widget.duration);
+      _controller.reverse();
+    });
   }
 
   @override
