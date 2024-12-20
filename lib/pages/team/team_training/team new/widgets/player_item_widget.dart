@@ -480,7 +480,7 @@ class PlayerCard extends StatelessWidget {
               child: OutlinedText(
                 text: Utils.formatGrade(grade ?? 'S'),
                 textStyle:
-                    26.w4(height: 0.75, fontFamily: FontFamily.fRobotoMedium),
+                    26.w4(height: 0.75, fontFamily: FontFamily.fRobotoBlack),
               ),
             ),
 

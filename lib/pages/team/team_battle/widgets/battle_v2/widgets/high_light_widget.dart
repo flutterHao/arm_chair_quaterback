@@ -83,7 +83,7 @@ class _HighLightWidgetState extends State<HighLightWidget>
     GameEvent item = widget.event;
     TeamBattleV2Controller controller = Get.find();
     return Positioned(
-      top: 53.w + animationController2.value * 80.w,
+      bottom: 15.w+animationController2.value * -150.w,
       child: Opacity(
         opacity: 1.0 - animationController2.value,
         child: Opacity(

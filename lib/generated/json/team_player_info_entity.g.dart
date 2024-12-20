@@ -129,6 +129,7 @@ extension TeamPlayerInfoEntityExtension on TeamPlayerInfoEntity {
     int? playerId,
     TeamPlayerInfoPotential? upStarBase,
     RxBool? isChange,
+    int? recoverCost,
   }) {
     return TeamPlayerInfoEntity()
       ..buyPrice = buyPrice ?? this.buyPrice
@@ -149,7 +150,8 @@ extension TeamPlayerInfoEntityExtension on TeamPlayerInfoEntity {
       ..breakThroughGrade = breakThroughGrade ?? this.breakThroughGrade
       ..playerId = playerId ?? this.playerId
       ..upStarBase = upStarBase ?? this.upStarBase
-      ..isChange = isChange ?? this.isChange;
+      ..isChange = isChange ?? this.isChange
+      ..recoverCost = recoverCost ?? this.recoverCost;
   }
 }
 

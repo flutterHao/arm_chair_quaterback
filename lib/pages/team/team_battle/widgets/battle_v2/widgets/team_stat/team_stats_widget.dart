@@ -8,6 +8,7 @@ import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/support_percent_progress_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/league/league_detail/widgets/league_detail_play/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
@@ -191,7 +192,7 @@ class TeamStatsWidget extends StatelessWidget {
                         ),
                         4.vGap,
                         Obx(() {
-                          return  AnimatedRotation(
+                          return AnimatedRotation(
                             turns: controller.expandedTurns.value,
                             duration: const Duration(milliseconds: 300),
                             child: IconWidget(
@@ -213,7 +214,55 @@ class TeamStatsWidget extends StatelessWidget {
     );
   }
 
-  Container _teamStatsItemWidget(TeamStats item) {
+  Widget _teamStatsItemWidget(TeamStats item) {
+    return Container(
+      height: 60.w,
+      margin: EdgeInsets.symmetric(horizontal: 16.w),
+      padding: EdgeInsets.symmetric(horizontal: 13.w),
+      decoration: const BoxDecoration(
+          border:
+              Border(bottom: BorderSide(color: AppColors.cE6E6E, width: 1))),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                (item.getLeftPercent*100).format(),
+                style: 16.w4(
+                    color: AppColors.c000000,
+                    height: 1,
+                    fontFamily: FontFamily.fOswaldRegular),
+              ),
+              Text(
+                "${item.name} ${item.valueIsPercent?"":"%"}",
+                style: 10.w4(
+                    color: AppColors.c000000,
+                    height: 1,
+                    fontFamily: FontFamily.fRobotoRegular),
+              ),
+              Text(
+                (100-item.getLeftPercent*100).format(),
+                style: 16.w4(
+                    color: AppColors.c000000,
+                    height: 1,
+                    fontFamily: FontFamily.fOswaldRegular),
+              )
+            ],
+          ),
+          3.5.vGap,
+          SupportPercentProgressWidget(
+            height: 12.w,
+            leftPercent: (item.getLeftPercent * 100).toInt(),
+            leftColor: AppColors.cB3B3B3,
+            rightPercent: (100 - (item.getLeftPercent * 100).toInt()),
+            rightColor: AppColors.c000000,
+          )
+        ],
+      ),
+    );
     return Container(
       height: 60.w,
       margin: EdgeInsets.symmetric(horizontal: 16.w),

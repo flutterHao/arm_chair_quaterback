@@ -8,6 +8,7 @@ import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/TLBuilderWidget.dart';
 import 'package:arm_chair_quaterback/common/widgets/WidgetUtils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/player_avatar_widget.dart';
@@ -15,6 +16,7 @@ import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_leader/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_leader/widget/player_detail.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/widgets/player_item_widget.dart';
 import 'package:extended_tabs/extended_tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -150,8 +152,7 @@ class GameLeaderWidget extends StatelessWidget {
                         : index == 1
                             ? "reb"
                             : "ast";
-                    List<PkEventUpdatedPlayerInfos> list =
-                        controller.getTwoMaxByTab(tab);
+                    List<GameLeader> list = controller.getTwoMaxByTab(tab);
                     return Container(
                       padding: EdgeInsets.symmetric(horizontal: 16.w),
                       child: Column(
@@ -168,29 +169,35 @@ class GameLeaderWidget extends StatelessWidget {
                           else
                             ...List.generate(list.length, (i) {
                               var item = list[i];
-                              var playBaseInfo =
-                                  Utils.getPlayBaseInfo(item.playerId);
+                              var playBaseInfo = Utils.getPlayBaseInfo(
+                                  item.playerInfo.playerId);
                               var teamInfo =
                                   Utils.getTeamInfo(playBaseInfo.teamId);
                               List<Widget> child;
                               List<Map<String, String>> values = [];
                               if (index == 0) {
                                 values.addAll([
-                                  {"PTS": "${item.pts}"},
-                                  {"FG": "${item.fgm}/${item.fga}"},
-                                  {"FT": "${item.ftm}/${item.fta}"}
+                                  {"PTS": "${item.playerInfo.pts}"},
+                                  {
+                                    "FG":
+                                        "${item.playerInfo.fgm}/${item.playerInfo.fga}"
+                                  },
+                                  {
+                                    "FT":
+                                        "${item.playerInfo.ftm}/${item.playerInfo.fta}"
+                                  }
                                 ]);
                               } else if (index == 1) {
                                 values.addAll([
-                                  {"REB": "${item.reb}"},
-                                  {"DERB": "${item.dreb}"},
-                                  {"OREB": "${item.oreb}"}
+                                  {"REB": "${item.playerInfo.reb}"},
+                                  {"DERB": "${item.playerInfo.dreb}"},
+                                  {"OREB": "${item.playerInfo.oreb}"}
                                 ]);
                               } else {
                                 values.addAll([
-                                  {"AST": "${item.ast}"},
-                                  {"TO": "${item.to}"},
-                                  {"MIN": "${item.min}"}
+                                  {"AST": "${item.playerInfo.ast}"},
+                                  {"TO": "${item.playerInfo.to}"},
+                                  {"MIN": "${item.playerInfo.min}"}
                                 ]);
                               }
                               return MtInkwell(
@@ -199,7 +206,7 @@ class GameLeaderWidget extends StatelessWidget {
                                   Get.toNamed(
                                     RouteNames.picksPlayerDetail,
                                     arguments: PlayerDetailPageArguments(
-                                        item.playerId),
+                                        item.playerInfo.playerId),
                                   );
                                 },
                                 child: Container(
@@ -212,33 +219,17 @@ class GameLeaderWidget extends StatelessWidget {
                                   child: Row(
                                     children: [
                                       13.hGap,
-                                      Stack(
-                                        children: [
-                                          PlayerAvatarWidget(
-                                            width: 73.w,
-                                            height: 93.w,
-                                            radius: 9.w,
-                                            playerId: item.playerId,
-                                            backgroundColor: AppColors.cD9D9D9,
-                                          ),
-                                          Positioned(
-                                              top: 4.w,
-                                              right: 4.w,
-                                              child: Container(
-                                                height: 16.w,
-                                                width: 16.w,
-                                                decoration: BoxDecoration(
-                                                    color: AppColors.cFFFFFF,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            4.w)),
-                                                child: IconWidget(
-                                                  iconWidth: 9.w,
-                                                  icon: Assets.iconUiIconRead,
-                                                  iconColor: AppColors.c000000,
-                                                ),
-                                              ))
-                                        ],
+                                      PlayerCard(
+                                        width: 73.w,
+                                        height: 93.w,
+                                        playerId: item.playerInfo.playerId,
+                                        grade: Utils.getPlayBaseInfo(
+                                                item.playerInfo.playerId)
+                                            .grade,
+                                        level:
+                                            controller.getMvpBreakThroughGrade(
+                                                item.teamInfo.teamId,
+                                                item.playerInfo.playerId),
                                       ),
                                       13.hGap,
                                       Expanded(
@@ -301,11 +292,41 @@ class GameLeaderWidget extends StatelessWidget {
                                           )
                                         ],
                                       )),
-                                      IconWidget(
-                                        iconWidth: 8.w,
-                                        icon: Assets
-                                            .commonUiCommonIconSystemJumpto,
-                                        iconColor: AppColors.c000000,
+                                      SizedBox(
+                                        width: 30.w,
+                                        child: Stack(
+                                          children: [
+                                            Positioned(
+                                                top: 23.w,
+                                                child: Container(
+                                                  width: 21.w,
+                                                  height: 21.w,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.5.w),
+                                                      border: Border.all(
+                                                          width: 1.w,
+                                                          color: item.color)),
+                                                  child: ImageWidget(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.5.w),
+                                                      url: Utils.getAvaterUrl(
+                                                          controller
+                                                              .getBattleTeam(
+                                                                  item.teamInfo
+                                                                      .teamId)
+                                                              .teamLogo)),
+                                                )),
+                                            IconWidget(
+                                              iconWidth: 8.w,
+                                              icon: Assets
+                                                  .commonUiCommonIconSystemJumpto,
+                                              iconColor: AppColors.c000000,
+                                            ),
+                                          ],
+                                        ),
                                       )
                                     ],
                                   ),

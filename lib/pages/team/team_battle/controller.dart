@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:arm_chair_quaterback/common/entities/competition_venue_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/game_event_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_start_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/web_socket/web_socket_entity.dart';
@@ -10,8 +8,7 @@ import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/apis.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
-import 'package:arm_chair_quaterback/common/net/apis/team.dart';
-import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
@@ -103,7 +100,7 @@ class TeamBattleController extends GetxController
         _timer?.cancel();
         if (result.serviceId == Api.wsJazminError && step.value == 1) {
           print('result.serviceId--${result.serviceId}--:${result.payload}');
-          EasyLoading.showToast("MATCH FAILED");
+          ErrorUtils.toast(result.payload);
           Get.back();
           return;
         }
@@ -126,6 +123,7 @@ class TeamBattleController extends GetxController
         }
       });
     }, onError: (e) {
+      ErrorUtils.toast(e);
       Get.back();
     });
 

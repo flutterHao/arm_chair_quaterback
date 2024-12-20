@@ -607,17 +607,13 @@ class JsonConvert {
       return data.map<PkEventUpdatedEntity>((Map<String, dynamic> e) =>
           PkEventUpdatedEntity.fromJson(e)).toList() as M;
     }
-    if (<PkEventUpdatedAwayInfo>[] is M) {
-      return data.map<PkEventUpdatedAwayInfo>((Map<String, dynamic> e) =>
-          PkEventUpdatedAwayInfo.fromJson(e)).toList() as M;
+    if (<PkEventUpdatedTeamInfo>[] is M) {
+      return data.map<PkEventUpdatedTeamInfo>((Map<String, dynamic> e) =>
+          PkEventUpdatedTeamInfo.fromJson(e)).toList() as M;
     }
     if (<PkEventUpdatedPlayerInfos>[] is M) {
       return data.map<PkEventUpdatedPlayerInfos>((Map<String, dynamic> e) =>
           PkEventUpdatedPlayerInfos.fromJson(e)).toList() as M;
-    }
-    if (<PkEventUpdatedHomeInfo>[] is M) {
-      return data.map<PkEventUpdatedHomeInfo>((Map<String, dynamic> e) =>
-          PkEventUpdatedHomeInfo.fromJson(e)).toList() as M;
     }
     if (<PkPlayerUpdatedEntity>[] is M) {
       return data.map<PkPlayerUpdatedEntity>((Map<String, dynamic> e) =>
@@ -1044,9 +1040,8 @@ class JsonConvertClassCollection {
     (NewsListDetail).toString(): NewsListDetail.fromJson,
     (PickTypeEntity).toString(): PickTypeEntity.fromJson,
     (PkEventUpdatedEntity).toString(): PkEventUpdatedEntity.fromJson,
-    (PkEventUpdatedAwayInfo).toString(): PkEventUpdatedAwayInfo.fromJson,
+    (PkEventUpdatedTeamInfo).toString(): PkEventUpdatedTeamInfo.fromJson,
     (PkEventUpdatedPlayerInfos).toString(): PkEventUpdatedPlayerInfos.fromJson,
-    (PkEventUpdatedHomeInfo).toString(): PkEventUpdatedHomeInfo.fromJson,
     (PkPlayerUpdatedEntity).toString(): PkPlayerUpdatedEntity.fromJson,
     (PkPlayerUpdatedPlayers).toString(): PkPlayerUpdatedPlayers.fromJson,
     (PkResultUpdatedEntity).toString(): PkResultUpdatedEntity.fromJson,

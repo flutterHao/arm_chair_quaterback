@@ -20,6 +20,7 @@ import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/wi
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/quarter_score/quarter_score_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/team_stat/team_stats_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/win_rate/win_rate_widget.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/open_box/small_player_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -102,7 +103,8 @@ class GameOverWidget extends GetView<GameOverController> {
                                   teamBattleV2Controller.gameLeaderController,
                               title: "KEY PLAYERS",
                             ),
-                            WinRateWidget(teamBattleV2Controller.winRateController),
+                            WinRateWidget(
+                                teamBattleV2Controller.winRateController),
                             TeamStatsWidget(
                               controller:
                                   teamBattleV2Controller.teamStatsController,
@@ -148,6 +150,8 @@ class GameOverWidget extends GetView<GameOverController> {
       }
       PkResultUpdatedPlayerResults pkResultUpdatedPlayer =
           controller.getMvpInfo()!;
+      var breakThroughGrade = controller.getMvpBreakThroughGrade();
+      print('breakThroughGrade:$breakThroughGrade');
       Widget parent({required Widget child}) {
         return Container(
           height: 165.w,
@@ -185,19 +189,9 @@ class GameOverWidget extends GetView<GameOverController> {
               Row(
                 children: [
                   17.hGap,
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(9.w),
-                        border:
-                            Border.all(color: AppColors.c000000, width: 5.w)),
-                    child: ImageWidget(
-                      url: Utils.getPlayUrl(pkResultUpdatedPlayer.playerId),
-                      imageFailedPath: Assets.iconUiDefault06,
-                      width: 88.w,
-                      borderRadius: BorderRadius.circular(9.w),
-                      height: 126.w,
-                    ),
-                  ),
+                  SmallPlayerCard(
+                      playerId: pkResultUpdatedPlayer.playerId,
+                      breakThroughGrade: breakThroughGrade),
                   15.hGap,
                   Expanded(
                     child: Column(
@@ -444,18 +438,9 @@ class GameOverWidget extends GetView<GameOverController> {
                   ),
                 ),
                 15.hGap,
-                Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(9.w),
-                      border: Border.all(color: AppColors.c000000, width: 5.w)),
-                  child: ImageWidget(
-                    url: Utils.getPlayUrl(pkResultUpdatedPlayer.playerId),
-                    imageFailedPath: Assets.iconUiDefault06,
-                    width: 88.w,
-                    borderRadius: BorderRadius.circular(9.w),
-                    height: 126.w,
-                  ),
-                ),
+                SmallPlayerCard(
+                    playerId: pkResultUpdatedPlayer.playerId,
+                    breakThroughGrade: breakThroughGrade),
                 17.hGap,
               ],
             ),
@@ -470,7 +455,7 @@ class GameOverWidget extends GetView<GameOverController> {
       alignment: Alignment.center,
       children: [
         ///winner旗帜
-        winnerBg(true,context),
+        winnerBg(true, context),
 
         ///WINNER：文字
         winnerText(true),
@@ -534,7 +519,9 @@ class GameOverWidget extends GetView<GameOverController> {
                   Expanded(
                     child: Center(
                       child: AnimatedNum(
-                        number: controller.moneyAnimationEnd.value?controller.getMoneyCount():0,
+                        number: controller.moneyAnimationEnd.value
+                            ? controller.getMoneyCount()
+                            : 0,
                         isMoney: true,
                         milliseconds: 300,
                         textStyle: 14.w5(
@@ -722,7 +709,7 @@ class GameOverWidget extends GetView<GameOverController> {
         }));
   }
 
-  Obx winnerBg(bool isLeft,BuildContext context) {
+  Obx winnerBg(bool isLeft, BuildContext context) {
     return Obx(() {
       return AnimatedPositioned(
           top: controller.startObs.value ? -10.w : -208.w,
@@ -732,7 +719,7 @@ class GameOverWidget extends GetView<GameOverController> {
           onEnd: () {
             print('AnimatedPositioned---onEnd----');
             Future.delayed(const Duration(milliseconds: 500), () {
-              if(context.mounted) {
+              if (context.mounted) {
                 controller.initCup();
               }
             });
@@ -756,7 +743,7 @@ class GameOverWidget extends GetView<GameOverController> {
       alignment: Alignment.center,
       children: [
         ///winner旗帜
-        winnerBg(false,context),
+        winnerBg(false, context),
 
         ///WINNER：文字
         winnerText(false),
@@ -808,11 +795,11 @@ class GameOverWidget extends GetView<GameOverController> {
     }));
   }
 
-  Positioned loserCups(bool isLeft) {
+  Positioned loserCups(bool isLeftWin) {
     return Positioned(
         top: 63.w,
-        right: isLeft ? 19.w : null,
-        left: !isLeft ? 19.w : null,
+        right: isLeftWin ? 19.w : null,
+        left: !isLeftWin ? 19.w : null,
         child: Obx(() {
           return HeartbeatWidget(
             onEnd: () {
@@ -852,7 +839,7 @@ class GameOverWidget extends GetView<GameOverController> {
                   ),
                   3.hGap,
                   Text(
-                    "-${controller.cup.value.abs()}",
+                    "-${!isLeftWin && controller.leftZero ? 0 : controller.cup.value.abs()}",
                     style: 16.w5(
                         color: AppColors.cF2F2F2,
                         height: 1,

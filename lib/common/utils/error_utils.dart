@@ -26,18 +26,28 @@ class ErrorUtils {
     }
     var str = _DEFAULTERRORSTRING;
     if (e is DioException) {
-      var result = _getResult(e);
+      var result = _getResultByDioException(e);
+      str = _getErrorDesc((result?.code ?? -1).toString());
+    }else if(e is Map){
+      var result = _getResultByMap(e);
       str = _getErrorDesc((result?.code ?? -1).toString());
     }
     EasyLoading.showToast(str);
   }
 
-  static Result? _getResult(DioException e) {
+  static Result? _getResultByDioException(DioException e) {
     try {
       var data = e.response?.data is String
           ? json.decode(e.response?.data)
           : e.response?.data;
       return Result.fromJson(data as Map<String, dynamic>);
+    } catch (e) {
+      return null;
+    }
+  }
+  static Result? _getResultByMap(Map e) {
+    try {
+      return Result.fromJson(e as Map<String, dynamic>);
     } catch (e) {
       return null;
     }

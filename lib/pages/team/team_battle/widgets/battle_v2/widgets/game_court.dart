@@ -36,7 +36,7 @@ class GameCourtWidget extends GetView<TeamBattleV2Controller> {
     });
   }
 
-  SizedBox buildBasketballCourt(BuildContext context) {
+  Widget buildBasketballCourt(BuildContext context) {
     return SizedBox(
       height: 156.w,
       width: MediaQuery.of(context).size.width,
@@ -236,7 +236,27 @@ class GameCourtWidget extends GetView<TeamBattleV2Controller> {
               ],
             ),
           ),
-
+          /// 高光时刻气泡
+          Positioned(
+            top: 0.w,
+            left: 9.w,
+            right: 9.w,
+            bottom: 0,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                GetBuilder<TeamBattleV2Controller>(
+                    id: TeamBattleV2Controller.idHighLightEvent,
+                    builder: (logic) {
+                      GameEvent? event = controller.highLightEvent;
+                      if (event == null) {
+                        return const SizedBox.shrink();
+                      }
+                      return HighLightWidget(event: event!);
+                    }),
+              ],
+            ),
+          ),
           /// 篮球轨迹线
           Obx(() {
             controller.shootOffset.value;
@@ -278,30 +298,7 @@ class GameCourtWidget extends GetView<TeamBattleV2Controller> {
           //   ),
           // ),
 
-          /// 高光时刻气泡
-          Positioned(
-            top: 0.w,
-            left: 9.w,
-            right: 9.w,
-            child: Container(
-              width: 357.w,
-              height: 127.w,
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  GetBuilder<TeamBattleV2Controller>(
-                      id: TeamBattleV2Controller.idHighLightEvent,
-                      builder: (logic) {
-                        GameEvent? event = controller.highLightEvent;
-                        if (event == null) {
-                          return const SizedBox.shrink();
-                        }
-                        return HighLightWidget(event: event!);
-                      }),
-                ],
-              ),
-            ),
-          ),
+
         ],
       ),
     );

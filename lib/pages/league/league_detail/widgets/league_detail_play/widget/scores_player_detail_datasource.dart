@@ -50,6 +50,7 @@ class ScoresPlayerDetailDatasource extends DataGridSource{
   DataGridRowAdapter? buildRow(DataGridRow row) {
     List<Widget> cells = row.getCells().map((e){
       if(e.columnName == "id"){
+        var baseInfo = Utils.getPlayBaseInfo(e.value);
         return Container(
           alignment: Alignment.centerLeft,
           decoration: const BoxDecoration(
@@ -59,11 +60,31 @@ class ScoresPlayerDetailDatasource extends DataGridSource{
             ))
           ),
           padding: EdgeInsets.only(left: 19.w,right: 9.w),
-            child: Text(Utils.getPlayBaseInfo(e.value).ename,maxLines: 2,style: TextStyle(
-              fontSize: 12.sp,
-                color: AppColors.c000000,fontFamily: FontFamily.fRobotoRegular,
-              decoration: TextDecoration.underline
-            ),));
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    baseInfo.ename,
+                    maxLines: 1,
+                    style: TextStyle(
+                        fontSize: 12.sp,
+                        color: AppColors.c000000,
+                        overflow: TextOverflow.ellipsis,
+                        fontFamily: FontFamily.fRobotoRegular,
+                        decoration: TextDecoration.underline),
+                  ),
+                ),
+                9.hGap,
+                if (baseInfo.number > 0)
+                  Text(
+                    "#${baseInfo.number}",
+                    style: 12.w4(
+                        color: AppColors.cB3B3B3,
+                        height: 1,
+                        fontFamily: FontFamily.fRobotoRegular),
+                  )
+              ],
+            ));
       }
       return FittedBox(
         fit: BoxFit.scaleDown,

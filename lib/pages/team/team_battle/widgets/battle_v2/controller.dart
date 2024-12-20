@@ -514,8 +514,8 @@ class TeamBattleV2Controller extends GetxController
         ((40 - quarterTimeCountDownAnimationController.value.value) +
             (quarter.value - 1) * 40);
     var scoreDiff = (event.homeScore - event.awayScore);
-    var prepareDiff = (event.pkEventUpdatedEntity.homePreparationLevel -
-            event.pkEventUpdatedEntity.awayPreparationLevel)
+    var prepareDiff = (event.pkEventUpdatedEntity.homeCurrentStrength -
+            event.pkEventUpdatedEntity.awayCurrentStrength)
         .abs();
     var random = (t < 15 ? 0 : generateRandomValue(t > 20 ? 20 : t));
     // print('prepareDiff--------:$prepareDiff');

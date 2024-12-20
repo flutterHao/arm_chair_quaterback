@@ -16,8 +16,8 @@ PkEventUpdatedEntity $PkEventUpdatedEntityFromJson(Map<String, dynamic> json) {
   if (awayFuryValue != null) {
     pkEventUpdatedEntity.awayFuryValue = awayFuryValue;
   }
-  final PkEventUpdatedAwayInfo? awayInfo = jsonConvert.convert<
-      PkEventUpdatedAwayInfo>(json['awayInfo']);
+  final PkEventUpdatedTeamInfo? awayInfo = jsonConvert.convert<
+      PkEventUpdatedTeamInfo>(json['awayInfo']);
   if (awayInfo != null) {
     pkEventUpdatedEntity.awayInfo = awayInfo;
   }
@@ -50,8 +50,8 @@ PkEventUpdatedEntity $PkEventUpdatedEntityFromJson(Map<String, dynamic> json) {
   if (homeFuryValue != null) {
     pkEventUpdatedEntity.homeFuryValue = homeFuryValue;
   }
-  final PkEventUpdatedHomeInfo? homeInfo = jsonConvert.convert<
-      PkEventUpdatedHomeInfo>(json['homeInfo']);
+  final PkEventUpdatedTeamInfo? homeInfo = jsonConvert.convert<
+      PkEventUpdatedTeamInfo>(json['homeInfo']);
   if (homeInfo != null) {
     pkEventUpdatedEntity.homeInfo = homeInfo;
   }
@@ -129,6 +129,16 @@ PkEventUpdatedEntity $PkEventUpdatedEntityFromJson(Map<String, dynamic> json) {
   if (homePreparationLevel != null) {
     pkEventUpdatedEntity.homePreparationLevel = homePreparationLevel;
   }
+  final double? awayCurrentStrength = jsonConvert.convert<double>(
+      json['awayCurrentStrength']);
+  if (awayCurrentStrength != null) {
+    pkEventUpdatedEntity.awayCurrentStrength = awayCurrentStrength;
+  }
+  final double? homeCurrentStrength = jsonConvert.convert<double>(
+      json['homeCurrentStrength']);
+  if (homeCurrentStrength != null) {
+    pkEventUpdatedEntity.homeCurrentStrength = homeCurrentStrength;
+  }
   return pkEventUpdatedEntity;
 }
 
@@ -163,6 +173,8 @@ Map<String, dynamic> $PkEventUpdatedEntityToJson(PkEventUpdatedEntity entity) {
   data['useSkillSuccess'] = entity.useSkillSuccess;
   data['awayPreparationLevel'] = entity.awayPreparationLevel;
   data['homePreparationLevel'] = entity.homePreparationLevel;
+  data['awayCurrentStrength'] = entity.awayCurrentStrength;
+  data['homeCurrentStrength'] = entity.homeCurrentStrength;
   return data;
 }
 
@@ -171,14 +183,14 @@ extension PkEventUpdatedEntityExtension on PkEventUpdatedEntity {
     List<dynamic>? alertList,
     int? allGameRound,
     int? awayFuryValue,
-    PkEventUpdatedAwayInfo? awayInfo,
+    PkEventUpdatedTeamInfo? awayInfo,
     List<PkEventUpdatedPlayerInfos>? awayPlayerInfos,
     int? awayScore,
     int? awayStrength,
     int? currRound,
     int? eventId,
     int? homeFuryValue,
-    PkEventUpdatedHomeInfo? homeInfo,
+    PkEventUpdatedTeamInfo? homeInfo,
     List<PkEventUpdatedPlayerInfos>? homePlayerInfos,
     int? homeScore,
     int? homeStrength,
@@ -195,6 +207,8 @@ extension PkEventUpdatedEntityExtension on PkEventUpdatedEntity {
     bool? useSkillSuccess,
     double? awayPreparationLevel,
     double? homePreparationLevel,
+    double? awayCurrentStrength,
+    double? homeCurrentStrength,
   }) {
     return PkEventUpdatedEntity()
       ..alertList = alertList ?? this.alertList
@@ -223,135 +237,136 @@ extension PkEventUpdatedEntityExtension on PkEventUpdatedEntity {
       ..stepId = stepId ?? this.stepId
       ..useSkillSuccess = useSkillSuccess ?? this.useSkillSuccess
       ..awayPreparationLevel = awayPreparationLevel ?? this.awayPreparationLevel
-      ..homePreparationLevel = homePreparationLevel ??
-          this.homePreparationLevel;
+      ..homePreparationLevel = homePreparationLevel ?? this.homePreparationLevel
+      ..awayCurrentStrength = awayCurrentStrength ?? this.awayCurrentStrength
+      ..homeCurrentStrength = homeCurrentStrength ?? this.homeCurrentStrength;
   }
 }
 
-PkEventUpdatedAwayInfo $PkEventUpdatedAwayInfoFromJson(
+PkEventUpdatedTeamInfo $PkEventUpdatedTeamInfoFromJson(
     Map<String, dynamic> json) {
-  final PkEventUpdatedAwayInfo pkEventUpdatedAwayInfo = PkEventUpdatedAwayInfo();
+  final PkEventUpdatedTeamInfo pkEventUpdatedTeamInfo = PkEventUpdatedTeamInfo();
   final int? ast = jsonConvert.convert<int>(json['ast']);
   if (ast != null) {
-    pkEventUpdatedAwayInfo.ast = ast;
+    pkEventUpdatedTeamInfo.ast = ast;
   }
   final int? astPoint = jsonConvert.convert<int>(json['astPoint']);
   if (astPoint != null) {
-    pkEventUpdatedAwayInfo.astPoint = astPoint;
+    pkEventUpdatedTeamInfo.astPoint = astPoint;
   }
   final int? blk = jsonConvert.convert<int>(json['blk']);
   if (blk != null) {
-    pkEventUpdatedAwayInfo.blk = blk;
+    pkEventUpdatedTeamInfo.blk = blk;
   }
   final int? blkPoint = jsonConvert.convert<int>(json['blkPoint']);
   if (blkPoint != null) {
-    pkEventUpdatedAwayInfo.blkPoint = blkPoint;
+    pkEventUpdatedTeamInfo.blkPoint = blkPoint;
   }
   final int? dreb = jsonConvert.convert<int>(json['dreb']);
   if (dreb != null) {
-    pkEventUpdatedAwayInfo.dreb = dreb;
+    pkEventUpdatedTeamInfo.dreb = dreb;
   }
   final int? fga = jsonConvert.convert<int>(json['fga']);
   if (fga != null) {
-    pkEventUpdatedAwayInfo.fga = fga;
+    pkEventUpdatedTeamInfo.fga = fga;
   }
   final int? fgm = jsonConvert.convert<int>(json['fgm']);
   if (fgm != null) {
-    pkEventUpdatedAwayInfo.fgm = fgm;
+    pkEventUpdatedTeamInfo.fgm = fgm;
   }
   final int? fta = jsonConvert.convert<int>(json['fta']);
   if (fta != null) {
-    pkEventUpdatedAwayInfo.fta = fta;
+    pkEventUpdatedTeamInfo.fta = fta;
   }
   final int? ftm = jsonConvert.convert<int>(json['ftm']);
   if (ftm != null) {
-    pkEventUpdatedAwayInfo.ftm = ftm;
+    pkEventUpdatedTeamInfo.ftm = ftm;
   }
   final int? gameId = jsonConvert.convert<int>(json['gameId']);
   if (gameId != null) {
-    pkEventUpdatedAwayInfo.gameId = gameId;
+    pkEventUpdatedTeamInfo.gameId = gameId;
   }
   final int? min = jsonConvert.convert<int>(json['min']);
   if (min != null) {
-    pkEventUpdatedAwayInfo.min = min;
+    pkEventUpdatedTeamInfo.min = min;
   }
   final int? mvpPoint = jsonConvert.convert<int>(json['mvpPoint']);
   if (mvpPoint != null) {
-    pkEventUpdatedAwayInfo.mvpPoint = mvpPoint;
+    pkEventUpdatedTeamInfo.mvpPoint = mvpPoint;
   }
   final int? oreb = jsonConvert.convert<int>(json['oreb']);
   if (oreb != null) {
-    pkEventUpdatedAwayInfo.oreb = oreb;
+    pkEventUpdatedTeamInfo.oreb = oreb;
   }
   final int? pass = jsonConvert.convert<int>(json['pass']);
   if (pass != null) {
-    pkEventUpdatedAwayInfo.pass = pass;
+    pkEventUpdatedTeamInfo.pass = pass;
   }
   final int? pf = jsonConvert.convert<int>(json['pf']);
   if (pf != null) {
-    pkEventUpdatedAwayInfo.pf = pf;
+    pkEventUpdatedTeamInfo.pf = pf;
   }
   final int? playerId = jsonConvert.convert<int>(json['playerId']);
   if (playerId != null) {
-    pkEventUpdatedAwayInfo.playerId = playerId;
+    pkEventUpdatedTeamInfo.playerId = playerId;
   }
   final int? property = jsonConvert.convert<int>(json['property']);
   if (property != null) {
-    pkEventUpdatedAwayInfo.property = property;
+    pkEventUpdatedTeamInfo.property = property;
   }
   final int? pts = jsonConvert.convert<int>(json['pts']);
   if (pts != null) {
-    pkEventUpdatedAwayInfo.pts = pts;
+    pkEventUpdatedTeamInfo.pts = pts;
   }
   final int? ptsPoint = jsonConvert.convert<int>(json['ptsPoint']);
   if (ptsPoint != null) {
-    pkEventUpdatedAwayInfo.ptsPoint = ptsPoint;
+    pkEventUpdatedTeamInfo.ptsPoint = ptsPoint;
   }
   final int? reb = jsonConvert.convert<int>(json['reb']);
   if (reb != null) {
-    pkEventUpdatedAwayInfo.reb = reb;
+    pkEventUpdatedTeamInfo.reb = reb;
   }
   final int? rebPoint = jsonConvert.convert<int>(json['rebPoint']);
   if (rebPoint != null) {
-    pkEventUpdatedAwayInfo.rebPoint = rebPoint;
+    pkEventUpdatedTeamInfo.rebPoint = rebPoint;
   }
   final bool? starter = jsonConvert.convert<bool>(json['starter']);
   if (starter != null) {
-    pkEventUpdatedAwayInfo.starter = starter;
+    pkEventUpdatedTeamInfo.starter = starter;
   }
   final int? starterPos = jsonConvert.convert<int>(json['starterPos']);
   if (starterPos != null) {
-    pkEventUpdatedAwayInfo.starterPos = starterPos;
+    pkEventUpdatedTeamInfo.starterPos = starterPos;
   }
   final int? stl = jsonConvert.convert<int>(json['stl']);
   if (stl != null) {
-    pkEventUpdatedAwayInfo.stl = stl;
+    pkEventUpdatedTeamInfo.stl = stl;
   }
   final int? teamId = jsonConvert.convert<int>(json['teamId']);
   if (teamId != null) {
-    pkEventUpdatedAwayInfo.teamId = teamId;
+    pkEventUpdatedTeamInfo.teamId = teamId;
   }
   final int? tech = jsonConvert.convert<int>(json['tech']);
   if (tech != null) {
-    pkEventUpdatedAwayInfo.tech = tech;
+    pkEventUpdatedTeamInfo.tech = tech;
   }
   final int? threePa = jsonConvert.convert<int>(json['threePa']);
   if (threePa != null) {
-    pkEventUpdatedAwayInfo.threePa = threePa;
+    pkEventUpdatedTeamInfo.threePa = threePa;
   }
   final int? threePm = jsonConvert.convert<int>(json['threePm']);
   if (threePm != null) {
-    pkEventUpdatedAwayInfo.threePm = threePm;
+    pkEventUpdatedTeamInfo.threePm = threePm;
   }
   final int? to = jsonConvert.convert<int>(json['to']);
   if (to != null) {
-    pkEventUpdatedAwayInfo.to = to;
+    pkEventUpdatedTeamInfo.to = to;
   }
-  return pkEventUpdatedAwayInfo;
+  return pkEventUpdatedTeamInfo;
 }
 
-Map<String, dynamic> $PkEventUpdatedAwayInfoToJson(
-    PkEventUpdatedAwayInfo entity) {
+Map<String, dynamic> $PkEventUpdatedTeamInfoToJson(
+    PkEventUpdatedTeamInfo entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['ast'] = entity.ast;
   data['astPoint'] = entity.astPoint;
@@ -385,8 +400,8 @@ Map<String, dynamic> $PkEventUpdatedAwayInfoToJson(
   return data;
 }
 
-extension PkEventUpdatedAwayInfoExtension on PkEventUpdatedAwayInfo {
-  PkEventUpdatedAwayInfo copyWith({
+extension PkEventUpdatedTeamInfoExtension on PkEventUpdatedTeamInfo {
+  PkEventUpdatedTeamInfo copyWith({
     int? ast,
     int? astPoint,
     int? blk,
@@ -417,7 +432,7 @@ extension PkEventUpdatedAwayInfoExtension on PkEventUpdatedAwayInfo {
     int? threePm,
     int? to,
   }) {
-    return PkEventUpdatedAwayInfo()
+    return PkEventUpdatedTeamInfo()
       ..ast = ast ?? this.ast
       ..astPoint = astPoint ?? this.astPoint
       ..blk = blk ?? this.blk
@@ -632,228 +647,6 @@ extension PkEventUpdatedPlayerInfosExtension on PkEventUpdatedPlayerInfos {
       ..reb = reb ?? this.reb
       ..skillEffectRound = skillEffectRound ?? this.skillEffectRound
       ..stl = stl ?? this.stl
-      ..tech = tech ?? this.tech
-      ..threePa = threePa ?? this.threePa
-      ..threePm = threePm ?? this.threePm
-      ..to = to ?? this.to;
-  }
-}
-
-PkEventUpdatedHomeInfo $PkEventUpdatedHomeInfoFromJson(
-    Map<String, dynamic> json) {
-  final PkEventUpdatedHomeInfo pkEventUpdatedHomeInfo = PkEventUpdatedHomeInfo();
-  final int? ast = jsonConvert.convert<int>(json['ast']);
-  if (ast != null) {
-    pkEventUpdatedHomeInfo.ast = ast;
-  }
-  final int? astPoint = jsonConvert.convert<int>(json['astPoint']);
-  if (astPoint != null) {
-    pkEventUpdatedHomeInfo.astPoint = astPoint;
-  }
-  final int? blk = jsonConvert.convert<int>(json['blk']);
-  if (blk != null) {
-    pkEventUpdatedHomeInfo.blk = blk;
-  }
-  final int? blkPoint = jsonConvert.convert<int>(json['blkPoint']);
-  if (blkPoint != null) {
-    pkEventUpdatedHomeInfo.blkPoint = blkPoint;
-  }
-  final int? dreb = jsonConvert.convert<int>(json['dreb']);
-  if (dreb != null) {
-    pkEventUpdatedHomeInfo.dreb = dreb;
-  }
-  final int? fga = jsonConvert.convert<int>(json['fga']);
-  if (fga != null) {
-    pkEventUpdatedHomeInfo.fga = fga;
-  }
-  final int? fgm = jsonConvert.convert<int>(json['fgm']);
-  if (fgm != null) {
-    pkEventUpdatedHomeInfo.fgm = fgm;
-  }
-  final int? fta = jsonConvert.convert<int>(json['fta']);
-  if (fta != null) {
-    pkEventUpdatedHomeInfo.fta = fta;
-  }
-  final int? ftm = jsonConvert.convert<int>(json['ftm']);
-  if (ftm != null) {
-    pkEventUpdatedHomeInfo.ftm = ftm;
-  }
-  final int? gameId = jsonConvert.convert<int>(json['gameId']);
-  if (gameId != null) {
-    pkEventUpdatedHomeInfo.gameId = gameId;
-  }
-  final int? min = jsonConvert.convert<int>(json['min']);
-  if (min != null) {
-    pkEventUpdatedHomeInfo.min = min;
-  }
-  final int? mvpPoint = jsonConvert.convert<int>(json['mvpPoint']);
-  if (mvpPoint != null) {
-    pkEventUpdatedHomeInfo.mvpPoint = mvpPoint;
-  }
-  final int? oreb = jsonConvert.convert<int>(json['oreb']);
-  if (oreb != null) {
-    pkEventUpdatedHomeInfo.oreb = oreb;
-  }
-  final int? pass = jsonConvert.convert<int>(json['pass']);
-  if (pass != null) {
-    pkEventUpdatedHomeInfo.pass = pass;
-  }
-  final int? pf = jsonConvert.convert<int>(json['pf']);
-  if (pf != null) {
-    pkEventUpdatedHomeInfo.pf = pf;
-  }
-  final int? playerId = jsonConvert.convert<int>(json['playerId']);
-  if (playerId != null) {
-    pkEventUpdatedHomeInfo.playerId = playerId;
-  }
-  final int? property = jsonConvert.convert<int>(json['property']);
-  if (property != null) {
-    pkEventUpdatedHomeInfo.property = property;
-  }
-  final int? pts = jsonConvert.convert<int>(json['pts']);
-  if (pts != null) {
-    pkEventUpdatedHomeInfo.pts = pts;
-  }
-  final int? ptsPoint = jsonConvert.convert<int>(json['ptsPoint']);
-  if (ptsPoint != null) {
-    pkEventUpdatedHomeInfo.ptsPoint = ptsPoint;
-  }
-  final int? reb = jsonConvert.convert<int>(json['reb']);
-  if (reb != null) {
-    pkEventUpdatedHomeInfo.reb = reb;
-  }
-  final int? rebPoint = jsonConvert.convert<int>(json['rebPoint']);
-  if (rebPoint != null) {
-    pkEventUpdatedHomeInfo.rebPoint = rebPoint;
-  }
-  final bool? starter = jsonConvert.convert<bool>(json['starter']);
-  if (starter != null) {
-    pkEventUpdatedHomeInfo.starter = starter;
-  }
-  final int? starterPos = jsonConvert.convert<int>(json['starterPos']);
-  if (starterPos != null) {
-    pkEventUpdatedHomeInfo.starterPos = starterPos;
-  }
-  final int? stl = jsonConvert.convert<int>(json['stl']);
-  if (stl != null) {
-    pkEventUpdatedHomeInfo.stl = stl;
-  }
-  final int? teamId = jsonConvert.convert<int>(json['teamId']);
-  if (teamId != null) {
-    pkEventUpdatedHomeInfo.teamId = teamId;
-  }
-  final int? tech = jsonConvert.convert<int>(json['tech']);
-  if (tech != null) {
-    pkEventUpdatedHomeInfo.tech = tech;
-  }
-  final int? threePa = jsonConvert.convert<int>(json['threePa']);
-  if (threePa != null) {
-    pkEventUpdatedHomeInfo.threePa = threePa;
-  }
-  final int? threePm = jsonConvert.convert<int>(json['threePm']);
-  if (threePm != null) {
-    pkEventUpdatedHomeInfo.threePm = threePm;
-  }
-  final int? to = jsonConvert.convert<int>(json['to']);
-  if (to != null) {
-    pkEventUpdatedHomeInfo.to = to;
-  }
-  return pkEventUpdatedHomeInfo;
-}
-
-Map<String, dynamic> $PkEventUpdatedHomeInfoToJson(
-    PkEventUpdatedHomeInfo entity) {
-  final Map<String, dynamic> data = <String, dynamic>{};
-  data['ast'] = entity.ast;
-  data['astPoint'] = entity.astPoint;
-  data['blk'] = entity.blk;
-  data['blkPoint'] = entity.blkPoint;
-  data['dreb'] = entity.dreb;
-  data['fga'] = entity.fga;
-  data['fgm'] = entity.fgm;
-  data['fta'] = entity.fta;
-  data['ftm'] = entity.ftm;
-  data['gameId'] = entity.gameId;
-  data['min'] = entity.min;
-  data['mvpPoint'] = entity.mvpPoint;
-  data['oreb'] = entity.oreb;
-  data['pass'] = entity.pass;
-  data['pf'] = entity.pf;
-  data['playerId'] = entity.playerId;
-  data['property'] = entity.property;
-  data['pts'] = entity.pts;
-  data['ptsPoint'] = entity.ptsPoint;
-  data['reb'] = entity.reb;
-  data['rebPoint'] = entity.rebPoint;
-  data['starter'] = entity.starter;
-  data['starterPos'] = entity.starterPos;
-  data['stl'] = entity.stl;
-  data['teamId'] = entity.teamId;
-  data['tech'] = entity.tech;
-  data['threePa'] = entity.threePa;
-  data['threePm'] = entity.threePm;
-  data['to'] = entity.to;
-  return data;
-}
-
-extension PkEventUpdatedHomeInfoExtension on PkEventUpdatedHomeInfo {
-  PkEventUpdatedHomeInfo copyWith({
-    int? ast,
-    int? astPoint,
-    int? blk,
-    int? blkPoint,
-    int? dreb,
-    int? fga,
-    int? fgm,
-    int? fta,
-    int? ftm,
-    int? gameId,
-    int? min,
-    int? mvpPoint,
-    int? oreb,
-    int? pass,
-    int? pf,
-    int? playerId,
-    int? property,
-    int? pts,
-    int? ptsPoint,
-    int? reb,
-    int? rebPoint,
-    bool? starter,
-    int? starterPos,
-    int? stl,
-    int? teamId,
-    int? tech,
-    int? threePa,
-    int? threePm,
-    int? to,
-  }) {
-    return PkEventUpdatedHomeInfo()
-      ..ast = ast ?? this.ast
-      ..astPoint = astPoint ?? this.astPoint
-      ..blk = blk ?? this.blk
-      ..blkPoint = blkPoint ?? this.blkPoint
-      ..dreb = dreb ?? this.dreb
-      ..fga = fga ?? this.fga
-      ..fgm = fgm ?? this.fgm
-      ..fta = fta ?? this.fta
-      ..ftm = ftm ?? this.ftm
-      ..gameId = gameId ?? this.gameId
-      ..min = min ?? this.min
-      ..mvpPoint = mvpPoint ?? this.mvpPoint
-      ..oreb = oreb ?? this.oreb
-      ..pass = pass ?? this.pass
-      ..pf = pf ?? this.pf
-      ..playerId = playerId ?? this.playerId
-      ..property = property ?? this.property
-      ..pts = pts ?? this.pts
-      ..ptsPoint = ptsPoint ?? this.ptsPoint
-      ..reb = reb ?? this.reb
-      ..rebPoint = rebPoint ?? this.rebPoint
-      ..starter = starter ?? this.starter
-      ..starterPos = starterPos ?? this.starterPos
-      ..stl = stl ?? this.stl
-      ..teamId = teamId ?? this.teamId
       ..tech = tech ?? this.tech
       ..threePa = threePa ?? this.threePa
       ..threePm = threePm ?? this.threePm
