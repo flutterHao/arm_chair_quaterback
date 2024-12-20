@@ -228,7 +228,7 @@ class GameLeaderWidget extends StatelessWidget {
                                             .grade,
                                         level:
                                             controller.getMvpBreakThroughGrade(
-                                                item.teamInfo.teamId,
+                                                item.teamId,
                                                 item.playerInfo.playerId),
                                       ),
                                       13.hGap,
@@ -315,8 +315,7 @@ class GameLeaderWidget extends StatelessWidget {
                                                       url: Utils.getAvaterUrl(
                                                           controller
                                                               .getBattleTeam(
-                                                                  item.teamInfo
-                                                                      .teamId)
+                                                                  item.teamId)
                                                               .teamLogo)),
                                                 )),
                                             IconWidget(
