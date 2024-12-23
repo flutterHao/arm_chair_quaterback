@@ -127,10 +127,10 @@ class GameOverWidget extends GetView<GameOverController> {
 
                     /// 位移动画视图
                     return AnimatedPositioned(
-                        top: controller.mvpObs.value ? 219.w : 812.h,
+                        top: controller.mvpObs.value ? 219.w : 2500.h,
                         left: 0,
                         right: 0,
-                        duration: const Duration(milliseconds: 300),
+                        duration: const Duration(milliseconds: 500),
                         onEnd: () {
                           controller.onMvpAnimationEndObs.value = true;
                         },
@@ -559,7 +559,7 @@ class GameOverWidget extends GetView<GameOverController> {
   Obx gift(bool isLeft) {
     return Obx(() {
       return AnimatedPositioned(
-          top: controller.giftObs.value ? 100.w : null,
+          top: controller.giftObs.value ? 103.w : null,
           left: isLeft
               ? controller.giftObs.value
                   ? 44.w
@@ -696,7 +696,7 @@ class GameOverWidget extends GetView<GameOverController> {
                   ),
                   3.hGap,
                   Text(
-                    "+${controller.cup.value.abs()}",
+                    "+${(isLeft ? controller.leftCup.value : controller.rightCup.value).abs()}",
                     style: 16.w5(
                         color: AppColors.cF2F2F2,
                         height: 1,
@@ -801,16 +801,26 @@ class GameOverWidget extends GetView<GameOverController> {
         right: isLeftWin ? 19.w : null,
         left: !isLeftWin ? 19.w : null,
         child: Obx(() {
-          var value2 = controller.cup.value;
+          controller.rightCup.value;
+          controller.leftCup.value;
+          var value2 =
+              isLeftWin ? controller.rightCup.value : controller.leftCup.value;
           return HeartbeatWidget(
             onEnd: () {
-              if (value2 == controller.cupNum) {
+              if (isLeftWin
+                  ? controller.leftCup.value == controller.leftCupNum
+                  : controller.rightCup.value == controller.rightCupNum) {
                 Future.delayed(const Duration(milliseconds: 500), () {
                   controller.giftScaleObs.value = true;
                 });
                 return;
               }
-              value2 = value2 + 1;
+              print('----------vvvv-------');
+              if (isLeftWin) {
+                controller.leftCup.value = controller.leftCup.value + 1;
+              } else {
+                controller.rightCup.value = controller.rightCup.value + 1;
+              }
             },
             child: Container(
               width: 131.w,
@@ -840,7 +850,7 @@ class GameOverWidget extends GetView<GameOverController> {
                   ),
                   3.hGap,
                   Text(
-                    "-${!isLeftWin && controller.leftZero ? 0 : value2.abs()}",
+                    "-${value2.abs()}",
                     style: 16.w5(
                         color: AppColors.cF2F2F2,
                         height: 1,

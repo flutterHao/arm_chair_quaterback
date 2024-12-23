@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/cup_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
@@ -24,7 +25,8 @@ class GameOverController extends GetxController {
 
   final BuildContext context;
   var startObs = false.obs;
-  var cup = RxInt(0);
+  var leftCup = RxInt(0);
+  var rightCup = RxInt(0);
   var giftScaleObs = false.obs;
   var giftObs = false.obs;
   var opacityObs = false.obs;
@@ -34,13 +36,14 @@ class GameOverController extends GetxController {
   var moneyAnimationEnd = false.obs;
   var onMvpAnimationEndObs = false.obs;
 
-  var cupNum = 0;
-  var leftZero = false;
+  var leftCupNum = -1;
+  var rightCupNum = -1;
 
   @override
   void onReady() {
     super.onReady();
     startObs.value = true;
+    print('=========onReady');
   }
 
   PkResultUpdatedPlayerResults? getMvpInfo() {
@@ -83,18 +86,18 @@ class GameOverController extends GetxController {
   }
 
   void initCup() {
-    var beforeCup = getBeforeCup();
-    var currentCup = getCurrentCup();
-    var result = (currentCup - beforeCup).abs();
+    var beforeHomeCup = getHomeTeam().cup;
+    var currentHomeCup = getHomeCurrentCup();
+    var result = (currentHomeCup - beforeHomeCup).abs();
+    leftCupNum = result;
+    leftCup.value = leftCupNum>0?1:0;
+    var beforeAwayCup = getAwayTeam().cup;
+    var currentAwayCup = getAwayCurrentCup();
+    rightCupNum = (currentAwayCup - beforeAwayCup).abs();
+    rightCup.value = rightCupNum>0?1:0;
+    print('leftCupNum:$leftCupNum,,,,$rightCupNum');
     if (result != 0) {
-      cupNum = result;
-    } else {
-      cupNum = (getCurrentCupDefine()?.loseCup ?? 0).toInt();
-      leftZero = true;
-    }
-    cup.value = 1;
-    if (result != 0) {
-      var cupPercent = getCupPercent();
+      var cupPercent = getHomeCupPercent();
       showTopToastDialog(
           child: Row(
         children: [
@@ -156,7 +159,7 @@ class GameOverController extends GetxController {
               Row(
                 children: [
                   Text(
-                    "$beforeCup",
+                    "$beforeHomeCup",
                     style: 16.w4(
                         color: AppColors.c000000,
                         height: 1,
@@ -185,14 +188,14 @@ class GameOverController extends GetxController {
                   ),
                   7.hGap,
                   Text(
-                    "$currentCup",
+                    "$currentHomeCup",
                     style: 16.w5(
                         color: AppColors.c000000,
                         height: 1,
                         fontFamily: FontFamily.fRobotoMedium),
                   ),
                   5.hGap,
-                  if (currentCup != beforeCup)
+                  if (currentHomeCup != beforeHomeCup)
                     Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -200,7 +203,7 @@ class GameOverController extends GetxController {
                           iconWidth: 8.w,
                           icon: Assets.commonUiCommonIconSystemArrow,
                           iconColor: AppColors.c000000,
-                          rotateAngle: currentCup > beforeCup ? -90 : 90,
+                          rotateAngle: currentHomeCup > beforeHomeCup ? -90 : 90,
                         )
                       ],
                     )
@@ -213,9 +216,14 @@ class GameOverController extends GetxController {
     }
   }
 
-  int getBeforeCup() {
-    var beforeCup = Get.find<TeamBattleController>().teamInfoEntity.cup;
-    return beforeCup;
+  BattleTeam getHomeTeam() {
+    var homeTeam = Get.find<TeamBattleController>().battleEntity.homeTeam;
+    return homeTeam;
+  }
+
+  BattleTeam getAwayTeam() {
+    var awayTeam = Get.find<TeamBattleController>().battleEntity.awayTeam;
+    return awayTeam;
   }
 
   bool isFull() {
@@ -236,8 +244,8 @@ class GameOverController extends GetxController {
         0;
   }
 
-  double getCupPercent() {
-    int currentCup = getCurrentCup();
+  double getHomeCupPercent() {
+    int currentCup = getHomeCurrentCup();
     var where = CacheApi.cupDefineList.firstWhereOrNull(
         (e) => e.getCupMax() > currentCup && e.getCupMin() <= currentCup);
     if (where == null) {
@@ -247,18 +255,34 @@ class GameOverController extends GetxController {
     return (currentCup / cupMax).handlerNaNInfinity().toDouble();
   }
 
-  CupDefineEntity? getCurrentCupDefine() {
-    int currentCup = getCurrentCup();
+  CupDefineEntity? getHomeCurrentCupDefine() {
+    int id = getHomeTeam().cupRankId;
     var where = CacheApi.cupDefineList.firstWhereOrNull(
-        (e) => e.getCupMax() > currentCup && e.getCupMin() <= currentCup);
+        (e) => e.cupNumId == id);
     return where;
   }
 
-  int getCurrentCup() {
+  CupDefineEntity? getAwayCurrentCupDefine() {
+    int id = getAwayTeam().cupRankId;
+    var where = CacheApi.cupDefineList.firstWhereOrNull(
+            (e) => e.cupNumId == id);
+    return where;
+  }
+
+  int getHomeCurrentCup() {
     var currentCup = Get.find<TeamBattleV2Controller>()
             .pkResultUpdatedEntity
             ?.homeTeamResult
             .cup ??
+        0;
+    return currentCup;
+  }
+
+  int getAwayCurrentCup() {
+    var currentCup = Get.find<TeamBattleV2Controller>()
+        .pkResultUpdatedEntity
+        ?.awayTeamResult
+        .cup ??
         0;
     return currentCup;
   }

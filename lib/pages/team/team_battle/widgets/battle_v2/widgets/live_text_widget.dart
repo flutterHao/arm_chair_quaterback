@@ -21,9 +21,10 @@ import 'package:get/get.dart';
 ///created at 2024/12/11/10:58
 
 class LiveTextWidget extends StatefulWidget {
-  const LiveTextWidget({super.key, this.isGameOverStatus = false});
+  const LiveTextWidget({super.key, this.isGameOverStatus = false, this.needTopMargin = true});
 
   final bool isGameOverStatus;
+  final bool needTopMargin;
 
   @override
   State<LiveTextWidget> createState() => _LiveTextWidgetState();
@@ -58,7 +59,7 @@ class _LiveTextWidgetState extends State<LiveTextWidget> {
   Widget build(BuildContext context) {
     return Container(
       height: 329.w,
-      margin: EdgeInsets.only(top: 9.w),
+      margin: EdgeInsets.only(top: widget.needTopMargin?9.w:0),
       padding: EdgeInsets.only(bottom: 5.w),
       decoration: BoxDecoration(
           color: AppColors.cFFFFFF, borderRadius: BorderRadius.circular(9.w)),

@@ -153,13 +153,6 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                                     ),
                                   ),
                                 ),
-                                20.hGap,
-                                IconWidget(
-                                  iconWidth: 8.w,
-                                  icon: Assets.playerUiIconArrows01,
-                                  iconColor: AppColors.c000000,
-                                ),
-                                18.hGap,
                               ],
                             ),
                             6.vGap,
@@ -168,19 +161,36 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                                 splashColor: AppColors.ce5e5e5,
                                 onTap: () => Get.toNamed(RouteNames.leagueLeagueDetail,
                                     arguments: {"gameId": player.guessInfo.gameId}),
-                                child: SizedBox(
-                                  height: 30.w,
-                                  child: FittedBox(
-                                    fit: BoxFit.scaleDown,
-                                    child: Text(
-                                      "${Utils.getTeamInfo(player.baseInfoList.teamId).shortEname}@${player.awayTeamInfo?.shortEname ?? ""}   ${controller.gameStartTimeStr.value}",
-                                      style: 12.w4(
-                                          color: AppColors.c000000,
-                                          fontFamily: FontFamily.fRobotoRegular,
-                                          height: 1),
-                                      overflow: TextOverflow.ellipsis,
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                      height: 30.w,
+                                      child: FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        child: Text(
+                                          "${Utils.getTeamInfo(player.baseInfoList.teamId).shortEname}@${player.awayTeamInfo?.shortEname ?? ""}   ${controller.gameStartTimeStr.value}",
+                                          // style: 12.w4(
+                                          //     color: AppColors.c000000,
+                                          //     fontFamily: FontFamily.fRobotoRegular,
+                                          //     height: 1),
+                                          style: TextStyle(
+                                            color: AppColors.c000000,
+                                            height: 1,
+                                            fontFamily: FontFamily.fRobotoRegular,
+                                            fontSize: 12.sp,
+                                            decoration: TextDecoration.underline
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
                                     ),
-                                  ),
+                                    7.hGap,
+                                    IconWidget(
+                                      iconWidth: 5.w,
+                                      icon: Assets.playerUiIconArrows01,
+                                      iconColor: AppColors.c000000,
+                                    ),
+                                  ],
                                 ),
                               );
                             })

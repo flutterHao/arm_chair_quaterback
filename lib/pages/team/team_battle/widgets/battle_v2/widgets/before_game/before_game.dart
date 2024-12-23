@@ -478,7 +478,7 @@ class BeforeGameWidget extends GetView<BeforeGameController> {
                                   ],
                                 ),
                               ),
-                              const LiveTextWidget(),
+                              const LiveTextWidget(needTopMargin: false,),
                               WinRateWidget(
                                   teamBattleV2Controller.winRateController),
                             ],
