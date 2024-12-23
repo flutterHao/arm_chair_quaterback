@@ -96,11 +96,12 @@ class ScoreBoardDetailList {
 
 	ScoreBoardDetailList();
 
-	factory ScoreBoardDetailList.fromJson(Map<String, dynamic> json) => $PkResultUpdatedAwayTeamResultScoreBoardDetailListFromJson(json);
+  factory ScoreBoardDetailList.fromJson(Map<String, dynamic> json) =>
+      $ScoreBoardDetailListFromJson(json);
 
-	Map<String, dynamic> toJson() => $PkResultUpdatedAwayTeamResultScoreBoardDetailListToJson(this);
+  Map<String, dynamic> toJson() => $ScoreBoardDetailListToJson(this);
 
-	@override
+  @override
 	String toString() {
 		return jsonEncode(this);
 	}
