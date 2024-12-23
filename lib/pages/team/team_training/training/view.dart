@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-11 15:57:44
- * @LastEditTime: 2024-12-16 16:05:39
+ * @LastEditTime: 2024-12-23 12:21:06
  */
 
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -61,36 +61,36 @@ class TrainingPage extends GetView<TrainingController> {
                   index++)
                 Obx(() {
                   var e = controller.tacticChooseList[index];
-                  return Visibility(
-                    visible:
-                        controller.showBuff.value && !controller.isChange.value,
-                    child: AnimatedPositioned(
-                      left: e.offset.value.dx,
-                      top: e.offset.value.dy,
-                      // left: 153.w,
+                  return AnimatedPositioned(
+                    left: e.offset.value.dx,
+                    top: e.offset.value.dy,
+                    // left: 153.w,
 
-                      duration: 300.milliseconds,
-                      child: AnimatedScale(
-                        alignment: Alignment.topLeft,
-                        duration: const Duration(milliseconds: 300),
-                        scale: !controller.tacticFly.value ? 1 : 0.5,
-                        // scale: controller.showBuff.value &&
-                        //         !controller.isChange.value
-                        //     ? 1
-                        //     : 0.5,
-                        child: FlipCard(
-                          useSmallTacticCard: controller.tacticFly.value,
-                          isFlipped: e.isOpen.value,
-                          onFlip: () async {
-                            //卡牌飞行动画
-                            // controller.tacticFly.value = true;
-                            e.isSelect.value = true;
-                            controller.selectTacticId = e.id;
-                            controller.changeTacticId = 0;
-                            controller.chooseTactic(context);
-                          },
-                          buff: e,
-                        ),
+                    duration: 300.milliseconds,
+                    child: AnimatedScale(
+                      alignment: Alignment.topLeft,
+                      duration: Duration(
+                          milliseconds: controller.isChange.value ||
+                                  !controller.showBuff.value
+                              ? 0
+                              : 300),
+                      // scale: !controller.tacticFly.value ? 1 : 0.5,
+                      scale: controller.showBuff.value &&
+                              !controller.isChange.value
+                          ? (!controller.tacticFly.value ? 1 : 0.5)
+                          : 0,
+                      child: FlipCard(
+                        useSmallTacticCard: controller.tacticFly.value,
+                        isFlipped: e.isOpen.value,
+                        onFlip: () async {
+                          //卡牌飞行动画
+                          // controller.tacticFly.value = true;
+                          e.isSelect.value = true;
+                          controller.selectTacticId = e.id;
+                          controller.changeTacticId = 0;
+                          controller.chooseTactic(context);
+                        },
+                        buff: e,
                       ),
                     ),
                   );

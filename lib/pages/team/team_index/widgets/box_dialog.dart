@@ -2,11 +2,12 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 14:09:29
- * @LastEditTime: 2024-12-19 21:02:40
+ * @LastEditTime: 2024-12-23 17:52:52
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
+import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -88,7 +89,7 @@ class BattleBoxDialog extends StatelessWidget {
         bool noWait =
             controller.cardPackInfo.card.where((e) => e.status == 1).isEmpty;
         bool isUnlock = item.status == 0 && noWait;
-        bool enable = isUnlock || item.status == 2;
+        bool enable = isUnlock || item.status == 2 || item.status == 1;
         return Container(
           width: double.infinity,
           height: 554.w,
@@ -198,47 +199,43 @@ class BattleBoxDialog extends StatelessWidget {
                         progress: item.progress,
                         progressColor: AppColors.cFF7954,
                       ),
-                      // Stack(
-                      //   alignment: Alignment.centerLeft,
-                      //   children: [
-                      //     Container(
-                      //       alignment: Alignment.centerLeft,
-                      //       margin: EdgeInsets.symmetric(horizontal: 39.w),
-                      //       width: 297.w,
-                      //       height: 14.w,
-                      //       decoration: BoxDecoration(
-                      //         border: Border.all(color: AppColors.cD1D1D1),
-                      //         borderRadius: BorderRadius.circular(7.w),
-                      //       ),
-                      //     ),
-                      //     AnimatedContainer(
-                      //       duration: 300.milliseconds,
-                      //       alignment: Alignment.centerLeft,
-                      //       margin: EdgeInsets.symmetric(horizontal: 39.w),
-                      //       width: 7.w + 290 * item.progress,
-                      //       height: 14.w,
-                      //       clipBehavior: Clip.antiAlias,
-                      //       decoration: BoxDecoration(
-                      //           borderRadius: BorderRadius.horizontal(
-                      //               left: Radius.circular(7.w)),
-                      //           gradient: const LinearGradient(colors: [
-                      //             AppColors.c000000,
-                      //             AppColors.cFF7954
-                      //           ])),
-                      //     ),
-                      //   ],
-                      // ),
                       18.vGap
                     ],
                   );
                 }),
+              if (item.status == 1)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "COST:",
+                      style: 16.w7(
+                          color: AppColors.c262626,
+                          fontFamily: FontFamily.fOswaldMedium,
+                          height: 0.7),
+                    ),
+                    7.hGap,
+                    IconWidget(
+                        iconWidth: 21.w,
+                        icon: Assets.commonUiCommonIconCurrency02),
+                    4.hGap,
+                    Text(
+                      "${CacheApi.cardPackDefineMap[item.cardId]?.cardPackOpenNow}",
+                      style: 16.w7(color: AppColors.c262626),
+                    )
+                  ],
+                ),
               9.5.vGap,
               MtInkwell(
                 onTap: () {
                   if (item.status == 0 && isUnlock) {
                     controller.activeBattleBox(index);
                   } else if (item.status == 1) {
-                    controller.speedOpneBattleBox(index);
+                    controller.speedOpneBattleBox(
+                        index,
+                        CacheApi.cardPackDefineMap[item.cardId]
+                                ?.cardPackOpenNow ??
+                            0);
                   }
                   Navigator.pop(context);
                 },
@@ -284,7 +281,7 @@ String _getButtonString(int status, bool isUnlock) {
   if (status == 0) {
     comfirmText = isUnlock ? "unlock" : "other package is opening";
   } else if (status == 1) {
-    comfirmText = "Waiting to open";
+    comfirmText = "OPEN NOW";
   } else {
     comfirmText = "open";
   }

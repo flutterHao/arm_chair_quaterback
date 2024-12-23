@@ -41,6 +41,7 @@ class TrainingController extends GetxController
   var caShScale = false.obs;
   var showBuff = false.obs;
   RxInt cash = 0.obs;
+  var showProp = false.obs;
 
   TrainingInfoEntity trainingInfo = TrainingInfoEntity();
   // List<TeamPlayerInfoEntity> playerList = [];
@@ -545,10 +546,13 @@ class TrainingController extends GetxController
     showBuff.value = false;
     tacticFly.value = false;
     isPlaying.value = false;
+    // isChange.value = false;
 
-    for (var element in tacticChooseList) {
-      element.isOpen.value = false;
-    }
+    // for (var element in tacticChooseList) {
+    //   element.isOpen.value = false;
+    //   initTacticPosition();
+    // }
+    initTacticPosition();
   }
 
   void chooseFinish() {
@@ -573,17 +577,19 @@ class TrainingController extends GetxController
   }
 
   void startSlot() async {
+    if (ballNum.value > 0) {
+      ballNum.value = ballNum.value - 1;
+    } else {
+      bool result = HomeController.to.updateChips(-1);
+      if (!result) return;
+    }
     if (isPlaying.value) return;
     initSlot();
     final teamIndexCtrl = Get.find<TeamIndexController>();
     teamIndexCtrl.scroToSlot();
     playerList = Get.find<TeamController>().myTeamEntity.teamPlayers;
     playerIdx = random.nextInt(playerList.length);
-    if (ballNum.value > 0) {
-      ballNum.value = ballNum.value - 1;
-    } else {
-      HomeController.to.updateChips(-1);
-    }
+
     await TeamApi.playerTraining(playerList[playerIdx].uuid).then((v) {
       trainingInfo = v;
       trainingInfo.propArray.shuffle();
@@ -678,10 +684,15 @@ class TrainingController extends GetxController
     if (awads.contains(3)) {
       //如果升级，先满填满
       if (trainingInfo.training.currentTaskId > currentLevel) {
-        currentLevel = trainingInfo.training.currentTaskId;
+        // currentLevel = trainingInfo.training.currentTaskId;
         taskValue.value = currentTaskNeed;
+        //箱子放大动画
+        await Future.delayed(const Duration(milliseconds: 300));
+        showProp.value = true;
+        await Future.delayed(const Duration(milliseconds: 300));
+        showProp.value = false;
       }
-      await Future.delayed(const Duration(milliseconds: 400));
+
       //更新道具
       for (int i = 0; i < trainTaskList.length; i++) {
         if (trainingInfo.training.currentTaskId == trainTaskList[i].taskLevel) {
@@ -689,33 +700,35 @@ class TrainingController extends GetxController
         }
       }
       taskValue.value = trainingInfo.training.taskItemCount;
-
       update(["training_page"]);
+
+      ///获取奖励值，获奖动画
+      int cashs = 0;
+      if (trainingInfo.training.currentTaskId > currentLevel) {
+        await Future.delayed(const Duration(milliseconds: 300));
+
+        var item =
+            trainTaskList.where((e) => e.taskLevel == currentLevel).first;
+        cashs = item.propNum;
+        await showCashAward(cashs);
+        currentLevel = trainingInfo.training.currentTaskId;
+      }
     }
 
     ///4:篮球
     if (awads.contains(4)) {
       showBall.value = true;
       // ballNum.value = trainingInfo.prop.num;
-      ballNum.value += trainDefine.ballRecoverNum;
-      await Future.delayed(const Duration(milliseconds: 500), () {
+      await Future.delayed(const Duration(milliseconds: 500), () async {
         showBall.value = false;
+        await Future.delayed(const Duration(milliseconds: 200));
+        ballNum.value = trainingInfo.prop.num;
       });
     }
 
     ///5:钞票
     if (awads.contains(5)) {
-      showCash.value = true;
-      cash.value = cashNum;
-      caShScale.value = true;
-      Future.delayed(const Duration(milliseconds: 1000), () async {
-        caShScale.value = false;
-      });
-      await Future.delayed(const Duration(milliseconds: 1500), () async {
-        showCash.value = false;
-        updateMoney();
-        await Future.delayed(const Duration(milliseconds: 300));
-      });
+      await showCashAward(cashNum);
     }
 
     ///战术 buff
@@ -723,17 +736,7 @@ class TrainingController extends GetxController
       tacticChooseList.clear();
       tacticChooseList = List.from(trainingInfo.chooseBuffs);
       //初始化卡牌的位置和朝向
-      double spacing = 20.w;
-      for (int i = 0; i < tacticChooseList.length; i++) {
-        var item = tacticChooseList[i];
-        double x = (375.w -
-                    (tacticChooseList.length * 74.w +
-                        (tacticChooseList.length - 1) * spacing)) /
-                2 +
-            i * (74.w + spacing);
-        item.offset.value = Offset(x, 78.5.w + 281.5.w);
-        // item.isOpen.value = false;
-      }
+      initTacticPosition();
 
       update(["training_page"]);
       showBuff.value = true;
@@ -749,15 +752,15 @@ class TrainingController extends GetxController
     if (!awads.contains(1)) {
       isPlaying.value = false;
     }
+    for (var element in scrollerCtrlList) {
+      Log.d("slot 当前位置 ${element.offset}");
+    }
 
     //暂时不知道重置到开始位置的原因，先重新变更成中奖位置
     if (scrollerCtrlList.where((e) => e.offset == 0.0).length == 6) {
       for (int i = 0; i < scrollerCtrlList.length; i++) {
         scrollerCtrlList[i].jumpTo(offsetList[i]);
       }
-    }
-    for (var element in scrollerCtrlList) {
-      Log.d("slot 当前位置 ${element.offset}");
     }
 
     Future.delayed(const Duration(milliseconds: 10), () {
@@ -773,6 +776,36 @@ class TrainingController extends GetxController
     // }
     // getPlayerList();
     // update(["training_page"]);
+  }
+
+  void initTacticPosition() {
+    double spacing = 20.w;
+    for (int i = 0; i < tacticChooseList.length; i++) {
+      var item = tacticChooseList[i];
+      item.isOpen.value = false;
+      double x = (375.w -
+                  (tacticChooseList.length * 74.w +
+                      (tacticChooseList.length - 1) * spacing)) /
+              2 +
+          i * (74.w + spacing);
+      item.offset.value = Offset(x, 78.5.w + 281.5.w);
+      // item.isOpen.value = false;
+    }
+  }
+
+  Future showCashAward(int cashs) async {
+    ///5:钞票
+    showCash.value = true;
+    cash.value = cashs;
+    caShScale.value = true;
+    Future.delayed(const Duration(milliseconds: 1000), () async {
+      caShScale.value = false;
+    });
+    await Future.delayed(const Duration(milliseconds: 1500), () async {
+      showCash.value = false;
+      HomeController.to.updateMoney(cashs);
+      await Future.delayed(const Duration(milliseconds: 300));
+    });
   }
 
   ///球员滚动
@@ -890,26 +923,32 @@ class TrainingController extends GetxController
     }
   }
 
-  void updateMoney() {
-    for (var e in trainingInfo.award) {
-      if (e.id == 5) {
-        for (var element
-            in HomeController.to.userEntiry.teamLoginInfo!.teamPropList!) {
-          if (element.propId == 102) {
-            element.num = element.num! + e.num;
-          }
-        }
-      }
-    }
-    HomeController.to.update([GetXBuilderIds.idMoneyAndCoinWidget]);
-  }
+  // void updateMoney() {
+  //   for (var e in trainingInfo.award) {
+  //     if (e.id == 5) {
+  //       for (var element
+  //           in HomeController.to.userEntiry.teamLoginInfo!.teamPropList!) {
+  //         if (element.propId == 102) {
+  //           element.num = element.num! + e.num;
+  //         }
+  //       }
+  //     }
+  //   }
+  //   HomeController.to.update([GetXBuilderIds.idMoneyAndCoinWidget]);
+  // }
 
   ///计算每个的数量
   void getBuffValue(TrainingInfoBuff buff) {
+    int count = 0;
+    for (var element in trainingInfo.buff) {
+      if (element.color == buff.color) {
+        count += element.takeEffectGameCount;
+      }
+    }
     for (var config in buffValueConfigList) {
       if (config.suit == buff.color) {
         int length = config.suitAdd.length;
-        int m = min(length, buff.takeEffectGameCount);
+        int m = min(length, count);
         buff.buffValue = config.suitAdd[m - 1];
       }
     }

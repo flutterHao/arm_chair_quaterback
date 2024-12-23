@@ -1,5 +1,6 @@
 import 'package:arm_chair_quaterback/common/entities/api_error_code_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/competition_venue_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/config/card_pack_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/config/prop_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/cup_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/dan_ma_ku_entity.dart';
@@ -52,6 +53,7 @@ class CacheApi {
   static List<GradeInStaminaEntity> gradeInStaminaList = [];
   static List<CupDefineEntity> cupDefineList = [];
   static List<DanMaKuEntity> danMaKuList = [];
+  static Map<int, CardPackDefineEntity> cardPackDefineMap = {};
 
   static Future<void> init() async {
     await Future.wait([
@@ -233,5 +235,18 @@ class CacheApi {
     List list = await HttpUtil().post(Api.cDanMaKu);
     danMaKuList = list.map((e) => DanMaKuEntity.fromJson(e)).toList();
     return danMaKuList;
+  }
+
+  static Future<Map<int, CardPackDefineEntity>> getCardPackDefine() async {
+    if (cardPackDefineMap.isNotEmpty) {
+      return cardPackDefineMap;
+    }
+    List list = await HttpUtil().post(Api.cCardPackDefine);
+    cardPackDefineMap = {
+      for (var item in list)
+        CardPackDefineEntity.fromJson(item).cardPackID:
+            CardPackDefineEntity.fromJson(item)
+    };
+    return cardPackDefineMap;
   }
 }

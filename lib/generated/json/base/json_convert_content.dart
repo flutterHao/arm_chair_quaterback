@@ -10,6 +10,7 @@ import 'package:arm_chair_quaterback/common/entities/api_error_code_entity.dart'
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/competition_venue_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/config/card_pack_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/config/prop_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/cup_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/dan_ma_ku_entity.dart';
@@ -292,6 +293,10 @@ class JsonConvert {
     if (<CompetitionVenueEntity>[] is M) {
       return data.map<CompetitionVenueEntity>((Map<String, dynamic> e) =>
           CompetitionVenueEntity.fromJson(e)).toList() as M;
+    }
+    if (<CardPackDefineEntity>[] is M) {
+      return data.map<CardPackDefineEntity>((Map<String, dynamic> e) =>
+          CardPackDefineEntity.fromJson(e)).toList() as M;
     }
     if (<PropDefineEntity>[] is M) {
       return data.map<PropDefineEntity>((Map<String, dynamic> e) =>
@@ -632,10 +637,8 @@ class JsonConvert {
           PkResultUpdatedTeamResult.fromJson(e)).toList() as M;
     }
     if (<ScoreBoardDetailList>[] is M) {
-      return data.map<ScoreBoardDetailList>((
-          Map<String, dynamic> e) =>
-          ScoreBoardDetailList.fromJson(e))
-          .toList() as M;
+      return data.map<ScoreBoardDetailList>((Map<String, dynamic> e) =>
+          ScoreBoardDetailList.fromJson(e)).toList() as M;
     }
     if (<PkResultUpdatedAwayTeamResultScoreBoards>[] is M) {
       return data.map<PkResultUpdatedAwayTeamResultScoreBoards>((
@@ -932,6 +935,7 @@ class JsonConvertClassCollection {
     (CardPackInfoEntity).toString(): CardPackInfoEntity.fromJson,
     (CardPackInfoCard).toString(): CardPackInfoCard.fromJson,
     (CompetitionVenueEntity).toString(): CompetitionVenueEntity.fromJson,
+    (CardPackDefineEntity).toString(): CardPackDefineEntity.fromJson,
     (PropDefineEntity).toString(): PropDefineEntity.fromJson,
     (CupDefineEntity).toString(): CupDefineEntity.fromJson,
     (DanMaKuEntity).toString(): DanMaKuEntity.fromJson,
@@ -1046,8 +1050,7 @@ class JsonConvertClassCollection {
     (PkPlayerUpdatedPlayers).toString(): PkPlayerUpdatedPlayers.fromJson,
     (PkResultUpdatedEntity).toString(): PkResultUpdatedEntity.fromJson,
     (PkResultUpdatedTeamResult).toString(): PkResultUpdatedTeamResult.fromJson,
-    (ScoreBoardDetailList)
-        .toString(): ScoreBoardDetailList.fromJson,
+    (ScoreBoardDetailList).toString(): ScoreBoardDetailList.fromJson,
     (PkResultUpdatedAwayTeamResultScoreBoards)
         .toString(): PkResultUpdatedAwayTeamResultScoreBoards.fromJson,
     (PkResultUpdatedAwayTeamResultTeamPlayers)

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-25 11:48:38
- * @LastEditTime: 2024-12-17 10:14:43
+ * @LastEditTime: 2024-12-23 11:18:58
  */
 /*
  * @Description: 
@@ -31,6 +31,7 @@ import 'package:arm_chair_quaterback/pages/team/team_index/view.dart';
 import 'package:arm_chair_quaterback/pages/trade/trade_index/view.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
@@ -179,13 +180,19 @@ class HomeController extends GetxController {
     HomeController.to.update([GetXBuilderIds.idMoneyAndCoinWidget]);
   }
 
-  void updateChips(int change) {
+  bool updateChips(int change) {
     for (var element
         in HomeController.to.userEntiry.teamLoginInfo!.teamPropList!) {
       if (element.propId == 103) {
-        element.num = element.num! + change;
+        if (change < 0 && element.num! < change.abs()) {
+          EasyLoading.showToast("Not enough chips");
+          return false;
+        } else {
+          element.num = element.num! + change;
+        }
       }
     }
     HomeController.to.update([GetXBuilderIds.idMoneyAndCoinWidget]);
+    return true;
   }
 }

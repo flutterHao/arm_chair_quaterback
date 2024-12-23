@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-12-20 19:59:03
+ * @LastEditTime: 2024-12-23 17:55:16
  */
 
 import 'dart:async';
@@ -16,6 +16,7 @@ import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
+import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/box_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
@@ -105,6 +106,7 @@ class TeamIndexController extends GetxController
     getBattleBox();
     getTeamInfoCup();
     CacheApi.getPropDefine();
+    CacheApi.getCardPackDefine();
   }
 
   @override
@@ -158,7 +160,9 @@ class TeamIndexController extends GetxController
   }
 
   ///快速开启
-  void speedOpneBattleBox(int index) async {
+  void speedOpneBattleBox(int index, int cost) async {
+    bool result = HomeController.to.updateChips(-cost);
+    if (!result) return;
     await TeamApi.speedOpneBattleBox(index);
     // showBoxDialog();
     getBattleBox();

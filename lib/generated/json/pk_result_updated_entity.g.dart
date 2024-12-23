@@ -110,11 +110,11 @@ PkResultUpdatedTeamResult $PkResultUpdatedTeamResultFromJson(
   }
   final List<
       ScoreBoardDetailList>? scoreBoardDetailList = (json['scoreBoardDetailList'] as List<
-      dynamic>?)?.map(
+      dynamic>?)
+      ?.map(
           (e) =>
-      jsonConvert.convert<
-          ScoreBoardDetailList>(
-          e) as ScoreBoardDetailList).toList();
+      jsonConvert.convert<ScoreBoardDetailList>(e) as ScoreBoardDetailList)
+      .toList();
   if (scoreBoardDetailList != null) {
     pkResultUpdatedTeamResult.scoreBoardDetailList = scoreBoardDetailList;
   }
@@ -207,8 +207,7 @@ extension PkResultUpdatedTeamResultExtension on PkResultUpdatedTeamResult {
     bool? pts,
     bool? reb,
     int? score,
-    List<
-        ScoreBoardDetailList>? scoreBoardDetailList,
+    List<ScoreBoardDetailList>? scoreBoardDetailList,
     PkResultUpdatedAwayTeamResultScoreBoards? scoreBoards,
     String? serverId,
     int? starNum,
@@ -244,142 +243,140 @@ extension PkResultUpdatedTeamResultExtension on PkResultUpdatedTeamResult {
   }
 }
 
-ScoreBoardDetailList $PkResultUpdatedAwayTeamResultScoreBoardDetailListFromJson(
-    Map<String, dynamic> json) {
-  final ScoreBoardDetailList pkResultUpdatedAwayTeamResultScoreBoardDetailList = ScoreBoardDetailList();
+ScoreBoardDetailList $ScoreBoardDetailListFromJson(Map<String, dynamic> json) {
+  final ScoreBoardDetailList scoreBoardDetailList = ScoreBoardDetailList();
   final int? ast = jsonConvert.convert<int>(json['ast']);
   if (ast != null) {
-    pkResultUpdatedAwayTeamResultScoreBoardDetailList.ast = ast;
+    scoreBoardDetailList.ast = ast;
   }
   final int? astPoint = jsonConvert.convert<int>(json['astPoint']);
   if (astPoint != null) {
-    pkResultUpdatedAwayTeamResultScoreBoardDetailList.astPoint = astPoint;
+    scoreBoardDetailList.astPoint = astPoint;
   }
   final int? blk = jsonConvert.convert<int>(json['blk']);
   if (blk != null) {
-    pkResultUpdatedAwayTeamResultScoreBoardDetailList.blk = blk;
+    scoreBoardDetailList.blk = blk;
   }
   final int? blkPoint = jsonConvert.convert<int>(json['blkPoint']);
   if (blkPoint != null) {
-    pkResultUpdatedAwayTeamResultScoreBoardDetailList.blkPoint = blkPoint;
+    scoreBoardDetailList.blkPoint = blkPoint;
   }
   final int? createTime = jsonConvert.convert<int>(json['createTime']);
   if (createTime != null) {
-    pkResultUpdatedAwayTeamResultScoreBoardDetailList.createTime = createTime;
+    scoreBoardDetailList.createTime = createTime;
   }
   final int? dreb = jsonConvert.convert<int>(json['dreb']);
   if (dreb != null) {
-    pkResultUpdatedAwayTeamResultScoreBoardDetailList.dreb = dreb;
+    scoreBoardDetailList.dreb = dreb;
   }
   final int? fga = jsonConvert.convert<int>(json['fga']);
   if (fga != null) {
-    pkResultUpdatedAwayTeamResultScoreBoardDetailList.fga = fga;
+    scoreBoardDetailList.fga = fga;
   }
   final int? fgm = jsonConvert.convert<int>(json['fgm']);
   if (fgm != null) {
-    pkResultUpdatedAwayTeamResultScoreBoardDetailList.fgm = fgm;
+    scoreBoardDetailList.fgm = fgm;
   }
   final int? fta = jsonConvert.convert<int>(json['fta']);
   if (fta != null) {
-    pkResultUpdatedAwayTeamResultScoreBoardDetailList.fta = fta;
+    scoreBoardDetailList.fta = fta;
   }
   final int? ftm = jsonConvert.convert<int>(json['ftm']);
   if (ftm != null) {
-    pkResultUpdatedAwayTeamResultScoreBoardDetailList.ftm = ftm;
+    scoreBoardDetailList.ftm = ftm;
   }
   final int? gameId = jsonConvert.convert<int>(json['gameId']);
   if (gameId != null) {
-    pkResultUpdatedAwayTeamResultScoreBoardDetailList.gameId = gameId;
+    scoreBoardDetailList.gameId = gameId;
   }
   final int? min = jsonConvert.convert<int>(json['min']);
   if (min != null) {
-    pkResultUpdatedAwayTeamResultScoreBoardDetailList.min = min;
+    scoreBoardDetailList.min = min;
   }
   final int? mvpPoint = jsonConvert.convert<int>(json['mvpPoint']);
   if (mvpPoint != null) {
-    pkResultUpdatedAwayTeamResultScoreBoardDetailList.mvpPoint = mvpPoint;
+    scoreBoardDetailList.mvpPoint = mvpPoint;
   }
   final int? oreb = jsonConvert.convert<int>(json['oreb']);
   if (oreb != null) {
-    pkResultUpdatedAwayTeamResultScoreBoardDetailList.oreb = oreb;
+    scoreBoardDetailList.oreb = oreb;
   }
   final int? pass = jsonConvert.convert<int>(json['pass']);
   if (pass != null) {
-    pkResultUpdatedAwayTeamResultScoreBoardDetailList.pass = pass;
+    scoreBoardDetailList.pass = pass;
   }
   final int? pf = jsonConvert.convert<int>(json['pf']);
   if (pf != null) {
-    pkResultUpdatedAwayTeamResultScoreBoardDetailList.pf = pf;
+    scoreBoardDetailList.pf = pf;
   }
   final int? playerId = jsonConvert.convert<int>(json['playerId']);
   if (playerId != null) {
-    pkResultUpdatedAwayTeamResultScoreBoardDetailList.playerId = playerId;
+    scoreBoardDetailList.playerId = playerId;
   }
   final int? property = jsonConvert.convert<int>(json['property']);
   if (property != null) {
-    pkResultUpdatedAwayTeamResultScoreBoardDetailList.property = property;
+    scoreBoardDetailList.property = property;
   }
   final int? pts = jsonConvert.convert<int>(json['pts']);
   if (pts != null) {
-    pkResultUpdatedAwayTeamResultScoreBoardDetailList.pts = pts;
+    scoreBoardDetailList.pts = pts;
   }
   final int? ptsPoint = jsonConvert.convert<int>(json['ptsPoint']);
   if (ptsPoint != null) {
-    pkResultUpdatedAwayTeamResultScoreBoardDetailList.ptsPoint = ptsPoint;
+    scoreBoardDetailList.ptsPoint = ptsPoint;
   }
   final int? reb = jsonConvert.convert<int>(json['reb']);
   if (reb != null) {
-    pkResultUpdatedAwayTeamResultScoreBoardDetailList.reb = reb;
+    scoreBoardDetailList.reb = reb;
   }
   final int? rebPoint = jsonConvert.convert<int>(json['rebPoint']);
   if (rebPoint != null) {
-    pkResultUpdatedAwayTeamResultScoreBoardDetailList.rebPoint = rebPoint;
+    scoreBoardDetailList.rebPoint = rebPoint;
   }
   final double? score = jsonConvert.convert<double>(json['score']);
   if (score != null) {
-    pkResultUpdatedAwayTeamResultScoreBoardDetailList.score = score;
+    scoreBoardDetailList.score = score;
   }
   final bool? starter = jsonConvert.convert<bool>(json['starter']);
   if (starter != null) {
-    pkResultUpdatedAwayTeamResultScoreBoardDetailList.starter = starter;
+    scoreBoardDetailList.starter = starter;
   }
   final int? starterPos = jsonConvert.convert<int>(json['starterPos']);
   if (starterPos != null) {
-    pkResultUpdatedAwayTeamResultScoreBoardDetailList.starterPos = starterPos;
+    scoreBoardDetailList.starterPos = starterPos;
   }
   final int? stl = jsonConvert.convert<int>(json['stl']);
   if (stl != null) {
-    pkResultUpdatedAwayTeamResultScoreBoardDetailList.stl = stl;
+    scoreBoardDetailList.stl = stl;
   }
   final int? teamId = jsonConvert.convert<int>(json['teamId']);
   if (teamId != null) {
-    pkResultUpdatedAwayTeamResultScoreBoardDetailList.teamId = teamId;
+    scoreBoardDetailList.teamId = teamId;
   }
   final int? tech = jsonConvert.convert<int>(json['tech']);
   if (tech != null) {
-    pkResultUpdatedAwayTeamResultScoreBoardDetailList.tech = tech;
+    scoreBoardDetailList.tech = tech;
   }
   final int? threePa = jsonConvert.convert<int>(json['threePa']);
   if (threePa != null) {
-    pkResultUpdatedAwayTeamResultScoreBoardDetailList.threePa = threePa;
+    scoreBoardDetailList.threePa = threePa;
   }
   final int? threePm = jsonConvert.convert<int>(json['threePm']);
   if (threePm != null) {
-    pkResultUpdatedAwayTeamResultScoreBoardDetailList.threePm = threePm;
+    scoreBoardDetailList.threePm = threePm;
   }
   final int? to = jsonConvert.convert<int>(json['to']);
   if (to != null) {
-    pkResultUpdatedAwayTeamResultScoreBoardDetailList.to = to;
+    scoreBoardDetailList.to = to;
   }
   final int? updateTime = jsonConvert.convert<int>(json['updateTime']);
   if (updateTime != null) {
-    pkResultUpdatedAwayTeamResultScoreBoardDetailList.updateTime = updateTime;
+    scoreBoardDetailList.updateTime = updateTime;
   }
-  return pkResultUpdatedAwayTeamResultScoreBoardDetailList;
+  return scoreBoardDetailList;
 }
 
-Map<String, dynamic> $PkResultUpdatedAwayTeamResultScoreBoardDetailListToJson(
-    ScoreBoardDetailList entity) {
+Map<String, dynamic> $ScoreBoardDetailListToJson(ScoreBoardDetailList entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['ast'] = entity.ast;
   data['astPoint'] = entity.astPoint;
@@ -416,7 +413,7 @@ Map<String, dynamic> $PkResultUpdatedAwayTeamResultScoreBoardDetailListToJson(
   return data;
 }
 
-extension PkResultUpdatedAwayTeamResultScoreBoardDetailListExtension on ScoreBoardDetailList {
+extension ScoreBoardDetailListExtension on ScoreBoardDetailList {
   ScoreBoardDetailList copyWith({
     int? ast,
     int? astPoint,

@@ -78,6 +78,7 @@ class _FlipCardState extends State<FlipCard>
   Widget build(BuildContext context) {
     return MtInkwell(
       onTap: widget.onFlip,
+      splashColor: Colors.transparent,
       child: AnimatedBuilder(
         animation: _animation,
         builder: (context, child) {

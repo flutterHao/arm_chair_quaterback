@@ -163,6 +163,7 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
                   return MtInkwell(
                     minScale: 0.9,
                     onTap: () async {
+                      // item.status = 1;
                       if (item.status == -1) {
                         controller.scroToMatch();
                       } else if (item.status == 2) {

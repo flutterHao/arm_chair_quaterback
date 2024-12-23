@@ -249,7 +249,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
         ///已经选择了背包直接替换
         await changeTeamPlayer(context);
       } else {
-        showChangeDialog(item);
+        await showChangeDialog(item);
       }
     }
 
@@ -264,7 +264,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
         ///已经选择了上阵直接替换
         await changeTeamPlayer(context);
       } else {
-        showChangeDialog(item);
+        await showChangeDialog(item);
       }
     }
     // Log.d("球员${item.uuid}\n ${item1.uuid} \n ${item2.uuid}");

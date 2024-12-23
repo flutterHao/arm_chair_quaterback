@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-25 15:56:43
- * @LastEditTime: 2024-12-19 10:37:57
+ * @LastEditTime: 2024-12-23 14:49:26
  */
 
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -44,7 +44,7 @@ class TrainingWidget extends GetView<TrainingController> {
   @override
   Widget build(BuildContext context) {
     // controller.startScroller();
-    // controller.showAward();
+    controller.showAward();
     return GetBuilder<TrainingController>(
         id: "training_page",
         builder: (controller) {
@@ -134,12 +134,21 @@ class TrainingWidget extends GetView<TrainingController> {
                                                   height: 1),
                                             );
                                           }),
+                                          if (controller.showBall.value)
+                                            Text(
+                                              "+${controller.trainingInfo.prop.num - controller.ballNum.value}",
+                                              style: 12.w7(
+                                                  color: AppColors.c31E99E,
+                                                  fontFamily:
+                                                      FontFamily.fOswaldMedium,
+                                                  height: 1),
+                                            )
                                         ],
                                       ),
                                     ),
                                     Expanded(
                                       child: AnimatedScale(
-                                        duration: 300.milliseconds,
+                                        duration: 150.milliseconds,
                                         scale:
                                             controller.showBall.value ? 0 : 1,
                                         child: Text(
@@ -435,8 +444,7 @@ class TrainingWidget extends GetView<TrainingController> {
                                           return AnimatedScale(
                                             duration: const Duration(
                                                 milliseconds: 300),
-                                            scale: controller.taskValue.value ==
-                                                    controller.currentTaskNeed
+                                            scale: controller.showProp.value
                                                 ? 1.5
                                                 : 1,
                                             child: Image.asset(
