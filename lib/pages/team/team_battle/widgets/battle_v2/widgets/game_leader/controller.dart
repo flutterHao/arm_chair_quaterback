@@ -51,7 +51,7 @@ class GameLeaderController extends GetxController
             AppColors.c1F8FE5),
         GameLeader(
             teamBattleV2Controller.pkResultUpdatedEntity!.awayTeamResult.teamId,
-            PkEventUpdatedPlayerInfos.fromJson(homePlayers[0].toJson()),
+            PkEventUpdatedPlayerInfos.fromJson(awayPlayers[0].toJson()),
             AppColors.cD60D20),
       ];
     } else {
