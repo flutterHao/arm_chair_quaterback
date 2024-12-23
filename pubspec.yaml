@@ -73,6 +73,7 @@ dependencies:
   quiver: ^3.2.1
   web_socket_channel: ^3.0.1
   spine_flutter: ^4.2.11
+  flutter_inner_shadow: 0.0.1
 
 dev_dependencies:
   flutter_test:

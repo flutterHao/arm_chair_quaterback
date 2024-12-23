@@ -15,14 +15,15 @@ class AllTeamPlayersByUpStarEntity {
   late double fromType;
   late double createTime;
   late double playerGrade;
-  late double teamId;
+  late int teamId;
   late double id;
+  /// 0 替补 大于0 主力； 小于0 未上阵
   late double position;
   late double power;
   late AllTeamPlayersByUpStarPotential potential;
   late bool bindStatus;
-  late double breakThroughGrade;
-  late double playerId;
+  int breakThroughGrade=0;
+  late int playerId;
   late AllTeamPlayersByUpStarUpStarBase upStarBase;
 
   AllTeamPlayersByUpStarEntity();

@@ -234,7 +234,7 @@ class PlayerCardWidget extends GetView<TeamController> {
           score: Utils.getPlayBaseInfo(player.playerId).playerScore,
           isMyPlayer: true,
           onTap: () => Get.toNamed(RouteNames.teamTeamUpgrade,
-              arguments: {"playerId": player.playerId}),
+              arguments: {"player": player}),
         ),
         5.vGap,
         Text(

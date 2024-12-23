@@ -106,7 +106,7 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
 
   @override
   Widget build(BuildContext context) {
-    print('widget.noBackAnimation----------:${widget.noBackAnimation}');
+    // print('widget.noBackAnimation----------:${widget.noBackAnimation}');
     width = MediaQuery.of(context).size.width;
     onHorizontalDragStart(DragStartDetails detail) {
       if (!isOnLeftSide) {

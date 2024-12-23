@@ -45,7 +45,7 @@ AllTeamPlayersByUpStarEntity $AllTeamPlayersByUpStarEntityFromJson(
   if (playerGrade != null) {
     allTeamPlayersByUpStarEntity.playerGrade = playerGrade;
   }
-  final double? teamId = jsonConvert.convert<double>(json['teamId']);
+  final int? teamId = jsonConvert.convert<int>(json['teamId']);
   if (teamId != null) {
     allTeamPlayersByUpStarEntity.teamId = teamId;
   }
@@ -70,12 +70,12 @@ AllTeamPlayersByUpStarEntity $AllTeamPlayersByUpStarEntityFromJson(
   if (bindStatus != null) {
     allTeamPlayersByUpStarEntity.bindStatus = bindStatus;
   }
-  final double? breakThroughGrade = jsonConvert.convert<double>(
+  final int? breakThroughGrade = jsonConvert.convert<int>(
       json['breakThroughGrade']);
   if (breakThroughGrade != null) {
     allTeamPlayersByUpStarEntity.breakThroughGrade = breakThroughGrade;
   }
-  final double? playerId = jsonConvert.convert<double>(json['playerId']);
+  final int? playerId = jsonConvert.convert<int>(json['playerId']);
   if (playerId != null) {
     allTeamPlayersByUpStarEntity.playerId = playerId;
   }
@@ -124,14 +124,14 @@ extension AllTeamPlayersByUpStarEntityExtension on AllTeamPlayersByUpStarEntity 
     double? fromType,
     double? createTime,
     double? playerGrade,
-    double? teamId,
+    int? teamId,
     double? id,
     double? position,
     double? power,
     AllTeamPlayersByUpStarPotential? potential,
     bool? bindStatus,
-    double? breakThroughGrade,
-    double? playerId,
+    int? breakThroughGrade,
+    int? playerId,
     AllTeamPlayersByUpStarUpStarBase? upStarBase,
   }) {
     return AllTeamPlayersByUpStarEntity()

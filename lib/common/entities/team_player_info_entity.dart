@@ -145,7 +145,7 @@ class TeamPlayerInfoPotential {
   factory TeamPlayerInfoPotential.fromJson(Map<String, dynamic> json) =>
       $TeamPlayerInfoPotentialFromJson(json);
 
-  Map<String, dynamic> toJson() => $TeamPlayerInfoPotentialToJson(this);
+  	Map<String, dynamic> toJson() => $TeamPlayerInfoPotentialToJson(this);
 
   @override
   String toString() {
