@@ -62,9 +62,10 @@ class _PlayerSrollerViewState extends State<PlayerSrollerView> {
                       // isSelect = controller.currentPlayerIndex.value >
                       //         (index - selectPlayers.length) &&
                       //     controller.currentPlayerIndex.value <= index;
-                      isSelect = controller.currentPlayerIndex.value <=
-                              (index + count) &&
-                          controller.currentPlayerIndex.value >= (index);
+                      isSelect =
+                          controller.currentPlayerIndex.value >= (index) &&
+                              controller.currentPlayerIndex.value <=
+                                  (index + count);
                     } else {
                       isSelect = controller.currentPlayerIndex.value <=
                               (index + count) &&

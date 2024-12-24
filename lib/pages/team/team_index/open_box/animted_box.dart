@@ -2,9 +2,11 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-20 16:11:51
- * @LastEditTime: 2024-12-20 19:25:34
+ * @LastEditTime: 2024-12-24 14:54:37
  */
+import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AnimatedBox extends StatefulWidget {
   const AnimatedBox({super.key, required this.child, required this.onTap});

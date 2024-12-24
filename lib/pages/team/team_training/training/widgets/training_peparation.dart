@@ -1,5 +1,12 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-11-25 16:03:12
+ * @LastEditTime: 2024-12-24 11:49:35
+ */
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
+import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
@@ -7,7 +14,9 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/widgets/linear_progress_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactics/training_tactics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -27,90 +36,89 @@ class TrainingPeparation extends StatelessWidget {
               teamIndexCtrl.scroToSlot();
             },
             child: Container(
-              height: 75.w,
+              height: 177.w,
               width: double.infinity,
-              alignment: Alignment.center,
+              alignment: Alignment.topCenter,
               // padding: EdgeInsets.symmetric(vertical: 20.w),
               margin: EdgeInsets.only(top: 9.w),
               decoration: BoxDecoration(
                 color: AppColors.cFFFFFF,
                 borderRadius: BorderRadius.circular(12.w),
               ),
-              child: Row(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  29.hGap,
-                  SizedBox(
-                    width: 297.w,
+                  Container(
+                    width: 331.w,
+                    height: 59.5.w,
+                    alignment: Alignment.center,
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Row(
-                          children: [
-                            Expanded(
-                                child: Text(
-                              "PREPARATION",
-                              style: 19.w4(
-                                color: AppColors.c000000,
-                                height: 1,
-                                fontFamily: FontFamily.fOswaldMedium,
-                              ),
-                            )),
-                            AnimatedNum(
-                                number: (trainingInfo.playerReadiness * 100)
-                                    .toInt(),
-                                textStyle:
-                                    19.w4(color: AppColors.c000000, height: 1)),
-                            Text(
-                              "%",
-                              style: 19.w4(color: AppColors.c000000, height: 1),
-                            ),
-                            7.hGap,
-                          ],
-                        ),
-                        8.vGap,
-                        Stack(
-                          children: [
-                            Container(
-                              width: 297.w,
-                              height: 14.w,
-                              alignment: Alignment.centerLeft,
-                              clipBehavior: Clip.antiAliasWithSaveLayer,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(7.w),
-                                border: Border.all(
-                                  width: 1.w,
-                                  color: AppColors.cD1D1D1,
+                        Container(
+                          margin: EdgeInsets.symmetric(horizontal: 7.w),
+                          child: Row(
+                            children: [
+                              Text(
+                                "PREPARATION",
+                                style: 16.w4(
+                                  color: AppColors.c000000,
+                                  height: 1,
+                                  fontFamily: FontFamily.fOswaldMedium,
                                 ),
                               ),
-                            ),
-                            AnimatedContainer(
-                              duration: const Duration(milliseconds: 300),
-                              width: 297.w * trainingInfo.playerReadiness,
-                              height: 14.w,
-                              constraints: BoxConstraints(maxWidth: 297.w),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(7.w),
-                                gradient: LinearGradient(
-                                  colors: [
-                                    AppColors.c000000,
-                                    Utils.getProgressColor(
-                                        trainingInfo.playerReadiness * 100),
+                              12.5.hGap,
+                              AnimatedNum(
+                                  number: (trainingInfo.playerReadiness * 100)
+                                      .toInt(),
+                                  textStyle: 16
+                                      .w4(color: AppColors.c000000, height: 1)),
+                              Text(
+                                "%",
+                                style:
+                                    16.w4(color: AppColors.c000000, height: 1),
+                              ),
+                              const Expanded(child: SizedBox.shrink()),
+                              MtInkwell(
+                                child: Row(
+                                  // mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      "DETAIL",
+                                      style: TextStyle(
+                                        fontSize: 12.sp,
+                                        decoration: TextDecoration.underline,
+                                        // textBaseline: TextBaseline.ideographic,
+                                        color: AppColors.c000000,
+                                        height: 1,
+                                        fontFamily: FontFamily.fRobotoMedium,
+                                      ),
+                                    ),
+                                    6.hGap,
+                                    IconWidget(
+                                      iconWidth: 9.w,
+                                      icon: Assets.iconUiIconArrows04,
+                                      rotateAngle: -90,
+                                      iconColor: Colors.black,
+                                    )
                                   ],
                                 ),
-                              ),
-                            ),
-                          ],
+                              )
+                            ],
+                          ),
                         ),
+                        8.vGap,
+                        OutLineProgressWidget(
+                            width: 331.w,
+                            height: 14.w,
+                            progress: trainingInfo.playerReadiness,
+                            progressColor: Utils.getProgressColor(
+                                trainingInfo.playerReadiness * 100)),
                       ],
                     ),
                   ),
-                  18.hGap,
-                  IconWidget(
-                    iconWidth: 12.w,
-                    icon: Assets.iconUiIconTriangle03,
-                    iconColor: AppColors.c000000,
-                    rotateAngle: 90,
-                  ),
+                  const TrainingTactics()
                 ],
               ),
             ),

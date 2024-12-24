@@ -66,6 +66,11 @@ TrainDefineEntity $TrainDefineEntityFromJson(Map<String, dynamic> json) {
   if (trainMoneyCon != null) {
     trainDefineEntity.trainMoneyCon = trainMoneyCon;
   }
+  final List<int>? trainCoinNum = (json['trainCoinNum'] as List<dynamic>?)?.map(
+          (e) => jsonConvert.convert<int>(e) as int).toList();
+  if (trainCoinNum != null) {
+    trainDefineEntity.trainCoinNum = trainCoinNum;
+  }
   final List<int>? trainNormalMoney = (json['trainNormalMoney'] as List<
       dynamic>?)?.map(
           (e) => jsonConvert.convert<int>(e) as int).toList();
@@ -103,6 +108,7 @@ Map<String, dynamic> $TrainDefineEntityToJson(TrainDefineEntity entity) {
   data['trainBuffAdd'] = entity.trainBuffAdd;
   data['trainLessMoney'] = entity.trainLessMoney;
   data['trainMoneyCon'] = entity.trainMoneyCon;
+  data['trainCoinNum'] = entity.trainCoinNum;
   data['trainNormalMoney'] = entity.trainNormalMoney;
   data['trainRecoverStats'] = entity.trainRecoverStats;
   data['trainRewardBall'] = entity.trainRewardBall;
@@ -124,6 +130,7 @@ extension TrainDefineEntityExtension on TrainDefineEntity {
     List<int>? trainBuffAdd,
     List<int>? trainLessMoney,
     List<int>? trainMoneyCon,
+    List<int>? trainCoinNum,
     List<int>? trainNormalMoney,
     List<int>? trainRecoverStats,
     List<int>? trainRewardBall,
@@ -142,6 +149,7 @@ extension TrainDefineEntityExtension on TrainDefineEntity {
       ..trainBuffAdd = trainBuffAdd ?? this.trainBuffAdd
       ..trainLessMoney = trainLessMoney ?? this.trainLessMoney
       ..trainMoneyCon = trainMoneyCon ?? this.trainMoneyCon
+      ..trainCoinNum = trainCoinNum ?? this.trainCoinNum
       ..trainNormalMoney = trainNormalMoney ?? this.trainNormalMoney
       ..trainRecoverStats = trainRecoverStats ?? this.trainRecoverStats
       ..trainRewardBall = trainRewardBall ?? this.trainRewardBall;

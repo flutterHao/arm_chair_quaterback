@@ -19,13 +19,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class UserInfoBar extends StatelessWidget {
-  const UserInfoBar(
-      {super.key,
-      this.title = "Title",
-      this.enable = true,
-      this.routeId,
-      this.showPop = false,
-      this.onClickPop,});
+  const UserInfoBar({
+    super.key,
+    this.title = "Title",
+    this.enable = true,
+    this.routeId,
+    this.showPop = false,
+    this.onClickPop,
+  });
 
   final String title;
   final bool enable; //头像是否可点击显示弹框
@@ -70,9 +71,10 @@ class UserInfoBar extends StatelessWidget {
                         showPop ? 0.hGap : 16.hGap,
                         if (showPop)
                           InkWell(
-                            onTap: onClickPop??() {
-                              Navigator.pop(context);
-                            },
+                            onTap: onClickPop ??
+                                () {
+                                  Navigator.pop(context);
+                                },
                             child: Container(
                                 width: 36.w,
                                 height: 36.w,

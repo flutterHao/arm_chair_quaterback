@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-14 11:47:53
- * @LastEditTime: 2024-11-14 11:53:27
+ * @LastEditTime: 2024-12-24 10:56:45
  */
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/train_define_entity.g.dart';
@@ -24,6 +24,7 @@ class TrainDefineEntity {
   late List<int> trainBuffAdd = [];
   late List<int> trainLessMoney = [];
   late List<int> trainMoneyCon = [];
+  late List<int> trainCoinNum = [];
   late List<int> trainNormalMoney = [];
   late List<int> trainRecoverStats = [];
   late List<int> trainRewardBall = [];

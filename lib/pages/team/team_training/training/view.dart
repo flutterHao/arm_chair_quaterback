@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-11 15:57:44
- * @LastEditTime: 2024-12-23 12:21:06
+ * @LastEditTime: 2024-12-24 16:28:11
  */
 
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -13,6 +13,7 @@ import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/t
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactics/training_tactics.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/training_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class TrainingPage extends GetView<TrainingController> {
@@ -28,7 +29,7 @@ class TrainingPage extends GetView<TrainingController> {
               Column(
                 children: [
                   const TrainingPeparation(),
-                  9.vGap,
+                  // 9.vGap,
                   // SizedBox(
                   //   width: 375.w,
                   //   height: 480.w,
@@ -49,9 +50,9 @@ class TrainingPage extends GetView<TrainingController> {
                   //     ],
                   //   ),
                   // )
-                  const TrainingTactics(),
-                  9.vGap,
-                  const PlayerStatus(),
+                  // const TrainingTactics(),
+                  // 9.vGap,
+                  // const PlayerStatus(),
                   9.vGap,
                   const TrainingWidget(),
                 ],
@@ -68,7 +69,9 @@ class TrainingPage extends GetView<TrainingController> {
 
                     duration: 300.milliseconds,
                     child: AnimatedScale(
-                      alignment: Alignment.topLeft,
+                      alignment: e.offset.value.dy == (78.5.w + 197.5.w)
+                          ? Alignment.center
+                          : Alignment.topLeft,
                       duration: Duration(
                           milliseconds: controller.isChange.value ||
                                   !controller.showBuff.value
@@ -77,7 +80,11 @@ class TrainingPage extends GetView<TrainingController> {
                       // scale: !controller.tacticFly.value ? 1 : 0.5,
                       scale: controller.showBuff.value &&
                               !controller.isChange.value
-                          ? (!controller.tacticFly.value ? 1 : 0.5)
+                          ? (!controller.tacticFly.value
+                              ? 1
+                              : (e.offset.value.dy == (78.5.w + 197.5.w)
+                                  ? 0
+                                  : 0.5))
                           : 0,
                       child: FlipCard(
                         useSmallTacticCard: controller.tacticFly.value,
@@ -85,6 +92,8 @@ class TrainingPage extends GetView<TrainingController> {
                         onFlip: () async {
                           //卡牌飞行动画
                           // controller.tacticFly.value = true;
+                          // if (!e.isOpen.value) return;
+                          if (!controller.canChoose) return;
                           e.isSelect.value = true;
                           controller.selectTacticId = e.id;
                           controller.changeTacticId = 0;

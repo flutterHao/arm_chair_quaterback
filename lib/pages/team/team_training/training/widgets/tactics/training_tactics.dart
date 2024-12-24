@@ -74,15 +74,10 @@ class TrainingTactics extends StatelessWidget {
 
     return Material(
       child: GetBuilder<TeamController>(builder: (myTeamCtrl) {
-        return Container(
+        return SizedBox(
             key: key,
             width: double.infinity,
-            height: 115.w,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: AppColors.cFFFFFF,
-              borderRadius: BorderRadius.circular(12.w),
-            ),
+            height: 117.5.w,
             child: Row(
               children: [
                 InkWell(
@@ -541,6 +536,7 @@ class TacticItem extends GetView<TrainingController> {
           children: [
             SizedBox(
               width: 36.w,
+              // width: 30.w,
               child: Stack(
                 alignment: Alignment.bottomCenter,
                 children: [
@@ -555,6 +551,7 @@ class TacticItem extends GetView<TrainingController> {
                               num: buff.face,
                               color: buff.color,
                               width: 35.w,
+                              // width: 30.w,
                             ),
                           );
                         }))

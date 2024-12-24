@@ -147,8 +147,10 @@ class Assets {
   static const String managerUiManagerGift01 = 'assets/images/manager/ui_manager_gift_01.png';
   static const String managerUiManagerGift02 = 'assets/images/manager/ui_manager_gift_02.png';
   static const String managerUiManagerGift03 = 'assets/images/manager/ui_manager_gift_03.png';
+  static const String managerUiManagerIconArchive = 'assets/images/manager/ui_manager_icon_archive.png';
   static const String managerUiManagerIconCurrency04 = 'assets/images/manager/ui_manager_icon_currency_04.png';
   static const String managerUiManagerIconLine = 'assets/images/manager/ui_manager_icon_line.png';
+  static const String managerUiManagerIconMission = 'assets/images/manager/ui_manager_icon_mission.png';
   static const String managerUiManagerIconRecover = 'assets/images/manager/ui_manager_icon_recover.png';
   static const String managerUiManagerIconRecover01 = 'assets/images/manager/ui_manager_icon_recover_01.png';
   static const String managerUiManagerImageMatchgame = 'assets/images/manager/ui_manager_image_matchgame.png';
@@ -157,6 +159,7 @@ class Assets {
   static const String managerUiManagerLineupUnload = 'assets/images/manager/ui_manager_lineup_unload.png';
   static const String managerUiManagerMatchgameBg = 'assets/images/manager/ui_manager_matchgame_bg.jpg';
   static const String managerUiManagerMatchgameImage = 'assets/images/manager/ui_manager_matchgame_image.png';
+  static const String managerUiManagerMissionReward = 'assets/images/manager/ui_manager_mission_reward.png';
   static const String managerUiManagerMyteamBg = 'assets/images/manager/ui_manager_myteam_bg.jpg';
   static const String managerUiManagerPlayercard01 = 'assets/images/manager/ui_manager_playercard_01.png';
   static const String managerUiManagerPlayercardBig = 'assets/images/manager/ui_manager_playercard_big.png';

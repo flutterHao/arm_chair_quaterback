@@ -42,6 +42,7 @@ class TrainingController extends GetxController
   var showBuff = false.obs;
   RxInt cash = 0.obs;
   var showProp = false.obs;
+  bool canChoose = false;
 
   TrainingInfoEntity trainingInfo = TrainingInfoEntity();
   // List<TeamPlayerInfoEntity> playerList = [];
@@ -469,7 +470,7 @@ class TrainingController extends GetxController
             if (selectTacticId == tacticChooseList[j].id) {
               trainingInfo.buff[i] = tacticChooseList[j];
               double x = 10.w + 143.5.w + i * 43.w;
-              double y = 84.w + 45.w + 4.w;
+              double y = 45.w + 4.w + 59.5.w;
               tacticChooseList[j].offset.value = Offset(x, y);
               type = 0;
               Future.delayed(const Duration(milliseconds: 300), () async {
@@ -488,7 +489,7 @@ class TrainingController extends GetxController
           // trainingInfo.buff.add(chooseTacticList[i]);
           //  type = 0;
           double x = 10.w + 143.5.w + (trainingInfo.buff.length) * 43.w;
-          tacticChooseList[i].offset.value = Offset(x, 45.w + 84.w + 4.w);
+          tacticChooseList[i].offset.value = Offset(x, 45.w + 4.w + 59.5.w);
         }
       }
     }
@@ -568,6 +569,7 @@ class TrainingController extends GetxController
   }
 
   void initSlot() {
+    canChoose = false;
     isPlaying.value = true;
     cash.value = 0;
     for (var e in showBoxList) {
@@ -580,7 +582,8 @@ class TrainingController extends GetxController
     if (ballNum.value > 0) {
       ballNum.value = ballNum.value - 1;
     } else {
-      bool result = HomeController.to.updateChips(-1);
+      int cost = getBallCost();
+      bool result = HomeController.to.updateChips(-cost);
       if (!result) return;
     }
     if (isPlaying.value) return;
@@ -745,8 +748,9 @@ class TrainingController extends GetxController
         await Future.delayed(const Duration(milliseconds: 100));
         element.isOpen.value = true;
       }
-      // await Future.delayed(const Duration(milliseconds: 300));
-      //  showBuff.value = false;
+      Future.delayed(const Duration(milliseconds: 500), () {
+        canChoose = true;
+      });
     }
 
     if (!awads.contains(1)) {
@@ -788,7 +792,7 @@ class TrainingController extends GetxController
                       (tacticChooseList.length - 1) * spacing)) /
               2 +
           i * (74.w + spacing);
-      item.offset.value = Offset(x, 78.5.w + 281.5.w);
+      item.offset.value = Offset(x, 78.5.w + 197.5.w);
       // item.isOpen.value = false;
     }
   }
@@ -813,9 +817,11 @@ class TrainingController extends GetxController
     ///状态控制
 
     await Future.delayed(const Duration(milliseconds: 150));
+    var teamPlayers =
+        Get.find<TeamController>().myTeamEntity.teamPlayers.toList();
     trainingInfo.selectPlayer.value =
         trainingInfo.statusReplyPlayers.map((e) => e.playerId).toList();
-    playerList = Get.find<TeamController>().myTeamEntity.teamPlayers.toList()
+    playerList = List.from(teamPlayers)
       ..sort((a, b) {
         bool aInStatus = trainingInfo.selectPlayer.contains(a.playerId);
         bool bInStatus = trainingInfo.selectPlayer.contains(b.playerId);
@@ -826,7 +832,20 @@ class TrainingController extends GetxController
         } else {
           return 0; // 或者根据其他属性排序
         }
+        // int indexA = trainingInfo.selectPlayer.indexOf(a.playerId);
+        // int indexB = trainingInfo.selectPlayer.indexOf(b.playerId);
+        // if (indexA >= 0 && indexB >= 0) {
+        //   return indexA.compareTo(indexB);
+        // } else if (indexA < 0 && indexB < 0) {
+        //   return 2;
+        // } else {
+        //   return indexA < 0 ? 3 : indexA;
+        // }
       });
+    var tempList = playerList.map((e) => e.playerId).toList();
+    trainingInfo.selectPlayer.sort((a, b) {
+      return tempList.indexOf(a).compareTo(tempList.indexOf(b));
+    });
     statusScollerList.clear();
     for (int i = 0; i < trainingInfo.statusReplyPlayers.length; i++) {
       statusScollerList.add(ScrollController());
@@ -843,9 +862,10 @@ class TrainingController extends GetxController
       playerScollCtrl.jumpTo(0);
 
       double isTwo = (trainingInfo.statusReplyPlayers.length - 1) * 32.5.w;
+      // isTwo = 0;
       double offset = (playerList.length * 3 - 3) * 65.w + isTwo;
       playerScollCtrl.addListener(() {
-        currentPlayerIndex.value = (playerScollCtrl.offset / 65.w).round() + 3;
+        currentPlayerIndex.value = (playerScollCtrl.offset / 65.w).ceil() + 3;
       });
       await playerScollCtrl
           .animateTo(
@@ -952,5 +972,14 @@ class TrainingController extends GetxController
         buff.buffValue = config.suitAdd[m - 1];
       }
     }
+  }
+
+  int getBallCost() {
+    if (trainingInfo.training.todayBuyCount > 0) {
+      int length = trainDefine.trainCoinNum.length;
+      int cost = min(length, trainingInfo.training.todayBuyCount);
+      return trainDefine.trainCoinNum[cost];
+    }
+    return 0;
   }
 }

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2024-12-19 21:23:24
+ * @LastEditTime: 2024-12-23 18:59:27
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -235,6 +235,112 @@ class PlayerItem extends GetView<TeamController> {
     );
   }
 
+  Widget _centerInfo(BuildContext context) {
+    return Row(
+      key: ValueKey(item.uuid),
+      children: [
+        13.hGap,
+        PlayerCard(
+          backgroundColor: AppColors.cE1E1E1,
+          playerId: item.playerId,
+          width: 73.w,
+          height: 93.w,
+          isMyPlayer: true,
+          grade: Utils.formatGrade(Utils.getPlayBaseInfo(item.playerId).grade),
+          level: item.breakThroughGrade,
+        ),
+        11.hGap,
+        _playerInfo(),
+        9.hGap,
+        if (!isSelect)
+          controller.isFire && isBag
+              ? MtInkwell(
+                  onTap: () {
+                    //解雇
+                    showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        builder: (context) {
+                          return FireDialog(item: item);
+                        });
+                  },
+                  child: IconWidget(
+                    iconWidth: 12.w,
+                    backgroudWitdh: 28.w,
+                    backgroudheight: 28.w,
+                    borderRadius: BorderRadius.circular(9.w),
+                    backgroudColor: AppColors.cD60D20,
+                    icon: Assets.iconUiIconDelete02,
+                    iconColor: AppColors.cFFFFFF,
+                  ),
+                )
+              : MtInkwell(
+                  onTap: () {
+                    //换人
+                    if (item.position > 0) {
+                      String p = item.position > 0
+                          ? Utils.getPosition(item.position)
+                          : Utils.getPlayBaseInfo(item.playerId).position;
+                      int bagCount = controller.myBagList
+                          .where((e) =>
+                              Utils.getPlayBaseInfo(e.playerId)
+                                  .position
+                                  .contains(p) &&
+                              e.position < 0)
+                          .length;
+                      int count = 0;
+                      if (item.position < 0) {
+                        count = controller.myTeamEntity.teamPlayers
+                            .where((e) => Utils.getPlayBaseInfo(e.playerId)
+                                .position
+                                .contains(p))
+                            .length;
+                      } else if (item.position > 0) {
+                        int teamCount = controller.myTeamEntity.teamPlayers
+                            .where((e) =>
+                                Utils.getPlayBaseInfo(e.playerId)
+                                    .position
+                                    .contains(p) &&
+                                e.position == 0)
+                            .length;
+                        count = teamCount + bagCount;
+                      } else if (item.position == 0) {
+                        int teamCount = controller.myTeamEntity.teamPlayers
+                            .where((e) =>
+                                Utils.getPlayBaseInfo(e.playerId)
+                                    .position
+                                    .contains(p) &&
+                                e.position > 0)
+                            .length;
+                        count = teamCount + bagCount;
+                      }
+
+                      if (count == 0) {
+                        EasyLoading.showToast(
+                            "No players in the same position");
+                        return;
+                      }
+                    }
+                    // if (controller.isShowDialog.value) {
+                    //   controller.item2 = item;
+                    //   controller.item2.isChange.value = true;
+                    // }
+                    controller.playerChangeTap(context, isBag, item);
+                  },
+                  child: IconWidget(
+                    iconWidth: 17.w,
+                    backgroudWitdh: 36.w,
+                    backgroudheight: 36.w,
+                    borderRadius: BorderRadius.circular(9.w),
+                    backgroudColor: AppColors.c000000,
+                    icon: Assets.iconUiIconSwitch02,
+                    iconColor: AppColors.cFFFFFF,
+                  ),
+                ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -251,128 +357,21 @@ class PlayerItem extends GetView<TeamController> {
                 width: 16.w,
               ),
               Expanded(
-                child: AnimatedSwitcher(
-                  duration: controller.changeDuration.milliseconds,
-                  transitionBuilder:
-                      (Widget child, Animation<double> animation) {
-                    //  var tween = Tween(begin: const Offset(1, 0), end: const Offset(0, 0));
-                    return SlideTransitionX(
-                      direction: AxisDirection.left,
-                      position: animation,
-                      child: child,
-                    );
-                  },
-                  child: Row(
-                    key: ValueKey(item.uuid),
-                    children: [
-                      13.hGap,
-                      PlayerCard(
-                        backgroundColor: AppColors.cE1E1E1,
-                        playerId: item.playerId,
-                        width: 73.w,
-                        height: 93.w,
-                        isMyPlayer: true,
-                        grade: Utils.formatGrade(
-                            Utils.getPlayBaseInfo(item.playerId).grade),
-                        level: item.breakThroughGrade,
-                      ),
-                      11.hGap,
-                      _playerInfo(),
-                      9.hGap,
-                      if (!isSelect)
-                        controller.isFire && isBag
-                            ? MtInkwell(
-                                onTap: () {
-                                  //解雇
-                                  showModalBottomSheet(
-                                      context: context,
-                                      isScrollControlled: true,
-                                      builder: (context) {
-                                        return FireDialog(item: item);
-                                      });
-                                },
-                                child: IconWidget(
-                                  iconWidth: 12.w,
-                                  backgroudWitdh: 28.w,
-                                  backgroudheight: 28.w,
-                                  borderRadius: BorderRadius.circular(9.w),
-                                  backgroudColor: AppColors.cD60D20,
-                                  icon: Assets.iconUiIconDelete02,
-                                  iconColor: AppColors.cFFFFFF,
-                                ),
-                              )
-                            : MtInkwell(
-                                onTap: () {
-                                  //换人
-                                  if (item.position > 0) {
-                                    String p = item.position > 0
-                                        ? Utils.getPosition(item.position)
-                                        : Utils.getPlayBaseInfo(item.playerId)
-                                            .position;
-                                    int bagCount = controller.myBagList
-                                        .where((e) =>
-                                            Utils.getPlayBaseInfo(e.playerId)
-                                                .position
-                                                .contains(p) &&
-                                            e.position < 0)
-                                        .length;
-                                    int count = 0;
-                                    if (item.position < 0) {
-                                      count = controller
-                                          .myTeamEntity.teamPlayers
-                                          .where((e) =>
-                                              Utils.getPlayBaseInfo(e.playerId)
-                                                  .position
-                                                  .contains(p))
-                                          .length;
-                                    } else if (item.position > 0) {
-                                      int teamCount = controller
-                                          .myTeamEntity.teamPlayers
-                                          .where((e) =>
-                                              Utils.getPlayBaseInfo(e.playerId)
-                                                  .position
-                                                  .contains(p) &&
-                                              e.position == 0)
-                                          .length;
-                                      count = teamCount + bagCount;
-                                    } else if (item.position == 0) {
-                                      int teamCount = controller
-                                          .myTeamEntity.teamPlayers
-                                          .where((e) =>
-                                              Utils.getPlayBaseInfo(e.playerId)
-                                                  .position
-                                                  .contains(p) &&
-                                              e.position > 0)
-                                          .length;
-                                      count = teamCount + bagCount;
-                                    }
-
-                                    if (count == 0) {
-                                      EasyLoading.showToast(
-                                          "No players in the same position");
-                                      return;
-                                    }
-                                  }
-                                  // if (controller.isShowDialog.value) {
-                                  //   controller.item2 = item;
-                                  //   controller.item2.isChange.value = true;
-                                  // }
-                                  controller.playerChangeTap(
-                                      context, isBag, item);
-                                },
-                                child: IconWidget(
-                                  iconWidth: 17.w,
-                                  backgroudWitdh: 36.w,
-                                  backgroudheight: 36.w,
-                                  borderRadius: BorderRadius.circular(9.w),
-                                  backgroudColor: AppColors.c000000,
-                                  icon: Assets.iconUiIconSwitch02,
-                                  iconColor: AppColors.cFFFFFF,
-                                ),
-                              ),
-                    ],
-                  ),
-                ),
+                // child: _centerInfo(context),
+                child: item.position < 0
+                    ? _centerInfo(context)
+                    : AnimatedSwitcher(
+                        duration: controller.changeDuration.milliseconds,
+                        transitionBuilder:
+                            (Widget child, Animation<double> animation) {
+                          //  var tween = Tween(begin: const Offset(1, 0), end: const Offset(0, 0));
+                          return SlideTransitionX(
+                            direction: AxisDirection.left,
+                            position: animation,
+                            child: child,
+                          );
+                        },
+                        child: _centerInfo(context)),
               ),
               if (item.position == 0 &&
                   controller.isShowDialog.value &&

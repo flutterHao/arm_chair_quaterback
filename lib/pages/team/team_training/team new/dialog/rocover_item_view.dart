@@ -181,36 +181,24 @@ class RecoverItem extends GetView<TeamController> {
                 width: 16.w,
               ),
               Expanded(
-                child: AnimatedSwitcher(
-                  duration: controller.changeDuration.milliseconds,
-                  transitionBuilder:
-                      (Widget child, Animation<double> animation) {
-                    //  var tween = Tween(begin: const Offset(1, 0), end: const Offset(0, 0));
-                    return SlideTransitionX(
-                      direction: AxisDirection.left,
-                      position: animation,
-                      child: child,
-                    );
-                  },
-                  child: Row(
-                    key: ValueKey(item.uuid),
-                    children: [
-                      13.hGap,
-                      PlayerCard(
-                        backgroundColor: AppColors.cE1E1E1,
-                        playerId: item.playerId,
-                        width: 73.w,
-                        height: 93.w,
-                        isMyPlayer: true,
-                        grade: Utils.formatGrade(
-                            Utils.getPlayBaseInfo(item.playerId).grade),
-                        level: item.breakThroughGrade,
-                      ),
-                      11.hGap,
-                      _playerInfo(),
-                      9.hGap,
-                    ],
-                  ),
+                child: Row(
+                  key: ValueKey(item.uuid),
+                  children: [
+                    13.hGap,
+                    PlayerCard(
+                      backgroundColor: AppColors.cE1E1E1,
+                      playerId: item.playerId,
+                      width: 73.w,
+                      height: 93.w,
+                      isMyPlayer: true,
+                      grade: Utils.formatGrade(
+                          Utils.getPlayBaseInfo(item.playerId).grade),
+                      level: item.breakThroughGrade,
+                    ),
+                    11.hGap,
+                    _playerInfo(),
+                    9.hGap,
+                  ],
                 ),
               ),
               RecoverButtom(

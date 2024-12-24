@@ -2,21 +2,17 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-02 10:15:35
- * @LastEditTime: 2024-12-16 18:28:25
+ * @LastEditTime: 2024-12-24 14:49:46
  */
-import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
-import 'package:arm_chair_quaterback/common/widgets/dialog/custom_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactics/tactic_card.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactics/training_tactics.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/training_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -27,8 +23,10 @@ class TrainingAwardDialog extends GetView<TrainingController> {
 
   @override
   Widget build(BuildContext context) {
-    double top = (75 + 9 + 115 + 47 + 10).w;
-    Rx<Offset> offset = Offset((375 - 74).w / 2, top + 78.5.w + 69.w).obs;
+    double smallTop = (47 + 96.5).w;
+    // double top = (75 + 9 + 115 + 47 + 10).w;
+    double bigTop = (177.w + 9 + 47 + 78.5).w;
+    Rx<Offset> offset = Offset((375 - 74).w / 2, bigTop).obs;
     // RxBool isFly = false.obs;
     Duration duration = 300.milliseconds;
     return GetBuilder<TrainingController>(
@@ -48,13 +46,14 @@ class TrainingAwardDialog extends GetView<TrainingController> {
                       index < controller.trainingInfo.buff.length;
                       index++)
                     Positioned(
-                        top: 168.w,
+                        top: smallTop,
                         left: 10.w + 143.5.w + index * 43.w,
                         // right: 195.5.w - index * 43.w,
                         child: MtInkwell(
+                          splashColor: Colors.transparent,
                           onTap: () async {
-                            offset.value =
-                                Offset(10.w + 143.5.w + index * 43.w, 175.w);
+                            offset.value = Offset(
+                                10.w + 143.5.w + index * 43.w, smallTop + 4.w);
                             controller.changeTacticId =
                                 controller.trainingInfo.buff[index].id;
                             controller.chooseTactic(context);
@@ -118,10 +117,9 @@ class TrainingAwardDialog extends GetView<TrainingController> {
                   Obx(() {
                     return Visibility(
                       visible: controller.showBuff.value &&
-                              !controller.isChange.value ||
-                          true,
+                          !controller.tacticFly.value,
                       child: Positioned(
-                        top: top + 205.w + 69.w,
+                        top: bigTop + 97.w + 28.w,
                         child: MtInkwell(
                           onTap: () async {
                             if (Utils.getNoTip("tactics")) {

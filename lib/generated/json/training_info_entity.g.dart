@@ -255,6 +255,10 @@ TrainingInfoTraining $TrainingInfoTrainingFromJson(Map<String, dynamic> json) {
   if (taskEndTime != null) {
     trainingInfoTraining.taskEndTime = taskEndTime;
   }
+  final int? todayBuyCount = jsonConvert.convert<int>(json['todayBuyCount']);
+  if (todayBuyCount != null) {
+    trainingInfoTraining.todayBuyCount = todayBuyCount;
+  }
   return trainingInfoTraining;
 }
 
@@ -272,6 +276,7 @@ Map<String, dynamic> $TrainingInfoTrainingToJson(TrainingInfoTraining entity) {
   data['totalCount'] = entity.totalCount;
   data['currentLineId'] = entity.currentLineId;
   data['taskEndTime'] = entity.taskEndTime;
+  data['todayBuyCount'] = entity.todayBuyCount;
   return data;
 }
 
@@ -290,6 +295,7 @@ extension TrainingInfoTrainingExtension on TrainingInfoTraining {
     int? currentLineId,
     int? taskEndTime,
     RxDouble? taskProgress,
+    int? todayBuyCount,
   }) {
     return TrainingInfoTraining()
       ..ballRefreshTime = ballRefreshTime ?? this.ballRefreshTime
@@ -304,7 +310,8 @@ extension TrainingInfoTrainingExtension on TrainingInfoTraining {
       ..totalCount = totalCount ?? this.totalCount
       ..currentLineId = currentLineId ?? this.currentLineId
       ..taskEndTime = taskEndTime ?? this.taskEndTime
-      ..taskProgress = taskProgress ?? this.taskProgress;
+      ..taskProgress = taskProgress ?? this.taskProgress
+      ..todayBuyCount = todayBuyCount ?? this.todayBuyCount;
   }
 }
 

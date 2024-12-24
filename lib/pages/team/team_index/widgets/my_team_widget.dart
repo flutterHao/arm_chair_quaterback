@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 17:22:13
- * @LastEditTime: 2024-12-20 12:07:01
+ * @LastEditTime: 2024-12-23 20:55:03
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
@@ -29,6 +29,7 @@ class MyTeamWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<int> statusList = [106, 105, 104, 103, 102, 101];
     return GetBuilder<TeamController>(builder: (ctrl) {
       return Container(
         width: double.infinity,
@@ -39,19 +40,53 @@ class MyTeamWidget extends StatelessWidget {
         ),
         child: Column(
           children: [
-            24.vGap,
+            19.vGap,
             Container(
               margin: EdgeInsets.symmetric(horizontal: 16.w),
               alignment: Alignment.centerLeft,
-              child: Text(
-                "MY TEAM",
-                style: 30.w7(
-                  fontFamily: FontFamily.fOswaldBold,
-                  height: 0.75,
-                ),
+              child: Row(
+                children: [
+                  Text(
+                    "MY TEAM",
+                    style: 30.w7(
+                      fontFamily: FontFamily.fOswaldBold,
+                      height: 0.75,
+                    ),
+                  ),
+                  30.hGap,
+                  SizedBox(
+                    height: 60.w,
+                    child: ListView.separated(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          int count = ctrl.myTeamEntity.teamPlayers
+                              .where((e) => e.playerStatus == statusList[index])
+                              .length;
+                          return Column(
+                            children: [
+                              13.vGap,
+                              IconWidget(
+                                  iconWidth: 27.w,
+                                  icon: Utils.getStatusUrl(statusList[index])),
+                              2.5.vGap,
+                              Text(
+                                "$count",
+                                style: 12.w4(
+                                  height: 1,
+                                  fontFamily: FontFamily.fRobotoMedium,
+                                ),
+                              )
+                            ],
+                          );
+                        },
+                        separatorBuilder: (context, index) => 8.hGap,
+                        itemCount: statusList.length),
+                  )
+                ],
               ),
             ),
-            38.vGap,
+            19.vGap,
             Container(
               margin: EdgeInsets.symmetric(horizontal: 29.w),
               child: Row(
