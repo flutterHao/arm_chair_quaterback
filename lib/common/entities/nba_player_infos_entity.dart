@@ -45,27 +45,27 @@ class NbaPlayerInfosEntity {
 
 @JsonSerializable()
 class NbaPlayerInfosPlayerDataAvgList {
-  late double blk = 0;
-  late double fga = 0;
-  late double ast = 0;
-  late double dreb = 0;
-  late int starterCount = 0;
-  late double stl = 0;
-  late int updateTime = 0;
-  late double fgm = 0;
-  late double pts = 0;
-  late double threePa = 0;
-  late int playCount = 0;
-  late double fta = 0;
-  late double min = 0;
-  late double oreb = 0;
-  late int createTime = 0;
-  late int seasonId = 0;
-  late double pf = 0;
-  late double threePm = 0;
-  late double to = 0;
-  late double ftm = 0;
-  late int playerId = 0;
+  double blk = 0;
+  double fga = 0;
+  double ast = 0;
+  double dreb = 0;
+  int starterCount = 0;
+  double stl = 0;
+  int updateTime = 0;
+  double fgm = 0;
+  double pts = 0;
+  double threePa = 0;
+  int playCount = 0;
+  double fta = 0;
+  double min = 0;
+  double oreb = 0;
+  int createTime = 0;
+  int seasonId = 0;
+  double pf = 0;
+  double threePm = 0;
+  double to = 0;
+  double ftm = 0;
+  int playerId = 0;
 
   NbaPlayerInfosPlayerDataAvgList();
 
@@ -144,6 +144,8 @@ class NbaPlayerInfosPlayerDataCapList {
   late int to = 0;
   int? reb;
   int? threePt;
+  double pass = 0;
+  double tech = 0;
 
   NbaPlayerInfosPlayerDataCapList();
 
@@ -217,6 +219,9 @@ class NbaPlayerInfosPlayerBaseInfoList {
   late int beforeMarketPriceUpdateTime = 0;
   late String elname = "";
   late int number;
+  double layupWeight = 0;
+  double threePointWeight = 0;
+  double perimeterShotWeight = 0;
 
   NbaPlayerInfosPlayerBaseInfoList();
 

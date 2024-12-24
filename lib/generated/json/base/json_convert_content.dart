@@ -62,6 +62,7 @@ import 'package:arm_chair_quaterback/common/entities/tatics_combine_entity.dart'
 import 'package:arm_chair_quaterback/common/entities/team_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_list_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_player_up_star_vo_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rule_config_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_simple_entity.dart';
@@ -791,6 +792,14 @@ class JsonConvert {
       return data.map<TeamPlayerListEntity>((Map<String, dynamic> e) =>
           TeamPlayerListEntity.fromJson(e)).toList() as M;
     }
+    if (<TeamPlayerUpStarVoEntity>[] is M) {
+      return data.map<TeamPlayerUpStarVoEntity>((Map<String, dynamic> e) =>
+          TeamPlayerUpStarVoEntity.fromJson(e)).toList() as M;
+    }
+    if (<TeamPlayerUpStarVoPotential>[] is M) {
+      return data.map<TeamPlayerUpStarVoPotential>((Map<String, dynamic> e) =>
+          TeamPlayerUpStarVoPotential.fromJson(e)).toList() as M;
+    }
     if (<TeamRankEntity>[] is M) {
       return data.map<TeamRankEntity>((Map<String, dynamic> e) =>
           TeamRankEntity.fromJson(e)).toList() as M;
@@ -1094,6 +1103,9 @@ class JsonConvertClassCollection {
     (TeamPlayerInfoEntity).toString(): TeamPlayerInfoEntity.fromJson,
     (TeamPlayerInfoPotential).toString(): TeamPlayerInfoPotential.fromJson,
     (TeamPlayerListEntity).toString(): TeamPlayerListEntity.fromJson,
+    (TeamPlayerUpStarVoEntity).toString(): TeamPlayerUpStarVoEntity.fromJson,
+    (TeamPlayerUpStarVoPotential).toString(): TeamPlayerUpStarVoPotential
+        .fromJson,
     (TeamRankEntity).toString(): TeamRankEntity.fromJson,
     (TeamRuleConfigEntity).toString(): TeamRuleConfigEntity.fromJson,
     (TeamSimpleEntity).toString(): TeamSimpleEntity.fromJson,

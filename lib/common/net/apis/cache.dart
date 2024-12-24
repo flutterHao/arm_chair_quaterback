@@ -43,8 +43,8 @@ class CacheApi {
 
   static List<RewardGroupEntity>? rewardGroupList;
 
-  static List<StarUpDefineEntity>? _starUpDefines;
-  static List<GradeInStarDefineEntity>? _gradeInStars;
+  static List<StarUpDefineEntity>? starUpDefines;
+  static List<GradeInStarDefineEntity>? gradeInStars;
   static Map<int, PlayerStatusEntity> playerStatusMap = {};
 
   static List<GameEventEntity> gameEvents = [];
@@ -143,20 +143,20 @@ class CacheApi {
   }
 
   static Future<List<StarUpDefineEntity>> getStarUpDefine() async {
-    if (_starUpDefines == null) {
+    if (starUpDefines == null) {
       List json = await httpUtil.post(Api.cStarUpDefine);
-      _starUpDefines = json.map((e) => StarUpDefineEntity.fromJson(e)).toList();
+      starUpDefines = json.map((e) => StarUpDefineEntity.fromJson(e)).toList();
     }
-    return _starUpDefines!;
+    return starUpDefines!;
   }
 
   static Future<List<GradeInStarDefineEntity>> getGradeInStarDefine() async {
-    if (_gradeInStars == null) {
+    if (gradeInStars == null) {
       List json = await httpUtil.post(Api.cGradeInStarDefine);
-      _gradeInStars =
+      gradeInStars =
           json.map((e) => GradeInStarDefineEntity.fromJson(e)).toList();
     }
-    return _gradeInStars!;
+    return gradeInStars!;
   }
 
   static Future<List<TeamRuleConfigEntity>> getTeamRuleConfig() async {

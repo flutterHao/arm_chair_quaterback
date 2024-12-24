@@ -11,6 +11,7 @@ import 'package:arm_chair_quaterback/common/entities/player_status_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/tactics_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/tatics_combine_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_player_up_star_vo_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/train_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/train_task_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
@@ -143,5 +144,16 @@ class TeamApi {
     var isDismiss = await HttpUtil().post(Api.dismissPlayer,
         data: {"uuids": uuid, "dismissType": dismissType});
     return isDismiss;
+  }
+
+  static Future<TeamPlayerUpStarVoEntity> getTeamPlayerUpStarVO(
+      String uuid) async {
+    var json = await HttpUtil().post(
+      Api.getTeamPlayerUpStarVO,
+      data: {"uuid": uuid},
+    );
+    TeamPlayerUpStarVoEntity teamEntity =
+        TeamPlayerUpStarVoEntity.fromJson(json);
+    return teamEntity;
   }
 }

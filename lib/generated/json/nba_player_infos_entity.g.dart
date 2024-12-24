@@ -365,6 +365,14 @@ NbaPlayerInfosPlayerDataCapList $NbaPlayerInfosPlayerDataCapListFromJson(
   if (threePt != null) {
     nbaPlayerInfosPlayerDataCapList.threePt = threePt;
   }
+  final double? pass = jsonConvert.convert<double>(json['pass']);
+  if (pass != null) {
+    nbaPlayerInfosPlayerDataCapList.pass = pass;
+  }
+  final double? tech = jsonConvert.convert<double>(json['tech']);
+  if (tech != null) {
+    nbaPlayerInfosPlayerDataCapList.tech = tech;
+  }
   return nbaPlayerInfosPlayerDataCapList;
 }
 
@@ -403,6 +411,8 @@ Map<String, dynamic> $NbaPlayerInfosPlayerDataCapListToJson(
   data['to'] = entity.to;
   data['reb'] = entity.reb;
   data['threePt'] = entity.threePt;
+  data['pass'] = entity.pass;
+  data['tech'] = entity.tech;
   return data;
 }
 
@@ -440,6 +450,8 @@ extension NbaPlayerInfosPlayerDataCapListExtension on NbaPlayerInfosPlayerDataCa
     int? to,
     int? reb,
     int? threePt,
+    double? pass,
+    double? tech,
   }) {
     return NbaPlayerInfosPlayerDataCapList()
       ..fga = fga ?? this.fga
@@ -473,7 +485,9 @@ extension NbaPlayerInfosPlayerDataCapListExtension on NbaPlayerInfosPlayerDataCa
       ..threePm = threePm ?? this.threePm
       ..to = to ?? this.to
       ..reb = reb ?? this.reb
-      ..threePt = threePt ?? this.threePt;
+      ..threePt = threePt ?? this.threePt
+      ..pass = pass ?? this.pass
+      ..tech = tech ?? this.tech;
   }
 }
 
@@ -595,6 +609,20 @@ NbaPlayerInfosPlayerBaseInfoList $NbaPlayerInfosPlayerBaseInfoListFromJson(
   if (number != null) {
     nbaPlayerInfosPlayerBaseInfoList.number = number;
   }
+  final double? layupWeight = jsonConvert.convert<double>(json['layupWeight']);
+  if (layupWeight != null) {
+    nbaPlayerInfosPlayerBaseInfoList.layupWeight = layupWeight;
+  }
+  final double? threePointWeight = jsonConvert.convert<double>(
+      json['threePointWeight']);
+  if (threePointWeight != null) {
+    nbaPlayerInfosPlayerBaseInfoList.threePointWeight = threePointWeight;
+  }
+  final double? perimeterShotWeight = jsonConvert.convert<double>(
+      json['perimeterShotWeight']);
+  if (perimeterShotWeight != null) {
+    nbaPlayerInfosPlayerBaseInfoList.perimeterShotWeight = perimeterShotWeight;
+  }
   return nbaPlayerInfosPlayerBaseInfoList;
 }
 
@@ -628,6 +656,9 @@ Map<String, dynamic> $NbaPlayerInfosPlayerBaseInfoListToJson(
   data['beforeMarketPriceUpdateTime'] = entity.beforeMarketPriceUpdateTime;
   data['elname'] = entity.elname;
   data['number'] = entity.number;
+  data['layupWeight'] = entity.layupWeight;
+  data['threePointWeight'] = entity.threePointWeight;
+  data['perimeterShotWeight'] = entity.perimeterShotWeight;
   return data;
 }
 
@@ -660,6 +691,9 @@ extension NbaPlayerInfosPlayerBaseInfoListExtension on NbaPlayerInfosPlayerBaseI
     int? beforeMarketPriceUpdateTime,
     String? elname,
     int? number,
+    double? layupWeight,
+    double? threePointWeight,
+    double? perimeterShotWeight,
   }) {
     return NbaPlayerInfosPlayerBaseInfoList()
       ..marketPrice = marketPrice ?? this.marketPrice
@@ -689,6 +723,9 @@ extension NbaPlayerInfosPlayerBaseInfoListExtension on NbaPlayerInfosPlayerBaseI
       ..beforeMarketPriceUpdateTime = beforeMarketPriceUpdateTime ??
           this.beforeMarketPriceUpdateTime
       ..elname = elname ?? this.elname
-      ..number = number ?? this.number;
+      ..number = number ?? this.number
+      ..layupWeight = layupWeight ?? this.layupWeight
+      ..threePointWeight = threePointWeight ?? this.threePointWeight
+      ..perimeterShotWeight = perimeterShotWeight ?? this.perimeterShotWeight;
   }
 }

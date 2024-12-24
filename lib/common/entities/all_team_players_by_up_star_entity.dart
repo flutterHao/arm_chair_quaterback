@@ -25,6 +25,7 @@ class AllTeamPlayersByUpStarEntity {
   int breakThroughGrade=0;
   late int playerId;
   late AllTeamPlayersByUpStarUpStarBase upStarBase;
+  late int playerStatus;
 
   AllTeamPlayersByUpStarEntity();
 

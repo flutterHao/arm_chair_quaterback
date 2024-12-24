@@ -30,7 +30,7 @@ class PlayerStatusController extends GetxController {
                   (f) => f.playerId == e.playerId && f.teamId == e.teamId)
               ?.score ??
           0;
-      return PlayerStatus(e.playerId, e.power / 120 * 100, e.playerStatus,
+      return PlayerStatus(e.playerId, e.power, e.playerStatus,
           score, e.teamId, Utils.getPlayBaseInfo(e.playerId));
     }).toList();
     playerStatusList.sort((a, b) {

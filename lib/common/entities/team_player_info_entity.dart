@@ -26,6 +26,7 @@ class TeamPlayerInfoEntity {
   late int teamId = 0;
   late int id = 0;
   late int position = 0;
+  // 战力
   late int power = 0;
   late int playerStatus = 1;
   late TeamPlayerInfoPotential potential;

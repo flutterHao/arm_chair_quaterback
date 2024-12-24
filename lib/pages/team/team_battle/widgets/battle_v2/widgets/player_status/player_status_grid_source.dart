@@ -100,7 +100,7 @@ class PlayerStatusGridSource extends DataGridSource {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "${(e.value as double).toStringAsFixed(1)}%",
+                "${(e.value as double).format()}%",
                 style: 12.w4(
                     color: AppColors.c4D4D4D,
                     height: 1,

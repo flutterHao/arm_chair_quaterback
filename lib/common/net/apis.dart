@@ -126,6 +126,7 @@ class Api {
   static const String buyTrainingBall =
       "$API_BASE_PATH/TeamPlayer/buyTrainingBall";
   static const String chooseTactic = "/p/TeamPlayer/chooseTactic";
+  static const String getTeamPlayerUpStarVO = "/p/TeamPlayer/getTeamPlayerUpStarVO";
 
   static const String getCardPackInfo = "$API_BASE_PATH/match/getCardPackInfo";
   static const String activeBox = "$API_BASE_PATH/match/activeBox";

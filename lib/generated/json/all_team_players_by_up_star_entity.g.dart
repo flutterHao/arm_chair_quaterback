@@ -84,6 +84,10 @@ AllTeamPlayersByUpStarEntity $AllTeamPlayersByUpStarEntityFromJson(
   if (upStarBase != null) {
     allTeamPlayersByUpStarEntity.upStarBase = upStarBase;
   }
+  final int? playerStatus = jsonConvert.convert<int>(json['playerStatus']);
+  if (playerStatus != null) {
+    allTeamPlayersByUpStarEntity.playerStatus = playerStatus;
+  }
   return allTeamPlayersByUpStarEntity;
 }
 
@@ -109,6 +113,7 @@ Map<String, dynamic> $AllTeamPlayersByUpStarEntityToJson(
   data['breakThroughGrade'] = entity.breakThroughGrade;
   data['playerId'] = entity.playerId;
   data['upStarBase'] = entity.upStarBase.toJson();
+  data['playerStatus'] = entity.playerStatus;
   return data;
 }
 
@@ -133,6 +138,7 @@ extension AllTeamPlayersByUpStarEntityExtension on AllTeamPlayersByUpStarEntity 
     int? breakThroughGrade,
     int? playerId,
     AllTeamPlayersByUpStarUpStarBase? upStarBase,
+    int? playerStatus,
   }) {
     return AllTeamPlayersByUpStarEntity()
       ..buyPrice = buyPrice ?? this.buyPrice
@@ -153,7 +159,8 @@ extension AllTeamPlayersByUpStarEntityExtension on AllTeamPlayersByUpStarEntity 
       ..bindStatus = bindStatus ?? this.bindStatus
       ..breakThroughGrade = breakThroughGrade ?? this.breakThroughGrade
       ..playerId = playerId ?? this.playerId
-      ..upStarBase = upStarBase ?? this.upStarBase;
+      ..upStarBase = upStarBase ?? this.upStarBase
+      ..playerStatus = playerStatus ?? this.playerStatus;
   }
 }
 

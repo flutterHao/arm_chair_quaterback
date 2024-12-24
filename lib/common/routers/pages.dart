@@ -25,6 +25,7 @@ import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_detail_page.d
 import 'package:arm_chair_quaterback/pages/team/team_index/open_box/open_box_page.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_upgrade/view.dart';
+import 'package:arm_chair_quaterback/pages/team/team_upgrade/widgets/start_upgrade/start_upgrade_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -106,6 +107,11 @@ class AppPages {
       name: RouteNames.openBoxPage,
       page: () => OpenBoxPage(item: Get.arguments),
       transition: Transition.fadeIn,
+    ),
+    GetPage(
+      opaque: false,
+      name: RouteNames.teamStartUpGrade,
+      page: () => const StartUpgradeWidget(),
     ),
     // GetPage(
     //   opaque: false,
