@@ -13,6 +13,7 @@
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
 import 'package:arm_chair_quaterback/pages/league/league_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/view.dart';
+import 'package:arm_chair_quaterback/pages/message/view.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_info/bindings.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_info/view.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/view.dart';
@@ -112,6 +113,11 @@ class AppPages {
       opaque: false,
       name: RouteNames.teamStartUpGrade,
       page: () => const StartUpgradeWidget(),
+    ),
+    GetPage(
+      opaque: false,
+      name: RouteNames.message,
+      page: () => const MessagePage(),
     ),
     // GetPage(
     //   opaque: false,

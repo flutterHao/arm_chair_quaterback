@@ -208,7 +208,8 @@ class _HomePageState extends State<HomePage>
                               : AppColors.c000000.withOpacity(0.3),
                         ),
                       ),
-                      if (showMessageCount)
+                      if (showMessageCount && false)
+                        /// 消息数量
                         Positioned(
                           top: 0.w,
                           right: 0,

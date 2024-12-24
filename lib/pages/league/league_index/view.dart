@@ -114,7 +114,7 @@ class _LeagueIndexPageState extends State<LeagueIndexPage>
         }
         return Column(
           children: [
-            buildContainer(),
+            buildHeaderBar(),
             Expanded(
               child: ExtendedTabBarView(
                   cacheExtent: 1,
@@ -152,12 +152,12 @@ class _LeagueIndexPageState extends State<LeagueIndexPage>
     return SliverPersistentHeader(
       floating: true,
       delegate: FixedHeightSliverHeaderDelegate(
-          child: buildContainer(),
+          child: buildHeaderBar(),
           height: 58.w),
     );
   }
 
-  Container buildContainer() {
+  Container buildHeaderBar() {
     return Container(
           height: 58.w,
           width: double.infinity,
@@ -193,7 +193,7 @@ class _LeagueIndexPageState extends State<LeagueIndexPage>
                   indicatorSize: TabBarIndicatorSize.tab,
                   onTap: controller.onPageChanged,
                   tabs: controller.getDataTimes().map((e) {
-                    var today = MyDateUtils.isToday(e.millisecondsSinceEpoch);
+                    var specialDay = MyDateUtils.isToday(e.millisecondsSinceEpoch);
                     int index = controller.getDataTimes().indexOf(e);
                     return Obx(() {
                       var currentIndex = controller.currentPageIndex.value;
@@ -202,12 +202,12 @@ class _LeagueIndexPageState extends State<LeagueIndexPage>
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            (today
+                            (specialDay
                                     ? "TODAY"
                                     : MyDateUtils.getWeekday(e, short: true))
                                 .toUpperCase(),
                             style: 12.w4(
-                                color: today
+                                color: specialDay
                                     ? AppColors.cFF7954
                                     : select
                                         ? AppColors.cFFFFFF

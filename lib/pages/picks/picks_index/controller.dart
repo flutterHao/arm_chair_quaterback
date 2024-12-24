@@ -267,9 +267,9 @@ class PicksIndexController extends GetxController
           if(compareTo != 0){
             return compareTo;
           }
-          //竞猜分
-          return (b.guessInfo.guessReferenceValue[key] ?? 0)
-              .compareTo(a.guessInfo.guessReferenceValue[key] ?? 0);
+          //都使用PTS的竞猜分排序
+          return (b.guessInfo.guessReferenceValue["PTS"] ?? 0)
+              .compareTo(a.guessInfo.guessReferenceValue["PTS"] ?? 0);
         });
         //排序：选过的放后面
         // item.sort((a, b) {

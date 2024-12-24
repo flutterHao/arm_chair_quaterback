@@ -25,6 +25,7 @@ import 'package:arm_chair_quaterback/common/store/user.dart';
 import 'package:arm_chair_quaterback/common/utils/device_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/view.dart';
+import 'package:arm_chair_quaterback/pages/message/view.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/index.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/view.dart';
@@ -85,7 +86,7 @@ class HomeController extends GetxController {
       "Message",
       Assets.commonUiCommonTabBottom05Off,
       Assets.commonUiCommonTabBottom05On,
-      const TradeIndex(),
+      const MessagePage(),
     ),
   ];
   /*List<TabItemInfo> tabItems = [
