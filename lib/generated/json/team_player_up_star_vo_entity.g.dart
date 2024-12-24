@@ -116,6 +116,11 @@ TeamPlayerUpStarVoEntity $TeamPlayerUpStarVoEntityFromJson(
   if (maxAbility != null) {
     teamPlayerUpStarVoEntity.maxAbility = maxAbility;
   }
+  final double? playerStrength = jsonConvert.convert<double>(
+      json['playerStrength']);
+  if (playerStrength != null) {
+    teamPlayerUpStarVoEntity.playerStrength = playerStrength;
+  }
   return teamPlayerUpStarVoEntity;
 }
 
@@ -148,6 +153,7 @@ Map<String, dynamic> $TeamPlayerUpStarVoEntityToJson(
   data['position'] = entity.position;
   data['breakThroughGrade'] = entity.breakThroughGrade;
   data['maxAbility'] = entity.maxAbility.toJson();
+  data['playerStrength'] = entity.playerStrength;
   return data;
 }
 
@@ -179,6 +185,7 @@ extension TeamPlayerUpStarVoEntityExtension on TeamPlayerUpStarVoEntity {
     int? position,
     int? breakThroughGrade,
     TeamPlayerUpStarVoPotential? maxAbility,
+    double? playerStrength,
   }) {
     return TeamPlayerUpStarVoEntity()
       ..uuid = uuid ?? this.uuid
@@ -206,7 +213,8 @@ extension TeamPlayerUpStarVoEntityExtension on TeamPlayerUpStarVoEntity {
       ..teamId = teamId ?? this.teamId
       ..position = position ?? this.position
       ..breakThroughGrade = breakThroughGrade ?? this.breakThroughGrade
-      ..maxAbility = maxAbility ?? this.maxAbility;
+      ..maxAbility = maxAbility ?? this.maxAbility
+      ..playerStrength = playerStrength ?? this.playerStrength;
   }
 }
 

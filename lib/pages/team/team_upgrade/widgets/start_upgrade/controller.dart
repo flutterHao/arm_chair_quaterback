@@ -175,7 +175,7 @@ class StartUpgradeController extends GetxController {
     var where =
         CacheApi.gradeInStars!.firstWhere((e) => e.playerGrade == value2.name);
     var cost = where.starUpGradeCost[player.breakThroughGrade + 1];
-    return double.parse(cost);
+    return cost;
   }
 
   static String get idUpgradePlayers => "id_upgrade_players";

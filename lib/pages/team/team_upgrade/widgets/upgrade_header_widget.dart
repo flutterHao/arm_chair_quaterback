@@ -62,7 +62,7 @@ class UpgradeHeaderWidget extends GetView<TeamUpgradeController> {
                             color: AppColors.c000000,
                             borderRadius: BorderRadius.circular(2.w)),
                         child: Text(
-                          controller.teamPlayerInfo.position > 0
+                          controller.player.position > 0
                               ? "MAIN"
                               : "SUB",
                           style: 10.w5(
@@ -116,7 +116,7 @@ class UpgradeHeaderWidget extends GetView<TeamUpgradeController> {
                           IconWidget(
                               iconWidth: 16.w,
                               icon: Utils.getStatusUrl(
-                                  controller.teamPlayerInfo.playerStatus)),
+                                  controller.player.playerStatus)),
                           6.hGap,
                           if (controller.playerBaseInfo.injuries)
                             IconWidget(
@@ -170,7 +170,7 @@ class UpgradeHeaderWidget extends GetView<TeamUpgradeController> {
                             iconWidth: 22.w,
                             icon: Assets.managerUiManagerPlayerstar),
                         Text(
-                          "${controller.teamPlayerInfo.getBreakThroughGrade()}",
+                          "${controller.player.getBreakThroughGrade()}",
                           style: 13.w5(
                             color: AppColors.cFFFFFF,
                             fontFamily: FontFamily.fRobotoMedium,
@@ -231,7 +231,7 @@ class UpgradeHeaderWidget extends GetView<TeamUpgradeController> {
                           fontFamily: FontFamily.fOswaldRegular),
                     ),
                     Text(
-                      "${controller.teamPlayerInfo.power}",
+                      controller.teamPlayerUpStarVoEntity.playerStrength.format(),
                       style: 12.w4(
                           color: AppColors.c000000,
                           height: 1,
@@ -299,8 +299,7 @@ class UpgradeHeaderWidget extends GetView<TeamUpgradeController> {
                         icon: Assets.managerUiManagerIconRecover),
                     7.hGap,
                     Text(
-                      ///todo 暂无此字段
-                      "${controller.teamPlayerInfo.power}",
+                      "${controller.player.power}",
                       style: 12.w4(
                           color: AppColors.c000000,
                           height: 1,

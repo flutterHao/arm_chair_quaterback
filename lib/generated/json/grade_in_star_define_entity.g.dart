@@ -10,11 +10,14 @@ GradeInStarDefineEntity $GradeInStarDefineEntityFromJson(
   if (gradeAddWeight != null) {
     gradeInStarDefineEntity.gradeAddWeight = gradeAddWeight;
   }
-  final String? gradeId = jsonConvert.convert<String>(json['gradeId']);
+  final int? gradeId = jsonConvert.convert<int>(json['gradeId']);
   if (gradeId != null) {
     gradeInStarDefineEntity.gradeId = gradeId;
   }
-  final double? gradeWeight = jsonConvert.convert<double>(json['gradeWeight']);
+  final List<double>? gradeWeight = (json['gradeWeight'] as List<dynamic>?)
+      ?.map(
+          (e) => jsonConvert.convert<double>(e) as double)
+      .toList();
   if (gradeWeight != null) {
     gradeInStarDefineEntity.gradeWeight = gradeWeight;
   }
@@ -22,20 +25,20 @@ GradeInStarDefineEntity $GradeInStarDefineEntityFromJson(
   if (playerGrade != null) {
     gradeInStarDefineEntity.playerGrade = playerGrade;
   }
-  final List<String>? starPotentialNum = (json['starPotentialNum'] as List<
+  final List<double>? starPotentialNum = (json['starPotentialNum'] as List<
       dynamic>?)?.map(
-          (e) => jsonConvert.convert<String>(e) as String).toList();
+          (e) => jsonConvert.convert<double>(e) as double).toList();
   if (starPotentialNum != null) {
     gradeInStarDefineEntity.starPotentialNum = starPotentialNum;
   }
-  final List<String>? starUpBase = (json['starUpBase'] as List<dynamic>?)?.map(
-          (e) => jsonConvert.convert<String>(e) as String).toList();
+  final List<double>? starUpBase = (json['starUpBase'] as List<dynamic>?)?.map(
+          (e) => jsonConvert.convert<double>(e) as double).toList();
   if (starUpBase != null) {
     gradeInStarDefineEntity.starUpBase = starUpBase;
   }
-  final List<String>? starUpGradeCost = (json['starUpGradeCost'] as List<
+  final List<double>? starUpGradeCost = (json['starUpGradeCost'] as List<
       dynamic>?)?.map(
-          (e) => jsonConvert.convert<String>(e) as String).toList();
+          (e) => jsonConvert.convert<double>(e) as double).toList();
   if (starUpGradeCost != null) {
     gradeInStarDefineEntity.starUpGradeCost = starUpGradeCost;
   }
@@ -58,12 +61,12 @@ Map<String, dynamic> $GradeInStarDefineEntityToJson(
 extension GradeInStarDefineEntityExtension on GradeInStarDefineEntity {
   GradeInStarDefineEntity copyWith({
     List<double>? gradeAddWeight,
-    String? gradeId,
-    double? gradeWeight,
+    int? gradeId,
+    List<double>? gradeWeight,
     String? playerGrade,
-    List<String>? starPotentialNum,
-    List<String>? starUpBase,
-    List<String>? starUpGradeCost,
+    List<double>? starPotentialNum,
+    List<double>? starUpBase,
+    List<double>? starUpGradeCost,
   }) {
     return GradeInStarDefineEntity()
       ..gradeAddWeight = gradeAddWeight ?? this.gradeAddWeight

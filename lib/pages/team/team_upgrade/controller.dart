@@ -18,7 +18,6 @@ class TeamUpgradeController extends GetxController {
 
   final TeamPlayerInfoEntity player;
 
-  late TeamPlayerInfoEntity teamPlayerInfo;
   late NbaPlayerInfosPlayerBaseInfoList playerBaseInfo;
   var loadStatus = LoadDataStatus.loading.obs;
   late TeamPlayerUpStarVoEntity teamPlayerUpStarVoEntity;
@@ -32,20 +31,10 @@ class TeamUpgradeController extends GetxController {
   _initData() {
     loadStatus.value = LoadDataStatus.loading;
     Future.wait([
-      TeamApi.getMyTeamPlayer(player.teamId),
       TeamApi.getTeamPlayerUpStarVO(player.uuid),
       CacheApi.getNBAPlayerInfo(),
     ]).then((result) {
-      var where = ((result[0]) as MyTeamEntity)
-          .teamPlayers
-          .firstWhereOrNull((e) => e.playerId == player.playerId);
-      teamPlayerUpStarVoEntity = result[1] as TeamPlayerUpStarVoEntity;
-      if (where == null) {
-        loadStatus.value = LoadDataStatus.error;
-        EasyLoading.showToast("SERVER ERROR");
-      } else {
-        teamPlayerInfo = where;
-      }
+      teamPlayerUpStarVoEntity = result[0] as TeamPlayerUpStarVoEntity;
       playerBaseInfo = Utils.getPlayBaseInfo(player.playerId);
       loadStatus.value = LoadDataStatus.success;
     }, onError: (e) {
@@ -72,7 +61,7 @@ class TeamUpgradeController extends GetxController {
         key = "PTS";
       }
       var proKey = ParamUtils.getProKey(key.toLowerCase());
-      print('e:$e');
+      // print('e:$e');
       num baseValue = playerCapData.getValue(proKey);
       num potentialValue = teamPlayerUpStarVoEntity.potential.toJson()[proKey];
       return UpgradePlayerAbility(

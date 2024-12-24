@@ -6,12 +6,12 @@ export 'package:arm_chair_quaterback/generated/json/grade_in_star_define_entity.
 @JsonSerializable()
 class GradeInStarDefineEntity {
   late List<double> gradeAddWeight;
-  late String gradeId;
-  late double gradeWeight;
+  late int gradeId;
+  late List<double> gradeWeight;
   late String playerGrade;
-  late List<String> starPotentialNum;
-  late List<String> starUpBase;
-  late List<String> starUpGradeCost;
+  late List<double> starPotentialNum;
+  late List<double> starUpBase;
+  late List<double> starUpGradeCost;
 
   GradeInStarDefineEntity();
 

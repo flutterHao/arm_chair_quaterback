@@ -31,6 +31,7 @@ class TeamPlayerUpStarVoEntity {
 	late int position = 0;
 	late int breakThroughGrade = 0;
 	late TeamPlayerUpStarVoPotential maxAbility;
+	double playerStrength=0;
 
 	TeamPlayerUpStarVoEntity();
 
