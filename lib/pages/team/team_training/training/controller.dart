@@ -12,7 +12,7 @@ import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/top_toast_dialog.dart';
 import 'package:arm_chair_quaterback/pages/home/index.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactics/tactic_utils.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactics/tatic_match.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/training_award_dialog.dart';

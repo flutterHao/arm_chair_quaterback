@@ -16,7 +16,7 @@ import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_leader/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_leader/widget/player_detail.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/widgets/player_item_widget.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team_new/widgets/player_item_widget.dart';
 import 'package:extended_tabs/extended_tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

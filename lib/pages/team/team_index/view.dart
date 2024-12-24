@@ -21,9 +21,9 @@ import 'package:arm_chair_quaterback/pages/team/team_index/widgets/beauty_and_bo
 import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_page.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/match_card.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/my_team_widget.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/view.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team_new/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/view.dart';
 import 'package:flutter/material.dart';

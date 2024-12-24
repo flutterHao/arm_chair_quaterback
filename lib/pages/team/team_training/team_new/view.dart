@@ -15,8 +15,8 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/widgets/team_tab_bar.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team_new/widgets/team_tab_bar.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

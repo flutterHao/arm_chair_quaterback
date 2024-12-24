@@ -15,7 +15,7 @@ import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team%20new/widgets/player_item_widget.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team_new/widgets/player_item_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_upgrade/widgets/start_upgrade/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_upgrade/widgets/start_upgrade/widgets/add_sparring_players_dialog_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_upgrade/widgets/start_upgrade/widgets/player_property_widget.dart';
