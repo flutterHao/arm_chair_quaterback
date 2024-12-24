@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-14 11:11:48
- * @LastEditTime: 2024-12-17 11:05:10
+ * @LastEditTime: 2024-12-24 17:51:12
  */
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
@@ -244,6 +244,18 @@ class NewsDetailItem extends GetView<NewListController> {
                 ),
               )
             : 10.vGap,
+        Text(
+          item.content,
+          style: TextStyle(
+            fontSize: 16.h,
+            fontFamily: FontFamily.fRobotoRegular,
+            color: AppColors.c000000,
+            height: 1.6,
+            // letterSpacing: 0.5,
+          ),
+          // style: 17.w4(color: AppColors.c262626, height: 1.7,),
+        ),
+        10.vGap,
         ListView.separated(
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
@@ -258,18 +270,6 @@ class NewsDetailItem extends GetView<NewListController> {
                 borderRadius: BorderRadius.circular(9.w),
               );
             }),
-        10.vGap,
-        Text(
-          item.content,
-          style: TextStyle(
-            fontSize: 16.h,
-            fontFamily: FontFamily.fRobotoRegular,
-            color: AppColors.c000000,
-            height: 1.6,
-            // letterSpacing: 0.5,
-          ),
-          // style: 17.w4(color: AppColors.c262626, height: 1.7,),
-        ),
       ],
     );
   }

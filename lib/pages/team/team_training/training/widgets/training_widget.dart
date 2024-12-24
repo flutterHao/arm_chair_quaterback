@@ -320,135 +320,145 @@ class TrainingWidget extends GetView<TrainingController> {
                             left: 85.w,
                             right: 64.w,
                             top: 14.5.w,
-                            child: Container(
-                              height: 60.w,
-                              // color: Colors.red,
-                              alignment: Alignment.topCenter,
-                              width: double.infinity,
-                              child: Stack(
+                            child: GestureDetector(
+                              onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return const AwardDialog();
+                                    });
+                              },
+                              child: Container(
+                                height: 60.w,
+                                // color: Colors.red,
                                 alignment: Alignment.topCenter,
-                                children: [
-                                  Positioned(
-                                    top: 15.w,
-                                    left: 14.w,
-                                    child: Stack(
-                                      children: [
-                                        Container(
-                                          width: 180.w,
-                                          height: 9.w,
-                                          clipBehavior:
-                                              Clip.antiAliasWithSaveLayer,
-                                          alignment: Alignment.centerLeft,
-                                          decoration: BoxDecoration(
-                                              color: AppColors.c000000,
-                                              borderRadius:
-                                                  BorderRadius.circular(5.w),
-                                              border: Border.all(
-                                                  width: 1.w,
-                                                  color: AppColors.c666666)),
-                                        ),
-                                        Obx(() {
-                                          return AnimatedContainer(
-                                            duration: const Duration(
-                                                milliseconds: 300),
-                                            width: 180.w *
-                                                controller.taskValue.value /
-                                                controller.currentTaskNeed,
+                                width: double.infinity,
+                                child: Stack(
+                                  alignment: Alignment.topCenter,
+                                  children: [
+                                    Positioned(
+                                      top: 15.w,
+                                      left: 14.w,
+                                      child: Stack(
+                                        children: [
+                                          Container(
+                                            width: 180.w,
                                             height: 9.w,
-                                            constraints:
-                                                BoxConstraints(maxWidth: 290.w),
-                                            decoration: const BoxDecoration(
-                                                gradient: LinearGradient(
-                                                    colors: [
-                                                  AppColors.c3296F2,
-                                                  AppColors.c3BE1FF
-                                                ])),
-                                          );
-                                        }),
-                                      ],
-                                    ),
-                                  ),
-                                  Positioned(
-                                    top: 0.w,
-                                    left: 0.w,
-                                    child: IconWidget(
-                                      iconWidth: 27.w,
-                                      icon: Assets.commonUiCommonProp03,
-                                    ),
-                                  ),
-                                  Positioned(
-                                    top: 0.w,
-                                    left: 27.5.w,
-                                    child: Text(
-                                      "TRAINING TASK",
-                                      style: 12.w4(
-                                        fontFamily: FontFamily.fOswaldMedium,
-                                        height: 1,
-                                        color: AppColors.cFFFFFF,
+                                            clipBehavior:
+                                                Clip.antiAliasWithSaveLayer,
+                                            alignment: Alignment.centerLeft,
+                                            decoration: BoxDecoration(
+                                                color: AppColors.c000000,
+                                                borderRadius:
+                                                    BorderRadius.circular(5.w),
+                                                border: Border.all(
+                                                    width: 1.w,
+                                                    color: AppColors.c666666)),
+                                          ),
+                                          Obx(() {
+                                            return AnimatedContainer(
+                                              duration: const Duration(
+                                                  milliseconds: 300),
+                                              width: 180.w *
+                                                  controller.taskValue.value /
+                                                  controller.currentTaskNeed,
+                                              height: 9.w,
+                                              constraints: BoxConstraints(
+                                                  maxWidth: 290.w),
+                                              decoration: const BoxDecoration(
+                                                  gradient: LinearGradient(
+                                                      colors: [
+                                                    AppColors.c3296F2,
+                                                    AppColors.c3BE1FF
+                                                  ])),
+                                            );
+                                          }),
+                                        ],
                                       ),
                                     ),
-                                  ),
-                                  Positioned(
-                                    top: 0.w,
-                                    right: 40.w,
-                                    child: Row(
-                                      children: [
-                                        Obx(() {
-                                          return AnimatedNum(
+                                    Positioned(
+                                      top: 0.w,
+                                      left: 0.w,
+                                      child: IconWidget(
+                                        iconWidth: 27.w,
+                                        icon: Assets.commonUiCommonProp03,
+                                      ),
+                                    ),
+                                    Positioned(
+                                      top: 0.w,
+                                      left: 27.5.w,
+                                      child: Text(
+                                        "TRAINING TASK",
+                                        style: 12.w4(
+                                          fontFamily: FontFamily.fOswaldMedium,
+                                          height: 1,
+                                          color: AppColors.cFFFFFF,
+                                        ),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      top: 0.w,
+                                      right: 40.w,
+                                      child: Row(
+                                        children: [
+                                          Obx(() {
+                                            return AnimatedNum(
+                                                number:
+                                                    controller.taskValue.value,
+                                                textStyle: 12.w4(
+                                                  fontFamily:
+                                                      FontFamily.fOswaldMedium,
+                                                  height: 1,
+                                                  color: AppColors.cFFFFFF,
+                                                ));
+                                          }),
+                                          Text("/",
+                                              style: 12.w4(
+                                                fontFamily:
+                                                    FontFamily.fOswaldMedium,
+                                                height: 1,
+                                                color: AppColors.cFFFFFF,
+                                              )),
+                                          AnimatedNum(
                                               number:
-                                                  controller.taskValue.value,
+                                                  controller.currentTaskNeed,
                                               textStyle: 12.w4(
                                                 fontFamily:
                                                     FontFamily.fOswaldMedium,
                                                 height: 1,
                                                 color: AppColors.cFFFFFF,
-                                              ));
+                                              ))
+                                        ],
+                                      ),
+                                    ),
+                                    Positioned(
+                                      top: 0.w,
+                                      right: 4.w,
+                                      child: MtInkwell(
+                                        onTap: () {
+                                          showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return const AwardDialog();
+                                              });
+                                        },
+                                        child: Obx(() {
+                                          return AnimatedScale(
+                                            duration: const Duration(
+                                                milliseconds: 300),
+                                            scale: controller.showProp.value
+                                                ? 1.5
+                                                : 1,
+                                            child: Image.asset(
+                                              Assets.managerUiManagerFreegift01,
+                                              width: 30.5.w,
+                                            ),
+                                          );
                                         }),
-                                        Text("/",
-                                            style: 12.w4(
-                                              fontFamily:
-                                                  FontFamily.fOswaldMedium,
-                                              height: 1,
-                                              color: AppColors.cFFFFFF,
-                                            )),
-                                        AnimatedNum(
-                                            number: controller.currentTaskNeed,
-                                            textStyle: 12.w4(
-                                              fontFamily:
-                                                  FontFamily.fOswaldMedium,
-                                              height: 1,
-                                              color: AppColors.cFFFFFF,
-                                            ))
-                                      ],
+                                      ),
                                     ),
-                                  ),
-                                  Positioned(
-                                    top: 0.w,
-                                    right: 4.w,
-                                    child: MtInkwell(
-                                      onTap: () {
-                                        showDialog(
-                                            context: context,
-                                            builder: (context) {
-                                              return const AwardDialog();
-                                            });
-                                      },
-                                      child: Obx(() {
-                                        return AnimatedScale(
-                                          duration:
-                                              const Duration(milliseconds: 300),
-                                          scale: controller.showProp.value
-                                              ? 1.5
-                                              : 1,
-                                          child: Image.asset(
-                                            Assets.managerUiManagerFreegift01,
-                                            width: 30.5.w,
-                                          ),
-                                        );
-                                      }),
-                                    ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),

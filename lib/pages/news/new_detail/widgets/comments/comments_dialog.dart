@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-18 15:38:51
- * @LastEditTime: 2024-12-17 11:05:59
+ * @LastEditTime: 2024-12-24 18:11:06
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -29,8 +29,8 @@ class CommentsDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var borderRadius = BorderRadius.only(
-      topLeft: Radius.circular(16.w),
-      topRight: Radius.circular(16.w),
+      topLeft: Radius.circular(9.w),
+      topRight: Radius.circular(9.w),
     );
     return InkWell(
       onTap: () => FocusScope.of(context).unfocus(),
@@ -42,37 +42,23 @@ class CommentsDialog extends StatelessWidget {
             width: double.infinity,
             height: 650.h,
             decoration: BoxDecoration(
-              color: AppColors.cFF7954,
+              color: AppColors.cFFFFFF,
               borderRadius: borderRadius,
             ),
-          ),
-          Positioned(
-            left: 0,
-            right: 0,
-            top: 3,
-            bottom: 0,
-            child: Container(
-              width: double.infinity,
-              height: 650.w,
-              decoration: BoxDecoration(
-                color: AppColors.cFFFFFF,
-                borderRadius: borderRadius,
-              ),
-              child: Column(
-                children: [
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 12.w),
-                    width: 64.w,
-                    height: 4.w,
-                    decoration: BoxDecoration(
-                      color: AppColors.cB2B2B2,
-                      borderRadius: BorderRadius.circular(2.w),
-                    ),
+            child: Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 8.w),
+                  width: 44.w,
+                  height: 4.w,
+                  decoration: BoxDecoration(
+                    color: AppColors.cB2B2B2,
+                    borderRadius: BorderRadius.circular(2.w),
                   ),
-                  Expanded(child: CommentsList(detail: detail)),
-                  30.vGap,
-                ],
-              ),
+                ),
+                Expanded(child: CommentsList(detail: detail)),
+                30.vGap,
+              ],
             ),
           ),
           Positioned(

@@ -641,6 +641,7 @@ class TrainingController extends GetxController
   Future showAward() async {
     // tacticType = TacticUtils.checkTacticMatch(tacticList);
     isPlaying.value = true;
+    canChoose = false;
     int cashNum = 0;
     List<int> awads = [];
     for (var e in trainingInfo.award) {

@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 
 Future showTopToastDialog({
   required Widget child,
-  Duration duration = const Duration(milliseconds: 800), //停留时间
+  Duration duration = const Duration(milliseconds: 1000), //停留时间
 }) async {
   final overlayEntry = OverlayEntry(
     builder: (context) {
