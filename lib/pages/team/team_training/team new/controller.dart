@@ -37,6 +37,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   RxBool showThirdCard = true.obs;
 
   MyTeamEntity myTeamEntity = MyTeamEntity();
+  List<TeamPlayerInfoEntity> subList = [];
   List<TeamPlayerInfoEntity> myBagList = [];
   Timer? _timer;
   late int _recoverSeconds;
@@ -134,6 +135,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
       myTeamEntity = v[0] as MyTeamEntity;
       myBagList = v[1] as List<TeamPlayerInfoEntity>;
       starUpDefineList = v[3] as List<StarUpDefineEntity>;
+      subList = myTeamEntity.teamPlayers.where((e) => e.position == 0).toList();
       recoverTimeAndCountDown();
       myBagList.sort(comparePlayers);
       oVROld = myTeamEntity.oVR;
@@ -306,6 +308,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
     // }
 
     myTeamEntity = result;
+    subList = myTeamEntity.teamPlayers.where((e) => e.position == 0).toList();
     update();
     Get.back(result: result);
   }
@@ -336,6 +339,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   Future updateTeamInfo() async {
     int teamId = HomeController.to.userEntiry.teamLoginInfo!.team!.teamId ?? 0;
     myTeamEntity = await TeamApi.getMyTeamPlayer(teamId);
+    subList = myTeamEntity.teamPlayers.where((e) => e.position == 0).toList();
     update();
   }
 

@@ -161,7 +161,7 @@ class SubPlayerList extends GetView<TeamController> {
     var list = controller.myTeamEntity.teamPlayers
         .where((e) => e.position == 0)
         .toList();
-    // list.sort(controller.comparePlayers);
+    list.sort(controller.comparePlayers);
     return SizedBox(
       // width: 360.w,
       child: Column(

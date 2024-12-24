@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-25 15:56:43
- * @LastEditTime: 2024-12-24 15:44:24
+ * @LastEditTime: 2024-12-24 20:10:17
  */
 
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -167,7 +167,7 @@ class TrainingWidget extends GetView<TrainingController> {
                                                             fontFamily:
                                                                 FontFamily
                                                                     .fOswaldBold,
-                                                            height: 1),
+                                                            height: 0.8),
                                                       );
                                                     }),
                                                     if (controller
@@ -179,7 +179,7 @@ class TrainingWidget extends GetView<TrainingController> {
                                                                 .c31E99E,
                                                             fontFamily: FontFamily
                                                                 .fOswaldMedium,
-                                                            height: 1),
+                                                            height: 0.8),
                                                       )
                                                   ],
                                                 ),
@@ -196,7 +196,7 @@ class TrainingWidget extends GetView<TrainingController> {
                                                     style: 16.w4(
                                                         fontFamily: FontFamily
                                                             .fOswaldBold,
-                                                        height: 1),
+                                                        height: 0.8),
                                                   ),
                                                 ),
                                               ),
@@ -308,7 +308,7 @@ class TrainingWidget extends GetView<TrainingController> {
                           //   left: 0,
                           //   right: 0,
                           //   child: Container(
-                          //     height: 1.w,
+                          //     height: 0.8.w,
                           //     width: double.infinity,
                           //     color: AppColors.cE6E6E,
                           //     margin: EdgeInsets.symmetric(horizontal: 16.w),
@@ -319,7 +319,7 @@ class TrainingWidget extends GetView<TrainingController> {
                           Positioned(
                             left: 85.w,
                             right: 64.w,
-                            top: 14.5.w,
+                            top: 13.5.w,
                             child: GestureDetector(
                               onTap: () {
                                 showDialog(
@@ -337,9 +337,10 @@ class TrainingWidget extends GetView<TrainingController> {
                                   alignment: Alignment.topCenter,
                                   children: [
                                     Positioned(
-                                      top: 15.w,
+                                      top: 9.5.w,
                                       left: 14.w,
                                       child: Stack(
+                                        alignment: Alignment.topCenter,
                                         children: [
                                           Container(
                                             width: 180.w,
@@ -356,21 +357,24 @@ class TrainingWidget extends GetView<TrainingController> {
                                                     color: AppColors.c666666)),
                                           ),
                                           Obx(() {
-                                            return AnimatedContainer(
-                                              duration: const Duration(
-                                                  milliseconds: 300),
-                                              width: 180.w *
-                                                  controller.taskValue.value /
-                                                  controller.currentTaskNeed,
-                                              height: 9.w,
-                                              constraints: BoxConstraints(
-                                                  maxWidth: 290.w),
-                                              decoration: const BoxDecoration(
-                                                  gradient: LinearGradient(
-                                                      colors: [
-                                                    AppColors.c3296F2,
-                                                    AppColors.c3BE1FF
-                                                  ])),
+                                            return Positioned(
+                                              left: 0,
+                                              child: AnimatedContainer(
+                                                duration: const Duration(
+                                                    milliseconds: 300),
+                                                width: 180.w *
+                                                    controller.taskValue.value /
+                                                    controller.currentTaskNeed,
+                                                height: 9.w,
+                                                constraints: BoxConstraints(
+                                                    maxWidth: 290.w),
+                                                decoration: const BoxDecoration(
+                                                    gradient: LinearGradient(
+                                                        colors: [
+                                                      AppColors.c3296F2,
+                                                      AppColors.c3BE1FF
+                                                    ])),
+                                              ),
                                             );
                                           }),
                                         ],
@@ -380,25 +384,13 @@ class TrainingWidget extends GetView<TrainingController> {
                                       top: 0.w,
                                       left: 0.w,
                                       child: IconWidget(
-                                        iconWidth: 27.w,
+                                        iconWidth: 24.w,
                                         icon: Assets.commonUiCommonProp03,
                                       ),
                                     ),
                                     Positioned(
-                                      top: 0.w,
-                                      left: 27.5.w,
-                                      child: Text(
-                                        "TRAINING TASK",
-                                        style: 12.w4(
-                                          fontFamily: FontFamily.fOswaldMedium,
-                                          height: 1,
-                                          color: AppColors.cFFFFFF,
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      top: 0.w,
-                                      right: 40.w,
+                                      top: 8.5.w,
+                                      // right: 40.w,
                                       child: Row(
                                         children: [
                                           Obx(() {
@@ -408,7 +400,7 @@ class TrainingWidget extends GetView<TrainingController> {
                                                 textStyle: 12.w4(
                                                   fontFamily:
                                                       FontFamily.fOswaldMedium,
-                                                  height: 1,
+                                                  height: 0.8,
                                                   color: AppColors.cFFFFFF,
                                                 ));
                                           }),
@@ -416,7 +408,7 @@ class TrainingWidget extends GetView<TrainingController> {
                                               style: 12.w4(
                                                 fontFamily:
                                                     FontFamily.fOswaldMedium,
-                                                height: 1,
+                                                height: 0.8,
                                                 color: AppColors.cFFFFFF,
                                               )),
                                           AnimatedNum(
@@ -425,38 +417,51 @@ class TrainingWidget extends GetView<TrainingController> {
                                               textStyle: 12.w4(
                                                 fontFamily:
                                                     FontFamily.fOswaldMedium,
-                                                height: 1,
+                                                height: 0.8,
                                                 color: AppColors.cFFFFFF,
                                               ))
                                         ],
                                       ),
                                     ),
-                                    Positioned(
-                                      top: 0.w,
-                                      right: 4.w,
-                                      child: MtInkwell(
-                                        onTap: () {
-                                          showDialog(
-                                              context: context,
-                                              builder: (context) {
-                                                return const AwardDialog();
-                                              });
-                                        },
-                                        child: Obx(() {
-                                          return AnimatedScale(
-                                            duration: const Duration(
-                                                milliseconds: 300),
-                                            scale: controller.showProp.value
-                                                ? 1.5
-                                                : 1,
-                                            child: Image.asset(
-                                              Assets.managerUiManagerFreegift01,
-                                              width: 30.5.w,
-                                            ),
-                                          );
-                                        }),
-                                      ),
-                                    ),
+                                    // Positioned(
+                                    //   top: 0.w,
+                                    //   left: 27.5.w,
+                                    //   child: Text(
+                                    //     "TRAINING TASK",
+                                    //     style: 12.w4(
+                                    //       fontFamily: FontFamily.fOswaldMedium,
+                                    //       height: 0.8,
+                                    //       color: AppColors.cFFFFFF,
+                                    //     ),
+                                    //   ),
+                                    // ),
+
+                                    // Positioned(
+                                    //   top: 0.w,
+                                    //   right: 4.w,
+                                    //   child: MtInkwell(
+                                    //     onTap: () {
+                                    //       showDialog(
+                                    //           context: context,
+                                    //           builder: (context) {
+                                    //             return const AwardDialog();
+                                    //           });
+                                    //     },
+                                    //     child: Obx(() {
+                                    //       return AnimatedScale(
+                                    //         duration: const Duration(
+                                    //             milliseconds: 300),
+                                    //         scale: controller.showProp.value
+                                    //             ? 1.5
+                                    //             : 1,
+                                    //         child: Image.asset(
+                                    //           Assets.managerUiManagerFreegift01,
+                                    //           width: 30.5.w,
+                                    //         ),
+                                    //       );
+                                    //     }),
+                                    //   ),
+                                    // ),
                                   ],
                                 ),
                               ),

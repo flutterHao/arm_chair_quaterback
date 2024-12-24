@@ -22,9 +22,9 @@ class _LineUpTabState extends State<LineUpTab>
   Widget build(BuildContext context) {
     super.build(context);
     return GetBuilder<TeamController>(builder: (_) {
-      var sublist = controller.myTeamEntity.teamPlayers
-          .where((e) => e.position == 0)
-          .toList();
+      // var sublist = controller.myTeamEntity.teamPlayers
+      //     .where((e) => e.position == 0)
+      //     .toList();
       return Container(
         color: AppColors.cF2F2F2,
         child: SingleChildScrollView(
@@ -85,7 +85,7 @@ class _LineUpTabState extends State<LineUpTab>
                             ),
                           ),
                           Text(
-                            "${sublist.length}/${controller.myTeamEntity.benchCount}",
+                            "${controller.subList.length}/${controller.myTeamEntity.benchCount}",
                             style: 12.w4(
                               fontFamily: FontFamily.fOswaldRegular,
                             ),
