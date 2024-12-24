@@ -110,7 +110,6 @@ class _HomePageState extends State<HomePage>
                                       onTap: () => controller.onTap(2),
                                       child: Container(
                                           height: 66.w,
-                                          width: 74.w,
                                           padding: EdgeInsets.all(4.w),
                                           decoration: BoxDecoration(
                                               color: select
@@ -147,7 +146,8 @@ class _HomePageState extends State<HomePage>
                                   color: AppColors.cFFFFFF,
                                   child: MtInkwell(
                                     onTap: () => controller.onTap(index),
-                                    child: _barItem(e, select, 66.w),
+                                    child: _barItem(e, select, 66.w,
+                                        showMessageCount: index == 4),
                                   ),
                                 ),
                               );
@@ -172,7 +172,7 @@ class _HomePageState extends State<HomePage>
   }
 
   Widget _barItem(TabItemInfo e, bool select, double height,
-      {bool isCenter = false}) {
+      {bool isCenter = false, bool showMessageCount = false}) {
     return Container(
       height: height,
       decoration: BoxDecoration(
@@ -182,53 +182,96 @@ class _HomePageState extends State<HomePage>
               colors: isCenter && select
                   ? [AppColors.cFF6A41, AppColors.cFF9071]
                   : [AppColors.cFFFFFF, AppColors.cFFFFFF])),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: Stack(
         children: [
-          Row(
+          Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              if (isCenter && select && false) //二期功能
-                Expanded(
-                    child: SizedBox(
-                  width: 4.w,
-                )),
-              IconWidget(
-                iconWidth: 24.w,
-                icon: select ? e.tabIconSelected : e.tabIconNormal,
-                iconColor: select ? null : AppColors.c000000.withOpacity(0.3),
-              ),
-              if (isCenter && select && false) //二期功能
-                Expanded(
-                  child: Column(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (isCenter && select && false) //二期功能
+                    Expanded(
+                        child: SizedBox(
+                      width: 4.w,
+                    )),
+                  Stack(
                     children: [
-                      IconWidget(
-                        iconWidth: 4.w,
-                        icon: Assets.commonUiCommonIconSystemArrow,
-                        iconColor: AppColors.c000000,
-                        rotateAngle: -90,
+                      Container(
+                        margin: EdgeInsets.symmetric(
+                            horizontal: 7.w, vertical: 3.w),
+                        child: IconWidget(
+                          iconWidth: 24.w,
+                          icon: select ? e.tabIconSelected : e.tabIconNormal,
+                          iconColor: select
+                              ? null
+                              : AppColors.c000000.withOpacity(0.3),
+                        ),
                       ),
-                      IconWidget(
-                        iconWidth: 4.w,
-                        icon: Assets.commonUiCommonIconSystemArrow,
-                        iconColor: AppColors.c000000,
-                        rotateAngle: 90,
-                      )
+                      if (showMessageCount)
+                        Positioned(
+                          top: 0.w,
+                          right: 0,
+                          child: Container(
+                            width: 16.w,
+                            height: 16.w,
+                            padding: EdgeInsets.symmetric(horizontal: 2.w),
+                            decoration: BoxDecoration(
+                                color: AppColors.cFF7954,
+                                borderRadius: BorderRadius.circular(8.w)),
+                            child: Center(
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  "99",
+                                  style: 10.w5(
+                                    color: AppColors.cFFFFFF,
+                                    height: 0.5,
+                                    fontFamily: FontFamily.fOswaldMedium,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
                     ],
                   ),
-                )
+                  if (isCenter && select && false) //二期功能
+                    Expanded(
+                      child: Column(
+                        children: [
+                          IconWidget(
+                            iconWidth: 4.w,
+                            icon: Assets.commonUiCommonIconSystemArrow,
+                            iconColor: AppColors.c000000,
+                            rotateAngle: -90,
+                          ),
+                          IconWidget(
+                            iconWidth: 4.w,
+                            icon: Assets.commonUiCommonIconSystemArrow,
+                            iconColor: AppColors.c000000,
+                            rotateAngle: 90,
+                          )
+                        ],
+                      ),
+                    )
+                ],
+              ),
+              5.vGap,
+              Text(
+                e.label,
+                style: select
+                    ? 12.w5(
+                        color: AppColors.c000000,
+                        height: 1,
+                        fontFamily: FontFamily.fRobotoRegular)
+                    : 12.w4(
+                        color: AppColors.c000000.withOpacity(0.3),
+                        height: 1,
+                        fontFamily: FontFamily.fRobotoMedium),
+              )
             ],
           ),
-          5.vGap,
-          Text(
-            e.label,
-            style: 12.w4(
-                color: select
-                    ? AppColors.c000000
-                    : AppColors.c000000.withOpacity(0.3),
-                height: 1,
-                fontFamily: FontFamily.fRobotoRegular),
-          )
         ],
       ),
     );

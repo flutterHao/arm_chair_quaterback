@@ -105,6 +105,7 @@ class _MtInkwellState extends State<MtInkwell>
           borderRadius: BorderRadius.circular(
               max(constraints.maxWidth, constraints.maxHeight) / 2),
           splashColor: widget.splashColor ?? AppColors.cFFFFFF.withOpacity(0.2),
+          hoverColor: Colors.transparent,
           onTap: () {
             if (easyAnimationController.controller.isAnimating) {
               return;

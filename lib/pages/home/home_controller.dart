@@ -56,8 +56,39 @@ class HomeController extends GetxController {
   GlobalKey<NavigatorState>? getCurrentTabGlobalKey() {
     return navigatorKeys[tabIndex.value];
   }
-
   List<TabItemInfo> tabItems = [
+    TabItemInfo(
+      "News",
+      Assets.commonUiCommonTabBottom01Off,
+      Assets.commonUiCommonTabBottom01On,
+      const NewsPage(),
+    ),
+    TabItemInfo(
+      "Scores",
+      Assets.commonUiCommonTabBottom02Off,
+      Assets.commonUiCommonTabBottom02On,
+      const LeaguePage(),
+    ),
+    TabItemInfo(
+      "Manager",
+      Assets.commonUiCommonTabBottom03,
+      Assets.commonUiCommonTabBottom03,
+      const TeamIndexPage(),
+    ),
+    TabItemInfo(
+      "Picks",
+      Assets.commonUiCommonTabBottom04Off,
+      Assets.commonUiCommonTabBottom04On,
+      const PicksIndex(),
+    ),
+    TabItemInfo(
+      "Message",
+      Assets.commonUiCommonTabBottom05Off,
+      Assets.commonUiCommonTabBottom05On,
+      const TradeIndex(),
+    ),
+  ];
+  /*List<TabItemInfo> tabItems = [
     TabItemInfo(
       "Picks",
       Assets.commonUiCommonTabBottom01Off,
@@ -88,7 +119,7 @@ class HomeController extends GetxController {
       Assets.commonUiCommonTabBottom05On,
       const TradeIndex(),
     ),
-  ];
+  ];*/
 
   RxBool isHide = false.obs;
 

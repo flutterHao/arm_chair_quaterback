@@ -49,15 +49,9 @@ class UserInfoBar extends StatelessWidget {
                 width: double.infinity,
                 color: AppColors.c000000,
                 child: ClipPath(
-                  clipper: TitleBarClipper(95.w),
+                  clipper: TitleBarClipper(55.w),
                   child: Container(
-                    color: AppColors.c404040,
-                    child: ClipPath(
-                      clipper: TitleBarClipper(55.w),
-                      child: Container(
-                        color: AppColors.c262626,
-                      ),
-                    ),
+                    color: AppColors.c262626,
                   ),
                 ),
               ),
@@ -159,7 +153,7 @@ class UserInfoBar extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    width: 40.w,
+                    width: 55.w,
                     height: 43.w,
                     child: Stack(
                       children: [
@@ -170,38 +164,11 @@ class UserInfoBar extends StatelessWidget {
                         ),
                         Positioned(
                             bottom: 9.w,
-                            right: 4.w,
+                            right: 10.w,
                             child: IconWidget(
                               iconWidth: 14.w,
                               icon: Assets.commonUiCommonStatusBarMission02,
-                              iconColor: AppColors.c10A86A,
-                            ))
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: 55.w,
-                    height: 43.w,
-                    child: Stack(
-                      children: [
-                        IconWidget(
-                            iconWidth: 20.w,
-                            icon: Assets
-                                .commonUiCommonStatusBarNoticeOn /* commonUiCommonStatusBarNoticeOff*/),
-                        //todo 根据数量显示图标
-                        Positioned(
-                            right: 10.w,
-                            child: Container(
-                              width: 16.w,
-                              height: 16.w,
-                              decoration: BoxDecoration(
-                                  color: AppColors.c000000,
-                                  borderRadius: BorderRadius.circular(8.w)),
-                              child: Center(
-                                  child: Text(
-                                "3",
-                                style: 12.w4(color: AppColors.cFF7954),
-                              )),
+                              iconColor: AppColors.c23E8A9,
                             ))
                       ],
                     ),
