@@ -68,7 +68,6 @@ class BattleNew {
   }
 }
 
-
 @JsonSerializable()
 class TeamPlayerList {
   late int buyPrice;
@@ -106,12 +105,12 @@ class TeamPlayerList {
 
 @JsonSerializable()
 class Potential {
-  late int blk;
+  int? blk;
   int? threePt;
-  late int ast;
-  late int stl;
-  late int pts;
-  late int reb;
+  int? ast;
+  int? stl;
+  int? pts;
+  int? reb;
 
   Potential();
 
@@ -128,12 +127,12 @@ class Potential {
 
 @JsonSerializable()
 class UpStarBase {
-  late int blk;
+  int? blk;
   int? threePt;
-  late int ast;
-  late int stl;
-  late int pts;
-  late int reb;
+  int? ast;
+  int? stl;
+  int? pts;
+  int? reb;
 
   UpStarBase();
 

@@ -57,7 +57,7 @@ class ErrorUtils {
       {String language = "en",
       String defaultErrorString = _DEFAULTERRORSTRING}) {
     var firstWhereOrNull =
-        CacheApi.apiErrorCode!.firstWhereOrNull((e) => e.id == errorCode);
+        CacheApi.apiErrorCode?.firstWhereOrNull((e) => e.id == errorCode);
     firstWhereOrNull ??= ((jsonDecode(_defaultErrorCodeJsonString) as List)
             .map((e) => ApiErrorCodeEntity.fromJson(e)))
         .toList()

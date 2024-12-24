@@ -4,7 +4,6 @@ import 'dart:math';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/competition_venue_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/dan_ma_ku_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/game_event_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_event_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_player_updated_entity.dart';
@@ -14,13 +13,11 @@ import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/index.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/thrid_lib/flutter_barrage.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
-import 'package:arm_chair_quaterback/pages/picks/personal_center/widgets/game/game.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/widgets/battle_animation_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_leader/controller.dart';
@@ -45,14 +42,16 @@ class ShootHistory {
 class TeamBattleV2Controller extends GetxController
     with GetTickerProviderStateMixin, WidgetsBindingObserver {
   TeamBattleV2Controller(this.context) {
-    size = MediaQuery.of(context).size;
+    size = MediaQuery
+        .of(context)
+        .size;
   }
 
   final BuildContext context;
   late BarrageWallController normalBarrageWallController =
-      BarrageWallController();
+  BarrageWallController();
   late BarrageWallController highLightBarrageWallController =
-      BarrageWallController();
+  BarrageWallController();
 
   late AnimationController shootAnimationController;
   Animation? shootAnimation;
@@ -128,7 +127,9 @@ class TeamBattleV2Controller extends GetxController
   void onInit() {
     super.onInit();
     WidgetsBinding.instance.addObserver(this);
-    battleEntity = Get.find<TeamBattleController>().battleEntity;
+    battleEntity = Get
+        .find<TeamBattleController>()
+        .battleEntity;
     winRateController = Get.put(WinRateController());
     gameLeaderController = Get.put(GameLeaderController());
     teamStatsController = Get.put(TeamStatsController());
@@ -166,7 +167,7 @@ class TeamBattleV2Controller extends GetxController
       }
       if (result.serviceId == Api.wsPkEventUpdated) {
         PkEventUpdatedEntity pkEventUpdatedEntity =
-            PkEventUpdatedEntity.fromJson(result.payload);
+        PkEventUpdatedEntity.fromJson(result.payload);
         var gameEvent = getGameEvent(pkEventUpdatedEntity.eventId);
         var text = insertParamValue(
             gameEvent?.eventDescripition ?? "", pkEventUpdatedEntity);
@@ -187,10 +188,10 @@ class TeamBattleV2Controller extends GetxController
           competitionVenue == null
               ? null
               : getMainPos(
-                  competitionVenue,
-                  pkEventUpdatedEntity.senderPlayerId,
-                  isHomePlayer,
-                  getPositions(competitionVenue)),
+              competitionVenue,
+              pkEventUpdatedEntity.senderPlayerId,
+              isHomePlayer,
+              getPositions(competitionVenue)),
           pkEventUpdatedEntity.stepHomeScore,
           pkEventUpdatedEntity.stepAwayScore,
           pkEventUpdatedEntity,
@@ -201,7 +202,10 @@ class TeamBattleV2Controller extends GetxController
   }
 
   Map<String, Offset> getPositions(CompetitionVenueEntity competitionVenue) {
-    return competitionVenue.toJson().keys.fold(<String, Offset>{}, (p, e) {
+    return competitionVenue
+        .toJson()
+        .keys
+        .fold(<String, Offset>{}, (p, e) {
       if (e.contains("Home") || e.contains("Away")) {
         List<String> json = competitionVenue.toJson()[e];
         var nextInt = Random().nextInt(json.length);
@@ -216,7 +220,7 @@ class TeamBattleV2Controller extends GetxController
   Offset getMainPos(CompetitionVenueEntity competitionVenue, int playerId,
       bool isHomeTeamPlayer, Map<String, Offset> map) {
     List<PkPlayerUpdatedPlayers> list =
-        List.from(isHomeTeamPlayer ? homeTeamPlayerList : awayTeamPlayerList);
+    List.from(isHomeTeamPlayer ? homeTeamPlayerList : awayTeamPlayerList);
     var firstWhere = list.firstWhere((e) => e.playerId == playerId);
     var position = Utils.getPosition(firstWhere.position);
     String key = "${isHomeTeamPlayer ? "Home" : "Away"}$position";
@@ -269,7 +273,7 @@ class TeamBattleV2Controller extends GetxController
         begin: lastValue,
         end: 0,
         duration:
-            Duration(milliseconds: (lastValue / 40 * time / gameSpeed).toInt()))
+        Duration(milliseconds: (lastValue / 40 * time / gameSpeed).toInt()))
       ..controller.addStatusListener(quarterStatusListener)
       ..controller.addListener(quarterListener);
     quarterTimeCountDownAnimationController.forward(from: 0);
@@ -298,16 +302,17 @@ class TeamBattleV2Controller extends GetxController
         gameSpeed = 1;
         update([idBattleMain]);
         print(
-            'cache length: ${eventCacheMap.values.fold(0, (p, e) => p + e.length)}');
+            'cache length: ${eventCacheMap.values.fold(
+                0, (p, e) => p + e.length)}');
         return;
       }
       EasyLoading.showToast("Next Quarter",
           toastPosition: EasyLoadingToastPosition.center,
           maskType: EasyLoadingMaskType.clear);
       Future.delayed(Duration(milliseconds: (3 * 1000 / gameSpeed).toInt()),
-          () {
-        startGame();
-      });
+              () {
+            startGame();
+          });
     }
   }
 
@@ -422,9 +427,9 @@ class TeamBattleV2Controller extends GetxController
     eventEngine = Timer(
         Duration(
             milliseconds: (gameEvent.eventShowTime * 1000 / gameSpeed).toInt()),
-        () {
-      sendToScreen();
-    });
+            () {
+          sendToScreen();
+        });
     checkRoundTransformEvent(event);
 
     /// 这几个事件的时间设置为
@@ -444,7 +449,7 @@ class TeamBattleV2Controller extends GetxController
     double winRate = getWinRate(event);
     // print('winRate: $winRate');
     var offset =
-        Offset(eventCount.toDouble() + getBeforeQuarterEventCount(), winRate);
+    Offset(eventCount.toDouble() + getBeforeQuarterEventCount(), winRate);
     var offsetEvent = OffsetEvent(event, offset);
     winRateController.addPoint(offsetEvent);
 
@@ -520,7 +525,7 @@ class TeamBattleV2Controller extends GetxController
             (quarter.value - 1) * 40);
     var scoreDiff = (event.homeScore - event.awayScore);
     var prepareDiff = (event.pkEventUpdatedEntity.homeCurrentStrength -
-            event.pkEventUpdatedEntity.awayCurrentStrength)
+        event.pkEventUpdatedEntity.awayCurrentStrength)
         .abs();
     var random = (t < 15 ? 0 : generateRandomValue(t > 20 ? 20 : t));
     // print('prepareDiff--------:$prepareDiff');
@@ -529,12 +534,26 @@ class TeamBattleV2Controller extends GetxController
     // print('other--------:$other');
 
     double winRate = 0.5 + prepareDiff + other - random;
+
     // print('winRate-------:$winRate');
     if (t == 0) {
       winRate = prepareDiff;
     }
     winRate = min(1, max(0, winRate));
     return winRate;
+    var pow2 = pow(e,(-log(10)/24*t));
+    print('pow2---:$pow2');
+
+    var d = (event.pkEventUpdatedEntity.homeCurrentStrength /
+            (event.pkEventUpdatedEntity.homeCurrentStrength +
+                event.pkEventUpdatedEntity.awayCurrentStrength));
+    print('d---:$d');
+
+    var other2 = d*0.1*pow2;
+    print('other2---:$other2');
+    var result = (t * 1.2 / (4 * 40) * scoreDiff / max(scoreDiff, 1)) * 0.6 +
+        other2;
+    return result;
   }
 
   double generateRandomValue(double t) {
@@ -814,16 +833,16 @@ class TeamBattleV2Controller extends GetxController
                   return Text.rich(
                       TextSpan(
                           children: List.generate(list.length, (index) {
-                        var colorString = list[index];
-                        return TextSpan(
-                            text: "${colorString.text} ",
-                            style: colorString.isMatch
-                                ? TextStyle(
+                            var colorString = list[index];
+                            return TextSpan(
+                                text: "${colorString.text} ",
+                                style: colorString.isMatch
+                                    ? TextStyle(
                                     color: event.isHomePlayer
                                         ? AppColors.c1F8FE5
                                         : AppColors.cD60D20)
-                                : null);
-                      })),
+                                    : null);
+                          })),
                       maxLines: 3,
                       softWrap: true,
                       style: 12.w5(
@@ -846,7 +865,8 @@ class TeamBattleV2Controller extends GetxController
       text: TextSpan(text: value, style: style),
       maxLines: 1,
       textDirection: TextDirection.ltr,
-    )..layout(); // 调用 layout() 进行布局计算
+    )
+      ..layout(); // 调用 layout() 进行布局计算
     return Size(painter.width, painter.height);
   }
 
@@ -874,7 +894,7 @@ class TeamBattleV2Controller extends GetxController
   // 计算行列式
   num determinant(List<List<num>> matrix) {
     return matrix[0][0] *
-            (matrix[1][1] * matrix[2][2] - matrix[2][1] * matrix[1][2]) -
+        (matrix[1][1] * matrix[2][2] - matrix[2][1] * matrix[1][2]) -
         matrix[0][1] *
             (matrix[1][0] * matrix[2][2] - matrix[2][0] * matrix[1][2]) +
         matrix[0][2] *
@@ -890,7 +910,9 @@ class TeamBattleV2Controller extends GetxController
     replaceColumn(int index) {
       return List<List<num>>.generate(
         3,
-        (row) => List<num>.from(matrix[row])..[index] = results[row],
+            (row) =>
+        List<num>.from(matrix[row])
+          ..[index] = results[row],
       );
     }
 
@@ -956,8 +978,8 @@ class TeamBattleV2Controller extends GetxController
         .firstWhereOrNull((e) => e.constantId == eventId.toString());
   }
 
-  CompetitionVenueEntity? getCompetitionVenue(
-      String gameEventType, int senderPlayerId, bool isHomePlayer) {
+  CompetitionVenueEntity? getCompetitionVenue(String gameEventType,
+      int senderPlayerId, bool isHomePlayer) {
     var data = isHomePlayer ? homeTeamPlayerList : awayTeamPlayerList;
     var info = data.firstWhereOrNull((e) => e.playerId == senderPlayerId);
     if (info == null) {
@@ -966,13 +988,14 @@ class TeamBattleV2Controller extends GetxController
     }
     var list = CacheApi.competitionVenues
         .where((e) =>
-            e.gameEventType.contains(gameEventType) &&
-            e.actor.toLowerCase() ==
-                Utils.getPosition(info.position).toLowerCase())
+    e.gameEventType.contains(gameEventType) &&
+        e.actor.toLowerCase() ==
+            Utils.getPosition(info.position).toLowerCase())
         .toList();
     if (list.isEmpty) {
       print(
-          'competitionVenue---null--------------------:${gameEventType},${info.position}');
+          'competitionVenue---null--------------------:${gameEventType},${info
+              .position}');
       return null;
     }
     var nextInt = Random().nextInt(list.length);
@@ -981,10 +1004,16 @@ class TeamBattleV2Controller extends GetxController
 
   String insertParamValue(String text, PkEventUpdatedEntity event) {
     String result = text
-        .replaceAll("[0]", Utils.getPlayBaseInfo(event.senderPlayerId).elname)
+        .replaceAll("[0]", Utils
+        .getPlayBaseInfo(event.senderPlayerId)
+        .elname)
         .replaceAll(
-            "[1]", Utils.getPlayBaseInfo(event.senderOtherPlayerId).elname)
-        .replaceAll("[2]", Utils.getPlayBaseInfo(event.receivePlayerId).elname);
+        "[1]", Utils
+        .getPlayBaseInfo(event.senderOtherPlayerId)
+        .elname)
+        .replaceAll("[2]", Utils
+        .getPlayBaseInfo(event.receivePlayerId)
+        .elname);
     var matchAsPrefix = result.indexOf('{0}');
     if (matchAsPrefix != -1) {
       result = result.replaceFirst(
@@ -1023,7 +1052,7 @@ class TeamBattleV2Controller extends GetxController
 
   List<GameEvent> getQuarterEvents({int? quarterValue}) {
     return eventOnScreenMap[
-            Utils.getSortWithInt(quarterValue ?? quarter.value)] ??
+    Utils.getSortWithInt(quarterValue ?? quarter.value)] ??
         [];
   }
 
@@ -1134,7 +1163,9 @@ class TeamBattleV2Controller extends GetxController
 
   String getBuff(int playerId) {
     var startUpdatedEntity =
-        Get.find<TeamBattleController>().pkStartUpdatedEntity;
+        Get
+            .find<TeamBattleController>()
+            .pkStartUpdatedEntity;
     var bool = startUpdatedEntity?.pokerWinner == playerId;
     return bool
         ? "+${(startUpdatedEntity?.pokerRate ?? 0) * 100}%"
@@ -1143,14 +1174,18 @@ class TeamBattleV2Controller extends GetxController
 
   Color getBuffColor(int playerId) {
     var startUpdatedEntity =
-        Get.find<TeamBattleController>().pkStartUpdatedEntity;
+        Get
+            .find<TeamBattleController>()
+            .pkStartUpdatedEntity;
     var bool = startUpdatedEntity?.pokerWinner == playerId;
     return bool ? AppColors.c10A86A : AppColors.cE72646;
   }
 
   double getBuffAngle(int playerId) {
     var startUpdatedEntity =
-        Get.find<TeamBattleController>().pkStartUpdatedEntity;
+        Get
+            .find<TeamBattleController>()
+            .pkStartUpdatedEntity;
     var bool = startUpdatedEntity?.pokerWinner == playerId;
     return bool ? -90 : 90;
   }
@@ -1187,7 +1222,7 @@ class TeamBattleV2Controller extends GetxController
     for (int i = 0; i < fold.length; i++) {
       var gameEvent = fold[i];
       var offset =
-          Offset(i.toDouble(), getWinRate(gameEvent, time: i.toDouble()));
+      Offset(i.toDouble(), getWinRate(gameEvent, time: i.toDouble()));
       oes.add(OffsetEvent(gameEvent, offset));
     }
     winRateController.jumpGame(oes);
@@ -1227,10 +1262,12 @@ class TeamBattleV2Controller extends GetxController
   }
 
   void handlerDanMaKu(GameEvent event) {
-    var where = CacheApi.danMaKuList.where((e) => e.hudTrigger.contains(
-        int.parse(
-            getGameEvent(event.pkEventUpdatedEntity.eventId)?.gameEventType ??
-                '0')));
+    var where = CacheApi.danMaKuList.where((e) =>
+        e.hudTrigger.contains(
+            int.parse(
+                getGameEvent(event.pkEventUpdatedEntity.eventId)
+                    ?.gameEventType ??
+                    '0')));
     if (where.isNotEmpty) {
       var random = Random();
       for (int i = 0; i < where.length; i++) {
@@ -1238,8 +1275,10 @@ class TeamBattleV2Controller extends GetxController
         var num = random.nextInt(item.hudNum[1]) + 1;
         normalBarrageWallController.send(List.generate(
             num,
-            (_) => generateNormalBullet(
-                insertParamValue(item.hudDes, event.pkEventUpdatedEntity))));
+                (_) =>
+                generateNormalBullet(
+                    insertParamValue(
+                        item.hudDes, event.pkEventUpdatedEntity))));
       }
     }
   }
@@ -1252,7 +1291,7 @@ class TeamBattleV2Controller extends GetxController
     }
     var list = eventCacheMap[key]!;
     var where =
-        list.where((e) => getGameEvent(e.pkEventUpdatedEntity.eventId) != null);
+    list.where((e) => getGameEvent(e.pkEventUpdatedEntity.eventId) != null);
     return where.length;
   }
 }
@@ -1281,21 +1320,19 @@ class GameEvent {
   final int quarterAwayScore;
   final PkEventUpdatedEntity pkEventUpdatedEntity;
 
-  GameEvent(
-    this.quarter,
-    this.playerId,
-    this.text,
-    this.homeScore,
-    this.awayScore,
-    this.isHomePlayer,
-    this.shooting,
-    this.score,
-    this.playerOffsets,
-    this.mainOffset,
-    this.quarterHomeScore,
-    this.quarterAwayScore,
-    this.pkEventUpdatedEntity,
-  );
+  GameEvent(this.quarter,
+      this.playerId,
+      this.text,
+      this.homeScore,
+      this.awayScore,
+      this.isHomePlayer,
+      this.shooting,
+      this.score,
+      this.playerOffsets,
+      this.mainOffset,
+      this.quarterHomeScore,
+      this.quarterAwayScore,
+      this.pkEventUpdatedEntity,);
 
   @override
   String toString() {

@@ -88,6 +88,7 @@ class WinRateController extends GetxController
       return;
     }
     var current = pointData.last;
+    easyAnimationController?.stop();
     easyAnimationController?.controller.removeListener(animationListener);
     easyAnimationController = EasyAnimationController(
         vsync: this,

@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:ui';
 
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -15,6 +16,7 @@ class ChartPainter extends CustomPainter {
     // print('list.len2222:${listPoint.length}');
 
     var list = listPoint;
+    // log('list:$list');
     _list2 = [];
     // print('------------height:${height/2}');
     for (int i = 0; i < list.length; i++) {
@@ -24,6 +26,7 @@ class ChartPainter extends CustomPainter {
         var preview = _list2.last;
         if(current.dx<preview.dx){
           // 处理往回跳的问题
+          // print('current:$current');
           continue;
         }
       }
