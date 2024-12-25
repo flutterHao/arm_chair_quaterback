@@ -59,7 +59,7 @@ class HomeController extends GetxController {
   }
   List<TabItemInfo> tabItems = [
     TabItemInfo(
-      "News",
+      "Home",
       Assets.commonUiCommonTabBottom01Off,
       Assets.commonUiCommonTabBottom01On,
       const NewsPage(),
@@ -83,7 +83,7 @@ class HomeController extends GetxController {
       const PicksIndex(),
     ),
     TabItemInfo(
-      "Message",
+      "Inbox",
       Assets.commonUiCommonTabBottom05Off,
       Assets.commonUiCommonTabBottom05On,
       const MessagePage(),

@@ -26,6 +26,7 @@ import 'package:arm_chair_quaterback/common/entities/star_up_define_entity.dart'
 import 'package:arm_chair_quaterback/common/entities/team_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_simple_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/up_star_team_player_v2_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/up_start_team_player_response_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/rank_type.dart';
 import 'package:arm_chair_quaterback/common/net/apis.dart';
@@ -127,6 +128,13 @@ class PicksApi {
     var json = await httpUtil.post(Api.upStarTeamPlayer,
         data: {"uuid": uuid, "materialScienceUUID": materialScienceUUID});
     return UpStartTeamPlayerResponseEntity.fromJson(json);
+  }
+
+  static Future<UpStarTeamPlayerV2Entity> upStarTeamPlayerV2(
+      String uuid, String materialScienceUUID) async {
+    var json = await httpUtil.post(Api.upStarTeamPlayer,
+        data: {"uuid": uuid, "materialScienceUUID": materialScienceUUID});
+    return UpStarTeamPlayerV2Entity.fromJson(json);
   }
 
   static Future<List<AllTeamPlayersByUpStarEntity>> getAllTeamPlayersByUpStar(

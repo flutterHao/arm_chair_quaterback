@@ -467,7 +467,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     Get.find<HomeController>().tabIndex.listen((value) {
-      if (value == 0) {
+      if (value == 3) {
         controller.formatGameStartTime();
       }
     });

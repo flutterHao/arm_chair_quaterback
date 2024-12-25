@@ -71,6 +71,7 @@ import 'package:arm_chair_quaterback/common/entities/train_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/train_task_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/training_task_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/up_star_team_player_v2_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/up_start_team_player_response_entity.dart';
 
 JsonConvert jsonConvert = JsonConvert();
@@ -860,6 +861,24 @@ class JsonConvert {
       return data.map<TrainingTaskEntity>((Map<String, dynamic> e) =>
           TrainingTaskEntity.fromJson(e)).toList() as M;
     }
+    if (<UpStarTeamPlayerV2Entity>[] is M) {
+      return data.map<UpStarTeamPlayerV2Entity>((Map<String, dynamic> e) =>
+          UpStarTeamPlayerV2Entity.fromJson(e)).toList() as M;
+    }
+    if (<UpStarTeamPlayerV2StarUpList>[] is M) {
+      return data.map<UpStarTeamPlayerV2StarUpList>((Map<String, dynamic> e) =>
+          UpStarTeamPlayerV2StarUpList.fromJson(e)).toList() as M;
+    }
+    if (<UpStarTeamPlayerV2StarUpListAttrCount>[] is M) {
+      return data.map<UpStarTeamPlayerV2StarUpListAttrCount>((
+          Map<String, dynamic> e) =>
+          UpStarTeamPlayerV2StarUpListAttrCount.fromJson(e)).toList() as M;
+    }
+    if (<UpStarTeamPlayerV2StarUpListAttr>[] is M) {
+      return data.map<UpStarTeamPlayerV2StarUpListAttr>((
+          Map<String, dynamic> e) =>
+          UpStarTeamPlayerV2StarUpListAttr.fromJson(e)).toList() as M;
+    }
     if (<UpStartTeamPlayerResponseEntity>[] is M) {
       return data.map<UpStartTeamPlayerResponseEntity>((
           Map<String, dynamic> e) =>
@@ -1122,6 +1141,13 @@ class JsonConvertClassCollection {
     (TrainingInfoTraining).toString(): TrainingInfoTraining.fromJson,
     (TrainingInfoBuff).toString(): TrainingInfoBuff.fromJson,
     (TrainingTaskEntity).toString(): TrainingTaskEntity.fromJson,
+    (UpStarTeamPlayerV2Entity).toString(): UpStarTeamPlayerV2Entity.fromJson,
+    (UpStarTeamPlayerV2StarUpList).toString(): UpStarTeamPlayerV2StarUpList
+        .fromJson,
+    (UpStarTeamPlayerV2StarUpListAttrCount)
+        .toString(): UpStarTeamPlayerV2StarUpListAttrCount.fromJson,
+    (UpStarTeamPlayerV2StarUpListAttr)
+        .toString(): UpStarTeamPlayerV2StarUpListAttr.fromJson,
     (UpStartTeamPlayerResponseEntity)
         .toString(): UpStartTeamPlayerResponseEntity.fromJson,
     (UpStartTeamPlayerResponseDataBefore)

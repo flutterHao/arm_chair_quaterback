@@ -10,8 +10,9 @@ import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
 import 'package:arm_chair_quaterback/common/widgets/player_avatar_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
-import 'package:arm_chair_quaterback/pages/team/team_upgrade/widgets/start_upgrade/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_upgrade/widgets/start_upgrade/widgets/player_property_widget.dart';
+import 'package:arm_chair_quaterback/pages/team/team_upgrade/slot_dialog/slot_dialog_widget.dart';
+import 'package:arm_chair_quaterback/pages/team/team_upgrade/start_upgrade/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_upgrade/widgets/player_property_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -346,7 +347,7 @@ class AddSparringPlayersDialogWidget extends GetView<StartUpgradeController> {
                               ),
                               7.5.vGap,
                               Text(
-                                "+${controller.ppUpValue}",
+                                "+${controller.ppUpValue.value}",
                                 style: 18.w5(
                                     color: AppColors.c000000,
                                     height: 1,
@@ -369,7 +370,7 @@ class AddSparringPlayersDialogWidget extends GetView<StartUpgradeController> {
                               ),
                               7.5.vGap,
                               Text(
-                                "${controller.upSuccessRate}%",
+                                "${controller.upSuccessRate.value.format()}%",
                                 style: 18.w5(
                                     color: AppColors.c000000,
                                     height: 1,
@@ -383,7 +384,7 @@ class AddSparringPlayersDialogWidget extends GetView<StartUpgradeController> {
                 ),
                 14.vGap,
                 MtInkwell(
-                  onTap: ()=> onStartClick(),
+                  onTap: ()=> onStartClick(context),
                   child: Container(
                     width: 343.w,
                     height: 51.w,
@@ -430,7 +431,14 @@ class AddSparringPlayersDialogWidget extends GetView<StartUpgradeController> {
     );
   }
 
-  onStartClick() {
-
+  onStartClick(BuildContext context) {
+    Get.back();
+    showModalBottomSheet(
+      isScrollControlled: true,
+        enableDrag: false,
+        backgroundColor: AppColors.cTransparent,
+        context: context, builder: (context){
+      return const SlotDialogWidget();
+    });
   }
 }

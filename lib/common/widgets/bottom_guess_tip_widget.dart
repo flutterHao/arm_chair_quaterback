@@ -32,7 +32,7 @@ class BottomGuessTipWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       var tabIndex = Get.find<HomeController>().tabIndex.value;
-      if (![0, 1].contains(tabIndex) && needCheckHomeTab) {
+      if (![0, 3].contains(tabIndex) && needCheckHomeTab) {
         return const SizedBox.shrink();
       }
       var picksIndexController = Get.find<PicksIndexController>();

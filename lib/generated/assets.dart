@@ -175,6 +175,7 @@ class Assets {
   static const String managerUiManagerPlayercardSmall03 = 'assets/images/manager/ui_manager_playercard_small_03.png';
   static const String managerUiManagerPlayerinfoBg = 'assets/images/manager/ui_manager_playerinfo_bg.png';
   static const String managerUiManagerPlayerinfoBg01 = 'assets/images/manager/ui_manager_playerinfo_bg01.png';
+  static const String managerUiManagerPlayerinfoBg02 = 'assets/images/manager/ui_manager_playerinfo_bg02.png';
   static const String managerUiManagerPlayerinfoFailure = 'assets/images/manager/ui_manager_playerinfo_failure.png';
   static const String managerUiManagerPlayerinfoIcon01 = 'assets/images/manager/ui_manager_playerinfo_icon_01.png';
   static const String managerUiManagerPlayerinfoIcon02 = 'assets/images/manager/ui_manager_playerinfo_icon_02.png';
