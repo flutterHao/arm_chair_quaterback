@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-12-23 17:55:16
+ * @LastEditTime: 2024-12-25 10:06:10
  */
 
 import 'dart:async';
@@ -222,7 +222,8 @@ class TeamIndexController extends GetxController
       final now = DateTime.now();
       final endTime = DateUtil.getDateTimeByMs(item.openTime);
       final diff = endTime.difference(now).inSeconds;
-      item.totalTime = ((diff % 3600) ~/ 60).toString();
+      int? needTime = CacheApi.cardPackDefineMap[item.cardId]?.cardPackOpenTime;
+      item.totalTime = ((needTime ?? 0 % 3600) ~/ 60).toString();
       if (item.status == 1) {
         final minutes = ((diff % 3600) ~/ 60).toString().padLeft(2, '0');
         final secs = (diff % 60).toString().padLeft(2, '0');

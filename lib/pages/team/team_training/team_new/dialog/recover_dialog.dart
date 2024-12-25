@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-29 16:06:50
- * @LastEditTime: 2024-12-20 14:16:12
+ * @LastEditTime: 2024-12-25 09:39:40
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -83,16 +83,17 @@ class RecoverDialog extends GetView<TeamController> {
                                           height: 0.8),
                                     ),
                                     7.hGap,
-                                    Obx(() {
-                                      return Text(
-                                        controller.remainString.value,
-                                        style: 12.w4(
-                                            fontFamily:
-                                                FontFamily.fRobotoMedium,
-                                            height: 0.8,
-                                            color: AppColors.c10A86A),
-                                      );
-                                    })
+                                    if (controller.myTeamEntity.powerP < 100)
+                                      Obx(() {
+                                        return Text(
+                                          controller.remainString.value,
+                                          style: 12.w4(
+                                              fontFamily:
+                                                  FontFamily.fRobotoMedium,
+                                              height: 0.8,
+                                              color: AppColors.c10A86A),
+                                        );
+                                      })
                                   ],
                                 ),
                               ],

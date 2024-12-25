@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 14:09:29
- * @LastEditTime: 2024-12-23 17:52:52
+ * @LastEditTime: 2024-12-25 10:21:56
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
@@ -17,6 +17,7 @@ import 'package:arm_chair_quaterback/common/widgets/dialog/custom_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/widgets/linear_progress_widget.dart';
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -155,6 +156,12 @@ class BattleBoxDialog extends StatelessWidget {
                     color: AppColors.c000000,
                     fontFamily: FontFamily.fOswaldRegular),
               ),
+              // Text(
+              //   "(${item.cardId} \n 需要时间${item.totalTime} \n 开启时间${DateUtil.getDateTimeByMs(item.openTime)})",
+              //   style: 12.w4(
+              //       color: AppColors.c000000,
+              //       fontFamily: FontFamily.fOswaldRegular),
+              // ),
               Expanded(child: Container()),
               if (isUnlock)
                 Text(

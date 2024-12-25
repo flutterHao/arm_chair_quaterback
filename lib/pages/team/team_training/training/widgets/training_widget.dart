@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-25 15:56:43
- * @LastEditTime: 2024-12-24 20:10:17
+ * @LastEditTime: 2024-12-25 10:44:07
  */
 
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -23,6 +23,7 @@ import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/a
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/flip_card.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/player_sroller_view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/training_slot.dart';
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -318,7 +319,7 @@ class TrainingWidget extends GetView<TrainingController> {
                           ///道具
                           Positioned(
                             left: 85.w,
-                            right: 64.w,
+                            right: 75.w,
                             top: 13.5.w,
                             child: GestureDetector(
                               onTap: () {
@@ -340,7 +341,7 @@ class TrainingWidget extends GetView<TrainingController> {
                                       top: 9.5.w,
                                       left: 14.w,
                                       child: Stack(
-                                        alignment: Alignment.topCenter,
+                                        alignment: Alignment.center,
                                         children: [
                                           Container(
                                             width: 180.w,
@@ -377,6 +378,37 @@ class TrainingWidget extends GetView<TrainingController> {
                                               ),
                                             );
                                           }),
+                                          Row(
+                                            children: [
+                                              Obx(() {
+                                                return AnimatedNum(
+                                                    number: controller
+                                                        .taskValue.value,
+                                                    textStyle: 12.w4(
+                                                      fontFamily: FontFamily
+                                                          .fOswaldMedium,
+                                                      height: 0.8,
+                                                      color: AppColors.cFFFFFF,
+                                                    ));
+                                              }),
+                                              Text("/",
+                                                  style: 12.w4(
+                                                    fontFamily: FontFamily
+                                                        .fOswaldMedium,
+                                                    height: 0.8,
+                                                    color: AppColors.cFFFFFF,
+                                                  )),
+                                              AnimatedNum(
+                                                  number: controller
+                                                      .currentTaskNeed,
+                                                  textStyle: 12.w4(
+                                                    fontFamily: FontFamily
+                                                        .fOswaldMedium,
+                                                    height: 0.8,
+                                                    color: AppColors.cFFFFFF,
+                                                  ))
+                                            ],
+                                          )
                                         ],
                                       ),
                                     ),
@@ -388,41 +420,7 @@ class TrainingWidget extends GetView<TrainingController> {
                                         icon: Assets.commonUiCommonProp03,
                                       ),
                                     ),
-                                    Positioned(
-                                      top: 8.5.w,
-                                      // right: 40.w,
-                                      child: Row(
-                                        children: [
-                                          Obx(() {
-                                            return AnimatedNum(
-                                                number:
-                                                    controller.taskValue.value,
-                                                textStyle: 12.w4(
-                                                  fontFamily:
-                                                      FontFamily.fOswaldMedium,
-                                                  height: 0.8,
-                                                  color: AppColors.cFFFFFF,
-                                                ));
-                                          }),
-                                          Text("/",
-                                              style: 12.w4(
-                                                fontFamily:
-                                                    FontFamily.fOswaldMedium,
-                                                height: 0.8,
-                                                color: AppColors.cFFFFFF,
-                                              )),
-                                          AnimatedNum(
-                                              number:
-                                                  controller.currentTaskNeed,
-                                              textStyle: 12.w4(
-                                                fontFamily:
-                                                    FontFamily.fOswaldMedium,
-                                                height: 0.8,
-                                                color: AppColors.cFFFFFF,
-                                              ))
-                                        ],
-                                      ),
-                                    ),
+
                                     // Positioned(
                                     //   top: 0.w,
                                     //   left: 27.5.w,
@@ -436,32 +434,32 @@ class TrainingWidget extends GetView<TrainingController> {
                                     //   ),
                                     // ),
 
-                                    // Positioned(
-                                    //   top: 0.w,
-                                    //   right: 4.w,
-                                    //   child: MtInkwell(
-                                    //     onTap: () {
-                                    //       showDialog(
-                                    //           context: context,
-                                    //           builder: (context) {
-                                    //             return const AwardDialog();
-                                    //           });
-                                    //     },
-                                    //     child: Obx(() {
-                                    //       return AnimatedScale(
-                                    //         duration: const Duration(
-                                    //             milliseconds: 300),
-                                    //         scale: controller.showProp.value
-                                    //             ? 1.5
-                                    //             : 1,
-                                    //         child: Image.asset(
-                                    //           Assets.managerUiManagerFreegift01,
-                                    //           width: 30.5.w,
-                                    //         ),
-                                    //       );
-                                    //     }),
-                                    //   ),
-                                    // ),
+                                    Positioned(
+                                      top: 5.5.w,
+                                      right: 4.w,
+                                      child: MtInkwell(
+                                        onTap: () {
+                                          showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return const AwardDialog();
+                                              });
+                                        },
+                                        child: Obx(() {
+                                          return AnimatedScale(
+                                            duration: const Duration(
+                                                milliseconds: 300),
+                                            scale: controller.showProp.value
+                                                ? 1.5
+                                                : 1,
+                                            child: Image.asset(
+                                              Assets.commonUiCommonProp05,
+                                              width: 20.5.w,
+                                            ),
+                                          );
+                                        }),
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),

@@ -9,6 +9,7 @@ import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/utils/click_feed_back.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/top_toast_dialog.dart';
 import 'package:arm_chair_quaterback/pages/home/index.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
@@ -139,6 +140,7 @@ class TrainingController extends GetxController
   RxBool tacticFly = false.obs;
 
   //任务
+  String awardIcon = "";
   RxInt taskValue = 0.obs;
   int currentTaskNeed = 10;
   int currentLevel = 1;
@@ -323,11 +325,7 @@ class TrainingController extends GetxController
       buffValueConfigList = v[3] as List<TaticsCombineEntity>;
       ballNum.value = trainingInfo.prop.num;
       // tacticList = trainingInfo.buff;
-      for (int i = 0; i < trainTaskList.length; i++) {
-        if (trainingInfo.training.currentTaskId == trainTaskList[i].taskLevel) {
-          currentTaskNeed = trainTaskList[i].taskNeed;
-        }
-      }
+      updateProp();
       taskValue.value = trainingInfo.training.taskItemCount;
       currentLevel = trainingInfo.training.currentTaskId;
       if (_timer == null) {
@@ -339,6 +337,16 @@ class TrainingController extends GetxController
       EasyLoading.showToast(v.toString());
       isPlaying.value = false;
     });
+  }
+
+  void updateProp() {
+    for (int i = 0; i < trainTaskList.length; i++) {
+      if (trainingInfo.training.currentTaskId == trainTaskList[i].taskLevel) {
+        currentTaskNeed = trainTaskList[i].taskNeed;
+        List<String> award = trainTaskList[i].taskReward.split("_");
+        awardIcon = Utils.getSlotIconUrl(award[2]);
+      }
+    }
   }
 
   // Future getPlayerList() async {
@@ -698,11 +706,8 @@ class TrainingController extends GetxController
       }
 
       //更新道具
-      for (int i = 0; i < trainTaskList.length; i++) {
-        if (trainingInfo.training.currentTaskId == trainTaskList[i].taskLevel) {
-          currentTaskNeed = trainTaskList[i].taskNeed;
-        }
-      }
+      updateProp();
+
       taskValue.value = trainingInfo.training.taskItemCount;
       update(["training_page"]);
 

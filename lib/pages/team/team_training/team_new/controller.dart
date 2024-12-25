@@ -330,7 +330,8 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
         _timer?.cancel();
 
         /// 恢复体力刷新数据
-        updateTeamInfo();
+        await updateTeamInfo();
+        recoverTimeAndCountDown();
         // initData();
       }
     });
