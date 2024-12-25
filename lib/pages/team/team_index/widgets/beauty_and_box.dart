@@ -26,7 +26,7 @@ class BeautyAndBoxView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final beautyCtrl = Get.find<BeautyController>();
+    final beautyCtrl = Get.find<BeautyController>();
     return GetBuilder<TeamIndexController>(
         id: "battleBox",
         builder: (ctrl) {
@@ -94,18 +94,46 @@ class BeautyAndBoxView extends StatelessWidget {
                       //         fit: BoxFit.fitHeight,
                       //         height: 546.w,
                       //         alignment: Alignment.topCenter)
-                          child: SizedBox(
-                              height: 546.w,
-                              child: Center(
-                                child: SpineWidget.fromAsset(
-                                  Assets.assetsSpineNv1,
-                                  "assets/spine/nv_1.json",
-                                  beautyCtrl.spineWidgetController,
-                                  fit: BoxFit.fitHeight,
-                                  alignment: Alignment.topCenter,
-                                ),
+                      child: SizedBox(
+                        height: 546.w,
+                        child: Stack(
+                          children: [
+                            Center(
+                              child: SpineWidget.fromAsset(
+                                Assets.assetsSpineNv1,
+                                "assets/spine/nv_1.json",
+                                beautyCtrl.spineWidgetController,
+                                fit: BoxFit.fitHeight,
+                                alignment: Alignment.topCenter,
                               ),
                             ),
+                            Positioned(
+                                top: 0,
+                                left: 0,
+                                right: 0,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.33,
+                                child: GestureDetector(
+                                  onTap: () => beautyCtrl.setAnimation(1),
+                                  child: Container(
+                                    color: Colors.transparent,
+                                  ),
+                                )),
+                            Positioned(
+                                bottom: 0,
+                                left: 0,
+                                right: 0,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.66,
+                                child: GestureDetector(
+                                  onTap: () => beautyCtrl.setAnimation(2),
+                                  child: Container(
+                                    color: Colors.transparent,
+                                  ),
+                                )),
+                          ],
+                        ),
+                      ),
                     );
                   }),
                 ),

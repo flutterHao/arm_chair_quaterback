@@ -2,10 +2,11 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-16 17:24:51
- * @LastEditTime: 2024-11-11 17:38:53
+ * @LastEditTime: 2024-12-25 15:17:20
  */
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:get/get.dart';
+import 'package:spine_flutter/spine_flutter.dart';
 import 'dart:async';
 
 import 'package:spine_flutter/spine_widget.dart';
@@ -46,10 +47,21 @@ class BeautyController extends GetxController {
       // Set the default mixing time between animations
       controller.animationState.getData().setDefaultMix(0.2);
       // Set the portal animation on track 0
-      controller.animationState
-          .setAnimationByName(0, "animation", true);
+      controller.animationState.setAnimationByName(0, "stand", true);
       // Queue the run animation after the portal animation
       // controller.animationState.addAnimationByName(0, "run", true, 0);
+    });
+  }
+
+  void setAnimation(int position) {
+    var type = position == 2 ? "click1" : "click2";
+    spineWidgetController.animationState
+        .setAnimationByName(0, type, false)
+        .setListener((type, trackEntry, event) {
+      if (type == EventType.complete) {
+        spineWidgetController.animationState
+            .setAnimationByName(0, "stand", true);
+      }
     });
   }
 
