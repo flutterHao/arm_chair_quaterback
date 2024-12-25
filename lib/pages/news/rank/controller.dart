@@ -2,10 +2,12 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:27:52
- * @LastEditTime: 2024-11-19 10:21:22
+ * @LastEditTime: 2024-12-25 21:04:41
  */
 import 'package:arm_chair_quaterback/common/entities/stats_rank/nba_player_stat.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank.dart';
+import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
+import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/controller.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/widgets/stats_list_view.dart';
@@ -20,8 +22,11 @@ class RankController extends GetxController
 
   late TabController tabController;
   RefreshController refreshCtrl = RefreshController();
+  int todayScoresCount = 0;
   RxInt tabIndex = 0.obs;
-  List<String> tabs = ["Player", "Team"];
+  List<String> tabs = ["CONFERENCE", "PRESEAON"];
+  int teamTypeIndex = 0;
+  List<String> teamRankType = ["CONFERENCE", "LEAGUE"];
   List<String> tabs2 = ["Eastean", "Westen"];
 
   RxDouble progress = 0.0.obs;
@@ -41,7 +46,9 @@ class RankController extends GetxController
   List<NbaPlayerStat> statList = [];
   List<String> seasonList = ["2023-24", "2024-25"];
   List<StarsTeamRank> starsTeamRankList = [];
+  List<TeamRankEntity> teamRankList = [];
   Map<String, List<NbaPlayerStat>> statsRankMap = {};
+//西部1，东部2
 
   /// 在 widget 内存中分配后立即调用。
   @override
@@ -66,7 +73,7 @@ class RankController extends GetxController
   @override
   void onReady() {
     super.onReady();
-    getRankData();
+    getStartRank();
   }
 
   void onTap(v) {
@@ -74,17 +81,28 @@ class RankController extends GetxController
     tabController.animateTo(v);
   }
 
-  Future getRankData() async {
+  // Future getTeamRank() async {
+  //   teamRankList = await NewsApi.getTeamList(seasonId: season.value);
+  // }
+
+  Future getStartRank() async {
     await Future.wait([
       NewsApi.startRank(
           season: season.value,
           statType: pointType.value,
           seasonType: seasonType),
-      NewsApi.starTeamList(seasonId: season.value, seasonType: seasonType)
+      NewsApi.starTeamList(seasonId: season.value, seasonType: seasonType),
+      NewsApi.getTeamList(seasonId: season.value),
+      CacheApi.getNBATeamDefine()
     ]).then((v) {
       statList = v[0] as List<NbaPlayerStat>;
       starsTeamRankList = v[1] as List<StarsTeamRank>;
+      teamRankList = v[2] as List<TeamRankEntity>;
+      for (var element in teamRankList) {
+        element.force = CacheApi.teamDefineMap?[element.teamID]?.force ?? 0;
+      }
       onTypeChange();
+      update(["teamRank", "starsRank"]);
     });
   }
 
@@ -151,5 +169,16 @@ class RankController extends GetxController
       default:
         return 0;
     }
+  }
+
+  String getTeamRankTitle(int type) {
+    String area = "";
+    if (type == 1) {
+      area = "Western";
+    }
+    if (type == 2) {
+      area = "Eastern";
+    }
+    return "$season NBA $area Conference Standings";
   }
 }

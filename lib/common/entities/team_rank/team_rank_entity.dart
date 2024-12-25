@@ -167,6 +167,7 @@ class TeamRankEntity {
   @JSONField(name: "HOME")
   late String hOME = '';
   late String shortEname;
+  late int force = 0;
 
   TeamRankEntity();
 

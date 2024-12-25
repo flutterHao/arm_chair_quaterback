@@ -79,7 +79,8 @@ class NewsApi {
   }
 
   static Future<List<TeamRankEntity>> getTeamList(
-      {required String seasonId, required String seasonType}) async {
+      {required String seasonId,
+      String seasonType = "Regular%20Season"}) async {
     List list = await HttpUtil().post(Api.teamRank,
         data: {"seasonId": seasonId, "seasonType": seasonType});
     return list.map((e) => TeamRankEntity.fromJson(e)).toList();

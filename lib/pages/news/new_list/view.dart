@@ -66,7 +66,7 @@ class _NewsPageState extends State<NewsPage>
               page: () => NewsDetailPage(newsDetail: item),
               // binding: NewDetailBinding(), /*  */
             );
-          case RouteNames.statsRank:
+          case RouteNames.nbaRank:
             return GetPageRoute(
                 opaque: false,
                 settings: settings,

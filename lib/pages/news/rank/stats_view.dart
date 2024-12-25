@@ -1,3 +1,5 @@
+import 'package:arm_chair_quaterback/common/widgets/delegate/fixed_height_sliver_header_delegate.dart';
+import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -143,7 +145,7 @@ class StatsRankPage extends GetView<RankController> {
                                 (item) {
                                   controller.season.value = item;
                                   controller.update(["search"]);
-                                  controller.getRankData();
+                                  controller.getStartRank();
                                 },
                               );
                             });
@@ -194,8 +196,9 @@ class StatsRankPage extends GetView<RankController> {
       child: GetBuilder<RankController>(
         builder: (_) {
           return BlackAppWidget(
-              const AppBarWidget(
+              const UserInfoBar(
                 title: "Stars",
+                showPop: true,
               ),
               bodyWidget: Expanded(
                 child: _buildView(context),

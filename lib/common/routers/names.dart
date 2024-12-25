@@ -18,7 +18,7 @@ class RouteNames {
   static const newsDetail2 = '/news_new_detail2';
   static const newsDetail = '/news_new_detail';
   static const newList = '/news_new_list';
-  static const statsRank = '/stats_rank';
+  static const nbaRank = '/stats_rank';
   static const teamRank = '/team_rank';
 
   static const picksPicksIndex = '/picks_picks_index';

@@ -12,7 +12,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
  * @Description: 自定义弹窗
  * @Author: lihonghao
  * @Date: 2024-09-28 15:59:52
- * @LastEditTime: 2024-12-17 12:09:21
+ * @LastEditTime: 2024-12-25 22:31:30
  */
 
 class CustomBottomDialog extends StatelessWidget {
@@ -127,7 +127,39 @@ class CustomBottomDialog extends StatelessWidget {
         ],
       ),
     );
- 
+  }
+}
+
+class SimpleBottomDialog extends StatelessWidget {
+  const SimpleBottomDialog({
+    super.key,
+    this.height,
+    required this.child,
+  });
+  final double? height;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: height ?? 489.w,
+      decoration: BoxDecoration(
+          color: AppColors.cFFFFFF,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(9.w))),
+      child: Column(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+                color: AppColors.ccccccc,
+                borderRadius: BorderRadius.circular(2.w)),
+            height: 4.w,
+            width: 44.w,
+          ),
+          child
+        ],
+      ),
+    );
   }
 }
 

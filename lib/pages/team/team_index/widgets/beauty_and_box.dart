@@ -97,20 +97,19 @@ class BeautyAndBoxView extends StatelessWidget {
                       child: SizedBox(
                         height: 546.w,
                         child: Stack(
+                          alignment: Alignment.topCenter,
                           children: [
-                            Center(
-                              child: SpineWidget.fromAsset(
-                                Assets.assetsSpineNv1,
-                                "assets/spine/nv_1.json",
-                                beautyCtrl.spineWidgetController,
-                                fit: BoxFit.fitHeight,
-                                alignment: Alignment.topCenter,
-                              ),
+                            SpineWidget.fromAsset(
+                              Assets.assetsSpineNv1,
+                              "assets/spine/nv_1.json",
+                              beautyCtrl.spineWidgetController,
+                              fit: BoxFit.fitHeight,
+                              alignment: Alignment.topCenter,
                             ),
                             Positioned(
                                 top: 0,
-                                left: 0,
-                                right: 0,
+                                left: 50.w,
+                                right: 50.w,
                                 height:
                                     MediaQuery.of(context).size.height * 0.33,
                                 child: GestureDetector(
@@ -121,8 +120,8 @@ class BeautyAndBoxView extends StatelessWidget {
                                 )),
                             Positioned(
                                 bottom: 0,
-                                left: 0,
-                                right: 0,
+                                left: 50.w,
+                                right: 50.w,
                                 height:
                                     MediaQuery.of(context).size.height * 0.66,
                                 child: GestureDetector(
