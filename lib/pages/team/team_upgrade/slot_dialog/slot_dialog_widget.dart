@@ -145,6 +145,9 @@ class SlotDialogWidget extends GetView<SlotDialogController> {
                                                         mainAxisAlignment:
                                                             MainAxisAlignment
                                                                 .spaceBetween,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
                                                         children: [
                                                           Text(
                                                             "Special training status",
@@ -156,19 +159,37 @@ class SlotDialogWidget extends GetView<SlotDialogController> {
                                                                     FontFamily
                                                                         .fRobotoRegular),
                                                           ),
-                                                          Text(
-                                                            "${(controller.startUpItem.successRate * 100).format()}%",
-                                                            style: 12.w5(
-                                                                color: AppColors
-                                                                    .cFFFFFF,
-                                                                height: 1,
-                                                                fontFamily:
-                                                                    FontFamily
-                                                                        .fOswaldMedium),
+                                                          SizedBox(
+                                                            height: 19.w,
+                                                            child: Row(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .center,
+                                                              children: [
+                                                                if (controller
+                                                                        .startUpItem
+                                                                        .successRate <
+                                                                    0.3 && !controller.isGameOver.value)
+                                                                  IconWidget(
+                                                                      iconWidth:
+                                                                          16.w,
+                                                                      icon: Assets
+                                                                          .commonUiCommonIconSystemDanger01),
+                                                                Text(
+                                                                  "${(controller.startUpItem.successRate * 100).format()}%",
+                                                                  style: 12.w5(
+                                                                      color: AppColors
+                                                                          .cFFFFFF,
+                                                                      height: 1,
+                                                                      fontFamily:
+                                                                          FontFamily
+                                                                              .fOswaldMedium),
+                                                                ),
+                                                              ],
+                                                            ),
                                                           )
                                                         ],
                                                       ),
-                                                      5.vGap,
                                                       Container(
                                                         height: 9.w,
                                                         decoration: BoxDecoration(
@@ -189,8 +210,14 @@ class SlotDialogWidget extends GetView<SlotDialogController> {
                                                                           .startUpItem
                                                                           .successRate),
                                                               decoration: BoxDecoration(
-                                                                  color: AppColors
-                                                                      .cFFFFFF,
+                                                                  color: controller
+                                                                              .startUpItem
+                                                                              .successRate <
+                                                                          0.3
+                                                                      ? AppColors
+                                                                          .cD60D20
+                                                                      : AppColors
+                                                                          .cFFFFFF,
                                                                   borderRadius:
                                                                       BorderRadius
                                                                           .circular(
@@ -757,11 +784,18 @@ class SlotDialogWidget extends GetView<SlotDialogController> {
                                           ],
                                         );
                                       }
+                                      var list = controller.selectIndexList;
+                                      var firstValue = list[0];
+                                      var every =
+                                          list.every((e) => e == firstValue);
                                       return Container(
                                         height: 46.w,
                                         margin: EdgeInsets.symmetric(
                                             horizontal: 8.w),
                                         decoration: BoxDecoration(
+                                            color: every && list.length >= 4
+                                                ? AppColors.c67A517
+                                                : null,
                                             image: !slotMachineController
                                                         .isAnimating &&
                                                     8 == selectIndex &&
