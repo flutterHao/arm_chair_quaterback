@@ -14,6 +14,7 @@ import 'package:arm_chair_quaterback/common/widgets/share_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_upgrade/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_upgrade/slot_dialog/slot_dialog_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_upgrade/widgets/upgrade_header_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +48,9 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
                 return Column(
                   children: [
                     const UpgradeHeaderWidget(),
-                    Expanded(child: _buildBaseInfo())
+                    Expanded(
+                      child: _buildBaseInfo(context),
+                    )
                   ],
                 );
               }),
@@ -58,7 +61,7 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
     );
   }
 
-  Widget _buildBaseInfo() {
+  Widget _buildBaseInfo(BuildContext context) {
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Column(
@@ -92,9 +95,10 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
                         ],
                       ),
                       26.vGap,
-                      ...List.generate(controller.upgradePlayerAbilityList.length,
-                          (index) {
-                        var ability = controller.upgradePlayerAbilityList[index];
+                      ...List.generate(
+                          controller.upgradePlayerAbilityList.length, (index) {
+                        var ability =
+                            controller.upgradePlayerAbilityList[index];
                         return Container(
                           margin: EdgeInsets.only(bottom: 17.w),
                           child: Row(
@@ -116,11 +120,12 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
                                   borderRadius: BorderRadius.circular(6.w),
                                   child: Builder(builder: (context) {
                                     double value = ability.maxValue;
-                                    double total = value + 5000;
+                                    double total = value + 2000;
                                     double baseValue = ability.baseValue;
                                     double beforeUpgradeValue =
                                         ability.beforeValue;
-                                    double afterUpgradeValue = ability.afterValue;
+                                    double afterUpgradeValue =
+                                        ability.afterValue;
                                     double maxProgress = value / total;
                                     double baseProgress = baseValue / total;
                                     double beforeProgress =
@@ -143,8 +148,8 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
                                                   width: 1.w)),
                                         ),
                                         AnimatedPositioned(
-                                            duration:
-                                                const Duration(milliseconds: 300),
+                                            duration: const Duration(
+                                                milliseconds: 300),
                                             left: -(235.w * (1 - maxProgress)),
                                             child: Container(
                                               width: 235.w,
@@ -159,9 +164,10 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
 
                                         /// 升级后
                                         AnimatedPositioned(
-                                            duration:
-                                                const Duration(milliseconds: 300),
-                                            left: -(235.w * (1 - afterProgress)),
+                                            duration: const Duration(
+                                                milliseconds: 300),
+                                            left:
+                                                -(235.w * (1 - afterProgress)),
                                             child: Container(
                                               height: 12.w,
                                               width: 235.w,
@@ -175,9 +181,10 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
 
                                         /// 升级前
                                         AnimatedPositioned(
-                                            duration:
-                                                const Duration(milliseconds: 300),
-                                            left: -(235.w * (1 - beforeProgress)),
+                                            duration: const Duration(
+                                                milliseconds: 300),
+                                            left:
+                                                -(235.w * (1 - beforeProgress)),
                                             child: Container(
                                               height: 12.w,
                                               width: 235.w,
@@ -191,8 +198,8 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
 
                                         /// 基础
                                         AnimatedPositioned(
-                                            duration:
-                                                const Duration(milliseconds: 300),
+                                            duration: const Duration(
+                                                milliseconds: 300),
                                             left: -(235.w * (1 - baseProgress)),
                                             child: Container(
                                               height: 12.w,
@@ -227,17 +234,22 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
                       if (controller.player.breakThroughGrade < 10)
                         MtInkwell(
                           onTap: () async {
-                            var result = await Get.toNamed(
-                                RouteNames.teamStartUpGrade,
-                                arguments: {"player": controller.player});
-                            if (kDebugMode) {
-                              print('isSuccess-upgrade:$result');
-                            }
-                            controller.initData();
-                            if (result != null &&
-                                result is bool &&
-                                result) {
-                              controller.refreshPlayerAbilityUI();
+                            if (controller.teamPlayerUpStarVoEntity.starUpDTO !=
+                                null) {
+                              var result = await showModalBottomSheet(
+                                  isScrollControlled: true,
+                                  enableDrag: false,
+                                  backgroundColor: AppColors.cTransparent,
+                                  context: context,
+                                  builder: (context) {
+                                    return const SlotDialogWidget();
+                                  });
+                              onResult(result);
+                            } else {
+                              var result = await Get.toNamed(
+                                  RouteNames.teamStartUpGrade,
+                                  arguments: {"player": controller.player});
+                              onResult(result);
                             }
                           },
                           child: Container(
@@ -479,5 +491,15 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
         ],
       ),
     );
+  }
+
+  void onResult(result) {
+    if (kDebugMode) {
+      print('isSuccess-upgrade:$result');
+    }
+    controller.initData();
+    if (result != null && result is bool && result) {
+      controller.refreshPlayerAbilityUI();
+    }
   }
 }

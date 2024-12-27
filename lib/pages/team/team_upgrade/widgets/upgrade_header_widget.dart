@@ -19,11 +19,13 @@ class UpgradeHeaderWidget extends GetView<TeamUpgradeController> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ..._buildHeader(context),
-      ],
-    );
+    return GetBuilder<TeamUpgradeController>(builder: (logic) {
+      return Column(
+        children: [
+          ..._buildHeader(context),
+        ],
+      );
+    });
   }
 
   List<Widget> _buildHeader(BuildContext context) {
@@ -229,7 +231,12 @@ class UpgradeHeaderWidget extends GetView<TeamUpgradeController> {
                           fontFamily: FontFamily.fOswaldRegular),
                     ),
                     Text(
-                      controller.starUpDoneEntity != null ? controller.starUpDoneEntity!.teamPlayerVO.playerStrength.format() : controller.teamPlayerUpStarVoEntity.playerStrength.format(),
+                      controller.starUpDoneEntity != null
+                          ? controller
+                              .starUpDoneEntity!.teamPlayerVO.playerStrength
+                              .format()
+                          : controller.teamPlayerUpStarVoEntity.playerStrength
+                              .format(),
                       style: 12.w4(
                           color: AppColors.c000000,
                           height: 1,

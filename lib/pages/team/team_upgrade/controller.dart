@@ -160,7 +160,6 @@ class TeamUpgradeController extends GetxController {
       num potentialValue = starUpDoneEntity!.addPotential.toJson()[proKey];
       upgradePlayerAbility.afterValue =
           baseValue * max(1.0, potentialValue.toDouble());
-      upgradePlayerAbility.afterValue = Random().nextDouble()*upgradePlayerAbility.maxValue;
     }
   }
 
@@ -172,17 +171,23 @@ class TeamUpgradeController extends GetxController {
 
 class UpgradePlayerAbility {
   final String name;
-  double maxValue = -1;
-  double baseValue = -1;
-  double beforeValue = -1;
-  double afterValue = -1;
+  double maxValue = 0;
+  double baseValue = 0;
+  double beforeValue = 0;
+  double afterValue = 0;
 
   UpgradePlayerAbility({
     required this.name,
-    this.maxValue = -1,
-    this.baseValue = -1,
-    this.beforeValue = -1,
+    this.maxValue = 0,
+    this.baseValue = 0,
+    this.beforeValue = 0,
+    this.afterValue = 0,
   });
+
+  @override
+  String toString() {
+    return 'UpgradePlayerAbility{name: $name, maxValue: $maxValue, baseValue: $baseValue, beforeValue: $beforeValue, afterValue: $afterValue}';
+  }
 }
 
 class UpgradeOffensive {

@@ -114,6 +114,7 @@ class SlotDialogController extends GetxController
     if (teamUpgradeController.teamPlayerUpStarVoEntity.starUpDTO != null) {
       handlerInitData(
           teamUpgradeController.teamPlayerUpStarVoEntity.starUpDTO!);
+      loadStatus.value = LoadDataStatus.success;
     } else {
       loadStatus.value = LoadDataStatus.loading;
       StartUpgradeController startUpgradeController = Get.find();
@@ -212,8 +213,8 @@ class SlotDialogController extends GetxController
   }
 
   continueStarUp({bool isRetry = false}) {
-    StartUpgradeController startUpgradeController = Get.find();
-    PicksApi.continueStarUp(startUpgradeController.player.uuid).then((result) {
+    TeamUpgradeController teamUpgradeController = Get.find();
+    PicksApi.continueStarUp(teamUpgradeController.player.uuid).then((result) {
       onResult(result, needRefreshUI: isRetry);
       if (isRetry) {
         openDoor();
@@ -267,8 +268,8 @@ class SlotDialogController extends GetxController
   done() {
     if (slotCount.value < 8) return;
     if (isGameOver.value) return;
-    StartUpgradeController startUpgradeController = Get.find();
-    PicksApi.starUpDone(startUpgradeController.player.uuid).then((result) {
+    TeamUpgradeController teamUpgradeController = Get.find();
+    PicksApi.starUpDone(teamUpgradeController.player.uuid).then((result) {
       TeamUpgradeController teamUpgradeController = Get.find();
       teamUpgradeController.setUpgradeResult(result);
       var success = result.success;

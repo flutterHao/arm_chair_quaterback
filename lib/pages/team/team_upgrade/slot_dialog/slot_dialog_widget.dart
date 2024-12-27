@@ -404,14 +404,10 @@ class SlotDialogWidget extends GetView<SlotDialogController> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          if (controller
-                                                  .upStarTeamPlayerV2Entity
-                                                  .starUpList
-                                                  .isNotEmpty &&
-                                              !controller.isGameOver.value &&
-                                              controller.slotCount < 8)
+                                          if (!controller.isGameOver.value &&
+                                              controller.slotCount < 9)
                                             Text(
-                                              "TIMES:${max(0, 8 - controller.slotCount.value)}",
+                                              "TIMES:${max(0, 9 - controller.slotCount.value)}",
                                               style: 12.w4(
                                                   color: AppColors.c000000,
                                                   height: 1,
