@@ -1,4 +1,3 @@
-
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
@@ -16,6 +15,7 @@ import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_upgrade/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_upgrade/widgets/upgrade_header_widget.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -24,6 +24,7 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
   const TeamUpgradePage({required this.player, super.key});
 
   final TeamPlayerInfoEntity player;
+
   @override
   Widget build(BuildContext context) {
     return HorizontalDragBackWidget(
@@ -62,202 +63,219 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
       physics: const BouncingScrollPhysics(),
       child: Column(
         children: [
-          Container(
-            margin: EdgeInsets.only(top: 9.w),
-            width: double.infinity,
-            decoration: BoxDecoration(
-                color: AppColors.cFFFFFF,
-                borderRadius: BorderRadius.circular(12.w)),
-            child: Stack(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    20.vGap,
-                    Row(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(left: 16.w),
-                          child: Text(
-                            "ABILITY",
-                            style: 30.w7(
-                                color: AppColors.c000000,
-                                height: 1,
-                                fontFamily: FontFamily.fOswaldBold),
+          9.vGap,
+          Stack(
+            children: [
+              RepaintBoundary(
+                key: controller.globalKey,
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      color: AppColors.cFFFFFF,
+                      borderRadius: BorderRadius.circular(12.w)),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      20.vGap,
+                      Row(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(left: 16.w),
+                            child: Text(
+                              "ABILITY",
+                              style: 30.w7(
+                                  color: AppColors.c000000,
+                                  height: 1,
+                                  fontFamily: FontFamily.fOswaldBold),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    26.vGap,
-                    ...List.generate(controller.getPlayerAbility().length, (index) {
-                      var ability = controller.getPlayerAbility()[index];
-                      return Container(
-                        margin: EdgeInsets.only(bottom: 17.w),
-                        child: Row(
-                          children: [
-                            29.hGap,
-                            Expanded(
-                              child: Text(
-                                ability.name,
-                                style: 16.w4(
-                                    color: AppColors.c000000,
-                                    height: 1,
-                                    fontFamily: FontFamily.fOswaldRegular),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 12.w,
-                              width: 235.w,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(6.w),
-                                child: Builder(builder: (context) {
-                                  double value = ability.maxValue;
-                                  double total = value + 20;
-                                  double baseValue = ability.baseValue;
-                                  double beforeUpgradeValue = ability.beforeValue;
-                                  double afterUpgradeValue = ability.afterValue;
-                                  double maxProgress = value / total;
-                                  double baseProgress = baseValue / total;
-                                  double beforeProgress =
-                                      beforeUpgradeValue / total;
-                                  double afterProgress =
-                                      afterUpgradeValue / total;
-
-                                  return Stack(
-                                    alignment: Alignment.centerLeft,
-                                    children: [
-                                      /// 边框
-                                      Container(
-                                        height: 12.w,
-                                        width: 235.w,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(6.w),
-                                            border: Border.all(
-                                                color: AppColors.cD1D1D1,
-                                                width: 1.w)),
-                                      ),
-                                      AnimatedPositioned(
-                                          duration:
-                                              const Duration(milliseconds: 300),
-                                          left: -(235.w * (1 - maxProgress)),
-                                          child: Container(
-                                            width: 235.w,
-                                            height: 10.w,
-                                            decoration: BoxDecoration(
-                                                border: Border(
-                                                    right: BorderSide(
-                                                        color:
-                                                            AppColors.c000000,
-                                                        width: 2.w))),
-                                          )),
-
-                                      /// 升级后
-                                      AnimatedPositioned(
-                                          duration:
-                                              const Duration(milliseconds: 300),
-                                          left: -(235.w * (1 - afterProgress)),
-                                          child: Container(
-                                            height: 12.w,
-                                            width: 235.w,
-                                            decoration: BoxDecoration(
-                                                color: AppColors.cFFD133,
-                                                borderRadius:
-                                                    BorderRadius.horizontal(
-                                                        left: Radius.circular(
-                                                            6.w))),
-                                          )),
-
-                                      /// 升级前
-                                      AnimatedPositioned(
-                                          duration:
-                                              const Duration(milliseconds: 300),
-                                          left: -(235.w * (1 - beforeProgress)),
-                                          child: Container(
-                                            height: 12.w,
-                                            width: 235.w,
-                                            decoration: BoxDecoration(
-                                                color: AppColors.cFF7954,
-                                                borderRadius:
-                                                    BorderRadius.horizontal(
-                                                        left: Radius.circular(
-                                                            6.w))),
-                                          )),
-
-                                      /// 基础
-                                      AnimatedPositioned(
-                                          duration:
-                                              const Duration(milliseconds: 300),
-                                          left: -(235.w * (1 - baseProgress)),
-                                          child: Container(
-                                            height: 12.w,
-                                            width: 235.w,
-                                            decoration: BoxDecoration(
-                                                color: AppColors.c000000,
-                                                borderRadius:
-                                                    BorderRadius.horizontal(
-                                                        left: Radius.circular(
-                                                            6.w))),
-                                          )),
-                                    ],
-                                  );
-                                }),
-                              ),
-                            ),
-                            9.hGap,
-                            Expanded(
-                              child: Text(
-                                ability.maxValue.format(),
-                                style: 16.w4(
-                                    color: AppColors.c000000,
-                                    height: 1,
-                                    fontFamily: FontFamily.fOswaldRegular),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    }),
-                    16.vGap,
-                    if (controller.player.breakThroughGrade < 10)
-                      MtInkwell(
-                        onTap: () => Get.toNamed(RouteNames.teamStartUpGrade,
-                            arguments: {"player": controller.player}),
-                        child: Container(
-                          height: 51.w,
-                          width: 343.w,
-                          decoration: BoxDecoration(
-                              color: AppColors.c000000,
-                              borderRadius: BorderRadius.circular(9.w)),
-                          child: Stack(
-                            alignment: Alignment.center,
+                        ],
+                      ),
+                      26.vGap,
+                      ...List.generate(controller.upgradePlayerAbilityList.length,
+                          (index) {
+                        var ability = controller.upgradePlayerAbilityList[index];
+                        return Container(
+                          margin: EdgeInsets.only(bottom: 17.w),
+                          child: Row(
                             children: [
-                              Text(
-                                "UPGRADE",
-                                style: 23.w5(
-                                    color: AppColors.cFFFFFF,
-                                    height: 1,
-                                    fontFamily: FontFamily.fOswaldMedium),
+                              29.hGap,
+                              Expanded(
+                                child: Text(
+                                  ability.name,
+                                  style: 16.w4(
+                                      color: AppColors.c000000,
+                                      height: 1,
+                                      fontFamily: FontFamily.fOswaldRegular),
+                                ),
                               ),
-                              Positioned(
-                                  right: 13.w,
-                                  child: IconWidget(
-                                      iconWidth: 11.w,
-                                      icon: Assets
-                                          .commonUiCommonIconSystemJumpto))
+                              SizedBox(
+                                height: 12.w,
+                                width: 235.w,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(6.w),
+                                  child: Builder(builder: (context) {
+                                    double value = ability.maxValue;
+                                    double total = value + 5000;
+                                    double baseValue = ability.baseValue;
+                                    double beforeUpgradeValue =
+                                        ability.beforeValue;
+                                    double afterUpgradeValue = ability.afterValue;
+                                    double maxProgress = value / total;
+                                    double baseProgress = baseValue / total;
+                                    double beforeProgress =
+                                        beforeUpgradeValue / total;
+                                    double afterProgress =
+                                        afterUpgradeValue / total;
+
+                                    return Stack(
+                                      alignment: Alignment.centerLeft,
+                                      children: [
+                                        /// 边框
+                                        Container(
+                                          height: 12.w,
+                                          width: 235.w,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(6.w),
+                                              border: Border.all(
+                                                  color: AppColors.cD1D1D1,
+                                                  width: 1.w)),
+                                        ),
+                                        AnimatedPositioned(
+                                            duration:
+                                                const Duration(milliseconds: 300),
+                                            left: -(235.w * (1 - maxProgress)),
+                                            child: Container(
+                                              width: 235.w,
+                                              height: 10.w,
+                                              decoration: BoxDecoration(
+                                                  border: Border(
+                                                      right: BorderSide(
+                                                          color:
+                                                              AppColors.c000000,
+                                                          width: 2.w))),
+                                            )),
+
+                                        /// 升级后
+                                        AnimatedPositioned(
+                                            duration:
+                                                const Duration(milliseconds: 300),
+                                            left: -(235.w * (1 - afterProgress)),
+                                            child: Container(
+                                              height: 12.w,
+                                              width: 235.w,
+                                              decoration: BoxDecoration(
+                                                  color: AppColors.cFFD133,
+                                                  borderRadius:
+                                                      BorderRadius.horizontal(
+                                                          left: Radius.circular(
+                                                              6.w))),
+                                            )),
+
+                                        /// 升级前
+                                        AnimatedPositioned(
+                                            duration:
+                                                const Duration(milliseconds: 300),
+                                            left: -(235.w * (1 - beforeProgress)),
+                                            child: Container(
+                                              height: 12.w,
+                                              width: 235.w,
+                                              decoration: BoxDecoration(
+                                                  color: AppColors.cFF7954,
+                                                  borderRadius:
+                                                      BorderRadius.horizontal(
+                                                          left: Radius.circular(
+                                                              6.w))),
+                                            )),
+
+                                        /// 基础
+                                        AnimatedPositioned(
+                                            duration:
+                                                const Duration(milliseconds: 300),
+                                            left: -(235.w * (1 - baseProgress)),
+                                            child: Container(
+                                              height: 12.w,
+                                              width: 235.w,
+                                              decoration: BoxDecoration(
+                                                  color: AppColors.c000000,
+                                                  borderRadius:
+                                                      BorderRadius.horizontal(
+                                                          left: Radius.circular(
+                                                              6.w))),
+                                            )),
+                                      ],
+                                    );
+                                  }),
+                                ),
+                              ),
+                              9.hGap,
+                              Expanded(
+                                child: Text(
+                                  ability.maxValue.format(),
+                                  style: 16.w4(
+                                      color: AppColors.c000000,
+                                      height: 1,
+                                      fontFamily: FontFamily.fOswaldRegular),
+                                ),
+                              ),
                             ],
                           ),
+                        );
+                      }),
+                      16.vGap,
+                      if (controller.player.breakThroughGrade < 10)
+                        MtInkwell(
+                          onTap: () async {
+                            var result = await Get.toNamed(
+                                RouteNames.teamStartUpGrade,
+                                arguments: {"player": controller.player});
+                            if (kDebugMode) {
+                              print('isSuccess-upgrade:$result');
+                            }
+                            controller.initData();
+                            if (result != null &&
+                                result is bool &&
+                                result) {
+                              controller.refreshPlayerAbilityUI();
+                            }
+                          },
+                          child: Container(
+                            height: 51.w,
+                            width: 343.w,
+                            decoration: BoxDecoration(
+                                color: AppColors.c000000,
+                                borderRadius: BorderRadius.circular(9.w)),
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Text(
+                                  "UPGRADE",
+                                  style: 23.w5(
+                                      color: AppColors.cFFFFFF,
+                                      height: 1,
+                                      fontFamily: FontFamily.fOswaldMedium),
+                                ),
+                                Positioned(
+                                    right: 13.w,
+                                    child: IconWidget(
+                                        iconWidth: 11.w,
+                                        icon: Assets
+                                            .commonUiCommonIconSystemJumpto))
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
-                    21.vGap,
-                  ],
+                      21.vGap,
+                    ],
+                  ),
                 ),
-                Positioned(
-                    right: 10.w,
-                    top: 10.w,
-                    child: ShareWidget(globalKey: GlobalKey())) //todo
-              ],
-            ),
+              ),
+              Positioned(
+                  right: 10.w,
+                  top: 10.w,
+                  child: ShareWidget(globalKey: controller.globalKey))
+            ],
           ),
           Container(
             width: double.infinity,
@@ -289,7 +307,8 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
                   margin: EdgeInsets.only(left: 29.w, right: 16.w),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: List.generate(controller.getOffensive().length, (index) {
+                    children: List.generate(controller.getOffensive().length,
+                        (index) {
                       var offensive = controller.getOffensive()[index];
                       double progress = offensive.progress;
 
@@ -307,7 +326,7 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
                           child: Stack(
                             alignment: Alignment.topCenter,
                             children: [
-                              ArcWidget(
+                              AnimationArcWidget(
                                 45.w,
                                 borderColor: AppColors.cE1E1E1,
                                 progressColor: AppColors.cFF7954,
@@ -411,7 +430,8 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: List.generate(3, (index) {
-                          var additional = controller.getAdditional()[index+3];
+                          var additional =
+                              controller.getAdditional()[index + 3];
                           return SizedBox(
                             width: 125.w,
                             height: 28.w,

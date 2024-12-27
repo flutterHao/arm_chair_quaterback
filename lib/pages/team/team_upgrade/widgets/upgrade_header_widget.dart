@@ -62,9 +62,7 @@ class UpgradeHeaderWidget extends GetView<TeamUpgradeController> {
                             color: AppColors.c000000,
                             borderRadius: BorderRadius.circular(2.w)),
                         child: Text(
-                          controller.player.position > 0
-                              ? "MAIN"
-                              : "SUB",
+                          controller.player.position > 0 ? "MAIN" : "SUB",
                           style: 10.w5(
                             color: AppColors.cFFFFFF,
                             height: 1,
@@ -170,7 +168,7 @@ class UpgradeHeaderWidget extends GetView<TeamUpgradeController> {
                             iconWidth: 22.w,
                             icon: Assets.managerUiManagerPlayerstar),
                         Text(
-                          "${controller.player.getBreakThroughGrade()}",
+                          "${controller.starUpDoneEntity != null ? (controller.starUpDoneEntity!.teamPlayerVO.breakThroughGrade + 1) : (controller.teamPlayerUpStarVoEntity.breakThroughGrade + 1)}",
                           style: 13.w5(
                             color: AppColors.cFFFFFF,
                             fontFamily: FontFamily.fRobotoMedium,
@@ -231,7 +229,7 @@ class UpgradeHeaderWidget extends GetView<TeamUpgradeController> {
                           fontFamily: FontFamily.fOswaldRegular),
                     ),
                     Text(
-                      controller.teamPlayerUpStarVoEntity.playerStrength.format(),
+                      controller.starUpDoneEntity != null ? controller.starUpDoneEntity!.teamPlayerVO.playerStrength.format() : controller.teamPlayerUpStarVoEntity.playerStrength.format(),
                       style: 12.w4(
                           color: AppColors.c000000,
                           height: 1,

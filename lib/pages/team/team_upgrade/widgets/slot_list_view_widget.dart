@@ -14,10 +14,12 @@ class SlotListViewWidget extends StatefulWidget {
       super.key,
       required this.itemBuilder,
       required this.itemCount,
-      this.onEnd});
+      this.onEnd,
+      this.viewportFraction = 0.38});
 
   final SlotMachineController controller;
   final int itemCount;
+  final double viewportFraction;
   final Widget Function(BuildContext context, int index, int selectIndex)
       itemBuilder;
   final void Function(int value)? onEnd;
@@ -36,13 +38,13 @@ class _SlotListViewWidgetState extends State<SlotListViewWidget>
   void initState() {
     super.initState();
     _pageController = PageController(
-      viewportFraction: 0.38,
+      viewportFraction: widget.viewportFraction,
       initialPage: widget.itemCount * 1000, // 设置初始页面为中间，避免快速滑到边界
     );
     widget.controller._bindSpinCallback(_spin);
   }
 
-  void _spin(int spins, int index) async {
+  void _spin(int spins, int index, Duration duration) async {
     // 计算随机目标页面
     final int currentPage = _pageController.page!.toInt();
     final int s = spins * widget.itemCount; // 设置滚动圈数
@@ -52,12 +54,14 @@ class _SlotListViewWidgetState extends State<SlotListViewWidget>
     randomTarget = randomTarget - currentPage % widget.itemCount;
     final int targetPage = currentPage + s + randomTarget;
 
+    widget.controller._isAnimating = true;
     // 动画滚动到目标页面
     await _pageController.animateToPage(
       targetPage,
-      duration: const Duration(seconds: 4),
+      duration: duration,
       curve: Curves.easeOutExpo, // 逐渐减速的效果
     );
+    widget.controller._isAnimating = false;
 
     // 修正最终位置到循环索引
     final int finalPage = targetPage % widget.itemCount;
@@ -91,12 +95,16 @@ class _SlotListViewWidgetState extends State<SlotListViewWidget>
 
 /// 自定义 Controller，用于控制 SlotMachine
 class SlotMachineController {
-  void Function(int spins, int index)? _spinCallback;
+  void Function(int spins, int index, Duration duration)? _spinCallback;
+  bool _isAnimating = false;
 
   /// 外部调用此方法触发滚动 spins 圈数 index 目标位置
-  void spin({int spins = 3, int index = 0}) {
+  void spin(
+      {int spins = 3,
+      int index = 0,
+      Duration duration = const Duration(seconds: 4)}) {
     if (_spinCallback != null) {
-      _spinCallback!(spins, index);
+      _spinCallback!(spins, index, duration);
     } else {
       throw Exception(
           "SlotMachineController is not attached to a SlotMachine.");
@@ -104,7 +112,10 @@ class SlotMachineController {
   }
 
   /// 内部绑定滚动逻辑
-  void _bindSpinCallback(void Function(int spins, int index) spinCallback) {
+  void _bindSpinCallback(
+      void Function(int spins, int index, Duration duration) spinCallback) {
     _spinCallback = spinCallback;
   }
+
+  bool get isAnimating => _isAnimating;
 }

@@ -5,24 +5,17 @@
  * @LastEditTime: 2024-09-21 17:29:10
  */
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/entities/all_team_players_by_up_star_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_game_info_v2_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/guess_infos_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/guess_param_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_top_reviews_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_season_game_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_day_data_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/rank_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/recive_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/recive_award_v2_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/star_up_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/star_up_done_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_simple_entity.dart';
@@ -31,16 +24,12 @@ import 'package:arm_chair_quaterback/common/entities/up_start_team_player_respon
 import 'package:arm_chair_quaterback/common/enums/rank_type.dart';
 import 'package:arm_chair_quaterback/common/net/apis.dart';
 import 'package:arm_chair_quaterback/common/net/http.dart';
-import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.dart';
-
-import '../../entities/guess_game_info_entity.dart';
 
 ///
 ///@auther gejiahui
 ///created at 2024/9/20/10:42
 
 class PicksApi {
-
   static Future<GuessGameInfoV2Entity> getGuessGamesInfo() async {
     var json = await httpUtil.post(Api.getGuessGamesInfo);
     return GuessGameInfoV2Entity.fromJson(json);
@@ -58,8 +47,7 @@ class PicksApi {
     return json.map((e) => PlayerDayDataEntity.fromJson(e)).toList();
   }
 
-  static Future guess(
-      int type, List guessParams, int newsId) async {
+  static Future guess(int type, List guessParams, int newsId) async {
     //newsId:新闻id，不是新闻竞猜填0
     var json = await httpUtil.post(Api.guess,
         data: ({
@@ -135,6 +123,16 @@ class PicksApi {
     var json = await httpUtil.post(Api.upStarTeamPlayer,
         data: {"uuid": uuid, "materialScienceUUID": materialScienceUUID});
     return UpStarTeamPlayerV2Entity.fromJson(json);
+  }
+
+  static Future<UpStarTeamPlayerV2Entity> continueStarUp(String uuid) async {
+    var json = await httpUtil.post(Api.continueStarUp, data: {"uuid": uuid});
+    return UpStarTeamPlayerV2Entity.fromJson(json);
+  }
+
+  static Future<StarUpDoneEntity> starUpDone(String uuid) async {
+    var json = await httpUtil.post(Api.starUpDone, data: {"uuid": uuid});
+    return StarUpDoneEntity.fromJson(json);
   }
 
   static Future<List<AllTeamPlayersByUpStarEntity>> getAllTeamPlayersByUpStar(

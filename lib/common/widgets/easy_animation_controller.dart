@@ -19,6 +19,7 @@ class EasyAnimationController<T> {
 
     _animationController =
         AnimationController(vsync: vsync, duration: duration);
+    _animationController.addListener(_animationListener);
     _tween = Tween(begin: begin, end: end);
     if (curve != null) {
       CurvedAnimation curvedAnimation = CurvedAnimation(
@@ -27,9 +28,10 @@ class EasyAnimationController<T> {
     } else {
       _animation = _tween.animate(_animationController);
     }
-    _animation.addListener(() {
-      value.value = _animation.value;
-    });
+  }
+
+  void _animationListener() {
+    value.value = _animation.value;
   }
 
   late AnimationController _animationController;
@@ -59,5 +61,16 @@ class EasyAnimationController<T> {
 
   void stop({bool canceled = true}) {
     controller.stop(canceled: canceled);
+  }
+
+  void set(T begin,T end,{Curve? curve}){
+    _tween = Tween(begin: begin, end: end);
+    if (curve != null) {
+      CurvedAnimation curvedAnimation = CurvedAnimation(
+          parent: _animationController as Animation<double>, curve: curve);
+      _animation = _tween.animate(curvedAnimation);
+    } else {
+      _animation = _tween.animate(_animationController);
+    }
   }
 }

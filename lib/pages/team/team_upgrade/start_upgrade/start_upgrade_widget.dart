@@ -33,6 +33,7 @@ import 'package:get/get.dart';
 
 class StartUpgradeWidget extends GetView<StartUpgradeController> {
   const StartUpgradeWidget({required this.player, super.key});
+
   final TeamPlayerInfoEntity player;
 
   @override
@@ -420,9 +421,17 @@ class StartUpgradeWidget extends GetView<StartUpgradeController> {
                   duration: const Duration(milliseconds: 300),
                   child: Center(
                     child: MtInkwell(
-                      onTap: ()=> showModalBottomSheet(context: context, builder: (BuildContext context) {
-                        return const AddSparringPlayersDialogWidget();
-                      },),
+                      onTap: () => showModalBottomSheet(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AddSparringPlayersDialogWidget(
+                            onBack:(value){
+                              print('isSuccess:$value');
+                              Get.back(result: value);
+                          }
+                          );
+                        },
+                      ),
                       child: Container(
                         height: 79.w,
                         width: 360.w,
@@ -449,7 +458,9 @@ class StartUpgradeWidget extends GetView<StartUpgradeController> {
                                 ),
                                 17.vGap,
                                 Row(
-                                  children: List.generate(5, (index) {
+                                  children: List.generate(
+                                      controller.selfStarUpDefine.starPlayerNum,
+                                      (index) {
                                     return Container(
                                       margin: EdgeInsets.only(right: 4.5.w),
                                       child: IconWidget(
@@ -484,8 +495,8 @@ class StartUpgradeWidget extends GetView<StartUpgradeController> {
                                       Container(
                                         width: 69.w,
                                         height: 35.w,
-                                        margin:
-                                            EdgeInsets.symmetric(horizontal: 2.w),
+                                        margin: EdgeInsets.symmetric(
+                                            horizontal: 2.w),
                                         decoration: BoxDecoration(
                                           color: AppColors.c1A1A1A,
                                           borderRadius:
@@ -543,15 +554,15 @@ class StartUpgradeWidget extends GetView<StartUpgradeController> {
                                             width: 82.w *
                                                 min(
                                                     1,
-                                                    controller
-                                                            .upSuccessRate.value /
+                                                    controller.upSuccessRate
+                                                            .value /
                                                         100),
                                             decoration: BoxDecoration(
                                                 color: AppColors.cFFFFFF,
                                                 borderRadius:
                                                     BorderRadius.circular(2.w)),
-                                            duration:
-                                                const Duration(milliseconds: 300),
+                                            duration: const Duration(
+                                                milliseconds: 300),
                                           )
                                         ],
                                       ),
@@ -712,12 +723,14 @@ class StartUpgradeWidget extends GetView<StartUpgradeController> {
   }
 
   void _itemTap(UpgradePlayer upgradePlayer) {
-    if(upgradePlayer.teamPlayer.position>=0){
+    if (upgradePlayer.teamPlayer.position >= 0) {
       EasyLoading.showToast("please remove player from lineup");
       return;
     }
-    if (controller.getSelectedPlayers().length >= 5 &&
+    if (controller.getSelectedPlayers().length ==
+            controller.selfStarUpDefine.starPlayerNum &&
         !upgradePlayer.select.value) {
+      EasyLoading.showToast("The maximum quantity limit has been reached");
       return;
     }
     upgradePlayer.select.value = !upgradePlayer.select.value;

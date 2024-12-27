@@ -56,6 +56,7 @@ import 'package:arm_chair_quaterback/common/entities/reward_group_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_not_start_game_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/star_up_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/star_up_done_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/tactic_grade_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/tactics_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/tatics_combine_entity.dart';
@@ -757,6 +758,32 @@ class JsonConvert {
       return data.map<StarUpDefineEntity>((Map<String, dynamic> e) =>
           StarUpDefineEntity.fromJson(e)).toList() as M;
     }
+    if (<StarUpDoneEntity>[] is M) {
+      return data.map<StarUpDoneEntity>((Map<String, dynamic> e) =>
+          StarUpDoneEntity.fromJson(e)).toList() as M;
+    }
+    if (<StarUpDoneAddPotential>[] is M) {
+      return data.map<StarUpDoneAddPotential>((Map<String, dynamic> e) =>
+          StarUpDoneAddPotential.fromJson(e)).toList() as M;
+    }
+    if (<StarUpDoneTeamPlayerVO>[] is M) {
+      return data.map<StarUpDoneTeamPlayerVO>((Map<String, dynamic> e) =>
+          StarUpDoneTeamPlayerVO.fromJson(e)).toList() as M;
+    }
+    if (<StarUpDoneTeamPlayerVOMaxAbility>[] is M) {
+      return data.map<StarUpDoneTeamPlayerVOMaxAbility>((
+          Map<String, dynamic> e) =>
+          StarUpDoneTeamPlayerVOMaxAbility.fromJson(e)).toList() as M;
+    }
+    if (<StarUpDoneTeamPlayerVOPotential>[] is M) {
+      return data.map<StarUpDoneTeamPlayerVOPotential>((
+          Map<String, dynamic> e) =>
+          StarUpDoneTeamPlayerVOPotential.fromJson(e)).toList() as M;
+    }
+    if (<StarUpDoneRandomCount>[] is M) {
+      return data.map<StarUpDoneRandomCount>((Map<String, dynamic> e) =>
+          StarUpDoneRandomCount.fromJson(e)).toList() as M;
+    }
     if (<TacticGradeEntity>[] is M) {
       return data.map<TacticGradeEntity>((Map<String, dynamic> e) =>
           TacticGradeEntity.fromJson(e)).toList() as M;
@@ -1113,6 +1140,14 @@ class JsonConvertClassCollection {
     (TeamPlayer).toString(): TeamPlayer.fromJson,
     (TeamHistory).toString(): TeamHistory.fromJson,
     (StarUpDefineEntity).toString(): StarUpDefineEntity.fromJson,
+    (StarUpDoneEntity).toString(): StarUpDoneEntity.fromJson,
+    (StarUpDoneAddPotential).toString(): StarUpDoneAddPotential.fromJson,
+    (StarUpDoneTeamPlayerVO).toString(): StarUpDoneTeamPlayerVO.fromJson,
+    (StarUpDoneTeamPlayerVOMaxAbility)
+        .toString(): StarUpDoneTeamPlayerVOMaxAbility.fromJson,
+    (StarUpDoneTeamPlayerVOPotential)
+        .toString(): StarUpDoneTeamPlayerVOPotential.fromJson,
+    (StarUpDoneRandomCount).toString(): StarUpDoneRandomCount.fromJson,
     (TacticGradeEntity).toString(): TacticGradeEntity.fromJson,
     (TacticGradeCards).toString(): TacticGradeCards.fromJson,
     (TacticsDefineEntity).toString(): TacticsDefineEntity.fromJson,

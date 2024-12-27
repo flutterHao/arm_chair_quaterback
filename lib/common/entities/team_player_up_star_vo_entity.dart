@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/entities/up_star_team_player_v2_entity.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/team_player_up_star_vo_entity.g.dart';
 import 'dart:convert';
@@ -32,6 +33,8 @@ class TeamPlayerUpStarVoEntity {
 	late int breakThroughGrade = 0;
 	late TeamPlayerUpStarVoPotential maxAbility;
 	double playerStrength=0;
+	/// 上次升星没有结束，过程中退出了才会有这个字段
+	UpStarTeamPlayerV2Entity? starUpDTO;
 
 	TeamPlayerUpStarVoEntity();
 

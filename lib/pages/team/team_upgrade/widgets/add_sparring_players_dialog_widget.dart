@@ -22,7 +22,12 @@ import 'package:get/get.dart';
 ///created at 2024/12/24/14:33
 
 class AddSparringPlayersDialogWidget extends GetView<StartUpgradeController> {
-  const AddSparringPlayersDialogWidget({super.key});
+  const AddSparringPlayersDialogWidget({
+    super.key,
+    required this.onBack,
+  });
+
+  final Function(dynamic value) onBack;
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +37,8 @@ class AddSparringPlayersDialogWidget extends GetView<StartUpgradeController> {
           return Container(
             width: double.infinity,
             decoration: BoxDecoration(
-              color: AppColors.cFFFFFF,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(9.w))
-            ),
+                color: AppColors.cFFFFFF,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(9.w))),
             child: Column(
               children: [
                 const DialogTopBtn(),
@@ -228,13 +232,14 @@ class AddSparringPlayersDialogWidget extends GetView<StartUpgradeController> {
                         }),
                   );
                 })),
-                if (controller.getSelectedPlayers().length < 5)
+                if (controller.getSelectedPlayers().length <
+                    controller.selfStarUpDefine.starPlayerNum)
                   Container(
                     margin: EdgeInsets.only(left: 20.w),
                     height: 53.w,
                     width: double.infinity,
                     child: MtInkwell(
-                      onTap: ()=> Get.back(),
+                      onTap: () => Get.back(),
                       child: Row(
                         children: [
                           Container(
@@ -291,7 +296,8 @@ class AddSparringPlayersDialogWidget extends GetView<StartUpgradeController> {
                                           "${controller.getSelectedPlayers().length}",
                                       style: TextStyle(fontSize: 18.sp)),
                                   TextSpan(
-                                      text: "/5",
+                                      text:
+                                          "/${controller.selfStarUpDefine.starPlayerNum}",
                                       style: TextStyle(fontSize: 14.sp))
                                 ]),
                                 style: 18.w5(
@@ -384,7 +390,7 @@ class AddSparringPlayersDialogWidget extends GetView<StartUpgradeController> {
                 ),
                 14.vGap,
                 MtInkwell(
-                  onTap: ()=> onStartClick(context),
+                  onTap: () => onStartClick(context),
                   child: Container(
                     width: 343.w,
                     height: 51.w,
@@ -431,14 +437,16 @@ class AddSparringPlayersDialogWidget extends GetView<StartUpgradeController> {
     );
   }
 
-  onStartClick(BuildContext context) {
+  onStartClick(BuildContext context) async {
     Get.back();
-    showModalBottomSheet(
-      isScrollControlled: true,
+    var result = await showModalBottomSheet(
+        isScrollControlled: true,
         enableDrag: false,
         backgroundColor: AppColors.cTransparent,
-        context: context, builder: (context){
-      return const SlotDialogWidget();
-    });
+        context: context,
+        builder: (context) {
+          return const SlotDialogWidget();
+        });
+    onBack.call(result);
   }
 }

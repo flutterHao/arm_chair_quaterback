@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/widgets/battle_animation_controller.dart';
+import 'package:arm_chair_quaterback/common/widgets/easy_animation_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

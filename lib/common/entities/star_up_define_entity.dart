@@ -12,10 +12,11 @@ import 'dart:convert';
 class StarUpDefineEntity {
   late double starUpRange = 0;
   late String potantialRang = "";
-  late double starUp = 0;
+  late int starUp = 0;
   late double starUpSell = 0;
   late double starUpline = 0;
   late double starRatingCoefficient = 0.0;
+  late int starPlayerNum = 0;
 
   StarUpDefineEntity();
 

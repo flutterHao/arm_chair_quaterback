@@ -42,6 +42,8 @@ class StartUpgradeController extends GetxController {
 
   late List<StarUpDefineEntity> starUpDefineList;
 
+  late StarUpDefineEntity selfStarUpDefine;
+
   var upSuccessRate = 0.0.obs;
   var ppUpValue = 0.0.obs;
 
@@ -76,6 +78,7 @@ class StartUpgradeController extends GetxController {
       starUpDefineList = result[2] as List<StarUpDefineEntity>;
       var starUpDefineEntity = starUpDefineList
           .firstWhere((f) => f.starUp == (player.breakThroughGrade + 1));
+      selfStarUpDefine = starUpDefineEntity;
       ppUpValue.value = 1 + starUpDefineEntity.getPotantialMax() / 100;
       var selfBaseInfo = Utils.getPlayBaseInfo(player.playerId);
       var value2 = Grade.getGradeByName(selfBaseInfo.grade);

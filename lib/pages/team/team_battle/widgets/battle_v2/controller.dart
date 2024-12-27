@@ -19,7 +19,7 @@ import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/thrid_lib/flutter_barrage.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/widgets/battle_animation_controller.dart';
+import 'package:arm_chair_quaterback/common/widgets/easy_animation_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/game_leader/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/live_text_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';

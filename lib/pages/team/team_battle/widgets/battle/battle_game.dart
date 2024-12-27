@@ -12,7 +12,7 @@ import 'package:arm_chair_quaterback/common/widgets/clipper/circle_clipper.dart'
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/clipper/line_chart_clipper.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/battle_game_over.dart';
-import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/widgets/battle_animation_controller.dart';
+import 'package:arm_chair_quaterback/common/widgets/easy_animation_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle/widgets/score_panel.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:flutter/material.dart';

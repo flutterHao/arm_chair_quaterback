@@ -387,6 +387,10 @@ TeamRankEntity $TeamRankEntityFromJson(Map<String, dynamic> json) {
   if (shortEname != null) {
     teamRankEntity.shortEname = shortEname;
   }
+  final int? force = jsonConvert.convert<int>(json['force']);
+  if (force != null) {
+    teamRankEntity.force = force;
+  }
   return teamRankEntity;
 }
 
@@ -480,6 +484,7 @@ Map<String, dynamic> $TeamRankEntityToJson(TeamRankEntity entity) {
   data['TiedAtHalf'] = entity.tiedAtHalf;
   data['HOME'] = entity.hOME;
   data['shortEname'] = entity.shortEname;
+  data['force'] = entity.force;
   return data;
 }
 
@@ -573,6 +578,7 @@ extension TeamRankEntityExtension on TeamRankEntity {
     String? tiedAtHalf,
     String? hOME,
     String? shortEname,
+    int? force,
   }) {
     return TeamRankEntity()
       ..oppPointsPG = oppPointsPG ?? this.oppPointsPG
@@ -664,6 +670,7 @@ extension TeamRankEntityExtension on TeamRankEntity {
       ..threePTSOrLess = threePTSOrLess ?? this.threePTSOrLess
       ..tiedAtHalf = tiedAtHalf ?? this.tiedAtHalf
       ..hOME = hOME ?? this.hOME
-      ..shortEname = shortEname ?? this.shortEname;
+      ..shortEname = shortEname ?? this.shortEname
+      ..force = force ?? this.force;
   }
 }

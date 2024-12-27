@@ -1,5 +1,7 @@
 import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_up_star_vo_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/up_star_team_player_v2_entity.dart';
+
 
 TeamPlayerUpStarVoEntity $TeamPlayerUpStarVoEntityFromJson(
     Map<String, dynamic> json) {
@@ -121,6 +123,11 @@ TeamPlayerUpStarVoEntity $TeamPlayerUpStarVoEntityFromJson(
   if (playerStrength != null) {
     teamPlayerUpStarVoEntity.playerStrength = playerStrength;
   }
+  final UpStarTeamPlayerV2Entity? starUpDTO = jsonConvert.convert<
+      UpStarTeamPlayerV2Entity>(json['starUpDTO']);
+  if (starUpDTO != null) {
+    teamPlayerUpStarVoEntity.starUpDTO = starUpDTO;
+  }
   return teamPlayerUpStarVoEntity;
 }
 
@@ -154,6 +161,7 @@ Map<String, dynamic> $TeamPlayerUpStarVoEntityToJson(
   data['breakThroughGrade'] = entity.breakThroughGrade;
   data['maxAbility'] = entity.maxAbility.toJson();
   data['playerStrength'] = entity.playerStrength;
+  data['starUpDTO'] = entity.starUpDTO?.toJson();
   return data;
 }
 
@@ -186,6 +194,7 @@ extension TeamPlayerUpStarVoEntityExtension on TeamPlayerUpStarVoEntity {
     int? breakThroughGrade,
     TeamPlayerUpStarVoPotential? maxAbility,
     double? playerStrength,
+    UpStarTeamPlayerV2Entity? starUpDTO,
   }) {
     return TeamPlayerUpStarVoEntity()
       ..uuid = uuid ?? this.uuid
@@ -214,7 +223,8 @@ extension TeamPlayerUpStarVoEntityExtension on TeamPlayerUpStarVoEntity {
       ..position = position ?? this.position
       ..breakThroughGrade = breakThroughGrade ?? this.breakThroughGrade
       ..maxAbility = maxAbility ?? this.maxAbility
-      ..playerStrength = playerStrength ?? this.playerStrength;
+      ..playerStrength = playerStrength ?? this.playerStrength
+      ..starUpDTO = starUpDTO ?? this.starUpDTO;
   }
 }
 

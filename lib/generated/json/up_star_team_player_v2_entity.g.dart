@@ -8,7 +8,7 @@ UpStarTeamPlayerV2Entity $UpStarTeamPlayerV2EntityFromJson(
   if (nowCount != null) {
     upStarTeamPlayerV2Entity.nowCount = nowCount;
   }
-  final int? successRate = jsonConvert.convert<int>(json['successRate']);
+  final double? successRate = jsonConvert.convert<double>(json['successRate']);
   if (successRate != null) {
     upStarTeamPlayerV2Entity.successRate = successRate;
   }
@@ -56,7 +56,7 @@ Map<String, dynamic> $UpStarTeamPlayerV2EntityToJson(
 extension UpStarTeamPlayerV2EntityExtension on UpStarTeamPlayerV2Entity {
   UpStarTeamPlayerV2Entity copyWith({
     int? nowCount,
-    int? successRate,
+    double? successRate,
     int? teamId,
     double? addRate,
     List<UpStarTeamPlayerV2StarUpList>? starUpList,
@@ -77,6 +77,10 @@ extension UpStarTeamPlayerV2EntityExtension on UpStarTeamPlayerV2Entity {
 UpStarTeamPlayerV2StarUpList $UpStarTeamPlayerV2StarUpListFromJson(
     Map<String, dynamic> json) {
   final UpStarTeamPlayerV2StarUpList upStarTeamPlayerV2StarUpList = UpStarTeamPlayerV2StarUpList();
+  final double? successRate = jsonConvert.convert<double>(json['successRate']);
+  if (successRate != null) {
+    upStarTeamPlayerV2StarUpList.successRate = successRate;
+  }
   final bool? success = jsonConvert.convert<bool>(json['success']);
   if (success != null) {
     upStarTeamPlayerV2StarUpList.success = success;
@@ -105,6 +109,7 @@ UpStarTeamPlayerV2StarUpList $UpStarTeamPlayerV2StarUpListFromJson(
 Map<String, dynamic> $UpStarTeamPlayerV2StarUpListToJson(
     UpStarTeamPlayerV2StarUpList entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
+  data['successRate'] = entity.successRate;
   data['success'] = entity.success;
   data['attrCount'] = entity.attrCount.toJson();
   data['attr'] = entity.attr.toJson();
@@ -115,6 +120,7 @@ Map<String, dynamic> $UpStarTeamPlayerV2StarUpListToJson(
 
 extension UpStarTeamPlayerV2StarUpListExtension on UpStarTeamPlayerV2StarUpList {
   UpStarTeamPlayerV2StarUpList copyWith({
+    double? successRate,
     bool? success,
     UpStarTeamPlayerV2StarUpListAttrCount? attrCount,
     UpStarTeamPlayerV2StarUpListAttr? attr,
@@ -122,6 +128,7 @@ extension UpStarTeamPlayerV2StarUpListExtension on UpStarTeamPlayerV2StarUpList 
     int? starUpCount,
   }) {
     return UpStarTeamPlayerV2StarUpList()
+      ..successRate = successRate ?? this.successRate
       ..success = success ?? this.success
       ..attrCount = attrCount ?? this.attrCount
       ..attr = attr ?? this.attr
@@ -216,27 +223,27 @@ UpStarTeamPlayerV2StarUpListAttr $UpStarTeamPlayerV2StarUpListAttrFromJson(
   if (tech != null) {
     upStarTeamPlayerV2StarUpListAttr.tech = tech;
   }
-  final int? pass = jsonConvert.convert<int>(json['pass']);
+  final double? pass = jsonConvert.convert<double>(json['pass']);
   if (pass != null) {
     upStarTeamPlayerV2StarUpListAttr.pass = pass;
   }
-  final int? stl = jsonConvert.convert<int>(json['stl']);
+  final double? stl = jsonConvert.convert<double>(json['stl']);
   if (stl != null) {
     upStarTeamPlayerV2StarUpListAttr.stl = stl;
   }
-  final int? threePm = jsonConvert.convert<int>(json['threePm']);
+  final double? threePm = jsonConvert.convert<double>(json['threePm']);
   if (threePm != null) {
     upStarTeamPlayerV2StarUpListAttr.threePm = threePm;
   }
-  final int? ftm = jsonConvert.convert<int>(json['ftm']);
+  final double? ftm = jsonConvert.convert<double>(json['ftm']);
   if (ftm != null) {
     upStarTeamPlayerV2StarUpListAttr.ftm = ftm;
   }
-  final int? pts = jsonConvert.convert<int>(json['pts']);
+  final double? pts = jsonConvert.convert<double>(json['pts']);
   if (pts != null) {
     upStarTeamPlayerV2StarUpListAttr.pts = pts;
   }
-  final int? reb = jsonConvert.convert<int>(json['reb']);
+  final double? reb = jsonConvert.convert<double>(json['reb']);
   if (reb != null) {
     upStarTeamPlayerV2StarUpListAttr.reb = reb;
   }
@@ -261,12 +268,12 @@ extension UpStarTeamPlayerV2StarUpListAttrExtension on UpStarTeamPlayerV2StarUpL
   UpStarTeamPlayerV2StarUpListAttr copyWith({
     double? blk,
     double? tech,
-    int? pass,
-    int? stl,
-    int? threePm,
-    int? ftm,
-    int? pts,
-    int? reb,
+    double? pass,
+    double? stl,
+    double? threePm,
+    double? ftm,
+    double? pts,
+    double? reb,
   }) {
     return UpStarTeamPlayerV2StarUpListAttr()
       ..blk = blk ?? this.blk

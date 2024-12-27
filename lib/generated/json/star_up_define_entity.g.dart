@@ -12,7 +12,7 @@ StarUpDefineEntity $StarUpDefineEntityFromJson(Map<String, dynamic> json) {
   if (potantialRang != null) {
     starUpDefineEntity.potantialRang = potantialRang;
   }
-  final double? starUp = jsonConvert.convert<double>(json['starUp']);
+  final int? starUp = jsonConvert.convert<int>(json['starUp']);
   if (starUp != null) {
     starUpDefineEntity.starUp = starUp;
   }
@@ -29,6 +29,10 @@ StarUpDefineEntity $StarUpDefineEntityFromJson(Map<String, dynamic> json) {
   if (starRatingCoefficient != null) {
     starUpDefineEntity.starRatingCoefficient = starRatingCoefficient;
   }
+  final int? starPlayerNum = jsonConvert.convert<int>(json['starPlayerNum']);
+  if (starPlayerNum != null) {
+    starUpDefineEntity.starPlayerNum = starPlayerNum;
+  }
   return starUpDefineEntity;
 }
 
@@ -40,6 +44,7 @@ Map<String, dynamic> $StarUpDefineEntityToJson(StarUpDefineEntity entity) {
   data['starUpSell'] = entity.starUpSell;
   data['starUpline'] = entity.starUpline;
   data['starRatingCoefficient'] = entity.starRatingCoefficient;
+  data['starPlayerNum'] = entity.starPlayerNum;
   return data;
 }
 
@@ -47,10 +52,11 @@ extension StarUpDefineEntityExtension on StarUpDefineEntity {
   StarUpDefineEntity copyWith({
     double? starUpRange,
     String? potantialRang,
-    double? starUp,
+    int? starUp,
     double? starUpSell,
     double? starUpline,
     double? starRatingCoefficient,
+    int? starPlayerNum,
   }) {
     return StarUpDefineEntity()
       ..starUpRange = starUpRange ?? this.starUpRange
@@ -59,6 +65,7 @@ extension StarUpDefineEntityExtension on StarUpDefineEntity {
       ..starUpSell = starUpSell ?? this.starUpSell
       ..starUpline = starUpline ?? this.starUpline
       ..starRatingCoefficient = starRatingCoefficient ??
-          this.starRatingCoefficient;
+          this.starRatingCoefficient
+      ..starPlayerNum = starPlayerNum ?? this.starPlayerNum;
   }
 }

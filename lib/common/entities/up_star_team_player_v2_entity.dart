@@ -6,7 +6,7 @@ export 'package:arm_chair_quaterback/generated/json/up_star_team_player_v2_entit
 @JsonSerializable()
 class UpStarTeamPlayerV2Entity {
 	late int nowCount = 0;
-	late int successRate = 0;
+	late double successRate = 0;
 	late int teamId = 0;
 	late double addRate;
 	late List<UpStarTeamPlayerV2StarUpList> starUpList = [];
@@ -27,6 +27,7 @@ class UpStarTeamPlayerV2Entity {
 
 @JsonSerializable()
 class UpStarTeamPlayerV2StarUpList {
+	late double successRate;
 	late bool success = false;
 	late UpStarTeamPlayerV2StarUpListAttrCount attrCount;
 	late UpStarTeamPlayerV2StarUpListAttr attr;
@@ -72,12 +73,12 @@ class UpStarTeamPlayerV2StarUpListAttrCount {
 class UpStarTeamPlayerV2StarUpListAttr {
 	late double blk;
 	late double tech;
-	late int pass = 0;
-	late int stl = 0;
-	late int threePm = 0;
-	late int ftm = 0;
-	late int pts = 0;
-	late int reb = 0;
+	late double pass = 0;
+	late double stl = 0;
+	late double threePm = 0;
+	late double ftm = 0;
+	late double pts = 0;
+	late double reb = 0;
 
 	UpStarTeamPlayerV2StarUpListAttr();
 

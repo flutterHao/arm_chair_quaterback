@@ -44,7 +44,7 @@ class TeamPlayerInfoEntity {
   TeamPlayerInfoEntity();
 
   int getBreakThroughGrade() {
-    if ((breakThroughGrade ?? 0) >= 1) {
+    if (breakThroughGrade >= 1) {
       return breakThroughGrade!;
     }
     return 1;

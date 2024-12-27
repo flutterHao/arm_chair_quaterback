@@ -1,6 +1,8 @@
 import 'dart:math';
 
+import 'package:arm_chair_quaterback/common/widgets/easy_animation_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 ///
 ///@auther gejiahui
@@ -17,6 +19,7 @@ class AnimationArcWidget extends StatefulWidget {
     this.borderColor = Colors.grey,
     this.borderWidth = 1.0,
     this.duration = const Duration(milliseconds: 700),
+    this.borderSweepAngle = 180,
   });
 
   /// 半径
@@ -34,6 +37,9 @@ class AnimationArcWidget extends StatefulWidget {
   /// 间隔角度
   final double progressSweepAngle;
 
+  /// 边框角度
+  final double borderSweepAngle;
+
   /// 圆环背景色
   final Color borderColor;
 
@@ -48,37 +54,55 @@ class AnimationArcWidget extends StatefulWidget {
 }
 
 class _AnimationArcWidgetState extends State<AnimationArcWidget>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _animationController;
-  late Animation<double> _animation;
+    with TickerProviderStateMixin {
+  late EasyAnimationController borderAnimationController;
+  late EasyAnimationController progressAnimationController;
 
   @override
   void initState() {
     super.initState();
-    _animationController =
-        AnimationController(vsync: this, duration: widget.duration)
-          ..addListener(() {
-            setState(() {});
-          });
-    _animation = Tween(begin: 0.0, end: 180.0).animate(_animationController);
-    _animationController.forward();
+    progressAnimationController = EasyAnimationController(
+        vsync: this,
+        begin: 0.0,
+        end: widget.progressSweepAngle,
+        duration: widget.duration);
+    borderAnimationController = EasyAnimationController(
+        vsync: this,
+        begin: 0.0,
+        end: widget.borderSweepAngle,
+        duration: widget.duration);
+    borderAnimationController.forward();
+    progressAnimationController.forward();
   }
 
   @override
   Widget build(BuildContext context) {
-    return ArcWidget(widget.radius,
-        progressWidth: widget.progressWidth,
-        progressColor: widget.progressColor,
-        startAngle: widget.startAngle,
-        progressSweepAngle: widget.progressSweepAngle,
-        borderColor: widget.borderColor,
-        borderWidth: widget.borderWidth,
-        borderSweepAngle: _animation.value);
+    return Obx(() {
+      return ArcWidget(widget.radius,
+          progressWidth: widget.progressWidth,
+          progressColor: widget.progressColor,
+          startAngle: widget.startAngle,
+          progressSweepAngle: progressAnimationController.value.value,
+          borderColor: widget.borderColor,
+          borderWidth: widget.borderWidth,
+          borderSweepAngle: borderAnimationController.value.value);
+    });
+  }
+
+  @override
+  void didUpdateWidget(covariant AnimationArcWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.progressSweepAngle != widget.progressSweepAngle) {
+      progressAnimationController.set(
+          oldWidget.progressSweepAngle, widget.progressSweepAngle);
+      progressAnimationController.forward(from: oldWidget.progressSweepAngle);
+    }
   }
 
   @override
   void dispose() {
-    _animationController.dispose();
+    borderAnimationController.dispose();
+    progressAnimationController.dispose();
     super.dispose();
   }
 }
