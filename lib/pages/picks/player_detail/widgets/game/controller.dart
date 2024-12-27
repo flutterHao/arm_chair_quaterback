@@ -15,6 +15,7 @@ import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
+import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/up_star_defeat.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/up_start_success.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -23,7 +24,6 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../index.dart';
 
 ///
 ///@auther gejiahui

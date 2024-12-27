@@ -12,11 +12,7 @@ import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
-import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
-import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
-import 'package:arm_chair_quaterback/common/widgets/transitions/slide_transition_x.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team_new/dialog/fire_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/dialog/recover_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/widgets/linear_progress_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/widgets/player_item_widget.dart';
@@ -27,10 +23,6 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:arm_chair_quaterback/common/routers/routes.dart';
-import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
-import 'package:arm_chair_quaterback/pages/picks/player_detail/index.dart';
-import 'package:common_utils/common_utils.dart';
 
 class RecoverItem extends GetView<TeamController> {
   const RecoverItem({

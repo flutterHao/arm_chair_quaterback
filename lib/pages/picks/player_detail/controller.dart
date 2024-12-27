@@ -1,16 +1,9 @@
-/*
- * @Description: 
- * @Author: lihonghao
- * @Date: 2024-09-19 15:45:08
- * @LastEditTime: 2024-09-24 18:04:05
- */
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
-import 'package:flutter/material.dart';
+import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:get/get.dart';
 
-import 'index.dart';
 
 class PlayerDetailController extends GetxController
     with GetTickerProviderStateMixin {
