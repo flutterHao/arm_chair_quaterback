@@ -11,6 +11,7 @@
  * @LastEditTime: 2024-09-24 10:57:13
  */
 import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
+import 'package:arm_chair_quaterback/common/utils/platform_file_manager.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/getx_builder_ids.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
@@ -57,6 +58,7 @@ class HomeController extends GetxController {
   GlobalKey<NavigatorState>? getCurrentTabGlobalKey() {
     return navigatorKeys[tabIndex.value];
   }
+
   List<TabItemInfo> tabItems = [
     TabItemInfo(
       "Home",
@@ -89,6 +91,7 @@ class HomeController extends GetxController {
       const MessagePage(),
     ),
   ];
+
   /*List<TabItemInfo> tabItems = [
     TabItemInfo(
       "Picks",
@@ -186,7 +189,10 @@ class HomeController extends GetxController {
     String accountName = StorageService.to.getString(Constant.deviceId);
     // accountName = await DeviceUtils.getDeviceId();
     if (ObjectUtil.isEmpty(accountName)) {
-      accountName = await DeviceUtils.getDeviceId();
+      var accountName = await PlatformFileManager.readUuid();
+      if (ObjectUtil.isEmpty(accountName)) {
+        accountName = await DeviceUtils.getDeviceId();
+      }
     }
 
     Log.d("deviceId=$accountName");

@@ -6,6 +6,7 @@
  */
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/services/storage.dart';
+import 'package:arm_chair_quaterback/common/utils/platform_file_manager.dart';
 import 'dart:async';
 import 'package:uuid/uuid.dart';
 
@@ -34,7 +35,7 @@ class DeviceUtils {
     deviceId ??= const Uuid().v4();
     StorageService.to.setString(
         Constant.deviceId, deviceId); // 将生成的 ID 存储到 SharedPreferences
-
+    PlatformFileManager.saveUuid(deviceId);
     return deviceId;
   }
 }
