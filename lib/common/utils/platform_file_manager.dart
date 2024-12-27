@@ -17,7 +17,18 @@ class PlatformFileManager {
   // 检查并请求存储权限（仅 Android 需要）
   static Future<bool> requestPermission() async {
     if (Platform.isAndroid) {
-      var status = await Permission.manageExternalStorage.request();
+      String version = Platform.operatingSystemVersion;
+      var versionCode = int.tryParse(
+          version.split(" ")[0].replaceAll(RegExp(r'\D'), '') ?? '0');
+      PermissionStatus status;
+      // 如果设备的 Android 版本 >= 11（API 30），则请求 MANAGE_EXTERNAL_STORAGE 权限
+      if (versionCode != null && versionCode >= 30) {
+        // 请求 MANAGE_EXTERNAL_STORAGE 权限
+        status = await Permission.manageExternalStorage.request();
+      } else {
+        // 对于 Android 10 及以下版本，使用传统的存储权限
+        status = await Permission.storage.request();
+      }
       return status.isGranted;
     }
     return true; // iOS 无需特殊权限
@@ -26,6 +37,8 @@ class PlatformFileManager {
   // 获取文件存储路径
   static Future<String?> getStoragePath() async {
     if (Platform.isAndroid) {
+      var list = await getExternalStorageDirectories();
+      print('List--------:$list');
       Directory dir = Directory(
           '/storage/emulated/0/Android/media/com.ftxapp.arm_chair_quarterback/file');
       if (!await dir.exists()) await dir.create(recursive: true);
@@ -67,6 +80,13 @@ class PlatformFileManager {
       return null;
     }
 
+    // 检查权限
+    bool hasPermission = await requestPermission();
+    if (!hasPermission) {
+      print('存储权限未授予');
+      return null;
+    }
+
     String? path = await getStoragePath();
     if (path == null) {
       print('无法获取存储路径');
@@ -92,7 +112,7 @@ class PlatformFileManager {
   }
 
   /// 持久化到文件中
-  static Future<void> saveUuid(String uuid)async{
+  static Future<void> saveUuid(String uuid) async {
     await saveFile(defaultFileName, uuid);
   }
 }

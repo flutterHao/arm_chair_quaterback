@@ -189,7 +189,7 @@ class HomeController extends GetxController {
     String accountName = StorageService.to.getString(Constant.deviceId);
     // accountName = await DeviceUtils.getDeviceId();
     if (ObjectUtil.isEmpty(accountName)) {
-      var accountName = await PlatformFileManager.readUuid();
+      accountName = (await PlatformFileManager.readUuid())??"";
       if (ObjectUtil.isEmpty(accountName)) {
         accountName = await DeviceUtils.getDeviceId();
       }

@@ -17,7 +17,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-
 class PlayerDetailPageArguments {
   final int playerId;
   final String? tabStr; //选中的初始tab属性
@@ -36,7 +35,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
   Widget build(BuildContext context) {
     PlayerDetailPageArguments args = arguments ?? Get.arguments;
     return HorizontalDragBackWidget(
-      responseDepth: const [0,1,3],
+      responseDepth: const [0, 1, 3],
       child: GetBuilder<PlayerDetailController>(
         init: PlayerDetailController(args),
         id: PlayerDetailController.idMain,
@@ -153,11 +152,10 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                           ),
                         ),
                         11.hGap,
-
-                        ///todo
-                        IconWidget(
-                            iconWidth: 20.w,
-                            icon: Assets.commonUiCommonIconInjury),
+                        if (controller.baseInfo?.injuries == true)
+                          IconWidget(
+                              iconWidth: 20.w,
+                              icon: Assets.commonUiCommonIconInjury),
                       ],
                     ),
                     5.vGap,
