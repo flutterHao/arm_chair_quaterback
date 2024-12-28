@@ -27,20 +27,26 @@ class TeamStatsController extends GetxController {
     var awayDetail = event?.pkEventUpdatedEntity.awayInfo;
 
     list.add(TeamStats("Points", homeDetail?.pts ?? 0, awayDetail?.pts ?? 0));
-    list.add(TeamStats(
-        "3 Points Make", homeDetail?.threePm ?? 0, awayDetail?.threePm ?? 0));
     list.add(TeamStats("Rebound", homeDetail?.reb ?? 0, awayDetail?.reb ?? 0));
     list.add(TeamStats("Assist", homeDetail?.ast ?? 0, awayDetail?.ast ?? 0));
     list.add(TeamStats("Steals", homeDetail?.stl ?? 0, awayDetail?.stl ?? 0));
     list.add(
         TeamStats("Block Shot ", homeDetail?.blk ?? 0, awayDetail?.blk ?? 0));
     list.add(TeamStats(
-        "Free Throw Make", homeDetail?.ftm ?? 0, awayDetail?.ftm ?? 0));
+        "Free Throw Make", homeDetail?.fta ?? 0, awayDetail?.ftm ?? 0));
+    list.add(TeamStats(
+        "3 Points Make", homeDetail?.threePm ?? 0, awayDetail?.threePm ?? 0));
     list.add(TeamStats("Turn over", homeDetail?.to ?? 0, awayDetail?.to ?? 0));
     list.add(TeamStats("Foul", homeDetail?.pf ?? 0, awayDetail?.pf ?? 0));
-
     list.add(TeamStats(
-        "Field Goal",
+        "3 Point %",
+        ((homeDetail?.threePm ?? 0) / (homeDetail?.threePa ?? 0))
+            .handlerNaNInfinity(),
+        ((awayDetail?.threePm ?? 0) / (awayDetail?.threePa ?? 0))
+            .handlerNaNInfinity(),
+        valueIsPercent: true));
+    list.add(TeamStats(
+        "Field Goal %",
         ((homeDetail?.fgm ?? 0) / (homeDetail?.fga ?? 0)).handlerNaNInfinity(),
         ((awayDetail?.fgm ?? 0) / (awayDetail?.fga ?? 0)).handlerNaNInfinity(),
         valueIsPercent: true));
@@ -48,13 +54,6 @@ class TeamStatsController extends GetxController {
         "Free Throw %",
         ((homeDetail?.ftm ?? 0) / (homeDetail?.fta ?? 0)).handlerNaNInfinity(),
         ((awayDetail?.ftm ?? 0) / (awayDetail?.fta ?? 0)).handlerNaNInfinity(),
-        valueIsPercent: true));
-    list.add(TeamStats(
-        "3 Point %",
-        ((homeDetail?.threePm ?? 0) / (homeDetail?.threePa ?? 0))
-            .handlerNaNInfinity(),
-        ((awayDetail?.threePm ?? 0) / (awayDetail?.threePa ?? 0))
-            .handlerNaNInfinity(),
         valueIsPercent: true));
     return list;
   }

@@ -112,14 +112,14 @@ class StarUpDoneTeamPlayerVOMaxAbility {
 
 @JsonSerializable()
 class StarUpDoneTeamPlayerVOPotential {
-	late int blk = 0;
+	late double blk = 0;
 	late double tech;
-	late int pass = 0;
-	late int stl = 0;
-	late int threePm = 0;
-	late int ftm = 0;
-	late int pts = 0;
-	late int reb = 0;
+	late double pass = 0;
+	late double stl = 0;
+	late double threePm = 0;
+	late double ftm = 0;
+	late double pts = 0;
+	late double reb = 0;
 
 	StarUpDoneTeamPlayerVOPotential();
 

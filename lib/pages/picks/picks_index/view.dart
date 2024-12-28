@@ -5,7 +5,6 @@
  * @LastEditTime: 2024-11-04 16:14:16
  */
 
-
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/widgets/delegate/fixed_height_sliver_header_delegate.dart';
@@ -33,6 +32,7 @@ import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guess_item_
 import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/recive_rward/index.dart';
 import 'package:extended_tabs/extended_tabs.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -135,8 +135,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
       bucket: PageStorageBucket(),
       child: NestedScrollView(
           floatHeaderSlivers: true,
-              headerSliverBuilder:
-                  (BuildContext context, bool innerBoxIsScrolled) {
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
               SliverPersistentHeader(
                 floating: true,
@@ -144,30 +143,33 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                     child: Container(
                       color: AppColors.c262626,
                       padding: EdgeInsets.only(
-                          bottom: 10.w,
-                          right: 6.w,
-                          left: 16.w,
-                          top: 3.w),
+                          bottom: 10.w, right: 6.w, left: 16.w, top: 3.w),
                       child: Row(
                         children: [
                           Expanded(
                             flex: 204,
                             child: InkWell(
-                                  onTap: () =>
-                                      Get.toNamed(
-                                  RouteNames.picksPickRank,
-                                  id: GlobalNestedKey.PICKS),
+                              onTap: () => kReleaseMode
+                                  ? Get.toNamed(RouteNames.picksPickRank,
+                                      id: GlobalNestedKey.PICKS)
+                                  : Get.toNamed(RouteNames.picksPersonalCenter,
+                                      arguments: {
+                                          "teamId": Get.find<HomeController>()
+                                                  .userEntiry
+                                                  .teamLoginInfo
+                                                  ?.team
+                                                  ?.teamId ??
+                                              0,
+                                          "initTab": 0
+                                        }),
                               child: Container(
                                 height: 51.w,
                                 padding: EdgeInsets.only(
-                                    left: 14.w,
-                                    right: 24.w,
-                                    bottom: 6.w),
+                                    left: 14.w, right: 24.w, bottom: 6.w),
                                 margin: EdgeInsets.only(top: 4.w),
                                 decoration: BoxDecoration(
                                     color: AppColors.c3B3B3B,
-                                    borderRadius:
-                                        BorderRadius.circular(9.w)),
+                                    borderRadius: BorderRadius.circular(9.w)),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -184,14 +186,13 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                           style: 19.w5(
                                               color: AppColors.cFFFFFF,
                                               height: 1,
-                                              fontFamily: FontFamily
-                                                  .fOswaldMedium),
+                                              fontFamily:
+                                                  FontFamily.fOswaldMedium),
                                         )
                                       ],
                                     ),
                                     Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.end,
+                                      mainAxisAlignment: MainAxisAlignment.end,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
@@ -207,8 +208,8 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                           style: 10.w4(
                                               color: AppColors.cFF7954,
                                               height: 1,
-                                              fontFamily: FontFamily
-                                                  .fRobotoRegular),
+                                              fontFamily:
+                                                  FontFamily.fRobotoRegular),
                                         )
                                       ],
                                     )
@@ -223,46 +224,33 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                               child: Stack(
                                 children: [
                                   InkWell(
-                                    onTap: () =>
-                                        // Navigator.push(
-                                        // context,
-                                        // EnterExitRoute(
-                                        //     exitPage: widget,
-                                        //     transitionDuration: Duration(seconds: 2),
-                                        //     reverseTransitionDuration: Duration(seconds: 2),
-                                        //     enterPage: PersonalCenterPage(
-                                        //         teamId: Get.find<
-                                        //                     HomeController>()
-                                        //                 .userEntiry
-                                        //                 .teamLoginInfo
-                                        //                 ?.team
-                                        //                 ?.teamId ??
-                                        //             0))),
-                                    Get.toNamed(
-                                        RouteNames
-                                            .picksPersonalCenter,
-                                        arguments: {
-                                          "teamId": Get
-                                              .find<
-                                              HomeController>()
-                                              .userEntiry
-                                              .teamLoginInfo
-                                              ?.team
-                                              ?.teamId ??
-                                              0,
-                                          "initTab": 0
-                                        }),
+                                    onTap: () => Get.toNamed(
+                                      RouteNames.picksPicksHistory,
+                                    ),
+                                    // Get.toNamed(
+                                    //     RouteNames
+                                    //         .picksPersonalCenter,
+                                    //     arguments: {
+                                    //       "teamId": Get
+                                    //           .find<
+                                    //           HomeController>()
+                                    //           .userEntiry
+                                    //           .teamLoginInfo
+                                    //           ?.team
+                                    //           ?.teamId ??
+                                    //           0,
+                                    //       "initTab": 0
+                                    //     }),
                                     child: Container(
                                       height: 51.w,
-                                      margin: EdgeInsets.only(
-                                          right: 7.w, top: 4.w),
+                                      margin:
+                                          EdgeInsets.only(right: 7.w, top: 4.w),
                                       decoration: BoxDecoration(
                                           border: Border.all(
                                               color: AppColors.c666666,
                                               width: 1),
                                           borderRadius:
-                                              BorderRadius.circular(
-                                                  9.w)),
+                                              BorderRadius.circular(9.w)),
                                       child: Row(
                                         children: [
                                           11.hGap,
@@ -275,11 +263,10 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                                   child: Text(
                                             "PICKS",
                                             style: 19.w4(
-                                                color:
-                                                    AppColors.cFFFFFF,
+                                                color: AppColors.cFFFFFF,
                                                 height: 1,
-                                                fontFamily: FontFamily
-                                                    .fOswaldMedium),
+                                                fontFamily:
+                                                    FontFamily.fOswaldMedium),
                                           )))
                                         ],
                                       ),
@@ -291,26 +278,23 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                         var value = picksIndexController
                                             .choiceSize.value;
                                         if (value <= 0) {
-                                          return const SizedBox
-                                              .shrink();
+                                          return const SizedBox.shrink();
                                         }
                                         return Container(
                                           height: 16.w,
                                           width: 16.w,
                                           decoration: BoxDecoration(
                                               borderRadius:
-                                                  BorderRadius.circular(
-                                                      8.w),
+                                                  BorderRadius.circular(8.w),
                                               color: AppColors.c000000),
                                           child: Center(
                                             child: Text(
                                               "$value",
                                               style: 12.w5(
-                                                  color:
-                                                      AppColors.cF37350,
+                                                  color: AppColors.cF37350,
                                                   height: 1,
-                                                  fontFamily: FontFamily
-                                                      .fRobotoMedium),
+                                                  fontFamily:
+                                                      FontFamily.fRobotoMedium),
                                             ),
                                           ),
                                         );
@@ -325,7 +309,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
               SliverPersistentHeader(
                   pinned: true,
                   delegate: FixedHeightSliverHeaderDelegate(
-                      child:  Container(
+                      child: Container(
                         alignment: Alignment.bottomCenter,
                         color: AppColors.c262626,
                         child: TabBar(
@@ -355,7 +339,8 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
             ];
           },
           body: ExtendedTabBarView(
-            cacheExtent: picksIndexController.guessGamePlayers.keys.length-1,
+              cacheExtent:
+                  picksIndexController.guessGamePlayers.keys.length - 1,
               controller: picksIndexController.tabController,
               children: picksIndexController.guessGamePlayers.keys.map((e) {
                 var list = picksIndexController.guessGamePlayers[e]!;

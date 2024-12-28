@@ -505,7 +505,7 @@ class StartUpgradeWidget extends GetView<StartUpgradeController> {
                                         child: Center(
                                           child: Obx(() {
                                             return Text(
-                                              "+${controller.ppUpValue.value}",
+                                              "+${controller.ppUpValue.value.toStringAsFixed(3)}",
                                               style: 16.w5(
                                                   color: AppColors.cFFFFFF,
                                                   height: 1,
@@ -597,7 +597,7 @@ class StartUpgradeWidget extends GetView<StartUpgradeController> {
               height: 46.w,
               child: Center(
                 child: Text(
-                  "${controller.pps[index]} +${controller.ppUpValue.value}",
+                  "${controller.pps[index]} +${controller.ppUpValue.value.toStringAsFixed(3)}",
                   style: 16.w7(
                       color: controller.slotIndex.value == index
                           ? AppColors.cFFFFFF

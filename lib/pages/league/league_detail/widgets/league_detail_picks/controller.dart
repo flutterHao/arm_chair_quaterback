@@ -121,7 +121,7 @@ class LeagueDetailPicksController extends GetxController
         playerV2.tabStr = key;
         playerV2.baseInfoList = Utils.getPlayBaseInfo(item.playerId);
         playerV2.dataAvgList = Utils.getPlayerDataAvg(item.playerId);
-        playerV2.awayTeamInfo = Utils.getTeamInfo(item.teamId);
+        playerV2.awayTeamInfo = Utils.getTeamInfo(item.awayTeamId);
         playerV2.guessInfo = item;
         data.add(playerV2);
       }

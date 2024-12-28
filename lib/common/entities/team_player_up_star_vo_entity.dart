@@ -32,6 +32,7 @@ class TeamPlayerUpStarVoEntity {
 	late int position = 0;
 	late int breakThroughGrade = 0;
 	late TeamPlayerUpStarVoPotential maxAbility;
+	late TeamPlayerUpStarVoPotential bestOneStarAbility;
 	double playerStrength=0;
 	/// 上次升星没有结束，过程中退出了才会有这个字段
 	UpStarTeamPlayerV2Entity? starUpDTO;
@@ -50,14 +51,14 @@ class TeamPlayerUpStarVoEntity {
 
 @JsonSerializable()
 class TeamPlayerUpStarVoPotential {
-	 int blk = 0;
-	 int tech = 0;
-	 int pass = 0;
-	 int stl = 0;
-	 int threePm = 0;
-	 int ftm = 0;
-	 int pts = 0;
-	 int reb = 0;
+	 double blk = 0;
+	 double tech = 0;
+	 double pass = 0;
+	 double stl = 0;
+	 double threePm = 0;
+	 double ftm = 0;
+	 double pts = 0;
+	 double reb = 0;
 
 	TeamPlayerUpStarVoPotential();
 

@@ -119,19 +119,27 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(6.w),
                                   child: Builder(builder: (context) {
-                                    double value = ability.maxValue;
-                                    double total = value + 2000;
+                                    double value =
+                                        ability.sGradeLevel1PlayerMaxValue;
+                                    double total = ability.totalValue;
                                     double baseValue = ability.baseValue;
                                     double beforeUpgradeValue =
                                         ability.beforeValue;
                                     double afterUpgradeValue =
                                         ability.afterValue;
-                                    double maxProgress = value / total;
-                                    double baseProgress = baseValue / total;
+                                    double maxProgress =
+                                        ability.selfLevel10Value / total;
+                                    double baseProgress = baseValue / value;
+                                    baseProgress = baseProgress *
+                                        ability.selfLevel10Value /
+                                        total;
+
                                     double beforeProgress =
-                                        beforeUpgradeValue / total;
+                                        (beforeUpgradeValue-baseValue+baseProgress*total) / total;
+
+
                                     double afterProgress =
-                                        afterUpgradeValue / total;
+                                        (afterUpgradeValue-baseValue+baseProgress*total) / total;
 
                                     return Stack(
                                       alignment: Alignment.centerLeft,
@@ -219,7 +227,9 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
                               9.hGap,
                               Expanded(
                                 child: Text(
-                                  ability.maxValue.format(),
+                                  ability.afterValue != 0
+                                      ? ability.afterValue.format()
+                                      : ability.beforeValue.format(),
                                   style: 16.w4(
                                       color: AppColors.c000000,
                                       height: 1,
@@ -242,7 +252,7 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
                                   backgroundColor: AppColors.cTransparent,
                                   context: context,
                                   builder: (context) {
-                                    return const SlotDialogWidget();
+                                    return const SlotDialogWidget(0);
                                   });
                               onResult(result);
                             } else {

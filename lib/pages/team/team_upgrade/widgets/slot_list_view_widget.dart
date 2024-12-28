@@ -77,6 +77,7 @@ class _SlotListViewWidgetState extends State<SlotListViewWidget>
       onPageChanged: (v) => setState(() {
         selectIndex = v;
       }),
+      reverse: true,
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         final int realIndex = index % widget.itemCount;

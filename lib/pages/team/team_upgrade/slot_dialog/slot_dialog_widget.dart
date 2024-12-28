@@ -20,8 +20,9 @@ import 'package:get/get.dart';
 ///created at 2024/12/25/10:18
 
 class SlotDialogWidget extends GetView<SlotDialogController> {
-  const SlotDialogWidget({super.key});
+  const SlotDialogWidget(this.successRate, {super.key});
 
+  final double successRate;
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -31,520 +32,532 @@ class SlotDialogWidget extends GetView<SlotDialogController> {
       },
       child: GetBuilder<SlotDialogController>(
           id: SlotDialogController.idSlotDialogMain,
-          init: SlotDialogController(),
+          init: SlotDialogController(successRate),
           builder: (logic) {
-            if (LoadDataStatus.success != controller.loadStatus.value) {
-              return const SizedBox.shrink();
-            }
-            return Stack(
-              alignment: Alignment.topCenter,
-              children: [
-                Column(
-                  children: [
-                    /// 顶部半透明背景
-                    Expanded(
-                      child: InkWell(
-                        onTap: () {
-                          back();
-                        },
+            return Obx(() {
+              if (LoadDataStatus.success != controller.loadStatus.value) {
+                return const SizedBox.shrink();
+              }
+              return Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  Column(
+                    children: [
+                      /// 顶部半透明背景
+                      Expanded(
+                        child: InkWell(
+                          onTap: () {
+                            back();
+                          },
+                        ),
                       ),
-                    ),
 
-                    /// 白色背景
-                    Container(
-                      height: 615.w,
-                      decoration: BoxDecoration(
-                          color: AppColors.cFFFFFF,
-                          borderRadius:
-                              BorderRadius.vertical(top: Radius.circular(9.w))),
-                    )
-                  ],
-                ),
-                Column(
-                  children: [
-                    Expanded(
-                        child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        /// tv和吊线
-                        Obx(() {
-                          var b = controller.tvShow.value
-                              ? 0.0
-                              : (400.w + 327.w + 6.w + 309.w);
-                          return AnimatedPositioned(
-                            bottom: b,
-                            duration: const Duration(milliseconds: 300),
-                            curve: Curves.easeInOut,
-                            onEnd: () {
-                              if (controller.isInBackStatus) {
-                                Get.back();
-                              } else {
-                                Future.delayed(
-                                    const Duration(milliseconds: 600), () {
-                                  controller.openDoor();
-                                });
-                              }
-                            },
-                            child: Center(
-                              child: SizedBox(
-                                width: 327.w,
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      margin: EdgeInsets.symmetric(
-                                          horizontal: 24.w),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                      /// 白色背景
+                      Container(
+                        height: 615.w,
+                        decoration: BoxDecoration(
+                            color: AppColors.cFFFFFF,
+                            borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(9.w))),
+                      )
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Expanded(
+                          child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          /// tv和吊线
+                          Obx(() {
+                            var b = controller.tvShow.value
+                                ? 0.0
+                                : (400.w + 327.w + 6.w + 309.w);
+                            return AnimatedPositioned(
+                              bottom: b,
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.easeInOut,
+                              onEnd: () {
+                                if (controller.isInBackStatus) {
+                                  Get.back();
+                                } else {
+                                  // Future.delayed(
+                                  //     const Duration(milliseconds: 600), () {
+                                  //   controller.openDoor();
+                                  // });
+                                }
+                              },
+                              child: Center(
+                                child: SizedBox(
+                                  width: 327.w,
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.symmetric(
+                                            horizontal: 24.w),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Container(
+                                              height: 400.w,
+                                              width: 4.w,
+                                              color: AppColors.c434343,
+                                            ),
+                                            Container(
+                                              height: 400.w,
+                                              width: 4.w,
+                                              color: AppColors.c434343,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      IconWidget(
+                                          iconWidth: 327.w,
+                                          icon: Assets
+                                              .managerUiManagerPlayerinfoBg),
+                                      Container(
+                                        height: 6.w,
+                                        width: 297.w,
+                                        color: AppColors.c000000,
+                                      ),
+                                      //tv
+                                      Stack(
+                                        alignment: Alignment.center,
                                         children: [
-                                          Container(
-                                            height: 400.w,
-                                            width: 4.w,
-                                            color: AppColors.c434343,
-                                          ),
-                                          Container(
-                                            height: 400.w,
-                                            width: 4.w,
-                                            color: AppColors.c434343,
+                                          IconWidget(
+                                              iconWidth: 309.w,
+                                              icon: Assets
+                                                  .managerUiManagerPlayerinfoBg01),
+                                          Positioned(
+                                            top: 0,
+                                            child: SizedBox(
+                                              width: 241.w,
+                                              child: Column(
+                                                children: [
+                                                  15.vGap,
+                                                  _buildSlotWidget(),
+                                                  10.vGap,
+                                                  Container(
+                                                    margin:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 8.w),
+                                                    child: Column(
+                                                      children: [
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Text(
+                                                              "Special training status",
+                                                              style: 10.w4(
+                                                                  color: AppColors
+                                                                      .cFFFFFF,
+                                                                  height: 1,
+                                                                  fontFamily:
+                                                                      FontFamily
+                                                                          .fRobotoRegular),
+                                                            ),
+                                                            SizedBox(
+                                                              height: 19.w,
+                                                              child: Row(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  if (controller.startUpItem != null &&
+                                                                      controller
+                                                                              .successRate
+                                                                              .value <
+                                                                          0.3 &&
+                                                                      !controller
+                                                                          .isGameOver
+                                                                          .value)
+                                                                    IconWidget(
+                                                                        iconWidth: 16
+                                                                            .w,
+                                                                        icon: Assets
+                                                                            .commonUiCommonIconSystemDanger01),
+                                                                  Text(
+                                                                    "${(controller.successRate.value * 100).format()}%",
+                                                                    style: 12.w5(
+                                                                        color: AppColors
+                                                                            .cFFFFFF,
+                                                                        height:
+                                                                            1,
+                                                                        fontFamily:
+                                                                            FontFamily.fOswaldMedium),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                        Container(
+                                                          height: 9.w,
+                                                          decoration: BoxDecoration(
+                                                              color: AppColors
+                                                                  .c333333,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          4.5.w)),
+                                                          child: Row(
+                                                            children: [
+                                                              AnimatedContainer(
+                                                                height: 9.w,
+                                                                width: 225.w *
+                                                                    min(
+                                                                        1,
+                                                                        controller
+                                                                            .successRate
+                                                                            .value),
+                                                                decoration: BoxDecoration(
+                                                                    color: controller
+                                                                                .successRate.value <
+                                                                            0.3
+                                                                        ? AppColors
+                                                                            .cD60D20
+                                                                        : AppColors
+                                                                            .cFFFFFF,
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            4.5.w)),
+                                                                duration:
+                                                                    const Duration(
+                                                                        milliseconds:
+                                                                            300),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
                                           ),
                                         ],
                                       ),
-                                    ),
-                                    IconWidget(
-                                        iconWidth: 327.w,
-                                        icon: Assets
-                                            .managerUiManagerPlayerinfoBg),
-                                    Container(
-                                      height: 6.w,
-                                      width: 297.w,
-                                      color: AppColors.c000000,
-                                    ),
-                                    //tv
-                                    Stack(
-                                      alignment: Alignment.center,
-                                      children: [
-                                        IconWidget(
-                                            iconWidth: 309.w,
-                                            icon: Assets
-                                                .managerUiManagerPlayerinfoBg01),
-                                        Positioned(
-                                          top: 0,
-                                          child: SizedBox(
-                                            width: 241.w,
-                                            child: Column(
-                                              children: [
-                                                15.vGap,
-                                                _buildSlotWidget(),
-                                                10.vGap,
-                                                Container(
-                                                  margin: EdgeInsets.symmetric(
-                                                      horizontal: 8.w),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          }),
+                        ],
+                      )),
+
+                      ///底部
+                      SizedBox(
+                        // width: 343.w,
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              width: 343.w,
+                              child: Column(
+                                children: [
+                                  51.vGap,
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "SPARRING RESULT",
+                                        style: 19.w5(
+                                            color: AppColors.c000000,
+                                            height: 1,
+                                            fontFamily:
+                                                FontFamily.fOswaldMedium),
+                                      ),
+                                    ],
+                                  ),
+                                  15.vGap,
+
+                                  ///表格
+                                  GetBuilder<SlotDialogController>(
+                                      id: SlotDialogController.idSparringResult,
+                                      builder: (logic) {
+                                        return Container(
+                                          height: 110.w,
+                                          decoration: BoxDecoration(
+                                            border: Border(
+                                              left: BorderSide(
+                                                width: 1.w,
+                                                color: AppColors.cE6E6E6,
+                                              ),
+                                            ),
+                                          ),
+                                          child: Row(
+                                            children: List.generate(
+                                                controller.propertys.length - 3,
+                                                (index) {
+                                              var borderSide = BorderSide(
+                                                width: 1.w,
+                                                color: AppColors.cE6E6E6,
+                                              );
+                                              var item =
+                                                  controller.propertys[index];
+                                              var list =
+                                                  controller.slotResult[item] ??
+                                                      [];
+                                              return Expanded(
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    border: Border(
+                                                      top: borderSide,
+                                                      right: borderSide,
+                                                      bottom: borderSide,
+                                                    ),
+                                                  ),
                                                   child: Column(
                                                     children: [
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Text(
-                                                            "Special training status",
-                                                            style: 10.w4(
-                                                                color: AppColors
-                                                                    .cFFFFFF,
-                                                                height: 1,
-                                                                fontFamily:
-                                                                    FontFamily
-                                                                        .fRobotoRegular),
-                                                          ),
-                                                          SizedBox(
-                                                            height: 19.w,
-                                                            child: Row(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                if (controller
-                                                                        .startUpItem
-                                                                        .successRate <
-                                                                    0.3 && !controller.isGameOver.value)
-                                                                  IconWidget(
-                                                                      iconWidth:
-                                                                          16.w,
-                                                                      icon: Assets
-                                                                          .commonUiCommonIconSystemDanger01),
-                                                                Text(
-                                                                  "${(controller.startUpItem.successRate * 100).format()}%",
-                                                                  style: 12.w5(
-                                                                      color: AppColors
-                                                                          .cFFFFFF,
-                                                                      height: 1,
-                                                                      fontFamily:
-                                                                          FontFamily
-                                                                              .fOswaldMedium),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          )
-                                                        ],
-                                                      ),
+                                                      //表头
                                                       Container(
-                                                        height: 9.w,
-                                                        decoration: BoxDecoration(
+                                                        height: 21.w,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          border: Border(
+                                                            bottom: borderSide,
+                                                          ),
+                                                        ),
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Text(
+                                                          item,
+                                                          style: 12.w5(
                                                             color: AppColors
-                                                                .c333333,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        4.5.w)),
-                                                        child: Row(
-                                                          children: [
-                                                            AnimatedContainer(
-                                                              height: 9.w,
-                                                              width: 225.w *
-                                                                  min(
-                                                                      1,
-                                                                      controller
-                                                                          .startUpItem
-                                                                          .successRate),
-                                                              decoration: BoxDecoration(
-                                                                  color: controller
-                                                                              .startUpItem
-                                                                              .successRate <
-                                                                          0.3
-                                                                      ? AppColors
-                                                                          .cD60D20
-                                                                      : AppColors
-                                                                          .cFFFFFF,
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              4.5.w)),
-                                                              duration:
-                                                                  const Duration(
-                                                                      milliseconds:
-                                                                          300),
-                                                            )
-                                                          ],
+                                                                .c000000,
+                                                            height: 1,
+                                                            fontFamily: FontFamily
+                                                                .fRobotoMedium,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      //表内容
+                                                      Expanded(
+                                                        child: Container(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  bottom: 10.w),
+                                                          child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .end,
+                                                            children:
+                                                                List.generate(
+                                                                    list.length,
+                                                                    (tIndex) {
+                                                              Property prop =
+                                                                  list[tIndex];
+                                                              return AnimatedScale(
+                                                                duration:
+                                                                    const Duration(
+                                                                        milliseconds:
+                                                                            300),
+                                                                scale: 1,
+                                                                child:
+                                                                    Container(
+                                                                  height: 17.w,
+                                                                  width: 34.w,
+                                                                  margin: EdgeInsets
+                                                                      .only(
+                                                                          top: 7
+                                                                              .w),
+                                                                  decoration: BoxDecoration(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(4
+                                                                              .w),
+                                                                      color: controller.isGameOver.value &&
+                                                                              !controller
+                                                                                  .isSuccess
+                                                                          ? AppColors
+                                                                              .cB2B2B2
+                                                                          : prop
+                                                                              .color),
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .center,
+                                                                  child: Text(
+                                                                    "+${(prop.bet * controller.upStarTeamPlayerV2Entity.addRate).toStringAsFixed(1)}",
+                                                                    style: TextStyle(
+                                                                        fontSize: 10
+                                                                            .sp,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .w500,
+                                                                        color: AppColors
+                                                                            .cFFFFFF,
+                                                                        height:
+                                                                            1,
+                                                                        decorationColor:
+                                                                            AppColors
+                                                                                .cFFFFFF,
+                                                                        fontFamily:
+                                                                            FontFamily
+                                                                                .fRobotoMedium,
+                                                                        decoration: controller.isGameOver.value &&
+                                                                                !controller.isSuccess
+                                                                            ? TextDecoration.lineThrough
+                                                                            : null),
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            }),
+                                                          ),
                                                         ),
                                                       )
                                                     ],
                                                   ),
-                                                )
-                                              ],
-                                            ),
+                                                ),
+                                              );
+                                            }),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
+                                        );
+                                      }),
+                                ],
                               ),
                             ),
-                          );
-                        }),
-                      ],
-                    )),
-
-                    ///底部
-                    SizedBox(
-                      // width: 343.w,
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            width: 343.w,
-                            child: Column(
-                              children: [
-                                51.vGap,
-                                Row(
-                                  children: [
-                                    Text(
-                                      "SPARRING RESULT",
-                                      style: 19.w5(
-                                          color: AppColors.c000000,
-                                          height: 1,
-                                          fontFamily: FontFamily.fOswaldMedium),
-                                    ),
-                                  ],
-                                ),
-                                15.vGap,
-
-                                ///表格
-                                GetBuilder<SlotDialogController>(
-                                    id: SlotDialogController.idSparringResult,
-                                    builder: (logic) {
-                                      return Container(
-                                        height: 110.w,
-                                        decoration: BoxDecoration(
-                                          border: Border(
-                                            left: BorderSide(
-                                              width: 1.w,
-                                              color: AppColors.cE6E6E6,
-                                            ),
-                                          ),
-                                        ),
-                                        child: Row(
-                                          children: List.generate(
-                                              controller.propertys.length - 3,
-                                              (index) {
-                                            var borderSide = BorderSide(
-                                              width: 1.w,
-                                              color: AppColors.cE6E6E6,
-                                            );
-                                            var item =
-                                                controller.propertys[index];
-                                            var list =
-                                                controller.slotResult[item] ??
-                                                    [];
-                                            return Expanded(
+                            59.vGap,
+                            SizedBox(
+                              height: 70.w,
+                              child: PageView(
+                                physics: const NeverScrollableScrollPhysics(),
+                                controller: controller.btnPageController,
+                                children: [
+                                  Container(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 14.w),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            if (!controller.isGameOver.value &&
+                                                controller.slotCount < 8)
+                                              Text(
+                                                "TIMES:${max(0, 8 - controller.slotCount.value)}",
+                                                style: 12.w4(
+                                                    color: AppColors.c000000,
+                                                    height: 1,
+                                                    fontFamily: Assets
+                                                        .fontsRobotoRegular),
+                                              ),
+                                            7.vGap,
+                                            MtInkwell(
+                                              onTap: () => controller.done(),
                                               child: Container(
+                                                height: 51.w,
+                                                width: 118.w,
                                                 decoration: BoxDecoration(
-                                                  border: Border(
-                                                    top: borderSide,
-                                                    right: borderSide,
-                                                    bottom: borderSide,
-                                                  ),
-                                                ),
-                                                child: Column(
-                                                  children: [
-                                                    //表头
-                                                    Container(
-                                                      height: 21.w,
-                                                      decoration: BoxDecoration(
-                                                        border: Border(
-                                                          bottom: borderSide,
-                                                        ),
-                                                      ),
-                                                      alignment:
-                                                          Alignment.center,
-                                                      child: Text(
-                                                        item,
-                                                        style: 12.w5(
-                                                          color:
-                                                              AppColors.c000000,
-                                                          height: 1,
-                                                          fontFamily: FontFamily
-                                                              .fRobotoMedium,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    //表内容
-                                                    Expanded(
-                                                      child: Container(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                bottom: 10.w),
-                                                        child: Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .end,
-                                                          children:
-                                                              List.generate(
-                                                                  list.length,
-                                                                  (tIndex) {
-                                                            Property prop =
-                                                                list[tIndex];
-                                                            return AnimatedScale(
-                                                              duration:
-                                                                  const Duration(
-                                                                      milliseconds:
-                                                                          300),
-                                                              scale: 1,
-                                                              child: Container(
-                                                                height: 17.w,
-                                                                width: 34.w,
-                                                                margin: EdgeInsets
-                                                                    .only(
-                                                                        top: 7
-                                                                            .w),
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(4
-                                                                            .w),
-                                                                    color: controller.isGameOver.value &&
-                                                                            !controller
-                                                                                .isSuccess
-                                                                        ? AppColors
-                                                                            .cB2B2B2
-                                                                        : prop
-                                                                            .color),
-                                                                alignment:
-                                                                    Alignment
-                                                                        .center,
-                                                                child: Text(
-                                                                  "+${(prop.bet * controller.upStarTeamPlayerV2Entity.addRate).toStringAsFixed(1)}",
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          10.sp,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
-                                                                      color: AppColors
-                                                                          .cFFFFFF,
-                                                                      height: 1,
-                                                                      decorationColor:
-                                                                          AppColors
-                                                                              .cFFFFFF,
-                                                                      fontFamily:
-                                                                          FontFamily
-                                                                              .fRobotoMedium,
-                                                                      decoration: controller.isGameOver.value &&
-                                                                              !controller.isSuccess
-                                                                          ? TextDecoration.lineThrough
-                                                                          : null),
-                                                                ),
-                                                              ),
-                                                            );
-                                                          }),
-                                                        ),
-                                                      ),
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                            );
-                                          }),
-                                        ),
-                                      );
-                                    }),
-                              ],
-                            ),
-                          ),
-                          59.vGap,
-                          SizedBox(
-                            height: 70.w,
-                            child: PageView(
-                              physics: const NeverScrollableScrollPhysics(),
-                              controller: controller.btnPageController,
-                              children: [
-                                Container(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 14.w),
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          if (!controller.isGameOver.value &&
-                                              controller.slotCount < 9)
-                                            Text(
-                                              "TIMES:${max(0, 9 - controller.slotCount.value)}",
-                                              style: 12.w4(
-                                                  color: AppColors.c000000,
-                                                  height: 1,
-                                                  fontFamily: Assets
-                                                      .fontsRobotoRegular),
-                                            ),
-                                          7.vGap,
-                                          MtInkwell(
-                                            onTap: () => controller.done(),
-                                            child: Container(
-                                              height: 51.w,
-                                              width: 118.w,
-                                              decoration: BoxDecoration(
-                                                  color: controller
-                                                              .slotCount.value >
-                                                          8
-                                                      ? AppColors.cFF7954
-                                                      : AppColors.cEEEEEE,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          9.w)),
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                "DONE",
-                                                style: 25.w5(
                                                     color: controller.slotCount
-                                                                .value >
+                                                                .value >=
                                                             8
-                                                        ? AppColors.cFFFFFF
-                                                        : AppColors.ccccccc,
-                                                    fontFamily: FontFamily
-                                                        .fOswaldMedium,
-                                                    height: 1),
+                                                        ? AppColors.cFF7954
+                                                        : AppColors.cEEEEEE,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            9.w)),
+                                                alignment: Alignment.center,
+                                                child: Text(
+                                                  "DONE",
+                                                  style: 25.w5(
+                                                      color: controller
+                                                                  .slotCount
+                                                                  .value >
+                                                              8
+                                                          ? AppColors.cFFFFFF
+                                                          : AppColors.ccccccc,
+                                                      fontFamily: FontFamily
+                                                          .fOswaldMedium,
+                                                      height: 1),
+                                                ),
                                               ),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          MtInkwell(
-                                            onTap: () => controller.startSlot(),
-                                            child: Container(
-                                              height: 51.w,
-                                              width: 216.w,
-                                              decoration: BoxDecoration(
-                                                  color: AppColors.c000000,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          9.w)),
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                "CONTINUE",
-                                                style: 25.w5(
-                                                    color: AppColors.cF2F2F2,
-                                                    fontFamily: FontFamily
-                                                        .fOswaldMedium,
-                                                    height: 1),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 14.w),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      MtInkwell(
-                                        onTap: () => controller.goBack(),
-                                        child: Container(
-                                          height: 51.w,
-                                          width: double.infinity,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: AppColors.c666666,
-                                                width: 1.w,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(9.w)),
-                                          alignment: Alignment.center,
-                                          child: Text(
-                                            "GO BACK",
-                                            style: 23.w5(
-                                                fontFamily:
-                                                    FontFamily.fOswaldMedium,
-                                                height: 1),
-                                          ),
+                                            )
+                                          ],
                                         ),
-                                      )
-                                    ],
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            MtInkwell(
+                                              onTap: () =>
+                                                  controller.startSlot(),
+                                              child: Container(
+                                                height: 51.w,
+                                                width: 216.w,
+                                                decoration: BoxDecoration(
+                                                    color: AppColors.c000000,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            9.w)),
+                                                alignment: Alignment.center,
+                                                child: Text(
+                                                  "CONTINUE",
+                                                  style: 25.w5(
+                                                      color: AppColors.cF2F2F2,
+                                                      fontFamily: FontFamily
+                                                          .fOswaldMedium,
+                                                      height: 1),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
                                   ),
-                                )
-                              ],
+                                  Container(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 14.w),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        MtInkwell(
+                                          onTap: () => controller.goBack(),
+                                          child: Container(
+                                            height: 51.w,
+                                            width: double.infinity,
+                                            decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  color: AppColors.c666666,
+                                                  width: 1.w,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(9.w)),
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              "GO BACK",
+                                              style: 23.w5(
+                                                  fontFamily:
+                                                      FontFamily.fOswaldMedium,
+                                                  height: 1),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
-                          35.vGap
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ],
-            );
+                            35.vGap
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              );
+            });
           }),
     );
   }

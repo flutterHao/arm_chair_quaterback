@@ -420,7 +420,7 @@ extension StarUpDoneTeamPlayerVOMaxAbilityExtension on StarUpDoneTeamPlayerVOMax
 StarUpDoneTeamPlayerVOPotential $StarUpDoneTeamPlayerVOPotentialFromJson(
     Map<String, dynamic> json) {
   final StarUpDoneTeamPlayerVOPotential starUpDoneTeamPlayerVOPotential = StarUpDoneTeamPlayerVOPotential();
-  final int? blk = jsonConvert.convert<int>(json['blk']);
+  final double? blk = jsonConvert.convert<double>(json['blk']);
   if (blk != null) {
     starUpDoneTeamPlayerVOPotential.blk = blk;
   }
@@ -428,27 +428,27 @@ StarUpDoneTeamPlayerVOPotential $StarUpDoneTeamPlayerVOPotentialFromJson(
   if (tech != null) {
     starUpDoneTeamPlayerVOPotential.tech = tech;
   }
-  final int? pass = jsonConvert.convert<int>(json['pass']);
+  final double? pass = jsonConvert.convert<double>(json['pass']);
   if (pass != null) {
     starUpDoneTeamPlayerVOPotential.pass = pass;
   }
-  final int? stl = jsonConvert.convert<int>(json['stl']);
+  final double? stl = jsonConvert.convert<double>(json['stl']);
   if (stl != null) {
     starUpDoneTeamPlayerVOPotential.stl = stl;
   }
-  final int? threePm = jsonConvert.convert<int>(json['threePm']);
+  final double? threePm = jsonConvert.convert<double>(json['threePm']);
   if (threePm != null) {
     starUpDoneTeamPlayerVOPotential.threePm = threePm;
   }
-  final int? ftm = jsonConvert.convert<int>(json['ftm']);
+  final double? ftm = jsonConvert.convert<double>(json['ftm']);
   if (ftm != null) {
     starUpDoneTeamPlayerVOPotential.ftm = ftm;
   }
-  final int? pts = jsonConvert.convert<int>(json['pts']);
+  final double? pts = jsonConvert.convert<double>(json['pts']);
   if (pts != null) {
     starUpDoneTeamPlayerVOPotential.pts = pts;
   }
-  final int? reb = jsonConvert.convert<int>(json['reb']);
+  final double? reb = jsonConvert.convert<double>(json['reb']);
   if (reb != null) {
     starUpDoneTeamPlayerVOPotential.reb = reb;
   }
@@ -471,14 +471,14 @@ Map<String, dynamic> $StarUpDoneTeamPlayerVOPotentialToJson(
 
 extension StarUpDoneTeamPlayerVOPotentialExtension on StarUpDoneTeamPlayerVOPotential {
   StarUpDoneTeamPlayerVOPotential copyWith({
-    int? blk,
+    double? blk,
     double? tech,
-    int? pass,
-    int? stl,
-    int? threePm,
-    int? ftm,
-    int? pts,
-    int? reb,
+    double? pass,
+    double? stl,
+    double? threePm,
+    double? ftm,
+    double? pts,
+    double? reb,
   }) {
     return StarUpDoneTeamPlayerVOPotential()
       ..blk = blk ?? this.blk

@@ -1,14 +1,14 @@
+import 'dart:async';
+
 import 'package:arm_chair_quaterback/common/entities/up_star_team_player_v2_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/param_utils.dart';
-import 'package:arm_chair_quaterback/common/widgets/buble_box.dart';
 import 'package:arm_chair_quaterback/pages/team/team_upgrade/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_upgrade/start_upgrade/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_upgrade/widgets/slot_list_view_widget.dart';
-import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -18,6 +18,9 @@ import 'package:get/get.dart';
 
 class SlotDialogController extends GetxController
     with GetTickerProviderStateMixin {
+  SlotDialogController(this.initSuccessRate);
+
+  final double initSuccessRate;
   var loadStatus = LoadDataStatus.loading.obs;
   var tvShow = false.obs;
   var isInBackStatus = false;
@@ -52,13 +55,10 @@ class SlotDialogController extends GetxController
 
   List<int> selectIndexList = [];
 
-  late UpStarTeamPlayerV2StarUpList startUpItem;
+  UpStarTeamPlayerV2StarUpList? startUpItem;
 
   /// 进行了多少次
   var slotCount = 0.obs;
-
-  /// 显示slot结果中
-  bool showSlotResult = false;
 
   ///continueStarUp接口报错
   bool isContinueStarUpError = false;
@@ -68,32 +68,40 @@ class SlotDialogController extends GetxController
 
   var btnPageController = PageController();
 
+  Timer? timer;
+
+  bool isSlotRunning = false;
+
+  bool isFirst = true;
+
+  bool isContinueLastTime = false;
+
+  var successRate = 1.0.obs;
+
   @override
   void onInit() {
     super.onInit();
+    successRate.value = initSuccessRate;
     doorAnimationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 700));
     doorAnimationController.addListener(doorAnimationListener);
-    doorAnimationController.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        //动画结束
-        print('doorAnimationController----completed----');
-      }
-    });
     _initData();
   }
 
   @override
   void dispose() {
     doorAnimationController.dispose();
+    timer?.cancel();
     super.dispose();
   }
 
   openDoor() {
     doorAnimation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
         parent: doorAnimationController, curve: Curves.bounceOut));
-    doorAnimationController.forward(from: 0);
-    isDoorOpen = true;
+    doorAnimationController.forward(from: 0).then((r) {
+      isDoorOpen = true;
+      onOpenDoorEnd();
+    });
   }
 
   closeDoor(Function onEnd) {
@@ -112,8 +120,60 @@ class SlotDialogController extends GetxController
   void _initData() {
     TeamUpgradeController teamUpgradeController = Get.find();
     if (teamUpgradeController.teamPlayerUpStarVoEntity.starUpDTO != null) {
-      handlerInitData(
-          teamUpgradeController.teamPlayerUpStarVoEntity.starUpDTO!);
+      var result = teamUpgradeController.teamPlayerUpStarVoEntity.starUpDTO!;
+      successRate.value = result.starUpList.last.successRate;
+      slotResult = result.starUpList.fold(slotResult, (p, e) {
+        var selectIndexList = [];
+        var startUpItem = e;
+        if (startUpItem.type == 2) {
+          selectIndexList = [9];
+        } else if (startUpItem.type == 3) {
+          selectIndexList = [10];
+        } else {
+          selectIndexList =
+              startUpItem.attrCount.toJson().keys.fold([], (p, e) {
+            var value = startUpItem.attrCount.toJson()[e];
+            if (value > 0) {
+              var key = e;
+              key = key.replaceAll("three", "3");
+              key = key.replaceAll("pts", "fgm");
+              p.addAll(List.generate(
+                  value, (index) => propertys.indexOf(key.toUpperCase())));
+            }
+            return p;
+          });
+          if (selectIndexList.length == 8) {
+            selectIndexList = [8];
+          }
+        }
+        var attrJson = startUpItem.attr.toJson();
+
+        p = selectIndexList.fold(p, (pp, e) {
+          var key = propertys[e];
+          var attrKey = ParamUtils.getProKey(key.toLowerCase());
+          if (attrKey == "fgm") {
+            attrKey = "pts";
+          }
+          if (attrJson.containsKey(attrKey)) {
+            pp[key] = [...(pp[key] ?? []), Property.green];
+          }
+          return pp;
+        });
+
+        var result = p.map((key, value) {
+          var list2 = mergeItem(value.toList());
+          return MapEntry(key, list2);
+        });
+
+        return result;
+      });
+      slotCount.value = result.starUpList.length;
+      result.starUpList = [];
+      upStarTeamPlayerV2Entity = result;
+      isContinueLastTime = true;
+      Future.delayed(const Duration(milliseconds: 300), () {
+        tvShow.value = true;
+      });
       loadStatus.value = LoadDataStatus.success;
     } else {
       loadStatus.value = LoadDataStatus.loading;
@@ -144,28 +204,25 @@ class SlotDialogController extends GetxController
     });
   }
 
-  void onResult(UpStarTeamPlayerV2Entity result, {bool needRefreshUI = true}) {
+  void onResult(UpStarTeamPlayerV2Entity result) {
     upStarTeamPlayerV2Entity = result;
-    if (needRefreshUI) {
-      setStarUpItem();
-    }
   }
 
   void setStarUpItem() {
-    slotCount.value += 1;
-    startUpItem = upStarTeamPlayerV2Entity.starUpList.first;
-    if (startUpItem.successRate <= 0) {
+    if(upStarTeamPlayerV2Entity.successRate <=0){
       gameOver(false);
       return;
     }
+    slotCount.value += 1;
+    startUpItem = upStarTeamPlayerV2Entity.starUpList.first;
     upStarTeamPlayerV2Entity.starUpList.removeAt(0);
-    if (startUpItem.type == 2) {
+    if (startUpItem?.type == 2) {
       selectIndexList = [9];
-    } else if (startUpItem.type == 3) {
+    } else if (startUpItem?.type == 3) {
       selectIndexList = [10];
     } else {
-      selectIndexList = startUpItem.attrCount.toJson().keys.fold([], (p, e) {
-        var value = startUpItem.attrCount.toJson()[e];
+      selectIndexList = startUpItem!.attrCount.toJson().keys.fold([], (p, e) {
+        var value = startUpItem!.attrCount.toJson()[e];
         if (value > 0) {
           var key = e;
           key = key.replaceAll("three", "3");
@@ -180,7 +237,7 @@ class SlotDialogController extends GetxController
       }
     }
     print('selectIndexList:$selectIndexList');
-    print('successRate:${startUpItem.successRate}');
+    print('successRate:${startUpItem?.successRate}');
     if (slotMachineControllers.length < selectIndexList.length) {
       for (int i = 0; i < selectIndexList.length; i++) {
         slotMachineControllers.add(SlotMachineController());
@@ -193,32 +250,51 @@ class SlotDialogController extends GetxController
   }
 
   startSlot() {
-    if (!isDoorOpen) {
-      if (isContinueStarUpError) {
-        continueStarUp(isRetry: true);
-      }
-      return;
-    }
     if (doorAnimationController.isAnimating) return;
     if (spinCount != 0) return;
-    if (selectIndexList.isEmpty) return;
     if (isGameOver.value) return;
-    if (showSlotResult) return;
-    for (int i = 0; i < selectIndexList.length; i++) {
-      Future.delayed(const Duration(milliseconds: 300), () {
-        slotMachineControllers[i].spin(index: selectIndexList[i]);
-        spinCount++;
-      });
+    if (isSlotRunning) return;
+    if (!isDoorOpen && !isFirst) return;
+    if(isContinueLastTime){
+      continueStarUp();
+      return;
     }
-  }
+    if (isFirst) {
+      isFirst = false;
+      setStarUpItem();
+      openDoor();
+      return;
+    }
 
-  continueStarUp({bool isRetry = false}) {
-    TeamUpgradeController teamUpgradeController = Get.find();
-    PicksApi.continueStarUp(teamUpgradeController.player.uuid).then((result) {
-      onResult(result, needRefreshUI: isRetry);
-      if (isRetry) {
+    closeDoor(() {
+      if (isContinueStarUpError) {
+        continueStarUp();
+      } else if (upStarTeamPlayerV2Entity.starUpList.isEmpty) {
+        continueStarUp();
+      } else {
+        setStarUpItem();
         openDoor();
       }
+    });
+  }
+
+  onOpenDoorEnd() {
+    isSlotRunning = true;
+    timer = Timer.periodic(const Duration(milliseconds: 300), (t) {
+      slotMachineControllers[spinCount].spin(index: selectIndexList[spinCount]);
+      spinCount++;
+      if (spinCount >= selectIndexList.length) {
+        t.cancel();
+      }
+    });
+  }
+
+  continueStarUp() {
+    TeamUpgradeController teamUpgradeController = Get.find();
+    PicksApi.continueStarUp(teamUpgradeController.player.uuid).then((result) {
+      onResult(result);
+      setStarUpItem();
+      openDoor();
     }, onError: (e) {
       isContinueStarUpError = true;
       ErrorUtils.toast(e);
@@ -228,8 +304,14 @@ class SlotDialogController extends GetxController
   void onSpinEnd() {
     spinCount--;
     if (spinCount == 0) {
-      showSlotResult = true;
-      var attrJson = startUpItem.attr.toJson();
+      /// 所有的老虎机都停了
+      if ((startUpItem?.successRate ?? 0) <= 0) {
+        gameOver(false);
+        return;
+      }
+      isSlotRunning = false;
+      successRate.value = startUpItem?.successRate ?? 0;
+      var attrJson = startUpItem!.attr.toJson();
       print('slotResult--before:$slotResult');
       slotResult = selectIndexList.fold(slotResult, (p, e) {
         var key = propertys[e];
@@ -246,26 +328,13 @@ class SlotDialogController extends GetxController
       startMerge();
       print('slotResult--aftter2222:$slotResult');
       update([idSparringResult]);
-
-      /// 所有的老虎机都停了
-      if (upStarTeamPlayerV2Entity.starUpList.isEmpty) {
-        continueStarUp();
-      }
-      Future.delayed(const Duration(milliseconds: 1000), () {
-        showSlotResult = false;
-        closeDoor(() {
-          if (upStarTeamPlayerV2Entity.starUpList.isNotEmpty) {
-            setStarUpItem();
-            Future.delayed(const Duration(milliseconds: 300), () {
-              openDoor();
-            });
-          }
-        });
-      });
     }
   }
 
   done() {
+    if (doorAnimationController.isAnimating) return;
+    if (spinCount != 0) return;
+    if (isSlotRunning) return;
     if (slotCount.value < 8) return;
     if (isGameOver.value) return;
     TeamUpgradeController teamUpgradeController = Get.find();

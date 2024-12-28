@@ -18,6 +18,8 @@ import 'package:arm_chair_quaterback/pages/mine/mine_info/view.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/news_detail2.dart';
 import 'package:arm_chair_quaterback/pages/picks/personal_center/view.dart';
+import 'package:arm_chair_quaterback/pages/picks/picks_history/bindings.dart';
+import 'package:arm_chair_quaterback/pages/picks/picks_history/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_detail_page.dart';
@@ -116,6 +118,12 @@ class AppPages {
       opaque: false,
       name: RouteNames.message,
       page: () => const MessagePage(),
+    ),
+    GetPage(
+      opaque: false,
+      name: RouteNames.picksPicksHistory,
+      page: () => const PicksHistoryPage(),
+      binding: PicksHistoryBinding(),
     ),
     // GetPage(
     //   opaque: false,

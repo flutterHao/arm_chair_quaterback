@@ -27,6 +27,7 @@ class RouteNames {
   static const picksPlayerDetail = '/picks_player_detail';
   static const picksPersonalCenter = '/picks_personal_center';
   static const reciveAwardPickPage = '/recive_award_pick_page';
+  static const picksPicksHistory = '/picks_picks_history';
 
   static const teamTeamIndex = '/team_team_index';
   static const teamTeamDetail = '/team_team_detail';
@@ -52,4 +53,5 @@ class RouteNames {
   static const leagueLeagueDetail = '/league_league_detail';
 
   static const message = '/message';
+
 }

@@ -118,6 +118,11 @@ TeamPlayerUpStarVoEntity $TeamPlayerUpStarVoEntityFromJson(
   if (maxAbility != null) {
     teamPlayerUpStarVoEntity.maxAbility = maxAbility;
   }
+  final TeamPlayerUpStarVoPotential? bestOneStarAbility = jsonConvert.convert<
+      TeamPlayerUpStarVoPotential>(json['bestOneStarAbility']);
+  if (bestOneStarAbility != null) {
+    teamPlayerUpStarVoEntity.bestOneStarAbility = bestOneStarAbility;
+  }
   final double? playerStrength = jsonConvert.convert<double>(
       json['playerStrength']);
   if (playerStrength != null) {
@@ -160,6 +165,7 @@ Map<String, dynamic> $TeamPlayerUpStarVoEntityToJson(
   data['position'] = entity.position;
   data['breakThroughGrade'] = entity.breakThroughGrade;
   data['maxAbility'] = entity.maxAbility.toJson();
+  data['bestOneStarAbility'] = entity.bestOneStarAbility.toJson();
   data['playerStrength'] = entity.playerStrength;
   data['starUpDTO'] = entity.starUpDTO?.toJson();
   return data;
@@ -193,6 +199,7 @@ extension TeamPlayerUpStarVoEntityExtension on TeamPlayerUpStarVoEntity {
     int? position,
     int? breakThroughGrade,
     TeamPlayerUpStarVoPotential? maxAbility,
+    TeamPlayerUpStarVoPotential? bestOneStarAbility,
     double? playerStrength,
     UpStarTeamPlayerV2Entity? starUpDTO,
   }) {
@@ -223,6 +230,7 @@ extension TeamPlayerUpStarVoEntityExtension on TeamPlayerUpStarVoEntity {
       ..position = position ?? this.position
       ..breakThroughGrade = breakThroughGrade ?? this.breakThroughGrade
       ..maxAbility = maxAbility ?? this.maxAbility
+      ..bestOneStarAbility = bestOneStarAbility ?? this.bestOneStarAbility
       ..playerStrength = playerStrength ?? this.playerStrength
       ..starUpDTO = starUpDTO ?? this.starUpDTO;
   }
@@ -231,35 +239,35 @@ extension TeamPlayerUpStarVoEntityExtension on TeamPlayerUpStarVoEntity {
 TeamPlayerUpStarVoPotential $TeamPlayerUpStarVoPotentialFromJson(
     Map<String, dynamic> json) {
   final TeamPlayerUpStarVoPotential teamPlayerUpStarVoPotential = TeamPlayerUpStarVoPotential();
-  final int? blk = jsonConvert.convert<int>(json['blk']);
+  final double? blk = jsonConvert.convert<double>(json['blk']);
   if (blk != null) {
     teamPlayerUpStarVoPotential.blk = blk;
   }
-  final int? tech = jsonConvert.convert<int>(json['tech']);
+  final double? tech = jsonConvert.convert<double>(json['tech']);
   if (tech != null) {
     teamPlayerUpStarVoPotential.tech = tech;
   }
-  final int? pass = jsonConvert.convert<int>(json['pass']);
+  final double? pass = jsonConvert.convert<double>(json['pass']);
   if (pass != null) {
     teamPlayerUpStarVoPotential.pass = pass;
   }
-  final int? stl = jsonConvert.convert<int>(json['stl']);
+  final double? stl = jsonConvert.convert<double>(json['stl']);
   if (stl != null) {
     teamPlayerUpStarVoPotential.stl = stl;
   }
-  final int? threePm = jsonConvert.convert<int>(json['threePm']);
+  final double? threePm = jsonConvert.convert<double>(json['threePm']);
   if (threePm != null) {
     teamPlayerUpStarVoPotential.threePm = threePm;
   }
-  final int? ftm = jsonConvert.convert<int>(json['ftm']);
+  final double? ftm = jsonConvert.convert<double>(json['ftm']);
   if (ftm != null) {
     teamPlayerUpStarVoPotential.ftm = ftm;
   }
-  final int? pts = jsonConvert.convert<int>(json['pts']);
+  final double? pts = jsonConvert.convert<double>(json['pts']);
   if (pts != null) {
     teamPlayerUpStarVoPotential.pts = pts;
   }
-  final int? reb = jsonConvert.convert<int>(json['reb']);
+  final double? reb = jsonConvert.convert<double>(json['reb']);
   if (reb != null) {
     teamPlayerUpStarVoPotential.reb = reb;
   }
@@ -282,14 +290,14 @@ Map<String, dynamic> $TeamPlayerUpStarVoPotentialToJson(
 
 extension TeamPlayerUpStarVoPotentialExtension on TeamPlayerUpStarVoPotential {
   TeamPlayerUpStarVoPotential copyWith({
-    int? blk,
-    int? tech,
-    int? pass,
-    int? stl,
-    int? threePm,
-    int? ftm,
-    int? pts,
-    int? reb,
+    double? blk,
+    double? tech,
+    double? pass,
+    double? stl,
+    double? threePm,
+    double? ftm,
+    double? pts,
+    double? reb,
   }) {
     return TeamPlayerUpStarVoPotential()
       ..blk = blk ?? this.blk

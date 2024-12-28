@@ -353,7 +353,7 @@ class AddSparringPlayersDialogWidget extends GetView<StartUpgradeController> {
                               ),
                               7.5.vGap,
                               Text(
-                                "+${controller.ppUpValue.value}",
+                                "+${controller.ppUpValue.value.toStringAsFixed(3)}",
                                 style: 18.w5(
                                     color: AppColors.c000000,
                                     height: 1,
@@ -445,7 +445,7 @@ class AddSparringPlayersDialogWidget extends GetView<StartUpgradeController> {
         backgroundColor: AppColors.cTransparent,
         context: context,
         builder: (context) {
-          return const SlotDialogWidget();
+          return SlotDialogWidget(controller.upSuccessRate.value/100);
         });
     onBack.call(result);
   }
