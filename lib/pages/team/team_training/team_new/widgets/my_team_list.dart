@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 21:19:02
- * @LastEditTime: 2024-12-28 19:52:53
+ * @LastEditTime: 2024-12-28 20:55:54
  */
 /*
  * @Description: 
@@ -158,10 +158,11 @@ class SubPlayerList extends GetView<TeamController> {
 
   @override
   Widget build(BuildContext context) {
-    var list = controller.myTeamEntity.teamPlayers
-        .where((e) => e.position == 0)
-        .toList();
+    // var list = controller.myTeamEntity.teamPlayers
+    //     .where((e) => e.position == 0)
+    //     .toList();
     // list.sort(controller.comparePlayers);
+    var list = controller.subList;
     return SizedBox(
       // width: 360.w,
       child: Column(

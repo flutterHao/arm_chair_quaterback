@@ -312,9 +312,38 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
     //     break;
     //   }
     // }
-
+    // var sub=result.teamPlayers.where((e)=>e.position==0).toList();
     myTeamEntity = result;
-    subList = myTeamEntity.teamPlayers.where((e) => e.position == 0).toList();
+    if (isDown) {
+      subList.removeWhere((element) => element.playerId == item1.playerId);
+    } else if (isAdd) {
+      for (var e in result.teamPlayers) {
+        if (e.position == 0 && !subList.contains(e)) {
+          subList.add(e);
+          break;
+        }
+      }
+    } else {
+      List<TeamPlayerInfoEntity> sub = List.from(subList);
+      for (var e in result.teamPlayers) {
+        if (e.position == 0 &&
+            sub.where((m) => m.playerId == e.playerId).isEmpty) {
+          ///如果sublit中没有这个元素,将teamPlayers中不包含sublit中的项替换
+          for (var element in sub) {
+            if (result.teamPlayers
+                .where((a) => a.playerId == element.playerId)
+                .isEmpty) {
+              // element = e;
+              subList[subList
+                  .indexWhere((n) => n.playerId == element.playerId)] = e;
+              break;
+            }
+          }
+          break;
+        }
+      }
+    }
+
     update();
     Get.back(result: result);
   }
