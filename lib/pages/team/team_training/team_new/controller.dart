@@ -147,8 +147,6 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   Future<void> recoverPower(
       {required int cost, int type = 1, String? uuid}) async {
     await TeamApi.recoverPower(type: type, uuid: uuid).then((v) async {
-      myTeamEntity.powerP = v.powerP;
-      myTeamEntity.powerReplyTime = v.powerReplyTime;
       if (type == 1) {
         if (v.teamPlayers.isEmpty) return;
         int totalPw = 0;
@@ -183,6 +181,8 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
 
         //  myTeamEntity=await TeamApi.getMyTeamPlayer(teamId)
       }
+      myTeamEntity.powerP = v.powerP;
+      myTeamEntity.powerReplyTime = v.powerReplyTime;
       update();
     });
   }

@@ -506,6 +506,8 @@ class TrainingController extends GetxController
     // update(["training_page"]);
     TeamApi.chooseTactic(selectTacticId, replaceTacticId: changeTacticId)
         .then((v) async {
+      trainingInfo = await TeamApi.getTrainingInfo();
+
       ///tacticList替换上面的buff
       await chooseEnd(context, type);
       // await Future.delayed(const Duration(milliseconds: 600));
@@ -768,15 +770,19 @@ class TrainingController extends GetxController
 
     //暂时不知道重置到开始位置的原因，先重新变更成中奖位置
     if (scrollerCtrlList.where((e) => e.offset == 0.0).length == 6) {
-      for (int i = 0; i < scrollerCtrlList.length; i++) {
-        scrollerCtrlList[i].jumpTo(offsetList[i]);
+      if (offsetList.isNotEmpty) {
+        for (int i = 0; i < scrollerCtrlList.length; i++) {
+          scrollerCtrlList[i].jumpTo(offsetList[i]);
+        }
       }
     }
 
     Future.delayed(const Duration(milliseconds: 10), () {
       if (scrollerCtrlList.where((e) => e.offset == 0.0).length == 6) {
-        for (int i = 0; i < scrollerCtrlList.length; i++) {
-          scrollerCtrlList[i].jumpTo(offsetList[i]);
+        if (offsetList.isNotEmpty) {
+          for (int i = 0; i < scrollerCtrlList.length; i++) {
+            scrollerCtrlList[i].jumpTo(offsetList[i]);
+          }
         }
       }
     });
@@ -871,7 +877,7 @@ class TrainingController extends GetxController
       // isTwo = 0;
       double offset = (playerList.length * 3 - 3) * 65.w + isTwo;
       playerScollCtrl.addListener(() {
-        currentPlayerIndex.value = (playerScollCtrl.offset / 65.w).ceil() + 3;
+        currentPlayerIndex.value = (playerScollCtrl.offset / 65.w).round() + 3;
       });
       await playerScollCtrl
           .animateTo(

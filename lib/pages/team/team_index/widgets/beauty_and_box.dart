@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
@@ -8,11 +9,13 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/widgets/animtion_love.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/battle_box_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/widgets/linear_progress_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:spine_flutter/spine_widget.dart';
 
 /*
@@ -26,7 +29,6 @@ class BeautyAndBoxView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final beautyCtrl = Get.find<BeautyController>();
     return GetBuilder<TeamIndexController>(
         id: "battleBox",
         builder: (ctrl) {
@@ -79,61 +81,62 @@ class BeautyAndBoxView extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  top: 21.w,
+                  top: 0.w,
                   left: 0,
                   right: 0,
-                  child: Obx(() {
-                    final beautyCtrl = Get.find<BeautyController>();
-                    beautyCtrl.beautyIndex.value;
-                    return InkWell(
-                      onTap: () => Get.toNamed(RouteNames.teamBeautyPage,
-                          id: GlobalNestedKey.TEAM),
-                      // child: Image.asset(
-                      //         beautyCtrl
-                      //             .beautyList[beautyCtrl.beautyIndex.value],
-                      //         fit: BoxFit.fitHeight,
-                      //         height: 546.w,
-                      //         alignment: Alignment.topCenter)
-                      child: SizedBox(
+                  child: GetBuilder<BeautyController>(builder: (beautyCtrl) {
+                    return Obx(() {
+                      beautyCtrl.beautyIndex.value;
+                      return SizedBox(
                         height: 546.w,
                         child: Stack(
                           alignment: Alignment.topCenter,
                           children: [
-                            SpineWidget.fromAsset(
-                              Assets.assetsSpineNv1,
-                              "assets/spine/nv_1.json",
-                              beautyCtrl.spineWidgetController,
-                              fit: BoxFit.fitHeight,
-                              alignment: Alignment.topCenter,
+                            Container(
+                              margin: EdgeInsets.only(top: 20.w),
+                              child: SpineWidget.fromAsset(
+                                Assets.assetsSpineNv1,
+                                "assets/spine/nv_1.json",
+                                beautyCtrl.spineWidgetController,
+                                fit: BoxFit.fitHeight,
+                                alignment: Alignment.topCenter,
+                              ),
                             ),
+                            ...beautyCtrl.hearts,
                             Positioned(
                                 top: 0,
-                                left: 50.w,
-                                right: 50.w,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.33,
+                                left: 0.w,
+                                right: 0.w,
+                                bottom: 0.w,
+                                // height:
+                                //     MediaQuery.of(context).size.height * 0.33,
                                 child: GestureDetector(
-                                  onTap: () => beautyCtrl.setAnimation(1),
+                                  onTapDown: (details) {
+                                    double top =
+                                        MediaQuery.of(context).size.height *
+                                            0.33;
+                                    beautyCtrl.addHeart(details.localPosition);
+                                    beautyCtrl.setAnimation(
+                                        details.localPosition.dy > top ? 2 : 1);
+                                  },
                                   child: Container(
                                     color: Colors.transparent,
                                   ),
                                 )),
-                            Positioned(
-                                bottom: 0,
-                                left: 50.w,
-                                right: 50.w,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.66,
-                                child: GestureDetector(
-                                  onTap: () => beautyCtrl.setAnimation(2),
-                                  child: Container(
-                                    color: Colors.transparent,
-                                  ),
-                                )),
+
+                            // Positioned(
+                            //   top: 0.w,
+                            //   // left: 10,
+                            //   // right: 10,
+                            //   child: Lottie.asset(
+                            //     Assets.lottieLove,
+                            //     height: 200.w,
+                            //   ),
+                            // ),
                           ],
                         ),
-                      ),
-                    );
+                      );
+                    });
                   }),
                 ),
                 Positioned(

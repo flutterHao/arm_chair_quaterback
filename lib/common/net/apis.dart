@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-06 15:16:54
- * @LastEditTime: 2024-12-05 17:40:19
+ * @LastEditTime: 2024-12-27 20:39:16
  */
 class Api {
   /// base
@@ -51,12 +51,12 @@ class Api {
       "$API_BASE_PATH/NBANews/getRelevantNews";
 
   ///NBAData
-  static const String teamStatRank =
-      "$API_BASE_PATH/NBAData/queryNBATeamStatRank";
+  static const String statTeamRank =
+      "$API_BASE_PATH/NBAData/getNBATeamPerGameAndTotalInfo";
   static const String teamRank = "$API_BASE_PATH/NBAData/queryNBATeamRank";
 
   static const String playerStats =
-      "$API_BASE_PATH/NBAData/getNBAPlayerRankJSONInfo";
+      "$API_BASE_PATH/NBAData/getNBAPlayerPerGameAndTotalsInfo";
   static const String getNBAPlayerInfo =
       "$API_BASE_PATH/NBAData/getNBAPlayerInfo";
   static const String getRecentAvg = "$API_BASE_PATH/NBAData/getRecentAvg";
@@ -126,7 +126,8 @@ class Api {
   static const String buyTrainingBall =
       "$API_BASE_PATH/TeamPlayer/buyTrainingBall";
   static const String chooseTactic = "/p/TeamPlayer/chooseTactic";
-  static const String getTeamPlayerUpStarVO = "/p/TeamPlayer/getTeamPlayerUpStarVO";
+  static const String getTeamPlayerUpStarVO =
+      "/p/TeamPlayer/getTeamPlayerUpStarVO";
   static const String continueStarUp = "/p/TeamPlayer/continueStarUp";
   static const String starUpDone = "/p/TeamPlayer/starUpDone";
 

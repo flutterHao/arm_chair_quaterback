@@ -216,7 +216,8 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
                                 return Container(
                                   margin: EdgeInsets.only(bottom: 3.w),
                                   child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
@@ -225,7 +226,8 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
                                             fontSize: 12.sp,
                                             fontWeight: FontWeight.w400,
                                             color: AppColors.c000000,
-                                            decoration: TextDecoration.underline,
+                                            decoration:
+                                                TextDecoration.underline,
                                             height: 1,
                                             fontFamily:
                                                 FontFamily.fRobotoRegular),
@@ -425,9 +427,7 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
           ),
         ),
         Positioned(
-            top: 11.w,
-            right: 10.w,
-            child: ShareWidget(globalKey: globalKey))
+            top: 11.w, right: 10.w, child: ShareWidget(globalKey: globalKey))
       ],
     );
   }

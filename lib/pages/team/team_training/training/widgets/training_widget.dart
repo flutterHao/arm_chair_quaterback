@@ -45,7 +45,7 @@ class TrainingWidget extends GetView<TrainingController> {
   @override
   Widget build(BuildContext context) {
     // controller.startScroller();
-    controller.showAward();
+    // controller.showAward();
     return GetBuilder<TrainingController>(
         id: "training_page",
         builder: (controller) {

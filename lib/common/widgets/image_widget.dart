@@ -109,6 +109,7 @@ class ImageWidget extends StatelessWidget {
       alignment: alignment ?? Alignment.center,
       borderRadius: borderRadius,
       shape: BoxShape.rectangle,
+      
       clearMemoryCacheWhenDispose: false,
       loadStateChanged: (ExtendedImageState state) {
         switch (state.extendedImageLoadState) {

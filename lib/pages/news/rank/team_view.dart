@@ -2,16 +2,14 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-14 16:54:10
- * @LastEditTime: 2024-12-25 22:10:02
+ * @LastEditTime: 2024-12-27 10:03:01
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
-import 'package:arm_chair_quaterback/common/widgets/TLBuilderWidget.dart';
-import 'package:arm_chair_quaterback/common/widgets/app_bar_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/custom_dialog.dart';
+import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
-import 'package:arm_chair_quaterback/pages/news/rank/widgets/team_list_view.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -33,7 +31,12 @@ class TeamRankPage extends GetView<RankController> {
               margin: EdgeInsets.symmetric(vertical: 9.w),
               child: Column(
                 children: [
-                  if (controller.teamTypeIndex == 0) RankList(type: 0)
+                  if (controller.teamTypeIndex.value == 0) RankList(type: 0),
+                  if (controller.teamTypeIndex.value == 1) ...[
+                    RankList(type: 1),
+                    9.vGap,
+                    RankList(type: 2),
+                  ]
                 ],
               ),
             ),
@@ -52,12 +55,20 @@ class RankList extends GetView<RankController> {
     if (type != 0) {
       list = list.where((e) => e.force == type).toList();
     }
-    List<String> colomns = ["EASTERN CONFERENCE", "W-L", "GB"];
+    String area = "";
+    if (type == 1) {
+      area = "WESTERN";
+    }
+    if (type == 2) {
+      area = "EASTERN";
+    }
+    List<String> colomns = ["$area CONFERENCE", "W-L", "GB"];
     List<double> colomnsWidth = [150.w, 35.w, 30.w];
 
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 25.w),
+      padding: EdgeInsets.symmetric(vertical: 20.w),
       width: double.infinity,
+      constraints: BoxConstraints(minHeight: 400.h),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12.w),
@@ -74,11 +85,11 @@ class RankList extends GetView<RankController> {
               maxLines: 2,
               style: 21.w4(
                 fontFamily: FontFamily.fOswaldMedium,
-                height: 0.8,
+                height: 1,
               ),
             ),
           ),
-          32.vGap,
+          27.vGap,
           Container(
             margin: EdgeInsets.symmetric(horizontal: 16.w),
             child: Row(
@@ -161,7 +172,7 @@ class RankList extends GetView<RankController> {
                       SizedBox(
                         width: colomnsWidth[2],
                         child: Text(
-                          "--",
+                          "${e.conferenceGamesBack}",
                           style: 12.w4(
                             fontFamily: FontFamily.fRobotoRegular,
                             color: AppColors.c4D4D4D,
@@ -177,5 +188,94 @@ class RankList extends GetView<RankController> {
         ],
       ),
     );
+  }
+}
+
+class TeamRankSelectDialog extends GetView<RankController> {
+  const TeamRankSelectDialog({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<RankController>(
+        id: "teamRank",
+        builder: (context) {
+          return SimpleBottomDialog(
+              height: 367.w,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  26.vGap,
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 16.w),
+                    child: Text(
+                      "NBA Team rankings".toUpperCase(),
+                      style: 19.w4(
+                          fontFamily: FontFamily.fOswaldMedium, height: 0.8),
+                    ),
+                  ),
+                  12.5.vGap,
+                  Container(
+                    width: double.infinity,
+                    height: 1,
+                    color: AppColors.cD1D1D1,
+                  ),
+                  ListView.separated(
+                      shrinkWrap: true,
+                      padding: EdgeInsets.zero,
+                      itemBuilder: (context, index) {
+                        var selected = controller.teamTypeIndex.value == index;
+                        return InkWell(
+                          onTap: () {
+                            controller.teamTypeIndex.value = index;
+                            controller.update(["teamRank"]);
+                            Get.back();
+                          },
+                          child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 21.w, horizontal: 31.5.w),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    controller.teamRankType[index],
+                                    style: selected
+                                        ? 14.w4(
+                                            fontFamily:
+                                                FontFamily.fOswaldMedium,
+                                            color: AppColors.c000000,
+                                            height: 0.8)
+                                        : 14.w4(
+                                            fontFamily:
+                                                FontFamily.fOswaldRegular,
+                                            color: AppColors.cB3B3B3,
+                                            height: 0.8),
+                                  ),
+                                  if (selected)
+                                    IconWidget(
+                                      iconWidth: 14.w,
+                                      icon: Assets
+                                          .commonUiCommonStatusBarMission02,
+                                      iconColor: AppColors.c000000,
+                                    )
+                                ],
+                              )),
+                        );
+                      },
+                      separatorBuilder: (context, index) => Container(
+                            width: double.infinity,
+                            margin: EdgeInsets.symmetric(horizontal: 16.w),
+                            height: 1,
+                            color: AppColors.cE6E6E,
+                          ),
+                      itemCount: controller.teamRankType.length),
+                  // Container(
+                  //   width: double.infinity,
+                  //   height: 1,
+                  //   color: AppColors.cD1D1D1,
+                  // ),
+                ],
+              ));
+        });
   }
 }

@@ -74,6 +74,7 @@ dependencies:
   web_socket_channel: ^3.0.1
   spine_flutter: ^4.2.11
   flutter_inner_shadow: 0.0.1
+  # lottie: ^3.2.0
   encrypt: ^5.0.0
 
 dev_dependencies:
@@ -111,6 +112,8 @@ flutter:
     - assets/images/Common/
     - assets/images/scores/
     - assets/spine/
+    - assets/lottie/
+
 
 
   # To add assets to your application, add an assets section, like this:

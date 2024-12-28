@@ -10,6 +10,7 @@ class Assets {
   static const String commonUiCommonIconElevate = 'assets/images/Common/ui_common_icon_elevate.png';
   static const String commonUiCommonIconElevate01 = 'assets/images/Common/ui_common_icon_elevate_01.png';
   static const String commonUiCommonIconElevate02 = 'assets/images/Common/ui_common_icon_elevate_02.png';
+  static const String commonUiCommonIconHeart = 'assets/images/Common/ui_common_icon_heart.png';
   static const String commonUiCommonIconInjury = 'assets/images/Common/ui_common_icon_injury.png';
   static const String commonUiCommonIconLayoff = 'assets/images/Common/ui_common_icon_layoff.png';
   static const String commonUiCommonIconPick = 'assets/images/Common/ui_common_icon_pick.png';
@@ -132,6 +133,7 @@ class Assets {
   static const String iconUiIconWinning = 'assets/images/icon/ui_icon_winning.png';
   static const String iconUiWindowsAward = 'assets/images/icon/ui_windows_award.png';
   static const String iconUiWindowsLose = 'assets/images/icon/ui_windows_lose.png';
+  static const String lottieLove = 'assets/lottie/love.json';
   static const String managerUiManagerCourt = 'assets/images/manager/ui_manager_court.jpg';
   static const String managerUiManagerCourt01 = 'assets/images/manager/ui_manager_court_01.png';
   static const String managerUiManagerCourt02 = 'assets/images/manager/ui_manager_court_02.png';

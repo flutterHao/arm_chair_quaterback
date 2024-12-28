@@ -37,6 +37,7 @@ import 'package:arm_chair_quaterback/common/entities/new_test_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/palyer_stats_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pick_type_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_event_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_player_updated_entity.dart';
@@ -607,6 +608,10 @@ class JsonConvert {
       return data.map<NewsListDetail>((Map<String, dynamic> e) =>
           NewsListDetail.fromJson(e)).toList() as M;
     }
+    if (<StatsEntity>[] is M) {
+      return data.map<StatsEntity>((Map<String, dynamic> e) =>
+          StatsEntity.fromJson(e)).toList() as M;
+    }
     if (<PickTypeEntity>[] is M) {
       return data.map<PickTypeEntity>((Map<String, dynamic> e) =>
           PickTypeEntity.fromJson(e)).toList() as M;
@@ -1097,6 +1102,7 @@ class JsonConvertClassCollection {
     (NewsEntity).toString(): NewsEntity.fromJson,
     (NewsListEntity).toString(): NewsListEntity.fromJson,
     (NewsListDetail).toString(): NewsListDetail.fromJson,
+    (StatsEntity).toString(): StatsEntity.fromJson,
     (PickTypeEntity).toString(): PickTypeEntity.fromJson,
     (PkEventUpdatedEntity).toString(): PkEventUpdatedEntity.fromJson,
     (PkEventUpdatedTeamInfo).toString(): PkEventUpdatedTeamInfo.fromJson,

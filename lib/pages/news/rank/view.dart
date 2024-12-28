@@ -1,21 +1,14 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
-import 'package:arm_chair_quaterback/common/widgets/delegate/fixed_height_sliver_header_delegate.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
-import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
-import 'package:arm_chair_quaterback/common/widgets/TLBuilderWidget.dart';
-import 'package:arm_chair_quaterback/common/widgets/app_bar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/controller.dart';
-import 'package:arm_chair_quaterback/pages/news/rank/controller.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/index.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/team_view.dart';
-import 'package:arm_chair_quaterback/pages/news/rank/widgets/border_container.dart';
-import 'package:arm_chair_quaterback/pages/news/rank/widgets/search_bottom_dialog.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -23,9 +16,21 @@ import 'package:get/get.dart';
 class NBARankPage extends GetView<RankController> {
   const NBARankPage({super.key});
 
+  int _getScoreCount() {
+    DateTime now = DateTime.now();
+    int startTime =
+        DateTime(now.year, now.month, now.day).millisecondsSinceEpoch;
+    int endTime =
+        DateTime(now.year, now.month, now.day + 1).millisecondsSinceEpoch;
+    var ctrl = Get.find<LeagueController>();
+    var caches = ctrl.cacheGameGuessData;
+    int length = caches["${startTime}_$endTime"]?.length ?? 0;
+    return length;
+  }
+
   // 主视图
   Widget _buildView(context) {
-    int length = Get.find<LeagueController>().scoreList.length;
+    int length = _getScoreCount();
     return Column(
       children: [
         Container(
@@ -110,24 +115,41 @@ class NBARankPage extends GetView<RankController> {
                               Positioned(
                                   left: 0,
                                   right: 0,
-                                  child: Text(
-                                    i == 0
-                                        ? controller.teamRankType[
-                                            controller.teamTypeIndex]
-                                        : "STARS",
-                                    textAlign: TextAlign.center,
-                                  )),
+                                  child: Obx(() {
+                                    var teamTabString = controller.teamRankType[
+                                        controller.teamTypeIndex.value];
+                                    return Text(
+                                      i == 0 ? teamTabString : "STATS",
+                                      textAlign: TextAlign.center,
+                                    );
+                                  })),
                               if (i == 0)
                                 Positioned(
-                                  right: 18.w,
-                                  child: IconWidget(
-                                    iconWidth: 11.5.w,
-                                    icon: Assets.iconUiIconArrows04,
-                                    iconColor:
-                                        controller.tabController.index == 0
-                                            ? AppColors.c000000
-                                            : AppColors.cB3B3B3,
-                                  ),
+                                  right: 0.w,
+                                  child: Obx(() {
+                                    return InkWell(
+                                      onTap: () {
+                                        showModalBottomSheet(
+                                            context: Get.context!,
+                                            isScrollControlled: true,
+                                            builder: (context) {
+                                              return TeamRankSelectDialog();
+                                            });
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 18.w),
+                                        child: IconWidget(
+                                          iconWidth: 11.5.w,
+                                          icon: Assets.iconUiIconArrows04,
+                                          iconColor:
+                                              controller.tabIndex.value == 0
+                                                  ? AppColors.c000000
+                                                  : AppColors.cB3B3B3,
+                                        ),
+                                      ),
+                                    );
+                                  }),
                                 )
                             ],
                           )

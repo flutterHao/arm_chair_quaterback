@@ -2,15 +2,16 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:27:52
- * @LastEditTime: 2024-12-25 21:04:41
+ * @LastEditTime: 2024-12-27 21:14:57
  */
-import 'package:arm_chair_quaterback/common/entities/stats_rank/nba_player_stat.dart';
+import 'package:arm_chair_quaterback/common/entities/nab_player_season_game_rank_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/nba_player_stat_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/palyer_stats_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
-import 'package:arm_chair_quaterback/pages/news/new_list/controller.dart';
-import 'package:arm_chair_quaterback/pages/news/rank/widgets/stats_list_view.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/widgets/team_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,15 +26,11 @@ class RankController extends GetxController
   int todayScoresCount = 0;
   RxInt tabIndex = 0.obs;
   List<String> tabs = ["CONFERENCE", "PRESEAON"];
-  int teamTypeIndex = 0;
-  List<String> teamRankType = ["CONFERENCE", "LEAGUE"];
+  var teamTypeIndex = 0.obs;
+  List<String> teamRankType = ["LEAGUE", "CONFERENCE"];
   List<String> tabs2 = ["Eastean", "Westen"];
 
   RxDouble progress = 0.0.obs;
-  List statsPages = const [
-    PlayerListView(),
-    TeamListView(),
-  ];
 
   List teamPages = const [
     EasTeamListView(type: 1),
@@ -43,11 +40,40 @@ class RankController extends GetxController
   RxString pointType = "PTS".obs;
   RxString season = "2024-25".obs;
   String seasonType = "Regular Season";
-  List<NbaPlayerStat> statList = [];
+  List<StatsEntity> statPlayerList = [];
   List<String> seasonList = ["2023-24", "2024-25"];
-  List<StarsTeamRank> starsTeamRankList = [];
+  List<StatsEntity> statTeamRankList = [];
   List<TeamRankEntity> teamRankList = [];
-  Map<String, List<NbaPlayerStat>> statsRankMap = {};
+  // Map<String, Map<String, List<NbaPlayerStat>>> statsRankMap = {};
+  Map<String, Map<String, dynamic>> statsRankMap = {
+    "SCORING": {
+      "current": 0,
+      "list": ["PPG_PTS", "FGM_FGA", "3PM_3PA", "FTM_FTA"]
+    },
+    "FIELD GOAL": {
+      "current": 0,
+      "list": ["FG%_FGM", "3P%_3PM", "FT%_FTM"]
+    },
+    "AST": {
+      "current": 0,
+      "list": ["APG_AST", "TPG_TO"]
+    },
+    "REB": {
+      "current": 0,
+      "list": ["RPG_REB", "BPG_BLK"]
+    },
+  };
+
+  Map<String, String> statsTeamTypeMap = {
+    "POINTS": "PPG_PTS",
+    "REBOUND": "RPG_REB",
+    "ASSIST": "APG_AST",
+    "FIELD GOLD": "FG%_FGM",
+    "THREE POINTS": "3P%_3PM",
+    "FREE THROW": "FT%_FTM",
+    "TURNOVER": "TPG_TO"
+  };
+
 //西部1，东部2
 
   /// 在 widget 内存中分配后立即调用。
@@ -91,94 +117,117 @@ class RankController extends GetxController
           season: season.value,
           statType: pointType.value,
           seasonType: seasonType),
-      NewsApi.starTeamList(seasonId: season.value, seasonType: seasonType),
+      NewsApi.statTeamList(seasonId: season.value),
       NewsApi.getTeamList(seasonId: season.value),
       CacheApi.getNBATeamDefine()
     ]).then((v) {
-      statList = v[0] as List<NbaPlayerStat>;
-      starsTeamRankList = v[1] as List<StarsTeamRank>;
+      statPlayerList = v[0] as List<StatsEntity>;
+      statTeamRankList = v[1] as List<StatsEntity>;
       teamRankList = v[2] as List<TeamRankEntity>;
       for (var element in teamRankList) {
         element.force = CacheApi.teamDefineMap?[element.teamID]?.force ?? 0;
       }
-      onTypeChange();
+      // onTypeChange();
+
       update(["teamRank", "starsRank"]);
     });
   }
 
-  void onTypeChange() async {
-    switch (pointType.value) {
+  List<StatsEntity> getStatRankList(String type, bool isTeam) {
+    List<StatsEntity> list =
+        List.from(isTeam ? statTeamRankList : statPlayerList);
+    switch (type) {
+      case "PPG": //场均PTS
+        list.sort((a, b) => b.pTS.compareTo(a.pTS));
       case "PTS":
-        starsTeamRankList.sort((a, b) => b.pts!.compareTo(a.pts!));
-        statList.sort((a, b) => b.pts!.compareTo(a.pts!));
-      case "AST":
-        starsTeamRankList.sort((a, b) => b.ast!.compareTo(a.ast!));
-        statList.sort((a, b) => b.pts!.compareTo(a.pts!));
-      case "REB":
-        starsTeamRankList.sort((a, b) => b.reb!.compareTo(a.reb!));
-        statList.sort((a, b) => b.pts!.compareTo(a.pts!));
-      case "FGP":
-        starsTeamRankList.sort((a, b) => b.fgPct!.compareTo(a.fgPct!));
-        statList.sort((a, b) => b.pts!.compareTo(a.pts!));
-      case "BLK":
-        starsTeamRankList.sort((a, b) => b.blk!.compareTo(a.blk!));
-        statList.sort((a, b) => b.pts!.compareTo(a.pts!));
-      case "STL":
-        starsTeamRankList.sort((a, b) => b.stl!.compareTo(a.stl!));
-        statList.sort((a, b) => b.pts!.compareTo(a.pts!));
-      case "FTP":
-        starsTeamRankList.sort((a, b) => b.ftPct!.compareTo(a.ftPct!));
-        statList.sort((a, b) => b.pts!.compareTo(a.pts!));
+        list.sort((a, b) => b.totalPts.compareTo(a.totalPts));
+      case "FGM":
+        list.sort((a, b) => b.fGM.compareTo(a.fGM));
+      case "FGA":
+        list.sort((a, b) => b.fGA.compareTo(a.fGA));
+      case "3PM":
+        list.sort((a, b) => b.threePM.compareTo(a.threePM));
       case "3PA":
-        starsTeamRankList.sort((a, b) => b.fg3A!.compareTo(a.fg3A!));
-        statList.sort((a, b) => b.pts!.compareTo(a.pts!));
-      case "3PP":
-        starsTeamRankList.sort((a, b) => b.fg3Pct!.compareTo(a.fg3Pct!));
-        statList.sort((a, b) => b.pts!.compareTo(a.pts!));
+        list.sort((a, b) => b.threePA.compareTo(a.threePA));
+      case "FTM":
+        list.sort((a, b) => b.fTM.compareTo(a.fTM));
+      case "FTA":
+        list.sort((a, b) => b.fTA.compareTo(a.fTA));
+      case "FG%":
+        list.sort((a, b) => b.fgPct.compareTo(a.fgPct));
+      case "3P%":
+        list.sort((a, b) => b.fg3Pct.compareTo(a.fg3Pct));
+      case "FT%":
+        list.sort((a, b) => b.ftPct.compareTo(a.ftPct));
+      case "APG": //场均AST
+        list.sort((a, b) => b.aST.compareTo(a.aST));
+      case "AST":
+        list.sort((a, b) => b.totalAst.compareTo(a.totalAst));
+      case "TPG": //场均TO
+        list.sort((a, b) => b.tOV.compareTo(a.tOV));
       case "TO":
-        starsTeamRankList.sort((a, b) => b.tov!.compareTo(a.tov!));
-        statList.sort((a, b) => b.tov!.compareTo(a.tov!));
+        list.sort((a, b) => b.totalTov.compareTo(a.totalTov));
+      case "RPG":
+        list.sort((a, b) => b.totalReb.compareTo(a.totalReb));
+      case "REB": //场均RPG
+        list.sort((a, b) => b.rEB.compareTo(a.rEB));
+      case "BPG": //场均blk
+        list.sort((a, b) => b.bLK.compareTo(a.bLK));
+      case "BLK":
+        list.sort((a, b) => b.totalBlk.compareTo(a.totalBlk));
       default:
     }
-
-    update(["stars", "starsTeam"]);
+    return list;
   }
 
-  dynamic getRankValue(dynamic item) {
-    switch (pointType.value) {
+  String getRankValue(String type, StatsEntity item) {
+    double value = 0;
+    switch (type) {
+      case "PPG": //场均PTS
+        value = item.pTS;
       case "PTS":
-        return item.pts ?? 0;
-      case "AST":
-        return item.ast ?? 0;
-      case "REB":
-        return item.reb ?? 0;
-      case "FGP":
-        return item.fgPct ?? 0;
-      case "BLK":
-        return item.blk ?? 0;
-      case "STL":
-        return item.stl ?? 0;
-      case "FTP":
-        return item.ftPct ?? 0;
+        value = item.totalPts;
+      case "FGM":
+        value = item.fGM;
+      case "FGA":
+        value = item.fGA;
+      case "3PM":
+        value = item.threePM;
       case "3PA":
-        return item.fg3A ?? 0;
-      case "3PP":
-        return item.fg3Pct ?? 0;
+        value = item.fGA;
+      case "FTM":
+        value = item.fTM;
+      case "FTA":
+        value = item.fTA;
+      case "FG%":
+        value = item.fgPct * 100;
+      case "3P%":
+        value = item.fg3Pct * 100;
+      case "FT%":
+        value = item.ftPct * 100;
+      case "APG": //场均AST
+        value = item.aST;
+      case "AST":
+        value = item.totalAst;
+      case "TPG": //场均TO
+        value = item.tOV;
       case "TO":
-        return item.tov ?? 0;
+        value = item.totalTov;
+      case "RPG":
+        value = item.rEB;
+      case "REB": //场均RPG
+        value = item.totalReb;
+      case "BPG": //场均blk
+        value = item.bLK;
+      case "BLK":
+        value = item.totalBlk;
       default:
-        return 0;
+        value = 0.0;
     }
+    return Utils.formatToThreeSignificantDigits(value);
   }
 
   String getTeamRankTitle(int type) {
-    String area = "";
-    if (type == 1) {
-      area = "Western";
-    }
-    if (type == 2) {
-      area = "Eastern";
-    }
-    return "$season NBA $area Conference Standings";
+    return "$season NBA Conference Standings".toUpperCase();
   }
 }

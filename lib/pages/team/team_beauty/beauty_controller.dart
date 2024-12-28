@@ -2,9 +2,14 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-16 17:24:51
- * @LastEditTime: 2024-12-25 15:17:20
+ * @LastEditTime: 2024-12-26 21:43:20
  */
+import 'dart:ui';
+
+import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/widgets/animtion_love.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:spine_flutter/spine_flutter.dart';
 import 'dart:async';
@@ -38,6 +43,8 @@ class BeautyController extends GetxController {
   Timer? boxTimer;
 
   late SpineWidgetController spineWidgetController;
+  final List<AnimationLove> hearts = [];
+  bool compeleted = true;
 
   @override
   void onInit() {
@@ -54,6 +61,8 @@ class BeautyController extends GetxController {
   }
 
   void setAnimation(int position) {
+    // if (!compeleted) return;
+    // compeleted = false;
     var type = position == 2 ? "click1" : "click2";
     spineWidgetController.animationState
         .setAnimationByName(0, type, false)
@@ -61,6 +70,7 @@ class BeautyController extends GetxController {
       if (type == EventType.complete) {
         spineWidgetController.animationState
             .setAnimationByName(0, "stand", true);
+        // compeleted = true;
       }
     });
   }
@@ -121,6 +131,19 @@ class BeautyController extends GetxController {
     final minutes = ((seconds % 3600) ~/ 60).toString().padLeft(2, '0');
     final secs = (seconds % 60).toString().padLeft(2, '0');
     return "$hours:$minutes:$secs";
+  }
+
+  void addHeart(Offset offset) {
+    hearts.add(
+      AnimationLove(
+        startPosition: offset,
+        onCompleted: () {
+          // hearts.removeWhere((heart) => heart.startPosition == offset);
+          // update();
+        },
+      ),
+    );
+    update();
   }
 
   @override

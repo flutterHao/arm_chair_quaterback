@@ -12,7 +12,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
  * @Description: 自定义弹窗
  * @Author: lihonghao
  * @Date: 2024-09-28 15:59:52
- * @LastEditTime: 2024-12-25 22:31:30
+ * @LastEditTime: 2024-12-26 10:15:50
  */
 
 class CustomBottomDialog extends StatelessWidget {
@@ -149,6 +149,7 @@ class SimpleBottomDialog extends StatelessWidget {
           borderRadius: BorderRadius.vertical(top: Radius.circular(9.w))),
       child: Column(
         children: [
+          8.vGap,
           Container(
             decoration: BoxDecoration(
                 color: AppColors.ccccccc,
@@ -156,7 +157,7 @@ class SimpleBottomDialog extends StatelessWidget {
             height: 4.w,
             width: 44.w,
           ),
-          child
+          Expanded(child: child)
         ],
       ),
     );

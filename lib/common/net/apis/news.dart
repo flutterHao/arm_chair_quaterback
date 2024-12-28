@@ -2,10 +2,12 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 17:28:14
- * @LastEditTime: 2024-12-16 21:05:22
+ * @LastEditTime: 2024-12-27 20:41:25
  */
+import 'package:arm_chair_quaterback/common/entities/nab_player_season_game_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_banner.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/palyer_stats_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/receive_prop_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/review_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/stats_rank/nba_player_stat.dart';
@@ -71,11 +73,11 @@ class NewsApi {
     return NewsListDetail.fromJson(json);
   }
 
-  static Future<List<StarsTeamRank>> starTeamList(
-      {required String seasonId, required String seasonType}) async {
-    List list = await HttpUtil().post(Api.teamStatRank,
-        data: {"seasonId": seasonId, "seasonType": seasonType});
-    return list.map((e) => StarsTeamRank.fromJson(e)).toList();
+  static Future<List<StatsEntity>> statTeamList(
+      {required String seasonId}) async {
+    List list = await HttpUtil().post(Api.statTeamRank,
+        data: {"seasonId": seasonId});
+    return list.map((e) => StatsEntity.fromJson(e)).toList();
   }
 
   static Future<List<TeamRankEntity>> getTeamList(
@@ -86,7 +88,7 @@ class NewsApi {
     return list.map((e) => TeamRankEntity.fromJson(e)).toList();
   }
 
-  static Future<List<NbaPlayerStat>> startRank(
+  static Future<List<StatsEntity>> startRank(
       {required String season,
       required String statType,
       String seasonType = "Regular%20Season"}) async {
@@ -94,9 +96,10 @@ class NewsApi {
       "season": season,
       "statType": statType,
       "seasonType": seasonType,
+      "perMode": "PerGame"
     });
     return list
-        .map((e) => NbaPlayerStat.fromJson(e as Map<String, dynamic>))
+        .map((e) => StatsEntity.fromJson(e as Map<String, dynamic>))
         .toList();
   }
 
