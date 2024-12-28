@@ -3,6 +3,7 @@
 ///created at 2024/12/27/16:05
 import 'dart:io';
 import 'package:arm_chair_quaterback/common/utils/string_encryptor.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -17,12 +18,15 @@ class PlatformFileManager {
   // 检查并请求存储权限（仅 Android 需要）
   static Future<bool> requestPermission() async {
     if (Platform.isAndroid) {
-      String version = Platform.operatingSystemVersion;
-      var versionCode = int.tryParse(
-          version.split(" ")[0].replaceAll(RegExp(r'\D'), '') ?? '0');
+      // String version = Platform.operatingSystemVersion;
+      // var versionCode = int.tryParse(
+      //     version.split(" ")[0].replaceAll(RegExp(r'\D'), '') ?? '0');
+      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      //  var a= androidInfo.version.sdkInt;
       PermissionStatus status;
       // 如果设备的 Android 版本 >= 11（API 30），则请求 MANAGE_EXTERNAL_STORAGE 权限
-      if (versionCode != null && versionCode >= 30) {
+      if (androidInfo.version.sdkInt >= 30) {
         // 请求 MANAGE_EXTERNAL_STORAGE 权限
         status = await Permission.manageExternalStorage.request();
       } else {
@@ -37,8 +41,9 @@ class PlatformFileManager {
   // 获取文件存储路径
   static Future<String?> getStoragePath() async {
     if (Platform.isAndroid) {
-      var list = await getExternalStorageDirectories();
-      print('List--------:$list');
+      // var list = await getExternalStorageDirectories();
+      // Directory dir = list!.first;
+      // print('List--------:$list');
       Directory dir = Directory(
           '/storage/emulated/0/Android/media/com.ftxapp.arm_chair_quarterback/file');
       if (!await dir.exists()) await dir.create(recursive: true);

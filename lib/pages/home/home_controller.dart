@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-25 11:48:38
- * @LastEditTime: 2024-12-23 11:18:58
+ * @LastEditTime: 2024-12-28 14:38:55
  */
 /*
  * @Description: 
@@ -189,7 +189,7 @@ class HomeController extends GetxController {
     String accountName = StorageService.to.getString(Constant.deviceId);
     // accountName = await DeviceUtils.getDeviceId();
     if (ObjectUtil.isEmpty(accountName)) {
-      accountName = (await PlatformFileManager.readUuid())??"";
+      accountName = (await PlatformFileManager.readUuid()) ?? "";
       if (ObjectUtil.isEmpty(accountName)) {
         accountName = await DeviceUtils.getDeviceId();
       }

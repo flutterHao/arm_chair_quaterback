@@ -101,10 +101,29 @@ class BeautyAndBoxView extends StatelessWidget {
                               ),
                             ),
                             ...beautyCtrl.hearts,
+                            //全屏爱心点击
+                            // Positioned(
+                            //   top: 0,
+                            //   left: 0.w,
+                            //   right: 0.w,
+                            //   bottom: 0.w,
+                            //   // height:
+                            //   //     MediaQuery.of(context).size.height * 0.33,
+                            //   child: GestureDetector(
+                            //     onTapDown: (details) {
+                            //       beautyCtrl.addHeart(details.localPosition);
+                            //     },
+                            //     child: Container(
+                            //       width: 200.w,
+                            //       color: Colors.transparent,
+                            //     ),
+                            //   ),
+                            // ),
+                            //美女区域点击响应
                             Positioned(
                                 top: 0,
-                                left: 0.w,
-                                right: 0.w,
+                                // left: 0.w,
+                                // right: 0.w,
                                 bottom: 0.w,
                                 // height:
                                 //     MediaQuery.of(context).size.height * 0.33,
@@ -113,11 +132,16 @@ class BeautyAndBoxView extends StatelessWidget {
                                     double top =
                                         MediaQuery.of(context).size.height *
                                             0.33;
-                                    beautyCtrl.addHeart(details.localPosition);
+                                    double x = details.localPosition.dx +
+                                        (375.w - 200.w) / 2;
+                                    var offset =
+                                        Offset(x, details.localPosition.dy);
+                                    beautyCtrl.addHeart(offset);
                                     beautyCtrl.setAnimation(
                                         details.localPosition.dy > top ? 2 : 1);
                                   },
                                   child: Container(
+                                    width: 200.w,
                                     color: Colors.transparent,
                                   ),
                                 )),
