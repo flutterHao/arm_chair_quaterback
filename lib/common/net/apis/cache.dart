@@ -10,6 +10,7 @@ import 'package:arm_chair_quaterback/common/entities/grade_in_star_define_entity
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/news_source_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pick_type_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_status_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_award_entity.dart';
@@ -54,6 +55,7 @@ class CacheApi {
   static List<CupDefineEntity> cupDefineList = [];
   static List<DanMaKuEntity> danMaKuList = [];
   static Map<int, CardPackDefineEntity> cardPackDefineMap = {};
+  static List<NewsSourceEntity> newsSourceList = [];
 
   static Future<void> init() async {
     await Future.wait([
@@ -248,5 +250,15 @@ class CacheApi {
             CardPackDefineEntity.fromJson(item)
     };
     return cardPackDefineMap;
+  }
+
+  static Future<List<NewsSourceEntity>> getNewsSourceList() async {
+    if (newsSourceList.isNotEmpty) {
+      return newsSourceList;
+    }
+    List list = await HttpUtil().post(Api.cSourceTranslate);
+    newsSourceList =
+        list.map((item) => NewsSourceEntity.fromJson(item)).toList();
+    return newsSourceList;
   }
 }

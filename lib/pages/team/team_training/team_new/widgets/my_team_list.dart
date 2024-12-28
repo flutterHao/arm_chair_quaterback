@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 21:19:02
- * @LastEditTime: 2024-12-23 19:02:55
+ * @LastEditTime: 2024-12-28 19:52:53
  */
 /*
  * @Description: 
@@ -148,7 +148,7 @@ class SubPlayerList extends GetView<TeamController> {
               ),
               11.hGap,
               Text(
-                "UNLOCK AT OFFICE LEVEL 15",
+                "${controller.getLockCup()} Trophies Unlocked",
                 style: 21.w4(fontFamily: FontFamily.fOswaldMedium),
               )
             ],
@@ -161,7 +161,7 @@ class SubPlayerList extends GetView<TeamController> {
     var list = controller.myTeamEntity.teamPlayers
         .where((e) => e.position == 0)
         .toList();
-    list.sort(controller.comparePlayers);
+    // list.sort(controller.comparePlayers);
     return SizedBox(
       // width: 360.w,
       child: Column(
@@ -183,9 +183,7 @@ class SubPlayerList extends GetView<TeamController> {
               color: AppColors.cE6E6E,
               margin: EdgeInsets.symmetric(horizontal: 16.w),
             ),
-            itemCount: controller.myTeamEntity.benchCount < 7
-                ? controller.myTeamEntity.benchCount + 1
-                : 7,
+            itemCount: controller.myTeamEntity.benchCount + 1,
           ),
         ],
       ),

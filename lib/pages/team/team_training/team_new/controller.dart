@@ -10,6 +10,7 @@ import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/top_toast_dialog.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/dialog/power_change_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/dialog/recover_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/widgets/line_up_tab.dart';
@@ -131,6 +132,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
       CacheApi.getPlayerStatusConfig(),
       CacheApi.getStarUpDefine(),
       CacheApi.getGradeInStamina(),
+      CacheApi.getCupDefine(),
     ]).then((v) {
       myTeamEntity = v[0] as MyTeamEntity;
       myBagList = v[1] as List<TeamPlayerInfoEntity>;
@@ -172,11 +174,6 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
             myTeamEntity.teamPlayers[index].power = e.power;
           }
           HomeController.to.updateMoney(-cost);
-
-          //更新训练信息
-          TrainingController ctrl = Get.find();
-          ctrl.trainingInfo = await TeamApi.getTrainingInfo();
-          ctrl.update(["training_page"]);
         }
 
         //  myTeamEntity=await TeamApi.getMyTeamPlayer(teamId)
@@ -184,6 +181,11 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
       myTeamEntity.powerP = v.powerP;
       myTeamEntity.powerReplyTime = v.powerReplyTime;
       update();
+
+      //更新训练信息
+      TrainingController ctrl = Get.find();
+      ctrl.trainingInfo = await TeamApi.getTrainingInfo();
+      ctrl.update(["training_page"]);
     });
   }
 
@@ -202,7 +204,8 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
 
   Future showChangeDialog(TeamPlayerInfoEntity? item) async {
     if (!isShowDialog.value) {
-      // animationCtrl.reset();
+      animationCtrl.reset();
+      animationCtrl.forward();
       isShowDialog.value = true;
       MyTeamEntity? result = await showDialog(
           barrierDismissible: false,
@@ -228,8 +231,8 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
         oVROld = myTeamEntity.oVR;
       }
 
-      animationCtrl.reset();
-      animationCtrl.forward();
+      // animationCtrl.reset();
+      // animationCtrl.forward();
     }
   }
 
@@ -275,6 +278,9 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   Future changeTeamPlayer(BuildContext context, {bool isDown = false}) async {
     MyTeamEntity result = await TeamApi.changeTeamPlayer(
         isAdd ? null : item1.uuid, isDown ? null : item2.uuid);
+    if (tabController.index == 1) {
+      tabController.animateTo(0);
+    }
     myBagList = await TeamApi.getMyBagPlayers();
     myBagList.sort(comparePlayers);
     // if (isDown || isAdd) {
@@ -478,5 +484,19 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
         builder: (context) {
           return const RecoverDialog();
         });
+  }
+
+  int getLockCup() {
+    int current = Get.find<TeamIndexController>().cup.value;
+    int cup = 0;
+    for (int i = 0; i < CacheApi.cupDefineList.length; i++) {
+      List<double> cupNum = CacheApi.cupDefineList[i].cupNum;
+      double begin = cupNum.first;
+      double end = cupNum.last;
+      if (end > current && current >= begin) {
+        return end.ceil();
+      }
+    }
+    return cup.ceil();
   }
 }

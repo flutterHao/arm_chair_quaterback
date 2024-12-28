@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2024-12-23 18:59:27
+ * @LastEditTime: 2024-12-28 16:05:04
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -78,6 +78,7 @@ class PlayerItem extends GetView<TeamController> {
 
   ///球员操作
   Widget _playerInfo() {
+    var showArrow = item.position >= 0 && !controller.isShowDialog.value;
     NbaPlayerInfosPlayerBaseInfoList palyer =
         Utils.getPlayBaseInfo(item.playerId);
     return Expanded(
@@ -183,8 +184,11 @@ class PlayerItem extends GetView<TeamController> {
               ),
               4.hGap,
               MtInkwell(
+                showScale: showArrow,
+                // minScale: showArrow ? 0.9 : 1,
                 onTap: () {
                   // controller.recoverPower(type: 1, uuid: item.uuid);
+                  if (!showArrow) return;
                   controller.recove();
                 },
                 child: Container(
@@ -218,12 +222,13 @@ class PlayerItem extends GetView<TeamController> {
                             height: 1,
                             fontFamily: FontFamily.fOswaldMedium),
                       ),
-                      7.hGap,
-                      IconWidget(
-                        icon: Assets.commonUiCommonIconSystemJumpto,
-                        iconWidth: 5.w,
-                        iconColor: AppColors.c000000,
-                      ),
+                      if (showArrow) 7.hGap,
+                      if (showArrow)
+                        IconWidget(
+                          icon: Assets.commonUiCommonIconSystemJumpto,
+                          iconWidth: 5.w,
+                          iconColor: AppColors.c000000,
+                        ),
                     ],
                   ),
                 ),

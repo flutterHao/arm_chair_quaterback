@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-06 10:37:49
- * @LastEditTime: 2024-12-19 12:05:48
+ * @LastEditTime: 2024-12-28 16:24:51
  */
 import 'dart:math';
 
@@ -185,14 +185,21 @@ class _LineUp extends GetView<TeamController> {
   @override
   Widget build(BuildContext context) {
     // String p = Utils.getPosition(item.position);
+    TeamPlayerInfoEntity? samePlayer;
+    if (item.position < 0) {
+      samePlayer = controller.myTeamEntity.teamPlayers
+          .firstWhereOrNull((e) => e.playerId == item.playerId);
+    }
     var list = controller.myTeamEntity.teamPlayers
         .where((e) => e.position > 0)
-        .toList();
-    list = list
-        .where((e) => Utils.getPlayBaseInfo(item.playerId)
-            .position
-            .contains(Utils.getPosition(e.position)))
-        .toList();
+        .where((e) {
+      if (samePlayer != null && e.playerId != samePlayer!.playerId) {
+        return false;
+      }
+      return Utils.getPlayBaseInfo(item.playerId)
+          .position
+          .contains(Utils.getPosition(e.position));
+    }).toList();
     list.sort((a, b) => a.position.compareTo(b.position));
     if (list.isEmpty) {
       return Container();
@@ -242,19 +249,27 @@ class _Substitute extends GetView<TeamController> {
 
   @override
   Widget build(BuildContext context) {
+    TeamPlayerInfoEntity? samePlayer;
     String p = item.position > 0
         ? Utils.getPosition(item.position)
         : Utils.getPlayBaseInfo(item.playerId).position;
     var subList = controller.myTeamEntity.teamPlayers
         .where((e) => e.position == 0)
         .toList();
-    var list = subList;
+
     if (item.position > 0) {
-      list = list
+      subList = subList
           .where((e) => Utils.getPlayBaseInfo(e.playerId).position.contains(p))
           .toList();
+    } else {
+      samePlayer = controller.myTeamEntity.teamPlayers
+          .firstWhereOrNull((e) => e.playerId == item.playerId);
+      if (samePlayer != null) {
+        subList =
+            subList.where((e) => e.playerId == samePlayer!.playerId).toList();
+      }
     }
-    if (list.isEmpty && item.position > 0) {
+    if (subList.isEmpty && item.position > 0) {
       return Container();
     }
     return Column(
@@ -283,10 +298,10 @@ class _Substitute extends GetView<TeamController> {
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   if (subList.length >= controller.myTeamEntity.benchCount) {
-                    return PlayerItem(item: list[index]);
+                    return PlayerItem(item: subList[index]);
                   }
-                  return index < list.length
-                      ? PlayerItem(item: list[index])
+                  return index < subList.length
+                      ? PlayerItem(item: subList[index])
                       : InkWell(
                           onTap: () {
                             controller.isAdd = true;
@@ -300,16 +315,18 @@ class _Substitute extends GetView<TeamController> {
                   color: AppColors.cE6E6E,
                   margin: EdgeInsets.symmetric(horizontal: 16.w),
                 ),
-                itemCount: subList.length < controller.myTeamEntity.benchCount
-                    ? list.length + 1
-                    : list.length,
+                itemCount:
+                    subList.length < controller.myTeamEntity.benchCount &&
+                            samePlayer == null
+                        ? subList.length + 1
+                        : subList.length,
               )
             : ListView.separated(
                 padding: EdgeInsets.symmetric(vertical: 10.w),
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  return PlayerItem(item: list[index]);
+                  return PlayerItem(item: subList[index]);
                 },
                 separatorBuilder: (context, index) => Container(
                   width: double.infinity,
@@ -317,7 +334,7 @@ class _Substitute extends GetView<TeamController> {
                   color: AppColors.cE6E6E,
                   margin: EdgeInsets.symmetric(horizontal: 16.w),
                 ),
-                itemCount: list.length,
+                itemCount: subList.length,
               ),
       ],
     );

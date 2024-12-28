@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-25 15:56:43
- * @LastEditTime: 2024-12-25 10:44:07
+ * @LastEditTime: 2024-12-28 16:04:02
  */
 
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -233,6 +233,8 @@ class TrainingWidget extends GetView<TrainingController> {
                                 Obx(() {
                                   return MtInkwell(
                                     // vibrate: true,
+                                    minScale: 0.9,
+                                    showScale: !controller.isPlaying.value,
                                     onTap: controller.isPlaying.value
                                         ? null
                                         : () async {

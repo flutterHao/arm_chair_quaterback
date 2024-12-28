@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-21 20:20:49
- * @LastEditTime: 2024-12-18 12:21:37
+ * @LastEditTime: 2024-12-28 19:57:47
  */
 import 'dart:async';
 import 'dart:io';
@@ -368,5 +368,15 @@ class Utils {
     String date =
         DateUtil.formatDate(DateTime.now(), format: DateFormats.y_mo_d);
     return StorageService.to.getBool("${type}noTip$date");
+  }
+
+  static String numberWithThousandths(int number) {
+    String numberStr = number.toString();
+    int length = numberStr.length;
+
+    if (length <= 3) return numberStr;
+
+    // 每次递归处理最后的三位
+    return '${numberWithThousandths(int.parse(numberStr.substring(0, length - 3)))},${numberStr.substring(length - 3)}';
   }
 }

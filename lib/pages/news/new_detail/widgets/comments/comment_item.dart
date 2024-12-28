@@ -100,7 +100,7 @@ class CommentItemView extends StatelessWidget {
                         //     BoxConstraints(maxWidth: 120.w, minWidth: 70.w),
                         margin: EdgeInsets.only(left: 6.w),
                         child: Text(
-                          " ${controller.getTeamName(item)}",
+                          " ${controller.getReplayTeamName(item)}",
                           style: 12.w4(
                               color: AppColors.c4D4D4D,
                               height: 1,
@@ -285,7 +285,7 @@ class SubCommentItemView extends StatelessWidget {
                           BoxConstraints(maxWidth: 120.w, minWidth: 70.w),
                       margin: EdgeInsets.only(left: 6.w),
                       child: Text(
-                        " ${controller.getTeamName(item)}",
+                        " ${controller.getReplayTeamName(item)}",
                         style: 12.w4(color: AppColors.cB3B3B3),
                         overflow: TextOverflow.ellipsis,
                       ),

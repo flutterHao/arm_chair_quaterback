@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-11 16:57:58
- * @LastEditTime: 2024-12-11 15:49:27
+ * @LastEditTime: 2024-12-28 19:27:34
  */
 
 import 'package:arm_chair_quaterback/common/entities/news_list/news_detail/reviews.dart';
@@ -190,15 +190,15 @@ class CommentController extends GetxController {
   //   });
   // }
 
-  String getTeamName(ReviewEntity item) {
-    for (var e in mainList) {
-      if (e.id == item.targetId) {
-        if (e.parentReviewId != 0) {
-          return "@${e.teamName}";
+  String getReplayTeamName(ReviewEntity item) {
+    for (var main in mainList) {
+      if (main.id == item.targetId) {
+        if (main.parentReviewId != 0) {
+          return "@${main.teamName}";
         }
       }
 
-      for (var e in e.subList) {
+      for (var e in main.subList) {
         if (e.id == item.targetId) {
           return "@${e.teamName}";
         }

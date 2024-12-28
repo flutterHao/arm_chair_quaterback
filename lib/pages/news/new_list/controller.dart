@@ -2,13 +2,16 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:22:13
- * @LastEditTime: 2024-12-12 10:45:09
+ * @LastEditTime: 2024-12-28 18:23:32
  */
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/news_source_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
+import 'package:arm_chair_quaterback/common/store/config.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comment_controller.dart';
 import 'package:flutter/material.dart';
@@ -36,8 +39,8 @@ class NewListController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    CacheApi.getNewsSourceList();
     getNewsFlow(isRefresh: true);
-    // refreshData();
     scrollController.addListener(() {
       if (scrollController.position.maxScrollExtent -
               scrollController.position.pixels <=
@@ -139,5 +142,15 @@ class NewListController extends GetxController {
 
       // update();
     });
+  }
+
+  String getNewsSourceImage(String source) {
+    String url = ConfigStore.to.getServiceUrl();
+    for (var element in CacheApi.newsSourceList) {
+      if (element.sourceEnName == source) {
+        return "$url/image/icon/${element.sourceIcon}.png";
+      }
+    }
+    return "";
   }
 }

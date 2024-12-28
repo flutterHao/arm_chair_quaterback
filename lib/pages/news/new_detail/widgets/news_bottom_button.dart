@@ -2,7 +2,7 @@
  * @Description: 新闻的底部按钮点赞分享评论
  * @Author: lihonghao
  * @Date: 2024-10-17 17:02:35
- * @LastEditTime: 2024-12-16 21:55:13
+ * @LastEditTime: 2024-12-28 18:53:26
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -144,7 +144,7 @@ class NewsBottomButton extends GetView<NewListController> {
               //     .where((e) => e.id == detail.id)
               //     .first;
 
-              detail.reviewsCount.value = ctrl.mainList.length;
+              // detail.reviewsCount.value = ctrl.mainList.length;
               detail.reviewsList = ctrl.mainList.value;
               ctrl.update();
               controller.update(["newsList"]);

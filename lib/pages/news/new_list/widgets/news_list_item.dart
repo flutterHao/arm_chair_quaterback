@@ -14,13 +14,14 @@ import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comm
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/comments_dialog.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/emoji_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/news_bottom_button.dart';
+import 'package:arm_chair_quaterback/pages/news/new_list/controller.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 
-class NewsListItem extends StatelessWidget {
+class NewsListItem extends GetView<NewListController> {
   const NewsListItem(
       {super.key, required this.newsDetail, this.showMoreNew = false});
   final NewsListDetail newsDetail;
@@ -44,7 +45,7 @@ class NewsListItem extends StatelessWidget {
     return Row(
       children: [
         ImageWidget(
-          url: newsDetail.imgUrl,
+          url: controller.getNewsSourceImage(newsDetail.source),
           width: 32.w,
           height: 32.w,
           fit: BoxFit.cover,

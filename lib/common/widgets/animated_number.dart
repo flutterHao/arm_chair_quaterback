@@ -171,7 +171,7 @@ class AnimState extends State<AnimatedNum> with SingleTickerProviderStateMixin {
         } else {
           numWidget = widget.withConma
               ? Text(
-                  _formatNumber(animation.value),
+                  Utils.numberWithThousandths(animation.value),
                   style: widget.textStyle,
                 )
               : Text(
@@ -189,14 +189,4 @@ class AnimState extends State<AnimatedNum> with SingleTickerProviderStateMixin {
     controller.dispose();
     super.dispose();
   }
-}
-
-String _formatNumber(int number) {
-  String numberStr = number.toString();
-  int length = numberStr.length;
-
-  if (length <= 3) return numberStr;
-
-  // 每次递归处理最后的三位
-  return '${_formatNumber(int.parse(numberStr.substring(0, length - 3)))},${numberStr.substring(length - 3)}';
 }

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-14 11:11:48
- * @LastEditTime: 2024-12-24 17:51:12
+ * @LastEditTime: 2024-12-28 18:21:40
  */
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
@@ -153,7 +153,7 @@ class NewsDetailItem extends GetView<NewListController> {
     return Row(
       children: [
         ImageWidget(
-          url: item.imgUrl,
+          url: controller.getNewsSourceImage(item.source),
           width: 32.w,
           height: 32.w,
           fit: BoxFit.cover,

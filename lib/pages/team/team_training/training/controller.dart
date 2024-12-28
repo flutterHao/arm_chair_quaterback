@@ -433,6 +433,7 @@ class TrainingController extends GetxController
   }
 
   void chooseTactic(BuildContext context) async {
+    canChoose = false;
     if (selectTacticId == 0) return;
     if (trainingInfo.buff.length == 5) {
       ///如果卡槽有这个直接添加

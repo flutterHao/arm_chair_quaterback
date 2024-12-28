@@ -28,6 +28,7 @@ class MtInkwell extends StatefulWidget {
     this.scaleX = false,
     this.scaleY = false,
     this.vibrate = false,
+    this.showScale = true,
   });
 
   final Widget child;
@@ -48,6 +49,7 @@ class MtInkwell extends StatefulWidget {
   final bool scaleY;
 
   final bool vibrate;
+  final bool showScale;
 
   @override
   State<MtInkwell> createState() => _MtInkwellState();
@@ -117,7 +119,9 @@ class _MtInkwellState extends State<MtInkwell>
               widget.onTap?.call();
               return;
             }
-            easyAnimationController.forward();
+            if (widget.showScale) {
+              easyAnimationController.forward();
+            }
           },
           child: Obx(() {
             var scale = easyAnimationController.value.value;
