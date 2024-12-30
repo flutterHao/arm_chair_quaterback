@@ -168,6 +168,7 @@ class TeamRankEntity {
   late String hOME = '';
   late String shortEname;
   late int force = 0;
+  late int teamDivision = 1;
 
   TeamRankEntity();
 

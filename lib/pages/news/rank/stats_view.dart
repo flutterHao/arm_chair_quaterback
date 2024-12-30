@@ -194,8 +194,9 @@ class StatsPlayerRankCard extends GetView<RankController> {
                             10.5.hGap,
                             Text(
                               Utils.getTeamInfo(player.teamId).shortEname,
-                              style: 14.w4(
+                              style: 12.w4(
                                 fontFamily: FontFamily.fRobotoRegular,
+                                color: AppColors.c4D4D4D,
                                 height: 0.8,
                               ),
                             )
@@ -219,7 +220,7 @@ class StatsPlayerRankCard extends GetView<RankController> {
                               style: 10.w4(
                                   fontFamily: FontFamily.fRobotoRegular,
                                   height: 0.8,
-                                  color: AppColors.c4D4D4D),
+                                  color: AppColors.c000000),
                             )
                           ],
                         )
@@ -335,7 +336,7 @@ class StatsTeamRankCard extends GetView<RankController> {
                               style: 10.w4(
                                   fontFamily: FontFamily.fRobotoRegular,
                                   height: 0.8,
-                                  color: AppColors.c4D4D4D),
+                                  color: AppColors.c000000),
                             )
                           ],
                         )

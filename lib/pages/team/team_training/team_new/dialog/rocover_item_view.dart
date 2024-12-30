@@ -183,6 +183,7 @@ class RecoverItem extends GetView<TeamController> {
                       width: 73.w,
                       height: 93.w,
                       isMyPlayer: true,
+                      player: item,
                       grade: Utils.formatGrade(
                           Utils.getPlayBaseInfo(item.playerId).grade),
                       level: item.breakThroughGrade,

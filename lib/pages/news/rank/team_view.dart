@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-14 16:54:10
- * @LastEditTime: 2024-12-27 10:03:01
+ * @LastEditTime: 2024-12-30 18:57:51
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -32,11 +32,15 @@ class TeamRankPage extends GetView<RankController> {
               child: Column(
                 children: [
                   if (controller.teamTypeIndex.value == 0) RankList(type: 0),
-                  if (controller.teamTypeIndex.value == 1) ...[
-                    RankList(type: 1),
-                    9.vGap,
-                    RankList(type: 2),
-                  ]
+                  if (controller.teamTypeIndex.value == 1)
+                    ...List.generate(6, (i) {
+                      return Column(
+                        children: [
+                          RankList(type: i + 1),
+                          9.vGap,
+                        ],
+                      );
+                    })
                 ],
               ),
             ),
@@ -53,22 +57,21 @@ class RankList extends GetView<RankController> {
   Widget build(BuildContext context) {
     var list = controller.teamRankList;
     if (type != 0) {
-      list = list.where((e) => e.force == type).toList();
+      list = list.where((e) => e.teamDivision == type).toList();
     }
-    String area = "";
-    if (type == 1) {
-      area = "WESTERN";
-    }
-    if (type == 2) {
-      area = "EASTERN";
-    }
-    List<String> colomns = ["$area CONFERENCE", "W-L", "GB"];
+    String area = controller.getTypeName(type);
+
+    List<String> colomns = [
+      type == 0 ? "LEAGUE" : "$area Division",
+      "W-L",
+      "GB"
+    ];
     List<double> colomnsWidth = [150.w, 35.w, 30.w];
 
     return Container(
       padding: EdgeInsets.symmetric(vertical: 20.w),
       width: double.infinity,
-      constraints: BoxConstraints(minHeight: 400.h),
+      constraints: BoxConstraints(minHeight: 300.h),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12.w),

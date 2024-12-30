@@ -137,15 +137,23 @@ class NBARankPage extends GetView<RankController> {
                                             });
                                       },
                                       child: Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 18.w),
-                                        child: IconWidget(
-                                          iconWidth: 11.5.w,
-                                          icon: Assets.iconUiIconArrows04,
-                                          iconColor:
-                                              controller.tabIndex.value == 0
-                                                  ? AppColors.c000000
-                                                  : AppColors.cB3B3B3,
+                                        alignment: Alignment.centerRight,
+                                        padding: EdgeInsets.only(left: 150.w),
+                                        width: controller.tabIndex.value == 1
+                                            ? 20.5.w
+                                            : 375.w * 0.5,
+                                        height: 43.w,
+                                        // color: Colors.red,
+                                        child: Align(
+                                          alignment: Alignment.centerRight,
+                                          child: IconWidget(
+                                            iconWidth: 11.5.w,
+                                            icon: Assets.iconUiIconArrows04,
+                                            iconColor:
+                                                controller.tabIndex.value == 0
+                                                    ? AppColors.c000000
+                                                    : AppColors.cB3B3B3,
+                                          ),
                                         ),
                                       ),
                                     );

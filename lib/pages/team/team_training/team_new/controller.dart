@@ -289,53 +289,29 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
     //   changeDuration = 300;
     // }
     await animationCtrl.reverse();
-    // for (var e in myBagList) {
-    //   if (isDown && e.uuid == item1.uuid) {
-    //     changeDuration = 0;
-    //     e.position = -1;
-    //     break;
-    //   } else if (isAdd && e.uuid == item2.uuid) {
-    //     changeDuration = 0;
-    //     e.position = 0;
-    //     break;
-    //   } else {
-    //     changeDuration = 300;
 
-    //     int index1 = myBagList.indexWhere((e) => e.uuid == item1.uuid);
-    //     int index2 = myBagList.indexWhere((e) => e.uuid == item2.uuid);
-
-    //     if (index1 != -1 && index2 != -1) {
-    //       int tempPosition = myBagList[index1].position;
-    //       myBagList[index1].position = myBagList[index2].position;
-    //       myBagList[index2].position = tempPosition;
-    //     }
-    //     break;
-    //   }
-    // }
-    // var sub=result.teamPlayers.where((e)=>e.position==0).toList();
     myTeamEntity = result;
     if (isDown) {
-      subList.removeWhere((element) => element.playerId == item1.playerId);
+      subList.removeWhere((element) => element.uuid == item1.uuid);
     } else if (isAdd) {
       for (var e in result.teamPlayers) {
-        if (e.position == 0 && !subList.contains(e)) {
+        if (e.position == 0 && subList.where((s) => s.uuid == e.uuid).isEmpty) {
           subList.add(e);
-          break;
         }
       }
     } else {
       List<TeamPlayerInfoEntity> sub = List.from(subList);
       for (var e in result.teamPlayers) {
-        if (e.position == 0 &&
-            sub.where((m) => m.playerId == e.playerId).isEmpty) {
+        if (e.position == 0 && sub.where((m) => m.uuid == e.uuid).isEmpty) {
           ///如果sublit中没有这个元素,将teamPlayers中不包含sublit中的项替换
           for (var element in sub) {
             if (result.teamPlayers
-                .where((a) => a.playerId == element.playerId)
+                .where((a) =>
+                    a.uuid == element.uuid && a.position == element.position)
                 .isEmpty) {
               // element = e;
-              subList[subList
-                  .indexWhere((n) => n.playerId == element.playerId)] = e;
+              int index = subList.indexWhere((n) => n.uuid == element.uuid);
+              subList[index] = e;
               break;
             }
           }
@@ -491,7 +467,9 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
       for (var element in CacheApi.gradeInStaminaList) {
         if (element.gradeDes == player.grade) {
           e.recoverCost = (player.salary * element.recoverStaminaValue).ceil();
-          total += e.recoverCost;
+          if (e.power < 100) {
+            total += e.recoverCost;
+          }
         }
       }
     }
@@ -522,8 +500,14 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
       List<double> cupNum = CacheApi.cupDefineList[i].cupNum;
       double begin = cupNum.first;
       double end = cupNum.last;
-      if (end > current && current >= begin) {
+      if (end > current && current > begin) {
         return end.ceil();
+      } else if (end == current) {
+        if (i + 1 < CacheApi.cupDefineList.length) {
+          return CacheApi.cupDefineList[i + 1].cupNum.last.ceil();
+        } else {
+          return end.ceil();
+        }
       }
     }
     return cup.ceil();

@@ -2,7 +2,7 @@
  * @Description: 我的球队的训练和比赛
  * @Author: lihonghao
  * @Date: 2024-09-27 19:21:36
- * @LastEditTime: 2024-12-26 15:54:28
+ * @LastEditTime: 2024-12-30 16:56:21
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -206,7 +206,7 @@ class TeamTabbar extends GetView<TeamController> {
                               const Expanded(child: SizedBox.shrink()),
 
                               SizedBox(
-                                height: 16.w,
+                                // height: 16.w,
                                 child: Row(
                                   children: [
                                     Row(

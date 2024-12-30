@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-12-25 10:06:10
+ * @LastEditTime: 2024-12-30 15:39:14
  */
 
 import 'dart:async';
@@ -17,6 +17,7 @@ import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/open_box/open_box_page.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/box_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
@@ -60,6 +61,7 @@ class TeamIndexController extends GetxController
   RxBool showBackground3 = false.obs;
   Duration showBgDuration = const Duration(milliseconds: 200);
   RxBool showChangeText = false.obs;
+  bool isOpen = false;
   @override
   void onInit() {
     super.onInit();
@@ -152,9 +154,12 @@ class TeamIndexController extends GetxController
   }
 
   ///开启战斗宝箱
-  void openBattleBox(int index, int playerId) async {
+  void openBattleBox(int index, PlayerCardEntity card) async {
     // return;
-    awardList = await TeamApi.opneBattleBox(index, playerId);
+    if (isOpen) return;
+    isOpen = true;
+    awardList = await TeamApi.opneBattleBox(index, card.playerId);
+    showBigCard(card);
     getBattleBox();
     // showBoxDialog();
   }
@@ -164,8 +169,23 @@ class TeamIndexController extends GetxController
     bool result = HomeController.to.updateChips(-cost);
     if (!result) return;
     await TeamApi.speedOpneBattleBox(index);
+    await toOpenBoxPage(cardPackInfo.card[index]);
     // showBoxDialog();
     getBattleBox();
+  }
+
+  Future toOpenBoxPage(CardPackInfoCard item) async {
+    isOpen = false;
+    step = 0;
+    for (var e in item.playerCards) {
+      e.isOpen.value = false;
+      e.isSelect.value = false;
+    }
+    await Get.to(
+        opaque: false,
+        () => OpenBoxPage(item: item),
+        duration: 300.milliseconds,
+        transition: Transition.fadeIn);
   }
 
   ///开启免费宝箱

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-16 17:24:51
- * @LastEditTime: 2024-12-26 21:43:20
+ * @LastEditTime: 2024-12-30 15:57:51
  */
 import 'dart:ui';
 
@@ -61,8 +61,8 @@ class BeautyController extends GetxController {
   }
 
   void setAnimation(int position) {
-    // if (!compeleted) return;
-    // compeleted = false;
+    if (!compeleted) return;
+    compeleted = false;
     var type = position == 2 ? "click1" : "click2";
     spineWidgetController.animationState
         .setAnimationByName(0, type, false)
@@ -70,7 +70,7 @@ class BeautyController extends GetxController {
       if (type == EventType.complete) {
         spineWidgetController.animationState
             .setAnimationByName(0, "stand", true);
-        // compeleted = true;
+        compeleted = true;
       }
     });
   }

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-17 18:13:43
- * @LastEditTime: 2024-12-20 18:41:54
+ * @LastEditTime: 2024-12-30 15:45:23
  */
 import 'dart:math';
 
@@ -144,10 +144,9 @@ class OpenBoxPage extends GetView<TeamIndexController> {
                   controller.shakeController.forward();
                   controller.update(["open_box_page"]);
                   await Future.delayed(const Duration(milliseconds: 500));
-                  await controller.showBigCard(player);
+
                   controller.openBattleBox(
-                      controller.cardPackInfo.card.indexOf(item),
-                      player.playerId);
+                      controller.cardPackInfo.card.indexOf(item), player);
                 } else {
                   controller.step = 1;
                 }
@@ -227,7 +226,7 @@ class OpenBoxPage extends GetView<TeamIndexController> {
                   isFlipped: e.isOpen.value,
                   player: e,
                   onFlip: () async {
-                    if (controller.step >= 3) return;
+                    if (controller.step >= 3 || controller.isOpen) return;
                     if (!e.isSelect.value) {
                       //如果还没有选择先选牌
                       for (var element in item.playerCards) {
@@ -242,8 +241,7 @@ class OpenBoxPage extends GetView<TeamIndexController> {
                       controller.update(["open_box_page"]);
                     } else {
                       controller.openBattleBox(
-                          controller.cardPackInfo.card.indexOf(item),
-                          e.playerId);
+                          controller.cardPackInfo.card.indexOf(item), e);
                       controller.showBigCard(e);
                     }
                   },

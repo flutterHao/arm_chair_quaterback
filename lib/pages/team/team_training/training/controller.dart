@@ -462,7 +462,9 @@ class TrainingController extends GetxController
               context: context,
               builder: (context) {
                 return TrainingAwardDialog(buff);
-              });
+              }).then((v) {
+            chooseFinish();
+          });
         }
 
         return;
@@ -479,7 +481,7 @@ class TrainingController extends GetxController
             if (selectTacticId == tacticChooseList[j].id) {
               trainingInfo.buff[i] = tacticChooseList[j];
               double x = 10.w + 143.5.w + i * 43.w;
-              double y = 45.w + 4.w + 59.5.w;
+              double y = 45.w + 8.w + 59.5.w;
               tacticChooseList[j].offset.value = Offset(x, y);
               type = 0;
               Future.delayed(const Duration(milliseconds: 300), () async {
@@ -498,7 +500,7 @@ class TrainingController extends GetxController
           // trainingInfo.buff.add(chooseTacticList[i]);
           //  type = 0;
           double x = 10.w + 143.5.w + (trainingInfo.buff.length) * 43.w;
-          tacticChooseList[i].offset.value = Offset(x, 45.w + 4.w + 59.5.w);
+          tacticChooseList[i].offset.value = Offset(x, 45.w + 8.w + 59.5.w);
         }
       }
     }
@@ -770,11 +772,9 @@ class TrainingController extends GetxController
     }
 
     //暂时不知道重置到开始位置的原因，先重新变更成中奖位置
-    if (scrollerCtrlList.where((e) => e.offset == 0.0).length == 6) {
-      if (offsetList.isNotEmpty) {
-        for (int i = 0; i < scrollerCtrlList.length; i++) {
-          scrollerCtrlList[i].jumpTo(offsetList[i]);
-        }
+    if (offsetList.isNotEmpty) {
+      for (int i = 0; i < scrollerCtrlList.length; i++) {
+        scrollerCtrlList[i].jumpTo(offsetList[i]);
       }
     }
 

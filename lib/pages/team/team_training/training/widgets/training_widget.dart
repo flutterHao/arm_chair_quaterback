@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-25 15:56:43
- * @LastEditTime: 2024-12-28 16:04:02
+ * @LastEditTime: 2024-12-30 16:12:08
  */
 
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -45,7 +45,7 @@ class TrainingWidget extends GetView<TrainingController> {
   @override
   Widget build(BuildContext context) {
     // controller.startScroller();
-    // controller.showAward();
+    controller.showAward();
     return GetBuilder<TrainingController>(
         id: "training_page",
         builder: (controller) {
@@ -162,7 +162,7 @@ class TrainingWidget extends GetView<TrainingController> {
                                                       int v = controller
                                                           .ballNum.value;
                                                       return AnimatedNum(
-                                                        milliseconds: 150,
+                                                        milliseconds: 100,
                                                         number: v,
                                                         textStyle: 16.w4(
                                                             fontFamily:
@@ -234,7 +234,7 @@ class TrainingWidget extends GetView<TrainingController> {
                                   return MtInkwell(
                                     // vibrate: true,
                                     minScale: 0.9,
-                                    showScale: !controller.isPlaying.value,
+                                    // showScale: !controller.isPlaying.value,
                                     onTap: controller.isPlaying.value
                                         ? null
                                         : () async {

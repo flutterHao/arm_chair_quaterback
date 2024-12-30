@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-29 16:06:50
- * @LastEditTime: 2024-12-25 09:39:40
+ * @LastEditTime: 2024-12-30 17:16:26
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -25,7 +25,6 @@ class RecoverDialog extends GetView<TeamController> {
 
   @override
   Widget build(BuildContext context) {
-    int cost = controller.getRecoverCost();
     return GetBuilder<TeamController>(builder: (_) {
       var mainList = controller.myTeamEntity.teamPlayers
           .where((e) => e.position > 0)
@@ -33,6 +32,8 @@ class RecoverDialog extends GetView<TeamController> {
       var sublist = controller.myTeamEntity.teamPlayers
           .where((e) => e.position == 0)
           .toList();
+      int cost = controller.getRecoverCost();
+
       return VerticalDragBackWidget(
         child: Container(
           height: 700.h,
@@ -52,6 +53,7 @@ class RecoverDialog extends GetView<TeamController> {
               ),
               Expanded(
                 child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
                   child: Column(
                     children: [
                       Container(
@@ -203,10 +205,11 @@ class RecoverButtom extends StatelessWidget {
             children: [
               IconWidget(iconWidth: 16.w, icon: Assets.commonUiCommonProp05),
               2.5.hGap,
-              Text(
-                Utils.formatMoney(money),
-                style: 12.w4(fontFamily: FontFamily.fOswaldRegular),
-              )
+              AnimatedNum(
+                number: money,
+                isMoney: true,
+                textStyle: 12.w4(fontFamily: FontFamily.fOswaldRegular),
+              ),
             ],
           ),
           5.5.vGap,

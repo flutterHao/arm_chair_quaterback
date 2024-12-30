@@ -11,6 +11,7 @@ class NbaTeamEntity {
   late String name = "";
   late String shortEname = "";
   late String shortName = "";
+  late int teamDivision = 0;
 
   NbaTeamEntity();
 

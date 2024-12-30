@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-25 11:48:38
- * @LastEditTime: 2024-12-28 20:49:45
+ * @LastEditTime: 2024-12-30 12:04:30
  */
 /*
  * @Description: 
@@ -208,14 +208,21 @@ class HomeController extends GetxController {
     return item;
   }
 
-  void updateMoney(int change) {
-    for (var element
-        in HomeController.to.userEntiry.teamLoginInfo!.teamPropList!) {
-      if (element.propId == 102) {
-        element.num = element.num! + change;
-      }
-    }
-    HomeController.to.update([GetXBuilderIds.idMoneyAndCoinWidget]);
+  updateTeamProp() async {
+    await UserApi.getTeamProp().then((v) {
+      HomeController.to.userEntiry.teamLoginInfo!.teamPropList = v;
+      HomeController.to.update([GetXBuilderIds.idMoneyAndCoinWidget]);
+    });
+  }
+
+  void updateMoney(int change) async {
+    // for (var element
+    //     in HomeController.to.userEntiry.teamLoginInfo!.teamPropList!) {
+    //   if (element.propId == 102) {
+    //     element.num = element.num! + change;
+    //   }
+    // }
+    updateTeamProp();
   }
 
   bool updateChips(int change) {
@@ -223,14 +230,14 @@ class HomeController extends GetxController {
         in HomeController.to.userEntiry.teamLoginInfo!.teamPropList!) {
       if (element.propId == 103) {
         if (change < 0 && element.num! < change.abs()) {
-          EasyLoading.showToast("Not enough chips");
+          EasyLoading.showToast("Not enough coins");
           return false;
         } else {
-          element.num = element.num! + change;
+          // element.num = element.num! + change;
+          updateTeamProp();
         }
       }
     }
-    HomeController.to.update([GetXBuilderIds.idMoneyAndCoinWidget]);
     return true;
   }
 }

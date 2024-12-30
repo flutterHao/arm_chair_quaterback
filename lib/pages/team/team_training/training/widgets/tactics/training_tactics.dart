@@ -287,65 +287,6 @@ class TacticList extends StatelessWidget {
                                             ),
 
                                             ///颜色动画
-                                            // AnimatedBuilder(
-                                            //     animation: ctrl
-                                            //         .tacticExpAnimated,
-                                            //     builder: (context,
-                                            //         child) {
-                                            //       return Transform
-                                            //           .scale(
-                                            //         scale: 2 -
-                                            //             ctrl.tacticExpAnimated
-                                            //                 .value,
-                                            //         child: Opacity(
-                                            //           opacity: ctrl
-                                            //               .tacticExpAnimated
-                                            //               .value,
-                                            //           child:
-                                            //               Visibility(
-                                            //             visible: TacticUtils
-                                            //                     .matchedIndices
-                                            //                     .contains(
-                                            //                         index) &&
-                                            //                 ctrl.showTacticColor
-                                            //                     .value,
-                                            //             child:
-                                            //                 Container(
-                                            //               width:
-                                            //                   36.w,
-                                            //               height:
-                                            //                   62.w,
-                                            //               decoration: BoxDecoration(
-                                            //                   color: AppColors.cFF7954.withOpacity(
-                                            //                       0.5),
-                                            //                   borderRadius:
-                                            //                       BorderRadius.circular(6.w)),
-                                            //             ),
-                                            //             // child:
-                                            //             //     Container(
-                                            //             //   width:
-                                            //             //       36.w,
-                                            //             //   height:
-                                            //             //       62.w,
-                                            //             //   decoration:
-                                            //             //       BoxDecoration(
-                                            //             //     border:
-                                            //             //         Border.all(
-                                            //             //       width:
-                                            //             //           2.w,
-                                            //             //       color: AppColors
-                                            //             //           .cFF7954
-                                            //             //           .withOpacity(0.6),
-                                            //             //     ),
-                                            //             //     borderRadius:
-                                            //             //         BorderRadius.circular(6.w),
-                                            //             //   ),
-                                            //             // ),
-                                            //           ),
-                                            //         ),
-                                            //       );
-                                            //     }),
-
                                             AnimatedBuilder(
                                                 animation: ctrl.tacticAnimCtrl,
                                                 builder: (context, child) {
@@ -375,21 +316,9 @@ class TacticList extends StatelessWidget {
                                                                     index) &&
                                                             ctrl.showTacticColor
                                                                 .value,
-                                                        // child:
-                                                        //     Container(
-                                                        //   width:
-                                                        //       36.w,
-                                                        //   height:
-                                                        //       62.w,
-                                                        //   decoration: BoxDecoration(
-                                                        //       color: AppColors.cFF7954.withOpacity(
-                                                        //           0.5),
-                                                        //       borderRadius:
-                                                        //           BorderRadius.circular(6.w)),
-                                                        // ),
                                                         child: Container(
                                                           width: 36.w,
-                                                          height: 62.w,
+                                                          height: 58.w,
                                                           decoration:
                                                               BoxDecoration(
                                                             border: Border.all(

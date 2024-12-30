@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2024-12-28 16:05:04
+ * @LastEditTime: 2024-12-30 16:51:48
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -207,22 +207,22 @@ class PlayerItem extends GetView<TeamController> {
                         icon: Assets.managerUiManagerIconRecover,
                         iconWidth: 12.5.w,
                       ),
-                      5.5.hGap,
+                      3.5.hGap,
                       AnimatedNum(
                         number: item.power * 100 ~/ 100,
-                        textStyle: 16.w7(
+                        textStyle: 16.w4(
                             color: AppColors.c000000,
                             height: 1,
                             fontFamily: FontFamily.fOswaldMedium),
                       ),
                       Text(
                         "%",
-                        style: 16.w7(
+                        style: 16.w4(
                             color: AppColors.c000000,
                             height: 1,
                             fontFamily: FontFamily.fOswaldMedium),
                       ),
-                      if (showArrow) 7.hGap,
+                      if (showArrow) 3.hGap,
                       if (showArrow)
                         IconWidget(
                           icon: Assets.commonUiCommonIconSystemJumpto,
@@ -248,6 +248,7 @@ class PlayerItem extends GetView<TeamController> {
         PlayerCard(
           backgroundColor: AppColors.cE1E1E1,
           playerId: item.playerId,
+          player: item,
           width: 73.w,
           height: 93.w,
           isMyPlayer: true,
@@ -332,14 +333,18 @@ class PlayerItem extends GetView<TeamController> {
                     // }
                     controller.playerChangeTap(context, isBag, item);
                   },
-                  child: IconWidget(
-                    iconWidth: 17.w,
-                    backgroudWitdh: 36.w,
-                    backgroudheight: 36.w,
-                    borderRadius: BorderRadius.circular(9.w),
-                    backgroudColor: AppColors.c000000,
-                    icon: Assets.iconUiIconSwitch02,
-                    iconColor: AppColors.cFFFFFF,
+                  child: Container(
+                    width: 59.w,
+                    height: 40.w,
+                    decoration: BoxDecoration(
+                        border: Border.all(color: AppColors.c666666),
+                        borderRadius: BorderRadius.circular(9.w)),
+                    child: IconWidget(
+                      iconWidth: 17.w,
+                      borderRadius: BorderRadius.circular(9.w),
+                      icon: Assets.iconUiIconSwitch02,
+                      iconColor: AppColors.c000000,
+                    ),
                   ),
                 ),
       ],
@@ -393,12 +398,11 @@ class PlayerItem extends GetView<TeamController> {
                     }
                   },
                   child: Container(
-                    width: 36.w,
-                    height: 36.w,
-                    alignment: Alignment.center,
+                    width: 59.w,
+                    height: 40.w,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(9.w),
-                        border: Border.all(color: AppColors.c666666, width: 1)),
+                        border: Border.all(color: AppColors.c666666),
+                        borderRadius: BorderRadius.circular(9.w)),
                     child: IconWidget(
                         iconWidth: 18.w,
                         icon: Assets.managerUiManagerLineupUnload),
@@ -423,12 +427,13 @@ class PlayerCard extends StatelessWidget {
     this.grade,
     required this.width,
     required this.height,
+    required this.playerId,
+    this.player,
     this.backgroundColor = AppColors.cD9D9D9,
     this.radius,
     this.fontSize = 14,
     this.fontColor = AppColors.c000000,
-    // this.showGrade = true,
-    this.playerId = 0,
+    // this.playerId = 0,
     this.getXRouteId,
     this.tabStr,
     this.level,
@@ -439,6 +444,7 @@ class PlayerCard extends StatelessWidget {
   final double width;
   final double height;
   final int playerId;
+  final TeamPlayerInfoEntity? player;
   final String? grade;
   final int? level;
   final Color? backgroundColor;
@@ -455,11 +461,12 @@ class PlayerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => canTap
-          ? Get.toNamed(RouteNames.picksPlayerDetail,
-              arguments: PlayerDetailPageArguments(playerId,
-                  isMyPlayer: isMyPlayer, tabStr: tabStr))
-          : null,
+      onTap: () {
+        if (canTap && player != null) {
+          Get.toNamed(RouteNames.teamTeamUpgrade,
+              arguments: {"player": player});
+        }
+      },
       child: Stack(
         children: [
           Container(

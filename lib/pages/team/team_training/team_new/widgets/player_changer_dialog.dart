@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-06 10:37:49
- * @LastEditTime: 2024-12-28 16:24:51
+ * @LastEditTime: 2024-12-30 14:17:55
  */
 import 'dart:math';
 
@@ -360,6 +360,12 @@ class _Stash extends GetView<TeamController> {
                   (e) => Utils.getPlayBaseInfo(e.playerId).position.contains(p))
               .toList();
         }
+      } else {
+        list = list
+            .where((e) => controller.myTeamEntity.teamPlayers
+                .where((a) => a.playerId == e.playerId)
+                .isEmpty)
+            .toList();
       }
 
       if (list.isEmpty) {

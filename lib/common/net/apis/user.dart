@@ -2,9 +2,10 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 16:52:11
- * @LastEditTime: 2024-11-07 15:55:31
+ * @LastEditTime: 2024-12-30 11:54:00
  */
 import 'package:arm_chair_quaterback/common/entities/user_entity/team_login_info.dart';
+import 'package:arm_chair_quaterback/common/entities/user_entity/team_prop_list.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entity/user_entiry.dart';
 import 'package:arm_chair_quaterback/common/net/index.dart';
 
@@ -41,5 +42,10 @@ class UserApi {
   static Future<UserEntity> updateTeamInfo() async {
     await HttpUtil().post(Api.updateTeamInfo);
     return await visitorLogin();
+  }
+
+  static Future<List<TeamPropList>> getTeamProp() async {
+    var list = await HttpUtil().post(Api.getTeamProp, data: {"propId": 0});
+    return list.map<TeamPropList>((e) => TeamPropList.fromJson(e)).toList();
   }
 }

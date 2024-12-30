@@ -167,17 +167,7 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
                       if (item.status == -1) {
                         controller.scroToMatch();
                       } else if (item.status == 2) {
-                        controller.step = 0;
-                        for (var e in item.playerCards) {
-                          e.isOpen.value = false;
-                          e.isSelect.value = false;
-                        }
-                        Get.to(
-                            opaque: false,
-                            () => OpenBoxPage(item: item),
-                            duration: 300.milliseconds,
-                            transition: Transition.fadeIn);
-                        // Get.toNamed(RouteNames.openBoxPage, arguments: item);
+                        controller.toOpenBoxPage(item);
                       } else {
                         showModalBottomSheet(
                             isScrollControlled: true,

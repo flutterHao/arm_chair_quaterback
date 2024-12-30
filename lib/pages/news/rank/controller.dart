@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:27:52
- * @LastEditTime: 2024-12-27 21:14:57
+ * @LastEditTime: 2024-12-30 18:55:58
  */
 import 'package:arm_chair_quaterback/common/entities/nab_player_season_game_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_stat_entity.dart';
@@ -11,6 +11,7 @@ import 'package:arm_chair_quaterback/common/entities/team_rank.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
+import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/widgets/team_list_view.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class RankController extends GetxController
   RxInt tabIndex = 0.obs;
   List<String> tabs = ["CONFERENCE", "PRESEAON"];
   var teamTypeIndex = 0.obs;
-  List<String> teamRankType = ["LEAGUE", "CONFERENCE"];
+  List<String> teamRankType = ["LEAGUE", "DIVISION"];
   List<String> tabs2 = ["Eastean", "Westen"];
 
   RxDouble progress = 0.0.obs;
@@ -52,7 +53,7 @@ class RankController extends GetxController
     },
     "FIELD GOAL": {
       "current": 0,
-      "list": ["FG%_FGM", "3P%_3PM", "FT%_FTM"]
+      "list": ["FGM_FG%", "3PM_3P%", "FTM_FT%"]
     },
     "AST": {
       "current": 0,
@@ -125,11 +126,14 @@ class RankController extends GetxController
       statTeamRankList = v[1] as List<StatsEntity>;
       teamRankList = v[2] as List<TeamRankEntity>;
       for (var element in teamRankList) {
-        element.force = CacheApi.teamDefineMap?[element.teamID]?.force ?? 0;
+        element.teamDivision =
+            CacheApi.teamDefineMap?[element.teamID]?.teamDivision ?? 0;
       }
       // onTypeChange();
 
       update(["teamRank", "starsRank"]);
+    }).catchError((e) {
+      Log.e(e.toString());
     });
   }
 
@@ -229,5 +233,24 @@ class RankController extends GetxController
 
   String getTeamRankTitle(int type) {
     return "$season NBA Conference Standings".toUpperCase();
+  }
+
+  String getTypeName(int type) {
+    switch (type) {
+      case 1:
+        return "Atlantic ";
+      case 2:
+        return "Central ";
+      case 3:
+        return "Southeast ";
+      case 4:
+        return "Northwest ";
+      case 5:
+        return "Pacific ";
+      case 6:
+        return "Southwest ";
+      default:
+        return "";
+    }
   }
 }

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-27 14:44:25
- * @LastEditTime: 2024-12-27 21:17:32
+ * @LastEditTime: 2024-12-30 15:48:36
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/nab_player_season_game_rank_entity.dart';
@@ -275,7 +275,9 @@ class _PlayerStatsDialogState extends State<PlayerStatsDialog>
                                             height: 1,
                                             color: AppColors.cE6E6E,
                                           ),
-                                      itemCount: list.length),
+                                      itemCount: list.length > 100
+                                          ? 100
+                                          : list.length),
                                 ),
                               ],
                             );
@@ -433,7 +435,7 @@ class TeamStatsDialog extends GetView<RankController> {
                                 child: Center(
                                   child: Text(
                                     controller
-                                        .getRankValue(type1, item)
+                                        .getRankValue(type2, item)
                                         .toString(),
                                     style: 12.w4(
                                         fontFamily: FontFamily.fRobotoRegular,
