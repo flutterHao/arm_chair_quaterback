@@ -9,17 +9,17 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 
-class PowerChangeDialog extends GetView<TeamController> {
-  const PowerChangeDialog({super.key});
+class PowerChangeDialog extends StatelessWidget {
+  const PowerChangeDialog(this.newValue, this.oldValue, {super.key});
+  final int newValue;
+  final int oldValue;
 
   @override
   Widget build(BuildContext context) {
-    int change = controller.myTeamEntity.oVR - controller.oVROld;
+    int change = newValue - oldValue;
     return Row(
       children: [
         Stack(
@@ -73,7 +73,7 @@ class PowerChangeDialog extends GetView<TeamController> {
             Row(
               children: [
                 Text(
-                  "${controller.oVROld}",
+                  "$oldValue",
                   style: 12.w4(
                       color: AppColors.c000000,
                       height: 1,
@@ -113,7 +113,7 @@ class PowerChangeDialog extends GetView<TeamController> {
                 ),
                 10.5.hGap,
                 Text(
-                  "${controller.myTeamEntity.oVR}",
+                  "$newValue",
                   style: 12.w4(
                       color: AppColors.c000000,
                       height: 1,

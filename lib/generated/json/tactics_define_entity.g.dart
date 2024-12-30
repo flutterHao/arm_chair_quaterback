@@ -3,7 +3,7 @@ import 'package:arm_chair_quaterback/common/entities/tactics_define_entity.dart'
 
 TacticsDefineEntity $TacticsDefineEntityFromJson(Map<String, dynamic> json) {
   final TacticsDefineEntity tacticsDefineEntity = TacticsDefineEntity();
-  final int? degreeAdd = jsonConvert.convert<int>(json['degreeAdd']);
+  final double? degreeAdd = jsonConvert.convert<double>(json['degreeAdd']);
   if (degreeAdd != null) {
     tacticsDefineEntity.degreeAdd = degreeAdd;
   }
@@ -35,7 +35,7 @@ Map<String, dynamic> $TacticsDefineEntityToJson(TacticsDefineEntity entity) {
 
 extension TacticsDefineEntityExtension on TacticsDefineEntity {
   TacticsDefineEntity copyWith({
-    int? degreeAdd,
+    double? degreeAdd,
     String? tacticStruct,
     int? tacticTypeGrade,
     int? tacticTypeId,

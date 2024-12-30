@@ -227,7 +227,8 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
       //战力变化弹窗
       if (oVROld != myTeamEntity.oVR) {
         await Future.delayed(const Duration(milliseconds: 1500));
-        await showTopToastDialog(child: PowerChangeDialog());
+        await showTopToastDialog(
+            child: PowerChangeDialog(myTeamEntity.oVR, oVROld));
         oVROld = myTeamEntity.oVR;
       }
 

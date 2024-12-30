@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-24 18:53:16
- * @LastEditTime: 2024-12-03 21:05:17
+ * @LastEditTime: 2024-12-30 20:04:41
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/tactic_grade_entity.dart';
@@ -30,7 +30,7 @@ class _CardRuleDialogState extends State<CardRuleDialog> {
         TacticGradeEntity item = TacticGradeEntity.fromJson(e);
         for (var tactics in v) {
           if (item.id == tactics.tacticTypeId) {
-            item.percent = tactics.degreeAdd;
+            item.percent = (tactics.degreeAdd * 100).round();
           }
         }
         return item;

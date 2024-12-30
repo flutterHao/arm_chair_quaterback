@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-28 17:29:21
- * @LastEditTime: 2024-11-28 17:30:46
+ * @LastEditTime: 2024-12-30 20:04:11
  */
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/tactics_define_entity.g.dart';
@@ -11,7 +11,7 @@ export 'package:arm_chair_quaterback/generated/json/tactics_define_entity.g.dart
 
 @JsonSerializable()
 class TacticsDefineEntity {
-  late int degreeAdd = 0;
+  late double degreeAdd = 0;
   late String tacticStruct = '';
   late int tacticTypeGrade = 0;
   late int tacticTypeId = 0;
