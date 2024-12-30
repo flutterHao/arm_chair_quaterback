@@ -2,9 +2,10 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-14 16:54:10
- * @LastEditTime: 2024-12-30 18:57:51
+ * @LastEditTime: 2024-12-30 20:53:48
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/custom_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
@@ -29,15 +30,50 @@ class TeamRankPage extends GetView<RankController> {
             physics: const BouncingScrollPhysics(),
             child: Container(
               margin: EdgeInsets.symmetric(vertical: 9.w),
+              padding: EdgeInsets.symmetric(vertical: 20.w),
+              width: double.infinity,
+              constraints: BoxConstraints(minHeight: 300.h),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12.w),
+              ),
               child: Column(
                 children: [
-                  if (controller.teamTypeIndex.value == 0) RankList(type: 0),
-                  if (controller.teamTypeIndex.value == 1)
-                    ...List.generate(6, (i) {
+                  Container(
+                    // color: Colors.red,
+                    alignment: Alignment.centerLeft,
+                    margin: EdgeInsets.symmetric(horizontal: 16.w),
+                    child: Text(
+                      controller.getTeamRankTitle(),
+                      // textAlign: TextAlign.center,
+                      maxLines: 2,
+                      style: 21.w4(
+                        fontFamily: FontFamily.fOswaldMedium,
+                        height: 1,
+                      ),
+                    ),
+                  ),
+                  if (controller.teamTypeIndex.value == 0)
+                    ...List.generate(2, (i) {
+                      String name =
+                          "${i == 0 ? "Western" : "Eastern"} Conference";
+                      var list = controller.teamRankList;
+                      list = list.where((e) => e.force == i + 1).toList();
                       return Column(
                         children: [
-                          RankList(type: i + 1),
-                          9.vGap,
+                          RankList(name, list),
+                        ],
+                      );
+                    }),
+                  if (controller.teamTypeIndex.value == 1)
+                    ...List.generate(6, (i) {
+                      var list = controller.teamRankList;
+                      String area = "${controller.getTypeName(i + 1)}Division";
+                      list =
+                          list.where((e) => e.teamDivision == i + 1).toList();
+                      return Column(
+                        children: [
+                          RankList(area, list),
                         ],
                       );
                     })
@@ -50,48 +86,19 @@ class TeamRankPage extends GetView<RankController> {
 }
 
 class RankList extends GetView<RankController> {
-  const RankList({super.key, ty, required this.type});
-  final int type;
+  const RankList(this.typeName, this.list, {super.key});
+  final String typeName;
+  final List<TeamRankEntity> list;
 
   @override
   Widget build(BuildContext context) {
-    var list = controller.teamRankList;
-    if (type != 0) {
-      list = list.where((e) => e.teamDivision == type).toList();
-    }
-    String area = controller.getTypeName(type);
-
-    List<String> colomns = [
-      type == 0 ? "LEAGUE" : "$area Division",
-      "W-L",
-      "GB"
-    ];
+    List<String> colomns = [typeName, "W-L", "GB"];
     List<double> colomnsWidth = [150.w, 35.w, 30.w];
 
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 20.w),
-      width: double.infinity,
-      constraints: BoxConstraints(minHeight: 300.h),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12.w),
-      ),
+      // color: Colors.black,
       child: Column(
         children: [
-          Container(
-            // color: Colors.red,
-            alignment: Alignment.centerLeft,
-            margin: EdgeInsets.symmetric(horizontal: 16.w),
-            child: Text(
-              controller.getTeamRankTitle(type),
-              // textAlign: TextAlign.center,
-              maxLines: 2,
-              style: 21.w4(
-                fontFamily: FontFamily.fOswaldMedium,
-                height: 1,
-              ),
-            ),
-          ),
           27.vGap,
           Container(
             margin: EdgeInsets.symmetric(horizontal: 16.w),
@@ -124,6 +131,7 @@ class RankList extends GetView<RankController> {
               itemBuilder: (context, index) {
                 var e = list[index];
                 return Container(
+                  // color: Colors.green,
                   margin: EdgeInsets.symmetric(horizontal: 16.w),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -187,7 +195,8 @@ class RankList extends GetView<RankController> {
                 );
               },
               separatorBuilder: (context, index) => 17.vGap,
-              itemCount: list.length)
+              itemCount: list.length),
+          23.vGap
         ],
       ),
     );

@@ -14,6 +14,7 @@ import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/dialog/power_change_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/dialog/recover_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/widgets/line_up_tab.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team_new/widgets/my_team_list.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/widgets/player_bag_tab.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/widgets/player_changer_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
@@ -63,6 +64,8 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   //换人战力
   late int oVROld = 0;
   int changeDuration = 300;
+
+  final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
 
   /// 在 widget 内存中分配后立即调用。
   @override
@@ -292,14 +295,21 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
     await animationCtrl.reverse();
 
     myTeamEntity = result;
-    if (isDown) {
-      subList.removeWhere((element) => element.uuid == item1.uuid);
-    } else if (isAdd) {
+    if (isAdd) {
       for (var e in result.teamPlayers) {
         if (e.position == 0 && subList.where((s) => s.uuid == e.uuid).isEmpty) {
           subList.add(e);
+          listKey.currentState!.insertItem(subList.length - 1);
         }
       }
+    } else if (isDown) {
+      int index = subList.indexWhere((element) => element.uuid == item1.uuid);
+
+      // listKey.currentState!.removeItem(
+      //   index,
+      //   (context, animation) => animatedSubItem(index, animation),
+      // );
+      subList.removeAt(index);
     } else {
       List<TeamPlayerInfoEntity> sub = List.from(subList);
       for (var e in result.teamPlayers) {

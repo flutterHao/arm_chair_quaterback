@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 21:19:02
- * @LastEditTime: 2024-12-28 20:55:54
+ * @LastEditTime: 2024-12-30 21:31:58
  */
 /*
  * @Description: 
@@ -57,105 +57,6 @@ class MainPlayerList extends GetView<TeamController> {
 class SubPlayerList extends GetView<TeamController> {
   const SubPlayerList({super.key});
 
-  // Widget _emptyPlayer(context) {
-  //   return InkWell(
-  //       onTap: () {
-  //         if (controller.myBagList.where((e) => e.position == -1).isEmpty) {
-  //           EasyLoading.showToast("No players in the stash");
-  //           return;
-  //         }
-  //         controller.addPlay(context);
-  //       },
-  //       child: SizedBox(
-  //         width: double.infinity,
-  //         height: 121.w,
-  //         child: Row(
-  //           children: [
-  //             _subPosition(),
-  //             13.hGap,
-  //             Container(
-  //               width: 73.w,
-  //               height: 93.w,
-  //               alignment: Alignment.center,
-  //               decoration: BoxDecoration(
-  //                   color: AppColors.cF1F1F1,
-  //                   borderRadius: BorderRadius.circular(9.w)),
-  //               child: Image.asset(
-  //                 Assets.managerUiManagerTacticsIconEmpty,
-  //                 width: 35.w,
-  //                 height: 35.w,
-  //               ),
-  //             ),
-  //             11.hGap,
-  //             Expanded(
-  //               child: Text(
-  //                 "EMPTY",
-  //                 style: 21.w4(fontFamily: FontFamily.fOswaldMedium),
-  //               ),
-  //             ),
-  //             MtInkwell(
-  //               onTap: () async {
-  //                 if (controller.myBagList
-  //                     .where((e) => e.position == -1)
-  //                     .isEmpty) {
-  //                   EasyLoading.showToast("No players in the stash");
-  //                   return;
-  //                 }
-  //                 controller.addPlay(context);
-  //               },
-  //               child: Container(
-  //                 width: 36.w,
-  //                 height: 36.w,
-  //                 alignment: Alignment.center,
-  //                 decoration: BoxDecoration(
-  //                     borderRadius: BorderRadius.circular(9.w),
-  //                     border: Border.all(color: AppColors.c666666, width: 1)),
-  //                 child: IconWidget(
-  //                   iconWidth: 18.w,
-  //                   icon: Assets.commonUiCommonIconSystemExchange,
-  //                   iconColor: AppColors.c000000,
-  //                 ),
-  //               ),
-  //             ),
-  //             16.hGap,
-  //           ],
-  //         ),
-  //       ));
-  // }
-
-  Widget _lock() {
-    return InkWell(
-        onTap: () {},
-        child: SizedBox(
-          width: double.infinity,
-          height: 121.w,
-          child: Row(
-            children: [
-              _subPosition(),
-              13.hGap,
-              Container(
-                width: 73.w,
-                height: 93.w,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    color: AppColors.cF1F1F1,
-                    borderRadius: BorderRadius.circular(9.w)),
-                child: Image.asset(
-                  Assets.iconUiIconLock,
-                  width: 30.w,
-                  color: AppColors.cB2B2B2,
-                ),
-              ),
-              11.hGap,
-              Text(
-                "${controller.getLockCup()} Trophies Unlocked",
-                style: 21.w4(fontFamily: FontFamily.fOswaldMedium),
-              )
-            ],
-          ),
-        ));
-  }
-
   @override
   Widget build(BuildContext context) {
     // var list = controller.myTeamEntity.teamPlayers
@@ -165,7 +66,7 @@ class SubPlayerList extends GetView<TeamController> {
     var list = controller.subList;
     return SizedBox(
       // width: 360.w,
-      child: Column(
+      child: Stack(
         children: [
           ListView.separated(
             padding: EdgeInsets.symmetric(vertical: 10.w),
@@ -173,10 +74,14 @@ class SubPlayerList extends GetView<TeamController> {
             shrinkWrap: true,
             itemBuilder: (context, index) {
               return index < list.length
-                  ? PlayerItem(item: list[index])
+                  ? Container(
+                      color: Colors.white,
+                      height: 121.w,
+                      width: double.infinity,
+                    )
                   : (index < controller.myTeamEntity.benchCount
                       ? EmptyPlayer()
-                      : _lock());
+                      : lock());
             },
             separatorBuilder: (context, index) => Container(
               width: double.infinity,
@@ -186,10 +91,77 @@ class SubPlayerList extends GetView<TeamController> {
             ),
             itemCount: controller.myTeamEntity.benchCount + 1,
           ),
+          AnimatedList(
+            key: controller.listKey,
+            padding: EdgeInsets.symmetric(vertical: 10.w),
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemBuilder: (context, index, animation) {
+              return animatedSubItem(index, animation);
+            },
+            initialItemCount: controller.subList.length,
+          ),
         ],
       ),
     );
   }
+}
+
+Widget animatedSubItem(index, animation) {
+  final controller = Get.find<TeamController>();
+  return Column(
+    children: [
+      SizeTransition(
+        sizeFactor: animation,
+        child: index < controller.subList.length
+            ? PlayerItem(item: controller.subList[index])
+            : (index < controller.myTeamEntity.benchCount
+                ? Container()
+                : Container()),
+      ),
+      if (index < controller.subList.length - 1)
+        Container(
+          width: double.infinity,
+          height: 1.w,
+          color: AppColors.cE6E6E,
+          margin: EdgeInsets.symmetric(horizontal: 16.w),
+        )
+    ],
+  );
+}
+
+Widget lock() {
+  final controller = Get.find<TeamController>();
+  return InkWell(
+      onTap: () {},
+      child: SizedBox(
+        width: double.infinity,
+        height: 121.w,
+        child: Row(
+          children: [
+            _subPosition(),
+            13.hGap,
+            Container(
+              width: 73.w,
+              height: 93.w,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  color: AppColors.cF1F1F1,
+                  borderRadius: BorderRadius.circular(9.w)),
+              child: Image.asset(
+                Assets.iconUiIconLock,
+                width: 30.w,
+                color: AppColors.cB2B2B2,
+              ),
+            ),
+            11.hGap,
+            Text(
+              "${controller.getLockCup()} Trophies Unlocked",
+              style: 21.w4(fontFamily: FontFamily.fOswaldMedium),
+            )
+          ],
+        ),
+      ));
 }
 
 ///球员位置
@@ -269,8 +241,8 @@ class EmptyPlayer extends StatelessWidget {
                   controller.addPlay(context);
                 },
                 child: Container(
-                  width: 36.w,
-                  height: 36.w,
+                  width: 59.w,
+                  height: 40.w,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(9.w),

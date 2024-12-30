@@ -2,12 +2,9 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:27:52
- * @LastEditTime: 2024-12-30 18:55:58
+ * @LastEditTime: 2024-12-30 20:38:31
  */
-import 'package:arm_chair_quaterback/common/entities/nab_player_season_game_rank_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/nba_player_stat_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/palyer_stats_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/team_rank.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
@@ -28,7 +25,7 @@ class RankController extends GetxController
   RxInt tabIndex = 0.obs;
   List<String> tabs = ["CONFERENCE", "PRESEAON"];
   var teamTypeIndex = 0.obs;
-  List<String> teamRankType = ["LEAGUE", "DIVISION"];
+  List<String> teamRankType = ["CONFERENCE", "DIVISION"];
   List<String> tabs2 = ["Eastean", "Westen"];
 
   RxDouble progress = 0.0.obs;
@@ -126,6 +123,7 @@ class RankController extends GetxController
       statTeamRankList = v[1] as List<StatsEntity>;
       teamRankList = v[2] as List<TeamRankEntity>;
       for (var element in teamRankList) {
+        element.force = CacheApi.teamDefineMap?[element.teamID]?.force ?? 0;
         element.teamDivision =
             CacheApi.teamDefineMap?[element.teamID]?.teamDivision ?? 0;
       }
@@ -231,8 +229,9 @@ class RankController extends GetxController
     return Utils.formatToThreeSignificantDigits(value);
   }
 
-  String getTeamRankTitle(int type) {
-    return "$season NBA Conference Standings".toUpperCase();
+  String getTeamRankTitle() {
+    return "$season NBA ${teamTypeIndex.value == 0 ? "Conference" : "Division"}  Standings"
+        .toUpperCase();
   }
 
   String getTypeName(int type) {
