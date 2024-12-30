@@ -6,6 +6,8 @@ import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/param_utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/top_toast_dialog.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team_new/dialog/power_change_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_upgrade/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_upgrade/start_upgrade/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_upgrade/widgets/slot_list_view_widget.dart';
@@ -117,7 +119,8 @@ class SlotDialogController extends GetxController
     TeamUpgradeController teamUpgradeController = Get.find();
     if (teamUpgradeController.teamPlayerUpStarVoEntity.starUpDTO != null) {
       var result = teamUpgradeController.teamPlayerUpStarVoEntity.starUpDTO!;
-      successRate.value = result.starUpList[result.starUpList.length-1].successRate;
+      successRate.value =
+          result.starUpList[result.starUpList.length - 1].successRate;
       slotResult = result.starUpList
           .sublist(0, result.starUpList.length - 1)
           .fold(slotResult, (p, e) {
@@ -267,7 +270,7 @@ class SlotDialogController extends GetxController
   onOpenDoorEnd() {
     isSlotRunning = true;
     timer = Timer.periodic(const Duration(milliseconds: 300), (t) {
-      if(spinCount>=slotMachineControllers.length){
+      if (spinCount >= slotMachineControllers.length) {
         t.cancel();
         return;
       }
@@ -321,16 +324,18 @@ class SlotDialogController extends GetxController
   }
 
   done() {
-    if (doorAnimationController.isAnimating) return;
-    if (spinCount != 0) return;
-    if (isSlotRunning) return;
-    if (slotCount.value < 8) return;
-    if (isGameOver.value) return;
     TeamUpgradeController teamUpgradeController = Get.find();
     PicksApi.starUpDone(teamUpgradeController.player.uuid).then((result) {
       TeamUpgradeController teamUpgradeController = Get.find();
       teamUpgradeController.setUpgradeResult(result);
       var success = result.success;
+      showTopToastDialog(
+          child: PowerChangeDialog(
+              Get.find<TeamUpgradeController>()
+                  .getPlayer()
+                  .playerStrength
+                  .toInt(),
+              result.teamPlayerVO.playerStrength.toInt()));
       gameOver(success);
     }, onError: (e) {
       ErrorUtils.toast(e);
@@ -340,7 +345,7 @@ class SlotDialogController extends GetxController
   void gameOver(bool success) {
     isGameOver.value = true;
     isSuccess = success;
-    Future.delayed(const Duration(milliseconds: 300),(){
+    Future.delayed(const Duration(milliseconds: 300), () {
       btnPageController.animateToPage(1,
           duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
     });

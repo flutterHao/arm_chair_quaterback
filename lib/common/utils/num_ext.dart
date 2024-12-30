@@ -90,9 +90,18 @@ extension NumExt on num {
         width: toDouble(),
       );
 
-  String format() {
+  String formatToString() {
     var stringAsFixed = toStringAsFixed(1);
     return stringAsFixed.endsWith(".0") ? toInt().toString() : stringAsFixed;
+  }
+
+  num format() {
+    var stringAsFixed = toStringAsFixed(1);
+    var source = stringAsFixed.endsWith(".0") ? toInt().toString() : stringAsFixed;
+    if(!source.contains(".")){
+      return int.parse(source);
+    }
+    return double.parse(source);
   }
 
   num handlerNaNInfinity({num defaultValue = 0}) {

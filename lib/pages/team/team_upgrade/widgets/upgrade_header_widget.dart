@@ -304,7 +304,7 @@ class UpgradeHeaderWidget extends GetView<TeamUpgradeController> {
                         icon: Assets.managerUiManagerIconRecover),
                     7.hGap,
                     Text(
-                      "${controller.getPlayer().power}",
+                      "${controller.getPlayer().power}%",
                       style: 12.w4(
                           color: AppColors.c000000,
                           height: 1,

@@ -100,6 +100,7 @@ class AddSparringPlayersDialogWidget extends GetView<StartUpgradeController> {
                                           height: 36.w,
                                           playerId: item.teamPlayer.playerId,
                                           backgroundColor: AppColors.cFFFFFF,
+                                          canTap: false,
                                           radius: 0,
                                         ),
                                         9.hGap,
@@ -182,7 +183,7 @@ class AddSparringPlayersDialogWidget extends GetView<StartUpgradeController> {
                                             PlayerPropertyWidget(
                                               title: "POW",
                                               value: item.teamPlayer.power
-                                                  .format(),
+                                                  .formatToString(),
                                             ),
                                             if (item.starUpDefine.starUpRange !=
                                                 0)
@@ -194,7 +195,7 @@ class AddSparringPlayersDialogWidget extends GetView<StartUpgradeController> {
                                             PlayerPropertyWidget(
                                               title: "SUCCESS",
                                               value:
-                                                  "+${item.teamPlayer.probability.format()}%",
+                                                  "+${item.teamPlayer.probability.formatToString()}%",
                                             ),
                                           ],
                                         ),
@@ -379,7 +380,7 @@ class AddSparringPlayersDialogWidget extends GetView<StartUpgradeController> {
                               ),
                               7.5.vGap,
                               Text(
-                                "${controller.upSuccessRate.value.format()}%",
+                                "${controller.upSuccessRate.value.formatToString()}%",
                                 style: 18.w5(
                                     color: AppColors.c000000,
                                     height: 1,

@@ -134,16 +134,27 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
                                         ability.selfLevel10Value /
                                         total;
 
-                                    double beforeProgress =
-                                        (beforeUpgradeValue -
-                                                baseValue +
-                                                baseProgress * total) /
-                                            total;
+                                    double beforeProgress = baseProgress +
+                                        (ability.beforeValue -
+                                                ability.baseValue) /
+                                            (ability.beforeMaxValue -
+                                                ability.baseValue) *
+                                            (controller
+                                                    .teamPlayerUpStarVoEntity
+                                                    .breakThroughGrade *
+                                                maxProgress /
+                                                10);
 
-                                    double afterProgress = (afterUpgradeValue -
-                                            baseValue +
-                                            baseProgress * total) /
-                                        total;
+                                    double afterProgress = baseProgress +
+                                        (ability.afterValue -
+                                                ability.baseValue) /
+                                            (ability.afterMaxValue -
+                                                ability.baseValue) *
+                                            (controller
+                                                    .starUpDoneEntity
+                                                    ?.teamPlayerVO
+                                                    .breakThroughGrade ??
+                                                0 * maxProgress / 10);
 
                                     return Stack(
                                       alignment: Alignment.centerLeft,
@@ -370,7 +381,7 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     Text(
-                                      "${progress.format()}%",
+                                      "${progress.formatToString()}%",
                                       style: 20.w7(
                                           color: AppColors.c000000,
                                           height: 1,

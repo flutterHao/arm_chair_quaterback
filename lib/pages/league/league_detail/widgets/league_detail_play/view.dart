@@ -239,21 +239,21 @@ class _LeagueDetailPlayPageState extends State<LeagueDetailPlayPage>
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                (item.getLeftPercent*100).format(),
+                "${item.leftValue}",
                 style: 16.w4(
                     color: AppColors.c000000,
                     height: 1,
                     fontFamily: FontFamily.fOswaldRegular),
               ),
               Text(
-                "${item.name} ${item.valueIsPercent?"":"%"}",
+                item.name,
                 style: 10.w4(
                     color: AppColors.c000000,
                     height: 1,
                     fontFamily: FontFamily.fRobotoRegular),
               ),
               Text(
-                (100-item.getLeftPercent*100).format(),
+                "${item.rightValue}",
                 style: 16.w4(
                     color: AppColors.c000000,
                     height: 1,
@@ -269,83 +269,6 @@ class _LeagueDetailPlayPageState extends State<LeagueDetailPlayPage>
             rightPercent: (100 - (item.getLeftPercent * 100).toInt()),
             rightColor: AppColors.c000000,
           )
-        ],
-      ),
-    );
-    return Container(
-      height: 60.w,
-      margin: EdgeInsets.symmetric(horizontal: 16.w),
-      decoration: const BoxDecoration(
-          border:
-              Border(bottom: BorderSide(color: AppColors.cE6E6E, width: 1))),
-      child: Row(
-        children: [
-          Container(
-              width: 38.w,
-              alignment: Alignment.centerRight,
-              child: Text(
-                (item.leftValue * (item.valueIsPercent ? 100 : 1)).format(),
-                style: 16.w4(
-                    color: AppColors.c000000,
-                    fontFamily: FontFamily.fOswaldRegular),
-              )),
-          6.hGap,
-          Expanded(
-            child: Container(
-              height: 12.w,
-              decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.cD1D1D1, width: 1),
-                  borderRadius: BorderRadius.circular(6.w)),
-              child: Transform.rotate(
-                angle: pi / 180 * 180,
-                child: LinearProgressIndicator(
-                  color: item.getLeftColor,
-                  value: item.getLeftPercent.toDouble(),
-                  borderRadius: BorderRadius.circular(6.w),
-                  backgroundColor: AppColors.cTransparent,
-                ),
-              ),
-            ),
-          ),
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Container(
-              width: 57.w,
-              padding: EdgeInsets.symmetric(horizontal: 4.w),
-              child: Center(
-                  child: Text(
-                item.name,
-                textAlign: TextAlign.center,
-                maxLines: 2,
-                style: 10.w4(
-                    color: AppColors.c000000,
-                    fontFamily: FontFamily.fRobotoRegular),
-              )),
-            ),
-          ),
-          Expanded(
-            child: Container(
-              height: 12.w,
-              decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.cD1D1D1, width: 1),
-                  borderRadius: BorderRadius.circular(6.w)),
-              child: LinearProgressIndicator(
-                color: item.getRightColor,
-                value: item.getRightPercent.toDouble(),
-                borderRadius: BorderRadius.circular(6.w),
-                backgroundColor: AppColors.cTransparent,
-              ),
-            ),
-          ),
-          6.hGap,
-          SizedBox(
-              width: 38.w,
-              child: Text(
-                (item.rightValue * (item.valueIsPercent ? 100 : 1)).format(),
-                style: 16.w4(
-                    color: AppColors.c000000,
-                    fontFamily: FontFamily.fOswaldRegular),
-              )),
         ],
       ),
     );

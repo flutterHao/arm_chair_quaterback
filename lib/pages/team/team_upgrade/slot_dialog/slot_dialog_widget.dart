@@ -4,6 +4,7 @@ import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -184,7 +185,7 @@ class SlotDialogWidget extends GetView<SlotDialogController> {
                                                                         icon: Assets
                                                                             .commonUiCommonIconSystemDanger01),
                                                                   Text(
-                                                                    "${(controller.successRate.value * 100).format()}%",
+                                                                    "${(controller.successRate.value * 100).formatToString()}%",
                                                                     style: 12.w5(
                                                                         color: AppColors
                                                                             .cFFFFFF,
@@ -459,7 +460,30 @@ class SlotDialogWidget extends GetView<SlotDialogController> {
                                               ),
                                             7.vGap,
                                             MtInkwell(
-                                              onTap: () => controller.done(),
+                                              onTap: () {
+                                                if (controller
+                                                    .doorAnimationController
+                                                    .isAnimating) return;
+                                                if (controller.spinCount != 0) {
+                                                  return;
+                                                }
+                                                if (controller.isSlotRunning) {
+                                                  return;
+                                                }
+                                                if (controller.slotCount.value <
+                                                    8) return;
+                                                if (controller
+                                                    .isGameOver.value) {
+                                                  return;
+                                                }
+                                                BottomTipDialog.show(
+                                                    desc: "Do you want to done the game",
+                                                    context: context,
+                                                    onTap: (){
+                                                      Get.back();
+                                                      controller.done();
+                                                    });
+                                              },
                                               child: Container(
                                                 height: 51.w,
                                                 width: 118.w,
@@ -756,7 +780,7 @@ class SlotDialogWidget extends GetView<SlotDialogController> {
                                       Widget child = FittedBox(
                                         fit: BoxFit.scaleDown,
                                         child: Text(
-                                          "${controller.propertys[index]} ${index < 8 && controller.selectIndexList.length == 1 ? "+${controller.upStarTeamPlayerV2Entity.addRate.format()}" : ""}",
+                                          "${controller.propertys[index]} ${index < 8 && controller.selectIndexList.length == 1 ? "+${controller.upStarTeamPlayerV2Entity.addRate.formatToString()}" : ""}",
                                           style: 16.w7(
                                               color: slotMachineController
                                                       .isAnimating

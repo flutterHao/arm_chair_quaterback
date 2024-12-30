@@ -41,19 +41,19 @@ class TeamStatsController extends GetxController {
     list.add(TeamStats(
         "3 Point %",
         ((homeDetail?.threePm ?? 0) / (homeDetail?.threePa ?? 0))
-            .handlerNaNInfinity(),
+            .handlerNaNInfinity().format(),
         ((awayDetail?.threePm ?? 0) / (awayDetail?.threePa ?? 0))
-            .handlerNaNInfinity(),
+            .handlerNaNInfinity().format(),
         valueIsPercent: true));
     list.add(TeamStats(
         "Field Goal %",
-        ((homeDetail?.fgm ?? 0) / (homeDetail?.fga ?? 0)).handlerNaNInfinity(),
-        ((awayDetail?.fgm ?? 0) / (awayDetail?.fga ?? 0)).handlerNaNInfinity(),
+        ((homeDetail?.fgm ?? 0) / (homeDetail?.fga ?? 0)).handlerNaNInfinity().format(),
+        ((awayDetail?.fgm ?? 0) / (awayDetail?.fga ?? 0)).handlerNaNInfinity().format(),
         valueIsPercent: true));
     list.add(TeamStats(
         "Free Throw %",
-        ((homeDetail?.ftm ?? 0) / (homeDetail?.fta ?? 0)).handlerNaNInfinity(),
-        ((awayDetail?.ftm ?? 0) / (awayDetail?.fta ?? 0)).handlerNaNInfinity(),
+        ((homeDetail?.ftm ?? 0) / (homeDetail?.fta ?? 0)).handlerNaNInfinity().format(),
+        ((awayDetail?.ftm ?? 0) / (awayDetail?.fta ?? 0)).handlerNaNInfinity().format(),
         valueIsPercent: true));
     return list;
   }

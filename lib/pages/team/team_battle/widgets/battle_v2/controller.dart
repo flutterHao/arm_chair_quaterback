@@ -1161,15 +1161,15 @@ class TeamBattleV2Controller extends GetxController
     });
   }
 
-  String getBuff(int playerId) {
+  double getBuff(int playerId) {
     var startUpdatedEntity =
         Get
             .find<TeamBattleController>()
             .pkStartUpdatedEntity;
     var bool = startUpdatedEntity?.pokerWinner == playerId;
     return bool
-        ? "+${(startUpdatedEntity?.pokerRate ?? 0) * 100}%"
-        : "-${(startUpdatedEntity?.pokerRate ?? 0) * 100}%";
+        ? (startUpdatedEntity?.pokerRate ?? 0) * 100
+        : -(startUpdatedEntity?.pokerRate ?? 0) * 100;
   }
 
   Color getBuffColor(int playerId) {

@@ -166,7 +166,7 @@ class StartUpgradeWidget extends GetView<StartUpgradeController> {
                                                     FontFamily.fRobotoRegular),
                                           ),
                                           Text(
-                                            "${min(100, controller.upSuccessRate.value).format()}%",
+                                            "${min(100, controller.upSuccessRate.value).formatToString()}%",
                                             style: 12.w5(
                                                 color: AppColors.cFFFFFF,
                                                 height: 1,
@@ -641,6 +641,7 @@ class StartUpgradeWidget extends GetView<StartUpgradeController> {
             height: 93.w,
             playerId: item.playerId,
             grade: Utils.formatGrade(baseInfo.grade),
+            canTap: false,
             level: item.breakThroughGrade,
           ),
           11.hGap,
@@ -687,7 +688,7 @@ class StartUpgradeWidget extends GetView<StartUpgradeController> {
                         children: [
                           PlayerPropertyWidget(
                             title: "POW",
-                            value: item.power.format(),
+                            value: item.power.formatToString(),
                           ),
                           if (upgradePlayer.starUpDefine.starUpRange != 0)
                             PlayerPropertyWidget(
@@ -697,7 +698,7 @@ class StartUpgradeWidget extends GetView<StartUpgradeController> {
                             ),
                           PlayerPropertyWidget(
                             title: "SUCCESS",
-                            value: "+${item.probability.format()}%",
+                            value: "+${item.probability.formatToString()}%",
                           ),
                         ],
                       )

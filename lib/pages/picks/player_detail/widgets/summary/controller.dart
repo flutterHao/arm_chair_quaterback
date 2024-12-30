@@ -170,18 +170,18 @@ class SummaryController extends GetxController {
         var str = split[i];
           value += nbaPlayerBaseInfoEntity?.playerRegularMap?.toJson()[str]??0;
       }
-      return value.format();
+      return value.formatToString();
     }
     return ((nbaPlayerBaseInfoEntity!.playerRegularMap?.toJson()[key] ?? 0)
             as num)
-        .format();
+        .formatToString();
   }
 
   String getCurrentTabKey() => (nbaPlayerBaseInfoEntity?.guessInfos.keys.toList()[currentIndex.value])!;
 
   String getLast5AvgWithTab() {
     var key = getCurrentTabKey();
-    return (nbaPlayerBaseInfoEntity?.l5DataAvg?.getValue(key) ?? 0).format();
+    return (nbaPlayerBaseInfoEntity?.l5DataAvg?.getValue(key) ?? 0).formatToString();
   }
 
   _PickInfo? getPickInfo() {

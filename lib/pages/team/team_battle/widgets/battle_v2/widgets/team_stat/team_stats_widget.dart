@@ -230,21 +230,21 @@ class TeamStatsWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                (item.getLeftPercent*100).format(),
+                "${item.leftValue}",
                 style: 16.w4(
                     color: AppColors.c000000,
                     height: 1,
                     fontFamily: FontFamily.fOswaldRegular),
               ),
               Text(
-                "${item.name} ${item.valueIsPercent?"":"%"}",
+                item.name,
                 style: 10.w4(
                     color: AppColors.c000000,
                     height: 1,
                     fontFamily: FontFamily.fRobotoRegular),
               ),
               Text(
-                (100-item.getLeftPercent*100).format(),
+              "${item.rightValue}",
                 style: 16.w4(
                     color: AppColors.c000000,
                     height: 1,
@@ -275,7 +275,7 @@ class TeamStatsWidget extends StatelessWidget {
               width: 38.w,
               alignment: Alignment.centerRight,
               child: Text(
-                (item.leftValue * (item.valueIsPercent ? 100 : 1)).format(),
+                (item.leftValue * (item.valueIsPercent ? 100 : 1)).formatToString(),
                 style: 16.w4(
                     color: AppColors.c000000,
                     fontFamily: FontFamily.fOswaldRegular),
@@ -332,7 +332,7 @@ class TeamStatsWidget extends StatelessWidget {
           SizedBox(
               width: 38.w,
               child: Text(
-                (item.rightValue * (item.valueIsPercent ? 100 : 1)).format(),
+                (item.rightValue * (item.valueIsPercent ? 100 : 1)).formatToString(),
                 style: 16.w4(
                     color: AppColors.c000000,
                     fontFamily: FontFamily.fOswaldRegular),

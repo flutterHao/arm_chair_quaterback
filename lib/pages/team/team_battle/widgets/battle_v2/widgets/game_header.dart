@@ -59,7 +59,8 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                     GameEvent? event = events.isEmpty ? null : events.last;
 
                     double value = event == null
-                        ? teamBattleController.pkStartUpdatedEntity!.homeTeamStrength
+                        ? teamBattleController
+                            .pkStartUpdatedEntity!.homeTeamStrength
                         : event.pkEventUpdatedEntity.homeCurrentStrength;
                     return _buildPrePercentWidget(value);
                   }),
@@ -70,8 +71,14 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
         SizedBox(
           width: 118.w,
           child: Obx(() {
+            var value2 = controller.showBuff.value;
+            var buff = controller
+                .getBuff(teamBattleController.battleEntity.homeTeam.teamId);
+            if (buff == 0) {
+              return const SizedBox.shrink();
+            }
             return AnimatedOpacity(
-              opacity: controller.showBuff.value ? 1 : 0,
+              opacity: value2 ? 1 : 0,
               duration: const Duration(milliseconds: 1000),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -90,9 +97,7 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                     width: 35.w,
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
-                      child: Text(
-                          controller.getBuff(teamBattleController
-                              .battleEntity.homeTeam.teamId),
+                      child: Text("${buff > 0 ? "+" : "-"}$buff",
                           style: 12.w4(
                               color: controller.getBuffColor(
                                   teamBattleController
@@ -327,8 +332,14 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                   SizedBox(
                     width: 118.w,
                     child: Obx(() {
+                      var value2 = controller.showBuff.value;
+                      var buff = controller.getBuff(
+                          teamBattleController.battleEntity.awayTeam.teamId);
+                      if (buff == 0) {
+                        return const SizedBox.shrink();
+                      }
                       return AnimatedOpacity(
-                        opacity: controller.showBuff.value ? 1 : 0,
+                        opacity: value2 ? 1 : 0,
                         duration: const Duration(milliseconds: 1000),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -349,9 +360,7 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                               width: 35.w,
                               child: FittedBox(
                                 fit: BoxFit.scaleDown,
-                                child: Text(
-                                    controller.getBuff(teamBattleController
-                                        .battleEntity.awayTeam.teamId),
+                                child: Text("${buff > 0 ? "+" : "-"}$buff",
                                     style: 12.w4(
                                         color: controller.getBuffColor(
                                             teamBattleController
@@ -377,7 +386,7 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
 
   Stack _buildPrePercentWidget(double v) {
     print('value:$v');
-    double value = max(0,v);
+    double value = max(0, v);
     var firstMaxValue = 1.44;
     var secondMaxValue = 0.06;
     return Stack(
@@ -389,14 +398,15 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
             border: Border.all(color: AppColors.c666666, width: 1.w),
             borderRadius: BorderRadius.circular(4.5.w),
           ),
-          child:  Align(
+          child: Align(
             alignment: Alignment.centerLeft,
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 300),
-              width: 118.w * min(1,(value / firstMaxValue)),
+              width: 118.w * min(1, (value / firstMaxValue)),
               height: 7.w,
-              decoration:  BoxDecoration(
-                  borderRadius: BorderRadius.horizontal(left: Radius.circular(3.5.w)),
+              decoration: BoxDecoration(
+                  borderRadius:
+                      BorderRadius.horizontal(left: Radius.circular(3.5.w)),
                   gradient: const LinearGradient(
                       colors: [AppColors.cB3B3B3, AppColors.c000000])),
             ),
@@ -414,9 +424,10 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                   width: 118.w *
                       (min(secondMaxValue, (value - firstMaxValue)) /
                           secondMaxValue),
-                  height: 9.w,
+                  height: 7.w,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.horizontal(left: Radius.circular(3.5.w)),
+                    borderRadius:
+                        BorderRadius.horizontal(left: Radius.circular(3.5.w)),
                     color: AppColors.c10A86A,
                   ),
                 ),
