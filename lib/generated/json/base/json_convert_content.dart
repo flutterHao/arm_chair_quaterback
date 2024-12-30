@@ -776,20 +776,6 @@ class JsonConvert {
       return data.map<StarUpDoneAddPotential>((Map<String, dynamic> e) =>
           StarUpDoneAddPotential.fromJson(e)).toList() as M;
     }
-    if (<StarUpDoneTeamPlayerVO>[] is M) {
-      return data.map<StarUpDoneTeamPlayerVO>((Map<String, dynamic> e) =>
-          StarUpDoneTeamPlayerVO.fromJson(e)).toList() as M;
-    }
-    if (<StarUpDoneTeamPlayerVOMaxAbility>[] is M) {
-      return data.map<StarUpDoneTeamPlayerVOMaxAbility>((
-          Map<String, dynamic> e) =>
-          StarUpDoneTeamPlayerVOMaxAbility.fromJson(e)).toList() as M;
-    }
-    if (<StarUpDoneTeamPlayerVOPotential>[] is M) {
-      return data.map<StarUpDoneTeamPlayerVOPotential>((
-          Map<String, dynamic> e) =>
-          StarUpDoneTeamPlayerVOPotential.fromJson(e)).toList() as M;
-    }
     if (<StarUpDoneRandomCount>[] is M) {
       return data.map<StarUpDoneRandomCount>((Map<String, dynamic> e) =>
           StarUpDoneRandomCount.fromJson(e)).toList() as M;
@@ -1154,11 +1140,6 @@ class JsonConvertClassCollection {
     (StarUpDefineEntity).toString(): StarUpDefineEntity.fromJson,
     (StarUpDoneEntity).toString(): StarUpDoneEntity.fromJson,
     (StarUpDoneAddPotential).toString(): StarUpDoneAddPotential.fromJson,
-    (StarUpDoneTeamPlayerVO).toString(): StarUpDoneTeamPlayerVO.fromJson,
-    (StarUpDoneTeamPlayerVOMaxAbility)
-        .toString(): StarUpDoneTeamPlayerVOMaxAbility.fromJson,
-    (StarUpDoneTeamPlayerVOPotential)
-        .toString(): StarUpDoneTeamPlayerVOPotential.fromJson,
     (StarUpDoneRandomCount).toString(): StarUpDoneRandomCount.fromJson,
     (TacticGradeEntity).toString(): TacticGradeEntity.fromJson,
     (TacticGradeCards).toString(): TacticGradeCards.fromJson,

@@ -23,6 +23,7 @@ class SlotDialogWidget extends GetView<SlotDialogController> {
   const SlotDialogWidget(this.successRate, {super.key});
 
   final double successRate;
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -81,10 +82,10 @@ class SlotDialogWidget extends GetView<SlotDialogController> {
                                 if (controller.isInBackStatus) {
                                   Get.back();
                                 } else {
-                                  // Future.delayed(
-                                  //     const Duration(milliseconds: 600), () {
-                                  //   controller.openDoor();
-                                  // });
+                                  Future.delayed(
+                                      const Duration(milliseconds: 600), () {
+                                    controller.openDoor();
+                                  });
                                 }
                               },
                               child: Center(
@@ -153,7 +154,7 @@ class SlotDialogWidget extends GetView<SlotDialogController> {
                                                                   .center,
                                                           children: [
                                                             Text(
-                                                              "Special training status",
+                                                              "Star up success",
                                                               style: 10.w4(
                                                                   color: AppColors
                                                                       .cFFFFFF,
@@ -351,8 +352,13 @@ class SlotDialogWidget extends GetView<SlotDialogController> {
                                                                 List.generate(
                                                                     list.length,
                                                                     (tIndex) {
+                                                              //顺序倒转
+                                                              var rIndex =
+                                                                  list.length -
+                                                                      1 -
+                                                                      tIndex;
                                                               Property prop =
-                                                                  list[tIndex];
+                                                                  list[rIndex];
                                                               return AnimatedScale(
                                                                 duration:
                                                                     const Duration(
@@ -472,7 +478,7 @@ class SlotDialogWidget extends GetView<SlotDialogController> {
                                                   style: 25.w5(
                                                       color: controller
                                                                   .slotCount
-                                                                  .value >
+                                                                  .value >=
                                                               8
                                                           ? AppColors.cFFFFFF
                                                           : AppColors.ccccccc,
@@ -600,7 +606,7 @@ class SlotDialogWidget extends GetView<SlotDialogController> {
                             Container(
                               margin: EdgeInsets.only(bottom: 3.w),
                               child: Text(
-                                "${Get.find<TeamUpgradeController>().teamPlayerUpStarVoEntity.breakThroughGrade + 1}",
+                                "${Get.find<TeamUpgradeController>().teamPlayerUpStarVoEntity.breakThroughGrade}",
                                 style: 21.w7(
                                   color: AppColors.cFFFFFF,
                                   height: 1,
@@ -640,7 +646,7 @@ class SlotDialogWidget extends GetView<SlotDialogController> {
                             Container(
                               margin: EdgeInsets.only(bottom: 3.w),
                               child: Text(
-                                "${Get.find<TeamUpgradeController>().teamPlayerUpStarVoEntity.breakThroughGrade + 2}",
+                                "${Get.find<TeamUpgradeController>().teamPlayerUpStarVoEntity.breakThroughGrade}",
                                 style: 21.w7(
                                   color: AppColors.cFFFFFF,
                                   height: 1,

@@ -10,10 +10,12 @@ import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
 import 'package:arm_chair_quaterback/common/widgets/player_avatar_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_upgrade/slot_dialog/slot_dialog_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_upgrade/start_upgrade/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_upgrade/widgets/player_property_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -95,11 +97,12 @@ class AddSparringPlayersDialogWidget extends GetView<StartUpgradeController> {
                                       children: [
                                         PlayerAvatarWidget(
                                           width: 36.w,
+                                          height: 36.w,
                                           playerId: item.teamPlayer.playerId,
                                           backgroundColor: AppColors.cFFFFFF,
                                           radius: 0,
                                         ),
-                                        11.hGap,
+                                        9.hGap,
                                         Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
@@ -136,7 +139,7 @@ class AddSparringPlayersDialogWidget extends GetView<StartUpgradeController> {
                                                         icon: Assets
                                                             .managerUiManagerPlayerstar),
                                                     Text(
-                                                      "${item.teamPlayer.breakThroughGrade + 1}",
+                                                      "${item.teamPlayer.breakThroughGrade}",
                                                       style: 10.w5(
                                                           color:
                                                               AppColors.cFFFFFF,
@@ -173,7 +176,7 @@ class AddSparringPlayersDialogWidget extends GetView<StartUpgradeController> {
                                             )
                                           ],
                                         ),
-                                        23.hGap,
+                                        20.hGap,
                                         Row(
                                           children: [
                                             PlayerPropertyWidget(
@@ -186,10 +189,10 @@ class AddSparringPlayersDialogWidget extends GetView<StartUpgradeController> {
                                               PlayerPropertyWidget(
                                                 title: "ATTRIB",
                                                 value:
-                                                    "${item.starUpDefine.starUpRange}",
+                                                    "+${item.starUpDefine.starUpRange}",
                                               ),
                                             PlayerPropertyWidget(
-                                              title: "STATUS",
+                                              title: "SUCCESS",
                                               value:
                                                   "+${item.teamPlayer.probability.format()}%",
                                             ),
@@ -261,7 +264,7 @@ class AddSparringPlayersDialogWidget extends GetView<StartUpgradeController> {
                           ),
                           21.hGap,
                           Text(
-                            "Add stake to Combo",
+                            "Add a player",
                             style: 14.w5(
                                 color: AppColors.cB3B3B3,
                                 height: 1,
@@ -438,6 +441,11 @@ class AddSparringPlayersDialogWidget extends GetView<StartUpgradeController> {
   }
 
   onStartClick(BuildContext context) async {
+    if ((Get.find<HomeController>().userEntiry.teamLoginInfo?.getMoney() ?? 0) <
+        controller.getCost()) {
+      EasyLoading.showToast("not sufficient funds");
+      return;
+    }
     Get.back();
     var result = await showModalBottomSheet(
         isScrollControlled: true,
@@ -445,7 +453,7 @@ class AddSparringPlayersDialogWidget extends GetView<StartUpgradeController> {
         backgroundColor: AppColors.cTransparent,
         context: context,
         builder: (context) {
-          return SlotDialogWidget(controller.upSuccessRate.value/100);
+          return SlotDialogWidget(controller.upSuccessRate.value / 100);
         });
     onBack.call(result);
   }

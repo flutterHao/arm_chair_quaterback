@@ -54,7 +54,7 @@ class TeamUpgradeController extends GetxController {
       teamPlayerUpStarVoEntity = result[0] as TeamPlayerUpStarVoEntity;
       playerBaseInfo = Utils.getPlayBaseInfo(player.playerId);
       selfStarUpDefine = CacheApi.starUpDefines!
-          .firstWhere((f) => f.starUp == (player.breakThroughGrade + 1));
+          .firstWhere((f) => f.starUp == (player.breakThroughGrade));
       setBeforePlayerAbility();
       loadStatus.value = LoadDataStatus.success;
     }, onError: (e) {
@@ -130,11 +130,13 @@ class TeamUpgradeController extends GetxController {
   }
 
   String getLastName() {
-    return playerBaseInfo.elname;
+    var split = playerBaseInfo.elname.split(" ");
+    return playerBaseInfo.elname.contains(" ")?split[1]:playerBaseInfo.elname;
   }
 
   String getFirstName() {
-    return playerBaseInfo.elname;
+    var split = playerBaseInfo.elname.split(" ");
+    return playerBaseInfo.elname.contains(" ")?split[0]:playerBaseInfo.elname;
   }
 
   double geBestOneStarAbility(String key) {
@@ -160,16 +162,15 @@ class TeamUpgradeController extends GetxController {
     });
     gradeInStar.starUpBase.sort((a, b) => a.compareTo(b));
     List<StarUpDefineEntity> starUpDefines = List.from(CacheApi.starUpDefines!);
-    starUpDefines.sort((a,b)=>a.starUpRange.compareTo(b.starUpRange));
-    var maxStarUpRange = starUpDefines.last.starUpRange;
-    var greenValue = starUpDefines.fold(1.0, (p, e) {
-      if(e.starUp == 0){
-        return p;
-      }
-      var v = 1 + e.getPotantialMax()/100 + (maxStarUpRange * e.starPlayerNum);
-      return p * v;
-    });
-    double level10Value = baseValue * (gradeInStar.starUpBase.last + greenValue);
+    starUpDefines.sort((a, b) => a.starUpRange.compareTo(b.starUpRange));
+    var last = starUpDefines.last;
+    var greenValue = 1 +
+        last.getPotantialMax() / 100 +
+        last.starUpRange * last.starPlayerNum;
+
+    double level10Value =
+        baseValue * gradeInStar.starUpBase.last * greenValue;
+
     return level10Value;
   }
 
@@ -188,10 +189,14 @@ class TeamUpgradeController extends GetxController {
           geBestOneStarAbility(key);
       upgradePlayerAbility.baseValue = baseValue.toDouble();
       upgradePlayerAbility.beforeValue =
-          baseValue * max(1.0, potentialValue.toDouble());
+          baseValue * max(1.0,potentialValue.toDouble());
       upgradePlayerAbility.selfLevel10Value = getLevel10Ability(key);
       upgradePlayerAbility.totalValue =
           (teamPlayerUpStarVoEntity.maxAbility.toJson()[proKey] * 1.0);
+      // double maybeMaxPotentialValue = CacheApi.starUpDefines!.fold(0.0, (p,e){
+      //
+      // });
+      // upgradePlayerAbility.maybeMaxValue = baseValue * selfStarUpDefine;
     }
   }
 
@@ -208,13 +213,17 @@ class TeamUpgradeController extends GetxController {
       num potentialValue =
           starUpDoneEntity!.teamPlayerVO.potential.toJson()[proKey];
       upgradePlayerAbility.afterValue =
-          baseValue * max(1.0, potentialValue.toDouble());
+          baseValue * max(1.0,potentialValue.toDouble());
     }
   }
 
   void refreshPlayerAbilityUI() {
     setAfterPlayerAbility();
     update();
+  }
+
+  TeamPlayerUpStarVoEntity getPlayer(){
+    return starUpDoneEntity?.teamPlayerVO ?? teamPlayerUpStarVoEntity;
   }
 }
 
@@ -230,8 +239,11 @@ class UpgradePlayerAbility {
   /// 自己满星的最大值
   double selfLevel10Value = 0;
 
-  /// 联盟满星最大值
+  /// 联盟球员满星最大值
   double totalValue = 0;
+
+  /// 最大值
+  double beforeMaxValue = 0;
 
   UpgradePlayerAbility({
     required this.name,

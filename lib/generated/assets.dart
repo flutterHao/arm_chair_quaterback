@@ -133,7 +133,6 @@ class Assets {
   static const String iconUiIconWinning = 'assets/images/icon/ui_icon_winning.png';
   static const String iconUiWindowsAward = 'assets/images/icon/ui_windows_award.png';
   static const String iconUiWindowsLose = 'assets/images/icon/ui_windows_lose.png';
-  static const String lottieLove = 'assets/lottie/love.json';
   static const String managerUiManagerCourt = 'assets/images/manager/ui_manager_court.jpg';
   static const String managerUiManagerCourt01 = 'assets/images/manager/ui_manager_court_01.png';
   static const String managerUiManagerCourt02 = 'assets/images/manager/ui_manager_court_02.png';
@@ -235,6 +234,10 @@ class Assets {
   static const String picksUiIconMoneyW = 'assets/images/picks/ui_icon_money_w.png';
   static const String picksUiNewsWireframe = 'assets/images/picks/ui_news_wireframe.png';
   static const String picksUiPickArrows = 'assets/images/picks/ui_pick_arrows.png';
+  static const String picksUiPicksHistoryArrowsBig = 'assets/images/picks/ui_picks_history_arrows_big.png';
+  static const String picksUiPicksHistoryComment = 'assets/images/picks/ui_picks_history_comment.png';
+  static const String picksUiPicksHistoryJettonBig = 'assets/images/picks/ui_picks_history_jetton_big.png';
+  static const String picksUiPicksHistoryPick = 'assets/images/picks/ui_picks_history_pick.png';
   static const String picksUiPicksStatusBarPicks = 'assets/images/picks/ui_picks_StatusBar_picks.png';
   static const String picksUiPicksStatusBarRank = 'assets/images/picks/ui_picks_StatusBar_rank.png';
   static const String picksUiPropsBox = 'assets/images/picks/ui_props_box.png';

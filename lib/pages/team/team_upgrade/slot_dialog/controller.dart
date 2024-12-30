@@ -72,10 +72,6 @@ class SlotDialogController extends GetxController
 
   bool isSlotRunning = false;
 
-  bool isFirst = true;
-
-  bool isContinueLastTime = false;
-
   var successRate = 1.0.obs;
 
   @override
@@ -121,8 +117,10 @@ class SlotDialogController extends GetxController
     TeamUpgradeController teamUpgradeController = Get.find();
     if (teamUpgradeController.teamPlayerUpStarVoEntity.starUpDTO != null) {
       var result = teamUpgradeController.teamPlayerUpStarVoEntity.starUpDTO!;
-      successRate.value = result.starUpList.last.successRate;
-      slotResult = result.starUpList.fold(slotResult, (p, e) {
+      successRate.value = result.starUpList[result.starUpList.length-1].successRate;
+      slotResult = result.starUpList
+          .sublist(0, result.starUpList.length - 1)
+          .fold(slotResult, (p, e) {
         var selectIndexList = [];
         var startUpItem = e;
         if (startUpItem.type == 2) {
@@ -167,13 +165,10 @@ class SlotDialogController extends GetxController
 
         return result;
       });
-      slotCount.value = result.starUpList.length;
+      slotCount.value = result.starUpList.length - 1;
+      handlerInitData(result);
       result.starUpList = [];
       upStarTeamPlayerV2Entity = result;
-      isContinueLastTime = true;
-      Future.delayed(const Duration(milliseconds: 300), () {
-        tvShow.value = true;
-      });
       loadStatus.value = LoadDataStatus.success;
     } else {
       loadStatus.value = LoadDataStatus.loading;
@@ -206,15 +201,16 @@ class SlotDialogController extends GetxController
 
   void onResult(UpStarTeamPlayerV2Entity result) {
     upStarTeamPlayerV2Entity = result;
+    setStarUpItem();
   }
 
   void setStarUpItem() {
-    if(upStarTeamPlayerV2Entity.successRate <=0){
+    if (upStarTeamPlayerV2Entity.successRate <= 0) {
       gameOver(false);
       return;
     }
     slotCount.value += 1;
-    startUpItem = upStarTeamPlayerV2Entity.starUpList.first;
+    startUpItem = upStarTeamPlayerV2Entity.starUpList.last;
     upStarTeamPlayerV2Entity.starUpList.removeAt(0);
     if (startUpItem?.type == 2) {
       selectIndexList = [9];
@@ -254,17 +250,7 @@ class SlotDialogController extends GetxController
     if (spinCount != 0) return;
     if (isGameOver.value) return;
     if (isSlotRunning) return;
-    if (!isDoorOpen && !isFirst) return;
-    if(isContinueLastTime){
-      continueStarUp();
-      return;
-    }
-    if (isFirst) {
-      isFirst = false;
-      setStarUpItem();
-      openDoor();
-      return;
-    }
+    if (!isDoorOpen) return;
 
     closeDoor(() {
       if (isContinueStarUpError) {
@@ -281,6 +267,10 @@ class SlotDialogController extends GetxController
   onOpenDoorEnd() {
     isSlotRunning = true;
     timer = Timer.periodic(const Duration(milliseconds: 300), (t) {
+      if(spinCount>=slotMachineControllers.length){
+        t.cancel();
+        return;
+      }
       slotMachineControllers[spinCount].spin(index: selectIndexList[spinCount]);
       spinCount++;
       if (spinCount >= selectIndexList.length) {
@@ -293,7 +283,6 @@ class SlotDialogController extends GetxController
     TeamUpgradeController teamUpgradeController = Get.find();
     PicksApi.continueStarUp(teamUpgradeController.player.uuid).then((result) {
       onResult(result);
-      setStarUpItem();
       openDoor();
     }, onError: (e) {
       isContinueStarUpError = true;
@@ -351,8 +340,10 @@ class SlotDialogController extends GetxController
   void gameOver(bool success) {
     isGameOver.value = true;
     isSuccess = success;
-    btnPageController.animateToPage(1,
-        duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+    Future.delayed(const Duration(milliseconds: 300),(){
+      btnPageController.animateToPage(1,
+          duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+    });
     update([idSlotDialogMain]);
   }
 

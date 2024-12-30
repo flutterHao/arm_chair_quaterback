@@ -9,6 +9,7 @@ class PicksHistoryController extends GetxController {
   PicksHistoryController();
 
   var loadStatus = LoadDataStatus.loading.obs;
+  List<String> tabs = ["OPEN","CLOSED"];
 
   late TeamSimpleEntity teamSimpleEntity;
   @override

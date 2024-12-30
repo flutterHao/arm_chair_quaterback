@@ -135,11 +135,15 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
                                         total;
 
                                     double beforeProgress =
-                                        (beforeUpgradeValue-baseValue+baseProgress*total) / total;
+                                        (beforeUpgradeValue -
+                                                baseValue +
+                                                baseProgress * total) /
+                                            total;
 
-
-                                    double afterProgress =
-                                        (afterUpgradeValue-baseValue+baseProgress*total) / total;
+                                    double afterProgress = (afterUpgradeValue -
+                                            baseValue +
+                                            baseProgress * total) /
+                                        total;
 
                                     return Stack(
                                       alignment: Alignment.centerLeft,
@@ -228,8 +232,8 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
                               Expanded(
                                 child: Text(
                                   ability.afterValue != 0
-                                      ? ability.afterValue.format()
-                                      : ability.beforeValue.format(),
+                                      ? ability.afterValue.toStringAsFixed(0)
+                                      : ability.beforeValue.toStringAsFixed(0),
                                   style: 16.w4(
                                       color: AppColors.c000000,
                                       height: 1,
@@ -241,7 +245,7 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
                         );
                       }),
                       16.vGap,
-                      if (controller.player.breakThroughGrade < 10)
+                      if (controller.getPlayer().breakThroughGrade < 10)
                         MtInkwell(
                           onTap: () async {
                             if (controller.teamPlayerUpStarVoEntity.starUpDTO !=
@@ -258,7 +262,9 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
                             } else {
                               var result = await Get.toNamed(
                                   RouteNames.teamStartUpGrade,
-                                  arguments: {"player": controller.player});
+                                  arguments: {
+                                    "player": controller.getPlayer()
+                                  });
                               onResult(result);
                             }
                           },
@@ -272,7 +278,7 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
                               alignment: Alignment.center,
                               children: [
                                 Text(
-                                  "UPGRADE",
+                                  "Star up",
                                   style: 23.w5(
                                       color: AppColors.cFFFFFF,
                                       height: 1,
@@ -437,7 +443,7 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
                                 ),
                                 15.hGap,
                                 Text(
-                                  additional.value.format(),
+                                  additional.value.toStringAsFixed(0),
                                   style: 12.w4(
                                       color: AppColors.c000000,
                                       height: 1,
@@ -473,7 +479,7 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
                                 ),
                                 15.hGap,
                                 Text(
-                                  additional.value.format(),
+                                  additional.value.toStringAsFixed(0),
                                   style: 12.w4(
                                       color: AppColors.c000000,
                                       height: 1,

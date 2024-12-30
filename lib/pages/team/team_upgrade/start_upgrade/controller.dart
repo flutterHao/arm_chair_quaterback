@@ -3,6 +3,7 @@ import 'package:arm_chair_quaterback/common/entities/my_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/star_up_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_player_up_star_vo_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/grade.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
@@ -22,7 +23,7 @@ import 'package:get/get.dart';
 class StartUpgradeController extends GetxController {
   StartUpgradeController(this.player);
 
-  final TeamPlayerInfoEntity player;
+  final TeamPlayerUpStarVoEntity player;
 
   var loadStatus = LoadDataStatus.loading.obs;
   late NbaPlayerInfosPlayerBaseInfoList playerBaseInfo;
@@ -77,7 +78,7 @@ class StartUpgradeController extends GetxController {
           result[1] as List<AllTeamPlayersByUpStarEntity>;
       starUpDefineList = result[2] as List<StarUpDefineEntity>;
       var starUpDefineEntity = starUpDefineList
-          .firstWhere((f) => f.starUp == (player.breakThroughGrade + 1));
+          .firstWhere((f) => f.starUp == (player.breakThroughGrade));
       selfStarUpDefine = starUpDefineEntity;
       ppUpValue.value = 1 + starUpDefineEntity.getPotantialMax() / 100;
       var selfBaseInfo = Utils.getPlayBaseInfo(player.playerId);
@@ -91,7 +92,7 @@ class StartUpgradeController extends GetxController {
                 (value2.grade - 1) == value3.grade)) {
           /// 筛选非自己，未上阵，等于自己品阶或低自己一阶的球员
           var firstWhere = starUpDefineList
-              .firstWhere((f) => f.starUp == e.breakThroughGrade);
+              .firstWhere((f) => f.starUp == (e.breakThroughGrade));
           p.add(UpgradePlayer(e, firstWhere));
         }
         return p;
@@ -152,11 +153,13 @@ class StartUpgradeController extends GetxController {
         showFloatWidget.value = false;
       }
     }
-    var starUpDefineEntity = starUpDefineList
-        .firstWhere((f) => f.starUp == (player.breakThroughGrade + 1));
     double propertyUp = selectedPlayers.fold(0, (p, e) {
+      var starUpDefineEntity = starUpDefineList
+          .firstWhere((f) => f.starUp == (e.teamPlayer.breakThroughGrade));
       return p + starUpDefineEntity.starUpRange;
     });
+    var starUpDefineEntity = starUpDefineList
+        .firstWhere((f) => f.starUp == (player.breakThroughGrade));
     propertyUp = 1 + starUpDefineEntity.getPotantialMax() / 100 + propertyUp;
     var upSR = selectedPlayers.fold(0.0, (p, e) {
       return p + e.teamPlayer.probability;
@@ -177,7 +180,7 @@ class StartUpgradeController extends GetxController {
     var value2 = Grade.getGradeByName(selfBaseInfo.grade);
     var where =
         CacheApi.gradeInStars!.firstWhere((e) => e.playerGrade == value2.name);
-    var cost = where.starUpGradeCost[player.breakThroughGrade + 1];
+    var cost = where.starUpGradeCost[player.breakThroughGrade];
     return cost;
   }
 

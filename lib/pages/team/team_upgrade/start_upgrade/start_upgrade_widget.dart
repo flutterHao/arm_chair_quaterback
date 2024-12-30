@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/all_team_players_by_up_star_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_player_up_star_vo_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -34,7 +35,7 @@ import 'package:get/get.dart';
 class StartUpgradeWidget extends GetView<StartUpgradeController> {
   const StartUpgradeWidget({required this.player, super.key});
 
-  final TeamPlayerInfoEntity player;
+  final TeamPlayerUpStarVoEntity player;
 
   @override
   Widget build(BuildContext context) {
@@ -157,7 +158,7 @@ class StartUpgradeWidget extends GetView<StartUpgradeController> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            "Special training status",
+                                            "Star Up success",
                                             style: 10.w4(
                                                 color: AppColors.cFFFFFF,
                                                 height: 1,
@@ -192,7 +193,12 @@ class StartUpgradeWidget extends GetView<StartUpgradeController> {
                                                               .value /
                                                           100),
                                               decoration: BoxDecoration(
-                                                  color: AppColors.cFFFFFF,
+                                                  color: controller
+                                                              .upSuccessRate
+                                                              .value <
+                                                          30
+                                                      ? AppColors.cD60D20
+                                                      : AppColors.cFFFFFF,
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           4.5.w)),
@@ -425,11 +431,10 @@ class StartUpgradeWidget extends GetView<StartUpgradeController> {
                         context: context,
                         builder: (BuildContext context) {
                           return AddSparringPlayersDialogWidget(
-                            onBack:(value){
-                              print('isSuccess:$value');
-                              Get.back(result: value);
-                          }
-                          );
+                              onBack: (value) {
+                            print('isSuccess:$value');
+                            Get.back(result: value);
+                          });
                         },
                       ),
                       child: Container(
@@ -558,7 +563,11 @@ class StartUpgradeWidget extends GetView<StartUpgradeController> {
                                                             .value /
                                                         100),
                                             decoration: BoxDecoration(
-                                                color: AppColors.cFFFFFF,
+                                                color: controller.upSuccessRate
+                                                            .value <
+                                                        30
+                                                    ? AppColors.cD60D20
+                                                    : AppColors.cFFFFFF,
                                                 borderRadius:
                                                     BorderRadius.circular(2.w)),
                                             duration: const Duration(
@@ -632,7 +641,7 @@ class StartUpgradeWidget extends GetView<StartUpgradeController> {
             height: 93.w,
             playerId: item.playerId,
             grade: Utils.formatGrade(baseInfo.grade),
-            level: item.breakThroughGrade + 1,
+            level: item.breakThroughGrade,
           ),
           11.hGap,
           Expanded(
@@ -684,10 +693,10 @@ class StartUpgradeWidget extends GetView<StartUpgradeController> {
                             PlayerPropertyWidget(
                               title: "ATTRIB",
                               value:
-                                  "${upgradePlayer.starUpDefine.starUpRange}",
+                                  "+${upgradePlayer.starUpDefine.starUpRange}",
                             ),
                           PlayerPropertyWidget(
-                            title: "STATUS",
+                            title: "SUCCESS",
                             value: "+${item.probability.format()}%",
                           ),
                         ],

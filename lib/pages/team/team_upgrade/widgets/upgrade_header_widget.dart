@@ -64,7 +64,7 @@ class UpgradeHeaderWidget extends GetView<TeamUpgradeController> {
                             color: AppColors.c000000,
                             borderRadius: BorderRadius.circular(2.w)),
                         child: Text(
-                          controller.player.position > 0 ? "MAIN" : "SUB",
+                          controller.getPlayer().position > 0 ? "MAIN" : "SUB",
                           style: 10.w5(
                             color: AppColors.cFFFFFF,
                             height: 1,
@@ -84,7 +84,7 @@ class UpgradeHeaderWidget extends GetView<TeamUpgradeController> {
                       FittedBox(
                         fit: BoxFit.scaleDown,
                         child: Text(
-                          controller.getLastName(),
+                          controller.getFirstName(),
                           style: 16.w4(
                               color: AppColors.cFFFFFF,
                               height: 1,
@@ -116,7 +116,7 @@ class UpgradeHeaderWidget extends GetView<TeamUpgradeController> {
                           IconWidget(
                               iconWidth: 16.w,
                               icon: Utils.getStatusUrl(
-                                  controller.player.playerStatus)),
+                                  controller.getPlayer().playerStatus)),
                           6.hGap,
                           if (controller.playerBaseInfo.injuries)
                             IconWidget(
@@ -170,7 +170,7 @@ class UpgradeHeaderWidget extends GetView<TeamUpgradeController> {
                             iconWidth: 22.w,
                             icon: Assets.managerUiManagerPlayerstar),
                         Text(
-                          "${controller.starUpDoneEntity != null ? (controller.starUpDoneEntity!.teamPlayerVO.breakThroughGrade + 1) : (controller.teamPlayerUpStarVoEntity.breakThroughGrade + 1)}",
+                          "${controller.starUpDoneEntity != null ? (controller.starUpDoneEntity!.teamPlayerVO.breakThroughGrade) : (controller.teamPlayerUpStarVoEntity.breakThroughGrade)}",
                           style: 13.w5(
                             color: AppColors.cFFFFFF,
                             fontFamily: FontFamily.fRobotoMedium,
@@ -234,9 +234,9 @@ class UpgradeHeaderWidget extends GetView<TeamUpgradeController> {
                       controller.starUpDoneEntity != null
                           ? controller
                               .starUpDoneEntity!.teamPlayerVO.playerStrength
-                              .format()
+                              .toStringAsFixed(0)
                           : controller.teamPlayerUpStarVoEntity.playerStrength
-                              .format(),
+                              .toStringAsFixed(0),
                       style: 12.w4(
                           color: AppColors.c000000,
                           height: 1,
@@ -304,7 +304,7 @@ class UpgradeHeaderWidget extends GetView<TeamUpgradeController> {
                         icon: Assets.managerUiManagerIconRecover),
                     7.hGap,
                     Text(
-                      "${controller.player.power}",
+                      "${controller.getPlayer().power}",
                       style: 12.w4(
                           color: AppColors.c000000,
                           height: 1,
