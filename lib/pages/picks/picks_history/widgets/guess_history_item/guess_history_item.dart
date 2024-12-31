@@ -183,6 +183,9 @@ class GuessHistoryItem extends StatelessWidget {
 
   Widget _buildPlayerItemWidget(
       ReciveAwardV2GuessInfoGuessData item, bool lastIndex) {
+    if(item.type == 2){
+      return const SizedBox.shrink();
+    }
     var baseInfo = Utils.getPlayBaseInfo(item.playerId);
     var homeTeamInfo = Utils.getTeamInfo(item.homeTeamId);
     var awayTeamInfo = Utils.getTeamInfo(item.awayTeamId);
