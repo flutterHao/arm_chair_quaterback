@@ -1,3 +1,9 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-09-06 15:16:54
+ * @LastEditTime: 2024-12-31 15:42:28
+ */
 import 'package:flutter/rendering.dart';
 
 class Borders {
@@ -6,4 +12,6 @@ class Borders {
     width: 1,
     style: BorderStyle.solid,
   );
+
+   
 }

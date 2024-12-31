@@ -132,6 +132,14 @@ StatsEntity $StatsEntityFromJson(Map<String, dynamic> json) {
   if (teamId != null) {
     statsEntity.teamId = teamId;
   }
+  final double? gp = jsonConvert.convert<double>(json['GP']);
+  if (gp != null) {
+    statsEntity.gp = gp;
+  }
+  final double? min = jsonConvert.convert<double>(json['MIN']);
+  if (min != null) {
+    statsEntity.min = min;
+  }
   return statsEntity;
 }
 
@@ -169,6 +177,8 @@ Map<String, dynamic> $StatsEntityToJson(StatsEntity entity) {
   data['FTM'] = entity.fTM;
   data['TEAM_NAME'] = entity.teamName;
   data['TEAM_ID'] = entity.teamId;
+  data['GP'] = entity.gp;
+  data['MIN'] = entity.min;
   return data;
 }
 
@@ -206,6 +216,8 @@ extension StatsEntityExtension on StatsEntity {
     double? fTM,
     String? teamName,
     int? teamId,
+    double? gp,
+    double? min,
   }) {
     return StatsEntity()
       ..bLK = bLK ?? this.bLK
@@ -239,6 +251,8 @@ extension StatsEntityExtension on StatsEntity {
       ..tOV = tOV ?? this.tOV
       ..fTM = fTM ?? this.fTM
       ..teamName = teamName ?? this.teamName
-      ..teamId = teamId ?? this.teamId;
+      ..teamId = teamId ?? this.teamId
+      ..gp = gp ?? this.gp
+      ..min = min ?? this.min;
   }
 }

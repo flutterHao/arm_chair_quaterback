@@ -820,7 +820,7 @@ class TrainingController extends GetxController
     });
     await Future.delayed(const Duration(milliseconds: 1500), () async {
       showCash.value = false;
-      HomeController.to.updateMoney(cashs);
+      HomeController.to.updateMoney();
       await Future.delayed(const Duration(milliseconds: 300));
     });
   }

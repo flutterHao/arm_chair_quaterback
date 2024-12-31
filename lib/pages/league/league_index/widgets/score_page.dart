@@ -286,10 +286,15 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            ImageWidget(
-                              url: Utils.getTeamUrl(item.homeTeamId),
-                              imageFailedPath: Assets.iconUiDefault06,
-                              width: 52.w,
+                            InkWell(
+                              onTap: () {
+                                // Get.toNamed(RouteNames.teamDetailPage);
+                              },
+                              child: ImageWidget(
+                                url: Utils.getTeamUrl(item.homeTeamId),
+                                imageFailedPath: Assets.iconUiDefault06,
+                                width: 52.w,
+                              ),
                             ),
                             12.hGap,
                             Container(

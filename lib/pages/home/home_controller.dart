@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-25 11:48:38
- * @LastEditTime: 2024-12-30 12:04:30
+ * @LastEditTime: 2024-12-31 11:54:18
  */
 /*
  * @Description: 
@@ -216,7 +216,7 @@ class HomeController extends GetxController {
     });
   }
 
-  void updateMoney(int change) async {
+  void updateMoney() async {
     // for (var element
     //     in HomeController.to.userEntiry.teamLoginInfo!.teamPropList!) {
     //   if (element.propId == 102) {

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-14 16:54:10
- * @LastEditTime: 2024-12-30 20:53:48
+ * @LastEditTime: 2024-12-31 15:25:29
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
@@ -26,6 +26,9 @@ class TeamRankPage extends GetView<RankController> {
     return GetBuilder<RankController>(
         id: "teamRank",
         builder: (_) {
+          if (controller.teamRankList.isEmpty) {
+            return Container();
+          }
           return SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Container(
@@ -136,7 +139,7 @@ class RankList extends GetView<RankController> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
+                      SizedBox(
                         // margin: EdgeInsets.only(left: 16.w),
                         width: colomnsWidth[0],
                         child: Row(

@@ -111,7 +111,7 @@ class _FireDialogState extends State<FireDialog>
               //       return TopToastDialog(
               //           child: FireSuccessDialog(item: widget.item));
               //     });
-              HomeController.to.updateMoney(-ctrl.getFireMoney(widget.item));
+              HomeController.to.updateMoney();
               // await Future.delayed(Duration(milliseconds: 2000));
             },
             child: Container(

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:27:52
- * @LastEditTime: 2024-12-30 20:38:31
+ * @LastEditTime: 2024-12-31 10:46:38
  */
 import 'package:arm_chair_quaterback/common/entities/palyer_stats_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
@@ -45,20 +45,20 @@ class RankController extends GetxController
   // Map<String, Map<String, List<NbaPlayerStat>>> statsRankMap = {};
   Map<String, Map<String, dynamic>> statsRankMap = {
     "SCORING": {
-      "current": 0,
-      "list": ["PPG_PTS", "FGM_FGA", "3PM_3PA", "FTM_FTA"]
+      "current": 1,
+      "list": ["GP_MIN", "PPG_PTS", "FGM_FGA", "3PM_3PA", "FTM_FTA"]
     },
     "FIELD GOAL": {
-      "current": 0,
-      "list": ["FGM_FG%", "3PM_3P%", "FTM_FT%"]
+      "current": 1,
+      "list": ["GP_MIN", "FGM_FG%", "3PM_3P%", "FTM_FT%"]
     },
     "AST": {
-      "current": 0,
-      "list": ["APG_AST", "TPG_TO"]
+      "current": 1,
+      "list": ["GP_MIN", "APG_AST", "TPG_TO"]
     },
     "REB": {
-      "current": 0,
-      "list": ["RPG_REB", "BPG_BLK"]
+      "current": 1,
+      "list": ["GP_MIN", "RPG_REB", "BPG_BLK"]
     },
   };
 
@@ -177,6 +177,8 @@ class RankController extends GetxController
         list.sort((a, b) => b.bLK.compareTo(a.bLK));
       case "BLK":
         list.sort((a, b) => b.totalBlk.compareTo(a.totalBlk));
+      case "GP":
+        list.sort((a, b) => b.gp.compareTo(a.gp));
       default:
     }
     return list;
@@ -223,6 +225,10 @@ class RankController extends GetxController
         value = item.bLK;
       case "BLK":
         value = item.totalBlk;
+      case "GP":
+        value = item.gp;
+      case "MIN":
+        value = item.min;
       default:
         value = 0.0;
     }

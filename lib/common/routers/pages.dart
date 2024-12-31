@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:33:28
- * @LastEditTime: 2024-12-18 18:52:19
+ * @LastEditTime: 2024-12-31 15:13:49
  */
 // import 'package:arm_chair_quaterback/pages/news/new_detail/bindings.dart';
 // import 'package:arm_chair_quaterback/pages/news/new_detail/view.dart';
@@ -12,6 +12,7 @@
 // import 'package:arm_chair_quaterback/pages/news/rank/team_view.dart';
 import 'package:arm_chair_quaterback/pages/league/league_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/view.dart';
+import 'package:arm_chair_quaterback/pages/league/team_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/message/view.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_info/bindings.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_info/view.dart';
@@ -92,7 +93,6 @@ class AppPages {
       name: RouteNames.leagueLeagueDetail,
       page: () => const LeagueDetailPage(),
     ),
-
     GetPage(
       opaque: false,
       name: RouteNames.teamMemberPage,
@@ -125,14 +125,12 @@ class AppPages {
       page: () => const PicksHistoryPage(),
       binding: PicksHistoryBinding(),
     ),
-    // GetPage(
-    //   opaque: false,
-    //   name: RouteNames.newsDetail,
-    //   page: () {
-    //     return NewsListItem(
-    //       newsDetail: NewsListDetail(),
-    //     );
-    //   },
-    // ),
+    GetPage(
+      opaque: false,
+      name: RouteNames.teamDetailPage,
+      page: () {
+        return TeamDetailPage();
+      },
+    ),
   ];
 }

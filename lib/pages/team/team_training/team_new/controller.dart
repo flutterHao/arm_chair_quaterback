@@ -164,7 +164,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
           totalPw += e.power;
         }
         myTeamEntity.powerP = (totalPw ~/ myTeamEntity.teamPlayers.length);
-        HomeController.to.updateMoney(-cost);
+        HomeController.to.updateMoney();
       } else {
         if (myTeamEntity.powerP >= 100) {
           EasyLoading.showToast("Your team's morale is full.");
@@ -176,7 +176,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
                 myTeamEntity.teamPlayers.indexWhere((e1) => e1.uuid == e.uuid);
             myTeamEntity.teamPlayers[index].power = e.power;
           }
-          HomeController.to.updateMoney(-cost);
+          HomeController.to.updateMoney();
         }
 
         //  myTeamEntity=await TeamApi.getMyTeamPlayer(teamId)
@@ -295,6 +295,8 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
     await animationCtrl.reverse();
 
     myTeamEntity = result;
+    changeDuration = 300;
+
     if (isAdd) {
       for (var e in result.teamPlayers) {
         if (e.position == 0 && subList.where((s) => s.uuid == e.uuid).isEmpty) {
@@ -305,11 +307,12 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
     } else if (isDown) {
       int index = subList.indexWhere((element) => element.uuid == item1.uuid);
 
-      // listKey.currentState!.removeItem(
-      //   index,
-      //   (context, animation) => animatedSubItem(index, animation),
-      // );
+      listKey.currentState!.removeItem(
+        index,
+        (context, animation) => animatedSubItem(index, animation),
+      );
       subList.removeAt(index);
+      changeDuration = 0;
     } else {
       List<TeamPlayerInfoEntity> sub = List.from(subList);
       for (var e in result.teamPlayers) {

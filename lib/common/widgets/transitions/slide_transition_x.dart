@@ -61,7 +61,7 @@ class SlideTransitionX extends AnimatedWidget {
     return FractionalTranslation(
       translation: offset,
       transformHitTests: transformHitTests,
-      child: child,
+      child: position.status == AnimationStatus.reverse ? Container() : child,
     );
   }
 }

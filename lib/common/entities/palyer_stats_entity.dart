@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-27 18:50:14
- * @LastEditTime: 2024-12-27 21:06:13
+ * @LastEditTime: 2024-12-31 11:15:16
  */
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/palyer_stats_entity.g.dart';
@@ -74,6 +74,10 @@ class StatsEntity {
   late String teamName = "";
   @JSONField(name: "TEAM_ID")
   late int teamId = 0;
+  @JSONField(name: "GP")
+  late double gp = 0;
+  @JSONField(name: "MIN")
+  late double min = 0;
 
   StatsEntity();
   factory StatsEntity.fromJson(Map<String, dynamic> json) =>
