@@ -268,7 +268,7 @@ class StartUpgradeWidget extends GetView<StartUpgradeController> {
                                       alignment: Alignment.center,
                                       children: [
                                         Text(
-                                          "star",
+                                          "Star",
                                           style: 16.w4(
                                               color: AppColors.c000000,
                                               height: 1,
@@ -280,25 +280,24 @@ class StartUpgradeWidget extends GetView<StartUpgradeController> {
                                           child: Column(
                                             children: [
                                               IconWidget(
-                                                iconWidth: 4.w,
+                                                iconWidth: 8.w,
                                                 icon: Assets
-                                                    .commonUiCommonIconSystemArrow,
+                                                    .iconUiIconShrink,
                                                 iconColor:
-                                                    controller.starSort == 0
+                                                    controller.starSort.value == 0
                                                         ? AppColors.c000000
                                                         : AppColors.cB3B3B3,
-                                                rotateAngle: -90.w,
                                               ),
                                               3.vGap,
                                               IconWidget(
-                                                iconWidth: 4.w,
+                                                iconWidth: 8.w,
                                                 icon: Assets
-                                                    .commonUiCommonIconSystemArrow,
+                                                    .iconUiIconShrink,
                                                 iconColor:
-                                                    controller.starSort == 1
+                                                    controller.starSort.value == 1
                                                         ? AppColors.c000000
                                                         : AppColors.cB3B3B3,
-                                                rotateAngle: 90.w,
+                                                rotateAngle: 180,
                                               ),
                                             ],
                                           ),
@@ -333,7 +332,7 @@ class StartUpgradeWidget extends GetView<StartUpgradeController> {
                                       alignment: Alignment.center,
                                       children: [
                                         Text(
-                                          "grade",
+                                          "Grade",
                                           style: 16.w4(
                                               color: AppColors.c000000,
                                               height: 1,
@@ -345,25 +344,24 @@ class StartUpgradeWidget extends GetView<StartUpgradeController> {
                                           child: Column(
                                             children: [
                                               IconWidget(
-                                                iconWidth: 4.w,
+                                                iconWidth: 8.w,
                                                 icon: Assets
-                                                    .commonUiCommonIconSystemArrow,
+                                                    .iconUiIconShrink,
                                                 iconColor:
-                                                    controller.gradeSort == 0
+                                                    controller.gradeSort.value == 0
                                                         ? AppColors.c000000
                                                         : AppColors.cB3B3B3,
-                                                rotateAngle: -90.w,
                                               ),
                                               3.vGap,
                                               IconWidget(
-                                                iconWidth: 4.w,
+                                                iconWidth: 8.w,
                                                 icon: Assets
-                                                    .commonUiCommonIconSystemArrow,
+                                                    .iconUiIconShrink,
                                                 iconColor:
-                                                    controller.gradeSort == 1
+                                                    controller.gradeSort.value == 1
                                                         ? AppColors.c000000
                                                         : AppColors.cB3B3B3,
-                                                rotateAngle: 90.w,
+                                                rotateAngle: 180,
                                               ),
                                             ],
                                           ),

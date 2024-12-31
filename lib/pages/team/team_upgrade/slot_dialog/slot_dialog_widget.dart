@@ -477,9 +477,10 @@ class SlotDialogWidget extends GetView<SlotDialogController> {
                                                   return;
                                                 }
                                                 BottomTipDialog.show(
-                                                    desc: "Do you want to done the game",
+                                                    desc:
+                                                        "Do you want to done the game",
                                                     context: context,
-                                                    onTap: (){
+                                                    onTap: () {
                                                       Get.back();
                                                       controller.done();
                                                     });
@@ -630,7 +631,7 @@ class SlotDialogWidget extends GetView<SlotDialogController> {
                             Container(
                               margin: EdgeInsets.only(bottom: 3.w),
                               child: Text(
-                                "${Get.find<TeamUpgradeController>().teamPlayerUpStarVoEntity.breakThroughGrade}",
+                                "${Get.find<TeamUpgradeController>().getPlayer().breakThroughGrade}",
                                 style: 21.w7(
                                   color: AppColors.cFFFFFF,
                                   height: 1,
@@ -670,7 +671,7 @@ class SlotDialogWidget extends GetView<SlotDialogController> {
                             Container(
                               margin: EdgeInsets.only(bottom: 3.w),
                               child: Text(
-                                "${Get.find<TeamUpgradeController>().teamPlayerUpStarVoEntity.breakThroughGrade}",
+                                "${Get.find<TeamUpgradeController>().getPlayer().breakThroughGrade + 1}",
                                 style: 21.w7(
                                   color: AppColors.cFFFFFF,
                                   height: 1,

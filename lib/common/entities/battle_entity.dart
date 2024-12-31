@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/battle_entity.g.dart';
@@ -8,10 +9,10 @@ export 'package:arm_chair_quaterback/generated/json/battle_entity.g.dart';
 class BattleEntity {
   late int awayTeamPower;
   BattleNew? news;
-  late List<TeamPlayerList> homeTeamPlayerList;
+  late List<TeamPlayerInfoEntity> homeTeamPlayerList;
   late BattleTeam awayTeam;
   late AbilityValue awayAbilityValue;
-  late List<TeamPlayerList> awayTeamPlayerList;
+  late List<TeamPlayerInfoEntity> awayTeamPlayerList;
   late List<TrainingInfoBuff> awayTeamBuff;
   late int homeTeamPower;
   late List<TrainingInfoBuff> homeTeamBuff;
@@ -61,41 +62,6 @@ class BattleNew {
       $BattleNewFromJson(json);
 
   Map<String, dynamic> toJson() => $BattleNewToJson(this);
-
-  @override
-  String toString() {
-    return jsonEncode(this);
-  }
-}
-
-@JsonSerializable()
-class TeamPlayerList {
-  late int buyPrice;
-  late int buyPlayerScore;
-  late int updateTime;
-  late String uuid;
-  late double playerReadiness;
-  late int gradeExp;
-  late int fromType;
-  late int createTime;
-  late int playerGrade;
-  late int teamId;
-  late int id;
-  late int position;
-  late int power;
-  late int playerStatus;
-  late Potential potential;
-  late bool bindStatus;
-  late int breakThroughGrade;
-  late int playerId;
-  late UpStarBase upStarBase;
-
-  TeamPlayerList();
-
-  factory TeamPlayerList.fromJson(Map<String, dynamic> json) =>
-      $TeamPlayerListFromJson(json);
-
-  Map<String, dynamic> toJson() => $TeamPlayerListToJson(this);
 
   @override
   String toString() {

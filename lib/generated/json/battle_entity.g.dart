@@ -1,5 +1,7 @@
 import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.dart';
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
+
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 
 
@@ -14,10 +16,11 @@ BattleEntity $BattleEntityFromJson(Map<String, dynamic> json) {
     battleEntity.news = news;
   }
   final List<
-      TeamPlayerList>? homeTeamPlayerList = (json['homeTeamPlayerList'] as List<
+      TeamPlayerInfoEntity>? homeTeamPlayerList = (json['homeTeamPlayerList'] as List<
       dynamic>?)
       ?.map(
-          (e) => jsonConvert.convert<TeamPlayerList>(e) as TeamPlayerList)
+          (e) =>
+      jsonConvert.convert<TeamPlayerInfoEntity>(e) as TeamPlayerInfoEntity)
       .toList();
   if (homeTeamPlayerList != null) {
     battleEntity.homeTeamPlayerList = homeTeamPlayerList;
@@ -33,10 +36,11 @@ BattleEntity $BattleEntityFromJson(Map<String, dynamic> json) {
     battleEntity.awayAbilityValue = awayAbilityValue;
   }
   final List<
-      TeamPlayerList>? awayTeamPlayerList = (json['awayTeamPlayerList'] as List<
+      TeamPlayerInfoEntity>? awayTeamPlayerList = (json['awayTeamPlayerList'] as List<
       dynamic>?)
       ?.map(
-          (e) => jsonConvert.convert<TeamPlayerList>(e) as TeamPlayerList)
+          (e) =>
+      jsonConvert.convert<TeamPlayerInfoEntity>(e) as TeamPlayerInfoEntity)
       .toList();
   if (awayTeamPlayerList != null) {
     battleEntity.awayTeamPlayerList = awayTeamPlayerList;
@@ -125,10 +129,10 @@ extension BattleEntityExtension on BattleEntity {
   BattleEntity copyWith({
     int? awayTeamPower,
     BattleNew? news,
-    List<TeamPlayerList>? homeTeamPlayerList,
+    List<TeamPlayerInfoEntity>? homeTeamPlayerList,
     BattleTeam? awayTeam,
     AbilityValue? awayAbilityValue,
-    List<TeamPlayerList>? awayTeamPlayerList,
+    List<TeamPlayerInfoEntity>? awayTeamPlayerList,
     List<TrainingInfoBuff>? awayTeamBuff,
     int? homeTeamPower,
     List<TrainingInfoBuff>? homeTeamBuff,
@@ -289,160 +293,6 @@ extension BattleNewExtension on BattleNew {
       ..id = id ?? this.id
       ..views = views ?? this.views
       ..likes = likes ?? this.likes;
-  }
-}
-
-TeamPlayerList $TeamPlayerListFromJson(Map<String, dynamic> json) {
-  final TeamPlayerList teamPlayerList = TeamPlayerList();
-  final int? buyPrice = jsonConvert.convert<int>(json['buyPrice']);
-  if (buyPrice != null) {
-    teamPlayerList.buyPrice = buyPrice;
-  }
-  final int? buyPlayerScore = jsonConvert.convert<int>(json['buyPlayerScore']);
-  if (buyPlayerScore != null) {
-    teamPlayerList.buyPlayerScore = buyPlayerScore;
-  }
-  final int? updateTime = jsonConvert.convert<int>(json['updateTime']);
-  if (updateTime != null) {
-    teamPlayerList.updateTime = updateTime;
-  }
-  final String? uuid = jsonConvert.convert<String>(json['uuid']);
-  if (uuid != null) {
-    teamPlayerList.uuid = uuid;
-  }
-  final double? playerReadiness = jsonConvert.convert<double>(
-      json['playerReadiness']);
-  if (playerReadiness != null) {
-    teamPlayerList.playerReadiness = playerReadiness;
-  }
-  final int? gradeExp = jsonConvert.convert<int>(json['gradeExp']);
-  if (gradeExp != null) {
-    teamPlayerList.gradeExp = gradeExp;
-  }
-  final int? fromType = jsonConvert.convert<int>(json['fromType']);
-  if (fromType != null) {
-    teamPlayerList.fromType = fromType;
-  }
-  final int? createTime = jsonConvert.convert<int>(json['createTime']);
-  if (createTime != null) {
-    teamPlayerList.createTime = createTime;
-  }
-  final int? playerGrade = jsonConvert.convert<int>(json['playerGrade']);
-  if (playerGrade != null) {
-    teamPlayerList.playerGrade = playerGrade;
-  }
-  final int? teamId = jsonConvert.convert<int>(json['teamId']);
-  if (teamId != null) {
-    teamPlayerList.teamId = teamId;
-  }
-  final int? id = jsonConvert.convert<int>(json['id']);
-  if (id != null) {
-    teamPlayerList.id = id;
-  }
-  final int? position = jsonConvert.convert<int>(json['position']);
-  if (position != null) {
-    teamPlayerList.position = position;
-  }
-  final int? power = jsonConvert.convert<int>(json['power']);
-  if (power != null) {
-    teamPlayerList.power = power;
-  }
-  final int? playerStatus = jsonConvert.convert<int>(json['playerStatus']);
-  if (playerStatus != null) {
-    teamPlayerList.playerStatus = playerStatus;
-  }
-  final Potential? potential = jsonConvert.convert<Potential>(
-      json['potential']);
-  if (potential != null) {
-    teamPlayerList.potential = potential;
-  }
-  final bool? bindStatus = jsonConvert.convert<bool>(json['bindStatus']);
-  if (bindStatus != null) {
-    teamPlayerList.bindStatus = bindStatus;
-  }
-  final int? breakThroughGrade = jsonConvert.convert<int>(
-      json['breakThroughGrade']);
-  if (breakThroughGrade != null) {
-    teamPlayerList.breakThroughGrade = breakThroughGrade;
-  }
-  final int? playerId = jsonConvert.convert<int>(json['playerId']);
-  if (playerId != null) {
-    teamPlayerList.playerId = playerId;
-  }
-  final UpStarBase? upStarBase = jsonConvert.convert<UpStarBase>(
-      json['upStarBase']);
-  if (upStarBase != null) {
-    teamPlayerList.upStarBase = upStarBase;
-  }
-  return teamPlayerList;
-}
-
-Map<String, dynamic> $TeamPlayerListToJson(TeamPlayerList entity) {
-  final Map<String, dynamic> data = <String, dynamic>{};
-  data['buyPrice'] = entity.buyPrice;
-  data['buyPlayerScore'] = entity.buyPlayerScore;
-  data['updateTime'] = entity.updateTime;
-  data['uuid'] = entity.uuid;
-  data['playerReadiness'] = entity.playerReadiness;
-  data['gradeExp'] = entity.gradeExp;
-  data['fromType'] = entity.fromType;
-  data['createTime'] = entity.createTime;
-  data['playerGrade'] = entity.playerGrade;
-  data['teamId'] = entity.teamId;
-  data['id'] = entity.id;
-  data['position'] = entity.position;
-  data['power'] = entity.power;
-  data['playerStatus'] = entity.playerStatus;
-  data['potential'] = entity.potential.toJson();
-  data['bindStatus'] = entity.bindStatus;
-  data['breakThroughGrade'] = entity.breakThroughGrade;
-  data['playerId'] = entity.playerId;
-  data['upStarBase'] = entity.upStarBase.toJson();
-  return data;
-}
-
-extension TeamPlayerListExtension on TeamPlayerList {
-  TeamPlayerList copyWith({
-    int? buyPrice,
-    int? buyPlayerScore,
-    int? updateTime,
-    String? uuid,
-    double? playerReadiness,
-    int? gradeExp,
-    int? fromType,
-    int? createTime,
-    int? playerGrade,
-    int? teamId,
-    int? id,
-    int? position,
-    int? power,
-    int? playerStatus,
-    Potential? potential,
-    bool? bindStatus,
-    int? breakThroughGrade,
-    int? playerId,
-    UpStarBase? upStarBase,
-  }) {
-    return TeamPlayerList()
-      ..buyPrice = buyPrice ?? this.buyPrice
-      ..buyPlayerScore = buyPlayerScore ?? this.buyPlayerScore
-      ..updateTime = updateTime ?? this.updateTime
-      ..uuid = uuid ?? this.uuid
-      ..playerReadiness = playerReadiness ?? this.playerReadiness
-      ..gradeExp = gradeExp ?? this.gradeExp
-      ..fromType = fromType ?? this.fromType
-      ..createTime = createTime ?? this.createTime
-      ..playerGrade = playerGrade ?? this.playerGrade
-      ..teamId = teamId ?? this.teamId
-      ..id = id ?? this.id
-      ..position = position ?? this.position
-      ..power = power ?? this.power
-      ..playerStatus = playerStatus ?? this.playerStatus
-      ..potential = potential ?? this.potential
-      ..bindStatus = bindStatus ?? this.bindStatus
-      ..breakThroughGrade = breakThroughGrade ?? this.breakThroughGrade
-      ..playerId = playerId ?? this.playerId
-      ..upStarBase = upStarBase ?? this.upStarBase;
   }
 }
 

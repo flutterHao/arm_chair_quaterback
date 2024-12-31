@@ -78,7 +78,7 @@ class StartUpgradeController extends GetxController {
           result[1] as List<AllTeamPlayersByUpStarEntity>;
       starUpDefineList = result[2] as List<StarUpDefineEntity>;
       var starUpDefineEntity = starUpDefineList
-          .firstWhere((f) => f.starUp == (player.breakThroughGrade));
+          .firstWhere((f) => f.starUp == (player.breakThroughGrade+1));
       selfStarUpDefine = starUpDefineEntity;
       ppUpValue.value = 1 + starUpDefineEntity.getPotantialMax() / 100;
       var selfBaseInfo = Utils.getPlayBaseInfo(player.playerId);

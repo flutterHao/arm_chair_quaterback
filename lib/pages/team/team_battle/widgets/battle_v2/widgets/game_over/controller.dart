@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/cup_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -52,6 +54,20 @@ class GameOverController extends GetxController {
         .firstWhereOrNull((e) => e.type == 1);
   }
 
+  TeamPlayerInfoEntity getTeamPlayerInfoEntityByPlayerId(
+      int teamId, int playerId) {
+    TeamBattleV2Controller teamBattleV2Controller = Get.find();
+    var battleEntity = teamBattleV2Controller.battleEntity;
+    List<TeamPlayerInfoEntity> list = [];
+    if (teamId == battleEntity.homeTeam.teamId) {
+      list = battleEntity.homeTeamPlayerList;
+    } else {
+      list = battleEntity.awayTeamPlayerList;
+    }
+    var result = list.firstWhere((e) => e.playerId == playerId);
+    return result;
+  }
+
   /// 获取mvp球员的星级
   int getMvpBreakThroughGrade() {
     var mvpInfo = getMvpInfo();
@@ -90,11 +106,26 @@ class GameOverController extends GetxController {
     var currentHomeCup = getHomeCurrentCup();
     var result = (currentHomeCup - beforeHomeCup).abs();
     leftCupNum = result;
-    leftCup.value = leftCupNum>0?1:0;
+    leftCup.value = leftCupNum > 0 ? 1 : 0;
     var beforeAwayCup = getAwayTeam().cup;
     var currentAwayCup = getAwayCurrentCup();
     rightCupNum = (currentAwayCup - beforeAwayCup).abs();
-    rightCup.value = rightCupNum>0?1:0;
+    rightCup.value = rightCupNum > 0 ? 1 : 0;
+    Timer.periodic(const Duration(milliseconds: 100), (t) {
+      if (leftCup.value == leftCupNum && rightCup.value == rightCupNum) {
+        t.cancel();
+        Future.delayed(const Duration(milliseconds: 500), () {
+          giftScaleObs.value = true;
+        });
+        return;
+      }
+      if (leftCup.value != leftCupNum) {
+        leftCup.value = leftCup.value + 1;
+      }
+      if (rightCup.value != rightCupNum) {
+        rightCup.value = rightCup.value + 1;
+      }
+    });
     print('leftCupNum:$leftCupNum,,,,$rightCupNum');
     if (result != 0) {
       var cupPercent = getHomeCupPercent();
@@ -203,7 +234,8 @@ class GameOverController extends GetxController {
                           iconWidth: 8.w,
                           icon: Assets.commonUiCommonIconSystemArrow,
                           iconColor: AppColors.c000000,
-                          rotateAngle: currentHomeCup > beforeHomeCup ? -90 : 90,
+                          rotateAngle:
+                              currentHomeCup > beforeHomeCup ? -90 : 90,
                         )
                       ],
                     )
@@ -257,15 +289,15 @@ class GameOverController extends GetxController {
 
   CupDefineEntity? getHomeCurrentCupDefine() {
     int id = getHomeTeam().cupRankId;
-    var where = CacheApi.cupDefineList.firstWhereOrNull(
-        (e) => e.cupNumId == id);
+    var where =
+        CacheApi.cupDefineList.firstWhereOrNull((e) => e.cupNumId == id);
     return where;
   }
 
   CupDefineEntity? getAwayCurrentCupDefine() {
     int id = getAwayTeam().cupRankId;
-    var where = CacheApi.cupDefineList.firstWhereOrNull(
-            (e) => e.cupNumId == id);
+    var where =
+        CacheApi.cupDefineList.firstWhereOrNull((e) => e.cupNumId == id);
     return where;
   }
 
@@ -280,9 +312,9 @@ class GameOverController extends GetxController {
 
   int getAwayCurrentCup() {
     var currentCup = Get.find<TeamBattleV2Controller>()
-        .pkResultUpdatedEntity
-        ?.awayTeamResult
-        .cup ??
+            .pkResultUpdatedEntity
+            ?.awayTeamResult
+            .cup ??
         0;
     return currentCup;
   }

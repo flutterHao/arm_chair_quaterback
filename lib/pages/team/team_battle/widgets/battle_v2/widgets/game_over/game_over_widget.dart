@@ -1,5 +1,6 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.dart';
+import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -153,13 +154,19 @@ class GameOverWidget extends GetView<GameOverController> {
       var breakThroughGrade = controller.getMvpBreakThroughGrade();
       print('breakThroughGrade:$breakThroughGrade');
       Widget parent({required Widget child}) {
-        return Container(
-          height: 165.w,
-          margin: EdgeInsets.only(bottom: 9.w),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(9.w),
-              color: AppColors.cFFFFFF),
-          child: child,
+        return InkWell(
+          onTap: () => Get.toNamed(RouteNames.teamTeamUpgrade, arguments: {
+            "player": controller.getTeamPlayerInfoEntityByPlayerId(
+                pkResultUpdatedPlayer.teamId, pkResultUpdatedPlayer.playerId)
+          }),
+          child: Container(
+            height: 165.w,
+            margin: EdgeInsets.only(bottom: 9.w),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(9.w),
+                color: AppColors.cFFFFFF),
+            child: child,
+          ),
         );
       }
 
@@ -806,22 +813,7 @@ class GameOverWidget extends GetView<GameOverController> {
           var value2 =
               isLeftWin ? controller.rightCup.value : controller.leftCup.value;
           return HeartbeatWidget(
-            onEnd: () {
-              if (isLeftWin
-                  ? controller.leftCup.value == controller.leftCupNum
-                  : controller.rightCup.value == controller.rightCupNum) {
-                Future.delayed(const Duration(milliseconds: 500), () {
-                  controller.giftScaleObs.value = true;
-                });
-                return;
-              }
-              print('----------vvvv-------');
-              if (isLeftWin) {
-                controller.leftCup.value = controller.leftCup.value + 1;
-              } else {
-                controller.rightCup.value = controller.rightCup.value + 1;
-              }
-            },
+            onEnd: () {},
             child: Container(
               width: 131.w,
               alignment: Alignment.topCenter,

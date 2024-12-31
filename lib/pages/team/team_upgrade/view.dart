@@ -18,6 +18,7 @@ import 'package:arm_chair_quaterback/pages/team/team_upgrade/slot_dialog/slot_di
 import 'package:arm_chair_quaterback/pages/team/team_upgrade/widgets/upgrade_header_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -70,250 +71,32 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
           Stack(
             children: [
               RepaintBoundary(
-                key: controller.globalKey,
-                child: Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      color: AppColors.cFFFFFF,
-                      borderRadius: BorderRadius.circular(12.w)),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      20.vGap,
-                      Row(
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(left: 16.w),
-                            child: Text(
-                              "ABILITY",
-                              style: 30.w7(
-                                  color: AppColors.c000000,
-                                  height: 1,
-                                  fontFamily: FontFamily.fOswaldBold),
-                            ),
-                          ),
-                        ],
-                      ),
-                      26.vGap,
-                      ...List.generate(
-                          controller.upgradePlayerAbilityList.length, (index) {
-                        var ability =
-                            controller.upgradePlayerAbilityList[index];
-                        return Container(
-                          margin: EdgeInsets.only(bottom: 17.w),
-                          child: Row(
-                            children: [
-                              29.hGap,
-                              Expanded(
-                                child: Text(
-                                  ability.name,
-                                  style: 16.w4(
-                                      color: AppColors.c000000,
-                                      height: 1,
-                                      fontFamily: FontFamily.fOswaldRegular),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 12.w,
-                                width: 235.w,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(6.w),
-                                  child: Builder(builder: (context) {
-                                    double value =
-                                        ability.sGradeLevel1PlayerMaxValue;
-                                    double total = ability.totalValue;
-                                    double baseValue = ability.baseValue;
-                                    double beforeUpgradeValue =
-                                        ability.beforeValue;
-                                    double afterUpgradeValue =
-                                        ability.afterValue;
-                                    double maxProgress =
-                                        ability.selfLevel10Value / total;
-                                    double baseProgress = baseValue / value;
-                                    baseProgress = baseProgress *
-                                        ability.selfLevel10Value /
-                                        total;
-
-                                    double beforeProgress = baseProgress +
-                                        (ability.beforeValue -
-                                                ability.baseValue) /
-                                            (ability.beforeMaxValue -
-                                                ability.baseValue) *
-                                            (controller
-                                                    .teamPlayerUpStarVoEntity
-                                                    .breakThroughGrade *
-                                                maxProgress /
-                                                10);
-
-                                    double afterProgress = baseProgress +
-                                        (ability.afterValue -
-                                                ability.baseValue) /
-                                            (ability.afterMaxValue -
-                                                ability.baseValue) *
-                                            (controller
-                                                    .starUpDoneEntity
-                                                    ?.teamPlayerVO
-                                                    .breakThroughGrade ??
-                                                0 * maxProgress / 10);
-
-                                    return Stack(
-                                      alignment: Alignment.centerLeft,
-                                      children: [
-                                        /// 边框
-                                        Container(
-                                          height: 12.w,
-                                          width: 235.w,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(6.w),
-                                              border: Border.all(
-                                                  color: AppColors.cD1D1D1,
-                                                  width: 1.w)),
-                                        ),
-                                        AnimatedPositioned(
-                                            duration: const Duration(
-                                                milliseconds: 300),
-                                            left: -(235.w * (1 - maxProgress)),
-                                            child: Container(
-                                              width: 235.w,
-                                              height: 10.w,
-                                              decoration: BoxDecoration(
-                                                  border: Border(
-                                                      right: BorderSide(
-                                                          color:
-                                                              AppColors.c000000,
-                                                          width: 2.w))),
-                                            )),
-
-                                        /// 升级后
-                                        AnimatedPositioned(
-                                            duration: const Duration(
-                                                milliseconds: 300),
-                                            left:
-                                                -(235.w * (1 - afterProgress)),
-                                            child: Container(
-                                              height: 12.w,
-                                              width: 235.w,
-                                              decoration: BoxDecoration(
-                                                  color: AppColors.cFFD133,
-                                                  borderRadius:
-                                                      BorderRadius.horizontal(
-                                                          left: Radius.circular(
-                                                              6.w))),
-                                            )),
-
-                                        /// 升级前
-                                        AnimatedPositioned(
-                                            duration: const Duration(
-                                                milliseconds: 300),
-                                            left:
-                                                -(235.w * (1 - beforeProgress)),
-                                            child: Container(
-                                              height: 12.w,
-                                              width: 235.w,
-                                              decoration: BoxDecoration(
-                                                  color: AppColors.cFF7954,
-                                                  borderRadius:
-                                                      BorderRadius.horizontal(
-                                                          left: Radius.circular(
-                                                              6.w))),
-                                            )),
-
-                                        /// 基础
-                                        AnimatedPositioned(
-                                            duration: const Duration(
-                                                milliseconds: 300),
-                                            left: -(235.w * (1 - baseProgress)),
-                                            child: Container(
-                                              height: 12.w,
-                                              width: 235.w,
-                                              decoration: BoxDecoration(
-                                                  color: AppColors.c000000,
-                                                  borderRadius:
-                                                      BorderRadius.horizontal(
-                                                          left: Radius.circular(
-                                                              6.w))),
-                                            )),
-                                      ],
-                                    );
-                                  }),
-                                ),
-                              ),
-                              9.hGap,
-                              Expanded(
-                                child: Text(
-                                  ability.afterValue != 0
-                                      ? ability.afterValue.toStringAsFixed(0)
-                                      : ability.beforeValue.toStringAsFixed(0),
-                                  style: 16.w4(
-                                      color: AppColors.c000000,
-                                      height: 1,
-                                      fontFamily: FontFamily.fOswaldRegular),
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      }),
-                      16.vGap,
-                      if (controller.getPlayer().breakThroughGrade < 10)
-                        MtInkwell(
-                          onTap: () async {
-                            if (controller.teamPlayerUpStarVoEntity.starUpDTO !=
-                                null) {
-                              var result = await showModalBottomSheet(
-                                  isScrollControlled: true,
-                                  enableDrag: false,
-                                  backgroundColor: AppColors.cTransparent,
-                                  context: context,
-                                  builder: (context) {
-                                    return const SlotDialogWidget(0);
-                                  });
-                              onResult(result);
-                            } else {
-                              var result = await Get.toNamed(
-                                  RouteNames.teamStartUpGrade,
-                                  arguments: {
-                                    "player": controller.getPlayer()
-                                  });
-                              onResult(result);
-                            }
-                          },
-                          child: Container(
-                            height: 51.w,
-                            width: 343.w,
-                            decoration: BoxDecoration(
-                                color: AppColors.c000000,
-                                borderRadius: BorderRadius.circular(9.w)),
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                Text(
-                                  "Star up",
-                                  style: 23.w5(
-                                      color: AppColors.cFFFFFF,
-                                      height: 1,
-                                      fontFamily: FontFamily.fOswaldMedium),
-                                ),
-                                Positioned(
-                                    right: 13.w,
-                                    child: IconWidget(
-                                        iconWidth: 11.w,
-                                        icon: Assets
-                                            .commonUiCommonIconSystemJumpto))
-                              ],
-                            ),
-                          ),
-                        ),
-                      21.vGap,
-                    ],
-                  ),
-                ),
+                // key: controller.globalKey,
+                child: _buildAbilityWidget(context),
               ),
               Positioned(
                   right: 10.w,
                   top: 10.w,
-                  child: ShareWidget(globalKey: controller.globalKey))
+                  child: ShareWidget(globalKey: controller.globalKey)),
+              Positioned(
+                top: 0,
+                  child: Transform.scale(
+                    scale: 0.000001,
+                    child: RepaintBoundary(
+                      key: controller.globalKey,
+                      child: Container(
+                        color: AppColors.cF2F2F2,
+                        width: MediaQuery.of(context).size.width,
+                        child: Column(
+                          children: [
+                            const UpgradeHeaderWidget(),
+                            9.vGap,
+                            _buildAbilityWidget(context),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ))
             ],
           ),
           Container(
@@ -518,6 +301,253 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
         ],
       ),
     );
+  }
+
+  Container _buildAbilityWidget(BuildContext context) {
+    return Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    color: AppColors.cFFFFFF,
+                    borderRadius: BorderRadius.circular(12.w)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    20.vGap,
+                    Row(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(left: 16.w),
+                          child: Text(
+                            "ABILITY",
+                            style: 30.w7(
+                                color: AppColors.c000000,
+                                height: 1,
+                                fontFamily: FontFamily.fOswaldBold),
+                          ),
+                        ),
+                      ],
+                    ),
+                    26.vGap,
+                    ...List.generate(
+                        controller.upgradePlayerAbilityList.length, (index) {
+                      var ability =
+                          controller.upgradePlayerAbilityList[index];
+                      return Container(
+                        margin: EdgeInsets.only(bottom: 17.w),
+                        child: Row(
+                          children: [
+                            29.hGap,
+                            Expanded(
+                              child: Text(
+                                ability.name,
+                                style: 16.w4(
+                                    color: AppColors.c000000,
+                                    height: 1,
+                                    fontFamily: FontFamily.fOswaldRegular),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 12.w,
+                              width: 235.w,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(6.w),
+                                child: Builder(builder: (context) {
+                                  double value =
+                                      ability.sGradeLevel1PlayerMaxValue;
+                                  double total = ability.totalValue;
+                                  double baseValue = ability.baseValue;
+                                  double beforeUpgradeValue =
+                                      ability.beforeValue;
+                                  double afterUpgradeValue =
+                                      ability.afterValue;
+                                  double maxProgress =
+                                      ability.selfLevel10Value / total;
+                                  double baseProgress = baseValue / value;
+                                  baseProgress = baseProgress *
+                                      ability.selfLevel10Value /
+                                      total;
+
+                                  double beforeProgress = baseProgress +
+                                      ((ability.beforeValue -
+                                                  ability.baseValue) /
+                                              (ability.beforeMaxValue -
+                                                  ability.baseValue) *
+                                              (controller
+                                                      .teamPlayerUpStarVoEntity
+                                                      .breakThroughGrade *
+                                                  maxProgress /
+                                                  10))
+                                          .handlerNaNInfinity();
+
+                                  double afterProgress = baseProgress +
+                                      ((ability.afterValue -
+                                                  ability.baseValue) /
+                                              (ability.afterMaxValue -
+                                                  ability.baseValue) *
+                                              ((controller
+                                                          .starUpDoneEntity
+                                                          ?.teamPlayerVO
+                                                          .breakThroughGrade ??
+                                                      0) *
+                                                  maxProgress /
+                                                  10))
+                                          .handlerNaNInfinity();
+
+                                  return Stack(
+                                    alignment: Alignment.centerLeft,
+                                    children: [
+                                      /// 边框
+                                      Container(
+                                        height: 12.w,
+                                        width: 235.w,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(6.w),
+                                            border: Border.all(
+                                                color: AppColors.cD1D1D1,
+                                                width: 1.w)),
+                                      ),
+                                      AnimatedPositioned(
+                                          duration: const Duration(
+                                              milliseconds: 300),
+                                          left: -(235.w * (1 - maxProgress)),
+                                          child: Container(
+                                            width: 235.w,
+                                            height: 10.w,
+                                            decoration: BoxDecoration(
+                                                border: Border(
+                                                    right: BorderSide(
+                                                        color:
+                                                            AppColors.c000000,
+                                                        width: 2.w))),
+                                          )),
+
+                                      /// 升级后
+                                      AnimatedPositioned(
+                                          duration: const Duration(
+                                              milliseconds: 300),
+                                          left:
+                                              -(235.w * (1 - afterProgress)),
+                                          child: Container(
+                                            height: 12.w,
+                                            width: 235.w,
+                                            decoration: BoxDecoration(
+                                                color: AppColors.cFFD133,
+                                                borderRadius:
+                                                    BorderRadius.horizontal(
+                                                        left: Radius.circular(
+                                                            6.w))),
+                                          )),
+
+                                      /// 升级前
+                                      AnimatedPositioned(
+                                          duration: const Duration(
+                                              milliseconds: 300),
+                                          left:
+                                              -(235.w * (1 - beforeProgress)),
+                                          child: Container(
+                                            height: 12.w,
+                                            width: 235.w,
+                                            decoration: BoxDecoration(
+                                                color: AppColors.cFF7954,
+                                                borderRadius:
+                                                    BorderRadius.horizontal(
+                                                        left: Radius.circular(
+                                                            6.w))),
+                                          )),
+
+                                      /// 基础
+                                      AnimatedPositioned(
+                                          duration: const Duration(
+                                              milliseconds: 300),
+                                          left: -(235.w * (1 - baseProgress)),
+                                          child: Container(
+                                            height: 12.w,
+                                            width: 235.w,
+                                            decoration: BoxDecoration(
+                                                color: AppColors.c000000,
+                                                borderRadius:
+                                                    BorderRadius.horizontal(
+                                                        left: Radius.circular(
+                                                            6.w))),
+                                          )),
+                                    ],
+                                  );
+                                }),
+                              ),
+                            ),
+                            9.hGap,
+                            Expanded(
+                              child: Text(
+                                ability.afterValue != 0
+                                    ? ability.afterValue.toStringAsFixed(0)
+                                    : ability.beforeValue.toStringAsFixed(0),
+                                style: 16.w4(
+                                    color: AppColors.c000000,
+                                    height: 1,
+                                    fontFamily: FontFamily.fOswaldRegular),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }),
+                    16.vGap,
+                    MtInkwell(
+                      onTap: () async {
+                        if (controller.getPlayer().breakThroughGrade >= 10) {
+                          EasyLoading.showToast(
+                              "The player's star level is already  max");
+                          return;
+                        }
+                        if (controller.teamPlayerUpStarVoEntity.starUpDTO !=
+                            null) {
+                          var result = await showModalBottomSheet(
+                              isScrollControlled: true,
+                              enableDrag: false,
+                              backgroundColor: AppColors.cTransparent,
+                              context: context,
+                              builder: (context) {
+                                return const SlotDialogWidget(0);
+                              });
+                          onResult(result);
+                        } else {
+                          var result = await Get.toNamed(
+                              RouteNames.teamStartUpGrade,
+                              arguments: {"player": controller.getPlayer()});
+                          onResult(result);
+                        }
+                      },
+                      child: Container(
+                        height: 51.w,
+                        width: 343.w,
+                        decoration: BoxDecoration(
+                            color: AppColors.c000000,
+                            borderRadius: BorderRadius.circular(9.w)),
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Text(
+                              "Star up",
+                              style: 23.w5(
+                                  color: AppColors.cFFFFFF,
+                                  height: 1,
+                                  fontFamily: FontFamily.fOswaldMedium),
+                            ),
+                            Positioned(
+                                right: 13.w,
+                                child: IconWidget(
+                                    iconWidth: 11.w,
+                                    icon: Assets
+                                        .commonUiCommonIconSystemJumpto))
+                          ],
+                        ),
+                      ),
+                    ),
+                    21.vGap,
+                  ],
+                ),
+              );
   }
 
   void onResult(result) {

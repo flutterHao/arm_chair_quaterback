@@ -223,6 +223,7 @@ class GameLeaderWidget extends StatelessWidget {
                                         width: 73.w,
                                         height: 93.w,
                                         playerId: item.playerInfo.playerId,
+                                        player: controller.getTeamPlayerInfoEntityByPlayerId(item.teamId,item.playerInfo.playerId),
                                         grade: Utils.getPlayBaseInfo(
                                                 item.playerInfo.playerId)
                                             .grade,

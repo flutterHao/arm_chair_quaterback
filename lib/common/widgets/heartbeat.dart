@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 ///created at 2024/10/11/21:26
 
 class HeartbeatWidget extends StatefulWidget {
-  const HeartbeatWidget({super.key, required this.child, this.onEnd});
+  const HeartbeatWidget(
+      {super.key, required this.child, this.onEnd, this.duration});
 
   final Widget child;
   final Function? onEnd;
+  final Duration? duration;
 
   @override
   State createState() => _HeartbeatWidgetState();
@@ -25,7 +27,7 @@ class _HeartbeatWidgetState extends State<HeartbeatWidget>
 
     // 初始化动画控制器
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 300), // 动画时长
+      duration: widget.duration ?? const Duration(milliseconds: 300), // 动画时长
       vsync: this,
     );
 
@@ -36,7 +38,7 @@ class _HeartbeatWidgetState extends State<HeartbeatWidget>
         if (status == AnimationStatus.completed) {
           _controller.reverse(); // 动画完成时反向播放
         }
-        if(status == AnimationStatus.reverse){
+        if (status == AnimationStatus.reverse) {
           widget.onEnd?.call();
         }
       });
@@ -46,9 +48,11 @@ class _HeartbeatWidgetState extends State<HeartbeatWidget>
   @override
   void didUpdateWidget(covariant HeartbeatWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
-    // 每次刷新页面重新启动动画
-    _controller.reset();
-    _controller.forward();
+    if(!_controller.isAnimating) {
+      // 每次刷新页面重新启动动画
+      _controller.reset();
+      _controller.forward();
+    }
   }
 
   @override

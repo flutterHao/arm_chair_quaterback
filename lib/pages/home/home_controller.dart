@@ -32,6 +32,7 @@ import 'package:arm_chair_quaterback/pages/picks/picks_index/index.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/view.dart';
 import 'package:arm_chair_quaterback/pages/trade/trade_index/view.dart';
 import 'package:common_utils/common_utils.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -88,7 +89,7 @@ class HomeController extends GetxController {
       "Inbox",
       Assets.commonUiCommonTabBottom05Off,
       Assets.commonUiCommonTabBottom05On,
-      const MessagePage(),
+      kReleaseMode?const MessagePage():const TradeIndex(),
     ),
   ];
 

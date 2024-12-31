@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_event_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
 import 'package:flutter/material.dart';
@@ -83,7 +84,7 @@ class GameLeaderController extends GetxController
   int getMvpBreakThroughGrade(int teamId, int playerId) {
     TeamBattleV2Controller teamBattleV2Controller = Get.find();
     var battleEntity = teamBattleV2Controller.battleEntity;
-    List<TeamPlayerList> list = [];
+    List<TeamPlayerInfoEntity> list = [];
     if (teamId == battleEntity.homeTeam.teamId) {
       list = battleEntity.homeTeamPlayerList;
     } else {
@@ -91,6 +92,20 @@ class GameLeaderController extends GetxController
     }
     var firstWhereOrNull = list.firstWhereOrNull((e) => e.playerId == playerId);
     return max(1, firstWhereOrNull?.breakThroughGrade ?? 1);
+  }
+
+  TeamPlayerInfoEntity getTeamPlayerInfoEntityByPlayerId(
+      int teamId, int playerId) {
+    TeamBattleV2Controller teamBattleV2Controller = Get.find();
+    var battleEntity = teamBattleV2Controller.battleEntity;
+    List<TeamPlayerInfoEntity> list = [];
+    if (teamId == battleEntity.homeTeam.teamId) {
+      list = battleEntity.homeTeamPlayerList;
+    } else {
+      list = battleEntity.awayTeamPlayerList;
+    }
+    var result = list.firstWhere((e) => e.playerId == playerId);
+    return result;
   }
 }
 
