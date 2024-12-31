@@ -427,7 +427,7 @@ class _ReciveAwardPicksPageState extends State<ReciveAwardPicksPage>
                       children: [
                         ReceiveAwardItem(
                           items,
-                          controller.picksDefineEntity!,
+                          controller. picksDefineEntity!,
                           personalCenterPage: true,
                         ),
                         if (index == data.length - 1) 20.vGap,

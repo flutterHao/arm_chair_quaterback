@@ -30,7 +30,7 @@ class CacheApi {
   static NbaPlayerInfosEntity? playerInfo;
 
   ///新闻定义
-  static PicksDefineEntity? _pickDefine;
+  static PicksDefineEntity? pickDefine;
 
   static List<PickTypeEntity>? pickType;
   static List<ApiErrorCodeEntity>? apiErrorCode;
@@ -101,12 +101,12 @@ class CacheApi {
 
   ///
   static Future<PicksDefineEntity> getPickDefine() async {
-    if (_pickDefine != null) {
-      return _pickDefine!;
+    if (pickDefine != null) {
+      return pickDefine!;
     }
     List json = await httpUtil.get(Api.cPickDefine);
-    _pickDefine = PicksDefineEntity.fromJson(json[0]);
-    return _pickDefine!;
+    pickDefine = PicksDefineEntity.fromJson(json[0]);
+    return pickDefine!;
   }
 
   static Future<List<PickTypeEntity>> getPickType() async {

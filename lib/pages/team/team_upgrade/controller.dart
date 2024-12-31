@@ -196,14 +196,20 @@ class TeamUpgradeController extends GetxController {
       upgradePlayerAbility.selfLevel10Value = getLevel10Ability(key);
       upgradePlayerAbility.totalValue =
           (teamPlayerUpStarVoEntity.maxAbility.toJson()[proKey] * 1.0);
-      var beforeMaxvalue = CacheApi.starUpDefines!.fold(0.0, (p, e) {
-        if (e.starUp <= getPlayer().breakThroughGrade && e.starUp>0) {
-          p += 1 + e.getPotantialMax() / 100 + e.starUpRange * e.starPlayerNum;
-        }
-        return p;
+
+      GradeInStarDefineEntity gradeInStar =
+          CacheApi.gradeInStars!.firstWhere((e) {
+        return e.playerGrade == playerBaseInfo.grade;
       });
-      upgradePlayerAbility.beforeMaxValue =
-          baseValue * max(1.0, beforeMaxvalue);
+      var starUpBase = getPlayer().breakThroughGrade == 0
+          ? 0
+          : gradeInStar.starUpBase[getPlayer().breakThroughGrade - 1];
+      var first = CacheApi.starUpDefines!.firstWhere((e)=> e.starUp == getPlayer().breakThroughGrade);
+      var greenValue = 1 +
+          first.getPotantialMax() / 100 +
+          first.starUpRange * first.starPlayerNum;
+      double beforeMaxvalue = baseValue * starUpBase * greenValue;
+      upgradePlayerAbility.beforeMaxValue = beforeMaxvalue;
     }
   }
 
@@ -221,13 +227,21 @@ class TeamUpgradeController extends GetxController {
           starUpDoneEntity!.teamPlayerVO.potential.toJson()[proKey];
       upgradePlayerAbility.afterValue =
           baseValue * max(1.0, potentialValue.toDouble());
-      var beforeMaxvalue = CacheApi.starUpDefines!.fold(0.0, (p, e) {
-        if (e.starUp <= getPlayer().breakThroughGrade) {
-          p += 1 + e.getPotantialMax() / 100 + e.starUpRange * e.starPlayerNum;
-        }
-        return p;
+
+      GradeInStarDefineEntity gradeInStar =
+      CacheApi.gradeInStars!.firstWhere((e) {
+        return e.playerGrade == playerBaseInfo.grade;
       });
-      upgradePlayerAbility.afterMaxValue = baseValue * max(1.0, beforeMaxvalue);
+      var starUpBase = getPlayer().breakThroughGrade == 0
+          ? 0
+          : gradeInStar.starUpBase[getPlayer().breakThroughGrade - 1];
+      var first = CacheApi.starUpDefines!.firstWhere((e)=> e.starUp == getPlayer().breakThroughGrade);
+      var greenValue = 1 +
+          first.getPotantialMax() / 100 +
+          first.starUpRange * first.starPlayerNum;
+      double afterMaxvalue = baseValue * starUpBase * greenValue;
+
+      upgradePlayerAbility.afterMaxValue = afterMaxvalue;
     }
   }
 
@@ -247,8 +261,10 @@ class UpgradePlayerAbility {
   /// 一星s级球员最大值
   double sGradeLevel1PlayerMaxValue = 0;
   double baseValue = 0;
+
   /// 升级前值
   double beforeValue = 0;
+
   /// 升级后值
   double afterValue = 0;
 

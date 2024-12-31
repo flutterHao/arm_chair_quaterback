@@ -34,7 +34,9 @@ class ReciveAwardV2GuessInfo {
   late List<ReciveAwardV2GuessInfoGuessData> guessData;
   late int updateTime;
   late int id;
+  /// 1 flex模式 2 power模式
   late int type;
+  /// 1 未结算 2 已结算未领取奖励 3 已结算已领取奖励
   late int status;
 
   ReciveAwardV2GuessInfo();
@@ -65,6 +67,7 @@ class ReciveAwardV2GuessInfoGuessData {
   late int winPro;
   late int awayTeamId;
   late int playerId;
+  /// 1 未结算 2 已结算未领取奖励 3 已结算已领取奖励
   late int status;
   ///type=1：球员，type=2：比赛
   late int type;

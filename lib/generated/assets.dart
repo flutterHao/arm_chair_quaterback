@@ -5,6 +5,7 @@ class Assets {
   static const String assetsSpineNv1 = 'assets/spine/nv_1.atlas';
   static const String common100 = 'assets/images/Common/100.png';
   static const String commonUiCommonArrow = 'assets/images/Common/ui_common_arrow.png';
+  static const String commonUiCommonCountdown = 'assets/images/Common/ui_common_countdown.png';
   static const String commonUiCommonIconCombat = 'assets/images/Common/ui_common_icon_combat.png';
   static const String commonUiCommonIconCurrency02 = 'assets/images/Common/ui_common_icon_currency_02.png';
   static const String commonUiCommonIconElevate = 'assets/images/Common/ui_common_icon_elevate.png';
