@@ -2,11 +2,12 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-27 14:44:25
- * @LastEditTime: 2024-12-30 15:48:36
+ * @LastEditTime: 2024-12-31 19:18:31
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/nab_player_season_game_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/palyer_stats_entity.dart';
+import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -14,6 +15,7 @@ import 'package:arm_chair_quaterback/common/widgets/TLBuilderWidget.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/custom_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/vertival_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/controller.dart';
+import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -187,45 +189,57 @@ class _PlayerStatsDialogState extends State<PlayerStatsDialog>
                                           height: 33.w,
                                           child: Row(
                                             children: [
-                                              Container(
-                                                width: 219.w,
-                                                padding:
-                                                    EdgeInsets.only(left: 18.w),
-                                                child: Row(
-                                                  children: [
-                                                    Text(
-                                                      "${index + 1}",
-                                                      style: 12.w4(
-                                                        fontFamily: FontFamily
-                                                            .fOswaldRegular,
-                                                        color:
-                                                            AppColors.cB3B3B3,
-                                                        height: 0.8,
+                                              InkWell(
+                                                onTap: () {
+                                                  Get.toNamed(
+                                                      RouteNames
+                                                          .picksPlayerDetail,
+                                                      arguments:
+                                                          PlayerDetailPageArguments(
+                                                              item.playerId));
+                                                },
+                                                child: Container(
+                                                  width: 219.w,
+                                                  padding: EdgeInsets.only(
+                                                      left: 18.w),
+                                                  child: Row(
+                                                    children: [
+                                                      Text(
+                                                        "${index + 1}",
+                                                        style: 12.w4(
+                                                          fontFamily: FontFamily
+                                                              .fOswaldRegular,
+                                                          color:
+                                                              AppColors.cB3B3B3,
+                                                          height: 0.8,
+                                                        ),
                                                       ),
-                                                    ),
-                                                    16.5.hGap,
-                                                    Container(
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          border: Border(
-                                                            bottom: BorderSide(
-                                                              width: 1.w,
-                                                              color: AppColors
-                                                                  .c666666,
+                                                      16.5.hGap,
+                                                      Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            border: Border(
+                                                              bottom:
+                                                                  BorderSide(
+                                                                width: 1.w,
+                                                                color: AppColors
+                                                                    .c666666,
+                                                              ),
                                                             ),
                                                           ),
-                                                        ),
-                                                        child: Text(
-                                                          // Utils.getPlayBaseInfo(
-                                                          //         item.playerId!)
-                                                          //     .ename,
-                                                          item.playerName,
-                                                          style: 12.w4(
-                                                              fontFamily: FontFamily
-                                                                  .fRobotoRegular,
-                                                              height: 1),
-                                                        )),
-                                                  ],
+                                                          child: Text(
+                                                            // Utils.getPlayBaseInfo(
+                                                            //         item.playerId!)
+                                                            //     .ename,
+                                                            item.playerName,
+                                                            style: 12.w4(
+                                                                fontFamily:
+                                                                    FontFamily
+                                                                        .fRobotoRegular,
+                                                                height: 1),
+                                                          )),
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                               const VerticalDivider(
@@ -381,37 +395,43 @@ class TeamStatsDialog extends GetView<RankController> {
                           height: 33.w,
                           child: Row(
                             children: [
-                              Container(
-                                width: 219.w,
-                                padding: EdgeInsets.only(left: 18.w),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      "${index + 1}",
-                                      style: 12.w4(
-                                        fontFamily: FontFamily.fOswaldRegular,
-                                        color: AppColors.cB3B3B3,
-                                        height: 0.8,
+                              InkWell(
+                                onTap: () {
+                                  Get.toNamed(RouteNames.teamDetailPage,
+                                      arguments: item.teamId);
+                                },
+                                child: Container(
+                                  width: 219.w,
+                                  padding: EdgeInsets.only(left: 18.w),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "${index + 1}",
+                                        style: 12.w4(
+                                          fontFamily: FontFamily.fOswaldRegular,
+                                          color: AppColors.cB3B3B3,
+                                          height: 0.8,
+                                        ),
                                       ),
-                                    ),
-                                    16.5.hGap,
-                                    Container(
-                                        decoration: BoxDecoration(
-                                          border: Border(
-                                            bottom: BorderSide(
-                                              width: 1.w,
-                                              color: AppColors.c666666,
+                                      16.5.hGap,
+                                      Container(
+                                          decoration: BoxDecoration(
+                                            border: Border(
+                                              bottom: BorderSide(
+                                                width: 1.w,
+                                                color: AppColors.c666666,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        child: Text(
-                                          item.teamName,
-                                          style: 12.w4(
-                                              fontFamily:
-                                                  FontFamily.fRobotoRegular,
-                                              height: 1),
-                                        )),
-                                  ],
+                                          child: Text(
+                                            item.teamName,
+                                            style: 12.w4(
+                                                fontFamily:
+                                                    FontFamily.fRobotoRegular,
+                                                height: 1),
+                                          )),
+                                    ],
+                                  ),
                                 ),
                               ),
                               const VerticalDivider(

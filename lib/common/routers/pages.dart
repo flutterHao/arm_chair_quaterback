@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:33:28
- * @LastEditTime: 2024-12-31 15:13:49
+ * @LastEditTime: 2024-12-31 19:26:35
  */
 // import 'package:arm_chair_quaterback/pages/news/new_detail/bindings.dart';
 // import 'package:arm_chair_quaterback/pages/news/new_detail/view.dart';
@@ -129,7 +129,7 @@ class AppPages {
       opaque: false,
       name: RouteNames.teamDetailPage,
       page: () {
-        return TeamDetailPage();
+        return const TeamDetailPage();
       },
     ),
   ];

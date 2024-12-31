@@ -6,6 +6,7 @@
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
+import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/custom_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
@@ -139,39 +140,45 @@ class RankList extends GetView<RankController> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SizedBox(
-                        // margin: EdgeInsets.only(left: 16.w),
-                        width: colomnsWidth[0],
-                        child: Row(
-                            // mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "${index + 1}",
-                                style: 10
-                                    .w4(fontFamily: FontFamily.fRobotoRegular),
-                              ),
-                              13.hGap,
-                              ImageWidget(
-                                url: Utils.getTeamUrl(e.teamID),
-                                width: 20.w,
-                              ),
-                              9.hGap,
-                              Container(
-                                decoration: const BoxDecoration(
-                                    border: Border(
-                                        bottom: BorderSide(
-                                            color: AppColors.c666666,
-                                            width: 1))),
-                                child: Text(
-                                  e.teamName,
-                                  style: 12.w4(
-                                    height: 1,
-                                    fontFamily: FontFamily.fRobotoMedium,
-                                    color: AppColors.c000000,
-                                  ),
+                      InkWell(
+                        onTap: () {
+                          Get.toNamed(RouteNames.teamDetailPage,
+                              arguments: e.teamID);
+                        },
+                        child: SizedBox(
+                          // margin: EdgeInsets.only(left: 16.w),
+                          width: colomnsWidth[0],
+                          child: Row(
+                              // mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "${index + 1}",
+                                  style: 10.w4(
+                                      fontFamily: FontFamily.fRobotoRegular),
                                 ),
-                              )
-                            ]),
+                                13.hGap,
+                                ImageWidget(
+                                  url: Utils.getTeamUrl(e.teamID),
+                                  width: 20.w,
+                                ),
+                                9.hGap,
+                                Container(
+                                  decoration: const BoxDecoration(
+                                      border: Border(
+                                          bottom: BorderSide(
+                                              color: AppColors.c666666,
+                                              width: 1))),
+                                  child: Text(
+                                    e.teamName,
+                                    style: 12.w4(
+                                      height: 1,
+                                      fontFamily: FontFamily.fRobotoMedium,
+                                      color: AppColors.c000000,
+                                    ),
+                                  ),
+                                )
+                              ]),
+                        ),
                       ),
                       SizedBox(
                         width: colomnsWidth[1],

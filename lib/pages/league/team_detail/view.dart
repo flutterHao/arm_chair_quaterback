@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-31 14:30:33
- * @LastEditTime: 2024-12-31 15:28:43
+ * @LastEditTime: 2024-12-31 19:25:29
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -38,7 +38,7 @@ class TeamDetailPage extends GetView<TeamDetailController> {
       builder: (_) {
         return HorizontalDragBackWidget(
           child: BlackAppWidget(
-            UserInfoBar(),
+            UserInfoBar(showPop: true),
             bodyWidget: Expanded(
               child: DefaultTabController(
                 length: controller.tabs.length,
