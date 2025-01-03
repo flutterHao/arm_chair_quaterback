@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-31 15:06:38
- * @LastEditTime: 2024-12-31 15:48:35
+ * @LastEditTime: 2025-01-03 21:38:43
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -48,7 +48,7 @@ class TeamHeadCard extends StatelessWidget {
           Positioned(
             top: 88.w,
             child: Text(
-              "Minnesota Timberwolves".toUpperCase(),
+              Utils.getTeamInfo(teamId).longEname.toUpperCase(),
               style: 21.w4(
                 height: 0.8,
                 color: AppColors.cFFFFFF,

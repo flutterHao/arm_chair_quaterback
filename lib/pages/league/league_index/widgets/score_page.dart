@@ -55,34 +55,34 @@ class _ScorePageState extends State<ScorePage>
         tag: widget.time.millisecondsSinceEpoch.toString(),
         builder: (_) {
           return SmartRefresher(
-              controller: controller.refreshController,
-              onRefresh: controller.loading,
-              child: controller.scoreList.isEmpty
-                  ? Center(
-                      child: Obx(() {
-                        return LoadStatusWidget(
-                          loadDataStatus: controller.loadStatus.value,
-                        );
-                      }),
-                    )
-                  : ListView.separated(
-                      controller: ScrollController(),
-                      itemCount: controller.scoreList.length,
-                      physics: const BouncingScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        bool lastIndex =
-                            index == controller.scoreList.length - 1;
-                        var item = controller.scoreList[index];
-                        return Container(
-                            margin: EdgeInsets.only(
-                                top: index == 0 ? 9.w : 0,
-                                bottom: lastIndex ? 94.w : 0),
-                            child: ScoreItemWidget(gameGuess: item));
-                      },
-                      separatorBuilder: (BuildContext context, int index) {
-                        return 9.vGap;
-                      },
-                    ),);
+            controller: controller.refreshController,
+            onRefresh: controller.loading,
+            child: controller.scoreList.isEmpty
+                ? Center(
+                    child: Obx(() {
+                      return LoadStatusWidget(
+                        loadDataStatus: controller.loadStatus.value,
+                      );
+                    }),
+                  )
+                : ListView.separated(
+                    controller: ScrollController(),
+                    itemCount: controller.scoreList.length,
+                    physics: const BouncingScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      bool lastIndex = index == controller.scoreList.length - 1;
+                      var item = controller.scoreList[index];
+                      return Container(
+                          margin: EdgeInsets.only(
+                              top: index == 0 ? 9.w : 0,
+                              bottom: lastIndex ? 94.w : 0),
+                          child: ScoreItemWidget(gameGuess: item));
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return 9.vGap;
+                    },
+                  ),
+          );
         });
   }
 
@@ -294,7 +294,8 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
                           children: [
                             InkWell(
                               onTap: () {
-                                // Get.toNamed(RouteNames.teamDetailPage);
+                                Get.toNamed(RouteNames.teamDetailPage,
+                                    arguments: item.homeTeamId);
                               },
                               child: ImageWidget(
                                 url: Utils.getTeamUrl(item.homeTeamId),
@@ -339,10 +340,15 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
                               ),
                             ),
                             12.hGap,
-                            ImageWidget(
-                              url: Utils.getTeamUrl(item.awayTeamId),
-                              imageFailedPath: Assets.iconUiDefault06,
-                              width: 52.w,
+                            InkWell(
+                              onTap: () => Get.toNamed(
+                                  RouteNames.teamDetailPage,
+                                  arguments: item.awayTeamId),
+                              child: ImageWidget(
+                                url: Utils.getTeamUrl(item.awayTeamId),
+                                imageFailedPath: Assets.iconUiDefault06,
+                                width: 52.w,
+                              ),
                             ),
                           ],
                         ),

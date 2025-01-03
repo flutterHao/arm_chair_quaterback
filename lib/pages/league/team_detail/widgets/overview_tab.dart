@@ -1,5 +1,9 @@
+import 'dart:math';
+
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/entities/chart_sample_data.dart';
 import 'package:arm_chair_quaterback/common/entities/game_schedules_info.dart';
+import 'package:arm_chair_quaterback/common/entities/team_detail_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
@@ -14,34 +18,39 @@ import 'package:arm_chair_quaterback/pages/league/team_detail/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 class OverviewTab extends StatelessWidget {
   const OverviewTab({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      child: Container(
-        margin: EdgeInsets.only(bottom: 9.w),
-        child: Column(
-          children: [
-            9.vGap,
-            _SeasonStats(),
-            9.vGap,
-            _Schedule(),
-            9.vGap,
-            _RecentMatch(),
-            9.vGap,
-            // _RecentPick(),
-            9.vGap,
-            _OutCome(),
-            9.vGap,
-            _Stats(),
-          ],
-        ),
-      ),
-    );
+    return GetBuilder<TeamDetailController>(
+        id: "overview_tab",
+        builder: (context) {
+          return SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Container(
+              margin: EdgeInsets.only(bottom: 9.w),
+              child: Column(
+                children: [
+                  9.vGap,
+                  _SeasonStats(),
+                  9.vGap,
+                  _Schedule(),
+                  9.vGap,
+                  _RecentMatch(),
+                  // 9.vGap,
+                  // _RecentPick(),
+                  9.vGap,
+                  _OutCome(),
+                  9.vGap,
+                  _Stats(),
+                ],
+              ),
+            ),
+          );
+        });
   }
 }
 
@@ -64,7 +73,7 @@ class _SeasonStats extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(left: 16.w),
             child: Text(
-              "24-25 stats",
+              "24-25 stats".toUpperCase(),
               style: 24.w4(fontFamily: FontFamily.fOswaldBold, height: 0.9),
             ),
           ),
@@ -265,7 +274,7 @@ class _Schedule extends StatelessWidget {
   }
 }
 
-class _RecentMatch extends StatelessWidget {
+class _RecentMatch extends GetView<TeamDetailController> {
   const _RecentMatch({super.key});
 
   @override
@@ -403,104 +412,86 @@ class _RecentMatch extends StatelessWidget {
                     ],
                   ),
                 ),
-                // Builder(builder: (context) {
-                //   if (controller.nbaPlayerBaseInfoEntity!
-                //       .l5GameData.isEmpty) {
-                //     return const SizedBox.shrink();
-                //   }
-                //   return Column(
-                //     children: [
-                //       9.vGap,
-                //       Container(
-                //         height: 162.w,
-                //         margin: EdgeInsets.symmetric(
-                //             horizontal: 16.w),
-                //         padding: EdgeInsets.all(10.w),
-                //         child: Stack(
-                //           children: [
-                //             _buildDefaultColumnChart(context),
-                //           ],
-                //         ),
-                //       ),
-                //     ],
-                //   );
-                // }),
+                9.vGap,
+                Container(
+                  height: 162.w,
+                  margin: EdgeInsets.symmetric(horizontal: 16.w),
+                  padding: EdgeInsets.all(10.w),
+                  child: _buildDefaultColumnChart(context),
+                ),
                 31.vGap,
-                // GetBuilder<PlayNotStartController>(builder: (ctrl) {
-                //   return Column(
-                //     children: [
-                //       SizedBox(
-                //         height: 40.w,
-                //         child: TabBar(
-                //             controller: ctrl.teamL5GameTabController,
-                //             indicatorColor: AppColors.cFF7954,
-                //             indicatorSize: TabBarIndicatorSize.tab,
-                //             dividerColor: AppColors.cD1D1D1,
-                //             overlayColor: null,
-                //             labelStyle: 16.w5(
-                //                 height: 1,
-                //                 fontFamily: FontFamily.fOswaldMedium),
-                //             labelColor: AppColors.c000000,
-                //             unselectedLabelStyle: 16.w5(
-                //                 height: 1,
-                //                 fontFamily: FontFamily.fOswaldMedium),
-                //             unselectedLabelColor: AppColors.cB2B2B2,
-                //             tabs: [
-                //               Row(
-                //                 children: [
-                //                   ImageWidget(
-                //                     url: Utils.getTeamUrl(
-                //                         ctrl.item.homeTeamId),
-                //                     width: 28.w,
-                //                   ),
-                //                   7.hGap,
-                //                   Text(
-                //                     Utils.getTeamInfo(
-                //                             ctrl.item.homeTeamId)
-                //                         .shortEname,
-                //                   )
-                //                 ],
-                //               ),
-                //               Row(
-                //                 mainAxisAlignment: MainAxisAlignment.end,
-                //                 children: [
-                //                   Text(
-                //                     Utils.getTeamInfo(
-                //                             ctrl.item.awayTeamId)
-                //                         .shortEname,
-                //                   ),
-                //                   7.hGap,
-                //                   ImageWidget(
-                //                     url: Utils.getTeamUrl(
-                //                         ctrl.item.awayTeamId),
-                //                     width: 28.w,
-                //                   ),
-                //                 ],
-                //               )
-                //             ]),
-                //       ),
-                //       Expanded(
-                //         child: ExtendedTabBarView(
-                //             controller: ctrl.teamL5GameTabController,
-                //             children: [
-                //               _buildL5GamePageWidget(
-                //                   context,
-                //                   ctrl.scoresNotStartGameEntity!
-                //                           .teamHistoryMap[
-                //                       ctrl.item.homeTeamId.toString()],
-                //                   ctrl.item.homeTeamId),
-                //               _buildL5GamePageWidget(
-                //                   context,
-                //                   ctrl.scoresNotStartGameEntity!
-                //                           .teamHistoryMap[
-                //                       ctrl.item.awayTeamId.toString()],
-                //                   ctrl.item.awayTeamId),
-                //             ]),
-                //       ),
-                //     ],
-                //   );
-                // }),
-                // 18.vGap,
+                Container(
+                  height: 273.w,
+                  margin: EdgeInsets.only(top: 9.w),
+                  decoration: BoxDecoration(
+                      color: AppColors.cFFFFFF,
+                      borderRadius: BorderRadius.circular(9.w)),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 40.w,
+                        child: TabBar(
+                            controller: controller.teamTabCtrl,
+                            indicatorColor: AppColors.cFF7954,
+                            indicatorSize: TabBarIndicatorSize.tab,
+                            dividerColor: AppColors.cD1D1D1,
+                            overlayColor: null,
+                            labelStyle: 16.w5(
+                                height: 1,
+                                fontFamily: FontFamily.fOswaldMedium),
+                            labelColor: AppColors.c000000,
+                            unselectedLabelStyle: 16.w5(
+                                height: 1,
+                                fontFamily: FontFamily.fOswaldMedium),
+                            unselectedLabelColor: AppColors.cB2B2B2,
+                            tabs: [
+                              Row(
+                                children: [
+                                  ImageWidget(
+                                    url: Utils.getTeamUrl(111),
+                                    width: 28.w,
+                                  ),
+                                  7.hGap,
+                                  Text(
+                                    Utils.getTeamInfo(111).shortEname,
+                                  )
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    Utils.getTeamInfo(112).shortEname,
+                                  ),
+                                  7.hGap,
+                                  ImageWidget(
+                                    url: Utils.getTeamUrl(112),
+                                    width: 28.w,
+                                  ),
+                                ],
+                              )
+                            ]),
+                      ),
+                      Expanded(
+                        child: TabBarView(
+                            controller: controller.teamTabCtrl,
+                            children: [
+                              _buildL5GamePageWidget(
+                                  context,
+                                  controller.teamDetailEntity.last5GameSchedule
+                                      .schedule,
+                                  111),
+                              _buildL5GamePageWidget(
+                                  context,
+                                  controller.teamDetailEntity.last5GameSchedule
+                                      .schedule,
+                                  122),
+                            ]),
+                      ),
+                    ],
+                  ),
+                ),
+                18.vGap,
               ],
             );
           }),
@@ -509,8 +500,8 @@ class _RecentMatch extends StatelessWidget {
     );
   }
 
-  MediaQuery _buildL5GamePageWidget(
-      BuildContext context, List<GameSchedulesInfo>? historyMap, int homeId) {
+  MediaQuery _buildL5GamePageWidget(BuildContext context,
+      List<TeamDetailLast5GameScheduleSchedule> historyMap, int homeId) {
     return MediaQuery.removePadding(
         removeTop: true,
         context: context,
@@ -544,14 +535,6 @@ class _RecentMatch extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: Center(
-                        child: ImageWidget(
-                          url: Utils.getTeamUrl(leftId),
-                          width: 25.w,
-                        ),
-                      ),
-                    ),
-                    Expanded(
                       child: Text(
                         leftScore.toString(),
                         style: 21.w5(
@@ -572,12 +555,6 @@ class _RecentMatch extends StatelessWidget {
                               fontFamily: FontFamily.fRobotoRegular,
                               height: 1),
                         ),
-                      ),
-                    ),
-                    Expanded(
-                      child: ImageWidget(
-                        url: Utils.getTeamUrl(rightId),
-                        width: 25.w,
                       ),
                     ),
                     Expanded(
@@ -606,57 +583,82 @@ class _RecentMatch extends StatelessWidget {
             }));
   }
 
-  // SfCartesianChart _buildDefaultColumnChart(BuildContext context) {
-  //   var width = MediaQuery.of(context).size.width;
-  //   // var pickInfo = controller.getPickInfo();
-  //   var plotBands = <PlotBand>[];
-  //   if (pickInfo != null) {
-  //     var verticalTextPadding =
-  //         controller.getColumnMaxYValue() / 2 > pickInfo.value ? "0" : "-20";
-  //     plotBands = <PlotBand>[
-  //       PlotBand(
-  //         start: 1,
-  //         // 虚线的起始位置（y 值）
-  //         end: 1,
-  //         // 虚线的终止位置（y 值），相同值表示一条线
-  //         borderWidth: 1,
-  //         text: 'AVG \n${1}',
-  //         verticalTextPadding: verticalTextPadding,
-  //         horizontalTextAlignment: TextAnchor.end,
-  //         verticalTextAlignment: TextAnchor.middle,
-  //         textStyle: 9.w4(color: AppColors.c262626, height: 1),
-  //         // 虚线的宽度
-  //         borderColor: AppColors.cFF7954.withOpacity(0.5),
-  //         shouldRenderAboveSeries: true,
-  //         // 虚线的颜色
-  //         dashArray: const [3, 2], // 设置虚线样式：[线段长度, 间隔长度]
-  //       ),
-  //     ];
-  //   }
-  //   return SfCartesianChart(
-  //     margin: const EdgeInsets.only(bottom: 0),
-  //     plotAreaBorderWidth: 0,
-  //     primaryXAxis: CategoryAxis(
-  //       majorGridLines: const MajorGridLines(width: 0),
-  //       axisLine: const AxisLine(color: AppColors.cD9D9D9, width: 1),
-  //       majorTickLines: const MajorTickLines(size: 0),
-  //       labelIntersectAction: AxisLabelIntersectAction.wrap,
-  //       labelStyle: 10.w4(color: AppColors.cB3B3B3),
-  //     ),
-  //     // 添加标注
-  //     primaryYAxis: NumericAxis(
-  //       labelStyle: 10.w4(color: AppColors.cB3B3B3),
-  //       plotBands: plotBands,
-  //       axisLine: const AxisLine(width: 0),
-  //       // maximum: controller.getColumnMaxYValue().toDouble(),
-  //       majorTickLines: const MajorTickLines(size: 0),
-  //       majorGridLines: const MajorGridLines(
-  //           width: 1, color: AppColors.cD9D9D9, dashArray: [2, 2]),
-  //     ),
-  //     series: controller.getDefaultColumnSeries(width),
-  //     // tooltipBehavior: _tooltipBehavior,
-  //   );
-  // }
+  SfCartesianChart _buildDefaultColumnChart(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+    var plotBands = <PlotBand>[];
+    plotBands = <PlotBand>[
+      PlotBand(
+        start: 0,
+        // 虚线的起始位置（y 值）
+        end: 50,
+        // 虚线的终止位置（y 值），相同值表示一条线
+        borderWidth: 1,
+        text: 'AVG \n${1}',
+        verticalTextPadding: "verticalTextPadding",
+        horizontalTextAlignment: TextAnchor.end,
+        verticalTextAlignment: TextAnchor.middle,
+        textStyle: 9.w4(color: AppColors.c262626, height: 1),
+        // 虚线的宽度
+        borderColor: AppColors.cFF7954.withOpacity(0.5),
+        shouldRenderAboveSeries: true,
+        // 虚线的颜色
+        dashArray: const [3, 2], // 设置虚线样式：[线段长度, 间隔长度]
+      ),
+    ];
+    return SfCartesianChart(
+      margin: const EdgeInsets.only(bottom: 0),
+      plotAreaBorderWidth: 0,
+      primaryXAxis: CategoryAxis(
+        majorGridLines: const MajorGridLines(width: 0),
+        axisLine: const AxisLine(color: AppColors.cD9D9D9, width: 1),
+        majorTickLines: const MajorTickLines(size: 0),
+        labelIntersectAction: AxisLabelIntersectAction.wrap,
+        labelStyle: 10.w4(color: AppColors.cB3B3B3),
+      ),
+      // 添加标注
+      primaryYAxis: NumericAxis(
+        labelStyle: 10.w4(color: AppColors.cB3B3B3),
+        plotBands: plotBands,
+        axisLine: const AxisLine(width: 0),
+        // maximum: controller.getColumnMaxYValue().toDouble(),
+        majorTickLines: const MajorTickLines(size: 0),
+        majorGridLines: const MajorGridLines(
+            width: 1, color: AppColors.cD9D9D9, dashArray: [2, 2]),
+      ),
+      series: getDefaultColumnSeries(width),
+      // tooltipBehavior: _tooltipBehavior,
+    );
+  }
+
+  List<ColumnSeries<ChartSampleData, String>> getDefaultColumnSeries(
+      double width) {
+    var list = controller.teamDetailEntity.last5GameSchedule.schedule.map((e) {
+      var timeByMs = MyDateUtils.getDateTimeByMs(e.gameStartTime);
+      var monthEnName = MyDateUtils.getMonthEnName(timeByMs, short: true);
+      // var currentTabKey = getCurrentTabKey();
+      // var value = e.getValue(currentTabKey);
+      var value = Random().nextInt(20) + 20;
+      Color color = 30 <= value ? AppColors.c000000 : AppColors.cD9D9D9;
+      return ChartSampleData(
+          x: '$monthEnName ${timeByMs.day}\nVS ${Utils.getTeamInfo(e.awayTeamId).shortEname}',
+          y: value,
+          pointColor: color);
+    }).toList();
+    var len = list?.length ?? 0;
+    return <ColumnSeries<ChartSampleData, String>>[
+      ColumnSeries<ChartSampleData, String>(
+        spacing: len > 1 ? 0.5 : 0.9,
+        width: 0.3,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(10.w)),
+        dataSource: list,
+        xValueMapper: (ChartSampleData sales, _) => sales.x as String,
+        yValueMapper: (ChartSampleData sales, _) => sales.y,
+        pointColorMapper: (ChartSampleData sales, _) => sales.pointColor,
+        dataLabelSettings: DataLabelSettings(
+            isVisible: true, textStyle: 10.w7(color: AppColors.c262626)),
+      )
+    ];
+  }
 }
 
 class _RecentPick extends StatelessWidget {

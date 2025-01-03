@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-14 17:25:31
- * @LastEditTime: 2024-12-06 21:44:18
+ * @LastEditTime: 2025-01-03 20:43:22
  */
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
@@ -10,6 +10,7 @@ import 'package:arm_chair_quaterback/common/entities/my_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_status_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/tactics_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/tatics_combine_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_detail_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_up_star_vo_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/train_define_entity.dart';
@@ -155,5 +156,13 @@ class TeamApi {
     TeamPlayerUpStarVoEntity teamEntity =
         TeamPlayerUpStarVoEntity.fromJson(json);
     return teamEntity;
+  }
+
+  static Future<TeamDetailEntity> getNBATeamDetail(int teamId) async {
+    var json = await HttpUtil().post(
+      Api.getNBATeamInfo,
+      data: {"NBATeamId": teamId},
+    );
+    return TeamDetailEntity.fromJson(json);
   }
 }

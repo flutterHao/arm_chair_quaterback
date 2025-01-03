@@ -62,6 +62,7 @@ import 'package:arm_chair_quaterback/common/entities/star_up_done_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/tactic_grade_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/tactics_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/tatics_combine_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_detail_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_list_entity.dart';
@@ -792,6 +793,66 @@ class JsonConvert {
       return data.map<TaticsCombineEntity>((Map<String, dynamic> e) =>
           TaticsCombineEntity.fromJson(e)).toList() as M;
     }
+    if (<TeamDetailEntity>[] is M) {
+      return data.map<TeamDetailEntity>((Map<String, dynamic> e) =>
+          TeamDetailEntity.fromJson(e)).toList() as M;
+    }
+    if (<TeamDetailGameSchedules>[] is M) {
+      return data.map<TeamDetailGameSchedules>((Map<String, dynamic> e) =>
+          TeamDetailGameSchedules.fromJson(e)).toList() as M;
+    }
+    if (<TeamDetailRegularSeasonData>[] is M) {
+      return data.map<TeamDetailRegularSeasonData>((Map<String, dynamic> e) =>
+          TeamDetailRegularSeasonData.fromJson(e)).toList() as M;
+    }
+    if (<TeamDetailRecentPick>[] is M) {
+      return data.map<TeamDetailRecentPick>((Map<String, dynamic> e) =>
+          TeamDetailRecentPick.fromJson(e)).toList() as M;
+    }
+    if (<TeamDetailLast5GameSchedule>[] is M) {
+      return data.map<TeamDetailLast5GameSchedule>((Map<String, dynamic> e) =>
+          TeamDetailLast5GameSchedule.fromJson(e)).toList() as M;
+    }
+    if (<TeamDetailLast5GameScheduleSchedule>[] is M) {
+      return data.map<TeamDetailLast5GameScheduleSchedule>((
+          Map<String, dynamic> e) =>
+          TeamDetailLast5GameScheduleSchedule.fromJson(e)).toList() as M;
+    }
+    if (<TeamDetailLast5GameScheduleScoreAvg>[] is M) {
+      return data.map<TeamDetailLast5GameScheduleScoreAvg>((
+          Map<String, dynamic> e) =>
+          TeamDetailLast5GameScheduleScoreAvg.fromJson(e)).toList() as M;
+    }
+    if (<TeamDetailGuessL5GameList>[] is M) {
+      return data.map<TeamDetailGuessL5GameList>((Map<String, dynamic> e) =>
+          TeamDetailGuessL5GameList.fromJson(e)).toList() as M;
+    }
+    if (<TeamDetailGuessL5GameListSchedule>[] is M) {
+      return data.map<TeamDetailGuessL5GameListSchedule>((
+          Map<String, dynamic> e) =>
+          TeamDetailGuessL5GameListSchedule.fromJson(e)).toList() as M;
+    }
+    if (<TeamDetailGuessL5GameListTotalScore>[] is M) {
+      return data.map<TeamDetailGuessL5GameListTotalScore>((
+          Map<String, dynamic> e) =>
+          TeamDetailGuessL5GameListTotalScore.fromJson(e)).toList() as M;
+    }
+    if (<TeamDetailPreSeasonData>[] is M) {
+      return data.map<TeamDetailPreSeasonData>((Map<String, dynamic> e) =>
+          TeamDetailPreSeasonData.fromJson(e)).toList() as M;
+    }
+    if (<TeamDetailTotalL5Data>[] is M) {
+      return data.map<TeamDetailTotalL5Data>((Map<String, dynamic> e) =>
+          TeamDetailTotalL5Data.fromJson(e)).toList() as M;
+    }
+    if (<TeamDetailOutcome>[] is M) {
+      return data.map<TeamDetailOutcome>((Map<String, dynamic> e) =>
+          TeamDetailOutcome.fromJson(e)).toList() as M;
+    }
+    if (<TeamDetailOutcomeGameSchedule>[] is M) {
+      return data.map<TeamDetailOutcomeGameSchedule>((Map<String, dynamic> e) =>
+          TeamDetailOutcomeGameSchedule.fromJson(e)).toList() as M;
+    }
     if (<TeamInfoEntity>[] is M) {
       return data.map<TeamInfoEntity>((Map<String, dynamic> e) =>
           TeamInfoEntity.fromJson(e)).toList() as M;
@@ -1140,6 +1201,27 @@ class JsonConvertClassCollection {
     (TacticGradeCards).toString(): TacticGradeCards.fromJson,
     (TacticsDefineEntity).toString(): TacticsDefineEntity.fromJson,
     (TaticsCombineEntity).toString(): TaticsCombineEntity.fromJson,
+    (TeamDetailEntity).toString(): TeamDetailEntity.fromJson,
+    (TeamDetailGameSchedules).toString(): TeamDetailGameSchedules.fromJson,
+    (TeamDetailRegularSeasonData).toString(): TeamDetailRegularSeasonData
+        .fromJson,
+    (TeamDetailRecentPick).toString(): TeamDetailRecentPick.fromJson,
+    (TeamDetailLast5GameSchedule).toString(): TeamDetailLast5GameSchedule
+        .fromJson,
+    (TeamDetailLast5GameScheduleSchedule)
+        .toString(): TeamDetailLast5GameScheduleSchedule.fromJson,
+    (TeamDetailLast5GameScheduleScoreAvg)
+        .toString(): TeamDetailLast5GameScheduleScoreAvg.fromJson,
+    (TeamDetailGuessL5GameList).toString(): TeamDetailGuessL5GameList.fromJson,
+    (TeamDetailGuessL5GameListSchedule)
+        .toString(): TeamDetailGuessL5GameListSchedule.fromJson,
+    (TeamDetailGuessL5GameListTotalScore)
+        .toString(): TeamDetailGuessL5GameListTotalScore.fromJson,
+    (TeamDetailPreSeasonData).toString(): TeamDetailPreSeasonData.fromJson,
+    (TeamDetailTotalL5Data).toString(): TeamDetailTotalL5Data.fromJson,
+    (TeamDetailOutcome).toString(): TeamDetailOutcome.fromJson,
+    (TeamDetailOutcomeGameSchedule).toString(): TeamDetailOutcomeGameSchedule
+        .fromJson,
     (TeamInfoEntity).toString(): TeamInfoEntity.fromJson,
     (TeamInfoTeamPreference).toString(): TeamInfoTeamPreference.fromJson,
     (TeamPlayerInfoEntity).toString(): TeamPlayerInfoEntity.fromJson,

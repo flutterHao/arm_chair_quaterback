@@ -124,8 +124,7 @@ class _PlayerDetailState extends State<PlayerDetail>
     );
   }
 
-  Widget _buildTabViewItem(
-      List<ScoreBoardDetailList> playerScores) {
+  Widget _buildTabViewItem(List<ScoreBoardDetailList> playerScores) {
     List<String> keys = [
       "MIN",
       "PTS",

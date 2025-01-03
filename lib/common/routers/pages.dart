@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:33:28
- * @LastEditTime: 2024-12-31 19:26:35
+ * @LastEditTime: 2025-01-03 21:35:24
  */
 // import 'package:arm_chair_quaterback/pages/news/new_detail/bindings.dart';
 // import 'package:arm_chair_quaterback/pages/news/new_detail/view.dart';
@@ -18,6 +18,8 @@ import 'package:arm_chair_quaterback/pages/mine/mine_info/bindings.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_info/view.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/news_detail2.dart';
+import 'package:arm_chair_quaterback/pages/news/rank/bindings.dart';
+import 'package:arm_chair_quaterback/pages/news/rank/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/personal_center/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_history/bindings.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_history/view.dart';
@@ -127,6 +129,11 @@ class AppPages {
         return const TeamDetailPage();
       },
     ),
+    GetPage(
+        opaque: false,
+        name: RouteNames.nbaRank,
+        page: () => const NBARankPage(),
+        binding: RankBinding()),
     GetPage(
       opaque: false,
       name: RouteNames.leagueLeagueDetail,

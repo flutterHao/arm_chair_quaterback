@@ -1,8 +1,8 @@
 /*
- * @Description: 
+ * @Description: 球队、球员排行底部弹窗
  * @Author: lihonghao
  * @Date: 2024-12-27 14:44:25
- * @LastEditTime: 2025-01-03 15:45:34
+ * @LastEditTime: 2025-01-03 16:19:00
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/palyer_stats_entity.dart';
@@ -140,7 +140,7 @@ class _PlayerStatsDialogState extends State<PlayerStatsDialog>
                             List currentType = e.split("_");
                             String rankType = currentType.first;
                             var list =
-                                _getStatRankList(rankType, widget.originList);
+                                getStatRankList(rankType, widget.originList);
                             return Column(
                               children: [
                                 Container(
@@ -262,7 +262,7 @@ class _PlayerStatsDialogState extends State<PlayerStatsDialog>
                                               Expanded(
                                                 child: Center(
                                                   child: Text(
-                                                    _getRankValue(
+                                                    getRankValue(
                                                         currentType.first,
                                                         item),
                                                     style: 12.w4(
@@ -277,8 +277,7 @@ class _PlayerStatsDialogState extends State<PlayerStatsDialog>
                                               Expanded(
                                                 child: Center(
                                                   child: Text(
-                                                    _getRankValue(
-                                                            currentType[1],
+                                                    getRankValue(currentType[1],
                                                             item)
                                                         .toString(),
                                                     style: 12.w4(
@@ -453,7 +452,7 @@ class TeamStatsDialog extends StatelessWidget {
                               Expanded(
                                 child: Center(
                                   child: Text(
-                                    _getRankValue(type1, item).toString(),
+                                    getRankValue(type1, item).toString(),
                                     style: 12.w4(
                                         fontFamily: FontFamily.fRobotoRegular,
                                         color: AppColors.c4D4D4D,
@@ -464,7 +463,7 @@ class TeamStatsDialog extends StatelessWidget {
                               Expanded(
                                 child: Center(
                                   child: Text(
-                                    _getRankValue(type2, item).toString(),
+                                    getRankValue(type2, item).toString(),
                                     style: 12.w4(
                                         fontFamily: FontFamily.fRobotoRegular,
                                         color: AppColors.c4D4D4D,
@@ -488,7 +487,7 @@ class TeamStatsDialog extends StatelessWidget {
   }
 }
 
-List<StatsEntity> _getStatRankList(String type, List<StatsEntity> originList) {
+List<StatsEntity> getStatRankList(String type, List<StatsEntity> originList) {
   List<StatsEntity> list = List.from(originList);
   switch (type) {
     case "PPG": //场均PTS
@@ -536,7 +535,7 @@ List<StatsEntity> _getStatRankList(String type, List<StatsEntity> originList) {
   return list;
 }
 
-String _getRankValue(String type, StatsEntity item) {
+String getRankValue(String type, StatsEntity item) {
   double value = 0;
   switch (type) {
     case "PPG": //场均PTS

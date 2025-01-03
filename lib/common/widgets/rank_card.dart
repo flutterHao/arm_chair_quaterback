@@ -52,7 +52,7 @@ class RankCard extends StatelessWidget {
                 Text(
                   title,
                   style:
-                      16.w4(fontFamily: FontFamily.fOswaldMedium, height: 0.8),
+                      16.w4(fontFamily: FontFamily.fOswaldMedium, height: 0.9),
                 ),
                 13.vGap,
                 Row(
@@ -84,7 +84,7 @@ class RankCard extends StatelessWidget {
                               name,
                               style: 14.w4(
                                 fontFamily: FontFamily.fRobotoRegular,
-                                height: 0.8,
+                                height: 0.9,
                               ),
                             ),
                             10.5.hGap,
@@ -94,7 +94,7 @@ class RankCard extends StatelessWidget {
                                 style: 12.w4(
                                   fontFamily: FontFamily.fRobotoRegular,
                                   color: AppColors.c4D4D4D,
-                                  height: 0.8,
+                                  height: 0.9,
                                 ),
                               )
                           ],
@@ -108,7 +108,7 @@ class RankCard extends StatelessWidget {
                               rankValue,
                               style: 35.w4(
                                 fontFamily: FontFamily.fOswaldBold,
-                                height: 0.8,
+                                height: 0.9,
                               ),
                             ),
                             12.hGap,
@@ -116,7 +116,7 @@ class RankCard extends StatelessWidget {
                               rankType,
                               style: 10.w4(
                                   fontFamily: FontFamily.fRobotoRegular,
-                                  height: 0.8,
+                                  height: 0.9,
                                   color: AppColors.c000000),
                             )
                           ],

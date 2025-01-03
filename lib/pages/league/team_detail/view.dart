@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-31 14:30:33
- * @LastEditTime: 2025-01-03 11:12:39
+ * @LastEditTime: 2025-01-03 21:36:14
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -44,7 +44,7 @@ class TeamDetailPage extends GetView<TeamDetailController> {
                 length: controller.tabs.length,
                 child: Column(
                   children: [
-                    TeamHeadCard(teamId: 110),
+                    TeamHeadCard(teamId: controller.teamId),
                     Container(
                       height: 43.w,
                       alignment: Alignment.bottomCenter,
@@ -73,9 +73,9 @@ class TeamDetailPage extends GetView<TeamDetailController> {
                     Expanded(
                       child: Stack(
                         children: [
-                          TabBarView(
+                          const TabBarView(
                             // physics: const NeverScrollableScrollPhysics(),
-                            children: const [
+                            children: [
                               OverviewTab(),
                               RosterTab(),
                               StatsTab(),

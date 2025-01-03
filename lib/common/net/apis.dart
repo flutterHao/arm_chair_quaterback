@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-06 15:16:54
- * @LastEditTime: 2024-12-30 12:05:19
+ * @LastEditTime: 2025-01-03 20:43:13
  */
 class Api {
   /// base
@@ -74,6 +74,7 @@ class Api {
       "$API_BASE_PATH/NBAData/getNBAGamePicks";
   static const String queryNBAGameSchedulesInfo =
       "$API_BASE_PATH/NBAData/queryNBAGameSchedulesInfo";
+  static const String getNBATeamInfo = "$API_BASE_PATH/NBAData/getNBATeamInfo";
 
   /// config
   static const String cNewsBanner = "$CONFIG_BASE_PATH/HightlightNews.json";

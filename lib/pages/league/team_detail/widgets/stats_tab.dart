@@ -1,7 +1,9 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/entities/palyer_stats_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/stats_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/rank_card.dart';
@@ -55,16 +57,44 @@ class StatsTab extends GetView<TeamDetailController> {
                     shrinkWrap: true,
                     padding: EdgeInsets.zero,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
+                    itemBuilder: (context, i) {
+                      var item = controller.statsRankMap.entries.elementAt(i);
+                      int index = item.value["current"];
+                      List types = item.value["list"][index].split("_");
+                      // String rankType = types.first;
+                      // var list = getStatRankList(rankType, []);
+                      // StatsEntity first = list.first;
+                      // var player = Utils.getPlayBaseInfo(first.playerId ?? 0);
                       return RankCard(
-                          title: controller.statsRankMap.entries
-                              .elementAt(index)
-                              .key,
-                          rankType: "PPG",
-                          imageUrl: Utils.getPlayUrl(2821),
-                          name: "jemas",
-                          rankValue: "10",
-                          onTap: () {});
+                        // title: item.key,
+                        // rankType: rankType,
+                        // imageUrl: Utils.getPlayUrl(player.playerId),
+                        // name: first.playerName,
+                        // shortTeamName:
+                        //     Utils.getTeamInfo(player.teamId).shortEname,
+                        title: item.key,
+                        rankType: "PPG",
+                        imageUrl: Utils.getPlayUrl(2879),
+                        name: "jemas",
+                        rankValue: "10",
+                        onTap: () {
+                          showModalBottomSheet(
+                              context: Get.context!,
+                              backgroundColor: Colors.transparent,
+                              builder: (context) {
+                                return PlayerStatsDialog(
+                                  title: item.key,
+                                  currentIdex: item.value["current"],
+                                  types: item.value["list"],
+                                  originList: [],
+                                  onTabChange: (index) {
+                                    item.value["current"] = index;
+                                    controller.update(["starsRank"]);
+                                  },
+                                );
+                              });
+                        },
+                      );
                     },
                     separatorBuilder: (context, index) =>
                         _line(margin: EdgeInsets.symmetric(horizontal: 16.w)),
@@ -75,7 +105,6 @@ class StatsTab extends GetView<TeamDetailController> {
             ),
             9.vGap,
             Container(
-              padding: EdgeInsets.symmetric(vertical: 25.w),
               width: double.infinity,
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -84,6 +113,7 @@ class StatsTab extends GetView<TeamDetailController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  25.vGap,
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: 16.w),
                     child: Text(
@@ -99,12 +129,28 @@ class StatsTab extends GetView<TeamDetailController> {
                     padding: EdgeInsets.zero,
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
+                      // List<String> types = type.value.split("_");
+                      // var rankType = types.first;
+                      // var list = getStatRankList(rankType, true);
+                      // StatsEntity first = list.first;
                       return _TeamRankCard(
                           rankType: "PPG",
                           imageUrl: Utils.getPlayUrl(2879),
                           name: "jemas",
                           rankValue: "10",
-                          onTap: () {});
+                          onTap: () {
+                            showModalBottomSheet(
+                                context: Get.context!,
+                                backgroundColor: Colors.transparent,
+                                builder: (context) {
+                                  return TeamStatsDialog(
+                                    [],
+                                    "type.key",
+                                    "rankType",
+                                    "types[1]",
+                                  );
+                                });
+                          });
                     },
                     separatorBuilder: (context, index) =>
                         _line(margin: EdgeInsets.symmetric(horizontal: 16.w)),
