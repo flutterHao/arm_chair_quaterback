@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/game_schedules_info.dart';
+import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/scores_not_start_game_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
@@ -16,9 +16,11 @@ import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/support_percent_progress_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
-import 'package:arm_chair_quaterback/pages/league/league_detail/widgets/league_detail_play/controller.dart';
-import 'package:arm_chair_quaterback/pages/league/league_detail/widgets/league_detail_play/play_not_start/controller.dart';
-import 'package:arm_chair_quaterback/pages/league/league_detail/widgets/league_detail_play/play_not_start/widget/play_not_start_player_detail.dart';
+import 'package:arm_chair_quaterback/pages/league/league_detail_v2/play_already_start/controller.dart';
+import 'package:arm_chair_quaterback/pages/league/league_detail_v2/play_not_start/controller.dart';
+import 'package:arm_chair_quaterback/pages/league/league_detail_v2/play_not_start/widget/play_not_start_player_detail.dart';
+import 'package:arm_chair_quaterback/pages/league/league_index/widgets/score_page.dart';
+import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guess_item_v2/guess_item_v2.dart';
 import 'package:extended_tabs/extended_tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -67,6 +69,370 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
         physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                Row(
+                  children: [
+                    Transform(
+                      alignment: Alignment.center,
+                      transform: Matrix4.identity()..scale(-1.0, 1.0),
+                      child: IconWidget(
+                          iconWidth: MediaQuery.of(context).size.width / 2,
+                          icon: Assets.scoresUiScoresBattleBg),
+                    ),
+                    IconWidget(
+                        iconWidth: MediaQuery.of(context).size.width / 2,
+                        icon: Assets.scoresUiScoresBattleBg),
+                  ],
+                ),
+                Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      height: 15.w,
+                      decoration: BoxDecoration(
+                          color: AppColors.cFFFFFF,
+                          borderRadius:
+                              BorderRadius.vertical(top: Radius.circular(9.w))),
+                    )),
+                Column(
+                  children: [
+                    Text(
+                      "TIP OFF IN",
+                      style: 14.w5(
+                        color: AppColors.cFFFFFF,
+                        height: 1,
+                        fontFamily: FontFamily.fOswaldMedium,
+                      ),
+                    ),
+                    9.vGap,
+                    Obx(() {
+                      controller.gameStartTimesCountDown.value;
+                      print('-----：${controller.gameStartTimesCountDown.value},---:${controller.minute}');
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Column(
+                            children: [
+                              Text(
+                                controller.twoDigits(controller.day),
+                                style: 40.w5(
+                                  color: AppColors.cFFFFFF,
+                                  height: 1,
+                                  fontFamily: FontFamily.fOswaldMedium,
+                                ),
+                              ),
+                              5.vGap,
+                              Text(
+                                "DAY",
+                                style: 10.w4(
+                                  color: AppColors.cFFFFFF,
+                                  height: 1,
+                                  fontFamily: FontFamily.fRobotoRegular,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Text(
+                            " : ",
+                            style: 40.w5(
+                              color: AppColors.cFFFFFF,
+                              height: 1,
+                              fontFamily: FontFamily.fOswaldMedium,
+                            ),
+                          ),
+                          Column(
+                            children: [
+                              Text(
+                                controller.twoDigits(controller.hh),
+                                style: 40.w5(
+                                  color: AppColors.cFFFFFF,
+                                  height: 1,
+                                  fontFamily: FontFamily.fOswaldMedium,
+                                ),
+                              ),
+                              5.vGap,
+                              Text(
+                                "HRS",
+                                style: 10.w4(
+                                  color: AppColors.cFFFFFF,
+                                  height: 1,
+                                  fontFamily: FontFamily.fRobotoRegular,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Text(
+                            " : ",
+                            style: 40.w5(
+                              color: AppColors.cFFFFFF,
+                              height: 1,
+                              fontFamily: FontFamily.fOswaldMedium,
+                            ),
+                          ),
+                          Column(
+                            children: [
+                              Text(
+                                controller.twoDigits(controller.minute),
+                                style: 40.w5(
+                                  color: AppColors.cFFFFFF,
+                                  height: 1,
+                                  fontFamily: FontFamily.fOswaldMedium,
+                                ),
+                              ),
+                              5.vGap,
+                              Text(
+                                "MIN",
+                                style: 10.w4(
+                                  color: AppColors.cFFFFFF,
+                                  height: 1,
+                                  fontFamily: FontFamily.fRobotoRegular,
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      );
+                    })
+                  ],
+                ),
+              ],
+            ),
+
+            ///mvp竞猜
+            Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  color: AppColors.cFFFFFF,
+                  borderRadius:
+                      BorderRadius.vertical(top: Radius.circular(9.w))),
+              child: Column(
+                children: [
+                  14.vGap,
+                  Text(
+                    "Who will be the MVP in this game?",
+                    style: 16.w5(
+                        color: AppColors.c000000,
+                        height: 1,
+                        fontFamily: FontFamily.fOswaldMedium),
+                  ),
+                  17.vGap,
+                  ...List.generate(4, (index) {
+                    return Container(
+                      height: 46.w,
+                      width: 259.w,
+                      margin: EdgeInsets.only(bottom: 9.w),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6.w),
+                        border: Border.all(
+                          color: AppColors.cD1D1D1,
+                          width: 1.w,
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          12.hGap,
+                          ImageWidget(
+                            url: "url",
+                            width: 47.w,
+                            height: 41.w,
+                            imageFailedPath: Assets.iconUiDefault05,
+                          ),
+                          8.hGap,
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Player Name",
+                                style: 14.w4(
+                                  color: AppColors.c000000,
+                                  height: 1,
+                                  fontFamily: FontFamily.fOswaldRegular,
+                                ),
+                              ),
+                              5.vGap,
+                              Text(
+                                "HOU · SG",
+                                style: 10.w4(
+                                  color: AppColors.c000000,
+                                  height: 1,
+                                  fontFamily: FontFamily.fOswaldRegular,
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    );
+                  }),
+                  21.vGap,
+                ],
+              ),
+            ),
+
+            /// 赛程竞猜
+            Container(
+              margin: EdgeInsets.only(top: 9.w),
+              padding: EdgeInsets.symmetric(horizontal: 15.w),
+              height: 232.w,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(9.w),
+                  color: AppColors.cFFFFFF),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  22.vGap,
+                  Text(
+                    "WINNER PICK",
+                    style: 24.w7(height: 1, fontFamily: FontFamily.fOswaldBold),
+                  ),
+                  16.vGap,
+                  ScoreItemWidget(
+                    gameGuess: controller.getGameGuess(),
+                    isInScoreDetail: true,
+                  ),
+                ],
+              ),
+            ),
+
+            /// 球员竞猜
+            if (controller.getPlayerV2().isNotEmpty &&
+                controller.getPlayerMaxLength() != 0) ...[
+              Container(
+                margin: EdgeInsets.only(top: 9.w),
+                height: 114.w + 159.w * controller.getPlayerMaxLength(),
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                    color: AppColors.cFFFFFF,
+                    borderRadius: BorderRadius.circular(9.w)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 114.w,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          22.vGap,
+                          Container(
+                            margin: EdgeInsets.only(left: 15.w),
+                            child: Text(
+                              "PLAYER PICK",
+                              style: 24.w7(
+                                  height: 1,
+                                  fontFamily: FontFamily.fOswaldBold),
+                            ),
+                          ),
+                          25.vGap,
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            child: TLBuildWidget(
+                                controller: controller.tabController!,
+                                builder: (int current, int next,
+                                    double progress, double totalProgress) {
+                                  return SingleChildScrollView(
+                                    controller: controller.scrollController,
+                                    scrollDirection: Axis.horizontal,
+                                    child: Row(
+                                      children: controller.getTabs().map((e) {
+                                        int index =
+                                            controller.getTabs().indexOf(e);
+                                        Color bgColor = index == current
+                                            ? Color.lerp(AppColors.c000000,
+                                                AppColors.cFFFFFF, progress)!
+                                            : index == next
+                                                ? Color.lerp(
+                                                    AppColors.cFFFFFF,
+                                                    AppColors.c000000,
+                                                    progress)!
+                                                : AppColors.cFFFFFF;
+                                        Color color = index == current
+                                            ? Color.lerp(AppColors.cFFFFFF,
+                                                AppColors.c000000, progress)!
+                                            : index == next
+                                                ? Color.lerp(
+                                                    AppColors.c000000,
+                                                    AppColors.cFFFFFF,
+                                                    progress)!
+                                                : AppColors.c000000;
+                                        return MtInkwell(
+                                          onTap: () {
+                                            if (controller
+                                                    .tabController!.index !=
+                                                index) {
+                                              controller.tabController!
+                                                  .animateTo(index);
+                                            }
+                                          },
+                                          child: Container(
+                                            height: 28.w,
+                                            width: 76.w,
+                                            margin: EdgeInsets.only(
+                                                left: index == 0 ? 16.w : 0,
+                                                right: 10.w),
+                                            decoration: BoxDecoration(
+                                              color: bgColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(14.w),
+                                              border: Border.all(
+                                                  color: AppColors.c666666,
+                                                  width: 1),
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                e,
+                                                style: 16.w5(
+                                                    color: color,
+                                                    height: 1,
+                                                    fontFamily: FontFamily
+                                                        .fOswaldMedium),
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      }).toList(),
+                                    ),
+                                  );
+                                }),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: ExtendedTabBarView(
+                          controller: controller.tabController,
+                          children: controller.getTabs().map((e) {
+                            List<PicksPlayerV2> list =
+                                controller.getPlayerV2()[e] ?? [];
+                            return MediaQuery.removePadding(
+                              removeTop: true,
+                              context: context,
+                              child: ListView(
+                                physics: const NeverScrollableScrollPhysics(),
+                                children: list.map((e) {
+                                  var i = list.indexOf(e);
+                                  return GuessItemV2(
+                                    playerV2: e,
+                                    index: i,
+                                    mainRoute: true,
+                                    isInScoreDetail: true,
+                                  );
+                                }).toList(),
+                              ),
+                            );
+                          }).toList()),
+                    )
+                  ],
+                ),
+              ),
+              9.vGap
+            ],
+
+            /// team stats
             Container(
               margin: EdgeInsets.only(top: 9.w),
               decoration: BoxDecoration(
@@ -570,7 +936,7 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
       padding: EdgeInsets.symmetric(horizontal: 13.w),
       decoration: const BoxDecoration(
           border:
-          Border(bottom: BorderSide(color: AppColors.cE6E6E, width: 1))),
+              Border(bottom: BorderSide(color: AppColors.cE6E6E, width: 1))),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

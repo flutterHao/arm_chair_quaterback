@@ -1,19 +1,14 @@
 import 'package:arm_chair_quaterback/common/entities/all_team_players_by_up_star_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/my_team_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/grade_in_star_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/star_up_define_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_up_star_vo_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/grade.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
-import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
-import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_upgrade/controller.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
 ///
@@ -78,9 +73,16 @@ class StartUpgradeController extends GetxController {
           result[1] as List<AllTeamPlayersByUpStarEntity>;
       starUpDefineList = result[2] as List<StarUpDefineEntity>;
       var starUpDefineEntity = starUpDefineList
-          .firstWhere((f) => f.starUp == (player.breakThroughGrade+1));
+          .firstWhere((f) => f.starUp == (player.breakThroughGrade + 1));
       selfStarUpDefine = starUpDefineEntity;
-      ppUpValue.value = 1 + starUpDefineEntity.getPotantialMax() / 100;
+      playerBaseInfo = Utils.getPlayBaseInfo(player.playerId);
+      var gradeInStarDefineEntity = CacheApi.gradeInStars!
+          .firstWhere((e) => e.playerGrade == playerBaseInfo.grade);
+      double starUpBase = player.breakThroughGrade == 0
+          ? 0 // 零星球员
+          : gradeInStarDefineEntity.starUpBase[player.breakThroughGrade - 1];
+      ppUpValue.value =
+          starUpBase * (1 + starUpDefineEntity.getPotantialMax() / 100);
       var selfBaseInfo = Utils.getPlayBaseInfo(player.playerId);
       var value2 = Grade.getGradeByName(selfBaseInfo.grade);
       allTeamPlayers =
@@ -91,13 +93,12 @@ class StartUpgradeController extends GetxController {
             (value2.grade == value3.grade ||
                 (value2.grade - 1) == value3.grade)) {
           /// 筛选非自己，未上阵，等于自己品阶或低自己一阶的球员
-          var firstWhere = starUpDefineList
+          var firstWhere = CacheApi.starUpDefines!
               .firstWhere((f) => f.starUp == (e.breakThroughGrade));
-          p.add(UpgradePlayer(e, firstWhere));
+          p.add(UpgradePlayer(e, firstWhere,starUpBase,ppUpValue.value));
         }
         return p;
       });
-      playerBaseInfo = Utils.getPlayBaseInfo(player.playerId);
       loadStatus.value = LoadDataStatus.success;
     }, onError: (e) {
       loadStatus.value = LoadDataStatus.error;
@@ -154,13 +155,16 @@ class StartUpgradeController extends GetxController {
       }
     }
     double propertyUp = selectedPlayers.fold(0, (p, e) {
-      var starUpDefineEntity = starUpDefineList
-          .firstWhere((f) => f.starUp == (e.teamPlayer.breakThroughGrade));
-      return p + starUpDefineEntity.starUpRange;
+      return p + e.getPropertyAddValue();
     });
     var starUpDefineEntity = starUpDefineList
         .firstWhere((f) => f.starUp == (player.breakThroughGrade));
-    propertyUp = 1 + starUpDefineEntity.getPotantialMax() / 100 + propertyUp;
+    var gradeInStarDefineEntity = CacheApi.gradeInStars!
+        .firstWhere((e) => e.playerGrade == playerBaseInfo.grade);
+    double starUpBase = player.breakThroughGrade == 0
+        ? 0 // 零星球员
+        : gradeInStarDefineEntity.starUpBase[player.breakThroughGrade - 1];
+    propertyUp = starUpBase * (1 + starUpDefineEntity.getPotantialMax() / 100) + propertyUp;
     var upSR = selectedPlayers.fold(0.0, (p, e) {
       return p + e.teamPlayer.probability;
     });
@@ -192,7 +196,19 @@ class StartUpgradeController extends GetxController {
 class UpgradePlayer {
   final AllTeamPlayersByUpStarEntity teamPlayer;
   final StarUpDefineEntity starUpDefine;
+  final double starUpBase;
+  final double playerBaseValue;
   var select = false.obs;
 
-  UpgradePlayer(this.teamPlayer, this.starUpDefine);
+  UpgradePlayer(this.teamPlayer, this.starUpDefine,this.starUpBase,this.playerBaseValue);
+
+  double getPropertyAddValue() {
+    if (starUpDefine.starUp == 0) {
+      return 0;
+    }
+    double value = starUpBase*(1 +
+        starUpDefine.getPotantialMax() / 100 +
+        starUpDefine.starUpRange * 1) - playerBaseValue;
+    return value;
+  }
 }

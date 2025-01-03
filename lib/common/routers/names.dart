@@ -53,6 +53,7 @@ class RouteNames {
   //league
   static const leagueLeagueDetail = '/league_league_detail';
 
+
   static const message = '/message';
 
 }

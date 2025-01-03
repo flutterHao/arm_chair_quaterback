@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -90,9 +91,11 @@ class _ScorePageState extends State<ScorePage>
 }
 
 class ScoreItemWidget extends StatefulWidget {
-  const ScoreItemWidget({super.key, required this.gameGuess});
+  const ScoreItemWidget(
+      {super.key, required this.gameGuess, this.isInScoreDetail = false});
 
   final GameGuess gameGuess;
+  final bool isInScoreDetail;
 
   @override
   State<ScoreItemWidget> createState() => _ScoreItemWidgetState();
@@ -172,6 +175,9 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
     item = widget.gameGuess.scoresEntity;
     gameGuess = widget.gameGuess;
     setGameStartTimeStr();
+    if (widget.isInScoreDetail) {
+      return _buildScoreDetailItem();
+    }
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -437,6 +443,120 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
     );
   }
 
+  Widget _buildScoreDetailItem() {
+    return Container(
+      height: 150.w,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(9.w),
+          border: Border.all(
+            color: AppColors.cD9D9D9,
+            width: 1.w,
+          )),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          18.vGap,
+          Column(
+            children: [
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 52.w),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ImageWidget(
+                      url: Utils.getTeamUrl(item.homeTeamId),
+                      imageFailedPath: Assets.iconUiDefault06,
+                      width: 26.w,
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          alignment: Alignment.center,
+                          child: Text(
+                            Utils.getTeamInfo(item.homeTeamId).shortEname,
+                            style: 21.w5(
+                                color: AppColors.c000000,
+                                height: 1,
+                                fontFamily: FontFamily.fOswaldMedium),
+                          ),
+                        ),
+                        Container(
+                          width: 50.w,
+                          alignment: Alignment.center,
+                          child: Text(
+                            "VS",
+                            style: 21.w5(
+                                color: AppColors.cB3B3B3,
+                                height: 1,
+                                fontFamily: FontFamily.fOswaldMedium),
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          child: Text(
+                            Utils.getTeamInfo(item.awayTeamId).shortEname,
+                            style: 21.w5(
+                                color: AppColors.c000000,
+                                height: 1,
+                                fontFamily: FontFamily.fOswaldMedium),
+                          ),
+                        ),
+                      ],
+                    ),
+                    ImageWidget(
+                      url: Utils.getTeamUrl(item.awayTeamId),
+                      imageFailedPath: Assets.iconUiDefault06,
+                      width: 26.w,
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 52.w),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      width: 34.w,
+                      alignment: Alignment.centerLeft,
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          item.homeTeamWL,
+                          style: 12.w4(
+                              color: AppColors.c000000,
+                              height: 1,
+                              fontFamily: FontFamily.fRobotoRegular),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 34.w,
+                      alignment: Alignment.centerRight,
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          item.awayTeamWL,
+                          style: 12.w4(
+                              color: AppColors.c000000,
+                              height: 1,
+                              fontFamily: FontFamily.fRobotoRegular),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              21.vGap,
+              _buildGuess(),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
   String getChip() => Utils.formatChip((item.awayTeamWins + item.homeTeamWins) *
       int.parse(
           Get.find<LeagueController>().picksDefineEntity?.betCost ?? "0"));
@@ -476,7 +596,7 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
               Obx(() {
                 return Row(
                   children: [
-                    29.hGap,
+                    widget.isInScoreDetail ? 42.hGap : 29.hGap,
                     _buildBtn(gameGuess.choiceTeamId.value == homeTeamInfo.id,
                         homeTeamInfo.id,
                         isGuessIdEqualTeamId: item.isGuess == homeTeamInfo.id),
@@ -484,7 +604,7 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
                     _buildBtn(gameGuess.choiceTeamId.value == awayTeamInfo.id,
                         awayTeamInfo.id,
                         isGuessIdEqualTeamId: item.isGuess == awayTeamInfo.id),
-                    29.hGap,
+                    widget.isInScoreDetail ? 42.hGap : 29.hGap,
                   ],
                 );
               }),
@@ -492,73 +612,111 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
             ],
           );
         }),
-        if (item.status != 0)
-          Column(
-            children: [
-              Row(
-                children: [
-                  29.hGap,
-                  Text(
-                    homeTeamInfo.shortEname,
-                    style: 10.w4(
-                        color: AppColors.c000000,
-                        height: 1,
-                        fontFamily: FontFamily.fRobotoRegular),
-                  ),
-                  Expanded(
-                    child: Center(
-                      child: Text(
-                        "WHO WILL WIN",
-                        style: 10.w4(
-                            color: AppColors.c000000,
-                            height: 1,
-                            fontFamily: FontFamily.fRobotoRegular),
-                      ),
-                    ),
-                  ),
-                  Text(
-                    awayTeamInfo.shortEname,
-                    style: 10.w4(
-                        color: AppColors.c000000,
-                        height: 1,
-                        fontFamily: FontFamily.fRobotoRegular),
-                  ),
-                  29.hGap,
-                ],
-              ),
-              3.vGap,
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  29.hGap,
-                  Text(
-                    "$homePercent%",
-                    style: 14.w5(
-                        color: AppColors.c000000,
-                        height: 1,
-                        fontFamily: FontFamily.fOswaldMedium),
-                  ),
-                  3.hGap,
-                  Expanded(
-                      child: SupportPercentProgressWidget(
-                          leftPercent: homePercent,
-                          rightPercent: 100 - homePercent)),
-                  3.hGap,
-                  Text(
-                    "${100 - homePercent}%",
-                    style: 14.w5(
-                        color: AppColors.c000000,
-                        height: 1,
-                        fontFamily: FontFamily.fOswaldMedium),
-                  ),
-                  29.hGap,
-                ],
-              ),
-              21.vGap,
-            ],
-          )
+        _buildWinProgress(homeTeamInfo, awayTeamInfo, homePercent)
       ],
     );
+  }
+
+  Widget _buildWinProgress(
+      NbaTeamEntity homeTeamInfo, NbaTeamEntity awayTeamInfo, int homePercent) {
+    if (widget.isInScoreDetail) {
+      return Container(
+        margin: EdgeInsets.symmetric(horizontal: 42.w),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              "$homePercent%",
+              style: 12.w5(
+                  color: AppColors.c000000,
+                  height: 1,
+                  fontFamily: FontFamily.fOswaldMedium),
+            ),
+            10.hGap,
+            Expanded(
+                child: SupportPercentProgressWidget(
+                    height: 9.w,
+                    leftPercent: homePercent,
+                    rightPercent: 100 - homePercent)),
+            10.hGap,
+            Text(
+              "${100 - homePercent}%",
+              style: 12.w5(
+                  color: AppColors.c000000,
+                  height: 1,
+                  fontFamily: FontFamily.fOswaldMedium),
+            ),
+          ],
+        ),
+      );
+    }
+    if (item.status != 0) {
+      return Column(
+        children: [
+          Row(
+            children: [
+              29.hGap,
+              Text(
+                homeTeamInfo.shortEname,
+                style: 10.w4(
+                    color: AppColors.c000000,
+                    height: 1,
+                    fontFamily: FontFamily.fRobotoRegular),
+              ),
+              Expanded(
+                child: Center(
+                  child: Text(
+                    "WHO WILL WIN",
+                    style: 10.w4(
+                        color: AppColors.c000000,
+                        height: 1,
+                        fontFamily: FontFamily.fRobotoRegular),
+                  ),
+                ),
+              ),
+              Text(
+                awayTeamInfo.shortEname,
+                style: 10.w4(
+                    color: AppColors.c000000,
+                    height: 1,
+                    fontFamily: FontFamily.fRobotoRegular),
+              ),
+              29.hGap,
+            ],
+          ),
+          3.vGap,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              29.hGap,
+              Text(
+                "$homePercent%",
+                style: 14.w5(
+                    color: AppColors.c000000,
+                    height: 1,
+                    fontFamily: FontFamily.fOswaldMedium),
+              ),
+              3.hGap,
+              Expanded(
+                  child: SupportPercentProgressWidget(
+                      leftPercent: homePercent,
+                      rightPercent: 100 - homePercent)),
+              3.hGap,
+              Text(
+                "${100 - homePercent}%",
+                style: 14.w5(
+                    color: AppColors.c000000,
+                    height: 1,
+                    fontFamily: FontFamily.fOswaldMedium),
+              ),
+              29.hGap,
+            ],
+          ),
+          21.vGap,
+        ],
+      );
+    }
+    return const SizedBox.shrink();
   }
 
   Expanded _buildBtn(bool isChoice, int teamId,
@@ -573,7 +731,7 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
           Get.find<LeagueController>().btnTap(gameGuess, teamId);
         },
         child: Container(
-          height: 41.w,
+          height: widget.isInScoreDetail ? 32.w : 41.w,
           decoration: BoxDecoration(
               color: item.isGuess != 0
                   ? isGuessIdEqualTeamId
@@ -589,7 +747,9 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
             children: [
               Text(
                 "${Utils.getTeamInfo(teamId).shortEname} WIN",
-                style: 19.w5(
+                style: TextStyle(
+                    fontSize: widget.isInScoreDetail ? 16.sp : 19.sp,
+                    fontWeight: FontWeight.w500,
                     color: item.isGuess != 0
                         ? isGuessIdEqualTeamId
                             ? AppColors.cFFFFFF

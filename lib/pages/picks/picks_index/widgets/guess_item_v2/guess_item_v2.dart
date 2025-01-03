@@ -32,11 +32,13 @@ class GuessItemV2 extends StatefulWidget {
       {super.key,
       required this.playerV2,
       required this.index,
-      this.mainRoute = false});
+      this.mainRoute = false,
+      this.isInScoreDetail = false});
 
   final PicksPlayerV2 playerV2;
   final int index;
   final bool mainRoute;
+  final bool isInScoreDetail;
 
   @override
   State<GuessItemV2> createState() => _GuessItemV2State();
@@ -69,6 +71,10 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
           (player.guessInfo.moreCount + player.guessInfo.lessCount) *
           100;
     }
+    if (widget.isInScoreDetail) {
+      return _buildScoreDetailItem(
+          player, picksIndexController, morePercent, count);
+    }
     return Stack(
       children: [
         RepaintBoundary(
@@ -83,7 +89,9 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                 25.vGap,
                 InkWell(
                   onTap: () => Get.toNamed(RouteNames.picksPlayerDetail,
-                      arguments: PlayerDetailPageArguments(player.guessInfo.playerId,tabStr: player.tabStr)),
+                      arguments: PlayerDetailPageArguments(
+                          player.guessInfo.playerId,
+                          tabStr: player.tabStr)),
                   child: Row(
                     children: [
                       29.hGap,
@@ -159,8 +167,11 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                             Obx(() {
                               return MtInkwell(
                                 splashColor: AppColors.ce5e5e5,
-                                onTap: () => Get.toNamed(RouteNames.leagueLeagueDetail,
-                                    arguments: {"gameId": player.guessInfo.gameId}),
+                                onTap: () => Get.toNamed(
+                                    RouteNames.leagueLeagueDetail,
+                                    arguments: {
+                                      "gameId": player.guessInfo.gameId
+                                    }),
                                 child: Row(
                                   children: [
                                     SizedBox(
@@ -174,12 +185,13 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                                           //     fontFamily: FontFamily.fRobotoRegular,
                                           //     height: 1),
                                           style: TextStyle(
-                                            color: AppColors.c000000,
-                                            height: 1,
-                                            fontFamily: FontFamily.fRobotoRegular,
-                                            fontSize: 12.sp,
-                                            decoration: TextDecoration.underline
-                                          ),
+                                              color: AppColors.c000000,
+                                              height: 1,
+                                              fontFamily:
+                                                  FontFamily.fRobotoRegular,
+                                              fontSize: 12.sp,
+                                              decoration:
+                                                  TextDecoration.underline),
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
@@ -327,6 +339,127 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
     );
   }
 
+  Container _buildScoreDetailItem(
+      PicksPlayerV2 player,
+      PicksIndexController picksIndexController,
+      double morePercent,
+      int count) {
+    return Container(
+      height: 150.w,
+      margin: EdgeInsets.only(left: 15.w,right: 15.w,bottom: 9.w),
+      decoration: BoxDecoration(
+        color: AppColors.cFFFFFF,
+        border: Border.all(
+          color: AppColors.cD9D9D9,
+          width: 1.w,
+        ),
+        borderRadius: BorderRadius.circular(16.w),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          InkWell(
+            onTap: () => Get.toNamed(RouteNames.picksPlayerDetail,
+                arguments: PlayerDetailPageArguments(player.guessInfo.playerId,
+                    tabStr: player.tabStr)),
+            child: Row(
+              children: [
+                53.hGap,
+                PlayerAvatarWidget(
+                  width: 53.w,
+                  height: 46.w,
+                  radius: 0.w,
+                  playerId: player.guessInfo.playerId,
+                  backgroundColor: AppColors.cFFFFFF,
+                  tabStr: player.tabStr,
+                ),
+                14.hGap,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        player.baseInfoList.ename,
+                        style: 14.w4(
+                            color: AppColors.c000000,
+                            fontFamily: FontFamily.fOswaldRegular,
+                            height: 1),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      2.vGap,
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            "${player.guessInfo.guessReferenceValue[player.tabStr] ?? 0}",
+                            style: 24.w5(
+                                color: AppColors.c262626,
+                                fontFamily: FontFamily.fOswaldMedium,
+                                height: 1),
+                          ),
+                          11.hGap,
+                          Expanded(
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                Utils.getLongName(player.tabStr),
+                                style: 19.w5(
+                                  color: AppColors.c262626,
+                                  fontFamily: FontFamily.fOswaldMedium,
+                                  height: 1,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+          18.vGap,
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 13.w),
+              child: _buildBtn(picksIndexController, player, controller)),
+          13.vGap,
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 42.w),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  "$morePercent%",
+                  style: 12.w5(
+                      color: AppColors.c000000,
+                      height: 1,
+                      fontFamily: FontFamily.fOswaldMedium),
+                ),
+                10.hGap,
+                Expanded(
+                    child: SupportPercentProgressWidget(
+                        height: 9.w,
+                        leftPercent: morePercent.toInt(),
+                        rightPercent: 100 - morePercent.toInt())),
+                10.hGap,
+                Text(
+                  "${100 - morePercent}%",
+                  style: 12.w5(
+                      color: AppColors.c000000,
+                      height: 1,
+                      fontFamily: FontFamily.fOswaldMedium),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
   Widget _buildBtn(PicksIndexController picksIndexController,
       PicksPlayerV2 player, GuessItemControllerV2 controller) {
     if (player.guessInfo.guessData.isNotEmpty) {
@@ -335,7 +468,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
         var textColor = choice ? AppColors.cFFFFFF : AppColors.ccccccc;
         return Expanded(
           child: Container(
-            height: 41.w,
+            height: widget.isInScoreDetail ? 32.w : 41.w,
             decoration: BoxDecoration(
                 color: bgColor, borderRadius: BorderRadius.circular(9.w)),
             child: Stack(
@@ -343,7 +476,9 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
               children: [
                 Text(
                   text,
-                  style: 19.w5(
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: widget.isInScoreDetail ? 16.sp : 19.sp,
                       color: textColor,
                       height: 1,
                       fontFamily: FontFamily.fOswaldMedium),
@@ -377,7 +512,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
     }
     return Obx(() {
       return Container(
-        height: 46.w,
+        height: widget.isInScoreDetail ? 32.w : 41.w,
         width: double.infinity,
         margin: EdgeInsets.symmetric(horizontal: 29.w),
         child: Row(
@@ -402,12 +537,14 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                   ),
                   child: Text(
                     "MORE",
-                    style: 19.w5(
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: widget.isInScoreDetail ? 16.sp : 19.sp,
                         color: controller.currentIndex.value == 0
                             ? AppColors.cFFFFFF
                             : AppColors.c000000,
-                        fontFamily: FontFamily.fOswaldMedium,
-                        height: 1),
+                        height: 1,
+                        fontFamily: FontFamily.fOswaldMedium),
                   ),
                 ),
               ),
@@ -435,12 +572,14 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                     children: [
                       Text(
                         "LESS",
-                        style: 19.w5(
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: widget.isInScoreDetail ? 16.sp : 19.sp,
                             color: controller.currentIndex.value == 1
                                 ? AppColors.cFFFFFF
                                 : AppColors.c000000,
-                            fontFamily: FontFamily.fOswaldMedium,
-                            height: 1),
+                            height: 1,
+                            fontFamily: FontFamily.fOswaldMedium),
                       )
                     ],
                   ),

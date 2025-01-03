@@ -269,6 +269,7 @@ class Assets {
   static const String playerUiIconTriangle03 = 'assets/images/player/ui_icon_triangle_03.png';
   static const String playerUiLight01 = 'assets/images/player/ui_light_01.png';
   static const String playerUiStateBest = 'assets/images/player/ui_state_best.png';
+  static const String scoresUiScoresBattleBg = 'assets/images/scores/ui_scores_battle_bg.png';
   static const String scoresUiScoresIconSystemRank = 'assets/images/scores/ui_scores_icon_system_rank.png';
   static const String spineNv1 = 'assets/spine/nv_1.png';
   static const String teamUICommonGrain = 'assets/images/team/UI_common_grain.png';
