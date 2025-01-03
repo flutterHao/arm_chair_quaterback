@@ -1,5 +1,5 @@
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
-import 'package:arm_chair_quaterback/pages/league/league_detail/widgets/league_detail_play/controller.dart';
+import 'package:arm_chair_quaterback/pages/league/league_detail_v2/play_already_start/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
 import 'package:get/get.dart';
 

@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/all_team_players_by_up_star_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_up_star_vo_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -281,20 +280,20 @@ class StartUpgradeWidget extends GetView<StartUpgradeController> {
                                             children: [
                                               IconWidget(
                                                 iconWidth: 8.w,
-                                                icon: Assets
-                                                    .iconUiIconShrink,
+                                                icon: Assets.iconUiIconShrink,
                                                 iconColor:
-                                                    controller.starSort.value == 0
+                                                    controller.starSort.value ==
+                                                            0
                                                         ? AppColors.c000000
                                                         : AppColors.cB3B3B3,
                                               ),
                                               3.vGap,
                                               IconWidget(
                                                 iconWidth: 8.w,
-                                                icon: Assets
-                                                    .iconUiIconShrink,
+                                                icon: Assets.iconUiIconShrink,
                                                 iconColor:
-                                                    controller.starSort.value == 1
+                                                    controller.starSort.value ==
+                                                            1
                                                         ? AppColors.c000000
                                                         : AppColors.cB3B3B3,
                                                 rotateAngle: 180,
@@ -345,22 +344,22 @@ class StartUpgradeWidget extends GetView<StartUpgradeController> {
                                             children: [
                                               IconWidget(
                                                 iconWidth: 8.w,
-                                                icon: Assets
-                                                    .iconUiIconShrink,
-                                                iconColor:
-                                                    controller.gradeSort.value == 0
-                                                        ? AppColors.c000000
-                                                        : AppColors.cB3B3B3,
+                                                icon: Assets.iconUiIconShrink,
+                                                iconColor: controller
+                                                            .gradeSort.value ==
+                                                        0
+                                                    ? AppColors.c000000
+                                                    : AppColors.cB3B3B3,
                                               ),
                                               3.vGap,
                                               IconWidget(
                                                 iconWidth: 8.w,
-                                                icon: Assets
-                                                    .iconUiIconShrink,
-                                                iconColor:
-                                                    controller.gradeSort.value == 1
-                                                        ? AppColors.c000000
-                                                        : AppColors.cB3B3B3,
+                                                icon: Assets.iconUiIconShrink,
+                                                iconColor: controller
+                                                            .gradeSort.value ==
+                                                        1
+                                                    ? AppColors.c000000
+                                                    : AppColors.cB3B3B3,
                                                 rotateAngle: 180,
                                               ),
                                             ],
@@ -604,7 +603,7 @@ class StartUpgradeWidget extends GetView<StartUpgradeController> {
               height: 46.w,
               child: Center(
                 child: Text(
-                  "${controller.pps[index]} +${controller.ppUpValue.value.toStringAsFixed(3)}",
+                  "${controller.pps[index]} ${controller.ppUpValue.value == 0 ? "" : "+${controller.ppUpValue.value.toStringAsFixed(3)}"}",
                   style: 16.w7(
                       color: controller.slotIndex.value == index
                           ? AppColors.cFFFFFF
@@ -688,11 +687,11 @@ class StartUpgradeWidget extends GetView<StartUpgradeController> {
                             title: "POW",
                             value: item.power.formatToString(),
                           ),
-                          if (upgradePlayer.starUpDefine.starUpRange != 0)
+                          if (upgradePlayer.getPropertyAddValue() != 0)
                             PlayerPropertyWidget(
                               title: "ATTRIB",
                               value:
-                                  "+${upgradePlayer.starUpDefine.starUpRange}",
+                                  "+${upgradePlayer.getPropertyAddValue().toStringAsFixed(3)}",
                             ),
                           PlayerPropertyWidget(
                             title: "SUCCESS",

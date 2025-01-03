@@ -10,7 +10,7 @@ import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/support_percent_progress_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
-import 'package:arm_chair_quaterback/pages/league/league_detail/widgets/league_detail_play/controller.dart';
+import 'package:arm_chair_quaterback/pages/league/league_detail_v2/play_already_start/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/team_stat/controller.dart';
 import 'package:flutter/material.dart';
