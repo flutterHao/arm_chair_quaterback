@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 17:28:14
- * @LastEditTime: 2024-12-27 20:41:25
+ * @LastEditTime: 2025-01-02 19:45:02
  */
 import 'package:arm_chair_quaterback/common/entities/nab_player_season_game_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_banner.dart';
@@ -86,6 +86,12 @@ class NewsApi {
       String seasonType = "Regular%20Season"}) async {
     List list = await HttpUtil().post(Api.teamRank,
         data: {"seasonId": seasonId, "seasonType": seasonType});
+    return list.map((e) => TeamRankEntity.fromJson(e)).toList();
+  }
+
+  static Future<List<TeamRankEntity>> getTeamListNew(int type) async {
+    String typeStr = type == 1 ? "conf" : "div";
+    List list = await HttpUtil().post(Api.teamRank, data: {"groupBy": typeStr});
     return list.map((e) => TeamRankEntity.fromJson(e)).toList();
   }
 

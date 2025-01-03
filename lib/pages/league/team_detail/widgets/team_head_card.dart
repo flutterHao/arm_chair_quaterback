@@ -7,7 +7,9 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,15 +23,16 @@ class TeamHeadCard extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: 139.5.w,
-      color: AppColors.c266AB4,
+      // color: AppColors.c266AB4,
+      color: Utils.getTeamColor(teamId),
       child: Stack(
         alignment: Alignment.topCenter,
         children: [
           Positioned(
             top: 19.w,
-            child: IconWidget(
-              iconWidth: 64.w,
-              icon: Assets.common100,
+            child: ImageWidget(
+              width: 64.w,
+              url: Utils.getTeamUrl(teamId),
               fit: BoxFit.fitHeight,
             ),
           ),

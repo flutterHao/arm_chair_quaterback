@@ -64,6 +64,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   //换人战力
   late int oVROld = 0;
   int changeDuration = 300;
+  bool showReserve = false;
 
   final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
 
@@ -296,7 +297,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
 
     myTeamEntity = result;
     changeDuration = 300;
-
+    showReserve = false;
     if (isAdd) {
       for (var e in result.teamPlayers) {
         if (e.position == 0 && subList.where((s) => s.uuid == e.uuid).isEmpty) {
@@ -314,6 +315,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
       subList.removeAt(index);
       changeDuration = 0;
     } else {
+      showReserve = true;
       List<TeamPlayerInfoEntity> sub = List.from(subList);
       for (var e in result.teamPlayers) {
         if (e.position == 0 && sub.where((m) => m.uuid == e.uuid).isEmpty) {
@@ -508,20 +510,24 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
   }
 
   int getLockCup() {
-    int current = Get.find<TeamIndexController>().cup.value;
     int cup = 0;
     for (int i = 0; i < CacheApi.cupDefineList.length; i++) {
-      List<double> cupNum = CacheApi.cupDefineList[i].cupNum;
-      double begin = cupNum.first;
-      double end = cupNum.last;
-      if (end > current && current > begin) {
-        return end.ceil();
-      } else if (end == current) {
-        if (i + 1 < CacheApi.cupDefineList.length) {
-          return CacheApi.cupDefineList[i + 1].cupNum.last.ceil();
-        } else {
-          return end.ceil();
-        }
+      // List<double> cupNum = CacheApi.cupDefineList[i].cupNum;
+      // double begin = cupNum.first;
+      // double end = cupNum.last;
+      // if (end > current && current > begin) {
+      //   return end.ceil();
+      // } else if (end == current) {
+      //   if (i + 1 < CacheApi.cupDefineList.length) {
+      //     return CacheApi.cupDefineList[i + 1].cupNum.last.ceil();
+      //   } else {
+      //     return end.ceil();
+      //   }
+      // }
+      if (CacheApi.cupDefineList[i].substituteSum > myTeamEntity.benchCount) {
+        List<double> cupNum = CacheApi.cupDefineList[i].cupNum;
+        double begin = cupNum.first;
+        return begin.ceil();
       }
     }
     return cup.ceil();

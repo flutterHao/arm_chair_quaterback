@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 14:27:52
- * @LastEditTime: 2024-12-31 10:46:38
+ * @LastEditTime: 2025-01-02 19:52:39
  */
 import 'package:arm_chair_quaterback/common/entities/palyer_stats_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
@@ -41,7 +41,10 @@ class RankController extends GetxController
   List<StatsEntity> statPlayerList = [];
   List<String> seasonList = ["2023-24", "2024-25"];
   List<StatsEntity> statTeamRankList = [];
-  List<TeamRankEntity> teamRankList = [];
+  // List<TeamRankEntity> teamRankList = [];
+  List<TeamRankEntity> confRankList = [];
+  List<TeamRankEntity> divRankList = [];
+
   // Map<String, Map<String, List<NbaPlayerStat>>> statsRankMap = {};
   Map<String, Map<String, dynamic>> statsRankMap = {
     "SCORING": {
@@ -116,16 +119,21 @@ class RankController extends GetxController
           statType: pointType.value,
           seasonType: seasonType),
       NewsApi.statTeamList(seasonId: season.value),
-      NewsApi.getTeamList(seasonId: season.value),
+      NewsApi.getTeamListNew(1),
+      NewsApi.getTeamListNew(2),
       CacheApi.getNBATeamDefine()
     ]).then((v) {
       statPlayerList = v[0] as List<StatsEntity>;
       statTeamRankList = v[1] as List<StatsEntity>;
-      teamRankList = v[2] as List<TeamRankEntity>;
-      for (var element in teamRankList) {
+      confRankList = v[2] as List<TeamRankEntity>;
+      divRankList = v[3] as List<TeamRankEntity>;
+
+      for (var element in confRankList) {
         element.force = CacheApi.teamDefineMap?[element.teamID]?.force ?? 0;
-        element.teamDivision =
-            CacheApi.teamDefineMap?[element.teamID]?.teamDivision ?? 0;
+      }
+      for (var element in divRankList) {
+        int div = CacheApi.teamDefineMap?[element.teamID]?.teamDivision ?? 0;
+        element.teamDivision = div;
       }
       // onTypeChange();
 

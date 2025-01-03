@@ -5,33 +5,34 @@ export 'package:arm_chair_quaterback/generated/json/cup_define_entity.g.dart';
 
 @JsonSerializable()
 class CupDefineEntity {
-	late String backUp;
-	late double cupDailyReward;
-	late List<double> cupNum;
-	late int cupNumId;
-	late int cupPicId ;
-	late String desc;
-	late double loseCup ;
-	late List<double> loserMoney;
-	late double winCup;
-	late List<double> winMoney;
+  late String backUp = '';
+  late int cupDailyReward = 0;
+  late List<double> cupNum = [];
+  late int cupNumId = 0;
+  late int cupPicId = 0;
+  late String desc = '';
+  late int loseCup = 0;
+  late List<int> loserMoney = [];
+  late int substituteSum = 1;
+  late int winCup = 20;
+  late List<int> winMoney = [];
 
-	CupDefineEntity();
+  CupDefineEntity();
 
-	factory CupDefineEntity.fromJson(Map<String, dynamic> json) => $CupDefineEntityFromJson(json);
+  factory CupDefineEntity.fromJson(Map<String, dynamic> json) =>
+      $CupDefineEntityFromJson(json);
 
-	Map<String, dynamic> toJson() => $CupDefineEntityToJson(this);
+  Map<String, dynamic> toJson() => $CupDefineEntityToJson(this);
+  double getCupMax() {
+    return cupNum[1];
+  }
 
-	double getCupMax(){
-		return cupNum[1];
-	}
+  double getCupMin() {
+    return cupNum[0];
+  }
 
-	double getCupMin(){
-		return cupNum[0];
-	}
-
-	@override
-	String toString() {
-		return jsonEncode(this);
-	}
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
 }

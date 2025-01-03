@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 14:09:29
- * @LastEditTime: 2024-12-25 10:21:56
+ * @LastEditTime: 2025-01-02 11:58:08
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
@@ -165,7 +165,7 @@ class BattleBoxDialog extends StatelessWidget {
               Expanded(child: Container()),
               if (isUnlock)
                 Text(
-                  "unlock time:${item.totalTime}MIN".toUpperCase(),
+                  "unlock time: ${item.totalTime}".toUpperCase(),
                   style: 16.w4(
                     fontFamily: FontFamily.fOswaldMedium,
                     height: 0.8,

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-14 16:54:10
- * @LastEditTime: 2024-12-31 15:25:29
+ * @LastEditTime: 2025-01-02 20:02:15
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
@@ -27,7 +27,8 @@ class TeamRankPage extends GetView<RankController> {
     return GetBuilder<RankController>(
         id: "teamRank",
         builder: (_) {
-          if (controller.teamRankList.isEmpty) {
+          if (controller.confRankList.isEmpty &&
+              controller.divRankList.isEmpty) {
             return Container();
           }
           return SingleChildScrollView(
@@ -61,7 +62,7 @@ class TeamRankPage extends GetView<RankController> {
                     ...List.generate(2, (i) {
                       String name =
                           "${i == 0 ? "Western" : "Eastern"} Conference";
-                      var list = controller.teamRankList;
+                      var list = controller.confRankList;
                       list = list.where((e) => e.force == i + 1).toList();
                       return Column(
                         children: [
@@ -71,7 +72,7 @@ class TeamRankPage extends GetView<RankController> {
                     }),
                   if (controller.teamTypeIndex.value == 1)
                     ...List.generate(6, (i) {
-                      var list = controller.teamRankList;
+                      var list = controller.divRankList;
                       String area = "${controller.getTypeName(i + 1)}Division";
                       list =
                           list.where((e) => e.teamDivision == i + 1).toList();
@@ -193,7 +194,7 @@ class RankList extends GetView<RankController> {
                       SizedBox(
                         width: colomnsWidth[2],
                         child: Text(
-                          "${e.conferenceGamesBack}",
+                          "${controller.teamTypeIndex.value == 0 ? e.conferenceGamesBack : e.divisionGamesBack}",
                           style: 12.w4(
                             fontFamily: FontFamily.fRobotoRegular,
                             color: AppColors.c4D4D4D,

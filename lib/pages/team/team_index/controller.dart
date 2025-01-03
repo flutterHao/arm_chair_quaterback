@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2024-12-30 15:39:14
+ * @LastEditTime: 2025-01-02 12:08:59
  */
 
 import 'dart:async';
@@ -210,6 +210,7 @@ class TeamIndexController extends GetxController
           return const FreeBoxDialog();
         });
     getBattleBox();
+    HomeController.to.updateMoney();
   }
 
   void handlerBatterBoxData() {
@@ -242,19 +243,26 @@ class TeamIndexController extends GetxController
       final now = DateTime.now();
       final endTime = DateUtil.getDateTimeByMs(item.openTime);
       final diff = endTime.difference(now).inSeconds;
-      int? needTime = CacheApi.cardPackDefineMap[item.cardId]?.cardPackOpenTime;
-      item.totalTime = ((needTime ?? 0 % 3600) ~/ 60).toString();
+      int needTime =
+          CacheApi.cardPackDefineMap[item.cardId]?.cardPackOpenTime ?? 0;
+      if (diff ~/ 3600 > 0) {
+        item.totalTime = "${needTime ~/ 3600} H";
+      } else {
+        item.totalTime = "${(needTime % 3600) ~/ 60} MIN";
+      }
       if (item.status == 1) {
+        final hours = (diff ~/ 3600).toString().padLeft(2, '0');
         final minutes = ((diff % 3600) ~/ 60).toString().padLeft(2, '0');
         final secs = (diff % 60).toString().padLeft(2, '0');
 
-        item.remainTime.value = "$minutes:$secs";
+        item.remainTime.value = "$hours:$minutes:$secs";
         _startTimer(
           time: item.openTime,
           onTick: (v) {
+            final hours = (diff ~/ 3600).toString().padLeft(2, '0');
             final minutes = ((v % 3600) ~/ 60).toString().padLeft(2, '0');
             final secs = (v % 60).toString().padLeft(2, '0');
-            item.remainTime.value = "$minutes:$secs";
+            item.remainTime.value = "$hours:$minutes:$secs";
             item.progress = (diff - v) / diff;
           },
           onComplete: getBattleBox,

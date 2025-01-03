@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-25 11:48:38
- * @LastEditTime: 2024-12-31 11:54:18
+ * @LastEditTime: 2025-01-02 10:47:45
  */
 /*
  * @Description: 
@@ -89,7 +89,7 @@ class HomeController extends GetxController {
       "Inbox",
       Assets.commonUiCommonTabBottom05Off,
       Assets.commonUiCommonTabBottom05On,
-      kReleaseMode?const MessagePage():const TradeIndex(),
+      kReleaseMode ? const MessagePage() : const TradeIndex(),
     ),
   ];
 
@@ -144,6 +144,7 @@ class HomeController extends GetxController {
   @override
   void onReady() {
     super.onReady();
+    // UserStore.to.setToken("");
     login();
     CacheApi.init();
   }

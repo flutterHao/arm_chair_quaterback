@@ -378,6 +378,7 @@ class PlayerItem extends GetView<TeamController> {
                           return SlideTransitionX(
                             direction: AxisDirection.left,
                             position: animation,
+                            showReverse: controller.showReserve,
                             child: child,
                           );
                         },

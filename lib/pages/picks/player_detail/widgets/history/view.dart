@@ -13,8 +13,7 @@ import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 class HistoryPage extends StatefulWidget {
-  const HistoryPage(
-      {super.key, required this.playerId});
+  const HistoryPage({super.key, required this.playerId});
 
   final int playerId;
 

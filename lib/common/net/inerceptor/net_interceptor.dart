@@ -20,6 +20,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class NetInterceptor extends InterceptorsWrapper {
   static const other = 'unknown error';
+  // bool isFreshing = false;
   Completer<void>? _refreshCompleter;
 
   @override
@@ -95,7 +96,7 @@ class NetInterceptor extends InterceptorsWrapper {
     // Loading.dismiss();
     ErrorEntity eInfo = createErrorEntity(err);
     Log.e(
-        'url -> ${eInfo.url} \n error.code -> ${eInfo.code} \n error.message -> ${eInfo.message}');
+        'url -> ${err.requestOptions.uri} \n error.code -> ${eInfo.code} \n error.message -> ${eInfo.message}');
 
     ///服务器错误提示
     // if (eInfo.code >= 100000) {
@@ -106,21 +107,23 @@ class NetInterceptor extends InterceptorsWrapper {
 
   Future<void> _handle401Error(
       RequestOptions requestOptions, ResponseInterceptorHandler handler) async {
+    // if (isFreshing) return;
+    // isFreshing = true;
     String uri = requestOptions.uri.toString();
-    Log.e("$uri捕获到 401 错误 当前token=${UserStore.to.token}，,开始处理 token 刷新");
 
     if (_refreshCompleter != null) {
       // 如果正在刷新 token，等待刷新完成
       await _refreshCompleter!.future;
     } else {
       // 开始刷新 token
+      Log.e("$uri捕获到 401 错误 当前token=${UserStore.to.token}，,开始处理 token 刷新");
       _refreshCompleter = Completer<void>();
       try {
         await _refreshToken(); // 刷新 token 方法
         _refreshCompleter!.complete(); // 刷新成功
       } catch (e) {
         _refreshCompleter!.completeError(e); // 刷新失败
-        handlerError(ErrorEntity(code: 401, message: 'Token 刷新失败'));
+        handlerError(ErrorEntity(url: uri, code: 401, message: 'Token 刷新失败'));
         return handler.reject(DioException(
           requestOptions: requestOptions,
           type: DioExceptionType.badResponse,

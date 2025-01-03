@@ -726,6 +726,7 @@ class TrainingController extends GetxController
         cashs = item.propNum;
         await showCashAward(cashs);
         currentLevel = trainingInfo.training.currentTaskId;
+        HomeController.to.updateMoney();
       }
     }
 
@@ -988,8 +989,9 @@ class TrainingController extends GetxController
   }
 
   int getBallCost() {
-    if (trainingInfo.training.todayBuyCount > 0) {
+    if (trainingInfo.training.todayBuyCount >= 0) {
       int length = trainDefine.trainCoinNum.length;
+      if (length == 0) return 0;
       int cost = min(length, trainingInfo.training.todayBuyCount);
       return trainDefine.trainCoinNum[cost];
     }

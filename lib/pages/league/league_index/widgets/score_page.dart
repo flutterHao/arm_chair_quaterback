@@ -81,7 +81,7 @@ class _ScorePageState extends State<ScorePage>
                       separatorBuilder: (BuildContext context, int index) {
                         return 9.vGap;
                       },
-                    ));
+                    ),);
         });
   }
 

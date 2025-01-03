@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-31 14:30:33
- * @LastEditTime: 2024-12-31 19:25:29
+ * @LastEditTime: 2025-01-03 11:12:39
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -44,7 +44,7 @@ class TeamDetailPage extends GetView<TeamDetailController> {
                 length: controller.tabs.length,
                 child: Column(
                   children: [
-                    TeamHeadCard(teamId: 0),
+                    TeamHeadCard(teamId: 110),
                     Container(
                       height: 43.w,
                       alignment: Alignment.bottomCenter,
@@ -70,19 +70,28 @@ class TeamDetailPage extends GetView<TeamDetailController> {
                               .map((e) => Tab(text: e))
                               .toList()),
                     ),
-                    Container(
-                      width: double.infinity,
-                      height: 9.w,
-                      color: AppColors.cDEDEDE.withOpacity(0.05),
-                    ),
                     Expanded(
-                      child: TabBarView(
-                        // physics: const NeverScrollableScrollPhysics(),
-                        children: const [
-                          OverviewTab(),
-                          RosterTab(),
-                          StatsTab(),
-                          LogTab(),
+                      child: Stack(
+                        children: [
+                          TabBarView(
+                            // physics: const NeverScrollableScrollPhysics(),
+                            children: const [
+                              OverviewTab(),
+                              RosterTab(),
+                              StatsTab(),
+                              LogTab(),
+                            ],
+                          ),
+                          Positioned(
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            child: Container(
+                              width: double.infinity,
+                              height: 9.w,
+                              color: AppColors.cDEDEDE.withOpacity(0.1),
+                            ),
+                          )
                         ],
                       ),
                     ),
