@@ -1,9 +1,12 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/recive_award_v2_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/player_avatar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/share_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -42,7 +45,10 @@ class GuessHistoryItem extends StatelessWidget {
                       color: AppColors.cFFFFFF,
                       borderRadius: BorderRadius.circular(6.w),
                       border: Border.all(
-                        color: AppColors.cD1D1D1,
+                        color: controller.guessInfo.status != 1 &&
+                                controller.guessInfo.success
+                            ? AppColors.c53BE94
+                            : AppColors.cD1D1D1,
                         width: 1.w,
                       ),
                     ),
@@ -54,7 +60,11 @@ class GuessHistoryItem extends StatelessWidget {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.vertical(
                                 top: Radius.circular(6.w)),
-                            color: AppColors.cF2F2F2,
+                            color: controller.guessInfo.status == 1
+                                ? AppColors.cF2F2F2
+                                : controller.guessInfo.success
+                                    ? AppColors.cEFF6F0
+                                    : AppColors.cF6EFF0,
                           ),
                           child: Column(
                             children: [
@@ -66,7 +76,7 @@ class GuessHistoryItem extends StatelessWidget {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      "${controller.getTypeString()} ${controller.getBetCount()}X",
+                                      "${controller.getTypeString()} ${controller.getBetCount() > 0 ? "${controller.getBetCount()}X" : ""}",
                                       style: 19.w5(
                                           color: AppColors.c000000,
                                           height: 1,
@@ -183,11 +193,117 @@ class GuessHistoryItem extends StatelessWidget {
 
   Widget _buildPlayerItemWidget(
       ReciveAwardV2GuessInfoGuessData item, bool lastIndex) {
-    if(item.type == 2){
-      return const SizedBox.shrink();
+    var bottom = Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              controller.formatGameStartTime(item.gameStartTime),
+              style: TextStyle(
+                  decoration: TextDecoration.underline,
+                  fontSize: 10.sp,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.c000000,
+                  fontFamily: FontFamily.fRobotoRegular,
+                  height: 1),
+              // style: 10.w4(
+              //   color: AppColors
+              //       .c000000,
+              //   fontFamily: FontFamily
+              //       .fRobotoRegular,
+              //   height: 1,
+              // ),
+            ),
+            6.hGap,
+            IconWidget(
+              iconWidth: 5.w,
+              icon: Assets.commonUiCommonIconSystemJumpto,
+              iconColor: AppColors.c000000,
+            )
+          ],
+        ),
+        Row(
+          children: [
+            IconWidget(
+              iconWidth: 17.w,
+              icon: Assets.picksUiPicksHistoryComment,
+              iconColor: AppColors.c000000,
+            ),
+            6.hGap,
+            Text(
+              "100k",
+              style: 10.w4(
+                  color: AppColors.c000000,
+                  height: 1,
+                  fontFamily: FontFamily.fRobotoRegular),
+            )
+          ],
+        )
+      ],
+    );
+
+    if (item.type == 2) {
+      NbaTeamEntity homeTeamInfo;
+      NbaTeamEntity awayTeamInfo;
+      if (item.guessChoice == item.homeTeamId) {
+        homeTeamInfo = Utils.getTeamInfo(item.homeTeamId);
+        awayTeamInfo = Utils.getTeamInfo(item.awayTeamId);
+      } else {
+        homeTeamInfo = Utils.getTeamInfo(item.awayTeamId);
+        awayTeamInfo = Utils.getTeamInfo(item.homeTeamId);
+      }
+      return SizedBox(
+        height: 90.w,
+        width: double.infinity,
+        child: Row(
+          children: [
+            13.hGap,
+            ImageWidget(
+              url: Utils.getTeamUrl(item.guessChoice),
+              width: 50.w,
+              height: 50.w,
+            ),
+            15.hGap,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "${homeTeamInfo.shortEname} WIN",
+                        style: 14.w5(
+                            color: AppColors.c000000,
+                            height: 1,
+                            fontFamily: FontFamily.fOswaldMedium),
+                      ),
+                      _buildResultWidget(item)
+                    ],
+                  ),
+                  6.vGap,
+                  Text(
+                    "${homeTeamInfo.shortEname}${item.homeTeamScore == 0 ? "" : " ${item.homeTeamScore} "} @ ${item.awayTeamScore == 0 ? "" : " ${item.awayTeamScore}"} ${awayTeamInfo.shortEname}",
+                    style: 10.w5(
+                        color: AppColors.c000000,
+                        height: 1,
+                        fontFamily: FontFamily.fRobotoMedium),
+                  ),
+                  12.vGap,
+                  bottom,
+                ],
+              ),
+            ),
+            13.hGap,
+          ],
+        ),
+      );
     }
     var baseInfo = Utils.getPlayBaseInfo(item.playerId);
-    var homeTeamInfo = Utils.getTeamInfo(item.homeTeamId);
+    var homeTeamInfo = Utils.getTeamInfo(baseInfo.teamId);
     var awayTeamInfo = Utils.getTeamInfo(item.awayTeamId);
     return Container(
       height: 95.w,
@@ -236,7 +352,7 @@ class GuessHistoryItem extends StatelessWidget {
                           fontFamily: FontFamily.fRobotoRegular,
                         ))
                   ])),
-                  _buildResultWidget()
+                  _buildResultWidget(item)
                 ],
               ),
               8.vGap,
@@ -259,56 +375,7 @@ class GuessHistoryItem extends StatelessWidget {
                     height: 1,
                   )),
               12.vGap,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        "11/08/01  8:00 AM  FINAL",
-                        style: TextStyle(
-                            decoration: TextDecoration.underline,
-                            fontSize: 10.sp,
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.c000000,
-                            fontFamily: FontFamily.fRobotoRegular,
-                            height: 1),
-                        // style: 10.w4(
-                        //   color: AppColors
-                        //       .c000000,
-                        //   fontFamily: FontFamily
-                        //       .fRobotoRegular,
-                        //   height: 1,
-                        // ),
-                      ),
-                      6.hGap,
-                      IconWidget(
-                        iconWidth: 5.w,
-                        icon: Assets.commonUiCommonIconSystemJumpto,
-                        iconColor: AppColors.c000000,
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      IconWidget(
-                        iconWidth: 17.w,
-                        icon: Assets.picksUiPicksHistoryComment,
-                        iconColor: AppColors.c000000,
-                      ),
-                      6.hGap,
-                      Text(
-                        "100k",
-                        style: 10.w4(
-                            color: AppColors.c000000,
-                            height: 1,
-                            fontFamily: FontFamily.fRobotoRegular),
-                      )
-                    ],
-                  )
-                ],
-              )
+              bottom
             ],
           )),
           13.hGap,
@@ -317,27 +384,63 @@ class GuessHistoryItem extends StatelessWidget {
     );
   }
 
-  Widget _buildResultWidget() {
+  Widget _buildResultWidget(ReciveAwardV2GuessInfoGuessData item) {
     if (controller.guessInfo.status == 1) {
+      if (item.type == 2) {
+        return Obx(() {
+          var value = controller.openTime.value;
+          return Text(
+            controller.getGameStatus(item.gameStartTime) == 1
+                ? "Gaming"
+                : value,
+            style: 14.w5(color: AppColors.cB3B3B3),
+          );
+        });
+      }
       return Row(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           IconWidget(
             iconWidth: 13.w,
             icon: Assets.commonUiCommonCountdown,
             iconColor: AppColors.cB3B3B3,
           ),
-          3.hGap,
-          Text(
-            "08:56:32",
-            style: 14.w5(
-                color: AppColors.cB3B3B3, fontFamily: FontFamily.fOswaldMedium),
-          )
+          Obx(() {
+            return Container(
+              width: 50.w,
+              alignment: Alignment.centerRight,
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  controller.openTime.value,
+                  style: 14.w5(
+                      color: AppColors.cB3B3B3,
+                      fontFamily: FontFamily.fOswaldMedium),
+                ),
+              ),
+            );
+          })
         ],
       );
+    } else {
+      if (item.type == 2) {
+        NbaTeamEntity teamInfo;
+        if (item.guessGameAttrValue == item.guessChoice) {
+          teamInfo = Utils.getTeamInfo(item.guessChoice);
+        } else {
+          teamInfo = Utils.getTeamInfo(item.awayTeamId);
+        }
+        return Text(
+          "Result: ${teamInfo.shortEname} Win",
+          style: 14
+              .w5(color: item.success ? AppColors.c0FA76C : AppColors.cE71629),
+        );
+      }
+      return Text(
+        "Result: ${item.guessGameAttrValue}",
+        style:
+            14.w5(color: item.success ? AppColors.c0FA76C : AppColors.cE71629),
+      );
     }
-    return Text(
-      "Result: 36",
-      style: 14.w5(color: AppColors.c0FA76C),
-    );
   }
 }

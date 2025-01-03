@@ -15,6 +15,7 @@ import 'package:arm_chair_quaterback/pages/picks/picks_history/widgets/guess_his
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class PicksHistoryPage extends GetView<PicksHistoryController> {
   const PicksHistoryPage({super.key});
@@ -130,32 +131,14 @@ class PicksHistoryPage extends GetView<PicksHistoryController> {
                         SliverPersistentHeader(
                             pinned: true,
                             delegate: FixedHeightSliverHeaderDelegate(
-                                child: Container(
-                                  color: AppColors.cFFFFFF,
-                                  child: TabBar(
-                                      labelColor: AppColors.c000000,
-                                      unselectedLabelColor: AppColors.cB3B3B3,
-                                      labelStyle: 16.w5(
-                                          height: 1,
-                                          fontFamily: FontFamily.fOswaldMedium),
-                                      unselectedLabelStyle: 16.w5(
-                                          height: 1,
-                                          fontFamily: FontFamily.fOswaldMedium),
-                                      dividerHeight: 0,
-                                      indicatorColor: AppColors.cFF7954,
-                                      indicatorSize: TabBarIndicatorSize.tab,
-                                      indicatorWeight: 3.w,
-                                      tabs: List.generate(
-                                          controller.tabs.length, (index) {
-                                        return Text(controller.tabs[index]);
-                                      })),
-                                ),
-                                height: 36.w)),
+                              child: _buildTabBar(),
+                              height: 36.w,
+                            )),
                       ];
                     },
                     body: TabBarView(children: [
-                      _buildPage(context, controller.getOpenList()),
-                      _buildPage(context, controller.getCloseList()),
+                      _PicksHistoryPage(data: controller.getOpenList()),
+                      _PicksHistoryPage(data: controller.getCloseList()),
                     ])),
               );
             })),
@@ -165,58 +148,100 @@ class PicksHistoryPage extends GetView<PicksHistoryController> {
     );
   }
 
-  Widget _buildPage(
-      BuildContext context, Map<String, List<ReciveAwardV2GuessInfo>> data) {
-    if (data.isEmpty) {
-      return const Center(
-        child: LoadStatusWidget(
-          loadDataStatus: LoadDataStatus.noData,
-        ),
-      );
-    }
-    return MediaQuery.removePadding(
-      context: context,
-      removeTop: true,
-      child: ListView.builder(
-        itemCount: data.keys.length,
-        physics: const BouncingScrollPhysics(),
-        itemBuilder: (context, outerIndex) {
-          var key = data.keys.toList()[outerIndex];
-          var list = data[key]!;
-          bool lastIndex = outerIndex == data.keys.length - 1;
-          return Container(
-            color: AppColors.cFFFFFF,
-            width: double.infinity,
-            padding: EdgeInsets.symmetric(horizontal: 15.w),
-            margin: EdgeInsets.only(top: 9.w, bottom: lastIndex ? 9.w : 0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // 时间
-                Container(
-                  margin: EdgeInsets.only(top: 22.w, bottom: 19.w),
-                  child: Text(
-                    key,
-                    style: 30.w7(
-                        color: AppColors.c000000,
-                        height: 1,
-                        fontFamily: FontFamily.fOswaldBold),
-                  ),
-                ),
-                ...List.generate(list.length, (innerIndex) {
-                  var guessInfo = list[innerIndex];
-                  return Container(
-                    margin: EdgeInsets.only(bottom: 17.w),
-                    child: GuessHistoryItem(
-                      guessInfo: guessInfo,
-                    ),
-                  );
-                })
-              ],
-            ),
-          );
-        },
-      ),
+  Container _buildTabBar() {
+    return Container(
+      height: 36.w,
+      color: AppColors.cFFFFFF,
+      child: TabBar(
+          labelColor: AppColors.c000000,
+          unselectedLabelColor: AppColors.cB3B3B3,
+          labelStyle: 16.w5(height: 1, fontFamily: FontFamily.fOswaldMedium),
+          unselectedLabelStyle:
+              16.w5(height: 1, fontFamily: FontFamily.fOswaldMedium),
+          dividerHeight: 0,
+          indicatorColor: AppColors.cFF7954,
+          indicatorSize: TabBarIndicatorSize.tab,
+          indicatorWeight: 3.w,
+          tabs: List.generate(controller.tabs.length, (index) {
+            return Text(controller.tabs[index]);
+          })),
     );
   }
+}
+
+class _PicksHistoryPage extends StatefulWidget {
+  const _PicksHistoryPage({super.key, required this.data});
+
+  final Map<String, List<ReciveAwardV2GuessInfo>> data;
+
+  @override
+  State<_PicksHistoryPage> createState() => _PicksHistoryPageState();
+}
+
+class _PicksHistoryPageState extends State<_PicksHistoryPage>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  Widget build(BuildContext context) {
+    return _buildPage(context, widget.data);
+  }
+
+  Widget _buildPage(
+      BuildContext context, Map<String, List<ReciveAwardV2GuessInfo>> data) {
+    return Builder(builder: (context) {
+      if (data.isEmpty) {
+        return const Center(
+          child: LoadStatusWidget(
+            loadDataStatus: LoadDataStatus.noData,
+          ),
+        );
+      }
+      return MediaQuery.removePadding(
+        context: context,
+        removeTop: true,
+        child: ListView.builder(
+          itemCount: data.keys.length,
+          physics: const BouncingScrollPhysics(),
+          itemBuilder: (context, outerIndex) {
+            var key = data.keys.toList()[outerIndex];
+            var list = data[key]!;
+            bool lastIndex = outerIndex == data.keys.length - 1;
+            return Container(
+              color: AppColors.cFFFFFF,
+              width: double.infinity,
+              padding: EdgeInsets.symmetric(horizontal: 15.w),
+              margin: EdgeInsets.only(top: 9.w, bottom: lastIndex ? 9.w : 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // 时间
+                  Container(
+                    margin: EdgeInsets.only(top: 22.w, bottom: 19.w),
+                    child: Text(
+                      key,
+                      style: 30.w7(
+                          color: AppColors.c000000,
+                          height: 1,
+                          fontFamily: FontFamily.fOswaldBold),
+                    ),
+                  ),
+                  ...List.generate(list.length, (innerIndex) {
+                    var guessInfo = list[innerIndex];
+                    return Container(
+                      margin: EdgeInsets.only(bottom: 17.w),
+                      child: GuessHistoryItem(
+                        guessInfo: guessInfo,
+                      ),
+                    );
+                  })
+                ],
+              ),
+            );
+          },
+        ),
+      );
+    });
+  }
+
+  @override
+  bool get wantKeepAlive => true;
 }
