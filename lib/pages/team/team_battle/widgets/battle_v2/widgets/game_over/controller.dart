@@ -104,13 +104,18 @@ class GameOverController extends GetxController {
   void initCup() {
     var beforeHomeCup = getHomeTeam().cup;
     var currentHomeCup = getHomeCurrentCup();
-    var result = (currentHomeCup - beforeHomeCup).abs();
-    leftCupNum = result;
-    leftCup.value = leftCupNum > 0 ? 1 : 0;
-    var beforeAwayCup = getAwayTeam().cup;
-    var currentAwayCup = getAwayCurrentCup();
-    rightCupNum = (currentAwayCup - beforeAwayCup).abs();
-    rightCup.value = rightCupNum > 0 ? 1 : 0;
+
+    if(isLeftWin()){
+      leftCupNum = getHomeCurrentCupDefine()?.winCup??0;
+      leftCup.value = leftCupNum > 0 ? 1 : 0;
+      rightCupNum = getAwayCurrentCupDefine()?.loseCup??0;
+      rightCup.value = rightCupNum > 0 ? 1 : 0;
+    }else{
+      leftCupNum = getHomeCurrentCupDefine()?.loseCup??0;
+      leftCup.value = leftCupNum > 0 ? 1 : 0;
+      rightCupNum = getAwayCurrentCupDefine()?.winCup??0;
+      rightCup.value = rightCupNum > 0 ? 1 : 0;
+    }
     Timer.periodic(const Duration(milliseconds: 100), (t) {
       if (leftCup.value == leftCupNum && rightCup.value == rightCupNum) {
         t.cancel();
@@ -127,7 +132,7 @@ class GameOverController extends GetxController {
       }
     });
     print('leftCupNum:$leftCupNum,,,,$rightCupNum');
-    if (result != 0) {
+    if (leftCupNum != 0) {
       var cupPercent = getHomeCupPercent();
       showTopToastDialog(
           child: Row(
@@ -318,4 +323,5 @@ class GameOverController extends GetxController {
         0;
     return currentCup;
   }
+
 }
