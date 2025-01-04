@@ -15,7 +15,6 @@ import 'package:arm_chair_quaterback/pages/picks/picks_history/widgets/guess_his
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class PicksHistoryPage extends GetView<PicksHistoryController> {
   const PicksHistoryPage({super.key});

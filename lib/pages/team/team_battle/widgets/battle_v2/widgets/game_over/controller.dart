@@ -103,17 +103,16 @@ class GameOverController extends GetxController {
 
   void initCup() {
     var beforeHomeCup = getHomeTeam().cup;
-    var currentHomeCup = getHomeCurrentCup();
 
-    if(isLeftWin()){
-      leftCupNum = getHomeCurrentCupDefine()?.winCup??0;
+    if (isLeftWin()) {
+      leftCupNum = getHomeCurrentCupDefine()?.winCup ?? 0;
       leftCup.value = leftCupNum > 0 ? 1 : 0;
-      rightCupNum = getAwayCurrentCupDefine()?.loseCup??0;
+      rightCupNum = getAwayCurrentCupDefine()?.loseCup ?? 0;
       rightCup.value = rightCupNum > 0 ? 1 : 0;
-    }else{
-      leftCupNum = getHomeCurrentCupDefine()?.loseCup??0;
+    } else {
+      leftCupNum = getHomeCurrentCupDefine()?.loseCup ?? 0;
       leftCup.value = leftCupNum > 0 ? 1 : 0;
-      rightCupNum = getAwayCurrentCupDefine()?.winCup??0;
+      rightCupNum = getAwayCurrentCupDefine()?.winCup ?? 0;
       rightCup.value = rightCupNum > 0 ? 1 : 0;
     }
     Timer.periodic(const Duration(milliseconds: 100), (t) {
@@ -133,7 +132,8 @@ class GameOverController extends GetxController {
     });
     print('leftCupNum:$leftCupNum,,,,$rightCupNum');
     if (leftCupNum != 0) {
-      var cupPercent = getHomeCupPercent();
+      var currentHomeCup = beforeHomeCup+(leftCupNum*(isLeftWin()?1:-1));
+      var cupPercent = getHomeCupPercent(currentHomeCup);
       showTopToastDialog(
           child: Row(
         children: [
@@ -155,7 +155,10 @@ class GameOverController extends GetxController {
                   child: IconWidget(
                     iconWidth: 14.w,
                     icon: Assets.managerUiManagerTacticsArrow,
-                    iconColor: AppColors.c40F093,
+                    iconColor: currentHomeCup > beforeHomeCup
+                        ? AppColors.c40F093
+                        : AppColors.cC01223,
+                    rotateAngle: currentHomeCup > beforeHomeCup ? 0 : 180,
                   ),
                 )
               ],
@@ -281,8 +284,7 @@ class GameOverController extends GetxController {
         0;
   }
 
-  double getHomeCupPercent() {
-    int currentCup = getHomeCurrentCup();
+  double getHomeCupPercent(int currentCup) {
     var where = CacheApi.cupDefineList.firstWhereOrNull(
         (e) => e.getCupMax() > currentCup && e.getCupMin() <= currentCup);
     if (where == null) {
@@ -323,5 +325,4 @@ class GameOverController extends GetxController {
         0;
     return currentCup;
   }
-
 }

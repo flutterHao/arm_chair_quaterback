@@ -13,8 +13,7 @@ import 'package:get/get.dart';
 ///@auther gejiahui
 ///created at 2024/12/31/17:40
 
-class GuessHistoryItemController extends GetxController
-    with WidgetsBindingObserver {
+class GuessHistoryItemController extends GetxController {
   GuessHistoryItemController(this.guessInfo);
 
   final ReciveAwardV2GuessInfo guessInfo;
@@ -29,24 +28,15 @@ class GuessHistoryItemController extends GetxController
   @override
   void onInit() {
     super.onInit();
-    WidgetsBinding.instance.addObserver(this);
     picksDefineEntity = CacheApi.pickDefine!;
     if (guessInfo.status == 1) {
       startCountDown();
     }
   }
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    super.didChangeAppLifecycleState(state);
-    if (state == AppLifecycleState.resumed) {
-      startCountDown();
-    }
-  }
 
   @override
   dispose() {
-    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 

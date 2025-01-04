@@ -19,14 +19,43 @@ import 'package:get/get.dart';
 ///@auther gejiahui
 ///created at 2024/12/31/17:36
 
-class GuessHistoryItem extends StatelessWidget {
-  GuessHistoryItem({required this.guessInfo, super.key});
+class GuessHistoryItem extends StatefulWidget {
+  const GuessHistoryItem({required this.guessInfo, super.key});
 
   final ReciveAwardV2GuessInfo guessInfo;
+
+  @override
+  State<GuessHistoryItem> createState() => _GuessHistoryItemState();
+}
+
+class _GuessHistoryItemState extends State<GuessHistoryItem> with WidgetsBindingObserver {
+
+  late  ReciveAwardV2GuessInfo guessInfo;
   late GuessHistoryItemController controller;
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    if(state == AppLifecycleState.resumed){
+      controller.startCountDown();
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    guessInfo = widget.guessInfo;
     controller = Get.put(
       GuessHistoryItemController(guessInfo),
       tag: "${guessInfo.id}_${guessInfo.createTime}",

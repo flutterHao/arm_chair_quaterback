@@ -57,6 +57,7 @@ class PlayNotStartController extends GetxController
   @override
   void onInit() {
     super.onInit();
+    WidgetsBinding.instance.addObserver(this);
     initData();
     Get
         .find<LeagueController>()
@@ -81,6 +82,7 @@ class PlayNotStartController extends GetxController
 
   @override
   void dispose() {
+    WidgetsBinding.instance.addObserver(this);
     teamPropertyTabController.dispose();
     teamL5GameTabController.dispose();
     teamPlayersTabController.dispose();

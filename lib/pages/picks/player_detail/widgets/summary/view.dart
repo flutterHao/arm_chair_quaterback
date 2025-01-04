@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
@@ -71,19 +72,17 @@ class _SummaryPageState extends State<SummaryPage>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        height: 75.w,
+                        height: 70.w,
                         margin: EdgeInsets.only(left: 16.w),
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          "24-25 STATS",
-                          style: 30.w7(
-                              color: AppColors.c262626,
-                              height: 1,
-                              fontFamily: FontFamily.fOswaldBold),
+                          "${controller.formatSeasonDate()} STATS",
+                          style: 24.w7(
+                              height: 1, fontFamily: FontFamily.fOswaldBold),
                         ),
                       ),
                       Divider(
-                        color: AppColors.cE6E6E,
+                        color: AppColors.cE6E6E6,
                         height: 1.w,
                       ),
                       Builder(builder: (context) {
@@ -118,7 +117,6 @@ class _SummaryPageState extends State<SummaryPage>
                                             Text(
                                               item.value.toStringAsFixed(1),
                                               style: 21.w5(
-                                                  color: AppColors.c262626,
                                                   height: 1,
                                                   fontFamily:
                                                       FontFamily.fOswaldMedium),
@@ -132,7 +130,7 @@ class _SummaryPageState extends State<SummaryPage>
                                                   fontFamily: FontFamily
                                                       .fRobotoRegular),
                                             ),
-                                            9.vGap,
+                                            13.vGap,
                                             Opacity(
                                                 opacity:
                                                     item.rank <= 100 ? 1 : 0,
@@ -152,7 +150,7 @@ class _SummaryPageState extends State<SummaryPage>
                                           Positioned(
                                             right: 0,
                                             child: Container(
-                                              color: AppColors.cE6E6E,
+                                              color: AppColors.cE6E6E6,
                                               width: 1.w,
                                               height: 54.w,
                                             ),
@@ -180,10 +178,8 @@ class _SummaryPageState extends State<SummaryPage>
                         margin: EdgeInsets.symmetric(horizontal: 16.w),
                         child: Text(
                           "RECENT",
-                          style: 30.w7(
-                              color: AppColors.c262626,
-                              height: 1,
-                              fontFamily: FontFamily.fOswaldBold),
+                          style: 24.w7(
+                              height: 1, fontFamily: FontFamily.fOswaldBold),
                         ),
                       ),
                       25.vGap,
@@ -250,7 +246,7 @@ class _SummaryPageState extends State<SummaryPage>
                                 ),
                                 16.vGap,
                                 Divider(
-                                  color: AppColors.cE6E6E,
+                                  color: AppColors.cD1D1D1,
                                   height: 1.w,
                                 ),
                                 Container(
@@ -271,16 +267,15 @@ class _SummaryPageState extends State<SummaryPage>
                                             Text(
                                               "Season Avg",
                                               style: 12.w4(
-                                                  color: AppColors.c666666,
+                                                  color: AppColors.c000000,
                                                   height: 1,
                                                   fontFamily: FontFamily
                                                       .fRobotoRegular),
                                             ),
-                                            15.vGap,
+                                            9.vGap,
                                             Text(
                                               controller.getSeasonAvgWithTab(),
                                               style: 27.w7(
-                                                  color: AppColors.c262626,
                                                   height: 1,
                                                   fontFamily:
                                                       FontFamily.fOswaldBold),
@@ -290,8 +285,8 @@ class _SummaryPageState extends State<SummaryPage>
                                       )),
                                       Container(
                                         width: 1.w,
-                                        color: AppColors.cE6E6E,
-                                        height: 67.w,
+                                        color: AppColors.cE6E6E6,
+                                        height: 42.w,
                                       ),
                                       Expanded(
                                           child: Container(
@@ -306,16 +301,15 @@ class _SummaryPageState extends State<SummaryPage>
                                             Text(
                                               "Last 5 Avg",
                                               style: 14.w4(
-                                                  color: AppColors.c666666,
+                                                  color: AppColors.c000000,
                                                   height: 1,
                                                   fontFamily: FontFamily
                                                       .fRobotoRegular),
                                             ),
-                                            15.vGap,
+                                            9.vGap,
                                             Text(
                                               controller.getLast5AvgWithTab(),
                                               style: 27.w7(
-                                                  color: AppColors.c262626,
                                                   height: 1,
                                                   fontFamily:
                                                       FontFamily.fOswaldBold),
@@ -348,72 +342,169 @@ class _SummaryPageState extends State<SummaryPage>
                                     ],
                                   );
                                 }),
-                                _buildPick(),
-                                _buildCommunityPick(),
                                 Builder(builder: (context) {
-                                  if (controller.getVsTeams().isEmpty ||
-                                      controller.getPickInfo() == null) {
+                                  if (controller.getPickInfo() == null) {
                                     return const SizedBox.shrink();
                                   }
                                   return Column(
                                     children: [
-                                      9.vGap,
+                                      34.vGap,
                                       Container(
-                                        height: 87.w,
-                                        width: double.infinity,
                                         margin: EdgeInsets.symmetric(
-                                            horizontal: 16.w),
-                                        decoration: BoxDecoration(
-                                            color: AppColors.cF2F2F2,
-                                            image: const DecorationImage(
-                                                image: AssetImage(
-                                                  Assets.testTestTeamLogo,
-                                                ),
-                                                alignment: Alignment.topRight,
-                                                opacity: 0.1),
-                                            borderRadius:
-                                                BorderRadius.circular(16.w)),
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 14.w),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                            horizontal: 35.w),
+                                        child: Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.end,
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text(
-                                              "vs ${controller.getPickInfo()?.teamInfo.shortEname}",
-                                              style: 14.w7(
-                                                  color: AppColors.c262626,
-                                                  height: 1),
-                                            ),
-                                            10.vGap,
                                             Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: getVsWidget(),
+                                              children: [
+                                                Text(
+                                                  "@${controller.getPickInfo()?.teamInfo.shortEname}",
+                                                  style: 12.w5(
+                                                    height: 1,
+                                                    fontFamily: FontFamily
+                                                        .fRobotoMedium,
+                                                  ),
+                                                ),
+                                                7.hGap,
+                                                ImageWidget(
+                                                  url: Utils.getTeamUrl(
+                                                      controller
+                                                          .getPickInfo()
+                                                          ?.teamInfo
+                                                          .id),
+                                                  width: 21.w,
+                                                )
+                                              ],
                                             ),
-                                            9.vGap
+                                            Text(
+                                              controller
+                                                  .getCurrentTabKey()
+                                                  .replaceAll(",", "+"),
+                                              style: 12.w5(
+                                                height: 1,
+                                                fontFamily:
+                                                    FontFamily.fRobotoMedium,
+                                              ),
+                                            ),
                                           ],
                                         ),
+                                      ),
+                                      7.vGap,
+                                      Divider(
+                                        height: 1.w,
+                                        color: AppColors.cD1D1D1,
+                                      ),
+                                      ...getVsAwayWidget(),
+                                      Divider(
+                                        height: 1.w,
+                                        color: AppColors.cD1D1D1,
                                       ),
                                     ],
                                   );
                                 }),
-                                22.vGap,
+                                25.vGap,
                               ],
                             );
                           }),
                     ],
                   ),
                 ),
+                Builder(
+                  builder: (context) {
+                    /// todo 未实现
+                    return const SizedBox.shrink();
+                    if (controller.getPickInfo() == null) {
+                      return const SizedBox.shrink();
+                    }
+                    return Container(
+                      margin: EdgeInsets.only(top: 9.w),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12.w),
+                          color: AppColors.cFFFFFF),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          25.vGap,
+                          Container(
+                            margin: EdgeInsets.symmetric(horizontal: 16.w),
+                            child: Text(
+                              "RECENT PICK",
+                              style: 24.w7(
+                                  height: 1, fontFamily: FontFamily.fOswaldBold),
+                            ),
+                          ),
+                          25.vGap,
+                          SizedBox(
+                            height: 28.w,
+                            child: MediaQuery.removePadding(
+                              context: context,
+                              removeTop: true,
+                              child: ListView.builder(
+                                  itemCount:
+                                  controller.getTitles().length,
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (context, index) {
+                                    var key = controller
+                                        .getTitles()
+                                        .toList()[index];
+                                    return Obx(() {
+                                      bool isSelected =
+                                          controller.currentIndex.value ==
+                                              index;
+                                      return InkWell(
+                                        onTap: () =>
+                                            controller.onTabTap(index),
+                                        child: Container(
+                                          margin: EdgeInsets.only(
+                                              right: 4.w,
+                                              left:
+                                              index == 0 ? 16.w : 0),
+                                          height: 28.w,
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 21.w),
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color:
+                                                  AppColors.c666666,
+                                                  width: 1.w),
+                                              color: isSelected
+                                                  ? AppColors.c262626
+                                                  : AppColors.cFFFFFF,
+                                              borderRadius:
+                                              BorderRadius.circular(
+                                                  14.w)),
+                                          child: Text(
+                                            key.replaceAll(",", "+"),
+                                            style: 13.w5(
+                                                color: isSelected
+                                                    ? AppColors.cF2F2F2
+                                                    : AppColors.c262626,
+                                                height: 1,
+                                                fontFamily: FontFamily
+                                                    .fOswaldMedium),
+                                          ),
+                                        ),
+                                      );
+                                    });
+                                  }),
+                            ),
+                          ),
+                          16.vGap,
+                          _buildPick(),
+                          _buildCommunityPick(),
+                        ],
+                      ),
+                    );
+                  }
+                ),
                 9.vGap,
                 Container(
                   padding: EdgeInsets.only(top: 19.w),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12.w),
-                    color: AppColors.cFFFFFF),
+                      borderRadius: BorderRadius.circular(12.w),
+                      color: AppColors.cFFFFFF),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -422,12 +513,14 @@ class _SummaryPageState extends State<SummaryPage>
                         child: Text.rich(TextSpan(children: [
                           TextSpan(
                               text: "Trade",
-                              style: 16.w7(color: AppColors.c262626, height: 1)),
+                              style:
+                                  16.w7(color: AppColors.c262626, height: 1)),
                           if (controller.getTradePlayer() != null &&
                               controller.getTradePlayer()?.isBuy == true)
                             TextSpan(
                                 text: " (You already have this player )",
-                                style: 10.w4(color: AppColors.cB3B3B3, height: 1))
+                                style:
+                                    10.w4(color: AppColors.cB3B3B3, height: 1))
                         ])),
                       ),
                       13.vGap,
@@ -447,7 +540,8 @@ class _SummaryPageState extends State<SummaryPage>
                             Expanded(
                               child: LineChart(
                                 LineChartData(
-                                  lineTouchData: const LineTouchData(enabled: false),
+                                  lineTouchData:
+                                      const LineTouchData(enabled: false),
                                   titlesData: FlTitlesData(
                                       show: true,
                                       rightTitles: AxisTitles(
@@ -459,8 +553,9 @@ class _SummaryPageState extends State<SummaryPage>
                                                   fit: BoxFit.scaleDown,
                                                   child: Text(
                                                     Utils.formatMoney(value),
-                                                    style: 9
-                                                        .w4(color: AppColors.cB3B3B3),
+                                                    style: 9.w4(
+                                                        color:
+                                                            AppColors.cB3B3B3),
                                                   ),
                                                 );
                                               })),
@@ -479,7 +574,8 @@ class _SummaryPageState extends State<SummaryPage>
                                         belowBarData: BarAreaData(
                                             show: true,
                                             gradient: LinearGradient(colors: [
-                                              AppColors.cFF7954.withOpacity(0.3),
+                                              AppColors.cFF7954
+                                                  .withOpacity(0.3),
                                               AppColors.cFF7954.withOpacity(0.1)
                                             ])))
                                   ],
@@ -541,7 +637,8 @@ class _SummaryPageState extends State<SummaryPage>
                               alignment: Alignment.topCenter,
                               child: Container(
                                 height: 25.w,
-                                margin: EdgeInsets.only(left: 12.w, right: 22.w),
+                                margin:
+                                    EdgeInsets.only(left: 12.w, right: 22.w),
                                 alignment: Alignment.center,
                                 child: Row(
                                   mainAxisAlignment:
@@ -590,7 +687,8 @@ class _SummaryPageState extends State<SummaryPage>
                                               AppColors.cFF7954.withOpacity(.1),
                                               BlendMode.srcIn)),
                                       color: AppColors.cF2F2F2,
-                                      borderRadius: BorderRadius.circular(16.w)),
+                                      borderRadius:
+                                          BorderRadius.circular(16.w)),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -609,7 +707,8 @@ class _SummaryPageState extends State<SummaryPage>
                                                 CrossAxisAlignment.center,
                                             children: [
                                               Text(
-                                                Utils.formatGrade(baseInfo.grade),
+                                                Utils.formatGrade(
+                                                    baseInfo.grade),
                                                 style: 40.w7(
                                                     color: AppColors.c262626,
                                                     height: 1),
@@ -620,17 +719,18 @@ class _SummaryPageState extends State<SummaryPage>
                                                 children: [
                                                   IconWidget(
                                                     iconWidth: 37.w,
-                                                    icon:
-                                                        Assets.playerUiIconStar01,
-                                                    iconColor: AppColors.cFF7954,
+                                                    icon: Assets
+                                                        .playerUiIconStar01,
+                                                    iconColor:
+                                                        AppColors.cFF7954,
                                                   ),
                                                   Positioned(
                                                       top: 10.w,
                                                       child: Text(
                                                         "1",
                                                         style: 23.w7(
-                                                            color:
-                                                                AppColors.cF2F2F2,
+                                                            color: AppColors
+                                                                .cF2F2F2,
                                                             height: 1),
                                                       ))
                                                 ],
@@ -651,7 +751,8 @@ class _SummaryPageState extends State<SummaryPage>
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.end,
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
                                                 IconWidget(
                                                     iconWidth: 19.w,
@@ -674,7 +775,8 @@ class _SummaryPageState extends State<SummaryPage>
                                                 ),
                                                 4.hGap,
                                                 Stack(
-                                                  alignment: Alignment.bottomLeft,
+                                                  alignment:
+                                                      Alignment.bottomLeft,
                                                   children: [
                                                     Positioned(
                                                         top: 0,
@@ -683,15 +785,19 @@ class _SummaryPageState extends State<SummaryPage>
                                                           iconWidth: 14.w,
                                                           icon: Assets
                                                               .iconUiIconDecreasingAmplitude,
-                                                          iconColor: percent == 0
-                                                              ? AppColors.cB3B3B3
-                                                              : AppColors.cE72646,
+                                                          iconColor:
+                                                              percent == 0
+                                                                  ? AppColors
+                                                                      .cB3B3B3
+                                                                  : AppColors
+                                                                      .cE72646,
                                                         )),
                                                     Container(
                                                         height: 16.w,
                                                         width: 39.w,
                                                         margin: EdgeInsets.only(
-                                                            top: 6.w, right: 3.w),
+                                                            top: 6.w,
+                                                            right: 3.w),
                                                         decoration: BoxDecoration(
                                                             color: percent == 0
                                                                 ? AppColors
@@ -731,7 +837,8 @@ class _SummaryPageState extends State<SummaryPage>
                                               width: 121.w,
                                               decoration: BoxDecoration(
                                                   borderRadius:
-                                                      BorderRadius.circular(13.w),
+                                                      BorderRadius.circular(
+                                                          13.w),
                                                   border: Border.all(
                                                       color: AppColors.c262626
                                                           .withOpacity(0.4),
@@ -1155,9 +1262,8 @@ class _SummaryPageState extends State<SummaryPage>
   Widget _buildStats() {
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12.w),
-          color: AppColors.cFFFFFF),
-      padding: EdgeInsets.only(left: 16.w, right: 16.w,bottom: 9.w),
+          borderRadius: BorderRadius.circular(12.w), color: AppColors.cFFFFFF),
+      padding: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 9.w),
       margin: EdgeInsets.only(top: 9.w),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         19.vGap,
@@ -1312,11 +1418,75 @@ class _SummaryPageState extends State<SummaryPage>
     );
   }
 
+  /// 对战记录
+  List<Widget> getVsAwayWidget() {
+    var vsTeams = controller.getVsTeams();
+    List<Widget> list = vsTeams.fold([], (p, e) {
+      var key = controller.getCurrentTabKey();
+      num value = 0.0;
+      if (key.contains(",")) {
+        value = key.split(",").fold(0.0, (p, element) {
+          num v = e.toJson()[ParamUtils.getProKey(element.toLowerCase())] ?? 0;
+          return p + v;
+        });
+      } else {
+        value = e.toJson()[ParamUtils.getProKey(key.toLowerCase())];
+      }
+      var dateTimeByMs = MyDateUtils.getDateTimeByMs(e.updateTime);
+      var month = MyDateUtils.getMonthEnName(dateTimeByMs, short: true);
+      var enMMDDYYYY = MyDateUtils.getEnMMDDYYYY(dateTimeByMs, short: true);
+      var day = dateTimeByMs.day;
+      p.add(Container(
+        height: 42.w,
+        margin: EdgeInsets.symmetric(horizontal: 35.w),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              enMMDDYYYY,
+              style: 12.w4(
+                  color: AppColors.c000000,
+                  height: 1,
+                  fontFamily: FontFamily.fRobotoRegular),
+            ),
+            Text(
+              "${value.format()}",
+              style: 16.w5(
+                color: AppColors.c000000,
+                height: 1,
+                fontFamily: FontFamily.fOswaldMedium,
+              ),
+            )
+          ],
+        ),
+      ));
+      p.add(Container(
+          margin: EdgeInsets.symmetric(
+            horizontal: 16.w,
+          ),
+          child: Divider(
+            height: 1.w,
+            color: AppColors.cE6E6E6,
+          )));
+      return p;
+    });
+    list.removeLast();
+    return list;
+  }
+
   List<Widget> getVsWidget() {
     var vsTeams = controller.getVsTeams();
     List<Widget> list = vsTeams.fold([], (p, e) {
       var key = controller.getCurrentTabKey();
-      var value = e.toJson()[ParamUtils.getProKey(key.toLowerCase())];
+      num value = 0.0;
+      if (key.contains(",")) {
+        value = key.split(",").fold(0.0, (p, element) {
+          num v = e.toJson()[ParamUtils.getProKey(element.toLowerCase())] ?? 0;
+          return p + v;
+        });
+      } else {
+        value = e.toJson()[ParamUtils.getProKey(key.toLowerCase())];
+      }
       var dateTimeByMs = MyDateUtils.getDateTimeByMs(e.updateTime);
       var month = MyDateUtils.getMonthEnName(dateTimeByMs, short: true);
       var day = dateTimeByMs.day;
@@ -1361,9 +1531,12 @@ class _SummaryPageState extends State<SummaryPage>
           verticalTextPadding: verticalTextPadding,
           horizontalTextAlignment: TextAnchor.end,
           verticalTextAlignment: TextAnchor.middle,
-          textStyle: 9.w4(color: AppColors.c262626, height: 1),
+          textStyle: 10.w4(
+              color: AppColors.cFF7954,
+              height: 1,
+              fontFamily: FontFamily.fOswaldMedium),
           // 虚线的宽度
-          borderColor: AppColors.cFF7954.withOpacity(0.5),
+          borderColor: AppColors.cFF7954,
           shouldRenderAboveSeries: true,
           // 虚线的颜色
           dashArray: const [3, 2], // 设置虚线样式：[线段长度, 间隔长度]
@@ -1378,11 +1551,17 @@ class _SummaryPageState extends State<SummaryPage>
         axisLine: const AxisLine(color: AppColors.cD9D9D9, width: 1),
         majorTickLines: const MajorTickLines(size: 0),
         labelIntersectAction: AxisLabelIntersectAction.wrap,
-        labelStyle: 10.w4(color: AppColors.cB3B3B3),
+        labelStyle: 10.w4(
+            color: AppColors.cB3B3B3,
+            height: 1,
+            fontFamily: FontFamily.fRobotoRegular),
       ),
       // 添加标注
       primaryYAxis: NumericAxis(
-        labelStyle: 10.w4(color: AppColors.cB3B3B3),
+        labelStyle: 10.w4(
+            color: AppColors.cB3B3B3,
+            height: 1,
+            fontFamily: FontFamily.fOswaldMedium),
         plotBands: plotBands,
         axisLine: const AxisLine(width: 0),
         // maximum: controller.getColumnMaxYValue().toDouble(),

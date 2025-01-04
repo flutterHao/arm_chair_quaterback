@@ -107,12 +107,10 @@ class SummaryController extends GetxController {
       });
       Map<String, NbaPlayerBaseInfoGuessInfosProperty> guessInfos =
           (CacheApi.pickType ?? []).fold({}, (p, e) {
-        var contains = result2.guessInfos.keys
-            .toList()
-            .contains(e.pickTypeName);
+        var contains =
+            result2.guessInfos.keys.toList().contains(e.pickTypeName);
         if (contains) {
-          p[e.pickTypeName] =
-          result2.guessInfos[e.pickTypeName]!;
+          p[e.pickTypeName] = result2.guessInfos[e.pickTypeName]!;
         }
         return p;
       });
@@ -148,6 +146,15 @@ class SummaryController extends GetxController {
   static String get idSummaryMain => "id_summary_main";
 
   static String get idTabContent => "id_tab_content";
+
+  int getSeasonDate() {
+    return nbaPlayerBaseInfoEntity?.playerDataAvg.seasonId ?? 1971;
+  }
+
+  String formatSeasonDate() {
+    var seasonDate = getSeasonDate();
+    return "${(seasonDate.toString()).substring(2)}-${((seasonDate + 1).toString()).substring(2)}";
+  }
 
   List<PlayerRegular> getSeasonAverageData() {
     if (nbaPlayerBaseInfoEntity == null) {
@@ -204,7 +211,6 @@ class SummaryController extends GetxController {
     }
     var key = getCurrentTabKey();
 
-    key = key.toLowerCase();
     var guessInfos = nbaPlayerBaseInfoEntity?.guessInfos[key];
     var picks = guessInfos?.picks;
     if (picks == null) {
@@ -362,7 +368,7 @@ class SummaryController extends GetxController {
       var currentTabKey = getCurrentTabKey();
       var value = e.getValue(currentTabKey);
       Color color = double.parse(getLast5AvgWithTab()) <= value
-          ? AppColors.cFF7954
+          ? AppColors.c000000
           : AppColors.cD9D9D9;
       return ChartSampleData(
           x: '$monthEnName ${timeByMs.day}\nVS ${Utils.getTeamInfo(e.awayTeamId).shortEname}',
@@ -373,8 +379,8 @@ class SummaryController extends GetxController {
     return <ColumnSeries<ChartSampleData, String>>[
       ColumnSeries<ChartSampleData, String>(
         spacing: len > 1 ? 0.5 : 0.9,
-        width: 0.2,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20.w)),
+        width: 0.35,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(3.w)),
         dataSource: list,
         xValueMapper: (ChartSampleData sales, _) => sales.x as String,
         yValueMapper: (ChartSampleData sales, _) => sales.y,

@@ -149,19 +149,8 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                           Expanded(
                             flex: 204,
                             child: InkWell(
-                              onTap: () => kReleaseMode
-                                  ? Get.toNamed(RouteNames.picksPickRank,
-                                      id: GlobalNestedKey.PICKS)
-                                  : Get.toNamed(RouteNames.picksPersonalCenter,
-                                      arguments: {
-                                          "teamId": Get.find<HomeController>()
-                                                  .userEntiry
-                                                  .teamLoginInfo
-                                                  ?.team
-                                                  ?.teamId ??
-                                              0,
-                                          "initTab": 0
-                                        }),
+                              onTap: () => Get.toNamed(RouteNames.picksPickRank,
+                                  id: GlobalNestedKey.PICKS),
                               child: Container(
                                 height: 51.w,
                                 padding: EdgeInsets.only(
