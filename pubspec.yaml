@@ -112,6 +112,8 @@ flutter:
     - assets/images/Common/
     - assets/images/scores/
     - assets/spine/
+    - assets/images/inbox/
+
     # - assets/lottie/
 
 

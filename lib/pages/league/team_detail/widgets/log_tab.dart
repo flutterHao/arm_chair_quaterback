@@ -2,16 +2,20 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-31 15:05:53
- * @LastEditTime: 2025-01-03 19:03:25
+ * @LastEditTime: 2025-01-04 11:16:30
  */
+import 'dart:math';
+
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/stats_dialog.dart';
 import 'package:arm_chair_quaterback/pages/league/team_detail/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
@@ -21,7 +25,6 @@ class LogTab extends GetView<TeamDetailController> {
 
   @override
   Widget build(BuildContext context) {
-    return _buildTabViewItem([]);
     return ListView.separated(
         padding: EdgeInsets.zero,
         itemCount: controller.yearList.length,
@@ -57,6 +60,7 @@ class _Item extends GetView<TeamDetailController> {
   @override
   Widget build(BuildContext context) {
     return Container(
+        // padding: EdgeInsets.only(left: 16.w),
         width: double.infinity,
         decoration: const BoxDecoration(
           border: Border(
@@ -67,35 +71,17 @@ class _Item extends GetView<TeamDetailController> {
         ),
         child: _buildTabViewItem([]));
   }
-}
 
-Widget _buildTabViewItem(List<ScoreBoardDetailList> playerScores) {
-  List<String> keys = [
-    "MIN",
-    "PTS",
-    "3PM",
-    "REB",
-    "AST",
-    "STL",
-    "BLK",
-    "FTM",
-    "TO",
-    "FOUL",
-    "FG",
-    "FT",
-    "3P"
-  ];
-  item(List<ScoreBoardDetailList> list) {
+  Widget _buildTabViewItem(List<ScoreBoardDetailList> list) {
     return SizedBox(
-      height: 29.w + 34.w * list.length,
+      height: 29.w + 34.w * 5,
       child: SfDataGridTheme(
           data: const SfDataGridThemeData(
               gridLineColor: AppColors.cE6E6E6,
               frozenPaneLineColor: Colors.transparent,
-              rowHoverColor: Colors.blue,
-              gridLineStrokeWidth: 0),
+              gridLineStrokeWidth: 1),
           child: SfDataGrid(
-            frozenColumnsCount: 1,
+            frozenColumnsCount: 2,
             rowHeight: 34.w,
             headerRowHeight: 29.w,
             verticalScrollPhysics: const NeverScrollableScrollPhysics(),
@@ -104,31 +90,34 @@ Widget _buildTabViewItem(List<ScoreBoardDetailList> playerScores) {
             source: PlayerDetailDatasource(list),
             columns: [
               GridColumn(
-                  columnName: 'id',
-                  width: 70.w,
+                  columnName: 'WK',
+                  width: 50.w,
                   label: Container(
-                    alignment: Alignment.centerLeft,
-                    padding: EdgeInsets.only(left: 19.w),
-                    decoration: const BoxDecoration(
-                        border: Border(
-                            bottom: BorderSide(
-                                color: AppColors.cD1D1D1, width: 1))),
+                    alignment: Alignment.center,
                     child: Text(
-                      'Player',
+                      'WK',
+                      style: 12.w4(fontFamily: FontFamily.fRobotoMedium),
                     ),
                   )),
-              ...keys.map((e) {
+              GridColumn(
+                  columnName: 'id',
+                  width: 50.w,
+                  label: Container(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'OPP',
+                      style: 12.w4(fontFamily: FontFamily.fRobotoMedium),
+                    ),
+                  )),
+              ...controller.columns.map((e) {
                 return GridColumn(
                     columnName: e,
                     width: 50.w,
                     label: Container(
                       alignment: Alignment.center,
-                      decoration: const BoxDecoration(
-                          border: Border(
-                              bottom: BorderSide(
-                                  color: AppColors.cD1D1D1, width: 1))),
                       child: Text(
                         e,
+                        style: 12.w4(fontFamily: FontFamily.fRobotoMedium),
                       ),
                     ));
               })
@@ -136,14 +125,6 @@ Widget _buildTabViewItem(List<ScoreBoardDetailList> playerScores) {
           )),
     );
   }
-
-  return SingleChildScrollView(
-    child: Column(
-      children: [
-        item(playerScores),
-      ],
-    ),
-  );
 }
 
 class PlayerDetailDatasource extends DataGridSource {
@@ -152,23 +133,17 @@ class PlayerDetailDatasource extends DataGridSource {
   final List<ScoreBoardDetailList> playerScores;
 
   List<DataGridRow> _buildRows() {
-    List<List<DataGridCell>> map = playerScores.map((e) {
+    final ctrl = Get.find<TeamDetailController>();
+    Random random = Random();
+    int i = 0;
+    List<List<DataGridCell>> map = List.generate(5, (i) {}).toList().map((e) {
       List<DataGridCell> cells = [];
-      cells.add(DataGridCell(columnName: "id", value: e.playerId));
-      cells.add(DataGridCell(columnName: "MIN", value: e.min));
-      cells.add(DataGridCell(columnName: "PTS", value: e.pts));
-      cells.add(DataGridCell(columnName: "3PM", value: e.threePm));
-      cells.add(DataGridCell(columnName: "REB", value: e.reb));
-      cells.add(DataGridCell(columnName: "AST", value: e.ast));
-      cells.add(DataGridCell(columnName: "STL", value: e.stl));
-      cells.add(DataGridCell(columnName: "BLK", value: e.blk));
-      cells.add(DataGridCell(columnName: "FTM", value: e.ftm));
-      cells.add(DataGridCell(columnName: "TO", value: e.to));
-      cells.add(DataGridCell(columnName: "FOUL", value: e.pf));
-      cells.add(DataGridCell(columnName: "FG", value: "${e.fgm}-${e.fga}"));
-      cells.add(DataGridCell(columnName: "FT", value: "${e.ftm}-${e.fta}"));
-      cells.add(
-          DataGridCell(columnName: "3P", value: "${e.threePm}-${e.threePa}"));
+      cells.add(DataGridCell(columnName: "WK", value: i + 1));
+      cells.add(const DataGridCell(columnName: "OPP", value: "HOU"));
+      for (var ele in ctrl.columns) {
+        cells.add(DataGridCell(columnName: ele, value: random.nextInt(5) + 20));
+      }
+      i++;
       return cells;
     }).toList();
     List<DataGridRow> list = map.fold(<DataGridRow>[], (p, e) {
@@ -188,9 +163,9 @@ class PlayerDetailDatasource extends DataGridSource {
         var baseInfo = Utils.getPlayBaseInfo(e.value);
         return Container(
             alignment: Alignment.centerLeft,
-            decoration: const BoxDecoration(
-                border: Border(
-                    right: BorderSide(color: AppColors.cE6E6E, width: 1))),
+            // decoration: const BoxDecoration(
+            //     border: Border(
+            //         right: BorderSide(color: AppColors.cE6E6E, width: 1))),
             padding: EdgeInsets.only(left: 19.w, right: 9.w),
             child: Row(
               children: [

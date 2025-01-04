@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:33:28
- * @LastEditTime: 2024-11-19 22:13:25
+ * @LastEditTime: 2025-01-04 16:38:10
  */
 class RouteNames {
   static const main = '/';
@@ -53,7 +53,6 @@ class RouteNames {
   //league
   static const leagueLeagueDetail = '/league_league_detail';
 
-
-  static const message = '/message';
-
+  /// inbox
+  static const inboxDetail = '/inbox_detail';
 }

@@ -54,11 +54,13 @@ class OverviewTab extends StatelessWidget {
   }
 }
 
-class _SeasonStats extends StatelessWidget {
+class _SeasonStats extends GetView<TeamDetailController> {
   const _SeasonStats({super.key});
 
   @override
   Widget build(BuildContext context) {
+    List<String> types = ["PPG", "RPG", "APG", "BPG"];
+    var regular = controller.teamDetailEntity.regularSeasonData;
     return Container(
       width: double.infinity,
       // padding: EdgeInsets.symmetric(vertical: 20.w),
@@ -96,7 +98,7 @@ class _SeasonStats extends StatelessWidget {
                       width: 93.w,
                       child: Column(children: [
                         Text(
-                          "24.1",
+                          regular.getRankValue(types[index], regular),
                           textAlign: TextAlign.center,
                           style: 21.w4(
                             fontFamily: FontFamily.fOswaldBold,
@@ -105,7 +107,7 @@ class _SeasonStats extends StatelessWidget {
                         ),
                         5.5.vGap,
                         Text(
-                          "PPG",
+                          types[index],
                           style: 10.w4(
                               fontFamily: FontFamily.fRobotoRegular,
                               height: 0.9,
@@ -113,7 +115,7 @@ class _SeasonStats extends StatelessWidget {
                         ),
                         const Expanded(child: SizedBox.shrink()),
                         Text(
-                          "6th",
+                          regular.getRank(types[index], regular),
                           style: 12.w4(
                             color: AppColors.cFF7954,
                             height: 0.9,
@@ -126,7 +128,7 @@ class _SeasonStats extends StatelessWidget {
                       height: 53.5.w,
                       color: AppColors.cE6E6E,
                     ),
-                itemCount: 4),
+                itemCount: types.length),
           )
         ],
       ),

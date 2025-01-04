@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-06 15:16:54
- * @LastEditTime: 2025-01-03 20:43:13
+ * @LastEditTime: 2025-01-04 15:20:59
  */
 class Api {
   /// base
@@ -105,6 +105,7 @@ class Api {
   static const String cCardPackDefine = "$CONFIG_BASE_PATH/CardPackDefine.json";
   static const String cSourceTranslate =
       "$CONFIG_BASE_PATH/SourceTranslate.json";
+  static const String cInboxMessage = "$CONFIG_BASE_PATH/InboxMessage.json";
 
   /// TeamPlayer
   static const String getTeamPlayerByUUID =

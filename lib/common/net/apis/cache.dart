@@ -7,6 +7,7 @@ import 'package:arm_chair_quaterback/common/entities/dan_ma_ku_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/game_event_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/grade_in_stamina_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/grade_in_star_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/inbox_message_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
@@ -56,6 +57,7 @@ class CacheApi {
   static List<DanMaKuEntity> danMaKuList = [];
   static Map<int, CardPackDefineEntity> cardPackDefineMap = {};
   static List<NewsSourceEntity> newsSourceList = [];
+  static List<InboxMessageEntity> inboxMessageList = [];
 
   static Future<void> init() async {
     await Future.wait([
@@ -260,5 +262,13 @@ class CacheApi {
     newsSourceList =
         list.map((item) => NewsSourceEntity.fromJson(item)).toList();
     return newsSourceList;
+  }
+
+  static Future<List<InboxMessageEntity>> getInboxMessageList() async {
+    if (inboxMessageList.isNotEmpty) {
+      return inboxMessageList;
+    }
+    List list = await HttpUtil().post(Api.cInboxMessage);
+    return list.map((item) => InboxMessageEntity.fromJson(item)).toList();
   }
 }

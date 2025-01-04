@@ -25,6 +25,7 @@ import 'package:arm_chair_quaterback/common/entities/guess_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_param_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_reference_value.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_top_reviews_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/inbox_message_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/my_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nab_player_season_game_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_game_detail_entity.dart';
@@ -375,6 +376,10 @@ class JsonConvert {
     if (<GuessTopReviewsEntity>[] is M) {
       return data.map<GuessTopReviewsEntity>((Map<String, dynamic> e) =>
           GuessTopReviewsEntity.fromJson(e)).toList() as M;
+    }
+    if (<InboxMessageEntity>[] is M) {
+      return data.map<InboxMessageEntity>((Map<String, dynamic> e) =>
+          InboxMessageEntity.fromJson(e)).toList() as M;
     }
     if (<MyTeamEntity>[] is M) {
       return data.map<MyTeamEntity>((Map<String, dynamic> e) =>
@@ -1063,6 +1068,7 @@ class JsonConvertClassCollection {
     (GuessGameParamEntity).toString(): GuessGameParamEntity.fromJson,
     (GuessReferenceValue).toString(): GuessReferenceValue.fromJson,
     (GuessTopReviewsEntity).toString(): GuessTopReviewsEntity.fromJson,
+    (InboxMessageEntity).toString(): InboxMessageEntity.fromJson,
     (MyTeamEntity).toString(): MyTeamEntity.fromJson,
     (NabPlayerSeasonGameRankEntity).toString(): NabPlayerSeasonGameRankEntity
         .fromJson,

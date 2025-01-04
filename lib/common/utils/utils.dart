@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-21 20:20:49
- * @LastEditTime: 2024-12-28 19:57:47
+ * @LastEditTime: 2025-01-04 16:03:04
  */
 import 'dart:async';
 import 'dart:io';
@@ -30,10 +30,14 @@ import 'dart:ui' show ImmutableBuffer, ImageDescriptor;
 import 'package:flutter/widgets.dart';
 
 class Utils {
-  ///深色队徽
   static String getAvaterUrl(avatarId) {
     String url = ConfigStore.to.getServiceUrl();
     return "$url/image/user_avatar/$avatarId.png";
+  }
+
+  static String getMessageIcon(String name) {
+    String url = ConfigStore.to.getServiceUrl();
+    return "$url/image/message/$name.png";
   }
 
   static String getPlayUrl(int? playerId) {

@@ -1,5 +1,7 @@
 import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.dart';
 import 'package:arm_chair_quaterback/common/entities/team_detail_entity.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
+
 
 TeamDetailEntity $TeamDetailEntityFromJson(Map<String, dynamic> json) {
   final TeamDetailEntity teamDetailEntity = TeamDetailEntity();

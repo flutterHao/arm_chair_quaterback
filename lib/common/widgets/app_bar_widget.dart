@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-12 19:09:06
- * @LastEditTime: 2024-10-22 09:46:00
+ * @LastEditTime: 2025-01-04 16:56:16
  */
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -42,24 +42,27 @@ class AppBarWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            height: 63.w,
+            height: 47.w,
             alignment: Alignment.center,
             child: Stack(
               alignment: Alignment.center,
               children: [
                 Positioned(
-                  left: 0,
-                  child: SizedBox(
-                    width: 48.w,
-                    height: 48.w,
-                    child: left ??
-                        MtInkwell(
-                          onTap: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: SizedBox(
-                            width: 48.w,
-                            height: 48.w,
+                  left: 16.w,
+                  child: left ??
+                      MtInkwell(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Center(
+                          child: Container(
+                            width: 32.w,
+                            height: 32.w,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16.w),
+                              border: Border.all(color: AppColors.cE1E1E1),
+                            ),
                             child: IconWidget(
                               iconWidth: 19.w,
                               iconHeight: 19.w,
@@ -68,7 +71,7 @@ class AppBarWidget extends StatelessWidget {
                             ),
                           ),
                         ),
-                  ),
+                      ),
                 ),
                 Center(
                   child: titleWidget ??
@@ -78,7 +81,7 @@ class AppBarWidget extends StatelessWidget {
                       ),
                 ),
                 Positioned(
-                  right: 8.w,
+                  right: 16.w,
                   child: SizedBox(
                     // width: 19.w,
                     // height: 19.w,
@@ -106,12 +109,12 @@ class AppBarContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       // width: 361.w,
-      constraints: BoxConstraints(minHeight: 63.w),
+      constraints: BoxConstraints(minHeight: 47.w),
       decoration: BoxDecoration(
         color: AppColors.c000000,
-        borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(borderRadius ?? 16.w),
-            bottomRight: Radius.circular(borderRadius ?? 16.w)),
+        // borderRadius: BorderRadius.only(
+        //     bottomLeft: Radius.circular(borderRadius ?? 16.w),
+        //     bottomRight: Radius.circular(borderRadius ?? 16.w)),
       ),
       child: child,
     );

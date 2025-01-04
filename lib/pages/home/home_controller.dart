@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-25 11:48:38
- * @LastEditTime: 2025-01-02 10:47:45
+ * @LastEditTime: 2025-01-04 11:28:53
  */
 /*
  * @Description: 
@@ -25,6 +25,7 @@ import 'package:arm_chair_quaterback/common/services/services.dart';
 import 'package:arm_chair_quaterback/common/store/user.dart';
 import 'package:arm_chair_quaterback/common/utils/device_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
+import 'package:arm_chair_quaterback/pages/inbox/index.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/view.dart';
 import 'package:arm_chair_quaterback/pages/message/view.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/view.dart';
@@ -89,7 +90,7 @@ class HomeController extends GetxController {
       "Inbox",
       Assets.commonUiCommonTabBottom05Off,
       Assets.commonUiCommonTabBottom05On,
-      kReleaseMode ? const MessagePage() : const TradeIndex(),
+      const InboxPage(),
     ),
   ];
 
@@ -241,5 +242,10 @@ class HomeController extends GetxController {
       }
     }
     return true;
+  }
+
+  int getTeamId() {
+    int teamId = HomeController.to.userEntiry?.teamLoginInfo?.team?.teamId ?? 0;
+    return teamId;
   }
 }

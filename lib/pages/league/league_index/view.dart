@@ -68,13 +68,13 @@ class LeaguePage extends StatelessWidget {
                 customTransition: HalfSlideRightToLeftTransition(),
                 page: () => const MineAccountPage(),
                 binding: MineAccountBinding());
-          case RouteNames.nbaRank:
-            return GetPageRoute(
-                opaque: false,
-                settings: setting,
-                customTransition: HalfSlideRightToLeftTransition(),
-                page: () => const NBARankPage(),
-                binding: RankBinding());
+          // case RouteNames.nbaRank:
+          //   return GetPageRoute(
+          //       opaque: false,
+          //       settings: setting,
+          //       customTransition: HalfSlideRightToLeftTransition(),
+          //       page: () => const NBARankPage(),
+          //       binding: RankBinding());
         }
       },
     );
@@ -239,10 +239,7 @@ class _LeagueIndexPageState extends State<LeagueIndexPage>
                 border: Border.all(color: AppColors.c666666, width: 1),
                 borderRadius: BorderRadius.circular(9.w)),
             child: MtInkwell(
-                onTap: () => Get.toNamed(
-                      RouteNames.nbaRank,
-                      id: GlobalNestedKey.LEAGUES,
-                    ),
+                onTap: () => Get.toNamed(RouteNames.nbaRank),
                 child: IconWidget(
                     iconWidth: 21.w,
                     icon: Assets.scoresUiScoresIconSystemRank)),
