@@ -48,7 +48,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                 child: DefaultTabController(
               length: controller.tabs.length,
               child: NestedScrollView(
-                  floatHeaderSlivers: true,
+                  // floatHeaderSlivers: true,
                   headerSliverBuilder:
                       (BuildContext context, bool innerBoxIsScrolled) {
                     return <Widget>[

@@ -17,7 +17,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:intl/intl.dart';
 
 ///
 ///@auther gejiahui
@@ -47,10 +46,12 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
   // 主视图
   Widget _buildView(BuildContext context) {
     return SingleChildScrollView(
-      controller: controller.scrollController,
-      physics: const BouncingScrollPhysics(),
+      // controller: controller.scrollController,
+      physics: const NeverScrollableScrollPhysics(),
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 16.w),
+        margin: EdgeInsets.only(top: 9.w),
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
+        color: AppColors.cFFFFFF,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -159,7 +160,7 @@ class _PlayerDetailGameState extends State<PlayerDetailGame>
                     );
                   }),
                   18.vGap,
-                  if (controller.starUpDefineEntity != null)
+                  if (controller.starUpDefineEntity != null && false)
                     Center(
                       child: InkWell(
                         onTap: () {

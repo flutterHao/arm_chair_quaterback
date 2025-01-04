@@ -31,13 +31,15 @@ class _HistoryPageState extends State<HistoryPage>
       init: controller = HistoryController(widget.playerId),
       builder: (_) {
         return Container(
-          margin: EdgeInsets.symmetric(horizontal: 16.w),
+          margin: EdgeInsets.only(top: 9.w),
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          color: AppColors.cFFFFFF,
           child: MediaQuery.removePadding(
             context: context,
             removeTop: true,
             child: ListView.builder(
-                controller: controller.scrollController,
-                physics: const BouncingScrollPhysics(),
+                // controller: controller.scrollController,
+                physics: const NeverScrollableScrollPhysics(),
                 itemCount: controller.items.length,
                 itemBuilder: (context, index) {
                   bool lastItem = index == controller.items.length - 1;
@@ -60,7 +62,7 @@ class _HistoryPageState extends State<HistoryPage>
                         onExpansionChanged: (expanded) {
                           if (expanded) {
                             // 在展开时自动滚动到确保内容在屏幕中
-                            _scrollToItem(context, index);
+                            // _scrollToItem(context, index);
                             if (controller.data[year]!.loadStatus.value ==
                                     LoadDataStatus.loading &&
                                 controller.data[year]!.seasonHistoryItems
@@ -78,13 +80,13 @@ class _HistoryPageState extends State<HistoryPage>
                         children: [
                           GetBuilder<HistoryController>(
                               id: year,
-                              builder: (controller) {
+                              builder: (_) {
                                 List<SeasonHistoryItems> itemData =
                                     controller.data[year]!.seasonHistoryItems;
                                 var loadStatus =
                                     controller.data[year]!.loadStatus;
                                 var listSize = itemData.length;
-                                print('listSize:$listSize');
+                                print('listSize:$listSize,,,$loadStatus');
                                 return Container(
                                   height: listSize * 20.w + (2 * 14.w) + 20.w,
                                   constraints: BoxConstraints(

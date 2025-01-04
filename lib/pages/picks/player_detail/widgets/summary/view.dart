@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
-import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -15,7 +14,6 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/physics/one_boundary_scroll_physics.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/controller.dart';
-import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/summary/controller.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -25,7 +23,7 @@ import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class SummaryPage extends StatefulWidget {
-  SummaryPage({required this.playerId, super.key, this.tabStr});
+  const SummaryPage({required this.playerId, super.key, this.tabStr});
 
   final int playerId;
   final String? tabStr;
@@ -60,7 +58,7 @@ class _SummaryPageState extends State<SummaryPage>
           var scrollController = ScrollController();
 
           return SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -410,86 +408,94 @@ class _SummaryPageState extends State<SummaryPage>
                     ],
                   ),
                 ),
-                18.vGap,
+                9.vGap,
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 16.w),
-                  child: Text.rich(TextSpan(children: [
-                    TextSpan(
-                        text: "Trade",
-                        style: 16.w7(color: AppColors.c262626, height: 1)),
-                    if (controller.getTradePlayer() != null &&
-                        controller.getTradePlayer()?.isBuy == true)
-                      TextSpan(
-                          text: " (You already have this player )",
-                          style: 10.w4(color: AppColors.cB3B3B3, height: 1))
-                  ])),
-                ),
-                13.vGap,
-                Container(
-                  height: 185.w,
-                  margin: EdgeInsets.symmetric(horizontal: 16.w),
-                  padding: EdgeInsets.only(
-                      top: 14.w, right: 21.w, bottom: 17.w, left: 13.w),
+                  padding: EdgeInsets.only(top: 19.w),
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16.w),
-                      color: AppColors.cF2F2F2),
+                    borderRadius: BorderRadius.circular(12.w),
+                    color: AppColors.cFFFFFF),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Prize Change",
-                        style: 14.w7(color: AppColors.c262626, height: 1),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 16.w),
+                        child: Text.rich(TextSpan(children: [
+                          TextSpan(
+                              text: "Trade",
+                              style: 16.w7(color: AppColors.c262626, height: 1)),
+                          if (controller.getTradePlayer() != null &&
+                              controller.getTradePlayer()?.isBuy == true)
+                            TextSpan(
+                                text: " (You already have this player )",
+                                style: 10.w4(color: AppColors.cB3B3B3, height: 1))
+                        ])),
                       ),
-                      11.vGap,
-                      Expanded(
-                        child: LineChart(
-                          LineChartData(
-                            lineTouchData: const LineTouchData(enabled: false),
-                            titlesData: FlTitlesData(
-                                show: true,
-                                rightTitles: AxisTitles(
-                                    sideTitles: SideTitles(
-                                        reservedSize: 25.w,
-                                        showTitles: true,
-                                        getTitlesWidget: (value, _) {
-                                          return FittedBox(
-                                            fit: BoxFit.scaleDown,
-                                            child: Text(
-                                              Utils.formatMoney(value),
-                                              style: 9
-                                                  .w4(color: AppColors.cB3B3B3),
-                                            ),
-                                          );
-                                        })),
-                                bottomTitles: const AxisTitles(),
-                                leftTitles: const AxisTitles(),
-                                topTitles: const AxisTitles()),
-                            borderData: FlBorderData(
-                              show: false,
+                      13.vGap,
+                      Container(
+                        height: 185.w,
+                        margin: EdgeInsets.symmetric(horizontal: 16.w),
+                        padding: EdgeInsets.only(
+                            top: 14.w, right: 21.w, bottom: 17.w, left: 13.w),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Prize Change",
+                              style: 14.w7(color: AppColors.c262626, height: 1),
                             ),
-                            lineBarsData: [
-                              LineChartBarData(
-                                  spots: controller.getTradeData(),
-                                  color: AppColors.cFF7954,
-                                  dotData: const FlDotData(show: false),
-                                  barWidth: 2,
-                                  belowBarData: BarAreaData(
+                            11.vGap,
+                            Expanded(
+                              child: LineChart(
+                                LineChartData(
+                                  lineTouchData: const LineTouchData(enabled: false),
+                                  titlesData: FlTitlesData(
                                       show: true,
-                                      gradient: LinearGradient(colors: [
-                                        AppColors.cFF7954.withOpacity(0.3),
-                                        AppColors.cFF7954.withOpacity(0.1)
-                                      ])))
-                            ],
-                            gridData: FlGridData(
-                                show: true,
-                                drawVerticalLine: false,
-                                getDrawingHorizontalLine: (value) {
-                                  return const FlLine(
-                                      color: AppColors.cB3B3B3,
-                                      dashArray: [2, 2],
-                                      strokeWidth: 1);
-                                }),
-                          ),
+                                      rightTitles: AxisTitles(
+                                          sideTitles: SideTitles(
+                                              reservedSize: 25.w,
+                                              showTitles: true,
+                                              getTitlesWidget: (value, _) {
+                                                return FittedBox(
+                                                  fit: BoxFit.scaleDown,
+                                                  child: Text(
+                                                    Utils.formatMoney(value),
+                                                    style: 9
+                                                        .w4(color: AppColors.cB3B3B3),
+                                                  ),
+                                                );
+                                              })),
+                                      bottomTitles: const AxisTitles(),
+                                      leftTitles: const AxisTitles(),
+                                      topTitles: const AxisTitles()),
+                                  borderData: FlBorderData(
+                                    show: false,
+                                  ),
+                                  lineBarsData: [
+                                    LineChartBarData(
+                                        spots: controller.getTradeData(),
+                                        color: AppColors.cFF7954,
+                                        dotData: const FlDotData(show: false),
+                                        barWidth: 2,
+                                        belowBarData: BarAreaData(
+                                            show: true,
+                                            gradient: LinearGradient(colors: [
+                                              AppColors.cFF7954.withOpacity(0.3),
+                                              AppColors.cFF7954.withOpacity(0.1)
+                                            ])))
+                                  ],
+                                  gridData: FlGridData(
+                                      show: true,
+                                      drawVerticalLine: false,
+                                      getDrawingHorizontalLine: (value) {
+                                        return const FlLine(
+                                            color: AppColors.cB3B3B3,
+                                            dashArray: [2, 2],
+                                            strokeWidth: 1);
+                                      }),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -514,240 +520,245 @@ class _SummaryPageState extends State<SummaryPage>
                       controller.nbaPlayerBaseInfoEntity!.playerBaseInfo;
                   bool isSpecial = tradePlayer.top ?? false;
                   var color = isGood ? AppColors.c10A86A : AppColors.cE72646;
-                  return Column(
-                    children: [
-                      9.vGap,
-                      Stack(
-                        children: [
-                          Container(
-                            height: 79.w,
-                            margin: EdgeInsets.symmetric(horizontal: 16.w),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(16.w),
-                                gradient: const LinearGradient(colors: [
-                                  AppColors.cB6553B,
-                                  AppColors.c262626
-                                ])),
-                            alignment: Alignment.topCenter,
-                            child: Container(
-                              height: 25.w,
-                              margin: EdgeInsets.only(left: 12.w, right: 22.w),
-                              alignment: Alignment.center,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "Discount in limited time",
-                                    style: 14.w4(
-                                        color: AppColors.cF2F2F2, height: 1),
-                                  ),
-                                  Row(
-                                    children: [
-                                      IconWidget(
-                                          iconWidth: 13.w,
-                                          icon: Assets.iconUiIconCountdown),
-                                      3.hGap,
-                                      Obx(() {
-                                        return Text(
-                                          controller.specialTime.value,
-                                          style: 14.w4(
-                                              color: AppColors.cF2F2F2,
-                                              height: 1),
-                                        );
-                                      })
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                          Container(
-                              margin: EdgeInsets.only(top: 25.w),
+                  return Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12.w),
+                        color: AppColors.cFFFFFF),
+                    child: Column(
+                      children: [
+                        9.vGap,
+                        Stack(
+                          children: [
+                            Container(
+                              height: 79.w,
+                              margin: EdgeInsets.symmetric(horizontal: 16.w),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16.w),
+                                  gradient: const LinearGradient(colors: [
+                                    AppColors.cB6553B,
+                                    AppColors.c262626
+                                  ])),
+                              alignment: Alignment.topCenter,
                               child: Container(
-                                margin:
-                                    EdgeInsets.only(left: 16.w, right: 16.w),
-                                height: 79.w,
-                                padding:
-                                    EdgeInsets.only(left: 17.w, right: 12.w),
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        alignment: Alignment.centerLeft,
-                                        scale: 0.5,
-                                        image: const AssetImage(
-                                            Assets.playerUiIconTrade),
-                                        colorFilter: ColorFilter.mode(
-                                            AppColors.cFF7954.withOpacity(.1),
-                                            BlendMode.srcIn)),
-                                    color: AppColors.cF2F2F2,
-                                    borderRadius: BorderRadius.circular(16.w)),
+                                height: 25.w,
+                                margin: EdgeInsets.only(left: 12.w, right: 22.w),
+                                alignment: Alignment.center,
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          "Game Quality",
-                                          style:
-                                              14.w4(color: AppColors.c666666),
-                                        ),
-                                        Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              Utils.formatGrade(baseInfo.grade),
-                                              style: 40.w7(
-                                                  color: AppColors.c262626,
-                                                  height: 1),
-                                            ),
-                                            11.hGap,
-                                            Stack(
-                                              alignment: Alignment.center,
-                                              children: [
-                                                IconWidget(
-                                                  iconWidth: 37.w,
-                                                  icon:
-                                                      Assets.playerUiIconStar01,
-                                                  iconColor: AppColors.cFF7954,
-                                                ),
-                                                Positioned(
-                                                    top: 10.w,
-                                                    child: Text(
-                                                      "1",
-                                                      style: 23.w7(
-                                                          color:
-                                                              AppColors.cF2F2F2,
-                                                          height: 1),
-                                                    ))
-                                              ],
-                                            )
-                                          ],
-                                        )
-                                      ],
+                                    Text(
+                                      "Discount in limited time",
+                                      style: 14.w4(
+                                          color: AppColors.cF2F2F2, height: 1),
                                     ),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                    Row(
                                       children: [
-                                        SizedBox(
-                                          width: 121.w,
-                                          child: Row(
+                                        IconWidget(
+                                            iconWidth: 13.w,
+                                            icon: Assets.iconUiIconCountdown),
+                                        3.hGap,
+                                        Obx(() {
+                                          return Text(
+                                            controller.specialTime.value,
+                                            style: 14.w4(
+                                                color: AppColors.cF2F2F2,
+                                                height: 1),
+                                          );
+                                        })
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Container(
+                                margin: EdgeInsets.only(top: 25.w),
+                                child: Container(
+                                  margin:
+                                      EdgeInsets.only(left: 16.w, right: 16.w),
+                                  height: 79.w,
+                                  padding:
+                                      EdgeInsets.only(left: 17.w, right: 12.w),
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          alignment: Alignment.centerLeft,
+                                          scale: 0.5,
+                                          image: const AssetImage(
+                                              Assets.playerUiIconTrade),
+                                          colorFilter: ColorFilter.mode(
+                                              AppColors.cFF7954.withOpacity(.1),
+                                              BlendMode.srcIn)),
+                                      color: AppColors.cF2F2F2,
+                                      borderRadius: BorderRadius.circular(16.w)),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "Game Quality",
+                                            style:
+                                                14.w4(color: AppColors.c666666),
+                                          ),
+                                          Row(
                                             crossAxisAlignment:
-                                                CrossAxisAlignment.end,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                                                CrossAxisAlignment.center,
                                             children: [
-                                              IconWidget(
-                                                  iconWidth: 19.w,
-                                                  icon: Assets.teamUiMoney02),
-                                              3.hGap,
                                               Text(
-                                                Utils.formatMoney(tradePlayer
-                                                        .marketPrice
-                                                        ?.toDouble() ??
-                                                    0),
-                                                style: 16.w7(
-                                                    color: (tradePlayer
-                                                                    .marketPrice
-                                                                    ?.toDouble() ??
-                                                                0) ==
-                                                            0
-                                                        ? AppColors.cB3B3B3
-                                                        : AppColors.cE72646,
+                                                Utils.formatGrade(baseInfo.grade),
+                                                style: 40.w7(
+                                                    color: AppColors.c262626,
                                                     height: 1),
                                               ),
-                                              4.hGap,
+                                              11.hGap,
                                               Stack(
-                                                alignment: Alignment.bottomLeft,
+                                                alignment: Alignment.center,
                                                 children: [
+                                                  IconWidget(
+                                                    iconWidth: 37.w,
+                                                    icon:
+                                                        Assets.playerUiIconStar01,
+                                                    iconColor: AppColors.cFF7954,
+                                                  ),
                                                   Positioned(
-                                                      top: 0,
-                                                      right: 0,
-                                                      child: IconWidget(
-                                                        iconWidth: 14.w,
-                                                        icon: Assets
-                                                            .iconUiIconDecreasingAmplitude,
-                                                        iconColor: percent == 0
-                                                            ? AppColors.cB3B3B3
-                                                            : AppColors.cE72646,
-                                                      )),
-                                                  Container(
-                                                      height: 16.w,
-                                                      width: 39.w,
-                                                      margin: EdgeInsets.only(
-                                                          top: 6.w, right: 3.w),
-                                                      decoration: BoxDecoration(
-                                                          color: percent == 0
-                                                              ? AppColors
-                                                                  .cB3B3B3
-                                                              : AppColors
-                                                                  .cE72646,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      5.w)),
-                                                      alignment:
-                                                          Alignment.center,
-                                                      child: FittedBox(
-                                                        child: Text(
-                                                          "${isGood ? "+" : percent == 0 ? "" : "-"}${percent.toStringAsFixed(0)}%",
-                                                          style: 12.w4(
-                                                              color: AppColors
-                                                                  .cFFFFFF,
-                                                              height: 1),
-                                                        ),
-                                                      )),
+                                                      top: 10.w,
+                                                      child: Text(
+                                                        "1",
+                                                        style: 23.w7(
+                                                            color:
+                                                                AppColors.cF2F2F2,
+                                                            height: 1),
+                                                      ))
                                                 ],
                                               )
                                             ],
-                                          ),
-                                        ),
-                                        12.vGap,
-                                        InkWell(
-                                          onTap: () {
-                                            if (tradePlayer.isBuy ?? false) {
-                                              return;
-                                            }
-                                            controller.buyPlayer();
-                                          },
-                                          child: Container(
-                                            height: 26.w,
+                                          )
+                                        ],
+                                      ),
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          SizedBox(
                                             width: 121.w,
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(13.w),
-                                                border: Border.all(
-                                                    color: AppColors.c262626
-                                                        .withOpacity(0.4),
-                                                    width: 1)),
-                                            alignment: Alignment.center,
-                                            child: Text(
-                                              (tradePlayer.isBuy ?? false)
-                                                  ? "HAVE BOUGHT"
-                                                  : "BUY",
-                                              style: 13.w7(
-                                                  color: (tradePlayer.isBuy ??
-                                                          false)
-                                                      ? AppColors.cB3B3B3
-                                                      : AppColors.c262626,
-                                                  height: 1),
+                                            child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                IconWidget(
+                                                    iconWidth: 19.w,
+                                                    icon: Assets.teamUiMoney02),
+                                                3.hGap,
+                                                Text(
+                                                  Utils.formatMoney(tradePlayer
+                                                          .marketPrice
+                                                          ?.toDouble() ??
+                                                      0),
+                                                  style: 16.w7(
+                                                      color: (tradePlayer
+                                                                      .marketPrice
+                                                                      ?.toDouble() ??
+                                                                  0) ==
+                                                              0
+                                                          ? AppColors.cB3B3B3
+                                                          : AppColors.cE72646,
+                                                      height: 1),
+                                                ),
+                                                4.hGap,
+                                                Stack(
+                                                  alignment: Alignment.bottomLeft,
+                                                  children: [
+                                                    Positioned(
+                                                        top: 0,
+                                                        right: 0,
+                                                        child: IconWidget(
+                                                          iconWidth: 14.w,
+                                                          icon: Assets
+                                                              .iconUiIconDecreasingAmplitude,
+                                                          iconColor: percent == 0
+                                                              ? AppColors.cB3B3B3
+                                                              : AppColors.cE72646,
+                                                        )),
+                                                    Container(
+                                                        height: 16.w,
+                                                        width: 39.w,
+                                                        margin: EdgeInsets.only(
+                                                            top: 6.w, right: 3.w),
+                                                        decoration: BoxDecoration(
+                                                            color: percent == 0
+                                                                ? AppColors
+                                                                    .cB3B3B3
+                                                                : AppColors
+                                                                    .cE72646,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        5.w)),
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: FittedBox(
+                                                          child: Text(
+                                                            "${isGood ? "+" : percent == 0 ? "" : "-"}${percent.toStringAsFixed(0)}%",
+                                                            style: 12.w4(
+                                                                color: AppColors
+                                                                    .cFFFFFF,
+                                                                height: 1),
+                                                          ),
+                                                        )),
+                                                  ],
+                                                )
+                                              ],
                                             ),
                                           ),
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              )),
-                        ],
-                      ),
-                    ],
+                                          12.vGap,
+                                          InkWell(
+                                            onTap: () {
+                                              if (tradePlayer.isBuy ?? false) {
+                                                return;
+                                              }
+                                              controller.buyPlayer();
+                                            },
+                                            child: Container(
+                                              height: 26.w,
+                                              width: 121.w,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(13.w),
+                                                  border: Border.all(
+                                                      color: AppColors.c262626
+                                                          .withOpacity(0.4),
+                                                      width: 1)),
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                (tradePlayer.isBuy ?? false)
+                                                    ? "HAVE BOUGHT"
+                                                    : "BUY",
+                                                style: 13.w7(
+                                                    color: (tradePlayer.isBuy ??
+                                                            false)
+                                                        ? AppColors.cB3B3B3
+                                                        : AppColors.c262626,
+                                                    height: 1),
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                )),
+                          ],
+                        ),
+                      ],
+                    ),
                   );
                 }),
                 _buildStats(),
@@ -766,64 +777,71 @@ class _SummaryPageState extends State<SummaryPage>
       if (controller.nbaPlayerBaseInfoEntity?.playerNews.isEmpty == true) {
         return const SizedBox.shrink();
       }
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          19.vGap,
-          Container(
-            margin: EdgeInsets.only(left: 16.w, right: 16.w),
-            child: Text(
-              "News",
-              style: 19.w7(color: AppColors.c262626, height: 1),
-            ),
-          ),
-          ...List.generate(
-              controller.nbaPlayerBaseInfoEntity!.playerNews.length, (index) {
-            var playerNew =
-                controller.nbaPlayerBaseInfoEntity!.playerNews[index];
-            return InkWell(
-              onTap: () {
-                print('playerNew:${playerNew.id}');
-                Get.find<NewListController>().getNewsFlow(isRefresh: true);
-                Get.toNamed(RouteNames.newsDetail, arguments: playerNew);
-              },
-              child: Container(
-                width: double.infinity,
-                margin: EdgeInsets.only(left: 16.w, right: 16.w, top: 13.w),
-                decoration: BoxDecoration(
-                    color: AppColors.cF2F2F2,
-                    borderRadius: BorderRadius.circular(16.w)),
-                padding: EdgeInsets.only(
-                    top: 14.w, right: 30.w, left: 14.w, bottom: 14.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      playerNew.title.isEmpty
-                          ? playerNew.content
-                          : playerNew.title,
-                      maxLines: 3,
-                      style: TextStyle(
-                        fontSize: 12.sp,
-                        height: 1.5,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      // style: 12.w4(
-                      //     color: AppColors.c262626,
-                      //     height: 1,
-                      //     overflow: TextOverflow.ellipsis),
-                    ),
-                    10.vGap,
-                    Text(
-                      "${MyDateUtils.formatDate(MyDateUtils.getDateTimeByMs(playerNew.createTime), format: DateFormats.PARAM_Y_M_D_H_M)} -${playerNew.source}",
-                      style: 10.w4(color: AppColors.cB3B3B3, height: 1),
-                    )
-                  ],
-                ),
+      return Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12.w),
+            color: AppColors.cFFFFFF),
+        margin: EdgeInsets.only(top: 9.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            19.vGap,
+            Container(
+              margin: EdgeInsets.only(left: 16.w, right: 16.w),
+              child: Text(
+                "News",
+                style: 19.w7(color: AppColors.c262626, height: 1),
               ),
-            );
-          })
-        ],
+            ),
+            ...List.generate(
+                controller.nbaPlayerBaseInfoEntity!.playerNews.length, (index) {
+              var playerNew =
+                  controller.nbaPlayerBaseInfoEntity!.playerNews[index];
+              return InkWell(
+                onTap: () {
+                  print('playerNew:${playerNew.id}');
+                  Get.find<NewListController>().getNewsFlow(isRefresh: true);
+                  Get.toNamed(RouteNames.newsDetail, arguments: playerNew);
+                },
+                child: Container(
+                  width: double.infinity,
+                  margin: EdgeInsets.only(left: 16.w, right: 16.w, top: 13.w),
+                  decoration: BoxDecoration(
+                      color: AppColors.cF2F2F2,
+                      borderRadius: BorderRadius.circular(16.w)),
+                  padding: EdgeInsets.only(
+                      top: 14.w, right: 30.w, left: 14.w, bottom: 14.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        playerNew.title.isEmpty
+                            ? playerNew.content
+                            : playerNew.title,
+                        maxLines: 3,
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          height: 1.5,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        // style: 12.w4(
+                        //     color: AppColors.c262626,
+                        //     height: 1,
+                        //     overflow: TextOverflow.ellipsis),
+                      ),
+                      10.vGap,
+                      Text(
+                        "${MyDateUtils.formatDate(MyDateUtils.getDateTimeByMs(playerNew.createTime), format: DateFormats.PARAM_Y_M_D_H_M)} -${playerNew.source}",
+                        style: 10.w4(color: AppColors.cB3B3B3, height: 1),
+                      )
+                    ],
+                  ),
+                ),
+              );
+            }),
+            9.vGap,
+          ],
+        ),
       );
     });
   }
@@ -1137,7 +1155,11 @@ class _SummaryPageState extends State<SummaryPage>
 
   Widget _buildStats() {
     return Container(
-      margin: EdgeInsets.only(left: 16.w, right: 16.w),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12.w),
+          color: AppColors.cFFFFFF),
+      padding: EdgeInsets.only(left: 16.w, right: 16.w,bottom: 9.w),
+      margin: EdgeInsets.only(top: 9.w),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         19.vGap,
         Text(
