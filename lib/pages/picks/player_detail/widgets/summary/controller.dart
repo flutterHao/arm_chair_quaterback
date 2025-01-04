@@ -101,10 +101,29 @@ class SummaryController extends GetxController {
       CacheApi.getNBATeamDefine(),
       CacheApi.getPickType()
     ]).then((result) {
-      nbaPlayerBaseInfoEntity = result[0];
+      NbaPlayerBaseInfoEntity result2 = result[0];
+      result2.l5GameData.sort((a, b) {
+        return a.updateTime.compareTo(b.updateTime);
+      });
+      Map<String, NbaPlayerBaseInfoGuessInfosProperty> guessInfos =
+          (CacheApi.pickType ?? []).fold({}, (p, e) {
+        var contains = result2.guessInfos.keys
+            .toList()
+            .contains(e.pickTypeName);
+        if (contains) {
+          p[e.pickTypeName] =
+          result2.guessInfos[e.pickTypeName]!;
+        }
+        return p;
+      });
+      result2.guessInfos = guessInfos;
+      nbaPlayerBaseInfoEntity = result2;
       if (initTabStr != null) {
-        var i = nbaPlayerBaseInfoEntity?.guessInfos.keys.toList().indexOf(initTabStr!.toUpperCase())??-1;
-        currentIndex.value = i==-1?0:i;
+        var i = nbaPlayerBaseInfoEntity?.guessInfos.keys
+                .toList()
+                .indexOf(initTabStr!.toUpperCase()) ??
+            -1;
+        currentIndex.value = i == -1 ? 0 : i;
       }
       if (nbaPlayerBaseInfoEntity!.tradePlayers != null) {
         startCountDown(nbaPlayerBaseInfoEntity!.tradePlayers);
@@ -122,15 +141,8 @@ class SummaryController extends GetxController {
     });
   }
 
-  List<String> getTitles(){
-    var list = (CacheApi.pickType??[]).fold(<String>[], (p,e){
-      var contains = nbaPlayerBaseInfoEntity?.guessInfos.keys.toList().contains(e.pickTypeName);
-      if(contains??false){
-        p.add(e.pickTypeName);
-      }
-      return p;
-    });
-    return list;
+  List<String> getTitles() {
+    return nbaPlayerBaseInfoEntity?.guessInfos.keys.toList() ?? [];
   }
 
   static String get idSummaryMain => "id_summary_main";
@@ -168,7 +180,7 @@ class SummaryController extends GetxController {
       var value = 0.0;
       for (int i = 0; i < split.length; i++) {
         var str = split[i];
-          value += nbaPlayerBaseInfoEntity?.playerRegularMap?.toJson()[str]??0;
+        value += nbaPlayerBaseInfoEntity?.playerRegularMap?.toJson()[str] ?? 0;
       }
       return value.formatToString();
     }
@@ -177,14 +189,19 @@ class SummaryController extends GetxController {
         .formatToString();
   }
 
-  String getCurrentTabKey() => (nbaPlayerBaseInfoEntity?.guessInfos.keys.toList()[currentIndex.value])!;
+  String getCurrentTabKey() =>
+      (nbaPlayerBaseInfoEntity?.guessInfos.keys.toList()[currentIndex.value])!;
 
   String getLast5AvgWithTab() {
     var key = getCurrentTabKey();
-    return (nbaPlayerBaseInfoEntity?.l5DataAvg?.getValue(key) ?? 0).formatToString();
+    return (nbaPlayerBaseInfoEntity?.l5DataAvg?.getValue(key) ?? 0)
+        .formatToString();
   }
 
   _PickInfo? getPickInfo() {
+    if (nbaPlayerBaseInfoEntity?.guessInfos.isEmpty == true) {
+      return null;
+    }
     var key = getCurrentTabKey();
 
     key = key.toLowerCase();
@@ -200,7 +217,7 @@ class SummaryController extends GetxController {
     if (key == "3PM".toLowerCase()) {
       key = "threePm";
     }
-    var value = picks.guessReferenceValue[key]??0;
+    var value = picks.guessReferenceValue[key] ?? 0;
     var picksPlayerV2 = PicksPlayerV2();
     picksPlayerV2.guessInfo = picks;
     var currentTabKey = getCurrentTabKey();
@@ -236,7 +253,8 @@ class SummaryController extends GetxController {
 
   NbaPlayerBaseInfoGuessInfosProperty? getGuessInfo() {
     var currentTabKey = getCurrentTabKey();
-    var nbaPlayerBaseInfoGuessInfosProperty = nbaPlayerBaseInfoEntity?.guessInfos[currentTabKey.toLowerCase()];
+    var nbaPlayerBaseInfoGuessInfosProperty =
+        nbaPlayerBaseInfoEntity?.guessInfos[currentTabKey.toLowerCase()];
     return nbaPlayerBaseInfoGuessInfosProperty;
   }
 
@@ -316,27 +334,28 @@ class SummaryController extends GetxController {
     ];
   }
 
-  num getColumnMaxYValue(){
+  num getColumnMaxYValue() {
     var list = nbaPlayerBaseInfoEntity?.l5GameData.map((e) {
-      var timeByMs = MyDateUtils.getDateTimeByMs(e.updateTime);
-      var monthEnName = MyDateUtils.getMonthEnName(timeByMs, short: true);
-      var currentTabKey = getCurrentTabKey();
-      var value = e.getValue(currentTabKey);
-      Color color = double.parse(getSeasonAvgWithTab()) <= value
-          ? AppColors.cFF7954
-          : AppColors.cD9D9D9;
-      return ChartSampleData(
-          x: '$monthEnName ${timeByMs.day}\nvs ${Utils.getTeamInfo(e.awayTeamId).shortEname}',
-          y: value,
-          pointColor: color);
-    }).toList()??[];
-    list.sort((a,b)=> a.y!.compareTo(b.y!));
+          var timeByMs = MyDateUtils.getDateTimeByMs(e.updateTime);
+          var monthEnName = MyDateUtils.getMonthEnName(timeByMs, short: true);
+          var currentTabKey = getCurrentTabKey();
+          var value = e.getValue(currentTabKey);
+          Color color = double.parse(getSeasonAvgWithTab()) <= value
+              ? AppColors.cFF7954
+              : AppColors.cD9D9D9;
+          return ChartSampleData(
+              x: '$monthEnName ${timeByMs.day}\nvs ${Utils.getTeamInfo(e.awayTeamId).shortEname}',
+              y: value,
+              pointColor: color);
+        }).toList() ??
+        [];
+    list.sort((a, b) => a.y!.compareTo(b.y!));
     var pickInfo = getPickInfo();
-    return list.isEmpty?pickInfo?.value??0:list[list.length-1].y!;
+    return list.isEmpty ? pickInfo?.value ?? 0 : list[list.length - 1].y!;
   }
 
-
-  List<ColumnSeries<ChartSampleData, String>> getDefaultColumnSeries(double width) {
+  List<ColumnSeries<ChartSampleData, String>> getDefaultColumnSeries(
+      double width) {
     var list = nbaPlayerBaseInfoEntity?.l5GameData.map((e) {
       var timeByMs = MyDateUtils.getDateTimeByMs(e.updateTime);
       var monthEnName = MyDateUtils.getMonthEnName(timeByMs, short: true);
@@ -350,10 +369,10 @@ class SummaryController extends GetxController {
           y: value,
           pointColor: color);
     }).toList();
-    var len = list?.length??0;
+    var len = list?.length ?? 0;
     return <ColumnSeries<ChartSampleData, String>>[
       ColumnSeries<ChartSampleData, String>(
-        spacing: len>1?0.5:0.9,
+        spacing: len > 1 ? 0.5 : 0.9,
         width: 0.2,
         borderRadius: BorderRadius.vertical(top: Radius.circular(20.w)),
         dataSource: list,
@@ -366,13 +385,18 @@ class SummaryController extends GetxController {
     ];
   }
 
-  List<String> getStatsKeys(){
+  List<String> getStatsKeys() {
     var excludeKeys = ["NICKNAME"];
-    return nbaPlayerBaseInfoEntity?.playerRegularMap?.toJson().keys.where((e)=>!e.contains("_")&&!excludeKeys.contains(e)).toList()??[];
+    return nbaPlayerBaseInfoEntity?.playerRegularMap
+            ?.toJson()
+            .keys
+            .where((e) => !e.contains("_") && !excludeKeys.contains(e))
+            .toList() ??
+        [];
   }
 }
 
-class StatsData{
+class StatsData {
   final List<String> keys;
 
   StatsData(this.keys);

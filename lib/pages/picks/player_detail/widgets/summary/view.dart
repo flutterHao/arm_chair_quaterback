@@ -800,8 +800,7 @@ class _SummaryPageState extends State<SummaryPage>
               return InkWell(
                 onTap: () {
                   print('playerNew:${playerNew.id}');
-                  Get.find<NewListController>().getNewsFlow(isRefresh: true);
-                  Get.toNamed(RouteNames.newsDetail, arguments: playerNew);
+                  Get.find<NewListController>().pageToDetail(playerNew);
                 },
                 child: Container(
                   width: double.infinity,
