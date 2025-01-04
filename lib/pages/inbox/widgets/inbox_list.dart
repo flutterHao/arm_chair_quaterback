@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-01-04 11:25:34
- * @LastEditTime: 2025-01-04 18:09:37
+ * @LastEditTime: 2025-01-04 18:42:10
  */
 import 'dart:math';
 
@@ -195,6 +195,8 @@ class InboxList extends GetView<InboxController> {
                         Visibility(
                           visible: !item.isRead,
                           child: Container(
+                            constraints: BoxConstraints(minWidth: 15.w),
+                            alignment: Alignment.center,
                             padding: EdgeInsets.symmetric(
                                 horizontal: 4.5.w, vertical: 2.5.w),
                             decoration: BoxDecoration(
