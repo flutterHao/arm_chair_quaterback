@@ -1,7 +1,9 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/palyer_stats_entity.dart';
+import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/stats_dialog.dart';
+import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/rank_card.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/controller.dart';
@@ -26,85 +28,95 @@ class StatsRankPage extends GetView<RankController> {
     return GetBuilder<RankController>(
       id: "starsRank",
       builder: (_) {
+        if (controller.statPlayerList.isEmpty ||
+            controller.statTeamRankList.isEmpty) {
+          return const Center(
+            child: LoadStatusWidget(loadDataStatus: LoadDataStatus.noData),
+          );
+        }
         return SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 9.w),
             child: Column(
               children: [
-                Container(
-                  padding: EdgeInsets.symmetric(vertical: 25.w),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12.w),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 16.w),
-                        child: Text(
-                          "player STATS".toUpperCase(),
-                          style: 24.w4(
-                              fontFamily: FontFamily.fOswaldBold, height: 0.8),
+                if (controller.statPlayerList.isNotEmpty)
+                  Container(
+                    padding: EdgeInsets.symmetric(vertical: 25.w),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12.w),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.symmetric(horizontal: 16.w),
+                          child: Text(
+                            "player STATS".toUpperCase(),
+                            style: 24.w4(
+                                fontFamily: FontFamily.fOswaldBold,
+                                height: 0.8),
+                          ),
                         ),
-                      ),
-                      15.vGap,
-                      _line(),
-                      ListView.separated(
-                        shrinkWrap: true,
-                        padding: EdgeInsets.zero,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return StatsPlayerRankCard(
-                            item: controller.statsRankMap.entries
-                                .elementAt(index),
-                          );
-                        },
-                        separatorBuilder: (context, index) => _line(),
-                        itemCount: controller.statsRankMap.entries.length,
-                      )
-                    ],
+                        15.vGap,
+                        _line(),
+                        ListView.separated(
+                          shrinkWrap: true,
+                          padding: EdgeInsets.zero,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return StatsPlayerRankCard(
+                              item: controller.statsRankMap.entries
+                                  .elementAt(index),
+                            );
+                          },
+                          separatorBuilder: (context, index) => _line(),
+                          itemCount: controller.statsRankMap.entries.length,
+                        )
+                      ],
+                    ),
                   ),
-                ),
                 9.vGap,
-                Container(
-                  padding: EdgeInsets.symmetric(vertical: 25.w),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12.w),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 16.w),
-                        child: Text(
-                          "TEAM STATS".toUpperCase(),
-                          style: 24.w4(
-                              fontFamily: FontFamily.fOswaldBold, height: 0.8),
+                if (controller.statTeamRankList.isNotEmpty)
+                  Container(
+                    padding: EdgeInsets.symmetric(vertical: 25.w),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12.w),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.symmetric(horizontal: 16.w),
+                          child: Text(
+                            "TEAM STATS".toUpperCase(),
+                            style: 24.w4(
+                                fontFamily: FontFamily.fOswaldBold,
+                                height: 0.8),
+                          ),
                         ),
-                      ),
-                      15.vGap,
-                      _line(),
-                      ListView.separated(
-                        shrinkWrap: true,
-                        padding: EdgeInsets.zero,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return StatsTeamRankCard(
-                            type: controller.statsTeamTypeMap.entries
-                                .elementAt(index),
-                          );
-                        },
-                        separatorBuilder: (context, index) => _line(),
-                        itemCount: controller.statsTeamTypeMap.length,
-                      )
-                    ],
+                        15.vGap,
+                        _line(),
+                        ListView.separated(
+                          shrinkWrap: true,
+                          padding: EdgeInsets.zero,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return StatsTeamRankCard(
+                              type: controller.statsTeamTypeMap.entries
+                                  .elementAt(index),
+                            );
+                          },
+                          separatorBuilder: (context, index) => _line(),
+                          itemCount: controller.statsTeamTypeMap.length,
+                        )
+                      ],
+                    ),
                   ),
-                ),
               ],
             ),
           ),
