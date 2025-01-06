@@ -182,7 +182,7 @@ class PlayerItem extends GetView<TeamController> {
                 ),
               ),
               4.hGap,
-              MtInkwell(
+              MtInkWell(
                 showScale: showArrow,
                 // minScale: showArrow ? 0.9 : 1,
                 onTap: () {
@@ -259,7 +259,7 @@ class PlayerItem extends GetView<TeamController> {
         9.hGap,
         if (!isSelect)
           controller.isFire && isBag
-              ? MtInkwell(
+              ? MtInkWell(
                   onTap: () {
                     //解雇
                     showModalBottomSheet(
@@ -279,7 +279,7 @@ class PlayerItem extends GetView<TeamController> {
                     iconColor: AppColors.cFFFFFF,
                   ),
                 )
-              : MtInkwell(
+              : MtInkWell(
                   onTap: () {
                     //换人
                     if (item.position > 0) {
@@ -386,7 +386,7 @@ class PlayerItem extends GetView<TeamController> {
               if (item.position == 0 &&
                   controller.isShowDialog.value &&
                   isSelect)
-                MtInkwell(
+                MtInkWell(
                   onTap: () async {
                     //下阵容
                     controller.item1.isChange.value = false;

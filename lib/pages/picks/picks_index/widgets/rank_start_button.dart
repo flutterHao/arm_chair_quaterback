@@ -40,7 +40,7 @@ class RankStartButton extends StatelessWidget {
       return false;
     }
 
-    return MtInkwell(
+    return MtInkWell(
       scaleX: true,
       minScale: 0.96,
       onTap: () async {

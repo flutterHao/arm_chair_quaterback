@@ -320,7 +320,7 @@ class _LeagueDetailPlayPageState extends State<LeagueDetailPlayPage>
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: controller.tabTitles.map((e) {
                       int index = controller.tabTitles.indexOf(e);
-                      Widget child = MtInkwell(
+                      Widget child = MtInkWell(
                         splashColor: AppColors.cTransparent,
                         vibrate: false,
                         onTap: () {
@@ -422,7 +422,7 @@ class _LeagueDetailPlayPageState extends State<LeagueDetailPlayPage>
                               {"MIN": "${item.min}"}
                             ]);
                           }
-                          return MtInkwell(
+                          return MtInkWell(
                             minScale: 1,
                             onTap: () {
                               Get.toNamed(
@@ -536,7 +536,7 @@ class _LeagueDetailPlayPageState extends State<LeagueDetailPlayPage>
                           );
                         }),
                         Expanded(
-                          child: MtInkwell(
+                          child: MtInkWell(
                             onTap: () {
                               if (controller.nbaGameDetailEntity?.gameData ==
                                   null) {

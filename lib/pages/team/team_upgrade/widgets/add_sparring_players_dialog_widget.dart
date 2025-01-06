@@ -201,7 +201,7 @@ class AddSparringPlayersDialogWidget extends GetView<StartUpgradeController> {
                                         ),
                                       ],
                                     ),
-                                    MtInkwell(
+                                    MtInkWell(
                                       onTap: () {
                                         item.select.value = false;
                                         controller.onDialogDelete();
@@ -242,7 +242,7 @@ class AddSparringPlayersDialogWidget extends GetView<StartUpgradeController> {
                     margin: EdgeInsets.only(left: 20.w),
                     height: 53.w,
                     width: double.infinity,
-                    child: MtInkwell(
+                    child: MtInkWell(
                       onTap: () => Get.back(),
                       child: Row(
                         children: [
@@ -393,7 +393,7 @@ class AddSparringPlayersDialogWidget extends GetView<StartUpgradeController> {
                   ),
                 ),
                 14.vGap,
-                MtInkwell(
+                MtInkWell(
                   onTap: () => onStartClick(context),
                   child: Container(
                     width: 343.w,

@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/entities/guess_data.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_game_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/trade_entity/trade_info_entity.dart';
@@ -19,6 +20,7 @@ class NbaPlayerBaseInfoEntity {
   late List<NbaPlayerBaseInfoPlayerTrends> playerTrends;
   late List<NewsListDetail> playerNews;
   TradeInfoTradePlayers? tradePlayers;
+  List<OutComeInfoEntity> outCome = [];
 
   NbaPlayerBaseInfoEntity();
 
@@ -63,6 +65,15 @@ class NbaPlayerBaseInfoPlayerDataAvg {
       $NbaPlayerBaseInfoPlayerDataAvgFromJson(json);
 
   Map<String, dynamic> toJson() => $NbaPlayerBaseInfoPlayerDataAvgToJson(this);
+
+
+  bool isNotEmpty() {
+    return toJson().isNotEmpty;
+  }
+
+  String getValue(String key) {
+    return (toJson()[key] ?? 0).toString();
+  }
 
   @override
   String toString() {
@@ -1000,6 +1011,37 @@ class NbaPlayerBaseInfoPlayerNews {
       $NbaPlayerBaseInfoPlayerNewsFromJson(json);
 
   Map<String, dynamic> toJson() => $NbaPlayerBaseInfoPlayerNewsToJson(this);
+
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
+}
+
+
+@JsonSerializable()
+class OutComeInfoEntity {
+  late int gameId;
+  late double newsId;
+  late int gameStartTime;
+  late int teamId;
+  late List<GuessData> guessData;
+  late Map<String,double> guessReferenceValue;
+  late double id;
+  late double type;
+  late int awayTeamId;
+  late int playerId;
+  late int moreCount;
+  late int lessCount;
+  bool? success;
+  int reviewsCount = 0;
+
+  OutComeInfoEntity();
+
+  factory OutComeInfoEntity.fromJson(Map<String, dynamic> json) =>
+      $OutComeInfoEntityFromJson(json);
+
+  Map<String, dynamic> toJson() => $OutComeInfoEntityToJson(this);
 
   @override
   String toString() {

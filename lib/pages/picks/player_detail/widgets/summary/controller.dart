@@ -59,6 +59,8 @@ class SummaryController extends GetxController {
 
   Timer? timer;
 
+  late PageController outComePageController;
+
   void startCountDown(trendPlayer) {
     timer?.cancel();
     timer = Timer.periodic(const Duration(seconds: 1), (t) {
@@ -88,7 +90,9 @@ class SummaryController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-
+    outComePageController = PageController(
+      viewportFraction: 321/375,
+    );
     statsScrollController.addListener(() {
       if (!statsIsScrolling.value && statsScrollController.offset > 5) {
         statsIsScrolling.value = true;
@@ -129,10 +133,12 @@ class SummaryController extends GetxController {
                 .indexOf(initTabStr!.toUpperCase()) ??
             -1;
         currentIndex.value = i == -1 ? 0 : i;
+        currentRecentPickIndex.value = i == -1 ? 0 : i;
       }
       if (nbaPlayerBaseInfoEntity!.tradePlayers != null) {
         startCountDown(nbaPlayerBaseInfoEntity!.tradePlayers);
       }
+
       loadStatus.value = LoadDataStatus.success;
       var choiceGuessPlayers = picksIndexController.getChoiceGuessPlayers();
       var pickInfo = getPickInfo();
@@ -424,6 +430,26 @@ class SummaryController extends GetxController {
             .where((e) => !e.contains("_") && !excludeKeys.contains(e))
             .toList() ??
         [];
+  }
+  /// 0 未开始 1 进行中 2 已结束
+  /// 超过比赛开始时间三小时就算结束
+  int getGameStatus(int gameStartMilliseconds) {
+    var nowMs = DateTime.now().millisecondsSinceEpoch;
+    if (gameStartMilliseconds > nowMs) {
+      return 0;
+    } else if ((gameStartMilliseconds + (3 * 60 * 60 * 1000)) < nowMs) {
+      return 1;
+    } else {
+      return 2;
+    }
+  }
+
+  String formatGameStartTime(int gameStartMilliseconds) {
+    bool isFinal = false;
+    if (getGameStatus(gameStartMilliseconds) == 2) {
+      isFinal = true;
+    }
+    return "${MyDateUtils.formatDateMilliseconds(gameStartMilliseconds, format: DateFormats.PARAM_Y_M_D)} ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(gameStartMilliseconds))}   ${isFinal ? "FINAL" : ""}";
   }
 }
 

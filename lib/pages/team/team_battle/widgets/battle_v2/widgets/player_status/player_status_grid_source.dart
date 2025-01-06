@@ -50,7 +50,7 @@ class PlayerStatusGridSource extends DataGridSource {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              MtInkwell(
+              MtInkWell(
                 onTap: () {
                   showDialog(
                       context: context,

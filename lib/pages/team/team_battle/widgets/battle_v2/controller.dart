@@ -434,7 +434,7 @@ class TeamBattleV2Controller extends GetxController
 
     /// 这几个事件的时间设置为
     if (["501", "502", "505", "506"].contains(gameEvent.gameEventType)) {
-      if (gameEvent.gameEventType == '502') {
+      if (gameEvent.gameEventType == '502' && gameEvent.gameEventType == '501') {
         /// 比赛开始跳球事件
         event.time = (40 / 40 * 12 * 60).toInt();
       } else {

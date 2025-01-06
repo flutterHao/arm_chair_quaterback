@@ -80,7 +80,7 @@ class TrainingPeparation extends StatelessWidget {
                                     16.w4(color: AppColors.c000000, height: 1),
                               ),
                               const Expanded(child: SizedBox.shrink()),
-                              MtInkwell(
+                              MtInkWell(
                                 child: Row(
                                   // mainAxisAlignment: MainAxisAlignment.end,
                                   children: [

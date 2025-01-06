@@ -24,7 +24,7 @@ class ShareWidget extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4.w),
             border: Border.all(color: AppColors.c666666, width: 1.w)),
-        child: MtInkwell(
+        child: MtInkWell(
             vibrate: true,
             onTap: () => Utils.generateAndShareImage(globalKey),
             child: IconWidget(

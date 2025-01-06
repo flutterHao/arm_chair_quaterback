@@ -112,7 +112,7 @@ class TrainingTactics extends StatelessWidget {
                           ],
                         ),
                         13.vGap,
-                        MtInkwell(
+                        MtInkWell(
                           onTap: () {
                             myTeamCtrl.recove();
                           },
@@ -272,7 +272,7 @@ class TacticList extends StatelessWidget {
                                               builder: (context, child) {
                                                 return Transform.scale(
                                                   scale: 1,
-                                                  child: MtInkwell(
+                                                  child: MtInkWell(
                                                     onTap: () {
                                                       onItemTap(context, index);
                                                     },

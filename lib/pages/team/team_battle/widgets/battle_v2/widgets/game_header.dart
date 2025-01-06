@@ -260,7 +260,7 @@ class GameHeaderWidget extends GetView<TeamBattleV2Controller> {
                               controller.isGameOver.value) {
                             return const SizedBox.shrink();
                           }
-                          return MtInkwell(
+                          return MtInkWell(
                             onTap: () {
                               controller.jumpGame();
                             },

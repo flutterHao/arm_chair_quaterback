@@ -40,7 +40,7 @@ class PlayerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MtInkwell(
+    return MtInkWell(
       onTap: () =>
           onTap?.call() ??
           Get.toNamed(RouteNames.picksPlayerDetail,

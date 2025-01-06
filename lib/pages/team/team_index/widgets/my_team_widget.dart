@@ -195,7 +195,7 @@ class MyTeamWidget extends StatelessWidget {
               ),
             ),
             20.vGap,
-            MtInkwell(
+            MtInkWell(
               vibrate: true,
               minScale: 0.8,
               onTap: () {

@@ -406,7 +406,7 @@ class OpenBoxPage extends GetView<TeamIndexController> {
         child: AnimatedScale(
           duration: 300.milliseconds,
           scale: controller.step == 3 ? 1 : 0,
-          child: MtInkwell(
+          child: MtInkWell(
             onTap: () => Get.back(),
             child: Container(
               width: 165.w,

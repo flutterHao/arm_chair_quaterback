@@ -103,7 +103,7 @@ class _HomePageState extends State<HomePage>
                                         color: AppColors.cFFFFFF,
                                         borderRadius: BorderRadius.vertical(
                                             top: Radius.circular(9.w))),
-                                    child: MtInkwell(
+                                    child: MtInkWell(
                                       onTap: () => controller.onTap(2),
                                       child: Container(
                                           height: 66.w,
@@ -141,7 +141,7 @@ class _HomePageState extends State<HomePage>
                                 flex: 1,
                                 child: Container(
                                   color: AppColors.cFFFFFF,
-                                  child: MtInkwell(
+                                  child: MtInkWell(
                                     onTap: () => controller.onTap(index),
                                     child: _barItem(e, select, 66.w,
                                         showMessageCount: index == 4),

@@ -532,6 +532,10 @@ class JsonConvert {
       return data.map<NbaPlayerBaseInfoPlayerNews>((Map<String, dynamic> e) =>
           NbaPlayerBaseInfoPlayerNews.fromJson(e)).toList() as M;
     }
+    if (<OutComeInfoEntity>[] is M) {
+      return data.map<OutComeInfoEntity>((Map<String, dynamic> e) =>
+          OutComeInfoEntity.fromJson(e)).toList() as M;
+    }
     if (<NbaPlayerInfosEntity>[] is M) {
       return data.map<NbaPlayerInfosEntity>((Map<String, dynamic> e) =>
           NbaPlayerInfosEntity.fromJson(e)).toList() as M;
@@ -1130,6 +1134,7 @@ class JsonConvertClassCollection {
         .fromJson,
     (NbaPlayerBaseInfoPlayerNews).toString(): NbaPlayerBaseInfoPlayerNews
         .fromJson,
+    (OutComeInfoEntity).toString(): OutComeInfoEntity.fromJson,
     (NbaPlayerInfosEntity).toString(): NbaPlayerInfosEntity.fromJson,
     (NbaPlayerInfosPlayerDataAvgList)
         .toString(): NbaPlayerInfosPlayerDataAvgList.fromJson,

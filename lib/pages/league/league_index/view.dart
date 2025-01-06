@@ -238,7 +238,7 @@ class _LeagueIndexPageState extends State<LeagueIndexPage>
             decoration: BoxDecoration(
                 border: Border.all(color: AppColors.c666666, width: 1),
                 borderRadius: BorderRadius.circular(9.w)),
-            child: MtInkwell(
+            child: MtInkWell(
                 onTap: () => Get.toNamed(RouteNames.nbaRank),
                 child: IconWidget(
                     iconWidth: 21.w,

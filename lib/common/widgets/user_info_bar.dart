@@ -94,11 +94,13 @@ class UserInfoBar extends StatelessWidget {
                                 Address.personalDevUrl,
                                 Address.privateDevUrl,
                                 Address.publicDevUrl,
+                                Address.pubDevUrl,
                               ];
                               final List<String> wsServers = [
                                 Address.wsPersonalDevUrl,
                                 Address.wsPrivateDevUrl,
                                 Address.wsPublicDevUrl,
+                                Address.wsPubDevUrl,
                               ];
                               String current = HttpUtil().getUrl;
                               showDialog(
@@ -295,11 +297,11 @@ class ServerSwitchDialog extends StatelessWidget {
   final ValueChanged<String> onServerChanged;
 
   const ServerSwitchDialog({
-    Key? key,
+    super.key,
     required this.servers,
     required this.currentServer,
     required this.onServerChanged,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -311,7 +313,8 @@ class ServerSwitchDialog extends StatelessWidget {
           return '${Address.privateDevUrl}(内网)';
         case Address.publicDevUrl:
           return '${Address.publicDevUrl}(外网)';
-
+        case Address.pubDevUrl:
+          return '${Address.pubDevUrl}(海外)';
         default:
           return '';
       }

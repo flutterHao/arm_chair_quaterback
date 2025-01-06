@@ -160,7 +160,7 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
                   bool canOpen =
                       item.status == 2 || (item.status == 0 && noWait);
 
-                  return MtInkwell(
+                  return MtInkWell(
                     minScale: 0.9,
                     onTap: () async {
                       // item.status = 1;

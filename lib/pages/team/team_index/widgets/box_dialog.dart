@@ -233,7 +233,7 @@ class BattleBoxDialog extends StatelessWidget {
                   ],
                 ),
               9.5.vGap,
-              MtInkwell(
+              MtInkWell(
                 onTap: () {
                   if (item.status == 0 && isUnlock) {
                     controller.activeBattleBox(index);

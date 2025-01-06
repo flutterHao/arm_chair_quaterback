@@ -70,7 +70,7 @@ class EmojiWidget extends StatelessWidget {
           });
         }),
         5.hGap,
-        MtInkwell(
+        MtInkWell(
           onTap: () {},
           child: Container(
             height: 24.w,

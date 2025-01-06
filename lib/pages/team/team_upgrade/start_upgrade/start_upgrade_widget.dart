@@ -243,7 +243,7 @@ class StartUpgradeWidget extends GetView<StartUpgradeController> {
                           20.vGap,
                           Row(
                             children: [
-                              MtInkwell(
+                              MtInkWell(
                                 onTap: () {
                                   controller.gradeSort.value = -1;
                                   if (controller.starSort.value == -1) {
@@ -307,7 +307,7 @@ class StartUpgradeWidget extends GetView<StartUpgradeController> {
                                 }),
                               ),
                               5.hGap,
-                              MtInkwell(
+                              MtInkWell(
                                 onTap: () {
                                   controller.starSort.value = -1;
                                   if (controller.gradeSort.value == -1) {
@@ -423,7 +423,7 @@ class StartUpgradeWidget extends GetView<StartUpgradeController> {
                   right: 0,
                   duration: const Duration(milliseconds: 300),
                   child: Center(
-                    child: MtInkwell(
+                    child: MtInkWell(
                       onTap: () => showModalBottomSheet(
                         context: context,
                         builder: (BuildContext context) {
@@ -701,7 +701,7 @@ class StartUpgradeWidget extends GetView<StartUpgradeController> {
                       )
                     ],
                   )),
-                  MtInkwell(
+                  MtInkWell(
                     onTap: () => _itemTap(upgradePlayer),
                     child: Obx(() {
                       return Container(

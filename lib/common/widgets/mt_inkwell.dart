@@ -17,8 +17,8 @@ enum CallTapStatus {
   end; //执行完动画回调onTap
 }
 
-class MtInkwell extends StatefulWidget {
-  const MtInkwell({
+class MtInkWell extends StatefulWidget {
+  const MtInkWell({
     super.key,
     required this.child,
     this.splashColor,
@@ -52,10 +52,10 @@ class MtInkwell extends StatefulWidget {
   final bool showScale;
 
   @override
-  State<MtInkwell> createState() => _MtInkwellState();
+  State<MtInkWell> createState() => _MtInkWellState();
 }
 
-class _MtInkwellState extends State<MtInkwell>
+class _MtInkWellState extends State<MtInkWell>
     with SingleTickerProviderStateMixin {
   late EasyAnimationController easyAnimationController;
 

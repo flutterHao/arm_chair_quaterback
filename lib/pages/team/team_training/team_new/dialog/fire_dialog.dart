@@ -97,7 +97,7 @@ class _FireDialogState extends State<FireDialog>
             ],
           ),
           7.5.vGap,
-          MtInkwell(
+          MtInkWell(
             onTap: () async {
               Navigator.pop(context);
               await ctrl.dismissPlayer(context, widget.item.uuid);
@@ -131,7 +131,7 @@ class _FireDialogState extends State<FireDialog>
             ),
           ),
           9.vGap,
-          MtInkwell(
+          MtInkWell(
             onTap: () => Navigator.pop(context),
             child: Container(
               height: 51.w,

@@ -81,7 +81,7 @@ class GameLeaderWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: controller.tabTitles.map((e) {
                         int index = controller.tabTitles.indexOf(e);
-                        Widget child = MtInkwell(
+                        Widget child = MtInkWell(
                           splashColor: AppColors.cTransparent,
                           vibrate: false,
                           onTap: () {
@@ -199,7 +199,7 @@ class GameLeaderWidget extends StatelessWidget {
                                   {"MIN": "${item.playerInfo.min}"}
                                 ]);
                               }
-                              return MtInkwell(
+                              return MtInkWell(
                                 minScale: 1,
                                 onTap: () {
                                   Get.toNamed(
@@ -341,7 +341,7 @@ class GameLeaderWidget extends StatelessWidget {
                               );
                             }),
                           Expanded(
-                            child: MtInkwell(
+                            child: MtInkWell(
                               onTap: () {
                                 if (controller.event == null) {
                                   return;

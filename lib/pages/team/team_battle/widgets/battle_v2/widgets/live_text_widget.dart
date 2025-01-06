@@ -21,7 +21,8 @@ import 'package:get/get.dart';
 ///created at 2024/12/11/10:58
 
 class LiveTextWidget extends StatefulWidget {
-  const LiveTextWidget({super.key, this.isGameOverStatus = false, this.needTopMargin = true});
+  const LiveTextWidget(
+      {super.key, this.isGameOverStatus = false, this.needTopMargin = true});
 
   final bool isGameOverStatus;
   final bool needTopMargin;
@@ -59,7 +60,7 @@ class _LiveTextWidgetState extends State<LiveTextWidget> {
   Widget build(BuildContext context) {
     return Container(
       height: 329.w,
-      margin: EdgeInsets.only(top: widget.needTopMargin?9.w:0),
+      margin: EdgeInsets.only(top: widget.needTopMargin ? 9.w : 0),
       padding: EdgeInsets.only(bottom: 5.w),
       decoration: BoxDecoration(
           color: AppColors.cFFFFFF, borderRadius: BorderRadius.circular(9.w)),
@@ -94,7 +95,7 @@ class _LiveTextWidgetState extends State<LiveTextWidget> {
                                   border: Border.all(
                                       color: AppColors.c666666, width: 1.w)),
                               alignment: Alignment.center,
-                              child: MtInkwell(
+                              child: MtInkWell(
                                 onTap: () {
                                   if (controller.liveTextTabIndex.value !=
                                       index) {
@@ -186,7 +187,18 @@ class _LiveTextWidgetState extends State<LiveTextWidget> {
                                           12 *
                                           60)
                                       .toInt();
+                              var gameEvent = Get.find<TeamBattleV2Controller>()
+                                  .getGameEvent(
+                                      item.pkEventUpdatedEntity.eventId);
                               time = generateTime;
+                              if (["501", "502"]
+                                  .contains(gameEvent?.gameEventType)) {
+                                time = 12 * 60;
+                              }
+                              if (["505", "506"]
+                                  .contains(gameEvent?.gameEventType)) {
+                                time = 12 * 60;
+                              }
                             }
                             return Container(
                               height: 44.w,
@@ -214,11 +226,12 @@ class _LiveTextWidgetState extends State<LiveTextWidget> {
                                         borderRadius:
                                             BorderRadius.circular(15.5.w),
                                         border: Border.all(
-                                            color: controller.isSystemEvent(item)
-                                                ? AppColors.cTransparent
-                                                : item.isHomePlayer
-                                                    ? AppColors.c1F8FE5
-                                                    : AppColors.cD60D20,
+                                            color:
+                                                controller.isSystemEvent(item)
+                                                    ? AppColors.cTransparent
+                                                    : item.isHomePlayer
+                                                        ? AppColors.c1F8FE5
+                                                        : AppColors.cD60D20,
                                             width: 1.5.w)),
                                     child: controller.isSystemEvent(item)
                                         ? IconWidget(
@@ -309,7 +322,7 @@ class _LiveTextWidgetState extends State<LiveTextWidget> {
                   });
                 }),
           ),
-          MtInkwell(
+          MtInkWell(
             onTap: () => controller.seeAll(),
             child: Container(
               height: 44.w,

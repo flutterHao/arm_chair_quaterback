@@ -108,7 +108,7 @@ class _BottomTipDialog extends StatelessWidget {
             decoration: BoxDecoration(
                 color: confirmBtnColor ?? AppColors.c000000,
                 borderRadius: BorderRadius.circular(9.w)),
-            child: MtInkwell(
+            child: MtInkWell(
               onTap: () => onTap.call(),
               child: Center(
                 child: Text(
@@ -129,7 +129,7 @@ class _BottomTipDialog extends StatelessWidget {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(9.w),
                 border: Border.all(color: AppColors.c666666, width: 1.w)),
-            child: MtInkwell(
+            child: MtInkWell(
               onTap: () => Get.back(),
               child: Center(
                 child: Text(

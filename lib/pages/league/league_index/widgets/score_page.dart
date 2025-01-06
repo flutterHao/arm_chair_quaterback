@@ -192,7 +192,7 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 18.vGap,
-                MtInkwell(
+                MtInkWell(
                   minScale: 1,
                   onTap: () {
                     Get.toNamed(RouteNames.leagueLeagueDetail,
@@ -728,7 +728,7 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
   Expanded _buildBtn(bool isChoice, int teamId,
       {bool isGuessIdEqualTeamId = false}) {
     return Expanded(
-      child: MtInkwell(
+      child: MtInkWell(
         vibrate: true,
         onTap: () {
           if (item.isGuess != 0) {

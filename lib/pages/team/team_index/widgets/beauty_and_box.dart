@@ -164,7 +164,7 @@ class BeautyAndBoxView extends StatelessWidget {
                 Positioned(
                   right: 16.w,
                   top: 116.w,
-                  child: MtInkwell(
+                  child: MtInkWell(
                     onTap: () => Get.toNamed(RouteNames.teamBeautyPage,
                         id: GlobalNestedKey.TEAM),
                     child: Container(
@@ -248,7 +248,7 @@ class BeautyAndBoxView extends StatelessWidget {
                             ///免费宝箱
                             Expanded(
                               flex: 134,
-                              child: MtInkwell(
+                              child: MtInkWell(
                                 onTap: () async {
                                   if (ctrl.recieved) return;
                                   ctrl.openFreeGift();

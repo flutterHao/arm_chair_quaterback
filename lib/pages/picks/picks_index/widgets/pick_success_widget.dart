@@ -142,7 +142,7 @@ class _PickSuccessWidgetState extends State<PickSuccessWidget>
                 ),
               ),
               63.vGap,
-              MtInkwell(
+              MtInkWell(
                 onTap: ()=> Navigator.pop(context),
                 child: Container(
                   height: 51.w,
@@ -161,7 +161,7 @@ class _PickSuccessWidgetState extends State<PickSuccessWidget>
                 ),
               ),
               19.vGap,
-              MtInkwell(
+              MtInkWell(
                 onTap: () async {
                   Navigator.pop(context);
                   await Get.toNamed(RouteNames.picksPersonalCenter,

@@ -89,7 +89,7 @@ class _LiveTextDialogState extends State<LiveTextDialogWidget>
                                 return Expanded(
                                   child: index > tabController.length - 1
                                       ? const SizedBox.shrink()
-                                      : MtInkwell(
+                                      : MtInkWell(
                                           onTap: () {
                                             if (tabController.index != index) {
                                               tabController.animateTo(index);
@@ -171,7 +171,20 @@ class _LiveTextDialogState extends State<LiveTextDialogWidget>
                                                           12 *
                                                           60)
                                                       .toInt();
+                                              var gameEvent = Get.find<
+                                                      TeamBattleV2Controller>()
+                                                  .getGameEvent(item
+                                                      .pkEventUpdatedEntity
+                                                      .eventId);
                                               time = generateTime;
+                                              if (["501", "502"].contains(
+                                                  gameEvent?.gameEventType)) {
+                                                time = 12 * 60;
+                                              }
+                                              if (["505", "506"].contains(
+                                                  gameEvent?.gameEventType)) {
+                                                time = 0;
+                                              }
                                             }
                                             return Container(
                                               // height: 44.w,

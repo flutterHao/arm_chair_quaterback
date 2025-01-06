@@ -493,7 +493,7 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
                       );
                     }),
                     16.vGap,
-                    MtInkwell(
+                    MtInkWell(
                       onTap: () async {
                         if (controller.getPlayer().breakThroughGrade >= 10) {
                           EasyLoading.showToast(

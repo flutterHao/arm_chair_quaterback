@@ -82,7 +82,7 @@ class MatchCard extends GetView<TeamIndexController> {
                 ),
 
                 ///比赛按钮
-                MtInkwell(
+                MtInkWell(
                   vibrate: true,
                   minScale: 0.9,
                   onTap: () {

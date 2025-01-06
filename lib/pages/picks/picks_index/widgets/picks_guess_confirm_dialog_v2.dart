@@ -298,7 +298,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
         child: Column(
           children: [
             if (list.length != 6)
-              MtInkwell(
+              MtInkWell(
                 onTap: () => Navigator.pop(context),
                 child: Container(
                   height: 61.w,
@@ -630,7 +630,7 @@ class _PicksGuessConfirmDialogV2State extends State<PicksGuessConfirmDialogV2> {
                   ),
                 );
               }
-              return MtInkwell(
+              return MtInkWell(
                 onTap: () => picksIndexController
                     .guess(modelCurrentIndex.value == 0 ? 1 : 2, () {
                   showModalBottomSheet(
@@ -1013,7 +1013,7 @@ class ConfirmChangeBtn extends StatelessWidget {
                 ),
               ),
               8.hGap,
-              MtInkwell(
+              MtInkWell(
                 onTap: deleteTap,
                 child: Container(
                   height: 28.w,
@@ -1034,7 +1034,7 @@ class ConfirmChangeBtn extends StatelessWidget {
             decoration: BoxDecoration(
                 border: Border.all(color: AppColors.c666666, width: 1),
                 borderRadius: BorderRadius.circular(7.w)),
-            child: MtInkwell(
+            child: MtInkWell(
               onTap: () {
                 tap.call();
               },

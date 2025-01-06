@@ -20,6 +20,7 @@ class SeasonHistoryItems {
 class SeasonHistory {
   late List<SeasonHistoryItems> seasonHistoryItems = [];
   var loadStatus = LoadDataStatus.loading.obs;
+  var isOpen = false.obs;
 }
 
 class HistoryController extends GetxController {
@@ -51,6 +52,7 @@ class HistoryController extends GetxController {
       pre[e] = SeasonHistory();
       return pre;
     });
+    data.values.toList()[0].isOpen.value = true;
     getData(MyDateUtils.getNowDateTime().year.toString());
   }
 

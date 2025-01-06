@@ -359,7 +359,7 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                                                     AppColors.cFFFFFF,
                                                     progress)!
                                                 : AppColors.c000000;
-                                        return MtInkwell(
+                                        return MtInkWell(
                                           onTap: () {
                                             if (controller
                                                     .tabController!.index !=
@@ -683,7 +683,7 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                                   progress)!
                               : AppColors.c000000;
                       return Expanded(
-                        child: MtInkwell(
+                        child: MtInkWell(
                           onTap: () {
                             if (controller.teamPropertyTabController.index !=
                                 index) {

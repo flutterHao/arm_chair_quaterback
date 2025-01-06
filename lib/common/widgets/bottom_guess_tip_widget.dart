@@ -50,7 +50,7 @@ class BottomGuessTipWidget extends StatelessWidget {
                   : bottomValue ??
                       75.w + 7.w + MediaQuery.of(context).padding.bottom,
           child: Center(
-            child: MtInkwell(
+            child: MtInkWell(
               scaleX: true,
               minScale: 0.95,
               onTap: () async {

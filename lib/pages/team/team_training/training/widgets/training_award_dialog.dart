@@ -49,7 +49,7 @@ class TrainingAwardDialog extends GetView<TrainingController> {
                         top: smallTop,
                         left: 10.w + 143.5.w + index * 43.w,
                         // right: 195.5.w - index * 43.w,
-                        child: MtInkwell(
+                        child: MtInkWell(
                           splashColor: Colors.transparent,
                           onTap: () async {
                             offset.value = Offset(
@@ -82,7 +82,7 @@ class TrainingAwardDialog extends GetView<TrainingController> {
                           alignment: Alignment.topLeft,
                           duration: duration,
                           scale: !controller.tacticFly.value ? 1 : 0.5,
-                          child: MtInkwell(
+                          child: MtInkWell(
                               onTap: () {
                                 buff.isSelect.value = true;
                                 controller.selectTacticId = buff.id;
@@ -120,7 +120,7 @@ class TrainingAwardDialog extends GetView<TrainingController> {
                           !controller.tacticFly.value,
                       child: Positioned(
                         top: bigTop + 97.w + 28.w,
-                        child: MtInkwell(
+                        child: MtInkWell(
                           onTap: () async {
                             if (Utils.getNoTip("tactics")) {
                               controller.chooseFinish();

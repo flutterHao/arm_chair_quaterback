@@ -28,15 +28,14 @@ import 'package:get/get.dart';
 ///created at 2024/10/19/16:43
 
 class GuessItemV2 extends StatefulWidget {
-  const GuessItemV2(
-      {super.key,
-      required this.playerV2,
-      required this.index,
-      this.mainRoute = false,
-      this.isInScoreDetail = false,
-      this.isInPlayerDetail = false})
+  const GuessItemV2({super.key,
+    required this.playerV2,
+    required this.index,
+    this.mainRoute = false,
+    this.isInScoreDetail = false,
+    this.isInPlayerDetail = false})
       : assert(!isInPlayerDetail || (isInPlayerDetail && isInScoreDetail),
-            "if 'isInPlayerDetail' true,'isInScoreDetail' must be true");
+  "if 'isInPlayerDetail' true,'isInScoreDetail' must be true");
 
   final PicksPlayerV2 playerV2;
   final int index;
@@ -92,10 +91,11 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
               children: [
                 25.vGap,
                 InkWell(
-                  onTap: () => Get.toNamed(RouteNames.picksPlayerDetail,
-                      arguments: PlayerDetailPageArguments(
-                          player.guessInfo.playerId,
-                          tabStr: player.tabStr)),
+                  onTap: () =>
+                      Get.toNamed(RouteNames.picksPlayerDetail,
+                          arguments: PlayerDetailPageArguments(
+                              player.guessInfo.playerId,
+                              tabStr: player.tabStr)),
                   child: Row(
                     children: [
                       29.hGap,
@@ -144,7 +144,8 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                             Row(
                               children: [
                                 Text(
-                                  "${player.guessInfo.guessReferenceValue[player.tabStr] ?? 0}",
+                                  "${player.guessInfo.guessReferenceValue[player
+                                      .tabStr] ?? 0}",
                                   style: 24.w7(
                                       color: AppColors.c262626,
                                       fontFamily: FontFamily.fOswaldMedium,
@@ -169,13 +170,14 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                             ),
                             6.vGap,
                             Obx(() {
-                              return MtInkwell(
+                              return MtInkWell(
                                 splashColor: AppColors.ce5e5e5,
-                                onTap: () => Get.toNamed(
-                                    RouteNames.leagueLeagueDetail,
-                                    arguments: {
-                                      "gameId": player.guessInfo.gameId
-                                    }),
+                                onTap: () =>
+                                    Get.toNamed(
+                                        RouteNames.leagueLeagueDetail,
+                                        arguments: {
+                                          "gameId": player.guessInfo.gameId
+                                        }),
                                 child: Row(
                                   children: [
                                     SizedBox(
@@ -183,7 +185,12 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                                       child: FittedBox(
                                         fit: BoxFit.scaleDown,
                                         child: Text(
-                                          "${Utils.getTeamInfo(player.baseInfoList.teamId).shortEname}@${player.awayTeamInfo?.shortEname ?? ""}   ${controller.gameStartTimeStr.value}",
+                                          "${Utils
+                                              .getTeamInfo(
+                                              player.baseInfoList.teamId)
+                                              .shortEname}@${player.awayTeamInfo
+                                              ?.shortEname ?? ""}   ${controller
+                                              .gameStartTimeStr.value}",
                                           // style: 12.w4(
                                           //     color: AppColors.c000000,
                                           //     fontFamily: FontFamily.fRobotoRegular,
@@ -192,10 +199,10 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                                               color: AppColors.c000000,
                                               height: 1,
                                               fontFamily:
-                                                  FontFamily.fRobotoRegular,
+                                              FontFamily.fRobotoRegular,
                                               fontSize: 12.sp,
                                               decoration:
-                                                  TextDecoration.underline),
+                                              TextDecoration.underline),
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
@@ -302,15 +309,15 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                         5.hGap,
                         Expanded(
                             child: Text(
-                          player.guessTopReviews?.context ??
-                              "Add a comment about this stake about",
-                          style: 14.w4(
-                            color: AppColors.c4D4D4D,
-                            height: 1,
-                            fontFamily: FontFamily.fRobotoRegular,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        )),
+                              player.guessTopReviews?.context ??
+                                  "Add a comment about this stake about",
+                              style: 14.w4(
+                                color: AppColors.c4D4D4D,
+                                height: 1,
+                                fontFamily: FontFamily.fRobotoRegular,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            )),
                         9.hGap,
                         IconWidget(
                             iconWidth: 18.w,
@@ -318,7 +325,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                         2.hGap,
                         Text(
                           Utils.formatChip((double.parse(
-                                  picksIndexController.picksDefine.betCost) *
+                              picksIndexController.picksDefine.betCost) *
                               count)),
                           style: 12.w5(
                             color: AppColors.c4D4D4D,
@@ -343,8 +350,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
     );
   }
 
-  Container _buildScoreDetailItem(
-      PicksPlayerV2 player,
+  Container _buildScoreDetailItem(PicksPlayerV2 player,
       PicksIndexController picksIndexController,
       double morePercent,
       int count) {
@@ -376,17 +382,20 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
             ],
           ),
           11.vGap,
-          MtInkwell(
-            onTap: () => Get.toNamed(
-                RouteNames.leagueLeagueDetail,
-                arguments: {
-                  "gameId": player.guessInfo.gameId
-                }),
+          MtInkWell(
+            onTap: () =>
+                Get.toNamed(
+                    RouteNames.leagueLeagueDetail,
+                    arguments: {
+                      "gameId": player.guessInfo.gameId
+                    }),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "${Utils.getTeamInfo(player.baseInfoList.teamId).shortEname}@${player.awayTeamInfo?.shortEname ?? ""}",
+                  "${Utils
+                      .getTeamInfo(player.baseInfoList.teamId)
+                      .shortEname}@${player.awayTeamInfo?.shortEname ?? ""}",
                   style: 12.w4(
                     color: AppColors.c000000,
                     height: 1,
@@ -396,15 +405,17 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                 13.hGap,
                 Row(
                   children: [
-                    Text(
-                      controller.gameStartTimeStr.value,
-                      style: TextStyle(
-                          color: AppColors.c000000,
-                          height: 1,
-                          fontFamily: FontFamily.fRobotoRegular,
-                          fontSize: 12.sp,
-                          decoration: TextDecoration.underline),
-                    ),
+                    Obx(() {
+                      return Text(
+                        controller.gameStartTimeStr.value,
+                        style: TextStyle(
+                            color: AppColors.c000000,
+                            height: 1,
+                            fontFamily: FontFamily.fRobotoRegular,
+                            fontSize: 12.sp,
+                            decoration: TextDecoration.underline),
+                      );
+                    }),
                     7.hGap,
                     IconWidget(
                       iconWidth: 5.w,
@@ -420,9 +431,10 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
       );
     } else {
       header = InkWell(
-        onTap: () => Get.toNamed(RouteNames.picksPlayerDetail,
-            arguments: PlayerDetailPageArguments(player.guessInfo.playerId,
-                tabStr: player.tabStr)),
+        onTap: () =>
+            Get.toNamed(RouteNames.picksPlayerDetail,
+                arguments: PlayerDetailPageArguments(player.guessInfo.playerId,
+                    tabStr: player.tabStr)),
         child: Row(
           children: [
             53.hGap,
@@ -453,7 +465,8 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        "${player.guessInfo.guessReferenceValue[player.tabStr] ?? 0}",
+                        "${player.guessInfo.guessReferenceValue[player
+                            .tabStr] ?? 0}",
                         style: 24.w5(
                             color: AppColors.c262626,
                             fontFamily: FontFamily.fOswaldMedium,
@@ -595,7 +608,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
         child: Row(
           children: [
             Expanded(
-              child: MtInkwell(
+              child: MtInkWell(
                 vibrate: true,
                 onTap: () {
                   if (maxLimit(picksIndexController, player)) {
@@ -628,7 +641,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
             ),
             9.hGap,
             Expanded(
-              child: MtInkwell(
+              child: MtInkWell(
                 vibrate: true,
                 onTap: () {
                   if (maxLimit(picksIndexController, player)) {
@@ -670,7 +683,9 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
   }
 
   maxLimit(PicksIndexController picksIndexController, PicksPlayerV2 player) {
-    var length = picksIndexController.getChoiceGuessPlayers().length;
+    var length = picksIndexController
+        .getChoiceGuessPlayers()
+        .length;
     if (length >= 6 && player.status == -1) {
       EasyLoading.showToast("Select up to 6");
       return true;
@@ -682,7 +697,10 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    Get.find<HomeController>().tabIndex.listen((value) {
+    Get
+        .find<HomeController>()
+        .tabIndex
+        .listen((value) {
       if (value == 3) {
         controller.formatGameStartTime();
       }
@@ -698,7 +716,10 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
-    var value = Get.find<HomeController>().tabIndex.value;
+    var value = Get
+        .find<HomeController>()
+        .tabIndex
+        .value;
     if (state == AppLifecycleState.resumed && value == 0) {
       controller.formatGameStartTime();
     }

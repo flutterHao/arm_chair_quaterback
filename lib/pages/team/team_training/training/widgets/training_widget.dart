@@ -231,7 +231,7 @@ class TrainingWidget extends GetView<TrainingController> {
                                       ),
                                 5.vGap,
                                 Obx(() {
-                                  return MtInkwell(
+                                  return MtInkWell(
                                     // vibrate: true,
                                     minScale: 0.9,
                                     // showScale: !controller.isPlaying.value,
@@ -439,7 +439,7 @@ class TrainingWidget extends GetView<TrainingController> {
                                     Positioned(
                                       top: 5.5.w,
                                       right: 4.w,
-                                      child: MtInkwell(
+                                      child: MtInkWell(
                                         onTap: () {
                                           showDialog(
                                               context: context,
@@ -523,7 +523,7 @@ class TrainingWidget extends GetView<TrainingController> {
                                   !controller.tacticFly.value,
                               child: Positioned(
                                 top: 205.w,
-                                child: MtInkwell(
+                                child: MtInkWell(
                                   splashColor: Colors.transparent,
                                   onTap: () {
                                     if (Utils.getNoTip("tactics")) {

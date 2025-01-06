@@ -71,7 +71,7 @@ class _PlayerBagTabState extends State<PlayerBagTab>
                           // ignore: prefer_const_constructors
                           GradeSort(),
                           const Expanded(child: SizedBox.shrink()),
-                          MtInkwell(
+                          MtInkWell(
                             onTap: () {
                               controller.isFire = !controller.isFire;
                               controller.sortType = controller.isFire ? -1 : 1;

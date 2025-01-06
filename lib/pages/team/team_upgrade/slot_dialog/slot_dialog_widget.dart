@@ -459,7 +459,7 @@ class SlotDialogWidget extends GetView<SlotDialogController> {
                                                         .fontsRobotoRegular),
                                               ),
                                             7.vGap,
-                                            MtInkwell(
+                                            MtInkWell(
                                               onTap: () {
                                                 if (controller
                                                     .doorAnimationController
@@ -519,7 +519,7 @@ class SlotDialogWidget extends GetView<SlotDialogController> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.end,
                                           children: [
-                                            MtInkwell(
+                                            MtInkWell(
                                               onTap: () =>
                                                   controller.startSlot(),
                                               child: Container(
@@ -552,7 +552,7 @@ class SlotDialogWidget extends GetView<SlotDialogController> {
                                     child: Column(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
-                                        MtInkwell(
+                                        MtInkWell(
                                           onTap: () => controller.goBack(),
                                           child: Container(
                                             height: 51.w,

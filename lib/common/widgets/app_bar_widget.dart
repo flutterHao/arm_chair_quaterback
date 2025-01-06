@@ -50,7 +50,7 @@ class AppBarWidget extends StatelessWidget {
                 Positioned(
                   left: 16.w,
                   child: left ??
-                      MtInkwell(
+                      MtInkWell(
                         onTap: () {
                           Navigator.of(context).pop();
                         },

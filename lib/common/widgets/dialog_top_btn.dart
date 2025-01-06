@@ -13,7 +13,7 @@ class DialogTopBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MtInkwell(
+    return MtInkWell(
       minScale: 1.0,
       onTap: ()=> Get.back(),
       child: Container(

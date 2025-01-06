@@ -326,7 +326,7 @@ class DetailCommentWidget extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      MtInkwell(
+                      MtInkWell(
                         onTap: () => comCtrl.getReviews(item.id),
                         child: Container(
                           padding: EdgeInsets.all(10.w),

@@ -230,7 +230,7 @@ class EmptyPlayer extends StatelessWidget {
               ),
             ),
             if (showChangeButton)
-              MtInkwell(
+              MtInkWell(
                 onTap: () async {
                   if (controller.myBagList
                       .where((e) => e.position == -1)

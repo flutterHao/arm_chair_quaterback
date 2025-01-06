@@ -213,7 +213,7 @@ class RecoverButtom extends StatelessWidget {
             ],
           ),
           5.5.vGap,
-          MtInkwell(
+          MtInkWell(
             onTap: () => onTap(),
             child: Container(
               width: 59.w,

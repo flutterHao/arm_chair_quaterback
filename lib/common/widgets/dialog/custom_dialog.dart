@@ -82,7 +82,7 @@ class CustomBottomDialog extends StatelessWidget {
             ),
           ),
           7.5.vGap,
-          MtInkwell(
+          MtInkWell(
             onTap: () {
               onComfirm();
               Navigator.pop(context);
@@ -105,7 +105,7 @@ class CustomBottomDialog extends StatelessWidget {
           ),
           if (isShowCancelButton) 9.vGap,
           if (isShowCancelButton)
-            MtInkwell(
+            MtInkWell(
               onTap: () => Navigator.pop(context),
               child: Container(
                 height: 51.w,
