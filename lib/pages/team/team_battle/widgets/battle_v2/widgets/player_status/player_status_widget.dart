@@ -63,7 +63,7 @@ class PlayerStatusWidget extends GetView<PlayerStatusController> {
                           const NeverScrollableScrollPhysics(),
                           verticalScrollPhysics:
                           const NeverScrollableScrollPhysics(),
-                          source: PlayerStatusGridSource(controller.getData()),
+                          source: PlayerStatusGridSource(controller.getData(),context),
                           columns: [
                             GridColumn(
                                 columnName: 'player',

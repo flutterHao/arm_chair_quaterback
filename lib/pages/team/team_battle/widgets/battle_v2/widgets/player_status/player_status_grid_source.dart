@@ -3,7 +3,9 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/widgets/battle_v2/widgets/player_status/controllr.dart';
+import 'package:arm_chair_quaterback/pages/team/team_index/open_box/big_player_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
@@ -13,9 +15,10 @@ import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 ///created at 2024/12/16/10:35
 
 class PlayerStatusGridSource extends DataGridSource {
-  PlayerStatusGridSource(this.data);
+  PlayerStatusGridSource(this.data, this.context);
 
   final List<PlayerStatus> data;
+  final BuildContext context;
 
   List<DataGridRow> _buildDataGridRows() {
     var list = data.map((e) {
@@ -47,19 +50,32 @@ class PlayerStatusGridSource extends DataGridSource {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Container(
-                constraints: BoxConstraints(maxWidth: 70.w),
-                child: Text(
-                  playerStatus.playerInfo.elname.isEmpty
-                      ? playerStatus.playerInfo.ename
-                      : playerStatus.playerInfo.elname,
-                  style: TextStyle(
-                      color: AppColors.c000000,
-                      height: 1,
-                      fontSize: 12.sp,
-                      decoration: TextDecoration.underline,
-                      fontFamily: FontFamily.fRobotoRegular,
-                      overflow: TextOverflow.ellipsis),
+              MtInkwell(
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return Center(
+                          child: BigPlayerCard(
+                            playerId: playerStatus.playerId,
+                          ),
+                        );
+                      });
+                },
+                child: Container(
+                  constraints: BoxConstraints(maxWidth: 70.w),
+                  child: Text(
+                    playerStatus.playerInfo.elname.isEmpty
+                        ? playerStatus.playerInfo.ename
+                        : playerStatus.playerInfo.elname,
+                    style: TextStyle(
+                        color: AppColors.c000000,
+                        height: 1,
+                        fontSize: 12.sp,
+                        decoration: TextDecoration.underline,
+                        fontFamily: FontFamily.fRobotoRegular,
+                        overflow: TextOverflow.ellipsis),
+                  ),
                 ),
               ),
               if (playerStatus.playerInfo.number > 0)
