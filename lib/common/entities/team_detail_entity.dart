@@ -1,3 +1,5 @@
+import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/team_detail_entity.g.dart';
@@ -10,13 +12,15 @@ class TeamDetailEntity {
   @JSONField(name: "RegularSeasonData")
   late TeamDetailRegularSeasonData regularSeasonData =
       TeamDetailRegularSeasonData();
-  late TeamDetailRecentPick recentPick = TeamDetailRecentPick();
+  late ScoresEntity recentPick = ScoresEntity();
   late TeamDetailLast5GameSchedule last5GameSchedule =
       TeamDetailLast5GameSchedule();
   late TeamDetailLast5GameSchedule guessL5GameList =
       TeamDetailLast5GameSchedule();
   @JSONField(name: "PreSeasonData")
-  late TeamDetailPreSeasonData preSeasonData = TeamDetailPreSeasonData();
+  TeamDetailRegularSeasonData? preSeasonData;
+  @JSONField(name: "PlayoffsData")
+  TeamDetailRegularSeasonData? playoffsData;
   late TeamDetailTotalL5Data totalL5Data = TeamDetailTotalL5Data();
   late List<TeamDetailOutcome> outcome = [];
 
@@ -153,7 +157,7 @@ class TeamDetailRegularSeasonData {
   @JSONField(name: "FT_PCT_RANK")
   late int ftPctRank = 0;
   @JSONField(name: "GP")
-  late int gP = 0;
+  late double gP = 0;
   @JSONField(name: "FGM_RANK")
   late int fgmRank = 0;
   @JSONField(name: "REB")
@@ -178,21 +182,59 @@ class TeamDetailRegularSeasonData {
 
   Map<String, dynamic> toJson() => $TeamDetailRegularSeasonDataToJson(this);
 
-  String getRankValue(String type, TeamDetailRegularSeasonData item) {
+  double getRankValue(String type, TeamDetailRegularSeasonData item) {
     double value = 0;
     switch (type) {
       case "PPG": //场均PTS
         value = item.pTS;
+      case "PTS":
+        value = item.pTS;
+      case "FGM":
+        value = item.fGM;
+      case "FGA":
+        value = item.fGA;
+      // case "3PM":
+      //   value = item.threePM;
+      case "3PA":
+        value = item.fGA;
+      case "FTM":
+        value = item.fTM;
+      case "FTA":
+        value = item.fTA;
+      case "FG%":
+        value = item.fgPct * 100;
+      case "3P%":
+        value = item.fg3Pct * 100;
+      case "FT%":
+        value = item.ftPct * 100;
       case "APG": //场均AST
         value = item.aST;
+      case "AST":
+        value = item.aST;
+      case "TPG": //场均TO
+        value = item.tOV;
+      case "TO":
+        value = item.tOV;
       case "RPG":
+        value = item.rEB;
+      case "REB": //场均RPG
         value = item.rEB;
       case "BPG": //场均blk
         value = item.bLK;
+      case "BLK":
+        value = item.bLK;
+      case "GP":
+        value = item.gP;
+      case "MIN":
+        value = item.mIN;
+      case "FOUL":
+        value = item.pF;
+      case "STL":
+        value = item.sTL;
       default:
         value = 0.0;
     }
-    return Utils.formatToThreeSignificantDigits(value);
+    return (value * 10).roundToDouble() / 10;
   }
 
   String getRank(String type, TeamDetailRegularSeasonData item) {
@@ -265,8 +307,8 @@ class TeamDetailRecentPick {
 
 @JsonSerializable()
 class TeamDetailLast5GameSchedule {
-  late List<TeamDetailLast5GameScheduleSchedule> schedule = [];
-  late List<TeamDetailLast5GameScheduleScoreAvg> scoreAvg = [];
+  late List<TeamDetailGameSchedules> schedule = [];
+  late List<NbaPlayerBaseInfoL5DataAvg> scoreAvg = [];
 
   TeamDetailLast5GameSchedule();
 
@@ -600,7 +642,7 @@ class TeamDetailTotalL5Data {
 @JsonSerializable()
 class TeamDetailOutcome {
   late int reviewsCount = 0;
-  late TeamDetailOutcomeGameSchedule gameSchedule;
+  late TeamDetailGameSchedules gameSchedule;
 
   TeamDetailOutcome();
 

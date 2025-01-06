@@ -1,5 +1,9 @@
 import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.dart';
 import 'package:arm_chair_quaterback/common/entities/team_detail_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity.dart';
+
+import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
+
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 
 
@@ -19,8 +23,8 @@ TeamDetailEntity $TeamDetailEntityFromJson(Map<String, dynamic> json) {
   if (regularSeasonData != null) {
     teamDetailEntity.regularSeasonData = regularSeasonData;
   }
-  final TeamDetailRecentPick? recentPick = jsonConvert.convert<
-      TeamDetailRecentPick>(json['recentPick']);
+  final ScoresEntity? recentPick = jsonConvert.convert<ScoresEntity>(
+      json['recentPick']);
   if (recentPick != null) {
     teamDetailEntity.recentPick = recentPick;
   }
@@ -34,10 +38,15 @@ TeamDetailEntity $TeamDetailEntityFromJson(Map<String, dynamic> json) {
   if (guessL5GameList != null) {
     teamDetailEntity.guessL5GameList = guessL5GameList;
   }
-  final TeamDetailPreSeasonData? preSeasonData = jsonConvert.convert<
-      TeamDetailPreSeasonData>(json['PreSeasonData']);
+  final TeamDetailRegularSeasonData? preSeasonData = jsonConvert.convert<
+      TeamDetailRegularSeasonData>(json['PreSeasonData']);
   if (preSeasonData != null) {
     teamDetailEntity.preSeasonData = preSeasonData;
+  }
+  final TeamDetailRegularSeasonData? playoffsData = jsonConvert.convert<
+      TeamDetailRegularSeasonData>(json['PlayoffsData']);
+  if (playoffsData != null) {
+    teamDetailEntity.playoffsData = playoffsData;
   }
   final TeamDetailTotalL5Data? totalL5Data = jsonConvert.convert<
       TeamDetailTotalL5Data>(json['totalL5Data']);
@@ -61,7 +70,8 @@ Map<String, dynamic> $TeamDetailEntityToJson(TeamDetailEntity entity) {
   data['recentPick'] = entity.recentPick.toJson();
   data['last5GameSchedule'] = entity.last5GameSchedule.toJson();
   data['guessL5GameList'] = entity.guessL5GameList.toJson();
-  data['PreSeasonData'] = entity.preSeasonData.toJson();
+  data['PreSeasonData'] = entity.preSeasonData?.toJson();
+  data['PlayoffsData'] = entity.playoffsData?.toJson();
   data['totalL5Data'] = entity.totalL5Data.toJson();
   data['outcome'] = entity.outcome.map((v) => v.toJson()).toList();
   return data;
@@ -71,10 +81,11 @@ extension TeamDetailEntityExtension on TeamDetailEntity {
   TeamDetailEntity copyWith({
     List<TeamDetailGameSchedules>? gameSchedules,
     TeamDetailRegularSeasonData? regularSeasonData,
-    TeamDetailRecentPick? recentPick,
+    ScoresEntity? recentPick,
     TeamDetailLast5GameSchedule? last5GameSchedule,
     TeamDetailLast5GameSchedule? guessL5GameList,
-    TeamDetailPreSeasonData? preSeasonData,
+    TeamDetailRegularSeasonData? preSeasonData,
+    TeamDetailRegularSeasonData? playoffsData,
     TeamDetailTotalL5Data? totalL5Data,
     List<TeamDetailOutcome>? outcome,
   }) {
@@ -85,6 +96,7 @@ extension TeamDetailEntityExtension on TeamDetailEntity {
       ..last5GameSchedule = last5GameSchedule ?? this.last5GameSchedule
       ..guessL5GameList = guessL5GameList ?? this.guessL5GameList
       ..preSeasonData = preSeasonData ?? this.preSeasonData
+      ..playoffsData = playoffsData ?? this.playoffsData
       ..totalL5Data = totalL5Data ?? this.totalL5Data
       ..outcome = outcome ?? this.outcome;
   }
@@ -369,7 +381,7 @@ TeamDetailRegularSeasonData $TeamDetailRegularSeasonDataFromJson(
   if (ftPctRank != null) {
     teamDetailRegularSeasonData.ftPctRank = ftPctRank;
   }
-  final int? gP = jsonConvert.convert<int>(json['GP']);
+  final double? gP = jsonConvert.convert<double>(json['GP']);
   if (gP != null) {
     teamDetailRegularSeasonData.gP = gP;
   }
@@ -515,7 +527,7 @@ extension TeamDetailRegularSeasonDataExtension on TeamDetailRegularSeasonData {
     double? aST,
     double? oREB,
     int? ftPctRank,
-    int? gP,
+    double? gP,
     int? fgmRank,
     double? rEB,
     double? ftPct,
@@ -722,21 +734,19 @@ extension TeamDetailRecentPickExtension on TeamDetailRecentPick {
 TeamDetailLast5GameSchedule $TeamDetailLast5GameScheduleFromJson(
     Map<String, dynamic> json) {
   final TeamDetailLast5GameSchedule teamDetailLast5GameSchedule = TeamDetailLast5GameSchedule();
-  final List<
-      TeamDetailLast5GameScheduleSchedule>? schedule = (json['schedule'] as List<
+  final List<TeamDetailGameSchedules>? schedule = (json['schedule'] as List<
       dynamic>?)?.map(
           (e) =>
-      jsonConvert.convert<TeamDetailLast5GameScheduleSchedule>(
-          e) as TeamDetailLast5GameScheduleSchedule).toList();
+      jsonConvert.convert<TeamDetailGameSchedules>(
+          e) as TeamDetailGameSchedules).toList();
   if (schedule != null) {
     teamDetailLast5GameSchedule.schedule = schedule;
   }
-  final List<
-      TeamDetailLast5GameScheduleScoreAvg>? scoreAvg = (json['scoreAvg'] as List<
+  final List<NbaPlayerBaseInfoL5DataAvg>? scoreAvg = (json['scoreAvg'] as List<
       dynamic>?)?.map(
           (e) =>
-      jsonConvert.convert<TeamDetailLast5GameScheduleScoreAvg>(
-          e) as TeamDetailLast5GameScheduleScoreAvg).toList();
+      jsonConvert.convert<NbaPlayerBaseInfoL5DataAvg>(
+          e) as NbaPlayerBaseInfoL5DataAvg).toList();
   if (scoreAvg != null) {
     teamDetailLast5GameSchedule.scoreAvg = scoreAvg;
   }
@@ -753,8 +763,8 @@ Map<String, dynamic> $TeamDetailLast5GameScheduleToJson(
 
 extension TeamDetailLast5GameScheduleExtension on TeamDetailLast5GameSchedule {
   TeamDetailLast5GameSchedule copyWith({
-    List<TeamDetailLast5GameScheduleSchedule>? schedule,
-    List<TeamDetailLast5GameScheduleScoreAvg>? scoreAvg,
+    List<TeamDetailGameSchedules>? schedule,
+    List<NbaPlayerBaseInfoL5DataAvg>? scoreAvg,
   }) {
     return TeamDetailLast5GameSchedule()
       ..schedule = schedule ?? this.schedule
@@ -1905,8 +1915,8 @@ TeamDetailOutcome $TeamDetailOutcomeFromJson(Map<String, dynamic> json) {
   if (reviewsCount != null) {
     teamDetailOutcome.reviewsCount = reviewsCount;
   }
-  final TeamDetailOutcomeGameSchedule? gameSchedule = jsonConvert.convert<
-      TeamDetailOutcomeGameSchedule>(json['gameSchedule']);
+  final TeamDetailGameSchedules? gameSchedule = jsonConvert.convert<
+      TeamDetailGameSchedules>(json['gameSchedule']);
   if (gameSchedule != null) {
     teamDetailOutcome.gameSchedule = gameSchedule;
   }
@@ -1923,7 +1933,7 @@ Map<String, dynamic> $TeamDetailOutcomeToJson(TeamDetailOutcome entity) {
 extension TeamDetailOutcomeExtension on TeamDetailOutcome {
   TeamDetailOutcome copyWith({
     int? reviewsCount,
-    TeamDetailOutcomeGameSchedule? gameSchedule,
+    TeamDetailGameSchedules? gameSchedule,
   }) {
     return TeamDetailOutcome()
       ..reviewsCount = reviewsCount ?? this.reviewsCount

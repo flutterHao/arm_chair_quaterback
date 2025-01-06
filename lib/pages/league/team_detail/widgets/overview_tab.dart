@@ -5,16 +5,18 @@ import 'package:arm_chair_quaterback/common/entities/chart_sample_data.dart';
 import 'package:arm_chair_quaterback/common/entities/game_schedules_info.dart';
 import 'package:arm_chair_quaterback/common/entities/team_detail_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/bottom_guess_tip_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/league/league_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/widgets/score_page.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/widgets/score_page_controller.dart';
 import 'package:arm_chair_quaterback/pages/league/team_detail/controller.dart';
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -28,27 +30,33 @@ class OverviewTab extends StatelessWidget {
     return GetBuilder<TeamDetailController>(
         id: "overview_tab",
         builder: (context) {
-          return SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Container(
-              margin: EdgeInsets.only(bottom: 9.w),
-              child: Column(
-                children: [
-                  9.vGap,
-                  _SeasonStats(),
-                  9.vGap,
-                  _Schedule(),
-                  9.vGap,
-                  _RecentMatch(),
-                  // 9.vGap,
-                  // _RecentPick(),
-                  9.vGap,
-                  _OutCome(),
-                  9.vGap,
-                  _Stats(),
-                ],
+          return Stack(
+            children: [
+              SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Container(
+                  margin: EdgeInsets.only(bottom: 9.w),
+                  child: Column(
+                    children: [
+                      9.vGap,
+                      _SeasonStats(),
+                      9.vGap,
+                      _Schedule(),
+                      9.vGap,
+                      _RecentMatch(),
+                      // 9.vGap,
+                      _RecentPick(),
+                      9.vGap,
+                      _OutCome(),
+                      9.vGap,
+                      _Stats(),
+                    ],
+                  ),
+                ),
               ),
-            ),
+              // 竞猜选择结果底部弹框
+              const BottomGuessTipWidget(),
+            ],
           );
         });
   }
@@ -98,7 +106,9 @@ class _SeasonStats extends GetView<TeamDetailController> {
                       width: 93.w,
                       child: Column(children: [
                         Text(
-                          regular.getRankValue(types[index], regular),
+                          regular
+                              .getRankValue(types[index], regular)
+                              .toString(),
                           textAlign: TextAlign.center,
                           style: 21.w4(
                             fontFamily: FontFamily.fOswaldBold,
@@ -136,7 +146,7 @@ class _SeasonStats extends GetView<TeamDetailController> {
   }
 }
 
-class _Schedule extends StatelessWidget {
+class _Schedule extends GetView<TeamDetailController> {
   const _Schedule({super.key});
 
   @override
@@ -164,54 +174,39 @@ class _Schedule extends StatelessWidget {
           16.vGap,
           SizedBox(
             height: 123.5.w,
-            // child: PageView.builder(
-            //     physics: const BouncingScrollPhysics(),
-            //     padEnds: false,
-            //     itemCount: 4,
-            //     controller: PageController(
-            //       initialPage: 0,
-            //       viewportFraction: 123.5 / 193.5,
-            //     ),
-            //     itemBuilder: (context, index) {
-            //       return Padding(
-            //         padding: EdgeInsets.only(left: 9.w),
-            //         child: Container(
-            //           width: 193.5.w,
-            //           height: 123.5.w,
-            //           decoration: BoxDecoration(
-            //             color: Colors.white,
-            //             borderRadius: BorderRadius.circular(12.r),
-            //             border: Border.all(color: AppColors.cB3B3B3),
-            //           ),
-            //         ),
-            //       );
-            //     }),
             child: ListView.separated(
                 physics: const BouncingScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
-                itemBuilder: (context, index) => Container(
-                      width: 193.5.w,
-                      height: 123.5.w,
-                      padding:
-                          EdgeInsets.only(left: 14.w, right: 14.w, top: 14.w),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(12.r),
-                        border: Border.all(color: AppColors.cB3B3B3),
-                      ),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                "11/9  8:00 AM",
-                                style: 12.w4(
-                                    color: AppColors.c000000,
-                                    fontFamily: FontFamily.fRobotoRegular,
-                                    height: 0.9),
-                              ),
-                              12.5.hGap,
+                itemBuilder: (context, index) {
+                  var item = controller.teamDetailEntity.gameSchedules[index];
+                  var isFinal = DateTime.now()
+                      .toUtc()
+                      .isAfter(DateUtil.getDateTimeByMs(item.gameStartTime));
+                  return Container(
+                    width: 193.5.w,
+                    height: 123.5.w,
+                    padding:
+                        EdgeInsets.only(left: 14.w, right: 14.w, top: 14.w),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12.r),
+                      border: Border.all(color: AppColors.cB3B3B3),
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              DateUtil.formatDateMs(item.gameStartTime,
+                                  format: DateFormats.mo_d_h_m),
+                              style: 12.w4(
+                                  color: AppColors.c000000,
+                                  fontFamily: FontFamily.fRobotoRegular,
+                                  height: 0.9),
+                            ),
+                            12.5.hGap,
+                            if (isFinal)
                               Text(
                                 "Final",
                                 style: 12.w4(
@@ -219,55 +214,64 @@ class _Schedule extends StatelessWidget {
                                     fontFamily: FontFamily.fRobotoRegular,
                                     height: 0.9),
                               ),
-                              const Expanded(child: SizedBox.shrink()),
-                              IconWidget(
-                                iconWidth: 10.w,
-                                iconColor: AppColors.c000000,
-                                icon: Assets.iconUiIconArrows04,
-                                rotateAngle: -90,
-                              ),
-                              9.hGap,
-                            ],
-                          ),
-                          9.5.vGap,
-                          Container(
-                            width: double.infinity,
-                            height: 1,
-                            color: AppColors.cE6E6E,
-                          ),
-                          5.5.vGap,
-                          ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: 2,
-                              padding: EdgeInsets.zero,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                return Row(
-                                  children: [
-                                    ImageWidget(
-                                      url: Utils.getTeamUrl(101),
-                                      width: 38.5.w,
-                                      height: 38.5.w,
-                                    ),
-                                    Text(
-                                      "SDF",
-                                      style: 12.w4(
-                                          fontFamily: FontFamily.fOswaldMedium),
-                                    ),
-                                    78.hGap,
-                                    Text(
-                                      "SDF",
+                            const Expanded(child: SizedBox.shrink()),
+                            IconWidget(
+                              iconWidth: 10.w,
+                              iconColor: AppColors.c000000,
+                              icon: Assets.iconUiIconArrows04,
+                              rotateAngle: -90,
+                            ),
+                            9.hGap,
+                          ],
+                        ),
+                        9.5.vGap,
+                        Container(
+                          width: double.infinity,
+                          height: 1,
+                          color: AppColors.cE6E6E,
+                        ),
+                        5.5.vGap,
+                        ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: 2,
+                            padding: EdgeInsets.zero,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              int score = index == 0
+                                  ? item.homeTeamScore
+                                  : item.awayTeamScore;
+                              return Row(
+                                children: [
+                                  ImageWidget(
+                                    url: Utils.getTeamUrl(index == 0
+                                        ? item.homeTeamId
+                                        : item.awayTeamId),
+                                    width: 38.5.w,
+                                    height: 38.5.w,
+                                  ),
+                                  Text(
+                                    "SDF",
+                                    style: 12.w4(
+                                        fontFamily: FontFamily.fOswaldMedium),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      !isFinal ? "-" : "$score",
+                                      textAlign: TextAlign.right,
                                       style: 16.w4(
                                           fontFamily: FontFamily.fOswaldMedium),
                                     ),
-                                  ],
-                                );
-                              })
-                        ],
-                      ),
+                                  ),
+                                  6.hGap,
+                                ],
+                              );
+                            })
+                      ],
                     ),
+                  );
+                },
                 separatorBuilder: (context, index) => 9.hGap,
-                itemCount: 4),
+                itemCount: controller.teamDetailEntity.gameSchedules.length),
           ),
           25.vGap,
         ],
@@ -279,8 +283,91 @@ class _Schedule extends StatelessWidget {
 class _RecentMatch extends GetView<TeamDetailController> {
   const _RecentMatch({super.key});
 
+  MediaQuery _buildL5GamePageWidget(
+      BuildContext context, List<TeamDetailGameSchedules> list) {
+    return MediaQuery.removePadding(
+        removeTop: true,
+        context: context,
+        child: ListView.builder(
+            itemCount: list.length,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              var item = list[index];
+              int homeId = Get.arguments;
+              var isHome = homeId == item.homeTeamId;
+              // int leftId = isHome ? item.homeTeamId : item.awayTeamId;
+              // int rightId = isHome ? item.awayTeamId : item.homeTeamId;
+              int leftScore = isHome ? item.homeTeamScore : item.awayTeamScore;
+              int rightScore = isHome ? item.awayTeamScore : item.homeTeamScore;
+              return Container(
+                height: 46.w,
+                margin: EdgeInsets.symmetric(horizontal: 16.w),
+                padding: EdgeInsets.symmetric(horizontal: 17.w),
+                decoration: const BoxDecoration(
+                    border: Border(
+                        bottom: BorderSide(color: AppColors.cE6E6E, width: 1))),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      isHome ? "HOME" : "AWAY",
+                      style: 10.w4(
+                          color: AppColors.c4D4D4D,
+                          fontFamily: FontFamily.fRobotoRegular,
+                          height: 1),
+                    ),
+                    Expanded(
+                      child: Text(
+                        leftScore.toString(),
+                        textAlign: TextAlign.end,
+                        style: 21.w5(
+                            color: leftScore > rightScore
+                                ? AppColors.c000000
+                                : AppColors.cB3B3B3,
+                            height: 0.9,
+                            fontFamily: FontFamily.fOswaldMedium),
+                      ),
+                    ),
+                    18.hGap,
+                    Text(
+                      DateUtil.formatDateMs(item.gameStartTime,
+                          format: "yyyy.MM.dd"),
+                      style: 10.w4(
+                          color: AppColors.c4D4D4D,
+                          fontFamily: FontFamily.fRobotoRegular,
+                          height: 0.9),
+                    ),
+                    18.hGap,
+                    Expanded(
+                      child: Text(
+                        textAlign: TextAlign.start,
+                        rightScore.toString(),
+                        style: 21.w5(
+                            color: leftScore < rightScore
+                                ? AppColors.c000000
+                                : AppColors.cB3B3B3,
+                            height: 0.9,
+                            fontFamily: FontFamily.fOswaldMedium),
+                      ),
+                    ),
+                    Text(
+                      textAlign: TextAlign.end,
+                      isHome ? "AWAY" : "HOME",
+                      style: 10.w4(
+                        color: AppColors.c4D4D4D,
+                        fontFamily: FontFamily.fRobotoRegular,
+                        height: 0.9,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }));
+  }
+
   @override
   Widget build(BuildContext context) {
+    int teamId = Get.arguments;
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.w), color: AppColors.cFFFFFF),
@@ -300,6 +387,7 @@ class _RecentMatch extends GetView<TeamDetailController> {
           ),
           25.vGap,
           GetBuilder<TeamDetailController>(builder: (controller) {
+            var regular = controller.teamDetailEntity.regularSeasonData;
             return Column(
               children: [
                 SizedBox(
@@ -314,9 +402,9 @@ class _RecentMatch extends GetView<TeamDetailController> {
                           var type = controller.types[index];
                           return Obx(() {
                             bool isSelected =
-                                controller.currentTabIndex.value == index;
+                                controller.currentTypeIndex.value == index;
                             return InkWell(
-                              onTap: () => controller.onTabTap(index),
+                              onTap: () => controller.onTypeTap(index),
                               child: Container(
                                 margin: EdgeInsets.only(
                                     right: 4.w, left: index == 0 ? 16.w : 0),
@@ -350,13 +438,13 @@ class _RecentMatch extends GetView<TeamDetailController> {
                   color: AppColors.cE6E6E,
                   height: 1.w,
                 ),
+                14.5.vGap,
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 16.w),
                   child: Row(
                     children: [
                       Expanded(
                           child: Container(
-                        height: 94.w,
                         padding: EdgeInsets.only(left: 14.w),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -365,16 +453,18 @@ class _RecentMatch extends GetView<TeamDetailController> {
                             Text(
                               "Season Avg",
                               style: 12.w4(
-                                  color: AppColors.c666666,
-                                  height: 1,
+                                  height: 0.9,
                                   fontFamily: FontFamily.fRobotoRegular),
                             ),
-                            15.vGap,
+                            9.vGap,
                             Text(
-                              "30.0",
+                              regular
+                                  .getRankValue(
+                                      controller.getCurrentType(), regular)
+                                  .toString(),
                               style: 27.w7(
                                   color: AppColors.c262626,
-                                  height: 1,
+                                  height: 0.9,
                                   fontFamily: FontFamily.fOswaldBold),
                             )
                           ],
@@ -383,11 +473,10 @@ class _RecentMatch extends GetView<TeamDetailController> {
                       Container(
                         width: 1.w,
                         color: AppColors.cE6E6E,
-                        height: 67.w,
+                        height: 42.w,
                       ),
                       Expanded(
                           child: Container(
-                        height: 94.w,
                         padding: EdgeInsets.only(left: 14.w),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -395,17 +484,16 @@ class _RecentMatch extends GetView<TeamDetailController> {
                           children: [
                             Text(
                               "Last 5 Avg",
-                              style: 14.w4(
-                                  color: AppColors.c666666,
-                                  height: 1,
+                              style: 12.w4(
+                                  height: 0.9,
                                   fontFamily: FontFamily.fRobotoRegular),
                             ),
-                            15.vGap,
+                            9.vGap,
                             Text(
-                              "30.0",
+                              "${controller.last5Avg()}",
                               style: 27.w7(
                                   color: AppColors.c262626,
-                                  height: 1,
+                                  height: 0.9,
                                   fontFamily: FontFamily.fOswaldBold),
                             )
                           ],
@@ -414,85 +502,73 @@ class _RecentMatch extends GetView<TeamDetailController> {
                     ],
                   ),
                 ),
-                9.vGap,
+                25.vGap,
                 Container(
-                  height: 162.w,
-                  margin: EdgeInsets.symmetric(horizontal: 16.w),
-                  padding: EdgeInsets.all(10.w),
+                  height: 135.w,
+                  margin: EdgeInsets.symmetric(horizontal: 26.w),
                   child: _buildDefaultColumnChart(context),
                 ),
                 31.vGap,
-                Container(
-                  height: 273.w,
-                  margin: EdgeInsets.only(top: 9.w),
-                  decoration: BoxDecoration(
-                      color: AppColors.cFFFFFF,
-                      borderRadius: BorderRadius.circular(9.w)),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 40.w,
-                        child: TabBar(
-                            controller: controller.teamTabCtrl,
-                            indicatorColor: AppColors.cFF7954,
-                            indicatorSize: TabBarIndicatorSize.tab,
-                            dividerColor: AppColors.cD1D1D1,
-                            overlayColor: null,
-                            labelStyle: 16.w5(
-                                height: 1,
-                                fontFamily: FontFamily.fOswaldMedium),
-                            labelColor: AppColors.c000000,
-                            unselectedLabelStyle: 16.w5(
-                                height: 1,
-                                fontFamily: FontFamily.fOswaldMedium),
-                            unselectedLabelColor: AppColors.cB2B2B2,
-                            tabs: [
-                              Row(
-                                children: [
-                                  ImageWidget(
-                                    url: Utils.getTeamUrl(111),
-                                    width: 28.w,
-                                  ),
-                                  7.hGap,
-                                  Text(
-                                    Utils.getTeamInfo(111).shortEname,
-                                  )
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    Utils.getTeamInfo(112).shortEname,
-                                  ),
-                                  7.hGap,
-                                  ImageWidget(
-                                    url: Utils.getTeamUrl(112),
-                                    width: 28.w,
-                                  ),
-                                ],
-                              )
-                            ]),
-                      ),
-                      Expanded(
-                        child: TabBarView(
-                            controller: controller.teamTabCtrl,
-                            children: [
-                              _buildL5GamePageWidget(
-                                  context,
-                                  controller.teamDetailEntity.last5GameSchedule
-                                      .schedule,
-                                  111),
-                              _buildL5GamePageWidget(
-                                  context,
-                                  controller.teamDetailEntity.last5GameSchedule
-                                      .schedule,
-                                  122),
-                            ]),
-                      ),
-                    ],
+                if (controller
+                    .teamDetailEntity.guessL5GameList.schedule.isNotEmpty)
+                  Container(
+                    height: 273.w,
+                    margin: EdgeInsets.only(top: 9.w),
+                    decoration: BoxDecoration(
+                        color: AppColors.cFFFFFF,
+                        borderRadius: BorderRadius.circular(9.w)),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                            height: 40.w,
+                            child: Row(
+                              children: [
+                                30.hGap,
+                                Row(
+                                  children: [
+                                    Text(
+                                      Utils.getTeamInfo(teamId).shortEname,
+                                    ),
+                                    7.hGap,
+                                    ImageWidget(
+                                      url: Utils.getTeamUrl(teamId),
+                                      width: 28.w,
+                                    ),
+                                  ],
+                                ),
+                                Expanded(
+                                    child: Text(
+                                  controller.getCurrentType(),
+                                  textAlign: TextAlign.center,
+                                  style: 12.w4(
+                                      fontFamily: FontFamily.fRobotoRegular),
+                                )),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    ImageWidget(
+                                      url: Utils.getTeamUrl(
+                                          controller.getAwayTeamId()),
+                                      width: 28.w,
+                                    ),
+                                    7.hGap,
+                                    Text(
+                                      Utils.getTeamInfo(112).shortEname,
+                                    ),
+                                  ],
+                                ),
+                                30.hGap,
+                              ],
+                            )),
+                        Expanded(
+                          child: _buildL5GamePageWidget(
+                              context,
+                              controller
+                                  .teamDetailEntity.guessL5GameList.schedule),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
                 18.vGap,
               ],
             );
@@ -502,91 +578,9 @@ class _RecentMatch extends GetView<TeamDetailController> {
     );
   }
 
-  MediaQuery _buildL5GamePageWidget(BuildContext context,
-      List<TeamDetailLast5GameScheduleSchedule> historyMap, int homeId) {
-    return MediaQuery.removePadding(
-        removeTop: true,
-        context: context,
-        child: ListView.builder(
-            itemCount: (historyMap ?? []).length,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              var item = historyMap![index];
-              var isHome = homeId == item.homeTeamId;
-              int leftId = isHome ? item.homeTeamId : item.awayTeamId;
-              int rightId = isHome ? item.awayTeamId : item.homeTeamId;
-              int leftScore = isHome ? item.homeTeamScore : item.awayTeamScore;
-              int rightScore = isHome ? item.awayTeamScore : item.homeTeamScore;
-              return Container(
-                height: 46.w,
-                margin: EdgeInsets.symmetric(horizontal: 16.w),
-                padding: EdgeInsets.symmetric(horizontal: 17.w),
-                decoration: const BoxDecoration(
-                    border: Border(
-                        bottom: BorderSide(color: AppColors.cE6E6E, width: 1))),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        isHome ? "HOME" : "AWAY",
-                        style: 10.w4(
-                            color: AppColors.c4D4D4D,
-                            fontFamily: FontFamily.fRobotoRegular,
-                            height: 1),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        leftScore.toString(),
-                        style: 21.w5(
-                            color: AppColors.c000000,
-                            height: 1,
-                            fontFamily: FontFamily.fOswaldMedium),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: Center(
-                        child: Text(
-                          MyDateUtils.formatDate(
-                              MyDateUtils.getDateTimeByMs(item.gameStartTime),
-                              format: DateFormats.DOT_Y_M_D),
-                          style: 10.w4(
-                              color: AppColors.c4D4D4D,
-                              fontFamily: FontFamily.fRobotoRegular,
-                              height: 1),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        textAlign: TextAlign.end,
-                        rightScore.toString(),
-                        style: 21.w5(
-                            color: AppColors.c000000,
-                            height: 1,
-                            fontFamily: FontFamily.fOswaldMedium),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        textAlign: TextAlign.end,
-                        isHome ? "AWAY" : "HOME",
-                        style: 10.w4(
-                            color: AppColors.c4D4D4D,
-                            fontFamily: FontFamily.fRobotoRegular,
-                            height: 1),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }));
-  }
-
   SfCartesianChart _buildDefaultColumnChart(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
+
     var plotBands = <PlotBand>[];
     plotBands = <PlotBand>[
       PlotBand(
@@ -595,7 +589,7 @@ class _RecentMatch extends GetView<TeamDetailController> {
         end: 50,
         // 虚线的终止位置（y 值），相同值表示一条线
         borderWidth: 1,
-        text: 'AVG \n${1}',
+        text: 'AVG \n${controller.last5Avg()}',
         verticalTextPadding: "verticalTextPadding",
         horizontalTextAlignment: TextAnchor.end,
         verticalTextAlignment: TextAnchor.middle,
@@ -635,15 +629,22 @@ class _RecentMatch extends GetView<TeamDetailController> {
   List<ColumnSeries<ChartSampleData, String>> getDefaultColumnSeries(
       double width) {
     var list = controller.teamDetailEntity.last5GameSchedule.schedule.map((e) {
-      var timeByMs = MyDateUtils.getDateTimeByMs(e.gameStartTime);
+      int index =
+          controller.teamDetailEntity.last5GameSchedule.schedule.indexOf(e);
+      var item = controller.teamDetailEntity.last5GameSchedule.scoreAvg[index];
+
+      var timeByMs = DateUtil.getDateTimeByMs(e.gameStartTime);
       var monthEnName = MyDateUtils.getMonthEnName(timeByMs, short: true);
       // var currentTabKey = getCurrentTabKey();
       // var value = e.getValue(currentTabKey);
-      var value = Random().nextInt(20) + 20;
-      Color color = 30 <= value ? AppColors.c000000 : AppColors.cD9D9D9;
+      Color color = e.homeTeamScore > controller.seasonAvg()
+          ? AppColors.c000000
+          : AppColors.cD9D9D9;
       return ChartSampleData(
-          x: '$monthEnName ${timeByMs.day}\nVS ${Utils.getTeamInfo(e.awayTeamId).shortEname}',
-          y: value,
+          x:
+              '$monthEnName ${timeByMs.day}\nVS ${Utils.getTeamInfo(e.awayTeamId).shortEname}',
+          y: (item.getValue(controller.getCurrentType()) * 10).roundToDouble() /
+              10,
           pointColor: color);
     }).toList();
     var len = list?.length ?? 0;
@@ -668,35 +669,50 @@ class _RecentPick extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ScorePageController controller = Get.find();
+    var teamCtrl = Get.find<TeamDetailController>();
+    var pick = teamCtrl.teamDetailEntity.recentPick;
+    DateTime time = DateUtil.getDateTimeByMs(pick.gameStartTime);
+    var date = DateTime(time.year, time.month, time.day);
+    var controller = Get.put(ScorePageController(date));
+    if (pick.homeTeamId == 0) return const SizedBox();
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 25.w, horizontal: 16.w),
+      margin: EdgeInsets.only(top: 9.w),
+      padding: EdgeInsets.symmetric(vertical: 25.w, horizontal: 16.w),
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12.w),
         color: AppColors.cFFFFFF,
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "recent Pick",
-            style: 24.w4(
-              fontFamily: FontFamily.fOswaldBold,
-            ),
+            "recent Pick".toUpperCase(),
+            style: 24.w4(fontFamily: FontFamily.fOswaldBold, height: 0.9),
           ),
           16.5.vGap,
-          ScoreItemWidget(gameGuess: controller.scoreList.first)
+          Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12.w),
+                border: Border.all(color: AppColors.cD9D9D9),
+              ),
+              child: ScoreItemWidget(gameGuess: GameGuess(pick)))
         ],
       ),
     );
   }
 }
 
-class _OutCome extends StatelessWidget {
+class _OutCome extends GetView<TeamDetailController> {
   const _OutCome({super.key});
+
+  // String _getWinTeamName(TeamDetailGameSchedules gameSchedule) {
+  //   return;
+  // }
 
   @override
   Widget build(BuildContext context) {
+    var outcomeList = controller.teamDetailEntity.outcome;
     return Container(
       height: 183.5.w,
       width: double.infinity,
@@ -722,8 +738,19 @@ class _OutCome extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               scrollDirection: Axis.horizontal,
-              itemCount: 3,
+              itemCount: outcomeList.length,
               itemBuilder: (context, index) {
+                var item = outcomeList[index];
+                String homeName =
+                    Utils.getTeamInfo(item.gameSchedule.homeTeamId).shortEname;
+                String awayName =
+                    Utils.getTeamInfo(item.gameSchedule.awayTeamId).shortEname;
+                String winName = item.gameSchedule.awayTeamScore >
+                        item.gameSchedule.homeTeamScore
+                    ? awayName
+                    : homeName;
+                bool isFinal = item.gameSchedule.gameStartTime <
+                    DateTime.now().millisecondsSinceEpoch;
                 return Align(
                   alignment: Alignment.topCenter,
                   child: Container(
@@ -752,14 +779,14 @@ class _OutCome extends StatelessWidget {
                             7.5.hGap,
                             Expanded(
                               child: Text(
-                                "@HOU",
+                                "@${Utils.getTeamInfo(item.gameSchedule.awayTeamId).shortEname}",
                                 style: 14.w4(
                                     fontFamily: FontFamily.fOswaldMedium,
                                     height: 0.9),
                               ),
                             ),
                             Text(
-                              " Result: CHI WIN",
+                              " Result: $winName WIN",
                               style: 14.w4(
                                   color: AppColors.c0FA76C,
                                   fontFamily: FontFamily.fOswaldMedium,
@@ -769,7 +796,7 @@ class _OutCome extends StatelessWidget {
                         ),
                         7.vGap,
                         Text(
-                          "DAS 128  @ 129 chi",
+                          "$homeName ${item.gameSchedule.homeTeamScore}  @  ${item.gameSchedule.awayTeamScore} $awayName",
                           style: 7.w4(
                               fontFamily: FontFamily.fRobotoMedium,
                               height: 0.9),
@@ -783,11 +810,11 @@ class _OutCome extends StatelessWidget {
                         Row(
                           children: [
                             Container(
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                   border:
                                       Border(bottom: BorderSide(width: 0.5))),
                               child: Text(
-                                "11/08/01  8:00 am  final",
+                                "${controller.formatDate12Hours(item.gameSchedule.gameStartTime)} ${isFinal ? "Final" : ""}",
                                 style: 10.w4(
                                     fontFamily: FontFamily.fRobotoRegular,
                                     color: AppColors.c000000,
@@ -810,7 +837,7 @@ class _OutCome extends StatelessWidget {
                             ),
                             6.hGap,
                             Text(
-                              "100K",
+                              "${item.reviewsCount}",
                               style: 10.w4(
                                   fontFamily: FontFamily.fRobotoRegular,
                                   height: 0.9),
@@ -836,6 +863,7 @@ class _Stats extends GetView<TeamDetailController> {
 
   @override
   Widget build(BuildContext context) {
+    var map = controller.getSeasonRanks();
     return Container(
       width: double.infinity,
       height: 208.w,
@@ -903,72 +931,92 @@ class _Stats extends GetView<TeamDetailController> {
                   height: 1,
                   color: AppColors.cD1D1D1,
                 ),
-                Row(
-                  children: [
-                    Container(
-                      alignment: Alignment.center,
-                      width: 71.w,
-                      child: Text(
-                        "REG",
-                        style: 12.w4(fontFamily: FontFamily.fRobotoRegular),
-                      ),
-                    ),
-                    Container(
-                      width: 1.w,
-                      height: 32.w,
-                      color: AppColors.cE6E6E,
-                    ),
-                    10.hGap,
-                    ...controller.types.map(
-                      (e) => Expanded(
-                        child: Text(
-                          "10",
-                          textAlign: TextAlign.center,
-                          style: 12.w4(
-                            fontFamily: FontFamily.fRobotoRegular,
+                ListView.separated(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      var item = map.entries.elementAt(index);
+                      return Row(
+                        children: [
+                          Container(
+                            alignment: Alignment.center,
+                            width: 71.w,
+                            child: Text(
+                              item.key,
+                              style:
+                                  12.w4(fontFamily: FontFamily.fRobotoRegular),
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
-                    10.hGap,
-                  ],
-                ),
-                Container(
-                  width: double.infinity,
-                  height: 1,
-                  color: AppColors.cD1D1D1,
-                  margin: EdgeInsets.symmetric(horizontal: 16.w),
-                ),
-                Row(
-                  children: [
-                    Container(
-                      alignment: Alignment.center,
-                      width: 71.w,
-                      child: Text(
-                        "POS",
-                        style: 12.w4(fontFamily: FontFamily.fRobotoRegular),
-                      ),
-                    ),
-                    Container(
-                      width: 1.w,
-                      height: 32.w,
-                      color: AppColors.cE6E6E,
-                    ),
-                    10.hGap,
-                    ...controller.types.map(
-                      (e) => Expanded(
-                        child: Text(
-                          "9.0",
-                          textAlign: TextAlign.center,
-                          style: 12.w4(
-                            fontFamily: FontFamily.fRobotoRegular,
+                          Container(
+                            width: 1.w,
+                            height: 32.w,
+                            color: AppColors.cE6E6E,
                           ),
-                        ),
-                      ),
-                    ),
-                    10.hGap,
-                  ],
-                ),
+                          10.hGap,
+                          ...controller.types.map(
+                            (e) => Expanded(
+                              child: Text(
+                                item.value
+                                    .getRankValue(e, item.value)
+                                    .toString(),
+                                textAlign: TextAlign.center,
+                                style: 12.w4(
+                                  fontFamily: FontFamily.fRobotoRegular,
+                                ),
+                              ),
+                            ),
+                          ),
+                          10.hGap,
+                        ],
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return Container(
+                        margin: EdgeInsets.symmetric(horizontal: 16.w),
+                        width: double.infinity,
+                        height: 1,
+                        color: AppColors.cD1D1D1,
+                      );
+                    },
+                    itemCount: map.entries.length)
+
+                // Container(
+                //   width: double.infinity,
+                //   height: 1,
+                //   color: AppColors.cD1D1D1,
+                //   margin: EdgeInsets.symmetric(horizontal: 16.w),
+                // ),
+                // Row(
+                //   children: [
+                //     Container(
+                //       alignment: Alignment.center,
+                //       width: 71.w,
+                //       child: Text(
+                //         "POS",
+                //         style: 12.w4(fontFamily: FontFamily.fRobotoRegular),
+                //       ),
+                //     ),
+                //     Container(
+                //       width: 1.w,
+                //       height: 32.w,
+                //       color: AppColors.cE6E6E,
+                //     ),
+                //     10.hGap,
+                //     ...controller.types.map(
+                //       (e) => Expanded(
+                //         child: Text(
+                //           "9.0",
+                //           textAlign: TextAlign.center,
+                //           style: 12.w4(
+                //             fontFamily: FontFamily.fRobotoRegular,
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //     10.hGap,
+                //   ],
+                // ),
               ],
             ),
           ),

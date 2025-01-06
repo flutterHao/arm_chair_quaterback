@@ -239,9 +239,9 @@ class MyDateUtils {
   }
 
   /// dateTime 今天 ,locDateTime 要比较的时间
-  static bool isTomorrow(int tomorrowMs,{DateTime? nowDateTime}) {
+  static bool isTomorrow(int tomorrowMs, {DateTime? nowDateTime}) {
     // 获取当前日期（不包含时分秒）
-    DateTime now = nowDateTime??DateTime.now();
+    DateTime now = nowDateTime ?? DateTime.now();
     DateTime currentDate = DateTime(now.year, now.month, now.day);
 
     // 获取明天的日期（不包含时分秒）
@@ -253,7 +253,6 @@ class MyDateUtils {
         tomorrowDateTime.month == tomorrow.month &&
         tomorrowDateTime.day == tomorrow.day;
   }
-
 
   /// is yesterday by millis.
   /// 是否是昨天.
@@ -798,7 +797,6 @@ class MyDateUtils {
         DateTime(dateTime.year, dateTime.month, dateTime.day, 0, 0, 0, 0, 0);
     return dateTime2.millisecondsSinceEpoch;
   }
-
 }
 
 /// month->days.

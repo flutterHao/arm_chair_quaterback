@@ -773,9 +773,11 @@ class TrainingController extends GetxController
     }
 
     //暂时不知道重置到开始位置的原因，先重新变更成中奖位置
-    if (offsetList.isNotEmpty) {
-      for (int i = 0; i < scrollerCtrlList.length; i++) {
-        scrollerCtrlList[i].jumpTo(offsetList[i]);
+    if (scrollerCtrlList.where((e) => e.offset == 0.0).length == 6) {
+      if (offsetList.isNotEmpty) {
+        for (int i = 0; i < scrollerCtrlList.length; i++) {
+          scrollerCtrlList[i].jumpTo(offsetList[i]);
+        }
       }
     }
 

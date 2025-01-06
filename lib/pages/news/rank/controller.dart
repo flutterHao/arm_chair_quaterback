@@ -82,8 +82,8 @@ class RankController extends GetxController
   void onInit() {
     super.onInit();
     // pointType.value = Get.find<NewListController>().pointType;
-    int currentYear = DateTime.now().year;
-    season.value = "$currentYear-${(currentYear + 1) % 100}";
+    // int currentYear = DateTime.now().year;
+    // season.value = "$currentYear-${(currentYear + 1) % 100}";
     tabController = TabController(length: tabs.length, vsync: this);
     tabController.animation?.addListener(() {
       progress.value = tabController.animation!.value;

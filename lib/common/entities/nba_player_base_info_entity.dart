@@ -621,6 +621,9 @@ class NbaPlayerBaseInfoL5DataAvg {
     if ("3pm" == key.toLowerCase()) {
       return threePm ?? 0;
     }
+    if ("foul" == key.toLowerCase()) {
+      return pf ?? 0;
+    }
     if ("reb" == key.toLowerCase()) {
       return ((oreb ?? 0) + (dreb ?? 0));
     }

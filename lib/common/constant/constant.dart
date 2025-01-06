@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-06 15:16:54
- * @LastEditTime: 2024-12-20 15:50:21
+ * @LastEditTime: 2025-01-06 21:16:32
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:flutter/material.dart';
@@ -111,4 +111,5 @@ class Constant {
     "SS",
     "SS+"
   ];
+  final currentSeason = "24-25";
 }
