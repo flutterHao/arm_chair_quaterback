@@ -1,4 +1,5 @@
 import 'package:arm_chair_quaterback/common/entities/pk_player_updated_entity.dart';
+import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
@@ -76,10 +77,10 @@ class GamePlayersWidget extends GetView<TeamBattleV2Controller> {
       GameEvent? event, List<PkPlayerUpdatedPlayers> homeTeamPlayerList) {
     return List.generate(5, (index) {
       var list = homeTeamPlayerList;
-      var item = list[index];
+      PkPlayerUpdatedPlayers? item = index>=list.length-1?null:list[index];
       var active = event != null &&
           event.isHomePlayer &&
-          item.playerId == event.playerId;
+          item?.playerId == event.playerId;
 
       Widget content = Container(
           width: 28.w,
@@ -90,8 +91,8 @@ class GamePlayersWidget extends GetView<TeamBattleV2Controller> {
           ),
           margin: EdgeInsets.only(right: 4.w),
           child: ImageWidget(
-            url: Utils.getPlayUrl(item.playerId),
-            imageFailedPath: Assets.iconUiDefault04,
+            url: Utils.getPlayUrl(item?.playerId),
+            imageFailedPath: item==null?null:Assets.iconUiDefault04,
             borderRadius: BorderRadius.circular(4.w),
           ));
       if (active) {

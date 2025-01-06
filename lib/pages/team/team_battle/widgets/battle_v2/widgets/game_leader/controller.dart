@@ -15,7 +15,7 @@ import 'package:get/get.dart';
 
 class GameLeaderController extends GetxController
     with GetTickerProviderStateMixin {
-  List<String> tabTitles = ["POINTS", "REBOUNGS", "ASSISTS"];
+  List<String> tabTitles = ["POINTS", "REBOUNDS", "ASSISTS"];
   late TabController tabController;
 
   GameEvent? event;

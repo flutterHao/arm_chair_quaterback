@@ -25,7 +25,7 @@ class LeagueDetailPlayController extends GetxController
 
   NbaGameDetailEntity? nbaGameDetailEntity;
 
-  List<String> tabTitles = ["POINTS", "REBOUNGS", "ASSISTS"];
+  List<String> tabTitles = ["POINTS", "REBOUNDS", "ASSISTS"];
   late TabController tabController;
 
   @override

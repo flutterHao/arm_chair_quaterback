@@ -15,7 +15,6 @@ import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
 import 'package:arm_chair_quaterback/common/widgets/transitions/slide_transition_x.dart';
-import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/dialog/fire_dialog.dart';
 import 'package:flutter/material.dart';
@@ -461,150 +460,154 @@ class PlayerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        if (canTap && player != null) {
-          Get.toNamed(RouteNames.teamTeamUpgrade,
-              arguments: {"player": player});
-        }
-      },
-      child: Stack(
-        children: [
-          Container(
-            height: height,
+    Widget child = Stack(
+      children: [
+        Container(
+          height: height,
+          width: width,
+          decoration: BoxDecoration(
+            color: backgroundColor,
+            borderRadius: BorderRadius.circular(9.w),
+          ),
+          child: ImageWidget(
+            url: Utils.getPlayUrl(playerId),
+            imageFailedPath: Assets.iconUiDefault04,
+            borderRadius: BorderRadius.circular(9.w),
             width: width,
-            decoration: BoxDecoration(
-              color: backgroundColor,
-              borderRadius: BorderRadius.circular(9.w),
-            ),
-            child: ImageWidget(
-              url: Utils.getPlayUrl(playerId),
-              imageFailedPath: Assets.iconUiDefault04,
-              borderRadius: BorderRadius.circular(9.w),
-              width: width,
-              height: height,
+            height: height,
+          ),
+        ),
+        //球员等级
+        if (ObjectUtil.isNotEmpty(grade))
+          Positioned(
+            top: 5.5.w,
+            left: 5.w,
+            child: OutlinedText(
+              text: Utils.formatGrade(grade ?? 'S'),
+              textStyle:
+              26.w4(height: 0.75, fontFamily: FontFamily.fRobotoBlack),
             ),
           ),
-          //球员等级
-          if (ObjectUtil.isNotEmpty(grade))
-            Positioned(
-              top: 5.5.w,
-              left: 5.w,
-              child: OutlinedText(
-                text: Utils.formatGrade(grade ?? 'S'),
-                textStyle:
-                    26.w4(height: 0.75, fontFamily: FontFamily.fRobotoBlack),
-              ),
-            ),
 
-          ///升星等级
-          if (ObjectUtil.isNotEmpty(level))
-            Positioned(
-              bottom: -2.w,
-              left: 0.w,
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  IconWidget(
-                    iconWidth: 22.5.w,
-                    icon: Assets.managerUiManagerPlayerstar,
-                  ),
-                  Positioned(
-                    // top: 7.w,
-                    child: Text(
-                      "$level",
-                      style: 12.w4(
-                          color: AppColors.cFFFFFF,
-                          height: 0.75,
-                          fontFamily: FontFamily.fRobotoMedium),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
+        ///升星等级
+        if (ObjectUtil.isNotEmpty(level))
           Positioned(
-              right: 4.w,
-              top: 4.w,
-              child: Container(
-                width: 16.w,
-                height: 16.w,
-                decoration: BoxDecoration(
-                  color: AppColors.cFFFFFF,
-                  borderRadius: BorderRadius.circular(4.w),
+            bottom: -2.w,
+            left: 0.w,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                IconWidget(
+                  iconWidth: 22.5.w,
+                  icon: Assets.managerUiManagerPlayerstar,
                 ),
-                alignment: Alignment.center,
-                child: Image.asset(
-                  Assets.iconUiIconRead,
-                  width: 9.w,
-                  color: AppColors.c000000,
-                ),
-              )),
-          Positioned(
-              bottom: 0,
-              right: 0,
-              child: Container(
-                width: 41.w,
-                height: 18.w,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: AppColors.c000000,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(9.w),
-                      bottomRight: Radius.circular(9.w)),
-                ),
-                child: RichText(
-                    text: TextSpan(children: [
-                  TextSpan(
-                    text: "OVR",
-                    style: 9.w4(
-                        color: AppColors.cFFFFFF,
-                        height: 1,
-                        fontFamily: FontFamily.fRobotoRegular),
-                  ),
-                  TextSpan(
-                    text: " ${Utils.getPlayBaseInfo(playerId).playerScore}",
+                Positioned(
+                  // top: 7.w,
+                  child: Text(
+                    "$level",
                     style: 12.w4(
                         color: AppColors.cFFFFFF,
-                        height: 1,
-                        fontFamily: FontFamily.fOswaldBold),
-                  )
-                ])),
+                        height: 0.75,
+                        fontFamily: FontFamily.fRobotoMedium),
+                  ),
+                ),
+              ],
+            ),
+          ),
 
-                // child: Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   crossAxisAlignment: CrossAxisAlignment.center,
-                //   children: [
-                //     Container(
-                //       color: Colors.red,
-                //       alignment: Alignment.center,
-                //       // height: 7.w,
-                //       child: Text(
-                //         "OVR",
-                //         style: 9.w4(
-                //             color: AppColors.cFFFFFF,
-                //             // height: 0.75,
-                //             fontFamily: FontFamily.fRobotoRegular),
-                //       ),
-                //     ),
-                //     2.hGap,
-                //     Container(
-                //       alignment: Alignment.center,
-                //       color: Colors.red,
-                //       // height: 10.5.w,
-                //       child: Text(
-                //         "${Utils.getPlayBaseInfo(playerId).playerScore}",
-                //         style: 12.w4(
-                //             color: AppColors.cFFFFFF,
-                //             // height: 0.75,
-                //             fontFamily: FontFamily.fOswaldBold),
-                //       ),
-                //     )
-                //   ],
-                // ),
-              ))
-        ],
-      ),
+        Positioned(
+            right: 4.w,
+            top: 4.w,
+            child: Container(
+              width: 16.w,
+              height: 16.w,
+              decoration: BoxDecoration(
+                color: AppColors.cFFFFFF,
+                borderRadius: BorderRadius.circular(4.w),
+              ),
+              alignment: Alignment.center,
+              child: Image.asset(
+                Assets.iconUiIconRead,
+                width: 9.w,
+                color: AppColors.c000000,
+              ),
+            )),
+        Positioned(
+            bottom: 0,
+            right: 0,
+            child: Container(
+              width: 41.w,
+              height: 18.w,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: AppColors.c000000,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(9.w),
+                    bottomRight: Radius.circular(9.w)),
+              ),
+              child: RichText(
+                  text: TextSpan(children: [
+                    TextSpan(
+                      text: "OVR",
+                      style: 9.w4(
+                          color: AppColors.cFFFFFF,
+                          height: 1,
+                          fontFamily: FontFamily.fRobotoRegular),
+                    ),
+                    TextSpan(
+                      text: " ${Utils.getPlayBaseInfo(playerId).playerScore}",
+                      style: 12.w4(
+                          color: AppColors.cFFFFFF,
+                          height: 1,
+                          fontFamily: FontFamily.fOswaldBold),
+                    )
+                  ])),
+
+              // child: Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   crossAxisAlignment: CrossAxisAlignment.center,
+              //   children: [
+              //     Container(
+              //       color: Colors.red,
+              //       alignment: Alignment.center,
+              //       // height: 7.w,
+              //       child: Text(
+              //         "OVR",
+              //         style: 9.w4(
+              //             color: AppColors.cFFFFFF,
+              //             // height: 0.75,
+              //             fontFamily: FontFamily.fRobotoRegular),
+              //       ),
+              //     ),
+              //     2.hGap,
+              //     Container(
+              //       alignment: Alignment.center,
+              //       color: Colors.red,
+              //       // height: 10.5.w,
+              //       child: Text(
+              //         "${Utils.getPlayBaseInfo(playerId).playerScore}",
+              //         style: 12.w4(
+              //             color: AppColors.cFFFFFF,
+              //             // height: 0.75,
+              //             fontFamily: FontFamily.fOswaldBold),
+              //       ),
+              //     )
+              //   ],
+              // ),
+            ))
+      ],
     );
+    if (canTap && player != null) {
+      child = InkWell(
+        onTap: () {
+          if (canTap && player != null) {
+            Get.toNamed(RouteNames.teamTeamUpgrade,
+                arguments: {"player": player});
+          }
+        },
+        child: child,
+      );
+    }
+    return child;
   }
 }
