@@ -84,12 +84,12 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                       playerId: args.playerId,
                       tabStr: args.tabStr,
                     ),
+                    PlayerDetailGame(
+                      upStarSuccessCallBack: controller.reloadData,
+                    ),
                     HistoryPage(
                       playerId: args.playerId,
                     ),
-                    PlayerDetailGame(
-                      upStarSuccessCallBack: controller.reloadData,
-                    )
                   ])),
             )),
           );

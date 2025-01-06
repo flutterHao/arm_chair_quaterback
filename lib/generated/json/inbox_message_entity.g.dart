@@ -24,6 +24,28 @@ InboxMessageEntity $InboxMessageEntityFromJson(Map<String, dynamic> json) {
   if (userText != null) {
     inboxMessageEntity.userText = userText;
   }
+  final bool? isRead = jsonConvert.convert<bool>(json['isRead']);
+  if (isRead != null) {
+    inboxMessageEntity.isRead = isRead;
+  }
+  final DateTime? time = jsonConvert.convert<DateTime>(json['time']);
+  if (time != null) {
+    inboxMessageEntity.time = time;
+  }
+  final List<String>? messageList = (json['messageList'] as List<dynamic>?)
+      ?.map(
+          (e) => jsonConvert.convert<String>(e) as String)
+      .toList();
+  if (messageList != null) {
+    inboxMessageEntity.messageList = messageList;
+  }
+  final List<String>? messageList2 = (json['messageList2'] as List<dynamic>?)
+      ?.map(
+          (e) => jsonConvert.convert<String>(e) as String)
+      .toList();
+  if (messageList2 != null) {
+    inboxMessageEntity.messageList2 = messageList2;
+  }
   return inboxMessageEntity;
 }
 
@@ -34,6 +56,10 @@ Map<String, dynamic> $InboxMessageEntityToJson(InboxMessageEntity entity) {
   data['userSmallIcon'] = entity.userSmallIcon;
   data['userName'] = entity.userName;
   data['userText'] = entity.userText;
+  data['isRead'] = entity.isRead;
+  data['time'] = entity.time.toIso8601String();
+  data['messageList'] = entity.messageList;
+  data['messageList2'] = entity.messageList2;
   return data;
 }
 
@@ -44,12 +70,20 @@ extension InboxMessageEntityExtension on InboxMessageEntity {
     String? userSmallIcon,
     String? userName,
     String? userText,
+    bool? isRead,
+    DateTime? time,
+    List<String>? messageList,
+    List<String>? messageList2,
   }) {
     return InboxMessageEntity()
       ..id = id ?? this.id
       ..userIcon = userIcon ?? this.userIcon
       ..userSmallIcon = userSmallIcon ?? this.userSmallIcon
       ..userName = userName ?? this.userName
-      ..userText = userText ?? this.userText;
+      ..userText = userText ?? this.userText
+      ..isRead = isRead ?? this.isRead
+      ..time = time ?? this.time
+      ..messageList = messageList ?? this.messageList
+      ..messageList2 = messageList2 ?? this.messageList2;
   }
 }

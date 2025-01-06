@@ -262,7 +262,7 @@ class _GuessHistoryItemState extends State<GuessHistoryItem> with WidgetsBinding
             ),
             6.hGap,
             Text(
-              "100k",
+              "${item.reviewsCount}",
               style: 10.w4(
                   color: AppColors.c000000,
                   height: 1,

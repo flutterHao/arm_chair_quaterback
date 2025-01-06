@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
@@ -15,6 +16,7 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/physics/one_boundary_scroll_physics.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/controller.dart';
+import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guess_item_v2/guess_item_v2.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/summary/controller.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -59,7 +61,7 @@ class _SummaryPageState extends State<SummaryPage>
           var scrollController = ScrollController();
 
           return SingleChildScrollView(
-            physics: const NeverScrollableScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -410,466 +412,463 @@ class _SummaryPageState extends State<SummaryPage>
                     ],
                   ),
                 ),
-                Builder(
-                  builder: (context) {
-                    /// todo 未实现
-                    return const SizedBox.shrink();
-                    if (controller.getPickInfo() == null) {
-                      return const SizedBox.shrink();
-                    }
-                    return Container(
-                      margin: EdgeInsets.only(top: 9.w),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12.w),
-                          color: AppColors.cFFFFFF),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          25.vGap,
-                          Container(
-                            margin: EdgeInsets.symmetric(horizontal: 16.w),
-                            child: Text(
-                              "RECENT PICK",
-                              style: 24.w7(
-                                  height: 1, fontFamily: FontFamily.fOswaldBold),
-                            ),
-                          ),
-                          25.vGap,
-                          SizedBox(
-                            height: 28.w,
-                            child: MediaQuery.removePadding(
-                              context: context,
-                              removeTop: true,
-                              child: ListView.builder(
-                                  itemCount:
-                                  controller.getTitles().length,
-                                  scrollDirection: Axis.horizontal,
-                                  itemBuilder: (context, index) {
-                                    var key = controller
-                                        .getTitles()
-                                        .toList()[index];
-                                    return Obx(() {
-                                      bool isSelected =
-                                          controller.currentIndex.value ==
-                                              index;
-                                      return InkWell(
-                                        onTap: () =>
-                                            controller.onTabTap(index),
-                                        child: Container(
-                                          margin: EdgeInsets.only(
-                                              right: 4.w,
-                                              left:
-                                              index == 0 ? 16.w : 0),
-                                          height: 28.w,
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 21.w),
-                                          alignment: Alignment.center,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  color:
-                                                  AppColors.c666666,
-                                                  width: 1.w),
-                                              color: isSelected
-                                                  ? AppColors.c262626
-                                                  : AppColors.cFFFFFF,
-                                              borderRadius:
-                                              BorderRadius.circular(
-                                                  14.w)),
-                                          child: Text(
-                                            key.replaceAll(",", "+"),
-                                            style: 13.w5(
-                                                color: isSelected
-                                                    ? AppColors.cF2F2F2
-                                                    : AppColors.c262626,
-                                                height: 1,
-                                                fontFamily: FontFamily
-                                                    .fOswaldMedium),
-                                          ),
-                                        ),
-                                      );
-                                    });
-                                  }),
-                            ),
-                          ),
-                          16.vGap,
-                          _buildPick(),
-                          _buildCommunityPick(),
-                        ],
-                      ),
-                    );
-                  }
-                ),
-                9.vGap,
-                Container(
-                  padding: EdgeInsets.only(top: 19.w),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12.w),
-                      color: AppColors.cFFFFFF),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 16.w),
-                        child: Text.rich(TextSpan(children: [
-                          TextSpan(
-                              text: "Trade",
-                              style:
-                                  16.w7(color: AppColors.c262626, height: 1)),
-                          if (controller.getTradePlayer() != null &&
-                              controller.getTradePlayer()?.isBuy == true)
-                            TextSpan(
-                                text: " (You already have this player )",
-                                style:
-                                    10.w4(color: AppColors.cB3B3B3, height: 1))
-                        ])),
-                      ),
-                      13.vGap,
-                      Container(
-                        height: 185.w,
-                        margin: EdgeInsets.symmetric(horizontal: 16.w),
-                        padding: EdgeInsets.only(
-                            top: 14.w, right: 21.w, bottom: 17.w, left: 13.w),
+                GetBuilder<SummaryController>(
+                    id: SummaryController.idRecentPickTabContent,
+                    builder: (_) {
+                      if (controller.getPickInfo() == null) {
+                        return const SizedBox.shrink();
+                      }
+                      return Container(
+                        margin: EdgeInsets.only(top: 9.w),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12.w),
+                            color: AppColors.cFFFFFF),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              "Prize Change",
-                              style: 14.w7(color: AppColors.c262626, height: 1),
-                            ),
-                            11.vGap,
-                            Expanded(
-                              child: LineChart(
-                                LineChartData(
-                                  lineTouchData:
-                                      const LineTouchData(enabled: false),
-                                  titlesData: FlTitlesData(
-                                      show: true,
-                                      rightTitles: AxisTitles(
-                                          sideTitles: SideTitles(
-                                              reservedSize: 25.w,
-                                              showTitles: true,
-                                              getTitlesWidget: (value, _) {
-                                                return FittedBox(
-                                                  fit: BoxFit.scaleDown,
-                                                  child: Text(
-                                                    Utils.formatMoney(value),
-                                                    style: 9.w4(
-                                                        color:
-                                                            AppColors.cB3B3B3),
-                                                  ),
-                                                );
-                                              })),
-                                      bottomTitles: const AxisTitles(),
-                                      leftTitles: const AxisTitles(),
-                                      topTitles: const AxisTitles()),
-                                  borderData: FlBorderData(
-                                    show: false,
-                                  ),
-                                  lineBarsData: [
-                                    LineChartBarData(
-                                        spots: controller.getTradeData(),
-                                        color: AppColors.cFF7954,
-                                        dotData: const FlDotData(show: false),
-                                        barWidth: 2,
-                                        belowBarData: BarAreaData(
-                                            show: true,
-                                            gradient: LinearGradient(colors: [
-                                              AppColors.cFF7954
-                                                  .withOpacity(0.3),
-                                              AppColors.cFF7954.withOpacity(0.1)
-                                            ])))
-                                  ],
-                                  gridData: FlGridData(
-                                      show: true,
-                                      drawVerticalLine: false,
-                                      getDrawingHorizontalLine: (value) {
-                                        return const FlLine(
-                                            color: AppColors.cB3B3B3,
-                                            dashArray: [2, 2],
-                                            strokeWidth: 1);
-                                      }),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Builder(builder: (context) {
-                  if (controller.getTradePlayer() == null) {
-                    return const SizedBox.shrink();
-                  }
-                  var tradePlayer = controller.getTradePlayer()!;
-                  bool isGood = (tradePlayer.basicMarketPrice ?? 0) <
-                      (tradePlayer.marketPrice ?? 0);
-                  double percent = ((tradePlayer.basicMarketPrice ?? 0) -
-                              (tradePlayer.marketPrice ?? 0))
-                          .abs() /
-                      (tradePlayer.basicMarketPrice ?? 0) *
-                      100;
-                  if (percent.isNaN) {
-                    percent = 0;
-                  }
-                  var baseInfo =
-                      controller.nbaPlayerBaseInfoEntity!.playerBaseInfo;
-                  bool isSpecial = tradePlayer.top ?? false;
-                  var color = isGood ? AppColors.c10A86A : AppColors.cE72646;
-                  return Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12.w),
-                        color: AppColors.cFFFFFF),
-                    child: Column(
-                      children: [
-                        9.vGap,
-                        Stack(
-                          children: [
+                            25.vGap,
                             Container(
-                              height: 79.w,
                               margin: EdgeInsets.symmetric(horizontal: 16.w),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(16.w),
-                                  gradient: const LinearGradient(colors: [
-                                    AppColors.cB6553B,
-                                    AppColors.c262626
-                                  ])),
-                              alignment: Alignment.topCenter,
-                              child: Container(
-                                height: 25.w,
-                                margin:
-                                    EdgeInsets.only(left: 12.w, right: 22.w),
-                                alignment: Alignment.center,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "Discount in limited time",
-                                      style: 14.w4(
-                                          color: AppColors.cF2F2F2, height: 1),
-                                    ),
-                                    Row(
-                                      children: [
-                                        IconWidget(
-                                            iconWidth: 13.w,
-                                            icon: Assets.iconUiIconCountdown),
-                                        3.hGap,
-                                        Obx(() {
-                                          return Text(
-                                            controller.specialTime.value,
-                                            style: 14.w4(
-                                                color: AppColors.cF2F2F2,
-                                                height: 1),
-                                          );
-                                        })
-                                      ],
-                                    )
-                                  ],
-                                ),
+                              child: Text(
+                                "RECENT PICK",
+                                style: 24.w7(
+                                    height: 1,
+                                    fontFamily: FontFamily.fOswaldBold),
                               ),
                             ),
-                            Container(
-                                margin: EdgeInsets.only(top: 25.w),
-                                child: Container(
-                                  margin:
-                                      EdgeInsets.only(left: 16.w, right: 16.w),
-                                  height: 79.w,
-                                  padding:
-                                      EdgeInsets.only(left: 17.w, right: 12.w),
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          alignment: Alignment.centerLeft,
-                                          scale: 0.5,
-                                          image: const AssetImage(
-                                              Assets.playerUiIconTrade),
-                                          colorFilter: ColorFilter.mode(
-                                              AppColors.cFF7954.withOpacity(.1),
-                                              BlendMode.srcIn)),
-                                      color: AppColors.cF2F2F2,
-                                      borderRadius:
-                                          BorderRadius.circular(16.w)),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            "Game Quality",
-                                            style:
-                                                14.w4(color: AppColors.c666666),
-                                          ),
-                                          Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                Utils.formatGrade(
-                                                    baseInfo.grade),
-                                                style: 40.w7(
-                                                    color: AppColors.c262626,
-                                                    height: 1),
-                                              ),
-                                              11.hGap,
-                                              Stack(
-                                                alignment: Alignment.center,
-                                                children: [
-                                                  IconWidget(
-                                                    iconWidth: 37.w,
-                                                    icon: Assets
-                                                        .playerUiIconStar01,
-                                                    iconColor:
-                                                        AppColors.cFF7954,
-                                                  ),
-                                                  Positioned(
-                                                      top: 10.w,
-                                                      child: Text(
-                                                        "1",
-                                                        style: 23.w7(
-                                                            color: AppColors
-                                                                .cF2F2F2,
-                                                            height: 1),
-                                                      ))
-                                                ],
-                                              )
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          SizedBox(
-                                            width: 121.w,
-                                            child: Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                IconWidget(
-                                                    iconWidth: 19.w,
-                                                    icon: Assets.teamUiMoney02),
-                                                3.hGap,
-                                                Text(
-                                                  Utils.formatMoney(tradePlayer
-                                                          .marketPrice
-                                                          ?.toDouble() ??
-                                                      0),
-                                                  style: 16.w7(
-                                                      color: (tradePlayer
-                                                                      .marketPrice
-                                                                      ?.toDouble() ??
-                                                                  0) ==
-                                                              0
-                                                          ? AppColors.cB3B3B3
-                                                          : AppColors.cE72646,
-                                                      height: 1),
-                                                ),
-                                                4.hGap,
-                                                Stack(
-                                                  alignment:
-                                                      Alignment.bottomLeft,
-                                                  children: [
-                                                    Positioned(
-                                                        top: 0,
-                                                        right: 0,
-                                                        child: IconWidget(
-                                                          iconWidth: 14.w,
-                                                          icon: Assets
-                                                              .iconUiIconDecreasingAmplitude,
-                                                          iconColor:
-                                                              percent == 0
-                                                                  ? AppColors
-                                                                      .cB3B3B3
-                                                                  : AppColors
-                                                                      .cE72646,
-                                                        )),
-                                                    Container(
-                                                        height: 16.w,
-                                                        width: 39.w,
-                                                        margin: EdgeInsets.only(
-                                                            top: 6.w,
-                                                            right: 3.w),
-                                                        decoration: BoxDecoration(
-                                                            color: percent == 0
-                                                                ? AppColors
-                                                                    .cB3B3B3
-                                                                : AppColors
-                                                                    .cE72646,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        5.w)),
-                                                        alignment:
-                                                            Alignment.center,
-                                                        child: FittedBox(
-                                                          child: Text(
-                                                            "${isGood ? "+" : percent == 0 ? "" : "-"}${percent.toStringAsFixed(0)}%",
-                                                            style: 12.w4(
-                                                                color: AppColors
-                                                                    .cFFFFFF,
-                                                                height: 1),
-                                                          ),
-                                                        )),
-                                                  ],
-                                                )
-                                              ],
+                            25.vGap,
+                            SizedBox(
+                              height: 28.w,
+                              child: MediaQuery.removePadding(
+                                context: context,
+                                removeTop: true,
+                                child: ListView.builder(
+                                    itemCount: controller.getTitles().length,
+                                    scrollDirection: Axis.horizontal,
+                                    itemBuilder: (context, index) {
+                                      var key = controller
+                                          .getTitles()
+                                          .toList()[index];
+                                      return Obx(() {
+                                        bool isSelected = controller
+                                                .currentRecentPickIndex.value ==
+                                            index;
+                                        return InkWell(
+                                          onTap: () => controller
+                                              .onRecentPickTabTap(index),
+                                          child: Container(
+                                            margin: EdgeInsets.only(
+                                                right: 4.w,
+                                                left: index == 0 ? 16.w : 0),
+                                            height: 28.w,
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 21.w),
+                                            alignment: Alignment.center,
+                                            decoration: BoxDecoration(
+                                                border: Border.all(
+                                                    color: AppColors.c666666,
+                                                    width: 1.w),
+                                                color: isSelected
+                                                    ? AppColors.c262626
+                                                    : AppColors.cFFFFFF,
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        14.w)),
+                                            child: Text(
+                                              key.replaceAll(",", "+"),
+                                              style: 13.w5(
+                                                  color: isSelected
+                                                      ? AppColors.cF2F2F2
+                                                      : AppColors.c262626,
+                                                  height: 1,
+                                                  fontFamily:
+                                                      FontFamily.fOswaldMedium),
                                             ),
                                           ),
-                                          12.vGap,
-                                          InkWell(
-                                            onTap: () {
-                                              if (tradePlayer.isBuy ?? false) {
-                                                return;
-                                              }
-                                              controller.buyPlayer();
-                                            },
-                                            child: Container(
-                                              height: 26.w,
-                                              width: 121.w,
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          13.w),
-                                                  border: Border.all(
-                                                      color: AppColors.c262626
-                                                          .withOpacity(0.4),
-                                                      width: 1)),
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                (tradePlayer.isBuy ?? false)
-                                                    ? "HAVE BOUGHT"
-                                                    : "BUY",
-                                                style: 13.w7(
-                                                    color: (tradePlayer.isBuy ??
-                                                            false)
-                                                        ? AppColors.cB3B3B3
-                                                        : AppColors.c262626,
-                                                    height: 1),
-                                              ),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                )),
+                                        );
+                                      });
+                                    }),
+                              ),
+                            ),
+                            16.vGap,
+                            _buildPick(),
                           ],
                         ),
-                      ],
-                    ),
-                  );
-                }),
+                      );
+                    }),
+
+                /// trade
+                // Container(
+                //   padding: EdgeInsets.only(top: 19.w),
+                //   decoration: BoxDecoration(
+                //       borderRadius: BorderRadius.circular(12.w),
+                //       color: AppColors.cFFFFFF),
+                //   child: Column(
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     children: [
+                //       Container(
+                //         margin: EdgeInsets.symmetric(horizontal: 16.w),
+                //         child: Text.rich(TextSpan(children: [
+                //           TextSpan(
+                //               text: "Trade",
+                //               style:
+                //                   16.w7(color: AppColors.c262626, height: 1)),
+                //           if (controller.getTradePlayer() != null &&
+                //               controller.getTradePlayer()?.isBuy == true)
+                //             TextSpan(
+                //                 text: " (You already have this player )",
+                //                 style:
+                //                     10.w4(color: AppColors.cB3B3B3, height: 1))
+                //         ])),
+                //       ),
+                //       13.vGap,
+                //       Container(
+                //         height: 185.w,
+                //         margin: EdgeInsets.symmetric(horizontal: 16.w),
+                //         padding: EdgeInsets.only(
+                //             top: 14.w, right: 21.w, bottom: 17.w, left: 13.w),
+                //         child: Column(
+                //           crossAxisAlignment: CrossAxisAlignment.start,
+                //           children: [
+                //             Text(
+                //               "Prize Change",
+                //               style: 14.w7(color: AppColors.c262626, height: 1),
+                //             ),
+                //             11.vGap,
+                //             Expanded(
+                //               child: LineChart(
+                //                 LineChartData(
+                //                   lineTouchData:
+                //                       const LineTouchData(enabled: false),
+                //                   titlesData: FlTitlesData(
+                //                       show: true,
+                //                       rightTitles: AxisTitles(
+                //                           sideTitles: SideTitles(
+                //                               reservedSize: 25.w,
+                //                               showTitles: true,
+                //                               getTitlesWidget: (value, _) {
+                //                                 return FittedBox(
+                //                                   fit: BoxFit.scaleDown,
+                //                                   child: Text(
+                //                                     Utils.formatMoney(value),
+                //                                     style: 9.w4(
+                //                                         color:
+                //                                             AppColors.cB3B3B3),
+                //                                   ),
+                //                                 );
+                //                               })),
+                //                       bottomTitles: const AxisTitles(),
+                //                       leftTitles: const AxisTitles(),
+                //                       topTitles: const AxisTitles()),
+                //                   borderData: FlBorderData(
+                //                     show: false,
+                //                   ),
+                //                   lineBarsData: [
+                //                     LineChartBarData(
+                //                         spots: controller.getTradeData(),
+                //                         color: AppColors.cFF7954,
+                //                         dotData: const FlDotData(show: false),
+                //                         barWidth: 2,
+                //                         belowBarData: BarAreaData(
+                //                             show: true,
+                //                             gradient: LinearGradient(colors: [
+                //                               AppColors.cFF7954
+                //                                   .withOpacity(0.3),
+                //                               AppColors.cFF7954.withOpacity(0.1)
+                //                             ])))
+                //                   ],
+                //                   gridData: FlGridData(
+                //                       show: true,
+                //                       drawVerticalLine: false,
+                //                       getDrawingHorizontalLine: (value) {
+                //                         return const FlLine(
+                //                             color: AppColors.cB3B3B3,
+                //                             dashArray: [2, 2],
+                //                             strokeWidth: 1);
+                //                       }),
+                //                 ),
+                //               ),
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                /// 交易行特价球员
+                // Builder(builder: (context) {
+                //   if (controller.getTradePlayer() == null) {
+                //     return const SizedBox.shrink();
+                //   }
+                //   var tradePlayer = controller.getTradePlayer()!;
+                //   bool isGood = (tradePlayer.basicMarketPrice ?? 0) <
+                //       (tradePlayer.marketPrice ?? 0);
+                //   double percent = ((tradePlayer.basicMarketPrice ?? 0) -
+                //               (tradePlayer.marketPrice ?? 0))
+                //           .abs() /
+                //       (tradePlayer.basicMarketPrice ?? 0) *
+                //       100;
+                //   if (percent.isNaN) {
+                //     percent = 0;
+                //   }
+                //   var baseInfo =
+                //       controller.nbaPlayerBaseInfoEntity!.playerBaseInfo;
+                //   bool isSpecial = tradePlayer.top ?? false;
+                //   var color = isGood ? AppColors.c10A86A : AppColors.cE72646;
+                //   return Container(
+                //     decoration: BoxDecoration(
+                //         borderRadius: BorderRadius.circular(12.w),
+                //         color: AppColors.cFFFFFF),
+                //     child: Column(
+                //       children: [
+                //         9.vGap,
+                //         Stack(
+                //           children: [
+                //             Container(
+                //               height: 79.w,
+                //               margin: EdgeInsets.symmetric(horizontal: 16.w),
+                //               decoration: BoxDecoration(
+                //                   borderRadius: BorderRadius.circular(16.w),
+                //                   gradient: const LinearGradient(colors: [
+                //                     AppColors.cB6553B,
+                //                     AppColors.c262626
+                //                   ])),
+                //               alignment: Alignment.topCenter,
+                //               child: Container(
+                //                 height: 25.w,
+                //                 margin:
+                //                     EdgeInsets.only(left: 12.w, right: 22.w),
+                //                 alignment: Alignment.center,
+                //                 child: Row(
+                //                   mainAxisAlignment:
+                //                       MainAxisAlignment.spaceBetween,
+                //                   children: [
+                //                     Text(
+                //                       "Discount in limited time",
+                //                       style: 14.w4(
+                //                           color: AppColors.cF2F2F2, height: 1),
+                //                     ),
+                //                     Row(
+                //                       children: [
+                //                         IconWidget(
+                //                             iconWidth: 13.w,
+                //                             icon: Assets.iconUiIconCountdown),
+                //                         3.hGap,
+                //                         Obx(() {
+                //                           return Text(
+                //                             controller.specialTime.value,
+                //                             style: 14.w4(
+                //                                 color: AppColors.cF2F2F2,
+                //                                 height: 1),
+                //                           );
+                //                         })
+                //                       ],
+                //                     )
+                //                   ],
+                //                 ),
+                //               ),
+                //             ),
+                //             Container(
+                //                 margin: EdgeInsets.only(top: 25.w),
+                //                 child: Container(
+                //                   margin:
+                //                       EdgeInsets.only(left: 16.w, right: 16.w),
+                //                   height: 79.w,
+                //                   padding:
+                //                       EdgeInsets.only(left: 17.w, right: 12.w),
+                //                   decoration: BoxDecoration(
+                //                       image: DecorationImage(
+                //                           alignment: Alignment.centerLeft,
+                //                           scale: 0.5,
+                //                           image: const AssetImage(
+                //                               Assets.playerUiIconTrade),
+                //                           colorFilter: ColorFilter.mode(
+                //                               AppColors.cFF7954.withOpacity(.1),
+                //                               BlendMode.srcIn)),
+                //                       color: AppColors.cF2F2F2,
+                //                       borderRadius:
+                //                           BorderRadius.circular(16.w)),
+                //                   child: Row(
+                //                     mainAxisAlignment:
+                //                         MainAxisAlignment.spaceBetween,
+                //                     children: [
+                //                       Column(
+                //                         mainAxisAlignment:
+                //                             MainAxisAlignment.center,
+                //                         children: [
+                //                           Text(
+                //                             "Game Quality",
+                //                             style:
+                //                                 14.w4(color: AppColors.c666666),
+                //                           ),
+                //                           Row(
+                //                             crossAxisAlignment:
+                //                                 CrossAxisAlignment.center,
+                //                             children: [
+                //                               Text(
+                //                                 Utils.formatGrade(
+                //                                     baseInfo.grade),
+                //                                 style: 40.w7(
+                //                                     color: AppColors.c262626,
+                //                                     height: 1),
+                //                               ),
+                //                               11.hGap,
+                //                               Stack(
+                //                                 alignment: Alignment.center,
+                //                                 children: [
+                //                                   IconWidget(
+                //                                     iconWidth: 37.w,
+                //                                     icon: Assets
+                //                                         .playerUiIconStar01,
+                //                                     iconColor:
+                //                                         AppColors.cFF7954,
+                //                                   ),
+                //                                   Positioned(
+                //                                       top: 10.w,
+                //                                       child: Text(
+                //                                         "1",
+                //                                         style: 23.w7(
+                //                                             color: AppColors
+                //                                                 .cF2F2F2,
+                //                                             height: 1),
+                //                                       ))
+                //                                 ],
+                //                               )
+                //                             ],
+                //                           )
+                //                         ],
+                //                       ),
+                //                       Column(
+                //                         mainAxisAlignment:
+                //                             MainAxisAlignment.center,
+                //                         crossAxisAlignment:
+                //                             CrossAxisAlignment.center,
+                //                         children: [
+                //                           SizedBox(
+                //                             width: 121.w,
+                //                             child: Row(
+                //                               crossAxisAlignment:
+                //                                   CrossAxisAlignment.end,
+                //                               mainAxisAlignment:
+                //                                   MainAxisAlignment
+                //                                       .spaceBetween,
+                //                               children: [
+                //                                 IconWidget(
+                //                                     iconWidth: 19.w,
+                //                                     icon: Assets.teamUiMoney02),
+                //                                 3.hGap,
+                //                                 Text(
+                //                                   Utils.formatMoney(tradePlayer
+                //                                           .marketPrice
+                //                                           ?.toDouble() ??
+                //                                       0),
+                //                                   style: 16.w7(
+                //                                       color: (tradePlayer
+                //                                                       .marketPrice
+                //                                                       ?.toDouble() ??
+                //                                                   0) ==
+                //                                               0
+                //                                           ? AppColors.cB3B3B3
+                //                                           : AppColors.cE72646,
+                //                                       height: 1),
+                //                                 ),
+                //                                 4.hGap,
+                //                                 Stack(
+                //                                   alignment:
+                //                                       Alignment.bottomLeft,
+                //                                   children: [
+                //                                     Positioned(
+                //                                         top: 0,
+                //                                         right: 0,
+                //                                         child: IconWidget(
+                //                                           iconWidth: 14.w,
+                //                                           icon: Assets
+                //                                               .iconUiIconDecreasingAmplitude,
+                //                                           iconColor:
+                //                                               percent == 0
+                //                                                   ? AppColors
+                //                                                       .cB3B3B3
+                //                                                   : AppColors
+                //                                                       .cE72646,
+                //                                         )),
+                //                                     Container(
+                //                                         height: 16.w,
+                //                                         width: 39.w,
+                //                                         margin: EdgeInsets.only(
+                //                                             top: 6.w,
+                //                                             right: 3.w),
+                //                                         decoration: BoxDecoration(
+                //                                             color: percent == 0
+                //                                                 ? AppColors
+                //                                                     .cB3B3B3
+                //                                                 : AppColors
+                //                                                     .cE72646,
+                //                                             borderRadius:
+                //                                                 BorderRadius
+                //                                                     .circular(
+                //                                                         5.w)),
+                //                                         alignment:
+                //                                             Alignment.center,
+                //                                         child: FittedBox(
+                //                                           child: Text(
+                //                                             "${isGood ? "+" : percent == 0 ? "" : "-"}${percent.toStringAsFixed(0)}%",
+                //                                             style: 12.w4(
+                //                                                 color: AppColors
+                //                                                     .cFFFFFF,
+                //                                                 height: 1),
+                //                                           ),
+                //                                         )),
+                //                                   ],
+                //                                 )
+                //                               ],
+                //                             ),
+                //                           ),
+                //                           12.vGap,
+                //                           InkWell(
+                //                             onTap: () {
+                //                               if (tradePlayer.isBuy ?? false) {
+                //                                 return;
+                //                               }
+                //                               controller.buyPlayer();
+                //                             },
+                //                             child: Container(
+                //                               height: 26.w,
+                //                               width: 121.w,
+                //                               decoration: BoxDecoration(
+                //                                   borderRadius:
+                //                                       BorderRadius.circular(
+                //                                           13.w),
+                //                                   border: Border.all(
+                //                                       color: AppColors.c262626
+                //                                           .withOpacity(0.4),
+                //                                       width: 1)),
+                //                               alignment: Alignment.center,
+                //                               child: Text(
+                //                                 (tradePlayer.isBuy ?? false)
+                //                                     ? "HAVE BOUGHT"
+                //                                     : "BUY",
+                //                                 style: 13.w7(
+                //                                     color: (tradePlayer.isBuy ??
+                //                                             false)
+                //                                         ? AppColors.cB3B3B3
+                //                                         : AppColors.c262626,
+                //                                     height: 1),
+                //                               ),
+                //                             ),
+                //                           )
+                //                         ],
+                //                       ),
+                //                     ],
+                //                   ),
+                //                 )),
+                //           ],
+                //         ),
+                //       ],
+                //     ),
+                //   );
+                // }),
                 _buildStats(),
-                _buildNews(),
+                // _buildNews(),
                 20.vGap
               ],
             ),
@@ -1059,202 +1058,12 @@ class _SummaryPageState extends State<SummaryPage>
       if (pickInfo == null) {
         return const SizedBox.shrink();
       }
-      return Column(
-        children: [
-          9.vGap,
-          Container(
-            height: 63.w,
-            margin: EdgeInsets.symmetric(horizontal: 16.w),
-            padding: EdgeInsets.symmetric(horizontal: 13.w),
-            decoration: BoxDecoration(
-                color: AppColors.cF2F2F2,
-                image: DecorationImage(
-                    image: const AssetImage(Assets.playerUiIconPick),
-                    alignment: Alignment.bottomLeft,
-                    scale: 0.5,
-                    colorFilter: ColorFilter.mode(
-                        AppColors.cFF7954.withOpacity(.1), BlendMode.srcIn)),
-                borderRadius: BorderRadius.circular(16.w)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "PICKS",
-                      style: 19.w7(color: AppColors.cFF7954, height: 1),
-                    ),
-                    5.vGap,
-                    Text(
-                        "${pickInfo.month} ${pickInfo.day} vs ${pickInfo.teamInfo.shortEname}",
-                        style: 9.w4(color: AppColors.c666666, height: 1))
-                  ],
-                ),
-                Row(
-                  children: [
-                    Container(
-                      height: 39.w,
-                      width: 62.w,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.w),
-                          border:
-                              Border.all(color: AppColors.cE6E6E6, width: 1)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "${pickInfo.value}",
-                            style: 18.w7(color: AppColors.c262626, height: 1),
-                          ),
-                          Text(
-                            pickInfo.key,
-                            style: 10.w7(color: AppColors.cB3B3B3),
-                          )
-                        ],
-                      ),
-                    ),
-                    9.hGap,
-                    Builder(builder: (_) {
-                      if (pickInfo.picks.guessData.isNotEmpty) {
-                        var choiceMore = pickInfo
-                                .playerV2.guessInfo.guessData[0].guessChoice ==
-                            1;
-                        return Container(
-                          height: 39.w,
-                          width: 110.w,
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: AppColors.cB3B3B3, width: 1),
-                              borderRadius: BorderRadius.circular(8.w)),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  IconWidget(
-                                    iconWidth: 11.w,
-                                    icon: Assets.iconUiIconUp,
-                                    iconColor: AppColors.cFF7954,
-                                    rotateAngle: choiceMore ? 0 : 180,
-                                  ),
-                                  5.hGap,
-                                  Text(
-                                    pickInfo.playerV2.guessInfo.guessData[0]
-                                                .guessChoice ==
-                                            1
-                                        ? "MORE"
-                                        : "LESS",
-                                    style: 12.w7(
-                                        color: AppColors.cFF7954, height: 1),
-                                  )
-                                ],
-                              ),
-                              Text(
-                                "Be settling",
-                                style: 10.w4(color: AppColors.cB3B3B3),
-                              )
-                            ],
-                          ),
-                        );
-                      }
-                      return Obx(() {
-                        return Container(
-                          height: 39.w,
-                          width: 110.w,
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: AppColors.cFF7954, width: 1),
-                              borderRadius: BorderRadius.circular(8.w)),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                  child: InkWell(
-                                onTap: () => controller.pickTap(0),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      color: controller.pickIndex.value == 0
-                                          ? AppColors.cFF7954
-                                          : AppColors.cF2F2F2,
-                                      borderRadius: BorderRadius.horizontal(
-                                          left: Radius.circular(8.w))),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      IconWidget(
-                                        iconWidth: 14.w,
-                                        icon: Assets.iconUiIconUp,
-                                        iconColor:
-                                            controller.pickIndex.value == 0
-                                                ? AppColors.cF2F2F2
-                                                : AppColors.cFF7954,
-                                      ),
-                                      Text(
-                                        "MORE",
-                                        style: 10.w7(
-                                            color:
-                                                controller.pickIndex.value == 0
-                                                    ? AppColors.cF2F2F2
-                                                    : AppColors.cFF7954),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              )),
-                              Container(
-                                width: 1,
-                                height: double.infinity,
-                                color: AppColors.cFF7954,
-                              ),
-                              Expanded(
-                                  child: InkWell(
-                                onTap: () => controller.pickTap(1),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      color: controller.pickIndex.value == 1
-                                          ? AppColors.cFF7954
-                                          : AppColors.cF2F2F2,
-                                      borderRadius: BorderRadius.horizontal(
-                                          right: Radius.circular(8.w))),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      IconWidget(
-                                        iconWidth: 14.w,
-                                        icon: Assets.iconUiIconUp,
-                                        iconColor:
-                                            controller.pickIndex.value == 1
-                                                ? AppColors.cF2F2F2
-                                                : AppColors.cFF7954,
-                                        rotateAngle: 180,
-                                      ),
-                                      Text(
-                                        "LESS",
-                                        style: 10.w7(
-                                            color:
-                                                controller.pickIndex.value == 1
-                                                    ? AppColors.cF2F2F2
-                                                    : AppColors.cFF7954),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ))
-                            ],
-                          ),
-                        );
-                      });
-                    })
-                  ],
-                )
-              ],
-            ),
-          ),
-        ],
+
+      return GuessItemV2(
+        playerV2: pickInfo.playerV2,
+        index: 0,
+        isInScoreDetail: true,
+        isInPlayerDetail: true,
       );
     });
   }
@@ -1263,76 +1072,106 @@ class _SummaryPageState extends State<SummaryPage>
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.w), color: AppColors.cFFFFFF),
-      padding: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 9.w),
       margin: EdgeInsets.only(top: 9.w),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         19.vGap,
-        Text(
-          "Stats",
-          style: 19.w7(color: AppColors.c262626, height: 1),
+        Container(
+          margin: EdgeInsets.only(
+            left: 16.w,
+          ),
+          child: Text(
+            "STATS",
+            style: 19.w7(color: AppColors.c262626, height: 1),
+          ),
         ),
         13.vGap,
-        Container(
-          height: 105.w,
+        Divider(color: AppColors.cD1D1D1, height: 1.w),
+        SizedBox(
           width: double.infinity,
-          decoration: BoxDecoration(
-              color: AppColors.cF2F2F2,
-              borderRadius: BorderRadius.circular(16.w)),
           child: Row(
             children: [
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 7.w),
-                child: Column(
-                  children: [
+              Column(
+                children: [
+                  SizedBox(
+                      height: 30.w,
+                      width: 77.w,
+                      child: Container(
+                        padding: EdgeInsets.only(left:16.w),
+                        decoration: BoxDecoration(
+                            border: Border(
+                              bottom:
+                              BorderSide(color: AppColors.cD1D1D1, width: 1.w),
+                              right:
+                              BorderSide(color: AppColors.cE6E6E6, width: 1.w),
+                            )),
+                        alignment: Alignment.center,
+                        child: Text("TYPE",
+                            style: 12.w4(
+                                color: AppColors.c000000,
+                                fontFamily: FontFamily.fRobotoMedium)),
+                      )),
+                  if (controller.nbaPlayerBaseInfoEntity != null &&
+                      controller.nbaPlayerBaseInfoEntity!.playerRegularMap
+                              ?.isNotEmpty() ==
+                          true)
+                    SizedBox(
+                        height: 30.w,
+                        width: 77.w,
+                        child: Container(
+                          margin: EdgeInsets.only(left:16.w),
+                          decoration: BoxDecoration(
+                              border: Border(
+                                bottom:
+                                BorderSide(color: AppColors.cE6E6E6, width: 1.w),
+                                right:
+                                BorderSide(color: AppColors.cE6E6E6, width: 1.w),
+                              )),
+                          alignment: Alignment.center,
+                          child: Text("REG",
+                              style: 12.w4(
+                                  color: AppColors.c000000,
+                                  fontFamily: FontFamily.fRobotoRegular)),
+                        )),
+                  if (controller.nbaPlayerBaseInfoEntity != null &&
+                      controller.nbaPlayerBaseInfoEntity!.playerPlayoffsMap
+                              ?.isNotEmpty() ==
+                          true)
                     Container(
                         height: 30.w,
                         width: 77.w,
+                        padding: EdgeInsets.only(left:16.w),
+                        decoration: BoxDecoration(
+                            border: Border(
+                          right: BorderSide(
+                              color: AppColors.cE6E6E6, width: 1.w),
+                        )),
                         alignment: Alignment.center,
-                        child: Text("TEAM",
-                            style: 10.w4(color: AppColors.cB3B3B3))),
-                    if (controller.nbaPlayerBaseInfoEntity != null &&
-                        controller.nbaPlayerBaseInfoEntity!.playerRegularMap
-                                ?.isNotEmpty() ==
-                            true)
-                      Container(
-                          height: 30.w,
-                          width: 77.w,
-                          alignment: Alignment.center,
-                          child: Text("REG",
-                              style: 12.w4(color: AppColors.c818181))),
-                    if (controller.nbaPlayerBaseInfoEntity != null &&
-                        controller.nbaPlayerBaseInfoEntity!.playerPlayoffsMap
-                                ?.isNotEmpty() ==
-                            true)
-                      Container(
-                          height: 30.w,
-                          width: 77.w,
-                          alignment: Alignment.center,
-                          child: Text("POS",
-                              style: 12.w4(color: AppColors.c818181)))
-                  ],
-                ),
+                        child: Text("POS",
+                            style: 12.w4(
+                                color: AppColors.c000000,
+                                fontFamily: FontFamily.fRobotoRegular))),
+                ],
               ),
               Expanded(
                 child: Stack(
                   children: [
-                    Obx(() {
-                      return Container(
-                        height: 105.w,
-                        width: 2.w,
-                        decoration: BoxDecoration(
-                            boxShadow: controller.statsIsScrolling.value
-                                ? [
-                                    BoxShadow(
-                                      color: AppColors.c262626.withOpacity(.1),
-                                      offset: const Offset(0, 2),
-                                      blurRadius: 1,
-                                      // spreadRadius: 1.0,
-                                    )
-                                  ]
-                                : []),
-                      );
-                    }),
+                    // Obx(() {
+                    //   return Container(
+                    //     height: 105.w,
+                    //     width: 2.w,
+                    //     decoration: BoxDecoration(
+                    //         boxShadow: controller.statsIsScrolling.value
+                    //             ? [
+                    //                 BoxShadow(
+                    //                   color: AppColors.c262626.withOpacity(.1),
+                    //                   offset: const Offset(0, 2),
+                    //                   blurRadius: 1,
+                    //                   // spreadRadius: 1.0,
+                    //                 )
+                    //               ]
+                    //             : []),
+                    //   );
+                    // }),
                     if (controller.nbaPlayerBaseInfoEntity != null &&
                         (controller.nbaPlayerBaseInfoEntity!.playerPlayoffsMap
                                     ?.isNotEmpty() ==
@@ -1345,6 +1184,11 @@ class _SummaryPageState extends State<SummaryPage>
                         var children = List.generate(3, (index) {
                           if (index == 0) {
                             return TableRow(
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        bottom: BorderSide(
+                                            color: AppColors.cD1D1D1,
+                                            width: 1.w))),
                                 children: List.generate(
                                     keys.length,
                                     (index) => Container(
@@ -1352,58 +1196,67 @@ class _SummaryPageState extends State<SummaryPage>
                                         alignment: Alignment.center,
                                         child: Text(
                                           keys[index],
-                                          style:
-                                              10.w4(color: AppColors.cB3B3B3),
+                                          style: 12.w4(
+                                              color: AppColors.c000000,
+                                              fontFamily:
+                                                  FontFamily.fRobotoMedium),
                                         ))));
                           } else if (index == 1) {
                             return TableRow(
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        bottom: BorderSide(
+                                            color: AppColors.cE6E6E6,
+                                            width: 1.w))),
                                 children: List.generate(keys.length, (index) {
-                              return Container(
-                                  height: 30.w,
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    (controller.nbaPlayerBaseInfoEntity!
-                                                .playerRegularMap!
-                                                .toJson()[keys[index]] ??
-                                            "/")
-                                        .toString(),
-                                    style: 12.w4(color: AppColors.c545454),
-                                  ));
-                            }));
+                                  return Container(
+                                      height: 30.w,
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        (controller.nbaPlayerBaseInfoEntity!
+                                                    .playerRegularMap!
+                                                    .toJson()[keys[index]] ??
+                                                "/")
+                                            .toString(),
+                                        style: 14.w4(
+                                            color: AppColors.c000000,
+                                            fontFamily:
+                                                FontFamily.fRobotoRegular),
+                                      ));
+                                }));
                           } else {
                             return TableRow(
                                 children: List.generate(keys.length, (index) {
-                              return Container(
-                                  height: 30.w,
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    (controller.nbaPlayerBaseInfoEntity!
-                                                .playerPlayoffsMap!
-                                                .toJson()[keys[index]] ??
-                                            "/")
-                                        .toString(),
-                                    style: 12.w4(color: AppColors.c545454),
-                                  ));
-                            }));
+                                  return Container(
+                                      height: 30.w,
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        (controller.nbaPlayerBaseInfoEntity!
+                                                    .playerPlayoffsMap!
+                                                    .toJson()[keys[index]] ??
+                                                "/")
+                                            .toString(),
+                                        style: 14.w4(
+                                            color: AppColors.c000000,
+                                            fontFamily:
+                                                FontFamily.fRobotoRegular),
+                                      ));
+                                }));
                           }
                         }).toList();
                         return SingleChildScrollView(
-                          physics: const BouncingScrollPhysics(),
+                          // physics: const BouncingScrollPhysics(),
                           controller: controller.statsScrollController,
                           scrollDirection: Axis.horizontal,
-                          child: Container(
-                            margin: EdgeInsets.symmetric(vertical: 7.w),
-                            padding: EdgeInsets.only(left: 10.w),
-                            child: Column(
-                              children: [
-                                Table(
-                                  columnWidths: List.generate((keys).length,
-                                          (index) => FixedColumnWidth(40.w))
-                                      .asMap(),
-                                  children: children,
-                                ),
-                              ],
-                            ),
+                          child: Column(
+                            children: [
+                              Table(
+                                columnWidths: List.generate((keys).length,
+                                        (index) => FixedColumnWidth(40.w))
+                                    .asMap(),
+                                children: children,
+                              ),
+                            ],
                           ),
                         );
                       }),
@@ -1412,6 +1265,35 @@ class _SummaryPageState extends State<SummaryPage>
               ),
               13.hGap
             ],
+          ),
+        ),
+        Divider(color: AppColors.cD1D1D1, height: 1.w),
+        SizedBox(
+          height: 50.w,
+          child: MtInkwell(
+            onTap: () {
+              print('see all ---- ');
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  "SEE ALL",
+                  style: 16.w7(
+                      color: AppColors.c262626,
+                      height: 1,
+                      fontFamily: FontFamily.fOswaldBold),
+                ),
+                6.hGap,
+                IconWidget(
+                  iconWidth: 5.w,
+                  icon: Assets.commonUiCommonIconSystemJumpto,
+                  iconColor: AppColors.c000000,
+                ),
+                19.hGap,
+              ],
+            ),
           ),
         )
       ]),
@@ -1433,9 +1315,7 @@ class _SummaryPageState extends State<SummaryPage>
         value = e.toJson()[ParamUtils.getProKey(key.toLowerCase())];
       }
       var dateTimeByMs = MyDateUtils.getDateTimeByMs(e.updateTime);
-      var month = MyDateUtils.getMonthEnName(dateTimeByMs, short: true);
       var enMMDDYYYY = MyDateUtils.getEnMMDDYYYY(dateTimeByMs, short: true);
-      var day = dateTimeByMs.day;
       p.add(Container(
         height: 42.w,
         margin: EdgeInsets.symmetric(horizontal: 35.w),

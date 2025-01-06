@@ -33,12 +33,16 @@ class GuessItemV2 extends StatefulWidget {
       required this.playerV2,
       required this.index,
       this.mainRoute = false,
-      this.isInScoreDetail = false});
+      this.isInScoreDetail = false,
+      this.isInPlayerDetail = false})
+      : assert(!isInPlayerDetail || (isInPlayerDetail && isInScoreDetail),
+            "if 'isInPlayerDetail' true,'isInScoreDetail' must be true");
 
   final PicksPlayerV2 playerV2;
   final int index;
   final bool mainRoute;
   final bool isInScoreDetail;
+  final bool isInPlayerDetail;
 
   @override
   State<GuessItemV2> createState() => _GuessItemV2State();
@@ -250,7 +254,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            "${morePercent.toStringAsFixed(0)}%",
+                            "${morePercent.format()}%",
                             style: 14.w5(
                                 color: AppColors.c000000,
                                 height: 1,
@@ -264,7 +268,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                           ),
                           3.hGap,
                           Text(
-                            "${(100 - morePercent).toStringAsFixed(0)}%",
+                            "${(100 - morePercent).format()}%",
                             style: 14.w5(
                                 color: AppColors.c000000,
                                 height: 1,
@@ -344,9 +348,144 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
       PicksIndexController picksIndexController,
       double morePercent,
       int count) {
+    Widget header;
+    if (widget.isInPlayerDetail) {
+      header = Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                "${player.guessInfo.guessReferenceValue[player.tabStr] ?? 0}",
+                style: 24.w5(
+                    color: AppColors.c262626,
+                    fontFamily: FontFamily.fOswaldMedium,
+                    height: 1),
+              ),
+              11.hGap,
+              Text(
+                Utils.getLongName(player.tabStr),
+                style: 19.w5(
+                  color: AppColors.c262626,
+                  fontFamily: FontFamily.fOswaldMedium,
+                  height: 1,
+                ),
+              ),
+            ],
+          ),
+          11.vGap,
+          MtInkwell(
+            onTap: () => Get.toNamed(
+                RouteNames.leagueLeagueDetail,
+                arguments: {
+                  "gameId": player.guessInfo.gameId
+                }),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "${Utils.getTeamInfo(player.baseInfoList.teamId).shortEname}@${player.awayTeamInfo?.shortEname ?? ""}",
+                  style: 12.w4(
+                    color: AppColors.c000000,
+                    height: 1,
+                    fontFamily: FontFamily.fRobotoRegular,
+                  ),
+                ),
+                13.hGap,
+                Row(
+                  children: [
+                    Text(
+                      controller.gameStartTimeStr.value,
+                      style: TextStyle(
+                          color: AppColors.c000000,
+                          height: 1,
+                          fontFamily: FontFamily.fRobotoRegular,
+                          fontSize: 12.sp,
+                          decoration: TextDecoration.underline),
+                    ),
+                    7.hGap,
+                    IconWidget(
+                      iconWidth: 5.w,
+                      icon: Assets.playerUiIconArrows01,
+                      iconColor: AppColors.c000000,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      );
+    } else {
+      header = InkWell(
+        onTap: () => Get.toNamed(RouteNames.picksPlayerDetail,
+            arguments: PlayerDetailPageArguments(player.guessInfo.playerId,
+                tabStr: player.tabStr)),
+        child: Row(
+          children: [
+            53.hGap,
+            PlayerAvatarWidget(
+              width: 53.w,
+              height: 46.w,
+              radius: 0.w,
+              playerId: player.guessInfo.playerId,
+              backgroundColor: AppColors.cFFFFFF,
+              tabStr: player.tabStr,
+            ),
+            14.hGap,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    player.baseInfoList.ename,
+                    style: 14.w4(
+                        color: AppColors.c000000,
+                        fontFamily: FontFamily.fOswaldRegular,
+                        height: 1),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  2.vGap,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        "${player.guessInfo.guessReferenceValue[player.tabStr] ?? 0}",
+                        style: 24.w5(
+                            color: AppColors.c262626,
+                            fontFamily: FontFamily.fOswaldMedium,
+                            height: 1),
+                      ),
+                      11.hGap,
+                      Expanded(
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            Utils.getLongName(player.tabStr),
+                            style: 19.w5(
+                              color: AppColors.c262626,
+                              fontFamily: FontFamily.fOswaldMedium,
+                              height: 1,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      );
+    }
     return Container(
       height: 150.w,
-      margin: EdgeInsets.only(left: 15.w,right: 15.w,bottom: 9.w),
+      margin: EdgeInsets.only(left: 15.w, right: 15.w, bottom: 9.w),
       decoration: BoxDecoration(
         color: AppColors.cFFFFFF,
         border: Border.all(
@@ -358,72 +497,10 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          InkWell(
-            onTap: () => Get.toNamed(RouteNames.picksPlayerDetail,
-                arguments: PlayerDetailPageArguments(player.guessInfo.playerId,
-                    tabStr: player.tabStr)),
-            child: Row(
-              children: [
-                53.hGap,
-                PlayerAvatarWidget(
-                  width: 53.w,
-                  height: 46.w,
-                  radius: 0.w,
-                  playerId: player.guessInfo.playerId,
-                  backgroundColor: AppColors.cFFFFFF,
-                  tabStr: player.tabStr,
-                ),
-                14.hGap,
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        player.baseInfoList.ename,
-                        style: 14.w4(
-                            color: AppColors.c000000,
-                            fontFamily: FontFamily.fOswaldRegular,
-                            height: 1),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      2.vGap,
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            "${player.guessInfo.guessReferenceValue[player.tabStr] ?? 0}",
-                            style: 24.w5(
-                                color: AppColors.c262626,
-                                fontFamily: FontFamily.fOswaldMedium,
-                                height: 1),
-                          ),
-                          11.hGap,
-                          Expanded(
-                            child: FittedBox(
-                              fit: BoxFit.scaleDown,
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                Utils.getLongName(player.tabStr),
-                                style: 19.w5(
-                                  color: AppColors.c262626,
-                                  fontFamily: FontFamily.fOswaldMedium,
-                                  height: 1,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
+          header,
           18.vGap,
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 13.w),
+              margin: EdgeInsets.symmetric(horizontal: 13.w),
               child: _buildBtn(picksIndexController, player, controller)),
           13.vGap,
           Container(
@@ -432,7 +509,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  "$morePercent%",
+                  "${morePercent.format()}%",
                   style: 12.w5(
                       color: AppColors.c000000,
                       height: 1,
@@ -446,7 +523,7 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                         rightPercent: 100 - morePercent.toInt())),
                 10.hGap,
                 Text(
-                  "${100 - morePercent}%",
+                  "${(100 - morePercent).format()}%",
                   style: 12.w5(
                       color: AppColors.c000000,
                       height: 1,

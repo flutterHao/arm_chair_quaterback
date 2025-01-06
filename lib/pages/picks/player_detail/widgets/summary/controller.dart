@@ -42,6 +42,8 @@ class SummaryController extends GetxController {
 
   var currentIndex = 0.obs;
 
+  var currentRecentPickIndex = 0.obs;
+
   var loadStatus = LoadDataStatus.loading.obs;
 
   late PicksIndexController picksIndexController;
@@ -75,6 +77,11 @@ class SummaryController extends GetxController {
   onTabTap(int index) {
     currentIndex.value = index;
     update([idTabContent]);
+  }
+
+  onRecentPickTabTap(int index) {
+    currentRecentPickIndex.value = index;
+    update([idRecentPickTabContent]);
   }
 
   /// 在 widget 内存中分配后立即调用。
@@ -147,6 +154,9 @@ class SummaryController extends GetxController {
 
   static String get idTabContent => "id_tab_content";
 
+  static String get idRecentPickTabContent => "id_recent_pick_tab_content";
+
+
   int getSeasonDate() {
     return nbaPlayerBaseInfoEntity?.playerDataAvg.seasonId ?? 1971;
   }
@@ -199,6 +209,9 @@ class SummaryController extends GetxController {
   String getCurrentTabKey() =>
       (nbaPlayerBaseInfoEntity?.guessInfos.keys.toList()[currentIndex.value])!;
 
+  String getCurrentRecentPickTabKey() =>
+      (nbaPlayerBaseInfoEntity?.guessInfos.keys.toList()[currentRecentPickIndex.value])!;
+
   String getLast5AvgWithTab() {
     var key = getCurrentTabKey();
     return (nbaPlayerBaseInfoEntity?.l5DataAvg?.getValue(key) ?? 0)
@@ -209,13 +222,15 @@ class SummaryController extends GetxController {
     if (nbaPlayerBaseInfoEntity?.guessInfos.isEmpty == true) {
       return null;
     }
-    var key = getCurrentTabKey();
+    var key = getCurrentRecentPickTabKey();
 
     var guessInfos = nbaPlayerBaseInfoEntity?.guessInfos[key];
     var picks = guessInfos?.picks;
     if (picks == null) {
       return null;
     }
+    var picksPlayerV2 = PicksPlayerV2();
+    var currentTabKey = getCurrentRecentPickTabKey();
     var dateTimeByMs = MyDateUtils.getDateTimeByMs(picks.gameStartTime);
     var month = MyDateUtils.getMonthEnName(dateTimeByMs, short: true);
     var day = dateTimeByMs.day;
@@ -224,10 +239,20 @@ class SummaryController extends GetxController {
       key = "threePm";
     }
     var value = picks.guessReferenceValue[key] ?? 0;
-    var picksPlayerV2 = PicksPlayerV2();
-    picksPlayerV2.guessInfo = picks;
-    var currentTabKey = getCurrentTabKey();
-    picksPlayerV2.tabStr = currentTabKey.toLowerCase();
+
+    PicksIndexController picksIndexController =
+        Get.find<PicksIndexController>();
+    var choiceGuessPlayers = picksIndexController.getChoiceGuessPlayers();
+    var firstWhereOrNull = choiceGuessPlayers.firstWhereOrNull((e) =>
+        e.tabStr == currentTabKey && e.baseInfoList.playerId == picks.playerId);
+    if (firstWhereOrNull != null) {
+      picksPlayerV2 = firstWhereOrNull;
+    } else {
+      picksPlayerV2.baseInfoList = Utils.getPlayBaseInfo(picks.playerId);
+      picksPlayerV2.guessInfo = picks;
+      picksPlayerV2.awayTeamInfo = Utils.getTeamInfo(picks.awayTeamId);
+      picksPlayerV2.tabStr = currentTabKey;
+    }
     return _PickInfo(
         month, day, teamInfo, value, currentTabKey, picks, picksPlayerV2);
   }

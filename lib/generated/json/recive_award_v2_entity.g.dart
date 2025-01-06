@@ -226,6 +226,10 @@ ReciveAwardV2GuessInfoGuessData $ReciveAwardV2GuessInfoGuessDataFromJson(
   if (homeTeamId != null) {
     reciveAwardV2GuessInfoGuessData.homeTeamId = homeTeamId;
   }
+  final int? reviewsCount = jsonConvert.convert<int>(json['reviewsCount']);
+  if (reviewsCount != null) {
+    reciveAwardV2GuessInfoGuessData.reviewsCount = reviewsCount;
+  }
   return reciveAwardV2GuessInfoGuessData;
 }
 
@@ -248,6 +252,7 @@ Map<String, dynamic> $ReciveAwardV2GuessInfoGuessDataToJson(
   data['homeTeamScore'] = entity.homeTeamScore;
   data['awayTeamScore'] = entity.awayTeamScore;
   data['homeTeamId'] = entity.homeTeamId;
+  data['reviewsCount'] = entity.reviewsCount;
   return data;
 }
 
@@ -269,6 +274,7 @@ extension ReciveAwardV2GuessInfoGuessDataExtension on ReciveAwardV2GuessInfoGues
     int? homeTeamScore,
     int? awayTeamScore,
     int? homeTeamId,
+    int? reviewsCount,
   }) {
     return ReciveAwardV2GuessInfoGuessData()
       ..gameId = gameId ?? this.gameId
@@ -286,6 +292,7 @@ extension ReciveAwardV2GuessInfoGuessDataExtension on ReciveAwardV2GuessInfoGues
       ..type = type ?? this.type
       ..homeTeamScore = homeTeamScore ?? this.homeTeamScore
       ..awayTeamScore = awayTeamScore ?? this.awayTeamScore
-      ..homeTeamId = homeTeamId ?? this.homeTeamId;
+      ..homeTeamId = homeTeamId ?? this.homeTeamId
+      ..reviewsCount = reviewsCount ?? this.reviewsCount;
   }
 }

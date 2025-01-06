@@ -74,6 +74,8 @@ class ReciveAwardV2GuessInfoGuessData {
   late int homeTeamScore;
   late int awayTeamScore;
   late int homeTeamId;
+  /// 评论数
+  late int reviewsCount;
 
 
   ReciveAwardV2GuessInfoGuessData();
