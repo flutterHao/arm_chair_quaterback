@@ -134,12 +134,13 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               4.hGap,
-              PlayerAvatarWidget(
-                  canTap: false,
-                  backgroundColor: AppColors.cTransparent,
-                  radius: 0,
-                  playerId: controller.baseInfo?.playerId ?? 0,
-                  width: 134.w),
+              ImageWidget(
+                url: Utils.getPlayUrl(controller.baseInfo?.playerId),
+                width: 134.w,
+                height: 134.w,
+                loadingWidget: const SizedBox.shrink(),
+                errorWidget: const SizedBox.shrink(),
+              ),
               11.hGap,
               Expanded(
                 child: Column(
@@ -178,11 +179,14 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                     15.vGap,
                     Row(
                       children: [
-                        _buildPlayerInfoItem("AGE", "${controller.baseInfo?.age}"),
+                        _buildPlayerInfoItem(
+                            "AGE", "${controller.baseInfo?.age}"),
                         33.hGap,
+
                         ///todo
                         _buildPlayerInfoItem("RPG", '0.8'),
                         33.hGap,
+
                         ///todo
                         _buildPlayerInfoItem("APG", "0.6"),
                       ],
