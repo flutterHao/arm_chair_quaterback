@@ -20,6 +20,7 @@ import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/widgets/score_page_controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/user_avater_widget.dart';
+import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -72,11 +73,23 @@ class _ScorePageState extends State<ScorePage>
                     itemBuilder: (context, index) {
                       bool lastIndex = index == controller.scoreList.length - 1;
                       var item = controller.scoreList[index];
-                      return Container(
-                          margin: EdgeInsets.only(
-                              top: index == 0 ? 9.w : 0,
-                              bottom: lastIndex ? 94.w : 0),
-                          child: ScoreItemWidget(gameGuess: item));
+                      return Obx(() {
+                        var picksIndexController =
+                            Get.find<PicksIndexController>();
+                        var leagueController = Get.find<LeagueController>();
+                        var value = picksIndexController.choiceSize.value;
+                        value += leagueController.choiceSize.value;
+                        return AnimatedContainer(
+                            margin: EdgeInsets.only(
+                                top: index == 0 ? 9.w : 0,
+                                bottom: lastIndex
+                                    ? value > 0
+                                        ? 94.w
+                                        : 15.w
+                                    : 0),
+                            duration: const Duration(milliseconds: 300),
+                            child: ScoreItemWidget(gameGuess: item));
+                      });
                     },
                     separatorBuilder: (BuildContext context, int index) {
                       return 9.vGap;

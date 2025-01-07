@@ -249,13 +249,7 @@ class _LeagueIndexPageState extends State<LeagueIndexPage>
   @override
   Widget build(BuildContext context) {
     return GetBuilder<LeagueController>(builder: (_) {
-      return BlackAppWidget(
-        const UserInfoBar(
-          title: "COMMUNITIES",
-          routeId: GlobalNestedKey.LEAGUES,
-        ),
-        bodyWidget: _buildView(),
-      );
+      return _buildView();
     });
   }
 

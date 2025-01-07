@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:arm_chair_quaterback/common/entities/game_schedules_info.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
@@ -6,9 +8,9 @@ import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/league.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class GameGuess {
@@ -40,8 +42,13 @@ class LeagueController extends GetxController
 
   TabController? tabController;
 
+  bool isLoadSuccess = false;
+
   // 存储的没有数据的日期
   List<DateTime> noDataDayList = [];
+
+  AppLifecycleListener? _appLifecycleListener;
+  StreamSubscription? _subscription;
 
   List<DateTime> getDataTimes() {
     // 获取今天的日期
@@ -108,17 +115,38 @@ class LeagueController extends GetxController
   @override
   void onInit() {
     super.onInit();
-    initData();
+    getScoreDateTime();
+    _subscription = InternetConnection().onStatusChange.listen((status) {
+      if(status == InternetStatus.connected){
+        getScoreDateTime();
+      }
+    });
+    _appLifecycleListener = AppLifecycleListener(
+      onResume: (){
+        _subscription?.resume();
+        getScoreDateTime();
+      },
+          onPause: _subscription?.pause,
+      onHide: _subscription?.pause,
+    );
   }
 
-  initData() {
-    loadStatus.value = LoadDataStatus.loading;
+
+  getScoreDateTime() {
+    if(loadStatus.value == LoadDataStatus.loading){
+      return;
+    }
+    bool needShowLoading = !isLoadSuccess;
+    if (needShowLoading) {
+      loadStatus.value = LoadDataStatus.loading;
+    }
     Future.wait([
       CacheApi.getPickDefine(),
       LeagueApi.queryNBAGameSchedulesInfo(
           getDataTimes().first.millisecondsSinceEpoch,
           getDataTimes().last.millisecondsSinceEpoch)
     ]).then((result) {
+      isLoadSuccess = true;
       picksDefineEntity = result[0] as PicksDefineEntity;
       List<GameSchedulesInfo> list = result[1] as List<GameSchedulesInfo>;
 
@@ -128,19 +156,26 @@ class LeagueController extends GetxController
                   MyDateUtils.getDateTimeByMs(l.gameStartTime), e))
               .isEmpty)
           .toList();
-      var dateTime = DateTime.now();
-      var nowStartTime = DateTime(dateTime.year, dateTime.month, dateTime.day);
-      if (getDataTimes().contains(nowStartTime)) {
-        currentPageIndex.value = getDataTimes().indexOf(nowStartTime);
-      } else if (getDataTimes().length > 6) {
-        currentPageIndex.value = 6;
-      } else {
-        currentPageIndex.value = getDataTimes().length - 1;
+      if (needShowLoading) {
+        var dateTime = DateTime.now();
+        var nowStartTime =
+            DateTime(dateTime.year, dateTime.month, dateTime.day);
+        if (getDataTimes().contains(nowStartTime)) {
+          currentPageIndex.value = getDataTimes().indexOf(nowStartTime);
+        } else if (getDataTimes().length > 6) {
+          currentPageIndex.value = 6;
+        } else {
+          currentPageIndex.value = getDataTimes().length - 1;
+        }
       }
       if (getDataTimes().isEmpty) {
-        loadStatus.value = LoadDataStatus.noData;
+        if (needShowLoading) {
+          loadStatus.value = LoadDataStatus.noData;
+        }
       } else {
-        loadStatus.value = LoadDataStatus.success;
+        if (needShowLoading) {
+          loadStatus.value = LoadDataStatus.success;
+        }
         tabController ??= TabController(
             initialIndex: currentPageIndex.value,
             length: getDataTimes()
@@ -152,9 +187,16 @@ class LeagueController extends GetxController
             onPageChanged(tabController!.index);
           });
       }
+
+      if (!needShowLoading) {
+        update();
+      }
       refreshController.refreshCompleted();
     }, onError: (e) {
       ErrorUtils.toast(e);
+      if(isLoadSuccess){
+        return;
+      }
       loadStatus.value = LoadDataStatus.error;
       refreshController.refreshCompleted();
     });
@@ -163,6 +205,8 @@ class LeagueController extends GetxController
   @override
   void dispose() {
     pageController.dispose();
+    _subscription?.cancel();
+    _appLifecycleListener?.dispose();
     super.dispose();
   }
 

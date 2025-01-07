@@ -49,6 +49,7 @@ class ScorePageController extends GetxController {
       refreshController.refreshCompleted();
       return;
     }
+    leagueController.getScoreDateTime();
     //下拉刷新，把之前选中的项恢复为选中状态
     getDataFromNet(List.from(scoreList));
   }

@@ -25,10 +25,9 @@ class InboxPage extends GetView<InboxController> {
       init: InboxController(),
       id: "inbox",
       builder: (_) {
-        return const BlackAppWidget(
-          backgroundColor: AppColors.cFFFFFF,
-          UserInfoBar(),
-          bodyWidget: InboxList(),
+        return Container(
+          color: AppColors.cFFFFFF,
+          child: const InboxList(),
         );
       },
     );
