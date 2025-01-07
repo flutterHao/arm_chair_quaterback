@@ -2,13 +2,18 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-31 14:30:33
- * @LastEditTime: 2025-01-06 21:01:10
+ * @LastEditTime: 2025-01-07 18:21:14
  */
+import 'package:arm_chair_quaterback/common/entities/palyer_stats_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_detail_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entity/team.dart';
+import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
+import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -23,21 +28,6 @@ class TeamDetailController extends GetxController
   // int typeIndex = 0;
 
   List<String> positionList = ["CENTER", "GUARD", "FORWARD"];
-
-  Map<String, Map<String, dynamic>> statsRankMap = {
-    "POINTS": {
-      "current": 1,
-      "list": ["GP_MIN", "PPG_PTS", "FG%_FGM", "3P%_3PM", "FT_FTM"]
-    },
-    "REBOUNDS": {
-      "current": 1,
-      "list": ["GP_MIN", "RPG_REB", "DREB_OREB"]
-    },
-    "ASSISTS": {
-      "current": 1,
-      "list": ["GP_MIN", "APG_AST", "TPG_TO", "FPG_FOUL"]
-    },
-  };
 
   final List<String> yearList = List.generate(
       MyDateUtils.getNowDateTime().year - 2016,
@@ -57,6 +47,9 @@ class TeamDetailController extends GetxController
 
   TeamDetailEntity teamDetailEntity = TeamDetailEntity();
   late TabController teamTabCtrl;
+  List<StatsEntity> statTeamList = [];
+  List<StatsEntity> statPlayerList = [];
+  List<TeamRankEntity> confRankList = [];
 
   void onTap() {}
 
@@ -75,6 +68,7 @@ class TeamDetailController extends GetxController
 
   _initData() {
     getTeamInfo();
+    getStatsInfo();
   }
 
   String getSeasonAvgWithTab() {
@@ -89,6 +83,56 @@ class TeamDetailController extends GetxController
     await TeamApi.getNBATeamDetail(teamId).then((v) {
       teamDetailEntity = v;
       update(["overview_tab"]);
+    });
+  }
+
+  //   Future getStartRank() async {
+  //   await Future.wait([
+  //     NewsApi.startRank(
+  //         season: season.value,
+  //         statType: pointType.value,
+  //         seasonType: seasonType),
+  //     NewsApi.statTeamList(seasonId: season.value),
+  //     NewsApi.getTeamListNew(1),
+  //     NewsApi.getTeamListNew(2),
+  //     CacheApi.getNBATeamDefine()
+  //   ]).then((v) {
+  //     statPlayerList = v[0] as List<StatsEntity>;
+  //     statTeamRankList = v[1] as List<StatsEntity>;
+  //     confRankList = v[2] as List<TeamRankEntity>;
+  //     divRankList = v[3] as List<TeamRankEntity>;
+
+  //     for (var element in confRankList) {
+  //       element.force = CacheApi.teamDefineMap?[element.teamID]?.force ?? 0;
+  //     }
+  //     for (var element in divRankList) {
+  //       int div = CacheApi.teamDefineMap?[element.teamID]?.teamDivision ?? 0;
+  //       element.teamDivision = div;
+  //     }
+  //     // onTypeChange();
+
+  //     update(["teamRank", "starsRank"]);
+  //   }).catchError((e) {
+  //     Log.e(e.toString());
+  //   });
+  // }
+
+  void getStatsInfo() async {
+    await Future.wait([
+      NewsApi.startRank(),
+      NewsApi.statTeamList(),
+      NewsApi.getTeamListNew(1),
+      CacheApi.getNBATeamDefine()
+    ]).then((v) {
+      statPlayerList = (v[0] as List<StatsEntity>)
+          .where((e) => Utils.getPlayBaseInfo(e.playerId).teamId == teamId)
+          .toList();
+      statTeamList = v[1] as List<StatsEntity>;
+      confRankList = v[2];
+      for (var element in confRankList) {
+        element.force = CacheApi.teamDefineMap?[element.teamID]?.force ?? 0;
+      }
+      update(["stats"]);
     });
   }
 
@@ -126,12 +170,8 @@ class TeamDetailController extends GetxController
     return 0;
   }
 
-  String formatDate12Hours(int time) {
-    return "${MyDateUtils.formatDate(MyDateUtils.getDateTimeByMs(time), format: DateFormats.PARAM_Y_M_D)}  ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(time))}";
-  }
-
-  Map<String, TeamDetailRegularSeasonData> getSeasonRanks() {
-    Map<String, TeamDetailRegularSeasonData> map = {};
+  Map<String, TeamDetailSeasonData> getSeasonRanks() {
+    Map<String, TeamDetailSeasonData> map = {};
     if (teamDetailEntity.preSeasonData != null) {
       map.addAll({"PRE": teamDetailEntity.preSeasonData!});
     }
@@ -141,5 +181,27 @@ class TeamDetailController extends GetxController
       map.addAll({"PLAYOFF": teamDetailEntity.playoffsData!});
     }
     return map;
+  }
+
+  List<StatsEntity> getPlayerList(String type) {
+    switch (type) {
+      case "CENTER":
+        return statPlayerList
+            .where(
+                (e) => Utils.getPlayBaseInfo(e.playerId).position.contains("C"))
+            .toList();
+      case "GUARD":
+        return statPlayerList
+            .where(
+                (e) => Utils.getPlayBaseInfo(e.playerId).position.contains("G"))
+            .toList();
+      case "FORWARD":
+        return statPlayerList
+            .where(
+                (e) => Utils.getPlayBaseInfo(e.playerId).position.contains("F"))
+            .toList();
+      default:
+        return statPlayerList;
+    }
   }
 }

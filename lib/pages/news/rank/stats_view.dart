@@ -1,6 +1,7 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/palyer_stats_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/stats_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
@@ -177,23 +178,28 @@ class StatsTeamRankCard extends GetView<RankController> {
     var list = controller.getStatRankList(rankType, true);
     StatsEntity first = list.first;
     return RankCard(
-        title: type.key,
-        rankType: rankType,
-        imageUrl: Utils.getTeamUrl(first.teamId),
-        name: first.teamName,
-        rankValue: controller.getRankValue(rankType, first),
-        onTap: () {
-          showModalBottomSheet(
-              context: Get.context!,
-              backgroundColor: Colors.transparent,
-              builder: (context) {
-                return TeamStatsDialog(
-                  list,
-                  type.key,
-                  rankType,
-                  types[1],
-                );
-              });
-        });
+      title: type.key,
+      rankType: rankType,
+      imageUrl: Utils.getTeamUrl(first.teamId),
+      name: first.teamName,
+      rankValue: controller.getRankValue(rankType, first),
+      onTap: () {
+        showModalBottomSheet(
+            context: Get.context!,
+            backgroundColor: Colors.transparent,
+            builder: (context) {
+              return TeamStatsDialog(
+                list,
+                type.key,
+                rankType,
+                types[1],
+              );
+            });
+      },
+      onHeadOnTap: () {
+        Get.toNamed(RouteNames.teamDetailPage,
+            preventDuplicates: false, arguments: first.teamId);
+      },
+    );
   }
 }

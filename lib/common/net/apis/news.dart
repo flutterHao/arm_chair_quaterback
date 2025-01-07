@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 17:28:14
- * @LastEditTime: 2025-01-02 19:45:02
+ * @LastEditTime: 2025-01-07 14:55:25
  */
 import 'package:arm_chair_quaterback/common/entities/nab_player_season_game_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_banner.dart';
@@ -74,7 +74,7 @@ class NewsApi {
   }
 
   static Future<List<StatsEntity>> statTeamList(
-      {required String seasonId,
+      {String seasonId = "2024-25",
       String seasonType = "Regular%20Season"}) async {
     List list = await HttpUtil().post(Api.statTeamRank,
         data: {"seasonId": seasonId, "seasonType": seasonType});
@@ -82,7 +82,7 @@ class NewsApi {
   }
 
   static Future<List<TeamRankEntity>> getTeamList(
-      {required String seasonId,
+      {String seasonId = "2024-25",
       String seasonType = "Regular%20Season"}) async {
     List list = await HttpUtil().post(Api.teamRank,
         data: {"seasonId": seasonId, "seasonType": seasonType});
@@ -96,8 +96,8 @@ class NewsApi {
   }
 
   static Future<List<StatsEntity>> startRank(
-      {required String season,
-      required String statType,
+      {String season = "2024-25",
+      String statType = "PTS",
       String seasonType = "Regular%20Season"}) async {
     List list = await HttpUtil().post(Api.playerStats, data: {
       "season": season,

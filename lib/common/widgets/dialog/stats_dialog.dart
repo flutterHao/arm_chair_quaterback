@@ -2,7 +2,7 @@
  * @Description: 球队、球员排行底部弹窗
  * @Author: lihonghao
  * @Date: 2024-12-27 14:44:25
- * @LastEditTime: 2025-01-03 16:19:00
+ * @LastEditTime: 2025-01-07 15:58:15
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/palyer_stats_entity.dart';
@@ -409,6 +409,7 @@ class TeamStatsDialog extends StatelessWidget {
                               InkWell(
                                 onTap: () {
                                   Get.toNamed(RouteNames.teamDetailPage,
+                                      preventDuplicates: false,
                                       arguments: item.teamId);
                                 },
                                 child: Container(

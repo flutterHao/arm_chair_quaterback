@@ -5,14 +5,17 @@
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class RankCard extends StatelessWidget {
   const RankCard({
@@ -24,6 +27,7 @@ class RankCard extends StatelessWidget {
     required this.rankType,
     required this.rankValue,
     required this.onTap,
+    this.onHeadOnTap,
   });
   final String title;
   final String imageUrl;
@@ -32,6 +36,7 @@ class RankCard extends StatelessWidget {
   final String rankType;
   final String rankValue;
   final Function onTap;
+  final Function? onHeadOnTap; //点击头像
 
   @override
   Widget build(BuildContext context) {
@@ -58,17 +63,24 @@ class RankCard extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      width: 55.w,
-                      height: 74.w,
-                      decoration: BoxDecoration(
-                        color: AppColors.cF2F2F2,
-                        borderRadius: BorderRadius.circular(6.w),
-                      ),
-                      child: ImageWidget(
-                        url: imageUrl,
-                        borderRadius: BorderRadius.circular(6.w),
+                    InkWell(
+                      onTap: () {
+                        if (onHeadOnTap != null) {
+                          onHeadOnTap!();
+                        }
+                      },
+                      child: Container(
                         width: 55.w,
+                        height: 74.w,
+                        decoration: BoxDecoration(
+                          color: AppColors.cF2F2F2,
+                          borderRadius: BorderRadius.circular(6.w),
+                        ),
+                        child: ImageWidget(
+                          url: imageUrl,
+                          borderRadius: BorderRadius.circular(6.w),
+                          width: 55.w,
+                        ),
                       ),
                     ),
                     15.5.hGap,

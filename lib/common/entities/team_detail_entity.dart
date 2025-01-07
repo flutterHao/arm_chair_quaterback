@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/entities/last5_avg_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -10,17 +11,16 @@ export 'package:arm_chair_quaterback/generated/json/team_detail_entity.g.dart';
 class TeamDetailEntity {
   late List<TeamDetailGameSchedules> gameSchedules = [];
   @JSONField(name: "RegularSeasonData")
-  late TeamDetailRegularSeasonData regularSeasonData =
-      TeamDetailRegularSeasonData();
+  late TeamDetailSeasonData regularSeasonData = TeamDetailSeasonData();
   late ScoresEntity recentPick = ScoresEntity();
   late TeamDetailLast5GameSchedule last5GameSchedule =
       TeamDetailLast5GameSchedule();
   late TeamDetailLast5GameSchedule guessL5GameList =
       TeamDetailLast5GameSchedule();
   @JSONField(name: "PreSeasonData")
-  TeamDetailRegularSeasonData? preSeasonData;
+  TeamDetailSeasonData? preSeasonData;
   @JSONField(name: "PlayoffsData")
-  TeamDetailRegularSeasonData? playoffsData;
+  TeamDetailSeasonData? playoffsData;
   late TeamDetailTotalL5Data totalL5Data = TeamDetailTotalL5Data();
   late List<TeamDetailOutcome> outcome = [];
 
@@ -65,7 +65,7 @@ class TeamDetailGameSchedules {
 }
 
 @JsonSerializable()
-class TeamDetailRegularSeasonData {
+class TeamDetailSeasonData {
   @JSONField(name: "PFD_RANK")
   late int pfdRank = 0;
   @JSONField(name: "FG3_PCT")
@@ -175,14 +175,14 @@ class TeamDetailRegularSeasonData {
   @JSONField(name: "STL_RANK")
   late int stlRank = 0;
 
-  TeamDetailRegularSeasonData();
+  TeamDetailSeasonData();
 
-  factory TeamDetailRegularSeasonData.fromJson(Map<String, dynamic> json) =>
-      $TeamDetailRegularSeasonDataFromJson(json);
+  factory TeamDetailSeasonData.fromJson(Map<String, dynamic> json) =>
+      $TeamDetailSeasonDataFromJson(json);
 
-  Map<String, dynamic> toJson() => $TeamDetailRegularSeasonDataToJson(this);
+  Map<String, dynamic> toJson() => $TeamDetailSeasonDataToJson(this);
 
-  double getRankValue(String type, TeamDetailRegularSeasonData item) {
+  double getRankValue(String type, TeamDetailSeasonData item) {
     double value = 0;
     switch (type) {
       case "PPG": //场均PTS
@@ -237,7 +237,7 @@ class TeamDetailRegularSeasonData {
     return (value * 10).roundToDouble() / 10;
   }
 
-  String getRank(String type, TeamDetailRegularSeasonData item) {
+  String getRank(String type, TeamDetailSeasonData item) {
     int value = 0;
     switch (type) {
       case "PPG": //场均PTS
@@ -308,7 +308,7 @@ class TeamDetailRecentPick {
 @JsonSerializable()
 class TeamDetailLast5GameSchedule {
   late List<TeamDetailGameSchedules> schedule = [];
-  late List<NbaPlayerBaseInfoL5DataAvg> scoreAvg = [];
+  late List<Last5AvgEntity> scoreAvg = [];
 
   TeamDetailLast5GameSchedule();
 
@@ -383,93 +383,6 @@ class TeamDetailLast5GameScheduleScoreAvg {
 
   Map<String, dynamic> toJson() =>
       $TeamDetailLast5GameScheduleScoreAvgToJson(this);
-
-  @override
-  String toString() {
-    return jsonEncode(this);
-  }
-}
-
-@JsonSerializable()
-class TeamDetailGuessL5GameList {
-  late List<TeamDetailGuessL5GameListSchedule> schedule = [];
-  late List<TeamDetailGuessL5GameListTotalScore> totalScore = [];
-
-  TeamDetailGuessL5GameList();
-
-  factory TeamDetailGuessL5GameList.fromJson(Map<String, dynamic> json) =>
-      $TeamDetailGuessL5GameListFromJson(json);
-
-  Map<String, dynamic> toJson() => $TeamDetailGuessL5GameListToJson(this);
-
-  @override
-  String toString() {
-    return jsonEncode(this);
-  }
-}
-
-@JsonSerializable()
-class TeamDetailGuessL5GameListSchedule {
-  late int gameId = 0;
-  late int gameType = 0;
-  late int gameTime = 0;
-  late int createTime = 0;
-  late int gameStartTime = 0;
-  late int homeTeamScore = 0;
-  late int seasonId = 0;
-  late int awayTeamScore = 0;
-  late int homeTeamId = 0;
-  late int awayTeamId = 0;
-  late int status = 0;
-
-  TeamDetailGuessL5GameListSchedule();
-
-  factory TeamDetailGuessL5GameListSchedule.fromJson(
-          Map<String, dynamic> json) =>
-      $TeamDetailGuessL5GameListScheduleFromJson(json);
-
-  Map<String, dynamic> toJson() =>
-      $TeamDetailGuessL5GameListScheduleToJson(this);
-
-  @override
-  String toString() {
-    return jsonEncode(this);
-  }
-}
-
-@JsonSerializable()
-class TeamDetailGuessL5GameListTotalScore {
-  late int blk = 0;
-  late int gameId = 0;
-  late int fga = 0;
-  late int ast = 0;
-  late int dreb = 0;
-  late int espnId = 0;
-  late int stl = 0;
-  late int fgm = 0;
-  late int pts = 0;
-  late int reb = 0;
-  late int threePa = 0;
-  late int fta = 0;
-  late int min = 0;
-  late int oreb = 0;
-  late int pf = 0;
-  late int teamId = 0;
-  late bool isStarter = false;
-  late int threePm = 0;
-  late int to = 0;
-  late int awayTeamId = 0;
-  late int ftm = 0;
-  late int playerId = 0;
-
-  TeamDetailGuessL5GameListTotalScore();
-
-  factory TeamDetailGuessL5GameListTotalScore.fromJson(
-          Map<String, dynamic> json) =>
-      $TeamDetailGuessL5GameListTotalScoreFromJson(json);
-
-  Map<String, dynamic> toJson() =>
-      $TeamDetailGuessL5GameListTotalScoreToJson(this);
 
   @override
   String toString() {

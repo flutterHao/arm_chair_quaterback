@@ -1,5 +1,7 @@
 import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.dart';
 import 'package:arm_chair_quaterback/common/entities/team_detail_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/last5_avg_entity.dart';
+
 import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity.dart';
 
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
@@ -18,8 +20,8 @@ TeamDetailEntity $TeamDetailEntityFromJson(Map<String, dynamic> json) {
   if (gameSchedules != null) {
     teamDetailEntity.gameSchedules = gameSchedules;
   }
-  final TeamDetailRegularSeasonData? regularSeasonData = jsonConvert.convert<
-      TeamDetailRegularSeasonData>(json['RegularSeasonData']);
+  final TeamDetailSeasonData? regularSeasonData = jsonConvert.convert<
+      TeamDetailSeasonData>(json['RegularSeasonData']);
   if (regularSeasonData != null) {
     teamDetailEntity.regularSeasonData = regularSeasonData;
   }
@@ -38,13 +40,13 @@ TeamDetailEntity $TeamDetailEntityFromJson(Map<String, dynamic> json) {
   if (guessL5GameList != null) {
     teamDetailEntity.guessL5GameList = guessL5GameList;
   }
-  final TeamDetailRegularSeasonData? preSeasonData = jsonConvert.convert<
-      TeamDetailRegularSeasonData>(json['PreSeasonData']);
+  final TeamDetailSeasonData? preSeasonData = jsonConvert.convert<
+      TeamDetailSeasonData>(json['PreSeasonData']);
   if (preSeasonData != null) {
     teamDetailEntity.preSeasonData = preSeasonData;
   }
-  final TeamDetailRegularSeasonData? playoffsData = jsonConvert.convert<
-      TeamDetailRegularSeasonData>(json['PlayoffsData']);
+  final TeamDetailSeasonData? playoffsData = jsonConvert.convert<
+      TeamDetailSeasonData>(json['PlayoffsData']);
   if (playoffsData != null) {
     teamDetailEntity.playoffsData = playoffsData;
   }
@@ -80,12 +82,12 @@ Map<String, dynamic> $TeamDetailEntityToJson(TeamDetailEntity entity) {
 extension TeamDetailEntityExtension on TeamDetailEntity {
   TeamDetailEntity copyWith({
     List<TeamDetailGameSchedules>? gameSchedules,
-    TeamDetailRegularSeasonData? regularSeasonData,
+    TeamDetailSeasonData? regularSeasonData,
     ScoresEntity? recentPick,
     TeamDetailLast5GameSchedule? last5GameSchedule,
     TeamDetailLast5GameSchedule? guessL5GameList,
-    TeamDetailRegularSeasonData? preSeasonData,
-    TeamDetailRegularSeasonData? playoffsData,
+    TeamDetailSeasonData? preSeasonData,
+    TeamDetailSeasonData? playoffsData,
     TeamDetailTotalL5Data? totalL5Data,
     List<TeamDetailOutcome>? outcome,
   }) {
@@ -198,230 +200,228 @@ extension TeamDetailGameSchedulesExtension on TeamDetailGameSchedules {
   }
 }
 
-TeamDetailRegularSeasonData $TeamDetailRegularSeasonDataFromJson(
-    Map<String, dynamic> json) {
-  final TeamDetailRegularSeasonData teamDetailRegularSeasonData = TeamDetailRegularSeasonData();
+TeamDetailSeasonData $TeamDetailSeasonDataFromJson(Map<String, dynamic> json) {
+  final TeamDetailSeasonData teamDetailSeasonData = TeamDetailSeasonData();
   final int? pfdRank = jsonConvert.convert<int>(json['PFD_RANK']);
   if (pfdRank != null) {
-    teamDetailRegularSeasonData.pfdRank = pfdRank;
+    teamDetailSeasonData.pfdRank = pfdRank;
   }
   final double? fg3Pct = jsonConvert.convert<double>(json['FG3_PCT']);
   if (fg3Pct != null) {
-    teamDetailRegularSeasonData.fg3Pct = fg3Pct;
+    teamDetailSeasonData.fg3Pct = fg3Pct;
   }
   final int? orebRank = jsonConvert.convert<int>(json['OREB_RANK']);
   if (orebRank != null) {
-    teamDetailRegularSeasonData.orebRank = orebRank;
+    teamDetailSeasonData.orebRank = orebRank;
   }
   final double? sTL = jsonConvert.convert<double>(json['STL']);
   if (sTL != null) {
-    teamDetailRegularSeasonData.sTL = sTL;
+    teamDetailSeasonData.sTL = sTL;
   }
   final double? dREB = jsonConvert.convert<double>(json['DREB']);
   if (dREB != null) {
-    teamDetailRegularSeasonData.dREB = dREB;
+    teamDetailSeasonData.dREB = dREB;
   }
   final int? fgPctRank = jsonConvert.convert<int>(json['FG_PCT_RANK']);
   if (fgPctRank != null) {
-    teamDetailRegularSeasonData.fgPctRank = fgPctRank;
+    teamDetailSeasonData.fgPctRank = fgPctRank;
   }
   final int? plusMinusRank = jsonConvert.convert<int>(json['PLUS_MINUS_RANK']);
   if (plusMinusRank != null) {
-    teamDetailRegularSeasonData.plusMinusRank = plusMinusRank;
+    teamDetailSeasonData.plusMinusRank = plusMinusRank;
   }
   final double? pFD = jsonConvert.convert<double>(json['PFD']);
   if (pFD != null) {
-    teamDetailRegularSeasonData.pFD = pFD;
+    teamDetailSeasonData.pFD = pFD;
   }
   final int? pfRank = jsonConvert.convert<int>(json['PF_RANK']);
   if (pfRank != null) {
-    teamDetailRegularSeasonData.pfRank = pfRank;
+    teamDetailSeasonData.pfRank = pfRank;
   }
   final int? drebRank = jsonConvert.convert<int>(json['DREB_RANK']);
   if (drebRank != null) {
-    teamDetailRegularSeasonData.drebRank = drebRank;
+    teamDetailSeasonData.drebRank = drebRank;
   }
   final int? tovRank = jsonConvert.convert<int>(json['TOV_RANK']);
   if (tovRank != null) {
-    teamDetailRegularSeasonData.tovRank = tovRank;
+    teamDetailSeasonData.tovRank = tovRank;
   }
   final double? fGA = jsonConvert.convert<double>(json['FGA']);
   if (fGA != null) {
-    teamDetailRegularSeasonData.fGA = fGA;
+    teamDetailSeasonData.fGA = fGA;
   }
   final int? fg3PctRank = jsonConvert.convert<int>(json['FG3_PCT_RANK']);
   if (fg3PctRank != null) {
-    teamDetailRegularSeasonData.fg3PctRank = fg3PctRank;
+    teamDetailSeasonData.fg3PctRank = fg3PctRank;
   }
   final int? blkRank = jsonConvert.convert<int>(json['BLK_RANK']);
   if (blkRank != null) {
-    teamDetailRegularSeasonData.blkRank = blkRank;
+    teamDetailSeasonData.blkRank = blkRank;
   }
   final double? fGM = jsonConvert.convert<double>(json['FGM']);
   if (fGM != null) {
-    teamDetailRegularSeasonData.fGM = fGM;
+    teamDetailSeasonData.fGM = fGM;
   }
   final int? lRank = jsonConvert.convert<int>(json['L_RANK']);
   if (lRank != null) {
-    teamDetailRegularSeasonData.lRank = lRank;
+    teamDetailSeasonData.lRank = lRank;
   }
   final double? wPct = jsonConvert.convert<double>(json['W_PCT']);
   if (wPct != null) {
-    teamDetailRegularSeasonData.wPct = wPct;
+    teamDetailSeasonData.wPct = wPct;
   }
   final int? fg3aRank = jsonConvert.convert<int>(json['FG3A_RANK']);
   if (fg3aRank != null) {
-    teamDetailRegularSeasonData.fg3aRank = fg3aRank;
+    teamDetailSeasonData.fg3aRank = fg3aRank;
   }
   final double? fTA = jsonConvert.convert<double>(json['FTA']);
   if (fTA != null) {
-    teamDetailRegularSeasonData.fTA = fTA;
+    teamDetailSeasonData.fTA = fTA;
   }
   final double? mIN = jsonConvert.convert<double>(json['MIN']);
   if (mIN != null) {
-    teamDetailRegularSeasonData.mIN = mIN;
+    teamDetailSeasonData.mIN = mIN;
   }
   final double? tOV = jsonConvert.convert<double>(json['TOV']);
   if (tOV != null) {
-    teamDetailRegularSeasonData.tOV = tOV;
+    teamDetailSeasonData.tOV = tOV;
   }
   final int? fg3mRank = jsonConvert.convert<int>(json['FG3M_RANK']);
   if (fg3mRank != null) {
-    teamDetailRegularSeasonData.fg3mRank = fg3mRank;
+    teamDetailSeasonData.fg3mRank = fg3mRank;
   }
   final double? fTM = jsonConvert.convert<double>(json['FTM']);
   if (fTM != null) {
-    teamDetailRegularSeasonData.fTM = fTM;
+    teamDetailSeasonData.fTM = fTM;
   }
   final int? teamId = jsonConvert.convert<int>(json['TEAM_ID']);
   if (teamId != null) {
-    teamDetailRegularSeasonData.teamId = teamId;
+    teamDetailSeasonData.teamId = teamId;
   }
   final double? bLKA = jsonConvert.convert<double>(json['BLKA']);
   if (bLKA != null) {
-    teamDetailRegularSeasonData.bLKA = bLKA;
+    teamDetailSeasonData.bLKA = bLKA;
   }
   final double? bLK = jsonConvert.convert<double>(json['BLK']);
   if (bLK != null) {
-    teamDetailRegularSeasonData.bLK = bLK;
+    teamDetailSeasonData.bLK = bLK;
   }
   final double? plusMinus = jsonConvert.convert<double>(json['PLUS_MINUS']);
   if (plusMinus != null) {
-    teamDetailRegularSeasonData.plusMinus = plusMinus;
+    teamDetailSeasonData.plusMinus = plusMinus;
   }
   final int? wRank = jsonConvert.convert<int>(json['W_RANK']);
   if (wRank != null) {
-    teamDetailRegularSeasonData.wRank = wRank;
+    teamDetailSeasonData.wRank = wRank;
   }
   final int? minRank = jsonConvert.convert<int>(json['MIN_RANK']);
   if (minRank != null) {
-    teamDetailRegularSeasonData.minRank = minRank;
+    teamDetailSeasonData.minRank = minRank;
   }
   final double? fgPct = jsonConvert.convert<double>(json['FG_PCT']);
   if (fgPct != null) {
-    teamDetailRegularSeasonData.fgPct = fgPct;
+    teamDetailSeasonData.fgPct = fgPct;
   }
   final int? l = jsonConvert.convert<int>(json['L']);
   if (l != null) {
-    teamDetailRegularSeasonData.l = l;
+    teamDetailSeasonData.l = l;
   }
   final double? pTS = jsonConvert.convert<double>(json['PTS']);
   if (pTS != null) {
-    teamDetailRegularSeasonData.pTS = pTS;
+    teamDetailSeasonData.pTS = pTS;
   }
   final double? fG3A = jsonConvert.convert<double>(json['FG3A']);
   if (fG3A != null) {
-    teamDetailRegularSeasonData.fG3A = fG3A;
+    teamDetailSeasonData.fG3A = fG3A;
   }
   final int? ftmRank = jsonConvert.convert<int>(json['FTM_RANK']);
   if (ftmRank != null) {
-    teamDetailRegularSeasonData.ftmRank = ftmRank;
+    teamDetailSeasonData.ftmRank = ftmRank;
   }
   final int? ftaRank = jsonConvert.convert<int>(json['FTA_RANK']);
   if (ftaRank != null) {
-    teamDetailRegularSeasonData.ftaRank = ftaRank;
+    teamDetailSeasonData.ftaRank = ftaRank;
   }
   final int? fgaRank = jsonConvert.convert<int>(json['FGA_RANK']);
   if (fgaRank != null) {
-    teamDetailRegularSeasonData.fgaRank = fgaRank;
+    teamDetailSeasonData.fgaRank = fgaRank;
   }
   final int? rebRank = jsonConvert.convert<int>(json['REB_RANK']);
   if (rebRank != null) {
-    teamDetailRegularSeasonData.rebRank = rebRank;
+    teamDetailSeasonData.rebRank = rebRank;
   }
   final int? blkaRank = jsonConvert.convert<int>(json['BLKA_RANK']);
   if (blkaRank != null) {
-    teamDetailRegularSeasonData.blkaRank = blkaRank;
+    teamDetailSeasonData.blkaRank = blkaRank;
   }
   final int? w = jsonConvert.convert<int>(json['W']);
   if (w != null) {
-    teamDetailRegularSeasonData.w = w;
+    teamDetailSeasonData.w = w;
   }
   final double? fG3M = jsonConvert.convert<double>(json['FG3M']);
   if (fG3M != null) {
-    teamDetailRegularSeasonData.fG3M = fG3M;
+    teamDetailSeasonData.fG3M = fG3M;
   }
   final int? wPctRank = jsonConvert.convert<int>(json['W_PCT_RANK']);
   if (wPctRank != null) {
-    teamDetailRegularSeasonData.wPctRank = wPctRank;
+    teamDetailSeasonData.wPctRank = wPctRank;
   }
   final int? astRank = jsonConvert.convert<int>(json['AST_RANK']);
   if (astRank != null) {
-    teamDetailRegularSeasonData.astRank = astRank;
+    teamDetailSeasonData.astRank = astRank;
   }
   final double? aST = jsonConvert.convert<double>(json['AST']);
   if (aST != null) {
-    teamDetailRegularSeasonData.aST = aST;
+    teamDetailSeasonData.aST = aST;
   }
   final double? oREB = jsonConvert.convert<double>(json['OREB']);
   if (oREB != null) {
-    teamDetailRegularSeasonData.oREB = oREB;
+    teamDetailSeasonData.oREB = oREB;
   }
   final int? ftPctRank = jsonConvert.convert<int>(json['FT_PCT_RANK']);
   if (ftPctRank != null) {
-    teamDetailRegularSeasonData.ftPctRank = ftPctRank;
+    teamDetailSeasonData.ftPctRank = ftPctRank;
   }
   final double? gP = jsonConvert.convert<double>(json['GP']);
   if (gP != null) {
-    teamDetailRegularSeasonData.gP = gP;
+    teamDetailSeasonData.gP = gP;
   }
   final int? fgmRank = jsonConvert.convert<int>(json['FGM_RANK']);
   if (fgmRank != null) {
-    teamDetailRegularSeasonData.fgmRank = fgmRank;
+    teamDetailSeasonData.fgmRank = fgmRank;
   }
   final double? rEB = jsonConvert.convert<double>(json['REB']);
   if (rEB != null) {
-    teamDetailRegularSeasonData.rEB = rEB;
+    teamDetailSeasonData.rEB = rEB;
   }
   final double? ftPct = jsonConvert.convert<double>(json['FT_PCT']);
   if (ftPct != null) {
-    teamDetailRegularSeasonData.ftPct = ftPct;
+    teamDetailSeasonData.ftPct = ftPct;
   }
   final int? ptsRank = jsonConvert.convert<int>(json['PTS_RANK']);
   if (ptsRank != null) {
-    teamDetailRegularSeasonData.ptsRank = ptsRank;
+    teamDetailSeasonData.ptsRank = ptsRank;
   }
   final String? teamName = jsonConvert.convert<String>(json['TEAM_NAME']);
   if (teamName != null) {
-    teamDetailRegularSeasonData.teamName = teamName;
+    teamDetailSeasonData.teamName = teamName;
   }
   final double? pF = jsonConvert.convert<double>(json['PF']);
   if (pF != null) {
-    teamDetailRegularSeasonData.pF = pF;
+    teamDetailSeasonData.pF = pF;
   }
   final int? gpRank = jsonConvert.convert<int>(json['GP_RANK']);
   if (gpRank != null) {
-    teamDetailRegularSeasonData.gpRank = gpRank;
+    teamDetailSeasonData.gpRank = gpRank;
   }
   final int? stlRank = jsonConvert.convert<int>(json['STL_RANK']);
   if (stlRank != null) {
-    teamDetailRegularSeasonData.stlRank = stlRank;
+    teamDetailSeasonData.stlRank = stlRank;
   }
-  return teamDetailRegularSeasonData;
+  return teamDetailSeasonData;
 }
 
-Map<String, dynamic> $TeamDetailRegularSeasonDataToJson(
-    TeamDetailRegularSeasonData entity) {
+Map<String, dynamic> $TeamDetailSeasonDataToJson(TeamDetailSeasonData entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['PFD_RANK'] = entity.pfdRank;
   data['FG3_PCT'] = entity.fg3Pct;
@@ -480,8 +480,8 @@ Map<String, dynamic> $TeamDetailRegularSeasonDataToJson(
   return data;
 }
 
-extension TeamDetailRegularSeasonDataExtension on TeamDetailRegularSeasonData {
-  TeamDetailRegularSeasonData copyWith({
+extension TeamDetailSeasonDataExtension on TeamDetailSeasonData {
+  TeamDetailSeasonData copyWith({
     int? pfdRank,
     double? fg3Pct,
     int? orebRank,
@@ -537,7 +537,7 @@ extension TeamDetailRegularSeasonDataExtension on TeamDetailRegularSeasonData {
     int? gpRank,
     int? stlRank,
   }) {
-    return TeamDetailRegularSeasonData()
+    return TeamDetailSeasonData()
       ..pfdRank = pfdRank ?? this.pfdRank
       ..fg3Pct = fg3Pct ?? this.fg3Pct
       ..orebRank = orebRank ?? this.orebRank
@@ -742,11 +742,10 @@ TeamDetailLast5GameSchedule $TeamDetailLast5GameScheduleFromJson(
   if (schedule != null) {
     teamDetailLast5GameSchedule.schedule = schedule;
   }
-  final List<NbaPlayerBaseInfoL5DataAvg>? scoreAvg = (json['scoreAvg'] as List<
-      dynamic>?)?.map(
-          (e) =>
-      jsonConvert.convert<NbaPlayerBaseInfoL5DataAvg>(
-          e) as NbaPlayerBaseInfoL5DataAvg).toList();
+  final List<Last5AvgEntity>? scoreAvg = (json['scoreAvg'] as List<dynamic>?)
+      ?.map(
+          (e) => jsonConvert.convert<Last5AvgEntity>(e) as Last5AvgEntity)
+      .toList();
   if (scoreAvg != null) {
     teamDetailLast5GameSchedule.scoreAvg = scoreAvg;
   }
@@ -764,7 +763,7 @@ Map<String, dynamic> $TeamDetailLast5GameScheduleToJson(
 extension TeamDetailLast5GameScheduleExtension on TeamDetailLast5GameSchedule {
   TeamDetailLast5GameSchedule copyWith({
     List<TeamDetailGameSchedules>? schedule,
-    List<NbaPlayerBaseInfoL5DataAvg>? scoreAvg,
+    List<Last5AvgEntity>? scoreAvg,
   }) {
     return TeamDetailLast5GameSchedule()
       ..schedule = schedule ?? this.schedule
@@ -1022,318 +1021,6 @@ extension TeamDetailLast5GameScheduleScoreAvgExtension on TeamDetailLast5GameSch
       ..pf = pf ?? this.pf
       ..threePm = threePm ?? this.threePm
       ..to = to ?? this.to
-      ..ftm = ftm ?? this.ftm
-      ..playerId = playerId ?? this.playerId;
-  }
-}
-
-TeamDetailGuessL5GameList $TeamDetailGuessL5GameListFromJson(
-    Map<String, dynamic> json) {
-  final TeamDetailGuessL5GameList teamDetailGuessL5GameList = TeamDetailGuessL5GameList();
-  final List<
-      TeamDetailGuessL5GameListSchedule>? schedule = (json['schedule'] as List<
-      dynamic>?)?.map(
-          (e) =>
-      jsonConvert.convert<TeamDetailGuessL5GameListSchedule>(
-          e) as TeamDetailGuessL5GameListSchedule).toList();
-  if (schedule != null) {
-    teamDetailGuessL5GameList.schedule = schedule;
-  }
-  final List<
-      TeamDetailGuessL5GameListTotalScore>? totalScore = (json['totalScore'] as List<
-      dynamic>?)?.map(
-          (e) =>
-      jsonConvert.convert<TeamDetailGuessL5GameListTotalScore>(
-          e) as TeamDetailGuessL5GameListTotalScore).toList();
-  if (totalScore != null) {
-    teamDetailGuessL5GameList.totalScore = totalScore;
-  }
-  return teamDetailGuessL5GameList;
-}
-
-Map<String, dynamic> $TeamDetailGuessL5GameListToJson(
-    TeamDetailGuessL5GameList entity) {
-  final Map<String, dynamic> data = <String, dynamic>{};
-  data['schedule'] = entity.schedule.map((v) => v.toJson()).toList();
-  data['totalScore'] = entity.totalScore.map((v) => v.toJson()).toList();
-  return data;
-}
-
-extension TeamDetailGuessL5GameListExtension on TeamDetailGuessL5GameList {
-  TeamDetailGuessL5GameList copyWith({
-    List<TeamDetailGuessL5GameListSchedule>? schedule,
-    List<TeamDetailGuessL5GameListTotalScore>? totalScore,
-  }) {
-    return TeamDetailGuessL5GameList()
-      ..schedule = schedule ?? this.schedule
-      ..totalScore = totalScore ?? this.totalScore;
-  }
-}
-
-TeamDetailGuessL5GameListSchedule $TeamDetailGuessL5GameListScheduleFromJson(
-    Map<String, dynamic> json) {
-  final TeamDetailGuessL5GameListSchedule teamDetailGuessL5GameListSchedule = TeamDetailGuessL5GameListSchedule();
-  final int? gameId = jsonConvert.convert<int>(json['gameId']);
-  if (gameId != null) {
-    teamDetailGuessL5GameListSchedule.gameId = gameId;
-  }
-  final int? gameType = jsonConvert.convert<int>(json['gameType']);
-  if (gameType != null) {
-    teamDetailGuessL5GameListSchedule.gameType = gameType;
-  }
-  final int? gameTime = jsonConvert.convert<int>(json['gameTime']);
-  if (gameTime != null) {
-    teamDetailGuessL5GameListSchedule.gameTime = gameTime;
-  }
-  final int? createTime = jsonConvert.convert<int>(json['createTime']);
-  if (createTime != null) {
-    teamDetailGuessL5GameListSchedule.createTime = createTime;
-  }
-  final int? gameStartTime = jsonConvert.convert<int>(json['gameStartTime']);
-  if (gameStartTime != null) {
-    teamDetailGuessL5GameListSchedule.gameStartTime = gameStartTime;
-  }
-  final int? homeTeamScore = jsonConvert.convert<int>(json['homeTeamScore']);
-  if (homeTeamScore != null) {
-    teamDetailGuessL5GameListSchedule.homeTeamScore = homeTeamScore;
-  }
-  final int? seasonId = jsonConvert.convert<int>(json['seasonId']);
-  if (seasonId != null) {
-    teamDetailGuessL5GameListSchedule.seasonId = seasonId;
-  }
-  final int? awayTeamScore = jsonConvert.convert<int>(json['awayTeamScore']);
-  if (awayTeamScore != null) {
-    teamDetailGuessL5GameListSchedule.awayTeamScore = awayTeamScore;
-  }
-  final int? homeTeamId = jsonConvert.convert<int>(json['homeTeamId']);
-  if (homeTeamId != null) {
-    teamDetailGuessL5GameListSchedule.homeTeamId = homeTeamId;
-  }
-  final int? awayTeamId = jsonConvert.convert<int>(json['awayTeamId']);
-  if (awayTeamId != null) {
-    teamDetailGuessL5GameListSchedule.awayTeamId = awayTeamId;
-  }
-  final int? status = jsonConvert.convert<int>(json['status']);
-  if (status != null) {
-    teamDetailGuessL5GameListSchedule.status = status;
-  }
-  return teamDetailGuessL5GameListSchedule;
-}
-
-Map<String, dynamic> $TeamDetailGuessL5GameListScheduleToJson(
-    TeamDetailGuessL5GameListSchedule entity) {
-  final Map<String, dynamic> data = <String, dynamic>{};
-  data['gameId'] = entity.gameId;
-  data['gameType'] = entity.gameType;
-  data['gameTime'] = entity.gameTime;
-  data['createTime'] = entity.createTime;
-  data['gameStartTime'] = entity.gameStartTime;
-  data['homeTeamScore'] = entity.homeTeamScore;
-  data['seasonId'] = entity.seasonId;
-  data['awayTeamScore'] = entity.awayTeamScore;
-  data['homeTeamId'] = entity.homeTeamId;
-  data['awayTeamId'] = entity.awayTeamId;
-  data['status'] = entity.status;
-  return data;
-}
-
-extension TeamDetailGuessL5GameListScheduleExtension on TeamDetailGuessL5GameListSchedule {
-  TeamDetailGuessL5GameListSchedule copyWith({
-    int? gameId,
-    int? gameType,
-    int? gameTime,
-    int? createTime,
-    int? gameStartTime,
-    int? homeTeamScore,
-    int? seasonId,
-    int? awayTeamScore,
-    int? homeTeamId,
-    int? awayTeamId,
-    int? status,
-  }) {
-    return TeamDetailGuessL5GameListSchedule()
-      ..gameId = gameId ?? this.gameId
-      ..gameType = gameType ?? this.gameType
-      ..gameTime = gameTime ?? this.gameTime
-      ..createTime = createTime ?? this.createTime
-      ..gameStartTime = gameStartTime ?? this.gameStartTime
-      ..homeTeamScore = homeTeamScore ?? this.homeTeamScore
-      ..seasonId = seasonId ?? this.seasonId
-      ..awayTeamScore = awayTeamScore ?? this.awayTeamScore
-      ..homeTeamId = homeTeamId ?? this.homeTeamId
-      ..awayTeamId = awayTeamId ?? this.awayTeamId
-      ..status = status ?? this.status;
-  }
-}
-
-TeamDetailGuessL5GameListTotalScore $TeamDetailGuessL5GameListTotalScoreFromJson(
-    Map<String, dynamic> json) {
-  final TeamDetailGuessL5GameListTotalScore teamDetailGuessL5GameListTotalScore = TeamDetailGuessL5GameListTotalScore();
-  final int? blk = jsonConvert.convert<int>(json['blk']);
-  if (blk != null) {
-    teamDetailGuessL5GameListTotalScore.blk = blk;
-  }
-  final int? gameId = jsonConvert.convert<int>(json['gameId']);
-  if (gameId != null) {
-    teamDetailGuessL5GameListTotalScore.gameId = gameId;
-  }
-  final int? fga = jsonConvert.convert<int>(json['fga']);
-  if (fga != null) {
-    teamDetailGuessL5GameListTotalScore.fga = fga;
-  }
-  final int? ast = jsonConvert.convert<int>(json['ast']);
-  if (ast != null) {
-    teamDetailGuessL5GameListTotalScore.ast = ast;
-  }
-  final int? dreb = jsonConvert.convert<int>(json['dreb']);
-  if (dreb != null) {
-    teamDetailGuessL5GameListTotalScore.dreb = dreb;
-  }
-  final int? espnId = jsonConvert.convert<int>(json['espnId']);
-  if (espnId != null) {
-    teamDetailGuessL5GameListTotalScore.espnId = espnId;
-  }
-  final int? stl = jsonConvert.convert<int>(json['stl']);
-  if (stl != null) {
-    teamDetailGuessL5GameListTotalScore.stl = stl;
-  }
-  final int? fgm = jsonConvert.convert<int>(json['fgm']);
-  if (fgm != null) {
-    teamDetailGuessL5GameListTotalScore.fgm = fgm;
-  }
-  final int? pts = jsonConvert.convert<int>(json['pts']);
-  if (pts != null) {
-    teamDetailGuessL5GameListTotalScore.pts = pts;
-  }
-  final int? reb = jsonConvert.convert<int>(json['reb']);
-  if (reb != null) {
-    teamDetailGuessL5GameListTotalScore.reb = reb;
-  }
-  final int? threePa = jsonConvert.convert<int>(json['threePa']);
-  if (threePa != null) {
-    teamDetailGuessL5GameListTotalScore.threePa = threePa;
-  }
-  final int? fta = jsonConvert.convert<int>(json['fta']);
-  if (fta != null) {
-    teamDetailGuessL5GameListTotalScore.fta = fta;
-  }
-  final int? min = jsonConvert.convert<int>(json['min']);
-  if (min != null) {
-    teamDetailGuessL5GameListTotalScore.min = min;
-  }
-  final int? oreb = jsonConvert.convert<int>(json['oreb']);
-  if (oreb != null) {
-    teamDetailGuessL5GameListTotalScore.oreb = oreb;
-  }
-  final int? pf = jsonConvert.convert<int>(json['pf']);
-  if (pf != null) {
-    teamDetailGuessL5GameListTotalScore.pf = pf;
-  }
-  final int? teamId = jsonConvert.convert<int>(json['teamId']);
-  if (teamId != null) {
-    teamDetailGuessL5GameListTotalScore.teamId = teamId;
-  }
-  final bool? isStarter = jsonConvert.convert<bool>(json['isStarter']);
-  if (isStarter != null) {
-    teamDetailGuessL5GameListTotalScore.isStarter = isStarter;
-  }
-  final int? threePm = jsonConvert.convert<int>(json['threePm']);
-  if (threePm != null) {
-    teamDetailGuessL5GameListTotalScore.threePm = threePm;
-  }
-  final int? to = jsonConvert.convert<int>(json['to']);
-  if (to != null) {
-    teamDetailGuessL5GameListTotalScore.to = to;
-  }
-  final int? awayTeamId = jsonConvert.convert<int>(json['awayTeamId']);
-  if (awayTeamId != null) {
-    teamDetailGuessL5GameListTotalScore.awayTeamId = awayTeamId;
-  }
-  final int? ftm = jsonConvert.convert<int>(json['ftm']);
-  if (ftm != null) {
-    teamDetailGuessL5GameListTotalScore.ftm = ftm;
-  }
-  final int? playerId = jsonConvert.convert<int>(json['playerId']);
-  if (playerId != null) {
-    teamDetailGuessL5GameListTotalScore.playerId = playerId;
-  }
-  return teamDetailGuessL5GameListTotalScore;
-}
-
-Map<String, dynamic> $TeamDetailGuessL5GameListTotalScoreToJson(
-    TeamDetailGuessL5GameListTotalScore entity) {
-  final Map<String, dynamic> data = <String, dynamic>{};
-  data['blk'] = entity.blk;
-  data['gameId'] = entity.gameId;
-  data['fga'] = entity.fga;
-  data['ast'] = entity.ast;
-  data['dreb'] = entity.dreb;
-  data['espnId'] = entity.espnId;
-  data['stl'] = entity.stl;
-  data['fgm'] = entity.fgm;
-  data['pts'] = entity.pts;
-  data['reb'] = entity.reb;
-  data['threePa'] = entity.threePa;
-  data['fta'] = entity.fta;
-  data['min'] = entity.min;
-  data['oreb'] = entity.oreb;
-  data['pf'] = entity.pf;
-  data['teamId'] = entity.teamId;
-  data['isStarter'] = entity.isStarter;
-  data['threePm'] = entity.threePm;
-  data['to'] = entity.to;
-  data['awayTeamId'] = entity.awayTeamId;
-  data['ftm'] = entity.ftm;
-  data['playerId'] = entity.playerId;
-  return data;
-}
-
-extension TeamDetailGuessL5GameListTotalScoreExtension on TeamDetailGuessL5GameListTotalScore {
-  TeamDetailGuessL5GameListTotalScore copyWith({
-    int? blk,
-    int? gameId,
-    int? fga,
-    int? ast,
-    int? dreb,
-    int? espnId,
-    int? stl,
-    int? fgm,
-    int? pts,
-    int? reb,
-    int? threePa,
-    int? fta,
-    int? min,
-    int? oreb,
-    int? pf,
-    int? teamId,
-    bool? isStarter,
-    int? threePm,
-    int? to,
-    int? awayTeamId,
-    int? ftm,
-    int? playerId,
-  }) {
-    return TeamDetailGuessL5GameListTotalScore()
-      ..blk = blk ?? this.blk
-      ..gameId = gameId ?? this.gameId
-      ..fga = fga ?? this.fga
-      ..ast = ast ?? this.ast
-      ..dreb = dreb ?? this.dreb
-      ..espnId = espnId ?? this.espnId
-      ..stl = stl ?? this.stl
-      ..fgm = fgm ?? this.fgm
-      ..pts = pts ?? this.pts
-      ..reb = reb ?? this.reb
-      ..threePa = threePa ?? this.threePa
-      ..fta = fta ?? this.fta
-      ..min = min ?? this.min
-      ..oreb = oreb ?? this.oreb
-      ..pf = pf ?? this.pf
-      ..teamId = teamId ?? this.teamId
-      ..isStarter = isStarter ?? this.isStarter
-      ..threePm = threePm ?? this.threePm
-      ..to = to ?? this.to
-      ..awayTeamId = awayTeamId ?? this.awayTeamId
       ..ftm = ftm ?? this.ftm
       ..playerId = playerId ?? this.playerId;
   }

@@ -642,7 +642,7 @@ class NbaPlayerBaseInfoL5DataAvg {
       }
       return value;
     }
-    return toJson()[key.toLowerCase()];
+    return toJson()[key.toLowerCase()] ?? 0;
   }
 
   @override

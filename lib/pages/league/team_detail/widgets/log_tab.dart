@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-31 15:05:53
- * @LastEditTime: 2025-01-04 11:16:30
+ * @LastEditTime: 2025-01-07 16:41:18
  */
 import 'dart:math';
 
@@ -20,9 +20,19 @@ import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
-class LogTab extends GetView<TeamDetailController> {
+class LogTab extends StatefulWidget {
   const LogTab({super.key});
 
+  @override
+  State<LogTab> createState() => _LogTabState();
+}
+
+class _LogTabState extends State<LogTab> with AutomaticKeepAliveClientMixin {
+  final controller =
+      Get.find<TeamDetailController>(tag: Get.arguments.toString());
+
+  @override
+  bool get wantKeepAlive => true;
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
@@ -54,7 +64,7 @@ class LogTab extends GetView<TeamDetailController> {
   }
 }
 
-class _Item extends GetView<TeamDetailController> {
+class _Item extends StatelessWidget {
   const _Item({super.key});
 
   @override
@@ -73,6 +83,8 @@ class _Item extends GetView<TeamDetailController> {
   }
 
   Widget _buildTabViewItem(List<ScoreBoardDetailList> list) {
+    final controller =
+        Get.find<TeamDetailController>(tag: Get.arguments.toString());
     return SizedBox(
       height: 29.w + 34.w * 5,
       child: SfDataGridTheme(
@@ -133,7 +145,7 @@ class PlayerDetailDatasource extends DataGridSource {
   final List<ScoreBoardDetailList> playerScores;
 
   List<DataGridRow> _buildRows() {
-    final ctrl = Get.find<TeamDetailController>();
+    final ctrl = Get.find<TeamDetailController>(tag: Get.arguments.toString());
     Random random = Random();
     int i = 0;
     List<List<DataGridCell>> map = List.generate(5, (i) {}).toList().map((e) {

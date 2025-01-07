@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-31 14:30:33
- * @LastEditTime: 2025-01-03 21:36:14
+ * @LastEditTime: 2025-01-07 16:27:03
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -20,20 +20,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class TeamDetailPage extends GetView<TeamDetailController> {
+class TeamDetailPage extends StatelessWidget {
   const TeamDetailPage({super.key});
-
-  // 主视图
-  Widget _buildView() {
-    return const Center(
-      child: Text("TeamDetailPage"),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
+    var controller =
+        Get.put(TeamDetailController(), tag: Get.arguments.toString());
     return GetBuilder<TeamDetailController>(
-      init: TeamDetailController(),
+      tag: Get.arguments.toString(),
       id: "team_detail",
       builder: (_) {
         return HorizontalDragBackWidget(

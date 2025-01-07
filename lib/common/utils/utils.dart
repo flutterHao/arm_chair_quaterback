@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-21 20:20:49
- * @LastEditTime: 2025-01-04 16:03:04
+ * @LastEditTime: 2025-01-07 15:47:56
  */
 import 'dart:async';
 import 'dart:io';
@@ -382,5 +382,21 @@ class Utils {
 
     // 每次递归处理最后的三位
     return '${numberWithThousandths(int.parse(numberStr.substring(0, length - 3)))},${numberStr.substring(length - 3)}';
+  }
+
+  static String getRankText(int rank) {
+    // 处理序数词后缀
+    String suffix;
+    if (rank == 1) {
+      suffix = "st";
+    } else if (rank == 2) {
+      suffix = "nd";
+    } else if (rank == 3) {
+      suffix = "rd";
+    } else {
+      suffix = "th";
+    }
+
+    return "$rank$suffix";
   }
 }

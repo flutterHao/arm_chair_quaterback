@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-18 14:27:59
- * @LastEditTime: 2024-12-18 21:29:55
+ * @LastEditTime: 2025-01-07 17:13:00
  */
 import 'package:arm_chair_quaterback/common/entities/player_card_entity.dart';
 import 'package:flutter/material.dart';
@@ -123,7 +123,7 @@ class BigPlayerCard extends StatelessWidget {
                 ),
                 1.hGap,
                 Text(
-                  "#34",
+                  '#${player.number}',
                   style:
                       12.w4(fontFamily: FontFamily.fRobotoRegular, height: 1),
                 ),
