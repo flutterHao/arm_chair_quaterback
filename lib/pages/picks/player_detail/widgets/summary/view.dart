@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -19,7 +20,6 @@ import 'package:arm_chair_quaterback/pages/news/new_list/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guess_item_v2/guess_item_v2.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/summary/controller.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -49,7 +49,7 @@ class _SummaryPageState extends State<SummaryPage>
       init: controller,
       id: SummaryController.idSummaryMain,
       builder: (_) {
-        if (controller.nbaPlayerBaseInfoEntity == null) {
+        if(controller.loadStatus.value != LoadDataStatus.success){
           return Obx(() {
             return Center(
               child: LoadStatusWidget(
@@ -59,7 +59,6 @@ class _SummaryPageState extends State<SummaryPage>
           });
         } else {
           var scrollController = ScrollController();
-
           return SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Column(
@@ -232,13 +231,15 @@ class _SummaryPageState extends State<SummaryPage>
                                                             14.w)),
                                                 child: Text(
                                                   key.replaceAll(",", "+"),
-                                                  style: 13.w5(
+                                                  style: 16.w5(
                                                       color: isSelected
                                                           ? AppColors.cF2F2F2
                                                           : AppColors.c262626,
                                                       height: 1,
-                                                      fontFamily: FontFamily
-                                                          .fOswaldMedium),
+                                                    fontFamily: isSelected
+                                                        ? FontFamily.fOswaldMedium
+                                                        : FontFamily
+                                                        .fOswaldRegular,),
                                                 ),
                                               ),
                                             );
@@ -476,13 +477,15 @@ class _SummaryPageState extends State<SummaryPage>
                                                         14.w)),
                                             child: Text(
                                               key.replaceAll(",", "+"),
-                                              style: 13.w5(
+                                              style: 16.w5(
                                                   color: isSelected
                                                       ? AppColors.cF2F2F2
                                                       : AppColors.c262626,
                                                   height: 1,
-                                                  fontFamily:
-                                                      FontFamily.fOswaldMedium),
+                                                fontFamily: isSelected
+                                                    ? FontFamily.fOswaldMedium
+                                                    : FontFamily
+                                                    .fOswaldRegular,),
                                             ),
                                           ),
                                         );

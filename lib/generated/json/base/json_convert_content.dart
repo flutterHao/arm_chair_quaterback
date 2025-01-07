@@ -514,15 +514,9 @@ class JsonConvert {
       return data.map<NbaPlayerBaseInfoL5DataAvg>((Map<String, dynamic> e) =>
           NbaPlayerBaseInfoL5DataAvg.fromJson(e)).toList() as M;
     }
-    if (<NbaPlayerBaseInfoPlayerRegularMap>[] is M) {
-      return data.map<NbaPlayerBaseInfoPlayerRegularMap>((
-          Map<String, dynamic> e) =>
-          NbaPlayerBaseInfoPlayerRegularMap.fromJson(e)).toList() as M;
-    }
-    if (<NbaPlayerBaseInfoPlayerPlayoffsMap>[] is M) {
-      return data.map<NbaPlayerBaseInfoPlayerPlayoffsMap>((
-          Map<String, dynamic> e) =>
-          NbaPlayerBaseInfoPlayerPlayoffsMap.fromJson(e)).toList() as M;
+    if (<NbaPlayerRankInfo>[] is M) {
+      return data.map<NbaPlayerRankInfo>((Map<String, dynamic> e) =>
+          NbaPlayerRankInfo.fromJson(e)).toList() as M;
     }
     if (<NbaPlayerBaseInfoPlayerTrends>[] is M) {
       return data.map<NbaPlayerBaseInfoPlayerTrends>((Map<String, dynamic> e) =>
@@ -1126,10 +1120,7 @@ class JsonConvertClassCollection {
         .fromJson,
     (NbaPlayerBaseInfoL5DataAvg).toString(): NbaPlayerBaseInfoL5DataAvg
         .fromJson,
-    (NbaPlayerBaseInfoPlayerRegularMap)
-        .toString(): NbaPlayerBaseInfoPlayerRegularMap.fromJson,
-    (NbaPlayerBaseInfoPlayerPlayoffsMap)
-        .toString(): NbaPlayerBaseInfoPlayerPlayoffsMap.fromJson,
+    (NbaPlayerRankInfo).toString(): NbaPlayerRankInfo.fromJson,
     (NbaPlayerBaseInfoPlayerTrends).toString(): NbaPlayerBaseInfoPlayerTrends
         .fromJson,
     (NbaPlayerBaseInfoPlayerNews).toString(): NbaPlayerBaseInfoPlayerNews

@@ -71,7 +71,7 @@ class PlayerAvatarWidget extends StatelessWidget {
               ),
               child: ImageWidget(
                 url: Utils.getPlayUrl(playerId),
-                imageFailedPath: Assets.iconUiDefault04,
+                imageFailedPath: Assets.iconUiDefault05,
                 width: width,
                 height: height??width,
                 borderRadius: BorderRadius.circular(radius??32.w),

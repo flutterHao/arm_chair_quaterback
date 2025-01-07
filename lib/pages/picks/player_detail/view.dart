@@ -1,5 +1,8 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/widgets/delegate/fixed_height_sliver_header_delegate.dart';
+import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/player_avatar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -12,6 +15,7 @@ import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/game/game.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/history/view.dart';
+import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/stats/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/summary/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,17 +31,16 @@ class PlayerDetailPageArguments {
 }
 
 class PlayerDetailPage extends GetView<PlayerDetailController> {
-  const PlayerDetailPage({super.key, this.arguments});
+  const PlayerDetailPage({super.key, required this.arguments});
 
-  final PlayerDetailPageArguments? arguments;
+  final PlayerDetailPageArguments arguments;
 
   @override
   Widget build(BuildContext context) {
-    PlayerDetailPageArguments args = arguments ?? Get.arguments;
     return HorizontalDragBackWidget(
       responseDepth: const [0, 1, 3],
       child: GetBuilder<PlayerDetailController>(
-        init: PlayerDetailController(args),
+        init: PlayerDetailController(arguments),
         id: PlayerDetailController.idMain,
         builder: (_) {
           return BlackAppWidget(
@@ -51,46 +54,52 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                   // floatHeaderSlivers: true,
                   headerSliverBuilder:
                       (BuildContext context, bool innerBoxIsScrolled) {
-                    return <Widget>[
-                      SliverPersistentHeader(
-                          floating: true,
-                          delegate: FixedHeightSliverHeaderDelegate(
-                              child: buildHeaderWidget(), height: 138.w)),
-                      SliverPersistentHeader(
-                          pinned: true,
-                          delegate: FixedHeightSliverHeaderDelegate(
-                              child: Container(
-                                width: double.infinity,
-                                color: AppColors.cFFFFFF,
-                                height: 43.w,
-                                child: TabBar(
-                                  labelColor: AppColors.c000000,
-                                  labelStyle: 16.w5(
-                                      height: 1,
-                                      fontFamily: FontFamily.fOswaldMedium),
-                                  unselectedLabelColor: AppColors.cB3B3B3,
-                                  indicatorSize: TabBarIndicatorSize.tab,
-                                  indicatorColor: AppColors.cFF7954,
-                                  tabs: controller.tabs.map((e) {
-                                    return Text(e);
-                                  }).toList(),
-                                ),
-                              ),
-                              height: 43.w))
-                    ];
-                  },
-                  body: TabBarView(children: [
-                    SummaryPage(
-                      playerId: args.playerId,
-                      tabStr: args.tabStr,
+                return <Widget>[
+                  SliverPersistentHeader(
+                      floating: true,
+                      delegate: FixedHeightSliverHeaderDelegate(
+                          child: buildHeaderWidget(), height: 138.w)),
+                  SliverPersistentHeader(
+                      pinned: true,
+                      delegate: FixedHeightSliverHeaderDelegate(
+                          child: Container(
+                            width: double.infinity,
+                            color: AppColors.cFFFFFF,
+                            height: 43.w,
+                            child: TabBar(
+                              labelColor: AppColors.c000000,
+                              labelStyle: 16.w5(
+                                  height: 1,
+                                  fontFamily: FontFamily.fOswaldMedium),
+                              unselectedLabelColor: AppColors.cB3B3B3,
+                              indicatorSize: TabBarIndicatorSize.tab,
+                              indicatorColor: AppColors.cFF7954,
+                              tabs: controller.tabs.map((e) {
+                                return Text(e);
+                              }).toList(),
+                            ),
+                          ),
+                          height: 43.w))
+                ];
+              }, body: Obx(() {
+                if (controller.loadStatus.value != LoadDataStatus.success) {
+                  return Center(
+                    child: LoadStatusWidget(
+                      loadDataStatus: controller.loadStatus.value,
                     ),
-                    PlayerDetailGame(
-                      upStarSuccessCallBack: controller.reloadData,
-                    ),
-                    HistoryPage(
-                      playerId: args.playerId,
-                    ),
-                  ])),
+                  );
+                }
+                return TabBarView(children: [
+                  SummaryPage(
+                    playerId: arguments.playerId,
+                    tabStr: arguments.tabStr,
+                  ),
+                  const StatsPage(),
+                  HistoryPage(
+                    playerId: arguments.playerId,
+                  ),
+                ]);
+              })),
             )),
           );
         },
@@ -119,19 +128,19 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
           Positioned(
             top: 23.w,
             right: 15.w,
-            child: IconWidget(iconWidth: 18.w, icon: Assets.playerUiIconFollow),
+            child: IconWidget(iconWidth: 19.w, icon: Assets.playerUiIconFollow),
           ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               4.hGap,
-              ImageWidget(
-                imageFailedPath: Assets.iconUiDefault04,
-                url: Utils.getPlayUrl(controller.baseInfo?.playerId),
-                width: 134.w,
-                fit: BoxFit.fitWidth,
-              ),
-              11.vGap,
+              PlayerAvatarWidget(
+                  canTap: false,
+                  backgroundColor: AppColors.cTransparent,
+                  radius: 0,
+                  playerId: controller.baseInfo?.playerId ?? 0,
+                  width: 134.w),
+              11.hGap,
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,7 +169,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                     ),
                     5.vGap,
                     Text(
-                      "${controller.baseInfo?.position} - ${controller.teamInfo?.longEname}",
+                      "#${controller.baseInfo?.number}-${controller.baseInfo?.position} - ${controller.teamInfo?.longEname}",
                       style: 10.w4(
                           color: AppColors.cFFFFFF,
                           height: 1,
@@ -169,11 +178,12 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                     15.vGap,
                     Row(
                       children: [
-                        ///todo
-                        _buildPlayerInfoItem("PPG", "2.0"),
+                        _buildPlayerInfoItem("AGE", "${controller.baseInfo?.age}"),
                         33.hGap,
+                        ///todo
                         _buildPlayerInfoItem("RPG", '0.8'),
                         33.hGap,
+                        ///todo
                         _buildPlayerInfoItem("APG", "0.6"),
                       ],
                     ),
@@ -202,7 +212,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
         Text(
           key,
           style: 10.w4(
-              color: AppColors.cFFFFFF,
+              color: AppColors.cFFFFFF.withOpacity(0.3),
               height: 1,
               fontFamily: FontFamily.fRobotoRegular),
         ),

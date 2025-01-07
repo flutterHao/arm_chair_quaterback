@@ -8,7 +8,6 @@ import 'package:arm_chair_quaterback/common/entities/guess_game_info_entity.dart
 import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
-import 'package:arm_chair_quaterback/common/entities/team_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/trade_entity/trade_info_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
@@ -17,9 +16,11 @@ import 'package:arm_chair_quaterback/common/net/apis/trade.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
+import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
+import 'package:arm_chair_quaterback/pages/picks/player_detail/controller.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -109,25 +110,10 @@ class SummaryController extends GetxController {
   initData() {
     loadStatus.value = LoadDataStatus.loading;
     Future.wait([
-      PicksApi.getNBAPlayerBaseInfo(playerId),
       CacheApi.getNBATeamDefine(),
       CacheApi.getPickType()
     ]).then((result) {
-      NbaPlayerBaseInfoEntity result2 = result[0];
-      result2.l5GameData.sort((a, b) {
-        return a.updateTime.compareTo(b.updateTime);
-      });
-      Map<String, NbaPlayerBaseInfoGuessInfosProperty> guessInfos =
-          (CacheApi.pickType ?? []).fold({}, (p, e) {
-        var contains =
-            result2.guessInfos.keys.toList().contains(e.pickTypeName);
-        if (contains) {
-          p[e.pickTypeName] = result2.guessInfos[e.pickTypeName]!;
-        }
-        return p;
-      });
-      result2.guessInfos = guessInfos;
-      nbaPlayerBaseInfoEntity = result2;
+      nbaPlayerBaseInfoEntity = Get.find<PlayerDetailController>().nbaPlayerBaseInfoEntity;
       if (initTabStr != null) {
         var i = nbaPlayerBaseInfoEntity?.guessInfos.keys
                 .toList()
@@ -149,6 +135,7 @@ class SummaryController extends GetxController {
       pickIndex.value = firstWhereOrNull == null ? -1 : firstWhereOrNull.status;
       update([idSummaryMain]);
     }, onError: (e) {
+      ErrorUtils.toast(e);
       loadStatus.value = LoadDataStatus.error;
     });
   }

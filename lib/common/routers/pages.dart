@@ -55,7 +55,7 @@ class AppPages {
     GetPage(
       opaque: false,
       name: RouteNames.picksPlayerDetail,
-      page: () => const PlayerDetailPage(),
+      page: () =>  PlayerDetailPage(arguments: Get.arguments,),
     ),
     GetPage(
         name: RouteNames.teamBeautyDetail,
