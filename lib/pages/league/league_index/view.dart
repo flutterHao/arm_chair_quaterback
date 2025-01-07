@@ -21,9 +21,6 @@ import 'package:arm_chair_quaterback/pages/mine/mine_info/bindings.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_info/view.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_setting/bindings.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_setting/view.dart';
-import 'package:arm_chair_quaterback/pages/news/rank/bindings.dart';
-import 'package:arm_chair_quaterback/pages/news/rank/stats_view.dart';
-import 'package:arm_chair_quaterback/pages/news/rank/view.dart';
 import 'package:extended_tabs/extended_tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -103,15 +100,14 @@ class _LeagueIndexPageState extends State<LeagueIndexPage>
     return Expanded(
       child: Obx(() {
         if (controller.loadStatus.value != LoadDataStatus.success) {
-          return Expanded(
-              child: SmartRefresher(
+          return SmartRefresher(
             controller: controller.refreshController,
             child: Center(
               child: LoadStatusWidget(
                 loadDataStatus: controller.loadStatus.value,
               ),
             ),
-          ));
+          );
         }
         return Column(
           children: [

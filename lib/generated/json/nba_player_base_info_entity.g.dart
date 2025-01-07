@@ -3304,6 +3304,12 @@ OutComeInfoEntity $OutComeInfoEntityFromJson(Map<String, dynamic> json) {
   if (lessCount != null) {
     outComeInfoEntity.lessCount = lessCount;
   }
+  final Map<String, double>? answerValue =
+  (json['answerValue'] as Map<String, dynamic>?)?.map(
+          (k, e) => MapEntry(k, jsonConvert.convert<double>(e) as double));
+  if (answerValue != null) {
+    outComeInfoEntity.answerValue = answerValue;
+  }
   final bool? success = jsonConvert.convert<bool>(json['success']);
   if (success != null) {
     outComeInfoEntity.success = success;
@@ -3329,6 +3335,7 @@ Map<String, dynamic> $OutComeInfoEntityToJson(OutComeInfoEntity entity) {
   data['playerId'] = entity.playerId;
   data['moreCount'] = entity.moreCount;
   data['lessCount'] = entity.lessCount;
+  data['answerValue'] = entity.answerValue;
   data['success'] = entity.success;
   data['reviewsCount'] = entity.reviewsCount;
   return data;
@@ -3348,6 +3355,7 @@ extension OutComeInfoEntityExtension on OutComeInfoEntity {
     int? playerId,
     int? moreCount,
     int? lessCount,
+    Map<String, double>? answerValue,
     bool? success,
     int? reviewsCount,
   }) {
@@ -3364,6 +3372,7 @@ extension OutComeInfoEntityExtension on OutComeInfoEntity {
       ..playerId = playerId ?? this.playerId
       ..moreCount = moreCount ?? this.moreCount
       ..lessCount = lessCount ?? this.lessCount
+      ..answerValue = answerValue ?? this.answerValue
       ..success = success ?? this.success
       ..reviewsCount = reviewsCount ?? this.reviewsCount;
   }

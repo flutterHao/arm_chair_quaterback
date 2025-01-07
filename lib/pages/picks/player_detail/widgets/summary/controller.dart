@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/entities/chart_sample_data.dart';
+import 'package:arm_chair_quaterback/common/entities/guess_data.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_game_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
@@ -91,7 +92,7 @@ class SummaryController extends GetxController {
   void onInit() {
     super.onInit();
     outComePageController = PageController(
-      viewportFraction: 321/375,
+      viewportFraction: 321 / 375,
     );
     statsScrollController.addListener(() {
       if (!statsIsScrolling.value && statsScrollController.offset > 5) {
@@ -162,7 +163,6 @@ class SummaryController extends GetxController {
 
   static String get idRecentPickTabContent => "id_recent_pick_tab_content";
 
-
   int getSeasonDate() {
     return nbaPlayerBaseInfoEntity?.playerDataAvg.seasonId ?? 1971;
   }
@@ -216,7 +216,8 @@ class SummaryController extends GetxController {
       (nbaPlayerBaseInfoEntity?.guessInfos.keys.toList()[currentIndex.value])!;
 
   String getCurrentRecentPickTabKey() =>
-      (nbaPlayerBaseInfoEntity?.guessInfos.keys.toList()[currentRecentPickIndex.value])!;
+      (nbaPlayerBaseInfoEntity?.guessInfos.keys
+          .toList()[currentRecentPickIndex.value])!;
 
   String getLast5AvgWithTab() {
     var key = getCurrentTabKey();
@@ -431,6 +432,7 @@ class SummaryController extends GetxController {
             .toList() ??
         [];
   }
+
   /// 0 未开始 1 进行中 2 已结束
   /// 超过比赛开始时间三小时就算结束
   int getGameStatus(int gameStartMilliseconds) {
@@ -451,6 +453,60 @@ class SummaryController extends GetxController {
     }
     return "${MyDateUtils.formatDateMilliseconds(gameStartMilliseconds, format: DateFormats.PARAM_Y_M_D)} ${MyDateUtils.formatHM_AM(MyDateUtils.getDateTimeByMs(gameStartMilliseconds))}   ${isFinal ? "FINAL" : ""}";
   }
+
+  List<OutCome> getOutComeWithTab() {
+    List<OutComeInfoEntity> list = nbaPlayerBaseInfoEntity?.outCome ?? [];
+    List<OutCome> fold = list.fold(<OutCome>[], (p, e) {
+      var result = CacheApi.pickType!.map((a) {
+        var key = a.pickTypeName;
+        var value = e.guessReferenceValue[key]!;
+        var guessData = e.guessData.firstWhereOrNull((g) => g.guessAttr == key);
+        return OutCome(
+            key: key,
+            awayTeamId: e.awayTeamId,
+            gameAttrValue: e.answerValue?[key],
+            guessRefValue: value,
+            gameId: e.gameId,
+            gameStartTime: e.gameStartTime,
+            reviewsCount: e.reviewsCount,
+            playerId: e.playerId,
+            guessData: guessData);
+      });
+      p.addAll(result);
+      return p;
+    });
+    List<OutCome> where = fold
+        .where((e) => e.guessData == null || e.guessData!.status != 1)
+        .toList();
+    where.sort((a, b) {
+      return b.gameStartTime.compareTo(a.gameStartTime);
+    });
+    return where;
+  }
+}
+
+class OutCome {
+  final String key;
+  final int awayTeamId;
+  final double? gameAttrValue;
+  final double guessRefValue;
+  final int gameId;
+  final int gameStartTime;
+  final int reviewsCount;
+  final int playerId;
+  final GuessData? guessData;
+
+  OutCome({
+    required this.key,
+    required this.awayTeamId,
+    required this.gameAttrValue,
+    required this.guessRefValue,
+    required this.gameId,
+    required this.gameStartTime,
+    required this.reviewsCount,
+    required this.playerId,
+    this.guessData,
+  });
 }
 
 class StatsData {

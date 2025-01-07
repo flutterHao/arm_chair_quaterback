@@ -30,6 +30,7 @@ class PlayerDetailController extends GetxController
     Future.wait([
       CacheApi.getNBAPlayerInfo(),
       CacheApi.getNBATeamDefine(getList: true),
+      CacheApi.getPickType(),
     ]).then((result) {
       baseInfo = (result[0] as NbaPlayerInfosEntity)
           .playerBaseInfoList

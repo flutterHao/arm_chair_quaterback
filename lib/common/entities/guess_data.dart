@@ -17,6 +17,7 @@ class GuessData {
   late int guessReferenceValue;
   late int guessGameAttrValue;
   late int winPro;
+  /// 1：未结算 2：已结算未领取奖励 3：已结算已领取奖励
   late int status;
 
   GuessData();

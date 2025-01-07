@@ -867,7 +867,7 @@ class _SummaryPageState extends State<SummaryPage>
                 //     ),
                 //   );
                 // }),
-                Builder(builder: (c) {
+                Builder(builder: (_) {
                   return Container(
                     margin: EdgeInsets.only(top: 9.w),
                     width: double.infinity,
@@ -891,15 +891,13 @@ class _SummaryPageState extends State<SummaryPage>
                           height: 150.w,
                           child: PageView.builder(
                               scrollDirection: Axis.horizontal,
-                              itemCount: controller
-                                  .nbaPlayerBaseInfoEntity?.outCome.length,
+                              itemCount: controller.getOutComeWithTab().length,
                               controller: PageController(
                                 viewportFraction: 324 / 375,
                               ),
                               padEnds: false,
                               itemBuilder: (context, index) {
-                                OutComeInfoEntity outComeInfoEntity = controller
-                                    .nbaPlayerBaseInfoEntity!.outCome[index];
+                                OutCome outCome = controller.getOutComeWithTab()[index];
                                 return Container(
                                   height: 96.w,
                                   width: 298.w,
@@ -929,8 +927,8 @@ class _SummaryPageState extends State<SummaryPage>
                                         children: [
                                           Row(
                                             children: [
-                                              if (outComeInfoEntity
-                                                  .guessData.isNotEmpty)
+                                              if (outCome
+                                                  .guessData != null)
                                                 Container(
                                                     margin: EdgeInsets.only(
                                                         right: 8.w),
@@ -938,17 +936,16 @@ class _SummaryPageState extends State<SummaryPage>
                                                       iconWidth: 20.w,
                                                       icon: Assets
                                                           .picksUiPicksHistoryPick,
-                                                      iconColor:
-                                                          outComeInfoEntity
-                                                                  .guessData[0]
-                                                                  .success
+                                                      iconColor: outCome
+                                                                  .guessData
+                                                                  !.success
                                                               ? AppColors
                                                                   .cE71629
                                                               : AppColors
                                                                   .c0FA76C,
                                                     )),
                                               Text(
-                                                "@${Utils.getTeamInfo(outComeInfoEntity.awayTeamId).shortEname}",
+                                                "@${Utils.getTeamInfo(outCome.awayTeamId).shortEname}",
                                                 style: 14.w5(
                                                   color: AppColors.c000000,
                                                   height: 1,
@@ -958,13 +955,13 @@ class _SummaryPageState extends State<SummaryPage>
                                               )
                                             ],
                                           ),
-                                          if (outComeInfoEntity
-                                              .guessData.isNotEmpty)
+                                          if (outCome
+                                              .guessData != null)
                                             Text(
-                                              "Result: ${outComeInfoEntity.guessData[0].guessGameAttrValue}",
+                                              "Result: ${outCome.guessData!.guessGameAttrValue}",
                                               style: 14.w5(
-                                                color: outComeInfoEntity
-                                                        .guessData[0].success
+                                                color: outCome
+                                                        .guessData!.success
                                                     ? AppColors.cE71629
                                                     : AppColors.c0FA76C,
                                                 height: 1,
@@ -974,7 +971,7 @@ class _SummaryPageState extends State<SummaryPage>
                                             )
                                           else
                                             Text(
-                                              "Result: ${outComeInfoEntity.guessReferenceValue[controller.getCurrentRecentPickTabKey()]}",
+                                              "Result: ${outCome.gameAttrValue??0}",
                                               style: 14.w5(
                                                 color: AppColors.cB3B3B3,
                                                 height: 1,
@@ -988,18 +985,17 @@ class _SummaryPageState extends State<SummaryPage>
                                       Text.rich(
                                         TextSpan(children: [
                                           TextSpan(
-                                              text: Utils.getLongName(controller
-                                                  .getCurrentRecentPickTabKey())),
-                                          if (outComeInfoEntity
-                                              .guessData.isNotEmpty)
+                                              text: Utils.getLongName(outCome.key)),
+                                          if (outCome
+                                              .guessData != null)
                                             TextSpan(
                                                 text:
-                                                    " ${outComeInfoEntity.guessData[0].guessChoice == 1 ? "MORE" : "LESS"}"),
-                                          if (outComeInfoEntity
-                                              .guessData.isNotEmpty)
+                                                    " ${outCome.guessData!.guessChoice == 1 ? "MORE" : "LESS"}"),
+                                          if (outCome
+                                              .guessData != null)
                                             TextSpan(
                                                 text:
-                                                    "${outComeInfoEntity.guessData[0].guessReferenceValue}"),
+                                                    " ${outCome.guessData!.guessReferenceValue}"),
                                         ]),
                                         style: 10.w4(
                                             color: AppColors.c000000,
@@ -1022,14 +1018,14 @@ class _SummaryPageState extends State<SummaryPage>
                                                 RouteNames.leagueLeagueDetail,
                                                 arguments: {
                                                   "gameId":
-                                                      outComeInfoEntity.gameId
+                                                      outCome.gameId
                                                 }),
                                             child: Row(
                                               children: [
                                                 Text(
                                                   controller
                                                       .formatGameStartTime(
-                                                          outComeInfoEntity
+                                                          outCome
                                                               .gameStartTime),
                                                   style: TextStyle(
                                                       color: AppColors.c000000,
@@ -1062,7 +1058,7 @@ class _SummaryPageState extends State<SummaryPage>
                                               ),
                                               6.hGap,
                                               Text(
-                                                "${outComeInfoEntity.reviewsCount}",
+                                                "${outCome.reviewsCount}",
                                                 style: 10.w4(
                                                     color: AppColors.c000000,
                                                     height: 1,
@@ -1369,24 +1365,24 @@ class _SummaryPageState extends State<SummaryPage>
                                   color: AppColors.c000000,
                                   fontFamily: FontFamily.fRobotoRegular))),
                     ),
-                  if (controller.nbaPlayerBaseInfoEntity != null &&
-                      controller.nbaPlayerBaseInfoEntity!.playerDataAvg
-                              .isNotEmpty() ==
-                          true)
-                    Container(
-                        height: 30.w,
-                        width: 77.w,
-                        padding: EdgeInsets.only(left: 16.w),
-                        decoration: BoxDecoration(
-                            border: Border(
-                          right:
-                              BorderSide(color: AppColors.cE6E6E6, width: 1.w),
-                        )),
-                        alignment: Alignment.center,
-                        child: Text("CAREER",
-                            style: 12.w4(
-                                color: AppColors.c000000,
-                                fontFamily: FontFamily.fRobotoRegular))),
+                  // if (controller.nbaPlayerBaseInfoEntity != null &&
+                  //     controller.nbaPlayerBaseInfoEntity!.playerDataAvg
+                  //             .isNotEmpty() ==
+                  //         true)
+                  // Container(
+                  //     height: 30.w,
+                  //     width: 77.w,
+                  //     padding: EdgeInsets.only(left: 16.w),
+                  //     decoration: BoxDecoration(
+                  //         border: Border(
+                  //       right:
+                  //           BorderSide(color: AppColors.cE6E6E6, width: 1.w),
+                  //     )),
+                  //     alignment: Alignment.center,
+                  //     child: Text("CAREER",
+                  //         style: 12.w4(
+                  //             color: AppColors.c000000,
+                  //             fontFamily: FontFamily.fRobotoRegular))),
                 ],
               ),
               Expanded(
@@ -1418,7 +1414,7 @@ class _SummaryPageState extends State<SummaryPage>
                                 true))
                       Builder(builder: (context) {
                         var keys = controller.getStatsKeys();
-                        var children = List.generate(4, (index) {
+                        var children = List.generate(3, (index) {
                           if (index == 0) {
                             return TableRow(
                                 decoration: BoxDecoration(
@@ -1463,36 +1459,11 @@ class _SummaryPageState extends State<SummaryPage>
                                                 FontFamily.fRobotoRegular),
                                       ));
                                 }));
-                          } else if (index == 2) {
-                            return TableRow(
-                                decoration: BoxDecoration(
-                                    border: Border(
-                                        bottom: BorderSide(
-                                            color: AppColors.cE6E6E6,
-                                            width: 1.w))),
-                                children: List.generate(keys.length, (index) {
-                                  var value = controller
-                                      .nbaPlayerBaseInfoEntity!
-                                      .playerPlayoffsMap!
-                                      .toJson()[keys[index]];
-                                  return Container(
-                                      height: 30.w,
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                        (value == null
-                                            ? "/"
-                                            : (value as num).formatToString()),
-                                        style: 14.w4(
-                                            color: AppColors.c4D4D4D,
-                                            fontFamily:
-                                                FontFamily.fRobotoRegular),
-                                      ));
-                                }));
                           } else {
                             return TableRow(
                                 children: List.generate(keys.length, (index) {
                               var value = controller
-                                  .nbaPlayerBaseInfoEntity!.playerDataAvg
+                                  .nbaPlayerBaseInfoEntity!.playerPlayoffsMap!
                                   .toJson()[keys[index].toLowerCase()];
 
                               return Container(
@@ -1508,6 +1479,51 @@ class _SummaryPageState extends State<SummaryPage>
                                   ));
                             }));
                           }
+                          // else if (index == 2) {
+                          //   return TableRow(
+                          //       decoration: BoxDecoration(
+                          //           border: Border(
+                          //               bottom: BorderSide(
+                          //                   color: AppColors.cE6E6E6,
+                          //                   width: 1.w))),
+                          //       children: List.generate(keys.length, (index) {
+                          //         var value = controller
+                          //             .nbaPlayerBaseInfoEntity!
+                          //             .playerPlayoffsMap!
+                          //             .toJson()[keys[index]];
+                          //         return Container(
+                          //             height: 30.w,
+                          //             alignment: Alignment.center,
+                          //             child: Text(
+                          //               (value == null
+                          //                   ? "/"
+                          //                   : (value as num).formatToString()),
+                          //               style: 14.w4(
+                          //                   color: AppColors.c4D4D4D,
+                          //                   fontFamily:
+                          //                       FontFamily.fRobotoRegular),
+                          //             ));
+                          //       }));
+                          // } else {
+                          //   return TableRow(
+                          //       children: List.generate(keys.length, (index) {
+                          //     var value = controller
+                          //         .nbaPlayerBaseInfoEntity!.playerDataAvg
+                          //         .toJson()[keys[index].toLowerCase()];
+                          //
+                          //     return Container(
+                          //         height: 30.w,
+                          //         alignment: Alignment.center,
+                          //         child: Text(
+                          //           (value == null
+                          //               ? "/"
+                          //               : (value as num).formatToString()),
+                          //           style: 14.w4(
+                          //               color: AppColors.c4D4D4D,
+                          //               fontFamily: FontFamily.fRobotoRegular),
+                          //         ));
+                          //   }));
+                          // }
                         }).toList();
                         return SingleChildScrollView(
                           // physics: const BouncingScrollPhysics(),

@@ -66,7 +66,6 @@ class NbaPlayerBaseInfoPlayerDataAvg {
 
   Map<String, dynamic> toJson() => $NbaPlayerBaseInfoPlayerDataAvgToJson(this);
 
-
   bool isNotEmpty() {
     return toJson().isNotEmpty;
   }
@@ -1021,7 +1020,6 @@ class NbaPlayerBaseInfoPlayerNews {
   }
 }
 
-
 @JsonSerializable()
 class OutComeInfoEntity {
   late int gameId;
@@ -1029,13 +1027,14 @@ class OutComeInfoEntity {
   late int gameStartTime;
   late int teamId;
   late List<GuessData> guessData;
-  late Map<String,double> guessReferenceValue;
+  late Map<String, double> guessReferenceValue;
   late double id;
   late double type;
   late int awayTeamId;
   late int playerId;
   late int moreCount;
   late int lessCount;
+  Map<String, double>? answerValue;
   bool? success;
   int reviewsCount = 0;
 

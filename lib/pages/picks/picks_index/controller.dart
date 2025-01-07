@@ -1,4 +1,3 @@
-import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_game_info_v2_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_param_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_top_reviews_entity.dart';
@@ -13,10 +12,8 @@ import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/enums/rank_type.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
-import 'package:arm_chair_quaterback/common/net/base/result_entity.dart';
 import 'package:arm_chair_quaterback/common/utils/click_feed_back.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
-import 'package:arm_chair_quaterback/common/utils/param_utils.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/controller.dart';
 import 'package:flutter/material.dart';

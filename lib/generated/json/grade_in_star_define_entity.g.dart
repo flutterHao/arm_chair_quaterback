@@ -42,6 +42,16 @@ GradeInStarDefineEntity $GradeInStarDefineEntityFromJson(
   if (starUpGradeCost != null) {
     gradeInStarDefineEntity.starUpGradeCost = starUpGradeCost;
   }
+  final double? zeroStarRatio = jsonConvert.convert<double>(
+      json['zeroStarRatio']);
+  if (zeroStarRatio != null) {
+    gradeInStarDefineEntity.zeroStarRatio = zeroStarRatio;
+  }
+  final double? maxStarRatio = jsonConvert.convert<double>(
+      json['maxStarRatio']);
+  if (maxStarRatio != null) {
+    gradeInStarDefineEntity.maxStarRatio = maxStarRatio;
+  }
   return gradeInStarDefineEntity;
 }
 
@@ -55,6 +65,8 @@ Map<String, dynamic> $GradeInStarDefineEntityToJson(
   data['starPotentialNum'] = entity.starPotentialNum;
   data['starUpBase'] = entity.starUpBase;
   data['starUpGradeCost'] = entity.starUpGradeCost;
+  data['zeroStarRatio'] = entity.zeroStarRatio;
+  data['maxStarRatio'] = entity.maxStarRatio;
   return data;
 }
 
@@ -67,6 +79,8 @@ extension GradeInStarDefineEntityExtension on GradeInStarDefineEntity {
     List<double>? starPotentialNum,
     List<double>? starUpBase,
     List<double>? starUpGradeCost,
+    double? zeroStarRatio,
+    double? maxStarRatio,
   }) {
     return GradeInStarDefineEntity()
       ..gradeAddWeight = gradeAddWeight ?? this.gradeAddWeight
@@ -75,6 +89,8 @@ extension GradeInStarDefineEntityExtension on GradeInStarDefineEntity {
       ..playerGrade = playerGrade ?? this.playerGrade
       ..starPotentialNum = starPotentialNum ?? this.starPotentialNum
       ..starUpBase = starUpBase ?? this.starUpBase
-      ..starUpGradeCost = starUpGradeCost ?? this.starUpGradeCost;
+      ..starUpGradeCost = starUpGradeCost ?? this.starUpGradeCost
+      ..zeroStarRatio = zeroStarRatio ?? this.zeroStarRatio
+      ..maxStarRatio = maxStarRatio ?? this.maxStarRatio;
   }
 }

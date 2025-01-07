@@ -12,6 +12,10 @@ class GradeInStarDefineEntity {
   late List<double> starPotentialNum;
   late List<double> starUpBase;
   late List<double> starUpGradeCost;
+  ///0星能力对比值
+  late double zeroStarRatio;
+  ///10星能力对比值
+  late double maxStarRatio;
 
   GradeInStarDefineEntity();
 
