@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/league.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
@@ -24,21 +27,42 @@ class ScorePageController extends GetxController {
 
   var loadStatus = LoadDataStatus.loading.obs;
 
+  bool loadDataSuccess = false;
+
+  late StreamSubscription<int> subscription;
+
   @override
   void onInit() {
     print('ScorePageController----onInit-----');
     super.onInit();
-    var startTime = time.millisecondsSinceEpoch;
-    var endTime = MyDateUtils.nextDay(time).millisecondsSinceEpoch;
-    getDataFromNet(Get.find<LeagueController>()
-            .cacheGameGuessData["${startTime}_$endTime"] ??
-        []);
+    subscription = WSInstance.netStream.listen((value) {
+      if (!loadDataSuccess) {
+        initData();
+      }
+    });
+    initData();
     Get.find<LeagueController>().guessSuccessTabKeys.listen((v) {
+      var startTime = time.millisecondsSinceEpoch;
+      var endTime = MyDateUtils.nextDay(time).millisecondsSinceEpoch;
       if (v.contains("${startTime}_$endTime")) {
         //下注成功，刷新数据，清除所有选中状态
         getDataFromNet([]);
       }
     });
+  }
+
+  @override
+  void dispose() {
+    subscription.cancel();
+    super.dispose();
+  }
+
+  void initData() {
+    var startTime = time.millisecondsSinceEpoch;
+    var endTime = MyDateUtils.nextDay(time).millisecondsSinceEpoch;
+    getDataFromNet(Get.find<LeagueController>()
+            .cacheGameGuessData["${startTime}_$endTime"] ??
+        []);
   }
 
   loading() {
@@ -70,6 +94,7 @@ class ScorePageController extends GetxController {
     }
 
     Future.wait(futures).then((result) {
+      loadDataSuccess = true;
       var list = result[0] as List<ScoresEntity>;
       if (futures.length == 4) {
         leagueController.picksDefineEntity = result[3] as PicksDefineEntity;

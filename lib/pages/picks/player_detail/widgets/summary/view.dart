@@ -876,6 +876,9 @@ class _SummaryPageState extends State<SummaryPage>
                     //   );
                     // }),
                     Builder(builder: (_) {
+                      if(controller.getOutComeWithTab().isEmpty){
+                        return const SizedBox.shrink();
+                      }
                       return Container(
                         margin: EdgeInsets.only(top: 9.w),
                         width: double.infinity,

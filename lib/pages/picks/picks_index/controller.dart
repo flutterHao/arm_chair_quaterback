@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:arm_chair_quaterback/common/entities/guess_game_info_v2_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_param_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_top_reviews_entity.dart';
@@ -10,6 +12,7 @@ import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entity/user_entiry.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/enums/rank_type.dart';
+import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/utils/click_feed_back.dart';
@@ -53,6 +56,10 @@ class PicksIndexController extends GetxController
   var maxBet = 0.0.obs; //赔率
 
   var batchDeleteOpen = false.obs;
+
+  bool loadDataSuccess = false;
+
+  late StreamSubscription<int> subscription;
 
   List<PicksPlayerV2> getChoiceGuessPlayers() {
     List<PicksPlayerV2> list = [];
@@ -210,6 +217,11 @@ class PicksIndexController extends GetxController
   @override
   void onInit() {
     super.onInit();
+    subscription = WSInstance.netStream.listen((value) {
+      if (!loadDataSuccess) {
+        _initData();
+      }
+    });
     _initData();
   }
 
@@ -224,6 +236,7 @@ class PicksIndexController extends GetxController
       PicksApi.getGuessTopReviews(),
       CacheApi.getPickType(),
     ]).then((results) {
+      loadDataSuccess = true;
       guessGamePlayers.clear();
       _count(false);
       var guessGameInfo = results[0] as GuessGameInfoV2Entity;
@@ -260,8 +273,9 @@ class PicksIndexController extends GetxController
         //排序
         item.sort((a, b) {
           // 比赛时间
-          var compareTo = a.guessInfo.gameStartTime.compareTo(b.guessInfo.gameStartTime);
-          if(compareTo != 0){
+          var compareTo =
+              a.guessInfo.gameStartTime.compareTo(b.guessInfo.gameStartTime);
+          if (compareTo != 0) {
             return compareTo;
           }
           //都使用PTS的竞猜分排序
@@ -315,21 +329,9 @@ class PicksIndexController extends GetxController
 
   static String get idGuessConfirmDialog => "id_guess_confirm_dialog";
 
-  /// 在 onInit() 之后调用 1 帧。这是进入的理想场所
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  /// 在 [onDelete] 方法之前调用。
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  /// dispose 释放内存
   @override
   void dispose() {
+    subscription.cancel();
     super.dispose();
   }
 }

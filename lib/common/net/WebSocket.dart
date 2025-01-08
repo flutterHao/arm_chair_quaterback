@@ -21,9 +21,13 @@ class WSInstance {
   static Timer? _reconnectTimer; // 重连定时器
 
   static Timer? _pingTimer; // 心跳定时器
-  static DateTime? _lastPongTime; // 记录最后一次收到 pong 的时间
+  static DateTime _lastPongTime = DateTime.now(); // 记录最后一次收到 pong 的时间
   static final _streamController =
       StreamController<ResponseMessage>.broadcast();
+
+  /// 用来当作网络状态监听器,只有连上服务器才会有通知，断开是没有通知的
+  static final _networkConnectedStreamController =
+      StreamController<int>.broadcast();
 
   WSInstance._();
 
@@ -49,7 +53,10 @@ class WSInstance {
         .listen(_onMessageReceive, onError: _onError, onDone: _onDone);
   }
 
-  static void _auth() {
+  static void _auth() async {
+    if (Get.find<HomeController>().userEntiry.teamLoginInfo == null) {
+      await Get.find<HomeController>().login();
+    }
     auth(
         Get.find<HomeController>().userEntiry.teamLoginInfo?.team?.teamId ?? 0);
   }
@@ -68,8 +75,7 @@ class WSInstance {
       ping();
 
       // 检查是否超时
-      if (_lastPongTime != null &&
-          DateTime.now().difference(_lastPongTime!).inSeconds > 15) {
+      if (DateTime.now().difference(_lastPongTime).inSeconds > 15) {
         print('没有收到 pong 响应，尝试重连');
         close(); // 如果 15 秒内没有收到 pong，则认为连接断开，进行重连
         _reconnect();
@@ -100,6 +106,11 @@ class WSInstance {
       // print('WebSocket--result--:$result');
       // log('result.serviceId--:${result.payload}');
       _streamController.sink.add(result);
+
+      /// 有此返回说明网络可以用，服务器正常
+      if (result.serviceId == Api.wsAuthAccount) {
+        _networkConnectedStreamController.sink.add(1);
+      }
     }
   }
 
@@ -131,14 +142,16 @@ class WSInstance {
 
   static Stream<ResponseMessage> get stream => _streamController.stream;
 
+  static Stream<int> get netStream => _networkConnectedStreamController.stream;
+
   static void _sendMessage(dynamic message, {String path = ""}) {
-    if(!_init){
-      throw('WSInstance not init');
+    if (!_init) {
+      throw ('WSInstance not init');
     }
-    if(_reconnectTimer?.isActive == true){
+    if (_reconnectTimer?.isActive == true) {
       print('reconnecting...');
     }
-    if(_channel == null){
+    if (_channel == null) {
       print('channel null...');
     }
     if (path != Api.wsHeartBeat) {

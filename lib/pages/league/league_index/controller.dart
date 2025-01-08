@@ -4,13 +4,13 @@ import 'package:arm_chair_quaterback/common/entities/game_schedules_info.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/league.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class GameGuess {
@@ -116,8 +116,9 @@ class LeagueController extends GetxController
   void onInit() {
     super.onInit();
     getScoreDateTime();
-    _subscription = InternetConnection().onStatusChange.listen((status) {
-      if (status == InternetStatus.connected) {
+    _subscription = WSInstance.netStream.listen((status) {
+      print('lllllll------net----');
+      if(!isLoadSuccess) {
         getScoreDateTime();
       }
     });
@@ -193,7 +194,7 @@ class LeagueController extends GetxController
       refreshController.refreshCompleted();
     }, onError: (e) {
       ErrorUtils.toast(e);
-      if (isLoadSuccess) {
+      if(isLoadSuccess){
         return;
       }
       loadStatus.value = LoadDataStatus.error;
