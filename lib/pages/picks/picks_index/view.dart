@@ -122,8 +122,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                             flex: 204,
                             child: InkWell(
                               onTap: () =>
-                                  Get.toNamed(RouteNames.picksPickRank,
-                                      id: GlobalNestedKey.PICKS),
+                                  Get.toNamed(RouteNames.picksPickRank),
                               child: Container(
                                 height: 51.w,
                                 padding: EdgeInsets.only(
