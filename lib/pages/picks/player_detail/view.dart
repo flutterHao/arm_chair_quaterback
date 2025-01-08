@@ -123,6 +123,8 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                   url: Utils.getTeamUrl(controller.teamInfo?.id),
                   width: 148.w,
                   fit: BoxFit.fitHeight,
+                  loadingWidget: const SizedBox.shrink(),
+                  errorWidget: const SizedBox.shrink(),
                 ),
               )),
           Positioned(
@@ -134,12 +136,18 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               4.hGap,
-              ImageWidget(
-                url: Utils.getPlayUrl(controller.baseInfo?.playerId),
+              SizedBox(
                 width: 134.w,
                 height: 134.w,
-                loadingWidget: const SizedBox.shrink(),
-                errorWidget: const SizedBox.shrink(),
+                child: Center(
+                  child: ImageWidget(
+                    url: Utils.getPlayUrl(controller.baseInfo?.playerId),
+                    width: 134.w,
+                    height: 134.w,
+                    // loadingWidget: const SizedBox.shrink(),
+                    errorWidget: const SizedBox.shrink(),
+                  ),
+                ),
               ),
               11.hGap,
               Expanded(
@@ -152,7 +160,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                         Container(
                           constraints: BoxConstraints(maxWidth: 169.w),
                           child: Text(
-                            "${controller.baseInfo?.elname}",
+                            controller.baseInfo?.elname??"",
                             maxLines: 3,
                             style: 21.w5(
                                 color: AppColors.cFFFFFF,
@@ -170,7 +178,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                     ),
                     5.vGap,
                     Text(
-                      "#${controller.baseInfo?.number}-${controller.baseInfo?.position} - ${controller.teamInfo?.longEname}",
+                      "#${controller.baseInfo?.number??""}-${controller.baseInfo?.position??""} - ${controller.teamInfo?.longEname??""}",
                       style: 10.w4(
                           color: AppColors.cFFFFFF,
                           height: 1,
@@ -180,7 +188,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                     Row(
                       children: [
                         _buildPlayerInfoItem(
-                            "AGE", "${controller.baseInfo?.age}"),
+                            "AGE", "${controller.baseInfo?.age??"0"}"),
                         33.hGap,
 
                         ///todo

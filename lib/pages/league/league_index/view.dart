@@ -97,53 +97,51 @@ class _LeagueIndexPageState extends State<LeagueIndexPage>
 
   // 主视图
   Widget _buildView() {
-    return Expanded(
-      child: Obx(() {
-        if (controller.loadStatus.value != LoadDataStatus.success) {
-          return SmartRefresher(
-            controller: controller.refreshController,
-            child: Center(
-              child: LoadStatusWidget(
-                loadDataStatus: controller.loadStatus.value,
-              ),
+    return Obx(() {
+      if (controller.loadStatus.value != LoadDataStatus.success) {
+        return SmartRefresher(
+          controller: controller.refreshController,
+          child: Center(
+            child: LoadStatusWidget(
+              loadDataStatus: controller.loadStatus.value,
             ),
-          );
-        }
-        return Column(
-          children: [
-            buildHeaderBar(),
-            Expanded(
-              child: ExtendedTabBarView(
-                  cacheExtent: 1,
-                  controller: controller.tabController,
-                  children: controller.getDataTimes().map((e) {
-                    return ScorePage(e);
-                  }).toList()),
-            )
-          ],
+          ),
         );
-
-        /// 顶部悬浮方案
-        return PageStorage(
-          bucket: PageStorageBucket(),
-          child: NestedScrollView(
-            floatHeaderSlivers: true,
-            headerSliverBuilder:
-                (BuildContext context, bool innerBoxIsScrolled) {
-              return <Widget>[
-                buildHeader(),
-              ];
-            },
-            body: ExtendedTabBarView(
+      }
+      return Column(
+        children: [
+          buildHeaderBar(),
+          Expanded(
+            child: ExtendedTabBarView(
                 cacheExtent: 1,
                 controller: controller.tabController,
                 children: controller.getDataTimes().map((e) {
                   return ScorePage(e);
                 }).toList()),
-          ),
-        );
-      }),
-    );
+          )
+        ],
+      );
+
+      /// 顶部悬浮方案
+      return PageStorage(
+        bucket: PageStorageBucket(),
+        child: NestedScrollView(
+          floatHeaderSlivers: true,
+          headerSliverBuilder:
+              (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              buildHeader(),
+            ];
+          },
+          body: ExtendedTabBarView(
+              cacheExtent: 1,
+              controller: controller.tabController,
+              children: controller.getDataTimes().map((e) {
+                return ScorePage(e);
+              }).toList()),
+        ),
+      );
+    });
   }
 
   SliverPersistentHeader buildHeader() {

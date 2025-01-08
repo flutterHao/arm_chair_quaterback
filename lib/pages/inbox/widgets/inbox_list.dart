@@ -28,43 +28,41 @@ class InboxList extends GetView<InboxController> {
     return GetBuilder<InboxController>(
         id: "inboxList",
         builder: (_) {
-          return Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.only(top: 24.w, left: 16.w, bottom: 15.5),
-                  decoration: const BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(color: AppColors.cD4D4D4),
-                    ),
-                  ),
-                  child: Text(
-                    "MESSAGE",
-                    style: 30.w4(
-                      fontFamily: FontFamily.fOswaldBold,
-                      height: 0.9,
-                    ),
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.only(top: 24.w, left: 16.w, bottom: 15.5),
+                decoration: const BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(color: AppColors.cD4D4D4),
                   ),
                 ),
-                Expanded(
-                  child: ListView.separated(
-                      physics: const BouncingScrollPhysics(),
-                      padding: EdgeInsets.zero,
-                      itemBuilder: (context, index) {
-                        return _buildItem(index);
-                      },
-                      separatorBuilder: (context, index) => Container(
-                            width: double.infinity,
-                            height: 0.5.w,
-                            margin: EdgeInsets.symmetric(horizontal: 16.w),
-                            color: AppColors.cD4D4D4,
-                          ),
-                      itemCount: controller.messageList.length),
+                child: Text(
+                  "MESSAGE",
+                  style: 30.w4(
+                    fontFamily: FontFamily.fOswaldBold,
+                    height: 0.9,
+                  ),
                 ),
-              ],
-            ),
+              ),
+              Expanded(
+                child: ListView.separated(
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.zero,
+                    itemBuilder: (context, index) {
+                      return _buildItem(index);
+                    },
+                    separatorBuilder: (context, index) => Container(
+                          width: double.infinity,
+                          height: 0.5.w,
+                          margin: EdgeInsets.symmetric(horizontal: 16.w),
+                          color: AppColors.cD4D4D4,
+                        ),
+                    itemCount: controller.messageList.length),
+              ),
+            ],
           );
         });
   }

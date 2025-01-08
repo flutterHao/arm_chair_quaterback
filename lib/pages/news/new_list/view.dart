@@ -117,41 +117,40 @@ class NewsListPage extends GetView<NewListController> {
       id: "newsList",
       builder: (_) {
         var hasData = controller.state.newsFlowList.isNotEmpty;
-        return Expanded(
-            child: SmartRefresher(
-              enablePullUp: true,
-              controller: controller.flowRefreshCtrl,
-              onRefresh: () => controller.getNewsFlow(isRefresh: true),
-              onLoading: () => controller.getNewsFlow(),
-              physics: const BouncingScrollPhysics(),
-              child: hasData
-                  ? ListView.separated(
-                  controller: controller.scrollController,
-                  padding: EdgeInsets.symmetric(vertical: 9.w),
-                  itemCount: controller.state.newsFlowList.length,
-                  separatorBuilder: (context, index) {
-                    return 9.vGap;
+        return SmartRefresher(
+          enablePullUp: true,
+          controller: controller.flowRefreshCtrl,
+          onRefresh: () => controller.getNewsFlow(isRefresh: true),
+          onLoading: () => controller.getNewsFlow(),
+          physics: const BouncingScrollPhysics(),
+          child: hasData
+              ? ListView.separated(
+              controller: controller.scrollController,
+              padding: EdgeInsets.symmetric(vertical: 9.w),
+              itemCount: controller.state.newsFlowList.length,
+              separatorBuilder: (context, index) {
+                return 9.vGap;
+              },
+              itemBuilder: (context, index) {
+                NewsListDetail item =
+                controller.state.newsFlowList[index];
+                return InkWell(
+                  onTap: () {
+                    controller.pageToDetail(item);
                   },
-                  itemBuilder: (context, index) {
-                    NewsListDetail item =
-                    controller.state.newsFlowList[index];
-                    return InkWell(
-                      onTap: () {
-                        controller.pageToDetail(item);
-                      },
-                      child: NewsListItem(
-                        newsDetail: item,
-                        // key: Key(item.id.toString()),
-                      ),
-                      // child: Text("sdsa"),
-                    );
-                  })
-                  : Center(child: Obx(() {
-                return LoadStatusWidget(
-                  loadDataStatus: controller.loadingStatus.value,
+                  child: NewsListItem(
+                    newsDetail: item,
+                    // key: Key(item.id.toString()),
+                  ),
+                  // child: Text("sdsa"),
                 );
-              })),
-            ));
+              })
+              : Center(child: Obx(() {
+            return LoadStatusWidget(
+              loadDataStatus: controller.loadingStatus.value,
+            );
+          })),
+        );
       },
     );
   }

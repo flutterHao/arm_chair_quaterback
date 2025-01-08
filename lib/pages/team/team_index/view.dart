@@ -112,21 +112,19 @@ class _TeamView extends GetView<TeamIndexController> {
       init: TeamIndexController(),
       id: "team_index",
       builder: (ctrl) {
-        return Expanded(
-          child: SizedBox(
-            // onRefresh: () => ctrl.onRefresh(),
-            // controller: ctrl.refreshController,
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              controller: ctrl.scrollController,
-              child: const Column(
-                children: [
-                  BeautyAndBoxView(),
-                  MatchCard(),
-                  TrainingPage(),
-                  MyTeamWidget(),
-                ],
-              ),
+        return SizedBox(
+          // onRefresh: () => ctrl.onRefresh(),
+          // controller: ctrl.refreshController,
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            controller: ctrl.scrollController,
+            child: const Column(
+              children: [
+                BeautyAndBoxView(),
+                MatchCard(),
+                TrainingPage(),
+                MyTeamWidget(),
+              ],
             ),
           ),
         );
