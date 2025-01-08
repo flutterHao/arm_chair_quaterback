@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-26 18:42:28
- * @LastEditTime: 2024-11-27 15:59:01
+ * @LastEditTime: 2025-01-08 14:54:28
  */
 import 'dart:convert';
 
@@ -10,6 +10,7 @@ import 'package:arm_chair_quaterback/common/entities/api_error_code_entity.dart'
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/base/error_entity.dart';
 import 'package:arm_chair_quaterback/common/net/base/result_entity.dart';
+import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -28,11 +29,12 @@ class ErrorUtils {
       }
       var result = _getResultByDioException(e);
       str = _getErrorDesc((result?.code ?? -1).toString());
-    }else if(e is Map){
+    } else if (e is Map) {
       var result = _getResultByMap(e);
       str = _getErrorDesc((result?.code ?? -1).toString());
     }
     EasyLoading.showToast(str);
+    Log.e(e.toString());
   }
 
   static Result? _getResultByDioException(DioException e) {
@@ -45,6 +47,7 @@ class ErrorUtils {
       return null;
     }
   }
+
   static Result? _getResultByMap(Map e) {
     try {
       return Result.fromJson(e as Map<String, dynamic>);

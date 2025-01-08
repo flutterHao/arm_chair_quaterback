@@ -1,15 +1,11 @@
-import 'dart:math';
-
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/chart_sample_data.dart';
-import 'package:arm_chair_quaterback/common/entities/game_schedules_info.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_detail_entity.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
-import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/bottom_guess_tip_widget.dart';
@@ -18,7 +14,6 @@ import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/widgets/score_page.dart';
-import 'package:arm_chair_quaterback/pages/league/league_index/widgets/score_page_controller.dart';
 import 'package:arm_chair_quaterback/pages/league/team_detail/controller.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
@@ -58,7 +53,8 @@ class _OverviewTabState extends State<OverviewTab>
                           regular:
                               controller.teamDetailEntity.regularSeasonData),
                       9.vGap,
-                      _Schedule(controller.teamDetailEntity.gameSchedules),
+                      _Schedule(controller.teamDetailEntity.gameSchedules,
+                          controller),
                       9.vGap,
                       _RecentMatch(controller
                           .teamDetailEntity.last5GameSchedule.schedule),
@@ -72,7 +68,9 @@ class _OverviewTabState extends State<OverviewTab>
                 ),
               ),
               // 竞猜选择结果底部弹框
-              const BottomGuessTipWidget(),
+              BottomGuessTipWidget(
+                bottomValue: 9.w,
+              ),
             ],
           );
         });
@@ -85,7 +83,8 @@ class _SeasonStats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> types = ["PPG", "RPG", "APG", "BPG"];
+    List<String> types = ["PPG", "RPG", "APG", "OPPG"];
+    final ctrl = Get.find<TeamDetailController>(tag: Get.arguments.toString());
     return Container(
       width: double.infinity,
       // padding: EdgeInsets.symmetric(vertical: 20.w),
@@ -123,8 +122,9 @@ class _SeasonStats extends StatelessWidget {
                       width: 93.w,
                       child: Column(children: [
                         Text(
-                          regular
-                              .getRankValue(types[index], regular)
+                          (types[index] == "OPPG"
+                                  ? ctrl.getOppg()
+                                  : regular.getRankValue(types[index], regular))
                               .toString(),
                           textAlign: TextAlign.center,
                           style: 21.w4(
@@ -142,7 +142,10 @@ class _SeasonStats extends StatelessWidget {
                         ),
                         const Expanded(child: SizedBox.shrink()),
                         Text(
-                          regular.getRank(types[index], regular),
+                          (types[index] == "OPPG"
+                                  ? Utils.getRankText(ctrl.getOppgRank())
+                                  : regular.getRank(types[index], regular))
+                              .toString(),
                           style: 12.w4(
                             color: AppColors.cFF7954,
                             height: 0.9,
@@ -164,8 +167,9 @@ class _SeasonStats extends StatelessWidget {
 }
 
 class _Schedule extends StatelessWidget {
-  const _Schedule(this.gameSchedules, {super.key});
+  const _Schedule(this.gameSchedules, this.controller, {super.key});
   final List<TeamDetailGameSchedules> gameSchedules;
+  final TeamDetailController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -193,14 +197,13 @@ class _Schedule extends StatelessWidget {
           SizedBox(
             height: 123.5.w,
             child: ListView.separated(
+                controller: controller.scrollController,
                 physics: const BouncingScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
                 itemBuilder: (context, index) {
                   var item = gameSchedules[index];
-                  var isFinal = DateTime.now()
-                      .toUtc()
-                      .isAfter(DateUtil.getDateTimeByMs(item.gameStartTime));
+
                   return Container(
                     width: 193.5.w,
                     height: 123.5.w,
@@ -224,7 +227,7 @@ class _Schedule extends StatelessWidget {
                                   height: 0.9),
                             ),
                             12.5.hGap,
-                            if (isFinal)
+                            if (item.status == 2)
                               Text(
                                 "Final",
                                 style: 12.w4(
@@ -276,13 +279,13 @@ class _Schedule extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    "SDF",
+                                    Utils.getTeamInfo(teamId).shortEname,
                                     style: 12.w4(
                                         fontFamily: FontFamily.fOswaldMedium),
                                   ),
                                   Expanded(
                                     child: Text(
-                                      !isFinal ? "-" : "$score",
+                                      item.status != 2 ? "-" : "$score",
                                       textAlign: TextAlign.right,
                                       style: 16.w4(
                                           fontFamily: FontFamily.fOswaldMedium),
@@ -668,22 +671,20 @@ class _RecentMatch extends StatelessWidget {
       double width) {
     final controller =
         Get.find<TeamDetailController>(tag: Get.arguments.toString());
-    var list = controller.teamDetailEntity.last5GameSchedule.schedule.map((e) {
-      int index =
-          controller.teamDetailEntity.last5GameSchedule.schedule.indexOf(e);
-      var item = controller.teamDetailEntity.last5GameSchedule.scoreAvg[index];
-
+    var last5 = controller.teamDetailEntity.last5GameSchedule;
+    var list = last5.schedule.map((e) {
+      int index = last5.schedule.indexOf(e);
+      var item = last5.scoreAvg[index];
       var dateStr = item.gameDate.split(",").first;
-      // var score =
-      //     e.homeTeamId == controller.teamId ? e.homeTeamScore : e.awayTeamScore;
       var score =
           (item.getValue(controller.getCurrentType()) * 10).roundToDouble() /
               10;
-      Color color = score > controller.seasonAvg()
-          ? AppColors.c000000
-          : AppColors.cD9D9D9;
+      int vsTeamId =
+          e.homeTeamId == controller.teamId ? e.awayTeamId : e.homeTeamId;
+      Color color =
+          score > controller.last5Avg() ? AppColors.c000000 : AppColors.cD9D9D9;
       return ChartSampleData(
-          x: '$dateStr\nVS ${Utils.getTeamInfo(e.awayTeamId).shortEname}',
+          x: '$dateStr\nVS ${Utils.getTeamInfo(vsTeamId).shortEname}',
           y: score,
           pointColor: color);
     }).toList();
@@ -710,7 +711,7 @@ class _RecentPick extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (pick.homeTeamId == 0) return const SizedBox();
-    DateTime time = DateUtil.getDateTimeByMs(pick.gameStartTime);
+    // DateTime time = DateUtil.getDateTimeByMs(pick.gameStartTime);
     // var date = DateTime(time.year, time.month, time.day);
     // Log.e("${time}_______" + pick.toString());
     return Container(

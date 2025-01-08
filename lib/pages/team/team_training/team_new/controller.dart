@@ -137,6 +137,7 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
       CacheApi.getStarUpDefine(),
       CacheApi.getGradeInStamina(),
       CacheApi.getCupDefine(),
+      CacheApi.getNBAPlayerInfo(),
     ]).then((v) {
       myTeamEntity = v[0] as MyTeamEntity;
       myBagList = v[1] as List<TeamPlayerInfoEntity>;

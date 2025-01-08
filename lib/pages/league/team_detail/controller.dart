@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-31 14:30:33
- * @LastEditTime: 2025-01-07 18:21:14
+ * @LastEditTime: 2025-01-08 16:26:56
  */
 import 'package:arm_chair_quaterback/common/entities/palyer_stats_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_detail_entity.dart';
@@ -15,6 +15,7 @@ import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class TeamDetailController extends GetxController
@@ -45,6 +46,7 @@ class TeamDetailController extends GetxController
     "3P%"
   ];
 
+  ScrollController scrollController = ScrollController();
   TeamDetailEntity teamDetailEntity = TeamDetailEntity();
   late TabController teamTabCtrl;
   List<StatsEntity> statTeamList = [];
@@ -82,6 +84,16 @@ class TeamDetailController extends GetxController
   void getTeamInfo() async {
     await TeamApi.getNBATeamDetail(teamId).then((v) {
       teamDetailEntity = v;
+      teamDetailEntity.gameSchedules
+          .sort((a, b) => a.gameStartTime.compareTo(b.gameStartTime));
+      for (int i = 0; i < teamDetailEntity.gameSchedules.length; i++) {
+        if (teamDetailEntity.gameSchedules[i].status != 2) {
+          double offsetx = (193.5.w + 9.w) * (i > 0 ? i - 1 : 0);
+          scrollController.jumpTo(offsetx);
+          break;
+        }
+      }
+
       update(["overview_tab"]);
     });
   }
@@ -132,7 +144,11 @@ class TeamDetailController extends GetxController
       for (var element in confRankList) {
         element.force = CacheApi.teamDefineMap?[element.teamID]?.force ?? 0;
       }
-      update(["stats"]);
+      teamDetailEntity.last5GameSchedule.schedule
+          .sort((a, b) => a.gameStartTime.compareTo(b.gameStartTime));
+      teamDetailEntity.last5GameSchedule.scoreAvg
+          .sort((a, b) => a.parseCustomDate().compareTo(b.parseCustomDate()));
+      update(["stats", "overview_tab"]);
     });
   }
 
@@ -203,5 +219,24 @@ class TeamDetailController extends GetxController
       default:
         return statPlayerList;
     }
+  }
+
+  double getOppg() {
+    for (var element in confRankList) {
+      if (teamId == element.teamID) {
+        return element.oppPointsPG;
+      }
+    }
+    return 0;
+  }
+
+  int getOppgRank() {
+    confRankList.sort((a, b) => a.oppPointsPG.compareTo(b.oppPointsPG));
+    for (int i = 0; i < confRankList.length; i++) {
+      if (teamId == confRankList[i].teamID) {
+        return i + 1;
+      }
+    }
+    return 1;
   }
 }

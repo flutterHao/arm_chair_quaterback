@@ -117,23 +117,22 @@ class LeagueController extends GetxController
     super.onInit();
     getScoreDateTime();
     _subscription = InternetConnection().onStatusChange.listen((status) {
-      if(status == InternetStatus.connected){
+      if (status == InternetStatus.connected) {
         getScoreDateTime();
       }
     });
     _appLifecycleListener = AppLifecycleListener(
-      onResume: (){
+      onResume: () {
         _subscription?.resume();
         getScoreDateTime();
       },
-          onPause: _subscription?.pause,
+      onPause: _subscription?.pause,
       onHide: _subscription?.pause,
     );
   }
 
-
   getScoreDateTime() {
-    if(loadStatus.value == LoadDataStatus.loading){
+    if (loadStatus.value == LoadDataStatus.loading) {
       return;
     }
     bool needShowLoading = !isLoadSuccess;
@@ -194,7 +193,7 @@ class LeagueController extends GetxController
       refreshController.refreshCompleted();
     }, onError: (e) {
       ErrorUtils.toast(e);
-      if(isLoadSuccess){
+      if (isLoadSuccess) {
         return;
       }
       loadStatus.value = LoadDataStatus.error;
@@ -293,7 +292,9 @@ class LeagueController extends GetxController
     cacheGameGuessData.forEach((key, e) {
       var firstWhereOrNull =
           e.firstWhereOrNull((e) => e.scoresEntity.gameId == gameId);
-      gameGuess = firstWhereOrNull;
+      if (firstWhereOrNull != null) {
+        gameGuess = firstWhereOrNull;
+      }
     });
     return gameGuess;
   }

@@ -2,11 +2,7 @@ import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.da
 import 'package:arm_chair_quaterback/common/entities/team_detail_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/last5_avg_entity.dart';
 
-import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity.dart';
-
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
-
-import 'package:arm_chair_quaterback/common/utils/utils.dart';
 
 
 TeamDetailEntity $TeamDetailEntityFromJson(Map<String, dynamic> json) {
@@ -749,6 +745,14 @@ TeamDetailLast5GameSchedule $TeamDetailLast5GameScheduleFromJson(
   if (scoreAvg != null) {
     teamDetailLast5GameSchedule.scoreAvg = scoreAvg;
   }
+  final List<Last5AvgEntity>? totalScore = (json['totalScore'] as List<
+      dynamic>?)
+      ?.map(
+          (e) => jsonConvert.convert<Last5AvgEntity>(e) as Last5AvgEntity)
+      .toList();
+  if (totalScore != null) {
+    teamDetailLast5GameSchedule.totalScore = totalScore;
+  }
   return teamDetailLast5GameSchedule;
 }
 
@@ -757,6 +761,7 @@ Map<String, dynamic> $TeamDetailLast5GameScheduleToJson(
   final Map<String, dynamic> data = <String, dynamic>{};
   data['schedule'] = entity.schedule.map((v) => v.toJson()).toList();
   data['scoreAvg'] = entity.scoreAvg.map((v) => v.toJson()).toList();
+  data['totalScore'] = entity.totalScore.map((v) => v.toJson()).toList();
   return data;
 }
 
@@ -764,10 +769,12 @@ extension TeamDetailLast5GameScheduleExtension on TeamDetailLast5GameSchedule {
   TeamDetailLast5GameSchedule copyWith({
     List<TeamDetailGameSchedules>? schedule,
     List<Last5AvgEntity>? scoreAvg,
+    List<Last5AvgEntity>? totalScore,
   }) {
     return TeamDetailLast5GameSchedule()
       ..schedule = schedule ?? this.schedule
-      ..scoreAvg = scoreAvg ?? this.scoreAvg;
+      ..scoreAvg = scoreAvg ?? this.scoreAvg
+      ..totalScore = totalScore ?? this.totalScore;
   }
 }
 

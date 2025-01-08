@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-01-07 10:55:31
- * @LastEditTime: 2025-01-07 12:08:42
+ * @LastEditTime: 2025-01-08 16:25:51
  */
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/last5_avg_entity.g.dart';
@@ -57,6 +57,7 @@ class Last5AvgEntity {
   late double fG3M = 0;
   @JSONField(name: "FTM")
   late double fTM = 0;
+  int gameDateMs = 0;
 
   Last5AvgEntity();
 
@@ -74,6 +75,36 @@ class Last5AvgEntity {
     }
 
     return toJson()[key] ?? 0;
+  }
+
+  int parseCustomDate() {
+    // 手动定义月份对应的数字
+    Map<String, int> monthMap = {
+      'JAN': 1,
+      'FEB': 2,
+      'MAR': 3,
+      'APR': 4,
+      'MAY': 5,
+      'JUN': 6,
+      'JUL': 7,
+      'AUG': 8,
+      'SEP': 9,
+      'OCT': 10,
+      'NOV': 11,
+      'DEC': 12
+    };
+
+    // 分割字符串，获取月份、日期和年份
+    List<String> parts = gameDate.split(' ');
+    String monthStr = parts[0].toUpperCase(); // 月份（如 JAN）
+    int day = int.parse(parts[1].split(',')[0]); // 日期（如 06）
+    int year = int.parse(parts[2]); // 年份（如 2025）
+
+    // 获取月份对应的数字
+    int month = monthMap[monthStr] ?? 1; // 默认返回1，如果月份不匹配
+
+    // 返回转换后的 DateTime 对象
+    return DateTime(year, month, day).microsecondsSinceEpoch;
   }
 
   @override

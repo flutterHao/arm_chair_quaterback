@@ -2,23 +2,25 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-01-04 11:25:34
- * @LastEditTime: 2025-01-04 11:47:34
+ * @LastEditTime: 2025-01-08 16:45:53
  */
-import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
-import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/pages/inbox/widgets/inbox_list.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'index.dart';
 
-class InboxPage extends GetView<InboxController> {
+class InboxPage extends StatefulWidget {
   const InboxPage({super.key});
 
+  @override
+  State<InboxPage> createState() => _InboxPageState();
+}
+
+class _InboxPageState extends State<InboxPage>
+    with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<InboxController>(
@@ -32,4 +34,7 @@ class InboxPage extends GetView<InboxController> {
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

@@ -307,6 +307,7 @@ class TeamDetailRecentPick {
 class TeamDetailLast5GameSchedule {
   late List<TeamDetailGameSchedules> schedule = [];
   late List<Last5AvgEntity> scoreAvg = [];
+  late List<Last5AvgEntity> totalScore = [];
 
   TeamDetailLast5GameSchedule();
 

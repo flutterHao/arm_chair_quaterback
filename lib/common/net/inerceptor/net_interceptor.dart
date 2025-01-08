@@ -9,14 +9,9 @@ import 'package:arm_chair_quaterback/common/net/base/result_entity.dart';
 import 'package:arm_chair_quaterback/common/net/http.dart';
 import 'package:arm_chair_quaterback/common/store/user.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
-import 'package:arm_chair_quaterback/common/utils/loading.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/pages/home/index.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-// import 'package:flutter_easyloading/flutter_easyloading.dart';
-// import 'package:get/get.dart' as getx;
 
 class NetInterceptor extends InterceptorsWrapper {
   static const other = 'unknown error';
