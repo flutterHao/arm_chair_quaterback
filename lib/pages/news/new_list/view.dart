@@ -45,7 +45,7 @@ class _NewsPageState extends State<NewsPage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-
+    return const NewsListPage();
     return Navigator(
       key: GlobalNestedKey.NewsTabGlobalKey,
       initialRoute: RouteNames.newList,

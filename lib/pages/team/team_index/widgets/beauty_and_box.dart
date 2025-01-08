@@ -165,8 +165,7 @@ class BeautyAndBoxView extends StatelessWidget {
                   right: 16.w,
                   top: 116.w,
                   child: MtInkWell(
-                    onTap: () => Get.toNamed(RouteNames.teamBeautyPage,
-                        id: GlobalNestedKey.TEAM),
+                    onTap: () => Get.toNamed(RouteNames.teamBeautyPage),
                     child: Container(
                       width: 36.w,
                       height: 36.w,

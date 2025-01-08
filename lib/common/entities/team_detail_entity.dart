@@ -1,7 +1,5 @@
 import 'package:arm_chair_quaterback/common/entities/last5_avg_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
-import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/team_detail_entity.g.dart';
 import 'dart:convert';

@@ -47,7 +47,7 @@ class _TeamIndexPageState extends State<TeamIndexPage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-
+    return const _TeamView();
     return Navigator(
       key: GlobalNestedKey.TeamTabGlobalKey,
       initialRoute: RouteNames.teamTeamIndex,

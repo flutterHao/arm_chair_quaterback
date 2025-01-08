@@ -46,6 +46,7 @@ class PicksIndex extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return const PicksIndexPageV2();
     return Navigator(
       key: GlobalNestedKey.PicksTabGlobalKey,
       initialRoute: RouteNames.picksPicksIndex,
@@ -65,34 +66,6 @@ class PicksIndex extends StatelessWidget {
                 customTransition: HalfSlideRightToLeftTransition(),
                 page: () => const ReceiveRewardPage(),
                 binding: ReciveRwardBinding());
-          case RouteNames.picksPickRank:
-            return GetPageRoute(
-                opaque: false,
-                settings: setting,
-                customTransition: HalfSlideRightToLeftTransition(),
-                page: () => const PickRankPage(),
-                binding: PickRankBinding());
-          case RouteNames.mineMineInfo:
-            return GetPageRoute(
-                opaque: false,
-                settings: setting,
-                customTransition: HalfSlideRightToLeftTransition(),
-                page: () => const MineInfoPage(),
-                binding: MineInfoBinding());
-          case RouteNames.mineMineSetting:
-            return GetPageRoute(
-                opaque: false,
-                settings: setting,
-                customTransition: HalfSlideRightToLeftTransition(),
-                page: () => const MineSettingPage(),
-                binding: MineSettingBinding());
-          case RouteNames.mineMineAccount:
-            return GetPageRoute(
-                opaque: false,
-                settings: setting,
-                customTransition: HalfSlideRightToLeftTransition(),
-                page: () => const MineAccountPage(),
-                binding: MineAccountBinding());
         }
       },
     );

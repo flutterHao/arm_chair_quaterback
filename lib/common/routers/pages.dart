@@ -15,18 +15,27 @@ import 'package:arm_chair_quaterback/pages/league/league_detail_v2/view.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/view.dart';
 import 'package:arm_chair_quaterback/pages/league/team_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/message/view.dart';
+import 'package:arm_chair_quaterback/pages/mine/mine_account/bindings.dart';
+import 'package:arm_chair_quaterback/pages/mine/mine_account/view.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_info/bindings.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_info/view.dart';
+import 'package:arm_chair_quaterback/pages/mine/mine_setting/bindings.dart';
+import 'package:arm_chair_quaterback/pages/mine/mine_setting/view.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/news_detail2.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/bindings.dart';
 import 'package:arm_chair_quaterback/pages/news/rank/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/personal_center/view.dart';
+import 'package:arm_chair_quaterback/pages/picks/pick_rank/bindings.dart';
+import 'package:arm_chair_quaterback/pages/picks/pick_rank/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_history/bindings.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_history/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
+import 'package:arm_chair_quaterback/pages/picks/recive_rward/bindings.dart';
+import 'package:arm_chair_quaterback/pages/picks/recive_rward/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_detail_page.dart';
+import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_page.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/open_box/open_box_page.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_upgrade/start_upgrade/start_upgrade_widget.dart';
@@ -139,6 +148,31 @@ class AppPages {
       opaque: false,
       name: RouteNames.inboxDetail,
       page: () => const InboxDetailPage(),
-    )
+    ),
+    GetPage(
+        opaque: false,
+        name: RouteNames.picksPickRank,
+        page: () => const PickRankPage(),
+        binding: PickRankBinding()),
+    GetPage(
+        opaque: false,
+        name: RouteNames.mineMineSetting,
+        page: () => const MineSettingPage(),
+        binding: MineSettingBinding()),
+    GetPage(
+        opaque: false,
+        name: RouteNames.mineMineAccount,
+        page: () => const MineAccountPage(),
+        binding: MineAccountBinding()),
+    GetPage(
+        opaque: false,
+        name: RouteNames.picksReciveRward,
+        page: () => const ReceiveRewardPage(),
+        binding: ReciveRwardBinding()),
+    GetPage(
+      opaque: false,
+      name: RouteNames.teamBeautyPage,
+      page: () => const BeautyPage(),
+    ),
   ];
 }
