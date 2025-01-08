@@ -31,6 +31,8 @@ class ScorePageController extends GetxController {
 
   late StreamSubscription<int> subscription;
 
+  late StreamSubscription<List> tabSubscription;
+
   @override
   void onInit() {
     print('ScorePageController----onInit-----');
@@ -41,7 +43,8 @@ class ScorePageController extends GetxController {
       }
     });
     initData();
-    Get.find<LeagueController>().guessSuccessTabKeys.listen((v) {
+    tabSubscription =
+        Get.find<LeagueController>().guessSuccessTabKeys.listen((v) {
       var startTime = time.millisecondsSinceEpoch;
       var endTime = MyDateUtils.nextDay(time).millisecondsSinceEpoch;
       if (v.contains("${startTime}_$endTime")) {
@@ -54,6 +57,7 @@ class ScorePageController extends GetxController {
   @override
   void dispose() {
     subscription.cancel();
+    tabSubscription.cancel();
     super.dispose();
   }
 

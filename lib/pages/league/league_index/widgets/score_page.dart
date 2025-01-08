@@ -123,11 +123,13 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
   Timer? timer;
   var gameStartTimeStr = "".obs;
 
+  late StreamSubscription<int> subscription;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    Get.find<HomeController>().tabIndex.listen((value) {
+    subscription = Get.find<HomeController>().tabIndex.listen((value) {
       if (value == 1) {
         setGameStartTimeStr();
       }
@@ -137,6 +139,7 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
   @override
   void dispose() {
     timer?.cancel();
+    subscription.cancel();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }

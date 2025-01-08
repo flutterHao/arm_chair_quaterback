@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -757,11 +758,19 @@ class _ScoresItemWidgetState extends State<_ScoresItemWidget>
     with SingleTickerProviderStateMixin {
   late PicksIndexController picksIndexController;
 
+  late StreamSubscription<bool> subscription;
+
   @override
   void initState() {
     super.initState();
     picksIndexController = widget.picksIndexController;
-    picksIndexController.batchDeleteOpen.listen(_listen);
+    subscription = picksIndexController.batchDeleteOpen.listen(_listen);
+  }
+
+  @override
+  void dispose() {
+    subscription.cancel();
+    super.dispose();
   }
 
   void _listen(value) {
@@ -872,11 +881,19 @@ class _PlayerItemWidgetState extends State<_PlayerItemWidget>
     with SingleTickerProviderStateMixin {
   late PicksIndexController picksIndexController;
 
+  late StreamSubscription<bool> subscription;
+
   @override
   void initState() {
     super.initState();
     picksIndexController = widget.picksIndexController;
-    picksIndexController.batchDeleteOpen.listen(_listen);
+    subscription = picksIndexController.batchDeleteOpen.listen(_listen);
+  }
+
+  @override
+  void dispose() {
+    subscription.cancel();
+    super.dispose();
   }
 
   void _listen(value) {

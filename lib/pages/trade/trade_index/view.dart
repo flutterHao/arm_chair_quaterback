@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -91,6 +92,8 @@ class _TradeIndexPageState extends State<TradeIndexPage>
     with AutomaticKeepAliveClientMixin, WidgetsBindingObserver {
   ScrollController scrollController = ScrollController();
   late TradeIndexController controller;
+
+  late StreamSubscription<int> subscription;
 
   @override
   Widget build(BuildContext context) {
@@ -1096,7 +1099,7 @@ class _TradeIndexPageState extends State<TradeIndexPage>
     super.initState();
     // 注册监听器
     WidgetsBinding.instance.addObserver(this);
-    Get.find<HomeController>().tabIndex.listen((value) {
+    subscription = Get.find<HomeController>().tabIndex.listen((value) {
       if (value == 4) {
         controller.refreshData();
       }
@@ -1106,6 +1109,7 @@ class _TradeIndexPageState extends State<TradeIndexPage>
   @override
   void dispose() {
     // 移除监听器
+    subscription.cancel();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }

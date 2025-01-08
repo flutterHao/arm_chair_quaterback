@@ -5,6 +5,8 @@
  * @LastEditTime: 2024-11-04 16:14:16
  */
 
+import 'dart:async';
+
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/widgets/delegate/fixed_height_sliver_header_delegate.dart';
@@ -97,8 +99,8 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
         child: Obx(() {
           return Center(
               child: LoadStatusWidget(
-                loadDataStatus: picksIndexController.loadStatusRx.value,
-              ));
+            loadDataStatus: picksIndexController.loadStatusRx.value,
+          ));
         }),
       );
     }
@@ -106,8 +108,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
       bucket: PageStorageBucket(),
       child: NestedScrollView(
           floatHeaderSlivers: true,
-          headerSliverBuilder: (BuildContext context,
-              bool innerBoxIsScrolled) {
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
               SliverPersistentHeader(
                 floating: true,
@@ -130,11 +131,10 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                 margin: EdgeInsets.only(top: 4.w),
                                 decoration: BoxDecoration(
                                     color: AppColors.c3B3B3B,
-                                    borderRadius: BorderRadius.circular(
-                                        9.w)),
+                                    borderRadius: BorderRadius.circular(9.w)),
                                 child: Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Row(
                                       children: [
@@ -149,19 +149,17 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                               color: AppColors.cFFFFFF,
                                               height: 1,
                                               fontFamily:
-                                              FontFamily.fOswaldMedium),
+                                                  FontFamily.fOswaldMedium),
                                         )
                                       ],
                                     ),
                                     Column(
-                                      mainAxisAlignment: MainAxisAlignment
-                                          .end,
+                                      mainAxisAlignment: MainAxisAlignment.end,
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.center,
+                                          CrossAxisAlignment.center,
                                       children: [
                                         Text(
-                                          "${picksIndexController.rankInfo
-                                              .myRank.rank ?? "--"}",
+                                          "${picksIndexController.rankInfo.myRank.rank ?? "--"}",
                                           style: 19.w4(
                                               color: AppColors.cFFFFFF,
                                               height: 1),
@@ -173,7 +171,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                               color: AppColors.cFF7954,
                                               height: 1,
                                               fontFamily:
-                                              FontFamily.fRobotoRegular),
+                                                  FontFamily.fRobotoRegular),
                                         )
                                       ],
                                     )
@@ -188,10 +186,9 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                               child: Stack(
                                 children: [
                                   InkWell(
-                                    onTap: () =>
-                                        Get.toNamed(
-                                          RouteNames.picksPicksHistory,
-                                        ),
+                                    onTap: () => Get.toNamed(
+                                      RouteNames.picksPicksHistory,
+                                    ),
                                     // Get.toNamed(
                                     //     RouteNames
                                     //         .picksPersonalCenter,
@@ -209,13 +206,13 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                     child: Container(
                                       height: 51.w,
                                       margin:
-                                      EdgeInsets.only(right: 7.w, top: 4.w),
+                                          EdgeInsets.only(right: 7.w, top: 4.w),
                                       decoration: BoxDecoration(
                                           border: Border.all(
                                               color: AppColors.c666666,
                                               width: 1),
                                           borderRadius:
-                                          BorderRadius.circular(9.w)),
+                                              BorderRadius.circular(9.w)),
                                       child: Row(
                                         children: [
                                           11.hGap,
@@ -226,15 +223,13 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                           Expanded(
                                               child: Center(
                                                   child: Text(
-                                                    "PICKS",
-                                                    style: 19.w4(
-                                                        color: AppColors
-                                                            .cFFFFFF,
-                                                        height: 1,
-                                                        fontFamily:
-                                                        FontFamily
-                                                            .fOswaldMedium),
-                                                  )))
+                                            "PICKS",
+                                            style: 19.w4(
+                                                color: AppColors.cFFFFFF,
+                                                height: 1,
+                                                fontFamily:
+                                                    FontFamily.fOswaldMedium),
+                                          )))
                                         ],
                                       ),
                                     ),
@@ -252,7 +247,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                           width: 16.w,
                                           decoration: BoxDecoration(
                                               borderRadius:
-                                              BorderRadius.circular(8.w),
+                                                  BorderRadius.circular(8.w),
                                               color: AppColors.c000000),
                                           child: Center(
                                             child: Text(
@@ -261,7 +256,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                                   color: AppColors.cF37350,
                                                   height: 1,
                                                   fontFamily:
-                                                  FontFamily.fRobotoMedium),
+                                                      FontFamily.fRobotoMedium),
                                             ),
                                           ),
                                         );
@@ -307,7 +302,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
           },
           body: ExtendedTabBarView(
               cacheExtent:
-              picksIndexController.guessGamePlayers.keys.length - 1,
+                  picksIndexController.guessGamePlayers.keys.length - 1,
               controller: picksIndexController.tabController,
               children: picksIndexController.guessGamePlayers.keys.map((e) {
                 var list = picksIndexController.guessGamePlayers[e]!;
@@ -344,6 +339,8 @@ class _TabViewItemPageState extends State<_TabViewItemPage>
     with AutomaticKeepAliveClientMixin {
   RefreshController refreshController = RefreshController();
 
+  late StreamSubscription<LoadDataStatus> subscription;
+
   SmartRefresher _buildTabViewItemPage(List<PicksPlayerV2> list) {
     return SmartRefresher(
       controller: refreshController,
@@ -366,8 +363,8 @@ class _TabViewItemPageState extends State<_TabViewItemPage>
                   top: index == 0 ? 9.w : 0,
                   bottom: lastIndex
                       ? value > 0
-                      ? 94.w
-                      : 15.w
+                          ? 94.w
+                          : 15.w
                       : 0),
               child: GuessItemV2(
                 index: index,
@@ -386,14 +383,17 @@ class _TabViewItemPageState extends State<_TabViewItemPage>
   @override
   void initState() {
     super.initState();
-    Get
-        .find<PicksIndexController>()
-        .loadStatusRx
-        .listen((v) {
+    subscription = Get.find<PicksIndexController>().loadStatusRx.listen((v) {
       if (v != LoadDataStatus.loading) {
         refreshController.refreshCompleted();
       }
     });
+  }
+
+  @override
+  void dispose() {
+    subscription.cancel();
+    super.dispose();
   }
 
   @override

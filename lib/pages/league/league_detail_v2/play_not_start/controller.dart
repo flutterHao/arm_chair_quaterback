@@ -54,15 +54,14 @@ class PlayNotStartController extends GetxController
   int hh = 0;
   int minute = 0;
 
+  late StreamSubscription<List> subscription;
+
   @override
   void onInit() {
     super.onInit();
     WidgetsBinding.instance.addObserver(this);
     initData();
-    Get
-        .find<LeagueController>()
-        .guessSuccessTabKeys
-        .listen((v) {
+    subscription = Get.find<LeagueController>().guessSuccessTabKeys.listen((v) {
       initData();
     });
     teamPropertyTabController =
@@ -89,32 +88,31 @@ class PlayNotStartController extends GetxController
     tabController?.dispose();
     scrollController.dispose();
     _timer?.cancel();
+    subscription.cancel();
     super.dispose();
   }
 
   timeCountDown() {
     _timer?.cancel();
     var gameStartTimeMs = item.gameStartTime;
-    var nowMs = DateTime
-        .now()
-        .millisecondsSinceEpoch;
+    var nowMs = DateTime.now().millisecondsSinceEpoch;
     var diff = gameStartTimeMs - nowMs;
     if (diff <= 0) {
       return;
     }
     gameStartTimesCountDown.value = diff;
-    day = gameStartTimesCountDown.value~/ 1000  ~/ 86400000;
-    hh = gameStartTimesCountDown.value ~/ 1000 %86400 ~/ 3600;
-    minute = gameStartTimesCountDown.value~/ 1000  % 3600 ~/ 60;
+    day = gameStartTimesCountDown.value ~/ 1000 ~/ 86400000;
+    hh = gameStartTimesCountDown.value ~/ 1000 % 86400 ~/ 3600;
+    minute = gameStartTimesCountDown.value ~/ 1000 % 3600 ~/ 60;
     _timer = Timer.periodic(const Duration(seconds: 1), (t) {
       var temp = gameStartTimesCountDown.value - 1000;
       if (temp <= 0) {
         t.cancel();
       } else {
         gameStartTimesCountDown.value = temp;
-        day = gameStartTimesCountDown.value~/ 1000  ~/ 86400000;
-        hh = gameStartTimesCountDown.value ~/ 1000 %86400 ~/ 3600;
-        minute = gameStartTimesCountDown.value~/ 1000  % 3600 ~/ 60;
+        day = gameStartTimesCountDown.value ~/ 1000 ~/ 86400000;
+        hh = gameStartTimesCountDown.value ~/ 1000 % 86400 ~/ 3600;
+        minute = gameStartTimesCountDown.value ~/ 1000 % 3600 ~/ 60;
       }
     });
   }
@@ -196,15 +194,11 @@ class PlayNotStartController extends GetxController
     return list;
   }
 
-
   GameGuess getGameGuess() {
     var gameGuess = GameGuess(leagueDetailPicks!.scheduleData.first);
-    Get
-        .find<LeagueController>()
-        .cacheGameGuessData
-        .forEach((key, e) {
+    Get.find<LeagueController>().cacheGameGuessData.forEach((key, e) {
       var firstWhereOrNull = e.firstWhereOrNull(
-              (e) => e.scoresEntity.gameId == gameGuess.scoresEntity.gameId);
+          (e) => e.scoresEntity.gameId == gameGuess.scoresEntity.gameId);
       if (firstWhereOrNull != null) {
         gameGuess = firstWhereOrNull;
       }
@@ -215,9 +209,7 @@ class PlayNotStartController extends GetxController
   Map<String, List<PicksPlayerV2>> getPlayerV2() {
     Map<String, List<PicksPlayerV2>> playerV2 = {};
     var res = leagueDetailPicks!.guessDataInfo;
-    var choiceGuessPlayers = Get
-        .find<PicksIndexController>()
-        .guessGamePlayers;
+    var choiceGuessPlayers = Get.find<PicksIndexController>().guessGamePlayers;
     for (int i = 0; i < res.keys.length; i++) {
       List<PicksPlayerV2> data = [];
       var key = res.keys.toList()[i];
@@ -227,8 +219,7 @@ class PlayNotStartController extends GetxController
         PicksPlayerV2? p;
         choiceGuessPlayers.forEach((k, e) {
           var firstWhereOrNull = e.firstWhereOrNull(
-                  (e) =>
-              e.tabStr == key && e.guessInfo.playerId == item.playerId);
+              (e) => e.tabStr == key && e.guessInfo.playerId == item.playerId);
           if (firstWhereOrNull != null) {
             p = firstWhereOrNull;
           }
@@ -281,5 +272,4 @@ class PlayNotStartController extends GetxController
     }
     return len;
   }
-
 }

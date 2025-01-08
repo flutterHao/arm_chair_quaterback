@@ -9,6 +9,7 @@ import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/league.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
+import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -49,6 +50,8 @@ class LeagueController extends GetxController
 
   AppLifecycleListener? _appLifecycleListener;
   StreamSubscription? _subscription;
+
+  late StreamSubscription<int> tabSubscription;
 
   List<DateTime> getDataTimes() {
     // 获取今天的日期
@@ -119,6 +122,11 @@ class LeagueController extends GetxController
     _subscription = WSInstance.netStream.listen((status) {
       print('lllllll------net----');
       if(!isLoadSuccess) {
+        getScoreDateTime();
+      }
+    });
+    tabSubscription = Get.find<HomeController>().tabIndex.listen((value){
+      if(value == 1){
         getScoreDateTime();
       }
     });
@@ -206,6 +214,7 @@ class LeagueController extends GetxController
   void dispose() {
     pageController.dispose();
     _subscription?.cancel();
+    tabSubscription.cancel();
     _appLifecycleListener?.dispose();
     super.dispose();
   }
