@@ -4,10 +4,13 @@
  * @Date: 2024-09-09 14:22:13
  * @LastEditTime: 2024-12-28 18:23:32
  */
+import 'dart:async';
+
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_source_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
@@ -36,11 +39,17 @@ class NewListController extends GetxController {
 
   RxBool showCommentDialog = true.obs;
 
+  bool loadDataSuccess = false;
+  late StreamSubscription<int> subscription;
   @override
   void onInit() {
     super.onInit();
-    CacheApi.getNewsSourceList();
-    getNewsFlow(isRefresh: true);
+    subscription = WSInstance.netStream.listen((_){
+      if(!loadDataSuccess){
+        _initData();
+      }
+    });
+    _initData();
     scrollController.addListener(() {
       if (scrollController.position.maxScrollExtent -
               scrollController.position.pixels <=
@@ -48,6 +57,17 @@ class NewListController extends GetxController {
         getNewsFlow();
       }
     });
+  }
+
+  @override
+  void dispose() {
+    subscription.cancel();
+    super.dispose();
+  }
+
+  void _initData() {
+    CacheApi.getNewsSourceList();
+    getNewsFlow(isRefresh: true);
   }
 
   Future getNewsFlow({bool isRefresh = false}) async {

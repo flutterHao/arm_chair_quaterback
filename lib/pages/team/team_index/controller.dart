@@ -11,6 +11,7 @@ import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart'
 import 'package:arm_chair_quaterback/common/entities/player_card_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
+import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
@@ -49,12 +50,15 @@ class TeamIndexController extends GetxController
 
   int step = 0;
   int selectIndex = -1;
+
   //摇动卡牌动画
   late AnimationController shakeController;
   late Animation<double> shakeAnimation;
+
   //卡牌呼吸动画
   late AnimationController breathController;
   late Animation<double> breathAnimation;
+
   //背景入场动画
   RxBool showBackground1 = false.obs;
   RxBool showBackground2 = false.obs;
@@ -62,9 +66,18 @@ class TeamIndexController extends GetxController
   Duration showBgDuration = const Duration(milliseconds: 200);
   RxBool showChangeText = false.obs;
   bool isOpen = false;
+  bool loadDataSuccess = false;
+
+  late StreamSubscription<int> subscription;
+
   @override
   void onInit() {
     super.onInit();
+    subscription = WSInstance.netStream.listen((_) {
+      if (!loadDataSuccess) {
+        _initData();
+      }
+    });
     shakeController = AnimationController(
       duration: const Duration(milliseconds: 200),
       vsync: this,
@@ -105,16 +118,29 @@ class TeamIndexController extends GetxController
   @override
   void onReady() {
     super.onReady();
-    getBattleBox();
-    getTeamInfoCup();
-    CacheApi.getPropDefine();
-    CacheApi.getCardPackDefine();
+    _initData();
   }
 
   @override
   void dispose() {
+    subscription.cancel();
     super.dispose();
     shakeController.dispose();
+  }
+
+  _initData() {
+    final trainingCtrl = Get.find<TrainingController>();
+    final teamCtrl = Get.find<TeamController>();
+    Future.wait([
+      getBattleBox(),
+      getTeamInfoCup(),
+      CacheApi.getPropDefine(),
+      CacheApi.getCardPackDefine(),
+      trainingCtrl.getData(),
+      teamCtrl.initData()
+    ]).then((v) {
+      loadDataSuccess = true;
+    });
   }
 
   void onRefresh() async {
@@ -123,6 +149,8 @@ class TeamIndexController extends GetxController
     Future.wait([
       getBattleBox(),
       getTeamInfoCup(),
+      CacheApi.getPropDefine(),
+      CacheApi.getCardPackDefine(),
       trainingCtrl.getData(),
       teamCtrl.initData()
     ]).then((v) {}).whenComplete(() {
