@@ -287,4 +287,14 @@ class LeagueController extends GetxController
     scoreList = cacheGameGuessData[cacheKey] ?? [];
     choiceSize.value = getAllChoiceData().length;
   }
+
+  GameGuess? getGameGuess(int gameId) {
+    GameGuess? gameGuess;
+    cacheGameGuessData.forEach((key, e) {
+      var firstWhereOrNull =
+          e.firstWhereOrNull((e) => e.scoresEntity.gameId == gameId);
+      gameGuess = firstWhereOrNull;
+    });
+    return gameGuess;
+  }
 }

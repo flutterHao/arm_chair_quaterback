@@ -9,6 +9,7 @@ import 'package:arm_chair_quaterback/common/entities/team_detail_entity.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
+import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/bottom_guess_tip_widget.dart';
@@ -708,10 +709,10 @@ class _RecentPick extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DateTime time = DateUtil.getDateTimeByMs(pick.gameStartTime);
-    var date = DateTime(time.year, time.month, time.day);
-    Get.put(ScorePageController(date));
     if (pick.homeTeamId == 0) return const SizedBox();
+    DateTime time = DateUtil.getDateTimeByMs(pick.gameStartTime);
+    // var date = DateTime(time.year, time.month, time.day);
+    // Log.e("${time}_______" + pick.toString());
     return Container(
       margin: EdgeInsets.only(top: 9.w),
       padding: EdgeInsets.symmetric(vertical: 25.w, horizontal: 16.w),
@@ -728,12 +729,11 @@ class _RecentPick extends StatelessWidget {
             style: 24.w4(fontFamily: FontFamily.fOswaldBold, height: 0.9),
           ),
           16.5.vGap,
-          Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12.w),
-                border: Border.all(color: AppColors.cD9D9D9),
-              ),
-              child: ScoreItemWidget(gameGuess: GameGuess(pick)))
+          ScoreItemWidget(
+              isInScoreDetail: true,
+              gameGuess:
+                  Get.find<LeagueController>().getGameGuess(pick.gameId) ??
+                      GameGuess(pick))
         ],
       ),
     );

@@ -696,6 +696,8 @@ class TrainingController extends GetxController
       await Future.delayed(const Duration(milliseconds: 500));
     }
 
+    updateScroller();
+
     ///3:道具自动加
     // taskValue.value = trainingInfo.training.taskItemCount;
     if (awads.contains(3)) {
@@ -773,22 +775,10 @@ class TrainingController extends GetxController
     }
 
     //暂时不知道重置到开始位置的原因，先重新变更成中奖位置
-    if (scrollerCtrlList.where((e) => e.offset == 0.0).length == 6) {
-      if (offsetList.isNotEmpty) {
-        for (int i = 0; i < scrollerCtrlList.length; i++) {
-          scrollerCtrlList[i].jumpTo(offsetList[i]);
-        }
-      }
-    }
+    updateScroller();
 
     Future.delayed(const Duration(milliseconds: 10), () {
-      if (scrollerCtrlList.where((e) => e.offset == 0.0).length == 6) {
-        if (offsetList.isNotEmpty) {
-          for (int i = 0; i < scrollerCtrlList.length; i++) {
-            scrollerCtrlList[i].jumpTo(offsetList[i]);
-          }
-        }
-      }
+      updateScroller();
     });
 
     // for (var element in slotsAnimlList) {
@@ -796,6 +786,16 @@ class TrainingController extends GetxController
     // }
     // getPlayerList();
     // update(["training_page"]);
+  }
+
+  void updateScroller() {
+    if (scrollerCtrlList.where((e) => e.offset == 0.0).length == 6) {
+      if (offsetList.isNotEmpty) {
+        for (int i = 0; i < scrollerCtrlList.length; i++) {
+          scrollerCtrlList[i].jumpTo(offsetList[i]);
+        }
+      }
+    }
   }
 
   void initTacticPosition() {
@@ -914,10 +914,9 @@ class TrainingController extends GetxController
           }
         }
         showStatus.value = true;
-
+        await Future.delayed(const Duration(milliseconds: 500), () {});
         // update(["playerList"]);
         for (int i = 0; i < statusScollerList.length; i++) {
-          await Future.delayed(const Duration(milliseconds: 500), () {});
           statusScroll(i, oldList[i]);
         }
 
