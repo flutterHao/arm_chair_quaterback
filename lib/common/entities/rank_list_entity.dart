@@ -34,7 +34,7 @@ class RankListMyRank {
   int? rank;
   int? updateTime;
   int? cycle;
-  int? win;
+  double? win;
 
   RankListMyRank();
 

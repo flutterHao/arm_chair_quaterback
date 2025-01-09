@@ -80,7 +80,7 @@ RankListMyRank $RankListMyRankFromJson(Map<String, dynamic> json) {
   if (cycle != null) {
     rankListMyRank.cycle = cycle;
   }
-  final int? win = jsonConvert.convert<int>(json['win']);
+  final double? win = jsonConvert.convert<double>(json['win']);
   if (win != null) {
     rankListMyRank.win = win;
   }
@@ -115,7 +115,7 @@ extension RankListMyRankExtension on RankListMyRank {
     int? rank,
     int? updateTime,
     int? cycle,
-    int? win,
+    double? win,
   }) {
     return RankListMyRank()
       ..guessCount = guessCount ?? this.guessCount

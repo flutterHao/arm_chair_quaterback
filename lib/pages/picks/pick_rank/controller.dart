@@ -25,26 +25,23 @@ class PickRankController extends GetxController
   late TabController tabController;
   List<String> tabTitles = ["Rank", "Reward"];
 
-  RankListEntity rankInfo = RankListEntity();
+  RankListEntity? rankInfo;
   List<RankAwardPropEntity> awardInfo = [];
   int minRak = 1, maxRank = 100;
 
+  ///
   var inTheRankList = false.obs;
   var tabIndex = 0.obs;
 
   var rewardDialogItemIndex = 0.obs;
 
-  var rewardOpenTime = "".obs;
-
   ///自己在榜单的什么区段
   int selfInRankListIndex = -1;
 
-  late Timer timer;
-
   //开奖剩余时间：周三周六零点开奖
-  String getRewardOpenTime() {
+  int getRewardOpenTime() {
     Duration difference = getTimeDifferenceToTarget();
-    return formatDuration(difference);
+    return difference.inMilliseconds;
   }
 
   Duration getTimeDifferenceToTarget() {
@@ -100,14 +97,6 @@ class PickRankController extends GetxController
   @override
   void onInit() {
     super.onInit();
-    rewardOpenTime.value = getRewardOpenTime();
-    timer = Timer.periodic(const Duration(seconds: 1), (t) {
-      var openTime = getTimeDifferenceToTarget();
-      if (openTime == Duration.zero) {
-        timer.cancel();
-      }
-      rewardOpenTime.value = formatDuration(openTime);
-    });
     tabController = TabController(length: tabTitles.length, vsync: this)
       ..addListener(() {
         tabIndex.value = tabController.index;
@@ -128,7 +117,8 @@ class PickRankController extends GetxController
     Future.wait([
       CacheApi.getGameRankAwardRule(),
       CacheApi.getPropDefine(),
-      PicksApi.getRedisRankInfo()
+      PicksApi.getRedisRankInfo(),
+      CacheApi.getPickDefine(),
     ]).then((result) {
       List<RankAwardEntity> rankAwardEntitys =
           result[0] as List<RankAwardEntity>;
@@ -173,14 +163,14 @@ class PickRankController extends GetxController
             RankAwardPropEntity(r, awardData, awardDataNum, awardPickData);
         awardInfo.add(rankAwardPropEntity);
       }
-      update([idAwards]);
+      update();
     });
   }
 
   void _initRankData() {
     PicksApi.getRedisRankInfo().then((result) {
       rankInfo = result;
-      inTheRankList.value = rankInfo.ranks.indexWhere((e) =>
+      inTheRankList.value = rankInfo!.ranks.indexWhere((e) =>
               e.teamId ==
               Get.find<HomeController>()
                   .userEntiry
@@ -188,7 +178,7 @@ class PickRankController extends GetxController
                   ?.team
                   ?.teamId) !=
           -1;
-      update([idRanks]);
+      update();
     });
   }
 
@@ -196,26 +186,17 @@ class PickRankController extends GetxController
 
   static String get idAwards => "awards";
 
-  /// 在 onInit() 之后调用 1 帧。这是进入的理想场所
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  /// 在 [onDelete] 方法之前调用。
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
   /// dispose 释放内存
   @override
   void dispose() {
-    timer.cancel();
     super.dispose();
   }
 
   rewardDialogItemTap(int index) {
     rewardDialogItemIndex.value = index;
+  }
+
+  num getBetRewardRank(){
+    return CacheApi.pickDefine!.betRewardRank;
   }
 }
