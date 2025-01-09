@@ -105,13 +105,13 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                       Stack(
                         children: [
                           PlayerAvatarWidget(
-                            width: 73.w,
-                            height: 93.w,
-                            radius: 9.w,
-                            playerId: player.guessInfo.playerId,
-                            backgroundColor: AppColors.cD9D9D9,
-                            tabStr: player.tabStr,
-                          ),
+                              width: 73.w,
+                              height: 93.w,
+                              radius: 9.w,
+                              playerId: player.guessInfo.playerId,
+                              backgroundColor: AppColors.cD9D9D9,
+                              tabStr: player.tabStr,
+                            ),
                           Positioned(
                               top: 4.w,
                               right: 4.w,

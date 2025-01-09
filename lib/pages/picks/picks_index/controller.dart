@@ -36,7 +36,7 @@ class PicksIndexController extends GetxController
   var isSelfInfoFloatShow = false.obs; //竞猜榜单自己的信息浮窗是否显示
   RefreshController refreshController = RefreshController();
 
-  var loadStatusRx = LoadDataStatus.loading.obs;
+  var loadStatusRx = LoadDataStatus.noData.obs;
 
   RankListEntity rankInfo = RankListEntity();
 
@@ -226,6 +226,9 @@ class PicksIndexController extends GetxController
   }
 
   void _initData() {
+    if(loadStatusRx.value == LoadDataStatus.loading){
+      return;
+    }
     loadStatusRx.value = LoadDataStatus.loading;
     Future.wait([
       PicksApi.getGuessGamesInfo(),

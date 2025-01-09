@@ -412,7 +412,7 @@
 				DEVELOPMENT_TEAM = 7568A797GY;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = ArmChairQuaterback;
+				INFOPLIST_KEY_CFBundleDisplayName = ArmChairQuarterback;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -552,7 +552,7 @@
 				DEVELOPMENT_TEAM = 7568A797GY;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = ArmChairQuaterback;
+				INFOPLIST_KEY_CFBundleDisplayName = ArmChairQuarterback;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -586,7 +586,7 @@
 				DEVELOPMENT_TEAM = 7568A797GY;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = ArmChairQuaterback;
+				INFOPLIST_KEY_CFBundleDisplayName = ArmChairQuarterback;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

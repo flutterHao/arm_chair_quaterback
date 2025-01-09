@@ -25,11 +25,18 @@ class NetInterceptor extends InterceptorsWrapper {
     if (authorization != null) {
       options.headers.addAll(authorization);
     }
+    options.extra["startMs"] = DateTime.now();
     handler.next(options);
   }
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) async {
+    var startMs = response.requestOptions.extra["startMs"];
+    if(startMs != null){
+      var milliseconds = DateTime.now().difference(startMs).inMilliseconds;
+      Log.i(
+          'url -> ${response.requestOptions.uri} \n request cost time(ms) -> $milliseconds');
+    }
     dynamic responseData =
         response.data is String ? json.decode(response.data) : response.data;
 

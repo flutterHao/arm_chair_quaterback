@@ -80,6 +80,11 @@ class LeagueController extends GetxController
     var startTime = time.millisecondsSinceEpoch;
     var endTime = MyDateUtils.nextDay(time).millisecondsSinceEpoch;
     print('scores -------->>> startTime: $startTime -> ${time.day}');
+    var key = "${startTime}_$endTime";
+    if (cacheGameGuessData.containsKey(key) &&
+        cacheGameGuessData[key]!.isNotEmpty) {
+      return;
+    }
     var futures = <Future>[
       LeagueApi.getNBAGameSchedules(startTime, endTime),
       CacheApi.getNBATeamDefine(),
@@ -99,7 +104,7 @@ class LeagueController extends GetxController
         return gameGuess;
       }).toList();
       sortScoreList();
-      cacheGameGuessData["${startTime}_$endTime"] = scoreList;
+      cacheGameGuessData[key] = scoreList;
     }, onError: (e) {});
   }
 
@@ -121,12 +126,12 @@ class LeagueController extends GetxController
     getScoreDateTime();
     _subscription = WSInstance.netStream.listen((status) {
       print('lllllll------net----');
-      if(!isLoadSuccess) {
+      if (!isLoadSuccess) {
         getScoreDateTime();
       }
     });
-    tabSubscription = Get.find<HomeController>().tabIndex.listen((value){
-      if(value == 1){
+    tabSubscription = Get.find<HomeController>().tabIndex.listen((value) {
+      if (value == 1) {
         getScoreDateTime();
       }
     });
@@ -202,7 +207,7 @@ class LeagueController extends GetxController
       refreshController.refreshCompleted();
     }, onError: (e) {
       ErrorUtils.toast(e);
-      if(isLoadSuccess){
+      if (isLoadSuccess) {
         return;
       }
       loadStatus.value = LoadDataStatus.error;

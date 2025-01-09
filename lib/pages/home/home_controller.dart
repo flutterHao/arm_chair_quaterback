@@ -26,6 +26,7 @@ import 'package:arm_chair_quaterback/common/store/user.dart';
 import 'package:arm_chair_quaterback/common/utils/device_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/pages/inbox/index.dart';
+import 'package:arm_chair_quaterback/pages/league/league_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/view.dart';
 import 'package:arm_chair_quaterback/pages/message/view.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/view.dart';
@@ -147,7 +148,6 @@ class HomeController extends GetxController {
     super.onReady();
     // UserStore.to.setToken("");
     login();
-    WSInstance.init();
     CacheApi.init();
   }
 
@@ -185,6 +185,9 @@ class HomeController extends GetxController {
     await UserStore.to.setToken(v);
     Log.d("用户=$accountName ，鉴权获取到token=$v，开始游客登陆");
     userEntiry = await UserApi.visitorLogin();
+    WSInstance.init();
+    Get.find<PicksIndexController>().preLoadData();
+    Get.find<LeagueController>().preLoadData();
     update([GetXBuilderIds.idGlobalUserEntityRefresh]);
   }
 
