@@ -32,7 +32,6 @@ class BeautyList extends GetView<BeautyController> {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
-                    // if (index == 3) return;
                     controller.beautyIndex.value = index;
                     controller.update();
                   },
@@ -96,7 +95,7 @@ class BeautyList extends GetView<BeautyController> {
                                         ))),
                               ],
                             ),
-                            if (index == 3)
+                            if (index == controller.beautyList.length - 1)
                               Container(
                                 height: 112.h,
                                 width: 79.h,

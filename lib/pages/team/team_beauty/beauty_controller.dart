@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-16 17:24:51
- * @LastEditTime: 2025-01-09 12:03:07
+ * @LastEditTime: 2025-01-09 14:12:57
  */
 import 'dart:ui';
 
@@ -15,14 +15,15 @@ import 'package:get/get.dart';
 import 'package:spine_flutter/spine_flutter.dart';
 import 'dart:async';
 
-import 'package:spine_flutter/spine_widget.dart';
-
 class BeautyController extends GetxController {
   RxInt beautyIndex = 0.obs;
   List beautyList = [
     Assets.cheerleadersUiCheerleaders02,
     Assets.cheerleadersUiCheerleaders01,
     Assets.cheerleadersUiCheerleaders03,
+    Assets.cheerleadersUiCheerleaders04,
+    Assets.cheerleadersUiCheerleaders05,
+    Assets.cheerleadersUiCheerleaders06,
     Assets.cheerleadersUiCheerleaders00,
     // Assets.teamUiBelle01,
     // Assets.teamUiBelle02,
@@ -36,10 +37,13 @@ class BeautyController extends GetxController {
     0xFFD5BD89,
     0xFFDC4258,
     0xFF3471C3,
+    0xFF913ED7,
+    0xFF3ED2D7,
+    0xFFDF592F,
     0xFF000000,
   ];
 
-  List<String> gradeList = ["S", "SR", "S+", "S"];
+  List<String> gradeList = ["S", "SR", "S+", "S", "S", "SR", "SR"];
 
   int clothingIndex = 0;
   List<String> clothingList = [

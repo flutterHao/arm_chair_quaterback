@@ -7,6 +7,9 @@ class Assets {
   static const String cheerleadersUiCheerleaders01 = 'assets/images/cheerleaders/ui_cheerleaders_01.png';
   static const String cheerleadersUiCheerleaders02 = 'assets/images/cheerleaders/ui_cheerleaders_02.png';
   static const String cheerleadersUiCheerleaders03 = 'assets/images/cheerleaders/ui_cheerleaders_03.png';
+  static const String cheerleadersUiCheerleaders04 = 'assets/images/cheerleaders/ui_cheerleaders_04.png';
+  static const String cheerleadersUiCheerleaders05 = 'assets/images/cheerleaders/ui_cheerleaders_05.png';
+  static const String cheerleadersUiCheerleaders06 = 'assets/images/cheerleaders/ui_cheerleaders_06.png';
   static const String cheerleadersUiCheerleadersIconChat = 'assets/images/cheerleaders/ui_cheerleaders_icon_chat.png';
   static const String cheerleadersUiCheerleadersIconClothing = 'assets/images/cheerleaders/ui_cheerleaders_icon_clothing.png';
   static const String cheerleadersUiCheerleadersIconFullscreen01 = 'assets/images/cheerleaders/ui_cheerleaders_icon_fullscreen_01.png';

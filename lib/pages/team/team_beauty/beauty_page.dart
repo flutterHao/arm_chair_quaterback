@@ -2,7 +2,7 @@
  * @Description: 换人换装页面
  * @Author: lihonghao
  * @Date: 2024-10-12 17:33:59
- * @LastEditTime: 2025-01-09 12:07:46
+ * @LastEditTime: 2025-01-09 14:16:49
  */
 
 import 'dart:math';
@@ -185,15 +185,24 @@ class BeautyPage extends GetView<BeautyController> {
                       Positioned(
                         top: controller.expandedGirl
                             ? 0
-                            : (controller.beautyIndex.value != 3 ? 27.5.h : 0) +
+                            : (controller.beautyIndex.value !=
+                                        controller.beautyList.length - 1
+                                    ? 27.5.h
+                                    : 0) +
                                 48.h,
                         bottom: controller.expandedGirl ? 0 : 150.h,
-                        child: Image.asset(
-                          controller.beautyList[controller.beautyIndex.value],
-                          // height: ,
-                          // width: 250.w,
-                          fit: BoxFit.fitHeight,
-                          alignment: Alignment.topCenter,
+                        child: InkWell(
+                          onTap: () {
+                            controller.expandedGirl = !controller.expandedGirl;
+                            controller.update();
+                          },
+                          child: Image.asset(
+                            controller.beautyList[controller.beautyIndex.value],
+                            // height: ,
+                            // width: 250.w,
+                            fit: BoxFit.fitHeight,
+                            alignment: Alignment.topCenter,
+                          ),
                         ),
                       ),
                       _grade(),

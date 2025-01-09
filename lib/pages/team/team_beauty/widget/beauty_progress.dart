@@ -2,7 +2,7 @@
  * @Description: 换人换装页面
  * @Author: lihonghao
  * @Date: 2024-01-08 17:33:59
- * @LastEditTime: 2025-01-09 12:11:59
+ * @LastEditTime: 2025-01-09 14:18:22
  */
 
 import 'dart:math';
@@ -65,7 +65,8 @@ class BeautyProgress extends StatelessWidget {
                     color: AppColors.cFFFFFF),
               ),
               const Expanded(child: SizedBox.shrink()),
-              if (controller.beautyIndex.value != 3)
+              if (controller.beautyIndex.value !=
+                  controller.beautyList.length - 1)
                 CircleProgressView(
                     backgroundColor: AppColors.c333333,
                     progressColor: AppColors.cFF5672,
