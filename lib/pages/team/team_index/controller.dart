@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-01-08 17:07:09
+ * @LastEditTime: 2025-01-09 17:37:50
  */
 
 import 'dart:async';
@@ -183,7 +183,7 @@ class TeamIndexController extends GetxController
 
   ///开启战斗宝箱
   void openBattleBox(int index, PlayerCardEntity card) async {
-    return;
+    // return;
     if (isOpen) return;
     isOpen = true;
     awardList = await TeamApi.opneBattleBox(index, card.playerId);

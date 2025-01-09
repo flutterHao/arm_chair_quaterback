@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 17:22:13
- * @LastEditTime: 2025-01-08 20:15:06
+ * @LastEditTime: 2025-01-09 17:47:06
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
@@ -18,6 +18,7 @@ import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/player_card.dart';
 import 'package:arm_chair_quaterback/common/widgets/vertival_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/team/illustratiions/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/widgets/linear_progress_widget.dart';
@@ -269,36 +270,45 @@ class MyTeamWidget extends StatelessWidget {
                             ),
                           ),
                           7.hGap,
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "ARCHIVE",
-                                style: 12.w4(
-                                    fontFamily: FontFamily.fRobotoRegular,
-                                    height: 0.9),
-                              ),
-                              6.5.vGap,
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  AnimatedNum(
-                                    number: 500,
-                                    milliseconds: 1000,
-                                    textStyle: 19.w4(
-                                        height: 0.75,
-                                        fontFamily: FontFamily.fOswaldMedium),
-                                  ),
-                                  SizedBox(height: 4.h),
-                                  Text(
-                                    "/500",
-                                    style: 14.w4(
-                                        height: 0.9,
-                                        fontFamily: FontFamily.fOswaldRegular),
-                                  ),
-                                ],
-                              ),
-                            ],
+                          InkWell(
+                            onTap: () {
+                              // Get.to(
+                              //   IllustratiionsPage(),
+                              //   opaque: false,
+                              // );
+                            },
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "ARCHIVE",
+                                  style: 12.w4(
+                                      fontFamily: FontFamily.fRobotoRegular,
+                                      height: 0.9),
+                                ),
+                                6.5.vGap,
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    AnimatedNum(
+                                      number: 500,
+                                      milliseconds: 1000,
+                                      textStyle: 19.w4(
+                                          height: 0.75,
+                                          fontFamily: FontFamily.fOswaldMedium),
+                                    ),
+                                    SizedBox(height: 4.h),
+                                    Text(
+                                      "/500",
+                                      style: 14.w4(
+                                          height: 0.9,
+                                          fontFamily:
+                                              FontFamily.fOswaldRegular),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                           const Expanded(child: SizedBox.shrink()),
                           IconWidget(
