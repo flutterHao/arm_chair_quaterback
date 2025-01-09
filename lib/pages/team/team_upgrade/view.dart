@@ -363,9 +363,9 @@ class TeamUpgradePage extends GetView<TeamUpgradeController> {
                                   double maxProgress =
                                       ability.selfLevel10Value / total;
                                   double baseProgress = baseValue / value;
-                                  baseProgress = baseProgress *
-                                      ability.selfLevel10Value /
-                                      total;
+                                  // baseProgress = baseProgress *
+                                  //     ability.selfLevel10Value /
+                                  //     total;
 
                                   double beforeProgress = baseProgress +
                                       ((ability.beforeValue -

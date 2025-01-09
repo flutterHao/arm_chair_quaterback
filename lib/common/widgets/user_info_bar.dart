@@ -1,6 +1,7 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
+import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/getx_builder_ids.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entity/team_login_info.dart';
@@ -154,25 +155,34 @@ class UserInfoBar extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(
-                    width: 55.w,
-                    height: 43.w,
-                    child: Stack(
-                      children: [
-                        IconWidget(
-                          iconWidth: 20.w,
-                          icon: Assets.commonUiCommonStatusBarMission01,
-                          iconColor: AppColors.c686868,
+                  ClipRRect(
+                    borderRadius:
+                        BorderRadius.only(topLeft: Radius.circular(10.w)),
+                    child: MtInkWell(
+                      onTap: () {
+                        print('day task ------ ');
+                      },
+                      child: SizedBox(
+                        width: 55.w,
+                        height: 43.w,
+                        child: Stack(
+                          children: [
+                            IconWidget(
+                              iconWidth: 20.w,
+                              icon: Assets.commonUiCommonStatusBarMission01,
+                              iconColor: AppColors.c686868,
+                            ),
+                            Positioned(
+                                bottom: 9.w,
+                                right: 10.w,
+                                child: IconWidget(
+                                  iconWidth: 14.w,
+                                  icon: Assets.commonUiCommonStatusBarMission02,
+                                  iconColor: AppColors.c23E8A9,
+                                ))
+                          ],
                         ),
-                        Positioned(
-                            bottom: 9.w,
-                            right: 10.w,
-                            child: IconWidget(
-                              iconWidth: 14.w,
-                              icon: Assets.commonUiCommonStatusBarMission02,
-                              iconColor: AppColors.c23E8A9,
-                            ))
-                      ],
+                      ),
                     ),
                   )
                 ],
