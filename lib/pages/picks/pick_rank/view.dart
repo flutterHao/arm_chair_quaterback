@@ -35,11 +35,13 @@ class PickRankPage extends GetView<PickRankController> {
             ),
             bodyWidget: Expanded(child: Builder(builder: (context) {
               if (controller.rankInfo == null) {
-                return const Center(
-                  child: LoadStatusWidget(
-                    loadDataStatus: LoadDataStatus.loading,
-                  ),
-                );
+                return Obx(() {
+                  return Center(
+                    child: LoadStatusWidget(
+                      loadDataStatus: controller.loadStatus.value,
+                    ),
+                  );
+                });
               }
               return Stack(
                 children: [
@@ -463,5 +465,4 @@ class PickRankPage extends GetView<PickRankController> {
       ),
     );
   }
-
 }
