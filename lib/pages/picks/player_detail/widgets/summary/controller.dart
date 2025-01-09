@@ -109,11 +109,10 @@ class SummaryController extends GetxController {
 
   initData() {
     loadStatus.value = LoadDataStatus.loading;
-    Future.wait([
-      CacheApi.getNBATeamDefine(),
-      CacheApi.getPickType()
-    ]).then((result) {
-      nbaPlayerBaseInfoEntity = Get.find<PlayerDetailController>().nbaPlayerBaseInfoEntity;
+    Future.wait([CacheApi.getNBATeamDefine(), CacheApi.getPickType()]).then(
+        (result) {
+      nbaPlayerBaseInfoEntity =
+          Get.find<PlayerDetailController>().nbaPlayerBaseInfoEntity;
       if (initTabStr != null) {
         var i = nbaPlayerBaseInfoEntity?.guessInfos.keys
                 .toList()
@@ -206,10 +205,9 @@ class SummaryController extends GetxController {
       (nbaPlayerBaseInfoEntity?.guessInfos.keys
           .toList()[currentRecentPickIndex.value])!;
 
-  String getLast5AvgWithTab() {
+  num getLast5AvgWithTab() {
     var key = getCurrentTabKey();
-    return (nbaPlayerBaseInfoEntity?.l5DataAvg?.getValue(key) ?? 0)
-        .formatToString();
+    return (nbaPlayerBaseInfoEntity?.l5DataAvg?.getValue(key) ?? 0);
   }
 
   _PickInfo? getPickInfo() {
@@ -386,7 +384,7 @@ class SummaryController extends GetxController {
       var monthEnName = MyDateUtils.getMonthEnName(timeByMs, short: true);
       var currentTabKey = getCurrentTabKey();
       var value = e.getValue(currentTabKey);
-      Color color = double.parse(getLast5AvgWithTab()) <= value
+      Color color = getLast5AvgWithTab().toDouble() <= value
           ? AppColors.c000000
           : AppColors.cD9D9D9;
       return ChartSampleData(

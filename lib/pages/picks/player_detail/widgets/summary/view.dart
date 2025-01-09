@@ -316,7 +316,7 @@ class _SummaryPageState extends State<SummaryPage>
                                                 ),
                                                 9.vGap,
                                                 Text(
-                                                  controller.getLast5AvgWithTab(),
+                                                  "${controller.getLast5AvgWithTab().format()}",
                                                   style: 27.w7(
                                                       height: 1,
                                                       fontFamily:
@@ -1702,19 +1702,19 @@ class _SummaryPageState extends State<SummaryPage>
 
   SfCartesianChart _buildDefaultColumnChart(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    var pickInfo = controller.getPickInfo();
+    var value = controller.getLast5AvgWithTab();
     var plotBands = <PlotBand>[];
-    if (pickInfo != null) {
+    if (value != 0) {
       var verticalTextPadding =
-          controller.getColumnMaxYValue() / 2 > pickInfo.value ? "0" : "-20";
+          controller.getColumnMaxYValue() / 2 > value ? "0" : "-20";
       plotBands = <PlotBand>[
         PlotBand(
-          start: pickInfo.value,
+          start: value,
           // 虚线的起始位置（y 值）
-          end: pickInfo.value,
+          end: value,
           // 虚线的终止位置（y 值），相同值表示一条线
           borderWidth: 1,
-          text: 'AVG \n${pickInfo.value}',
+          text: 'AVG \n$value',
           verticalTextPadding: verticalTextPadding,
           horizontalTextAlignment: TextAnchor.end,
           verticalTextAlignment: TextAnchor.middle,
@@ -1726,7 +1726,7 @@ class _SummaryPageState extends State<SummaryPage>
           borderColor: AppColors.cFF7954,
           shouldRenderAboveSeries: true,
           // 虚线的颜色
-          dashArray: const [3, 2], // 设置虚线样式：[线段长度, 间隔长度]
+          dashArray: const [2, 2], // 设置虚线样式：[线段长度, 间隔长度]
         ),
       ];
     }
@@ -1754,7 +1754,7 @@ class _SummaryPageState extends State<SummaryPage>
         // maximum: controller.getColumnMaxYValue().toDouble(),
         majorTickLines: const MajorTickLines(size: 0),
         majorGridLines: const MajorGridLines(
-            width: 1, color: AppColors.cD9D9D9, dashArray: [2, 2]),
+            width: 1, color: AppColors.cD9D9D9, dashArray: [3, 3]),
       ),
       series: controller.getDefaultColumnSeries(width),
       // tooltipBehavior: _tooltipBehavior,

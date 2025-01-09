@@ -54,13 +54,18 @@ class _OpenRewardCountDownWidgetState extends State<OpenRewardCountDownWidget> {
     int min = seconds % 3600 ~/ 60;
     int hr = seconds % 86400 ~/ 3600;
     int day = seconds ~/ 86400;
-    return Row(
-      children: [
-        _buildItem(day, "DAY",31),
-        _buildItem(hr, "HR",24),
-        _buildItem(min, "MIN",60),
-        _buildItem(sec, "SEC",60),
-      ],
+    return NotificationListener<ScrollNotification>(
+      onNotification: (_){
+        return true;
+      },
+      child: Row(
+        children: [
+          _buildItem(day, "DAY",31),
+          _buildItem(hr, "HR",24),
+          _buildItem(min, "MIN",60),
+          _buildItem(sec, "SEC",60),
+        ],
+      ),
     );
   }
 

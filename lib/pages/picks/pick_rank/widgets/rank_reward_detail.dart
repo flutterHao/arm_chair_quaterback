@@ -150,9 +150,11 @@ class RankRewardDetail extends StatelessWidget {
                                             .length, (index) {
                                       var item = controller.awardInfo[index]
                                           .awardPickData[index];
+                                      //todo 根据配置换图
                                       return _buildGiftItem(
                                           Assets.managerUiManagerGift02, "1");
                                     }),
+                                  //todo 根据配置换图
                                   _buildGiftItem(Assets.picksUiPickGift01,
                                       "${controller.awardInfo[controller.selfInRankListIndex].awardDataNum}"),
                                 ],
@@ -234,9 +236,11 @@ class RankRewardDetail extends StatelessWidget {
                                       .length, (index) {
                                 var item = controller
                                     .awardInfo[index].awardPickData[index];
+                                //todo 根据配置换图
                                 return _buildGiftItem(
                                     Assets.managerUiManagerGift02, "1");
                               }),
+                            //todo 根据配置换图
                             _buildGiftItem(Assets.picksUiPickGift01,
                                 "${controller.awardInfo[index].awardDataNum}"),
                           ],
