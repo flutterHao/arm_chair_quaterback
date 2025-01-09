@@ -20,7 +20,7 @@ class Address {
   ///内网测试地址
   static const String privateDevUrl = 'http://10.0.3.38:7007';
 
-  static const String httpBaseUrl = pubDevUrl;
+  static const String httpBaseUrl = publicDevUrl;
 
   // static const String httpBaseUrl = kReleaseMode ? privateDevUrl : personalDevUrl;
 
@@ -30,7 +30,7 @@ class Address {
   static const String wsPubDevUrl = 'ws://47.88.19.59:9003';
   static const String wsPrivateDevUrl = 'ws://10.0.3.38:9005';
 
-  static const String wsBaseUrl = wsPubDevUrl;
+  static const String wsBaseUrl = wsPublicDevUrl;
 
   static const String imgBaseUrl =
       "https://seaball-1324211645.cos.ap-guangzhou.myqcloud.com/";
