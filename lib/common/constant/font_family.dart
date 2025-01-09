@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-11 16:11:36
- * @LastEditTime: 2024-11-27 15:47:36
+ * @LastEditTime: 2025-01-09 10:06:19
  */
 ///
 ///@auther gejiahui
@@ -15,4 +15,5 @@ class FontFamily {
   static const fOswaldMedium = "Oswald-Medium";
   static const fOswaldBold = "Oswald-Bold";
   static const fOswaldRegular = "Oswald-Regular";
+  static const fCalcioDemo = "Calcio-Demo";
 }

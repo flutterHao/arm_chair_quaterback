@@ -18,21 +18,21 @@ import 'package:flutter/material.dart';
 /// @date 2024/9/9
 /// @description 可设置颜色和旋转的图标
 class IconWidget extends StatelessWidget {
-  const IconWidget({
-    super.key,
-    required this.iconWidth,
-    this.iconHeight,
-    required this.icon,
-    this.backgroudWitdh,
-    this.backgroudheight,
-    this.borderRadius,
-    this.iconColor,
-    this.backgroudColor,
-    this.border,
-    // this.rotation = 0.0,
-    this.rotateAngle,
-    this.fit,
-  });
+  const IconWidget(
+      {super.key,
+      required this.iconWidth,
+      this.iconHeight,
+      required this.icon,
+      this.backgroudWitdh,
+      this.backgroudheight,
+      this.borderRadius,
+      this.iconColor,
+      this.backgroudColor,
+      this.border,
+      // this.rotation = 0.0,
+      this.rotateAngle,
+      this.fit,
+      this.alignment = Alignment.center});
 
   final double iconWidth;
   final double? iconHeight;
@@ -46,6 +46,7 @@ class IconWidget extends StatelessWidget {
   // final double rotation; // 添加旋转角度
   final double? rotateAngle;
   final BoxFit? fit;
+  final Alignment alignment;
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +55,7 @@ class IconWidget extends StatelessWidget {
       child: Container(
         width: backgroudWitdh,
         height: backgroudheight,
-        alignment: Alignment.center,
+        alignment: alignment,
         decoration: BoxDecoration(
           border: border,
           color: backgroudColor,

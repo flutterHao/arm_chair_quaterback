@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:22:47
- * @LastEditTime: 2024-12-20 14:15:28
+ * @LastEditTime: 2025-01-08 19:32:03
  */
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
@@ -133,7 +133,7 @@ class RecoverItem extends GetView<TeamController> {
                 width: 68.w,
                 height: 6.w,
                 progress: item.power / 100,
-                progressColor: AppColors.cDFB523,
+                progressColor: Utils.getProgressColor(item.power),
               ),
               4.hGap,
               AnimatedNum(

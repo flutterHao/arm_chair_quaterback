@@ -2,7 +2,7 @@
  * @Description: 球员头像卡片
  * @Author: lihonghao
  * @Date: 2024-11-18 12:23:44
- * @LastEditTime: 2024-11-26 20:34:13
+ * @LastEditTime: 2025-01-08 19:20:30
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -11,6 +11,7 @@ import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
+import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:common_utils/common_utils.dart';
@@ -29,6 +30,7 @@ class PlayerCard extends StatelessWidget {
     this.iconBgColor,
     required this.isMyPlayer,
     this.onTap,
+    this.status,
   });
 
   final int playerId;
@@ -37,6 +39,7 @@ class PlayerCard extends StatelessWidget {
   final Color? iconBgColor;
   final bool isMyPlayer;
   final Function? onTap;
+  final int? status;
 
   @override
   Widget build(BuildContext context) {
@@ -65,14 +68,14 @@ class PlayerCard extends StatelessWidget {
             ),
             if (!ObjectUtil.isEmpty(score))
               Positioned(
-                left: 4.4.w,
-                top: 5.5.w,
-                child: Text(
-                  "${Utils.getPlayBaseInfo(playerId).playerScore}",
-                  style: 16.w4(
+                left: 3.5.w,
+                top: 4.w,
+                child: OutlinedText(
+                  text: Utils.getPlayBaseInfo(playerId).grade,
+                  textStyle: 21.w4(
                     color: AppColors.c262626,
-                    height: 0.75,
-                    fontFamily: FontFamily.fOswaldMedium,
+                    height: 0.8,
+                    fontFamily: FontFamily.fRobotoBlack,
                   ),
                 ),
               ),
@@ -93,6 +96,23 @@ class PlayerCard extends StatelessWidget {
                 ),
               ),
             ),
+            if (!ObjectUtil.isEmpty(status))
+              Positioned(
+                  top: 23.5.w,
+                  left: 2.5.w,
+                  child: Column(
+                    children: [
+                      IconWidget(
+                          iconWidth: 13.5.w, icon: Utils.getStatusUrl(status)),
+                      2.vGap,
+                      if (Utils.getPlayBaseInfo(playerId).injuries)
+                        IconWidget(
+                          iconWidth: 11.w,
+                          icon: Assets.commonUiCommonIconInjury,
+                        )
+                    ],
+                  )),
+            // if (Utils.getPlayBaseInfo(playerId).injuries)
           ],
         ),
       ),

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-31 15:05:53
- * @LastEditTime: 2025-01-07 16:41:18
+ * @LastEditTime: 2025-01-08 16:55:00
  */
 import 'dart:math';
 
@@ -35,32 +35,38 @@ class _LogTabState extends State<LogTab> with AutomaticKeepAliveClientMixin {
   bool get wantKeepAlive => true;
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-        padding: EdgeInsets.zero,
-        itemCount: controller.yearList.length,
-        separatorBuilder: (context, index) {
-          return Container(
-            height: 1,
-            width: double.infinity,
-            color: AppColors.cD1D1D1,
-          );
-        },
-        itemBuilder: (context, index) {
-          return Theme(
-            data: ThemeData(
-              dividerColor: AppColors.cTransparent,
-            ),
-            child: ExpansionTile(
-                title: Text(
-                  controller.yearList[index],
-                  style: 24.w4(
-                    fontFamily: FontFamily.fOswaldBold,
-                    color: AppColors.c262626,
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 9.w),
+      child: ListView.separated(
+          physics: const BouncingScrollPhysics(),
+          padding: EdgeInsets.zero,
+          itemCount: controller.yearList.length,
+          separatorBuilder: (context, index) {
+            return Container(
+              height: 1,
+              width: double.infinity,
+              color: AppColors.cD1D1D1,
+            );
+          },
+          itemBuilder: (context, index) {
+            return Theme(
+              data: ThemeData(
+                dividerColor: AppColors.cTransparent,
+              ),
+              child: ExpansionTile(
+                  backgroundColor: Colors.white,
+                  collapsedBackgroundColor: Colors.white,
+                  title: Text(
+                    controller.yearList[index],
+                    style: 24.w4(
+                      fontFamily: FontFamily.fOswaldBold,
+                      color: AppColors.c262626,
+                    ),
                   ),
-                ),
-                children: [_Item()]),
-          );
-        });
+                  children: [_Item()]),
+            );
+          }),
+    );
   }
 }
 

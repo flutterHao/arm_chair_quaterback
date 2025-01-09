@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-17 18:13:43
- * @LastEditTime: 2024-12-30 15:45:23
+ * @LastEditTime: 2025-01-08 17:13:41
  */
 import 'dart:math';
 
@@ -166,8 +166,9 @@ class OpenBoxPage extends GetView<TeamIndexController> {
             AnimatedArrow(
               end: -5.w,
               child: IconWidget(
-                iconWidth: 20.h,
-                icon: Assets.iconUiIconShrink,
+                iconWidth: 12.h,
+                icon: Assets.commonUiCommonIconSystemArrow,
+                rotateAngle: -90,
                 iconColor: AppColors.cFF7954,
               ),
             ),

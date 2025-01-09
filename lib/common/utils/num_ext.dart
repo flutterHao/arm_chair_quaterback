@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-13 11:33:27
- * @LastEditTime: 2024-12-18 17:46:15
+ * @LastEditTime: 2025-01-08 18:10:49
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -30,7 +30,7 @@ extension NumExt on num {
   //     color: color);
 
   TextStyle w4(
-          {Color color = AppColors.c262626,
+          {Color color = AppColors.c000000,
           TextOverflow? overflow,
           double? height,
           String? fontFamily}) =>
@@ -48,7 +48,7 @@ extension NumExt on num {
           fontFamily: fontFamily);
 
   TextStyle w5(
-          {Color color = AppColors.c262626,
+          {Color color = AppColors.c000000,
           TextOverflow? overflow,
           double? height,
           String? fontFamily}) =>
@@ -66,7 +66,7 @@ extension NumExt on num {
           fontFamily: fontFamily);
 
   TextStyle w7(
-          {Color color = AppColors.c262626,
+          {Color color = AppColors.c000000,
           TextOverflow? overflow,
           double? height,
           String? fontFamily}) =>
@@ -97,8 +97,9 @@ extension NumExt on num {
 
   num format() {
     var stringAsFixed = toStringAsFixed(1);
-    var source = stringAsFixed.endsWith(".0") ? toInt().toString() : stringAsFixed;
-    if(!source.contains(".")){
+    var source =
+        stringAsFixed.endsWith(".0") ? toInt().toString() : stringAsFixed;
+    if (!source.contains(".")) {
       return int.parse(source);
     }
     return double.parse(source);

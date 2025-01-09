@@ -1,3 +1,9 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-12-20 18:34:19
+ * @LastEditTime: 2025-01-08 17:15:17
+ */
 import 'package:flutter/material.dart';
 
 class AnimatedArrow extends StatefulWidget {
@@ -21,7 +27,7 @@ class _AnimatedArrowState extends State<AnimatedArrow>
 
     // 初始化 AnimationController
     _controller = AnimationController(
-      duration: const Duration(seconds: 1), // 动画持续时间
+      duration: const Duration(milliseconds: 600), // 动画持续时间
       vsync: this,
     );
 

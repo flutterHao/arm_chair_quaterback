@@ -95,6 +95,10 @@ Last5AvgEntity $Last5AvgEntityFromJson(Map<String, dynamic> json) {
   if (fTM != null) {
     last5AvgEntity.fTM = fTM;
   }
+  final int? gameDateMs = jsonConvert.convert<int>(json['gameDateMs']);
+  if (gameDateMs != null) {
+    last5AvgEntity.gameDateMs = gameDateMs;
+  }
   return last5AvgEntity;
 }
 
@@ -123,6 +127,7 @@ Map<String, dynamic> $Last5AvgEntityToJson(Last5AvgEntity entity) {
   data['GAME_DATE'] = entity.gameDate;
   data['FG3M'] = entity.fG3M;
   data['FTM'] = entity.fTM;
+  data['gameDateMs'] = entity.gameDateMs;
   return data;
 }
 
@@ -151,6 +156,7 @@ extension Last5AvgEntityExtension on Last5AvgEntity {
     String? gameDate,
     double? fG3M,
     double? fTM,
+    int? gameDateMs,
   }) {
     return Last5AvgEntity()
       ..bLK = bLK ?? this.bLK
@@ -175,6 +181,7 @@ extension Last5AvgEntityExtension on Last5AvgEntity {
       ..tOV = tOV ?? this.tOV
       ..gameDate = gameDate ?? this.gameDate
       ..fG3M = fG3M ?? this.fG3M
-      ..fTM = fTM ?? this.fTM;
+      ..fTM = fTM ?? this.fTM
+      ..gameDateMs = gameDateMs ?? this.gameDateMs;
   }
 }

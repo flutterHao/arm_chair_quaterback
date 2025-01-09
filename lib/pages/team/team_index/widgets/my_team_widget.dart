@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 17:22:13
- * @LastEditTime: 2024-12-23 20:55:03
+ * @LastEditTime: 2025-01-08 20:15:06
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
@@ -11,6 +11,7 @@ import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
@@ -109,54 +110,212 @@ class MyTeamWidget extends StatelessWidget {
                 ],
               ),
             ),
-            20.vGap,
+            14.vGap,
             Container(
               margin: EdgeInsets.symmetric(horizontal: 16.w),
               color: AppColors.c666666.withOpacity(0.3),
               height: 1.w,
             ),
-            15.vGap,
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 29.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "SALARY CAP",
-                    style: 16.w4(
-                      fontFamily: FontFamily.fOswaldMedium,
-                      height: 0.75,
-                    ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
+            9.vGap,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                28.5.hGap,
+                Expanded(
+                  flex: 194,
+                  child: Stack(
                     children: [
-                      Text(
-                        "${Utils.formatMoney(ctrl.myTeamEntity.salary)}/${Utils.formatMoney(ctrl.myTeamEntity.salaryCap)}",
-                        style: 16.w4(
-                          fontFamily: FontFamily.fOswaldMedium,
-                          height: 0.75,
+                      Container(
+                        margin: EdgeInsets.only(top: 4.w),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  "SALARY CAP",
+                                  style: 12.w4(
+                                      color: AppColors.c000000,
+                                      fontFamily: FontFamily.fRobotoRegular,
+                                      height: 0.9),
+                                ),
+                              ],
+                            ),
+                            6.5.vGap,
+                            // const Expanded(child: SizedBox.shrink()),
+                            Row(
+                              children: [
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    AnimatedNum(
+                                      number: ctrl.myTeamEntity.salary,
+                                      isMoney: true,
+                                      milliseconds: 1000,
+                                      textStyle: 19.w4(
+                                          height: 0.75,
+                                          fontFamily: FontFamily.fOswaldMedium),
+                                    ),
+                                    SizedBox(height: 4.h),
+                                    Text(
+                                      "/${Utils.formatMoney(ctrl.myTeamEntity.salaryCap)}",
+                                      style: 14.w4(
+                                          height: 0.9,
+                                          fontFamily:
+                                              FontFamily.fOswaldRegular),
+                                    ),
+                                  ],
+                                ),
+                                9.5.hGap,
+                                SizedBox(
+                                  width: 71.w,
+                                  child: Stack(
+                                    children: [
+                                      CustomLinearProgressBar(
+                                          width: 71.w,
+                                          height: 6.w,
+                                          progressColor: ctrl
+                                                      .myTeamEntity.salary >
+                                                  ctrl.myTeamEntity.salaryCap
+                                              ? AppColors.cD60D20
+                                              : AppColors.c000000,
+                                          backgroundColor: AppColors.cFFFFFF,
+                                          progress: ctrl.myTeamEntity.salary /
+                                              ctrl.myTeamEntity.salaryCap),
+                                      Container(
+                                        width: 71.w,
+                                        height: 6.w,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(3.w),
+                                            border: Border.all(
+                                                width: 0.5,
+                                                color: AppColors.c666666)),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            10.vGap,
+                          ],
                         ),
                       ),
-                      6.vGap,
-                      CustomLinearProgressBar(
-                        progress: ctrl.myTeamEntity.salary /
-                            ctrl.myTeamEntity.salaryCap,
-                        width: 113.w,
-                        height: 6.w,
-                        progressColor: ctrl.myTeamEntity.salary >
-                                ctrl.myTeamEntity.salaryCap
-                            ? AppColors.cD60D20
-                            : null,
-                      )
+                      if (ctrl.myTeamEntity.salary >
+                              ctrl.myTeamEntity.salaryCap &&
+                          ctrl.current.value == 0)
+                        Positioned(
+                          top: 0.w,
+                          left: 90.w,
+                          child: Container(
+                            width: 32.w,
+                            // height: 16.5.w,
+                            padding: EdgeInsets.symmetric(vertical: 2.w),
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                color: AppColors.cD60D20,
+                                borderRadius: BorderRadius.circular(4.w)),
+                            child: Text(
+                              "MAX",
+                              style: 12.w4(
+                                  color: AppColors.cFFFFFF,
+                                  fontFamily: FontFamily.fOswaldMedium,
+                                  height: 1),
+                            ),
+                          ),
+                        )
                     ],
                   ),
-                ],
-              ),
+                ),
+                Container(width: 1, height: 42.w, color: AppColors.cD1D1D1),
+                Expanded(
+                    flex: 148,
+                    child: Container(
+                      margin: EdgeInsets.only(top: 2.w),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          5.5.hGap,
+                          SizedBox(
+                            width: 40.w,
+                            height: 40,
+                            child: Stack(
+                              children: [
+                                IconWidget(
+                                    iconWidth: 31.5.w,
+                                    icon: Assets.managerUiManagerIconArchive),
+                                Positioned(
+                                    left: 0,
+                                    top: 0,
+                                    child: Container(
+                                      width: 16.w,
+                                      height: 16.w,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(8.w),
+                                          color: AppColors.cFF7954),
+                                      child: Text(
+                                        "99",
+                                        style: 10.w4(
+                                            fontFamily:
+                                                FontFamily.fOswaldMedium,
+                                            height: 1,
+                                            color: AppColors.cFFFFFF),
+                                      ),
+                                    )),
+                              ],
+                            ),
+                          ),
+                          7.hGap,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "ARCHIVE",
+                                style: 12.w4(
+                                    fontFamily: FontFamily.fRobotoRegular,
+                                    height: 0.9),
+                              ),
+                              6.5.vGap,
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  AnimatedNum(
+                                    number: 500,
+                                    milliseconds: 1000,
+                                    textStyle: 19.w4(
+                                        height: 0.75,
+                                        fontFamily: FontFamily.fOswaldMedium),
+                                  ),
+                                  SizedBox(height: 4.h),
+                                  Text(
+                                    "/500",
+                                    style: 14.w4(
+                                        height: 0.9,
+                                        fontFamily: FontFamily.fOswaldRegular),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          const Expanded(child: SizedBox.shrink()),
+                          IconWidget(
+                            iconWidth: 14.w,
+                            icon: Assets.iconUiIconArrows04,
+                            iconColor: AppColors.c000000,
+                            rotateAngle: -90,
+                          )
+                        ],
+                      ),
+                    )),
+                23.5.hGap,
+              ],
             ),
             Container(
               width: 367.w,
-              height: 318.w,
+              height: 330.w,
               margin: EdgeInsets.only(top: 18.w),
               decoration: const BoxDecoration(
                 image: DecorationImage(
@@ -168,26 +327,26 @@ class MyTeamWidget extends StatelessWidget {
                 alignment: Alignment.topCenter,
                 children: [
                   Positioned(
-                    top: 28.5.w,
+                    top: 16.w,
                     child: PlayerCardWidget(position: 1),
                   ),
                   Positioned(
-                    top: 73.5.w,
+                    top: 61.w,
                     left: 27.w,
                     child: PlayerCardWidget(position: 2),
                   ),
                   Positioned(
-                    top: 73.5.w,
+                    top: 61.w,
                     right: 27.w,
                     child: PlayerCardWidget(position: 3),
                   ),
                   Positioned(
-                    top: 195.5.w,
+                    top: 198.w,
                     left: 87.w,
                     child: PlayerCardWidget(position: 4),
                   ),
                   Positioned(
-                    top: 195.5.w,
+                    top: 198.w,
                     right: 87.w,
                     child: PlayerCardWidget(position: 5),
                   )
@@ -268,15 +427,23 @@ class PlayerCardWidget extends GetView<TeamController> {
           playerId: player.playerId,
           score: Utils.getPlayBaseInfo(player.playerId).playerScore,
           isMyPlayer: true,
+          status: player.playerStatus,
           onTap: () => Get.toNamed(RouteNames.teamTeamUpgrade,
               arguments: {"player": player}),
         ),
-        5.vGap,
+        3.5.vGap,
         Text(
           Utils.getPlayBaseInfo(player.playerId).ename,
           style: 12.w4(fontFamily: FontFamily.fOswaldMedium, height: 0.75),
         ),
-        5.5.vGap,
+        4.5.vGap,
+        OutLineProgressWidget(
+          width: 68.w,
+          height: 6.w,
+          progress: player.power / 100,
+          progressColor: Utils.getProgressColor(player.power),
+        ),
+        3.5.vGap,
         Text(
           Utils.getPlayBaseInfo(player.playerId).position,
           style: 10.w4(fontFamily: FontFamily.fRobotoRegular, height: 0.75),

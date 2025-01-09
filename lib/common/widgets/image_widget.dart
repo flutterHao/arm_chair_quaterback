@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-09 17:29:19
- * @LastEditTime: 2024-11-27 21:28:58
+ * @LastEditTime: 2025-01-08 20:50:59
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
@@ -46,7 +46,7 @@ class ImageWidget extends StatelessWidget {
           height: height,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: color??AppColors.cE6E6E,
+            color: color ?? AppColors.cE6E6E,
             borderRadius: borderRadius,
           ),
           child: imageFailedPath != null
@@ -71,7 +71,7 @@ class ImageWidget extends StatelessWidget {
               height: height,
               alignment: Alignment.center,
               child: CircularProgressIndicator(
-                color: color??AppColors.cE6E6E6,
+                color: color ?? AppColors.cE6E6E6,
                 strokeWidth: 2,
               )),
     );
@@ -109,7 +109,7 @@ class ImageWidget extends StatelessWidget {
       alignment: alignment ?? Alignment.center,
       borderRadius: borderRadius,
       shape: BoxShape.rectangle,
-      
+
       clearMemoryCacheWhenDispose: false,
       loadStateChanged: (ExtendedImageState state) {
         switch (state.extendedImageLoadState) {

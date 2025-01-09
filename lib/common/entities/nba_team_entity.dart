@@ -1,3 +1,9 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-09-20 20:31:52
+ * @LastEditTime: 2025-01-08 19:26:49
+ */
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/nba_team_entity.g.dart';
 import 'dart:convert';
@@ -12,6 +18,7 @@ class NbaTeamEntity {
   late String shortEname = "";
   late String shortName = "";
   late int teamDivision = 0;
+  late int nbaId = 0;
 
   NbaTeamEntity();
 

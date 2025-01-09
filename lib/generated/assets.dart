@@ -3,6 +3,18 @@ class Assets {
   Assets._();
 
   static const String assetsSpineNv1 = 'assets/spine/nv_1.atlas';
+  static const String cheerleadersUiCheerleaders00 = 'assets/images/cheerleaders/ui_cheerleaders_00.jpg';
+  static const String cheerleadersUiCheerleaders01 = 'assets/images/cheerleaders/ui_cheerleaders_01.png';
+  static const String cheerleadersUiCheerleaders02 = 'assets/images/cheerleaders/ui_cheerleaders_02.png';
+  static const String cheerleadersUiCheerleaders03 = 'assets/images/cheerleaders/ui_cheerleaders_03.png';
+  static const String cheerleadersUiCheerleadersIconChat = 'assets/images/cheerleaders/ui_cheerleaders_icon_chat.png';
+  static const String cheerleadersUiCheerleadersIconClothing = 'assets/images/cheerleaders/ui_cheerleaders_icon_clothing.png';
+  static const String cheerleadersUiCheerleadersIconFullscreen01 = 'assets/images/cheerleaders/ui_cheerleaders_icon_fullscreen_01.png';
+  static const String cheerleadersUiCheerleadersIconFullscreen02 = 'assets/images/cheerleaders/ui_cheerleaders_icon_fullscreen_02.png';
+  static const String cheerleadersUiCheerleadersIconIntimacy = 'assets/images/cheerleaders/ui_cheerleaders_icon_intimacy.png';
+  static const String cheerleadersUiCheerleadersIconPhoto = 'assets/images/cheerleaders/ui_cheerleaders_icon_photo.png';
+  static const String cheerleadersUiCheerleadersIconShow = 'assets/images/cheerleaders/ui_cheerleaders_icon_show.png';
+  static const String cheerleadersUiCheerleadersIconType01 = 'assets/images/cheerleaders/ui_cheerleaders_icon_type_01.png';
   static const String common100 = 'assets/images/Common/100.png';
   static const String commonUiCommonArrow = 'assets/images/Common/ui_common_arrow.png';
   static const String commonUiCommonCountdown = 'assets/images/Common/ui_common_countdown.png';
@@ -58,6 +70,7 @@ class Assets {
   static const String commonUiCommonTabBottom04On = 'assets/images/Common/ui_common_tab_bottom_04_on.png';
   static const String commonUiCommonTabBottom05Off = 'assets/images/Common/ui_common_tab_bottom_05_off.png';
   static const String commonUiCommonTabBottom05On = 'assets/images/Common/ui_common_tab_bottom_05_on.png';
+  static const String fontsCalcioDemo = 'assets/fonts/Calcio-Demo.ttf';
   static const String fontsOswaldBold = 'assets/fonts/Oswald-Bold.ttf';
   static const String fontsOswaldMedium = 'assets/fonts/Oswald-Medium.ttf';
   static const String fontsOswaldRegular = 'assets/fonts/Oswald-Regular.ttf';

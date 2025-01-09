@@ -2,11 +2,12 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-16 17:24:51
- * @LastEditTime: 2024-12-30 15:57:51
+ * @LastEditTime: 2025-01-09 12:03:07
  */
 import 'dart:ui';
 
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
+import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/animtion_love.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,13 +20,26 @@ import 'package:spine_flutter/spine_widget.dart';
 class BeautyController extends GetxController {
   RxInt beautyIndex = 0.obs;
   List beautyList = [
-    Assets.teamUiBelle01,
-    Assets.teamUiBelle02,
-    Assets.teamUiBelle03,
-    Assets.teamUiBelle04,
-    Assets.teamUiBelle05,
-    Assets.teamUiBelle06
+    Assets.cheerleadersUiCheerleaders02,
+    Assets.cheerleadersUiCheerleaders01,
+    Assets.cheerleadersUiCheerleaders03,
+    Assets.cheerleadersUiCheerleaders00,
+    // Assets.teamUiBelle01,
+    // Assets.teamUiBelle02,
+    // Assets.teamUiBelle03,
+    // Assets.teamUiBelle04,
+    // Assets.teamUiBelle05,
+    // Assets.teamUiBelle06
   ];
+
+  List<int> backgroundColor = [
+    0xFFD5BD89,
+    0xFFDC4258,
+    0xFF3471C3,
+    0xFF000000,
+  ];
+
+  List<String> gradeList = ["S", "SR", "S+", "S"];
 
   int clothingIndex = 0;
   List<String> clothingList = [
@@ -45,6 +59,7 @@ class BeautyController extends GetxController {
   late SpineWidgetController spineWidgetController;
   final List<AnimationLove> hearts = [];
   bool compeleted = true;
+  bool expandedGirl = false;
 
   @override
   void onInit() {

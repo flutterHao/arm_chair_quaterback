@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-16 17:13:31
- * @LastEditTime: 2024-10-21 16:43:51
+ * @LastEditTime: 2025-01-08 20:32:51
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -44,16 +44,16 @@ class BeautyDetailPage extends GetView<BeautyController> {
                     alignment: Alignment.topLeft),
           ),
         ),
-        Positioned(
-          top: 28.w,
-          left: 21.w,
-          child: heartAndCard(2),
-        ),
-        Positioned(
-          bottom: 275.w,
-          left: 31.5.w,
-          child: beautyInfo(color: AppColors.cF2F2F2),
-        ),
+        // Positioned(
+        //   top: 28.w,
+        //   left: 21.w,
+        //   child: heartAndCard(2),
+        // ),
+        // Positioned(
+        //   bottom: 275.w,
+        //   left: 31.5.w,
+        //   child: beautyInfo(color: AppColors.cF2F2F2),
+        // ),
         Obx(() {
           return AnimatedPositioned(
             duration: const Duration(milliseconds: 200),

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-14 15:06:14
- * @LastEditTime: 2024-11-24 17:27:37
+ * @LastEditTime: 2025-01-08 20:58:23
  */
 import 'dart:math';
 
@@ -118,7 +118,7 @@ class _CircleProgressViewState extends State<CircleProgressView>
       height: widget.height,
       padding: const EdgeInsets.all(2),
       decoration: BoxDecoration(
-        color: AppColors.cEEEEEE,
+        // color: widget.backgroundColor,
         borderRadius: BorderRadius.circular(widget.width / 2),
       ),
       child: CustomPaint(
@@ -134,7 +134,7 @@ class _CircleProgressViewState extends State<CircleProgressView>
           alignment: Alignment.center,
           margin: const EdgeInsets.all(3),
           decoration: BoxDecoration(
-            color: AppColors.cFFFFFF,
+            // color: widget.backgroundColor,
             borderRadius: BorderRadius.circular(widget.width / 2),
           ),
           child: widget.child,
