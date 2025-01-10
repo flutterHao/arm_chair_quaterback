@@ -56,7 +56,8 @@ class _WheelWidgetState extends State<WheelWidget>
         vsync: this,
         begin: 0,
         end: size * 4,
-        duration: const Duration(milliseconds: 300 * 4),curve: Curves.easeOut);
+        duration: const Duration(milliseconds: 300 * 4),
+        curve: Curves.easeOut);
     cornerItemIndexList = [
       0,
       widget.rowCount - 1,
@@ -75,14 +76,15 @@ class _WheelWidgetState extends State<WheelWidget>
   }
 
   startWheel() {
-    if(animationController.controller.isAnimating){
+    if (animationController.controller.isAnimating) {
       return;
     }
     Random random = Random();
-    var nextInt = random.nextInt(4)+3;
-    animationController.set(0, size * nextInt+nextInt,curve: Curves.easeOut,duration: const Duration(milliseconds: 800*5));
+    var nextInt = random.nextInt(4) + 3;
+    animationController.set(0, size * nextInt + nextInt,
+        curve: Curves.easeOut, duration: const Duration(milliseconds: 800 * 5));
     isActiveStatus = true;
-    animationController.forward(from: 0).then((_){
+    animationController.forward(from: 0).then((_) {
       /// 动画结束 开启其他动画
       // Future.de
     });
@@ -127,8 +129,7 @@ class _WheelWidgetState extends State<WheelWidget>
         } else {
           borderRadius = BorderRadius.circular(widget.radius);
         }
-        double left = 0,
-            top = 0;
+        double left = 0, top = 0;
         double w = widget.itemWidth + 3.w;
         double h = widget.itemHeight + 3.w;
         if (index <= cornerItemIndexList[1]) {
@@ -150,28 +151,67 @@ class _WheelWidgetState extends State<WheelWidget>
             top: top,
             child: Obx(() {
               //todo 选中状态
-              int value = (animationController.value.value%size).toInt();
-              var isSelect = (index == value && isActiveStatus);
-              return Container(
-                width: widget.itemWidth,
-                height: widget.itemHeight,
-                decoration: BoxDecoration(
-                  color: isSelect?AppColors.cFFFFFF:AppColors.c000000,
-                  borderRadius: borderRadius,
-                  boxShadow: isSelect?[
-                    BoxShadow(
-                      color: AppColors.cFF7954,
-                      offset: const Offset(0, 0),
-                      blurRadius: 3.w,
-                      spreadRadius: 1.w,
-                    )
-                  ]:[],
-                  border: Border.all(
-                    color: isSelect?AppColors.cFF7954:AppColors.c4c4c4c,
-                    width: isSelect?2.w:1.w,
+              int value = (animationController.value.value % size).toInt();
+              var isFirstSelect = (index == value && isActiveStatus);
+              var isSecondSelect = (index == value - 1 && isActiveStatus);
+              var isThirdSelect = (index == value - 2 && isActiveStatus);
+              var isFourSelect = (index == value - 3 && isActiveStatus);
+              Color bgColor, borderColor,shadowColor;
+              if (isFirstSelect) {
+                bgColor = AppColors.cFFFFFF;
+                borderColor = AppColors.cFF7954;
+                shadowColor = AppColors.cFF7954;
+              } else if (isSecondSelect) {
+                bgColor = AppColors.cFFFFFF.withOpacity(0.8);
+                borderColor = AppColors.cFF7954.withOpacity(0.8);
+                shadowColor = AppColors.cFF7954.withOpacity(0.8);
+              } else if (isThirdSelect) {
+                bgColor = AppColors.cFFFFFF.withOpacity(0.6);
+                borderColor = AppColors.cFF7954.withOpacity(0.6);
+                shadowColor = AppColors.cFF7954.withOpacity(0.6);
+              } else if (isFourSelect) {
+                bgColor = AppColors.cFFFFFF.withOpacity(0.4);
+                borderColor = AppColors.cFF7954.withOpacity(0.4);
+                shadowColor = AppColors.cFF7954.withOpacity(0.4);
+              }else {
+                bgColor = AppColors.c000000;
+                borderColor = AppColors.c4c4c4c;
+                shadowColor = AppColors.c000000;
+              }
+              return Stack(
+                children: [
+                  Container(
+                    width: widget.itemWidth,
+                    height: widget.itemHeight,
+                    decoration: BoxDecoration(
+                      boxShadow: isFirstSelect || isSecondSelect || isThirdSelect
+                          ? [
+                        BoxShadow(
+                          color: shadowColor,
+                          offset: const Offset(0, 0),
+                          blurRadius: 3.w,
+                          spreadRadius: 1.w,
+                        )
+                      ]
+                          : [],
+                    ),
                   ),
-                ),
-                child: widget.builder(index),
+                  Container(
+                    width: widget.itemWidth,
+                    height: widget.itemHeight,
+                    decoration: BoxDecoration(
+                      color: bgColor,
+                      borderRadius: borderRadius,
+                      border: Border.all(
+                        color: borderColor,
+                        width: isFirstSelect || isSecondSelect || isThirdSelect
+                            ? 2.w
+                            : 1.w,
+                      ),
+                    ),
+                    child: widget.builder(index),
+                  ),
+                ],
               );
             }));
       }),
