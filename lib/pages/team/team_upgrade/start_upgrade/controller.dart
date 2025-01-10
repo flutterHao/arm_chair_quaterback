@@ -1,5 +1,4 @@
 import 'package:arm_chair_quaterback/common/entities/all_team_players_by_up_star_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/grade_in_star_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/star_up_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_up_star_vo_entity.dart';
@@ -78,9 +77,7 @@ class StartUpgradeController extends GetxController {
       playerBaseInfo = Utils.getPlayBaseInfo(player.playerId);
       var gradeInStarDefineEntity = CacheApi.gradeInStars!
           .firstWhere((e) => e.playerGrade == playerBaseInfo.grade);
-      double starUpBase = player.breakThroughGrade == 0
-          ? 0 // 零星球员
-          : gradeInStarDefineEntity.starUpBase[player.breakThroughGrade - 1];
+      double starUpBase = gradeInStarDefineEntity.starUpBase[player.breakThroughGrade];
       ppUpValue.value =
           starUpBase * (1 + starUpDefineEntity.getPotantialMax() / 100);
       var selfBaseInfo = Utils.getPlayBaseInfo(player.playerId);
