@@ -71,12 +71,15 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
                                   ],
                                 ),
                               )
-                            : Text(
-                                "WAITING",
-                                style: 12.w4(
-                                  color: AppColors.c262626,
-                                  height: 1,
-                                  fontFamily: FontFamily.fRobotoRegular,
+                            : Positioned(
+                                bottom: 10.w,
+                                child: Text(
+                                  "WAITING",
+                                  style: 12.w4(
+                                    color: AppColors.c262626,
+                                    height: 1,
+                                    fontFamily: FontFamily.fRobotoRegular,
+                                  ),
                                 ),
                               ),
                       if (item.status == 1)

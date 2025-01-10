@@ -2,7 +2,7 @@
  * @Description: 换人换装页面
  * @Author: lihonghao
  * @Date: 2024-10-12 17:33:59
- * @LastEditTime: 2025-01-10 19:24:59
+ * @LastEditTime: 2025-01-10 20:38:27
  */
 
 import 'dart:math';
@@ -152,8 +152,11 @@ class BeautyPage extends GetView<BeautyController> {
               init: BeautyController(),
               builder: (_) {
                 return Container(
-                  color: Color(
-                      controller.backgroundColor[controller.beautyIndex.value]),
+                  decoration: BoxDecoration(
+                    color: Color(controller
+                        .backgroundColor[controller.beautyIndex.value]),
+                    border: Border.all(width: 0),
+                  ),
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
