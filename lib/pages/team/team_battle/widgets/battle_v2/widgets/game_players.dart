@@ -77,7 +77,7 @@ class GamePlayersWidget extends GetView<TeamBattleV2Controller> {
       GameEvent? event, List<PkPlayerUpdatedPlayers> homeTeamPlayerList) {
     return List.generate(5, (index) {
       var list = homeTeamPlayerList;
-      PkPlayerUpdatedPlayers? item = index>=list.length-1?null:list[index];
+      PkPlayerUpdatedPlayers? item = index>list.length-1?null:list[index];
       var active = event != null &&
           event.isHomePlayer &&
           item?.playerId == event.playerId;
