@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lihonghao
  * @Date: 2024-12-26 20:30:27
- * @LastEditTime: 2024-12-26 21:15:22
+ * @LastEditTime: 2025-01-10 16:53:36
  */
 
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
@@ -33,6 +33,7 @@ class _AnimationLoveState extends State<AnimationLove>
   late Animation<Offset> _offsetAnimation;
   late Animation<double> _rotationAnimation;
   late Animation<double> _shakeAnimation;
+  late Animation<double> _scaleAnimation;
 
   @override
   void initState() {
@@ -83,6 +84,13 @@ class _AnimationLoveState extends State<AnimationLove>
       ),
     );
 
+    _scaleAnimation = Tween(begin: 1.0, end: 0.3).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Curves.easeInOut,
+      ),
+    );
+
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         widget.onCompleted();
@@ -117,15 +125,18 @@ class _AnimationLoveState extends State<AnimationLove>
           top: offset.dy - 15 + verticalShake,
           child: Opacity(
             opacity: _animation.value,
-            child: RotationTransition(
-              turns: _rotationAnimation,
-              // child: const Icon(
-              //   Icons.favorite,
-              //   color: Colors.red,
-              //   size: 30,
-              // ),
-              child: IconWidget(
-                  iconWidth: 40.w, icon: Assets.commonUiCommonIconHeart),
+            child: ScaleTransition(
+              scale: _scaleAnimation,
+              child: RotationTransition(
+                turns: _rotationAnimation,
+                // child: const Icon(
+                //   Icons.favorite,
+                //   color: Colors.red,
+                //   size: 30,
+                // ),
+                child: IconWidget(
+                    iconWidth: 54.w, icon: Assets.commonUiCommonIconHeart),
+              ),
             ),
           ),
         );

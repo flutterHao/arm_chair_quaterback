@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-01-09 15:57:09
- * @LastEditTime: 2025-01-10 14:16:50
+ * @LastEditTime: 2025-01-10 17:56:47
  */
 import 'dart:math';
 
@@ -32,7 +32,7 @@ class IllustratiionsPage extends GetView<IllustratiionsController> {
       builder: (_) {
         return const HorizontalDragBackWidget(
           child: BlackAppWidget(
-            const UserInfoBar(),
+            UserInfoBar(showPop: true),
             bodyWidget: Expanded(
               child: SingleChildScrollView(
                 child: Column(

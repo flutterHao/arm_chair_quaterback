@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-21 20:20:49
- * @LastEditTime: 2025-01-10 15:21:15
+ * @LastEditTime: 2025-01-10 17:59:22
  */
 import 'dart:async';
 import 'dart:io';
@@ -398,5 +398,13 @@ class Utils {
     }
 
     return "$rank$suffix";
+  }
+
+  static String getBoxImageUrl(int cardId) {
+    if (CacheApi.cardPackDefineMap[cardId] != null) {
+      String cardName = CacheApi.cardPackDefineMap[cardId]!.cardPackIcon;
+      return "assets/images/manager/$cardName.png";
+    }
+    return Assets.managerUiManagerGift03;
   }
 }

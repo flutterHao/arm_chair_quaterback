@@ -1,3 +1,4 @@
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -14,6 +15,14 @@ import 'package:get/get.dart';
 
 class BattleBoxWidget extends GetView<TeamIndexController> {
   const BattleBoxWidget({super.key});
+
+  Widget _cardPackImage(int cardId) {
+    return Image.asset(
+      Utils.getBoxImageUrl(cardId),
+      width: 80.w,
+      fit: BoxFit.fitWidth,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,114 +42,93 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
                 itemBuilder: (context, index) {
                   var item = controller.cardPackInfo.card[index];
                   Widget child = const SizedBox.shrink();
-                  if (item.status == 2) {
-                    child = Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          Assets.managerUiManagerGift03,
-                          width: 61.w,
-                          fit: BoxFit.fitWidth,
-                        ),
-                        3.vGap,
-                        IconWidget(
-                          iconWidth: 5.w,
-                          icon: Assets.iconUiIconShrink,
-                          iconColor: AppColors.cFF7954,
-                        ),
-                        3.vGap,
-                        Text(
-                          "OPEN",
-                          style: 16.w4(
-                            color: AppColors.cFF7954,
-                            height: 1,
-                            fontFamily: FontFamily.fOswaldMedium,
-                          ),
-                        )
-                      ],
-                    );
-                  } else if (item.status == 1) {
-                    child = Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          Assets.managerUiManagerGift01,
-                          width: 61.w,
-                          fit: BoxFit.fitWidth,
-                        ),
-                        // 9.vGap,
-                        Obx(() {
-                          return Column(
-                            children: [
-                              Text(
-                                item.remainTime.value,
-                                style: 12.w4(
-                                  color: AppColors.c262626,
-                                  height: 1,
-                                  fontFamily: FontFamily.fRobotoRegular,
-                                ),
-                              ),
-                              5.vGap,
-                              CustomLinearProgressBar(
-                                progress: item.progress,
-                                height: 6.w,
-                                width: 68.w,
-                                milliseconds: 1000,
-                                backgroundColor: AppColors.ccccccc,
-                                progressColor: AppColors.c262626,
-                              ),
-                            ],
-                          );
-                        })
-                      ],
-                    );
-                  } else if (item.status == 0) {
-                    child = noWait
-                        ? Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                Assets.managerUiManagerGift03,
-                                width: 61.w,
-                                fit: BoxFit.fitWidth,
-                              ),
-                              3.vGap,
-                              IconWidget(
-                                iconWidth: 5.w,
-                                icon: Assets.iconUiIconShrink,
-                                iconColor: AppColors.c000000,
-                              ),
-                              3.vGap,
-                              Text(
-                                "UNLOCK",
-                                style: 16.w4(
-                                  color: AppColors.c000000,
-                                  height: 1,
-                                  fontFamily: FontFamily.fOswaldMedium,
+                  child = Stack(
+                    alignment: Alignment.topCenter,
+                    children: [
+                      Positioned(top: 3.w, child: _cardPackImage(item.cardId)),
+                      if (item.status == 0)
+                        noWait
+                            ? Positioned(
+                                bottom: 10.w,
+                                child: Column(
+                                  children: [
+                                    IconWidget(
+                                      iconWidth: 5.w,
+                                      icon: Assets.iconUiIconShrink,
+                                      iconColor: AppColors.c000000,
+                                    ),
+                                    3.vGap,
+                                    Text(
+                                      "UNLOCK",
+                                      style: 16.w4(
+                                        color: AppColors.c000000,
+                                        height: 1,
+                                        fontFamily: FontFamily.fOswaldMedium,
+                                      ),
+                                    )
+                                  ],
                                 ),
                               )
-                            ],
-                          )
-                        : Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                Assets.managerUiManagerGift02,
-                                width: 61.w,
-                                fit: BoxFit.fitWidth,
-                              ),
-                              // 15.vGap,
-                              Text(
+                            : Text(
                                 "WAITING",
                                 style: 12.w4(
                                   color: AppColors.c262626,
                                   height: 1,
                                   fontFamily: FontFamily.fRobotoRegular,
                                 ),
+                              ),
+                      if (item.status == 1)
+                        Obx(() {
+                          return Positioned(
+                            bottom: 10.w,
+                            child: Column(
+                              children: [
+                                Text(
+                                  item.remainTime.value,
+                                  style: 12.w4(
+                                    color: AppColors.c262626,
+                                    height: 1,
+                                    fontFamily: FontFamily.fRobotoRegular,
+                                  ),
+                                ),
+                                5.vGap,
+                                CustomLinearProgressBar(
+                                  progress: item.progress,
+                                  height: 6.w,
+                                  width: 68.w,
+                                  milliseconds: 1000,
+                                  backgroundColor: AppColors.ccccccc,
+                                  progressColor: AppColors.c262626,
+                                ),
+                              ],
+                            ),
+                          );
+                        }),
+                      if (item.status == 2)
+                        Positioned(
+                          bottom: 10.w,
+                          child: Column(
+                            children: [
+                              IconWidget(
+                                iconWidth: 5.w,
+                                icon: Assets.iconUiIconShrink,
+                                iconColor: AppColors.cFF7954,
+                              ),
+                              3.vGap,
+                              Text(
+                                "OPEN",
+                                style: 16.w4(
+                                  color: AppColors.cFF7954,
+                                  height: 1,
+                                  fontFamily: FontFamily.fOswaldMedium,
+                                ),
                               )
                             ],
-                          );
-                  } else if (item.status == -1) {
+                          ),
+                        )
+                    ],
+                  );
+                  if (item.status == -1) {
                     child = Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

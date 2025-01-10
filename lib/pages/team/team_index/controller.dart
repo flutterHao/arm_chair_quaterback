@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-01-09 20:28:48
+ * @LastEditTime: 2025-01-10 17:47:43
  */
 
 import 'dart:async';
@@ -17,6 +17,7 @@ import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/open_box/open_box_page.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/box_dialog.dart';

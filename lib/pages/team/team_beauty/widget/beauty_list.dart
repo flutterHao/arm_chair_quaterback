@@ -32,6 +32,10 @@ class BeautyList extends GetView<BeautyController> {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
+                    if (index == 0) {
+                      controller.spineWidgetController.animationState
+                          .setAnimationByName(0, "stand", true);
+                    }
                     controller.beautyIndex.value = index;
                     controller.update();
                   },

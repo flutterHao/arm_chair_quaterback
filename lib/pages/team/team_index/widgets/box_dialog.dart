@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 14:09:29
- * @LastEditTime: 2025-01-10 10:45:52
+ * @LastEditTime: 2025-01-10 18:24:38
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
@@ -143,9 +143,9 @@ class BattleBoxDialog extends StatelessWidget {
                   borderRadius: BorderRadius.circular(164.w / 2),
                 ),
                 child: Image.asset(
-                  _getBoxAssets(item.status, isUnlock),
-                  width: 102.w,
-                  height: 102.w,
+                  Utils.getBoxImageUrl(item.cardId),
+                  width: 102.w * 1.2,
+                  // height: 102.w,
                   fit: BoxFit.fill,
                 ),
               ),
@@ -269,23 +269,6 @@ class BattleBoxDialog extends StatelessWidget {
       },
     );
   }
-}
-
-String _getBoxAssets(int status, bool isUnlock) {
-  if (status == 0) {
-    return isUnlock
-        ? Assets.managerUiManagerGift03
-        : Assets.managerUiManagerGift02;
-  } else if (status == 1) {
-    return Assets.managerUiManagerGift01;
-  } else {
-    return Assets.managerUiManagerGift03;
-  }
-  // if (CacheApi.cardPackDefineMap[cardId] != null) {
-  //   String cardName = CacheApi.cardPackDefineMap[cardId]!.cardPackName;
-  //   return "assets/images/manager/$cardName";
-  // }
-  // return Assets.managerUiManagerGift03;
 }
 
 String _getButtonString(int status, bool isUnlock) {

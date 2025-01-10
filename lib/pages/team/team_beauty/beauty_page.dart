@@ -2,7 +2,7 @@
  * @Description: 换人换装页面
  * @Author: lihonghao
  * @Date: 2024-10-12 17:33:59
- * @LastEditTime: 2025-01-10 09:47:16
+ * @LastEditTime: 2025-01-10 17:15:21
  */
 
 import 'dart:math';
@@ -190,6 +190,7 @@ class BeautyPage extends GetView<BeautyController> {
                         child: InkWell(
                           onTap: () {
                             controller.expandedGirl = !controller.expandedGirl;
+
                             controller.update();
                           },
                           child: Image.asset(

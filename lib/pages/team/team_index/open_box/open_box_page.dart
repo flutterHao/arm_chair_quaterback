@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-17 18:13:43
- * @LastEditTime: 2025-01-08 17:13:41
+ * @LastEditTime: 2025-01-10 18:23:22
  */
 import 'dart:math';
 
@@ -157,8 +157,8 @@ class OpenBoxPage extends GetView<TeamIndexController> {
                 });
               },
               child: Image.asset(
-                Assets.managerUiManagerGift03,
-                width: 199.h,
+                Utils.getBoxImageUrl(item.cardId),
+                width: 199.h * 1.2,
                 fit: BoxFit.fitWidth,
               ),
             ),

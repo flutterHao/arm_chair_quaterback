@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 17:22:13
- * @LastEditTime: 2025-01-10 14:13:18
+ * @LastEditTime: 2025-01-10 17:09:11
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
@@ -232,49 +232,49 @@ class MyTeamWidget extends StatelessWidget {
                 Container(width: 1, height: 42.w, color: AppColors.cD1D1D1),
                 Expanded(
                     flex: 148,
-                    child: Container(
-                      margin: EdgeInsets.only(top: 2.w),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          5.5.hGap,
-                          SizedBox(
-                            width: 40.w,
-                            height: 40,
-                            child: Stack(
-                              children: [
-                                IconWidget(
-                                    iconWidth: 31.5.w,
-                                    icon: Assets.managerUiManagerIconArchive),
-                                Positioned(
-                                    left: 0,
-                                    top: 0,
-                                    child: Container(
-                                      width: 16.w,
-                                      height: 16.w,
-                                      alignment: Alignment.center,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(8.w),
-                                          color: AppColors.cFF7954),
-                                      child: Text(
-                                        "99",
-                                        style: 10.w4(
-                                            fontFamily:
-                                                FontFamily.fOswaldMedium,
-                                            height: 1,
-                                            color: AppColors.cFFFFFF),
-                                      ),
-                                    )),
-                              ],
+                    child: InkWell(
+                      onTap: () {
+                        Get.toNamed(RouteNames.illustrationPage);
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(top: 2.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            5.5.hGap,
+                            SizedBox(
+                              width: 40.w,
+                              height: 40,
+                              child: Stack(
+                                children: [
+                                  IconWidget(
+                                      iconWidth: 31.5.w,
+                                      icon: Assets.managerUiManagerIconArchive),
+                                  Positioned(
+                                      left: 0,
+                                      top: 0,
+                                      child: Container(
+                                        width: 16.w,
+                                        height: 16.w,
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(8.w),
+                                            color: AppColors.cFF7954),
+                                        child: Text(
+                                          "99",
+                                          style: 10.w4(
+                                              fontFamily:
+                                                  FontFamily.fOswaldMedium,
+                                              height: 1,
+                                              color: AppColors.cFFFFFF),
+                                        ),
+                                      )),
+                                ],
+                              ),
                             ),
-                          ),
-                          7.hGap,
-                          InkWell(
-                            onTap: () {
-                              Get.toNamed(RouteNames.illustrationPage);
-                            },
-                            child: Column(
+                            7.hGap,
+                            Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
@@ -306,15 +306,15 @@ class MyTeamWidget extends StatelessWidget {
                                 ),
                               ],
                             ),
-                          ),
-                          const Expanded(child: SizedBox.shrink()),
-                          IconWidget(
-                            iconWidth: 14.w,
-                            icon: Assets.iconUiIconArrows04,
-                            iconColor: AppColors.c000000,
-                            rotateAngle: -90,
-                          )
-                        ],
+                            const Expanded(child: SizedBox.shrink()),
+                            IconWidget(
+                              iconWidth: 14.w,
+                              icon: Assets.iconUiIconArrows04,
+                              iconColor: AppColors.c000000,
+                              rotateAngle: -90,
+                            )
+                          ],
+                        ),
                       ),
                     )),
                 23.5.hGap,
