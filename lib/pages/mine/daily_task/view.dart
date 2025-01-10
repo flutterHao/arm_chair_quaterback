@@ -4,6 +4,7 @@ import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
@@ -19,177 +20,179 @@ class DailyTaskPage extends GetView<DailyTaskController> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<DailyTaskController>(
-      builder: (_) {
-        return BlackAppWidget(
-          const UserInfoBar(
-            showPop: true,
-            canTapDailyTask: false,
-          ),
-          bodyWidget: Expanded(
-              child: SingleChildScrollView(
-                controller: controller.scrollController,
-            child: Column(
-              children: [
-                9.vGap,
-                Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.all(16.w),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(9.w),
-                    color: AppColors.cFFFFFF,
-                  ),
-                  child: Column(
-                    children: [
-                      Container(
-                        width: 339.w,
-                        height: 447.w,
-                        decoration: BoxDecoration(
-                          color: AppColors.c000000,
-                          borderRadius: BorderRadius.circular(23.w),
-                        ),
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            _buildOuterWheel(),
-                            _buildCenterTopWheel(),
-                            _buildCenter(),
-                            _buildCenterBottomWheel(),
-                          ],
-                        ),
-                      ),
-                      10.vGap,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          IconWidget(
-                              iconWidth: 18.w,
-                              icon: Assets.commonUiCommonIconTask),
-                          4.hGap,
-                          Text(
-                            "1/10",
-                            style: 16.w5(
-                              height: 1,
-                              fontFamily: FontFamily.fOswaldMedium,
-                            ),
-                          )
-                        ],
-                      ),
-                      7.vGap,
-                      MtInkWell(
-                        onTap: () {
-                          if(controller.scrollController.offset>0) {
-                            controller.scrollController.animateTo(
-                                0, duration: const Duration(milliseconds: 300),
-                                curve: Curves.linear).then((_) {
-                              Future.delayed(
-                                  const Duration(milliseconds: 300), () {
-                                controller.wheelController.start();
-                              });
-                            });
-                          }else{
-                            controller.wheelController.start();
-                          }
-                        },
-                        child: Container(
-                          height: 51.w,
-                          width: 211.w,
+    return HorizontalDragBackWidget(
+      child: GetBuilder<DailyTaskController>(
+        builder: (_) {
+          return BlackAppWidget(
+            const UserInfoBar(
+              showPop: true,
+              canTapDailyTask: false,
+            ),
+            bodyWidget: Expanded(
+                child: SingleChildScrollView(
+                  controller: controller.scrollController,
+              child: Column(
+                children: [
+                  9.vGap,
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.all(16.w),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(9.w),
+                      color: AppColors.cFFFFFF,
+                    ),
+                    child: Column(
+                      children: [
+                        Container(
+                          width: 339.w,
+                          height: 447.w,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(9.w),
-                            border: Border.all(
-                              color: AppColors.cE6E6E6,
-                              width: 1.w,
-                            ),
+                            color: AppColors.c000000,
+                            borderRadius: BorderRadius.circular(23.w),
                           ),
-                          alignment: Alignment.center,
-                          child: Center(
-                            child: Text(
-                              "START",
-                              style: 23.w5(
-                                color: AppColors.c000000,
-                                height: 1,
-                                fontFamily: FontFamily.fOswaldMedium,
-                              ),
-                            ),
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              _buildOuterWheel(),
+                              _buildCenterTopWheel(),
+                              _buildCenter(),
+                              _buildCenterBottomWheel(),
+                            ],
                           ),
                         ),
-                      ),
-                      15.vGap
-                    ],
-                  ),
-                ),
-                9.vGap,
-                Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.cFFFFFF,
-                    borderRadius:
-                        BorderRadius.circular(9.w),
-                  ),
-                  child: Column(
-                    children: [
-                      25.vGap,
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 16.w),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        10.vGap,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
+                            IconWidget(
+                                iconWidth: 18.w,
+                                icon: Assets.commonUiCommonIconTask),
+                            4.hGap,
                             Text(
-                              "DAILY MISSION",
-                              style: 24.w5(
-                                color: AppColors.c000000,
+                              "1/10",
+                              style: 16.w5(
                                 height: 1,
                                 fontFamily: FontFamily.fOswaldMedium,
                               ),
-                            ),
-                            Row(
-                              children: [
-                                IconWidget(
-                                    iconWidth: 16.w,
-                                    icon: Assets.commonUiCommonCountdown02),
-                                6.hGap,
-                                Text(
-                                  "23:59:59",
-                                  style: 16.w4(
-                                    color: AppColors.c000000,
-                                    height: 1,
-                                    fontFamily: FontFamily.fOswaldRegular,
-                                  ),
-                                )
-                              ],
                             )
                           ],
                         ),
-                      ),
-                      16.vGap,
-                      Divider(
-                        height: 1.w,
-                        color: AppColors.cD1D1D1,
-                      ),
-                      _buildDailyMissionItem(
-                        "Register 50 players in the archive in archive in the archive.Register 50 players in the archive. ",
-                        Assets.commonUiCommonIconTask,
-                        0,
-                      ),
-                      _buildDailyMissionItem(
-                        "Register 50 players in the archive. ",
-                        Assets.commonUiCommonIconCurrency02,
-                        1,
-                      ),
-                      _buildDailyMissionItem(
-                        "Register 50 players in the archive in archive in the archive.Register 50 players in the archive. ",
-                        Assets.commonUiCommonIconCurrency02,
-                        2,
-                      ),
-                      9.vGap,
-                    ],
+                        7.vGap,
+                        MtInkWell(
+                          onTap: () {
+                            if(controller.scrollController.offset>0) {
+                              controller.scrollController.animateTo(
+                                  0, duration: const Duration(milliseconds: 300),
+                                  curve: Curves.linear).then((_) {
+                                Future.delayed(
+                                    const Duration(milliseconds: 300), () {
+                                  controller.wheelController.start();
+                                });
+                              });
+                            }else{
+                              controller.wheelController.start();
+                            }
+                          },
+                          child: Container(
+                            height: 51.w,
+                            width: 211.w,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(9.w),
+                              border: Border.all(
+                                color: AppColors.cE6E6E6,
+                                width: 1.w,
+                              ),
+                            ),
+                            alignment: Alignment.center,
+                            child: Center(
+                              child: Text(
+                                "START",
+                                style: 23.w5(
+                                  color: AppColors.c000000,
+                                  height: 1,
+                                  fontFamily: FontFamily.fOswaldMedium,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        15.vGap
+                      ],
+                    ),
                   ),
-                ),
-                9.vGap
-              ],
-            ),
-          )),
-        );
-      },
+                  9.vGap,
+                  Container(
+                    decoration: BoxDecoration(
+                      color: AppColors.cFFFFFF,
+                      borderRadius:
+                          BorderRadius.circular(9.w),
+                    ),
+                    child: Column(
+                      children: [
+                        25.vGap,
+                        Container(
+                          margin: EdgeInsets.symmetric(horizontal: 16.w),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "DAILY MISSION",
+                                style: 24.w5(
+                                  color: AppColors.c000000,
+                                  height: 1,
+                                  fontFamily: FontFamily.fOswaldMedium,
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  IconWidget(
+                                      iconWidth: 16.w,
+                                      icon: Assets.commonUiCommonCountdown02),
+                                  6.hGap,
+                                  Text(
+                                    "23:59:59",
+                                    style: 16.w4(
+                                      color: AppColors.c000000,
+                                      height: 1,
+                                      fontFamily: FontFamily.fOswaldRegular,
+                                    ),
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                        16.vGap,
+                        Divider(
+                          height: 1.w,
+                          color: AppColors.cD1D1D1,
+                        ),
+                        _buildDailyMissionItem(
+                          "Register 50 players in the archive in archive in the archive.Register 50 players in the archive. ",
+                          Assets.commonUiCommonIconTask,
+                          0,
+                        ),
+                        _buildDailyMissionItem(
+                          "Register 50 players in the archive. ",
+                          Assets.commonUiCommonIconCurrency02,
+                          1,
+                        ),
+                        _buildDailyMissionItem(
+                          "Register 50 players in the archive in archive in the archive.Register 50 players in the archive. ",
+                          Assets.commonUiCommonIconCurrency02,
+                          2,
+                        ),
+                        9.vGap,
+                      ],
+                    ),
+                  ),
+                  9.vGap
+                ],
+              ),
+            )),
+          );
+        },
+      ),
     );
   }
 
