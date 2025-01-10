@@ -1,5 +1,6 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
+import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -18,7 +19,6 @@ import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/user
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class UserInfoBar extends StatelessWidget {
   const UserInfoBar({
@@ -28,6 +28,7 @@ class UserInfoBar extends StatelessWidget {
     this.routeId,
     this.showPop = false,
     this.onClickPop,
+    this.canTapDailyTask = true,
   });
 
   final String title;
@@ -35,6 +36,7 @@ class UserInfoBar extends StatelessWidget {
   final int? routeId;
   final bool showPop;
   final GestureTapCallback? onClickPop;
+  final bool canTapDailyTask;
 
   @override
   Widget build(BuildContext context) {
@@ -159,11 +161,8 @@ class UserInfoBar extends StatelessWidget {
                   ClipRRect(
                     borderRadius:
                         BorderRadius.only(topLeft: Radius.circular(10.w)),
-                    child: MtInkWell(
-                      onTap: () {
-                        print('day task ------ ');
-                      },
-                      child: SizedBox(
+                    child: Builder(builder: (context) {
+                      Widget child = SizedBox(
                         width: 55.w,
                         height: 43.w,
                         child: Stack(
@@ -183,8 +182,17 @@ class UserInfoBar extends StatelessWidget {
                                 ))
                           ],
                         ),
-                      ),
-                    ),
+                      );
+                      if (canTapDailyTask) {
+                        child = MtInkWell(
+                          onTap: () {
+                            Get.toNamed(RouteNames.mineDailyTask);
+                          },
+                          child: child,
+                        );
+                      }
+                      return child;
+                    }),
                   )
                 ],
               )

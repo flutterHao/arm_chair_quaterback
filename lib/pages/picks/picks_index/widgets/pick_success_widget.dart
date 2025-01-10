@@ -164,17 +164,7 @@ class _PickSuccessWidgetState extends State<PickSuccessWidget>
               MtInkWell(
                 onTap: () async {
                   Navigator.pop(context);
-                  await Get.toNamed(RouteNames.picksPersonalCenter,
-                      arguments: {
-                        "teamId": Get
-                            .find<HomeController>()
-                            .userEntiry
-                            .teamLoginInfo
-                            ?.team
-                            ?.teamId ??
-                            0,
-                        "initTab": 0
-                      });
+                  await Get.toNamed(RouteNames.picksPicksHistory);
                 },
                 child: Text(
                   "VIEW DETAILS",

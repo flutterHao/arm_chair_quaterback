@@ -21,6 +21,7 @@ class Assets {
   static const String common100 = 'assets/images/Common/100.png';
   static const String commonUiCommonArrow = 'assets/images/Common/ui_common_arrow.png';
   static const String commonUiCommonCountdown = 'assets/images/Common/ui_common_countdown.png';
+  static const String commonUiCommonCountdown02 = 'assets/images/Common/ui_common_countdown_02.png';
   static const String commonUiCommonIconCombat = 'assets/images/Common/ui_common_icon_combat.png';
   static const String commonUiCommonIconCurrency02 = 'assets/images/Common/ui_common_icon_currency_02.png';
   static const String commonUiCommonIconElevate = 'assets/images/Common/ui_common_icon_elevate.png';
@@ -46,6 +47,7 @@ class Assets {
   static const String commonUiCommonIconSystemLikeOn = 'assets/images/Common/ui_common_icon_system_like_on.png';
   static const String commonUiCommonIconSystemLock = 'assets/images/Common/ui_common_icon_system_lock.png';
   static const String commonUiCommonIconSystemShare = 'assets/images/Common/ui_common_icon_system_share.png';
+  static const String commonUiCommonIconTask = 'assets/images/Common/ui_common_icon_task.png';
   static const String commonUiCommonPlayerState01 = 'assets/images/Common/ui_common_player_state_01.png';
   static const String commonUiCommonPlayerState02 = 'assets/images/Common/ui_common_player_state_02.png';
   static const String commonUiCommonPlayerState04 = 'assets/images/Common/ui_common_player_state_04.png';
@@ -167,6 +169,7 @@ class Assets {
   static const String managerUiManagerCourt01 = 'assets/images/manager/ui_manager_court_01.png';
   static const String managerUiManagerCourt02 = 'assets/images/manager/ui_manager_court_02.png';
   static const String managerUiManagerCourtHighlight01 = 'assets/images/manager/ui_manager_court_highlight_01.png';
+  static const String managerUiManagerDailymissionSlot = 'assets/images/manager/ui_manager_dailymission_slot.png';
   static const String managerUiManagerEndingLose01 = 'assets/images/manager/ui_manager_ending_lose01.png';
   static const String managerUiManagerEndingLose02 = 'assets/images/manager/ui_manager_ending_lose02.png';
   static const String managerUiManagerEndingTrophydown = 'assets/images/manager/ui_manager_ending_trophydown.png';

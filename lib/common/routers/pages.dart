@@ -15,6 +15,8 @@ import 'package:arm_chair_quaterback/pages/league/league_detail_v2/view.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/view.dart';
 import 'package:arm_chair_quaterback/pages/league/team_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/message/view.dart';
+import 'package:arm_chair_quaterback/pages/mine/daily_task/bindings.dart';
+import 'package:arm_chair_quaterback/pages/mine/daily_task/view.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_account/bindings.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_account/view.dart';
 import 'package:arm_chair_quaterback/pages/mine/mine_info/bindings.dart';
@@ -178,6 +180,11 @@ class AppPages {
       name: RouteNames.teamBeautyPage,
       page: () => const BeautyPage(),
     ),
+    GetPage(
+        opaque: false,
+        name: RouteNames.mineDailyTask,
+        page: () => const DailyTaskPage(),
+        binding: DailyTaskBinding()),
     GetPage(
       opaque: false,
       name: RouteNames.illustrationPage,

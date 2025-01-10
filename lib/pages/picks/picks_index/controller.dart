@@ -235,7 +235,7 @@ class PicksIndexController extends GetxController
       CacheApi.getNBAPlayerInfo(),
       CacheApi.getPickDefine(),
       CacheApi.getNBATeamDefine(getList: true),
-      PicksApi.getRedisRankInfo(type: RankType.newsGuessExpert),
+      PicksApi.getRedisRankInfo(),
       PicksApi.getGuessTopReviews(),
       CacheApi.getPickType(),
     ]).then((results) {

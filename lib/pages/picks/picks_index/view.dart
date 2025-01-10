@@ -107,8 +107,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                         Expanded(
                           flex: 204,
                           child: InkWell(
-                            onTap: () =>
-                                Get.toNamed(RouteNames.picksPickRank),
+                            onTap: () => Get.toNamed(RouteNames.picksPickRank),
                             child: Container(
                               height: 51.w,
                               padding: EdgeInsets.only(
@@ -125,8 +124,8 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                     children: [
                                       IconWidget(
                                           iconWidth: 23.w,
-                                          icon: Assets
-                                              .picksUiPicksStatusBarRank),
+                                          icon:
+                                              Assets.picksUiPicksStatusBarRank),
                                       16.hGap,
                                       Text(
                                         "RANK",
@@ -144,7 +143,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                         CrossAxisAlignment.center,
                                     children: [
                                       Text(
-                                        "${picksIndexController.rankInfo.myRank.rank ?? "--"}",
+                                        "${picksIndexController.rankInfo.myRank.rank == 0 ? "--" : picksIndexController.rankInfo.myRank.rank}",
                                         style: 19.w4(
                                             color: AppColors.cFFFFFF,
                                             height: 1),
@@ -194,8 +193,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                         EdgeInsets.only(right: 7.w, top: 4.w),
                                     decoration: BoxDecoration(
                                         border: Border.all(
-                                            color: AppColors.c666666,
-                                            width: 1),
+                                            color: AppColors.c666666, width: 1),
                                         borderRadius:
                                             BorderRadius.circular(9.w)),
                                     child: Row(
@@ -222,8 +220,8 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                 Positioned(
                                     right: 0,
                                     child: Obx(() {
-                                      var value = picksIndexController
-                                          .choiceSize.value;
+                                      var value =
+                                          picksIndexController.choiceSize.value;
                                       if (value <= 0) {
                                         return const SizedBox.shrink();
                                       }
@@ -286,8 +284,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
           ];
         },
         body: ExtendedTabBarView(
-            cacheExtent:
-                picksIndexController.guessGamePlayers.keys.length - 1,
+            cacheExtent: picksIndexController.guessGamePlayers.keys.length - 1,
             controller: picksIndexController.tabController,
             children: picksIndexController.guessGamePlayers.keys.map((e) {
               var list = picksIndexController.guessGamePlayers[e]!;
