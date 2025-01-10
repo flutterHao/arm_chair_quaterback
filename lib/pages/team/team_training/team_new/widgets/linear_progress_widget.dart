@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 20:30:20
- * @LastEditTime: 2024-12-19 21:18:14
+ * @LastEditTime: 2025-01-10 15:03:19
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:flutter/material.dart';

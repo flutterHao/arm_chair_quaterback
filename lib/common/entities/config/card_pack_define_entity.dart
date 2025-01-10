@@ -1,3 +1,9 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-12-23 16:59:43
+ * @LastEditTime: 2025-01-10 10:30:58
+ */
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/card_pack_define_entity.g.dart';
 import 'dart:convert';
@@ -15,6 +21,7 @@ class CardPackDefineEntity {
   late List<int> cardPlayerNum = [];
   late List<int> cupConWeight = [];
   late int hideOpenNow = 0;
+  late String cardPackName = "";
 
   CardPackDefineEntity();
 

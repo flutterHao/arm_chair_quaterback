@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:33:28
- * @LastEditTime: 2025-01-04 16:52:35
+ * @LastEditTime: 2025-01-10 14:13:12
  */
 // import 'package:arm_chair_quaterback/pages/news/new_detail/bindings.dart';
 // import 'package:arm_chair_quaterback/pages/news/new_detail/view.dart';
@@ -33,6 +33,8 @@ import 'package:arm_chair_quaterback/pages/picks/picks_history/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/recive_rward/bindings.dart';
 import 'package:arm_chair_quaterback/pages/picks/recive_rward/view.dart';
+import 'package:arm_chair_quaterback/pages/team/illustratiions/view.dart';
+import 'package:arm_chair_quaterback/pages/team/illustratiions/widgets/illustraction_detail.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_detail_page.dart';
 import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_page.dart';
@@ -64,7 +66,9 @@ class AppPages {
     GetPage(
       opaque: false,
       name: RouteNames.picksPlayerDetail,
-      page: () =>  PlayerDetailPage(arguments: Get.arguments,),
+      page: () => PlayerDetailPage(
+        arguments: Get.arguments,
+      ),
     ),
     GetPage(
         name: RouteNames.teamBeautyDetail,
@@ -173,6 +177,16 @@ class AppPages {
       opaque: false,
       name: RouteNames.teamBeautyPage,
       page: () => const BeautyPage(),
+    ),
+    GetPage(
+      opaque: false,
+      name: RouteNames.illustrationPage,
+      page: () => const IllustratiionsPage(),
+    ),
+    GetPage(
+      opaque: false,
+      name: RouteNames.illustrationDetail,
+      page: () => const IllustratiionsDetail(),
     ),
   ];
 }

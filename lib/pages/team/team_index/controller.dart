@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-01-09 17:37:50
+ * @LastEditTime: 2025-01-09 20:28:48
  */
 
 import 'dart:async';
@@ -273,7 +273,7 @@ class TeamIndexController extends GetxController
       final diff = endTime.difference(now).inSeconds;
       int needTime =
           CacheApi.cardPackDefineMap[item.cardId]?.cardPackOpenTime ?? 0;
-      if (diff ~/ 3600 > 0) {
+      if (needTime ~/ 3600 > 0) {
         item.totalTime = "${needTime ~/ 3600} H";
       } else {
         item.totalTime = "${(needTime % 3600) ~/ 60} MIN";

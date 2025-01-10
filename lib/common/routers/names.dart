@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:33:28
- * @LastEditTime: 2025-01-04 16:38:10
+ * @LastEditTime: 2025-01-10 14:11:08
  */
 class RouteNames {
   static const main = '/';
@@ -41,6 +41,8 @@ class RouteNames {
   static const openBoxPage = "/open_box_page";
   static const teamStartUpGrade = '/team_start_upgrade';
   static const teamDetailPage = '/team_detail_page';
+  static const illustrationPage = '/illustration';
+  static const illustrationDetail = '/illustration_detail';
 
   //mine
   static const mineMineAccount = '/mine_mine_account';

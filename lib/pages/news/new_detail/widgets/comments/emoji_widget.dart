@@ -2,8 +2,10 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-22 15:19:24
- * @LastEditTime: 2024-12-11 11:52:07
+ * @LastEditTime: 2025-01-10 15:31:28
  */
+import 'dart:math';
+
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -20,6 +22,7 @@ class EmojiWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final randow = Random();
     RxInt current = 0.obs;
     List<String> emojiList = [
       Assets.newsUiEmojiJoker,
@@ -55,7 +58,7 @@ class EmojiWidget extends StatelessWidget {
                     IconWidget(iconWidth: 16.w, icon: e),
                     5.hGap,
                     Text(
-                      "99",
+                      "${randow.nextInt(20)}",
                       style: 12.w4(
                         fontFamily: FontFamily.fRobotoRegular,
                         color: current.value == index
@@ -70,25 +73,25 @@ class EmojiWidget extends StatelessWidget {
           });
         }),
         5.hGap,
-        MtInkWell(
-          onTap: () {},
-          child: Container(
-            height: 24.w,
-            width: 24.w,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: AppColors.cFFFFFF,
-              borderRadius: BorderRadius.circular(4.w),
-              border: Border.all(
-                  color: AppColors.c666666.withOpacity(0.3), width: 1.w),
-            ),
-            child: IconWidget(
-              iconWidth: 14.w,
-              icon: Assets.newsUiIconEmoji,
-              iconColor: AppColors.c262626,
-            ),
-          ),
-        )
+        // MtInkWell(
+        //   onTap: () {},
+        //   child: Container(
+        //     height: 24.w,
+        //     width: 24.w,
+        //     alignment: Alignment.center,
+        //     decoration: BoxDecoration(
+        //       color: AppColors.cFFFFFF,
+        //       borderRadius: BorderRadius.circular(4.w),
+        //       border: Border.all(
+        //           color: AppColors.c666666.withOpacity(0.3), width: 1.w),
+        //     ),
+        //     child: IconWidget(
+        //       iconWidth: 14.w,
+        //       icon: Assets.newsUiIconEmoji,
+        //       iconColor: AppColors.c262626,
+        //     ),
+        //   ),
+        // )
       ],
     );
   }

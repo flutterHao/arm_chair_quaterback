@@ -18,6 +18,7 @@ import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/user
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UserInfoBar extends StatelessWidget {
   const UserInfoBar({
@@ -331,7 +332,11 @@ class ServerSwitchDialog extends StatelessWidget {
     }
 
     return AlertDialog(
-      title: const Text('切换服务器'),
+      title: InkWell(
+          onTap: () {
+            // launchUrl(currentServer);
+          },
+          child: const Text('切换服务器')),
       content: SingleChildScrollView(
         child: ListBody(
           children: servers.map((server) {

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 14:09:29
- * @LastEditTime: 2025-01-02 11:58:08
+ * @LastEditTime: 2025-01-10 10:45:52
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
@@ -163,7 +163,7 @@ class BattleBoxDialog extends StatelessWidget {
               //       fontFamily: FontFamily.fOswaldRegular),
               // ),
               Expanded(child: Container()),
-              if (isUnlock)
+              if (item.status == 0)
                 Text(
                   "unlock time: ${item.totalTime}".toUpperCase(),
                   style: 16.w4(
@@ -281,6 +281,11 @@ String _getBoxAssets(int status, bool isUnlock) {
   } else {
     return Assets.managerUiManagerGift03;
   }
+  // if (CacheApi.cardPackDefineMap[cardId] != null) {
+  //   String cardName = CacheApi.cardPackDefineMap[cardId]!.cardPackName;
+  //   return "assets/images/manager/$cardName";
+  // }
+  // return Assets.managerUiManagerGift03;
 }
 
 String _getButtonString(int status, bool isUnlock) {

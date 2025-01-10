@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 17:22:13
- * @LastEditTime: 2025-01-09 17:47:06
+ * @LastEditTime: 2025-01-10 14:13:18
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
@@ -272,10 +272,7 @@ class MyTeamWidget extends StatelessWidget {
                           7.hGap,
                           InkWell(
                             onTap: () {
-                              // Get.to(
-                              //   IllustratiionsPage(),
-                              //   opaque: false,
-                              // );
+                              Get.toNamed(RouteNames.illustrationPage);
                             },
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,

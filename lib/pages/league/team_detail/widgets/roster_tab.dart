@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-31 15:05:31
- * @LastEditTime: 2025-01-07 17:33:31
+ * @LastEditTime: 2025-01-09 20:20:16
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
@@ -79,6 +79,7 @@ class _RosterTabState extends State<RosterTab>
                             color: AppColors.cD1D1D1,
                           ),
                           ListView.builder(
+                              padding: EdgeInsets.symmetric(vertical: 10.w),
                               shrinkWrap: true,
                               itemCount: list.length,
                               physics: const NeverScrollableScrollPhysics(),

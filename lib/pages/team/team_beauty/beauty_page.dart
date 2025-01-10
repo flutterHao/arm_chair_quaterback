@@ -2,30 +2,26 @@
  * @Description: 换人换装页面
  * @Author: lihonghao
  * @Date: 2024-10-12 17:33:59
- * @LastEditTime: 2025-01-09 14:16:49
+ * @LastEditTime: 2025-01-10 09:47:16
  */
 
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
-import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_beauty/widget/beauty_list.dart';
 import 'package:arm_chair_quaterback/pages/team/team_beauty/widget/beauty_progress.dart';
-import 'package:arm_chair_quaterback/pages/team/team_index/widgets/progress_paint.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 
 class BeautyPage extends GetView<BeautyController> {
   const BeautyPage({super.key});
@@ -189,7 +185,7 @@ class BeautyPage extends GetView<BeautyController> {
                                         controller.beautyList.length - 1
                                     ? 27.5.h
                                     : 0) +
-                                48.h,
+                                45.w,
                         bottom: controller.expandedGirl ? 0 : 150.h,
                         child: InkWell(
                           onTap: () {
@@ -211,8 +207,8 @@ class BeautyPage extends GetView<BeautyController> {
                         width: 20.h,
                         visible: true,
                         icon: controller.expandedGirl
-                            ? Assets.cheerleadersUiCheerleadersIconFullscreen01
-                            : Assets.cheerleadersUiCheerleadersIconFullscreen02,
+                            ? Assets.cheerleadersUiCheerleadersIconFullscreen02
+                            : Assets.cheerleadersUiCheerleadersIconFullscreen01,
                         onTap: () {
                           controller.expandedGirl = !controller.expandedGirl;
                           controller.update();
