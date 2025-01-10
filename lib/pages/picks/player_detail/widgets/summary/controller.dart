@@ -405,7 +405,7 @@ class SummaryController extends GetxController {
         dataLabelSettings: DataLabelSettings(
           isVisible: true,
           alignment: ChartAlignment.near,
-          offset: Offset(0, 3.w),
+          offset: Offset(12.w, 0.w),
           textStyle: 10.w7(color: AppColors.c262626),
         ),
       )
