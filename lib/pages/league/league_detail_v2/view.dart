@@ -1,5 +1,6 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
+import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
@@ -9,6 +10,7 @@ import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/place_holder_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -65,7 +67,8 @@ class LeagueDetailV2Page extends GetView<LeagueDetailV2Controller> {
                                             SizedBox(
                                               height: 81.w,
                                               child: Column(
-                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
                                                 children: [
                                                   PlaceHolderWidget(
                                                     width: 34.w,
@@ -75,11 +78,19 @@ class LeagueDetailV2Page extends GetView<LeagueDetailV2Controller> {
                                                     showChild: controller
                                                             .item?.homeTeamId !=
                                                         null,
-                                                    child: ImageWidget(
-                                                      url: Utils.getTeamUrl(
-                                                          controller
-                                                              .item?.homeTeamId),
-                                                      width: 34.w,
+                                                    child: MtInkWell(
+                                                      onTap: () => Get.toNamed(
+                                                          RouteNames
+                                                              .teamDetailPage,
+                                                          arguments: controller
+                                                              .item
+                                                              ?.homeTeamId),
+                                                      child: ImageWidget(
+                                                        url: Utils.getTeamUrl(
+                                                            controller.item
+                                                                ?.homeTeamId),
+                                                        width: 34.w,
+                                                      ),
                                                     ),
                                                   ),
                                                   2.vGap,
@@ -129,7 +140,9 @@ class LeagueDetailV2Page extends GetView<LeagueDetailV2Controller> {
                                                   return SizedBox(
                                                     height: 81.w,
                                                     child: Column(
-                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
                                                       children: [
                                                         PlaceHolderWidget(
                                                           width: 50,
@@ -205,7 +218,8 @@ class LeagueDetailV2Page extends GetView<LeagueDetailV2Controller> {
                                             SizedBox(
                                               height: 81.w,
                                               child: Column(
-                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
                                                 children: [
                                                   PlaceHolderWidget(
                                                     width: 34.w,
@@ -214,11 +228,19 @@ class LeagueDetailV2Page extends GetView<LeagueDetailV2Controller> {
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             17.w),
-                                                    child: ImageWidget(
-                                                      url: Utils.getTeamUrl(
-                                                          controller
-                                                              .item?.awayTeamId),
-                                                      width: 34.w,
+                                                    child: MtInkWell(
+                                                      onTap: () => Get.toNamed(
+                                                          RouteNames
+                                                              .teamDetailPage,
+                                                          arguments: controller
+                                                              .item
+                                                              ?.awayTeamId),
+                                                      child: ImageWidget(
+                                                        url: Utils.getTeamUrl(
+                                                            controller.item
+                                                                ?.awayTeamId),
+                                                        width: 34.w,
+                                                      ),
                                                     ),
                                                   ),
                                                   2.vGap,

@@ -65,6 +65,9 @@ class _BlackAppWidgetState extends State<BlackAppWidget> {
                 }
                 return Container(
                   alignment: Alignment.bottomLeft,
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 0),
+                  ),
                   child: Stack(
                     children: [
                       Container(
