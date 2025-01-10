@@ -4,6 +4,8 @@
  * @Date: 2024-11-13 21:12:10
  * @LastEditTime: 2024-11-29 10:06:32
  */
+import 'package:arm_chair_quaterback/common/routers/names.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -11,6 +13,7 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -86,6 +89,20 @@ class MatchCard extends GetView<TeamIndexController> {
                   vibrate: true,
                   minScale: 0.9,
                   onTap: () {
+                    final teamCtrl = Get.find<TeamController>();
+                    if(teamCtrl.myTeamEntity.salary>=teamCtrl.myTeamEntity.salaryCap){
+                    BottomTipDialog.show(
+                        context: context,
+                        onTap: () {
+                          Get.back();
+                          Get.toNamed(RouteNames.teamMemberPage);
+                        },
+                        confirmStr: "LINE UP",
+                        title: "SALARY CAP EXCEED",
+                        desc:
+                            "Salary cap over limit，please adjust the lineup  before the game can begin.");
+                    return;
+                    }
                     controller.matchBattle();
                   },
                   child: Stack(
