@@ -2,7 +2,7 @@
  * @Description: 换人换装页面
  * @Author: lihonghao
  * @Date: 2024-10-12 17:33:59
- * @LastEditTime: 2025-01-10 17:15:21
+ * @LastEditTime: 2025-01-10 19:24:59
  */
 
 import 'dart:math';
@@ -179,13 +179,7 @@ class BeautyPage extends GetView<BeautyController> {
                           fontFamily: FontFamily.fCalcioDemo,
                           fontSize: 187.h),
                       Positioned(
-                        top: controller.expandedGirl
-                            ? 0
-                            : (controller.beautyIndex.value !=
-                                        controller.beautyList.length - 1
-                                    ? 27.5.h
-                                    : 0) +
-                                45.w,
+                        top: controller.expandedGirl ? 0 : 45.w,
                         bottom: controller.expandedGirl ? 0 : 150.h,
                         child: InkWell(
                           onTap: () {

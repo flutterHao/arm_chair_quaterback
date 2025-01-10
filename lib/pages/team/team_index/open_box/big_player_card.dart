@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-18 14:27:59
- * @LastEditTime: 2025-01-07 17:13:00
+ * @LastEditTime: 2025-01-10 18:40:38
  */
 import 'package:arm_chair_quaterback/common/entities/player_card_entity.dart';
 import 'package:flutter/material.dart';
@@ -58,7 +58,7 @@ class BigPlayerCard extends StatelessWidget {
             child: OutlinedText(
               text: player.grade,
               textStyle:
-                  26.w4(height: 0.8, fontFamily: FontFamily.fRobotoMedium),
+                  43.w4(height: 0.8, fontFamily: FontFamily.fRobotoMedium),
             ),
           ),
           Positioned(
@@ -70,7 +70,7 @@ class BigPlayerCard extends StatelessWidget {
                   text: player.playerScore.toString(),
                   strokeWidth: 1.5.w,
                   textStyle:
-                      16.w4(height: 0.8, fontFamily: FontFamily.fOswaldRegular),
+                      20.w4(height: 0.9, fontFamily: FontFamily.fOswaldRegular),
                 ),
                 3.vGap,
                 OutlinedText(
@@ -104,7 +104,7 @@ class BigPlayerCard extends StatelessWidget {
               top: 175.w,
               child: Text(
                 player.ename.toUpperCase(),
-                style: 15.5.w4(
+                style: 18.w4(
                   // height: 0.8,
                   fontFamily: FontFamily.fOswaldBold,
                 ),

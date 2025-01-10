@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-20 16:11:51
- * @LastEditTime: 2024-12-24 14:54:37
+ * @LastEditTime: 2025-01-10 18:33:24
  */
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:flutter/material.dart';
@@ -94,6 +94,7 @@ class _AnimatedBoxState extends State<AnimatedBox>
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        _controller.reset();
         _controller.forward().then((v) {
           widget.onTap();
         });

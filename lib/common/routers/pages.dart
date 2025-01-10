@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:33:28
- * @LastEditTime: 2025-01-10 14:13:12
+ * @LastEditTime: 2025-01-10 19:44:41
  */
 // import 'package:arm_chair_quaterback/pages/news/new_detail/bindings.dart';
 // import 'package:arm_chair_quaterback/pages/news/new_detail/view.dart';
@@ -179,6 +179,7 @@ class AppPages {
       opaque: false,
       name: RouteNames.teamBeautyPage,
       page: () => const BeautyPage(),
+      // transition: Transition.fadeIn,
     ),
     GetPage(
         opaque: false,
