@@ -79,6 +79,7 @@ class _OverviewTabState extends State<OverviewTab>
 
 class _SeasonStats extends StatelessWidget {
   const _SeasonStats({super.key, required this.regular});
+
   final TeamDetailSeasonData regular;
 
   @override
@@ -168,6 +169,7 @@ class _SeasonStats extends StatelessWidget {
 
 class _Schedule extends StatelessWidget {
   const _Schedule(this.gameSchedules, this.controller, {super.key});
+
   final List<TeamDetailGameSchedules> gameSchedules;
   final TeamDetailController controller;
 
@@ -311,6 +313,7 @@ class _Schedule extends StatelessWidget {
 
 class _RecentMatch extends StatelessWidget {
   const _RecentMatch(this.list, {super.key});
+
   final List<TeamDetailGameSchedules> list;
 
   MediaQuery _buildL5GamePageWidget(final BuildContext context) {
@@ -698,7 +701,10 @@ class _RecentMatch extends StatelessWidget {
         yValueMapper: (ChartSampleData sales, _) => sales.y,
         pointColorMapper: (ChartSampleData sales, _) => sales.pointColor,
         dataLabelSettings: DataLabelSettings(
-            isVisible: true, textStyle: 10.w7(color: AppColors.c262626)),
+            isVisible: true,
+            alignment: ChartAlignment.near,
+            offset: Offset(0, 3.w),
+            textStyle: 10.w7(color: AppColors.c262626)),
       )
     ];
   }
@@ -706,6 +712,7 @@ class _RecentMatch extends StatelessWidget {
 
 class _RecentPick extends StatelessWidget {
   const _RecentPick(this.pick, {super.key});
+
   final ScoresEntity pick;
 
   @override
@@ -743,6 +750,7 @@ class _RecentPick extends StatelessWidget {
 
 class _OutCome extends StatelessWidget {
   const _OutCome(this.outcomeList, {super.key});
+
   final List<TeamDetailOutcome> outcomeList;
 
   // String _getWinTeamName(TeamDetailGameSchedules gameSchedule) {

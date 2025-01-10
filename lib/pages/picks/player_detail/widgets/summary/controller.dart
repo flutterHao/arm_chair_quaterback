@@ -403,7 +403,11 @@ class SummaryController extends GetxController {
         yValueMapper: (ChartSampleData sales, _) => sales.y,
         pointColorMapper: (ChartSampleData sales, _) => sales.pointColor,
         dataLabelSettings: DataLabelSettings(
-            isVisible: true, textStyle: 10.w7(color: AppColors.c262626)),
+          isVisible: true,
+          alignment: ChartAlignment.near,
+          offset: Offset(0, 3.w),
+          textStyle: 10.w7(color: AppColors.c262626),
+        ),
       )
     ];
   }

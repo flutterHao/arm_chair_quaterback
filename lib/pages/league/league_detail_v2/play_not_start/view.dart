@@ -413,7 +413,7 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                                                 ),
                                                 child: Center(
                                                   child: Text(
-                                                    e,
+                                                    e.replaceAll(",", "+"),
                                                     style: 16.w5(
                                                         color: color,
                                                         height: 1,
