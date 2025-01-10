@@ -83,16 +83,23 @@ class ScorePageController extends GetxController {
   }
 
   void getDataFromNet(List<GameGuess> temp) {
-    loadStatus.value = LoadDataStatus.loading;
     var startTime = time.millisecondsSinceEpoch;
     var endTime = MyDateUtils.nextDay(time).millisecondsSinceEpoch;
     print('scores -------->>> startTime: $startTime -> ${time.day}');
+    var key = "${startTime}_$endTime";
+    var leagueController = Get.find<LeagueController>();
+    if (leagueController.cacheGameGuessData.containsKey(key) &&
+        leagueController.cacheGameGuessData[key]!.isNotEmpty) {
+      scoreList = leagueController.cacheGameGuessData[key]!;
+      update([idScorePageMain]);
+      return;
+    }
+    loadStatus.value = LoadDataStatus.loading;
     var futures = <Future>[
       LeagueApi.getNBAGameSchedules(startTime, endTime),
       CacheApi.getNBATeamDefine(),
       CacheApi.getNBAPlayerInfo(),
     ];
-    var leagueController = Get.find<LeagueController>();
     if (leagueController.picksDefineEntity == null) {
       futures.add(CacheApi.getPickDefine());
     }

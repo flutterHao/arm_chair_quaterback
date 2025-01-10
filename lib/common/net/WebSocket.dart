@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:arm_chair_quaterback/common/entities/web_socket/web_socket_entity.dart';
+import 'package:arm_chair_quaterback/common/net/address.dart';
 import 'package:arm_chair_quaterback/common/net/index.dart';
 import 'package:arm_chair_quaterback/common/store/config.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
@@ -136,6 +137,10 @@ class WSInstance {
 
   static String get _getUrl {
     String url = ConfigStore.to.getWsServiceUrl();
+    /// 把美服的都转到国服
+    if(url == Address.wsPubDevUrl){
+      url =  Address.wsPublicDevUrl;
+    }
     print('ws url ------ : $url');
     return url;
   }
