@@ -78,17 +78,17 @@ class BeautyAndBoxView extends StatelessWidget {
                 ),
               ),
             ),
-            if (beautyCtrl.beautyIndex.value != 0)
-              Positioned(
-                top: 0.w,
-                left: 0,
-                right: 0,
-                child: Image.asset(
-                  beautyCtrl.beautyList[beautyCtrl.beautyIndex.value],
-                  fit: BoxFit.fitHeight,
-                  alignment: Alignment.topCenter,
-                ),
-              ),
+            // if (beautyCtrl.beautyIndex.value != 0)
+            //   Positioned(
+            //     top: 0.w,
+            //     left: 0,
+            //     right: 0,
+            //     child: Image.asset(
+            //       beautyCtrl.beautyList[beautyCtrl.beautyIndex.value],
+            //       fit: BoxFit.fitHeight,
+            //       alignment: Alignment.topCenter,
+            //     ),
+            //   ),
             Positioned(
               top: 0.w,
               left: 0,
