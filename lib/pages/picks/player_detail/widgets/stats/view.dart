@@ -219,14 +219,15 @@ class _StatsPageState extends State<StatsPage>
                                       ),
                                     ),
                                     6.vGap,
-                                    Text(
-                                      "${Utils.getSortWithInt(statsItem.rank)} OVERALL",
-                                      style: 10.w4(
-                                        color: AppColors.c4D4D4D,
-                                        height: 1,
-                                        fontFamily: FontFamily.fRobotoRegular,
+                                    if (statsItem.rank <= 100)
+                                      Text(
+                                        "${Utils.getSortWithInt(statsItem.rank)} OVERALL",
+                                        style: 10.w4(
+                                          color: AppColors.c4D4D4D,
+                                          height: 1,
+                                          fontFamily: FontFamily.fRobotoRegular,
+                                        ),
                                       ),
-                                    ),
                                   ],
                                 )
                               ],

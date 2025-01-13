@@ -1714,7 +1714,7 @@ class _SummaryPageState extends State<SummaryPage>
           end: value,
           // 虚线的终止位置（y 值），相同值表示一条线
           borderWidth: 1,
-          text: 'AVG \n$value',
+          text: 'AVG \n${value.format()}',
           verticalTextPadding: verticalTextPadding,
           horizontalTextAlignment: TextAnchor.end,
           verticalTextAlignment: TextAnchor.middle,

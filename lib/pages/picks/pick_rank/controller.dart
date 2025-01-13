@@ -5,20 +5,13 @@ import 'package:arm_chair_quaterback/common/entities/config/prop_define_entity.d
 import 'package:arm_chair_quaterback/common/entities/rank_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_award_prop_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/team_simple_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
-import 'package:arm_chair_quaterback/common/enums/rank_type.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
-import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
-import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import 'index.dart';
 
 class PickRankController extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -60,7 +53,6 @@ class PickRankController extends GetxController
       CacheApi.getPropDefine(),
       PicksApi.getRedisRankInfo(),
       CacheApi.getPickDefine(),
-      PicksApi.getRedisRankInfo(),
     ]).then((result) {
       List<RankAwardEntity> rankAwardEntitys =
       result[0] as List<RankAwardEntity>;
@@ -105,7 +97,7 @@ class PickRankController extends GetxController
         RankAwardPropEntity(r, awardData, awardDataNum, awardPickData);
         awardInfo.add(rankAwardPropEntity);
       }
-      rankInfo = result[4] as RankListEntity;
+      rankInfo = result[2] as RankListEntity;
       inTheRankList.value = rankInfo!.ranks.indexWhere((e) =>
       e.teamId ==
           Get.find<HomeController>()

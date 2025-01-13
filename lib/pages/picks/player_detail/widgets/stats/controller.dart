@@ -55,8 +55,8 @@ class StatsController extends GetxController with GetTickerProviderStateMixin {
       "PTS",
       "REB",
       "AST",
-      "FG3A",
       "FG3M",
+      "FG3_PCT",
       "FG_PCT",
       "FTM",
       "FTA",
@@ -64,7 +64,7 @@ class StatsController extends GetxController with GetTickerProviderStateMixin {
       "TOV"
     ];
     List<StatsItem> list = [];
-    var json = nbaPlayerBaseInfoEntity.teamPreSeasonRankInfoMap?.toJson();
+    var json = nbaPlayerBaseInfoEntity.playerRegularMap?.toJson();
     for (int i = 0; i < names.length; i++) {
       String name = names[i];
       String shortName = shortNames[i];

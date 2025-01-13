@@ -155,12 +155,10 @@ class StartUpgradeController extends GetxController {
       return p + e.getPropertyAddValue();
     });
     var starUpDefineEntity = starUpDefineList
-        .firstWhere((f) => f.starUp == (player.breakThroughGrade));
+        .firstWhere((f) => f.starUp == (player.breakThroughGrade+1));
     var gradeInStarDefineEntity = CacheApi.gradeInStars!
         .firstWhere((e) => e.playerGrade == playerBaseInfo.grade);
-    double starUpBase = player.breakThroughGrade == 0
-        ? 0 // 零星球员
-        : gradeInStarDefineEntity.starUpBase[player.breakThroughGrade - 1];
+    double starUpBase =  gradeInStarDefineEntity.starUpBase[player.breakThroughGrade];
     propertyUp = starUpBase * (1 + starUpDefineEntity.getPotantialMax() / 100) + propertyUp;
     var upSR = selectedPlayers.fold(0.0, (p, e) {
       return p + e.teamPlayer.probability;

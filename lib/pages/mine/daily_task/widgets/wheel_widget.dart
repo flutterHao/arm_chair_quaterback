@@ -184,6 +184,7 @@ class _WheelWidgetState extends State<WheelWidget>
                     width: widget.itemWidth,
                     height: widget.itemHeight,
                     decoration: BoxDecoration(
+                      borderRadius: borderRadius,
                       boxShadow: isFirstSelect || isSecondSelect || isThirdSelect
                           ? [
                         BoxShadow(
