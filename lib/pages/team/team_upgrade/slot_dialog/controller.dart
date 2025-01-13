@@ -209,7 +209,7 @@ class SlotDialogController extends GetxController
 
   void setStarUpItem() {
     if (upStarTeamPlayerV2Entity.successRate <= 0) {
-      /// 模拟第一次抽到受伤结束游戏
+      /// 模拟第一次就抽到受伤结束游戏
       selectIndexList = [9];
     }else {
       slotCount.value += 1;

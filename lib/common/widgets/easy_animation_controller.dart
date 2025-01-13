@@ -55,8 +55,8 @@ class EasyAnimationController<T> {
     controller.reset();
   }
 
-  reverse({double? from}) {
-    controller.reverse(from: from);
+  TickerFuture reverse({double? from}) {
+    return controller.reverse(from: from);
   }
 
   void stop({bool canceled = true}) {

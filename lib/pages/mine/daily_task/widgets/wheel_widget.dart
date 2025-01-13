@@ -46,7 +46,8 @@ class _WheelWidgetState extends State<WheelWidget>
 
   late EasyAnimationController animationController;
 
-  bool isActiveStatus = false;
+  var isAnimatingStatus = false.obs;
+  var isAnimateEnd = false.obs;
 
   @override
   void initState() {
@@ -80,13 +81,17 @@ class _WheelWidgetState extends State<WheelWidget>
       return;
     }
     Random random = Random();
-    var nextInt = random.nextInt(4) + 3;
+    var nextInt = random.nextInt(4) + 5;
     animationController.set(0, size * nextInt + nextInt,
-        curve: Curves.easeOut, duration: const Duration(milliseconds: 800 * 5));
-    isActiveStatus = true;
+        curve: Curves.easeOut, duration: const Duration(milliseconds: 800 * 6));
+    isAnimatingStatus.value = true;
+    isAnimateEnd.value = false;
     animationController.forward(from: 0).then((_) {
       /// 动画结束 开启其他动画
-      // Future.de
+      Future.delayed(const Duration(milliseconds: 300),(){
+        isAnimatingStatus.value = false;
+        isAnimateEnd.value = true;
+      });
     });
   }
 
@@ -152,32 +157,37 @@ class _WheelWidgetState extends State<WheelWidget>
             child: Obx(() {
               //todo 选中状态
               int value = (animationController.value.value % size).toInt();
-              var isFirstSelect = (index == value && isActiveStatus);
-              var isSecondSelect = (index == value - 1 && isActiveStatus);
-              var isThirdSelect = (index == value - 2 && isActiveStatus);
-              var isFourSelect = (index == value - 3 && isActiveStatus);
+              var isFirst = (index == value && isAnimatingStatus.value);
+              var isSecond = (index == value - 1 && isAnimatingStatus.value);
+              var isThird = (index == value - 2 && isAnimatingStatus.value);
+              var isFour = (index == value - 3 && isAnimatingStatus.value);
               Color bgColor, borderColor,shadowColor;
-              if (isFirstSelect) {
+              if (isFirst) {
                 bgColor = AppColors.cFFFFFF;
                 borderColor = AppColors.cFF7954;
                 shadowColor = AppColors.cFF7954;
-              } else if (isSecondSelect) {
+              } else if (isSecond) {
                 bgColor = AppColors.cFFFFFF.withOpacity(0.8);
                 borderColor = AppColors.cFF7954.withOpacity(0.8);
                 shadowColor = AppColors.cFF7954.withOpacity(0.8);
-              } else if (isThirdSelect) {
+              } else if (isThird) {
                 bgColor = AppColors.cFFFFFF.withOpacity(0.6);
                 borderColor = AppColors.cFF7954.withOpacity(0.6);
                 shadowColor = AppColors.cFF7954.withOpacity(0.6);
-              } else if (isFourSelect) {
+              } else if (isFour) {
                 bgColor = AppColors.cFFFFFF.withOpacity(0.4);
                 borderColor = AppColors.cFF7954.withOpacity(0.4);
                 shadowColor = AppColors.cFF7954.withOpacity(0.4);
-              }else {
+              }else if(index == value && isAnimateEnd.value){
+                bgColor = AppColors.cFF7954;
+                borderColor = AppColors.cFF7954;
+                shadowColor = AppColors.cTransparent;
+              } else {
                 bgColor = AppColors.c000000;
                 borderColor = AppColors.c4c4c4c;
                 shadowColor = AppColors.c000000;
               }
+
               return Stack(
                 children: [
                   Container(
@@ -185,13 +195,13 @@ class _WheelWidgetState extends State<WheelWidget>
                     height: widget.itemHeight,
                     decoration: BoxDecoration(
                       borderRadius: borderRadius,
-                      boxShadow: isFirstSelect || isSecondSelect || isThirdSelect
+                      boxShadow: isFirst || isSecond || isThird
                           ? [
                         BoxShadow(
                           color: shadowColor,
                           offset: const Offset(0, 0),
                           blurRadius: 3.w,
-                          spreadRadius: 1.w,
+                          spreadRadius: 2.w,
                         )
                       ]
                           : [],
@@ -205,7 +215,7 @@ class _WheelWidgetState extends State<WheelWidget>
                       borderRadius: borderRadius,
                       border: Border.all(
                         color: borderColor,
-                        width: isFirstSelect || isSecondSelect || isThirdSelect
+                        width: isFirst || isSecond || isThird
                             ? 2.w
                             : 1.w,
                       ),

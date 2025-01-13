@@ -22,8 +22,10 @@ class BottomTipDialog {
     String? title,
     String? desc,
     String? confirmStr,
+    String? cancelStr,
     Color? confirmBtnColor,
     Widget? centerWidget,
+    Function? cancelTap,
   }) {
     return showModalBottomSheet(
         isScrollControlled: true,
@@ -35,8 +37,10 @@ class BottomTipDialog {
             title: title,
             desc: desc,
             confirmStr: confirmStr,
+            cancelStr: cancelStr,
             confirmBtnColor: confirmBtnColor,
             centerWidget: centerWidget,
+            cancelTap: cancelTap,
           );
         });
   }
@@ -49,15 +53,19 @@ class _BottomTipDialog extends StatelessWidget {
     this.title,
     this.desc,
     this.confirmStr,
+    this.cancelStr,
     this.confirmBtnColor,
     this.centerWidget,
+    this.cancelTap,
   });
 
   final Function onTap;
+  final Function? cancelTap;
   final Widget? icon;
   final String? title;
   final String? desc;
   final String? confirmStr;
+  final String? cancelStr;
   final Color? confirmBtnColor;
   final Widget? centerWidget;
 
@@ -130,10 +138,10 @@ class _BottomTipDialog extends StatelessWidget {
                 borderRadius: BorderRadius.circular(9.w),
                 border: Border.all(color: AppColors.c666666, width: 1.w)),
             child: MtInkWell(
-              onTap: () => Get.back(),
+              onTap: () => cancelTap != null ? cancelTap!.call() : Get.back(),
               child: Center(
                 child: Text(
-                  "CANCEL",
+                  cancelStr ?? "CANCEL",
                   style: 23.w5(
                       color: AppColors.c000000,
                       height: 1,
