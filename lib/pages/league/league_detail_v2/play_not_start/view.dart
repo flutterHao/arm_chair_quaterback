@@ -289,29 +289,45 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                 ),
 
                 /// 赛程竞猜
-                Container(
-                  margin: EdgeInsets.only(top: 9.w),
-                  padding: EdgeInsets.symmetric(horizontal: 15.w),
-                  height: 232.w,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(9.w),
-                      color: AppColors.cFFFFFF),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      22.vGap,
-                      Text(
-                        "WINNER PICK",
-                        style: 24
-                            .w7(height: 1, fontFamily: FontFamily.fOswaldBold),
+                Builder(
+                  builder: (context) {
+                    var nowDateTime = MyDateUtils.getNowDateTime();
+                    var nextDay = MyDateUtils.nextDay(nowDateTime);
+                    var dayStartTimeMS =
+                    MyDateUtils.getDayStartTimeMS(MyDateUtils.nextDay(nextDay));
+                    var item = controller.getGameGuess().scoresEntity;
+                    /// 有时区问题
+                    if (item.gameStartTime >= dayStartTimeMS ||
+                        (item.gameStartTime < MyDateUtils.getNowDateMs() &&
+                            item.isGuess == 0 &&
+                            item.status != 0)) {
+                      return const SizedBox.shrink();
+                    }
+                    return Container(
+                      margin: EdgeInsets.only(top: 9.w),
+                      padding: EdgeInsets.symmetric(horizontal: 15.w),
+                      height: 232.w,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(9.w),
+                          color: AppColors.cFFFFFF),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          22.vGap,
+                          Text(
+                            "WINNER PICK",
+                            style: 24
+                                .w7(height: 1, fontFamily: FontFamily.fOswaldBold),
+                          ),
+                          16.vGap,
+                          ScoreItemWidget(
+                            gameGuess: controller.getGameGuess(),
+                            isInScoreDetail: true,
+                          ),
+                        ],
                       ),
-                      16.vGap,
-                      ScoreItemWidget(
-                        gameGuess: controller.getGameGuess(),
-                        isInScoreDetail: true,
-                      ),
-                    ],
-                  ),
+                    );
+                  }
                 ),
 
                 /// 球员竞猜

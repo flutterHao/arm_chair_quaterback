@@ -68,18 +68,24 @@ class StatsController extends GetxController with GetTickerProviderStateMixin {
     for (int i = 0; i < names.length; i++) {
       String name = names[i];
       String shortName = shortNames[i];
-      String key = keys[i];
-      if (json != null && json.containsKey(key)) {
-        var value = json[key];
-        var rank = json["${key}_RANK"];
-        list.add(StatsItem(name, value, shortName, rank));
+      String keyName = keys[i];
+      if (json != null && json.containsKey(keyName)) {
+        var value = json[keyName];
+        var rank = json["${keyName}_RANK"];
+        list.add(StatsItem(
+          name,
+          value,
+          shortName,
+          rank,
+          keyName,
+        ));
       }
     }
     return list;
   }
 
   List<String> getTitles() {
-    return ["REGULAR SEASON","PRESEASON"];
+    return ["REGULAR SEASON", "PRESEASON"];
   }
 
   onTabTap(int index) {
@@ -92,6 +98,7 @@ class StatsItem {
   final double value;
   final String shortName;
   final int rank;
+  final String keyName;
 
-  StatsItem(this.name, this.value, this.shortName, this.rank);
+  StatsItem(this.name, this.value, this.shortName, this.rank, this.keyName);
 }

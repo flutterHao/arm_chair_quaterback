@@ -209,30 +209,35 @@ class SlotDialogController extends GetxController
 
   void setStarUpItem() {
     if (upStarTeamPlayerV2Entity.successRate <= 0) {
-      gameOver(false);
-      return;
-    }
-    slotCount.value += 1;
-    startUpItem = upStarTeamPlayerV2Entity.starUpList.last;
-    upStarTeamPlayerV2Entity.starUpList.removeAt(0);
-    if (startUpItem?.type == 2) {
+      /// 模拟第一次抽到受伤结束游戏
       selectIndexList = [9];
-    } else if (startUpItem?.type == 3) {
-      selectIndexList = [10];
-    } else {
-      selectIndexList = startUpItem!.attrCount.toJson().keys.fold([], (p, e) {
-        var value = startUpItem!.attrCount.toJson()[e];
-        if (value > 0) {
-          var key = e;
-          key = key.replaceAll("three", "3");
-          key = key.replaceAll("pts", "fgm");
-          p.addAll(List.generate(
-              value, (index) => propertys.indexOf(key.toUpperCase())));
+    }else {
+      slotCount.value += 1;
+      startUpItem = upStarTeamPlayerV2Entity.starUpList.last;
+      upStarTeamPlayerV2Entity.starUpList.removeAt(0);
+      if (startUpItem?.type == 2) {
+        selectIndexList = [9];
+      } else if (startUpItem?.type == 3) {
+        selectIndexList = [10];
+      } else {
+        selectIndexList = startUpItem!
+            .attrCount
+            .toJson()
+            .keys
+            .fold([], (p, e) {
+          var value = startUpItem!.attrCount.toJson()[e];
+          if (value > 0) {
+            var key = e;
+            key = key.replaceAll("three", "3");
+            key = key.replaceAll("pts", "fgm");
+            p.addAll(List.generate(
+                value, (index) => propertys.indexOf(key.toUpperCase())));
+          }
+          return p;
+        });
+        if (selectIndexList.length == 8) {
+          selectIndexList = [8];
         }
-        return p;
-      });
-      if (selectIndexList.length == 8) {
-        selectIndexList = [8];
       }
     }
     print('selectIndexList:$selectIndexList');

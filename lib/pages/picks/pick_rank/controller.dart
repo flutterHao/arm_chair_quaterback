@@ -90,7 +90,7 @@ class PickRankController extends GetxController
         e.propType.toString() == awardkeyData[0] &&
             e.propId.toString() == awardkeyData[1]);
         int awardDataNum = int.parse(awardkeyData[2]);
-        if (awardData == null) {
+        if (awardData == null) { 
           continue;
         }
         RankAwardPropEntity rankAwardPropEntity =

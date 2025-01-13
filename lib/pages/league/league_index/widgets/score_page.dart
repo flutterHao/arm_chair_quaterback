@@ -606,6 +606,7 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
     return Column(
       children: [
         Builder(builder: (context) {
+          /// 有时区问题
           ///只能猜今明两天未开始的赛程
           if (item.gameStartTime >= dayStartTimeMS ||
               (item.gameStartTime < MyDateUtils.getNowDateMs() &&
