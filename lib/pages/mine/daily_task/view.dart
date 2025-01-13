@@ -50,6 +50,8 @@ class DailyTaskPage extends GetView<DailyTaskController> {
                           width: double.infinity,
                           height: 86.w,
                           child: PageView(
+                            controller: controller.pageController,
+                            physics: const NeverScrollableScrollPhysics(),
                             children: [
                               _buildStartWidget(),
                               _buildPackageAndSpin(context)
@@ -312,6 +314,9 @@ class DailyTaskPage extends GetView<DailyTaskController> {
             } else {
               controller.wheelController.start();
             }
+            //todo test code
+            controller.pageController.animateToPage(1,
+                duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
           },
           child: Container(
             height: 51.w,

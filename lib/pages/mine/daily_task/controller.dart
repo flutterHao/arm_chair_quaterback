@@ -9,6 +9,7 @@ class DailyTaskController extends GetxController {
   late WheelController wheelController;
 
   var scrollController = ScrollController();
+  PageController pageController = PageController();
 
   @override
   void onInit() {
