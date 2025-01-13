@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-01-10 17:47:43
+ * @LastEditTime: 2025-01-13 15:52:50
  */
 
 import 'dart:async';
@@ -17,6 +17,7 @@ import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
@@ -107,14 +108,7 @@ class TeamIndexController extends GetxController
     )..repeat(reverse: true);
 
     breathAnimation =
-        Tween<double>(begin: 0.95, end: 0.9).animate(breathController)
-          ..addStatusListener((status) {
-            if (status == AnimationStatus.completed) {
-              shakeController.reverse();
-            } else if (status == AnimationStatus.dismissed) {
-              shakeController.forward();
-            }
-          });
+        Tween<double>(begin: 0.95, end: 0.9).animate(breathController);
   }
 
   @override
@@ -196,10 +190,12 @@ class TeamIndexController extends GetxController
 
   ///快速开启
   void speedOpneBattleBox(int index, int cost) async {
-    bool result = HomeController.to.updateChips(-cost);
-    if (!result) return;
-    await TeamApi.speedOpneBattleBox(index);
-    await toOpenBoxPage(cardPackInfo.card[index]);
+    // bool result = HomeController.to.updateChips(-cost);
+    // if (!result) return;
+    await TeamApi.speedOpneBattleBox(index).then((v) async {
+      HomeController.to.updateTeamProp();
+      await toOpenBoxPage(cardPackInfo.card[index]);
+    });
     // showBoxDialog();
     getBattleBox();
   }
@@ -385,4 +381,39 @@ class TeamIndexController extends GetxController
   openPage() {}
 
   closePage() {}
+
+  ///设置晃动动画，等级低轻微晃动
+  void forwardShake(int currentId, CardPackInfoCard e) {
+    int milliseconds = 200;
+    //按照等级排序,3张以上3张剧烈晃动，一下两张
+    e.players.sort((a, b) => _grade(a).compareTo(b));
+    if (e.players.length > 3) {
+      int index = e.players.indexOf(currentId);
+      milliseconds = index < 3 ? 100 : 250;
+    } else {
+      int index = e.players.indexOf(currentId);
+      milliseconds = index < 2 ? 100 : 250;
+    }
+    shakeController.duration = Duration(milliseconds: milliseconds);
+    shakeController.forward();
+  }
+
+  int _grade(int playerId) {
+    String grade = Utils.getPlayBaseInfo(playerId).grade;
+    grade = grade.replaceAll("-", "").replaceAll("+", "");
+    switch (grade) {
+      case "S":
+        return 0;
+      case "A":
+        return 1;
+      case "B":
+        return 2;
+      case "C":
+        return 3;
+      case "D":
+        return 4;
+      default:
+        return 5;
+    }
+  }
 }

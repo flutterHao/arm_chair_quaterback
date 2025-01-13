@@ -1,5 +1,5 @@
 import 'package:arm_chair_quaterback/generated/json/base/json_convert_content.dart';
-import 'package:arm_chair_quaterback/common/entities/palyer_stats_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/player_stats_entity.dart';
 
 StatsEntity $StatsEntityFromJson(Map<String, dynamic> json) {
   final StatsEntity statsEntity = StatsEntity();

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-06 15:16:54
- * @LastEditTime: 2025-01-04 15:20:59
+ * @LastEditTime: 2025-01-13 16:14:36
  */
 class Api {
   /// base
@@ -106,6 +106,10 @@ class Api {
   static const String cSourceTranslate =
       "$CONFIG_BASE_PATH/SourceTranslate.json";
   static const String cInboxMessage = "$CONFIG_BASE_PATH/InboxMessage.json";
+  static const String cPPlayerBookRule =
+      "$CONFIG_BASE_PATH/PlayerBookRule.json";
+  static const String cPlayerBookExpRule =
+      "$CONFIG_BASE_PATH/PlayerBookExpRule.json";
 
   /// TeamPlayer
   static const String getTeamPlayerByUUID =
@@ -114,6 +118,7 @@ class Api {
       "$API_BASE_PATH/TeamPlayer/getTrainingInfo";
   static const String playerTraining =
       "$API_BASE_PATH/TeamPlayer/playerTraining";
+  static const cancelTactic = "$API_BASE_PATH/TeamPlayer/cancelTactic";
   static const String getTeamPlayerList =
       "$API_BASE_PATH/TeamPlayer/getTeamPlayerList";
   static const String upStarTeamPlayer =
@@ -144,6 +149,12 @@ class Api {
       "$API_BASE_PATH/match/speedOpenCardPack";
   static const String dismissPlayer =
       "$API_BASE_PATH/TeamPlayer/dismissTeamPlayerPack";
+  static const String getTeamPlayerCollect =
+      "$API_BASE_PATH/TeamPlayer/getTeamPlayerCollect";
+  static const String composeTeamPlayer =
+      "$API_BASE_PATH/TeamPlayer/composeTeamPlayer";
+  static const String destroyTeamPlayer =
+      "$API_BASE_PATH/TeamPlayer/destroyTeamPlayer";
 
   ///trade
   static const String getTradeInfo = "$API_BASE_PATH/Trade/getTradeInfo";

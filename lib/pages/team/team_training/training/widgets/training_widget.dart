@@ -2,12 +2,11 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-25 15:56:43
- * @LastEditTime: 2025-01-02 10:14:15
+ * @LastEditTime: 2025-01-13 16:23:20
  */
 
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/animated_number.dart';
-import 'package:arm_chair_quaterback/common/widgets/dialog/custom_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -16,14 +15,10 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team_new/view.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/add_ball_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/award_dialog.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/flip_card.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/player_sroller_view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/training_slot.dart';
-import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -528,6 +523,7 @@ class TrainingWidget extends GetView<TrainingController> {
                                   onTap: () {
                                     if (Utils.getNoTip("tactics")) {
                                       controller.chooseFinish();
+                                      controller.cancelTactic();
                                       return;
                                     }
                                     BottomTipDialog.show(
@@ -538,15 +534,9 @@ class TrainingWidget extends GetView<TrainingController> {
                                         onTap: () {
                                           Utils.saveNotTip("tactics");
                                           controller.chooseFinish();
+                                          controller.cancelTactic();
                                           Get.back();
                                         });
-                                    // showModalBottomSheet(
-                                    //     isScrollControlled: true,
-                                    //     context: Get.context!,
-                                    //     builder: (context) {
-                                    //       // return RecoverDialog();
-                                    //       return const TacticTipDialog();
-                                    //     });
                                   },
                                   child: Container(
                                     width: 30.w,

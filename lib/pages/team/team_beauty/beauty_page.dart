@@ -2,7 +2,7 @@
  * @Description: 换人换装页面
  * @Author: lihonghao
  * @Date: 2024-10-12 17:33:59
- * @LastEditTime: 2025-01-10 20:38:27
+ * @LastEditTime: 2025-01-10 20:50:52
  */
 
 import 'dart:math';
@@ -146,7 +146,12 @@ class BeautyPage extends GetView<BeautyController> {
     return HorizontalDragBackWidget(
         child: BlackAppWidget(
       // const UserInfoBar(showPop: true),
-      Container(),
+      Container(
+        decoration: BoxDecoration(
+          color: AppColors.c000000,
+          border: Border.all(width: 0),
+        ),
+      ),
       bodyWidget: Expanded(
           child: GetBuilder<BeautyController>(
               init: BeautyController(),

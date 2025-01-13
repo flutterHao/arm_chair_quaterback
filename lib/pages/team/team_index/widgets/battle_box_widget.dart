@@ -57,7 +57,7 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
                                       icon:
                                           Assets.commonUiCommonIconSystemArrow,
                                       iconColor: AppColors.c000000,
-                                      // rotateAngle: ,
+                                      rotateAngle: -90,
                                     ),
                                     3.vGap,
                                     Text(
@@ -116,8 +116,9 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
                             children: [
                               IconWidget(
                                 iconWidth: 5.w,
-                                icon: Assets.iconUiIconShrink,
+                                icon: Assets.commonUiCommonIconSystemArrow,
                                 iconColor: AppColors.cFF7954,
+                                rotateAngle: -90,
                               ),
                               3.vGap,
                               Text(

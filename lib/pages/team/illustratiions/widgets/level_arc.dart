@@ -15,11 +15,14 @@ class LevelWidget extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: 133.w,
-      decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [
-        AppColors.c333333,
-        AppColors.c1A1A1A,
-      ])),
+      decoration: const BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+            AppColors.c333333,
+            AppColors.c1A1A1A,
+          ])),
       child: Stack(
         alignment: Alignment.topCenter,
         children: [

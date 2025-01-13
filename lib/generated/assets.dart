@@ -163,6 +163,8 @@ class Assets {
   static const String inboxUiInboxIconMessage = 'assets/images/inbox/ui_inbox_icon_message.png';
   static const String inboxUiInboxIconSend = 'assets/images/inbox/ui_inbox_icon_send.png';
   static const String inboxUiInboxIconTips = 'assets/images/inbox/ui_inbox_icon_tips.png';
+  static const String managerPlayerBookExpRuleEntity = 'assets/images/manager/player_book_exp_rule_entity.dart';
+  static const String managerPlayerBookRuleEntity = 'assets/images/manager/player_book_rule_entity.dart';
   static const String managerUiManagerArchiveAtlas = 'assets/images/manager/ui_manager_archive_atlas.png';
   static const String managerUiManagerArchiveDebris = 'assets/images/manager/ui_manager_archive_debris.png';
   static const String managerUiManagerCourt = 'assets/images/manager/ui_manager_court.jpg';
@@ -186,6 +188,9 @@ class Assets {
   static const String managerUiManagerGift03 = 'assets/images/manager/ui_manager_gift_03.png';
   static const String managerUiManagerGift04 = 'assets/images/manager/ui_manager_gift_04.png';
   static const String managerUiManagerGift05 = 'assets/images/manager/ui_manager_gift_05.png';
+  static const String managerUiManagerGift06 = 'assets/images/manager/ui_manager_gift_06.png';
+  static const String managerUiManagerGift07 = 'assets/images/manager/ui_manager_gift_07.png';
+  static const String managerUiManagerGift08 = 'assets/images/manager/ui_manager_gift_08.png';
   static const String managerUiManagerIconArchive = 'assets/images/manager/ui_manager_icon_archive.png';
   static const String managerUiManagerIconCurrency04 = 'assets/images/manager/ui_manager_icon_currency_04.png';
   static const String managerUiManagerIconLine = 'assets/images/manager/ui_manager_icon_line.png';

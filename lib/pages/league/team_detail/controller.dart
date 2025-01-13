@@ -4,7 +4,7 @@
  * @Date: 2024-12-31 14:30:33
  * @LastEditTime: 2025-01-08 16:26:56
  */
-import 'package:arm_chair_quaterback/common/entities/palyer_stats_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/player_stats_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_detail_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entity/team.dart';

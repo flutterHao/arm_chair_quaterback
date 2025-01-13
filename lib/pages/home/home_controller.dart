@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-25 11:48:38
- * @LastEditTime: 2025-01-04 11:28:53
+ * @LastEditTime: 2025-01-13 16:02:27
  */
 /*
  * @Description: 
@@ -231,21 +231,24 @@ class HomeController extends GetxController {
     updateTeamProp();
   }
 
-  bool updateChips(int change) {
-    for (var element
-        in HomeController.to.userEntiry.teamLoginInfo!.teamPropList!) {
-      if (element.propId == 103) {
-        if (change < 0 && element.num! < change.abs()) {
-          EasyLoading.showToast("Not enough coins");
-          return false;
-        } else {
-          // element.num = element.num! + change;
-          updateTeamProp();
-        }
-      }
-    }
-    return true;
-  }
+  // bool updateCashAndChips(int change) {
+  //   for (var element
+  //       in HomeController.to.userEntiry.teamLoginInfo!.teamPropList!) {
+  //     if (element.propId == 103) {
+  //       if (change < 0 && element.num! < change.abs()) {
+  //         EasyLoading.showToast("Not enough coins");
+  //         return false;
+  //       }
+  //     } else if (element.propId == 102) {
+  //       if (change < 0 && element.num! < change.abs()) {
+  //         EasyLoading.showToast("Not enough cash");
+  //         return false;
+  //       }
+  //     }
+  //   }
+  //   updateTeamProp();
+  //   return true;
+  // }
 
   int getTeamId() {
     int teamId = HomeController.to.userEntiry?.teamLoginInfo?.team?.teamId ?? 0;

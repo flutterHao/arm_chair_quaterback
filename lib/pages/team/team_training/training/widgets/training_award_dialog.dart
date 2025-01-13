@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-02 10:15:35
- * @LastEditTime: 2024-12-24 14:49:46
+ * @LastEditTime: 2025-01-13 16:21:48
  */
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
@@ -10,6 +10,7 @@ import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactics/tactic_card.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/widgets/tactics/training_tactics.dart';
@@ -124,6 +125,7 @@ class TrainingAwardDialog extends GetView<TrainingController> {
                           onTap: () async {
                             if (Utils.getNoTip("tactics")) {
                               controller.chooseFinish();
+                              controller.cancelTactic();
                               Get.back();
                               // return;
                             } else {
@@ -135,10 +137,12 @@ class TrainingAwardDialog extends GetView<TrainingController> {
                                   onTap: () {
                                     Utils.saveNotTip("tactics");
                                     controller.chooseFinish();
+                                    controller.cancelTactic();
                                     Navigator.pop(context);
                                     Get.back();
                                   });
                             }
+                            controller.cancelTactic();
                           },
                           child: Container(
                             width: 30.w,

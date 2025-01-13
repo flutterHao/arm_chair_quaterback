@@ -1,3 +1,9 @@
+/*
+ * @Description: 
+ * @Author: lihonghao
+ * @Date: 2024-12-17 21:56:49
+ * @LastEditTime: 2025-01-13 10:46:22
+ */
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/player_card_entity.g.dart';
 import 'dart:convert';

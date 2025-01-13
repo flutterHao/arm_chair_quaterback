@@ -594,11 +594,12 @@ class TrainingController extends GetxController
   void startSlot() async {
     if (ballNum.value > 0) {
       ballNum.value = ballNum.value - 1;
-    } else {
-      int cost = getBallCost();
-      bool result = HomeController.to.updateChips(-cost);
-      if (!result) return;
     }
+    // else {
+    //   int cost = getBallCost();
+    //   bool result = HomeController.to.updateTeamProp(-cost);
+    //   if (!result) return;
+    // }
     if (isPlaying.value) return;
     initSlot();
     final teamIndexCtrl = Get.find<TeamIndexController>();
@@ -607,6 +608,9 @@ class TrainingController extends GetxController
     playerIdx = random.nextInt(playerList.length);
 
     await TeamApi.playerTraining(playerList[playerIdx].uuid).then((v) {
+      if (ballNum.value == 0) {
+        HomeController.to.updateTeamProp();
+      }
       trainingInfo = v;
       trainingInfo.propArray.shuffle();
       recoverBallCountDown();
@@ -997,5 +1001,11 @@ class TrainingController extends GetxController
       return trainDefine.trainCoinNum[cost];
     }
     return 0;
+  }
+
+  void cancelTactic() {
+    TeamApi.cancelTactic().then((v) {
+      HomeController.to.updateTeamProp();
+    });
   }
 }

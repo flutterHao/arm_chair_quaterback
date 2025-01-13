@@ -2,9 +2,10 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-20 16:11:51
- * @LastEditTime: 2025-01-10 18:33:24
+ * @LastEditTime: 2025-01-13 11:35:49
  */
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
+import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -92,8 +93,9 @@ class _AnimatedBoxState extends State<AnimatedBox>
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: () {
+        Log.d("打开宝箱");
         _controller.reset();
         _controller.forward().then((v) {
           widget.onTap();

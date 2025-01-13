@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-17 18:13:43
- * @LastEditTime: 2025-01-10 18:23:22
+ * @LastEditTime: 2025-01-13 11:42:40
  */
 import 'dart:math';
 
@@ -141,7 +141,7 @@ class OpenBoxPage extends GetView<TeamIndexController> {
                   var player = item.playerCards.first;
                   player.isSelect.value = true;
                   controller.shakeController.reset();
-                  controller.shakeController.forward();
+                  controller.forwardShake(player.playerId, item);
                   controller.update(["open_box_page"]);
                   await Future.delayed(const Duration(milliseconds: 500));
 
@@ -237,8 +237,10 @@ class OpenBoxPage extends GetView<TeamIndexController> {
                           element.isSelect.value = false;
                         }
                       }
-
-                      controller.shakeController.forward();
+                      controller.forwardShake(
+                        e.playerId,
+                        item,
+                      );
                       controller.update(["open_box_page"]);
                     } else {
                       controller.openBattleBox(
@@ -510,24 +512,25 @@ class OpenBoxPage extends GetView<TeamIndexController> {
           id: "open_box_page",
           builder: (context) {
             return GestureDetector(
-              onTap: () async {
-                if (controller.step == 2) {
-                  if (item.playerCards.length == 1) {
-                    await controller.closeBigBox();
-                    Get.back();
-                  } else {
-                    await controller.closeBigBox();
+              onTap: controller.step == 2
+                  ? () async {
+                      if (item.playerCards.length == 1) {
+                        await controller.closeBigBox();
+                        Get.back();
+                      } else {
+                        await controller.closeBigBox();
 
-                    controller.step = 3;
-                    controller.update(["open_box_page"]);
-                    await Future.delayed(const Duration(milliseconds: 300));
-                    for (var e in item.playerCards) {
-                      await Future.delayed(const Duration(milliseconds: 100));
-                      e.isOpen.value = true;
+                        controller.step = 3;
+                        controller.update(["open_box_page"]);
+                        await Future.delayed(const Duration(milliseconds: 300));
+                        for (var e in item.playerCards) {
+                          await Future.delayed(
+                              const Duration(milliseconds: 100));
+                          e.isOpen.value = true;
+                        }
+                      }
                     }
-                  }
-                }
-              },
+                  : null,
               child: Container(
                 width: 375.w,
                 height: 812.h,
@@ -551,10 +554,10 @@ class OpenBoxPage extends GetView<TeamIndexController> {
                     _rightBottomImage(),
 
                     /// 开宝箱
-                    _boxWidget(),
                     _openTitle(),
                     _changeTitle(),
                     _rightBottom(),
+                    _boxWidget(),
                   ],
                 ),
               ),

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-14 17:25:31
- * @LastEditTime: 2025-01-03 20:43:22
+ * @LastEditTime: 2025-01-13 16:17:07
  */
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
@@ -30,6 +30,12 @@ class TeamApi {
   static Future<TrainingInfoEntity> playerTraining(String uuid) async {
     var json = await HttpUtil().post(Api.playerTraining, data: {"uuid": uuid});
     return TrainingInfoEntity.fromJson(json);
+  }
+
+  ///放弃战术牌
+  static Future cancelTactic() async {
+    var json = await HttpUtil().post(Api.cancelTactic);
+    return json;
   }
 
   ///获取队伍球员

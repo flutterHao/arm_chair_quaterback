@@ -32,7 +32,7 @@ class NetInterceptor extends InterceptorsWrapper {
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) async {
     var startMs = response.requestOptions.extra["startMs"];
-    if(startMs != null){
+    if (startMs != null) {
       var milliseconds = DateTime.now().difference(startMs).inMilliseconds;
       Log.i(
           'url -> ${response.requestOptions.uri} \n request cost time(ms) -> $milliseconds');
@@ -63,7 +63,7 @@ class NetInterceptor extends InterceptorsWrapper {
             type: DioExceptionType.unknown,
             error: result,
           );
-
+          Log.e('url -> ${e.requestOptions.uri} \n error.code -> ${e.error}');
           ErrorUtils.toast(e);
           // await _retryOnError(response.requestOptions, handler);
           // handlerError(ErrorEntity(

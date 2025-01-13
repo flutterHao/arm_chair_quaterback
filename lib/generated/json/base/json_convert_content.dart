@@ -40,12 +40,14 @@ import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_source_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/palyer_stats_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/player_stats_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pick_type_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_event_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_player_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_start_updated_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/player_book_exp_rule_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/player_book_rule_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_card_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_day_data_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_status_entity.dart';
@@ -692,6 +694,14 @@ class JsonConvert {
       return data.map<PkStartUpdatedEntity>((Map<String, dynamic> e) =>
           PkStartUpdatedEntity.fromJson(e)).toList() as M;
     }
+    if (<PlayerBookExpRuleEntity>[] is M) {
+      return data.map<PlayerBookExpRuleEntity>((Map<String, dynamic> e) =>
+          PlayerBookExpRuleEntity.fromJson(e)).toList() as M;
+    }
+    if (<PlayerBookRuleEntity>[] is M) {
+      return data.map<PlayerBookRuleEntity>((Map<String, dynamic> e) =>
+          PlayerBookRuleEntity.fromJson(e)).toList() as M;
+    }
     if (<PlayerCardEntity>[] is M) {
       return data.map<PlayerCardEntity>((Map<String, dynamic> e) =>
           PlayerCardEntity.fromJson(e)).toList() as M;
@@ -1167,6 +1177,8 @@ class JsonConvertClassCollection {
         .fromJson,
     (DropAwardData).toString(): DropAwardData.fromJson,
     (PkStartUpdatedEntity).toString(): PkStartUpdatedEntity.fromJson,
+    (PlayerBookExpRuleEntity).toString(): PlayerBookExpRuleEntity.fromJson,
+    (PlayerBookRuleEntity).toString(): PlayerBookRuleEntity.fromJson,
     (PlayerCardEntity).toString(): PlayerCardEntity.fromJson,
     (PlayerDayDataEntity).toString(): PlayerDayDataEntity.fromJson,
     (PlayerStatusEntity).toString(): PlayerStatusEntity.fromJson,

@@ -7,7 +7,7 @@
 import 'package:arm_chair_quaterback/common/entities/nab_player_season_game_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_banner.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/palyer_stats_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/player_stats_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/receive_prop_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/review_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/stats_rank/nba_player_stat.dart';

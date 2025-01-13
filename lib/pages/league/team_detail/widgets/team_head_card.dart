@@ -5,7 +5,7 @@
  * @LastEditTime: 2025-01-07 18:29:06
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
-import 'package:arm_chair_quaterback/common/entities/palyer_stats_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/player_stats_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';

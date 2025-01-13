@@ -6,7 +6,7 @@
 //  */
 // import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 // import 'package:arm_chair_quaterback/common/entities/nab_player_season_game_rank_entity.dart';
-// import 'package:arm_chair_quaterback/common/entities/palyer_stats_entity.dart';
+// import 'package:arm_chair_quaterback/common/entities/player_stats_entity.dart';
 // import 'package:arm_chair_quaterback/common/routers/names.dart';
 // import 'package:arm_chair_quaterback/common/style/color.dart';
 // import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
