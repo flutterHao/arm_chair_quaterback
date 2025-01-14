@@ -93,7 +93,7 @@ class BeautyPage extends GetView<BeautyController> {
 
   Widget _grade() {
     return Positioned(
-      top: 31.5.h + 48.h,
+      top: 31.5.h + 48.h + 40.h,
       left: 0,
       child: Visibility(
         visible: !controller.expandedGirl,
@@ -152,109 +152,117 @@ class BeautyPage extends GetView<BeautyController> {
           border: Border.all(width: 0),
         ),
       ),
-      bodyWidget: Expanded(
-          child: GetBuilder<BeautyController>(
-              init: BeautyController(),
-              builder: (_) {
-                return Container(
-                  decoration: BoxDecoration(
-                    color: Color(controller
-                        .backgroundColor[controller.beautyIndex.value]),
-                    border: Border.all(width: 0),
-                  ),
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      _backText(
-                          top: 0.h,
-                          left: 75.5.w,
-                          text: "GIRLS",
-                          color: AppColors.cFFFFFF,
-                          fontFamily: FontFamily.fCalcioDemo,
-                          fontSize: 187.h),
-                      _backText(
-                          top: 193.h + 48.h,
-                          left: 10.w,
-                          text: "SEXY",
-                          color: AppColors.c000000,
-                          fontFamily: FontFamily.fOswaldMedium,
-                          fontSize: 20.h),
-                      _backText(
-                          top: 193.h + 48.h + 35.h,
-                          left: 0.w,
-                          text: "GIRLS",
-                          color: AppColors.c000000,
-                          fontFamily: FontFamily.fCalcioDemo,
-                          fontSize: 187.h),
-                      Positioned(
-                        top: controller.expandedGirl ? 0 : 45.w,
-                        bottom: controller.expandedGirl ? 0 : 150.h,
-                        child: InkWell(
-                          onTap: () {
-                            controller.expandedGirl = !controller.expandedGirl;
+      floatWidgets: [
+        Positioned(
+          top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            child: GetBuilder<BeautyController>(
+                init: BeautyController(),
+                builder: (_) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: Color(controller
+                          .backgroundColor[controller.beautyIndex.value]),
+                      border: Border.all(width: 0),
+                    ),
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        _backText(
+                            top: 0.h,
+                            left: 75.5.w,
+                            text: "GIRLS",
+                            color: AppColors.cFFFFFF,
+                            fontFamily: FontFamily.fCalcioDemo,
+                            fontSize: 187.h),
+                        _backText(
+                            top: 193.h + 48.h,
+                            left: 10.w,
+                            text: "SEXY",
+                            color: AppColors.c000000,
+                            fontFamily: FontFamily.fOswaldMedium,
+                            fontSize: 20.h),
+                        _backText(
+                            top: 193.h + 48.h + 35.h,
+                            left: 0.w,
+                            text: "GIRLS",
+                            color: AppColors.c000000,
+                            fontFamily: FontFamily.fCalcioDemo,
+                            fontSize: 187.h),
+                        Positioned(
+                          top: 40.w,
+                          bottom: 0,
+                          child: InkWell(
+                            onTap: () {
+                              controller.expandedGirl = !controller.expandedGirl;
 
-                            controller.update();
-                          },
-                          child: Image.asset(
-                            controller.beautyList[controller.beautyIndex.value],
-                            // height: ,
-                            // width: 250.w,
-                            fit: BoxFit.fitHeight,
-                            alignment: Alignment.topCenter,
+                              controller.update();
+                            },
+                            child: Image.asset(
+                              controller.beautyList[controller.beautyIndex.value],
+                              // height: ,
+                              // width: 250.w,
+                              fit: BoxFit.fitHeight,
+                              alignment: Alignment.topCenter,
+                            ),
                           ),
                         ),
-                      ),
-                      _grade(),
-                      _blackIconButton(
-                        top: 34.h,
-                        width: 20.h,
-                        visible: true,
-                        icon: controller.expandedGirl
-                            ? Assets.cheerleadersUiCheerleadersIconFullscreen02
-                            : Assets.cheerleadersUiCheerleadersIconFullscreen01,
-                        onTap: () {
-                          controller.expandedGirl = !controller.expandedGirl;
-                          controller.update();
-                        },
-                      ),
-                      _blackIconButton(
-                        top: 252.h,
-                        width: 22.h,
-                        icon: Assets.cheerleadersUiCheerleadersIconShow,
-                        onTap: () {},
-                      ),
-                      _blackIconButton(
-                        top: 311.h,
-                        width: 22.h,
-                        icon: Assets.cheerleadersUiCheerleadersIconChat,
-                        onTap: () {},
-                      ),
-                      _blackIconButton(
-                        top: 370.h,
-                        width: 22.h,
-                        icon: Assets.cheerleadersUiCheerleadersIconPhoto,
-                        onTap: () {},
-                      ),
-                      _blackIconButton(
-                        top: 429.h,
-                        width: 23.5.h,
-                        withArrow: true,
-                        icon: Assets.cheerleadersUiCheerleadersIconClothing,
-                        onTap: () {},
-                      ),
-                      Positioned(
-                        top: -1,
-                        left: 0,
-                        right: 0,
-                        child: Visibility(
-                            visible: !controller.expandedGirl,
-                            child: const UserInfoBar(showPop: true)),
-                      ),
-                    ],
-                  ),
-                );
-              })),
-      floatWidgets: [
+                        _grade(),
+                        _blackIconButton(
+                          top: 34.h+ 40.h,
+                          width: 20.h,
+                          visible: true,
+                          icon: controller.expandedGirl
+                              ? Assets.cheerleadersUiCheerleadersIconFullscreen02
+                              : Assets.cheerleadersUiCheerleadersIconFullscreen01,
+                          onTap: () {
+                            controller.expandedGirl = !controller.expandedGirl;
+                            controller.update();
+                          },
+                        ),
+                        _blackIconButton(
+                          top: 252.h+ 40.h,
+                          width: 22.h,
+                          icon: Assets.cheerleadersUiCheerleadersIconShow,
+                          onTap: () {},
+                        ),
+                        _blackIconButton(
+                          top: 311.h+ 40.h,
+                          width: 22.h,
+                          icon: Assets.cheerleadersUiCheerleadersIconChat,
+                          onTap: () {},
+                        ),
+                        _blackIconButton(
+                          top: 370.h+ 40.h,
+                          width: 22.h,
+                          icon: Assets.cheerleadersUiCheerleadersIconPhoto,
+                          onTap: () {},
+                        ),
+                        _blackIconButton(
+                          top: 429.h+ 40.h,
+                          width: 23.5.h,
+                          withArrow: true,
+                          icon: Assets.cheerleadersUiCheerleadersIconClothing,
+                          onTap: () {},
+                        ),
+                        Positioned(
+                          top: -1,
+                          left: 0,
+                          right: 0,
+                          child: Visibility(
+                              visible: !controller.expandedGirl,
+                              child: Container(
+                                color: AppColors.c000000,
+                                  padding: EdgeInsets.only(
+                                      top: MediaQuery.of(context).padding.top + 0.w),
+                                  child: const UserInfoBar(showPop: true))),
+                        ),
+                      ],
+                    ),
+                  );
+                })),
         const Positioned(
           bottom: 0,
           left: 0,
