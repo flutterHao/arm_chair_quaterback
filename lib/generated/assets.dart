@@ -163,8 +163,6 @@ class Assets {
   static const String inboxUiInboxIconMessage = 'assets/images/inbox/ui_inbox_icon_message.png';
   static const String inboxUiInboxIconSend = 'assets/images/inbox/ui_inbox_icon_send.png';
   static const String inboxUiInboxIconTips = 'assets/images/inbox/ui_inbox_icon_tips.png';
-  static const String managerPlayerBookExpRuleEntity = 'assets/images/manager/player_book_exp_rule_entity.dart';
-  static const String managerPlayerBookRuleEntity = 'assets/images/manager/player_book_rule_entity.dart';
   static const String managerUiManagerArchiveAtlas = 'assets/images/manager/ui_manager_archive_atlas.png';
   static const String managerUiManagerArchiveDebris = 'assets/images/manager/ui_manager_archive_debris.png';
   static const String managerUiManagerCourt = 'assets/images/manager/ui_manager_court.jpg';
@@ -251,6 +249,7 @@ class Assets {
   static const String managerUiManagerTrainingBg01 = 'assets/images/manager/ui_manager_training_bg01.jpg';
   static const String managerUiManagerTrainingBg02 = 'assets/images/manager/ui_manager_training_bg02.png';
   static const String managerUiManagerTrainingUnknown = 'assets/images/manager/ui_manager_training_unknown.png';
+  static const String managerUiManagerWheelBg01 = 'assets/images/manager/ui_manager_wheel_bg_01.png';
   static const String managerUiManagerWheelBg02 = 'assets/images/manager/ui_manager_wheel_bg_02.png';
   static const String managerUiManagerWheelCalendar = 'assets/images/manager/ui_manager_wheel_calendar.png';
   static const String managerUiManagerWheelGift = 'assets/images/manager/ui_manager_wheel_gift.png';

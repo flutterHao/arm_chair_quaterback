@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:arm_chair_quaterback/common/entities/guess_game_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_game_info_v2_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_param_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_top_reviews_entity.dart';
@@ -11,7 +12,6 @@ import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entity/user_entiry.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
-import 'package:arm_chair_quaterback/common/enums/rank_type.dart';
 import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
@@ -20,11 +20,9 @@ import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-import '../../../common/entities/guess_game_info_entity.dart';
 
 class PicksIndexController extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -60,6 +58,8 @@ class PicksIndexController extends GetxController
   bool loadDataSuccess = false;
 
   late StreamSubscription<int> subscription;
+
+  late StreamSubscription<int> tabSubscription;
 
   List<PicksPlayerV2> getChoiceGuessPlayers() {
     List<PicksPlayerV2> list = [];
@@ -217,6 +217,11 @@ class PicksIndexController extends GetxController
   @override
   void onInit() {
     super.onInit();
+    tabSubscription = Get.find<HomeController>().tabIndex.listen((value) {
+      if (value == 3) {
+        update([idMain]);
+      }
+    });
     subscription = WSInstance.netStream.listen((value) {
       if (!loadDataSuccess) {
         _initData();
@@ -335,6 +340,7 @@ class PicksIndexController extends GetxController
   @override
   void dispose() {
     subscription.cancel();
+    tabSubscription.cancel();
     super.dispose();
   }
 }

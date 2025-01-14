@@ -145,15 +145,15 @@ class LeagueController extends GetxController
     );
   }
 
-  getScoreDateTime() {
+  Future getScoreDateTime() {
     if (loadStatus.value == LoadDataStatus.loading) {
-      return;
+      return Future.delayed(Duration.zero);
     }
     bool needShowLoading = !isLoadSuccess;
     if (needShowLoading) {
       loadStatus.value = LoadDataStatus.loading;
     }
-    Future.wait([
+    return Future.wait([
       CacheApi.getPickDefine(),
       LeagueApi.queryNBAGameSchedulesInfo(
           getDataTimes().first.millisecondsSinceEpoch,

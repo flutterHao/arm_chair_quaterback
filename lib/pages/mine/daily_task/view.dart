@@ -203,7 +203,8 @@ class DailyTaskPage extends GetView<DailyTaskController> {
                                         ),
                                         Container(
                                           height: 190.w,
-                                          margin: EdgeInsets.symmetric(horizontal: 59.w),
+                                          margin: EdgeInsets.symmetric(
+                                              horizontal: 59.w),
                                           child: GridView.builder(
                                               gridDelegate:
                                                   const SliverGridDelegateWithFixedCrossAxisCount(
@@ -314,7 +315,7 @@ class DailyTaskPage extends GetView<DailyTaskController> {
                           title: "YOU’RE OUT",
                           desc:
                               "If you give up now,you’ll lose everything!Continue playing to keep your rewards and win some mor.",
-                          centerWidget: Container(
+                          centerWidget: SizedBox(
                             height: 97.w,
                             child: Stack(
                               children: [
@@ -357,13 +358,13 @@ class DailyTaskPage extends GetView<DailyTaskController> {
                             showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: AppColors.cTransparent,
-                                context: context, builder: (_){
-                              return const SuccessWidget();
-                            });
+                                context: context,
+                                builder: (_) {
+                                  return const SuccessWidget();
+                                });
                           },
                           cancelTap: () {
                             Get.back();
-
                           });
                     });
                   },
@@ -485,6 +486,8 @@ class DailyTaskPage extends GetView<DailyTaskController> {
       controller.wheelController.start(onEnd: onEnd);
     }
     //todo test code
+    controller.centerPageController.animateToPage(1,
+        duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
     controller.pageController.animateToPage(1,
         duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
   }
@@ -674,7 +677,7 @@ class DailyTaskPage extends GetView<DailyTaskController> {
     List<Widget> list = randomWheelData(12, scale: 31 / 52);
     return Positioned(
         left: 66.w,
-        top: 69.w,
+        top: 65.w,
         height: 99.w,
         width: 207.w,
         child: Stack(
@@ -710,7 +713,7 @@ class DailyTaskPage extends GetView<DailyTaskController> {
     List<Widget> list = randomWheelData(12, scale: 31 / 52);
     return Positioned(
         left: 66.w,
-        bottom: 69.w,
+        bottom: 65.w,
         height: 99.w,
         width: 207.w,
         child: Stack(
@@ -777,137 +780,241 @@ class DailyTaskPage extends GetView<DailyTaskController> {
         ));
   }
 
-  Positioned _buildCenter() {
-    return Positioned(
-        child: Container(
+  Widget _buildCenter() {
+    return SizedBox(
       width: 207.w,
       height: 105.w,
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: AppColors.c666666,
-          width: 1.w,
-        ),
-        borderRadius: BorderRadius.circular(12.w),
-      ),
-      padding: EdgeInsets.all(4.w),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(9.w),
-          gradient: const LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                AppColors.c404040,
-                AppColors.c666666,
-              ]),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.cFFFFFF.withOpacity(0.6),
-              offset: Offset(0.w, 0.w),
-              blurRadius: 3.w,
-              spreadRadius: 1.w,
+      child: PageView(
+        scrollDirection: Axis.vertical,
+        controller: controller.centerPageController,
+        physics: const NeverScrollableScrollPhysics(),
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: AppColors.c666666,
+                width: 1.w,
+              ),
+              borderRadius: BorderRadius.circular(12.w),
             ),
-          ],
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(9.w),
-          child: Column(
-            children: [
-              Stack(
-                children: [
-                  Container(
-                    height: 37.w,
-                    width: 181.w,
-                    margin:
-                        EdgeInsets.symmetric(vertical: 8.w, horizontal: 7.w),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4.w),
-                      border: Border.all(
-                        color: AppColors.c666666,
-                        width: 1.w,
-                      ),
-                    ),
-                    child: Stack(
-                      alignment: Alignment.center,
+            padding: EdgeInsets.all(4.w),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(9.w),
+                gradient: const LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      AppColors.c404040,
+                      AppColors.c666666,
+                    ]),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.cFFFFFF.withOpacity(0.6),
+                    offset: Offset(0.w, 0.w),
+                    blurRadius: 3.w,
+                    spreadRadius: 1.w,
+                  ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(9.w),
+                child: Column(
+                  children: [
+                    Stack(
                       children: [
-                        Positioned(
-                          height: 12.w,
-                          left: 26.w,
-                          right: 33.w,
-                          child: const LinearProgressIndicator(
-                            value: 0.2,
-                            color: AppColors.cFF7954,
-                            backgroundColor: AppColors.c000000,
+                        Container(
+                          height: 37.w,
+                          width: 181.w,
+                          margin: EdgeInsets.symmetric(
+                              vertical: 8.w, horizontal: 7.w),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4.w),
+                            border: Border.all(
+                              color: AppColors.c666666,
+                              width: 1.w,
+                            ),
+                          ),
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Positioned(
+                                height: 12.w,
+                                left: 26.w,
+                                right: 33.w,
+                                child: const LinearProgressIndicator(
+                                  value: 0.2,
+                                  color: AppColors.cFF7954,
+                                  backgroundColor: AppColors.c000000,
+                                ),
+                              ),
+                              Positioned(
+                                  left: 9.w,
+                                  child: IconWidget(
+                                      iconWidth: 24.w,
+                                      icon: Assets.commonUiCommonIconTask)),
+                              Positioned(
+                                  right: 9.w,
+                                  child: IconWidget(
+                                      iconWidth: 24.w,
+                                      icon: Assets.commonUiCommonProp05)),
+                              Text(
+                                "15/20",
+                                style: 12.w5(
+                                  color: AppColors.cFFFFFF,
+                                  height: 1,
+                                  fontFamily: FontFamily.fOswaldMedium,
+                                ),
+                              )
+                            ],
                           ),
                         ),
                         Positioned(
-                            left: 9.w,
-                            child: IconWidget(
-                                iconWidth: 24.w,
-                                icon: Assets.commonUiCommonIconTask)),
-                        Positioned(
-                            right: 9.w,
-                            child: IconWidget(
-                                iconWidth: 24.w,
-                                icon: Assets.commonUiCommonProp05)),
-                        Text(
-                          "15/20",
-                          style: 12.w5(
-                            color: AppColors.cFFFFFF,
-                            height: 1,
-                            fontFamily: FontFamily.fOswaldMedium,
-                          ),
-                        )
+                            top: 7.w,
+                            right: 6.w,
+                            child: Container(
+                              height: 16.w,
+                              constraints: BoxConstraints(
+                                minWidth: 16.w,
+                              ),
+                              decoration: BoxDecoration(
+                                color: AppColors.cFF7954,
+                                borderRadius: BorderRadius.circular(8.w),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  "1",
+                                  style: 10.w5(
+                                    color: AppColors.cFFFFFF,
+                                    height: 1,
+                                    fontFamily: FontFamily.fOswaldMedium,
+                                  ),
+                                ),
+                              ),
+                            ))
                       ],
                     ),
+                    7.vGap,
+                    Expanded(
+                        child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Text(
+                          "COINS IN",
+                          style: 52.w7(
+                            height: 0.1,
+                            color: AppColors.c000000.withOpacity(0.2),
+                            fontFamily: FontFamily.fOswaldBold,
+                          ),
+                        ),
+                        IconWidget(
+                            iconWidth: 80.w,
+                            icon: Assets.managerUiManagerDailymissionSlot)
+                      ],
+                    ))
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: AppColors.c998460,
+                width: 1.w,
+              ),
+              borderRadius: BorderRadius.circular(12.w),
+            ),
+            padding: EdgeInsets.all(4.w),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(9.w),
+              child: Container(
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(Assets.managerUiManagerWheelBg01),
+                    fit: BoxFit.fitWidth,
+                    alignment: Alignment.bottomCenter,
                   ),
-                  Positioned(
-                      top: 7.w,
-                      right: 6.w,
-                      child: Container(
-                        height: 16.w,
-                        constraints: BoxConstraints(
-                          minWidth: 16.w,
-                        ),
-                        decoration: BoxDecoration(
-                          color: AppColors.cFF7954,
-                          borderRadius: BorderRadius.circular(8.w),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "1",
-                            style: 10.w5(
-                              color: AppColors.cFFFFFF,
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                      height: 23.w,
+                      width: double.infinity,
+                      padding: EdgeInsets.only(left: 9.w, right: 12.w),
+                      decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                            AppColors.cB29E78,
+                            AppColors.cE2D3A7,
+                          ])),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              IconWidget(
+                                  iconWidth: 18.w,
+                                  icon: Assets.commonUiCommonProp05),
+                              6.hGap,
+                              Text(
+                                "PRIZE POOL",
+                                style: 14.w5(
+                                  color: AppColors.c000000,
+                                  height: 1,
+                                  fontFamily: FontFamily.fOswaldMedium,
+                                ),
+                              )
+                            ],
+                          ),
+                          Text(
+                            "1000",
+                            style: 14.w5(
+                              color: AppColors.c000000,
                               height: 1,
                               fontFamily: FontFamily.fOswaldMedium,
                             ),
-                          ),
-                        ),
-                      ))
-                ],
-              ),
-              7.vGap,
-              Expanded(
-                  child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Text(
-                    "COINS IN",
-                    style: 52.w7(
-                      height: 0.1,
-                      color: AppColors.c000000.withOpacity(0.2),
-                      fontFamily: FontFamily.fOswaldBold,
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  IconWidget(
-                      iconWidth: 80.w,
-                      icon: Assets.managerUiManagerDailymissionSlot)
-                ],
-              ))
-            ],
-          ),
-        ),
+                    Expanded(
+                        child: SizedBox(
+                      width: 47.w,
+                      child: PageView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        controller: controller.girlPageController,
+                        itemBuilder: (BuildContext context, int index) {
+                          return SizedBox(
+                            width: 47.w,
+                            height: 47.w,
+                            child: Center(
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(4.w),
+                                  child: Opacity(
+                                    opacity: 0.7,
+                                    child: SizedBox(
+                                        width: 47.w,
+                                        height: 47.w,
+                                        child: IconWidget(
+                                            iconWidth: 47.w,
+                                            icon: Assets.teamUiHead01)),
+                                  )),
+                            ),
+                          );
+                        },
+                      ),
+                    ))
+                  ],
+                ),
+              ),
+            ),
+          )
+        ],
       ),
-    ));
+    );
   }
 }

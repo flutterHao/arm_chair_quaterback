@@ -69,7 +69,7 @@ class ScorePageController extends GetxController {
         []);
   }
 
-  loading() {
+  loading() async {
     var leagueController = Get.find<LeagueController>();
     if (leagueController
             .getDataTimes()[leagueController.currentPageIndex.value] !=
@@ -77,7 +77,7 @@ class ScorePageController extends GetxController {
       refreshController.refreshCompleted();
       return;
     }
-    leagueController.getScoreDateTime();
+    await leagueController.getScoreDateTime();
     //下拉刷新，把之前选中的项恢复为选中状态
     getDataFromNet(List.from(scoreList));
   }
@@ -86,14 +86,15 @@ class ScorePageController extends GetxController {
     var startTime = time.millisecondsSinceEpoch;
     var endTime = MyDateUtils.nextDay(time).millisecondsSinceEpoch;
     print('scores -------->>> startTime: $startTime -> ${time.day}');
-    var key = "${startTime}_$endTime";
+    // var key = "${startTime}_$endTime";
     var leagueController = Get.find<LeagueController>();
-    if (leagueController.cacheGameGuessData.containsKey(key) &&
-        leagueController.cacheGameGuessData[key]!.isNotEmpty) {
-      scoreList = leagueController.cacheGameGuessData[key]!;
-      update([idScorePageMain]);
-      return;
-    }
+    // if (leagueController.cacheGameGuessData.containsKey(key) &&
+    //     leagueController.cacheGameGuessData[key]!.isNotEmpty) {
+    //   scoreList = leagueController.cacheGameGuessData[key]!;
+    //   refreshController.refreshCompleted();
+    //   update([idScorePageMain]);
+    //   return;
+    // }
     loadStatus.value = LoadDataStatus.loading;
     var futures = <Future>[
       LeagueApi.getNBAGameSchedules(startTime, endTime),
