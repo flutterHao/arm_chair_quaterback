@@ -8,6 +8,7 @@ import 'package:arm_chair_quaterback/common/entities/train_task_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
 import 'package:arm_chair_quaterback/common/utils/click_feed_back.dart';
+import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/top_toast_dialog.dart';
@@ -334,7 +335,7 @@ class TrainingController extends GetxController
       // taskCountDownTime();
       update(["training_page"]);
     }).catchError((v) {
-      EasyLoading.showToast(v.toString());
+      ErrorUtils.toast(v);
       isPlaying.value = false;
     });
   }

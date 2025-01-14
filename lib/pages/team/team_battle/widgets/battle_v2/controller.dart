@@ -1200,7 +1200,7 @@ class TeamBattleV2Controller extends GetxController
       EasyLoading.showToast("Wait a moment");
       return;
     }
-    BottomTipDialog.show(context: context, onTap: confirmJumpGame);
+    BottomTipDialog.show(context: context, onTap: confirmJumpGame,desc: "Do you want to skip the game?");
   }
 
   confirmJumpGame() {

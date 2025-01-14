@@ -18,7 +18,9 @@ import 'package:get/get.dart';
 ///created at 2025/1/13/15:22
 
 class RewardPackageWidget extends StatefulWidget {
-  const RewardPackageWidget({super.key});
+  const RewardPackageWidget({super.key, required this.claimAndExit});
+
+  final Function claimAndExit;
 
   @override
   State<RewardPackageWidget> createState() => _RewardPackageWidgetState();
@@ -189,6 +191,9 @@ class _RewardPackageWidgetState extends State<RewardPackageWidget>
                                     back(onEnd: () {
                                       BottomTipDialog.show(
                                           context: context,
+                                          height: 384.w,
+                                          btnDirection: Axis.horizontal,
+                                          centerWidget: 102.vGap,
                                           title: "EXIT AND CLAIM REWARDS",
                                           desc:
                                               "You still have the chance to win  amazing rewards.",
@@ -201,6 +206,7 @@ class _RewardPackageWidgetState extends State<RewardPackageWidget>
                                           cancelTap: () {
                                             print('CLAIM AND EXIT');
                                             Get.back();
+                                            widget.claimAndExit.call();
                                           });
                                     });
                                   },

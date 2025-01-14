@@ -12,6 +12,7 @@ import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
+import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
@@ -81,7 +82,7 @@ class GameController extends GetxController with GetTickerProviderStateMixin {
         reloadData();
       }
     }, onError: (e) {
-      EasyLoading.showToast("SERVER ERROR");
+      ErrorUtils.toast(e);
     });
     EasyLoading.dismiss();
   }

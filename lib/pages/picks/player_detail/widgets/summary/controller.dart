@@ -298,7 +298,7 @@ class SummaryController extends GetxController {
     TradeApi.buyPlayer(playerId).then((result) {
       initData();
     }, onError: (e) {
-      EasyLoading.showToast("Server Error");
+      ErrorUtils.toast(e);
     });
   }
 

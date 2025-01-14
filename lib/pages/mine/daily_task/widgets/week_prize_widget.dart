@@ -102,46 +102,53 @@ class _WeekPrizeWidgetState extends State<WeekPrizeWidget> {
                           ],
                         ),
                       ),
+                      3.vGap,
                       ...List.generate(15, (index) {
                         //todo
                         bool isFirst = index == 0;
                         bool isLast = index == 14;
                         int level = 3;
-                        return SizedBox(
-                          height: 83.w,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Stack(
+                        return Stack(
+                          children: [
+                            Positioned(
+                              top: 0,
+                              bottom: 0,
+                              child: Container(
+                                width: 29.w,
                                 alignment: Alignment.center,
-                                children: [
-                                  Container(
-                                    width: 9.w,
-                                    height: 83.w,
-                                    decoration: BoxDecoration(
-                                      color: index > level
-                                          ? AppColors.cFFFFFF
-                                          : AppColors.c000000,
-                                      borderRadius: isFirst
-                                          ? BorderRadius.vertical(
-                                              top: Radius.circular(4.5.w))
-                                          : isLast
-                                              ? BorderRadius.vertical(
-                                                  bottom:
-                                                      Radius.circular(4.5.w))
-                                              : null,
-                                      border: Border(
-                                          left: BorderSide(
-                                            color: AppColors.cD1D1D1,
-                                            width: 1.w,
-                                          ),
-                                          right: BorderSide(
-                                            color: AppColors.cD1D1D1,
-                                            width: 1.w,
-                                          )),
-                                    ),
+                                child: Container(
+                                  width: 9.w,
+                                  decoration: BoxDecoration(
+                                    color: index > level
+                                        ? AppColors.cFFFFFF
+                                        : AppColors.c000000,
+                                    borderRadius: isFirst
+                                        ? BorderRadius.vertical(
+                                            top: Radius.circular(4.5.w))
+                                        : isLast
+                                            ? BorderRadius.vertical(
+                                                bottom: Radius.circular(4.5.w))
+                                            : null,
+                                    border: Border(
+                                        left: BorderSide(
+                                          color: AppColors.cD1D1D1,
+                                          width: 1.w,
+                                        ),
+                                        right: BorderSide(
+                                          color: AppColors.cD1D1D1,
+                                          width: 1.w,
+                                        )),
                                   ),
-                                  Stack(
+                                ),
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                SizedBox(
+                                  height: 64.w,
+                                  child: Stack(
                                     alignment: Alignment.center,
                                     children: [
                                       Container(
@@ -186,55 +193,55 @@ class _WeekPrizeWidgetState extends State<WeekPrizeWidget> {
                                       ),
                                     ],
                                   ),
-                                ],
-                              ),
-                              Container(
-                                width: 236.w,
-                                height: 64.w,
-                                margin: EdgeInsets.only(bottom: 19.w),
-                                padding:
-                                    EdgeInsets.only(left: 23.w, right: 18.w),
-                                decoration: BoxDecoration(
-                                  color: AppColors.cFFFFFF,
-                                  borderRadius: BorderRadius.circular(9.w),
-                                  border: Border.all(
-                                    color: AppColors.c10A86A,
-                                    width: 1.w,
-                                  ),
                                 ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        IconWidget(
-                                            iconWidth: 43.w,
-                                            icon:
-                                                Assets.managerUiManagerGift02),
-                                        14.hGap,
-                                        Text(
-                                          "5",
-                                          style: 14.w4(
-                                            color: AppColors.c000000,
-                                            height: 1,
-                                            fontFamily:
-                                                FontFamily.fRobotoRegular,
-                                          ),
-                                        )
-                                      ],
+                                Container(
+                                  width: 236.w,
+                                  height: 64.w,
+                                  margin: EdgeInsets.only(top: isFirst?5.w:19.w),
+                                  padding:
+                                      EdgeInsets.only(left: 23.w, right: 18.w),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.cFFFFFF,
+                                    borderRadius: BorderRadius.circular(9.w),
+                                    border: Border.all(
+                                      color: AppColors.c10A86A,
+                                      width: 1.w,
                                     ),
-                                    IconWidget(
-                                      iconWidth: 21.w,
-                                      icon: Assets
-                                          .commonUiCommonStatusBarMission02,
-                                      iconColor: AppColors.c10A86A,
-                                    )
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          IconWidget(
+                                              iconWidth: 43.w,
+                                              icon: Assets
+                                                  .managerUiManagerGift02),
+                                          14.hGap,
+                                          Text(
+                                            "5",
+                                            style: 14.w4(
+                                              color: AppColors.c000000,
+                                              height: 1,
+                                              fontFamily:
+                                                  FontFamily.fRobotoRegular,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                      IconWidget(
+                                        iconWidth: 21.w,
+                                        icon: Assets
+                                            .commonUiCommonStatusBarMission02,
+                                        iconColor: AppColors.c10A86A,
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
                         );
                       }),
                       9.vGap,

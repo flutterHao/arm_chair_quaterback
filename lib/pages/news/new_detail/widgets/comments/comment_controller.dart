@@ -10,6 +10,7 @@ import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/review_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entity/team_login_info.dart';
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
+import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/news/new_list/controller.dart';
 import 'package:common_utils/common_utils.dart';
@@ -154,7 +155,7 @@ class CommentController extends GetxController {
       detail.reviewsCount.value++;
       update();
     }).catchError((v) {
-      EasyLoading.showToast(v.error.toString());
+      ErrorUtils.toast(v);
     });
   }
 

@@ -26,6 +26,9 @@ class BottomTipDialog {
     Color? confirmBtnColor,
     Widget? centerWidget,
     Function? cancelTap,
+    Axis? btnDirection,
+    double? height,
+    Color? cancelBgColor,
   }) {
     return showModalBottomSheet(
         isScrollControlled: true,
@@ -41,6 +44,9 @@ class BottomTipDialog {
             confirmBtnColor: confirmBtnColor,
             centerWidget: centerWidget,
             cancelTap: cancelTap,
+            btnDirection: btnDirection ?? Axis.vertical,
+            height: height,
+            cancelBgColor: cancelBgColor,
           );
         });
   }
@@ -57,6 +63,9 @@ class _BottomTipDialog extends StatelessWidget {
     this.confirmBtnColor,
     this.centerWidget,
     this.cancelTap,
+    this.btnDirection = Axis.vertical,
+    this.height,
+    this.cancelBgColor,
   });
 
   final Function onTap;
@@ -68,12 +77,15 @@ class _BottomTipDialog extends StatelessWidget {
   final String? cancelStr;
   final Color? confirmBtnColor;
   final Widget? centerWidget;
+  final Axis btnDirection;
+  final double? height;
+  final Color? cancelBgColor;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 419.w,
+      height: height ?? 419.w,
       decoration: BoxDecoration(
           color: AppColors.cFFFFFF, borderRadius: BorderRadius.circular(9.w)),
       child: Column(
@@ -94,65 +106,139 @@ class _BottomTipDialog extends StatelessWidget {
                 height: 1,
                 fontFamily: FontFamily.fOswaldMedium),
           ),
-          10.vGap,
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 40.w),
-            child: Text(
-              desc ?? "Do you want to skip the game?",
-              textAlign: TextAlign.center,
-              style: 14.w4(
-                  color: AppColors.c000000,
-                  // height: 1,
-                  fontFamily: FontFamily.fRobotoRegular),
-            ),
-          ),
-          const Expanded(child: SizedBox.shrink()),
-          centerWidget ?? const SizedBox.shrink(),
-          7.5.vGap,
-          Container(
-            height: 51.w,
-            margin: EdgeInsets.symmetric(horizontal: 16.w),
-            constraints: BoxConstraints(maxWidth: 343.w),
-            decoration: BoxDecoration(
-                color: confirmBtnColor ?? AppColors.c000000,
-                borderRadius: BorderRadius.circular(9.w)),
-            child: MtInkWell(
-              onTap: () => onTap.call(),
-              child: Center(
+          if (desc != null)
+            Container(
+              margin: EdgeInsets.only(top: 10.w),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 40.w),
                 child: Text(
-                  confirmStr ?? "CONFIRM",
-                  style: 23.w5(
-                      color: AppColors.cF2F2F2,
-                      height: 1,
-                      fontFamily: FontFamily.fOswaldMedium),
-                ),
-              ),
-            ),
-          ),
-          9.vGap,
-          Container(
-            height: 51.w,
-            margin: EdgeInsets.symmetric(horizontal: 16.w),
-            constraints: BoxConstraints(maxWidth: 343.w),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(9.w),
-                border: Border.all(color: AppColors.c666666, width: 1.w)),
-            child: MtInkWell(
-              onTap: () => cancelTap != null ? cancelTap!.call() : Get.back(),
-              child: Center(
-                child: Text(
-                  cancelStr ?? "CANCEL",
-                  style: 23.w5(
+                  desc!,
+                  textAlign: TextAlign.center,
+                  style: 14.w4(
                       color: AppColors.c000000,
-                      height: 1,
-                      fontFamily: FontFamily.fOswaldMedium),
+                      // height: 1,
+                      fontFamily: FontFamily.fRobotoRegular),
                 ),
               ),
             ),
-          ),
-          41.vGap,
+          centerWidget ?? const Expanded(child: SizedBox.shrink()),
+          if (btnDirection == Axis.vertical)
+            verticalBtnWidget()
+          else
+            horizontalBtnWidget(),
         ],
       ),
+    );
+  }
+
+  Widget verticalBtnWidget() {
+    return Column(
+      children: [
+        7.5.vGap,
+        Container(
+          height: 51.w,
+          margin: EdgeInsets.symmetric(horizontal: 16.w),
+          constraints: BoxConstraints(maxWidth: 343.w),
+          decoration: BoxDecoration(
+              color: confirmBtnColor ?? AppColors.c000000,
+              borderRadius: BorderRadius.circular(9.w)),
+          child: MtInkWell(
+            onTap: () => onTap.call(),
+            child: Center(
+              child: Text(
+                confirmStr ?? "CONFIRM",
+                style: 23.w5(
+                    color: AppColors.cF2F2F2,
+                    height: 1,
+                    fontFamily: FontFamily.fOswaldMedium),
+              ),
+            ),
+          ),
+        ),
+        9.vGap,
+        Container(
+          height: 51.w,
+          margin: EdgeInsets.symmetric(horizontal: 16.w),
+          constraints: BoxConstraints(maxWidth: 343.w),
+          decoration: BoxDecoration(
+              color: cancelBgColor,
+              borderRadius: BorderRadius.circular(9.w),
+              border: Border.all(
+                  color: cancelBgColor != null
+                      ? AppColors.cTransparent
+                      : AppColors.c666666,
+                  width: 1.w)),
+          child: MtInkWell(
+            onTap: () => cancelTap != null ? cancelTap!.call() : Get.back(),
+            child: Center(
+              child: Text(
+                cancelStr ?? "CANCEL",
+                style: 23.w5(
+                    color: cancelBgColor != null
+                        ? AppColors.cFFFFFF
+                        : AppColors.c000000,
+                    height: 1,
+                    fontFamily: FontFamily.fOswaldMedium),
+              ),
+            ),
+          ),
+        ),
+        41.vGap,
+      ],
+    );
+  }
+
+  Widget horizontalBtnWidget() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          width: 167.w,
+          height: 51.w,
+          decoration: BoxDecoration(
+              color: cancelBgColor,
+              borderRadius: BorderRadius.circular(9.w),
+              border: Border.all(
+                  color: cancelBgColor != null
+                      ? AppColors.cTransparent
+                      : AppColors.c666666,
+                  width: 1.w)),
+          child: MtInkWell(
+            onTap: () => cancelTap != null ? cancelTap!.call() : Get.back(),
+            child: Center(
+              child: Text(
+                cancelStr ?? "CANCEL",
+                style: 23.w5(
+                    color: cancelBgColor != null
+                        ? AppColors.cFFFFFF
+                        : AppColors.c000000,
+                    height: 1,
+                    fontFamily: FontFamily.fOswaldMedium),
+              ),
+            ),
+          ),
+        ),
+        9.hGap,
+        Container(
+          width: 167.w,
+          height: 51.w,
+          decoration: BoxDecoration(
+              color: confirmBtnColor ?? AppColors.c000000,
+              borderRadius: BorderRadius.circular(9.w)),
+          child: MtInkWell(
+            onTap: () => onTap.call(),
+            child: Center(
+              child: Text(
+                confirmStr ?? "CONFIRM",
+                style: 23.w5(
+                    color: AppColors.cF2F2F2,
+                    height: 1,
+                    fontFamily: FontFamily.fOswaldMedium),
+              ),
+            ),
+          ),
+        )
+      ],
     );
   }
 }

@@ -76,7 +76,7 @@ class _WheelWidgetState extends State<WheelWidget>
     super.dispose();
   }
 
-  startWheel() {
+  startWheel(Function? onEnd) {
     if (animationController.controller.isAnimating) {
       return;
     }
@@ -89,6 +89,7 @@ class _WheelWidgetState extends State<WheelWidget>
     animationController.forward(from: 0).then((_) {
       /// 动画结束 开启其他动画
       Future.delayed(const Duration(milliseconds: 300),(){
+        onEnd?.call();
         isAnimatingStatus.value = false;
         isAnimateEnd.value = true;
       });
@@ -231,9 +232,9 @@ class _WheelWidgetState extends State<WheelWidget>
 }
 
 class WheelController {
-  Function()? _startWheel;
+  Function(Function? onEnd)? _startWheel;
 
-  start() {
-    return _startWheel?.call();
+  start({Function? onEnd}) {
+    return _startWheel?.call(onEnd);
   }
 }

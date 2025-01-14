@@ -4,6 +4,7 @@ import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
@@ -11,6 +12,7 @@ import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/mine/daily_task/controller.dart';
 import 'package:arm_chair_quaterback/pages/mine/daily_task/widgets/reward_package_widget.dart';
+import 'package:arm_chair_quaterback/pages/mine/daily_task/widgets/success_widget.dart';
 import 'package:arm_chair_quaterback/pages/mine/daily_task/widgets/week_prize_widget.dart';
 import 'package:arm_chair_quaterback/pages/mine/daily_task/widgets/wheel_widget.dart';
 import 'package:flutter/material.dart';
@@ -179,8 +181,71 @@ class DailyTaskPage extends GetView<DailyTaskController> {
                           useSafeArea: false,
                           barrierColor: AppColors.cTransparent,
                           context: context,
-                          builder: (context) {
-                            return const RewardPackageWidget();
+                          builder: (_) {
+                            return RewardPackageWidget(
+                              claimAndExit: () {
+                                BottomTipDialog.show(
+                                    context: context,
+                                    height: 534.w,
+                                    btnDirection: Axis.horizontal,
+                                    cancelStr: "GIVE UP",
+                                    confirmStr: "STAY",
+                                    cancelBgColor: AppColors.cD60D20,
+                                    title: "YOU’LL LOSE THESE REWARDS",
+                                    desc:
+                                        "If you give up now, you will lose all the rewards gathered so far!",
+                                    centerWidget: Column(
+                                      children: [
+                                        27.vGap,
+                                        Divider(
+                                          color: AppColors.cD1D1D1,
+                                          height: 1.w,
+                                        ),
+                                        Container(
+                                          height: 190.w,
+                                          margin: EdgeInsets.symmetric(horizontal: 59.w),
+                                          child: GridView.builder(
+                                              gridDelegate:
+                                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                                      crossAxisCount: 4),
+                                              itemBuilder: (context, index) {
+                                                return Column(
+                                                  children: [
+                                                    SizedBox(
+                                                      width: 41.w,
+                                                      height: 41.w,
+                                                      child: Center(
+                                                        child: IconWidget(
+                                                            iconWidth: 34.w,
+                                                            icon: Assets
+                                                                .commonUiCommonProp05),
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      "50k",
+                                                      style: 14.w4(
+                                                        color:
+                                                            AppColors.c000000,
+                                                        height: 1,
+                                                        fontFamily: FontFamily
+                                                            .fRobotoRegular,
+                                                      ),
+                                                    )
+                                                  ],
+                                                );
+                                              }),
+                                        ),
+                                        44.vGap,
+                                      ],
+                                    ),
+                                    onTap: () {
+                                      Get.back();
+                                    },
+                                    cancelTap: () {
+                                      print('give up 2 ----');
+                                    });
+                              },
+                            );
                           });
                     },
                     child: Container(
@@ -225,6 +290,82 @@ class DailyTaskPage extends GetView<DailyTaskController> {
                 child: MtInkWell(
                   onTap: () {
                     print('spin ---- ');
+                    spin(onEnd: () {
+                      BottomTipDialog.show(
+                          context: context,
+                          height: 384.w,
+                          btnDirection: Axis.horizontal,
+                          icon: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              IconWidget(
+                                  iconWidth: 41.w,
+                                  icon: Assets.managerUiManagerIconWheelHurt),
+                              13.hGap,
+                              IconWidget(
+                                  iconWidth: 41.w,
+                                  icon: Assets.managerUiManagerIconWheelHurt),
+                              13.hGap,
+                              IconWidget(
+                                  iconWidth: 41.w,
+                                  icon: Assets.managerUiManagerIconWheelHurt),
+                            ],
+                          ),
+                          title: "YOU’RE OUT",
+                          desc:
+                              "If you give up now,you’ll lose everything!Continue playing to keep your rewards and win some mor.",
+                          centerWidget: Container(
+                            height: 97.w,
+                            child: Stack(
+                              children: [
+                                Positioned(
+                                    right: 51.w,
+                                    bottom: 9.w,
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          "COST:",
+                                          style: 16.w5(
+                                            height: 1,
+                                            fontFamily:
+                                                FontFamily.fOswaldMedium,
+                                          ),
+                                        ),
+                                        12.hGap,
+                                        IconWidget(
+                                            iconWidth: 24.w,
+                                            icon: Assets.commonUiCommonProp05),
+                                        3.hGap,
+                                        Text(
+                                          "10k",
+                                          style: 16.w5(
+                                            height: 1,
+                                            fontFamily:
+                                                FontFamily.fOswaldMedium,
+                                          ),
+                                        ),
+                                      ],
+                                    ))
+                              ],
+                            ),
+                          ),
+                          confirmStr: "PLAY ON",
+                          cancelStr: "GIVE UP",
+                          cancelBgColor: AppColors.cD60D20,
+                          onTap: () {
+                            Get.back();
+                            showModalBottomSheet(
+                                isScrollControlled: true,
+                                backgroundColor: AppColors.cTransparent,
+                                context: context, builder: (_){
+                              return const SuccessWidget();
+                            });
+                          },
+                          cancelTap: () {
+                            Get.back();
+
+                          });
+                    });
                   },
                   child: Container(
                     height: 51.w,
@@ -301,22 +442,7 @@ class DailyTaskPage extends GetView<DailyTaskController> {
         7.vGap,
         MtInkWell(
           onTap: () {
-            if (controller.scrollController.offset > 0) {
-              controller.scrollController
-                  .animateTo(0,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.linear)
-                  .then((_) {
-                Future.delayed(const Duration(milliseconds: 300), () {
-                  controller.wheelController.start();
-                });
-              });
-            } else {
-              controller.wheelController.start();
-            }
-            //todo test code
-            controller.pageController.animateToPage(1,
-                duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+            spin();
           },
           child: Container(
             height: 51.w,
@@ -343,6 +469,24 @@ class DailyTaskPage extends GetView<DailyTaskController> {
         ),
       ],
     );
+  }
+
+  void spin({Function? onEnd}) {
+    if (controller.scrollController.offset > 0) {
+      controller.scrollController
+          .animateTo(0,
+              duration: const Duration(milliseconds: 300), curve: Curves.linear)
+          .then((_) {
+        Future.delayed(const Duration(milliseconds: 300), () {
+          controller.wheelController.start(onEnd: onEnd);
+        });
+      });
+    } else {
+      controller.wheelController.start(onEnd: onEnd);
+    }
+    //todo test code
+    controller.pageController.animateToPage(1,
+        duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
   }
 
   Container _buildDailyMissionItem(String text, String image, int status) {
