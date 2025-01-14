@@ -43,6 +43,7 @@ class RouteNames {
   static const teamDetailPage = '/team_detail_page';
   static const illustrationPage = '/illustration';
   static const illustrationDetail = '/illustration_detail';
+  static const seaonRankPage = "/SeaonRankPage";
 
   //mine
   static const mineMineAccount = '/mine_mine_account';

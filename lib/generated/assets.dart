@@ -179,6 +179,8 @@ class Assets {
   static const String managerUiManagerFlag = 'assets/images/manager/ui_manager_flag.png';
   static const String managerUiManagerFreegift01 = 'assets/images/manager/ui_manager_freegift_01.png';
   static const String managerUiManagerFreegift02 = 'assets/images/manager/ui_manager_freegift_02.png';
+  static const String managerUiManagerGameGrade01 = 'assets/images/manager/ui_manager_game_grade_01.png';
+  static const String managerUiManagerGameRankCrown = 'assets/images/manager/ui_manager_game_rank_crown.png';
   static const String managerUiManagerGameoverBg1 = 'assets/images/manager/ui_manager_gameover_bg1.png';
   static const String managerUiManagerGameoverBg2 = 'assets/images/manager/ui_manager_gameover_bg2.jpg';
   static const String managerUiManagerGift01 = 'assets/images/manager/ui_manager_gift_01.png';

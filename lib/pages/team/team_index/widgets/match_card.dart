@@ -64,25 +64,29 @@ class MatchCard extends GetView<TeamIndexController> {
             bottom: 21.w,
             child: Row(
               children: [
-                Container(
-                  // color: Colors.red,
-                  width: 81.w,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      12.hGap,
-                      IconWidget(
-                          iconWidth: 18.w,
-                          icon: Assets.managerUiManagerIconCurrency04),
-                      4.hGap,
-                      Obx(() {
-                        return Text("${controller.cup.value}",
-                            style: 14.w7(color: AppColors.c000000));
-                      }),
-                      13.hGap,
-                    ],
-                  ),
-                ),
+                MtInkWell(
+                    onTap: () {
+                      Get.toNamed(RouteNames.seaonRankPage);
+                    },
+                    child: Container(
+                      // color: Colors.red,
+                      width: 81.w,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          12.hGap,
+                          IconWidget(
+                              iconWidth: 18.w,
+                              icon: Assets.managerUiManagerIconCurrency04),
+                          4.hGap,
+                          Obx(() {
+                            return Text("${controller.cup.value}",
+                                style: 14.w7(color: AppColors.c000000));
+                          }),
+                          13.hGap,
+                        ],
+                      ),
+                    )),
 
                 ///比赛按钮
                 MtInkWell(
@@ -90,18 +94,19 @@ class MatchCard extends GetView<TeamIndexController> {
                   minScale: 0.9,
                   onTap: () {
                     final teamCtrl = Get.find<TeamController>();
-                    if(teamCtrl.myTeamEntity.salary>=teamCtrl.myTeamEntity.salaryCap){
-                    BottomTipDialog.show(
-                        context: context,
-                        onTap: () {
-                          Get.back();
-                          Get.toNamed(RouteNames.teamMemberPage);
-                        },
-                        confirmStr: "LINE UP",
-                        title: "SALARY CAP EXCEED",
-                        desc:
-                            "Salary cap over limit，please adjust the lineup  before the game can begin.");
-                    return;
+                    if (teamCtrl.myTeamEntity.salary >=
+                        teamCtrl.myTeamEntity.salaryCap) {
+                      BottomTipDialog.show(
+                          context: context,
+                          onTap: () {
+                            Get.back();
+                            Get.toNamed(RouteNames.teamMemberPage);
+                          },
+                          confirmStr: "LINE UP",
+                          title: "SALARY CAP EXCEED",
+                          desc:
+                              "Salary cap over limit，please adjust the lineup  before the game can begin.");
+                      return;
                     }
                     controller.matchBattle();
                   },

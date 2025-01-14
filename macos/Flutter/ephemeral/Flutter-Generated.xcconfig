@@ -1,6 +1,6 @@
 // This is a generated file; do not edit or check into version control.
-FLUTTER_ROOT=/Users/gejiahui/Desktop/File/flutterSDK/flutter_3.24.2
-FLUTTER_APPLICATION_PATH=/Users/gejiahui/Desktop/WorkSpace/Flutter/arm_chair_quaterback
+FLUTTER_ROOT=D:\envs\flutter
+FLUTTER_APPLICATION_PATH=D:\ArmChairQuatebackDoc\sourcecode\arm_chair_quaterback
 COCOAPODS_PARALLEL_CODE_SIGN=true
 FLUTTER_BUILD_DIR=build
 FLUTTER_BUILD_NAME=1.0.3
