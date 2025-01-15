@@ -43,6 +43,16 @@ ScoresNotStartGameEntity $ScoresNotStartGameEntityFromJson(
   if (nbaGameSchedules != null) {
     scoresNotStartGameEntity.nbaGameSchedules = nbaGameSchedules;
   }
+  final List<Question>? questions = (json['questions'] as List<dynamic>?)?.map(
+          (e) => jsonConvert.convert<Question>(e) as Question).toList();
+  if (questions != null) {
+    scoresNotStartGameEntity.questions = questions;
+  }
+  final List<Question>? chooses = (json['chooses'] as List<dynamic>?)?.map(
+          (e) => jsonConvert.convert<Question>(e) as Question).toList();
+  if (chooses != null) {
+    scoresNotStartGameEntity.chooses = chooses;
+  }
   return scoresNotStartGameEntity;
 }
 
@@ -55,6 +65,8 @@ Map<String, dynamic> $ScoresNotStartGameEntityToJson(
       entity.nbaTeamStatRankList.map((v) => v.toJson()).toList();
   data['nbaGameSchedules'] =
       entity.nbaGameSchedules.map((v) => v.toJson()).toList();
+  data['questions'] = entity.questions.map((v) => v.toJson()).toList();
+  data['chooses'] = entity.chooses.map((v) => v.toJson()).toList();
   return data;
 }
 
@@ -64,12 +76,16 @@ extension ScoresNotStartGameEntityExtension on ScoresNotStartGameEntity {
     Map<String, List<GameSchedulesInfo>>? teamHistoryMap,
     List<TeamPlayer>? nbaTeamStatRankList,
     List<GameSchedulesInfo>? nbaGameSchedules,
+    List<Question>? questions,
+    List<Question>? chooses,
   }) {
     return ScoresNotStartGameEntity()
       ..teamPlayerMap = teamPlayerMap ?? this.teamPlayerMap
       ..teamHistoryMap = teamHistoryMap ?? this.teamHistoryMap
       ..nbaTeamStatRankList = nbaTeamStatRankList ?? this.nbaTeamStatRankList
-      ..nbaGameSchedules = nbaGameSchedules ?? this.nbaGameSchedules;
+      ..nbaGameSchedules = nbaGameSchedules ?? this.nbaGameSchedules
+      ..questions = questions ?? this.questions
+      ..chooses = chooses ?? this.chooses;
   }
 }
 
@@ -682,5 +698,71 @@ extension TeamHistoryExtension on TeamHistory {
       ..homeTeamId = homeTeamId ?? this.homeTeamId
       ..awayTeamId = awayTeamId ?? this.awayTeamId
       ..status = status ?? this.status;
+  }
+}
+
+Question $QuestionFromJson(Map<String, dynamic> json) {
+  final Question question = Question();
+  final int? gameId = jsonConvert.convert<int>(json['gameId']);
+  if (gameId != null) {
+    question.gameId = gameId;
+  }
+  final int? supportCount = jsonConvert.convert<int>(json['supportCount']);
+  if (supportCount != null) {
+    question.supportCount = supportCount;
+  }
+  final int? id = jsonConvert.convert<int>(json['id']);
+  if (id != null) {
+    question.id = id;
+  }
+  final int? playerId = jsonConvert.convert<int>(json['playerId']);
+  if (playerId != null) {
+    question.playerId = playerId;
+  }
+  final String? attr = jsonConvert.convert<String>(json['attr']);
+  if (attr != null) {
+    question.attr = attr;
+  }
+  final int? createTime = jsonConvert.convert<int>(json['createTime']);
+  if (createTime != null) {
+    question.createTime = createTime;
+  }
+  final int? updateTime = jsonConvert.convert<int>(json['updateTime']);
+  if (updateTime != null) {
+    question.updateTime = updateTime;
+  }
+  return question;
+}
+
+Map<String, dynamic> $QuestionToJson(Question entity) {
+  final Map<String, dynamic> data = <String, dynamic>{};
+  data['gameId'] = entity.gameId;
+  data['supportCount'] = entity.supportCount;
+  data['id'] = entity.id;
+  data['playerId'] = entity.playerId;
+  data['attr'] = entity.attr;
+  data['createTime'] = entity.createTime;
+  data['updateTime'] = entity.updateTime;
+  return data;
+}
+
+extension QuestionExtension on Question {
+  Question copyWith({
+    int? gameId,
+    int? supportCount,
+    int? id,
+    int? playerId,
+    String? attr,
+    int? createTime,
+    int? updateTime,
+  }) {
+    return Question()
+      ..gameId = gameId ?? this.gameId
+      ..supportCount = supportCount ?? this.supportCount
+      ..id = id ?? this.id
+      ..playerId = playerId ?? this.playerId
+      ..attr = attr ?? this.attr
+      ..createTime = createTime ?? this.createTime
+      ..updateTime = updateTime ?? this.updateTime;
   }
 }

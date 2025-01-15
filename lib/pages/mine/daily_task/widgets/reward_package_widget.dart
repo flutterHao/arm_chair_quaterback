@@ -92,6 +92,9 @@ class _RewardPackageWidgetState extends State<RewardPackageWidget>
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          SizedBox(
+                            height: MediaQuery.of(context).padding.top,
+                          ),
                           31.vGap,
                           Container(
                             margin: EdgeInsets.only(left: 16.w),
@@ -244,7 +247,10 @@ class _RewardPackageWidgetState extends State<RewardPackageWidget>
                                       fontFamily: FontFamily.fRobotoRegular,
                                     ),
                                   ),
-                                )
+                                ),
+                                SizedBox(
+                                  height: MediaQuery.of(context).padding.bottom,
+                                ),
                               ],
                             ),
                           )

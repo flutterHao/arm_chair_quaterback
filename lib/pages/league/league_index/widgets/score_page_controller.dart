@@ -134,6 +134,7 @@ class ScorePageController extends GetxController {
     }, onError: (e) {
       ErrorUtils.toast(e);
       loadStatus.value = LoadDataStatus.error;
+      refreshController.refreshCompleted();
     });
   }
 

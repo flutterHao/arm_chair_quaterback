@@ -245,6 +245,9 @@ class _WeekPrizeWidgetState extends State<WeekPrizeWidget> {
                         );
                       }),
                       9.vGap,
+                      SizedBox(
+                        height: MediaQuery.of(context).padding.bottom,
+                      ),
                     ],
                   ),
                 ),

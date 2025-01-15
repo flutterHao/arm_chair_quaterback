@@ -100,6 +100,7 @@ class _LeagueIndexPageState extends State<LeagueIndexPage>
       if (controller.loadStatus.value != LoadDataStatus.success) {
         return SmartRefresher(
           controller: controller.refreshController,
+          onRefresh: ()=> controller.getScoreDateTime(),
           child: Center(
             child: LoadStatusWidget(
               loadDataStatus: controller.loadStatus.value,

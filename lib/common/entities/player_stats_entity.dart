@@ -5,9 +5,9 @@
  * @LastEditTime: 2024-12-31 11:15:16
  */
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
-import 'package:arm_chair_quaterback/generated/json/palyer_stats_entity.g.dart';
 import 'dart:convert';
-export 'package:arm_chair_quaterback/generated/json/palyer_stats_entity.g.dart';
+
+import 'package:arm_chair_quaterback/generated/json/player_stats_entity.g.dart';
 
 @JsonSerializable()
 class StatsEntity {

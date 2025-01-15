@@ -10,6 +10,8 @@ class ScoresNotStartGameEntity {
   late Map<String, List<GameSchedulesInfo>> teamHistoryMap;
   late List<TeamPlayer> nbaTeamStatRankList;
   late List<GameSchedulesInfo> nbaGameSchedules;
+  late List<Question> questions;
+  late List<Question> chooses;
 
   ScoresNotStartGameEntity();
 
@@ -198,6 +200,30 @@ class TeamHistory {
       $TeamHistoryFromJson(json);
 
   	Map<String, dynamic> toJson() => $TeamHistoryToJson(this);
+
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
+}
+
+@JsonSerializable()
+class Question{
+  late int gameId;
+  int supportCount=0;
+  late int id;
+  late int playerId;
+  String? attr;
+  late int createTime;
+  late int updateTime;
+
+
+  Question();
+
+  factory Question.fromJson(Map<String, dynamic> json) =>
+      $QuestionFromJson(json);
+
+  Map<String, dynamic> toJson() => $QuestionToJson(this);
 
   @override
   String toString() {

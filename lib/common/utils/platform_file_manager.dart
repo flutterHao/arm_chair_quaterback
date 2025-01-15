@@ -26,13 +26,13 @@ class PlatformFileManager {
       //  var a= androidInfo.version.sdkInt;
       PermissionStatus status;
       // 如果设备的 Android 版本 >= 11（API 30），则请求 MANAGE_EXTERNAL_STORAGE 权限
-      if (androidInfo.version.sdkInt >= 30) {
-        // 请求 MANAGE_EXTERNAL_STORAGE 权限
-        status = await Permission.manageExternalStorage.request();
-      } else {
+      // if (androidInfo.version.sdkInt >= 30) {
+      //   // 请求 MANAGE_EXTERNAL_STORAGE 权限
+      //   status = await Permission.manageExternalStorage.request();
+      // } else {
         // 对于 Android 10 及以下版本，使用传统的存储权限
         status = await Permission.storage.request();
-      }
+      // }
       return status.isGranted;
     }
     return true; // iOS 无需特殊权限
@@ -45,7 +45,7 @@ class PlatformFileManager {
       // Directory dir = list!.first;
       // print('List--------:$list');
       Directory dir = Directory(
-          '/storage/emulated/0/Android/media/com.ftxapp.arm_chair_quarterback/file');
+          '/storage/emulated/0/Android/media/com.ftxapp.arm_chair_quaterback/file');
       if (!await dir.exists()) await dir.create(recursive: true);
       return dir.path;
     } else if (Platform.isIOS) {

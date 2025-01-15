@@ -40,7 +40,6 @@ import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_source_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/player_stats_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pick_type_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_event_updated_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_player_updated_entity.dart';
@@ -50,6 +49,7 @@ import 'package:arm_chair_quaterback/common/entities/player_book_exp_rule_entity
 import 'package:arm_chair_quaterback/common/entities/player_book_rule_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_card_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_day_data_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/player_stats_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_status_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_info_entity.dart';
@@ -620,10 +620,6 @@ class JsonConvert {
       return data.map<NewsSourceEntity>((Map<String, dynamic> e) =>
           NewsSourceEntity.fromJson(e)).toList() as M;
     }
-    if (<StatsEntity>[] is M) {
-      return data.map<StatsEntity>((Map<String, dynamic> e) =>
-          StatsEntity.fromJson(e)).toList() as M;
-    }
     if (<PickTypeEntity>[] is M) {
       return data.map<PickTypeEntity>((Map<String, dynamic> e) =>
           PickTypeEntity.fromJson(e)).toList() as M;
@@ -710,6 +706,10 @@ class JsonConvert {
       return data.map<PlayerDayDataEntity>((Map<String, dynamic> e) =>
           PlayerDayDataEntity.fromJson(e)).toList() as M;
     }
+    if (<StatsEntity>[] is M) {
+      return data.map<StatsEntity>((Map<String, dynamic> e) =>
+          StatsEntity.fromJson(e)).toList() as M;
+    }
     if (<PlayerStatusEntity>[] is M) {
       return data.map<PlayerStatusEntity>((Map<String, dynamic> e) =>
           PlayerStatusEntity.fromJson(e)).toList() as M;
@@ -778,6 +778,10 @@ class JsonConvert {
     if (<TeamHistory>[] is M) {
       return data.map<TeamHistory>((Map<String, dynamic> e) =>
           TeamHistory.fromJson(e)).toList() as M;
+    }
+    if (<Question>[] is M) {
+      return data.map<Question>((Map<String, dynamic> e) =>
+          Question.fromJson(e)).toList() as M;
     }
     if (<StarUpDefineEntity>[] is M) {
       return data.map<StarUpDefineEntity>((Map<String, dynamic> e) =>
@@ -1154,7 +1158,6 @@ class JsonConvertClassCollection {
     (NewsListEntity).toString(): NewsListEntity.fromJson,
     (NewsListDetail).toString(): NewsListDetail.fromJson,
     (NewsSourceEntity).toString(): NewsSourceEntity.fromJson,
-    (StatsEntity).toString(): StatsEntity.fromJson,
     (PickTypeEntity).toString(): PickTypeEntity.fromJson,
     (PkEventUpdatedEntity).toString(): PkEventUpdatedEntity.fromJson,
     (PkEventUpdatedTeamInfo).toString(): PkEventUpdatedTeamInfo.fromJson,
@@ -1181,6 +1184,7 @@ class JsonConvertClassCollection {
     (PlayerBookRuleEntity).toString(): PlayerBookRuleEntity.fromJson,
     (PlayerCardEntity).toString(): PlayerCardEntity.fromJson,
     (PlayerDayDataEntity).toString(): PlayerDayDataEntity.fromJson,
+    (StatsEntity).toString(): StatsEntity.fromJson,
     (PlayerStatusEntity).toString(): PlayerStatusEntity.fromJson,
     (RankAwardEntity).toString(): RankAwardEntity.fromJson,
     (RankInfoEntity).toString(): RankInfoEntity.fromJson,
@@ -1199,6 +1203,7 @@ class JsonConvertClassCollection {
     (ScoresNotStartGameEntity).toString(): ScoresNotStartGameEntity.fromJson,
     (TeamPlayer).toString(): TeamPlayer.fromJson,
     (TeamHistory).toString(): TeamHistory.fromJson,
+    (Question).toString(): Question.fromJson,
     (StarUpDefineEntity).toString(): StarUpDefineEntity.fromJson,
     (StarUpDoneEntity).toString(): StarUpDoneEntity.fromJson,
     (StarUpDoneAddPotential).toString(): StarUpDoneAddPotential.fromJson,

@@ -272,4 +272,10 @@ class PlayNotStartController extends GetxController
     }
     return len;
   }
+
+  int getTotalSupportCount() {
+    return scoresNotStartGameEntity!.questions.fold(0, (p, e) {
+      return p + e.supportCount;
+    });
+  }
 }

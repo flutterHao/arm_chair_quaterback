@@ -97,7 +97,7 @@ class BeautyAndBoxView extends StatelessWidget {
               top: 0.w,
               left: 0,
               right: 0,
-              bottom: 0,
+              bottom: -66.w,
               child: GetBuilder<BeautyController>(builder: (beautyCtrl) {
                 return Obx(() {
                   beautyCtrl.beautyIndex.value;

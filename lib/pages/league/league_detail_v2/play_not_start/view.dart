@@ -4,6 +4,7 @@ import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/game_schedules_info.dart';
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/scores_not_start_game_entity.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/data_formats.dart';
 import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
@@ -22,6 +23,7 @@ import 'package:arm_chair_quaterback/pages/league/league_detail_v2/play_not_star
 import 'package:arm_chair_quaterback/pages/league/league_detail_v2/play_not_start/widget/play_not_start_player_detail.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/widgets/score_page.dart';
+import 'package:arm_chair_quaterback/pages/news/new_detail/widgets/comments/user_avater_widget.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/widgets/guess_item_v2/guess_item_v2.dart';
 import 'package:extended_tabs/extended_tabs.dart';
@@ -81,20 +83,13 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                       children: [
                         Transform(
                           alignment: Alignment.center,
-                          transform: Matrix4.identity()
-                            ..scale(-1.0, 1.0),
+                          transform: Matrix4.identity()..scale(-1.0, 1.0),
                           child: IconWidget(
-                              iconWidth: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .width / 2,
+                              iconWidth: MediaQuery.of(context).size.width / 2,
                               icon: Assets.scoresUiScoresBattleBg),
                         ),
                         IconWidget(
-                            iconWidth: MediaQuery
-                                .of(context)
-                                .size
-                                .width / 2,
+                            iconWidth: MediaQuery.of(context).size.width / 2,
                             icon: Assets.scoresUiScoresBattleBg),
                       ],
                     ),
@@ -122,9 +117,6 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                         9.vGap,
                         Obx(() {
                           controller.gameStartTimesCountDown.value;
-                          print(
-                              '-----：${controller.gameStartTimesCountDown
-                                  .value},---:${controller.minute}');
                           return Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -222,7 +214,7 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                   decoration: BoxDecoration(
                       color: AppColors.cFFFFFF,
                       borderRadius:
-                      BorderRadius.vertical(top: Radius.circular(9.w))),
+                          BorderRadius.vertical(top: Radius.circular(9.w))),
                   child: Column(
                     children: [
                       14.vGap,
@@ -233,115 +225,306 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                             height: 1,
                             fontFamily: FontFamily.fOswaldMedium),
                       ),
-                      17.vGap,
-                      ...List.generate(4, (index) {
-                        return Container(
-                          height: 46.w,
-                          width: 259.w,
-                          margin: EdgeInsets.only(bottom: 9.w),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(6.w),
-                            border: Border.all(
-                              color: AppColors.cD1D1D1,
-                              width: 1.w,
-                            ),
-                          ),
-                          child: Row(
+                      Builder(builder: (context) {
+                        if (controller
+                            .scoresNotStartGameEntity!.chooses.isNotEmpty) {
+                          return Column(
                             children: [
-                              12.hGap,
-                              ImageWidget(
-                                url: "url",
-                                width: 47.w,
-                                height: 41.w,
-                                imageFailedPath: Assets.iconUiDefault05,
+                              7.vGap,
+                              Container(
+                                  margin:
+                                      EdgeInsets.symmetric(horizontal: 16.w),
+                                  child: Divider(
+                                    height: 1.w,
+                                    color: AppColors.cD1D1D1,
+                                  )),
+                              9.vGap,
+                              ...List.generate(
+                                  controller.scoresNotStartGameEntity!.questions
+                                      .length, (index) {
+                                Question item = controller
+                                    .scoresNotStartGameEntity!.questions[index];
+                                var baseInfo =
+                                    Utils.getPlayBaseInfo(item.playerId);
+                                var supportPercent = (item.supportCount /
+                                        controller.getTotalSupportCount())
+                                    .handlerNaNInfinity();
+                                bool isNotChoose = controller
+                                    .scoresNotStartGameEntity!.chooses
+                                    .where((e) => e.playerId != item.playerId)
+                                    .isNotEmpty;
+                                return Container(
+                                  height: 39.w,
+                                  width: 263.w,
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 9.w),
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                          bottom: BorderSide(
+                                    color: AppColors.cE6E6E6,
+                                    width: 1.w,
+                                  ))),
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          ImageWidget(
+                                            url:
+                                                Utils.getPlayUrl(item.playerId),
+                                            width: 35.w,
+                                            height: 29.w,
+                                            imageFailedPath:
+                                                Assets.iconUiDefault05,
+                                          ),
+                                          9.hGap,
+                                          Text(
+                                            baseInfo.ename,
+                                            style: 12.w4(
+                                              color: AppColors.c000000,
+                                              height: 1,
+                                              fontFamily:
+                                                  FontFamily.fOswaldRegular,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(5.w),
+                                            child: Stack(
+                                              children: [
+                                                Container(
+                                                  width: 70.w,
+                                                  height: 9.w,
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                      color: AppColors.cD1D1D1,
+                                                      width: 1.w,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5.w),
+                                                  ),
+                                                ),
+                                                Positioned(
+                                                  left: -70.w +
+                                                      supportPercent * 70.w,
+                                                  top: 0,
+                                                  bottom: 0,
+                                                  child: Container(
+                                                    width: 70.w,
+                                                    decoration: BoxDecoration(
+                                                      color: isNotChoose
+                                                          ? AppColors.cD5D5D5
+                                                          : AppColors.c000000,
+                                                      border: Border.all(
+                                                        color: isNotChoose
+                                                            ? AppColors.cD5D5D5
+                                                            : AppColors.c000000,
+                                                        width: 1.w,
+                                                      ),
+                                                      borderRadius: BorderRadius
+                                                          .horizontal(
+                                                              left: Radius
+                                                                  .circular(
+                                                                      5.w)),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          5.hGap,
+                                          Container(
+                                              height: 29.w,
+                                              width: 35.w,
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                "${(supportPercent * 100).format()}%",
+                                                style: 14.w4(
+                                                  color: isNotChoose
+                                                      ? AppColors.cB3B3B3
+                                                      : AppColors.c000000,
+                                                  height: 1,
+                                                  fontFamily:
+                                                      FontFamily.fOswaldRegular,
+                                                ),
+                                              ))
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                );
+                              }),
+                              25.vGap,
+                              Container(
+                                width: 343.w,
+                                height: 36.w,
+                                padding:
+                                    EdgeInsets.only(left: 5.w, right: 12.w),
+                                decoration: BoxDecoration(
+                                  color: AppColors.cF2F2F2,
+                                  borderRadius: BorderRadius.circular(6.w),
+                                ),
+                                child: Row(
+                                  children: [
+                                    UserAvaterWidget(
+                                      url: Utils.getAvaterUrl(""),
+                                      width: 26.w,
+                                      height: 26.w,
+                                      radius: 13.w,
+                                    ),
+                                    6.hGap,
+                                    Expanded(
+                                        child: Text(
+                                      "Add a comment about this stake about ...",
+                                      style: 14.w4(
+                                        color: AppColors.c4D4D4D,
+                                        height: 1,
+                                        fontFamily: FontFamily.fRobotoRegular,
+                                      ),
+                                    )),
+                                    20.hGap,
+                                    IconWidget(
+                                      iconWidth: 17.w,
+                                      icon: Assets
+                                          .commonUiCommonIconSystemLikeComment,
+                                      iconColor: AppColors.c000000,
+                                    )
+                                  ],
+                                ),
                               ),
-                              8.hGap,
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Player Name",
-                                    style: 14.w4(
-                                      color: AppColors.c000000,
-                                      height: 1,
-                                      fontFamily: FontFamily.fOswaldRegular,
-                                    ),
-                                  ),
-                                  5.vGap,
-                                  Text(
-                                    "HOU · SG",
-                                    style: 10.w4(
-                                      color: AppColors.c000000,
-                                      height: 1,
-                                      fontFamily: FontFamily.fOswaldRegular,
-                                    ),
-                                  ),
-                                ],
-                              )
+                              21.vGap,
                             ],
-                          ),
+                          );
+                        }
+                        return Column(
+                          children: [
+                            17.vGap,
+                            ...List.generate(
+                                controller.scoresNotStartGameEntity!.questions
+                                    .length, (index) {
+                              Question item = controller
+                                  .scoresNotStartGameEntity!.questions[index];
+                              var baseInfo =
+                                  Utils.getPlayBaseInfo(item.playerId);
+                              return Container(
+                                height: 46.w,
+                                width: 259.w,
+                                margin: EdgeInsets.only(bottom: 9.w),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6.w),
+                                  border: Border.all(
+                                    color: AppColors.cD1D1D1,
+                                    width: 1.w,
+                                  ),
+                                ),
+                                child: Row(
+                                  children: [
+                                    12.hGap,
+                                    ImageWidget(
+                                      url: Utils.getPlayUrl(item.playerId),
+                                      width: 47.w,
+                                      height: 41.w,
+                                      imageFailedPath: Assets.iconUiDefault05,
+                                    ),
+                                    8.hGap,
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          baseInfo.ename,
+                                          style: 14.w4(
+                                            color: AppColors.c000000,
+                                            height: 1,
+                                            fontFamily:
+                                                FontFamily.fOswaldRegular,
+                                          ),
+                                        ),
+                                        5.vGap,
+                                        Text(
+                                          "${Utils.getTeamInfo(baseInfo.teamId).shortEname} · ${baseInfo.position}",
+                                          style: 10.w4(
+                                            color: AppColors.c000000,
+                                            height: 1,
+                                            fontFamily:
+                                                FontFamily.fOswaldRegular,
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              );
+                            }),
+                            21.vGap,
+                          ],
                         );
-                      }),
-                      21.vGap,
+                      })
                     ],
                   ),
                 ),
 
                 /// 赛程竞猜
-                Builder(
-                  builder: (context) {
-                    var nowDateTime = MyDateUtils.getNowDateTime();
-                    var nextDay = MyDateUtils.nextDay(nowDateTime);
-                    var dayStartTimeMS =
-                    MyDateUtils.getDayStartTimeMS(MyDateUtils.nextDay(nextDay));
-                    var item = controller.getGameGuess().scoresEntity;
-                    /// 有时区问题
-                    if (item.gameStartTime >= dayStartTimeMS ||
-                        (item.gameStartTime < MyDateUtils.getNowDateMs() &&
-                            item.isGuess == 0 &&
-                            item.status != 0)) {
-                      return const SizedBox.shrink();
-                    }
-                    return Container(
-                      margin: EdgeInsets.only(top: 9.w),
-                      padding: EdgeInsets.symmetric(horizontal: 15.w),
-                      height: 232.w,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(9.w),
-                          color: AppColors.cFFFFFF),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          22.vGap,
-                          Text(
-                            "WINNER PICK",
-                            style: 24
-                                .w7(height: 1, fontFamily: FontFamily.fOswaldBold),
-                          ),
-                          16.vGap,
-                          ScoreItemWidget(
-                            gameGuess: controller.getGameGuess(),
-                            isInScoreDetail: true,
-                          ),
-                        ],
-                      ),
-                    );
+                Builder(builder: (context) {
+                  var nowDateTime = MyDateUtils.getNowDateTime();
+                  var nextDay = MyDateUtils.nextDay(nowDateTime);
+                  var dayStartTimeMS = MyDateUtils.getDayStartTimeMS(
+                      MyDateUtils.nextDay(nextDay));
+                  var item = controller.getGameGuess().scoresEntity;
+
+                  /// 有时区问题
+                  if (item.gameStartTime >= dayStartTimeMS ||
+                      (item.gameStartTime < MyDateUtils.getNowDateMs() &&
+                          item.isGuess == 0 &&
+                          item.status != 0)) {
+                    return const SizedBox.shrink();
                   }
-                ),
+                  return Container(
+                    margin: EdgeInsets.only(top: 9.w),
+                    padding: EdgeInsets.symmetric(horizontal: 15.w),
+                    height: 232.w,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(9.w),
+                        color: AppColors.cFFFFFF),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        22.vGap,
+                        Text(
+                          "WINNER PICK",
+                          style: 24.w7(
+                              height: 1, fontFamily: FontFamily.fOswaldBold),
+                        ),
+                        16.vGap,
+                        ScoreItemWidget(
+                          gameGuess: controller.getGameGuess(),
+                          isInScoreDetail: true,
+                        ),
+                      ],
+                    ),
+                  );
+                }),
 
                 /// 球员竞猜
-                if (controller
-                    .getPlayerV2()
-                    .isNotEmpty &&
+                if (controller.getPlayerV2().isNotEmpty &&
                     controller.getPlayerMaxLength() != 0) ...[
                   Container(
                     margin: EdgeInsets.only(top: 9.w),
                     height: 114.w + 159.w * controller.getPlayerMaxLength(),
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width,
+                    width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                         color: AppColors.cFFFFFF,
                         borderRadius: BorderRadius.circular(9.w)),
@@ -365,10 +548,7 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                               ),
                               25.vGap,
                               SizedBox(
-                                width: MediaQuery
-                                    .of(context)
-                                    .size
-                                    .width,
+                                width: MediaQuery.of(context).size.width,
                                 child: TLBuildWidget(
                                     controller: controller.tabController!,
                                     builder: (int current, int next,
@@ -378,35 +558,35 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                                         scrollDirection: Axis.horizontal,
                                         child: Row(
                                           children:
-                                          controller.getTabs().map((e) {
+                                              controller.getTabs().map((e) {
                                             int index =
-                                            controller.getTabs().indexOf(e);
+                                                controller.getTabs().indexOf(e);
                                             Color bgColor = index == current
                                                 ? Color.lerp(
-                                                AppColors.c000000,
-                                                AppColors.cFFFFFF,
-                                                progress)!
+                                                    AppColors.c000000,
+                                                    AppColors.cFFFFFF,
+                                                    progress)!
                                                 : index == next
-                                                ? Color.lerp(
-                                                AppColors.cFFFFFF,
-                                                AppColors.c000000,
-                                                progress)!
-                                                : AppColors.cFFFFFF;
+                                                    ? Color.lerp(
+                                                        AppColors.cFFFFFF,
+                                                        AppColors.c000000,
+                                                        progress)!
+                                                    : AppColors.cFFFFFF;
                                             Color color = index == current
                                                 ? Color.lerp(
-                                                AppColors.cFFFFFF,
-                                                AppColors.c000000,
-                                                progress)!
+                                                    AppColors.cFFFFFF,
+                                                    AppColors.c000000,
+                                                    progress)!
                                                 : index == next
-                                                ? Color.lerp(
-                                                AppColors.c000000,
-                                                AppColors.cFFFFFF,
-                                                progress)!
-                                                : AppColors.c000000;
+                                                    ? Color.lerp(
+                                                        AppColors.c000000,
+                                                        AppColors.cFFFFFF,
+                                                        progress)!
+                                                    : AppColors.c000000;
                                             return MtInkWell(
                                               onTap: () {
                                                 if (controller
-                                                    .tabController!.index !=
+                                                        .tabController!.index !=
                                                     index) {
                                                   controller.tabController!
                                                       .animateTo(index);
@@ -421,8 +601,8 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                                                 decoration: BoxDecoration(
                                                   color: bgColor,
                                                   borderRadius:
-                                                  BorderRadius.circular(
-                                                      14.w),
+                                                      BorderRadius.circular(
+                                                          14.w),
                                                   border: Border.all(
                                                       color: AppColors.c666666,
                                                       width: 1),
@@ -458,7 +638,7 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                                   context: context,
                                   child: ListView(
                                     physics:
-                                    const NeverScrollableScrollPhysics(),
+                                        const NeverScrollableScrollPhysics(),
                                     children: list.map((e) {
                                       var i = list.indexOf(e);
                                       return GuessItemV2(
@@ -521,9 +701,8 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                                   ),
                                   7.hGap,
                                   Text(
-                                    Utils
-                                        .getTeamInfo(
-                                        controller.item.homeTeamId)
+                                    Utils.getTeamInfo(
+                                            controller.item.homeTeamId)
                                         .shortEname,
                                   )
                                 ],
@@ -532,9 +711,8 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Text(
-                                    Utils
-                                        .getTeamInfo(
-                                        controller.item.awayTeamId)
+                                    Utils.getTeamInfo(
+                                            controller.item.awayTeamId)
                                         .shortEname,
                                   ),
                                   7.hGap,
@@ -555,14 +733,14 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                               _buildL5GamePageWidget(
                                   context,
                                   controller.scoresNotStartGameEntity!
-                                      .teamHistoryMap[
-                                  controller.item.homeTeamId.toString()],
+                                          .teamHistoryMap[
+                                      controller.item.homeTeamId.toString()],
                                   controller.item.homeTeamId),
                               _buildL5GamePageWidget(
                                   context,
                                   controller.scoresNotStartGameEntity!
-                                      .teamHistoryMap[
-                                  controller.item.awayTeamId.toString()],
+                                          .teamHistoryMap[
+                                      controller.item.awayTeamId.toString()],
                                   controller.item.awayTeamId),
                             ]),
                       ),
@@ -586,12 +764,11 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                       controller.item),
                 ),
                 Obx(() {
-                  var picksIndexController =
-                  Get.find<PicksIndexController>();
+                  var picksIndexController = Get.find<PicksIndexController>();
                   var leagueController = Get.find<LeagueController>();
                   var value = picksIndexController.choiceSize.value;
                   value += leagueController.choiceSize.value;
-                  if(value>0){
+                  if (value > 0) {
                     return 94.vGap;
                   }
                   return 9.vGap;
@@ -620,8 +797,8 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
     return len;
   }
 
-  MediaQuery _buildL5GamePageWidget(BuildContext context,
-      List<GameSchedulesInfo>? historyMap, int homeId) {
+  MediaQuery _buildL5GamePageWidget(
+      BuildContext context, List<GameSchedulesInfo>? historyMap, int homeId) {
     return MediaQuery.removePadding(
         removeTop: true,
         context: context,
@@ -741,18 +918,18 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                       int index = controller.tabPropertyTitles.indexOf(e);
                       Color bgColor = index == current
                           ? Color.lerp(
-                          AppColors.c000000, AppColors.cFFFFFF, progress)!
+                              AppColors.c000000, AppColors.cFFFFFF, progress)!
                           : index == next
-                          ? Color.lerp(AppColors.cFFFFFF, AppColors.c000000,
-                          progress)!
-                          : AppColors.cFFFFFF;
+                              ? Color.lerp(AppColors.cFFFFFF, AppColors.c000000,
+                                  progress)!
+                              : AppColors.cFFFFFF;
                       Color color = index == current
                           ? Color.lerp(
-                          AppColors.cFFFFFF, AppColors.c000000, progress)!
+                              AppColors.cFFFFFF, AppColors.c000000, progress)!
                           : index == next
-                          ? Color.lerp(AppColors.c000000, AppColors.cFFFFFF,
-                          progress)!
-                          : AppColors.c000000;
+                              ? Color.lerp(AppColors.c000000, AppColors.cFFFFFF,
+                                  progress)!
+                              : AppColors.c000000;
                       return Expanded(
                         child: MtInkWell(
                           onTap: () {
@@ -804,8 +981,7 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          Utils
-                              .getTeamInfo(controller.item.homeTeamId)
+                          Utils.getTeamInfo(controller.item.homeTeamId)
                               .shortEname,
                           style: 16.w5(
                               color: AppColors.c000000,
@@ -814,9 +990,7 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                         ),
                         3.vGap,
                         Text(
-                          "${leftItem?.conference} ${leftItem == null
-                              ? ""
-                              : Utils.getSortWithInt(leftItem.division)}",
+                          "${leftItem?.conference} ${leftItem == null ? "" : Utils.getSortWithInt(leftItem.division)}",
                           style: 12.w4(
                               color: AppColors.c000000,
                               height: 1,
@@ -832,8 +1006,7 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          Utils
-                              .getTeamInfo(controller.item.awayTeamId)
+                          Utils.getTeamInfo(controller.item.awayTeamId)
                               .shortEname,
                           style: 16.w5(
                               color: AppColors.c000000,
@@ -842,9 +1015,7 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                         ),
                         3.vGap,
                         Text(
-                          "${rightItem?.conference} ${rightItem == null
-                              ? ""
-                              : Utils.getSortWithInt(rightItem.division)}",
+                          "${rightItem?.conference} ${rightItem == null ? "" : Utils.getSortWithInt(rightItem.division)}",
                           style: 12.w4(
                               color: AppColors.c000000,
                               height: 1,
@@ -888,10 +1059,10 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
       child: ListView.builder(
           physics: const NeverScrollableScrollPhysics(),
           itemCount:
-          controller.scoresNotStartGameEntity!.nbaGameSchedules.length,
+              controller.scoresNotStartGameEntity!.nbaGameSchedules.length,
           itemBuilder: (context, index) {
             var gameSchedule =
-            controller.scoresNotStartGameEntity!.nbaGameSchedules[index];
+                controller.scoresNotStartGameEntity!.nbaGameSchedules[index];
             return Container(
               height: 60.w,
               margin: EdgeInsets.symmetric(horizontal: 16.w),
@@ -934,7 +1105,7 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
   Column _buildDataPageWidget() {
     var teamStatsData = controller.getTeamStatsData();
     var expansionList =
-    teamStatsData.length > 4 ? teamStatsData.sublist(4) : [];
+        teamStatsData.length > 4 ? teamStatsData.sublist(4) : [];
     return Column(
       children: [
         Expanded(
@@ -1013,7 +1184,7 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
       padding: EdgeInsets.symmetric(horizontal: 13.w),
       decoration: const BoxDecoration(
           border:
-          Border(bottom: BorderSide(color: AppColors.cE6E6E, width: 1))),
+              Border(bottom: BorderSide(color: AppColors.cE6E6E, width: 1))),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
