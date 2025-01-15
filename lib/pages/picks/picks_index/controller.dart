@@ -23,7 +23,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-
 class PicksIndexController extends GetxController
     with GetSingleTickerProviderStateMixin {
   PicksIndexController();
@@ -72,9 +71,10 @@ class PicksIndexController extends GetxController
   }
 
   /// 选择了more/less
-  choiceOne({PicksPlayerV2? player, bool needRefreshList = false}) {
+  choiceOne({PicksPlayerV2? player, bool needRefreshList = false}) async {
     print('choiceOne---');
     if (player != null) {
+      bool hasPlayer = false;
       for (int i = 0; i < guessGamePlayers.keys.length; i++) {
         var key = guessGamePlayers.keys.toList()[i];
         var list2 = guessGamePlayers[key]!;
@@ -83,8 +83,15 @@ class PicksIndexController extends GetxController
             e.tabStr == player.tabStr);
         if (firstWhereOrNull != null) {
           firstWhereOrNull.status = player.status;
+          hasPlayer = true;
           break;
         }
+      }
+
+      /// 现有的列表不包含此球员,刷新数据之后再加一次
+      if (!hasPlayer) {
+        await _initData();
+        choiceOne(player: player,needRefreshList: needRefreshList);
       }
     }
     _count(needRefreshList);
@@ -230,12 +237,12 @@ class PicksIndexController extends GetxController
     _initData();
   }
 
-  void _initData() {
-    if(loadStatusRx.value == LoadDataStatus.loading){
-      return;
+  Future _initData() {
+    if (loadStatusRx.value == LoadDataStatus.loading) {
+      return Future.delayed(Duration.zero);
     }
     loadStatusRx.value = LoadDataStatus.loading;
-    Future.wait([
+    return Future.wait([
       PicksApi.getGuessGamesInfo(),
       CacheApi.getNBAPlayerInfo(),
       CacheApi.getPickDefine(),

@@ -16,6 +16,7 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
+import 'package:arm_chair_quaterback/common/widgets/physics/one_boundary_page_scroll_physics.dart';
 import 'package:arm_chair_quaterback/common/widgets/support_percent_progress_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/league/league_detail_v2/play_already_start/controller.dart';
@@ -45,17 +46,8 @@ class PlayNotStartPage extends StatefulWidget {
 
 class _PlayNotStartPageState extends State<PlayNotStartPage>
     with AutomaticKeepAliveClientMixin {
-  final _isExpanded = false.obs;
-
-  var scrollController = ScrollController();
 
   late PlayNotStartController controller;
-
-  @override
-  void dispose() {
-    scrollController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -408,6 +400,7 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                             ],
                           );
                         }
+
                         /// 预测mvp
                         return Column(
                           children: [
@@ -633,7 +626,7 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                           ),
                         ),
                         Expanded(
-                          child: ExtendedTabBarView(
+                          child: TabBarView(
                               controller: controller.tabController,
                               children: controller.getTabs().map((e) {
                                 List<PicksPlayerV2> list =
@@ -732,7 +725,7 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                       ),
                       18.vGap,
                       Expanded(
-                        child: ExtendedTabBarView(
+                        child: TabBarView(
                             controller: controller.teamL5GameTabController,
                             children: [
                               _buildL5GamePageWidget(
@@ -1043,15 +1036,27 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
             color: AppColors.cD1D1D1,
             height: 1,
           ),
-          SizedBox(
-            height: 360.w,
-            child: ExtendedTabBarView(
-                controller: controller.teamPropertyTabController,
-                children: [
-                  _buildDataPageWidget(),
-                  _buildHistoryPageWidget(context),
-                ]),
-          )
+          Obx(() {
+            var index = controller.propertyIndex.value;
+            bool expanded = controller.isExpanded.value;
+            print('expanded------$expanded');
+            return AnimatedContainer(
+              height: !expanded
+                  ? index == 1
+                      ? 5 * 60.w + 25.w
+                      : 6 * 60.w
+                  : (controller.getTeamStatsData().length + 1) * 60.w,
+              duration: const Duration(milliseconds: 100),
+              child: TabBarView(
+                  controller: controller.teamPropertyTabController,
+                  physics: OneBoundaryPageScrollPhysics(
+                      tabController: controller.teamPropertyTabController),
+                  children: [
+                    _buildDataPageWidget(context),
+                    _buildHistoryPageWidget(context),
+                  ]),
+            );
+          })
         ],
       ),
     );
@@ -1107,50 +1112,26 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
     );
   }
 
-  Column _buildDataPageWidget() {
+  Column _buildDataPageWidget(BuildContext context) {
     var teamStatsData = controller.getTeamStatsData();
-    var expansionList =
-        teamStatsData.length > 4 ? teamStatsData.sublist(4) : [];
     return Column(
       children: [
         Expanded(
-          child: SingleChildScrollView(
-            controller: scrollController,
-            child: Column(
-              children: [
-                ...List.generate(min(5, teamStatsData.length), (index) {
-                  var item = teamStatsData[index];
-                  return _teamStatsItemWidget(item);
-                }),
-                if (teamStatsData.length > 5)
-                  Obx(() {
-                    return AnimatedCrossFade(
-                      duration: const Duration(milliseconds: 300),
-                      firstChild: const SizedBox.shrink(),
-                      secondChild: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: expansionList
-                            .map((e) => _teamStatsItemWidget(e))
-                            .toList(),
-                      ),
-                      crossFadeState: _isExpanded.value
-                          ? CrossFadeState.showSecond
-                          : CrossFadeState.showFirst,
-                    );
-                  }),
-              ],
+          child: MediaQuery.removePadding(
+            context: context,
+            removeTop: true,
+            child: ListView(
+              physics: const NeverScrollableScrollPhysics(),
+              children: List.generate(teamStatsData.length, (index) {
+                var item = teamStatsData[index];
+                return _teamStatsItemWidget(item);
+              }),
             ),
           ),
         ),
         InkWell(
           onTap: () {
-            _isExpanded.value = !_isExpanded.value;
-            Future.delayed(const Duration(milliseconds: 100), () {
-              scrollController.animateTo(
-                  scrollController.position.pixels + 60.w * 5,
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeOut);
-            });
+            controller.isExpanded.value = !controller.isExpanded.value;
           },
           child: Container(
             height: 60.w,
@@ -1171,7 +1152,7 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                     iconWidth: 9.w,
                     icon: Assets.commonUiCommonIconSystemJumpto,
                     iconColor: AppColors.c000000,
-                    rotateAngle: _isExpanded.value ? -90 : 90,
+                    rotateAngle: controller.isExpanded.value ? -90 : 90,
                   );
                 })
               ],

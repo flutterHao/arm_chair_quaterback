@@ -56,6 +56,9 @@ class PlayNotStartController extends GetxController
 
   late StreamSubscription<List> subscription;
 
+  var isExpanded = false.obs;
+  var propertyIndex = 0.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -66,6 +69,13 @@ class PlayNotStartController extends GetxController
     });
     teamPropertyTabController =
         TabController(length: tabPropertyTitles.length, vsync: this);
+    teamPropertyTabController.addListener(() {
+      print('teamPropertyTabController:${teamPropertyTabController.index}');
+      if(propertyIndex.value != teamPropertyTabController.index) {
+        isExpanded.value = false;
+        propertyIndex.value = teamPropertyTabController.index;
+      }
+    });
     teamL5GameTabController = TabController(length: 2, vsync: this);
     teamPlayersTabController = TabController(length: 2, vsync: this);
     timeCountDown();
@@ -279,10 +289,10 @@ class PlayNotStartController extends GetxController
     });
   }
 
-  scheduleChoose(Question question){
-    LeagueApi.scheduleChoose(question.playerId, question.gameId).then((result){
+  scheduleChoose(Question question) {
+    LeagueApi.scheduleChoose(question.playerId, question.gameId).then((result) {
       initData();
-    },onError: (e){
+    }, onError: (e) {
       ErrorUtils.toast(e);
     });
   }
