@@ -59,6 +59,7 @@ import 'package:arm_chair_quaterback/common/entities/recive_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/recive_award_v2_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/review_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/reward_group_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/schedule_choose_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_not_start_game_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/star_up_define_entity.dart';
@@ -763,6 +764,10 @@ class JsonConvert {
       return data.map<RewardGroupEntity>((Map<String, dynamic> e) =>
           RewardGroupEntity.fromJson(e)).toList() as M;
     }
+    if (<ScheduleChooseEntity>[] is M) {
+      return data.map<ScheduleChooseEntity>((Map<String, dynamic> e) =>
+          ScheduleChooseEntity.fromJson(e)).toList() as M;
+    }
     if (<ScoresEntity>[] is M) {
       return data.map<ScoresEntity>((Map<String, dynamic> e) =>
           ScoresEntity.fromJson(e)).toList() as M;
@@ -1199,6 +1204,7 @@ class JsonConvertClassCollection {
         .toString(): ReciveAwardV2GuessInfoGuessData.fromJson,
     (ReviewEntity).toString(): ReviewEntity.fromJson,
     (RewardGroupEntity).toString(): RewardGroupEntity.fromJson,
+    (ScheduleChooseEntity).toString(): ScheduleChooseEntity.fromJson,
     (ScoresEntity).toString(): ScoresEntity.fromJson,
     (ScoresNotStartGameEntity).toString(): ScoresNotStartGameEntity.fromJson,
     (TeamPlayer).toString(): TeamPlayer.fromJson,

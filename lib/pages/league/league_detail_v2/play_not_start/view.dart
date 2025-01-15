@@ -247,7 +247,7 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                                 var baseInfo =
                                     Utils.getPlayBaseInfo(item.playerId);
                                 var supportPercent = (item.supportCount /
-                                        controller.getTotalSupportCount())
+                                        controller.getMVPTotalSupportCount())
                                     .handlerNaNInfinity();
                                 bool isNotChoose = controller
                                     .scoresNotStartGameEntity!.chooses
@@ -417,55 +417,58 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                                   .scoresNotStartGameEntity!.questions[index];
                               var baseInfo =
                                   Utils.getPlayBaseInfo(item.playerId);
-                              return Container(
-                                height: 46.w,
-                                width: 259.w,
-                                margin: EdgeInsets.only(bottom: 9.w),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(6.w),
-                                  border: Border.all(
-                                    color: AppColors.cD1D1D1,
-                                    width: 1.w,
-                                  ),
-                                ),
-                                child: Row(
-                                  children: [
-                                    12.hGap,
-                                    ImageWidget(
-                                      url: Utils.getPlayUrl(item.playerId),
-                                      width: 47.w,
-                                      height: 41.w,
-                                      imageFailedPath: Assets.iconUiDefault05,
+                              return MtInkWell(
+                                onTap: () => controller.scheduleChoose(item),
+                                child: Container(
+                                  height: 46.w,
+                                  width: 259.w,
+                                  margin: EdgeInsets.only(bottom: 9.w),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(6.w),
+                                    border: Border.all(
+                                      color: AppColors.cD1D1D1,
+                                      width: 1.w,
                                     ),
-                                    8.hGap,
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          baseInfo.ename,
-                                          style: 14.w4(
-                                            color: AppColors.c000000,
-                                            height: 1,
-                                            fontFamily:
-                                                FontFamily.fOswaldRegular,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      12.hGap,
+                                      ImageWidget(
+                                        url: Utils.getPlayUrl(item.playerId),
+                                        width: 47.w,
+                                        height: 41.w,
+                                        imageFailedPath: Assets.iconUiDefault05,
+                                      ),
+                                      8.hGap,
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            baseInfo.ename,
+                                            style: 14.w4(
+                                              color: AppColors.c000000,
+                                              height: 1,
+                                              fontFamily:
+                                                  FontFamily.fOswaldRegular,
+                                            ),
                                           ),
-                                        ),
-                                        5.vGap,
-                                        Text(
-                                          "${Utils.getTeamInfo(baseInfo.teamId).shortEname} · ${baseInfo.position}",
-                                          style: 10.w4(
-                                            color: AppColors.c000000,
-                                            height: 1,
-                                            fontFamily:
-                                                FontFamily.fOswaldRegular,
+                                          5.vGap,
+                                          Text(
+                                            "${Utils.getTeamInfo(baseInfo.teamId).shortEname} · ${baseInfo.position}",
+                                            style: 10.w4(
+                                              color: AppColors.c000000,
+                                              height: 1,
+                                              fontFamily:
+                                                  FontFamily.fOswaldRegular,
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    )
-                                  ],
+                                        ],
+                                      )
+                                    ],
+                                  ),
                                 ),
                               );
                             }),

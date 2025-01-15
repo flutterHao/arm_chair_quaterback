@@ -75,6 +75,7 @@ class Api {
   static const String queryNBAGameSchedulesInfo =
       "$API_BASE_PATH/NBAData/queryNBAGameSchedulesInfo";
   static const String getNBATeamInfo = "$API_BASE_PATH/NBAData/getNBATeamInfo";
+  static const String scheduleChoose = "$API_BASE_PATH/NBAData/scheduleChoose";
 
   /// config
   static const String cNewsBanner = "$CONFIG_BASE_PATH/HightlightNews.json";

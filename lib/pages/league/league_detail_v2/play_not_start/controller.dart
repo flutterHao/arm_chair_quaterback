@@ -273,9 +273,17 @@ class PlayNotStartController extends GetxController
     return len;
   }
 
-  int getTotalSupportCount() {
+  int getMVPTotalSupportCount() {
     return scoresNotStartGameEntity!.questions.fold(0, (p, e) {
       return p + e.supportCount;
+    });
+  }
+
+  scheduleChoose(Question question){
+    LeagueApi.scheduleChoose(question.playerId, question.gameId).then((result){
+      initData();
+    },onError: (e){
+      ErrorUtils.toast(e);
     });
   }
 }
