@@ -24,7 +24,7 @@ class GameGuess {
 }
 
 class LeagueController extends GetxController
-    with GetSingleTickerProviderStateMixin {
+    with GetTickerProviderStateMixin {
   LeagueController();
 
   RefreshController refreshController = RefreshController();
@@ -54,6 +54,12 @@ class LeagueController extends GetxController
   late StreamSubscription<int> tabSubscription;
 
   List<DateTime> getDataTimes() {
+    var dateList = getAllDataTimes();
+    dateList.removeWhere((e) => noDataDayList.contains(e));
+    return dateList;
+  }
+
+  List<DateTime> getAllDataTimes() {
     // 获取今天的日期
     DateTime today = DateTime.now();
 
@@ -65,7 +71,6 @@ class LeagueController extends GetxController
         return DateTime(date.year, date.month, date.day); // 设置时间为零点
       },
     );
-    dateList.removeWhere((e) => noDataDayList.contains(e));
     return dateList;
   }
 
@@ -156,8 +161,8 @@ class LeagueController extends GetxController
     return Future.wait([
       CacheApi.getPickDefine(),
       LeagueApi.queryNBAGameSchedulesInfo(
-          getDataTimes().first.millisecondsSinceEpoch,
-          getDataTimes().last.millisecondsSinceEpoch)
+          getAllDataTimes().first.millisecondsSinceEpoch,
+          getAllDataTimes().last.millisecondsSinceEpoch)
     ]).then((result) {
       isLoadSuccess = true;
       picksDefineEntity = result[0] as PicksDefineEntity;
@@ -189,7 +194,10 @@ class LeagueController extends GetxController
         if (needShowLoading) {
           loadStatus.value = LoadDataStatus.success;
         }
-        tabController ??= TabController(
+        if(tabController != null){
+          tabController!.dispose();
+        }
+        tabController = TabController(
             initialIndex: currentPageIndex.value,
             length: getDataTimes()
                 .map((e) => e.millisecondsSinceEpoch)
@@ -201,9 +209,9 @@ class LeagueController extends GetxController
           });
       }
 
-      if (!needShowLoading) {
-        update();
-      }
+      // if (!needShowLoading) {
+      update();
+      // }
       refreshController.refreshCompleted();
     }, onError: (e) {
       ErrorUtils.toast(e);

@@ -280,6 +280,10 @@ class RankRewardDetail extends StatelessWidget {
                       9.vGap,
                     ],
                   ),
+                ),
+                9.vGap,
+                SizedBox(
+                  height: MediaQuery.of(context).padding.bottom,
                 )
               ],
             ),

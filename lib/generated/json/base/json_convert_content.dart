@@ -23,6 +23,7 @@ import 'package:arm_chair_quaterback/common/entities/guess_game_info_entity.dart
 import 'package:arm_chair_quaterback/common/entities/guess_game_info_v2_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_param_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/guess_rank_by_cycle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_reference_value.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_top_reviews_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/inbox_message_entity.dart';
@@ -372,6 +373,10 @@ class JsonConvert {
     if (<GuessGameParamEntity>[] is M) {
       return data.map<GuessGameParamEntity>((Map<String, dynamic> e) =>
           GuessGameParamEntity.fromJson(e)).toList() as M;
+    }
+    if (<GuessRankByCycleEntity>[] is M) {
+      return data.map<GuessRankByCycleEntity>((Map<String, dynamic> e) =>
+          GuessRankByCycleEntity.fromJson(e)).toList() as M;
     }
     if (<GuessReferenceValue>[] is M) {
       return data.map<GuessReferenceValue>((Map<String, dynamic> e) =>
@@ -1074,6 +1079,7 @@ class JsonConvertClassCollection {
         .fromJson,
     (GuessPlayerParamEntity).toString(): GuessPlayerParamEntity.fromJson,
     (GuessGameParamEntity).toString(): GuessGameParamEntity.fromJson,
+    (GuessRankByCycleEntity).toString(): GuessRankByCycleEntity.fromJson,
     (GuessReferenceValue).toString(): GuessReferenceValue.fromJson,
     (GuessTopReviewsEntity).toString(): GuessTopReviewsEntity.fromJson,
     (InboxMessageEntity).toString(): InboxMessageEntity.fromJson,

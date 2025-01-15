@@ -50,6 +50,8 @@ class Api {
       "$API_BASE_PATH/NBANews/getGuessTopReviews";
   static const String getRelevantNews =
       "$API_BASE_PATH/NBANews/getRelevantNews";
+  static const String getGuessRankByCycle =
+      "$API_BASE_PATH/NBANews/getGuessRankByCycle";
 
   ///NBAData
   static const String statTeamRank =

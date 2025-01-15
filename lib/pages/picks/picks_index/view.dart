@@ -143,7 +143,7 @@ class _PicksIndexPageV2State extends State<PicksIndexPageV2>
                                         CrossAxisAlignment.center,
                                     children: [
                                       Text(
-                                        "${picksIndexController.rankInfo.myRank.rank == 0 ? "--" : picksIndexController.rankInfo.myRank.rank}",
+                                        "${(picksIndexController.rankInfo.myRank.rank ?? 0) > 0 ? picksIndexController.rankInfo.myRank.rank : "--"}",
                                         style: 19.w4(
                                             color: AppColors.cFFFFFF,
                                             height: 1),

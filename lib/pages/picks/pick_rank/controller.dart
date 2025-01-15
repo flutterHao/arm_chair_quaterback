@@ -2,12 +2,13 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/entities/config/prop_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/guess_rank_by_cycle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_award_prop_entity.dart';
-import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
+import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class PickRankController extends GetxController
   late TabController tabController;
   List<String> tabTitles = ["Rank", "Reward"];
 
-  RankListEntity? rankInfo;
+  GuessRankByCycleEntity? rankInfo;
   List<RankAwardPropEntity> awardInfo = [];
   int minRak = 1, maxRank = 100;
 
@@ -34,6 +35,13 @@ class PickRankController extends GetxController
   int selfInRankListIndex = -1;
 
   var loadStatus = LoadDataStatus.loading.obs;
+
+  var loadOtherStatus = LoadDataStatus.loading.obs;
+
+  var hasPre = true.obs;
+  var hasNext = true.obs;
+  var currentStartMs = 0.obs;
+  var currentEndMs = 0.obs;
 
   /// 在 widget 内存中分配后立即调用。
   @override
@@ -51,18 +59,20 @@ class PickRankController extends GetxController
     Future.wait([
       CacheApi.getGameRankAwardRule(),
       CacheApi.getPropDefine(),
-      PicksApi.getRedisRankInfo(),
+      PicksApi.getGuessRankByCycle(
+          cycle: DateTime.now().millisecondsSinceEpoch),
       CacheApi.getPickDefine(),
     ]).then((result) {
       List<RankAwardEntity> rankAwardEntitys =
-      result[0] as List<RankAwardEntity>;
+          result[0] as List<RankAwardEntity>;
       List<PropDefineEntity> props = result[1] as List<PropDefineEntity>;
-      RankListEntity rankListEntity = result[2] as RankListEntity;
+      GuessRankByCycleEntity guessRankByCycleEntity =
+          result[2] as GuessRankByCycleEntity;
       awardInfo.clear();
       int index = 0;
       for (RankAwardEntity r in rankAwardEntitys) {
-        if (int.parse(r.minRank) >= (rankListEntity.myRank.rank ?? 0) &&
-            int.parse(r.maxRank) <= (rankListEntity.myRank.rank ?? 0)) {
+        if (int.parse(r.minRank) >= (guessRankByCycleEntity.myRank.rank ?? 0) &&
+            int.parse(r.maxRank) <= (guessRankByCycleEntity.myRank.rank ?? 0)) {
           selfInRankListIndex = index;
         }
         index++;
@@ -76,48 +86,63 @@ class PickRankController extends GetxController
             int num = int.parse(split[2]);
             print('split:$split');
             var propDefineEntity = props.firstWhereOrNull((e) =>
-            e.propType.toString() == split[0] &&
+                e.propType.toString() == split[0] &&
                 e.propId.toString() == split[1]);
             if (propDefineEntity == null) {
               continue;
             }
             PropDefineNumEntity propDefineNumEntity =
-            PropDefineNumEntity(num, propDefineEntity);
+                PropDefineNumEntity(num, propDefineEntity);
             awardPickData.add(propDefineNumEntity);
           }
         }
         var awardData = props.firstWhereOrNull((e) =>
-        e.propType.toString() == awardkeyData[0] &&
+            e.propType.toString() == awardkeyData[0] &&
             e.propId.toString() == awardkeyData[1]);
         int awardDataNum = int.parse(awardkeyData[2]);
-        if (awardData == null) { 
+        if (awardData == null) {
           continue;
         }
         RankAwardPropEntity rankAwardPropEntity =
-        RankAwardPropEntity(r, awardData, awardDataNum, awardPickData);
+            RankAwardPropEntity(r, awardData, awardDataNum, awardPickData);
         awardInfo.add(rankAwardPropEntity);
       }
-      rankInfo = result[2] as RankListEntity;
-      inTheRankList.value = rankInfo!.ranks.indexWhere((e) =>
-      e.teamId ==
-          Get.find<HomeController>()
-              .userEntiry
-              .teamLoginInfo
-              ?.team
-              ?.teamId) !=
-          -1;
+      rankInfo = result[2] as GuessRankByCycleEntity;
+      handlerRankInfoData();
 
       loadStatus.value = LoadDataStatus.success;
+      loadOtherStatus.value = LoadDataStatus.success;
       update();
-    },onError: (e){
+    }, onError: (e) {
       ErrorUtils.toast(e);
       loadStatus.value = LoadDataStatus.error;
     });
   }
 
+  void handlerRankInfoData() {
+    currentStartMs.value = rankInfo!.nowCycleStartTime;
+    currentEndMs.value = rankInfo!.nowCycleEndTime;
+    if (rankInfo!.firstRankTime >= rankInfo!.nowCycleStartTime) {
+      hasPre.value = false;
+    }
+    if (rankInfo!.lastRankTime <= rankInfo!.nowCycleEndTime) {
+      hasNext.value = false;
+    }
+    inTheRankList.value = rankInfo!.ranks.indexWhere((e) =>
+            e.teamId ==
+            Get.find<HomeController>()
+                .userEntiry
+                .teamLoginInfo
+                ?.team
+                ?.teamId) !=
+        -1;
+  }
+
   //开奖剩余时间：周三周六零点开奖
   int getRewardOpenTime() {
-    Duration difference = getTimeDifferenceToTarget();
+    // Duration difference = getTimeDifferenceToTarget();
+    var endTime = MyDateUtils.getDateTimeByMs(rankInfo!.nowCycleEndTime);
+    var difference = endTime.difference(MyDateUtils.getNowDateTime());
     return difference.inMilliseconds;
   }
 
@@ -174,6 +199,12 @@ class PickRankController extends GetxController
 
   static String get idAwards => "awards";
 
+  static String get idRankList => "rank_list";
+
+  static String get idRankListBottomEmpty => "rank_list_bottom_empty";
+
+  static String get idRankFloat => "rank_float";
+
   /// dispose 释放内存
   @override
   void dispose() {
@@ -184,7 +215,59 @@ class PickRankController extends GetxController
     rewardDialogItemIndex.value = index;
   }
 
-  num getBetRewardRank(){
+  num getBetRewardRank() {
     return CacheApi.pickDefine!.betRewardRank;
+  }
+
+  String getMonthDay(int ms) {
+    var dateTime = MyDateUtils.getDateTimeByMs(ms);
+    return "${MyDateUtils.getMonthEnName(dateTime, short: true)} ${(dateTime.day).toString().padLeft(2, "0")}";
+  }
+
+  next() {
+    if (!hasNext.value) {
+      return;
+    }
+    getOtherDayData(true);
+  }
+
+  void getOtherDayData(bool next) {
+    int millisecondsSinceEpoch = calculateTime(next);
+    loadOtherStatus.value = LoadDataStatus.loading;
+    PicksApi.getGuessRankByCycle(cycle: millisecondsSinceEpoch).then((result) {
+      if (result.ranks.isNotEmpty) {
+        loadOtherStatus.value = LoadDataStatus.noData;
+      } else {
+        loadOtherStatus.value = LoadDataStatus.success;
+      }
+      rankInfo = result;
+      handlerRankInfoData();
+      update([idRankList, idRankListBottomEmpty, idRankFloat]);
+    }, onError: (e) {
+      loadOtherStatus.value = LoadDataStatus.error;
+      ErrorUtils.toast(e);
+    });
+  }
+
+  int calculateTime(bool next) {
+    var endTime = MyDateUtils.getDateTimeByMs(rankInfo!.nowCycleEndTime);
+    var startTime = MyDateUtils.getDateTimeByMs(rankInfo!.nowCycleStartTime);
+    var stepDuration = const Duration(days: 2);
+    DateTime targetTime;
+    if (next) {
+      targetTime = endTime.add(stepDuration);
+    } else {
+      targetTime = startTime.subtract(stepDuration);
+    }
+    print('targetTime:$targetTime');
+    var millisecondsSinceEpoch = targetTime.millisecondsSinceEpoch;
+    return millisecondsSinceEpoch;
+  }
+
+  pre() {
+    if (!hasPre.value) {
+      return;
+    }
+    getOtherDayData(false);
   }
 }

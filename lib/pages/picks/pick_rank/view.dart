@@ -72,7 +72,7 @@ class PickRankPage extends GetView<PickRankController> {
                                     ),
                                     8.vGap,
                                     Text(
-                                      "DEC 12 - DEC 14",
+                                      "${controller.getMonthDay(controller.rankInfo!.nowCycleStartTime)} - ${controller.getMonthDay(controller.rankInfo!.nowCycleEndTime)}",
                                       style: 10.w4(
                                         color: AppColors.cFFE8A0,
                                         height: 1,
@@ -168,6 +168,8 @@ class PickRankPage extends GetView<PickRankController> {
                                       borderRadius: BorderRadius.vertical(
                                           top: Radius.circular(12.w))),
                                   child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
                                         "RANKS",
@@ -176,252 +178,388 @@ class PickRankPage extends GetView<PickRankController> {
                                           fontFamily: FontFamily.fOswaldBold,
                                           height: 1,
                                         ),
+                                      ),
+                                      Row(
+                                        children: [
+                                          Obx(() {
+                                            return MtInkWell(
+                                              onTap: () => controller.pre(),
+                                              child: Container(
+                                                width: 28.w,
+                                                height: 28.w,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          14.w),
+                                                  border: Border.all(
+                                                    color:
+                                                        controller.hasPre.value
+                                                            ? AppColors.cB3B3B3
+                                                            : AppColors.cE6E6E6,
+                                                    width: 1.w,
+                                                  ),
+                                                ),
+                                                child: Center(
+                                                  child: IconWidget(
+                                                    iconWidth: 5.w,
+                                                    icon: Assets
+                                                        .commonUiCommonIconSystemJumpto,
+                                                    iconColor:
+                                                        controller.hasPre.value
+                                                            ? AppColors.c000000
+                                                            : AppColors.cB3B3B3,
+                                                    rotateAngle: 180,
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          }),
+                                          Obx(() {
+                                            return Container(
+                                              width: 112.w,
+                                              height: 28.w,
+                                              margin: EdgeInsets.symmetric(
+                                                  horizontal: 6.w),
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  color: AppColors.cB3B3B3,
+                                                  width: 1.w,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(14.w),
+                                              ),
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                "${controller.getMonthDay(controller.currentStartMs.value)} - ${controller.getMonthDay(controller.currentEndMs.value)}",
+                                                style: 12.w4(
+                                                  color: AppColors.c000000,
+                                                  height: 1,
+                                                  fontFamily:
+                                                      FontFamily.fOswaldRegular,
+                                                ),
+                                              ),
+                                            );
+                                          }),
+                                          Obx(() {
+                                            return MtInkWell(
+                                              onTap: () => controller.next(),
+                                              child: Container(
+                                                width: 28.w,
+                                                height: 28.w,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          14.w),
+                                                  border: Border.all(
+                                                    color:
+                                                        controller.hasNext.value
+                                                            ? AppColors.cB3B3B3
+                                                            : AppColors.cE6E6E6,
+                                                    width: 1.w,
+                                                  ),
+                                                ),
+                                                child: Center(
+                                                  child: IconWidget(
+                                                    iconWidth: 5.w,
+                                                    icon: Assets
+                                                        .commonUiCommonIconSystemJumpto,
+                                                    iconColor:
+                                                        controller.hasNext.value
+                                                            ? AppColors.c000000
+                                                            : AppColors.cB3B3B3,
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          })
+                                        ],
                                       )
                                     ],
                                   ),
                                 ),
                               ),
                               height: 75.w)),
-                      controller.rankInfo!.ranks.isEmpty
-                          ? SliverToBoxAdapter(
-                              child: Container(
-                                color: AppColors.cFFFFFF,
-                                height: 300.w,
-                                child: const Center(
-                                  child: LoadStatusWidget(
-                                    loadDataStatus: LoadDataStatus.noData,
-                                  ),
-                                ),
-                              ),
-                            )
-                          : SliverList.builder(
-                              itemCount: controller.rankInfo!.ranks.length,
-                              itemBuilder: (context, index) {
-                                var item = controller.rankInfo!.ranks[index];
-                                var isMe = Get.find<HomeController>()
-                                        .userEntiry
-                                        .teamLoginInfo
-                                        ?.team
-                                        ?.teamId ==
-                                    item.teamId;
-                                return Container(
-                                  color: AppColors.cFFFFFF,
+                      GetBuilder<PickRankController>(
+                          id: PickRankController.idRankList,
+                          builder: (_) {
+                            if (controller.rankInfo!.ranks.isEmpty) {
+                              return Obx(() {
+                                return SliverToBoxAdapter(
                                   child: Container(
-                                    height: 69.w,
-                                    margin:
-                                        EdgeInsets.symmetric(horizontal: 16.w),
-                                    padding: EdgeInsets.only(right: 8.w),
-                                    decoration: BoxDecoration(
-                                      border: Border(
-                                        bottom: BorderSide(
-                                          color: AppColors.cE6E6E6,
-                                          width: 1.w,
-                                        ),
+                                    color: AppColors.cFFFFFF,
+                                    height: 300.w,
+                                    child: Center(
+                                      child: LoadStatusWidget(
+                                        loadDataStatus:
+                                            controller.loadOtherStatus.value,
                                       ),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                            width: 46.w,
-                                            child: Center(
-                                                child: Text(
-                                              "${index + 1}",
-                                              style: 19.w5(
-                                                color: AppColors.c1A1A1A,
-                                                height: 1,
-                                                fontFamily:
-                                                    FontFamily.fOswaldMedium,
-                                              ),
-                                            ))),
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(20.w),
-                                          child: ImageWidget(
-                                            url: Utils.getAvaterUrl(
-                                                item.teamLogo),
-                                            width: 40.w,
-                                            height: 40.w,
-                                            imageFailedPath:
-                                                Assets.iconUiDefault05,
-                                          ),
-                                        ),
-                                        10.hGap,
-                                        Expanded(
-                                            child: Text(
-                                          item.teamName,
-                                          style: 14.w5(
-                                            color: isMe
-                                                ? AppColors.cFF7954
-                                                : AppColors.c1A1A1A,
-                                            height: 1,
-                                            fontFamily:
-                                                FontFamily.fOswaldMedium,
-                                          ),
-                                        )),
-                                        Row(
-                                          children: [
-                                            IconWidget(
-                                              iconWidth: 16.w,
-                                              icon: Assets
-                                                  .commonUiCommonIconCurrency02,
-                                            ),
-                                            3.hGap,
-                                            Text(
-                                              "+${item.chip}",
-                                              style: 14.w5(
-                                                color: AppColors.c1A1A1A,
-                                                height: 1,
-                                                fontFamily:
-                                                    FontFamily.fRobotoMedium,
-                                              ),
-                                            )
-                                          ],
-                                        )
-                                      ],
                                     ),
                                   ),
                                 );
-                              }),
-                      if (controller.rankInfo!.myRank.rank == 0 ||
-                          (controller.rankInfo!.myRank.rank != 0 &&
-                              !controller.inTheRankList.value))
-                        SliverPadding(padding: EdgeInsets.only(top: 87.w))
+                              });
+                            }
+                            return SliverList.builder(
+                                itemCount: controller.rankInfo!.ranks.length,
+                                itemBuilder: (context, index) {
+                                  var item = controller.rankInfo!.ranks[index];
+                                  var isMe = Get.find<HomeController>()
+                                          .userEntiry
+                                          .teamLoginInfo
+                                          ?.team
+                                          ?.teamId ==
+                                      item.teamId;
+                                  return Container(
+                                    color: AppColors.cFFFFFF,
+                                    child: Container(
+                                      height: 69.w,
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: 16.w),
+                                      padding: EdgeInsets.only(right: 8.w),
+                                      decoration: BoxDecoration(
+                                        border: Border(
+                                          bottom: BorderSide(
+                                            color: AppColors.cE6E6E6,
+                                            width: 1.w,
+                                          ),
+                                        ),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
+                                              width: 46.w,
+                                              child: Center(
+                                                  child: Text(
+                                                "${index + 1}",
+                                                style: 19.w5(
+                                                  color: AppColors.c1A1A1A,
+                                                  height: 1,
+                                                  fontFamily:
+                                                      FontFamily.fOswaldMedium,
+                                                ),
+                                              ))),
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(20.w),
+                                            child: ImageWidget(
+                                              url: Utils.getAvaterUrl(
+                                                  item.teamLogo),
+                                              width: 40.w,
+                                              height: 40.w,
+                                              imageFailedPath:
+                                                  Assets.iconUiDefault05,
+                                            ),
+                                          ),
+                                          10.hGap,
+                                          Expanded(
+                                              child: Text(
+                                            item.teamName,
+                                            style: 14.w5(
+                                              color: isMe
+                                                  ? AppColors.cFF7954
+                                                  : AppColors.c1A1A1A,
+                                              height: 1,
+                                              fontFamily:
+                                                  FontFamily.fOswaldMedium,
+                                            ),
+                                          )),
+                                          Row(
+                                            children: [
+                                              IconWidget(
+                                                iconWidth: 16.w,
+                                                icon: Assets
+                                                    .commonUiCommonIconCurrency02,
+                                              ),
+                                              3.hGap,
+                                              Text(
+                                                "+${item.chip}",
+                                                style: 14.w5(
+                                                  color: AppColors.c1A1A1A,
+                                                  height: 1,
+                                                  fontFamily:
+                                                      FontFamily.fRobotoMedium,
+                                                ),
+                                              )
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                });
+                          }),
+                      GetBuilder<PickRankController>(
+                          id: PickRankController.idRankListBottomEmpty,
+                          builder: (_) {
+                            if ((controller.rankInfo!.myRank.rank ?? 0) == 0 ||
+                                ((controller.rankInfo!.myRank.rank ?? 0) != 0 &&
+                                    !controller.inTheRankList.value)) {
+                              return SliverPadding(
+                                  padding: EdgeInsets.only(top: 87.w));
+                            }
+                            return const SizedBox.shrink();
+                          })
                     ],
                   ),
                   Positioned(
                       bottom: 0,
                       right: 0,
                       left: 0,
-                      child: Builder(builder: (context) {
-                        if (controller.rankInfo!.myRank.rank == 0) {
-                          return Container(
-                            height: 78.w,
-                            padding: EdgeInsets.only(left: 24.w, right: 28.w),
-                            decoration: BoxDecoration(
-                                color: AppColors.cFFFFFF,
-                                boxShadow: [
-                                  BoxShadow(
-                                      color:
-                                          AppColors.c000000.withOpacity(0.05),
-                                      offset: Offset(0, -9.w),
-                                      blurRadius: 9.w)
-                                ]),
-                            child: Row(
-                              children: [
-                                IconWidget(
-                                    iconWidth: 34.w,
-                                    icon: Assets.commonUiCommonIconCurrency02),
-                                16.hGap,
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                      child: GetBuilder<PickRankController>(
+                          id: PickRankController.idRankFloat,
+                          builder: (_) {
+                            if ((controller.rankInfo!.myRank.rank ?? 0) == 0) {
+                              return MtInkWell(
+                                onTap: () => Get.back(),
+                                child: Container(
+                                  height: 78.w,
+                                  padding:
+                                      EdgeInsets.only(left: 24.w, right: 28.w),
+                                  decoration: BoxDecoration(
+                                      color: AppColors.cFFFFFF,
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color: AppColors.c000000
+                                                .withOpacity(0.05),
+                                            offset: Offset(0, -9.w),
+                                            blurRadius: 9.w)
+                                      ]),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          IconWidget(
+                                              iconWidth: 34.w,
+                                              icon: Assets
+                                                  .commonUiCommonIconCurrency02),
+                                          16.hGap,
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text.rich(TextSpan(children: [
+                                                TextSpan(
+                                                    text:
+                                                        "${controller.rankInfo!.myRank.chip ?? 0}",
+                                                    style: 24.w7(
+                                                      color: AppColors.c000000,
+                                                      height: 1,
+                                                      fontFamily: FontFamily
+                                                          .fOswaldBold,
+                                                    )),
+                                                TextSpan(
+                                                    text:
+                                                        "/${controller.getBetRewardRank().format()}",
+                                                    style: 16.w5(
+                                                      color: AppColors.c000000,
+                                                      height: 1,
+                                                      fontFamily: FontFamily
+                                                          .fOswaldMedium,
+                                                    )),
+                                              ])),
+                                              6.vGap,
+                                              Text(
+                                                "WIN ${controller.getBetRewardRank().format()} JETTON RANK",
+                                                style: 10.w4(
+                                                  color: AppColors.c000000,
+                                                  height: 1,
+                                                  fontFamily:
+                                                      FontFamily.fRobotoRegular,
+                                                ),
+                                              )
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                      IconWidget(
+                                        iconWidth: 7.w,
+                                        icon: Assets
+                                            .commonUiCommonIconSystemJumpto,
+                                        iconColor: AppColors.c000000,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              );
+                            }
+                            if (controller.inTheRankList.value) {
+                              return const SizedBox.shrink();
+                            }
+                            var item = controller.rankInfo!.myRank;
+                            return Container(
+                              color: AppColors.cFFFFFF,
+                              child: Container(
+                                height: 78.w,
+                                margin: EdgeInsets.symmetric(horizontal: 16.w),
+                                padding: EdgeInsets.only(right: 8.w),
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                      color: AppColors.cE6E6E6,
+                                      width: 1.w,
+                                    ),
+                                  ),
+                                ),
+                                child: Row(
                                   children: [
-                                    Text.rich(TextSpan(children: [
-                                      TextSpan(
-                                          text:
-                                              "${controller.rankInfo!.myRank.chip}",
-                                          style: 24.w7(
-                                            color: AppColors.c000000,
-                                            height: 1,
-                                            fontFamily: FontFamily.fOswaldBold,
-                                          )),
-                                      TextSpan(
-                                          text:
-                                              "/${controller.getBetRewardRank().format()}",
-                                          style: 16.w5(
-                                            color: AppColors.c000000,
+                                    SizedBox(
+                                        width: 46.w,
+                                        child: Center(
+                                            child: Text(
+                                          "${item.rank}",
+                                          style: 19.w5(
+                                            color: AppColors.c1A1A1A,
                                             height: 1,
                                             fontFamily:
                                                 FontFamily.fOswaldMedium,
-                                          )),
-                                    ])),
-                                    6.vGap,
-                                    Text(
-                                      "WIN ${controller.getBetRewardRank().format()} JETTON RANK",
-                                      style: 10.w4(
-                                        color: AppColors.c000000,
-                                        height: 1,
-                                        fontFamily: FontFamily.fRobotoRegular,
+                                          ),
+                                        ))),
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(20.w),
+                                      child: ImageWidget(
+                                        url: Utils.getAvaterUrl(item.teamLogo),
+                                        width: 40.w,
+                                        height: 40.w,
+                                        imageFailedPath: Assets.iconUiDefault05,
                                       ),
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                          );
-                        }
-                        if (controller.inTheRankList.value) {
-                          return const SizedBox.shrink();
-                        }
-                        var item = controller.rankInfo!.myRank;
-                        return Container(
-                          color: AppColors.cFFFFFF,
-                          child: Container(
-                            height: 78.w,
-                            margin: EdgeInsets.symmetric(horizontal: 16.w),
-                            padding: EdgeInsets.only(right: 8.w),
-                            decoration: BoxDecoration(
-                              border: Border(
-                                bottom: BorderSide(
-                                  color: AppColors.cE6E6E6,
-                                  width: 1.w,
-                                ),
-                              ),
-                            ),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                    width: 46.w,
-                                    child: Center(
+                                    ),
+                                    10.hGap,
+                                    Expanded(
                                         child: Text(
-                                      "${item.rank}",
-                                      style: 19.w5(
-                                        color: AppColors.c1A1A1A,
+                                      "${item.teamName}",
+                                      style: 14.w5(
+                                        color: AppColors.cFF7954,
                                         height: 1,
                                         fontFamily: FontFamily.fOswaldMedium,
                                       ),
-                                    ))),
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(20.w),
-                                  child: ImageWidget(
-                                    url: Utils.getAvaterUrl(item.teamLogo),
-                                    width: 40.w,
-                                    height: 40.w,
-                                    imageFailedPath: Assets.iconUiDefault05,
-                                  ),
-                                ),
-                                10.hGap,
-                                Expanded(
-                                    child: Text(
-                                  "${item.teamName}",
-                                  style: 14.w5(
-                                    color: AppColors.cFF7954,
-                                    height: 1,
-                                    fontFamily: FontFamily.fOswaldMedium,
-                                  ),
-                                )),
-                                Row(
-                                  children: [
-                                    IconWidget(
-                                      iconWidth: 16.w,
-                                      icon: Assets.commonUiCommonIconCurrency02,
-                                    ),
-                                    3.hGap,
-                                    Text(
-                                      "+${item.chip}",
-                                      style: 14.w5(
-                                        color: AppColors.c1A1A1A,
-                                        height: 1,
-                                        fontFamily: FontFamily.fRobotoMedium,
-                                      ),
+                                    )),
+                                    Row(
+                                      children: [
+                                        IconWidget(
+                                          iconWidth: 16.w,
+                                          icon: Assets
+                                              .commonUiCommonIconCurrency02,
+                                        ),
+                                        3.hGap,
+                                        Text(
+                                          "+${item.chip}",
+                                          style: 14.w5(
+                                            color: AppColors.c1A1A1A,
+                                            height: 1,
+                                            fontFamily:
+                                                FontFamily.fRobotoMedium,
+                                          ),
+                                        )
+                                      ],
                                     )
                                   ],
-                                )
-                              ],
-                            ),
-                          ),
-                        );
-                      }))
+                                ),
+                              ),
+                            );
+                          }))
                 ],
               );
             })),

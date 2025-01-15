@@ -8,6 +8,7 @@ import 'dart:convert';
 
 import 'package:arm_chair_quaterback/common/entities/all_team_players_by_up_star_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_game_info_v2_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/guess_rank_by_cycle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_top_reviews_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_season_game_entity.dart';
@@ -161,5 +162,16 @@ class PicksApi {
   static Future<List<GuessTopReviewsEntity>> getGuessTopReviews() async {
     List json = await httpUtil.post(Api.getGuessTopReviews);
     return json.map((e) => GuessTopReviewsEntity.fromJson(e)).toList();
+  }
+
+  static Future<GuessRankByCycleEntity> getGuessRankByCycle(
+      {required int cycle, int page = 0, int pageSize = 10}) async {
+    var json = await httpUtil.post(Api.getGuessRankByCycle, data: {
+      "type": RankType.newsGuess.value,
+      "cycle": cycle,
+      "page": page,
+      "pageSize": pageSize,
+    });
+    return GuessRankByCycleEntity.fromJson(json);
   }
 }

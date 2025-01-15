@@ -3,13 +3,13 @@ import 'dart:async';
 import 'package:arm_chair_quaterback/common/entities/guess_game_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_game_info_v2_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_param_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/guess_rank_by_cycle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_top_reviews_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pick_type_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/picks_player.dart';
-import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/user_entity/user_entiry.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/WebSocket.dart';
@@ -36,7 +36,7 @@ class PicksIndexController extends GetxController
 
   var loadStatusRx = LoadDataStatus.noData.obs;
 
-  RankListEntity rankInfo = RankListEntity();
+  GuessRankByCycleEntity rankInfo = GuessRankByCycleEntity();
 
   Map<String, List<PicksPlayerV2>> guessGamePlayers = {};
   double streakReward = 0;
@@ -240,7 +240,8 @@ class PicksIndexController extends GetxController
       CacheApi.getNBAPlayerInfo(),
       CacheApi.getPickDefine(),
       CacheApi.getNBATeamDefine(getList: true),
-      PicksApi.getRedisRankInfo(),
+      PicksApi.getGuessRankByCycle(
+          cycle: DateTime.now().millisecondsSinceEpoch),
       PicksApi.getGuessTopReviews(),
       CacheApi.getPickType(),
     ]).then((results) {
@@ -306,7 +307,7 @@ class PicksIndexController extends GetxController
       }
 
       ///rank 排行榜
-      rankInfo = results[4] as RankListEntity;
+      rankInfo = results[4] as GuessRankByCycleEntity;
       tabController ??=
           TabController(length: guessGamePlayers.keys.length, vsync: this);
 

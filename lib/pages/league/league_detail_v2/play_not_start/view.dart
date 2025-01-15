@@ -228,6 +228,7 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                       Builder(builder: (context) {
                         if (controller
                             .scoresNotStartGameEntity!.chooses.isNotEmpty) {
+                          /// 已经预测过了mvp，显示支持率
                           return Column(
                             children: [
                               7.vGap,
@@ -407,6 +408,7 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                             ],
                           );
                         }
+                        /// 预测mvp
                         return Column(
                           children: [
                             17.vGap,
