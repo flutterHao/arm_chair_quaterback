@@ -2,6 +2,7 @@ import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/widgets/linear_progress_widget.dart';
 import 'package:flutter/material.dart';
@@ -23,14 +24,14 @@ class _LegendaryManagerWidgetState extends State<LegendaryManagerWidget> {
           children: [
             Container(
               padding: EdgeInsets.symmetric(vertical: 20.w, horizontal: 20.w),
-              decoration: const BoxDecoration(
-                color: AppColors.cFFFFFF,
-              ),
+              decoration: BoxDecoration(
+                  color: AppColors.cFFFFFF,
+                  borderRadius: BorderRadius.circular(4.5.w)),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Legendary Manager 3',
+                    'LEGENDARY MANAGER 3',
                     style: 24.w5(fontFamily: FontFamily.fOswaldMedium),
                   ),
                   22.vGap,
@@ -62,11 +63,7 @@ class _LegendaryManagerWidgetState extends State<LegendaryManagerWidget> {
                                                 FontFamily.fOswaldMedium),
                                       ),
                                       const Spacer(),
-                                      IconWidget(
-                                          iconWidth: 14.w,
-                                          iconColor: Colors.black,
-                                          icon: Assets
-                                              .scoresUiScoresIconSystemRank),
+                                      _detailButton()
                                     ],
                                   ),
                                 ),
@@ -184,5 +181,34 @@ class _LegendaryManagerWidgetState extends State<LegendaryManagerWidget> {
             )
           ],
         ));
+  }
+
+  Widget _detailButton() {
+    return MtInkWell(
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        // mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Text(
+            "DETAIL",
+            style: TextStyle(
+              fontSize: 12.sp,
+              decoration: TextDecoration.underline,
+              // textBaseline: TextBaseline.ideographic,
+              color: AppColors.c000000,
+              height: 1,
+              fontFamily: FontFamily.fRobotoMedium,
+            ),
+          ),
+          6.hGap,
+          IconWidget(
+            iconWidth: 9.w,
+            icon: Assets.iconUiIconArrows04,
+            rotateAngle: -90,
+            iconColor: Colors.black,
+          )
+        ],
+      ),
+    );
   }
 }

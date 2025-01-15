@@ -1,6 +1,7 @@
 ///
 ///@auther gejiahui
 ///created at 2024/9/20/14:54
+library;
 
 class DateFormats {
   /// 一些常用格式参照。如果下面格式不够，你可以自定义
@@ -15,7 +16,6 @@ class DateFormats {
   static const String H_M_S = 'HH:mm:ss';
   static const String H_M = 'HH:mm';
   static const String M_S = 'mm:ss';
-
 
   static const String ZH_FULL = 'yyyy年MM月dd日 HH时mm分ss秒';
   static const String ZH_Y_M_D_H_M = 'yyyy年MM月dd日 HH时mm分';
@@ -33,7 +33,7 @@ class DateFormats {
   static const String PARAM_M_D = 'dd/MM';
   static const String PARAM_M_D_H = 'dd/MM HH';
   static const String PARAM_M_D_H_M = 'dd/MM HH:mm';
+  static const String PARAM_M_D_H_M_S = 'MM/dd HH:mm:ss';
 
   static const String DOT_Y_M_D = 'yyyy.MM.dd';
-
 }
