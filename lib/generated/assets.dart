@@ -234,6 +234,7 @@ class Assets {
   static const String managerUiManagerPlayerinfoSuccess = 'assets/images/manager/ui_manager_playerinfo_success.png';
   static const String managerUiManagerPlayerstar = 'assets/images/manager/ui_manager_playerstar.png';
   static const String managerUiManagerQualityS = 'assets/images/manager/ui_manager_quality_s.png';
+  static const String managerUiManagerRankBg = 'assets/images/manager/ui_manager_rank_bg.jpg';
   static const String managerUiManagerTactics01 = 'assets/images/manager/ui_manager_tactics_01.png';
   static const String managerUiManagerTactics02 = 'assets/images/manager/ui_manager_tactics_02.png';
   static const String managerUiManagerTactics03 = 'assets/images/manager/ui_manager_tactics_03.png';

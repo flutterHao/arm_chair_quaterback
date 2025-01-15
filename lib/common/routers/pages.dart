@@ -37,6 +37,7 @@ import 'package:arm_chair_quaterback/pages/picks/recive_rward/bindings.dart';
 import 'package:arm_chair_quaterback/pages/picks/recive_rward/view.dart';
 import 'package:arm_chair_quaterback/pages/team/illustratiions/view.dart';
 import 'package:arm_chair_quaterback/pages/team/illustratiions/widgets/illustraction_detail.dart';
+import 'package:arm_chair_quaterback/pages/team/seaon_rank/binding.dart';
 import 'package:arm_chair_quaterback/pages/team/seaon_rank/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_detail_page.dart';
@@ -197,6 +198,9 @@ class AppPages {
       name: RouteNames.illustrationDetail,
       page: () => const IllustratiionsDetail(),
     ),
-    GetPage(name: RouteNames.seaonRankPage, page: () => const SeaonRankPage())
+    GetPage(
+        name: RouteNames.seaonRankPage,
+        page: () => const SeaonRankPage(),
+        binding: SeaonRankBinding())
   ];
 }

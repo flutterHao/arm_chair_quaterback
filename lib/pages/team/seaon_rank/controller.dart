@@ -6,40 +6,44 @@ class SeaonRankController extends GetxController {
   SeaonRankController();
   Timer? _timer;
   var gameStartTimeMs =
-      DateTime.now().subtract(const Duration(days: 3)).millisecondsSinceEpoch;
+      DateTime.now().add(const Duration(days: 3)).millisecondsSinceEpoch;
   RxInt gameStartTimesCountDown = 0.obs;
 
   int day = 0;
   int hh = 0;
   int minute = 0;
   int second = 0;
-  _initData() {
-    update(["seaon_rank"]);
-  }
 
   void onTap() {}
 
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  // }
+  @override
+  void onInit() {
+    super.onInit();
+    timeCountDown();
+  }
 
   @override
   void onReady() {
+    // TODO: implement onReady
     super.onReady();
-    _initData();
   }
 
-  timeCountDown() {
+  @override
+  void dispose() {
     _timer?.cancel();
+    super.dispose();
+  }
 
+  void timeCountDown() {
+    _timer?.cancel();
     var nowMs = DateTime.now().millisecondsSinceEpoch;
     var diff = gameStartTimeMs - nowMs;
+
     if (diff <= 0) {
       return;
     }
     gameStartTimesCountDown.value = diff;
-    day = gameStartTimesCountDown.value ~/ 1000 ~/ 86400000;
+    day = gameStartTimesCountDown.value ~/ 1000 ~/ 86400;
     hh = gameStartTimesCountDown.value ~/ 1000 % 86400 ~/ 3600;
     minute = gameStartTimesCountDown.value ~/ 1000 % 3600 ~/ 60;
     second = gameStartTimesCountDown.value ~/ 1000 % 60;
@@ -49,7 +53,7 @@ class SeaonRankController extends GetxController {
         t.cancel();
       } else {
         gameStartTimesCountDown.value = temp;
-        day = gameStartTimesCountDown.value ~/ 1000 ~/ 86400000;
+        day = gameStartTimesCountDown.value ~/ 1000 ~/ 86400;
         hh = gameStartTimesCountDown.value ~/ 1000 % 86400 ~/ 3600;
         minute = gameStartTimesCountDown.value ~/ 1000 % 3600 ~/ 60;
         second = gameStartTimesCountDown.value ~/ 1000 % 60;
@@ -61,8 +65,4 @@ class SeaonRankController extends GetxController {
   String twoDigits(int n) {
     return n.toString().padLeft(2, '0');
   }
-  // @override
-  // void onClose() {
-  //   super.onClose();
-  // }
 }
