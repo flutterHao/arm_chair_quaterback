@@ -186,8 +186,6 @@ class HomeController extends GetxController {
     Log.d("用户=$accountName ，鉴权获取到token=$v，开始游客登陆");
     userEntiry = await UserApi.visitorLogin();
     WSInstance.init();
-    Get.find<PicksIndexController>().preLoadData();
-    Get.find<LeagueController>().preLoadData();
     update([GetXBuilderIds.idGlobalUserEntityRefresh]);
   }
 

@@ -77,6 +77,7 @@ class LeagueController extends GetxController
   /// 预加载今明两天的数据,因为只可以竞猜这两天的赛程
   preLoadData() {
     currentPageIndex.value = 6;
+    getDataFromNet(getDataTimes()[currentPageIndex.value-1]);
     getDataFromNet(getDataTimes()[currentPageIndex.value]);
     getDataFromNet(getDataTimes()[currentPageIndex.value + 1]);
   }
