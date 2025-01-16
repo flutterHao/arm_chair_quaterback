@@ -7,6 +7,9 @@ import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/widgets/linear_progress_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+
+import '../controller.dart';
 
 class LegendaryManagerWidget extends StatefulWidget {
   const LegendaryManagerWidget({super.key});
@@ -16,6 +19,7 @@ class LegendaryManagerWidget extends StatefulWidget {
 }
 
 class _LegendaryManagerWidgetState extends State<LegendaryManagerWidget> {
+  SeaonRankController seasonRankCtr = Get.find();
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -185,6 +189,9 @@ class _LegendaryManagerWidgetState extends State<LegendaryManagerWidget> {
 
   Widget _detailButton() {
     return MtInkWell(
+      onTap: () {
+        seasonRankCtr.goMatchLevelDialog();
+      },
       child: Row(
         mainAxisSize: MainAxisSize.min,
         // mainAxisAlignment: MainAxisAlignment.end,

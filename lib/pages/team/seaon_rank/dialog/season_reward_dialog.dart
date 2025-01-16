@@ -3,55 +3,66 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
+import 'package:arm_chair_quaterback/common/widgets/vertival_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/team/seaon_rank/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../controller.dart';
+class SeasonRewardDialog extends GetView<SeaonRankController> {
+  const SeasonRewardDialog({super.key});
 
-class SeasonRewardsWidget extends StatefulWidget {
-  const SeasonRewardsWidget({super.key});
-
-  @override
-  State<SeasonRewardsWidget> createState() => _SeasonRewadsWidgetState();
-}
-
-class _SeasonRewadsWidgetState extends State<SeasonRewardsWidget> {
-  SeaonRankController seasonRankCtr = Get.find();
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(top: 9.w),
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 21.w),
-        decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(4.5.w)),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Text(
-                  'SEASON REWARDS',
-                  style: 24.w5(fontFamily: FontFamily.fOswaldMedium),
-                ),
-                const Spacer(),
-                _detailButton()
-              ],
+    return VerticalDragBackWidget(
+        child: Container(
+      height: 650.h,
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(9.w)),
+      child: Column(
+        children: [
+          Container(
+            margin: EdgeInsets.only(top: 8.5.w, bottom: 17.5.w),
+            width: 44.w,
+            height: 4.w,
+            decoration: BoxDecoration(
+                color: AppColors.c000000.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(2.w)),
+          ),
+          Container(
+            padding: EdgeInsets.only(left: 16.w),
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'Season Rewards',
+              style: 19.w5(fontFamily: FontFamily.fOswaldMedium),
             ),
-            19.vGap,
-            _rewardsWidget()
-          ],
-        ),
+          ),
+          10.vGap,
+          const Divider(
+            height: 1,
+            color: AppColors.cD4D4D4,
+          ),
+          Expanded(
+              child: ListView.separated(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            itemCount: 20,
+            itemBuilder: (context, index) {
+              return _rewardsItemWidget();
+            },
+            separatorBuilder: (context, index) =>
+                const Divider(height: 1, color: AppColors.cD4D4D4),
+          ))
+        ],
       ),
-    );
+    ));
   }
 
-  Widget _rewardsWidget() {
+  Widget _rewardsItemWidget() {
     return Container(
       padding: EdgeInsets.all(13.w),
-      decoration: BoxDecoration(
-          color: AppColors.cF2F2F2, borderRadius: BorderRadius.circular(9.w)),
+      // decoration: BoxDecoration(
+      //     color: AppColors.cF2F2F2, borderRadius: BorderRadius.circular(9.w)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -86,50 +97,17 @@ class _SeasonRewadsWidgetState extends State<SeasonRewardsWidget> {
                 padding: EdgeInsets.only(top: 7.w),
                 child: MtInkWell(
                     child: Container(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 21.w, vertical: 10.w),
+                  width: 59.w,
+                  height: 40.w,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(9.w),
                       border: Border.all(color: AppColors.c666666)),
                   child: IconWidget(
-                      iconWidth: 17.w,
-                      iconColor: AppColors.c000000,
-                      icon: Assets.commonUiCommonIconSystemExchange),
+                      iconWidth: 29.w,
+                      icon: Assets.managerUiManagerMissionReward),
                 )),
               )
             ],
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget _detailButton() {
-    return MtInkWell(
-      onTap: () {
-        seasonRankCtr.goSeasonRewardDialog();
-      },
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        // mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Text(
-            "DETAIL",
-            style: TextStyle(
-              fontSize: 12.sp,
-              decoration: TextDecoration.underline,
-              // textBaseline: TextBaseline.ideographic,
-              color: AppColors.c000000,
-              height: 1,
-              fontFamily: FontFamily.fRobotoMedium,
-            ),
-          ),
-          6.hGap,
-          IconWidget(
-            iconWidth: 9.w,
-            icon: Assets.iconUiIconArrows04,
-            rotateAngle: -90,
-            iconColor: Colors.black,
           )
         ],
       ),

@@ -275,6 +275,7 @@ class _SeasonRankWidgetState extends State<SeasonRankWidget> {
 
   Widget _detailButton() {
     return MtInkWell(
+      onTap: () => seasonRankCtr.goSeasonRankDialog(),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         // mainAxisAlignment: MainAxisAlignment.end,

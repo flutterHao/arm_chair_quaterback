@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:arm_chair_quaterback/pages/team/seaon_rank/dialog/match_level_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/seaon_rank/dialog/season_rank_dialog.dart';
+import 'package:arm_chair_quaterback/pages/team/seaon_rank/dialog/season_reward_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,11 +18,24 @@ class SeaonRankController extends GetxController {
   int minute = 0;
   int second = 0;
 
-  void onTap() {}
+  final PageController seaDialogPageController = PageController();
+  RxInt pageviewIndex = 0.obs;
+  RxList<List> seasonRankList = [
+    [
+      'assets/images/team/season_rank/1.png',
+    ],
+    [
+      'assets/images/team/season_rank/2.png',
+    ],
+    [
+      'assets/images/team/season_rank/3.png',
+    ]
+  ].obs;
 
   @override
   void onInit() {
     super.onInit();
+
     timeCountDown();
   }
 
@@ -76,6 +91,28 @@ class SeaonRankController extends GetxController {
         backgroundColor: Colors.transparent,
         builder: (context) {
           return const SeasonRankDialog();
+        });
+  }
+
+  void goSeasonRewardDialog() {
+    showModalBottomSheet(
+        isScrollControlled: true,
+        context: Get.context!,
+        // barrierColor: Colors.transparent,
+        backgroundColor: Colors.transparent,
+        builder: (context) {
+          return const SeasonRewardDialog();
+        });
+  }
+
+  void goMatchLevelDialog() {
+    showModalBottomSheet(
+        isScrollControlled: true,
+        context: Get.context!,
+        // barrierColor: Colors.transparent,
+        backgroundColor: Colors.transparent,
+        builder: (context) {
+          return const MatchLevelDialog();
         });
   }
 }
