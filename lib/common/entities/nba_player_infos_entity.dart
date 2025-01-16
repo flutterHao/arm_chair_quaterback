@@ -143,7 +143,7 @@ class NbaPlayerInfosPlayerDataCapList {
   late int threePm = 0;
   late int to = 0;
   int? reb;
-  int? threePt;
+  int threePt = 0;
   double pass = 0;
   double tech = 0;
 

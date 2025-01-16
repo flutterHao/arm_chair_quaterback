@@ -2,21 +2,23 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-31 15:05:53
- * @LastEditTime: 2025-01-08 16:55:00
+ * @LastEditTime: 2025-01-16 19:52:15
  */
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/entities/last5_avg_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pk_result_updated_entity.dart';
+import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
-import 'package:arm_chair_quaterback/common/widgets/dialog/stats_dialog.dart';
+import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/pages/league/team_detail/controller.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
@@ -28,50 +30,60 @@ class LogTab extends StatefulWidget {
 }
 
 class _LogTabState extends State<LogTab> with AutomaticKeepAliveClientMixin {
-  final controller =
-      Get.find<TeamDetailController>(tag: Get.arguments.toString());
-
   @override
   bool get wantKeepAlive => true;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 9.w),
-      child: ListView.separated(
-          physics: const BouncingScrollPhysics(),
-          padding: EdgeInsets.zero,
-          itemCount: controller.yearList.length,
-          separatorBuilder: (context, index) {
-            return Container(
-              height: 1,
-              width: double.infinity,
-              color: AppColors.cD1D1D1,
-            );
-          },
-          itemBuilder: (context, index) {
-            return Theme(
-              data: ThemeData(
-                dividerColor: AppColors.cTransparent,
-              ),
-              child: ExpansionTile(
-                  backgroundColor: Colors.white,
-                  collapsedBackgroundColor: Colors.white,
-                  title: Text(
-                    controller.yearList[index],
-                    style: 24.w4(
-                      fontFamily: FontFamily.fOswaldBold,
-                      color: AppColors.c262626,
+    return GetBuilder<TeamDetailController>(
+        tag: Get.arguments.toString(),
+        id: "logTab",
+        builder: (controller) {
+          return Container(
+            margin: EdgeInsets.symmetric(vertical: 9.w),
+            child: ListView.separated(
+                physics: const BouncingScrollPhysics(),
+                padding: EdgeInsets.zero,
+                itemCount: controller.logMap.entries.length,
+                separatorBuilder: (context, index) {
+                  return Container(
+                    height: 1,
+                    width: double.infinity,
+                    color: AppColors.cD1D1D1,
+                  );
+                },
+                itemBuilder: (context, index) {
+                  String season =
+                      controller.logMap.entries.elementAt(index).key;
+                  return Theme(
+                    data: ThemeData(
+                      dividerColor: AppColors.cTransparent,
                     ),
-                  ),
-                  children: [_Item()]),
-            );
-          }),
-    );
+                    child: ExpansionTile(
+                        backgroundColor: Colors.white,
+                        collapsedBackgroundColor: Colors.white,
+                        initiallyExpanded: controller.openList[index],
+                        onExpansionChanged: (value) {
+                          controller.openList[index] = value;
+                          if (value) controller.getSeasonLog(season);
+                        },
+                        title: Text(
+                          season,
+                          style: 24.w4(
+                            fontFamily: FontFamily.fOswaldBold,
+                            color: AppColors.c262626,
+                          ),
+                        ),
+                        children: [_Item(season)]),
+                  );
+                }),
+          );
+        });
   }
 }
 
 class _Item extends StatelessWidget {
-  const _Item({super.key});
+  const _Item(this.season, {super.key});
+  final String season;
 
   @override
   Widget build(BuildContext context) {
@@ -85,14 +97,24 @@ class _Item extends StatelessWidget {
             ),
           ),
         ),
-        child: _buildTabViewItem([]));
+        child: _buildTabViewItem());
   }
 
-  Widget _buildTabViewItem(List<ScoreBoardDetailList> list) {
+  Widget _buildTabViewItem() {
     final controller =
         Get.find<TeamDetailController>(tag: Get.arguments.toString());
+    if ((controller.logMap[season] ?? []).isEmpty) {
+      return SizedBox(
+        height: 250.w,
+        child: const Center(
+          child: LoadStatusWidget(
+            loadDataStatus: LoadDataStatus.noData,
+          ),
+        ),
+      );
+    }
     return SizedBox(
-      height: 29.w + 34.w * 5,
+      height: 29.w + 34.w * controller.logMap[season]!.length,
       child: SfDataGridTheme(
           data: const SfDataGridThemeData(
               gridLineColor: AppColors.cE6E6E6,
@@ -105,7 +127,7 @@ class _Item extends StatelessWidget {
             verticalScrollPhysics: const NeverScrollableScrollPhysics(),
             showHorizontalScrollbar: false,
             gridLinesVisibility: GridLinesVisibility.horizontal,
-            source: PlayerDetailDatasource(list),
+            source: PlayerDetailDatasource(controller.logMap[season]!),
             columns: [
               GridColumn(
                   columnName: 'WK',
@@ -146,20 +168,20 @@ class _Item extends StatelessWidget {
 }
 
 class PlayerDetailDatasource extends DataGridSource {
-  PlayerDetailDatasource(this.playerScores);
+  PlayerDetailDatasource(this.datas);
 
-  final List<ScoreBoardDetailList> playerScores;
+  final List<Last5AvgEntity> datas;
 
   List<DataGridRow> _buildRows() {
     final ctrl = Get.find<TeamDetailController>(tag: Get.arguments.toString());
-    Random random = Random();
     int i = 0;
-    List<List<DataGridCell>> map = List.generate(5, (i) {}).toList().map((e) {
+    List<List<DataGridCell>> map = datas.map((e) {
+      String teamName = e.mATCHUP.split(" ").last;
       List<DataGridCell> cells = [];
       cells.add(DataGridCell(columnName: "WK", value: i + 1));
-      cells.add(const DataGridCell(columnName: "OPP", value: "HOU"));
-      for (var ele in ctrl.columns) {
-        cells.add(DataGridCell(columnName: ele, value: random.nextInt(5) + 20));
+      cells.add(DataGridCell(columnName: "OPP", value: teamName));
+      for (var col in ctrl.columns) {
+        cells.add(DataGridCell(columnName: col, value: e.getRankValue(col)));
       }
       i++;
       return cells;

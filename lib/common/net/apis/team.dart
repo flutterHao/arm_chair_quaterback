@@ -2,11 +2,14 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-10-14 17:25:31
- * @LastEditTime: 2025-01-13 16:17:07
+ * @LastEditTime: 2025-01-16 18:48:02
  */
+import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/last5_avg_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/my_team_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/player_collect_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_status_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/tactics_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/tatics_combine_entity.dart';
@@ -170,5 +173,42 @@ class TeamApi {
       data: {"NBATeamId": teamId},
     );
     return TeamDetailEntity.fromJson(json);
+  }
+
+  static Future<PlayerCollectEntity> getPlayerCollect(
+      {int bookId = 101}) async {
+    var json = await HttpUtil()
+        .post(Api.getTeamPlayerCollect, data: {"bookId": bookId});
+    return PlayerCollectEntity.fromJson(json);
+  }
+
+  static Future composeTeamPlayer(
+      {required int playerId, int bookId = 101, int composeNum = 1}) async {
+    var result = await HttpUtil().post(Api.composeTeamPlayer, data: {
+      "bookId": bookId,
+      "composeNum": composeNum,
+      "playerId": playerId
+    });
+
+    return result;
+  }
+
+  static Future destroyTeamPlayer(
+      {int bookId = 101, required int playerId}) async {
+    var result = await HttpUtil().post(Api.destroyTeamPlayer, data: {
+      "bookId": bookId,
+      "playerId": playerId,
+    });
+    return result;
+  }
+
+  static Future<List<Last5AvgEntity>> getNBAGameLogByTeamId(
+      int teamId, String season) async {
+    List list = await HttpUtil().post(Api.getNBAGameLogByTeamId, data: {
+      "season": season,
+      "seasonType": "Regular%20Season",
+      "teamId": teamId
+    });
+    return list.map((e) => Last5AvgEntity.fromJson(e)).toList();
   }
 }

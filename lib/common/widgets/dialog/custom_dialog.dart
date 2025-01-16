@@ -12,7 +12,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
  * @Description: 自定义弹窗
  * @Author: lihonghao
  * @Date: 2024-09-28 15:59:52
- * @LastEditTime: 2024-12-26 10:15:50
+ * @LastEditTime: 2025-01-14 20:43:04
  */
 
 class CustomBottomDialog extends StatelessWidget {
@@ -135,9 +135,13 @@ class SimpleBottomDialog extends StatelessWidget {
     super.key,
     this.height,
     required this.child,
+    this.onComfirm,
+    this.onCencel,
   });
   final double? height;
   final Widget child;
+  final Function? onComfirm;
+  final Function? onCencel;
 
   @override
   Widget build(BuildContext context) {
@@ -157,7 +161,65 @@ class SimpleBottomDialog extends StatelessWidget {
             height: 4.w,
             width: 44.w,
           ),
-          Expanded(child: child)
+          Expanded(child: child),
+          if (onComfirm != null)
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.w),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: MtInkWell(
+                      onTap: () {
+                        if (onCencel != null) {
+                          onCencel!();
+                        } else {
+                          Navigator.pop(context);
+                        }
+                      },
+                      child: Container(
+                        height: 51.w,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(9.w),
+                            border: Border.all(
+                                width: 1.w, color: AppColors.c000000)),
+                        child: Text(
+                          "RESET",
+                          style: 23.w4(
+                              fontFamily: FontFamily.fOswaldMedium,
+                              color: AppColors.c000000),
+                        ),
+                      ),
+                    ),
+                  ),
+                  9.hGap,
+                  Expanded(
+                    child: MtInkWell(
+                      minScale: 0.95,
+                      onTap: () {
+                        if (onComfirm != null) {
+                          onComfirm!();
+                        }
+                      },
+                      child: Container(
+                        height: 51.w,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(9.w),
+                          color: AppColors.c000000,
+                        ),
+                        child: Text(
+                          "CONFIRM",
+                          style: 23.w4(
+                              fontFamily: FontFamily.fOswaldMedium,
+                              color: AppColors.cFFFFFF),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
         ],
       ),
     );

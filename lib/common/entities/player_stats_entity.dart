@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-27 18:50:14
- * @LastEditTime: 2024-12-31 11:15:16
+ * @LastEditTime: 2025-01-13 21:02:07
  */
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'dart:convert';

@@ -62,6 +62,16 @@ CardPackDefineEntity $CardPackDefineEntityFromJson(Map<String, dynamic> json) {
   if (cardPackIcon != null) {
     cardPackDefineEntity.cardPackIcon = cardPackIcon;
   }
+  final String? cardPackName = jsonConvert.convert<String>(
+      json['cardPackName']);
+  if (cardPackName != null) {
+    cardPackDefineEntity.cardPackName = cardPackName;
+  }
+  final String? cardPackDesc = jsonConvert.convert<String>(
+      json['cardPackDesc']);
+  if (cardPackDesc != null) {
+    cardPackDefineEntity.cardPackDesc = cardPackDesc;
+  }
   return cardPackDefineEntity;
 }
 
@@ -78,6 +88,8 @@ Map<String, dynamic> $CardPackDefineEntityToJson(CardPackDefineEntity entity) {
   data['cupConWeight'] = entity.cupConWeight;
   data['hideOpenNow'] = entity.hideOpenNow;
   data['cardPackIcon'] = entity.cardPackIcon;
+  data['cardPackName'] = entity.cardPackName;
+  data['cardPackDesc'] = entity.cardPackDesc;
   return data;
 }
 
@@ -94,6 +106,8 @@ extension CardPackDefineEntityExtension on CardPackDefineEntity {
     List<int>? cupConWeight,
     int? hideOpenNow,
     String? cardPackIcon,
+    String? cardPackName,
+    String? cardPackDesc,
   }) {
     return CardPackDefineEntity()
       ..cardMoneyRange = cardMoneyRange ?? this.cardMoneyRange
@@ -106,6 +120,8 @@ extension CardPackDefineEntityExtension on CardPackDefineEntity {
       ..cardPlayerNum = cardPlayerNum ?? this.cardPlayerNum
       ..cupConWeight = cupConWeight ?? this.cupConWeight
       ..hideOpenNow = hideOpenNow ?? this.hideOpenNow
-      ..cardPackIcon = cardPackIcon ?? this.cardPackIcon;
+      ..cardPackIcon = cardPackIcon ?? this.cardPackIcon
+      ..cardPackName = cardPackName ?? this.cardPackName
+      ..cardPackDesc = cardPackDesc ?? this.cardPackDesc;
   }
 }

@@ -13,6 +13,10 @@ import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_source_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/pick_type_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/player_book_exp_rule_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/player_book_rule_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/player_collect_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/player_power_rate_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_status_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/reward_group_entity.dart';
@@ -58,6 +62,11 @@ class CacheApi {
   static Map<int, CardPackDefineEntity> cardPackDefineMap = {};
   static List<NewsSourceEntity> newsSourceList = [];
   static List<InboxMessageEntity> inboxMessageList = [];
+  static Map<int, PlayerCollectCollects> playerBookRuleMap = {};
+  static List<PlayerCollectCollects> playerBookRuleList = [];
+
+  static List<PlayerBookExpRuleEntity> playerBookExpRuleList = [];
+  static Map<String, PlayerPowerRateDefineEntity> playerPowerRateDefineMap = {};
 
   static Future<void> init() async {
     await Future.wait([
@@ -270,5 +279,42 @@ class CacheApi {
     }
     List list = await HttpUtil().post(Api.cInboxMessage);
     return list.map((item) => InboxMessageEntity.fromJson(item)).toList();
+  }
+
+  static Future<Map<int, PlayerCollectCollects>> getPlayerBookRuleList() async {
+    if (playerBookRuleMap.isNotEmpty) {
+      return playerBookRuleMap;
+    }
+    List list = await HttpUtil().post(Api.cPlayerBookRule);
+    playerBookRuleList =
+        list.map((item) => PlayerCollectCollects.fromJson(item)).toList();
+    playerBookRuleMap = {
+      for (var item in playerBookRuleList) item.playerId: item
+    };
+    return playerBookRuleMap;
+  }
+
+  static Future<List<PlayerBookExpRuleEntity>>
+      getPlayerBookExpRuleList() async {
+    if (playerBookExpRuleList.isNotEmpty) {
+      return playerBookExpRuleList;
+    }
+    List list = await HttpUtil().post(Api.cPlayerBookExpRule);
+    return playerBookExpRuleList =
+        list.map((item) => PlayerBookExpRuleEntity.fromJson(item)).toList();
+  }
+
+  static Future<Map<String, PlayerPowerRateDefineEntity>>
+      playerPowerRateDefine() async {
+    if (playerPowerRateDefineMap.isNotEmpty) {
+      return playerPowerRateDefineMap;
+    }
+    List list = await HttpUtil().post(Api.cPlayerPowerRateDefine);
+    var playerPowerRateDefineList =
+        list.map((item) => PlayerPowerRateDefineEntity.fromJson(item)).toList();
+    playerPowerRateDefineMap = {
+      for (var item in playerPowerRateDefineList) item.backUp: item
+    };
+    return playerPowerRateDefineMap;
   }
 }

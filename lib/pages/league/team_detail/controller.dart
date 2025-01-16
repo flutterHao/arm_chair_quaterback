@@ -2,8 +2,9 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-31 14:30:33
- * @LastEditTime: 2025-01-08 16:26:56
+ * @LastEditTime: 2025-01-16 18:49:21
  */
+import 'package:arm_chair_quaterback/common/entities/last5_avg_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_stats_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_detail_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rank/team_rank_entity.dart';
@@ -30,9 +31,8 @@ class TeamDetailController extends GetxController
 
   List<String> positionList = ["CENTER", "GUARD", "FORWARD"];
 
-  final List<String> yearList = List.generate(
-      MyDateUtils.getNowDateTime().year - 2016,
-      (index) => "${MyDateUtils.getNowDateTime().year - index}");
+  List<String> yearList = [];
+  Map<String, List<Last5AvgEntity>> logMap = {};
   List<String> columns = [
     "PTS",
     "AST",
@@ -52,6 +52,7 @@ class TeamDetailController extends GetxController
   List<StatsEntity> statTeamList = [];
   List<StatsEntity> statPlayerList = [];
   List<TeamRankEntity> confRankList = [];
+  List<bool> openList = [];
 
   void onTap() {}
 
@@ -60,6 +61,12 @@ class TeamDetailController extends GetxController
     super.onInit();
     teamId = Get.arguments;
     teamTabCtrl = TabController(length: 2, vsync: this);
+    int year = MyDateUtils.getNowDateTime().year;
+    yearList = List.generate(year - 2018,
+        (index) => "${(year - index - 1)}-${(year - index) % 2000}");
+    logMap = {for (var year in yearList) year: []};
+    openList =
+        List.generate(yearList.length, (index) => index == 0 ? true : false);
   }
 
   @override
@@ -71,6 +78,7 @@ class TeamDetailController extends GetxController
   _initData() {
     getTeamInfo();
     getStatsInfo();
+    getSeasonLog(logMap.entries.first.key);
   }
 
   String getSeasonAvgWithTab() {
@@ -238,5 +246,14 @@ class TeamDetailController extends GetxController
       }
     }
     return 1;
+  }
+
+  void getSeasonLog(String season) async {
+    if (logMap[season]!.isEmpty) {
+      await TeamApi.getNBAGameLogByTeamId(teamId, season).then((v) {
+        logMap[season] = v;
+        update(["logTab"]);
+      });
+    }
   }
 }

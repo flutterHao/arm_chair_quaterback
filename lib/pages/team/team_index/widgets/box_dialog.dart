@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 14:09:29
- * @LastEditTime: 2025-01-10 18:24:38
+ * @LastEditTime: 2025-01-15 18:50:16
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/card_pack_info_entity.dart';
@@ -82,8 +82,7 @@ class BattleBoxDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var propItem = CacheApi.propDefineList!
-        .firstWhere((element) => element.propId == item.cardId);
+    var propItem = CacheApi.cardPackDefineMap[item.cardId]!;
 
     return GetBuilder<TeamIndexController>(
       builder: (controller) {
@@ -124,7 +123,7 @@ class BattleBoxDialog extends StatelessWidget {
                 child: Container(
                   // constraints: BoxConstraints(minHeight: 47.5.w),
                   child: Text(
-                    propItem.desc,
+                    propItem.cardPackDesc,
                     textAlign: TextAlign.center,
                     style: 14.w4(
                         fontFamily: FontFamily.fRobotoRegular,
@@ -151,7 +150,7 @@ class BattleBoxDialog extends StatelessWidget {
               ),
               9.5.vGap,
               Text(
-                propItem.propName,
+                propItem.cardPackName,
                 style: 21.w4(
                     color: AppColors.c000000,
                     fontFamily: FontFamily.fOswaldRegular),

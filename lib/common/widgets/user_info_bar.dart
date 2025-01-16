@@ -96,6 +96,7 @@ class UserInfoBar extends StatelessWidget {
                             onLongPress: () {
                               final List<String> servers = [
                                 Address.personalDevUrl,
+                                Address.personalDevUrl2,
                                 Address.privateDevUrl,
                                 Address.publicDevUrl,
                                 Address.pubDevUrl,
@@ -327,7 +328,9 @@ class ServerSwitchDialog extends StatelessWidget {
     String getServerName(String serverUrl) {
       switch (serverUrl) {
         case Address.personalDevUrl:
-          return '${Address.personalDevUrl}(本地)';
+          return '${Address.personalDevUrl}(本地yw)';
+        case Address.personalDevUrl2:
+          return '${Address.personalDevUrl}(本地yx)';
         case Address.privateDevUrl:
           return '${Address.privateDevUrl}(内网)';
         case Address.publicDevUrl:

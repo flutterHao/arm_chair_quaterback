@@ -50,7 +50,9 @@ import 'package:arm_chair_quaterback/common/entities/pk_start_updated_entity.dar
 import 'package:arm_chair_quaterback/common/entities/player_book_exp_rule_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_book_rule_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_card_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/player_collect_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_day_data_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/player_power_rate_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_stats_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_status_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_award_entity.dart';
@@ -713,9 +715,26 @@ class JsonConvert {
       return data.map<PlayerCardEntity>((Map<String, dynamic> e) =>
           PlayerCardEntity.fromJson(e)).toList() as M;
     }
+    if (<PlayerCollectEntity>[] is M) {
+      return data.map<PlayerCollectEntity>((Map<String, dynamic> e) =>
+          PlayerCollectEntity.fromJson(e)).toList() as M;
+    }
+    if (<PlayerCollectCollects>[] is M) {
+      return data.map<PlayerCollectCollects>((Map<String, dynamic> e) =>
+          PlayerCollectCollects.fromJson(e)).toList() as M;
+    }
+    if (<PlayerCollectTeamBookPlayerCollect>[] is M) {
+      return data.map<PlayerCollectTeamBookPlayerCollect>((
+          Map<String, dynamic> e) =>
+          PlayerCollectTeamBookPlayerCollect.fromJson(e)).toList() as M;
+    }
     if (<PlayerDayDataEntity>[] is M) {
       return data.map<PlayerDayDataEntity>((Map<String, dynamic> e) =>
           PlayerDayDataEntity.fromJson(e)).toList() as M;
+    }
+    if (<PlayerPowerRateDefineEntity>[] is M) {
+      return data.map<PlayerPowerRateDefineEntity>((Map<String, dynamic> e) =>
+          PlayerPowerRateDefineEntity.fromJson(e)).toList() as M;
     }
     if (<StatsEntity>[] is M) {
       return data.map<StatsEntity>((Map<String, dynamic> e) =>
@@ -1200,7 +1219,13 @@ class JsonConvertClassCollection {
     (PlayerBookExpRuleEntity).toString(): PlayerBookExpRuleEntity.fromJson,
     (PlayerBookRuleEntity).toString(): PlayerBookRuleEntity.fromJson,
     (PlayerCardEntity).toString(): PlayerCardEntity.fromJson,
+    (PlayerCollectEntity).toString(): PlayerCollectEntity.fromJson,
+    (PlayerCollectCollects).toString(): PlayerCollectCollects.fromJson,
+    (PlayerCollectTeamBookPlayerCollect)
+        .toString(): PlayerCollectTeamBookPlayerCollect.fromJson,
     (PlayerDayDataEntity).toString(): PlayerDayDataEntity.fromJson,
+    (PlayerPowerRateDefineEntity).toString(): PlayerPowerRateDefineEntity
+        .fromJson,
     (StatsEntity).toString(): StatsEntity.fromJson,
     (PlayerStatusEntity).toString(): PlayerStatusEntity.fromJson,
     (RankAwardEntity).toString(): RankAwardEntity.fromJson,

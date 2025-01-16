@@ -646,6 +646,7 @@ class _RecentMatch extends StatelessWidget {
       ),
     ];
     return SfCartesianChart(
+      // backgroundColor: Colors.red,
       margin: const EdgeInsets.only(bottom: 0),
       plotAreaBorderWidth: 0,
       primaryXAxis: CategoryAxis(
@@ -655,7 +656,7 @@ class _RecentMatch extends StatelessWidget {
         labelIntersectAction: AxisLabelIntersectAction.wrap,
         labelStyle: 10.w4(color: AppColors.cB3B3B3),
       ),
-      // 添加标注
+      // 添加标注 y轴值 线
       primaryYAxis: NumericAxis(
         labelStyle: 10.w4(color: AppColors.cB3B3B3),
         plotBands: plotBands,

@@ -107,9 +107,6 @@ class Constant {
     "S-",
     "S",
     "S+",
-    "SS-",
-    "SS",
-    "SS+"
   ];
   static String seasonId = "2024-25";
 }

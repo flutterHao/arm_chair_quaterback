@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-06 15:16:54
- * @LastEditTime: 2025-01-13 16:14:36
+ * @LastEditTime: 2025-01-16 17:18:49
  */
 class Api {
   /// base
@@ -78,7 +78,10 @@ class Api {
       "$API_BASE_PATH/NBAData/queryNBAGameSchedulesInfo";
   static const String getNBATeamInfo = "$API_BASE_PATH/NBAData/getNBATeamInfo";
   static const String scheduleChoose = "$API_BASE_PATH/NBAData/scheduleChoose";
-  static const String getNBAPlayerOverAllPerGameData = "$API_BASE_PATH/NBAData/getNBAPlayerOverAllPerGameData";
+  static const String getNBAPlayerOverAllPerGameData =
+      "$API_BASE_PATH/NBAData/getNBAPlayerOverAllPerGameData";
+  static const String getNBAGameLogByTeamId =
+      "$API_BASE_PATH/NBAData/getNBAGameLogByTeamId";
 
   /// config
   static const String cNewsBanner = "$CONFIG_BASE_PATH/HightlightNews.json";
@@ -110,10 +113,12 @@ class Api {
   static const String cSourceTranslate =
       "$CONFIG_BASE_PATH/SourceTranslate.json";
   static const String cInboxMessage = "$CONFIG_BASE_PATH/InboxMessage.json";
-  static const String cPPlayerBookRule =
-      "$CONFIG_BASE_PATH/PlayerBookRule.json";
+  static const String cPlayerBookRule = "$CONFIG_BASE_PATH/PlayerBookRule.json";
   static const String cPlayerBookExpRule =
       "$CONFIG_BASE_PATH/PlayerBookExpRule.json";
+  static const String cGameConstant = "$CONFIG_BASE_PATH/GameConstant.json";
+  static const String cPlayerPowerRateDefine =
+      "$CONFIG_BASE_PATH/PlayerPowerRateDefine.json";
 
   /// TeamPlayer
   static const String getTeamPlayerByUUID =

@@ -2,11 +2,12 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 17:22:13
- * @LastEditTime: 2025-01-10 17:09:11
+ * @LastEditTime: 2025-01-16 16:50:23
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
+import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -18,6 +19,7 @@ import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/player_card.dart';
 import 'package:arm_chair_quaterback/common/widgets/vertival_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/team/illustratiions/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/illustratiions/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/view.dart';
@@ -232,91 +234,106 @@ class MyTeamWidget extends StatelessWidget {
                 Container(width: 1, height: 42.w, color: AppColors.cD1D1D1),
                 Expanded(
                     flex: 148,
-                    child: InkWell(
-                      onTap: () {
-                        Get.toNamed(RouteNames.illustrationPage);
-                      },
-                      child: Container(
-                        margin: EdgeInsets.only(top: 2.w),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            5.5.hGap,
-                            SizedBox(
-                              width: 40.w,
-                              height: 40,
-                              child: Stack(
+                    child: GetBuilder<IllustratiionsController>(
+                        init: IllustratiionsController(),
+                        id: "list",
+                        builder: (iCtrl) {
+                          int count = iCtrl.playerCollectEntity.collects
+                              .where((e) => e.isLight == 1)
+                              .length;
+                          return InkWell(
+                            onTap: () {
+                              Get.toNamed(RouteNames.illustrationPage);
+                              iCtrl.reset();
+                            },
+                            child: Container(
+                              margin: EdgeInsets.only(top: 2.w),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
+                                  5.5.hGap,
+                                  SizedBox(
+                                    width: 40.w,
+                                    height: 40,
+                                    child: Stack(
+                                      children: [
+                                        IconWidget(
+                                            iconWidth: 31.5.w,
+                                            icon: Assets
+                                                .managerUiManagerIconArchive),
+                                        Positioned(
+                                            left: 0,
+                                            top: 0,
+                                            child: Container(
+                                              width: 16.w,
+                                              height: 16.w,
+                                              alignment: Alignment.center,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.w),
+                                                  color: AppColors.cFF7954),
+                                              child: Text(
+                                                "99",
+                                                style: 10.w4(
+                                                    fontFamily: FontFamily
+                                                        .fOswaldMedium,
+                                                    height: 1,
+                                                    color: AppColors.cFFFFFF),
+                                              ),
+                                            )),
+                                      ],
+                                    ),
+                                  ),
+                                  7.hGap,
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "ARCHIVE",
+                                        style: 12.w4(
+                                            fontFamily:
+                                                FontFamily.fRobotoRegular,
+                                            height: 0.9),
+                                      ),
+                                      6.5.vGap,
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          AnimatedNum(
+                                            number: count,
+                                            milliseconds: 1000,
+                                            textStyle: 19.w4(
+                                                height: 0.75,
+                                                fontFamily:
+                                                    FontFamily.fOswaldMedium),
+                                          ),
+                                          SizedBox(height: 4.h),
+                                          Text(
+                                            "/${CacheApi.playerBookRuleList.length}",
+                                            style: 14.w4(
+                                                height: 0.9,
+                                                fontFamily:
+                                                    FontFamily.fOswaldRegular),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  const Expanded(child: SizedBox.shrink()),
                                   IconWidget(
-                                      iconWidth: 31.5.w,
-                                      icon: Assets.managerUiManagerIconArchive),
-                                  Positioned(
-                                      left: 0,
-                                      top: 0,
-                                      child: Container(
-                                        width: 16.w,
-                                        height: 16.w,
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(8.w),
-                                            color: AppColors.cFF7954),
-                                        child: Text(
-                                          "99",
-                                          style: 10.w4(
-                                              fontFamily:
-                                                  FontFamily.fOswaldMedium,
-                                              height: 1,
-                                              color: AppColors.cFFFFFF),
-                                        ),
-                                      )),
+                                    iconWidth: 14.w,
+                                    icon: Assets.iconUiIconArrows04,
+                                    iconColor: AppColors.c000000,
+                                    rotateAngle: -90,
+                                  )
                                 ],
                               ),
                             ),
-                            7.hGap,
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "ARCHIVE",
-                                  style: 12.w4(
-                                      fontFamily: FontFamily.fRobotoRegular,
-                                      height: 0.9),
-                                ),
-                                6.5.vGap,
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    AnimatedNum(
-                                      number: 500,
-                                      milliseconds: 1000,
-                                      textStyle: 19.w4(
-                                          height: 0.75,
-                                          fontFamily: FontFamily.fOswaldMedium),
-                                    ),
-                                    SizedBox(height: 4.h),
-                                    Text(
-                                      "/500",
-                                      style: 14.w4(
-                                          height: 0.9,
-                                          fontFamily:
-                                              FontFamily.fOswaldRegular),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            const Expanded(child: SizedBox.shrink()),
-                            IconWidget(
-                              iconWidth: 14.w,
-                              icon: Assets.iconUiIconArrows04,
-                              iconColor: AppColors.c000000,
-                              rotateAngle: -90,
-                            )
-                          ],
-                        ),
-                      ),
-                    )),
+                          );
+                        })),
                 23.5.hGap,
               ],
             ),

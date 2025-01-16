@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-01-07 10:55:31
- * @LastEditTime: 2025-01-08 16:25:51
+ * @LastEditTime: 2025-01-16 19:53:08
  */
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/last5_avg_entity.g.dart';
@@ -75,6 +75,59 @@ class Last5AvgEntity {
     }
 
     return toJson()[key] ?? 0;
+  }
+
+  double getRankValue(String type) {
+    double value = 0;
+    switch (type) {
+      case "PPG": //场均PTS
+        value = pTS;
+      case "PTS":
+        value = pTS;
+      case "FGM":
+        value = fGM;
+      case "FGA":
+        value = fGA;
+      // case "3PM":
+      //   value = threePM;
+      case "3PA":
+        value = fGA;
+      case "FTM":
+        value = fTM;
+      case "FTA":
+        value = fTA;
+      case "FG%":
+        value = fgPct * 100;
+      case "3P%":
+        value = fg3Pct * 100;
+      case "FT%":
+        value = ftPct * 100;
+      case "APG": //场均AST
+        value = aST;
+      case "AST":
+        value = aST;
+      case "TPG": //场均TO
+        value = tOV;
+      case "TO":
+        value = tOV;
+      case "RPG":
+        value = rEB;
+      case "REB": //场均RPG
+        value = rEB;
+      case "BPG": //场均blk
+        value = bLK;
+      case "BLK":
+        value = bLK;
+      case "MIN":
+        value = mIN;
+      case "FOUL":
+        value = pF;
+      case "STL":
+        value = sTL;
+      default:
+        value = 0.0;
+    }
+    return (value * 10).roundToDouble() / 10;
   }
 
   int parseCustomDate() {

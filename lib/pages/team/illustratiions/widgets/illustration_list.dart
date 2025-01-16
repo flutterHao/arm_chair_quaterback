@@ -2,21 +2,25 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-01-10 09:53:30
- * @LastEditTime: 2025-01-10 16:34:52
+ * @LastEditTime: 2025-01-16 16:44:56
  */
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
-import 'package:arm_chair_quaterback/common/net/apis/news.dart';
+import 'package:arm_chair_quaterback/common/entities/player_collect_entity.dart';
+import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/illustratiions/controller.dart';
-import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/illustratiions/widgets/filter_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -26,114 +30,146 @@ class IllustrationList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TeamController teamController = Get.find();
-    return GetBuilder<IllustratiionsController>(builder: (ctrl) {
-      return Column(
-        children: [
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 16.w),
-            width: double.infinity,
-            height: 37.w,
-            color: AppColors.c4D4D4D,
-            child: Row(
-              children: [
-                IconWidget(
-                  iconWidth: 19.w,
-                  icon: Assets.managerUiManagerArchiveAtlas,
-                ),
-                8.5.hGap,
-                Expanded(
-                    child: Text(
-                  "${teamController.myBagList.length}/500",
-                  style: 14.w4(
-                    color: AppColors.cFFFFFF,
-                    fontFamily: FontFamily.fRobotoRegular,
+    return GetBuilder<IllustratiionsController>(
+      id: "list",
+      builder: (ctrl) {
+        var list = ctrl.onfilter();
+        var activeList = list.where((e) => e.isActive == 0).toList();
+        var notActiveList = list.where((e) => e.isActive == 1).toList();
+        int length = list.where((e) => e.isLight == 1).length;
+        return Column(
+          children: [
+            Container(
+              padding: EdgeInsets.only(left: 16.w),
+              width: double.infinity,
+              height: 37.w,
+              color: AppColors.c4D4D4D,
+              child: Row(
+                children: [
+                  IconWidget(
+                    iconWidth: 19.w,
+                    icon: Assets.managerUiManagerArchiveAtlas,
                   ),
-                )),
-                IconWidget(
-                  iconWidth: 17.w,
-                  icon: Assets.commonUiCommonIconSift,
-                ),
-              ],
+                  8.5.hGap,
+                  Expanded(
+                    child: Text(
+                      "$length/${list.length}",
+                      style: 14.w4(
+                        color: AppColors.cFFFFFF,
+                        fontFamily: FontFamily.fRobotoRegular,
+                      ),
+                    ),
+                  ),
+                  MtInkWell(
+                    onTap: () {
+                      showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: Get.context!,
+                        backgroundColor: Colors.transparent,
+                        builder: (context) {
+                          return FilterDialog();
+                        },
+                      );
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.w,
+                        vertical: 4.w,
+                      ),
+                      child: IconWidget(
+                        iconWidth: 17.w,
+                        icon: Assets.commonUiCommonIconSift,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          SizedBox(
-            width: double.infinity,
-            child: GridView.builder(
-              padding: EdgeInsets.symmetric(horizontal: 21.w, vertical: 25.w),
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: teamController.myTeamEntity.teamPlayers.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  childAspectRatio: 100 / 160,
-                  crossAxisSpacing: 16.5.w,
-                  mainAxisSpacing: 10.w,
-                  crossAxisCount: 3),
-              itemBuilder: (context, index) {
-                return _Item(index: index);
-              },
+            Expanded(
+              child: CustomScrollView(
+                slivers: [
+                  SliverPadding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 21.w, vertical: 25.w),
+                    sliver: SliverGrid(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        childAspectRatio: 100 / 160,
+                        crossAxisSpacing: 16.5.w,
+                        mainAxisSpacing: 10.w,
+                        crossAxisCount: 3,
+                      ),
+                      delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                          return _Item(item: activeList[index]);
+                        },
+                        childCount: activeList.length,
+                      ),
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 16.w),
+                      child: Text(
+                        "free agency".toUpperCase(),
+                        style: 24.w4(
+                          fontFamily: FontFamily.fOswaldBold,
+                          height: 0.9,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 16.w),
+                      child: Container(
+                        width: double.infinity,
+                        height: 1,
+                        color: AppColors.cD1D1D1,
+                      ),
+                    ),
+                  ),
+                  SliverPadding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 21.w, vertical: 25.w),
+                    sliver: SliverGrid(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        childAspectRatio: 100 / 160,
+                        crossAxisSpacing: 16.5.w,
+                        mainAxisSpacing: 10.w,
+                        crossAxisCount: 3,
+                      ),
+                      delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                          return _Item(item: notActiveList[index]);
+                        },
+                        childCount: notActiveList.length,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          14.vGap,
-          Container(
-            margin: EdgeInsets.only(left: 16.w),
-            width: double.infinity,
-            child: Text(
-              "free agency".toUpperCase(),
-              style: 24.w4(fontFamily: FontFamily.fOswaldBold, height: 0.9),
-            ),
-          ),
-          16.vGap,
-          Container(
-            width: double.infinity,
-            height: 1,
-            color: AppColors.cD1D1D1,
-          ),
-          SizedBox(
-            width: double.infinity,
-            child: GridView.builder(
-              padding: EdgeInsets.symmetric(horizontal: 21.w, vertical: 25.w),
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount:
-                  (teamController.myTeamEntity.teamPlayers.length / 3).ceil(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  childAspectRatio: 100 / 160,
-                  crossAxisSpacing: 16.5.w,
-                  mainAxisSpacing: 10.w,
-                  crossAxisCount: 3),
-              itemBuilder: (context, index) {
-                return _Item(index: index);
-              },
-            ),
-          ),
-        ],
-      );
-    });
+          ],
+        );
+      },
+    );
   }
 }
 
-class _Item extends StatelessWidget {
-  const _Item({super.key, required this.index});
-  final int index;
+class _Item extends GetView<IllustratiionsController> {
+  const _Item({super.key, required this.item});
+  final PlayerCollectCollects item;
 
   @override
   Widget build(BuildContext context) {
-    TeamController teamController = Get.find();
-    Random random = Random();
-
-    int count = random.nextInt(100);
-
-    count = index == 0 ? 100 : count;
-    var achive = count == 100;
-
-    var item = teamController.myTeamEntity.teamPlayers[index];
-
     return InkWell(
-      onTap: () => Get.toNamed(RouteNames.illustrationDetail, arguments: {
-        "playerId": item.playerId,
-        "isAchivement": achive,
-      }),
+      onTap: () async {
+        await Get.toNamed(
+          RouteNames.illustrationDetail,
+          arguments: item,
+        );
+        controller.getPlayerCollectInfo();
+      },
       child: Center(
         child: Column(
           children: [
@@ -144,13 +180,16 @@ class _Item extends StatelessWidget {
               alignment: Alignment.center,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(9.w),
-                  color: achive ? AppColors.cFFFFFF : AppColors.cE6E6E),
+                  color:
+                      item.isLight == 1 ? AppColors.cFFFFFF : AppColors.cE6E6E),
               child: Stack(
                 alignment: Alignment.bottomCenter,
                 children: [
                   ImageWidget(
                     url: Utils.getPlayUrl(item.playerId),
-                    color: achive ? null : AppColors.c000000.withOpacity(0.2),
+                    color: item.isLight == 1
+                        ? null
+                        : AppColors.c000000.withOpacity(0.2),
                     width: 100.w,
                     height: 140.w,
                     fit: BoxFit.cover,
@@ -170,7 +209,7 @@ class _Item extends StatelessWidget {
                     bottom: 0,
                     child: Container(
                       height: 16.w,
-                      width: count.w,
+                      width: 100.w * item.fragmentNum / item.needNum,
                       alignment: Alignment.center,
                       color: AppColors.c10A86A,
                     ),
@@ -183,7 +222,7 @@ class _Item extends StatelessWidget {
                         height: 16.w,
                         alignment: Alignment.center,
                         child: Text(
-                          "$count/100",
+                          "${item.fragmentNum}/${item.needNum}",
                           style: 12.w4(
                             color: AppColors.cFFFFFF,
                             height: 1,
