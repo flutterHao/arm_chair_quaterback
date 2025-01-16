@@ -404,8 +404,8 @@ class SummaryController extends GetxController {
         pointColorMapper: (ChartSampleData sales, _) => sales.pointColor,
         dataLabelSettings: DataLabelSettings(
           isVisible: true,
-          alignment: ChartAlignment.near,
-          offset: Offset(12.w, 0.w),
+          alignment: ChartAlignment.far,
+          margin: EdgeInsets.only(bottom: 2.w),
           textStyle: 10.w7(color: AppColors.c262626),
         ),
       )

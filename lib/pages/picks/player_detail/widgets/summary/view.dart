@@ -1715,7 +1715,7 @@ class _SummaryPageState extends State<SummaryPage>
           // 虚线的终止位置（y 值），相同值表示一条线
           borderWidth: 1,
           text: 'AVG \n${value.format()}',
-          verticalTextPadding: verticalTextPadding,
+          verticalTextPadding: "14",
           horizontalTextAlignment: TextAnchor.end,
           verticalTextAlignment: TextAnchor.middle,
           textStyle: 10.w4(
@@ -1726,7 +1726,7 @@ class _SummaryPageState extends State<SummaryPage>
           borderColor: AppColors.cFF7954,
           shouldRenderAboveSeries: true,
           // 虚线的颜色
-          dashArray: const [2, 2], // 设置虚线样式：[线段长度, 间隔长度]
+          dashArray: const [3, 3], // 设置虚线样式：[线段长度, 间隔长度]
         ),
       ];
     }
@@ -1750,6 +1750,8 @@ class _SummaryPageState extends State<SummaryPage>
             height: 1,
             fontFamily: FontFamily.fOswaldMedium),
         plotBands: plotBands,
+        maximum: controller.getColumnMaxYValue()*1.2,
+        minimum: 0,
         axisLine: const AxisLine(width: 0),
         // maximum: controller.getColumnMaxYValue().toDouble(),
         majorTickLines: const MajorTickLines(size: 0),

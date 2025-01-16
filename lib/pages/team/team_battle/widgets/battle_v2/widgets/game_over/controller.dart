@@ -132,7 +132,8 @@ class GameOverController extends GetxController {
     });
     print('leftCupNum:$leftCupNum,,,,$rightCupNum');
     if (leftCupNum != 0) {
-      var currentHomeCup = beforeHomeCup+(leftCupNum*(isLeftWin()?1:-1));
+      var currentHomeCup =
+          beforeHomeCup + (leftCupNum * (isLeftWin() ? 1 : -1));
       var cupPercent = getHomeCupPercent(currentHomeCup);
       showTopToastDialog(
           child: Row(
@@ -273,6 +274,13 @@ class GameOverController extends GetxController {
             .cardBoxIsFull ??
         false;
   }
+
+  int getCardBoxId() =>
+      Get.find<TeamBattleV2Controller>()
+          .pkResultUpdatedEntity
+          ?.homeTeamResult
+          .cardBoxId ??
+      0;
 
   int getMoneyCount() {
     return Get.find<TeamBattleV2Controller>()

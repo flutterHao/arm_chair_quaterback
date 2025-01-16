@@ -56,7 +56,7 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                       (BuildContext context, bool innerBoxIsScrolled) {
                 return <Widget>[
                   SliverPersistentHeader(
-                      floating: true,
+                      // floating: true,
                       delegate: FixedHeightSliverHeaderDelegate(
                           child: buildHeaderWidget(), height: 138.w)),
                   SliverPersistentHeader(

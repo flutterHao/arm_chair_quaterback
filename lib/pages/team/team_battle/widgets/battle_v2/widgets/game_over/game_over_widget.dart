@@ -611,7 +611,7 @@ class GameOverWidget extends GetView<GameOverController> {
                     opacity: controller.isFull() ? 0.5 : 1,
                     child: IconWidget(
                       iconWidth: 63.w,
-                      icon: Assets.managerUiManagerGift03,
+                      icon: Utils.getBoxImageUrl(controller.getCardBoxId()),
                     ),
                   ),
                 ),
