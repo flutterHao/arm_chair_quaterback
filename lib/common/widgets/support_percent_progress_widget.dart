@@ -27,6 +27,7 @@ class SupportPercentProgressWidget extends StatelessWidget {
     return LayoutBuilder(
       builder: (context,c) {
         var width = c.maxWidth;
+        var minWidth = 5.w;
         return ClipRRect(
           borderRadius: BorderRadius.circular(9.w),
           child: SizedBox(
@@ -36,7 +37,7 @@ class SupportPercentProgressWidget extends StatelessWidget {
               children: [
                   AnimatedPositioned(
                     duration: const Duration(milliseconds: 300),
-                    left: -width + width * min(100,leftPercent) / 100,
+                    left: max(-width+minWidth,min(-minWidth,-width + width * min(100,leftPercent) / 100)),
                     child: Container(
                       height: height??18.w,
                       width: width,
@@ -50,7 +51,7 @@ class SupportPercentProgressWidget extends StatelessWidget {
                   ),
                   AnimatedPositioned(
                     duration: const Duration(milliseconds: 300),
-                    right: -width + width * min(100,rightPercent) / 100,
+                    right: max(-width+minWidth,min(-minWidth,-width + width * min(100,rightPercent) / 100)),
                     child: Container(
                       height: height??18.w,
                       width: width,

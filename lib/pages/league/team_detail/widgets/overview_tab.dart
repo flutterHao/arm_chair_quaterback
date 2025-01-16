@@ -739,6 +739,7 @@ class _RecentPick extends StatelessWidget {
           16.5.vGap,
           ScoreItemWidget(
               isInScoreDetail: true,
+              isInTeamDetail: true,
               gameGuess:
                   Get.find<LeagueController>().getGameGuess(pick.gameId) ??
                       GameGuess(pick))

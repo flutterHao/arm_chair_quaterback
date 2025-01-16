@@ -105,10 +105,14 @@ class _ScorePageState extends State<ScorePage>
 
 class ScoreItemWidget extends StatefulWidget {
   const ScoreItemWidget(
-      {super.key, required this.gameGuess, this.isInScoreDetail = false});
+      {super.key,
+      required this.gameGuess,
+      this.isInScoreDetail = false,
+      this.isInTeamDetail = false});
 
   final GameGuess gameGuess;
   final bool isInScoreDetail;
+  final bool isInTeamDetail;
 
   @override
   State<ScoreItemWidget> createState() => _ScoreItemWidgetState();
@@ -553,6 +557,32 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
                         ),
                       ),
                     ),
+                    if (widget.isInTeamDetail)
+                      Expanded(
+                          child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            gameStartTimeStr.value,
+                            style: TextStyle(
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w400,
+                                color: AppColors.c000000,
+                                decoration: TextDecoration.underline,
+                                height: 1,
+                                fontFamily: FontFamily.fRobotoRegular),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(left: 6.w),
+                            child: IconWidget(
+                              iconWidth: 5.w,
+                              icon: Assets.playerUiIconArrows01,
+                              iconColor: AppColors.c000000,
+                            ),
+                          )
+                        ],
+                      )),
                     Container(
                       width: 34.w,
                       alignment: Alignment.centerRight,
@@ -583,12 +613,18 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
       int.parse(
           Get.find<LeagueController>().picksDefineEntity?.betCost ?? "0"));
 
-  Widget _buildGuess() {
+  bool isTodayAndTomorrow() {
     var nowDateTime = MyDateUtils.getNowDateTime();
     var nextDay = MyDateUtils.nextDay(nowDateTime);
     var dayStartTimeMS =
         MyDateUtils.getDayStartTimeMS(MyDateUtils.nextDay(nextDay));
+    return item.gameStartTime >= dayStartTimeMS ||
+        (item.gameStartTime < MyDateUtils.getNowDateMs() &&
+            item.isGuess == 0 &&
+            item.status != 0);
+  }
 
+  Widget _buildGuess() {
     var count = item.homeTeamWins + item.awayTeamWins;
     var homePercent = 0;
     if (item.homeTeamWins == 0 && item.awayTeamWins == 0) {
@@ -608,10 +644,7 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
         Builder(builder: (context) {
           /// 有时区问题
           ///只能猜今明两天未开始的赛程
-          if (item.gameStartTime >= dayStartTimeMS ||
-              (item.gameStartTime < MyDateUtils.getNowDateMs() &&
-                  item.isGuess == 0 &&
-                  item.status != 0)) {
+          if (isTodayAndTomorrow()) {
             return const SizedBox.shrink();
           }
           return Column(
@@ -642,6 +675,11 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
 
   Widget _buildWinProgress(
       NbaTeamEntity homeTeamInfo, NbaTeamEntity awayTeamInfo, int homePercent) {
+    /// 有时区问题
+    ///只能猜今明两天未开始的赛程
+    if (isTodayAndTomorrow()) {
+      return const SizedBox.shrink();
+    }
     if (widget.isInScoreDetail) {
       return Container(
         margin: EdgeInsets.symmetric(horizontal: 42.w),
@@ -673,7 +711,7 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
         ),
       );
     }
-    if (item.status != 0) {
+    if (item.status == 0) {
       return Column(
         children: [
           Row(

@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_game_detail_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
+import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
@@ -32,7 +33,7 @@ import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 ///created at 2024/11/21/11:18
 
 class LeagueDetailPlayPage extends StatefulWidget {
-  const LeagueDetailPlayPage(this.item ,{super.key});
+  const LeagueDetailPlayPage(this.item, {super.key});
 
   final ScoresEntity item;
 
@@ -184,7 +185,9 @@ class _LeagueDetailPlayPageState extends State<LeagueDetailPlayPage>
                     _isExpanded.value = !_isExpanded.value;
                     Future.delayed(const Duration(milliseconds: 100), () {
                       PrimaryScrollController.of(context).animateTo(
-                          PrimaryScrollController.of(context).position.maxScrollExtent,
+                          PrimaryScrollController.of(context)
+                              .position
+                              .maxScrollExtent,
                           duration: const Duration(milliseconds: 100),
                           curve: Curves.easeOut);
                     });
@@ -223,14 +226,13 @@ class _LeagueDetailPlayPageState extends State<LeagueDetailPlayPage>
   }
 
   Container _teamStatsItemWidget(TeamStats item) {
-
     return Container(
       height: 60.w,
       margin: EdgeInsets.symmetric(horizontal: 16.w),
       padding: EdgeInsets.symmetric(horizontal: 13.w),
       decoration: const BoxDecoration(
           border:
-          Border(bottom: BorderSide(color: AppColors.cE6E6E, width: 1))),
+              Border(bottom: BorderSide(color: AppColors.cE6E6E, width: 1))),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -396,145 +398,160 @@ class _LeagueDetailPlayPageState extends State<LeagueDetailPlayPage>
                     padding: EdgeInsets.symmetric(horizontal: 16.w),
                     child: Column(
                       children: [
-                        ...List.generate(list.length, (i) {
-                          var item = list[i];
-                          var playBaseInfo =
-                              Utils.getPlayBaseInfo(item.playerId);
-                          var teamInfo = Utils.getTeamInfo(playBaseInfo.teamId);
-                          List<Widget> child;
-                          List<Map<String, String>> values = [];
-                          if (index == 0) {
-                            values.addAll([
-                              {"PTS": "${item.pts}"},
-                              {"FG": "${item.fgm}/${item.fga}"},
-                              {"FT": "${item.ftm}/${item.fta}"}
-                            ]);
-                          } else if (index == 1) {
-                            values.addAll([
-                              {"REB": "${item.reb}"},
-                              {"DERB": "${item.dreb}"},
-                              {"OREB": "${item.oreb}"}
-                            ]);
-                          } else {
-                            values.addAll([
-                              {"AST": "${item.ast}"},
-                              {"TO": "${item.to}"},
-                              {"MIN": "${item.min}"}
-                            ]);
-                          }
-                          return MtInkWell(
-                            minScale: 1,
-                            onTap: () {
-                              Get.toNamed(
-                                RouteNames.picksPlayerDetail,
-                                arguments:
-                                    PlayerDetailPageArguments(item.playerId),
-                              );
-                            },
-                            child: Container(
-                              height: 132.w,
-                              decoration: const BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          color: AppColors.cE6E6E, width: 1))),
-                              child: Row(
-                                children: [
-                                  13.hGap,
-                                  Stack(
-                                    children: [
-                                      PlayerAvatarWidget(
-                                        width: 73.w,
-                                        height: 93.w,
-                                        radius: 9.w,
-                                        playerId: item.playerId,
-                                        backgroundColor: AppColors.cD9D9D9,
-                                      ),
-                                      Positioned(
-                                          top: 4.w,
-                                          right: 4.w,
-                                          child: Container(
-                                            height: 16.w,
-                                            width: 16.w,
-                                            decoration: BoxDecoration(
-                                                color: AppColors.cFFFFFF,
-                                                borderRadius:
-                                                    BorderRadius.circular(4.w)),
-                                            child: IconWidget(
-                                              iconWidth: 9.w,
-                                              icon: Assets.iconUiIconRead,
-                                              iconColor: AppColors.c000000,
-                                            ),
-                                          ))
-                                    ],
-                                  ),
-                                  13.hGap,
-                                  Expanded(
-                                      child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        playBaseInfo.ename,
-                                        style: 21.w5(
-                                            color: AppColors.c262626,
-                                            height: 1,
-                                            fontFamily:
-                                                FontFamily.fOswaldMedium),
-                                      ),
-                                      7.vGap,
-                                      Text(
-                                        "${playBaseInfo.position} · ${teamInfo.shortEname}",
-                                        style: 12.w4(
-                                            color: AppColors.c000000,
-                                            height: 1,
-                                            fontFamily:
-                                                FontFamily.fRobotoRegular),
-                                      ),
-                                      16.vGap,
-                                      Row(
-                                        children: values
-                                            .map((e) => Container(
-                                                  margin: EdgeInsets.only(
-                                                      right: 25.w),
-                                                  child: Column(
-                                                    children: [
-                                                      Text(
-                                                        e.values.first,
-                                                        style: 14.w5(
-                                                            color: AppColors
-                                                                .c000000,
-                                                            height: 1,
-                                                            fontFamily: FontFamily
-                                                                .fRobotoMedium),
-                                                      ),
-                                                      5.vGap,
-                                                      Text(
-                                                        e.keys.first,
-                                                        style: 10.w4(
-                                                            color: AppColors
-                                                                .c4D4D4D,
-                                                            height: 1,
-                                                            fontFamily: FontFamily
-                                                                .fRobotoRegular),
-                                                      )
-                                                    ],
-                                                  ),
-                                                ))
-                                            .toList(),
-                                      )
-                                    ],
-                                  )),
-                                  IconWidget(
-                                    iconWidth: 8.w,
-                                    icon: Assets.commonUiCommonIconSystemJumpto,
-                                    iconColor: AppColors.c000000,
-                                  )
-                                ],
+                        if (list.isEmpty)
+                          SizedBox(
+                            height: 132.w * 2,
+                            child: const Center(
+                              child: LoadStatusWidget(
+                                loadDataStatus: LoadDataStatus.noData,
                               ),
                             ),
-                          );
-                        }),
+                          )
+                        else
+                          ...List.generate(list.length, (i) {
+                            var item = list[i];
+                            var playBaseInfo =
+                                Utils.getPlayBaseInfo(item.playerId);
+                            var teamInfo =
+                                Utils.getTeamInfo(playBaseInfo.teamId);
+                            List<Widget> child;
+                            List<Map<String, String>> values = [];
+                            if (index == 0) {
+                              values.addAll([
+                                {"PTS": "${item.pts}"},
+                                {"FG": "${item.fgm}/${item.fga}"},
+                                {"FT": "${item.ftm}/${item.fta}"}
+                              ]);
+                            } else if (index == 1) {
+                              values.addAll([
+                                {"REB": "${item.reb}"},
+                                {"DERB": "${item.dreb}"},
+                                {"OREB": "${item.oreb}"}
+                              ]);
+                            } else {
+                              values.addAll([
+                                {"AST": "${item.ast}"},
+                                {"TO": "${item.to}"},
+                                {"MIN": "${item.min}"}
+                              ]);
+                            }
+                            return MtInkWell(
+                              minScale: 1,
+                              onTap: () {
+                                Get.toNamed(
+                                  RouteNames.picksPlayerDetail,
+                                  arguments:
+                                      PlayerDetailPageArguments(item.playerId),
+                                );
+                              },
+                              child: Container(
+                                height: 132.w,
+                                decoration: const BoxDecoration(
+                                    border: Border(
+                                        bottom: BorderSide(
+                                            color: AppColors.cE6E6E,
+                                            width: 1))),
+                                child: Row(
+                                  children: [
+                                    13.hGap,
+                                    Stack(
+                                      children: [
+                                        PlayerAvatarWidget(
+                                          width: 73.w,
+                                          height: 93.w,
+                                          radius: 9.w,
+                                          playerId: item.playerId,
+                                          backgroundColor: AppColors.cD9D9D9,
+                                        ),
+                                        Positioned(
+                                            top: 4.w,
+                                            right: 4.w,
+                                            child: Container(
+                                              height: 16.w,
+                                              width: 16.w,
+                                              decoration: BoxDecoration(
+                                                  color: AppColors.cFFFFFF,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          4.w)),
+                                              child: IconWidget(
+                                                iconWidth: 9.w,
+                                                icon: Assets.iconUiIconRead,
+                                                iconColor: AppColors.c000000,
+                                              ),
+                                            ))
+                                      ],
+                                    ),
+                                    13.hGap,
+                                    Expanded(
+                                        child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          playBaseInfo.ename,
+                                          style: 21.w5(
+                                              color: AppColors.c262626,
+                                              height: 1,
+                                              fontFamily:
+                                                  FontFamily.fOswaldMedium),
+                                        ),
+                                        7.vGap,
+                                        Text(
+                                          "${playBaseInfo.position} · ${teamInfo.shortEname}",
+                                          style: 12.w4(
+                                              color: AppColors.c000000,
+                                              height: 1,
+                                              fontFamily:
+                                                  FontFamily.fRobotoRegular),
+                                        ),
+                                        16.vGap,
+                                        Row(
+                                          children: values
+                                              .map((e) => Container(
+                                                    margin: EdgeInsets.only(
+                                                        right: 25.w),
+                                                    child: Column(
+                                                      children: [
+                                                        Text(
+                                                          e.values.first,
+                                                          style: 14.w5(
+                                                              color: AppColors
+                                                                  .c000000,
+                                                              height: 1,
+                                                              fontFamily: FontFamily
+                                                                  .fRobotoMedium),
+                                                        ),
+                                                        5.vGap,
+                                                        Text(
+                                                          e.keys.first,
+                                                          style: 10.w4(
+                                                              color: AppColors
+                                                                  .c4D4D4D,
+                                                              height: 1,
+                                                              fontFamily: FontFamily
+                                                                  .fRobotoRegular),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ))
+                                              .toList(),
+                                        )
+                                      ],
+                                    )),
+                                    IconWidget(
+                                      iconWidth: 8.w,
+                                      icon:
+                                          Assets.commonUiCommonIconSystemJumpto,
+                                      iconColor: AppColors.c000000,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          }),
                         Expanded(
                           child: MtInkWell(
                             onTap: () {
