@@ -113,16 +113,6 @@ TeamPlayerUpStarVoEntity $TeamPlayerUpStarVoEntityFromJson(
   if (breakThroughGrade != null) {
     teamPlayerUpStarVoEntity.breakThroughGrade = breakThroughGrade;
   }
-  final TeamPlayerUpStarVoPotential? maxAbility = jsonConvert.convert<
-      TeamPlayerUpStarVoPotential>(json['maxAbility']);
-  if (maxAbility != null) {
-    teamPlayerUpStarVoEntity.maxAbility = maxAbility;
-  }
-  final TeamPlayerUpStarVoPotential? bestOneStarAbility = jsonConvert.convert<
-      TeamPlayerUpStarVoPotential>(json['bestOneStarAbility']);
-  if (bestOneStarAbility != null) {
-    teamPlayerUpStarVoEntity.bestOneStarAbility = bestOneStarAbility;
-  }
   final double? playerStrength = jsonConvert.convert<double>(
       json['playerStrength']);
   if (playerStrength != null) {
@@ -164,8 +154,6 @@ Map<String, dynamic> $TeamPlayerUpStarVoEntityToJson(
   data['teamId'] = entity.teamId;
   data['position'] = entity.position;
   data['breakThroughGrade'] = entity.breakThroughGrade;
-  data['maxAbility'] = entity.maxAbility.toJson();
-  data['bestOneStarAbility'] = entity.bestOneStarAbility.toJson();
   data['playerStrength'] = entity.playerStrength;
   data['starUpDTO'] = entity.starUpDTO?.toJson();
   return data;
@@ -198,8 +186,6 @@ extension TeamPlayerUpStarVoEntityExtension on TeamPlayerUpStarVoEntity {
     int? teamId,
     int? position,
     int? breakThroughGrade,
-    TeamPlayerUpStarVoPotential? maxAbility,
-    TeamPlayerUpStarVoPotential? bestOneStarAbility,
     double? playerStrength,
     UpStarTeamPlayerV2Entity? starUpDTO,
   }) {
@@ -229,8 +215,6 @@ extension TeamPlayerUpStarVoEntityExtension on TeamPlayerUpStarVoEntity {
       ..teamId = teamId ?? this.teamId
       ..position = position ?? this.position
       ..breakThroughGrade = breakThroughGrade ?? this.breakThroughGrade
-      ..maxAbility = maxAbility ?? this.maxAbility
-      ..bestOneStarAbility = bestOneStarAbility ?? this.bestOneStarAbility
       ..playerStrength = playerStrength ?? this.playerStrength
       ..starUpDTO = starUpDTO ?? this.starUpDTO;
   }

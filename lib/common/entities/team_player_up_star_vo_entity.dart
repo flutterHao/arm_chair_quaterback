@@ -31,8 +31,6 @@ class TeamPlayerUpStarVoEntity {
 	late int teamId = 0;
 	late int position = 0;
 	late int breakThroughGrade = 0;
-	late TeamPlayerUpStarVoPotential maxAbility;
-	late TeamPlayerUpStarVoPotential bestOneStarAbility;
 	double playerStrength=0;
 	/// 上次升星没有结束，过程中退出了才会有这个字段
 	UpStarTeamPlayerV2Entity? starUpDTO;
