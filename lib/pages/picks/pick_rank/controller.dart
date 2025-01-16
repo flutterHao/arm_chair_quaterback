@@ -124,9 +124,13 @@ class PickRankController extends GetxController
     currentEndMs.value = rankInfo!.nowCycleEndTime;
     if (rankInfo!.firstRankTime >= rankInfo!.nowCycleStartTime) {
       hasPre.value = false;
+    }else{
+      hasPre.value = true;
     }
     if (rankInfo!.lastRankTime <= rankInfo!.nowCycleEndTime) {
       hasNext.value = false;
+    }else{
+      hasNext.value = true;
     }
     inTheRankList.value = rankInfo!.ranks.indexWhere((e) =>
             e.teamId ==
