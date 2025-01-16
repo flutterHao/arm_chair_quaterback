@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:arm_chair_quaterback/pages/team/seaon_rank/dialog/season_rank_dialog.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SeaonRankController extends GetxController {
@@ -64,5 +66,16 @@ class SeaonRankController extends GetxController {
   /// 格式化为两位数
   String twoDigits(int n) {
     return n.toString().padLeft(2, '0');
+  }
+
+  void goSeasonRankDialog() {
+    showModalBottomSheet(
+        isScrollControlled: true,
+        context: Get.context!,
+        // barrierColor: Colors.transparent,
+        backgroundColor: Colors.transparent,
+        builder: (context) {
+          return const SeasonRankDialog();
+        });
   }
 }

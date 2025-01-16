@@ -4,8 +4,10 @@ import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/team/seaon_rank/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class SeasonRankWidget extends StatefulWidget {
   const SeasonRankWidget({super.key});
@@ -15,6 +17,7 @@ class SeasonRankWidget extends StatefulWidget {
 }
 
 class _SeasonRankWidgetState extends State<SeasonRankWidget> {
+  SeaonRankController seasonRankCtr = Get.find();
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -53,6 +56,9 @@ class _SeasonRankWidgetState extends State<SeasonRankWidget> {
               ),
               42.vGap,
               MtInkWell(
+                onTap: () {
+                  seasonRankCtr.goSeasonRankDialog();
+                },
                 child: Container(
                   decoration: BoxDecoration(
                       color: AppColors.cF2F2F2,
