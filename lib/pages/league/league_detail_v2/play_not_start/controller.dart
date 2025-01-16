@@ -9,12 +9,18 @@ import 'package:arm_chair_quaterback/common/entities/scores_not_start_game_entit
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/league.dart';
+import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/param_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/top_toast_dialog.dart';
+import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/league/league_detail_v2/play_already_start/controller.dart';
 import 'package:arm_chair_quaterback/pages/league/league_index/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/picks_index/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -34,7 +40,6 @@ class PlayNotStartController extends GetxController
   var loadStatus = LoadDataStatus.loading.obs;
 
   List<String> tabPropertyTitles = ["DATA", "HISTORY"];
-  late TabController teamPropertyTabController;
 
   late TabController teamL5GameTabController;
 
@@ -57,7 +62,6 @@ class PlayNotStartController extends GetxController
   late StreamSubscription<List> subscription;
 
   var isExpanded = false.obs;
-  var propertyIndex = 0.obs;
 
   @override
   void onInit() {
@@ -66,15 +70,6 @@ class PlayNotStartController extends GetxController
     initData();
     subscription = Get.find<LeagueController>().guessSuccessTabKeys.listen((v) {
       initData();
-    });
-    teamPropertyTabController =
-        TabController(length: tabPropertyTitles.length, vsync: this);
-    teamPropertyTabController.addListener(() {
-      print('teamPropertyTabController:${teamPropertyTabController.index}');
-      if(propertyIndex.value != teamPropertyTabController.index) {
-        isExpanded.value = false;
-        propertyIndex.value = teamPropertyTabController.index;
-      }
     });
     teamL5GameTabController = TabController(length: 2, vsync: this);
     teamPlayersTabController = TabController(length: 2, vsync: this);
@@ -92,7 +87,6 @@ class PlayNotStartController extends GetxController
   @override
   void dispose() {
     WidgetsBinding.instance.addObserver(this);
-    teamPropertyTabController.dispose();
     teamL5GameTabController.dispose();
     teamPlayersTabController.dispose();
     tabController?.dispose();
@@ -292,8 +286,61 @@ class PlayNotStartController extends GetxController
   scheduleChoose(Question question) {
     LeagueApi.scheduleChoose(question.playerId, question.gameId).then((result) {
       initData();
+      try{
+        /// 获得篮球，刷新篮球数量
+        Get.find<TrainingController>().getData();
+      }finally{
+        showTopToastDialog(
+            needBg: false,
+            child: Center(
+              child: Container(
+                height: 61.w,
+                width: 355.w,
+                margin: EdgeInsets.only(top: 44.w),
+                padding: EdgeInsets.symmetric(horizontal: 19.w),
+                decoration: BoxDecoration(
+                  color: AppColors.cFFFFFF,
+                  borderRadius: BorderRadius.circular(9.w),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.c000000.withOpacity(0.2),
+                      offset: Offset.zero,
+                      blurRadius: 4.w,
+                      spreadRadius: 4.w,
+                    )
+                  ]
+                ),
+                child: Row(
+                  children: [
+                    IconWidget(iconWidth: 34.w, icon: Assets.commonUiCommonProp04),
+                    16.hGap,
+                    Text(
+                      "YOU GOT 3 BALL",
+                      style: 18.w5(
+                        color: AppColors.c000000,
+                        height: 1,
+                        fontFamily: Assets.fontsOswaldMedium,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ));
+      }
     }, onError: (e) {
       ErrorUtils.toast(e);
     });
+  }
+
+  String getGuessStr() {
+    var question = scoresNotStartGameEntity!.questions[0];
+    Map<String, String> map = {
+      "pts": "Who is the scorer leader in the game?",
+      "reb": "Who is the rebound leader in the game?",
+      "3pm": "Who can make the most three points in the game?",
+      "ast": "Who can make the most assists in the game?",
+      "blk": "Who can make the most block shot  in the game?",
+    };
+    return map[ParamUtils.getProKey(question.attr ?? '')] ?? '';
   }
 }

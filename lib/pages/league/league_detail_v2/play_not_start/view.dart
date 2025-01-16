@@ -211,7 +211,7 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                     children: [
                       14.vGap,
                       Text(
-                        "Who will be the MVP in this game?",
+                        controller.getGuessStr(),
                         style: 16.w5(
                             color: AppColors.c000000,
                             height: 1,
@@ -656,23 +656,50 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                   9.vGap
                 ],
 
-                /// team stats
+                /// team data
                 Container(
                   margin: EdgeInsets.only(top: 9.w),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(9.w),
                       color: AppColors.cFFFFFF),
-                  child: _buildTeamStatsWidget(context),
+                  child: _buildTeamDataWidget(context),
                 ),
+
+                /// history
                 Container(
-                  height: 333.w,
+                  margin: EdgeInsets.only(top: 9.w),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(9.w),
+                      color: AppColors.cFFFFFF),
+                  child: _buildHistoryWidget(context),
+                ),
+
+                Container(
+                  height: 343.w,
                   margin: EdgeInsets.only(top: 9.w),
                   decoration: BoxDecoration(
                       color: AppColors.cFFFFFF,
                       borderRadius: BorderRadius.circular(9.w)),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      16.vGap,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          22.vGap,
+                          Container(
+                            margin: EdgeInsets.only(left: 15.w),
+                            child: Text(
+                              "RECENT GAME",
+                              style: 24.w7(
+                                  height: 1,
+                                  fontFamily: FontFamily.fOswaldBold),
+                            ),
+                          ),
+                          16.vGap,
+                        ],
+                      ),
                       SizedBox(
                         height: 40.w,
                         child: TabBar(
@@ -723,7 +750,6 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                               )
                             ]),
                       ),
-                      18.vGap,
                       Expanded(
                         child: TabBarView(
                             controller: controller.teamL5GameTabController,
@@ -752,7 +778,7 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
                       20.w +
                       40.w +
                       20.w,
-                  padding: EdgeInsets.only(top: 20.w, bottom: 20.w),
+                  padding: EdgeInsets.only(top: 0.w, bottom: 20.w),
                   margin: EdgeInsets.only(top: 9.w),
                   decoration: BoxDecoration(
                       color: AppColors.cFFFFFF,
@@ -892,7 +918,7 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
             }));
   }
 
-  Container _buildTeamStatsWidget(BuildContext context) {
+  Container _buildTeamDataWidget(BuildContext context) {
     var leftItem = controller.scoresNotStartGameEntity!.nbaTeamStatRankList
         .firstWhereOrNull((e) => e.teamId == controller.item.homeTeamId);
     var rightItem = controller.scoresNotStartGameEntity!.nbaTeamStatRankList
@@ -902,67 +928,19 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
       decoration: BoxDecoration(
           color: AppColors.cFFFFFF, borderRadius: BorderRadius.circular(9.w)),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          25.vGap,
+          22.vGap,
           Container(
-            height: 28.w,
-            margin: EdgeInsets.symmetric(horizontal: 16.w),
-            child: TLBuildWidget(
-                controller: controller.teamPropertyTabController,
-                builder: (int current, int next, double progress,
-                    double totalProgress) {
-                  return Row(
-                    children: controller.tabPropertyTitles.map((e) {
-                      int index = controller.tabPropertyTitles.indexOf(e);
-                      Color bgColor = index == current
-                          ? Color.lerp(
-                              AppColors.c000000, AppColors.cFFFFFF, progress)!
-                          : index == next
-                              ? Color.lerp(AppColors.cFFFFFF, AppColors.c000000,
-                                  progress)!
-                              : AppColors.cFFFFFF;
-                      Color color = index == current
-                          ? Color.lerp(
-                              AppColors.cFFFFFF, AppColors.c000000, progress)!
-                          : index == next
-                              ? Color.lerp(AppColors.c000000, AppColors.cFFFFFF,
-                                  progress)!
-                              : AppColors.c000000;
-                      return Expanded(
-                        child: MtInkWell(
-                          onTap: () {
-                            if (controller.teamPropertyTabController.index !=
-                                index) {
-                              controller.teamPropertyTabController
-                                  .animateTo(index);
-                            }
-                          },
-                          child: Container(
-                            margin: EdgeInsets.only(
-                                left: index == 0 ? 0 : 2.5.w,
-                                right: index == 0 ? 2.5.w : 0),
-                            decoration: BoxDecoration(
-                                color: bgColor,
-                                borderRadius: BorderRadius.circular(14.w),
-                                border: Border.all(
-                                    color: AppColors.c000000, width: 1)),
-                            child: Center(
-                              child: Text(
-                                e,
-                                style: 16.w5(
-                                    color: color,
-                                    height: 1,
-                                    fontFamily: FontFamily.fOswaldMedium),
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    }).toList(),
-                  );
-                }),
+            margin: EdgeInsets.only(left: 15.w),
+            child: Text(
+              "TEAM DATA",
+              style: 24.w7(
+                  height: 1,
+                  fontFamily: FontFamily.fOswaldBold),
+            ),
           ),
-          17.vGap,
+          16.vGap,
           Container(
             margin: EdgeInsets.symmetric(horizontal: 29.w),
             child: Row(
@@ -1037,30 +1015,131 @@ class _PlayNotStartPageState extends State<PlayNotStartPage>
             height: 1,
           ),
           Obx(() {
-            var index = controller.propertyIndex.value;
             bool expanded = controller.isExpanded.value;
-            print('expanded------$expanded');
             return AnimatedContainer(
               height: !expanded
-                  ? index == 1
-                      ? 5 * 60.w + 25.w
-                      : 6 * 60.w
+                  ?  6 * 60.w
                   : (controller.getTeamStatsData().length + 1) * 60.w,
               duration: const Duration(milliseconds: 100),
-              child: TabBarView(
-                  controller: controller.teamPropertyTabController,
-                  physics: OneBoundaryPageScrollPhysics(
-                      tabController: controller.teamPropertyTabController),
-                  children: [
-                    _buildDataPageWidget(context),
-                    _buildHistoryPageWidget(context),
-                  ]),
+              child: _buildDataPageWidget(context),
             );
           })
         ],
       ),
     );
   }
+
+  Container _buildHistoryWidget(BuildContext context) {
+    var leftItem = controller.scoresNotStartGameEntity!.nbaTeamStatRankList
+        .firstWhereOrNull((e) => e.teamId == controller.item.homeTeamId);
+    var rightItem = controller.scoresNotStartGameEntity!.nbaTeamStatRankList
+        .firstWhereOrNull((e) => e.teamId == controller.item.awayTeamId);
+    return Container(
+      margin: EdgeInsets.only(top: 9.w),
+      decoration: BoxDecoration(
+          color: AppColors.cFFFFFF, borderRadius: BorderRadius.circular(9.w)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              22.vGap,
+              Container(
+                margin: EdgeInsets.only(left: 15.w),
+                child: Text(
+                  "HISTORY",
+                  style: 24.w7(
+                      height: 1,
+                      fontFamily: FontFamily.fOswaldBold),
+                ),
+              ),
+              16.vGap,
+            ],
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 29.w),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    ImageWidget(
+                      url: Utils.getTeamUrl(controller.item.homeTeamId),
+                      width: 28.w,
+                    ),
+                    7.hGap,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          Utils.getTeamInfo(controller.item.homeTeamId)
+                              .shortEname,
+                          style: 16.w5(
+                              color: AppColors.c000000,
+                              fontFamily: FontFamily.fOswaldMedium,
+                              height: 1),
+                        ),
+                        3.vGap,
+                        Text(
+                          "${leftItem?.conference} ${leftItem == null ? "" : Utils.getSortWithInt(leftItem.division)}",
+                          style: 12.w4(
+                              color: AppColors.c000000,
+                              height: 1,
+                              fontFamily: FontFamily.fRobotoRegular),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+                Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          Utils.getTeamInfo(controller.item.awayTeamId)
+                              .shortEname,
+                          style: 16.w5(
+                              color: AppColors.c000000,
+                              fontFamily: FontFamily.fOswaldMedium,
+                              height: 1),
+                        ),
+                        3.vGap,
+                        Text(
+                          "${rightItem?.conference} ${rightItem == null ? "" : Utils.getSortWithInt(rightItem.division)}",
+                          style: 12.w4(
+                              color: AppColors.c000000,
+                              height: 1,
+                              fontFamily: FontFamily.fRobotoRegular),
+                        )
+                      ],
+                    ),
+                    7.hGap,
+                    ImageWidget(
+                      url: Utils.getTeamUrl(controller.item.awayTeamId),
+                      width: 28.w,
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+          9.vGap,
+          const Divider(
+            color: AppColors.cD1D1D1,
+            height: 1,
+          ),
+          SizedBox(
+            height: 60.w * 5 + 25.w,
+              child: _buildHistoryPageWidget(context))
+        ],
+      ),
+    );
+  }
+
+
 
   MediaQuery _buildHistoryPageWidget(BuildContext context) {
     return MediaQuery.removePadding(

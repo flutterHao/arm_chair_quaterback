@@ -6,12 +6,14 @@ import 'package:get/get.dart';
 
 Future showTopToastDialog({
   required Widget child,
+  bool? needBg,
   Duration duration = const Duration(milliseconds: 1000), //停留时间
 }) async {
   final overlayEntry = OverlayEntry(
     builder: (context) {
       return TopToastDialog(
         duration: duration,
+        needBg: needBg??true,
         child: child,
       );
     },
@@ -27,10 +29,16 @@ Future showTopToastDialog({
 ///顶部弹窗
 class TopToastDialog extends StatefulWidget {
   const TopToastDialog(
-      {super.key, required this.child, this.height, required this.duration});
+      {super.key,
+      required this.child,
+      this.height,
+      required this.duration,
+      this.needBg = true});
+
   final Widget child;
   final double? height;
   final Duration duration;
+  final bool needBg;
 
   @override
   State<TopToastDialog> createState() => _TopDialogState();
@@ -72,65 +80,67 @@ class _TopDialogState extends State<TopToastDialog>
         animation: _animation,
         builder: (context, child) {
           return Stack(
-            alignment: Alignment.bottomCenter,
-            children: [
-              Positioned(
-                left: 0,
-                right: 0,
-                top: height * (1 - _animation.value),
-                child: Container(
-                  width: double.infinity,
-                  height: 130.w,
-                  alignment: Alignment.center,
-                  decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      AppColors.cFF7954,
-                      AppColors.cEE6C4D,
-                    ],
-                  )),
-                  child: Stack(
-                    alignment: Alignment.bottomCenter,
-                    children: [
-                      Positioned(
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        child: Text(
-                          "congratulation".toUpperCase(),
-                          style: TextStyle(
-                            fontSize: 53.sp,
-                            height: 0.9,
-                            color: AppColors.cff7c5a.withOpacity(0.67),
-                            fontFamily: FontFamily.fOswaldMedium,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(left: 16.w, top: 47.w),
+                  alignment: Alignment.bottomCenter,
+                  children: [
+                    Positioned(
+                      left: 0,
+                      right: 0,
+                      top: height * (1 - _animation.value),
+                      child: !widget.needBg
+                          ? widget.child
+                          : Container(
                         width: double.infinity,
                         height: 130.w,
-                        alignment: Alignment.centerLeft,
-                        child: widget.child,
-                      ),
-                      Positioned(
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        child: Container(
-                          width: double.infinity,
-                          height: 2.w,
-                          color: AppColors.cFFFFFF,
+                        alignment: Alignment.center,
+                        decoration: const BoxDecoration(
+                            gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            AppColors.cFF7954,
+                            AppColors.cEE6C4D,
+                          ],
+                        )),
+                        child: Stack(
+                          alignment: Alignment.bottomCenter,
+                          children: [
+                            Positioned(
+                              bottom: 0,
+                              left: 0,
+                              right: 0,
+                              child: Text(
+                                "congratulation".toUpperCase(),
+                                style: TextStyle(
+                                  fontSize: 53.sp,
+                                  height: 0.9,
+                                  color: AppColors.cff7c5a.withOpacity(0.67),
+                                  fontFamily: FontFamily.fOswaldMedium,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(left: 16.w, top: 47.w),
+                              width: double.infinity,
+                              height: 130.w,
+                              alignment: Alignment.centerLeft,
+                              child: widget.child,
+                            ),
+                            Positioned(
+                              bottom: 0,
+                              left: 0,
+                              right: 0,
+                              child: Container(
+                                width: double.infinity,
+                                height: 2.w,
+                                color: AppColors.cFFFFFF,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          );
+                    ),
+                  ],
+                );
         });
   }
 }

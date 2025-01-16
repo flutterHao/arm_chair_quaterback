@@ -42,7 +42,25 @@ class _PlayNotStartPlayerDetailState extends State<PlayNotStartPlayerDetail>
     var homeTeamInfo = Utils.getTeamInfo(widget.item.homeTeamId);
     var awayTeamInfo = Utils.getTeamInfo(widget.item.awayTeamId);
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            22.vGap,
+            Container(
+              margin: EdgeInsets.only(left: 15.w),
+              child: Text(
+                "PLAYER STATS",
+                style: 24.w7(
+                    height: 1,
+                    fontFamily: FontFamily.fOswaldBold),
+              ),
+            ),
+            16.vGap,
+          ],
+        ),
         SizedBox(
           height: 40.w,
           child: TabBar(
