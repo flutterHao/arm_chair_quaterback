@@ -40,6 +40,7 @@ class TeamBattleV2Page extends GetView<TeamBattleV2Controller> {
             child: BlackAppWidget(
               UserInfoBar(
                 showPop: true,
+                canTapDailyTask: false,
                 onClickPop: () {
                   controller.jumpGame();
                 },

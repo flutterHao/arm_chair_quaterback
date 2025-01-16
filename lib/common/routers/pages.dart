@@ -199,8 +199,10 @@ class AppPages {
       page: () => const IllustratiionsDetail(),
     ),
     GetPage(
-        name: RouteNames.seaonRankPage,
-        page: () => const SeaonRankPage(),
-        binding: SeaonRankBinding())
+      opaque: false,
+      name: RouteNames.seaonRankPage,
+      page: () => const SeaonRankPage(),
+      binding: SeaonRankBinding(),
+    ),
   ];
 }
