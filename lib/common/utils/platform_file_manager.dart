@@ -76,7 +76,7 @@ class PlatformFileManager {
     var encryptString = StringEncryptor(defaultEncryptorKey, defaultEncryptorIV)
         .encryptString(content);
     await file.writeAsString(encryptString);
-    print('文件已保存: $file');
+    // print('文件已保存: $file');
   }
 
   static Future<String?> readFile(String fileName) async {

@@ -12,6 +12,7 @@ import 'package:arm_chair_quaterback/common/entities/guess_rank_by_cycle_entity.
 import 'package:arm_chair_quaterback/common/entities/guess_top_reviews_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_base_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_season_game_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/per_game_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/player_day_data_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/rank_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/recive_award_entity.dart';
@@ -23,6 +24,7 @@ import 'package:arm_chair_quaterback/common/entities/team_simple_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/up_star_team_player_v2_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/up_start_team_player_response_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/rank_type.dart';
+import 'package:arm_chair_quaterback/common/enums/season_type.dart';
 import 'package:arm_chair_quaterback/common/net/apis.dart';
 import 'package:arm_chair_quaterback/common/net/http.dart';
 
@@ -173,5 +175,19 @@ class PicksApi {
       "pageSize": pageSize,
     });
     return GuessRankByCycleEntity.fromJson(json);
+  }
+
+  static Future<Map<String, List<PerGameEntity>>>
+      getNBAPlayerOverAllPerGameData(
+          {required int playerId,
+          int limit = 20,
+          SeasonType seasonType = SeasonType.regular}) async {
+    Map json = await httpUtil.post(Api.getNBAPlayerOverAllPerGameData, data: {
+      "seasonType": seasonType.value,
+      "playerId": playerId,
+      "limit": limit,
+    });
+    return json.map((key, value) => MapEntry(key,
+        (value as List).map((item) => PerGameEntity.fromJson(item)).toList()));
   }
 }

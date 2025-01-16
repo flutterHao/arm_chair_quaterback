@@ -4,16 +4,20 @@ import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/TLBuilderWidget.dart';
+import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog_top_btn.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
+import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
-import 'package:arm_chair_quaterback/pages/picks/player_detail/controller.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/stats/controller.dart';
+import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/stats/widget/per_game_datasource.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:syncfusion_flutter_core/theme.dart';
+import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 ///
 ///@auther gejiahui
@@ -47,6 +51,8 @@ class _StatsPageState extends State<StatsPage>
                 onTap: () {
                   ///todo
                   controller.tabController.animateTo(0);
+                  controller.getRegularData();
+                  controller.getOffData();
                   showModalBottomSheet(
                       context: context,
                       builder: (context) {
@@ -65,7 +71,7 @@ class _StatsPageState extends State<StatsPage>
                                 children: [
                                   16.hGap,
                                   Text(
-                                    "Point per game",
+                                    "${statsItem.name} per game",
                                     style: 19.w5(
                                       color: AppColors.c000000,
                                       height: 1,
@@ -149,20 +155,239 @@ class _StatsPageState extends State<StatsPage>
                                       );
                                     }),
                               ),
+                              10.vGap,
+                              Divider(
+                                color: AppColors.cD1D1D1,
+                                height: 1.w,
+                              ),
                               Expanded(
                                   child: TabBarView(
                                       controller: controller.tabController,
-                                      children: const [
-                                    Center(
-                                      child: LoadStatusWidget(
-                                        loadDataStatus: LoadDataStatus.noData,
-                                      ),
-                                    ),
-                                    Center(
-                                      child: LoadStatusWidget(
-                                        loadDataStatus: LoadDataStatus.noData,
-                                      ),
-                                    )
+                                      children: [
+                                    /// 常规赛
+                                    Obx(() {
+                                      if (controller.regularLoadStatus.value ==
+                                          LoadDataStatus.success) {
+                                        var data = controller
+                                            .getRegularDataByKey(statsItem);
+                                        return SfDataGridTheme(
+                                            data: const SfDataGridThemeData(
+                                                gridLineColor:
+                                                    AppColors.cE6E6E6,
+                                                frozenPaneLineColor:
+                                                    Colors.transparent,
+                                                rowHoverColor: Colors.blue,
+                                                gridLineStrokeWidth: 0),
+                                            child: SfDataGrid(
+                                              rowHeight: 34.w,
+                                              headerRowHeight: 34.w,
+                                              horizontalScrollPhysics:
+                                                  const NeverScrollableScrollPhysics(),
+                                              verticalScrollPhysics:
+                                                  const BouncingScrollPhysics(),
+                                              gridLinesVisibility:
+                                                  GridLinesVisibility.none,
+                                              showHorizontalScrollbar: false,
+                                              source: PerGameDatasource(
+                                                  data),
+                                              columns: [
+                                                GridColumn(
+                                                    columnName: 'season',
+                                                    width: 124.w,
+                                                    label: Container(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      padding: EdgeInsets.only(
+                                                          left: 16.w),
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                              border: Border(
+                                                        bottom: BorderSide(
+                                                            color: AppColors
+                                                                .cD1D1D1,
+                                                            width: 1),
+                                                        right: BorderSide(
+                                                            color: AppColors
+                                                                .cE6E6E6,
+                                                            width: 1),
+                                                      )),
+                                                      child: Text(
+                                                        'SEASON',
+                                                        style: 12.w5(
+                                                          color: AppColors.c000000,
+                                                          fontFamily: FontFamily.fRobotoMedium,
+                                                          height: 1,
+                                                        ),
+                                                      ),
+                                                    )),
+                                                GridColumn(
+                                                    columnName: "value",
+                                                    width: 180.w,
+                                                    label: Container(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      decoration: const BoxDecoration(
+                                                          border: Border(
+                                                              bottom: BorderSide(
+                                                                  color: AppColors
+                                                                      .cD1D1D1,
+                                                                  width: 1))),
+                                                      child: Text(
+                                                        statsItem.shortName,
+                                                        style: 12.w5(
+                                                          color: AppColors.c000000,
+                                                          fontFamily: FontFamily.fRobotoMedium,
+                                                          height: 1,
+                                                        ),
+                                                      ),
+                                                    )),
+                                                GridColumn(
+                                                    columnName: "gp",
+                                                    columnWidthMode:
+                                                        ColumnWidthMode.fill,
+                                                    label: Container(
+                                                      alignment:
+                                                          Alignment.centerLeft,
+                                                      padding: EdgeInsets.only(
+                                                          right: 16.w),
+                                                      decoration: const BoxDecoration(
+                                                          border: Border(
+                                                              bottom: BorderSide(
+                                                                  color: AppColors
+                                                                      .cD1D1D1,
+                                                                  width: 1))),
+                                                      child: Text(
+                                                        "GP",
+                                                        style: 12.w5(
+                                                          color: AppColors.c000000,
+                                                          fontFamily: FontFamily.fRobotoMedium,
+                                                          height: 1,
+                                                        ),
+                                                      ),
+                                                    ))
+                                              ],
+                                            ));
+                                      }
+
+                                      return Center(
+                                        child: LoadStatusWidget(
+                                          loadDataStatus: controller
+                                              .regularLoadStatus.value,
+                                        ),
+                                      );
+                                    }),
+
+                                    /// 季后赛
+                                    Obx(() {
+                                      if (controller.offLoadStatus.value ==
+                                          LoadDataStatus.success) {
+                                        var data = controller
+                                            .getOffDataByKey(statsItem);
+                                        return SfDataGridTheme(
+                                            data: const SfDataGridThemeData(
+                                                gridLineColor:
+                                                AppColors.cE6E6E6,
+                                                frozenPaneLineColor:
+                                                Colors.transparent,
+                                                rowHoverColor: Colors.blue,
+                                                gridLineStrokeWidth: 0),
+                                            child: SfDataGrid(
+                                              rowHeight: 34.w,
+                                              headerRowHeight: 34.w,
+                                              horizontalScrollPhysics:
+                                              const NeverScrollableScrollPhysics(),
+                                              verticalScrollPhysics:
+                                              const BouncingScrollPhysics(),
+                                              gridLinesVisibility:
+                                              GridLinesVisibility.none,
+                                              showHorizontalScrollbar: false,
+                                              source: PerGameDatasource(
+                                                  data),
+                                              columns: [
+                                                GridColumn(
+                                                    columnName: 'season',
+                                                    width: 124.w,
+                                                    label: Container(
+                                                      alignment:
+                                                      Alignment.center,
+                                                      padding: EdgeInsets.only(
+                                                          left: 16.w),
+                                                      decoration:
+                                                      const BoxDecoration(
+                                                          border: Border(
+                                                            bottom: BorderSide(
+                                                                color: AppColors
+                                                                    .cD1D1D1,
+                                                                width: 1),
+                                                            right: BorderSide(
+                                                                color: AppColors
+                                                                    .cE6E6E6,
+                                                                width: 1),
+                                                          )),
+                                                      child: Text(
+                                                        'SEASON',
+                                                        style: 12.w5(
+                                                          color: AppColors.c000000,
+                                                          fontFamily: FontFamily.fRobotoMedium,
+                                                          height: 1,
+                                                        ),
+                                                      ),
+                                                    )),
+                                                GridColumn(
+                                                    columnName: "value",
+                                                    width: 180.w,
+                                                    label: Container(
+                                                      alignment:
+                                                      Alignment.center,
+                                                      decoration: const BoxDecoration(
+                                                          border: Border(
+                                                              bottom: BorderSide(
+                                                                  color: AppColors
+                                                                      .cD1D1D1,
+                                                                  width: 1))),
+                                                      child: Text(
+                                                        statsItem.shortName,
+                                                        style: 12.w5(
+                                                          color: AppColors.c000000,
+                                                          fontFamily: FontFamily.fRobotoMedium,
+                                                          height: 1,
+                                                        ),
+                                                      ),
+                                                    )),
+                                                GridColumn(
+                                                    columnName: "gp",
+                                                    columnWidthMode:
+                                                    ColumnWidthMode.fill,
+                                                    label: Container(
+                                                      alignment:
+                                                      Alignment.centerLeft,
+                                                      padding: EdgeInsets.only(
+                                                          right: 16.w),
+                                                      decoration: const BoxDecoration(
+                                                          border: Border(
+                                                              bottom: BorderSide(
+                                                                  color: AppColors
+                                                                      .cD1D1D1,
+                                                                  width: 1))),
+                                                      child: Text(
+                                                        "GP",
+                                                        style: 12.w5(
+                                                          color: AppColors.c000000,
+                                                          fontFamily: FontFamily.fRobotoMedium,
+                                                          height: 1,
+                                                        ),
+                                                      ),
+                                                    ))
+                                              ],
+                                            ));
+                                      }
+                                      return Center(
+                                        child: LoadStatusWidget(
+                                          loadDataStatus:
+                                              controller.offLoadStatus.value,
+                                        ),
+                                      );
+                                    })
                                   ]))
                             ],
                           ),
