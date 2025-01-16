@@ -75,6 +75,7 @@ class PlayerPropertyDataGridSource extends DataGridSource {
         value = value + 1;
         widget = Container(
           alignment: Alignment.center,
+          margin: EdgeInsets.only(left: 16.w),
           decoration: BoxDecoration(
               border: Border(
                   bottom: BorderSide(
@@ -131,7 +132,7 @@ class PlayerPropertyDataGridSource extends DataGridSource {
             ),
           )),
           child: Text(
-            map["value"].toString(),
+            (map["value"] as double).formatToString(),
             style: 12.w4(
                 color: map["value"] > avgValue ? AppColors.c000000 : AppColors.c4D4D4D,
                 height: 1,

@@ -625,18 +625,9 @@ class _ScoreItemWidgetState extends State<ScoreItemWidget>
   }
 
   Widget _buildGuess() {
-    var count = item.homeTeamWins + item.awayTeamWins;
-    var homePercent = 0;
-    if (item.homeTeamWins == 0 && item.awayTeamWins == 0) {
-      homePercent = 50;
-    } else if (item.homeTeamWins == 0) {
-      homePercent = 0;
-    } else if (item.awayTeamWins == 0) {
-      homePercent = 100;
-    } else {
-      homePercent =
-          int.parse((item.homeTeamWins / count * 100).toStringAsFixed(0));
-    }
+    var count = item.homeTeamWins + item.awayTeamWins + 4;
+    var homePercent =
+        int.parse(((item.homeTeamWins + 2) / count * 100).toStringAsFixed(0));
     var homeTeamInfo = Utils.getTeamInfo(item.homeTeamId);
     var awayTeamInfo = Utils.getTeamInfo(item.awayTeamId);
     return Column(

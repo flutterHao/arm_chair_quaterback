@@ -146,6 +146,7 @@ class _HistoryPageState extends State<HistoryPage>
           width: 50.w,
           label: Container(
             alignment: Alignment.center,
+            margin: EdgeInsets.only(left: 16.w),
             child: Text(
               'WK',
               style: 12.w5(
@@ -159,6 +160,12 @@ class _HistoryPageState extends State<HistoryPage>
           width: 50.w,
           label: Container(
             alignment: Alignment.center,
+            decoration: BoxDecoration(
+              border: Border(
+                  right: BorderSide(
+                    color: AppColors.cE6E6E6,
+                    width: 1.w,
+                  ))),
             child: Text(
               'OPP',
               style: 12.w5(

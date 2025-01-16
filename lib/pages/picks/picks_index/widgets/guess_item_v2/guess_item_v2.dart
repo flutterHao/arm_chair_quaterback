@@ -66,18 +66,9 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
       controller.currentIndex.value = widget.playerV2.status;
       controller.formatGameStartTime();
     });
-    var morePercent = player.guessInfo.moreCount / count;
-    if (player.guessInfo.moreCount == 0 && player.guessInfo.lessCount == 0) {
-      morePercent = 50;
-    } else if (player.guessInfo.moreCount == 0) {
-      morePercent = 0;
-    } else if (player.guessInfo.lessCount == 0) {
-      morePercent = 100;
-    } else {
-      morePercent = player.guessInfo.moreCount /
-          (player.guessInfo.moreCount + player.guessInfo.lessCount) *
-          100;
-    }
+    var morePercent = (player.guessInfo.moreCount + 2) /
+        (player.guessInfo.moreCount + player.guessInfo.lessCount + 4) *
+        100;
     if (widget.isInScoreDetail) {
       return _buildScoreDetailItem(
           player, picksIndexController, morePercent, count);
@@ -105,13 +96,13 @@ class _GuessItemV2State extends State<GuessItemV2> with WidgetsBindingObserver {
                       Stack(
                         children: [
                           PlayerAvatarWidget(
-                              width: 73.w,
-                              height: 93.w,
-                              radius: 9.w,
-                              playerId: player.guessInfo.playerId,
-                              backgroundColor: AppColors.cD9D9D9,
-                              tabStr: player.tabStr,
-                            ),
+                            width: 73.w,
+                            height: 93.w,
+                            radius: 9.w,
+                            playerId: player.guessInfo.playerId,
+                            backgroundColor: AppColors.cD9D9D9,
+                            tabStr: player.tabStr,
+                          ),
                           Positioned(
                               top: 4.w,
                               right: 4.w,
