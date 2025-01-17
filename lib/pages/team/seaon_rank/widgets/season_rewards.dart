@@ -64,18 +64,34 @@ class _SeasonRewadsWidgetState extends State<SeasonRewardsWidget> {
             children: [
               ...List.generate(
                   3,
-                  (index) => Container(
+                  (cupIndex) => Container(
                         margin: EdgeInsets.symmetric(
                             horizontal: 16.w, vertical: 2.w),
                         height: 57.w,
                         child: Column(
                           children: [
                             Expanded(
-                                child: IconWidget(
-                                    iconWidth: 41.w,
-                                    iconHeight: 38.w,
-                                    icon: Assets.managerUiManagerGift01)),
-                            Text('$index k',
+                              child: Expanded(
+                                  child: cupIndex == 0
+                                      ? IconWidget(
+                                          iconWidth: 41.w,
+                                          iconHeight: 41.w,
+                                          fit: BoxFit.contain,
+                                          icon: Assets.managerUiManagerGift01)
+                                      : cupIndex == 1
+                                          ? IconWidget(
+                                              iconWidth: 40.w,
+                                              iconHeight: 32.w,
+                                              fit: BoxFit.contain,
+                                              icon: Assets.commonUiCommonProp05)
+                                          : IconWidget(
+                                              iconWidth: 34.w,
+                                              iconHeight: 34.w,
+                                              fit: BoxFit.contain,
+                                              icon: Assets
+                                                  .commonUiCommonIconCurrency02)),
+                            ),
+                            Text('$cupIndex k',
                                 style: 14
                                     .w5(fontFamily: FontFamily.fOswaldRegular))
                           ],
@@ -85,17 +101,25 @@ class _SeasonRewadsWidgetState extends State<SeasonRewardsWidget> {
               Padding(
                 padding: EdgeInsets.only(top: 7.w),
                 child: MtInkWell(
+                    onTap: () => seasonRankCtr.goSeasonRewardDialog(),
                     child: Container(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 21.w, vertical: 10.w),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(9.w),
-                      border: Border.all(color: AppColors.c666666)),
-                  child: IconWidget(
-                      iconWidth: 17.w,
-                      iconColor: AppColors.c000000,
-                      icon: Assets.commonUiCommonIconSystemExchange),
-                )),
+                      width: 60.w,
+                      height: 40.w,
+                      alignment: Alignment.center,
+                      // padding:
+                      //     EdgeInsets.symmetric(horizontal: 11.w, vertical: 12.w),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(9.w),
+                          border: Border.all(color: AppColors.c666666)),
+                      child: Text(
+                        'go to'.toUpperCase(),
+                        style: 16.w5(fontFamily: FontFamily.fOswaldMedium),
+                      ),
+                      // child: IconWidget(
+                      //     iconWidth: 17.w,
+                      //     iconColor: AppColors.c000000,
+                      //     icon: Assets.commonUiCommonIconSystemExchange),
+                    )),
               )
             ],
           )

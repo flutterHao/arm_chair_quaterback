@@ -66,7 +66,7 @@ class _SeasonRankWidgetState extends State<SeasonRankWidget> {
                   padding: EdgeInsets.symmetric(vertical: 11.5.w),
                   alignment: Alignment.center,
                   child: Text(
-                    'My rank:   50+',
+                    'My rank:   50+'.toUpperCase(),
                     style: 18.w5(fontFamily: FontFamily.fOswaldMedium),
                   ),
                 ),

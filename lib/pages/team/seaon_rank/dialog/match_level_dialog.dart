@@ -43,13 +43,15 @@ class MatchLevelDialog extends GetView<SeaonRankController> {
             color: AppColors.cD4D4D4,
           ),
           Expanded(
-              child: ListView.builder(
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.w),
-            itemCount: 20,
-            itemBuilder: (context, index) {
-              return _matchLevelItemWidget(index);
-            },
-          ))
+              child: Obx(() => ListView.builder(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.w),
+                    itemCount: controller.cupDefineList.length,
+                    reverse: true,
+                    itemBuilder: (context, index) {
+                      return _matchLevelItemWidget(index);
+                    },
+                  )))
         ],
       ),
     ));
@@ -58,7 +60,7 @@ class MatchLevelDialog extends GetView<SeaonRankController> {
   Widget _matchLevelItemWidget(int index) {
     return Stack(
       children: [
-        index != 0
+        index != controller.cupDefineList.length - 1 && index != 0
             ? Positioned(
                 left: 22.w,
                 top: 0,
@@ -73,13 +75,15 @@ class MatchLevelDialog extends GetView<SeaonRankController> {
                   width: 2.w,
                   child: Column(
                     children: [
-                      const Spacer(),
+                      if (index == controller.cupDefineList.length - 1)
+                        const Spacer(),
                       Expanded(
                         child: Container(
                             width: 2.w,
                             height: double.infinity,
                             color: AppColors.cB3B3B3),
                       ),
+                      if (index == 0) const Spacer(),
                     ],
                   ),
                 ),
@@ -122,7 +126,10 @@ class MatchLevelDialog extends GetView<SeaonRankController> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text('Legendary Manager III'),
+                          Text(
+                            controller.cupDefineList[index].backUp,
+                            style: 16.w5(fontFamily: FontFamily.fOswaldRegular),
+                          ),
                           Container(
                               child: Row(
                             children: [
@@ -130,7 +137,11 @@ class MatchLevelDialog extends GetView<SeaonRankController> {
                                   iconWidth: 15.w,
                                   icon: Assets.managerUiManagerIconCurrency04),
                               5.hGap,
-                              const Text('25600'),
+                              Text(
+                                ' ${controller.cupDefineList[index].cupNum[1].toInt()}',
+                                style:
+                                    14.w5(fontFamily: FontFamily.fOswaldMedium),
+                              ),
                             ],
                           ))
                         ],

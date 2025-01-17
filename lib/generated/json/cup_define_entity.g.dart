@@ -11,8 +11,8 @@ CupDefineEntity $CupDefineEntityFromJson(Map<String, dynamic> json) {
   if (cupDailyReward != null) {
     cupDefineEntity.cupDailyReward = cupDailyReward;
   }
-  final List<double>? cupNum = (json['cupNum'] as List<dynamic>?)?.map(
-          (e) => jsonConvert.convert<double>(e) as double).toList();
+  final List<int>? cupNum = (json['cupNum'] as List<dynamic>?)?.map(
+          (e) => jsonConvert.convert<int>(e) as int).toList();
   if (cupNum != null) {
     cupDefineEntity.cupNum = cupNum;
   }
@@ -23,6 +23,10 @@ CupDefineEntity $CupDefineEntityFromJson(Map<String, dynamic> json) {
   final int? cupPicId = jsonConvert.convert<int>(json['cupPicId']);
   if (cupPicId != null) {
     cupDefineEntity.cupPicId = cupPicId;
+  }
+  final String? cupReward = jsonConvert.convert<String>(json['cupReward']);
+  if (cupReward != null) {
+    cupDefineEntity.cupReward = cupReward;
   }
   final String? desc = jsonConvert.convert<String>(json['desc']);
   if (desc != null) {
@@ -60,6 +64,7 @@ Map<String, dynamic> $CupDefineEntityToJson(CupDefineEntity entity) {
   data['cupNum'] = entity.cupNum;
   data['cupNumId'] = entity.cupNumId;
   data['cupPicId'] = entity.cupPicId;
+  data['cupReward'] = entity.cupReward;
   data['desc'] = entity.desc;
   data['loseCup'] = entity.loseCup;
   data['loserMoney'] = entity.loserMoney;
@@ -73,9 +78,10 @@ extension CupDefineEntityExtension on CupDefineEntity {
   CupDefineEntity copyWith({
     String? backUp,
     int? cupDailyReward,
-    List<double>? cupNum,
+    List<int>? cupNum,
     int? cupNumId,
     int? cupPicId,
+    String? cupReward,
     String? desc,
     int? loseCup,
     List<int>? loserMoney,
@@ -89,6 +95,7 @@ extension CupDefineEntityExtension on CupDefineEntity {
       ..cupNum = cupNum ?? this.cupNum
       ..cupNumId = cupNumId ?? this.cupNumId
       ..cupPicId = cupPicId ?? this.cupPicId
+      ..cupReward = cupReward ?? this.cupReward
       ..desc = desc ?? this.desc
       ..loseCup = loseCup ?? this.loseCup
       ..loserMoney = loserMoney ?? this.loserMoney

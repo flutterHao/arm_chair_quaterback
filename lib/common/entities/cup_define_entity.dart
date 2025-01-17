@@ -7,9 +7,10 @@ export 'package:arm_chair_quaterback/generated/json/cup_define_entity.g.dart';
 class CupDefineEntity {
   late String backUp = '';
   late int cupDailyReward = 0;
-  late List<double> cupNum = [];
+  late List<int> cupNum = [];
   late int cupNumId = 0;
   late int cupPicId = 0;
+  late String cupReward = '';
   late String desc = '';
   late int loseCup = 0;
   late List<int> loserMoney = [];
@@ -23,11 +24,11 @@ class CupDefineEntity {
       $CupDefineEntityFromJson(json);
 
   Map<String, dynamic> toJson() => $CupDefineEntityToJson(this);
-  double getCupMax() {
+  int getCupMax() {
     return cupNum[1];
   }
 
-  double getCupMin() {
+  int getCupMin() {
     return cupNum[0];
   }
 

@@ -526,8 +526,8 @@ class TeamController extends GetxController with GetTickerProviderStateMixin {
       //   }
       // }
       if (CacheApi.cupDefineList[i].substituteSum > myTeamEntity.benchCount) {
-        List<double> cupNum = CacheApi.cupDefineList[i].cupNum;
-        double begin = cupNum.first;
+        List<int> cupNum = CacheApi.cupDefineList[i].cupNum;
+        int begin = cupNum.first;
         return begin.ceil();
       }
     }

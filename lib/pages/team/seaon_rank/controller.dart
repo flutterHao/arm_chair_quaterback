@@ -1,5 +1,8 @@
 import 'dart:async';
 
+import 'package:arm_chair_quaterback/common/entities/config/prop_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/cup_define_entity.dart';
+import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/pages/team/seaon_rank/dialog/match_level_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/seaon_rank/dialog/season_rank_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/seaon_rank/dialog/season_reward_dialog.dart';
@@ -20,6 +23,8 @@ class SeaonRankController extends GetxController {
 
   final PageController seaDialogPageController = PageController();
   RxInt pageviewIndex = 0.obs;
+  RxList<CupDefineEntity> cupDefineList = RxList<CupDefineEntity>();
+  List<PropDefineEntity> propDefineList = [];
   RxList<List> seasonRankList = [
     [
       'assets/images/team/season_rank/1.png',
@@ -37,6 +42,7 @@ class SeaonRankController extends GetxController {
     super.onInit();
 
     timeCountDown();
+    initData();
   }
 
   @override
@@ -49,6 +55,17 @@ class SeaonRankController extends GetxController {
   void dispose() {
     _timer?.cancel();
     super.dispose();
+  }
+
+  Future initData() async {
+    cupDefineList.value = await CacheApi.getCupDefine();
+    propDefineList = await CacheApi.getPropDefine();
+    List cupRewardList = cupDefineList[0].cupReward.split(',');
+    // print('cupRewardList');
+    var res = ['1_101_20000', '2_503_1', '3_604_3'];
+    print(res[0].split('_')[2]);
+    print(res[0].split('_')[2]);
+    //propId == 101
   }
 
   void timeCountDown() {

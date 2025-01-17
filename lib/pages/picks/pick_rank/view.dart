@@ -396,7 +396,8 @@ class PickRankPage extends GetView<PickRankController> {
                               return SliverPadding(
                                   padding: EdgeInsets.only(top: 87.w));
                             }
-                            return const SliverToBoxAdapter(child: SizedBox.shrink());
+                            return const SliverToBoxAdapter(
+                                child: SizedBox.shrink());
                           })
                     ],
                   ),
