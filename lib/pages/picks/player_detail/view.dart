@@ -1,6 +1,7 @@
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/widgets/delegate/fixed_height_sliver_header_delegate.dart';
+import 'package:arm_chair_quaterback/common/widgets/keep_alive_wrapper.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/player_avatar_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
@@ -17,6 +18,7 @@ import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/game/game
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/history/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/stats/view.dart';
 import 'package:arm_chair_quaterback/pages/picks/player_detail/widgets/summary/view.dart';
+import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -50,17 +52,17 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
             bodyWidget: Expanded(
                 child: DefaultTabController(
               length: controller.tabs.length,
-              child: NestedScrollView(
-                  // floatHeaderSlivers: true,
+              child: ExtendedNestedScrollView(
+                  onlyOneScrollInBody: true,
                   headerSliverBuilder:
                       (BuildContext context, bool innerBoxIsScrolled) {
                 return <Widget>[
                   SliverPersistentHeader(
-                      // floating: true,
                       delegate: FixedHeightSliverHeaderDelegate(
                           child: buildHeaderWidget(), height: 138.w)),
                   SliverPersistentHeader(
                       pinned: true,
+                      floating: false,
                       delegate: FixedHeightSliverHeaderDelegate(
                           child: Container(
                             width: double.infinity,
@@ -90,13 +92,17 @@ class PlayerDetailPage extends GetView<PlayerDetailController> {
                   );
                 }
                 return TabBarView(children: [
-                  SummaryPage(
-                    playerId: arguments.playerId,
-                    tabStr: arguments.tabStr,
+                  KeepAliveWrapper(
+                    child: SummaryPage(
+                      playerId: arguments.playerId,
+                      tabStr: arguments.tabStr,
+                    ),
                   ),
-                  const StatsPage(),
-                  HistoryPage(
-                    playerId: arguments.playerId,
+                  const KeepAliveWrapper(child: StatsPage()),
+                  KeepAliveWrapper(
+                    child: HistoryPage(
+                      playerId: arguments.playerId,
+                    ),
                   ),
                 ]);
               })),

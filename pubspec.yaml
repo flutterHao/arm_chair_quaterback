@@ -75,6 +75,7 @@ dependencies:
   flutter_inner_shadow: 0.0.1
   # lottie: ^3.2.0
   encrypt: ^5.0.0
+  extended_nested_scroll_view: ^6.2.1
 
 dev_dependencies:
   flutter_test:
