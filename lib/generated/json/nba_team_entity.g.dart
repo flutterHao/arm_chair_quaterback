@@ -35,6 +35,10 @@ NbaTeamEntity $NbaTeamEntityFromJson(Map<String, dynamic> json) {
   if (nbaId != null) {
     nbaTeamEntity.nbaId = nbaId;
   }
+  final String? teamEname = jsonConvert.convert<String>(json['teamEname']);
+  if (teamEname != null) {
+    nbaTeamEntity.teamEname = teamEname;
+  }
   return nbaTeamEntity;
 }
 
@@ -48,6 +52,7 @@ Map<String, dynamic> $NbaTeamEntityToJson(NbaTeamEntity entity) {
   data['shortName'] = entity.shortName;
   data['teamDivision'] = entity.teamDivision;
   data['nbaId'] = entity.nbaId;
+  data['teamEname'] = entity.teamEname;
   return data;
 }
 
@@ -61,6 +66,7 @@ extension NbaTeamEntityExtension on NbaTeamEntity {
     String? shortName,
     int? teamDivision,
     int? nbaId,
+    String? teamEname,
   }) {
     return NbaTeamEntity()
       ..force = force ?? this.force
@@ -70,6 +76,7 @@ extension NbaTeamEntityExtension on NbaTeamEntity {
       ..shortEname = shortEname ?? this.shortEname
       ..shortName = shortName ?? this.shortName
       ..teamDivision = teamDivision ?? this.teamDivision
-      ..nbaId = nbaId ?? this.nbaId;
+      ..nbaId = nbaId ?? this.nbaId
+      ..teamEname = teamEname ?? this.teamEname;
   }
 }

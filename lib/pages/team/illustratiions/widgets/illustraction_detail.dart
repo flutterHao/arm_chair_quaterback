@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-01-09 15:57:09
- * @LastEditTime: 2025-01-16 16:37:21
+ * @LastEditTime: 2025-01-17 18:09:43
  */
 import 'dart:math';
 
@@ -27,6 +27,7 @@ import 'package:arm_chair_quaterback/pages/team/illustratiions/detail_controller
 import 'package:arm_chair_quaterback/pages/team/illustratiions/widgets/ilustraction_drag.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/open_box/big_player_card.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/widgets/linear_progress_widget.dart';
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -68,6 +69,11 @@ class IllustratiionsDetail extends GetView<IlluSctrationDtlCtrl> {
       init: IlluSctrationDtlCtrl(player),
       id: "detail",
       builder: (_) {
+        int teamId = Utils.getPlayBaseInfo(player.playerId).teamId;
+        String teamName =
+            ObjectUtil.isNotEmpty(Utils.getTeamInfo(teamId).teamEname)
+                ? Utils.getTeamInfo(teamId).teamEname
+                : Utils.getTeamInfo(teamId).longEname.split(" ").last;
         return HorizontalDragBackWidget(
           child: BlackAppWidget(
             UserInfoBar(showPop: true),
@@ -101,9 +107,10 @@ class IllustratiionsDetail extends GetView<IlluSctrationDtlCtrl> {
                                   heightFactor: i == 1 ? 1 : 0.2, //宽度设为原来宽度一半
                                   child: FittedBox(
                                     child: OutlinedText(
-                                      text: "BUCKS",
+                                      text: teamName.toUpperCase(),
                                       strokeWidth: 1,
-                                      strokeColor: AppColors.c179248,
+                                      strokeColor:
+                                          controller.getTeamColor(teamId),
                                       textStyle: TextStyle(
                                         letterSpacing: -1,
                                         fontSize:
@@ -132,9 +139,22 @@ class IllustratiionsDetail extends GetView<IlluSctrationDtlCtrl> {
                                   ),
                           ),
                         ),
+                        Positioned(
+                            top: 240.w,
+                            right: 0,
+                            child: Opacity(
+                              opacity: controller.scale,
+                              child: Text(
+                                "#${player.number}",
+                                style: (75 * controller.scale).w4(
+                                    fontFamily: FontFamily.fOswaldMedium,
+                                    height: 1,
+                                    color: AppColors.cFFFFFF.withOpacity(0.03)),
+                              ),
+                            )),
                         if (item.isActive == 1)
                           Positioned(
-                            top: 332.w,
+                            top: 99.w + (332 - 99).w * controller.scale,
                             right: 16.w,
                             child: MtInkWell(
                               onTap: () {

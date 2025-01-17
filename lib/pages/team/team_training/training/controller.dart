@@ -766,6 +766,7 @@ class TrainingController extends GetxController
         await Future.delayed(const Duration(milliseconds: 100));
         element.isOpen.value = true;
       }
+      updateScroller();
       Future.delayed(const Duration(milliseconds: 500), () {
         canChoose = true;
       });

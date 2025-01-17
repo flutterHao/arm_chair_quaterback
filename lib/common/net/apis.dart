@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-06 15:16:54
- * @LastEditTime: 2025-01-16 17:18:49
+ * @LastEditTime: 2025-01-17 17:37:01
  */
 class Api {
   /// base
@@ -119,6 +119,7 @@ class Api {
   static const String cGameConstant = "$CONFIG_BASE_PATH/GameConstant.json";
   static const String cPlayerPowerRateDefine =
       "$CONFIG_BASE_PATH/PlayerPowerRateDefine.json";
+  static const String cHelp = "$CONFIG_BASE_PATH/Help.json";
 
   /// TeamPlayer
   static const String getTeamPlayerByUUID =

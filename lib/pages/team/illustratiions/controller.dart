@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-01-09 15:57:09
- * @LastEditTime: 2025-01-16 21:01:07
+ * @LastEditTime: 2025-01-17 11:09:33
  */
 /*
  * @Description: 
@@ -59,7 +59,7 @@ class IllustratiionsController extends GetxController
   late List<UpgradePlayerAbility> upgradePlayerAbilityList;
 
   //搜索条件
-  var rangeValues = const RangeValues(0, 100).obs;
+  var rangeValues = const RangeValues(1, 100).obs;
 
   void onTap() {}
 
@@ -262,7 +262,7 @@ class IllustratiionsController extends GetxController
   }
 
   void reset() {
-    rangeValues.value = const RangeValues(0, 100);
+    rangeValues.value = const RangeValues(1, 100);
     for (int i = 0; i < posiStatuList.length; i++) {
       posiStatuList[i].value = i == 0 ? true : false;
     }

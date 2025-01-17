@@ -26,6 +26,7 @@ import 'package:arm_chair_quaterback/common/entities/guess_param_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_rank_by_cycle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_reference_value.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_top_reviews_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/help_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/inbox_message_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/last5_avg_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/my_team_entity.dart';
@@ -388,6 +389,10 @@ class JsonConvert {
     if (<GuessTopReviewsEntity>[] is M) {
       return data.map<GuessTopReviewsEntity>((Map<String, dynamic> e) =>
           GuessTopReviewsEntity.fromJson(e)).toList() as M;
+    }
+    if (<HelpEntity>[] is M) {
+      return data.map<HelpEntity>((Map<String, dynamic> e) =>
+          HelpEntity.fromJson(e)).toList() as M;
     }
     if (<InboxMessageEntity>[] is M) {
       return data.map<InboxMessageEntity>((Map<String, dynamic> e) =>
@@ -1106,6 +1111,7 @@ class JsonConvertClassCollection {
     (GuessRankByCycleEntity).toString(): GuessRankByCycleEntity.fromJson,
     (GuessReferenceValue).toString(): GuessReferenceValue.fromJson,
     (GuessTopReviewsEntity).toString(): GuessTopReviewsEntity.fromJson,
+    (HelpEntity).toString(): HelpEntity.fromJson,
     (InboxMessageEntity).toString(): InboxMessageEntity.fromJson,
     (Last5AvgEntity).toString(): Last5AvgEntity.fromJson,
     (MyTeamEntity).toString(): MyTeamEntity.fromJson,

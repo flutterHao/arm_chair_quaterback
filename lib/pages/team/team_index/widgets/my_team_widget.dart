@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-11-13 17:22:13
- * @LastEditTime: 2025-01-16 16:50:23
+ * @LastEditTime: 2025-01-17 10:48:45
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/constant/global_nest_key.dart';
@@ -241,6 +241,9 @@ class MyTeamWidget extends StatelessWidget {
                           int count = iCtrl.playerCollectEntity.collects
                               .where((e) => e.isLight == 1)
                               .length;
+                          int compCount = iCtrl.playerCollectEntity.collects
+                              .where((e) => e.fragmentNum >= e.needNum)
+                              .length;
                           return InkWell(
                             onTap: () {
                               Get.toNamed(RouteNames.illustrationPage);
@@ -274,7 +277,7 @@ class MyTeamWidget extends StatelessWidget {
                                                           8.w),
                                                   color: AppColors.cFF7954),
                                               child: Text(
-                                                "99",
+                                                "${compCount > 99 ? 99 : compCount}",
                                                 style: 10.w4(
                                                     fontFamily: FontFamily
                                                         .fOswaldMedium,

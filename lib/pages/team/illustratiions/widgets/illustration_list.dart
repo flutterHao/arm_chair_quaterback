@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-01-10 09:53:30
- * @LastEditTime: 2025-01-16 16:44:56
+ * @LastEditTime: 2025-01-17 18:20:40
  */
 import 'dart:math';
 
@@ -18,6 +18,7 @@ import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
+import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/illustratiions/controller.dart';
 import 'package:arm_chair_quaterback/pages/team/illustratiions/widgets/filter_dialog.dart';
@@ -35,7 +36,9 @@ class IllustrationList extends StatelessWidget {
       builder: (ctrl) {
         var list = ctrl.onfilter();
         var activeList = list.where((e) => e.isActive == 0).toList();
+        activeList.sort((a, b) => b.isLight.compareTo(a.isLight));
         var notActiveList = list.where((e) => e.isActive == 1).toList();
+        notActiveList.sort((a, b) => b.isLight.compareTo(a.isLight));
         int length = list.where((e) => e.isLight == 1).length;
         return Column(
           children: [
@@ -164,11 +167,11 @@ class _Item extends GetView<IllustratiionsController> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
-        await Get.toNamed(
+        var result = await Get.toNamed(
           RouteNames.illustrationDetail,
           arguments: item,
         );
-        controller.getPlayerCollectInfo();
+        if (result) controller.getPlayerCollectInfo();
       },
       child: Center(
         child: Column(
@@ -239,7 +242,19 @@ class _Item extends GetView<IllustratiionsController> {
                       icon: Assets.managerUiManagerArchiveDebris,
                       iconColor: AppColors.cFFFFFF,
                     ),
-                  )
+                  ),
+                  if (item.isLight == 1)
+                    Positioned(
+                      top: 7.5.w,
+                      left: 7.w,
+                      child: OutlinedText(
+                        text: Utils.getPlayBaseInfo(item.playerId).grade,
+                        textStyle: TextStyle(
+                            fontSize: 34.h,
+                            fontFamily: FontFamily.fRobotoBlack,
+                            height: 0.8),
+                      ),
+                    ),
                 ],
               ),
             ),

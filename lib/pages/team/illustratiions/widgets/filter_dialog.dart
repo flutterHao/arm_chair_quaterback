@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-01-14 14:33:48
- * @LastEditTime: 2025-01-15 12:23:30
+ * @LastEditTime: 2025-01-17 10:38:50
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
@@ -86,7 +86,7 @@ class FilterDialog extends GetView<IllustratiionsController> {
                           ),
                           child: RangeSlider(
                             values: controller.rangeValues.value,
-                            min: 0,
+                            min: 1,
                             max: 100,
                             activeColor: AppColors.c000000,
                             inactiveColor: AppColors.cD9D9D9,

@@ -7,6 +7,7 @@ import 'package:arm_chair_quaterback/common/entities/dan_ma_ku_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/game_event_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/grade_in_stamina_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/grade_in_star_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/help_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/inbox_message_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
@@ -67,6 +68,7 @@ class CacheApi {
 
   static List<PlayerBookExpRuleEntity> playerBookExpRuleList = [];
   static Map<String, PlayerPowerRateDefineEntity> playerPowerRateDefineMap = {};
+  static Map<int, HelpEntity> helpMap = {};
 
   static Future<void> init() async {
     await Future.wait([
@@ -316,5 +318,15 @@ class CacheApi {
       for (var item in playerPowerRateDefineList) item.backUp: item
     };
     return playerPowerRateDefineMap;
+  }
+
+  static Future<Map<int, HelpEntity>> getHelpConfig() async {
+    if (helpMap.isNotEmpty) {
+      return helpMap;
+    }
+    List list = await HttpUtil().post(Api.cHelp);
+    List<HelpEntity> helps = list.map((e) => HelpEntity.fromJson(e)).toList();
+    helpMap = {for (var item in helps) item.helpId: item};
+    return helpMap;
   }
 }

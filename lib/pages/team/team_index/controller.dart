@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-01-13 15:52:50
+ * @LastEditTime: 2025-01-17 15:55:31
  */
 
 import 'dart:async';
@@ -21,6 +21,8 @@ import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
+import 'package:arm_chair_quaterback/pages/team/illustratiions/controller.dart';
+import 'package:arm_chair_quaterback/pages/team/illustratiions/detail_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/open_box/open_box_page.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/widgets/box_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/controller.dart';
@@ -185,6 +187,8 @@ class TeamIndexController extends GetxController
     awardList = await TeamApi.opneBattleBox(index, card.playerId);
     showBigCard(card);
     getBattleBox();
+    IllustratiionsController ctrl = Get.find();
+    ctrl.getPlayerCollectInfo();
     // showBoxDialog();
   }
 
@@ -386,7 +390,7 @@ class TeamIndexController extends GetxController
   void forwardShake(int currentId, CardPackInfoCard e) {
     int milliseconds = 200;
     //按照等级排序,3张以上3张剧烈晃动，一下两张
-    e.players.sort((a, b) => _grade(a).compareTo(b));
+    e.players.sort((a, b) => _grade(a).compareTo(_grade(b)));
     if (e.players.length > 3) {
       int index = e.players.indexOf(currentId);
       milliseconds = index < 3 ? 100 : 250;

@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-20 20:31:52
- * @LastEditTime: 2025-01-08 19:26:49
+ * @LastEditTime: 2025-01-17 18:11:05
  */
 import 'package:arm_chair_quaterback/generated/json/base/json_field.dart';
 import 'package:arm_chair_quaterback/generated/json/nba_team_entity.g.dart';
@@ -19,6 +19,9 @@ class NbaTeamEntity {
   late String shortName = "";
   late int teamDivision = 0;
   late int nbaId = 0;
+  late String teamEname = "";
+  late String teamColors = "";
+  late String archiveColors = "";
 
   NbaTeamEntity();
 

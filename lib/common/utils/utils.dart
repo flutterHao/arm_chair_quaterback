@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-21 20:20:49
- * @LastEditTime: 2025-01-10 17:59:22
+ * @LastEditTime: 2025-01-17 18:07:36
  */
 import 'dart:async';
 import 'dart:io';
@@ -324,7 +324,14 @@ class Utils {
 
   /// 使用队伍id 获取队伍的颜色
   static Color getTeamColor(int teamId) {
-    return Constant.teamColorMap[teamId]?['light'] ?? AppColors.c404040;
+    if (CacheApi.teamDefineMap != null) {
+      String colorStr = "0xFF${CacheApi.teamDefineMap![teamId]!.teamColors}";
+      int? color = int.tryParse(colorStr);
+      if (color != null) {
+        return Color(color);
+      }
+    }
+    return AppColors.c404040;
   }
 
   /// 正则获取需要改变颜色的字符串

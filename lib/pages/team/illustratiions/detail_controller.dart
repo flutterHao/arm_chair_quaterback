@@ -11,11 +11,13 @@ import 'package:arm_chair_quaterback/common/entities/team_player_up_star_vo_enti
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/team.dart';
+import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/param_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/team_upgrade/controller.dart';
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -263,7 +265,19 @@ class IlluSctrationDtlCtrl extends GetxController {
       HomeController.to.updateMoney();
       update(["detail"]);
       Get.back();
-      Get.back();
+      Get.back(result: true);
     });
+  }
+
+  Color getTeamColor(int teamId) {
+    if (CacheApi.teamDefineMap != null) {
+      var archiveColors = CacheApi.teamDefineMap![teamId]!.archiveColors;
+      String colorStr = "0xFF$archiveColors";
+      int? color = int.tryParse(colorStr);
+      if (color != null && ObjectUtil.isNotEmpty(archiveColors)) {
+        return Color(color);
+      }
+    }
+    return AppColors.c2DE298;
   }
 }

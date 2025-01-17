@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-12-17 18:13:43
- * @LastEditTime: 2025-01-13 11:42:40
+ * @LastEditTime: 2025-01-17 16:05:37
  */
 import 'dart:math';
 
@@ -206,6 +206,7 @@ class OpenBoxPage extends GetView<TeamIndexController> {
   Widget _cardWidget() {
     double margin = controller.cardPackInfo.card.length <= 3 ? 50.w : 0.w;
     double spacing = 10.w;
+
     return Positioned(
       top: 240.h,
       left: 0,
@@ -227,6 +228,7 @@ class OpenBoxPage extends GetView<TeamIndexController> {
                   isFlipped: e.isOpen.value,
                   player: e,
                   onFlip: () async {
+                    int index = item.playerCards.indexOf(e);
                     if (controller.step >= 3 || controller.isOpen) return;
                     if (!e.isSelect.value) {
                       //如果还没有选择先选牌
@@ -511,6 +513,7 @@ class OpenBoxPage extends GetView<TeamIndexController> {
       child: GetBuilder<TeamIndexController>(
           id: "open_box_page",
           builder: (context) {
+            // item.playerCards.shuffle();
             return GestureDetector(
               onTap: controller.step == 2
                   ? () async {

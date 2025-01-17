@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 17:09:20
- * @LastEditTime: 2024-12-06 22:00:47
+ * @LastEditTime: 2025-01-17 12:09:17
  */
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -142,10 +142,10 @@ class _VerticalDragBackWidgetState extends State<VerticalDragBackWidget>
         startY = detail.localPosition.dy;
       }
       offsetY = detail.localPosition.dy - startY;
-        widget.onChange?.call(offsetY);
+      widget.onChange?.call(offsetY);
       if (offsetY < 0) {
         offsetY = 0;
-          widget.onChange?.call(offsetY);
+        widget.onChange?.call(offsetY);
       }
       setState(() {});
     }
