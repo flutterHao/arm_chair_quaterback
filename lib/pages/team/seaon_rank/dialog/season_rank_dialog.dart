@@ -8,9 +8,11 @@ import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/vertival_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/seaon_rank/controller.dart';
+import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 class SeasonRankDialog extends GetView<SeaonRankController> {
   const SeasonRankDialog({super.key});
@@ -126,51 +128,61 @@ class SeasonRankDialog extends GetView<SeaonRankController> {
   }
 
   Widget _seasonRankBodyWidget() {
-    return Container(
-      child: Stack(
-        children: [
-          PageView.builder(
-              itemCount: controller.seasonRankList.length,
-              controller: controller.seaDialogPageController,
-              itemBuilder: (context, index) {
-                return Container(
-                  child: ListView.separated(
-                    padding: EdgeInsets.symmetric(horizontal: 16.w),
-                    itemCount: 20,
-                    itemBuilder: (context, index) {
-                      return _seasonRankItemWidget(index);
-                    },
-                    separatorBuilder: (context, index) =>
-                        const Divider(color: AppColors.cD4D4D4, height: 1),
+    return PageView.builder(
+        itemCount: controller.seasonRankList.length,
+        controller: controller.seaDialogPageController,
+        itemBuilder: (context, pageIndex) {
+          return Obx(() => Stack(
+                children: [
+                  Container(
+                    child: ListView.separated(
+                      // controller: scrollController,
+                      padding: EdgeInsets.symmetric(horizontal: 16.w),
+                      itemCount: 20,
+                      itemBuilder: (context, index) {
+                        return VisibilityDetector(
+                            key: Key('item_$index'),
+                            onVisibilityChanged:
+                                (VisibilityInfo visibilityInfo) {
+                              controller.onVisibilityChanged(
+                                  visibilityInfo, index);
+                            },
+                            child: _seasonRankItemWidget(index));
+                      },
+                      separatorBuilder: (context, index) =>
+                          const Divider(color: AppColors.cD4D4D4, height: 1),
+                    ),
                   ),
-                );
-              }),
-          Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 2.w),
-                decoration:
-                    const BoxDecoration(color: Colors.white, boxShadow: [
-                  BoxShadow(
-                    color: AppColors.cDEDEDE,
-                    blurRadius: 10,
-                    // offset: Offset(0, 0)
-                  )
-                ]),
-                child: _seasonRankItemWidget(
-                    controller.seasonRankList.length - 1, AppColors.cFF7954),
-              ))
-        ],
-      ),
-    );
+                  AnimatedPositioned(
+                      duration: const Duration(milliseconds: 300),
+                      bottom: controller.isShow.value ? 0 : -100,
+                      left: 0,
+                      right: 0,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 16.w, vertical: 2.w),
+                        decoration: const BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppColors.cDEDEDE,
+                                blurRadius: 10,
+                              )
+                            ]),
+                        child: _seasonRankItemWidget(
+                            controller.seasonRankList.length - 1,
+                            AppColors.cFF7954),
+                      ))
+                ],
+              ));
+        });
   }
 
   Widget _seasonRankItemWidget(int index, [Color color = AppColors.c000000]) {
     return Obx(() {
       // controller.seasonRankList[controller.pageviewIndex.value];
       return Container(
+          color: index == 9 ? AppColors.cFF7954 : Colors.white,
           padding: EdgeInsets.symmetric(vertical: 17.w),
           child: Row(
             children: [

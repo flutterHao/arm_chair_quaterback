@@ -46,7 +46,7 @@ class SeaonRankPage extends GetView<SeaonRankController> {
                       child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        // SeasonRewardsWidget(),
+                        SeasonRewardsWidget(),
                         LegendaryManagerWidget(),
                         SeasonRankWidget(),
                         GameLogWidget(),

@@ -10,6 +10,7 @@ import 'package:arm_chair_quaterback/pages/team/seaon_rank/dialog/season_rank_di
 import 'package:arm_chair_quaterback/pages/team/seaon_rank/dialog/season_reward_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 class SeaonRankController extends GetxController {
   SeaonRankController();
@@ -24,10 +25,12 @@ class SeaonRankController extends GetxController {
   int second = 0;
 
   final PageController seaDialogPageController = PageController();
+
   RxInt pageviewIndex = 0.obs;
   RxList<CupDefineEntity> cupDefineList = RxList<CupDefineEntity>();
   Rx<LoadDataStatus> loadingStatus = LoadDataStatus.loading.obs;
   late Rx<TeamSimpleEntity> teamSimpleEntity;
+  RxBool isShow = false.obs;
   RxList<List> seasonRankList = [
     ['1'],
     ['a'],
@@ -140,5 +143,14 @@ class SeaonRankController extends GetxController {
   String getcupUrl(int cardId) {
     var item = cupDefineList.firstWhere((e) => e.cupNumId == cardId);
     return 'assets/images/manager/${item.cupPicId}.png';
+  }
+
+  onVisibilityChanged(VisibilityInfo visibilityInfo, int index) {
+    var visiblePercentage = visibilityInfo.visibleFraction * 100;
+    // Check if the item is mostly visible in the viewport and it's the target item.
+    if (index == 9) {
+      print(visiblePercentage);
+      visiblePercentage < 50 ? isShow.value = true : isShow.value = false;
+    }
   }
 }

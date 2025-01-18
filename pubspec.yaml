@@ -76,6 +76,8 @@ dependencies:
   # lottie: ^3.2.0
   encrypt: ^5.0.0
   extended_nested_scroll_view: ^6.2.1
+  # 可见性检测器
+  visibility_detector: 0.4.0+2
 
 dev_dependencies:
   flutter_test:
