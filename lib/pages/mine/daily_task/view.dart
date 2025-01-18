@@ -1,12 +1,17 @@
 import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
+import 'package:arm_chair_quaterback/common/entities/mission_define_entity.dart';
+import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
+import 'package:arm_chair_quaterback/common/utils/data_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/black_app_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/horizontal_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/user_info_bar.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -33,50 +38,63 @@ class DailyTaskPage extends GetView<DailyTaskController> {
               canTapDailyTask: false,
             ),
             bodyWidget: Expanded(
-                child: SingleChildScrollView(
-              controller: controller.scrollController,
-              child: Column(
-                children: [
-                  9.vGap,
-                  Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.symmetric(vertical: 16.w),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(9.w),
-                      color: AppColors.cFFFFFF,
-                    ),
-                    child: Column(
-                      children: [
-                        _buildSlotPan(),
-                        SizedBox(
-                          width: double.infinity,
-                          height: 86.w,
-                          child: PageView(
-                            controller: controller.pageController,
-                            physics: const NeverScrollableScrollPhysics(),
-                            children: [
-                              _buildStartWidget(),
-                              _buildPackageAndSpin(context)
-                            ],
+                child: GetBuilder<DailyTaskController>(
+                    id: DailyTaskController.idMain,
+                    builder: (logic) {
+                      if (controller.loadStatus.value !=
+                          LoadDataStatus.success) {
+                        return Center(
+                          child: LoadStatusWidget(
+                            loadDataStatus: controller.loadStatus.value,
                           ),
+                        );
+                      }
+                      return SingleChildScrollView(
+                        controller: controller.scrollController,
+                        physics: const BouncingScrollPhysics(),
+                        child: Column(
+                          children: [
+                            9.vGap,
+                            Container(
+                              width: double.infinity,
+                              padding: EdgeInsets.only(top: 16.w),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(9.w),
+                                color: AppColors.cFFFFFF,
+                              ),
+                              child: Column(
+                                children: [
+                                  _buildSlotPan(context),
+                                  SizedBox(
+                                    width: double.infinity,
+                                    height: 117.w,
+                                    child: PageView(
+                                      controller: controller.pageController,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      children: [
+                                        _buildStartWidget(),
+                                        _buildPackageAndSpin(context)
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            9.vGap,
+                            _buildDailyMission(),
+                            9.vGap
+                          ],
                         ),
-                        15.vGap
-                      ],
-                    ),
-                  ),
-                  9.vGap,
-                  _buildDailyMission(),
-                  9.vGap
-                ],
-              ),
-            )),
+                      );
+                    })),
           );
         },
       ),
     );
   }
 
-  Container _buildSlotPan() {
+  Container _buildSlotPan(BuildContext context) {
     return Container(
       width: 339.w,
       height: 447.w,
@@ -89,182 +107,190 @@ class DailyTaskPage extends GetView<DailyTaskController> {
         children: [
           _buildOuterWheel(),
           _buildCenterTopWheel(),
-          _buildCenter(),
+          _buildCenter(context),
           _buildCenterBottomWheel(),
         ],
       ),
     );
   }
 
-  Container _buildDailyMission() {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.cFFFFFF,
-        borderRadius: BorderRadius.circular(9.w),
-      ),
-      child: Column(
-        children: [
-          25.vGap,
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 16.w),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  Widget _buildDailyMission() {
+    return GetBuilder<DailyTaskController>(
+        id: DailyTaskController.idDailyMission,
+        builder: (logic) {
+          if (controller.dailyMissionList.isEmpty) {
+            return const SizedBox.shrink();
+          }
+          return Container(
+            decoration: BoxDecoration(
+              color: AppColors.cFFFFFF,
+              borderRadius: BorderRadius.circular(9.w),
+            ),
+            child: Column(
               children: [
-                Text(
-                  "DAILY MISSION",
-                  style: 24.w5(
-                    color: AppColors.c000000,
-                    height: 1,
-                    fontFamily: FontFamily.fOswaldMedium,
+                25.vGap,
+                Container(
+                  margin: EdgeInsets.only(left: 16.w),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "DAILY MISSION",
+                        style: 24.w5(
+                          color: AppColors.c000000,
+                          height: 1,
+                          fontFamily: FontFamily.fOswaldMedium,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          IconWidget(
+                              iconWidth: 16.w,
+                              icon: Assets.commonUiCommonCountdown02),
+                          Obx(() {
+                            var ms = controller.dailyCountDown.value;
+                            return Container(
+                              margin: EdgeInsets.only(left: 6.w),
+                              width: 73.w,
+                              child: Text(
+                                controller.formatDailyTaskTime(ms),
+                                style: 16.w4(
+                                  color: AppColors.c000000,
+                                  height: 1,
+                                  fontFamily: FontFamily.fOswaldRegular,
+                                ),
+                              ),
+                            );
+                          })
+                        ],
+                      )
+                    ],
                   ),
                 ),
-                Row(
-                  children: [
-                    IconWidget(
-                        iconWidth: 16.w,
-                        icon: Assets.commonUiCommonCountdown02),
-                    6.hGap,
-                    Text(
-                      "23:59:59",
-                      style: 16.w4(
-                        color: AppColors.c000000,
-                        height: 1,
-                        fontFamily: FontFamily.fOswaldRegular,
-                      ),
-                    )
-                  ],
-                )
+                16.vGap,
+                Divider(
+                  height: 1.w,
+                  color: AppColors.cD1D1D1,
+                ),
+                ...List.generate(controller.dailyMissionList.length, (index) {
+                  var item = controller.dailyMissionList[index];
+                  return _buildDailyMissionItem(
+                    item.missionDefineEntity.desc,
+                    item.missionDefineEntity,
+                    item.teamMissionEntity.status,
+                  );
+                }),
+                9.vGap,
               ],
             ),
-          ),
-          16.vGap,
-          Divider(
-            height: 1.w,
-            color: AppColors.cD1D1D1,
-          ),
-          _buildDailyMissionItem(
-            "Register 50 players in the archive in archive in the archive.Register 50 players in the archive. ",
-            Assets.commonUiCommonIconTask,
-            0,
-          ),
-          _buildDailyMissionItem(
-            "Register 50 players in the archive. ",
-            Assets.commonUiCommonIconCurrency02,
-            1,
-          ),
-          _buildDailyMissionItem(
-            "Register 50 players in the archive in archive in the archive.Register 50 players in the archive. ",
-            Assets.commonUiCommonIconCurrency02,
-            2,
-          ),
-          9.vGap,
-        ],
-      ),
-    );
+          );
+        });
   }
 
   Container _buildPackageAndSpin(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16.w),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          34.vGap,
           Row(
             children: [
               /// 临时背包
+              if (controller.getTurnRewardList().isNotEmpty)
               Stack(
                 children: [
-                  MtInkWell(
-                    onTap: () {
-                      print('package ------ ');
-                      showDialog(
-                          useSafeArea: false,
-                          barrierColor: AppColors.cTransparent,
-                          context: context,
-                          builder: (_) {
-                            return RewardPackageWidget(
-                              claimAndExit: () {
-                                BottomTipDialog.show(
-                                    context: context,
-                                    height: 534.w,
-                                    btnDirection: Axis.horizontal,
-                                    cancelStr: "GIVE UP",
-                                    confirmStr: "STAY",
-                                    cancelBgColor: AppColors.cD60D20,
-                                    title: "YOU’LL LOSE THESE REWARDS",
-                                    desc:
-                                        "If you give up now, you will lose all the rewards gathered so far!",
-                                    centerWidget: Column(
-                                      children: [
-                                        27.vGap,
-                                        Divider(
-                                          color: AppColors.cD1D1D1,
-                                          height: 1.w,
-                                        ),
-                                        Container(
-                                          height: 190.w,
-                                          margin: EdgeInsets.symmetric(
-                                              horizontal: 59.w),
-                                          child: GridView.builder(
-                                              gridDelegate:
-                                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                                      crossAxisCount: 4),
-                                              itemBuilder: (context, index) {
-                                                return Column(
-                                                  children: [
-                                                    SizedBox(
-                                                      width: 41.w,
-                                                      height: 41.w,
-                                                      child: Center(
-                                                        child: IconWidget(
-                                                            iconWidth: 34.w,
-                                                            icon: Assets
-                                                                .commonUiCommonProp05),
+                    MtInkWell(
+                      onTap: () {
+                        print('package ------ ');
+                        showDialog(
+                            useSafeArea: false,
+                            barrierColor: AppColors.cTransparent,
+                            context: context,
+                            builder: (_) {
+                              return RewardPackageWidget(
+                                claimAndExit: () {
+                                  BottomTipDialog.show(
+                                      context: context,
+                                      height: 534.w,
+                                      btnDirection: Axis.horizontal,
+                                      cancelStr: "GIVE UP",
+                                      confirmStr: "STAY",
+                                      cancelBgColor: AppColors.cD60D20,
+                                      title: "YOU’LL LOSE THESE REWARDS",
+                                      desc:
+                                          "If you give up now, you will lose all the rewards gathered so far!",
+                                      centerWidget: Column(
+                                        children: [
+                                          27.vGap,
+                                          Divider(
+                                            color: AppColors.cD1D1D1,
+                                            height: 1.w,
+                                          ),
+                                          Container(
+                                            height: 190.w,
+                                            margin: EdgeInsets.symmetric(
+                                                horizontal: 59.w),
+                                            child: GridView.builder(
+                                                gridDelegate:
+                                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                                        crossAxisCount: 4),
+                                                itemBuilder: (context, index) {
+                                                  return Column(
+                                                    children: [
+                                                      SizedBox(
+                                                        width: 41.w,
+                                                        height: 41.w,
+                                                        child: Center(
+                                                          child: IconWidget(
+                                                              iconWidth: 34.w,
+                                                              icon: Assets
+                                                                  .commonUiCommonProp05),
+                                                        ),
                                                       ),
-                                                    ),
-                                                    Text(
-                                                      "50k",
-                                                      style: 14.w4(
-                                                        color:
-                                                            AppColors.c000000,
-                                                        height: 1,
-                                                        fontFamily: FontFamily
-                                                            .fRobotoRegular,
-                                                      ),
-                                                    )
-                                                  ],
-                                                );
-                                              }),
-                                        ),
-                                        44.vGap,
-                                      ],
-                                    ),
-                                    onTap: () {
-                                      Get.back();
-                                    },
-                                    cancelTap: () {
-                                      print('give up 2 ----');
-                                    });
-                              },
-                            );
-                          });
-                    },
-                    child: Container(
-                      width: 94.w,
-                      height: 51.w,
-                      margin: EdgeInsets.only(top: 4.w, right: 9.w),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(9.w),
-                          border: Border.all(
-                            color: AppColors.c666666,
-                            width: 1.w,
-                          )),
-                      child: IconWidget(
-                        iconWidth: 33.w,
-                        icon: Assets.managerUiManagerWheelGift,
+                                                      Text(
+                                                        "50k",
+                                                        style: 14.w4(
+                                                          color:
+                                                              AppColors.c000000,
+                                                          height: 1,
+                                                          fontFamily: FontFamily
+                                                              .fRobotoRegular,
+                                                        ),
+                                                      )
+                                                    ],
+                                                  );
+                                                }),
+                                          ),
+                                          44.vGap,
+                                        ],
+                                      ),
+                                      onTap: () {
+                                        Get.back();
+                                      },
+                                      cancelTap: () {
+                                        print('give up 2 ----');
+                                      });
+                                },
+                              );
+                            });
+                      },
+                      child: Container(
+                        width: 94.w,
+                        height: 51.w,
+                        margin: EdgeInsets.only(top: 4.w, right: 9.w),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(9.w),
+                            border: Border.all(
+                              color: AppColors.c666666,
+                              width: 1.w,
+                            )),
+                        child: IconWidget(
+                          iconWidth: 33.w,
+                          icon: Assets.managerUiManagerWheelGift,
+                        ),
                       ),
                     ),
-                  ),
                   Positioned(
                       right: 5.w,
                       child: Container(
@@ -276,7 +302,7 @@ class DailyTaskPage extends GetView<DailyTaskController> {
                         ),
                         child: Center(
                           child: Text(
-                            "99",
+                            "${controller.getTurnRewardList().length}",
                             style: 10.w5(
                               color: AppColors.cFFFFFF,
                               height: 0.5,
@@ -387,34 +413,6 @@ class DailyTaskPage extends GetView<DailyTaskController> {
                   ),
                 ),
               ),
-              MtInkWell(
-                onTap: () {
-                  print('week prize');
-                  showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      backgroundColor: AppColors.cTransparent,
-                      builder: (context) {
-                        return const WeekPrizeWidget();
-                      });
-                },
-                child: Container(
-                  width: 59.w,
-                  height: 51.w,
-                  margin: EdgeInsets.only(left: 22.w),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(9.w),
-                      border: Border.all(
-                        color: AppColors.c666666,
-                        width: 1.w,
-                      )),
-                  child: IconWidget(
-                    iconWidth: 24.w,
-                    icon: Assets.managerUiManagerWheelCalendar,
-                    iconColor: AppColors.c000000,
-                  ),
-                ),
-              )
             ],
           )
         ],
@@ -424,23 +422,30 @@ class DailyTaskPage extends GetView<DailyTaskController> {
 
   Column _buildStartWidget() {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            IconWidget(iconWidth: 18.w, icon: Assets.commonUiCommonIconTask),
-            4.hGap,
-            Text(
-              "1/10",
-              style: 16.w5(
-                height: 1,
-                fontFamily: FontFamily.fOswaldMedium,
-              ),
-            )
-          ],
+        SizedBox(
+          height: 35.w,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              IconWidget(iconWidth: 18.w, icon: Assets.commonUiCommonIconTask),
+              4.hGap,
+              GetBuilder<DailyTaskController>(
+                  id: DailyTaskController.idLuckyCoin,
+                  builder: (logic) {
+                    return Text(
+                      "1/${controller.teamProp.num}",
+                      style: 16.w5(
+                        height: 1,
+                        fontFamily: FontFamily.fOswaldMedium,
+                      ),
+                    );
+                  })
+            ],
+          ),
         ),
-        7.vGap,
         MtInkWell(
           onTap: () {
             spin();
@@ -485,14 +490,15 @@ class DailyTaskPage extends GetView<DailyTaskController> {
     } else {
       controller.wheelController.start(onEnd: onEnd);
     }
-    //todo test code
     controller.centerPageController.animateToPage(1,
         duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
     controller.pageController.animateToPage(1,
         duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
   }
 
-  Container _buildDailyMissionItem(String text, String image, int status) {
+  Container _buildDailyMissionItem(
+      String text, MissionDefineEntity missionDefine, int status) {
+    var list = controller.getAwardList(missionDefine.awardData);
     return Container(
       width: double.infinity,
       margin: EdgeInsets.symmetric(horizontal: 16.w),
@@ -510,82 +516,84 @@ class DailyTaskPage extends GetView<DailyTaskController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           20.vGap,
-          Text.rich(TextSpan(children: [
-            TextSpan(
-                text: text,
-                style: 12.w4(
-                  color: AppColors.c000000,
-                  height: 1.2,
-                  fontFamily: FontFamily.fRobotoRegular,
-                )),
-            TextSpan(
-                text: "(50/50)",
-                style: 12.w4(
-                  color: AppColors.c10A86A,
-                  height: 1.2,
-                  fontFamily: FontFamily.fRobotoMedium,
-                ))
-          ])),
+          Opacity(
+            opacity: status == 3 ? 0.5 : 1,
+            child: Text.rich(TextSpan(children: [
+              TextSpan(
+                  text: text,
+                  style: 12.w4(
+                    color: AppColors.c000000,
+                    height: 1.2,
+                    fontFamily: FontFamily.fRobotoRegular,
+                  )),
+            ])),
+          ),
           19.vGap,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  Column(
-                    children: [
-                      IconWidget(
-                          iconWidth: 40.w, icon: Assets.commonUiCommonProp05),
-                      7.vGap,
-                      Text(
-                        "50k",
-                        style: 14.w4(
-                          color: AppColors.c000000,
-                          height: 1,
-                          fontFamily: FontFamily.fRobotoRegular,
-                        ),
-                      )
-                    ],
-                  ),
-                  39.hGap,
-                  Column(
-                    children: [
-                      IconWidget(iconWidth: 40.w, icon: image),
-                      7.vGap,
-                      Text(
-                        "50k",
-                        style: 14.w4(
-                          color: AppColors.c000000,
-                          height: 1,
-                          fontFamily: FontFamily.fRobotoRegular,
-                        ),
-                      )
-                    ],
-                  )
-                ],
+              Opacity(
+                opacity: status == 3 ? 0.5 : 1,
+                child: Row(
+                  children: List.generate(list.length, (index) {
+                    var item = list[index];
+                    return Container(
+                      margin: EdgeInsets.only(right: 30.w),
+                      child: Column(
+                        children: [
+                          Image.asset(
+                            Utils.getImageByPropId(item.id),
+                            width: 40.w,
+                            height: 40.w,
+                            errorBuilder: (context, error, s) {
+                              return Image.asset(
+                                Assets.managerUiManagerGift00,
+                                width: 40.w,
+                                height: 40.w,
+                              );
+                            },
+                          ),
+                          7.vGap,
+                          Text(
+                            controller.getPropNum(item),
+                            style: 14.w4(
+                              color: AppColors.c000000,
+                              height: 1,
+                              fontFamily: FontFamily.fRobotoRegular,
+                            ),
+                          )
+                        ],
+                      ),
+                    );
+                  }),
+                ),
               ),
               Builder(builder: (context) {
                 if (status == 1) {
-                  return Container(
-                    width: 59.w,
-                    height: 40.w,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: AppColors.c666666, width: 1.w),
-                      borderRadius: BorderRadius.circular(9.w),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "GO TO",
-                        style: 16.w5(
-                          color: AppColors.c000000,
-                          height: 1,
-                          fontFamily: FontFamily.fOswaldMedium,
+                  return MtInkWell(
+                    onTap: () => Get.back(),
+                    child: Container(
+                      width: 59.w,
+                      height: 40.w,
+                      decoration: BoxDecoration(
+                        border:
+                            Border.all(color: AppColors.c666666, width: 1.w),
+                        borderRadius: BorderRadius.circular(9.w),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "GO TO",
+                          style: 16.w5(
+                            color: AppColors.c000000,
+                            height: 1,
+                            fontFamily: FontFamily.fOswaldMedium,
+                          ),
                         ),
                       ),
                     ),
                   );
                 }
-                if (status == 2) {
+                if (status == 3) {
                   return Container(
                     width: 59.w,
                     height: 40.w,
@@ -602,20 +610,24 @@ class DailyTaskPage extends GetView<DailyTaskController> {
                     ),
                   );
                 }
-                return Container(
-                  width: 59.w,
-                  height: 40.w,
-                  decoration: BoxDecoration(
-                    color: AppColors.c000000,
-                    borderRadius: BorderRadius.circular(9.w),
-                  ),
-                  child: Center(
-                    child: Text(
-                      "CLAIM",
-                      style: 16.w5(
-                        color: AppColors.cFFFFFF,
-                        height: 1,
-                        fontFamily: FontFamily.fOswaldMedium,
+                return MtInkWell(
+                  onTap: () => controller
+                      .getTeamMissionAward(missionDefine.missionDefineId),
+                  child: Container(
+                    width: 59.w,
+                    height: 40.w,
+                    decoration: BoxDecoration(
+                      color: AppColors.c000000,
+                      borderRadius: BorderRadius.circular(9.w),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "CLAIM",
+                        style: 16.w5(
+                          color: AppColors.cFFFFFF,
+                          height: 1,
+                          fontFamily: FontFamily.fOswaldMedium,
+                        ),
                       ),
                     ),
                   ),
@@ -646,6 +658,21 @@ class DailyTaskPage extends GetView<DailyTaskController> {
         controller: controller.wheelController,
         builder: (index) {
           return list[index];
+          var item = controller.getOutWheel()[index];
+          var size = 30.w;
+          return Image.asset(
+            controller.getImage(item),
+            width: size,
+            height: size,
+            errorBuilder: (context, error, s) {
+              return Image.asset(
+                Assets.managerUiManagerGift00,
+                width: size,
+                height: size,
+              );
+            },
+          );
+          return IconWidget(iconWidth: size, icon: controller.getImage(item));
         },
       ),
     );
@@ -692,17 +719,37 @@ class DailyTaskPage extends GetView<DailyTaskController> {
                 bigRadius: 9.w,
                 builder: (index) {
                   return list[index];
+                  var item = controller.getInnerTopWheel()[index];
+                  var size = 30.w * 31 / 52;
+                  return Image.asset(
+                    controller.getImage(item),
+                    width: size,
+                    height: size,
+                    errorBuilder: (context, error, s) {
+                      return Image.asset(
+                        Assets.managerUiManagerGift00,
+                        width: size,
+                        height: size,
+                      );
+                    },
+                  );
+                  return IconWidget(
+                      iconWidth: size, icon: controller.getImage(item));
                 }),
 
             /// 爱心
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(3, (index) {
+                bool isActive =
+                    controller.turnTableEntity.currentLife >= index + 1;
                 return Container(
                     margin: EdgeInsets.only(right: 5.w),
                     child: IconWidget(
-                        iconWidth: 20.w,
-                        icon: Assets.managerUiManagerTactics01));
+                      iconWidth: 20.w,
+                      icon: Assets.managerUiManagerTactics01,
+                      iconColor: isActive ? null : AppColors.c4D4D4D,
+                    ));
               }),
             )
           ],
@@ -728,59 +775,100 @@ class DailyTaskPage extends GetView<DailyTaskController> {
                 bigRadius: 9.w,
                 builder: (index) {
                   return list[index];
+                  var item = controller.getInnerBottomWheel()[index];
+                  var size = 30.w * 31 / 52;
+                  return Image.asset(
+                    controller.getImage(item),
+                    width: size,
+                    height: size,
+                    errorBuilder: (context, error, s) {
+                      return Image.asset(
+                        Assets.managerUiManagerGift00,
+                        width: size,
+                        height: size,
+                      );
+                    },
+                  );
+                  return IconWidget(
+                      iconWidth: size, icon: controller.getImage(item));
                 }),
 
             /// 电池
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                        color: AppColors.c9EEB53,
-                        width: 1.w,
-                      ),
-                      borderRadius: BorderRadius.circular(5.w),
-                      boxShadow: [
-                        BoxShadow(
-                            color: AppColors.c9EEB53.withOpacity(0.4),
-                            offset: Offset.zero,
-                            blurRadius: 3.w,
-                            spreadRadius: 3.w)
-                      ]),
-                  padding: EdgeInsets.all(3.w),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(10, (index) {
-                      bool isFirst = index == 0;
-                      bool isLast = index == 9;
-                      BorderRadius? borderRadius;
-                      if (isFirst) {
-                        borderRadius =
-                            BorderRadius.horizontal(left: Radius.circular(2.w));
-                      } else if (isLast) {
-                        borderRadius = BorderRadius.horizontal(
-                            right: Radius.circular(2.w));
-                      }
-                      return Container(
-                        margin: EdgeInsets.only(right: isLast ? 0 : 2.w),
-                        width: 8.w,
-                        height: 15.w,
-                        decoration: BoxDecoration(
-                          color: AppColors.c9EEB53,
-                          borderRadius: borderRadius,
-                        ),
-                      );
-                    }),
+            Builder(builder: (context) {
+              bool isFull = controller.getBatteryCount() ==
+                  controller.getBatteryTotalCount();
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 105.w,
+                    decoration: BoxDecoration(
+                        border: !isFull
+                            ? null
+                            : Border.all(
+                                color: AppColors.c9EEB53,
+                                width: 1.w,
+                              ),
+                        borderRadius: BorderRadius.circular(5.w),
+                        boxShadow: !isFull
+                            ? null
+                            : [
+                                BoxShadow(
+                                    color: AppColors.c9EEB53.withOpacity(0.4),
+                                    offset: Offset.zero,
+                                    blurRadius: 3.w,
+                                    spreadRadius: 3.w)
+                              ]),
+                    padding: EdgeInsets.all(3.w),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: List.generate(controller.getBatteryTotalCount(),
+                          (index) {
+                        bool isFirst = index == 0;
+                        bool isLast =
+                            index == controller.getBatteryTotalCount() - 1;
+                        bool isActive = index < controller.getBatteryCount();
+                        BorderRadius? borderRadius;
+                        if (isFirst) {
+                          borderRadius = BorderRadius.horizontal(
+                              left: Radius.circular(2.w));
+                        } else if (isLast) {
+                          borderRadius = BorderRadius.horizontal(
+                              right: Radius.circular(2.w));
+                        }
+                        return Expanded(
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  height: 15.w,
+                                  decoration: BoxDecoration(
+                                    color: isActive
+                                        ? AppColors.c9EEB53
+                                        : AppColors.c4D4D4D,
+                                    borderRadius: borderRadius,
+                                  ),
+                                ),
+                              ),
+                              // if (!isLast)
+                              SizedBox(
+                                width: 2.w,
+                                height: 15.w,
+                              )
+                            ],
+                          ),
+                        );
+                      }),
+                    ),
                   ),
-                ),
-              ],
-            )
+                ],
+              );
+            })
           ],
         ));
   }
 
-  Widget _buildCenter() {
+  Widget _buildCenter(BuildContext context) {
     return SizedBox(
       width: 207.w,
       height: 105.w,
@@ -855,11 +943,23 @@ class DailyTaskPage extends GetView<DailyTaskController> {
                                       icon: Assets.commonUiCommonIconTask)),
                               Positioned(
                                   right: 9.w,
-                                  child: IconWidget(
-                                      iconWidth: 24.w,
-                                      icon: Assets.commonUiCommonProp05)),
+                                  child: MtInkWell(
+                                    onTap: () {
+                                      showModalBottomSheet(
+                                          context: context,
+                                          isScrollControlled: true,
+                                          backgroundColor:
+                                              AppColors.cTransparent,
+                                          builder: (context) {
+                                            return const WeekPrizeWidget();
+                                          });
+                                    },
+                                    child: IconWidget(
+                                        iconWidth: 24.w,
+                                        icon: Assets.commonUiCommonProp05),
+                                  )),
                               Text(
-                                "15/20",
+                                "${controller.getWeekFinishMission().length}/${controller.getCurrentWeekMission().targetNum}",
                                 style: 12.w5(
                                   color: AppColors.cFFFFFF,
                                   height: 1,
@@ -869,29 +969,30 @@ class DailyTaskPage extends GetView<DailyTaskController> {
                             ],
                           ),
                         ),
-                        Positioned(
-                            top: 7.w,
-                            right: 6.w,
-                            child: Container(
-                              height: 16.w,
-                              constraints: BoxConstraints(
-                                minWidth: 16.w,
-                              ),
-                              decoration: BoxDecoration(
-                                color: AppColors.cFF7954,
-                                borderRadius: BorderRadius.circular(8.w),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  "1",
-                                  style: 10.w5(
-                                    color: AppColors.cFFFFFF,
-                                    height: 1,
-                                    fontFamily: FontFamily.fOswaldMedium,
+                        if (controller.getNotGetMission().isNotEmpty)
+                          Positioned(
+                              top: 7.w,
+                              right: 6.w,
+                              child: Container(
+                                height: 16.w,
+                                constraints: BoxConstraints(
+                                  minWidth: 16.w,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: AppColors.cFF7954,
+                                  borderRadius: BorderRadius.circular(8.w),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    "${controller.getNotGetMission().length}",
+                                    style: 10.w5(
+                                      color: AppColors.cFFFFFF,
+                                      height: 1,
+                                      fontFamily: FontFamily.fOswaldMedium,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ))
+                              ))
                       ],
                     ),
                     7.vGap,

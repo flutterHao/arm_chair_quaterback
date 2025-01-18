@@ -3,12 +3,15 @@ import 'package:arm_chair_quaterback/common/entities/competition_venue_entity.da
 import 'package:arm_chair_quaterback/common/entities/config/card_pack_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/config/prop_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/cup_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/daily_task_wheel_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/dan_ma_ku_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/game_event_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/grade_in_stamina_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/grade_in_star_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/help_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/inbox_message_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/mission_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_mission_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/news_define_entity.dart';
@@ -23,6 +26,7 @@ import 'package:arm_chair_quaterback/common/entities/rank_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/reward_group_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/star_up_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_rule_config_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/wheel_reward_type_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis.dart';
 import 'package:arm_chair_quaterback/common/net/http.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
@@ -64,8 +68,11 @@ class CacheApi {
   static Map<int, CardPackDefineEntity> cardPackDefineMap = {};
   static List<NewsSourceEntity> newsSourceList = [];
   static List<InboxMessageEntity> inboxMessageList = [];
+  static List<DailyTaskWheelEntity> dailyTaskWheelList = [];
+  static List<WheelRewardTypeEntity> wheelRewardTypeList = [];
   static Map<int, PlayerCollectCollects> playerBookRuleMap = {};
   static List<PlayerCollectCollects> playerBookRuleList = [];
+  static List<MissionDefineEntity> missionDefineList = [];
 
   static List<PlayerBookExpRuleEntity> playerBookExpRuleList = [];
   static Map<String, PlayerPowerRateDefineEntity> playerPowerRateDefineMap = {};
@@ -282,7 +289,29 @@ class CacheApi {
       return inboxMessageList;
     }
     List list = await HttpUtil().post(Api.cInboxMessage);
-    return list.map((item) => InboxMessageEntity.fromJson(item)).toList();
+    return inboxMessageList =
+        list.map((item) => InboxMessageEntity.fromJson(item)).toList();
+    ;
+  }
+
+  /// 每日任务转盘
+  static Future<List<DailyTaskWheelEntity>> getDailyTaskWheel() async {
+    if (dailyTaskWheelList.isNotEmpty) {
+      return dailyTaskWheelList;
+    }
+    List list = await HttpUtil().post(Api.cDailyTaskWheel);
+    return dailyTaskWheelList =
+        list.map((item) => DailyTaskWheelEntity.fromJson(item)).toList();
+  }
+
+  /// 每日任务转盘奖励
+  static Future<List<WheelRewardTypeEntity>> getWheelRewardType() async {
+    if (wheelRewardTypeList.isNotEmpty) {
+      return wheelRewardTypeList;
+    }
+    List list = await HttpUtil().post(Api.cWheelRewardType);
+    return wheelRewardTypeList =
+        list.map((item) => WheelRewardTypeEntity.fromJson(item)).toList();
   }
 
   static Future<Map<int, PlayerCollectCollects>> getPlayerBookRuleList() async {
@@ -330,5 +359,15 @@ class CacheApi {
     List<HelpEntity> helps = list.map((e) => HelpEntity.fromJson(e)).toList();
     helpMap = {for (var item in helps) item.helpId: item};
     return helpMap;
+  }
+
+  /// 每日任务
+  static Future<List<MissionDefineEntity>> getMissionDefine() async {
+    if (missionDefineList.isNotEmpty) {
+      return missionDefineList;
+    }
+    List list = await HttpUtil().post(Api.cMissionDefine);
+    return missionDefineList =
+        list.map((item) => MissionDefineEntity.fromJson(item)).toList();
   }
 }

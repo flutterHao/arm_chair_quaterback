@@ -120,6 +120,10 @@ class Api {
   static const String cPlayerPowerRateDefine =
       "$CONFIG_BASE_PATH/PlayerPowerRateDefine.json";
   static const String cHelp = "$CONFIG_BASE_PATH/Help.json";
+  static const String cDailyTaskWheel = "$CONFIG_BASE_PATH/DailyTaskWheel.json";
+  static const String cWheelRewardType =
+      "$CONFIG_BASE_PATH/WheelRewardType.json";
+  static const String cMissionDefine = "$CONFIG_BASE_PATH/MissionDefine.json";
 
   /// TeamPlayer
   static const String getTeamPlayerByUUID =
@@ -177,6 +181,19 @@ class Api {
   ///league
   static const String getNBAGameSchedules =
       "$API_BASE_PATH/NBAData/getNBAGameSchedules";
+
+  ///turntable
+  static const String getTurntableInfo =
+      "$API_BASE_PATH/turntable/getTurntableInfo";
+  static const String turntable = "$API_BASE_PATH/turntable/turntable";
+  static const String reLife = "$API_BASE_PATH/turntable/reLife";
+  static const String claimRewards = "$API_BASE_PATH/turntable/claimRewards";
+
+  ///mission
+  static const String getTeamMissionList =
+      "$API_BASE_PATH/mission/getTeamMissionList";
+  static const String getTeamMissionAward =
+      "$API_BASE_PATH/mission/getTeamMissionAward";
 
   ///WebSocket
   static const String wsJazminError = "jazmin.error"; //接口错误

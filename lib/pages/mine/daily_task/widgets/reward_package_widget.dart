@@ -4,11 +4,13 @@ import 'dart:math';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/tip_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/easy_animation_controller.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
+import 'package:arm_chair_quaterback/pages/mine/daily_task/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -29,6 +31,7 @@ class RewardPackageWidget extends StatefulWidget {
 class _RewardPackageWidgetState extends State<RewardPackageWidget>
     with SingleTickerProviderStateMixin {
   late EasyAnimationController animationController;
+  late DailyTaskController controller;
 
   @override
   void initState() {
@@ -58,6 +61,7 @@ class _RewardPackageWidgetState extends State<RewardPackageWidget>
 
   @override
   Widget build(BuildContext context) {
+    controller = Get.find();
     var size = MediaQuery.of(context).size;
     var width = size.width;
     return PopScope(
@@ -119,23 +123,43 @@ class _RewardPackageWidgetState extends State<RewardPackageWidget>
                               context: context,
                               removeTop: true,
                               child: ListView.separated(
-                                  physics: const BouncingScrollPhysics(),
-                                  itemBuilder: (context, index) {
-                                    return Container(
-                                      height: 72.w,
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 10.w),
-                                      child: Row(
-                                        children: [
-                                          IconWidget(
-                                              iconWidth: 36.w,
-                                              icon: Assets
-                                                  .managerUiManagerGift02),
-                                          12.hGap,
-                                          Expanded(
+                                itemCount:
+                                    controller.getTurnRewardList().length,
+                                physics: const BouncingScrollPhysics(),
+                                itemBuilder: (context, index) {
+                                  var item =
+                                      controller.getTurnRewardList()[index];
+                                  return Container(
+                                    height: 72.w,
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 10.w),
+                                    child: Row(
+                                      children: [
+                                        IconWidget(
+                                            iconWidth: 36.w,
+                                            icon: controller.getImageByPath(item
+                                                .propDefineEntity.propIcon)),
+                                        12.hGap,
+                                        Expanded(
+                                          child: Text(
+                                            item.propDefineEntity.propName,
+                                            style: 14.w4(
+                                              color: AppColors.c000000,
+                                              height: 1,
+                                              fontFamily:
+                                                  FontFamily.fRobotoRegular,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 35.w,
+                                          alignment: Alignment.center,
+                                          child: FittedBox(
+                                            fit: BoxFit.scaleDown,
                                             child: Text(
-                                              "prop name",
-                                              style: 14.w4(
+                                              controller
+                                                  .getPropNum(item.awardItem),
+                                              style: 12.w4(
                                                 color: AppColors.c000000,
                                                 height: 1,
                                                 fontFamily:
@@ -143,33 +167,18 @@ class _RewardPackageWidgetState extends State<RewardPackageWidget>
                                               ),
                                             ),
                                           ),
-                                          Container(
-                                            width: 35.w,
-                                            alignment: Alignment.center,
-                                            child: FittedBox(
-                                              fit: BoxFit.scaleDown,
-                                              child: Text(
-                                                "500k",
-                                                style: 12.w4(
-                                                  color: AppColors.c000000,
-                                                  height: 1,
-                                                  fontFamily:
-                                                      FontFamily.fRobotoRegular,
-                                                ),
-                                              ),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                  separatorBuilder: (context, index) {
-                                    return Divider(
-                                      color: AppColors.cD1D1D1,
-                                      height: 1.w,
-                                    );
-                                  },
-                                  itemCount: 15),
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                },
+                                separatorBuilder: (context, index) {
+                                  return Divider(
+                                    color: AppColors.cD1D1D1,
+                                    height: 1.w,
+                                  );
+                                },
+                              ),
                             ),
                           )),
                           Container(

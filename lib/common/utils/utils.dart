@@ -406,11 +406,37 @@ class Utils {
     return "$rank$suffix";
   }
 
-  static String getBoxImageUrl(int cardId) {
+  static String getBoxImageUrl(int cardId,
+      {String defaultImage = Assets.managerUiManagerGift00}) {
     if (CacheApi.cardPackDefineMap[cardId] != null) {
       String cardName = CacheApi.cardPackDefineMap[cardId]!.cardPackIcon;
-      return "assets/images/$cardName.png";
+      return getImageByPath(cardName);
     }
-    return Assets.managerUiManagerGift03;
+    return defaultImage;
+  }
+
+  static String getImageByPropId(int propId,
+      {String defaultImage = Assets.managerUiManagerGift00}) {
+    var firstWhere = CacheApi.propDefineList
+        ?.firstWhere((element) => element.propId == propId);
+    if (firstWhere != null) {
+      return getImageByPath(firstWhere.propIcon);
+    }
+    return defaultImage;
+  }
+
+  static String getImageByPath(String image) {
+    return "assets/images/$image${Constant.imageSuffix}";
+  }
+
+  /// 获取手机时间时区和服务器时间的时差 (ms)
+  int getTimeZoneOffset() {
+    ///当前服务器时区为中国时区,固定返回0
+    return 0;
+
+    ///服务器时间为utc时间需要加上下面的返回值
+    var dateTime = DateTime.now();
+    var difference = dateTime.difference(dateTime.toUtc());
+    return difference.inMilliseconds;
   }
 }

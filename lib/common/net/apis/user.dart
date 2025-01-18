@@ -44,8 +44,8 @@ class UserApi {
     return await visitorLogin();
   }
 
-  static Future<List<TeamPropList>> getTeamProp() async {
-    var list = await HttpUtil().post(Api.getTeamProp, data: {"propId": 0});
+  static Future<List<TeamPropList>> getTeamProp({int propId = 0}) async {
+    var list = await HttpUtil().post(Api.getTeamProp, data: {"propId": propId});
     return list.map<TeamPropList>((e) => TeamPropList.fromJson(e)).toList();
   }
 }

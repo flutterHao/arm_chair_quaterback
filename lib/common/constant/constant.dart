@@ -109,4 +109,6 @@ class Constant {
     "S+",
   ];
   static String seasonId = "2024-25";
+
+  static String imageSuffix = ".png";
 }

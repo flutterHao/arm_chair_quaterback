@@ -13,6 +13,7 @@ import 'package:arm_chair_quaterback/common/entities/competition_venue_entity.da
 import 'package:arm_chair_quaterback/common/entities/config/card_pack_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/config/prop_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/cup_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/daily_task_wheel_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/dan_ma_ku_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/game_event_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/game_schedules_info.dart';
@@ -29,6 +30,7 @@ import 'package:arm_chair_quaterback/common/entities/guess_top_reviews_entity.da
 import 'package:arm_chair_quaterback/common/entities/help_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/inbox_message_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/last5_avg_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/mission_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/my_team_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nab_player_season_game_rank_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_game_detail_entity.dart';
@@ -63,6 +65,7 @@ import 'package:arm_chair_quaterback/common/entities/receive_prop_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/recive_award_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/recive_award_v2_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/review_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/reward_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/reward_group_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/schedule_choose_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/scores_entity.dart';
@@ -74,6 +77,7 @@ import 'package:arm_chair_quaterback/common/entities/tactics_define_entity.dart'
 import 'package:arm_chair_quaterback/common/entities/tatics_combine_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_detail_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_info_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_mission_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_list_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_player_up_star_vo_entity.dart';
@@ -85,8 +89,10 @@ import 'package:arm_chair_quaterback/common/entities/train_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/train_task_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/training_info_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/training_task_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/turn_table_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/up_star_team_player_v2_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/up_start_team_player_response_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/wheel_reward_type_entity.dart';
 
 JsonConvert jsonConvert = JsonConvert();
 
@@ -318,6 +324,10 @@ class JsonConvert {
       return data.map<CupDefineEntity>((Map<String, dynamic> e) =>
           CupDefineEntity.fromJson(e)).toList() as M;
     }
+    if (<DailyTaskWheelEntity>[] is M) {
+      return data.map<DailyTaskWheelEntity>((Map<String, dynamic> e) =>
+          DailyTaskWheelEntity.fromJson(e)).toList() as M;
+    }
     if (<DanMaKuEntity>[] is M) {
       return data.map<DanMaKuEntity>((Map<String, dynamic> e) =>
           DanMaKuEntity.fromJson(e)).toList() as M;
@@ -401,6 +411,10 @@ class JsonConvert {
     if (<Last5AvgEntity>[] is M) {
       return data.map<Last5AvgEntity>((Map<String, dynamic> e) =>
           Last5AvgEntity.fromJson(e)).toList() as M;
+    }
+    if (<MissionDefineEntity>[] is M) {
+      return data.map<MissionDefineEntity>((Map<String, dynamic> e) =>
+          MissionDefineEntity.fromJson(e)).toList() as M;
     }
     if (<MyTeamEntity>[] is M) {
       return data.map<MyTeamEntity>((Map<String, dynamic> e) =>
@@ -794,6 +808,10 @@ class JsonConvert {
       return data.map<ReviewEntity>((Map<String, dynamic> e) =>
           ReviewEntity.fromJson(e)).toList() as M;
     }
+    if (<RewardEntity>[] is M) {
+      return data.map<RewardEntity>((Map<String, dynamic> e) =>
+          RewardEntity.fromJson(e)).toList() as M;
+    }
     if (<RewardGroupEntity>[] is M) {
       return data.map<RewardGroupEntity>((Map<String, dynamic> e) =>
           RewardGroupEntity.fromJson(e)).toList() as M;
@@ -908,6 +926,10 @@ class JsonConvert {
       return data.map<TeamInfoTeamPreference>((Map<String, dynamic> e) =>
           TeamInfoTeamPreference.fromJson(e)).toList() as M;
     }
+    if (<TeamMissionEntity>[] is M) {
+      return data.map<TeamMissionEntity>((Map<String, dynamic> e) =>
+          TeamMissionEntity.fromJson(e)).toList() as M;
+    }
     if (<TeamPlayerInfoEntity>[] is M) {
       return data.map<TeamPlayerInfoEntity>((Map<String, dynamic> e) =>
           TeamPlayerInfoEntity.fromJson(e)).toList() as M;
@@ -988,6 +1010,10 @@ class JsonConvert {
       return data.map<TrainingTaskEntity>((Map<String, dynamic> e) =>
           TrainingTaskEntity.fromJson(e)).toList() as M;
     }
+    if (<TurnTableEntity>[] is M) {
+      return data.map<TurnTableEntity>((Map<String, dynamic> e) =>
+          TurnTableEntity.fromJson(e)).toList() as M;
+    }
     if (<UpStarTeamPlayerV2Entity>[] is M) {
       return data.map<UpStarTeamPlayerV2Entity>((Map<String, dynamic> e) =>
           UpStarTeamPlayerV2Entity.fromJson(e)).toList() as M;
@@ -1045,6 +1071,10 @@ class JsonConvert {
           UpStartTeamPlayerResponseDataAfterUpStarBase.fromJson(e))
           .toList() as M;
     }
+    if (<WheelRewardTypeEntity>[] is M) {
+      return data.map<WheelRewardTypeEntity>((Map<String, dynamic> e) =>
+          WheelRewardTypeEntity.fromJson(e)).toList() as M;
+    }
 
     debugPrint("$M not found");
 
@@ -1092,6 +1122,7 @@ class JsonConvertClassCollection {
     (CardPackDefineEntity).toString(): CardPackDefineEntity.fromJson,
     (PropDefineEntity).toString(): PropDefineEntity.fromJson,
     (CupDefineEntity).toString(): CupDefineEntity.fromJson,
+    (DailyTaskWheelEntity).toString(): DailyTaskWheelEntity.fromJson,
     (DanMaKuEntity).toString(): DanMaKuEntity.fromJson,
     (GameEventEntity).toString(): GameEventEntity.fromJson,
     (GameSchedulesInfo).toString(): GameSchedulesInfo.fromJson,
@@ -1114,6 +1145,7 @@ class JsonConvertClassCollection {
     (HelpEntity).toString(): HelpEntity.fromJson,
     (InboxMessageEntity).toString(): InboxMessageEntity.fromJson,
     (Last5AvgEntity).toString(): Last5AvgEntity.fromJson,
+    (MissionDefineEntity).toString(): MissionDefineEntity.fromJson,
     (MyTeamEntity).toString(): MyTeamEntity.fromJson,
     (NabPlayerSeasonGameRankEntity).toString(): NabPlayerSeasonGameRankEntity
         .fromJson,
@@ -1246,6 +1278,7 @@ class JsonConvertClassCollection {
     (ReciveAwardV2GuessInfoGuessData)
         .toString(): ReciveAwardV2GuessInfoGuessData.fromJson,
     (ReviewEntity).toString(): ReviewEntity.fromJson,
+    (RewardEntity).toString(): RewardEntity.fromJson,
     (RewardGroupEntity).toString(): RewardGroupEntity.fromJson,
     (ScheduleChooseEntity).toString(): ScheduleChooseEntity.fromJson,
     (ScoresEntity).toString(): ScoresEntity.fromJson,
@@ -1278,6 +1311,7 @@ class JsonConvertClassCollection {
         .fromJson,
     (TeamInfoEntity).toString(): TeamInfoEntity.fromJson,
     (TeamInfoTeamPreference).toString(): TeamInfoTeamPreference.fromJson,
+    (TeamMissionEntity).toString(): TeamMissionEntity.fromJson,
     (TeamPlayerInfoEntity).toString(): TeamPlayerInfoEntity.fromJson,
     (TeamPlayerInfoPotential).toString(): TeamPlayerInfoPotential.fromJson,
     (TeamPlayerListEntity).toString(): TeamPlayerListEntity.fromJson,
@@ -1300,6 +1334,7 @@ class JsonConvertClassCollection {
     (TrainingInfoTraining).toString(): TrainingInfoTraining.fromJson,
     (TrainingInfoBuff).toString(): TrainingInfoBuff.fromJson,
     (TrainingTaskEntity).toString(): TrainingTaskEntity.fromJson,
+    (TurnTableEntity).toString(): TurnTableEntity.fromJson,
     (UpStarTeamPlayerV2Entity).toString(): UpStarTeamPlayerV2Entity.fromJson,
     (UpStarTeamPlayerV2StarUpList).toString(): UpStarTeamPlayerV2StarUpList
         .fromJson,
@@ -1321,6 +1356,7 @@ class JsonConvertClassCollection {
         .toString(): UpStartTeamPlayerResponseDataAfterPotential.fromJson,
     (UpStartTeamPlayerResponseDataAfterUpStarBase)
         .toString(): UpStartTeamPlayerResponseDataAfterUpStarBase.fromJson,
+    (WheelRewardTypeEntity).toString(): WheelRewardTypeEntity.fromJson,
   };
 
   bool containsKey(String type) {
