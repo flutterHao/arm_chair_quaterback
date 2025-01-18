@@ -24,7 +24,6 @@ class SeaonRankController extends GetxController {
   final PageController seaDialogPageController = PageController();
   RxInt pageviewIndex = 0.obs;
   RxList<CupDefineEntity> cupDefineList = RxList<CupDefineEntity>();
-  List<PropDefineEntity> propDefineList = [];
   RxList<List> seasonRankList = [
     [
       'assets/images/team/season_rank/1.png',
@@ -59,13 +58,6 @@ class SeaonRankController extends GetxController {
 
   Future initData() async {
     cupDefineList.value = await CacheApi.getCupDefine();
-    propDefineList = await CacheApi.getPropDefine();
-    List cupRewardList = cupDefineList[0].cupReward.split(',');
-    // print('cupRewardList');
-    var res = ['1_101_20000', '2_503_1', '3_604_3'];
-    print(res[0].split('_')[2]);
-    print(res[0].split('_')[2]);
-    //propId == 101
   }
 
   void timeCountDown() {

@@ -43,6 +43,7 @@ class CacheApi {
 
   ///道具定义
   static List<PropDefineEntity>? propDefineList;
+  static Map<int, PropDefineEntity> propDefineMap = {};
 
   static List<RankAwardEntity>? gameRankAwardRuleList;
 
@@ -146,6 +147,7 @@ class CacheApi {
     if (propDefineList?.isNotEmpty == true) return propDefineList!;
     List list = await httpUtil.get(Api.cGetPropDefine);
     propDefineList = list.map((e) => PropDefineEntity.fromJson(e)).toList();
+    propDefineMap = {for (var e in propDefineList!) e.propId: e};
     return propDefineList!;
   }
 

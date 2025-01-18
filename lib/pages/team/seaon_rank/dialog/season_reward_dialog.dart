@@ -3,16 +3,15 @@ import 'dart:math';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/vertival_drag_back_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/team/seaon_rank/controller.dart';
-import 'package:encrypt/encrypt.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:collection/collection.dart';
 
 class SeasonRewardDialog extends GetView<SeaonRankController> {
   const SeasonRewardDialog({super.key});
@@ -75,22 +74,11 @@ class SeasonRewardDialog extends GetView<SeaonRankController> {
             'This season reached: Legendary Manager 4',
             style: 12.w5(fontFamily: FontFamily.fRobotoRegular),
           ),
-          // Text(
-          //   '$rewardsList',
-          //   style: 12.w5(fontFamily: FontFamily.fRobotoRegular),
-          // ),
           10.vGap,
           Row(
             children: [
               ...cupRewardList.map((cupItem) {
-                String propIcon = '';
-
-                /// 获取道具图标
-                for (var element in controller.propDefineList) {
-                  if (element.propId.toString() == cupItem.split('_')[1]) {
-                    propIcon = element.propIcon;
-                  }
-                }
+                int propId = int.tryParse(cupItem.split('_')[1]) ?? 0;
                 return Container(
                   margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 2.w),
                   height: 57.w,
@@ -101,15 +89,8 @@ class SeasonRewardDialog extends GetView<SeaonRankController> {
                               iconWidth: 41.w,
                               iconHeight: 41.w,
                               fit: BoxFit.contain,
-                              icon: Assets.managerUiManagerGift01)),
-                      // Expanded(
-                      //     child: IconWidget(
-                      //         iconWidth: 41.w,
-                      //         iconHeight: 41.w,
-                      //         fit: BoxFit.contain,
-                      //         icon: 'assets/images/$propIcon.png')),
-                      // Text('Icon:$propIcon',
-                      //     style: 14.w5(fontFamily: FontFamily.fOswaldRegular)),
+                              fieldPath: Assets.managerUiManagerGift00,
+                              icon: Utils.getPropIconUrl(propId))),
                       Text(
                           controller
                               .formatToK(int.parse(cupItem.split('_')[2])),

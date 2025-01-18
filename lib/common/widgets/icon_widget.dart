@@ -32,7 +32,8 @@ class IconWidget extends StatelessWidget {
       // this.rotation = 0.0,
       this.rotateAngle,
       this.fit,
-      this.alignment = Alignment.center});
+      this.alignment = Alignment.center,
+      this.fieldPath});
 
   final double iconWidth;
   final double? iconHeight;
@@ -47,6 +48,7 @@ class IconWidget extends StatelessWidget {
   final double? rotateAngle;
   final BoxFit? fit;
   final Alignment alignment;
+  final String? fieldPath;
 
   @override
   Widget build(BuildContext context) {
@@ -67,15 +69,22 @@ class IconWidget extends StatelessWidget {
           height: iconHeight,
           fit: fit ?? BoxFit.fill,
           color: iconColor,
-          // errorBuilder: (context, error, stackTrace) {
-          //   // 可能需要更换为缺省图
-          //   return Container(
-          //     width: double.infinity,
-          //     height: double.infinity,
-          //     color: Colors.white,
-          //     alignment: Alignment.center,
-          //   );
-          // },
+          errorBuilder: (context, error, stackTrace) {
+            // 可能需要更换为缺省图
+            if (fieldPath != null) {
+              return Image.asset(fieldPath!,
+                  width: iconWidth,
+                  height: iconHeight,
+                  fit: fit ?? BoxFit.fill,
+                  color: iconColor);
+            }
+            return Container(
+              width: iconWidth,
+              height: backgroudheight,
+              color: Colors.white,
+              alignment: Alignment.center,
+            );
+          },
         ),
       ),
     );

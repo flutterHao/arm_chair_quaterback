@@ -205,6 +205,7 @@ class Assets {
   static const String managerUiManagerGameRankCrown = 'assets/images/manager/ui_manager_game_rank_crown.png';
   static const String managerUiManagerGameoverBg1 = 'assets/images/manager/ui_manager_gameover_bg1.png';
   static const String managerUiManagerGameoverBg2 = 'assets/images/manager/ui_manager_gameover_bg2.jpg';
+  static const String managerUiManagerGift00 = 'assets/images/manager/ui_manager_gift_00.png';
   static const String managerUiManagerGift01 = 'assets/images/manager/ui_manager_gift_01.png';
   static const String managerUiManagerGift02 = 'assets/images/manager/ui_manager_gift_02.png';
   static const String managerUiManagerGift03 = 'assets/images/manager/ui_manager_gift_03.png';

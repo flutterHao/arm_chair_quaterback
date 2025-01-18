@@ -65,12 +65,11 @@ class Utils {
   }
 
   static String getPropIconUrl(id) {
-    if (id == 102) {
-      return Assets.commonUiCommonProp05;
-    } else if (id == 103) {
-      return Assets.commonUiCommonIconCurrency02;
+    if (CacheApi.propDefineMap[id] != null) {
+      String cardName = CacheApi.propDefineMap[id]!.propIcon;
+      return "assets/images/$cardName.png";
     }
-    return Assets.managerUiManagerGift03;
+    return Assets.managerUiManagerGift00;
   }
 
   static String getStatusUrl(id) {
