@@ -63,9 +63,9 @@ class SeasonRewardDialog extends GetView<SeaonRankController> {
   }
 
   Widget _rewardsItemWidget(int index) {
+    ///赛季奖励数据转list
     List<String> cupRewardList =
         controller.cupDefineList[index].cupReward.split(',');
-
     Widget cupRewardWidget = Container(
       padding: EdgeInsets.all(13.w),
       child: Column(
@@ -82,12 +82,13 @@ class SeasonRewardDialog extends GetView<SeaonRankController> {
           10.vGap,
           Row(
             children: [
-              ...cupRewardList.mapIndexed((cupIndex, cupItem) {
-                late int propIcon = 0;
+              ...cupRewardList.map((cupItem) {
+                String propIcon = '';
+
+                /// 获取道具图标
                 for (var element in controller.propDefineList) {
                   if (element.propId.toString() == cupItem.split('_')[1]) {
                     propIcon = element.propIcon;
-                    print(propIcon);
                   }
                 }
                 return Container(
@@ -101,49 +102,22 @@ class SeasonRewardDialog extends GetView<SeaonRankController> {
                               iconHeight: 41.w,
                               fit: BoxFit.contain,
                               icon: Assets.managerUiManagerGift01)),
-                      Text('Icon:$propIcon',
-                          style: 14.w5(fontFamily: FontFamily.fOswaldRegular)),
-                      Text('10 k',
+                      // Expanded(
+                      //     child: IconWidget(
+                      //         iconWidth: 41.w,
+                      //         iconHeight: 41.w,
+                      //         fit: BoxFit.contain,
+                      //         icon: 'assets/images/$propIcon.png')),
+                      // Text('Icon:$propIcon',
+                      //     style: 14.w5(fontFamily: FontFamily.fOswaldRegular)),
+                      Text(
+                          controller
+                              .formatToK(int.parse(cupItem.split('_')[2])),
                           style: 14.w5(fontFamily: FontFamily.fOswaldRegular))
                     ],
                   ),
                 );
               }),
-              // ...List.generate(
-
-              //     3,
-              //     (cupIndex) => Container(
-              //           margin: EdgeInsets.symmetric(
-              //               horizontal: 16.w, vertical: 2.w),
-              //           height: 57.w,
-              //           child: Column(
-              //             children: [
-              //               Expanded(
-              //                   child: cupIndex == 0
-              //                       ? IconWidget(
-              //                           iconWidth: 41.w,
-              //                           iconHeight: 41.w,
-              //                           fit: BoxFit.contain,
-              //                           icon: Assets.managerUiManagerGift01)
-              //                       : cupIndex == 1
-              //                           ? IconWidget(
-              //                               iconWidth: 40.w,
-              //                               iconHeight: 32.w,
-              //                               fit: BoxFit.contain,
-              //                               icon: Assets.commonUiCommonProp05)
-              //                           : IconWidget(
-              //                               iconWidth: 34.w,
-              //                               iconHeight: 34.w,
-              //                               fit: BoxFit.contain,
-              //                               icon: Assets
-              //                                   .commonUiCommonIconCurrency02)),
-              //               Text('$cupIndex k',
-              //                   style: 14
-              //                       .w5(fontFamily: FontFamily.fOswaldRegular))
-              //             ],
-              //           ),
-              //         )),
-              // const Spacer(),
             ],
           )
         ],

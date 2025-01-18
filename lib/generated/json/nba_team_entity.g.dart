@@ -39,6 +39,15 @@ NbaTeamEntity $NbaTeamEntityFromJson(Map<String, dynamic> json) {
   if (teamEname != null) {
     nbaTeamEntity.teamEname = teamEname;
   }
+  final String? teamColors = jsonConvert.convert<String>(json['teamColors']);
+  if (teamColors != null) {
+    nbaTeamEntity.teamColors = teamColors;
+  }
+  final String? archiveColors = jsonConvert.convert<String>(
+      json['archiveColors']);
+  if (archiveColors != null) {
+    nbaTeamEntity.archiveColors = archiveColors;
+  }
   return nbaTeamEntity;
 }
 
@@ -53,6 +62,8 @@ Map<String, dynamic> $NbaTeamEntityToJson(NbaTeamEntity entity) {
   data['teamDivision'] = entity.teamDivision;
   data['nbaId'] = entity.nbaId;
   data['teamEname'] = entity.teamEname;
+  data['teamColors'] = entity.teamColors;
+  data['archiveColors'] = entity.archiveColors;
   return data;
 }
 
@@ -67,6 +78,8 @@ extension NbaTeamEntityExtension on NbaTeamEntity {
     int? teamDivision,
     int? nbaId,
     String? teamEname,
+    String? teamColors,
+    String? archiveColors,
   }) {
     return NbaTeamEntity()
       ..force = force ?? this.force
@@ -77,6 +90,8 @@ extension NbaTeamEntityExtension on NbaTeamEntity {
       ..shortName = shortName ?? this.shortName
       ..teamDivision = teamDivision ?? this.teamDivision
       ..nbaId = nbaId ?? this.nbaId
-      ..teamEname = teamEname ?? this.teamEname;
+      ..teamEname = teamEname ?? this.teamEname
+      ..teamColors = teamColors ?? this.teamColors
+      ..archiveColors = archiveColors ?? this.archiveColors;
   }
 }

@@ -100,6 +100,17 @@ class SeaonRankController extends GetxController {
     return n.toString().padLeft(2, '0');
   }
 
+  /// 格式化为Kd单位
+  String formatToK(num value) {
+    if (value >= 1000) {
+      // Divide by 1000 and round to one decimal place, then directly return the string.
+      return '${(value / 1000).toStringAsFixed(0)}k';
+    } else {
+      // If the value is less than 1000, return it as a string without 'k'.
+      return value.toString();
+    }
+  }
+
   void goSeasonRankDialog() {
     showModalBottomSheet(
         isScrollControlled: true,

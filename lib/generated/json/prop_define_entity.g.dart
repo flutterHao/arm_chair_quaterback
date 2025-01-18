@@ -59,7 +59,7 @@ PropDefineEntity $PropDefineEntityFromJson(Map<String, dynamic> json) {
   if (propChn != null) {
     propDefineEntity.propChn = propChn;
   }
-  final int? propIcon = jsonConvert.convert<int>(json['propIcon']);
+  final String? propIcon = jsonConvert.convert<String>(json['propIcon']);
   if (propIcon != null) {
     propDefineEntity.propIcon = propIcon;
   }
@@ -137,7 +137,7 @@ extension PropDefineEntityExtension on PropDefineEntity {
     int? linkId,
     int? linkId2,
     String? propChn,
-    int? propIcon,
+    String? propIcon,
     int? propId,
     String? propName,
     int? propType,

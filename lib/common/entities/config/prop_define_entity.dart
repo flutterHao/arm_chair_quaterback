@@ -19,7 +19,7 @@ class PropDefineEntity {
   late int linkId = 0;
   late int linkId2 = 0;
   late String propChn = '';
-  late int propIcon = 0;
+  late String propIcon = '';
   late int propId = 0;
   late String propName = '';
   late int propType = 0;
