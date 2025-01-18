@@ -120,7 +120,9 @@ class MatchLevelDialog extends GetView<SeaonRankController> {
                   children: [
                     IconWidget(
                         iconWidth: 46.w,
-                        icon: Assets.managerUiManagerGameGrade01),
+                        icon:
+                            'assets/images/manager/${controller.cupDefineList[index].cupPicId}.png',
+                        fieldPath: Assets.managerUiManagerGameGrade01),
                     16.hGap,
                     Expanded(
                       child: Column(

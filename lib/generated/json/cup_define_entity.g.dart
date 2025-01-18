@@ -20,7 +20,7 @@ CupDefineEntity $CupDefineEntityFromJson(Map<String, dynamic> json) {
   if (cupNumId != null) {
     cupDefineEntity.cupNumId = cupNumId;
   }
-  final int? cupPicId = jsonConvert.convert<int>(json['cupPicId']);
+  final String? cupPicId = jsonConvert.convert<String>(json['cupPicId']);
   if (cupPicId != null) {
     cupDefineEntity.cupPicId = cupPicId;
   }
@@ -80,7 +80,7 @@ extension CupDefineEntityExtension on CupDefineEntity {
     int? cupDailyReward,
     List<int>? cupNum,
     int? cupNumId,
-    int? cupPicId,
+    String? cupPicId,
     String? cupReward,
     String? desc,
     int? loseCup,

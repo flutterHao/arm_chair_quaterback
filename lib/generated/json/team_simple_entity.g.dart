@@ -3,17 +3,17 @@ import 'package:arm_chair_quaterback/common/entities/team_simple_entity.dart';
 
 TeamSimpleEntity $TeamSimpleEntityFromJson(Map<String, dynamic> json) {
   final TeamSimpleEntity teamSimpleEntity = TeamSimpleEntity();
-  final int? teamLogo = jsonConvert.convert<int>(json['teamLogo']);
-  if (teamLogo != null) {
-    teamSimpleEntity.teamLogo = teamLogo;
-  }
   final String? teamName = jsonConvert.convert<String>(json['teamName']);
   if (teamName != null) {
     teamSimpleEntity.teamName = teamName;
   }
-  final int? winCount = jsonConvert.convert<int>(json['winCount']);
-  if (winCount != null) {
-    teamSimpleEntity.winCount = winCount;
+  final int? totalGames = jsonConvert.convert<int>(json['totalGames']);
+  if (totalGames != null) {
+    teamSimpleEntity.totalGames = totalGames;
+  }
+  final String? signature = jsonConvert.convert<String>(json['signature']);
+  if (signature != null) {
+    teamSimpleEntity.signature = signature;
   }
   final int? teamGrade = jsonConvert.convert<int>(json['teamGrade']);
   if (teamGrade != null) {
@@ -31,13 +31,54 @@ TeamSimpleEntity $TeamSimpleEntityFromJson(Map<String, dynamic> json) {
   if (vipGrade != null) {
     teamSimpleEntity.vipGrade = vipGrade;
   }
-  final int? friendType = jsonConvert.convert<int>(json['friendType']);
-  if (friendType != null) {
-    teamSimpleEntity.friendType = friendType;
+  final int? maxGameWinningStreak = jsonConvert.convert<int>(
+      json['maxGameWinningStreak']);
+  if (maxGameWinningStreak != null) {
+    teamSimpleEntity.maxGameWinningStreak = maxGameWinningStreak;
+  }
+  final int? cupRankId = jsonConvert.convert<int>(json['cupRankId']);
+  if (cupRankId != null) {
+    teamSimpleEntity.cupRankId = cupRankId;
   }
   final int? expertTop = jsonConvert.convert<int>(json['expertTop']);
   if (expertTop != null) {
     teamSimpleEntity.expertTop = expertTop;
+  }
+  final int? guessSuccessRate = jsonConvert.convert<int>(
+      json['guessSuccessRate']);
+  if (guessSuccessRate != null) {
+    teamSimpleEntity.guessSuccessRate = guessSuccessRate;
+  }
+  final int? teamLogo = jsonConvert.convert<int>(json['teamLogo']);
+  if (teamLogo != null) {
+    teamSimpleEntity.teamLogo = teamLogo;
+  }
+  final int? winCount = jsonConvert.convert<int>(json['winCount']);
+  if (winCount != null) {
+    teamSimpleEntity.winCount = winCount;
+  }
+  final int? currentWinGames = jsonConvert.convert<int>(
+      json['currentWinGames']);
+  if (currentWinGames != null) {
+    teamSimpleEntity.currentWinGames = currentWinGames;
+  }
+  final int? currentContinuousLoss = jsonConvert.convert<int>(
+      json['currentContinuousLoss']);
+  if (currentContinuousLoss != null) {
+    teamSimpleEntity.currentContinuousLoss = currentContinuousLoss;
+  }
+  final int? currentGameWinningStreak = jsonConvert.convert<int>(
+      json['currentGameWinningStreak']);
+  if (currentGameWinningStreak != null) {
+    teamSimpleEntity.currentGameWinningStreak = currentGameWinningStreak;
+  }
+  final int? friendType = jsonConvert.convert<int>(json['friendType']);
+  if (friendType != null) {
+    teamSimpleEntity.friendType = friendType;
+  }
+  final int? maxCup = jsonConvert.convert<int>(json['maxCup']);
+  if (maxCup != null) {
+    teamSimpleEntity.maxCup = maxCup;
   }
   final int? teamId = jsonConvert.convert<int>(json['teamId']);
   if (teamId != null) {
@@ -65,77 +106,112 @@ TeamSimpleEntity $TeamSimpleEntityFromJson(Map<String, dynamic> json) {
   if (wearNicknameId != null) {
     teamSimpleEntity.wearNicknameId = wearNicknameId;
   }
+  final double? gameWinRate = jsonConvert.convert<double>(json['gameWinRate']);
+  if (gameWinRate != null) {
+    teamSimpleEntity.gameWinRate = gameWinRate;
+  }
   final int? betCoin = jsonConvert.convert<int>(json['betCoin']);
   if (betCoin != null) {
     teamSimpleEntity.betCoin = betCoin;
   }
-  final double? guessSuccessRate = jsonConvert.convert<double>(
-      json['guessSuccessRate']);
-  if (guessSuccessRate != null) {
-    teamSimpleEntity.guessSuccessRate = guessSuccessRate;
+  final int? cup = jsonConvert.convert<int>(json['cup']);
+  if (cup != null) {
+    teamSimpleEntity.cup = cup;
   }
   return teamSimpleEntity;
 }
 
 Map<String, dynamic> $TeamSimpleEntityToJson(TeamSimpleEntity entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
-  data['teamLogo'] = entity.teamLogo;
   data['teamName'] = entity.teamName;
-  data['winCount'] = entity.winCount;
+  data['totalGames'] = entity.totalGames;
+  data['signature'] = entity.signature;
   data['teamGrade'] = entity.teamGrade;
   data['serverId'] = entity.serverId;
   data['lastGuess'] = entity.lastGuess;
   data['vipGrade'] = entity.vipGrade;
-  data['friendType'] = entity.friendType;
+  data['maxGameWinningStreak'] = entity.maxGameWinningStreak;
+  data['cupRankId'] = entity.cupRankId;
   data['expertTop'] = entity.expertTop;
+  data['guessSuccessRate'] = entity.guessSuccessRate;
+  data['teamLogo'] = entity.teamLogo;
+  data['winCount'] = entity.winCount;
+  data['currentWinGames'] = entity.currentWinGames;
+  data['currentContinuousLoss'] = entity.currentContinuousLoss;
+  data['currentGameWinningStreak'] = entity.currentGameWinningStreak;
+  data['friendType'] = entity.friendType;
+  data['maxCup'] = entity.maxCup;
   data['teamId'] = entity.teamId;
   data['currTeamStrength'] = entity.currTeamStrength;
   data['logoBoxId'] = entity.logoBoxId;
   data['lastOffLineTime'] = entity.lastOffLineTime;
   data['online'] = entity.online;
   data['wearNicknameId'] = entity.wearNicknameId;
+  data['gameWinRate'] = entity.gameWinRate;
   data['betCoin'] = entity.betCoin;
-  data['guessSuccessRate'] = entity.guessSuccessRate;
+  data['cup'] = entity.cup;
   return data;
 }
 
 extension TeamSimpleEntityExtension on TeamSimpleEntity {
   TeamSimpleEntity copyWith({
-    int? teamLogo,
     String? teamName,
-    int? winCount,
+    int? totalGames,
+    String? signature,
     int? teamGrade,
     String? serverId,
     String? lastGuess,
     int? vipGrade,
-    int? friendType,
+    int? maxGameWinningStreak,
+    int? cupRankId,
     int? expertTop,
+    int? guessSuccessRate,
+    int? teamLogo,
+    int? winCount,
+    int? currentWinGames,
+    int? currentContinuousLoss,
+    int? currentGameWinningStreak,
+    int? friendType,
+    int? maxCup,
     int? teamId,
     int? currTeamStrength,
     int? logoBoxId,
     int? lastOffLineTime,
     bool? online,
     int? wearNicknameId,
+    double? gameWinRate,
     int? betCoin,
-    double? guessSuccessRate,
+    int? cup,
   }) {
     return TeamSimpleEntity()
-      ..teamLogo = teamLogo ?? this.teamLogo
       ..teamName = teamName ?? this.teamName
-      ..winCount = winCount ?? this.winCount
+      ..totalGames = totalGames ?? this.totalGames
+      ..signature = signature ?? this.signature
       ..teamGrade = teamGrade ?? this.teamGrade
       ..serverId = serverId ?? this.serverId
       ..lastGuess = lastGuess ?? this.lastGuess
       ..vipGrade = vipGrade ?? this.vipGrade
-      ..friendType = friendType ?? this.friendType
+      ..maxGameWinningStreak = maxGameWinningStreak ?? this.maxGameWinningStreak
+      ..cupRankId = cupRankId ?? this.cupRankId
       ..expertTop = expertTop ?? this.expertTop
+      ..guessSuccessRate = guessSuccessRate ?? this.guessSuccessRate
+      ..teamLogo = teamLogo ?? this.teamLogo
+      ..winCount = winCount ?? this.winCount
+      ..currentWinGames = currentWinGames ?? this.currentWinGames
+      ..currentContinuousLoss = currentContinuousLoss ??
+          this.currentContinuousLoss
+      ..currentGameWinningStreak = currentGameWinningStreak ??
+          this.currentGameWinningStreak
+      ..friendType = friendType ?? this.friendType
+      ..maxCup = maxCup ?? this.maxCup
       ..teamId = teamId ?? this.teamId
       ..currTeamStrength = currTeamStrength ?? this.currTeamStrength
       ..logoBoxId = logoBoxId ?? this.logoBoxId
       ..lastOffLineTime = lastOffLineTime ?? this.lastOffLineTime
       ..online = online ?? this.online
       ..wearNicknameId = wearNicknameId ?? this.wearNicknameId
+      ..gameWinRate = gameWinRate ?? this.gameWinRate
       ..betCoin = betCoin ?? this.betCoin
-      ..guessSuccessRate = guessSuccessRate ?? this.guessSuccessRate;
+      ..cup = cup ?? this.cup;
   }
 }

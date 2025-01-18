@@ -9,7 +9,7 @@ class CupDefineEntity {
   late int cupDailyReward = 0;
   late List<int> cupNum = [];
   late int cupNumId = 0;
-  late int cupPicId = 0;
+  late String cupPicId = '';
   late String cupReward = '';
   late String desc = '';
   late int loseCup = 0;

@@ -1,8 +1,10 @@
 import 'dart:async';
-
-import 'package:arm_chair_quaterback/common/entities/config/prop_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/cup_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/team_simple_entity.dart';
+import 'package:arm_chair_quaterback/common/enums/load_status.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
+import 'package:arm_chair_quaterback/common/net/apis/picks.dart';
+import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/team/seaon_rank/dialog/match_level_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/seaon_rank/dialog/season_rank_dialog.dart';
 import 'package:arm_chair_quaterback/pages/team/seaon_rank/dialog/season_reward_dialog.dart';
@@ -24,22 +26,17 @@ class SeaonRankController extends GetxController {
   final PageController seaDialogPageController = PageController();
   RxInt pageviewIndex = 0.obs;
   RxList<CupDefineEntity> cupDefineList = RxList<CupDefineEntity>();
+  Rx<LoadDataStatus> loadingStatus = LoadDataStatus.loading.obs;
+  late Rx<TeamSimpleEntity> teamSimpleEntity;
   RxList<List> seasonRankList = [
-    [
-      'assets/images/team/season_rank/1.png',
-    ],
-    [
-      'assets/images/team/season_rank/2.png',
-    ],
-    [
-      'assets/images/team/season_rank/3.png',
-    ]
+    ['1'],
+    ['a'],
+    ['/3.png']
   ].obs;
 
   @override
   void onInit() {
     super.onInit();
-
     timeCountDown();
     initData();
   }
@@ -57,7 +54,11 @@ class SeaonRankController extends GetxController {
   }
 
   Future initData() async {
+    HomeController homeController = Get.find();
+    int teamId = homeController.userEntiry.teamLoginInfo?.team?.teamId ?? 0;
+    teamSimpleEntity = (await PicksApi.getTeamSimple(teamId)).obs;
     cupDefineList.value = await CacheApi.getCupDefine();
+    loadingStatus.value = LoadDataStatus.success;
   }
 
   void timeCountDown() {
@@ -134,5 +135,10 @@ class SeaonRankController extends GetxController {
         builder: (context) {
           return const MatchLevelDialog();
         });
+  }
+
+  String getcupUrl(int cardId) {
+    var item = cupDefineList.firstWhere((e) => e.cupNumId == cardId);
+    return 'assets/images/manager/${item.cupPicId}.png';
   }
 }

@@ -19,178 +19,188 @@ class LegendaryManagerWidget extends StatefulWidget {
 }
 
 class _LegendaryManagerWidgetState extends State<LegendaryManagerWidget> {
-  SeaonRankController seasonRankCtr = Get.find();
+  SeaonRankController controller = Get.find();
   @override
   Widget build(BuildContext context) {
     return Padding(
         padding: EdgeInsets.only(top: 9.w),
-        child: Stack(
-          children: [
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 20.w, horizontal: 20.w),
-              decoration: BoxDecoration(
-                  color: AppColors.cFFFFFF,
-                  borderRadius: BorderRadius.circular(4.5.w)),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'LEGENDARY MANAGER 3',
-                    style: 24.w5(fontFamily: FontFamily.fOswaldMedium),
-                  ),
-                  22.vGap,
-                  Stack(
+        child: Obx(() => Stack(
+              children: [
+                Container(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 20.w, horizontal: 20.w),
+                  decoration: BoxDecoration(
+                      color: AppColors.cFFFFFF,
+                      borderRadius: BorderRadius.circular(4.5.w)),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      67.vGap,
-                      Row(children: [
-                        const Spacer(),
-                        SizedBox(
-                            height: 67.w,
-                            width: 282.w,
-                            child: Column(
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.symmetric(vertical: 4.w),
-                                  padding: EdgeInsets.only(top: 4.w),
-                                  child: Row(
-                                    children: [
-                                      const Spacer(),
-                                      IconWidget(
-                                          iconWidth: 20.w,
-                                          icon: Assets
-                                              .managerUiManagerIconCurrency04),
-                                      5.hGap,
-                                      Text(
-                                        '15300/20000',
-                                        style: 14.w5(
-                                            fontFamily:
-                                                FontFamily.fOswaldMedium),
-                                      ),
-                                      const Spacer(),
-                                      _detailButton()
-                                    ],
-                                  ),
-                                ),
-                                Expanded(
-                                    child: Stack(
-                                  clipBehavior: Clip.none,
-                                  children: [
-                                    Positioned(
-                                      top: 0.w,
-                                      left: -4.w,
-                                      child: CustomLinearProgressBar(
-                                          width: 282.w,
-                                          height: 14.w,
-                                          progressColor: AppColors.c000000,
-                                          backgroundColor: AppColors.cFFFFFF,
-                                          progress: 0.2),
-                                    ),
-                                    Positioned(
-                                      top: 0.w,
-                                      left: -4.w,
-                                      child: Container(
-                                        width: 282.w,
-                                        height: 14.w,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(7.w),
-                                            border: Border.all(
-                                                width: 1,
-                                                color: AppColors.cD1D1D1)),
-                                      ),
-                                    ),
-                                  ],
-                                ))
-                              ],
-                            )),
-                      ]),
-                      Positioned(
-                        left: 0,
-                        child: IconWidget(
-                            iconWidth: 57.w,
-                            iconHeight: 67.w,
-                            icon: Assets.managerUiManagerGameGrade01),
-                      )
+                      Text(
+                        'LEGENDARY MANAGER 3',
+                        style: 24.w5(fontFamily: FontFamily.fOswaldMedium),
+                      ),
+                      22.vGap,
+                      _processWidget(),
+                      18.vGap,
+                      _contestsWonWidget()
                     ],
                   ),
-                  22.vGap,
-                  IntrinsicHeight(
+                ),
+                Positioned(right: 10.w, top: 10.w, child: _shareButton())
+              ],
+            )));
+  }
+
+  Widget _processWidget() {
+    return Stack(
+      children: [
+        67.vGap,
+        Row(children: [
+          const Spacer(),
+          SizedBox(
+              height: 67.w,
+              width: 282.w,
+              child: Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 4.w),
+                    padding: EdgeInsets.only(top: 4.w),
                     child: Row(
                       children: [
-                        Expanded(
-                            child: Column(
-                          children: [
-                            Text(
-                              'Contests Won',
-                              style:
-                                  12.w5(fontFamily: FontFamily.fRobotoRegular),
-                            ),
-                            Text(
-                              '172',
-                              style: 35.w5(fontFamily: FontFamily.fOswaldBold),
-                            )
-                          ],
-                        )),
-                        const VerticalDivider(
-                          width: 1, // 增加宽度
-                          color: AppColors.cD1D1D1,
+                        const Spacer(),
+                        IconWidget(
+                            iconWidth: 20.w,
+                            icon: Assets.managerUiManagerIconCurrency04),
+                        5.hGap,
+                        Text(
+                          '${controller.teamSimpleEntity.value.cup}/${controller.teamSimpleEntity.value.maxCup}',
+                          style: 14.w5(fontFamily: FontFamily.fOswaldMedium),
                         ),
-                        Expanded(
-                            child: Padding(
-                          padding: EdgeInsets.only(left: 59.w),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'win Rate',
-                                style: 12
-                                    .w5(fontFamily: FontFamily.fRobotoRegular),
-                              ),
-                              Text.rich(TextSpan(
-                                  text: '17',
-                                  style:
-                                      35.w5(fontFamily: FontFamily.fOswaldBold),
-                                  children: [
-                                    TextSpan(
-                                      text: '%',
-                                      style: 20.w5(
-                                          fontFamily: FontFamily.fOswaldBold),
-                                    )
-                                  ]))
-                            ],
-                          ),
-                        )),
+                        const Spacer(),
+                        _detailButton()
                       ],
                     ),
-                  )
+                  ),
+                  Expanded(
+                      child: Stack(
+                    children: [
+                      Positioned(
+                        top: 0.w,
+                        left: -4.w,
+                        child: CustomLinearProgressBar(
+                            width: 282.w,
+                            height: 14.w,
+                            progressColor: AppColors.c000000,
+                            backgroundColor: AppColors.cFFFFFF,
+                            progress: controller.teamSimpleEntity.value.cup /
+                                controller.teamSimpleEntity.value.maxCup),
+                      ),
+                      Positioned(
+                        top: 0.w,
+                        left: -4.w,
+                        child: Container(
+                          width: 282.w,
+                          height: 14.w,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(7.w),
+                              border: Border.all(
+                                  width: 1, color: AppColors.cD1D1D1)),
+                        ),
+                      ),
+                    ],
+                  ))
                 ],
+              )),
+        ]),
+        Positioned(
+          left: 0,
+          bottom: 0,
+          child: IconWidget(
+            iconWidth: 57.w,
+            icon: controller
+                .getcupUrl(controller.teamSimpleEntity.value.cupRankId),
+            // icon: Assets.managerUiManagerGameGrade01
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget _contestsWonWidget() {
+    return IntrinsicHeight(
+      child: Row(
+        children: [
+          Expanded(
+              child: Column(
+            children: [
+              Text(
+                'Contests Won',
+                style: 12.w5(fontFamily: FontFamily.fRobotoRegular),
               ),
+              Text(
+                '${controller.teamSimpleEntity.value.currentWinGames}',
+                style: 35.w5(fontFamily: FontFamily.fOswaldBold),
+              )
+            ],
+          )),
+          const VerticalDivider(
+            width: 1, // 增加宽度
+            color: AppColors.cD1D1D1,
+          ),
+          Expanded(
+              child: Padding(
+            padding: EdgeInsets.only(left: 59.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'win Rate',
+                  style: 12.w5(fontFamily: FontFamily.fRobotoRegular),
+                ),
+                Text.rich(TextSpan(
+                    text:
+                        ((controller.teamSimpleEntity.value.gameWinRate) * 100)
+                            .toStringAsFixed(0),
+                    style: 35.w5(fontFamily: FontFamily.fOswaldBold),
+                    children: [
+                      TextSpan(
+                        text: '%',
+                        style: 20.w5(fontFamily: FontFamily.fOswaldBold),
+                      )
+                    ]))
+              ],
             ),
-            Positioned(
-              right: 10.w,
-              top: 10.w,
-              child: Container(
-                width: 24.w,
-                height: 24.w,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4.w),
-                  border: Border.all(color: AppColors.c666666.withOpacity(0.3)),
-                ),
-                child: IconWidget(
-                  iconWidth: 16.w,
-                  icon: Assets.commonUiCommonIconSystemShare,
-                  iconColor: AppColors.c000000,
-                ),
-              ),
-            )
-          ],
-        ));
+          )),
+        ],
+      ),
+    );
+  }
+
+  Widget _shareButton() {
+    return InkWell(
+      onTap: () {
+        print('shark');
+      },
+      child: Container(
+        width: 24.w,
+        height: 24.w,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(4.w),
+          border: Border.all(color: AppColors.c666666.withOpacity(0.3)),
+        ),
+        child: IconWidget(
+          iconWidth: 16.w,
+          icon: Assets.commonUiCommonIconSystemShare,
+          iconColor: AppColors.c000000,
+        ),
+      ),
+    );
   }
 
   Widget _detailButton() {
     return MtInkWell(
       onTap: () {
-        seasonRankCtr.goMatchLevelDialog();
+        controller.goMatchLevelDialog();
       },
       child: Row(
         mainAxisSize: MainAxisSize.min,
