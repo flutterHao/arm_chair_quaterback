@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-26 16:49:14
- * @LastEditTime: 2025-01-17 15:55:31
+ * @LastEditTime: 2025-01-18 19:33:30
  */
 
 import 'dart:async';
@@ -78,6 +78,9 @@ class TeamIndexController extends GetxController
   @override
   void onInit() {
     super.onInit();
+    for (int i = 0; i < 4; i++) {
+      cardPackInfo.card.add(CardPackInfoCard(status: -1));
+    }
     subscription = WSInstance.netStream.listen((_) {
       if (!loadDataSuccess) {
         _initData();
@@ -116,6 +119,7 @@ class TeamIndexController extends GetxController
   @override
   void onReady() {
     super.onReady();
+
     _initData();
   }
 

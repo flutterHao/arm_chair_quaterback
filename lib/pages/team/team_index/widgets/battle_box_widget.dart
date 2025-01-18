@@ -29,9 +29,9 @@ class BattleBoxWidget extends GetView<TeamIndexController> {
     return GetBuilder<TeamIndexController>(
         id: "battleBox",
         builder: (context) {
-          if (controller.cardPackInfo.card.isEmpty) {
-            return const SizedBox.shrink();
-          }
+          // if (controller.cardPackInfo.card.isEmpty) {
+          //   return const SizedBox.shrink();
+          // }
           bool noWait =
               controller.cardPackInfo.card.where((e) => e.status == 1).isEmpty;
           return Container(
