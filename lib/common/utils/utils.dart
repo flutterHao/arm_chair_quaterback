@@ -410,7 +410,7 @@ class Utils {
   static String getBoxImageUrl(int cardId) {
     if (CacheApi.cardPackDefineMap[cardId] != null) {
       String cardName = CacheApi.cardPackDefineMap[cardId]!.cardPackIcon;
-      return "assets/images/manager/$cardName.png";
+      return "assets/images/$cardName.png";
     }
     return Assets.managerUiManagerGift03;
   }
