@@ -2,21 +2,17 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-01-10 09:53:30
- * @LastEditTime: 2025-01-17 18:20:40
+ * @LastEditTime: 2025-01-18 16:36:23
  */
-import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/player_collect_entity.dart';
-import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/routers/names.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
-import 'package:arm_chair_quaterback/common/utils/logger.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/image_widget.dart';
-import 'package:arm_chair_quaterback/common/widgets/load_status_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/out_line_text.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -64,6 +60,7 @@ class IllustrationList extends StatelessWidget {
                     ),
                   ),
                   MtInkWell(
+                    splashColor: Colors.transparent,
                     onTap: () {
                       showModalBottomSheet(
                         isScrollControlled: true,
@@ -167,11 +164,12 @@ class _Item extends GetView<IllustratiionsController> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
-        var result = await Get.toNamed(
+        await Get.toNamed(
           RouteNames.illustrationDetail,
           arguments: item,
         );
-        if (result) controller.getPlayerCollectInfo();
+        // if (result == true)
+        controller.getPlayerCollectInfo();
       },
       child: Center(
         child: Column(

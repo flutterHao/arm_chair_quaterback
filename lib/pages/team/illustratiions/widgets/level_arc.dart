@@ -103,6 +103,7 @@ class LevelWidget extends StatelessWidget {
                     top: 7.w,
                     right: 6.w,
                     child: MtInkWell(
+                      splashColor: Colors.transparent,
                       onTap: () {
                         showModalBottomSheet(
                             isScrollControlled: true,

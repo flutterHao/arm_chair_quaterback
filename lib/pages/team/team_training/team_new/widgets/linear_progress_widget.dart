@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 20:30:20
- * @LastEditTime: 2025-01-10 15:03:19
+ * @LastEditTime: 2025-01-18 18:04:04
  */
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +16,7 @@ class CustomLinearProgressBar extends StatefulWidget {
   final Color? backgroundColor; // 背景颜色
   final Color? progressColor; // 进度颜色
   final int milliseconds;
+  final BorderRadius? borderRadius;
 
   const CustomLinearProgressBar({
     super.key,
@@ -25,6 +26,7 @@ class CustomLinearProgressBar extends StatefulWidget {
     this.backgroundColor,
     this.progressColor,
     this.milliseconds = 500,
+    this.borderRadius,
   });
 
   @override
@@ -85,12 +87,14 @@ class _CustomLinearProgressBarState extends State<CustomLinearProgressBar>
         animation: _animation,
         builder: (context, child) {
           return ClipRRect(
-            borderRadius: BorderRadius.circular((widget.height ?? 20) / 2),
+            borderRadius: widget.borderRadius ??
+                BorderRadius.circular((widget.height ?? 20) / 2),
             child: LinearProgressIndicator(
               value: _animation.value,
               backgroundColor: widget.backgroundColor ?? AppColors.cD7D7D7,
               color: widget.progressColor ?? AppColors.c10A86A,
-              borderRadius: BorderRadius.circular((widget.height ?? 4.w) / 2),
+              borderRadius: widget.borderRadius ??
+                  BorderRadius.circular((widget.height ?? 4.w) / 2),
             ),
           );
         },

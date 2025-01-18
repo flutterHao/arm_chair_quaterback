@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-01-09 15:57:09
- * @LastEditTime: 2025-01-17 18:09:43
+ * @LastEditTime: 2025-01-18 15:28:39
  */
 import 'dart:math';
 
@@ -69,6 +69,7 @@ class IllustratiionsDetail extends GetView<IlluSctrationDtlCtrl> {
       init: IlluSctrationDtlCtrl(player),
       id: "detail",
       builder: (_) {
+        Log.d("__canScroller${controller.currentY == 143.w}");
         int teamId = Utils.getPlayBaseInfo(player.playerId).teamId;
         String teamName =
             ObjectUtil.isNotEmpty(Utils.getTeamInfo(teamId).teamEname)
@@ -244,7 +245,8 @@ class IllustratiionsDetail extends GetView<IlluSctrationDtlCtrl> {
                           bottom: 0,
                           child: SingleChildScrollView(
                             controller: controller.scrollController,
-                            physics: (controller.currentY == 143.w)
+                            physics: (controller.currentY == 143.w &&
+                                    controller.scale == 0)
                                 ? const ClampingScrollPhysics()
                                 : const NeverScrollableScrollPhysics(),
                             child: Container(

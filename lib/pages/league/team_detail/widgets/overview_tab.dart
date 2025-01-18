@@ -678,11 +678,16 @@ class _RecentMatch extends StatelessWidget {
     var last5 = controller.teamDetailEntity.last5GameSchedule;
     var list = last5.schedule.map((e) {
       int index = last5.schedule.indexOf(e);
-      var item = last5.scoreAvg[index];
-      var dateStr = item.gameDate.split(",").first;
-      var score =
-          (item.getValue(controller.getCurrentType()) * 10).roundToDouble() /
-              10;
+      double score = 0;
+      var dateStr = "";
+      if (last5.scoreAvg.length > index) {
+        var item = last5.scoreAvg[index];
+        dateStr = item.gameDate.split(",").first;
+        score =
+            (item.getValue(controller.getCurrentType()) * 10).roundToDouble() /
+                10;
+      }
+
       int vsTeamId =
           e.homeTeamId == controller.teamId ? e.awayTeamId : e.homeTeamId;
       Color color =

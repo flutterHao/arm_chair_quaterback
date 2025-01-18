@@ -698,7 +698,7 @@ class TrainingController extends GetxController
       //更新球员状态
       Get.find<TeamController>().updateTeamInfo();
       update(["training_page"]);
-      updateScroller();
+
       await Future.delayed(const Duration(milliseconds: 500));
     }
 
@@ -933,6 +933,7 @@ class TrainingController extends GetxController
           showStatus.value = false;
           arrowAnimCtrl.reset();
           arrowAnimCtrl.stop();
+          updateScroller();
         });
       });
     }

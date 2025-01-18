@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2025-01-17 15:11:03
- * @LastEditTime: 2025-01-17 17:45:14
+ * @LastEditTime: 2025-01-18 16:35:05
  */
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/entities/help_entity.dart';
@@ -10,7 +10,6 @@ import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/custom_dialog.dart';
-import 'package:arm_chair_quaterback/pages/team/illustratiions/widgets/filter_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -62,9 +61,9 @@ class _HelpDialogState extends State<HelpDialog> {
             ),
             Expanded(
               child: ListView.separated(
+                  physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
                     List<String> item = list[index].split('<T1>');
-
                     return Container(
                       padding: EdgeInsets.symmetric(
                           vertical: 15.w, horizontal: 18.w),
@@ -83,7 +82,8 @@ class _HelpDialogState extends State<HelpDialog> {
                               margin: EdgeInsets.only(
                                   top: 10.w, left: 18.w, right: 18.w),
                               child: Text(
-                                item[1],
+                                item[1].replaceAll(r"\n", '\n'),
+                                softWrap: true,
                                 style: 14.w4(
                                     fontFamily: FontFamily.fRobotoRegular,
                                     color: AppColors.c4D4D4D,

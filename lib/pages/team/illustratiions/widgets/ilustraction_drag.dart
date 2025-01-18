@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-27 17:09:20
- * @LastEditTime: 2025-01-17 20:58:00
+ * @LastEditTime: 2025-01-18 15:30:02
  */
 import 'package:arm_chair_quaterback/common/net/apis/news.dart';
 import 'package:arm_chair_quaterback/common/utils/logger.dart';
@@ -42,7 +42,7 @@ class _IllustractionDragWidgetState extends State<IllustractionDragWidget>
   late Tween<double> tween;
 
   /// 回收动画的最小时长
-  int minMilliseconds = 200;
+  int minMilliseconds = 150;
 
   /// 回收动画的最大时长
   int maxMilliseconds = 300;
@@ -91,10 +91,10 @@ class _IllustractionDragWidgetState extends State<IllustractionDragWidget>
     }
 
     onVerticalDragEnd(DragEndDetails detail) {
-      if (ctrl.scrollController.position.pixels != 0 &&
-          ctrl.currentY == 143.w) {
-        return;
-      }
+      // if (ctrl.scrollController.position.pixels != 0 &&
+      //     ctrl.currentY == 143.w) {
+      //   return;
+      // }
       // //结束更新当前位置
       offsetY = detail.localPosition.dy - startY;
       ctrl.currentY = (ctrl.currentY + offsetY).clamp(143.w, 437.w);
@@ -161,7 +161,8 @@ class _IllustractionDragWidgetState extends State<IllustractionDragWidget>
 
     // animationController.value=ctrl.currentY;
     animationController.reset();
-
+    animationController.duration = Duration(
+        milliseconds: velocity > 1000 ? minMilliseconds : minMilliseconds);
     isReset = true;
     if ((offsetY > 0 && velocity > 1500) ||
         (offsetY > 100 && velocity > 1000) ||
@@ -169,12 +170,9 @@ class _IllustractionDragWidgetState extends State<IllustractionDragWidget>
         offsetY > height * 2 / 5) {
       tween.begin = current;
       tween.end = 438.w;
-      animationController.duration = Duration(
-          milliseconds: velocity > 1000 ? minMilliseconds : minMilliseconds);
     } else {
       tween.begin = current;
       tween.end = 143.w;
-      animationController.duration = Duration(milliseconds: maxMilliseconds);
     }
     offsetY = 0;
     isReset = false;

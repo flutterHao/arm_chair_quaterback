@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: lihonghao
  * @Date: 2024-09-28 20:33:28
- * @LastEditTime: 2025-01-10 19:44:41
+ * @LastEditTime: 2025-01-18 17:57:42
  */
 // import 'package:arm_chair_quaterback/pages/news/new_detail/bindings.dart';
 // import 'package:arm_chair_quaterback/pages/news/new_detail/view.dart';
@@ -40,7 +40,6 @@ import 'package:arm_chair_quaterback/pages/team/illustratiions/widgets/illustrac
 import 'package:arm_chair_quaterback/pages/team/seaon_rank/binding.dart';
 import 'package:arm_chair_quaterback/pages/team/seaon_rank/view.dart';
 import 'package:arm_chair_quaterback/pages/team/team_battle/view.dart';
-import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_detail_page.dart';
 import 'package:arm_chair_quaterback/pages/team/team_beauty/beauty_page.dart';
 import 'package:arm_chair_quaterback/pages/team/team_index/open_box/open_box_page.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/team_new/view.dart';
@@ -74,11 +73,6 @@ class AppPages {
         arguments: Get.arguments,
       ),
     ),
-    GetPage(
-        name: RouteNames.teamBeautyDetail,
-        opaque: false,
-        page: () => const BeautyDetailPage(),
-        transition: Transition.fadeIn),
     GetPage(
       name: RouteNames.league,
       page: () => const LeaguePage(),
