@@ -7,6 +7,7 @@
 import 'dart:convert';
 
 import 'package:arm_chair_quaterback/common/entities/all_team_players_by_up_star_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_game_info_v2_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_rank_by_cycle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/guess_top_reviews_entity.dart';
@@ -189,5 +190,12 @@ class PicksApi {
     });
     return json.map((key, value) => MapEntry(key,
         (value as List).map((item) => PerGameEntity.fromJson(item)).toList()));
+  }
+
+  static Future<List<GameSchedule>> getGameSchedules(int teamId,
+      [int limit = 5]) async {
+    List json = await httpUtil
+        .post(Api.getGameSchedules, data: {"teamId": teamId, "limit": limit});
+    return json.map((e) => GameSchedule.fromJson(e)).toList();
   }
 }

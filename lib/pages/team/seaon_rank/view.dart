@@ -14,7 +14,6 @@ import 'package:arm_chair_quaterback/pages/team/seaon_rank/widgets/season_reward
 import 'package:arm_chair_quaterback/pages/team/seaon_rank/widgets/season_top.dart';
 import 'package:encrypt/encrypt.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'index.dart';
 import 'widgets/legendary_manager.dart';

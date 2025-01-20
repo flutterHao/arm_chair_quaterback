@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:arm_chair_quaterback/common/entities/battle_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/cup_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/team_simple_entity.dart';
 import 'package:arm_chair_quaterback/common/enums/load_status.dart';
@@ -31,6 +32,7 @@ class SeaonRankController extends GetxController {
   Rx<LoadDataStatus> loadingStatus = LoadDataStatus.loading.obs;
   late Rx<TeamSimpleEntity> teamSimpleEntity;
   RxBool isShow = true.obs;
+  RxList<GameSchedule> gameScheduleList = RxList();
   RxList<List> seasonRankList = [
     ['1'],
     ['a'],
@@ -61,6 +63,7 @@ class SeaonRankController extends GetxController {
     int teamId = homeController.userEntiry.teamLoginInfo?.team?.teamId ?? 0;
     teamSimpleEntity = (await PicksApi.getTeamSimple(teamId)).obs;
     cupDefineList.value = await CacheApi.getCupDefine();
+    gameScheduleList.value = await PicksApi.getGameSchedules(teamId);
     loadingStatus.value = LoadDataStatus.success;
   }
 

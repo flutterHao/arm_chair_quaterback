@@ -177,6 +177,8 @@ class Api {
 
   ///match
   static const String teamMatch = "$API_BASE_PATH/match/teamMatch";
+  static const String getGameSchedules =
+      "$API_BASE_PATH/match/getGameSchedules";
 
   ///league
   static const String getNBAGameSchedules =

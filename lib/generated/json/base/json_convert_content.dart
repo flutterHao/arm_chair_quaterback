@@ -16,6 +16,7 @@ import 'package:arm_chair_quaterback/common/entities/cup_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/daily_task_wheel_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/dan_ma_ku_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/game_event_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/game_schedules_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/game_schedules_info.dart';
 import 'package:arm_chair_quaterback/common/entities/grade_in_stamina_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/grade_in_star_define_entity.dart';
@@ -335,6 +336,10 @@ class JsonConvert {
     if (<GameEventEntity>[] is M) {
       return data.map<GameEventEntity>((Map<String, dynamic> e) =>
           GameEventEntity.fromJson(e)).toList() as M;
+    }
+    if (<GameSchedulesEntity>[] is M) {
+      return data.map<GameSchedulesEntity>((Map<String, dynamic> e) =>
+          GameSchedulesEntity.fromJson(e)).toList() as M;
     }
     if (<GameSchedulesInfo>[] is M) {
       return data.map<GameSchedulesInfo>((Map<String, dynamic> e) =>
@@ -1125,6 +1130,7 @@ class JsonConvertClassCollection {
     (DailyTaskWheelEntity).toString(): DailyTaskWheelEntity.fromJson,
     (DanMaKuEntity).toString(): DanMaKuEntity.fromJson,
     (GameEventEntity).toString(): GameEventEntity.fromJson,
+    (GameSchedulesEntity).toString(): GameSchedulesEntity.fromJson,
     (GameSchedulesInfo).toString(): GameSchedulesInfo.fromJson,
     (GradeInStaminaEntity).toString(): GradeInStaminaEntity.fromJson,
     (GradeInStarDefineEntity).toString(): GradeInStarDefineEntity.fromJson,
