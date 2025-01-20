@@ -30,7 +30,7 @@ class SeaonRankController extends GetxController {
   RxList<CupDefineEntity> cupDefineList = RxList<CupDefineEntity>();
   Rx<LoadDataStatus> loadingStatus = LoadDataStatus.loading.obs;
   late Rx<TeamSimpleEntity> teamSimpleEntity;
-  RxBool isShow = false.obs;
+  RxBool isShow = true.obs;
   RxList<List> seasonRankList = [
     ['1'],
     ['a'],
@@ -145,11 +145,11 @@ class SeaonRankController extends GetxController {
     return 'assets/images/manager/${item.cupPicId}.png';
   }
 
+  ///监听元素是否可见
   onVisibilityChanged(VisibilityInfo visibilityInfo, int index) {
     var visiblePercentage = visibilityInfo.visibleFraction * 100;
     // Check if the item is mostly visible in the viewport and it's the target item.
     if (index == 9) {
-      print(visiblePercentage);
       visiblePercentage < 50 ? isShow.value = true : isShow.value = false;
     }
   }

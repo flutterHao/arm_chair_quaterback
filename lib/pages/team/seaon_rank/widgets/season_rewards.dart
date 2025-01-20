@@ -71,26 +71,24 @@ class _SeasonRewadsWidgetState extends State<SeasonRewardsWidget> {
                         child: Column(
                           children: [
                             Expanded(
-                              child: Expanded(
-                                  child: cupIndex == 0
-                                      ? IconWidget(
-                                          iconWidth: 41.w,
-                                          iconHeight: 41.w,
-                                          fit: BoxFit.contain,
-                                          icon: Assets.managerUiManagerGift01)
-                                      : cupIndex == 1
-                                          ? IconWidget(
-                                              iconWidth: 40.w,
-                                              iconHeight: 32.w,
-                                              fit: BoxFit.contain,
-                                              icon: Assets.commonUiCommonProp05)
-                                          : IconWidget(
-                                              iconWidth: 34.w,
-                                              iconHeight: 34.w,
-                                              fit: BoxFit.contain,
-                                              icon: Assets
-                                                  .commonUiCommonIconCurrency02)),
-                            ),
+                                child: cupIndex == 0
+                                    ? IconWidget(
+                                        iconWidth: 41.w,
+                                        iconHeight: 41.w,
+                                        fit: BoxFit.contain,
+                                        icon: Assets.managerUiManagerGift01)
+                                    : cupIndex == 1
+                                        ? IconWidget(
+                                            iconWidth: 40.w,
+                                            iconHeight: 32.w,
+                                            fit: BoxFit.contain,
+                                            icon: Assets.commonUiCommonProp05)
+                                        : IconWidget(
+                                            iconWidth: 34.w,
+                                            iconHeight: 34.w,
+                                            fit: BoxFit.contain,
+                                            icon: Assets
+                                                .commonUiCommonIconCurrency02)),
                             Text('$cupIndex k',
                                 style: 14
                                     .w5(fontFamily: FontFamily.fOswaldRegular))
