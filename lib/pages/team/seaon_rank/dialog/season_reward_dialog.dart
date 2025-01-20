@@ -4,6 +4,7 @@ import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog_top_btn.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/vertival_drag_back_widget.dart';
@@ -25,14 +26,8 @@ class SeasonRewardDialog extends GetView<SeaonRankController> {
             color: Colors.white, borderRadius: BorderRadius.circular(9.w)),
         child: Column(
           children: [
-            Container(
-              margin: EdgeInsets.only(top: 8.5.w, bottom: 17.5.w),
-              width: 44.w,
-              height: 4.w,
-              decoration: BoxDecoration(
-                  color: AppColors.c000000.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(2.w)),
-            ),
+            const DialogTopBtn(),
+            10.vGap,
             Container(
               padding: EdgeInsets.only(left: 16.w),
               alignment: Alignment.centerLeft,
@@ -63,6 +58,13 @@ class SeasonRewardDialog extends GetView<SeaonRankController> {
   }
 
   Widget _rewardsItemWidget(int index) {
+    ///判断是否满足领取条件
+    bool isShowReceive = !(controller.teamSimpleEntity.value.cupRankId <
+        controller.cupDefineList[index].cupNumId);
+
+    /// 判断是否已经领取
+    bool haveReceive = true;
+
     ///赛季奖励数据转list
     List<String> cupRewardList =
         controller.cupDefineList[index].cupReward.split(',');
@@ -107,7 +109,7 @@ class SeasonRewardDialog extends GetView<SeaonRankController> {
     );
     return Stack(
       children: [
-        if (index < 1)
+        if (isShowReceive)
           ShaderMask(
               shaderCallback: (bounds) {
                 return LinearGradient(
@@ -122,7 +124,7 @@ class SeasonRewardDialog extends GetView<SeaonRankController> {
               child: cupRewardWidget)
         else
           cupRewardWidget,
-        if (index == 0)
+        if (isShowReceive && haveReceive)
           Positioned(
               right: 18.w,
               bottom: 32.w,
@@ -138,7 +140,7 @@ class SeasonRewardDialog extends GetView<SeaonRankController> {
                     iconColor: AppColors.c10A86A,
                     icon: Assets.commonUiCommonStatusBarMission02),
               )))
-        else if (index == 1)
+        else if (index == 2)
           Positioned(
               right: 18.w,
               bottom: 32.w,

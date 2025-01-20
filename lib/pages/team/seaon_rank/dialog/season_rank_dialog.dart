@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:arm_chair_quaterback/common/constant/font_family.dart';
 import 'package:arm_chair_quaterback/common/style/color.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog_top_btn.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/mt_inkwell.dart';
 import 'package:arm_chair_quaterback/common/widgets/vertival_drag_back_widget.dart';
@@ -26,14 +27,8 @@ class SeasonRankDialog extends GetView<SeaonRankController> {
           color: Colors.white, borderRadius: BorderRadius.circular(9.w)),
       child: Column(
         children: [
-          Container(
-            margin: EdgeInsets.only(top: 8.5.w, bottom: 17.5.w),
-            width: 44.w,
-            height: 4.w,
-            decoration: BoxDecoration(
-                color: AppColors.c000000.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(2.w)),
-          ),
+          const DialogTopBtn(),
+          10.vGap,
           _seasonRankHeaderWidget(),
           5.vGap,
           const Divider(
