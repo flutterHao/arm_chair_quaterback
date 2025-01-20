@@ -72,7 +72,7 @@ class SeasonRewardDialog extends GetView<SeaonRankController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'This season reached: Legendary Manager 4',
+            'This season reached:${controller.cupDefineList[index].backUp}',
             style: 12.w5(fontFamily: FontFamily.fRobotoRegular),
           ),
           10.vGap,
