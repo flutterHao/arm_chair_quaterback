@@ -144,6 +144,11 @@ class SeaonRankController extends GetxController {
         });
   }
 
+  int getCupDefineNum(int cupRankId) {
+    var item = cupDefineList.firstWhere((e) => e.cupNumId == cupRankId);
+    return item.cupNum[1];
+  }
+
   String getcupUrl(int cardId) {
     var item = cupDefineList.firstWhere((e) => e.cupNumId == cardId);
     return 'assets/images/manager/${item.cupPicId}.png';

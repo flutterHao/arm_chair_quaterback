@@ -109,8 +109,6 @@ class _SeasonRewadsWidgetState extends State<SeasonRewardsWidget> {
                       width: 60.w,
                       height: 40.w,
                       alignment: Alignment.center,
-                      // padding:
-                      //     EdgeInsets.symmetric(horizontal: 11.w, vertical: 12.w),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(9.w),
                           border: Border.all(color: AppColors.c666666)),
@@ -118,10 +116,6 @@ class _SeasonRewadsWidgetState extends State<SeasonRewardsWidget> {
                         'go to'.toUpperCase(),
                         style: 16.w5(fontFamily: FontFamily.fOswaldMedium),
                       ),
-                      // child: IconWidget(
-                      //     iconWidth: 17.w,
-                      //     iconColor: AppColors.c000000,
-                      //     icon: Assets.commonUiCommonIconSystemExchange),
                     )),
               )
             ],
