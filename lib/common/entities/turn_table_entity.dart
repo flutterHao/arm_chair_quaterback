@@ -22,6 +22,9 @@ class TurnTableEntity {
   /// 0 初始状态 1 上次未结束
   int isStart = 0;
 
+  /// 比赛比分
+  String? matchScore ;
+
   TurnTableEntity();
 
   factory TurnTableEntity.fromJson(Map<String, dynamic> json) =>

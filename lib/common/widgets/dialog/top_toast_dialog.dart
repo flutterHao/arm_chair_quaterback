@@ -8,12 +8,14 @@ Future showTopToastDialog({
   required Widget child,
   bool? needBg,
   Duration duration = const Duration(milliseconds: 1000), //停留时间
+  double? height,
 }) async {
   final overlayEntry = OverlayEntry(
     builder: (context) {
       return TopToastDialog(
         duration: duration,
         needBg: needBg??true,
+        height: height,
         child: child,
       );
     },

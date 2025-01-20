@@ -11,6 +11,7 @@ import 'dart:ui';
 
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/entities/ColorString.dart';
+import 'package:arm_chair_quaterback/common/entities/config/game_constant_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_player_infos_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/nba_team_entity.dart';
 import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
@@ -425,18 +426,32 @@ class Utils {
     return defaultImage;
   }
 
+  static String getImageByWheelRewardId(int propId,
+      {String defaultImage = Assets.managerUiManagerGift00}) {
+    var firstWhere = CacheApi.wheelRewardTypeList
+        ?.firstWhere((element) => element.wheelRewardId == propId);
+    if (firstWhere != null) {
+      return getImageByPath(firstWhere.wheelRewardIcon);
+    }
+    return defaultImage;
+  }
+
+  static GameConstantEntity? getGameConstant(int constantId) {
+      return CacheApi.gameConstantList.firstWhere((element) => element.constantId == constantId);
+  }
+
   static String getImageByPath(String image) {
     return "assets/images/$image${Constant.imageSuffix}";
   }
 
   /// 获取手机时间时区和服务器时间的时差 (ms)
-  int getTimeZoneOffset() {
+  Duration getTimeZoneOffset() {
     ///当前服务器时区为中国时区,固定返回0
-    return 0;
+    return Duration.zero;
 
     ///服务器时间为utc时间需要加上下面的返回值
     var dateTime = DateTime.now();
     var difference = dateTime.difference(dateTime.toUtc());
-    return difference.inMilliseconds;
+    return difference;
   }
 }

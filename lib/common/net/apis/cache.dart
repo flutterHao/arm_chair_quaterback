@@ -1,6 +1,7 @@
 import 'package:arm_chair_quaterback/common/entities/api_error_code_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/competition_venue_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/config/card_pack_define_entity.dart';
+import 'package:arm_chair_quaterback/common/entities/config/game_constant_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/config/prop_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/cup_define_entity.dart';
 import 'package:arm_chair_quaterback/common/entities/daily_task_wheel_entity.dart';
@@ -73,6 +74,7 @@ class CacheApi {
   static Map<int, PlayerCollectCollects> playerBookRuleMap = {};
   static List<PlayerCollectCollects> playerBookRuleList = [];
   static List<MissionDefineEntity> missionDefineList = [];
+  static List<GameConstantEntity> gameConstantList = [];
 
   static List<PlayerBookExpRuleEntity> playerBookExpRuleList = [];
   static Map<String, PlayerPowerRateDefineEntity> playerPowerRateDefineMap = {};
@@ -369,5 +371,15 @@ class CacheApi {
     List list = await HttpUtil().post(Api.cMissionDefine);
     return missionDefineList =
         list.map((item) => MissionDefineEntity.fromJson(item)).toList();
+  }
+
+  /// 游戏常量表
+  static Future<List<GameConstantEntity>> getGameConstant() async {
+    if (gameConstantList.isNotEmpty) {
+      return gameConstantList;
+    }
+    List list = await HttpUtil().post(Api.cGameConstant);
+    return gameConstantList =
+        list.map((item) => GameConstantEntity.fromJson(item)).toList();
   }
 }

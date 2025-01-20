@@ -14,6 +14,7 @@ import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/num_ext.dart';
 import 'package:arm_chair_quaterback/common/utils/param_utils.dart';
 import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/award_widget.dart';
 import 'package:arm_chair_quaterback/common/widgets/dialog/top_toast_dialog.dart';
 import 'package:arm_chair_quaterback/common/widgets/icon_widget.dart';
 import 'package:arm_chair_quaterback/generated/assets.dart';
@@ -292,40 +293,9 @@ class PlayNotStartController extends GetxController
       }finally{
         showTopToastDialog(
             needBg: false,
-            child: Center(
-              child: Container(
-                height: 61.w,
-                width: 355.w,
-                margin: EdgeInsets.only(top: 44.w),
-                padding: EdgeInsets.symmetric(horizontal: 19.w),
-                decoration: BoxDecoration(
-                  color: AppColors.cFFFFFF,
-                  borderRadius: BorderRadius.circular(9.w),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.c000000.withOpacity(0.2),
-                      offset: Offset.zero,
-                      blurRadius: 4.w,
-                      spreadRadius: 4.w,
-                    )
-                  ]
-                ),
-                child: Row(
-                  children: [
-                    IconWidget(iconWidth: 34.w, icon: Assets.commonUiCommonProp04),
-                    16.hGap,
-                    Text(
-                      "YOU GOT 3 BALL",
-                      style: 18.w5(
-                        color: AppColors.c000000,
-                        height: 1,
-                        fontFamily: Assets.fontsOswaldMedium,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ));
+            child: Container(
+              margin: EdgeInsets.only(top: 44.w),
+                child: const AwardWidget(image: Assets.commonUiCommonProp04, text: "YOU GOT 3 BALL")));
       }
     }, onError: (e) {
       ErrorUtils.toast(e);

@@ -76,19 +76,20 @@ class _WheelWidgetState extends State<WheelWidget>
     super.dispose();
   }
 
-  startWheel(Function? onEnd) {
+
+  startWheel(Function? onEnd,int? index) {
     if (animationController.controller.isAnimating) {
       return;
     }
     Random random = Random();
-    var nextInt = random.nextInt(4) + 5;
-    animationController.set(0, size * nextInt + nextInt,
+    var nextInt = random.nextInt(3)+4;
+    animationController.set(0, size * nextInt + (index??0),
         curve: Curves.easeOut, duration: const Duration(milliseconds: 800 * 6));
     isAnimatingStatus.value = true;
     isAnimateEnd.value = false;
     animationController.forward(from: 0).then((_) {
       /// 动画结束 开启其他动画
-      Future.delayed(const Duration(milliseconds: 300),(){
+      Future.delayed(const Duration(milliseconds: 300), () {
         onEnd?.call();
         isAnimatingStatus.value = false;
         isAnimateEnd.value = true;
@@ -162,7 +163,7 @@ class _WheelWidgetState extends State<WheelWidget>
               var isSecond = (index == value - 1 && isAnimatingStatus.value);
               var isThird = (index == value - 2 && isAnimatingStatus.value);
               var isFour = (index == value - 3 && isAnimatingStatus.value);
-              Color bgColor, borderColor,shadowColor;
+              Color bgColor, borderColor, shadowColor;
               if (isFirst) {
                 bgColor = AppColors.cFFFFFF;
                 borderColor = AppColors.cFF7954;
@@ -179,16 +180,21 @@ class _WheelWidgetState extends State<WheelWidget>
                 bgColor = AppColors.cFFFFFF.withOpacity(0.4);
                 borderColor = AppColors.cFF7954.withOpacity(0.4);
                 shadowColor = AppColors.cFF7954.withOpacity(0.4);
-              }else if(index == value && isAnimateEnd.value){
+              } else if (index == value && isAnimateEnd.value) {
                 bgColor = AppColors.cFF7954;
                 borderColor = AppColors.cFF7954;
                 shadowColor = AppColors.cTransparent;
               } else {
-                bgColor = AppColors.c000000;
-                borderColor = AppColors.c4c4c4c;
-                shadowColor = AppColors.c000000;
+                if (widget.controller?._active??false) {
+                  bgColor = AppColors.c666666;
+                  borderColor = AppColors.ccccccc;
+                  shadowColor = AppColors.c666666;
+                } else {
+                  bgColor = AppColors.c000000;
+                  borderColor = AppColors.c4c4c4c;
+                  shadowColor = AppColors.c000000;
+                }
               }
-
               return Stack(
                 children: [
                   Container(
@@ -198,13 +204,13 @@ class _WheelWidgetState extends State<WheelWidget>
                       borderRadius: borderRadius,
                       boxShadow: isFirst || isSecond || isThird
                           ? [
-                        BoxShadow(
-                          color: shadowColor,
-                          offset: const Offset(0, 0),
-                          blurRadius: 3.w,
-                          spreadRadius: 2.w,
-                        )
-                      ]
+                              BoxShadow(
+                                color: shadowColor,
+                                offset: const Offset(0, 0),
+                                blurRadius: 3.w,
+                                spreadRadius: 2.w,
+                              )
+                            ]
                           : [],
                     ),
                   ),
@@ -216,9 +222,7 @@ class _WheelWidgetState extends State<WheelWidget>
                       borderRadius: borderRadius,
                       border: Border.all(
                         color: borderColor,
-                        width: isFirst || isSecond || isThird
-                            ? 2.w
-                            : 1.w,
+                        width: isFirst || isSecond || isThird ? 2.w : 1.w,
                       ),
                     ),
                     child: widget.builder(index),
@@ -232,9 +236,14 @@ class _WheelWidgetState extends State<WheelWidget>
 }
 
 class WheelController {
-  Function(Function? onEnd)? _startWheel;
+  Function(Function? onEnd,int? index)? _startWheel;
+  bool _active = false;
 
-  start({Function? onEnd}) {
-    return _startWheel?.call(onEnd);
+  start({Function? onEnd,int? index}) {
+    return _startWheel?.call(onEnd,index);
+  }
+
+  active(bool active) {
+    return _active = active;
   }
 }

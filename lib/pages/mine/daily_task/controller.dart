@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:arm_chair_quaterback/common/constant/constant.dart';
 import 'package:arm_chair_quaterback/common/entities/config/prop_define_entity.dart';
@@ -12,10 +13,15 @@ import 'package:arm_chair_quaterback/common/net/apis/cache.dart';
 import 'package:arm_chair_quaterback/common/net/apis/mine.dart';
 import 'package:arm_chair_quaterback/common/net/apis/user.dart';
 import 'package:arm_chair_quaterback/common/utils/error_utils.dart';
+import 'package:arm_chair_quaterback/common/utils/utils.dart';
+import 'package:arm_chair_quaterback/common/widgets/award_widget.dart';
+import 'package:arm_chair_quaterback/common/widgets/dialog/top_toast_dialog.dart';
+import 'package:arm_chair_quaterback/generated/assets.dart';
 import 'package:arm_chair_quaterback/pages/home/home_controller.dart';
 import 'package:arm_chair_quaterback/pages/mine/daily_task/widgets/wheel_widget.dart';
 import 'package:arm_chair_quaterback/pages/team/team_training/training/controller.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class DailyTaskController extends GetxController
@@ -25,8 +31,9 @@ class DailyTaskController extends GetxController
   late WheelController wheelController;
 
   var scrollController = ScrollController();
-  PageController pageController = PageController();
-  PageController centerPageController = PageController();
+  PageController? pageController;
+
+  PageController? centerPageController;
   PageController girlPageController =
       PageController(initialPage: 1, viewportFraction: 0.75);
 
@@ -34,7 +41,7 @@ class DailyTaskController extends GetxController
   late TurnTableEntity turnTableEntity;
   late TeamPropList teamProp;
   List<DailyMissionItem> dailyMissionList = [];
-  List<TeamMissionEntity> weekMissionList = [];
+  List<WeekMissionItem> weekMissionList = [];
 
   Timer? _dailyTimer;
   var dailyCountDown = 0.obs;
@@ -49,8 +56,8 @@ class DailyTaskController extends GetxController
   @override
   void dispose() {
     scrollController.dispose();
-    pageController.dispose();
-    centerPageController.dispose();
+    pageController?.dispose();
+    centerPageController?.dispose();
     girlPageController.dispose();
     _dailyTimer?.cancel();
     super.dispose();
@@ -91,15 +98,27 @@ class DailyTaskController extends GetxController
       getTeamProp(),
       MineApi.getTeamMissionList(3),
       CacheApi.getMissionDefine(),
+      CacheApi.getGameConstant(),
     ]).then((result) {
       turnTableEntity = result[3] as TurnTableEntity;
-      if (turnTableEntity.isStart != 0) {
-        centerPageController.jumpToPage(1);
-        pageController.jumpToPage(1);
+      if (turnTableEntity.circle == 1) {
+        wheelController.active(true);
       }
-      weekMissionList = result[5] as List<TeamMissionEntity>;
-      weekMissionList
-          .sort((a, b) => a.missionDefineId.compareTo(b.missionDefineId));
+      int initialPage = 0;
+      if (turnTableEntity.isStart != 0 && pageController == null) {
+        initialPage = 1;
+      }
+      centerPageController = PageController(initialPage: initialPage);
+      pageController = PageController(initialPage: initialPage);
+      var wml = result[5] as List<TeamMissionEntity>;
+      wml.sort((a, b) => a.missionDefineId.compareTo(b.missionDefineId));
+      weekMissionList = wml.map((e) {
+        var missionDefineEntity = CacheApi.missionDefineList
+            .firstWhere((f) => e.missionDefineId == f.missionDefineId);
+        return WeekMissionItem(e, missionDefineEntity);
+      }).toList();
+      startDailyTaskCountDown();
+      update([idDailyMission]);
       getDailyMissions();
       loadStatus.value = LoadDataStatus.success;
       update([idMain]);
@@ -109,9 +128,87 @@ class DailyTaskController extends GetxController
     });
   }
 
-  void spin() {
+  Future reLife() {
+    return MineApi.reLife().then((result) {
+      turnTableEntity = result;
+      Get.find<HomeController>().refreshMoneyCoinWidget();
+      update([idSlotPan]);
+    }, onError: (e) {
+      ErrorUtils.toast(e);
+    });
+  }
+
+  void spin({Function? onEnd}) {
     MineApi.turntable().then((result) {
       turnTableEntity = result;
+      var awardItem = getAwardList(turnTableEntity.currentAward!)[0];
+      List<DailyTaskWheelEntity> taskWheelList = [];
+      if (result.circle == 1) {
+        taskWheelList = getOutWheel();
+      } else if (result.circle == 2) {
+        taskWheelList = getInnerTopWheel();
+      } else if (result.circle == 3) {
+        taskWheelList = getInnerBottomWheel();
+      } else {
+        taskWheelList = getInnerCenterGirlWheel();
+      }
+      var index = taskWheelList.indexWhere((e) => e.id == result.currentId);
+      _startSpin(
+          onEnd: () {
+            /// 转盘转完之后再更新界面
+            update([idSlotPan]);
+            onEnd?.call();
+          },
+          index: index);
+      if (pageController?.page == 0) {
+        centerPageController?.animateToPage(1,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut);
+        pageController?.animateToPage(1,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut);
+      }
+    }, onError: (e) {
+      ErrorUtils.toast(e);
+    });
+  }
+
+  void _startSpin({Function? onEnd, int index = 0}) {
+    if (scrollController.offset > 0) {
+      scrollController
+          .animateTo(0,
+              duration: const Duration(milliseconds: 300), curve: Curves.linear)
+          .then((_) {
+        Future.delayed(const Duration(milliseconds: 300), () {
+          wheelController.start(onEnd: onEnd);
+        });
+      });
+    } else {
+      wheelController.start(onEnd: onEnd, index: index);
+    }
+  }
+
+  void claimRewards() {
+    MineApi.claimRewards().then((result) {
+      var hasBall = result.where((e) => e.id == 306).isNotEmpty;
+      var hasLuckyCoin = result.where((e) => e.id == 201).isNotEmpty;
+      var hasMoneyOrBetCoin =
+          result.where((e) => e.id == 102 || e.id == 103).isNotEmpty;
+      if (hasBall) {
+        try {
+          Get.find<TrainingController>().getData();
+        } finally {}
+      }
+      if (hasMoneyOrBetCoin) {
+        Get.find<HomeController>().refreshMoneyCoinWidget();
+      }
+      if (hasLuckyCoin) {
+        getTeamProp();
+      }
+      /// 退出弹框
+      Get.back();
+      /// 退出页面
+      Get.back();
     }, onError: (e) {
       ErrorUtils.toast(e);
     });
@@ -135,6 +232,22 @@ class DailyTaskController extends GetxController
       if (hasLuckyCoin) {
         getTeamProp();
       }
+      if (hasMoneyOrBetCoin || hasLuckyCoin || hasBall) {
+        showTopToastDialog(
+            needBg: false,
+            child: Container(
+                margin: EdgeInsets.only(top: 44.w),
+                child: Column(
+                    children: List.generate(result.length, (index) {
+                  AwardItem awardItem =
+                      AwardItem.fromJson(result[index].toJson());
+                  var propItem = CacheApi.propDefineList!
+                      .firstWhere((e) => e.propId == awardItem.id);
+                  String text = "YOU GOT ${awardItem.num} ${propItem.propName}";
+                  return AwardWidget(
+                      image: getImageByAward(awardItem), text: text);
+                }))));
+      }
     }, onError: (e) {
       ErrorUtils.toast(e);
     });
@@ -153,20 +266,25 @@ class DailyTaskController extends GetxController
   }
 
   /// 周未领奖任务
-  List<TeamMissionEntity> getNotGetMission() {
-    return weekMissionList.where((e) => e.status == 3).toList();
+  List<WeekMissionItem> getNotGetMission() {
+    return weekMissionList
+        .where((e) => e.teamMissionEntity.status == 3)
+        .toList();
   }
 
   /// 周已完成任务
-  List<TeamMissionEntity> getWeekFinishMission() {
-    return weekMissionList.where((e) => e.status == 2).toList();
+  List<WeekMissionItem> getWeekFinishMission() {
+    return weekMissionList
+        .where((e) => e.teamMissionEntity.status == 2)
+        .toList();
   }
 
   /// 当前进行的周任务
   MissionDefineEntity getCurrentWeekMission() {
-    var lastWhere = weekMissionList.firstWhere((e) => e.status == 1);
-    var firstWhere = CacheApi.missionDefineList
-        .firstWhere((e) => lastWhere.missionDefineId == e.missionDefineId);
+    var lastWhere =
+        weekMissionList.firstWhere((e) => e.teamMissionEntity.status == 1);
+    var firstWhere = CacheApi.missionDefineList.firstWhere((e) =>
+        lastWhere.teamMissionEntity.missionDefineId == e.missionDefineId);
     return firstWhere;
   }
 
@@ -243,6 +361,14 @@ class DailyTaskController extends GetxController
     return getImageByPath(url);
   }
 
+  String getImageByAward(AwardItem item) {
+    if (item.type == 0) {
+      return Utils.getImageByWheelRewardId(item.id);
+    } else {
+      return Utils.getImageByPropId(item.id);
+    }
+  }
+
   String getImageByPath(String image) {
     return "assets/images/$image${Constant.imageSuffix}";
   }
@@ -316,11 +442,33 @@ class DailyTaskController extends GetxController
     return list;
   }
 
+  int getReLifeCost() {
+    var gameConstant = Utils.getGameConstant(10015);
+    var list = getAwardList(gameConstant?.constantStrVal ?? '');
+    if (list.isEmpty) {
+      return 0;
+    }
+    if (turnTableEntity.reLifeCount > list.length) {
+      return list.last.num;
+    }
+    return list[turnTableEntity.reLifeCount - 1].num;
+  }
+
+  int getLeftScore(){
+    return int.parse(turnTableEntity.matchScore?.split(':')[0]??"0");
+  }
+
+  int getRightScore(){
+    return int.parse(turnTableEntity.matchScore?.split(':')[1]??"0");
+  }
+
   static String get idMain => "id_main";
 
   static String get idDailyMission => "id_daily_mission";
 
   static String get idLuckyCoin => "id_lucky_coin";
+
+  static String get idSlotPan => "id_slot_pan";
 }
 
 class AwardItem {
@@ -334,6 +482,9 @@ class AwardItem {
   final int type;
 
   AwardItem(this.id, this.num, this.type);
+
+  factory AwardItem.fromJson(Map<String, dynamic> json) =>
+      AwardItem(json["id"], json['num'], json["type"]);
 }
 
 class TurnRewardItem {
@@ -349,4 +500,11 @@ class DailyMissionItem {
   final MissionDefineEntity missionDefineEntity;
 
   DailyMissionItem(this.teamMissionEntity, this.missionDefineEntity);
+}
+
+class WeekMissionItem {
+  final TeamMissionEntity teamMissionEntity;
+  final MissionDefineEntity missionDefineEntity;
+
+  WeekMissionItem(this.teamMissionEntity, this.missionDefineEntity);
 }

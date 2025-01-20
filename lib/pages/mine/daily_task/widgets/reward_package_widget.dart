@@ -217,7 +217,6 @@ class _RewardPackageWidgetState extends State<RewardPackageWidget>
                                           },
                                           cancelTap: () {
                                             print('CLAIM AND EXIT');
-                                            Get.back();
                                             widget.claimAndExit.call();
                                           });
                                     });
